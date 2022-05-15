@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Lightning
 		{
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 1200;
 			Projectile.width = 12;
 			Projectile.height = 14;

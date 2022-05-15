@@ -64,7 +64,7 @@ namespace SOTS.Items.Flails
 		{
 			Projectile.Size = new Vector2(34, 34);
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.penetrate = -1;
 		}
 
@@ -233,7 +233,7 @@ namespace SOTS.Items.Flails
 
 		public override bool PreDrawExtras(SpriteBatch spriteBatch)
 		{
-			Texture2D ChainTexture = Mod.Assets.Request<Texture2D>(Texture.Remove(0, mod.Name.Length + 1).Value + "_chain");
+			Texture2D ChainTexture = Mod.Assets.Request<Texture2D>(Texture.Remove(0, Mod.Name.Length + 1).Value + "_chain");
 			Player Owner = Main.player[Projectile.owner];
 			int timestodrawchain = Math.Max((int)(Projectile.Distance(Owner.MountedCenter) / ChainTexture.Width), 1);
 			for (int i = 0; i < timestodrawchain; i++)

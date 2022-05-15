@@ -53,11 +53,11 @@ namespace SOTS.Projectiles.BiomeChest
             }
             return false;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 8;
             height = 8;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
@@ -70,10 +70,10 @@ namespace SOTS.Projectiles.BiomeChest
         {
             if (runOnce)
             {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
                 Projectile.scale = 0.6f;
                 if (Main.netMode != NetmodeID.Server)
-                    SOTS.primitives.CreateTrail(new StarTrail(projectile, projColor(), projColor(true), 12));
+                    SOTS.primitives.CreateTrail(new StarTrail(Projectile, projColor(), projColor(true), 12));
                 runOnce = false;
             }
             return true;
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.BiomeChest
         }
         public override void AI()
         {
-            int target = SOTSNPCs.FindTarget_Basic(Projectile.Center, 270f, projectile);
+            int target = SOTSNPCs.FindTarget_Basic(Projectile.Center, 270f, Projectile);
             if (target != -1)
             {
                 var normal = (Main.npc[target].Center - Projectile.Center).SafeNormalize(Vector2.Zero);

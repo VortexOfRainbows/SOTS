@@ -15,7 +15,7 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			Projectile.aiStyle = 2;
-			Projectile.thrown = true;
+			Projectile.DamageType = DamageClass.Throwing;
 			Projectile.friendly = true;
 			Projectile.width = 46;
 			Projectile.height = 36;
@@ -23,7 +23,7 @@ namespace SOTS.Projectiles
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = true;
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 10;
 			height = 10;

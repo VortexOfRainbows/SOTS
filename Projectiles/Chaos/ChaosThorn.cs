@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.extraUpdates = 4;
 			Projectile.timeLeft = 900;
 			Projectile.tileCollide = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = -1;
 		}
 		public const int trailLength = 34;

@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Tide
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.timeLeft = 20;
             Projectile.hide = true;
             Projectile.alpha = 255;

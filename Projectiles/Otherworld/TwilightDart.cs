@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Lighting.AddLight(Projectile.Center, 0.55f, 0.55f, 0.75f);
 			NPC owner = Main.npc[(int)Projectile.ai[1]];
-			if (owner.type != mod.NPCType("TwilightDevil") || !owner.active)
+			if (owner.type != Mod.Find<ModNPC>("TwilightDevil") .Type|| !owner.active)
 			{
 				if (Projectile.timeLeft > 480)
 					Projectile.Kill();
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && Main.npc[(int)proj.ai[1]] == owner && proj.timeLeft >= 480)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}

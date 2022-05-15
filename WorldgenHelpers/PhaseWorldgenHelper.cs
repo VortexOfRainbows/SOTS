@@ -21,12 +21,12 @@ namespace SOTS
         private static void ClearPreviousGen()
         {
             int amtDestroyed = 0;
-            for(int i = 10; i < Main.maxTilesX - 10; i++)
+            for (int i = 10; i < Main.maxTilesX - 10; i++)
             {
-                for(int j = 10; j < Main.worldSurface * 0.35f + 40; j++)
+                for (int j = 10; j < Main.worldSurface * 0.35f + 40; j++)
                 {
                     Tile tile = Main.tile[i, j];
-                    if(tile.active() && tile.TileType == ModContent.TileType<PhaseOreTile>())
+                    if (tile.active() && tile.type == ModContent.TileType<PhaseOreTile>())
                     {
                         tile.active(false);
                         amtDestroyed++;
@@ -41,7 +41,7 @@ namespace SOTS
         private static void DoGen(object state)
         {
             Generating = true;
-            if(ClearPrevious)
+            if (ClearPrevious)
                 ClearPreviousGen();
             ClearPrevious = false;
             float worldPercent;
@@ -60,9 +60,9 @@ namespace SOTS
             int clearRadius = 15;
             float spread = 1f / total;
             float randomMult = 0;
-            for(int i = 1; i < total; i++)
+            for (int i = 1; i < total; i++)
             {
-                if(i != total / 2)
+                if (i != total / 2)
                 {
                     worldPercent = spread * i;
                     float randomMinMax = 20 * randomMult;

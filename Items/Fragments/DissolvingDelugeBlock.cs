@@ -30,16 +30,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
-			recipe.SetResult(this, 20);
-			recipe.AddRecipe();
+			CreateRecipe(20).AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1).Register();
 		}
 	}
 	public class DissolvingDelugeTile : ModTile
 	{
 		public static Color color = new Color(64, 72, 178);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
@@ -136,7 +133,7 @@ namespace SOTS.Items.Fragments
 				if (extraJ != 0)
 					next2 = Framing.GetTileSafely(i, j + extraJ);
 				bool run = true;
-				if ((next.active() && (Main.tileSolid[next.type] || next1.WallType == ModContent.WallType<DelugeWallWall>())) || (next1.active() && ((Main.tileSolid[next1.type] && next1.type == ModContent.TileType<DissolvingDelugeTile>()) || next1.WallType == ModContent.WallType<DelugeWallWall>())) || (next2.active() && ((Main.tileSolid[next2.type] && next2.type == ModContent.TileType<DissolvingDelugeTile>()) || next2.WallType == ModContent.WallType<DelugeWallWall>())))
+				if ((next.HasTile && (Main.tileSolid[next.TileType] || next1.WallType == ModContent.WallType<DelugeWallWall>())) || (next1.HasTile && ((Main.tileSolid[next1.TileType] && next1.TileType == ModContent.TileType<DissolvingDelugeTile>()) || next1.WallType == ModContent.WallType<DelugeWallWall>())) || (next2.HasTile && ((Main.tileSolid[next2.TileType] && next2.TileType == ModContent.TileType<DissolvingDelugeTile>()) || next2.WallType == ModContent.WallType<DelugeWallWall>())))
 					run = false;
 				if (run)
 					for (int k = 0; k < 8; k += 1)
@@ -241,7 +238,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			DrawEffects(i, j, spriteBatch, mod);
+			DrawEffects(i, j, spriteBatch, Mod);
 			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Crushers
             Main.projFrames[Projectile.type] = 6;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 23;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
@@ -45,10 +45,10 @@ namespace SOTS.Projectiles.Crushers
 				for(int i = 0; i < 2; i++)
 				{
 					Vector2 circularLocation = new Vector2(0, 4).RotatedBy(MathHelper.ToRadians(i * 180));
-					Projectile.NewProjectile(target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, mod.ProjectileType("ManaLock"), 0, 0, player.whoAmI, 20);
+					Projectile.NewProjectile(target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, Mod.Find<ModProjectile>("ManaLock").Type, 0, 0, player.whoAmI, 20);
 					
 					circularLocation = new Vector2(0, 4).RotatedBy(MathHelper.ToRadians(90 + (i * 180)));
-					Projectile.NewProjectile(target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, mod.ProjectileType("VoidLock"), 0, 0, player.whoAmI, 4);
+					Projectile.NewProjectile(target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, Mod.Find<ModProjectile>("VoidLock").Type, 0, 0, player.whoAmI, 4);
 				}
 			}
         }

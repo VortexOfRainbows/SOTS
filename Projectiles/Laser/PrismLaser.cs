@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.width = 14;
 			Projectile.height = 14;
 			Projectile.timeLeft = 85;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;

@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.friendly = true; 
             Projectile.tileCollide = true;
 			Projectile.ownerHitCheck = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.alpha = 255;
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -28,11 +28,11 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.velocity *= 0.1f;
             return base.OnTileCollide(oldVelocity);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = Projectile.width / 2;
 			height = Projectile.height / 2;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
 		float counter = 0;
 		public override void AI() //The projectile's AI/ what the projectile does
@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Otherworld
 			counter += 0.5f;
 			for (int i = 0; i < 2 + counter; i++)
 			{
-				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, mod.DustType("CodeDust"));
+				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CodeDust").Type);
 				Dust dust = Main.dust[num];
 				dust.velocity *= 0.5f;
 				dust.velocity += Projectile.velocity * 0.3f;

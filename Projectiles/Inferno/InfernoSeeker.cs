@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Inferno
         {
 			Projectile.height = 16;
 			Projectile.width = 16;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 150;
 			Projectile.friendly = false;
 			Projectile.hostile = false;

@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.Minions
 		public override void AI() 
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			#region Active check
 			if (player.dead || !player.active) 
 			{
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}
@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Minions
 					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(Projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 3, mod.ProjectileType("NatureBeam"), Projectile.damage, Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 3, Mod.Find<ModProjectile>("NatureBeam").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
 					}
 					Projectile.ai[0] = 32;
 				}

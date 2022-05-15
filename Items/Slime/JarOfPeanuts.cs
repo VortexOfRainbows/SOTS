@@ -29,18 +29,13 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Bottle, 1);
-			recipe.AddIngredient(null,"Peanut", 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Bottle, 1).AddIngredient(null,"Peanut", 15).AddTile(TileID.Anvils).Register();
 		}
 		public override bool CanUseItem(Player player)
 		{
-			return !NPC.AnyNPCs(mod.NPCType("PutridPinky1")) && !NPC.AnyNPCs(mod.NPCType("PutridPinkyPhase2"));
+			return !NPC.AnyNPCs(Mod.Find<ModNPC>("PutridPinky1").Type) && !NPC.AnyNPCs(Mod.Find<ModNPC>("PutridPinkyPhase2").Type);
 		}
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("PutridPinky1"));
 			SoundEngine.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);

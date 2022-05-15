@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 	*/
 	public class CursedGrowthTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileLighted[Type] = true;

@@ -25,7 +25,7 @@ namespace SOTS.Items.MusicBoxes
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("PlanetariumMusicBoxTile");
+			Item.createTile = Mod.Find<ModTile>("PlanetariumMusicBoxTile").Type;
 			Item.width = 24;
 			Item.height = 24;
 			Item.rare = ItemRarityID.LightRed;
@@ -35,14 +35,7 @@ namespace SOTS.Items.MusicBoxes
 		
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "AvaritianPlating", 10);
-			recipe.AddIngredient(null, "DullPlating", 10);
-			recipe.AddIngredient(null, "TwilightGel", 10);
-			recipe.AddIngredient(ItemID.MusicBox);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "AvaritianPlating", 10).AddIngredient(null, "DullPlating", 10).AddIngredient(null, "TwilightGel", 10).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class PlanetariumMusicBoxTile : ModTile
@@ -51,7 +44,7 @@ namespace SOTS.Items.MusicBoxes
 		{
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -67,7 +60,7 @@ namespace SOTS.Items.MusicBoxes
 		}
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("PlanetariumMusicBox"));
+			Item.NewItem(i * 16, j * 16, 16, 48, Mod.Find<ModItem>("PlanetariumMusicBox").Type);
 		}
 
 		public override void MouseOver(int i, int j)
@@ -75,7 +68,7 @@ namespace SOTS.Items.MusicBoxes
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = mod.ItemType("PlanetariumMusicBox");
+			player.cursorItemIconID = Mod.Find<ModItem>("PlanetariumMusicBox").Type;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

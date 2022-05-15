@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Earth
             Projectile.friendly = false;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.timeLeft = 40;
             Projectile.hide = true;
             Projectile.alpha = 255;

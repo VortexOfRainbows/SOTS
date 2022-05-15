@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Otherworld
 				for(int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(i * 45));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("OtherworldlyBolt"), Projectile.damage, 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("OtherworldlyBolt").Type, Projectile.damage, 0, Main.myPlayer);
 				}
 			}
 			for (int i = 0; i < 40; i++)

@@ -35,15 +35,7 @@ namespace SOTS.Items.MusicBoxes
 		
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<RubyKeystone>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<RoyalRubyShard>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<CursedTumor>(), 10);
-			recipe.AddIngredient(ItemID.MusicBox);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<RubyKeystone>(), 1).AddIngredient(ModContent.ItemType<RoyalRubyShard>(), 10).AddIngredient(ModContent.ItemType<CursedMatter>(), 5).AddIngredient(ModContent.ItemType<CursedTumor>(), 10).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class PyramidBattleMusicBoxTile : ModTile
@@ -52,7 +44,7 @@ namespace SOTS.Items.MusicBoxes
 		{
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

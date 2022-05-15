@@ -13,7 +13,7 @@ namespace SOTS.Items.Void
 	{
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			TooltipLine line = new TooltipLine(mod, "VoidConsumable", "Automatically consumed when void drops below zero");
+			TooltipLine line = new TooltipLine(Mod, "VoidConsumable", "Automatically consumed when void drops below zero");
 			tooltips.Add(line);
 			//line = new TooltipLine(mod, "VoidDelay", GetSatiateDuration() + " second cooldown");
 			//tooltips.Add(line);
@@ -42,7 +42,7 @@ namespace SOTS.Items.Void
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			return !voidPlayer.frozenVoid && !player.HasBuff(ModContent.BuffType<Satiated>());
         }
-        public sealed override bool UseItem(Player player)
+        public sealed override bool? UseItem(Player player)
 		{
 			return true;
 		}
@@ -262,11 +262,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "Curgeon", 1);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
+			CreateRecipe(2).AddIngredient(null, "Curgeon", 1).AddTile(TileID.CookingPots).Register();
 		}
 	}
 	public class FoulConcoction : VoidConsumable
@@ -318,7 +314,7 @@ namespace SOTS.Items.Void
 		}
 		public override void OnActivation(Player player)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int rand = Main.rand.Next(2);
 			if (rand == 0)
 			{
@@ -326,7 +322,7 @@ namespace SOTS.Items.Void
 				Vector2 circularSpeed = new Vector2(0, -12);
 				int calc = 10 + modPlayer.bonusShardDamage;
 				if (calc <= 0) calc = 1;
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
+				Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, Mod.Find<ModProjectile>("ShatterShard").Type, calc, 3f, player.whoAmI);
 
 			}
 			else
@@ -337,7 +333,7 @@ namespace SOTS.Items.Void
 					Vector2 circularSpeed = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 180));
 					int calc = 10 + modPlayer.bonusShardDamage;
 					if (calc <= 0) calc = 1;
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, Mod.Find<ModProjectile>("ShatterShard").Type, calc, 3f, player.whoAmI);
 				}
 			}
 		}

@@ -49,12 +49,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<ArclightOrbs>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 10).AddIngredient(ModContent.ItemType<ArclightOrbs>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

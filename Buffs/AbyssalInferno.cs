@@ -7,7 +7,7 @@ namespace SOTS.Buffs
 {
     public class AbyssalInferno : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abyssal Inferno");
 			Description.SetDefault("'No more skin!'");   

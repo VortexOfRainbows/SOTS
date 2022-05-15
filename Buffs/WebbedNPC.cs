@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class WebbedNPC : ModBuff
     {	
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
 			DisplayName.SetDefault("Webbed");
 			Description.SetDefault("Slowed, but only for enemies");   

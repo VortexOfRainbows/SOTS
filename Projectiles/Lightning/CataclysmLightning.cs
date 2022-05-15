@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Lightning
 			Projectile.width = 12;
 			Projectile.height = 12;
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Lightning
 				trailPos.Add(location + originalVelo.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-defaultDeviation, defaultDeviation + 1))) * 1.5f);
 				int u = (int)location.X / 16;
 				int j = (int)location.Y / 16;
-				if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].type] == false && Main.tileSolid[Main.tile[u, j].type] == true)
+				if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].TileType] == false && Main.tileSolid[Main.tile[u, j].TileType] == true)
 				{
 					int dust = Dust.NewDust(new Vector2(location.X - 16, location.Y - 16), 24, 24, 107);
 					Main.dust[dust].scale *= 1f;

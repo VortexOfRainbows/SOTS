@@ -23,15 +23,15 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0f;
             NPC.width = 156;
             NPC.height = 102;
-            npc.value = 420;
-            npc.npcSlots = 1f;
-            npc.boss = true;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit4;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = true;
+            NPC.value = 420;
+            NPC.npcSlots = 1f;
+            NPC.boss = true;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = true;
 			//music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
 			//musicPriority = MusicPriority.BossHigh;
 		}
@@ -43,30 +43,30 @@ namespace SOTS.NPCs
         }
         public override void AI()
 		{	
-			npc.position.Y += Main.rand.Next(-5, 6);
-			npc.position.X += Main.rand.Next(-5, 6);
-			npc.velocity += Main.rand.NextVector2Circular(0.1f, 0.1f);
+			NPC.position.Y += Main.rand.Next(-5, 6);
+			NPC.position.X += Main.rand.Next(-5, 6);
+			NPC.velocity += Main.rand.NextVector2Circular(0.1f, 0.1f);
 
-			npc.ai[0]++;
-			if (npc.ai[0] == 60)
+			NPC.ai[0]++;
+			if (NPC.ai[0] == 60)
 				Main.NewText("WHY ARE YOU RUNNING????", 0, 255, 0);
-			if(npc.ai[0] == 120)
+			if(NPC.ai[0] == 120)
 				Main.NewText("DO YOU KNOW DA WAE???", 0, 255, 0);
-			if(npc.ai[0] == 180)
+			if(NPC.ai[0] == 180)
 				Main.NewText("YOU DO NOT KNOW DA WAE!", 0, 255, 0);
-			if(npc.ai[0] >= 240)
+			if(NPC.ai[0] >= 240)
 			{
 				Main.NewText("LET US SHOW YOU DA WAE!!!!!!!!!!!!!!!!!!!!!!", 0, 255, 0);
-				NPC.SpawnOnPlayer(0, npc.type);
-				npc.ai[0] = 0;
+				NPC.SpawnOnPlayer(0, NPC.type);
+				NPC.ai[0] = 0;
 			}
-			npc.rotation += Main.rand.NextFloat(-100, 100);
-			if (Main.player[npc.target].dead)
+			NPC.rotation += Main.rand.NextFloat(-100, 100);
+			if (Main.player[NPC.target].dead)
 			{
-			   npc.timeLeft = 0;
+			   NPC.timeLeft = 0;
 			}
 			else
-			   npc.timeLeft = 10000;
+			   NPC.timeLeft = 10000;
 		}
 	
 	}

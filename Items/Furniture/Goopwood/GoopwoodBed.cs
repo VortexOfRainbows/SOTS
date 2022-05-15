@@ -18,12 +18,7 @@ namespace SOTS.Items.Furniture.Goopwood
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 15);
-			recipe.AddIngredient(ItemID.Silk, 5);
-			recipe.AddTile(TileID.Sawmill);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 15).AddIngredient(ItemID.Silk, 5).AddTile(TileID.Sawmill).Register();
 		}
 	}
 	public class GoopwoodBedTile : Bed<GoopwoodBed>

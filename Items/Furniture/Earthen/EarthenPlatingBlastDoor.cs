@@ -23,11 +23,7 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 6);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<EarthenPlating>(), 6).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class EarthenPlatingBlastDoorTileClosed : BlastDoorClosed<EarthenPlatingBlastDoor, EarthenPlatingBlastDoorTileOpen>

@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Earth
         public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(1);
-			aiType = 1;
+			AIType = 1;
 			Projectile.width = 26;
 			Projectile.height = 56;
 			Projectile.hide = true;
@@ -153,7 +153,7 @@ namespace SOTS.Projectiles.Earth
 			hitbox = new Rectangle((int)Projectile.Center.X - 12, (int)Projectile.Center.Y - 12, 24, 24);
 			base.ModifyDamageHitbox(ref hitbox);
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			fallThrough = true;
 			width = 12;
@@ -187,11 +187,11 @@ namespace SOTS.Projectiles.Earth
 			hitbox = new Rectangle((int)Projectile.Center.X - 8, (int)Projectile.Center.Y - 8, 16, 16);
 			base.ModifyDamageHitbox(ref hitbox);
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 8;
 			height = 8;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
 		float aiCounter = 400;
 		public override void AI()
@@ -241,11 +241,11 @@ namespace SOTS.Projectiles.Earth
 			hitbox = new Rectangle((int)Projectile.Center.X - 12, (int)Projectile.Center.Y - 12, 24, 24);
 			base.ModifyDamageHitbox(ref hitbox);
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 4;
 			height = 4;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
 		public override void AI()
 		{

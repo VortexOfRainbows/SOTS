@@ -110,17 +110,12 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.SetResult(ModContent.ItemType<RoyalRubyShard>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1).AddTile(TileID.DemonAltar).ReplaceResult(ModContent.ItemType<RoyalRubyShard>());
 		}
 	}
 	public class TaintedKeystoneShardTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileNoFail[Type] = true;
@@ -216,7 +211,7 @@ namespace SOTS.Items.Pyramid
 		}
 		private bool TileIsCapable(Tile tile)
         {
-			return tile.active() && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.TileType && !tile.IsActuated;
+			return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.TileType && !tile.IsActuated;
 		}
 		private bool TileIsCapable(int i, int j)
         {

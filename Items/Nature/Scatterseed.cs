@@ -35,20 +35,8 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NatureSpell>(), 1);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 8);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NatureSpell>(), 1);
-			recipe.AddIngredient(ItemID.DemoniteBar, 8);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<NatureSpell>(), 1).AddIngredient(ItemID.CrimtaneBar, 8).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<NatureSpell>(), 1).AddIngredient(ItemID.DemoniteBar, 8).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6).AddTile(TileID.Anvils).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

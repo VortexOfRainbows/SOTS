@@ -35,13 +35,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<ShardStaff>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<StormSpell>(), 1);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 10).AddIngredient(ModContent.ItemType<ShardStaff>(), 1).AddIngredient(ModContent.ItemType<StormSpell>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

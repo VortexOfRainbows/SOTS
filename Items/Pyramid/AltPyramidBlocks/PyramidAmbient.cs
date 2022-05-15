@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Item.placeStyle = 0;
 		}
 		int type = 0;
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
 			int modU = type % 7;
 			if(modU == 0)
@@ -68,7 +68,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
     }	
 	public class PyramidAmbientTile1x1 : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -98,7 +98,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	}
 	public class PyramidAmbientTile1x1Curse : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -128,7 +128,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	}
 	public class PyramidAmbientTile2x1 : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -158,7 +158,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	}
 	public class PyramidAmbientTile2x1Curse : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -188,7 +188,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	}
 	public class PyramidAmbientTile3x1Curse : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -217,7 +217,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	}
 	public class PyramidAmbientTile2x2 : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -310,7 +310,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			}
 			spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 		}
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
 		{
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = false;

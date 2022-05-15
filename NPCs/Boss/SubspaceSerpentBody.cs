@@ -22,17 +22,17 @@ namespace SOTS.NPCs.Boss
             NPC.defense = 100;
             NPC.lifeMax = 130000;
             NPC.knockBackResist = 0.0f;
-            npc.noTileCollide = true;
-            npc.netAlways = true;
-            npc.noGravity = true;
-            npc.dontCountMe = true;
-            npc.value = 10000;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath32;
+            NPC.noTileCollide = true;
+            NPC.netAlways = true;
+            NPC.noGravity = true;
+            NPC.dontCountMe = true;
+            NPC.value = 10000;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath32;
             music = MusicID.Boss2;
             for (int i = 0; i < Main.maxBuffTypes; i++)
             {
-                npc.buffImmune[i] = true;
+                NPC.buffImmune[i] = true;
             }
             Main.npcFrameCount[NPC.type] = 8;
         }
@@ -41,7 +41,7 @@ namespace SOTS.NPCs.Boss
         float maxDPS = 250;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return !npc.dontTakeDamage;
+            return !NPC.dontTakeDamage;
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -58,7 +58,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(npc.knockBackResist);
+            writer.Write(NPC.knockBackResist);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -66,28 +66,28 @@ namespace SOTS.NPCs.Boss
         }
         public override void FindFrame(int frameHeight)
         {
-            NPC parent = Main.npc[(int)npc.ai[1]];
+            NPC parent = Main.npc[(int)NPC.ai[1]];
             int frameHeight2 = frameHeight;
             if(parent.type == ModContent.NPCType<SubspaceSerpentHead>())
             {
                 frameHeight2 = 44;
             }
-            npc.alpha = parent.alpha;
-            npc.dontTakeDamage = parent.dontTakeDamage;
+            NPC.alpha = parent.alpha;
+            NPC.dontTakeDamage = parent.dontTakeDamage;
             int targetFrame = parent.frame.Y / frameHeight2;
             int currentFrame = NPC.frame.Y / frameHeight;
             if (currentFrame != targetFrame)
             {
-                npc.frameCounter++;
-                if (npc.frameCounter >= 4)
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 4)
                 {
                     currentFrame = targetFrame;
-                    npc.frameCounter = 0;
+                    NPC.frameCounter = 0;
                 }
             }
             else
             {
-                npc.frameCounter = 0;
+                NPC.frameCounter = 0;
             }
             if (currentFrame > 7)
                 currentFrame = 0;
@@ -96,47 +96,47 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreAI()
         {
-            if (npc.ai[3] > 0)
-                npc.realLife = (int)npc.ai[3];
-            if (npc.target < 0 || npc.target == byte.MaxValue || Main.player[npc.target].dead)
-                npc.TargetClosest(true);
+            if (NPC.ai[3] > 0)
+                NPC.realLife = (int)NPC.ai[3];
+            if (NPC.target < 0 || NPC.target == byte.MaxValue || Main.player[NPC.target].dead)
+                NPC.TargetClosest(true);
 
             if (Main.netMode != 1)
             {
-                if (!Main.npc[(int)npc.ai[1]].active)
+                if (!Main.npc[(int)NPC.ai[1]].active)
                 {
-                    npc.life = 0;
-                    npc.HitEffect(0, 10.0);
-                    npc.active = false;
+                    NPC.life = 0;
+                    NPC.HitEffect(0, 10.0);
+                    NPC.active = false;
                 }
-                if (!npc.active && Main.netMode == NetmodeID.Server)
+                if (!NPC.active && Main.netMode == NetmodeID.Server)
                 {
-                    NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, npc.whoAmI, -1f, 0f, 0f, 0, 0, 0);
+                    NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, NPC.whoAmI, -1f, 0f, 0f, 0, 0, 0);
                 }
             }
 
-            if (npc.ai[1] < (double)Main.npc.Length)
+            if (NPC.ai[1] < (double)Main.npc.Length)
             {
-                Vector2 npcCenter = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-                float dirX = Main.npc[(int)npc.ai[1]].position.X + (float)(Main.npc[(int)npc.ai[1]].width / 2) - npcCenter.X;
-                float dirY = Main.npc[(int)npc.ai[1]].position.Y + (float)(Main.npc[(int)npc.ai[1]].height / 2) - npcCenter.Y;
-                npc.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
+                Vector2 npcCenter = new Vector2(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
+                float dirX = Main.npc[(int)NPC.ai[1]].position.X + (float)(Main.npc[(int)NPC.ai[1]].width / 2) - npcCenter.X;
+                float dirY = Main.npc[(int)NPC.ai[1]].position.Y + (float)(Main.npc[(int)NPC.ai[1]].height / 2) - npcCenter.Y;
+                NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                float dist = (length - npc.height) / length;
+                float dist = (length - NPC.height) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
-                npc.velocity = Vector2.Zero;
-                npc.position.X = npc.position.X + posX;
-                npc.position.Y = npc.position.Y + posY;
+                NPC.velocity = Vector2.Zero;
+                NPC.position.X = NPC.position.X + posX;
+                NPC.position.Y = NPC.position.Y + posY;
             }
             return false;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyFill").Value;
-            Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
+            Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
             float percentShield = (maxDPS - currentDPS) / maxDPS;
-            NPC head = Main.npc[npc.realLife];
+            NPC head = Main.npc[NPC.realLife];
             SubspaceSerpentHead subHead = head.modNPC as SubspaceSerpentHead;
             bool phase2 = subHead.hasEnteredSecondPhase;
             if (phase2)
@@ -147,20 +147,20 @@ namespace SOTS.NPCs.Boss
                 for (int i = 0; i < 2; i++)
                 {
                     int direction = i * 2 - 1;
-                    Vector2 toTheSide = new Vector2(6 * percentShield * direction, 0).RotatedBy(npc.rotation);
-                    Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + toTheSide, npc.frame, color * ((255f - npc.alpha) / 255f) * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1f, SpriteEffects.None, 0);
+                    Vector2 toTheSide = new Vector2(6 * percentShield * direction, 0).RotatedBy(NPC.rotation);
+                    Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
                 }
             }
-            texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
         int counter = 0;
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyGlow").Value;
-            Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
+            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             counter++;
             if (counter > 12)
                 counter = 0;
@@ -168,8 +168,8 @@ namespace SOTS.NPCs.Boss
             {
                 float bonusAlphaMult = 1 - 1 * (counter / 12f);
                 float dir = j * 2 - 1;
-                Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(npc.rotation);
-                Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + offset, npc.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+                Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(NPC.rotation);
+                Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + offset, NPC.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             }
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -178,7 +178,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
+            NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
             DPSregenRate += 0.15f * numPlayers;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
@@ -188,20 +188,20 @@ namespace SOTS.NPCs.Boss
         }
         public override void PostAI()
         {
-            NPC head = Main.npc[npc.realLife];
+            NPC head = Main.npc[NPC.realLife];
             SubspaceSerpentHead subHead = head.modNPC as SubspaceSerpentHead;
             bool phase2 = subHead.hasEnteredSecondPhase;
             float mult = 0.6f;
             if (Main.expertMode)
                 mult = 0.65f;
-            bool wantsPhase2 = (npc.life < npc.lifeMax * mult && !phase2);
+            bool wantsPhase2 = (NPC.life < NPC.lifeMax * mult && !phase2);
             maxDPS = 250;
             if (wantsPhase2)
                 maxDPS = 100;
             if (phase2)
                 maxDPS = 350;
-            Lighting.AddLight(npc.Center, (255 - npc.alpha) * 2.5f / 255f, (255 - npc.alpha) * 1.6f / 255f, (255 - npc.alpha) * 2.4f / 255f);
-            npc.timeLeft = 100000;
+            Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 2.5f / 255f, (255 - NPC.alpha) * 1.6f / 255f, (255 - NPC.alpha) * 2.4f / 255f);
+            NPC.timeLeft = 100000;
 
             if (currentDPS == -1)
                 currentDPS = maxDPS;
@@ -220,7 +220,7 @@ namespace SOTS.NPCs.Boss
             }
             if (Main.netMode != 1)
             {
-                npc.netUpdate = true;
+                NPC.netUpdate = true;
             }
         }
     }

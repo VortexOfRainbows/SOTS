@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.timeLeft = 1500;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.extraUpdates = 1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 80;
@@ -99,11 +99,11 @@ namespace SOTS.Projectiles.Chaos
 				dust.scale *= 2f;
 			}
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 16;
 			height = 16;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
 		bool runOnce = true;
         public override void AI()

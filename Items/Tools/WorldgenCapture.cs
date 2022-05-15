@@ -36,7 +36,7 @@ namespace SOTS.Items.Tools
 			Item.height = 18;
 			Item.useTime = 12;
 			Item.useAnimation = 12;
-			Item.useStyle = ItemUseStyleID.Stabbing;
+			Item.useStyle = ItemUseStyleID.Thrust;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Cyan;
 			Item.UseSound = SoundID.Item1;
@@ -84,8 +84,8 @@ namespace SOTS.Items.Tools
 								{
 									double specialType = -tiles[w]; //W.YXXX
 									specialType += (int)tiles[w]; //solo out the decimal places: W.YXXX - W = .YXXX
-									tile.active(false);
-									tile.halfBrick(false);
+									tile.HasTile;
+									tile.IsHalfBlock;
 									tile.slope(0);
 									int specialDigit1 = (int)(specialType * 10 + 0.5); //Y in Y.XXX	stores liquid style
 									int specialDigits2 = (int)(specialType * 10000 + 0.5) - (specialDigit1 * 1000);  //X in XXX
@@ -107,10 +107,10 @@ namespace SOTS.Items.Tools
 								TileObjectData tileData = TileObjectData.GetTileData((int)tiles[w], specialDigits3);
 								if(tileData == null || (tileData.Width == 1 && tileData.Height == 1))
 								{
-									tile.active(false);
+									tile.HasTile;
 									WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3);
 									tile.slope(0);
-									tile.halfBrick(false);
+									tile.IsHalfBlock;
 
 									//tile.TileType = (ushort)(tiles[w]);
 									if (specialDigit2 > 0)
@@ -119,7 +119,7 @@ namespace SOTS.Items.Tools
 									}
 									else if (specialDigit1 > 0)
 									{
-										tile.halfBrick(true);
+										tile.IsHalfBlock;
 									}
 								}
 								else if(confirmPlatforms == 1)
@@ -127,28 +127,28 @@ namespace SOTS.Items.Tools
 									if ((int)tiles[w] == TileID.ClosedDoor)
 									{
 										if (Main.tile[i, j - 1].TileType != (int)(tiles[w]))
-											Main.tile[i, j - 1].active(false);
-										if (Main.tile[i, j - 2].type != (int)(tiles[w]))
-											Main.tile[i, j - 2].active(false);
+											Main.tile[i, j - 1].HasTile;
+										if (Main.tile[i, j - 2].TileType != (int)(tiles[w]))
+											Main.tile[i, j - 2].HasTile;
 										if (tile.TileType != (int)(tiles[w]))
-											tile.active(false);
+											tile.HasTile;
 										//Main.NewText("Special3: " + specialDigits3, 150, 255, 255);
 										WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3 % 36);
 									}
 									else
 									{
 										if(tile.TileType != (int)(tiles[w]))
-											tile.active(false);
+											tile.HasTile;
 										WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3);
 										tile.slope(0);
-										tile.halfBrick(false);
+										tile.IsHalfBlock;
 										if (specialDigit2 > 0)
 										{
 											tile.slope((byte)specialDigit2);
 										}
 										else if (specialDigit1 > 0)
 										{
-											tile.halfBrick(true);
+											tile.IsHalfBlock;
 										}
 									}
 								}
@@ -191,7 +191,7 @@ namespace SOTS.Items.Tools
 						double specialType = tile.TileType + (tile.Slope * 0.01) + (tile.TileType ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
 
 						specialType += style * 0.01 * 0.0001; //this allows tile styles to be stored as Z in WWWW.XYZZZZ;
-						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.type != tile.TileType)
+						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.TileType != tile.TileType)
 						{
 							Main.NewText("Points Reset", 150, 255, 255);
 							point1 = new Vector2(-1, 0);
@@ -216,7 +216,7 @@ namespace SOTS.Items.Tools
 			}
 		}
 		bool complete = false;
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			#region tile finder
 			if(complete)

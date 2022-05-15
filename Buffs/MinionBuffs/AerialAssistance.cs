@@ -6,7 +6,7 @@ namespace SOTS.Buffs.MinionBuffs
 {
     public class AerialAssistance : ModBuff
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Aerial Assistance");
 			Description.SetDefault("Penguins assist you in combat");

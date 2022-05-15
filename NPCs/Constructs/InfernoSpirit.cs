@@ -21,8 +21,8 @@ namespace SOTS.NPCs.Constructs
 		{
 			Main.npcFrameCount[NPC.type] = 1;
 			DisplayName.SetDefault("Inferno Spirit");
-			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -49,16 +49,16 @@ namespace SOTS.NPCs.Constructs
             NPC.knockBackResist = 0f;
             NPC.width = 70;
             NPC.height = 70;
-            npc.value = Item.buyPrice(0, 18, 0, 0);
-            npc.npcSlots = 10f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = false;
-			npc.rarity = 2;
+            NPC.value = Item.buyPrice(0, 18, 0, 0);
+            NPC.npcSlots = 10f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = false;
+			NPC.rarity = 2;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -93,22 +93,22 @@ namespace SOTS.NPCs.Constructs
 					miniSpirits.Add(new MiniSpirit(0, i * 360f / ProbeCount));
 				}
 			}
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.15f / 255f, (255 - npc.alpha) * 0.25f / 255f, (255 - npc.alpha) * 0.65f / 255f);
-			Player player = Main.player[npc.target];
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);
+			Player player = Main.player[NPC.target];
 			if (phase == 3)
 			{
 				NPC.aiStyle =-1;
-				npc.dontTakeDamage = false;
-				int damage = npc.damage / 2;
+				NPC.dontTakeDamage = false;
+				int damage = NPC.damage / 2;
 				if (Main.expertMode)
 				{
 					damage = (int)(damage / Main.expertDamage);
 				}
-				npc.ai[1]++;
-				if ((int)npc.ai[2] % 3 == 0)
+				NPC.ai[1]++;
+				if ((int)NPC.ai[2] % 3 == 0)
 				{
 					verticalCompress = MathHelper.Lerp(verticalCompress, 1f, 0.04f);
-					if (npc.ai[1] < (timeToDash * 4))
+					if (NPC.ai[1] < (timeToDash * 4))
 					{
 						rotation -= Direction();
 						for (int i = 0; i < ProbeCount; i++)
@@ -116,36 +116,36 @@ namespace SOTS.NPCs.Constructs
 							MiniSpirit spirit = miniSpirits[i];
 							spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
 						}
-						if (npc.ai[1] >= 0)
+						if (NPC.ai[1] >= 0)
 						{
-							float multiplier = npc.ai[1] / (timeToDash * 4);
+							float multiplier = NPC.ai[1] / (timeToDash * 4);
 							if (nextDestination != Vector2.Zero)
 							{
-								int rnCounter = (int)npc.ai[1] % timeToDash;
+								int rnCounter = (int)NPC.ai[1] % timeToDash;
 								if (rnCounter == 0)
 								{
-									Vector2 toPlayer = player.Center - npc.Center;
-									nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
+									Vector2 toPlayer = player.Center - NPC.Center;
+									nextDestination = NPC.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
 									if (Main.netMode != NetmodeID.MultiplayerClient)
 									{
-										npc.netUpdate = true;
+										NPC.netUpdate = true;
 									}
 								}
 								else
 								{
-									npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.06f);
+									NPC.Center = Vector2.Lerp(NPC.Center, nextDestination, 0.06f);
 								}
 							}
 							else
 							{
-								nextDestination = npc.Center;
-								npc.velocity *= 0;
+								nextDestination = NPC.Center;
+								NPC.velocity *= 0;
 							}
 						}
 					}
-					else if (npc.ai[1] <= (timeToDash * 4) + 30)
+					else if (NPC.ai[1] <= (timeToDash * 4) + 30)
 					{
-						float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
+						float bonus = (NPC.ai[1] - (timeToDash * 4)) / 30f;
 						rotation -= Direction() * (1.0f + bonus * 2);
 						for (int i = 0; i < ProbeCount; i++)
 						{
@@ -153,45 +153,45 @@ namespace SOTS.NPCs.Constructs
 							spirit.offset = MathHelper.Lerp(96, 60, bonus);
 						}
 					}
-					else if (npc.ai[1] > (timeToDash * 4) + 30)
+					else if (NPC.ai[1] > (timeToDash * 4) + 30)
 					{
 						rotation -= Direction() * 3.0f;
 						for (int i = 0; i < ProbeCount; i++)
 						{
 							MiniSpirit spirit = miniSpirits[i];
 							spirit.offset = MathHelper.Lerp(spirit.offset, 60, 0.06f);
-							if ((int)npc.ai[3] % ProbeCount == i)
+							if ((int)NPC.ai[3] % ProbeCount == i)
 							{
-								float mult = npc.ai[1] % timeToFire / (timeToFire - 1);
+								float mult = NPC.ai[1] % timeToFire / (timeToFire - 1);
 								if (mult == 0)
 									mult = 1;
 								spirit.offset = 60 + 32 * mult;
 							}
 						}
-						if (npc.ai[1] % timeToFire == 0)
+						if (NPC.ai[1] % timeToFire == 0)
 						{
 							if(Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								int i = (int)npc.ai[3] % ProbeCount;
+								int i = (int)NPC.ai[3] % ProbeCount;
 								MiniSpirit spirit = miniSpirits[i];
 								Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(spirit.rotation));
-								Projectile.NewProjectile(spirit.getCenter(npc.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0);
+								Projectile.NewProjectile(spirit.getCenter(NPC.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0);
 							}
-							npc.ai[3]++;
+							NPC.ai[3]++;
 						}
 					}
-					if (npc.ai[1] > (timeToDash * 4) + 240)
+					if (NPC.ai[1] > (timeToDash * 4) + 240)
 					{
-						npc.ai[1] = -110;
-						npc.ai[2]++;
-						npc.ai[3] = 0;
-						npc.ai[0] = 0;
-						npc.netUpdate = true;
+						NPC.ai[1] = -110;
+						NPC.ai[2]++;
+						NPC.ai[3] = 0;
+						NPC.ai[0] = 0;
+						NPC.netUpdate = true;
 					}
 				}
-				if ((int)npc.ai[2] % 3 == 1)
+				if ((int)NPC.ai[2] % 3 == 1)
 				{
-					float mult = npc.ai[1] / 60f;
+					float mult = NPC.ai[1] / 60f;
 					mult = MathHelper.Clamp(mult, 0, 1);
 					verticalCompress = MathHelper.Lerp(verticalCompress, 0.4f, 0.04f);
 					rotation -= Direction() * (1f + mult * 2);
@@ -200,48 +200,48 @@ namespace SOTS.NPCs.Constructs
 						MiniSpirit spirit = miniSpirits[i];
 						spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
 					}
-					if(npc.ai[1] < 0)
+					if(NPC.ai[1] < 0)
                     {
-						npc.ai[0] = player.Center.X;
-						npc.ai[3] = player.Center.Y;
+						NPC.ai[0] = player.Center.X;
+						NPC.ai[3] = player.Center.Y;
                     }
-					Vector2 center = new Vector2(npc.ai[0], npc.ai[3]);
+					Vector2 center = new Vector2(NPC.ai[0], NPC.ai[3]);
 					Vector2 dashPosition = new Vector2(800 * Direction(), -400) + center;
 					Vector2 dashPositionOther = new Vector2(800 * -Direction(), -400) + center;
-					if (npc.ai[1] < 0)
+					if (NPC.ai[1] < 0)
 					{
-						npc.Center = Vector2.Lerp(npc.Center, dashPosition, 0.054f); 
+						NPC.Center = Vector2.Lerp(NPC.Center, dashPosition, 0.054f); 
 						canDamage = false;
 					}
 					else
 						canDamage = true;
-					if (npc.ai[1] >= 0)
+					if (NPC.ai[1] >= 0)
 					{
-						mult = npc.ai[1] / 200f;
-						npc.Center = Vector2.Lerp(dashPosition, dashPositionOther, mult);
-						if ((int)npc.ai[1] % 4 == 0)
-							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 34, 1f, 0.5f);
-						if ((int)npc.ai[1] % 2 == 0)
+						mult = NPC.ai[1] / 200f;
+						NPC.Center = Vector2.Lerp(dashPosition, dashPositionOther, mult);
+						if ((int)NPC.ai[1] % 4 == 0)
+							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 34, 1f, 0.5f);
+						if ((int)NPC.ai[1] % 2 == 0)
 						{
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(npc.Center, new Vector2(Direction() * -0.5f, 4.5f), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3.5f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
+								Projectile.NewProjectile(NPC.Center, new Vector2(Direction() * -0.5f, 4.5f), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3.5f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
 							}
 						}
-						if (npc.ai[1] > 200f)
+						if (NPC.ai[1] > 200f)
 						{
-							npc.ai[1] = -60;
-							npc.ai[2]++;
-							npc.ai[3] = 0;
-							npc.ai[0] = 0;
-							npc.netUpdate = true;
+							NPC.ai[1] = -60;
+							NPC.ai[2]++;
+							NPC.ai[3] = 0;
+							NPC.ai[0] = 0;
+							NPC.netUpdate = true;
 						}
 					}
 				}
-				if ((int)npc.ai[2] % 3 == 2)
+				if ((int)NPC.ai[2] % 3 == 2)
 				{
 					verticalCompress = MathHelper.Lerp(verticalCompress, 1f, 0.04f);
-					if (npc.ai[1] < (timeToDash * 4))
+					if (NPC.ai[1] < (timeToDash * 4))
 					{
 						rotation -= Direction();
 						for (int i = 0; i < ProbeCount; i++)
@@ -249,36 +249,36 @@ namespace SOTS.NPCs.Constructs
 							MiniSpirit spirit = miniSpirits[i];
 							spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
 						}
-						if (npc.ai[1] >= 0)
+						if (NPC.ai[1] >= 0)
 						{
-							float multiplier = npc.ai[1] / (timeToDash * 4);
+							float multiplier = NPC.ai[1] / (timeToDash * 4);
 							if (nextDestination != Vector2.Zero)
 							{
-								int rnCounter = (int)npc.ai[1] % timeToDash;
+								int rnCounter = (int)NPC.ai[1] % timeToDash;
 								if (rnCounter == 0)
 								{
-									Vector2 toPlayer = player.Center - npc.Center;
-									nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
+									Vector2 toPlayer = player.Center - NPC.Center;
+									nextDestination = NPC.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
 									if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-										npc.netUpdate = true;
+										NPC.netUpdate = true;
 									}
 								}
 								else
 								{
-									npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.06f);
+									NPC.Center = Vector2.Lerp(NPC.Center, nextDestination, 0.06f);
 								}
 							}
 							else
 							{
-								nextDestination = npc.Center;
-								npc.velocity *= 0;
+								nextDestination = NPC.Center;
+								NPC.velocity *= 0;
 							}
 						}
 					}
-					else if (npc.ai[1] <= (timeToDash * 4) + 30)
+					else if (NPC.ai[1] <= (timeToDash * 4) + 30)
 					{
-						float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
+						float bonus = (NPC.ai[1] - (timeToDash * 4)) / 30f;
 						rotation -= Direction() * (1.0f - 0.6f * bonus);
 						for (int i = 0; i < ProbeCount; i++)
 						{
@@ -286,7 +286,7 @@ namespace SOTS.NPCs.Constructs
 							spirit.offset = MathHelper.Lerp(96, 60, bonus);
 						}
 					}
-					else if (npc.ai[1] > (timeToDash * 4) + 30)
+					else if (NPC.ai[1] > (timeToDash * 4) + 30)
 					{
 						rotation -= Direction() * 0.4f;
 						for (int i = 0; i < ProbeCount; i++)
@@ -294,42 +294,42 @@ namespace SOTS.NPCs.Constructs
 							MiniSpirit spirit = miniSpirits[i];
 							spirit.offset = MathHelper.Lerp(spirit.offset, 480, 0.05f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
-								if ((int)npc.ai[1] % 30 == 0 && npc.ai[1] > (timeToDash * 4) + 90)
+								if ((int)NPC.ai[1] % 30 == 0 && NPC.ai[1] > (timeToDash * 4) + 90)
 								{
-									int fortyfive = (int)npc.ai[1] % 60 == 30 ? 45 : 0;
+									int fortyfive = (int)NPC.ai[1] % 60 == 30 ? 45 : 0;
 									for (int j = 0; j < 4; j++)
 									{
 										Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * j + fortyfive));
-										Projectile.NewProjectile(spirit.getCenter(npc.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, 0, j == 0 ? -2 : -1);
+										Projectile.NewProjectile(spirit.getCenter(NPC.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, 0, j == 0 ? -2 : -1);
 									}
 								}
 						}
-						npc.ai[3]++;
+						NPC.ai[3]++;
 					}
-					if (npc.ai[1] > (timeToDash * 4) + 210)
+					if (NPC.ai[1] > (timeToDash * 4) + 210)
 					{
-						npc.ai[1] = -60;
-						npc.ai[2]++;
-						npc.ai[3] = 0;
-						npc.ai[0] = 0;
-						npc.netUpdate = true;
+						NPC.ai[1] = -60;
+						NPC.ai[2]++;
+						NPC.ai[3] = 0;
+						NPC.ai[0] = 0;
+						NPC.netUpdate = true;
 					}
 				}
 				counter2++;
 				Vector2 idle = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(counter2 * 2));
-				npc.velocity *= 0.95f;
-				npc.velocity += idle * 0.1f;
+				NPC.velocity *= 0.95f;
+				NPC.velocity += idle * 0.1f;
 			}
 			if (phase == 2)
 			{
 				if (Main.netMode != NetmodeID.MultiplayerClient)
-					npc.netUpdate = true;
-				npc.dontTakeDamage = false;
+					NPC.netUpdate = true;
+				NPC.dontTakeDamage = false;
 				NPC.aiStyle =-1;
-				npc.ai[0] = 0;
-				npc.ai[1] = -120;
-				npc.ai[2] = 0;
-				npc.ai[3] = 0;
+				NPC.ai[0] = 0;
+				NPC.ai[1] = -120;
+				NPC.ai[2] = 0;
+				NPC.ai[3] = 0;
 				phase = 3;
 			}
 			else if(phase == 1)
@@ -354,7 +354,7 @@ namespace SOTS.NPCs.Constructs
 					spirit.rotation = i * 360f / ProbeCount + rotation;
 				}
 			}
-			if (Main.player[npc.target].dead)
+			if (Main.player[NPC.target].dead)
 			{
 				counter++;
 			}
@@ -366,14 +366,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				phase = 1;
 				NPC.aiStyle =-1;
-				npc.velocity.Y -= 0.014f;
-				npc.dontTakeDamage = true;
+				NPC.velocity.Y -= 0.014f;
+				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(255, 130, 15);
 			dust.noGravity = true;
@@ -382,36 +382,36 @@ namespace SOTS.NPCs.Constructs
 		}
 		public int Direction()
 		{
-			return (int)npc.ai[2] % 2 * 2 - 1;
+			return (int)NPC.ai[2] % 2 * 2 - 1;
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
-			for (int k = 0; k < npc.oldPos.Length; k++) {
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
-				Color color = new Color(150, 80, 70, 0) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
+			for (int k = 0; k < NPC.oldPos.Length; k++) {
+				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = new Color(150, 80, 70, 0) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			if(!runOnce)
 			{
 				for (int k = 0; k < ProbeCount; k++)
 				{
 					MiniSpirit spirit = miniSpirits[k];
-					spirit.Draw(spirit.getCenter(npc.Center, verticalCompress));
+					spirit.Draw(spirit.getCenter(NPC.Center, verticalCompress));
 				}
 			}
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				if(Main.netMode	!= NetmodeID.Server)
 				{
 					for (int i = 0; i < 50; i++)
 					{
-						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
@@ -422,7 +422,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						for (int k = 0; k < 10; k++)
 						{
-							Dust dust = Dust.NewDustDirect(miniSpirits[i].getCenter(npc.Center, verticalCompress) - new Vector2(4, 4), 0, 0, DustID.RainbowMk2);
+							Dust dust = Dust.NewDustDirect(miniSpirits[i].getCenter(NPC.Center, verticalCompress) - new Vector2(4, 4), 0, 0, DustID.RainbowMk2);
 							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
 							dust.noGravity = true;
 							dust.fadeIn = 0.1f;
@@ -435,24 +435,24 @@ namespace SOTS.NPCs.Constructs
 				{
 					phase = 2;
 					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
-				Main.spriteBatch.Draw(texture, npc.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, NPC.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingNether>(), 1);	
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingNether>(), 1);	
 		}	
 	}
 	public class MiniSpirit

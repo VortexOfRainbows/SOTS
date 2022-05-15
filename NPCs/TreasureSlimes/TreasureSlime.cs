@@ -75,7 +75,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				for (int i = 0; i < LootAmt; i++)
 				{
 					int rand = Main.rand.Next(items.Count);
-					if(possibleItems.Count() == 0 && (npc.type == NPCType<CorruptionTreasureSlime>() || npc.type == NPCType<CrimsonTreasureSlime>()))
+					if(possibleItems.Count() == 0 && (NPC.type == NPCType<CorruptionTreasureSlime>() || NPC.type == NPCType<CrimsonTreasureSlime>()))
                     {
 						rand = 0;
                     }
@@ -90,7 +90,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				}
 				timeToUpdate = true;
 				runOnce = false;
-				npc.netUpdate = true;
+				NPC.netUpdate = true;
 			}
 			else
             {
@@ -119,22 +119,22 @@ namespace SOTS.NPCs.TreasureSlimes
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Slime");
-			NPCID.Sets.TrailCacheLength[npc.type] = 6;
-			NPCID.Sets.TrailingMode[npc.type] = 2;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
+			NPCID.Sets.TrailingMode[NPC.type] = 2;
 		}
         public override Color? GetAlpha(Color drawColor)
         {
-			return drawColor * ((255f - npc.alpha) / 255f);
+			return drawColor * ((255f - NPC.alpha) / 255f);
         }
         public override void SetDefaults()
 		{
-			Color temp = npc.color;
-			npc.CloneDefaults(NPCID.GreenSlime);
-			aiType = NPCID.GreenSlime;
-			animationType = NPCID.BlueSlime;
-			npc.alpha = 50;
-			npc.color = temp;
-			npc.rarity = 1;
+			Color temp = NPC.color;
+			NPC.CloneDefaults(NPCID.GreenSlime);
+			AIType = NPCID.GreenSlime;
+			AnimationType = NPCID.BlueSlime;
+			NPC.alpha = 50;
+			NPC.color = temp;
+			NPC.rarity = 1;
 			Main.npcFrameCount[NPC.type] = 2;
 		}
 		public float runAwayCounter = 0;
@@ -148,18 +148,18 @@ namespace SOTS.NPCs.TreasureSlimes
 			}
 			if (possibleItems.Count != 0)
 				doTreasureTimer();
-			if (npc.life < npc.lifeMax / 2)
+			if (NPC.life < NPC.lifeMax / 2)
 			{
-				npc.TargetClosest(true);
-				Player player = Main.player[npc.target];
-				if (player.Center.X > npc.Center.X)
+				NPC.TargetClosest(true);
+				Player player = Main.player[NPC.target];
+				if (player.Center.X > NPC.Center.X)
 				{
-					npc.direction = -1;
+					NPC.direction = -1;
 				}
 				else
-					npc.direction = 1;
-				npc.ai[2] = -1;
-				npc.ai[0] += 2.5f;
+					NPC.direction = 1;
+				NPC.ai[2] = -1;
+				NPC.ai[0] += 2.5f;
 				/*if(npc.velocity.Y < 0)
 				{
 					npc.position.Y += npc.velocity.Y * 0.05f;
@@ -172,10 +172,10 @@ namespace SOTS.NPCs.TreasureSlimes
 					float percent = (runAwayCounter - runAwayTime) / 100f;
 					if (percent > 1)
 						percent = 1;
-					npc.velocity.Y -= 0.5f;
-					npc.velocity.X *= 1f - percent;
-					npc.velocity.Y *= 1f - percent;
-					npc.noGravity = true;
+					NPC.velocity.Y -= 0.5f;
+					NPC.velocity.X *= 1f - percent;
+					NPC.velocity.Y *= 1f - percent;
+					NPC.noGravity = true;
 					returnV = false;
 				}
 				if (runAwayCounter >= (runAwayTime + 100))
@@ -183,37 +183,37 @@ namespace SOTS.NPCs.TreasureSlimes
 					if (Main.netMode != NetmodeID.MultiplayerClient && (int)runAwayDelay == 0)
                     {
 						int type = 0;
-						if (npc.type == NPCType<BasicTreasureSlime>())
+						if (NPC.type == NPCType<BasicTreasureSlime>())
 							type = 0;   
-						if (npc.type == NPCType<GoldenTreasureSlime>())
+						if (NPC.type == NPCType<GoldenTreasureSlime>())
 							type = 1;   
-						if (npc.type == NPCType<IceTreasureSlime>())
+						if (NPC.type == NPCType<IceTreasureSlime>())
 							type = 2;   
-						if (npc.type == NPCType<PyramidTreasureSlime>())
+						if (NPC.type == NPCType<PyramidTreasureSlime>())
 							type = 3;   
-						if (npc.type == NPCType<ShadowTreasureSlime>())
+						if (NPC.type == NPCType<ShadowTreasureSlime>())
 							type = 4;
-						if (npc.type == NPCType<CorruptionTreasureSlime>())
+						if (NPC.type == NPCType<CorruptionTreasureSlime>())
 							type = 5;
-						if (npc.type == NPCType<CrimsonTreasureSlime>())
+						if (NPC.type == NPCType<CrimsonTreasureSlime>())
 							type = 6;
-						if (npc.type == NPCType<JungleTreasureSlime>())
+						if (NPC.type == NPCType<JungleTreasureSlime>())
 							type = 7;
-						if (npc.type == NPCType<HallowTreasureSlime>())
+						if (NPC.type == NPCType<HallowTreasureSlime>())
 							type = 8;
-						if (npc.type == NPCType<DungeonTreasureSlime>())
+						if (NPC.type == NPCType<DungeonTreasureSlime>())
 							type = 9;
-						Projectile.NewProjectile(npc.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
+						Projectile.NewProjectile(NPC.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
 					}
 					runAwayDelay++;
 					if(runAwayDelay >= 70)
                     {
-						npc.active = false;
+						NPC.active = false;
 						return false;
                     }
                 }
 				else
-					runAwayCounter += 1 + 0.5f * (1 - (float)npc.life / (npc.lifeMax / 2));
+					runAwayCounter += 1 + 0.5f * (1 - (float)NPC.life / (NPC.lifeMax / 2));
 				return returnV;
 			}
 			return true;
@@ -228,7 +228,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			{
 				if(Main.netMode == NetmodeID.Server)
                 {
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				treasure++;
 			}
@@ -240,13 +240,13 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if(Main.rand.NextBool(2))
-				SoundEngine.PlaySound(SoundID.NPCHit, (int)npc.Center.X, (int)npc.Center.Y, 4, 0.6f, 0.2f);
-			if (npc.life > 0)
+				SoundEngine.PlaySound(SoundID.NPCHit, (int)NPC.Center.X, (int)NPC.Center.Y, 4, 0.6f, 0.2f);
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while (num < damage / npc.lifeMax * 100.0)
+				while (num < damage / NPC.lifeMax * 100.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, gelColor, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)hitDirection, -1f, NPC.alpha, gelColor, 1f);
 					num++;
 				}
 			}
@@ -254,7 +254,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			{
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)(2 * hitDirection), -2f, npc.alpha, gelColor, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)(2 * hitDirection), -2f, NPC.alpha, gelColor, 1f);
 				}
 			}
 		}
@@ -277,26 +277,26 @@ namespace SOTS.NPCs.TreasureSlimes
 				secondAlpha = 1 - ((treasureCounter % treasureSpeed) + 1) / 8f;
 				firstAlpha -= secondAlpha;
 			}
-			Vector2 drawPos = npc.oldPos[3] + new Vector2(0, -20 + (float)(Math.Cos((float)treasureCounter / treasureSpeed) * 2) + npc.gfxOffY) + (npc.Size / 2) - Main.screenPosition;
+			Vector2 drawPos = NPC.oldPos[3] + new Vector2(0, -20 + (float)(Math.Cos((float)treasureCounter / treasureSpeed) * 2) + NPC.gfxOffY) + (NPC.Size / 2) - Main.screenPosition;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.Type].Value;
-			float scale = 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width;
+			float scale = 1.2f * NPC.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * NPC.width;
 			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
 			//Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/TreasureSlimeBloom");
 			Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
 			//spriteBatch.Draw(textureGlow, new Vector2(npc.Center.X, npc.position.Y + npc.gfxOffY + 12) - Main.screenPosition, null, new Color(glowColor.R, glowColor.G, glowColor.B, 0), 0, new Vector2(textureGlow.Width/2, textureGlow.Height), 2f / (float)Math.Sqrt(textureGlow.Width * textureGlow.Width + textureGlow.Height * textureGlow.Height) * npc.width, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture, drawPos, frame, drawColor * firstAlpha, MathHelper.ToRadians(npc.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, frame, drawColor * firstAlpha, MathHelper.ToRadians(NPC.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
 			texture = Terraria.GameContent.TextureAssets.Item[item2.Type].Value;
 			frame = new Rectangle(0, 0, texture.Width, texture.Height);
-			scale = 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width;
+			scale = 1.2f * NPC.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * NPC.width;
 			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
-			spriteBatch.Draw(texture, drawPos, frame, drawColor * secondAlpha, MathHelper.ToRadians(npc.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, frame, drawColor * secondAlpha, MathHelper.ToRadians(NPC.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
 			DrawSlime(spriteBatch, drawColor);
 			return false;
 		}
 		public void DrawSlime(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), npc.frame, npc.GetAlpha(drawColor), npc.rotation, new Vector2(texture.Width / 2, npc.height / 2), npc.scale, SpriteEffects.None, 0f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(texture.Width / 2, NPC.height / 2), NPC.scale, SpriteEffects.None, 0f);
 		}
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
@@ -314,9 +314,9 @@ namespace SOTS.NPCs.TreasureSlimes
 			if (treasureCounter % treasureSpeed <= 7)
 				itemID = otherId;
 			TreasureSlimeItem item = possibleItems[(int)itemID];
-			Item.NewItem(npc.Hitbox, Item.Type, Main.rand.Next(Item.Amount, Item.AmountCap + 1));
-			Item.NewItem(npc.Hitbox, ItemType<Peanut>(), 10 + Main.rand.Next(11));
-			Item.NewItem(npc.Hitbox, ItemID.Gel, 5 + Main.rand.Next(6));
+			Item.NewItem(NPC.Hitbox, Item.Type, Main.rand.Next(Item.Amount, Item.AmountCap + 1));
+			Item.NewItem(NPC.Hitbox, ItemType<Peanut>(), 10 + Main.rand.Next(11));
+			Item.NewItem(NPC.Hitbox, ItemID.Gel, 5 + Main.rand.Next(6));
 			AdditionalLoot();
 		}
 		public virtual void AdditionalLoot()

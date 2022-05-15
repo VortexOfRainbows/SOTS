@@ -56,12 +56,12 @@ namespace SOTS
 		{
 			if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == player.whoAmI)
 			{
-				GasBlast ring = proj.modProjectile as GasBlast;
+				GasBlast ring = proj.ModProjectile as GasBlast;
 				return ring.foamParticleList1;
 			}
 			if (proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>() && proj.active && proj.owner == player.whoAmI)
 			{
-				Projectiles.Minions.CursedBlade ring = proj.modProjectile as Projectiles.Minions.CursedBlade;
+				Projectiles.Minions.CursedBlade ring = proj.ModProjectile as Projectiles.Minions.CursedBlade;
 				return ring.foamParticleList1;
 			}
 			return null;

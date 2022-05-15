@@ -45,11 +45,7 @@ namespace SOTS.Items.Tools
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FrigidBar>(), 16);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<FrigidBar>(), 16).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

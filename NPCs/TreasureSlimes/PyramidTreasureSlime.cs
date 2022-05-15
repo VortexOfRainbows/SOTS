@@ -18,8 +18,8 @@ namespace SOTS.NPCs.TreasureSlimes
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pyramid Treasure Slime");
-			NPCID.Sets.TrailCacheLength[npc.type] = 6;
-			NPCID.Sets.TrailingMode[npc.type] = 2;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
+			NPCID.Sets.TrailingMode[NPC.type] = 2;
 		}
 		public override void SetDefaults()
 		{
@@ -28,9 +28,9 @@ namespace SOTS.NPCs.TreasureSlimes
 			NPC.damage = 35;
 			NPC.defense = 18;
 			NPC.knockBackResist = 0.1f;
-			npc.value = Item.buyPrice(0, 4, 0, 0);
-			npc.Size = new Vector2(32, 38);
-			npc.npcSlots = 1f;
+			NPC.value = Item.buyPrice(0, 4, 0, 0);
+			NPC.Size = new Vector2(32, 38);
+			NPC.npcSlots = 1f;
 			Banner = NPC.type;
 			BannerItem = ItemType<PyramidTreasureSlimeBanner>();
 			LootAmt = 4;
@@ -71,11 +71,11 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
         public override void AdditionalLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<JuryRiggedDrill>(), 4 + Main.rand.Next(5));
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<JuryRiggedDrill>(), 4 + Main.rand.Next(5));
 			if (Main.rand.NextBool(2))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<Snakeskin>(), 5 + Main.rand.Next(6));
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<Snakeskin>(), 5 + Main.rand.Next(6));
 			else
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<SoulResidue>(), 5 + Main.rand.Next(6));
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<SoulResidue>(), 5 + Main.rand.Next(6));
 		}
     }
 }

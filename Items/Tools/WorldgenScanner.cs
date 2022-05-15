@@ -30,7 +30,7 @@ namespace SOTS.Items.Tools
 			Item.rare = ItemRarityID.Cyan;
 			Item.UseSound = SoundID.Item1;
 		}
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			if(Main.netMode != NetmodeID.MultiplayerClient)
 			{
@@ -142,11 +142,7 @@ namespace SOTS.Items.Tools
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddRecipeGroup("IronBar", 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddRecipeGroup("IronBar", 5).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

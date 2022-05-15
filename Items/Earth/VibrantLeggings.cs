@@ -23,7 +23,7 @@ namespace SOTS.Items.Earth
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == mod.ItemType("VibrantChestplate") && head.type == mod.ItemType("VibrantHelmet");
+            return body.type == Mod.Find<ModItem>("VibrantChestplate") .Type&& head.type == Mod.Find<ModItem>("VibrantHelmet").Type;
         }
 		public override void UpdateEquip(Player player)
 		{
@@ -32,11 +32,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantBar>(), 10).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

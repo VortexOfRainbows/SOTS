@@ -29,19 +29,19 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				foreach (TooltipLine line in tooltips) //goes through each tooltip line
 				{
-					if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
+						line.Text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
 						return;
 					}
 				}
 			}
 			foreach (TooltipLine line in tooltips) //goes through each tooltip line
 			{
-				if (line.mod == "Terraria" && line.Name == "Tooltip0")
+				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string key = "Unbound";
-					line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
+					line.Text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
 				}
 			}
 			base.ModifyTooltips(tooltips);
@@ -90,27 +90,12 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20);
-			recipe.AddIngredient(ItemID.SoulofFlight, 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20);
-			recipe.AddIngredient(ItemID.SoulofFlight, 20);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20).AddIngredient(ItemID.SoulofFlight, 20).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20).AddIngredient(ItemID.SoulofFlight, 20).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(mod, "TestWingsPlayer");
+			TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(Mod, "TestWingsPlayer");
 			testWingsPlayer.canCreativeFlight = true;
 			player.wingTimeMax = 150;
 			player.noFallDmg = true;
@@ -119,7 +104,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override bool WingUpdate(Player player, bool inUse)
 		{
-			TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(mod, "TestWingsPlayer");
+			TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(Mod, "TestWingsPlayer");
 			if(testWingsPlayer.creativeFlight)
 			{
 				player.wingFrame = 2;
@@ -157,9 +142,9 @@ namespace SOTS.Items.Otherworld.EpicWings
 	{
 		public void SendPacket()
 		{
-			var packet = mod.GetPacket();
+			var packet = Mod.GetPacket();
 			packet.Write((byte)SOTSMessageType.SyncCreativeFlight);
-			packet.Write((byte)player.whoAmI);
+			packet.Write((byte)Player.whoAmI);
 			packet.Write(creativeFlight);
 			packet.Send();
 			netUpdate = false;
@@ -183,41 +168,41 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				if (epicWingType == 0)
 				{
-					int index = Dust.NewDust(player.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust>(), 0, 0, 0, Color.White);
+					int index = Dust.NewDust(Player.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust>(), 0, 0, 0, Color.White);
 					Dust dust = Main.dust[index];
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.velocity *= 0.8f;
 					dust.scale += 1.5f;
 					dust.velocity += new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i));
-					dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
+					dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
 				}
 				else
 				{
-					int index = Dust.NewDust(player.Center + new Vector2(-5, -5), 0, 0, ModContent.DustType<CopyDust>());
+					int index = Dust.NewDust(Player.Center + new Vector2(-5, -5), 0, 0, ModContent.DustType<CopyDust>());
 					Dust dust = Main.dust[index];
 					dust.noGravity = true;
 					dust.fadeIn = 0.5f;
 					dust.velocity *= 0.8f;
 					dust.scale = 1.5f;
 					dust.velocity += new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i));
-					dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
+					dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
 				}
 			}
-			SoundEngine.PlaySound(12, player.Center);
+			SoundEngine.PlaySound(12, Player.Center);
 		}
 		public void flightStart()
 		{
-			if (SOTSPlayer.ModPlayer(player).CreativeFlightButtonPressed)
+			if (SOTSPlayer.ModPlayer(Player).CreativeFlightButtonPressed)
 			{
 				if (!creativeFlight)
 				{
-					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
 					voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
-					VoidPlayer.VoidEffect(player, (int)(-5 * voidPlayer.voidCost), false, false);
+					VoidPlayer.VoidEffect(Player, (int)(-5 * voidPlayer.voidCost), false, false);
 				}
 				creativeFlight = !creativeFlight; 
-				if(Main.myPlayer == player.whoAmI && Main.netMode != NetmodeID.SinglePlayer)
+				if(Main.myPlayer == Player.whoAmI && Main.netMode != NetmodeID.SinglePlayer)
 					SendPacket();
 			}
 		}
@@ -226,23 +211,23 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public override void PostUpdate()
 		{
 			if (creativeFlight)
-				if (player.bodyFrame.Y == player.bodyFrame.Height * 5 && !TilesBelow())
-					player.bodyFrame.Y = player.bodyFrame.Height * 6;
+				if (Player.bodyFrame.Y == Player.bodyFrame.Height * 5 && !TilesBelow())
+					Player.bodyFrame.Y = Player.bodyFrame.Height * 6;
 		}
 		public bool TilesBelow()
 		{
-			int i = (int)player.Center.X / 16;
-			int i2 = (int)(player.Center.X + 10) / 16;
-			int i3 = (int)(player.Center.X - 10) / 16;
-			int j = (int)(player.position.Y + player.height + 1) / 16;
-			int j2 = (int)(player.position.Y + player.height + 15) / 16;
+			int i = (int)Player.Center.X / 16;
+			int i2 = (int)(Player.Center.X + 10) / 16;
+			int i3 = (int)(Player.Center.X - 10) / 16;
+			int j = (int)(Player.position.Y + Player.height + 1) / 16;
+			int j2 = (int)(Player.position.Y + Player.height + 15) / 16;
 			Tile tile = Framing.GetTileSafely(i, j);
 			Tile tile2 = Framing.GetTileSafely(i, j2);
 			Tile tile3 = Framing.GetTileSafely(i2, j);
 			Tile tile4 = Framing.GetTileSafely(i2, j2);
 			Tile tile5 = Framing.GetTileSafely(i3, j);
 			Tile tile6 = Framing.GetTileSafely(i3, j2);
-			return (tile2 == tile && tile.active() && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileTable[tile.TileType])) || (tile3 == tile4 && tile4.active() && !tile4.IsActuated && (Main.tileSolid[tile4.type] || Main.tileTable[tile4.type])) || (tile5 == tile6 && tile6.active() && !tile6.IsActuated && (Main.tileSolid[tile6.type] || Main.tileTable[tile6.type]));
+			return (tile2 == tile && tile.HasTile && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileTable[tile.TileType])) || (tile3 == tile4 && tile4.HasTile && !tile4.IsActuated && (Main.tileSolid[tile4.TileType] || Main.tileTable[tile4.TileType])) || (tile5 == tile6 && tile6.HasTile && !tile6.IsActuated && (Main.tileSolid[tile6.TileType] || Main.tileTable[tile6.TileType]));
 		}
 		int dustIter = 0;
 		int[] dustID = new int[180];
@@ -253,20 +238,20 @@ namespace SOTS.Items.Otherworld.EpicWings
 			for (int i = 0; i < 3; i++)
 			{
 				dustIter++;
-				Vector2 center = new Vector2(player.Center.X - 12 * player.direction, player.position.Y - 4);
+				Vector2 center = new Vector2(Player.Center.X - 12 * Player.direction, Player.position.Y - 4);
 				Vector2 circularLocation = new Vector2(10, 0).RotatedBy(MathHelper.ToRadians(randCounter * 6 + i * 120));
-				Vector2 circularLocation2 = new Vector2(circularLocation.X / 2, circularLocation.Y).RotatedBy(MathHelper.ToRadians(45 * player.direction));
+				Vector2 circularLocation2 = new Vector2(circularLocation.X / 2, circularLocation.Y).RotatedBy(MathHelper.ToRadians(45 * Player.direction));
 				Vector2 loc = center + circularLocation2;
 				int index = Dust.NewDust(loc + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust2>(), 0, 0, 0, new Color(255, 255, 255));
 				Dust dust = Main.dust[index];
 				dust.noGravity = true;
-				dust.velocity = player.velocity;
+				dust.velocity = Player.velocity;
 				dust.scale = 0.65f;
-				dustPos[dustIter % 180] = dust.position - player.Center;
+				dustPos[dustIter % 180] = dust.position - Player.Center;
 				dustID[dustIter % 180] = index;
-				dustOwnerID[dustIter % 180] = player.whoAmI;
-				dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
-				dust.alpha = (int)(255 - (255 * player.stealth));
+				dustOwnerID[dustIter % 180] = Player.whoAmI;
+				dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
+				dust.alpha = (int)(255 - (255 * Player.stealth));
 			}
 			for (int i = 0; i < (dustIter > 180 ? 180 : dustIter); i++)
 			{
@@ -303,85 +288,85 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public void flight()
 		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
 			voidPlayer.flatVoidRegen -= voidDrain;
 			HaloDust();
-			player.gravity = 0f;
-			player.noFallDmg = true;
-			player.maxFallSpeed *= 4f;
-			player.wingTime = -1;
+			Player.gravity = 0f;
+			Player.noFallDmg = true;
+			Player.maxFallSpeed *= 4f;
+			Player.wingTime = -1;
 
-			if (player.controlDown && !(player.controlUp || player.controlJump) && !TilesBelow())
+			if (Player.controlDown && !(Player.controlUp || Player.controlJump) && !TilesBelow())
 			{
 				movingVert = true;
 				float toBeAdded = wingSpeed / 3;
-				if (player.velocity.Y + toBeAdded < wingSpeed * 1.5f)
+				if (Player.velocity.Y + toBeAdded < wingSpeed * 1.5f)
 				{
-					player.velocity.Y += toBeAdded;
+					Player.velocity.Y += toBeAdded;
 				}
-				else if (player.velocity.Y < wingSpeed * 1.5f)
+				else if (Player.velocity.Y < wingSpeed * 1.5f)
 				{
-					player.velocity.Y = wingSpeed * 1.5f;
+					Player.velocity.Y = wingSpeed * 1.5f;
 				}
 			}
-			if ((player.controlUp || player.controlJump) && !player.controlDown)
+			if ((Player.controlUp || Player.controlJump) && !Player.controlDown)
 			{
 				movingVert = true;
 				float toBeAdded = -wingSpeed / 3;
-				if (player.velocity.Y + toBeAdded > -wingSpeed * 1.5f)
+				if (Player.velocity.Y + toBeAdded > -wingSpeed * 1.5f)
 				{
-					player.velocity.Y += toBeAdded;
+					Player.velocity.Y += toBeAdded;
 				}
-				else if (player.velocity.Y > -wingSpeed * 1.5f)
+				else if (Player.velocity.Y > -wingSpeed * 1.5f)
 				{
-					player.velocity.Y = -wingSpeed * 1.5f;
+					Player.velocity.Y = -wingSpeed * 1.5f;
 				}
 			}
-			if (player.controlLeft && player.dashDelay >= 0 && !player.controlRight)
+			if (Player.controlLeft && Player.dashDelay >= 0 && !Player.controlRight)
 			{
 				movingHori = true;
 				float toBeAdded = -wingSpeed / 3;
-				if (player.velocity.X + toBeAdded > -wingSpeed * 1.5f)
+				if (Player.velocity.X + toBeAdded > -wingSpeed * 1.5f)
 				{
-					player.velocity.X += toBeAdded;
+					Player.velocity.X += toBeAdded;
 				}
-				else if (player.velocity.X > -wingSpeed * 1.5f)
+				else if (Player.velocity.X > -wingSpeed * 1.5f)
 				{
-					player.velocity.X = -wingSpeed * 1.5f;
+					Player.velocity.X = -wingSpeed * 1.5f;
 				}
 			}
-			if (player.controlRight && player.dashDelay >= 0 && !player.controlLeft)
+			if (Player.controlRight && Player.dashDelay >= 0 && !Player.controlLeft)
 			{
 				movingHori = true;
 				float toBeAdded = wingSpeed / 3;
-				if (player.velocity.X + toBeAdded < wingSpeed * 1.5f)
+				if (Player.velocity.X + toBeAdded < wingSpeed * 1.5f)
 				{
-					player.velocity.X += toBeAdded;
+					Player.velocity.X += toBeAdded;
 				}
-				else if (player.velocity.X < wingSpeed * 1.5f)
+				else if (Player.velocity.X < wingSpeed * 1.5f)
 				{
-					player.velocity.X = wingSpeed * 1.5f;
+					Player.velocity.X = wingSpeed * 1.5f;
 				}
 			}
 			if (!movingVert)
 			{
-				player.velocity.Y *= 0.8f;
+				Player.velocity.Y *= 0.8f;
 			}
-			if (!movingHori && player.dashDelay >= 0)
+			if (!movingHori && Player.dashDelay >= 0)
 			{
-				player.velocity.X *= 0.8f;
+				Player.velocity.X *= 0.8f;
 			}
 			if (TilesBelow())
 			{
-				if (!player.controlDown && !player.controlUp && !player.controlLeft && !player.controlRight && !player.controlJump && player.velocity.Y > -2)
+				if (!Player.controlDown && !Player.controlUp && !Player.controlLeft && !Player.controlRight && !Player.controlJump && Player.velocity.Y > -2)
 					creativeFlight = false;
-				if (player.controlDown)
-					player.gravity = Player.defaultGravity + 0.2f;
+				if (Player.controlDown)
+					Player.gravity = Player.defaultGravity + 0.2f;
 			}
 			else
 			{
-				if (player.velocity.Y == 0f)
-					player.velocity.Y = -0.04f;
+				if (Player.velocity.Y == 0f)
+					Player.velocity.Y = -0.04f;
 			}
 			movingHori = false;
 			movingVert = false;
@@ -393,7 +378,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		{
 			if (gyro && !TilesBelow())
 			{
-				if (player.controlDown && !creativeFlight)
+				if (Player.controlDown && !creativeFlight)
 				{
 					if (boost < 300)
 					{
@@ -404,9 +389,9 @@ namespace SOTS.Items.Otherworld.EpicWings
 					{
 						boost = 300;
 					}
-					if (player.velocity.Y != 0 && boost > 40)
+					if (Player.velocity.Y != 0 && boost > 40)
 					{
-						Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Electric, 0, -1);
+						Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Electric, 0, -1);
 						dust.velocity *= 0.2f;
 						dust.noGravity = true;
 					}
@@ -415,8 +400,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 				{
 					boost = 0f;
 				}
-				player.gravity += 0.0025f * boost;
-				player.maxFallSpeed += 0.075f * boost;
+				Player.gravity += 0.0025f * boost;
+				Player.maxFallSpeed += 0.075f * boost;
 			}
 			else
 			{
@@ -424,9 +409,9 @@ namespace SOTS.Items.Otherworld.EpicWings
 			}
 			gyro = false;
 			randCounter++;
-			if (player.gravDir != 1)
+			if (Player.gravDir != 1)
 				canCreativeFlight = false;
-			if (player.mount.Active || !canCreativeFlight)
+			if (Player.mount.Active || !canCreativeFlight)
 			{
 				canCreativeFlight = false;
 				wingSpeed = wingSpeedMax;
@@ -439,8 +424,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				if (runOnce)
 				{
-					if (player.velocity.Y == 0)
-						player.velocity.Y -= 12f;
+					if (Player.velocity.Y == 0)
+						Player.velocity.Y -= 12f;
 					DustExplosion();
 					runOnce = false;
 				}
@@ -665,7 +650,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 							if (drawInfo.shadow == 0f)
 							{
 								Color colorDust = changeColorBasedOnStealth(Color.White, drawPlayer);
-								int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f * scale + new Vector2(-4, -4), 0, 0, mod.DustType("CopyDust" + (j == 0 ? "3" : "")), 0, 0, 0, colorDust);
+								int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f * scale + new Vector2(-4, -4), 0, 0, Mod.Find<ModDust>("CopyDust" + (j == 0 ? "3" : "")).Type, 0, 0, 0, colorDust);
 								Dust dust = Main.dust[index];
 								dust.noGravity = true;
 								dust.fadeIn = 0.1f;
@@ -681,7 +666,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 						{
 							if (drawInfo.shadow == 0f)
 							{
-								int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f + new Vector2(-5, -5), 0, 0, mod.DustType("CubeDust"));
+								int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f + new Vector2(-5, -5), 0, 0, Mod.Find<ModDust>("CubeDust").Type);
 								Dust dust = Main.dust[index];
 								dust.noGravity = true;
 								dust.fadeIn = 0.5f;
@@ -767,7 +752,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 									if (drawInfo.shadow == 0f)
 									{
 										Color colorDust = changeColorBasedOnStealth(Color.White, drawPlayer);
-										int index = Dust.NewDust(currentPos2 + tilt3 * scale + tilt2 * scale + (tilt * Main.rand.Next(16, 34) * scale) + new Vector2(-4, -4), 0, 0, mod.DustType("CopyDust" + (j == 0 ? "3" : "")), 0, 0, 0, colorDust);
+										int index = Dust.NewDust(currentPos2 + tilt3 * scale + tilt2 * scale + (tilt * Main.rand.Next(16, 34) * scale) + new Vector2(-4, -4), 0, 0, Mod.Find<ModDust>("CopyDust" + (j == 0 ? "3" : "")).Type, 0, 0, 0, colorDust);
 										Dust dust = Main.dust[index];
 										dust.noGravity = true;
 										dust.fadeIn = 0.6f;

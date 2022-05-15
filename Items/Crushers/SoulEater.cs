@@ -45,12 +45,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.DemoniteBar, 12);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.DemoniteBar, 12).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 2).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

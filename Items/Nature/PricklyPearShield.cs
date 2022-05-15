@@ -27,18 +27,12 @@ namespace SOTS.Items.Nature
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			int damage = (int)(Item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f)));
+			int damage = (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f)));
 			modPlayer.CactusSpineDamage += damage;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Cactus, 20);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4);
-			recipe.AddIngredient(ItemID.PinkPricklyPear, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Cactus, 20).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4).AddIngredient(ItemID.PinkPricklyPear, 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 }

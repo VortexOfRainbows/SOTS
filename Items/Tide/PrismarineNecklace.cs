@@ -23,7 +23,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.rippleBonusDamage += 4;
 			if(!hideVisual)
 				modPlayer.rippleEffect = true;
@@ -33,12 +33,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<HeartOfTheSea>(), 1);
-			recipe.AddIngredient(ItemID.SharkToothNecklace, 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<HeartOfTheSea>(), 1).AddIngredient(ItemID.SharkToothNecklace, 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

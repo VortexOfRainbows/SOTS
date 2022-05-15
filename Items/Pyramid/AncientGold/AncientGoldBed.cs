@@ -26,21 +26,16 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AncientGoldBedTile");
+			Item.createTile = Mod.Find<ModTile>("AncientGoldBedTile").Type;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 15);
-			recipe.AddIngredient(ItemID.Silk, 5);
-			recipe.AddTile(TileID.Sawmill);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 15).AddIngredient(ItemID.Silk, 5).AddTile(TileID.Sawmill).Register();
 		}
 	}
 	public class AncientGoldBedTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -67,7 +62,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 64, 32, mod.ItemType("AncientGoldBed"));
+			Item.NewItem(i * 16, j * 16, 64, 32, Mod.Find<ModItem>("AncientGoldBed").Type);
 		}
 		public override void RightClick(int i, int j)
 		{
@@ -98,7 +93,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = mod.ItemType("AncientGoldBed");
+			player.cursorItemIconID = Mod.Find<ModItem>("AncientGoldBed").Type;
 		}
 	}
 }

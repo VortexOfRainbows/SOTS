@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class SoulAccess : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul Access");
 			Description.SetDefault("Increases void regeneration speed by 10%");   

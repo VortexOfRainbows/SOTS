@@ -9,7 +9,7 @@ namespace SOTS.Items.Permafrost
 {
 	public class FrigidIceTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -26,13 +26,13 @@ namespace SOTS.Items.Permafrost
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
 			soundType = SoundLoader.customSoundType;
-			soundStyle = mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre1");
+			soundStyle = Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre1");
 		}
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(2) + 1;
-			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
@@ -58,7 +58,7 @@ namespace SOTS.Items.Permafrost
 			texture = "SOTS/Items/Permafrost/FrigidIceTile";
 			return base.Autoload(ref name, ref texture);
         }
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -71,12 +71,12 @@ namespace SOTS.Items.Permafrost
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
 			soundType = SoundLoader.customSoundType;
-			soundStyle = mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
+			soundStyle = Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
 		}
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 	}
@@ -98,7 +98,7 @@ namespace SOTS.Items.Permafrost
 	}
 	public class FrigidBrickTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = false;
@@ -109,7 +109,7 @@ namespace SOTS.Items.Permafrost
 			drop = ModContent.ItemType<FrigidBrick>();
 			AddMapEntry(new Color(96, 111, 215));
 			soundType = SoundLoader.customSoundType;
-			soundStyle = mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
+			soundStyle = Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
 		}
 	}
 	public class FrigidBrick : ModItem
@@ -122,17 +122,12 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FrigidIce>(), 1);
-			recipe.AddIngredient(ItemID.IceBlock, 1);
-			recipe.AddTile(TileID.IceMachine);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
+			CreateRecipe(2).AddIngredient(ModContent.ItemType<FrigidIce>(), 1).AddIngredient(ItemID.IceBlock, 1).AddTile(TileID.IceMachine).Register();
 		}
 	}
 	public class FrigidBrickWallTile : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 122;
@@ -157,17 +152,8 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FrigidBrick>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<FrigidBrick>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<FrigidBrick>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<FrigidBrick>());
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Chaos
 		public override void SetDefaults()
 		{
 			Projectile.aiStyle = 0;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.width = 56;
 			Projectile.height = 30;

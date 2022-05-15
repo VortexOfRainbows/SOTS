@@ -7,7 +7,7 @@ namespace SOTS.Items.GhostTown
 {
 	public class CharredWoodTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -36,7 +36,7 @@ namespace SOTS.Items.GhostTown
 	}
 	public class CharredWoodWallTile : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 122;

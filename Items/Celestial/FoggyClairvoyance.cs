@@ -24,12 +24,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.PrecariousCluster>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 15).AddIngredient(ModContent.ItemType<Fragments.PrecariousCluster>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -38,7 +33,7 @@ namespace SOTS.Items.Celestial
 			Mod catalyst = ModLoader.GetMod("Catalyst");
 			if(catalyst != null)
             {
-				bList.Add(catalyst.BuffType("InfluxCoreCooldown"));
+				bList.Add(catalyst.Find<ModBuff>("InfluxCoreCooldown").Type);
             }
 			for(int i = 0; i < player.buffImmune.Length; i++)
             {

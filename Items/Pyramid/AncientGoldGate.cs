@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid
 	}	
 	public class AncientGoldGateTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = true;
@@ -183,7 +183,7 @@ namespace SOTS.Items.Pyramid
 				player.cursorItemIconEnabled = false;
 			}
 		}
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
@@ -201,9 +201,9 @@ namespace SOTS.Items.Pyramid
 				{
 					for (int y = top; y < top + 5; y++)
 					{
-						if (Main.tile[x, y].frameY < 270)
+						if (Main.tile[x, y].TileFrameY < 270)
 						{
-							Main.tile[x, y].frameY += 90;
+							Main.tile[x, y].TileFrameY += 90;
 							//NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
 							NetMessage.SendTileSquare(-1, x, y, 2);
 						}
@@ -249,7 +249,7 @@ namespace SOTS.Items.Pyramid
 			Tile tileDown = Main.tile[left, top + 5];
 			Tile tileUp2 = Main.tile[left + 1, top - 1];
 			Tile tileDown2 = Main.tile[left + 1, top + 5];
-			bool surrounded = (tileUp.type == ModContent.TileType<TrueSandstoneTile>() && tileDown.type == ModContent.TileType<TrueSandstoneTile>()) || (tileUp2.type == ModContent.TileType<TrueSandstoneTile>() && tileDown2.type == ModContent.TileType<TrueSandstoneTile>());
+			bool surrounded = (tileUp.TileType == ModContent.TileType<TrueSandstoneTile>() && tileDown.TileType == ModContent.TileType<TrueSandstoneTile>()) || (tileUp2.TileType == ModContent.TileType<TrueSandstoneTile>() && tileDown2.TileType == ModContent.TileType<TrueSandstoneTile>());
 			return tile.TileFrameY >= 360 && (!surrounded || !NPC.AnyNPCs(ModContent.NPCType<PharaohsCurse>()));
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)

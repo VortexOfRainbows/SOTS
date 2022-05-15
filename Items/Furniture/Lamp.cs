@@ -33,9 +33,9 @@ namespace SOTS.Items.Furniture
             Tile tile = Main.tile[i, j];
             int topY = j - tile.TileFrameY / 18 % 3;
             short frameAdjustment = (short)(tile.TileFrameX > 0 ? -18 : 18);
-            Main.tile[i, topY].frameX += frameAdjustment;
-            Main.tile[i, topY + 1].frameX += frameAdjustment;
-            Main.tile[i, topY + 2].frameX += frameAdjustment;
+            Main.tile[i, topY].TileFrameX += frameAdjustment;
+            Main.tile[i, topY + 1].TileFrameX += frameAdjustment;
+            Main.tile[i, topY + 2].TileFrameX += frameAdjustment;
             Wiring.SkipWire(i, topY);
             Wiring.SkipWire(i, topY + 1);
             Wiring.SkipWire(i, topY + 2);

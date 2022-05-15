@@ -13,12 +13,12 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(616);
-            aiType = 616;
+            AIType = 616;
 			Projectile.alpha = 255;
 			Projectile.width = 4;
 			Projectile.height = 4;
 			Projectile.timeLeft = 3600;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 		}
 		public override void AI()
 		{	

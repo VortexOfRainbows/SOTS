@@ -72,17 +72,17 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					if(runOnce2 && Projectile.timeLeft < 32)
 					{
-						DebuffNPC debuffNPC = (DebuffNPC)mod.GetGlobalNPC("DebuffNPC");
+						DebuffNPC debuffNPC = (DebuffNPC)Mod.GetGlobalNPC("DebuffNPC");
 						debuffNPC = (DebuffNPC)debuffNPC.Instance(npc);
 						if (debuffNPC.HarvestCurse < 99 && Main.myPlayer == Projectile.owner)
 						{
-							debuffNPC.OnHitByProjectile(npc, projectile, 0, 0, false);
+							debuffNPC.OnHitByProjectile(npc, Projectile, 0, 0, false);
 						}
 						runOnce2 = false;
 						for (int i = 0; i < 360; i += 4)
 						{
 							Vector2 rotationalPos = new Vector2(7, 0).RotatedBy(MathHelper.ToRadians(i));
-							int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(20, 20) - new Vector2(5), 40, 40, mod.DustType("CopyDust4"));
+							int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(20, 20) - new Vector2(5), 40, 40, Mod.Find<ModDust>("CopyDust4").Type);
 							Dust dust = Main.dust[num1];
 							dust.noGravity = true;
 							dust.velocity *= 0.1f;
@@ -98,9 +98,9 @@ namespace SOTS.Projectiles.Pyramid
 						for (int j = 0; j < Main.projectile.Length; j++)
 						{
 							Projectile proj = Main.projectile[j];
-							if (proj.active && proj.owner == Projectile.owner && proj.type == mod.ProjectileType("GhostPepper"))
+							if (proj.active && proj.owner == Projectile.owner && proj.type == Mod.Find<ModProjectile>("GhostPepper").Type)
 							{
-								GhostPepper pepper = (GhostPepper)proj.modProjectile;
+								GhostPepper pepper = (GhostPepper)proj.ModProjectile;
 								if (pepper.npcTargetId != npc.whoAmI)
 									SoundEngine.PlaySound(2, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.4f);
 								pepper.npcTargetId = npc.whoAmI;

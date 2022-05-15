@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class FluidCurse : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fluid Curse");
 			Description.SetDefault("");   

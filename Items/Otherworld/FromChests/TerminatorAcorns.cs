@@ -46,14 +46,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 3);
-			recipe.AddIngredient(ModContent.ItemType<AcornBag>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 10);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingNature>(), 1).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 3).AddIngredient(ModContent.ItemType<AcornBag>(), 1).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 10).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

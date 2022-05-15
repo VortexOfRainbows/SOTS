@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Permafrost
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(14);
-            aiType = 14; 
+            AIType = 14; 
 			Projectile.penetrate = 1;
 			Projectile.width = 30;
 			Projectile.height = 18;
@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Permafrost
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 perturbedSpeed = new Vector2(Projectile.velocity.X, Projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(15 - (10 * i)));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("IceCluster"), Projectile.damage, 0, Projectile.owner);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Mod.Find<ModProjectile>("IceCluster").Type, Projectile.damage, 0, Projectile.owner);
 				}
 			}
 		}

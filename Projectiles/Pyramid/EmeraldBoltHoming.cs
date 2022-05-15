@@ -46,8 +46,8 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 1800;
 			Projectile.tileCollide = false;
-			Projectile.melee = true;
-			Projectile.ranged = false;
+			Projectile.DamageType = DamageClass.Melee;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.extraUpdates = 3;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.timeLeft = 40;
 			if ((Main.rand.NextBool(2) && end) || Main.rand.NextBool(22))
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;

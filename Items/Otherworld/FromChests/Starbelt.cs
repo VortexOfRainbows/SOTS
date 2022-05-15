@@ -35,20 +35,14 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			player.magicCrit += 10;
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			player.GetCritChance(DamageClass.Magic) += 10;
 			player.statManaMax2 += 40;
 			modPlayer.CritManasteal += 6 + Main.rand.Next(5);
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.ManaCrystal, 1);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddIngredient(null, "StarlightAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.ManaCrystal, 1).AddIngredient(null, "DissolvingAether", 1).AddIngredient(null, "StarlightAlloy", 8).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 	public class StarbeltPlayer : ModPlayer

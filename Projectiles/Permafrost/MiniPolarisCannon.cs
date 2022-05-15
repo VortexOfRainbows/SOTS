@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.friendly = false;
 			Projectile.timeLeft = 300;
 			Projectile.tileCollide = false;
-			Projectile.melee = false;
+			// Projectile.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.hostile = false;
 			Projectile.netImportant = true;
 			Projectile.ignoreWater = true;
@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override void AI()
 		{
 			Player player  = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if(counter > 5)
             {
 				if((Projectile.ai[0] < 0) && !returnH)
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && Math.Abs(proj.ai[0] - Projectile.ai[0]) <= 1)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}

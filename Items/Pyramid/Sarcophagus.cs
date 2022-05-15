@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 4;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("SarcophagusTile");
+			Item.createTile = Mod.Find<ModTile>("SarcophagusTile").Type;
 		}
 	}
 }

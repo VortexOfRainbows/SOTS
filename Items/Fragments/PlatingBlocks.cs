@@ -14,7 +14,7 @@ namespace SOTS.Items.Fragments
 	public abstract class PlatingTile : ModTile
 	{
 		public virtual Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/PermafrostPlatingTileGlow").Value;
-		public sealed override void SetDefaults()
+		public sealed override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
@@ -84,12 +84,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 1);
-			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class NaturePlatingTile : PlatingTile
@@ -148,12 +143,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 1);
-			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class EarthenPlatingTile : PlatingTile
@@ -214,12 +204,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfPermafrost>(), 1);
-			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfPermafrost>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class PermafrostPlatingTile : PlatingTile
@@ -284,12 +269,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 1);
-			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class TidePlatingTile : PlatingTile
@@ -352,12 +332,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
-			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class EvilPlatingTile : PlatingTile
@@ -418,12 +393,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 1);
-			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class ChaosPlatingTile : PlatingTile
@@ -489,12 +459,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 1);
-			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class InfernoPlatingTile : PlatingTile
@@ -566,18 +531,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<PermafrostPlating>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DullPlating>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<TidePlating>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<EvilPlating>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<ChaosPlating>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<InfernoPlating>(), 1);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this, 8);
-			recipe.AddRecipe();
+			CreateRecipe(8).AddIngredient(ModContent.ItemType<NaturePlating>(), 1).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddIngredient(ModContent.ItemType<PermafrostPlating>(), 1).AddIngredient(ModContent.ItemType<DullPlating>(), 1).AddIngredient(ModContent.ItemType<TidePlating>(), 1).AddIngredient(ModContent.ItemType<EvilPlating>(), 1).AddIngredient(ModContent.ItemType<ChaosPlating>(), 1).AddIngredient(ModContent.ItemType<InfernoPlating>(), 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class UltimatePlatingTile : PlatingTile

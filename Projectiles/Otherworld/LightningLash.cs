@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.hostile = false; 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true; 
-            Projectile.magic = true; 
+            Projectile.DamageType = DamageClass.Magic; 
 			Projectile.alpha = 0;
             Projectile.extraUpdates = 2;
 			Projectile.usesLocalNPCImmunity = true;
@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Otherworld
 					}
 					if(Main.rand.NextBool(100))
 					{
-						int num1 = Dust.NewDust(addPos - new Vector2(5), 4, 4, mod.DustType("CopyDust4"));
+						int num1 = Dust.NewDust(addPos - new Vector2(5), 4, 4, Mod.Find<ModDust>("CopyDust4").Type);
 						Dust dust = Main.dust[num1];
 						dust.velocity *= 0.4f;
 						dust.noGravity = true;
@@ -211,7 +211,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("LightningLashTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("LightningLashTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
 				Projectile.ai[1] = storeData;
 				Projectile.netUpdate = true;
 			}

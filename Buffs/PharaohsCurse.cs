@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class PharaohsCurse : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pharaoh's Curse");
 			Description.SetDefault("Something is watching you, spawn rates increased");   
@@ -16,7 +16,7 @@ namespace SOTS.Buffs
         public override void Update(Player player, ref int buffIndex)
 		{
 			bool update = true;
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (NPC.downedBoss2 || modPlayer.weakerCurse)
 			{
 				update = false;	

@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Ores
 		
         public override void SetDefaults()
         {
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.width = 14;
 			Projectile.height = 14;

@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Laser
             Projectile.width = 18;
             Projectile.height = 18;
             Projectile.friendly = false;
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.alpha = 0;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Laser
                     int k = (int)drawPos.X / 16;
                     int j = (int)drawPos.Y / 16;
                     spriteBatch.Draw(texture, drawPos - Main.screenPosition + dynamicAddition, null, color, rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
-                    if (!WorldGen.InWorld(k, j, 20) || Main.tile[k, j].HasTile && Main.tileSolidTop[Main.tile[k, j].type] == false && Main.tileSolid[Main.tile[k, j].type] == true)
+                    if (!WorldGen.InWorld(k, j, 20) || Main.tile[k, j].HasTile && Main.tileSolidTop[Main.tile[k, j].TileType] == false && Main.tileSolid[Main.tile[k, j].TileType] == true)
                     {
                         break;
                     }
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Laser
                 }   
             base.Kill(timeLeft);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             fallThrough = true;
             return true;

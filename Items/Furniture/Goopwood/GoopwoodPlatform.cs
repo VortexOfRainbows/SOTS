@@ -19,19 +19,13 @@ namespace SOTS.Items.Furniture.Goopwood
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 1); 
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 2);
-			recipe.SetResult(ModContent.ItemType<Wormwood>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(2).AddIngredient(ModContent.ItemType<Wormwood>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 2).ReplaceResult(ModContent.ItemType<Wormwood>());
 		}
 	}
 	public class GoopwoodPlatformTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;

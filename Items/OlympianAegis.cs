@@ -31,20 +31,14 @@ namespace SOTS.Items
 			voidPlayer.bonusVoidGain += 2;
 			player.lifeRegen += 1;
 			player.endurance += 0.07f;
-			player.meleeCrit += 4;
-			player.rangedCrit += 4;
-			player.magicCrit += 4;
-			player.thrownCrit += 4;
+			player.GetCritChance(DamageClass.Melee) += 4;
+			player.GetCritChance(DamageClass.Ranged) += 4;
+			player.GetCritChance(DamageClass.Magic) += 4;
+			player.GetCritChance(DamageClass.Throwing) += 4;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<GraniteProtector>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<SpiritShield>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CrestofDasuver>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<GraniteProtector>(), 1).AddIngredient(ModContent.ItemType<SpiritShield>(), 1).AddIngredient(ModContent.ItemType<CrestofDasuver>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

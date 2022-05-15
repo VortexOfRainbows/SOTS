@@ -35,11 +35,11 @@ namespace SOTS.Projectiles
                 player.AddBuff(ModContent.BuffType<Frenzy>(), 190);
             }
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 20;
             height = 20;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         int counter = 0;
         public override bool PreAI()
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles
             Projectile.hostile = false; 
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
             Projectile.aiStyle = 3; 
 			Projectile.alpha = 0;
             Projectile.extraUpdates = 2;

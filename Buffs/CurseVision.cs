@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class CurseVision : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Curse Vision");
 			Description.SetDefault("Afflicted?");   

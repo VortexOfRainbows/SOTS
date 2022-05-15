@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Crushers
 			Projectile.width = 76;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 120;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;

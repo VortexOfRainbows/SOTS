@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Earth
         {
 			Projectile.penetrate = -1; 
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 1500;
 			Projectile.width = 24;
 			Projectile.height = 24;
@@ -35,11 +35,11 @@ namespace SOTS.Projectiles.Earth
 			Projectile.localNPCHitCooldown = 15;
 			Projectile.usesLocalNPCImmunity = true;
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 12;
 			height = 12;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
 		int pierceCount = 0;
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

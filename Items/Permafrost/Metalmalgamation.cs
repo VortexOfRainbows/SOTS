@@ -31,11 +31,7 @@ namespace SOTS.Items.Permafrost
         }
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "AbsoluteBar", 11);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "AbsoluteBar", 11).AddTile(TileID.MythrilAnvil).Register();
 		}
     }
 }

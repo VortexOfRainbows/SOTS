@@ -20,19 +20,19 @@ namespace SOTS.NPCs
 		private int storeDamage = 0;
 		private float tracerPosX
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		private float tracerPosY
 		{
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
+			get => NPC.ai[3];
+			set => NPC.ai[3] = value;
 		}
 		public void MoveCursorToPlayer()
 		{
 			float scaleFactor = 1;
 			scaleFactor = scaleFactor > 1 ? 1 : scaleFactor;
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			Vector2 between = new Vector2(tracerPosX, tracerPosY) - player.Center;
 			float length = between.Length() + 0.1f;
 			float speed = 6.5f * scaleFactor;
@@ -62,16 +62,16 @@ namespace SOTS.NPCs
             NPC.width = 50;
             NPC.height = 52;
 			Main.npcFrameCount[NPC.type] = 4;  
-            npc.value = 10000;
-            npc.npcSlots = 5f;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.netUpdate = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
+            NPC.value = 10000;
+            NPC.npcSlots = 5f;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.netUpdate = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = true;
+			NPC.buffImmune[BuffID.Frostburn] = true;
 			Banner = NPC.type;
 			BannerItem = ItemType<TwilightDevilBanner>();
 		}
@@ -81,28 +81,28 @@ namespace SOTS.NPCs
 			if(Main.hardMode && initiateHardmode == 0)
 			{
 				initiateHardmode = 1;
-				NPC.damage = (int)(npc.damage * 1.25f);
+				NPC.damage = (int)(NPC.damage * 1.25f);
 			}
-			if (npc.ai[0] == 0 && tracerPosX == 0 && tracerPosY == 0)
+			if (NPC.ai[0] == 0 && tracerPosX == 0 && tracerPosY == 0)
 			{
-				tracerPosX = npc.Center.X;
-				tracerPosY = npc.Center.Y;
+				tracerPosX = NPC.Center.X;
+				tracerPosY = NPC.Center.Y;
 			}
 			return true;
 		}
 		public void createDust(int dist = 64, int dir = 1, int amt = 10, bool scaleScale = false)
 		{
-			float scale = 2f * ((255 - npc.alpha) / 255);
+			float scale = 2f * ((255 - NPC.alpha) / 255);
 			if(!scaleScale)
 			{
 				scale = 1;
 			}
 			for (int i = 0; i < amt; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(npc.position.X - dist/2 - 2, npc.position.Y - dist/2 - 2), npc.width + dist, npc.height + dist, mod.DustType("AvaritianDust"), 0, 0, 0, default, scale);
+				int num1 = Dust.NewDust(new Vector2(NPC.position.X - dist/2 - 2, NPC.position.Y - dist/2 - 2), NPC.width + dist, NPC.height + dist, Mod.Find<ModDust>("AvaritianDust").Type, 0, 0, 0, default, scale);
 				Main.dust[num1].noGravity = true;
-				float dusDisX = Main.dust[num1].position.X - npc.Center.X;
-				float dusDisY = Main.dust[num1].position.Y - npc.Center.Y;
+				float dusDisX = Main.dust[num1].position.X - NPC.Center.X;
+				float dusDisY = Main.dust[num1].position.Y - NPC.Center.Y;
 				//double dis = Math.Sqrt((double)(dusDisX * dusDisX + dusDisY * dusDisY))
 
 				dusDisX *= 0.05f * dir;
@@ -110,55 +110,55 @@ namespace SOTS.NPCs
 
 				Main.dust[num1].velocity.X = dusDisX;
 				Main.dust[num1].velocity.Y = dusDisY;
-				Main.dust[num1].alpha = npc.alpha;
+				Main.dust[num1].alpha = NPC.alpha;
 			}
 		}
 		public override void AI()
 		{
-			if(Main.hardMode && npc.life < npc.lifeMax)
+			if(Main.hardMode && NPC.life < NPC.lifeMax)
 			{
-				if(npc.ai[0] % 6 == 0)
-					npc.life++;
+				if(NPC.ai[0] % 6 == 0)
+					NPC.life++;
 			}
-			npc.ai[0]++;
-			if (npc.ai[0] <= 390 && npc.ai[1] == 0)
+			NPC.ai[0]++;
+			if (NPC.ai[0] <= 390 && NPC.ai[1] == 0)
 				MoveCursorToPlayer();
-			if (npc.ai[0] == 30 && npc.ai[1] == 0)
+			if (NPC.ai[0] == 30 && NPC.ai[1] == 0)
 			{
-				int damage2 = npc.damage / 2;
+				int damage2 = NPC.damage / 2;
 				if (Main.expertMode)
 				{
 					damage2 = (int)(damage2 / Main.expertDamage);
 				}
 				for(int i = 0; i < 9; i++)
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("TwilightDart"), damage2, 1f, Main.myPlayer, 0, npc.whoAmI);
+						Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, 0, 0, Mod.Find<ModProjectile>("TwilightDart").Type, damage2, 1f, Main.myPlayer, 0, NPC.whoAmI);
 			}
-			if(npc.ai[0] == 510 && npc.ai[1] == 0) //time of release
+			if(NPC.ai[0] == 510 && NPC.ai[1] == 0) //time of release
 			{
-				SoundEngine.PlaySound(SoundID.Item46, (int)(npc.Center.X), (int)(npc.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 			}
-			if(npc.ai[0] >= 540 && npc.ai[1] == 0) //teleport out
+			if(NPC.ai[0] >= 540 && NPC.ai[1] == 0) //teleport out
 			{
 				if (storeDamage == 0)
 				{
-					storeDamage = npc.damage;
+					storeDamage = NPC.damage;
 					NPC.damage = 0;
 				}
 				createDust(16, 1, 2, false);
-				npc.alpha += 2;
-				if(npc.alpha >= 255)
+				NPC.alpha += 2;
+				if(NPC.alpha >= 255)
 				{
 					while (teleport()) { };
 					if(Main.netMode != 1)
 					{
-						npc.netUpdate = true;
+						NPC.netUpdate = true;
 					}
-					npc.ai[0] = 0;
-					npc.ai[1] = 1;
+					NPC.ai[0] = 0;
+					NPC.ai[1] = 1;
 				}
 			}
-			if (npc.ai[0] >= 60 && npc.ai[1] == 1) //reappear
+			if (NPC.ai[0] >= 60 && NPC.ai[1] == 1) //reappear
 			{
 				if (storeDamage != 0)
 				{
@@ -166,42 +166,42 @@ namespace SOTS.NPCs
 					storeDamage = 0;
 				}
 				createDust(64, -1, 2, false);
-				npc.alpha -= 2;
-				if (npc.alpha <= 0)
+				NPC.alpha -= 2;
+				if (NPC.alpha <= 0)
 				{
-					npc.ai[0] = 0;
-					npc.ai[1] = 0;
+					NPC.ai[0] = 0;
+					NPC.ai[1] = 0;
 				}
 			}
-			if(npc.alpha >= 100)
+			if(NPC.alpha >= 100)
 			{
-				npc.dontTakeDamage = true;
+				NPC.dontTakeDamage = true;
 			}
 			else
 			{
-				npc.dontTakeDamage = false;
+				NPC.dontTakeDamage = false;
 			}
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			if(!player.dead)
 			{
-				npc.timeLeft = 300;
+				NPC.timeLeft = 300;
 			}
 		}
 		public bool teleport() // returns true while inside of blocks
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			float distance = Main.rand.Next(200, 400);
 			Vector2 toArea = new Vector2(distance, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-			npc.position = toArea + player.Center - new Vector2(npc.width / 2, npc.height / 2);
-			int i = (int)npc.Center.X / 16;
-			int j = (int)npc.Center.Y / 16;
+			NPC.position = toArea + player.Center - new Vector2(NPC.width / 2, NPC.height / 2);
+			int i = (int)NPC.Center.X / 16;
+			int j = (int)NPC.Center.Y / 16;
 			bool flag = false;
 			for (int k = -1; k < 2; k++)
 			{
 				for (int w = -1; w < 2; w++)
 				{
 					Tile tile = Framing.GetTileSafely(i + k, j + w);
-					if (Main.tileSolid[tile.TileType] == true && tile.active() && Main.tileSolidTop[tile.TileType] == false)
+					if (Main.tileSolid[tile.TileType] == true && tile.HasTile && Main.tileSolidTop[tile.TileType] == false)
 					{
 						flag = true;
 					}
@@ -212,11 +212,11 @@ namespace SOTS.NPCs
 		int frame = 0;
 		public override void FindFrame(int frameHeight)
 		{
-			npc.frameCounter++;
+			NPC.frameCounter++;
 			frame = frameHeight;
-			if (npc.frameCounter >= 8f) 
+			if (NPC.frameCounter >= 8f) 
 			{
-				npc.frameCounter -= 8f;
+				NPC.frameCounter -= 8f;
 				NPC.frame.Y += frame;
 				if(NPC.frame.Y >= 4 * frame)
 				{
@@ -241,24 +241,24 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			if (Main.rand.NextBool(3) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightShard>(), 1);
+			if (Main.rand.NextBool(3) && SOTSWorld.downedAdvisor) Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightShard>(), 1);
 
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
 			if(Main.rand.NextBool(4))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<JarOfSouls>(), 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<JarOfSouls>(), 1);
 			else
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<AvaritianPlating>(), Main.rand.Next(5) + 4);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<AvaritianPlating>(), Main.rand.Next(5) + 4);
 			}
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 50.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 50.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, default, 0.5f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, default, 0.5f);
 					num++;
 				}
 			}
@@ -267,19 +267,19 @@ namespace SOTS.NPCs
 				for (int k = 0; k < 40; k++)
 				{
 					if (k % 3 == 0)
-						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Electric, (float)(2 * hitDirection), -2f, 0, default, 1f);
-					Dust.NewDust(npc.position, npc.width, npc.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric, (float)(2 * hitDirection), -2f, 0, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
-			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, npc.width, npc.height), npc.GetAlpha(drawColor), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = GetTexture("SOTS/NPCs/TwilightDevilGlow");
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, npc.width, npc.height), npc.GetAlpha(Color.White), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}

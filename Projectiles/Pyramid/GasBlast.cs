@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.netImportant = true;
 			Projectile.tileCollide = false;
 			Projectile.hide = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.extraUpdates = 2;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 80 * (Projectile.extraUpdates + 1); //nerf immunity ignoring to make it less overpowered on single target

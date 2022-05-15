@@ -24,7 +24,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int rand = Main.rand.Next(10);
 			if (rand >= 0 && rand <= 5) //0,1,2,3,4,5 60%
 				modPlayer.shardOnHit += 1;
@@ -37,12 +37,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "FrigidBar", 8);
-			recipe.AddIngredient(ItemID.LifeCrystal, 1); 
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "FrigidBar", 8).AddIngredient(ItemID.LifeCrystal, 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

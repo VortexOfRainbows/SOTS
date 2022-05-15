@@ -15,7 +15,7 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(3);
-            aiType = 3; 
+            AIType = 3; 
 			Projectile.penetrate = 1;
 			Projectile.width = 20;
 			Projectile.height = 20;

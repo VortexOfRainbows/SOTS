@@ -28,12 +28,12 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("OvergrownPyramidTileSafe");
+			Item.createTile = Mod.Find<ModTile>("OvergrownPyramidTileSafe").Type;
 		}
 	}
 	public class OvergrownPyramidTileSafe : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<PyramidSlabTile>();
@@ -41,7 +41,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("OvergrownPyramidBlock");
+			drop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			soundType = 21;
@@ -53,7 +53,7 @@ namespace SOTS.Items.Pyramid
 			if (!Main.rand.NextBool(8))
 				if (!Main.tile[i, j - 1].HasTile)
 				{
-					WorldGen.PlaceTile(i, j - 1, mod.TileType("CursedGrass"), true, false, -1, Main.rand.Next(12));
+					WorldGen.PlaceTile(i, j - 1, Mod.Find<ModTile>("CursedGrass").Type, true, false, -1, Main.rand.Next(12));
 					Main.tile[i, j - 1].color(Main.tile[i, j].TileColor);
 					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
 				}
@@ -86,8 +86,8 @@ namespace SOTS.Items.Pyramid
 					var num48 = j + 1;
 					if(Main.tile[num47, num48].liquid == 0)
 					{
-						Main.tile[num47, num48].type = (ushort)ModContent.TileType<CursedVine>();
-						Main.tile[num47, num48].active(true);
+						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
+						Main.tile[num47, num48].HasTile;
 						Main.tile[num47, num48].color(Main.tile[i, j].TileColor);
 						WorldGen.SquareTileFrame(num47, num48, true);
 						if (Main.netMode == NetmodeID.Server)
@@ -112,7 +112,7 @@ namespace SOTS.Items.Pyramid
 	}
 	public class OvergrownPyramidTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			//Main.tileMerge[Type][ModContent.TileType<PyramidSlabTile>()] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
@@ -121,7 +121,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("OvergrownPyramidBlock");
+			drop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			MinPick = 180;
@@ -134,7 +134,7 @@ namespace SOTS.Items.Pyramid
 			if (!Main.rand.NextBool(8))
 				if (!Main.tile[i, j - 1].HasTile)
 				{
-					WorldGen.PlaceTile(i, j - 1, mod.TileType("CursedGrass"), true, false, -1, Main.rand.Next(12));
+					WorldGen.PlaceTile(i, j - 1, Mod.Find<ModTile>("CursedGrass").Type, true, false, -1, Main.rand.Next(12));
 					Main.tile[i, j - 1].color(Main.tile[i, j].TileColor);
 					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
 				}
@@ -167,8 +167,8 @@ namespace SOTS.Items.Pyramid
 					var num48 = j + 1;
 					if (Main.tile[num47, num48].liquid == 0)
 					{
-						Main.tile[num47, num48].type = (ushort)ModContent.TileType<CursedVine>();
-						Main.tile[num47, num48].active(true);
+						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
+						Main.tile[num47, num48].HasTile;
 						Main.tile[num47, num48].color(Main.tile[i, j].TileColor);
 						WorldGen.SquareTileFrame(num47, num48, true);
 						if (Main.netMode == 2)
@@ -193,7 +193,7 @@ namespace SOTS.Items.Pyramid
 	}
 	public class CursedGrass : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -220,7 +220,7 @@ namespace SOTS.Items.Pyramid
 	}
 	public class CursedVine : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = false;
 			Main.tileLavaDeath[Type] = true;
@@ -252,7 +252,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-			if (!Main.tile[i, j - 1].HasTile || !(Main.tile[i, j - 1].TileType == mod.TileType("CursedVine") || Main.tile[i, j - 1].TileType == mod.TileType("OvergrownPyramidTile") || Main.tile[i, j - 1].TileType == mod.TileType("OvergrownPyramidTileSafe")))
+			if (!Main.tile[i, j - 1].HasTile || !(Main.tile[i, j - 1].TileType == Mod.Find<ModTile>("CursedVine") .Type|| Main.tile[i, j - 1].TileType == Mod.Find<ModTile>("OvergrownPyramidTile") .Type|| Main.tile[i, j - 1].TileType == Mod.Find<ModTile>("OvergrownPyramidTileSafe").Type))
 				WorldGen.KillTile(i, j, false, false, false);
             return base.TileFrame(i, j, ref resetFrame, ref noBreak);
         }

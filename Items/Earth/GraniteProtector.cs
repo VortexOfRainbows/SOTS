@@ -28,12 +28,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.GraniteBlock, 50); //smooth granite
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.GraniteBlock, 50).AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

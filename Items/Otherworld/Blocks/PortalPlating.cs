@@ -53,7 +53,7 @@ namespace SOTS.Items.Otherworld.Blocks
 				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 1f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			//Main.tileBrick[Type] = true;

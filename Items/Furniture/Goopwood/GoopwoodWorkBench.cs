@@ -19,10 +19,7 @@ namespace SOTS.Items.Furniture.Goopwood
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 10);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 10).Register();
 		}
     }
     public class GoopwoodWorkBenchTile : Workbench<GoopwoodWorkBench>

@@ -56,11 +56,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<HardlightBlock>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<HardlightBlock>(), 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class HologlassWallWall : ModWall
@@ -77,7 +73,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Texture2D textureFix = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/HologlassWallWallInline");
 			int xLength = 32;
 			int xOff = 0;
-			Rectangle frame = new Rectangle(tile.wallFrameX() + xOff, tile.wallFrameY(), xLength, 32);
+			Rectangle frame = new Rectangle(tile.WallFrameX() + xOff, tile.WallFrameY(), xLength, 32);
 			Color color = WorldGen.paintColor(tile.wallColor()) * (100f / 255f);
 			Color forBorder = color;
 			forBorder.A = 0;
@@ -126,7 +122,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			DrawWallGlow(i, j, spriteBatch);
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			Main.wallLight[Type] = true;

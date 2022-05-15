@@ -30,7 +30,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.Item11;
             Item.autoReuse = true;
-            Item.shoot = mod.ProjectileType("StarcoreBullet"); 
+            Item.shoot = Mod.Find<ModProjectile>("StarcoreBullet").Type; 
             Item.shootSpeed = 4f;
 			Item.reuseDelay = 10;
 			Item.noUseGraphic = true;
@@ -80,9 +80,9 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			SoundEngine.PlaySound(SoundID.Item11, position);
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-3f + 1.75f * projectileNum)));
-			Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("StarcoreRifle"), Item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? Item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
+			Projectile.NewProjectile(position, Vector2.Zero, Mod.Find<ModProjectile>("StarcoreRifle").Type, Item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? Item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
 			position += new Vector2(speedX, speedY) * 6;
@@ -94,13 +94,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "VibrantPistol", 1);
-			recipe.AddIngredient(null, "VibrancyModule", 1);
-			recipe.AddIngredient(null, "StarlightAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "VibrantPistol", 1).AddIngredient(null, "VibrancyModule", 1).AddIngredient(null, "StarlightAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

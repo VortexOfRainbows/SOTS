@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.BiomeChest
         public override void SetDefaults()
         {
 			Projectile.aiStyle = 0;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.width = 16;
 			Projectile.height = 16;

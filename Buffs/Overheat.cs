@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Overheat : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Overheat");
 			Description.SetDefault("Movement speed and melee speed increased by 10%");   

@@ -29,7 +29,7 @@ namespace SOTS.Items.Permafrost
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item61;
             Item.autoReuse = true;
-            Item.shoot = mod.ProjectileType("HypericeRocket"); 
+            Item.shoot = Mod.Find<ModProjectile>("HypericeRocket").Type; 
             Item.shootSpeed = 19f;
 		}
 		public override int GetVoid(Player player)
@@ -49,21 +49,15 @@ namespace SOTS.Items.Permafrost
 				for(int i = 0; i < 2; i ++)
 				{
 				Vector2 angle = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(2.5f - (5 * i)));
-				Projectile.NewProjectile(position.X, position.Y, angle.X, angle.Y, mod.ProjectileType("HypericeRocket"), damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(position.X, position.Y, angle.X, angle.Y, Mod.Find<ModProjectile>("HypericeRocket").Type, damage, knockBack, player.whoAmI);
 				}
 			}
-			Projectile.NewProjectile(position.X, position.Y, speedX * 1.6f, speedY * 1.6f, mod.ProjectileType("IceImpale"), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y, speedX * 1.6f, speedY * 1.6f, Mod.Find<ModProjectile>("IceImpale").Type, damage, knockBack, player.whoAmI);
 			return false; 
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "HypericeClusterCannon", 1);
-			recipe.AddIngredient(ModContent.ItemType<HelicopterParts>(), 1);
-			recipe.AddIngredient(null, "DissolvingAurora", 1);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "HypericeClusterCannon", 1).AddIngredient(ModContent.ItemType<HelicopterParts>(), 1).AddIngredient(null, "DissolvingAurora", 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

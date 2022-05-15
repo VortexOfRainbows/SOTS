@@ -23,11 +23,11 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.alpha = (int)byte.MaxValue;
             Projectile.timeLeft = 36000;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 6;
             height = 6;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         Vector2 lastVelo = new Vector2(0, 0);
         int counter = 0;
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Otherworld
                 Vector2 rotational = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(counter * 4));
                 for(int i = -1; i < 2; i += 2)
                 {
-                    var num371 = Dust.NewDust(position116, 6, 6, mod.DustType("CopyDust4"), 0, 0, 100, newColor, 1.6f);
+                    var num371 = Dust.NewDust(position116, 6, 6, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, newColor, 1.6f);
                     Dust dust = Main.dust[num371];
                     dust.position += new Vector2(0, rotational.X * i).RotatedBy(lastVelo.ToRotation());
                     dust.velocity.Y *= 0.1f;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Otherworld
                 for(int i = -1; i < 2; i++)
                 {
                     Vector2 circular = lastVelo.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(18 * i)) * (Projectile.frame == 2 ? 5 : Projectile.frame == 1 ? 3.5f : 6.5f) * 1.075f;
-                    Projectile.NewProjectile(Projectile.Center, circular, mod.ProjectileType("TravelingFlareFlame"), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.frame);
+                    Projectile.NewProjectile(Projectile.Center, circular, Mod.Find<ModProjectile>("TravelingFlareFlame").Type, Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.frame);
                 }
             }
             base.Kill(timeLeft);

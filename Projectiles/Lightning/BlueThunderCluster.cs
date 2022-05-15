@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Lightning
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 58;
 			Projectile.width = 58;
 			Projectile.penetrate = 24;
@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Lightning
 			Projectile.timeLeft = 150;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 		}
 		public override void AI()
 		{
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Lightning
 				for(int i = 0; i < 8; i++)
                 {
 					Vector2 circularVelocity = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 45));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("BlueLightning"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circularVelocity.X, circularVelocity.Y, Mod.Find<ModProjectile>("BlueLightning").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
 				}
 			}
 		}

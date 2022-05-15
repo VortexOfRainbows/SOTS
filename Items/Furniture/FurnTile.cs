@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture
         protected abstract int ItemType { get; }
         protected virtual Color MapColor => new Color(191, 142, 111, 255);
         protected virtual bool Multi => true;
-        public sealed override void SetDefaults()
+        public sealed override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             SetDefaults(TileObjectData.newTile);
@@ -23,7 +23,7 @@ namespace SOTS.Items.Furniture
                 drop = item;
             }
         }
-        protected abstract void SetDefaults(TileObjectData t);
+        protected abstract void SetStaticDefaults(TileObjectData t);
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = 0;

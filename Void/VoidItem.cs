@@ -21,12 +21,12 @@ namespace SOTS.Void
 		}
 		public sealed override void SetDefaults() {
 			Item.shoot = 10; 
-			Item.magic = false;
-			Item.melee = false;
-			Item.ranged = false; 
+			// Item.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Item.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Item.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ; 
 			SafeSetDefaults();
 			Item.mana = 1;
-			Item.thrown = false;
+			// Item.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 		}
 		/*public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
@@ -78,37 +78,37 @@ namespace SOTS.Void
 		public sealed override void ModifyTooltips(List<TooltipLine> tooltips) 
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Main.LocalPlayer); //only the local player will see the tooltip, afterall
-			TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
+			TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
 			if (tt != null) 
 			{
-				string[] splitText = tt.text.Split(' ');
+				string[] splitText = tt.Text.Split(' ');
 				string damageValue = splitText.First();
 				string damageWord = splitText.Last();
 				
-				tt.text = damageValue + " void " + damageWord;
+				tt.Text = damageValue + " void " + damageWord;
 				
 				if(Item.CountsAsClass(DamageClass.Melee))
-					tt.text = damageValue + " void + melee " + damageWord;
+					tt.Text = damageValue + " void + melee " + damageWord;
 				
 				if(Item.CountsAsClass(DamageClass.Ranged))
-					tt.text = damageValue + " void + ranged " + damageWord;
+					tt.Text = damageValue + " void + ranged " + damageWord;
 			
 				if(Item.CountsAsClass(DamageClass.Magic))
-					tt.text = damageValue + " void + magic " + damageWord;
+					tt.Text = damageValue + " void + magic " + damageWord;
 
 				if (Item.CountsAsClass(DamageClass.Summon))
-					tt.text = damageValue + " void + summon " + damageWord;
+					tt.Text = damageValue + " void + summon " + damageWord;
 			}
 				
 			string voidCostText = VoidCost(Main.LocalPlayer).ToString();
-			TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.mod == "Terraria");
+			TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.Mod == "Terraria");
 			if (tt2 != null) 
 			{
-				string[] splitText = tt2.text.Split(' ');
+				string[] splitText = tt2.Text.Split(' ');
 				//string damageValue = splitText.First();
 				//string damageWord = splitText.Last();
 				if(Item.accessory == false)
-					tt2.text = "Consumes " + voidCostText + " void";
+					tt2.Text = "Consumes " + voidCostText + " void";
 				else
 				{
 					tooltips.Remove(tt2);

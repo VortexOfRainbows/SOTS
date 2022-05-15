@@ -23,18 +23,18 @@ namespace SOTS.Projectiles.Tide
         {
             Projectile.width = 18;
             Projectile.height = 18;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
             Projectile.hostile = false; 
 			Projectile.timeLeft = 60;
 			Projectile.alpha = 0;
 			Projectile.penetrate = 1;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 14;
 			height = 14;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Tide
 		{
 			SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			Player owner = Main.player[Projectile.owner];
-            SOTSPlayer modPlayer = (SOTSPlayer)owner.GetModPlayer(mod, "SOTSPlayer");
+            SOTSPlayer modPlayer = (SOTSPlayer)owner.GetModPlayer(Mod, "SOTSPlayer");
 			int RandMod = (int)Projectile.ai[0];
 			for (int i = 0; i < 10 + RandMod * 2; i++)
 			{

@@ -24,7 +24,7 @@ namespace SOTS.Items.MusicBoxes
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AncientPyramidMusicBoxTile");
+			Item.createTile = Mod.Find<ModTile>("AncientPyramidMusicBoxTile").Type;
 			Item.width = 24;
 			Item.height = 24;
 			Item.rare = ItemRarityID.LightRed;
@@ -34,14 +34,7 @@ namespace SOTS.Items.MusicBoxes
 		
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "PyramidSlab", 10);
-			recipe.AddIngredient(null, "CursedHiveBlock", 10);
-			recipe.AddIngredient(null, "SoulResidue", 10);
-			recipe.AddIngredient(ItemID.MusicBox);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "PyramidSlab", 10).AddIngredient(null, "CursedHiveBlock", 10).AddIngredient(null, "SoulResidue", 10).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class AncientPyramidMusicBoxTile : ModTile
@@ -50,7 +43,7 @@ namespace SOTS.Items.MusicBoxes
 		{
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -67,7 +60,7 @@ namespace SOTS.Items.MusicBoxes
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("AncientPyramidMusicBox"));
+			Item.NewItem(i * 16, j * 16, 16, 48, Mod.Find<ModItem>("AncientPyramidMusicBox").Type);
 		}
 
 		public override void MouseOver(int i, int j)
@@ -75,7 +68,7 @@ namespace SOTS.Items.MusicBoxes
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = mod.ItemType("AncientPyramidMusicBox");
+			player.cursorItemIconID = Mod.Find<ModItem>("AncientPyramidMusicBox").Type;
 		}
 	}
 }

@@ -23,19 +23,14 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.meleeCrit += 8;
-			player.rangedCrit += 8;
-			player.magicCrit += 8;
-			player.thrownCrit += 8;
+			player.GetCritChance(DamageClass.Melee) += 8;
+			player.GetCritChance(DamageClass.Ranged) += 8;
+			player.GetCritChance(DamageClass.Magic) += 8;
+			player.GetCritChance(DamageClass.Throwing) += 8;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Snakeskin>(), 10).AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

@@ -12,13 +12,13 @@ namespace SOTS.NPCs
 	{
 		private float tracerPosX
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		private float tracerPosY
 		{
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
+			get => NPC.ai[3];
+			set => NPC.ai[3] = value;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -46,15 +46,15 @@ namespace SOTS.NPCs
             NPC.width = 36;
             NPC.height = 36;
 			Main.npcFrameCount[NPC.type] = 1;  
-            npc.value = 0;
-            npc.npcSlots = 2.5f;
-            npc.HitSound = SoundID.NPCHit53;
-            npc.DeathSound = SoundID.NPCDeath14;
-			npc.lavaImmune = true;
-			npc.netAlways = true;
-			npc.noGravity = true;
-			npc.buffImmune[BuffID.OnFire] = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
+            NPC.value = 0;
+            NPC.npcSlots = 2.5f;
+            NPC.HitSound = SoundID.NPCHit53;
+            NPC.DeathSound = SoundID.NPCDeath14;
+			NPC.lavaImmune = true;
+			NPC.netAlways = true;
+			NPC.noGravity = true;
+			NPC.buffImmune[BuffID.OnFire] = true;
+			NPC.buffImmune[BuffID.Frostburn] = true;
 			//Banner = NPC.type;
 			//BannerItem = ItemType<SittingMushroomBanner>();
 		}
@@ -74,7 +74,7 @@ namespace SOTS.NPCs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
-				Vector2 between = new Vector2(lookAtPos.X, lookAtPos.Y) - npc.Center;
+				Vector2 between = new Vector2(lookAtPos.X, lookAtPos.Y) - NPC.Center;
 				if(between.Length() > 1.1f)
 				{
 					between.Normalize();
@@ -85,16 +85,16 @@ namespace SOTS.NPCs
 				}
 
 				if (k == 0)
-					Main.spriteBatch.Draw(texture4, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) - 4), null, color * 0.5f, 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture4, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) - 4), null, color * 0.5f, 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y - 4), null, color * ((255 - npc.alpha) / 255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y - 4), null, color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 
 				float scaleFactor = counter / 180f;
 				scaleFactor = scaleFactor > 1 ? 1 : scaleFactor;
 
 				if (lookAtPos.X != -1 && lookAtPos.Y != -1)
 				{
-					Main.spriteBatch.Draw(texture3, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y - 4) + between * npc.scale * (6 + -14 * npc.ai[1]), null, color * ((255 - npc.alpha) / 255f), 0f, drawOrigin3, 1.5f * npc.scale - npc.ai[1], SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y - 4) + between * NPC.scale * (6 + -14 * NPC.ai[1]), null, color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin3, 1.5f * NPC.scale - NPC.ai[1], SpriteEffects.None, 0f);
 				}
 			}
 			base.PostDraw(spriteBatch, drawColor);
@@ -103,7 +103,7 @@ namespace SOTS.NPCs
 		{
 			float scaleFactor = counter / 120f;
 			scaleFactor = scaleFactor > 1 ? 1 : scaleFactor;
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			Vector2 between = new Vector2(tracerPosX, tracerPosY) - player.Center;
 			float length = between.Length() + 0.1f;
 			float speed = 6f * scaleFactor;
@@ -123,27 +123,27 @@ namespace SOTS.NPCs
 		{
 			float scaleFactor = counter / 120f;
 			scaleFactor = scaleFactor > 1 ? 1 : scaleFactor;
-			Player player = Main.player[npc.target];
-			Vector2 between = npc.Center - player.Center;
+			Player player = Main.player[NPC.target];
+			Vector2 between = NPC.Center - player.Center;
 			float length = between.Length() + 0.1f;
 			float speed = 0.7f * scaleFactor;
 			if (length > 1.1f)
 			{
 				between = between.SafeNormalize(Vector2.Zero);
-				Vector2 dynamicAddition = new Vector2(0.3f + (npc.whoAmI % 4) * 0.25f, 0).RotatedBy(MathHelper.ToRadians(counter));
+				Vector2 dynamicAddition = new Vector2(0.3f + (NPC.whoAmI % 4) * 0.25f, 0).RotatedBy(MathHelper.ToRadians(counter));
 				if (length > speed)
 				{
 					length = speed;
 				}
 				between *= -length;
-				npc.velocity = between + dynamicAddition;
+				NPC.velocity = between + dynamicAddition;
 			}
 		}
 		public void MoveEyesToCursor()
 		{
 			float scaleFactor = counter / 120f;
 			scaleFactor = scaleFactor > 1 ? 1 : scaleFactor;
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			Vector2 between = new Vector2(tracerPosX, tracerPosY) - lookAtPos;
 			float length = between.Length() + 0.1f;
 			float speed = 6f * scaleFactor;
@@ -169,39 +169,39 @@ namespace SOTS.NPCs
 				if (startup == -1)
 				{
 					startup++;
-					tracerPosX = npc.Center.X;
-					tracerPosY = npc.position.Y;
+					tracerPosX = NPC.Center.X;
+					tracerPosY = NPC.position.Y;
 					lookAtPos = new Vector2(tracerPosX, tracerPosY);
-					npc.scale = 0.1f;
+					NPC.scale = 0.1f;
                 }
-				npc.scale *= 1.01f;
-				Vector2 circular = new Vector2(2 * (1 - npc.scale), 0).RotatedBy(MathHelper.ToRadians(360 * npc.scale));
-				npc.velocity.Y = -circular.Y;
+				NPC.scale *= 1.01f;
+				Vector2 circular = new Vector2(2 * (1 - NPC.scale), 0).RotatedBy(MathHelper.ToRadians(360 * NPC.scale));
+				NPC.velocity.Y = -circular.Y;
 				for (int k = 0; k < 360; k += 15)
 				{
-					Vector2 circularLocation = new Vector2(-28 * npc.scale, 0).RotatedBy(MathHelper.ToRadians(k));
+					Vector2 circularLocation = new Vector2(-28 * NPC.scale, 0).RotatedBy(MathHelper.ToRadians(k));
 					circularLocation += 0.5f * new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
 					int type = 242;
 					if (Main.rand.NextBool(30))
 					{
-						int num1 = Dust.NewDust(new Vector2(npc.Center.X + circularLocation.X - 4, npc.Center.Y + circularLocation.Y - 4), 4, 4, type);
+						int num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, type);
 						Main.dust[num1].noGravity = true;
-						Main.dust[num1].scale *= 0.5f + 1.8f * npc.scale;
+						Main.dust[num1].scale *= 0.5f + 1.8f * NPC.scale;
 						Main.dust[num1].velocity = -circularLocation * 0.07f;
 					}
 				}
-				lookAtPos = (lookAtPos - npc.Center).RotatedBy(MathHelper.ToRadians(npc.scale * 15)) + npc.Center;
-				if(npc.scale > 1)
+				lookAtPos = (lookAtPos - NPC.Center).RotatedBy(MathHelper.ToRadians(NPC.scale * 15)) + NPC.Center;
+				if(NPC.scale > 1)
                 {
-					npc.scale = 1;
+					NPC.scale = 1;
 					startup = 31;
                 }
 				return false;
 			}
-			Player player = Main.player[npc.target];
-			npc.TargetClosest(true);
-			float distanceX = player.Center.X - npc.Center.X;
-			float distanceY = player.Center.Y - npc.Center.Y;
+			Player player = Main.player[NPC.target];
+			NPC.TargetClosest(true);
+			float distanceX = player.Center.X - NPC.Center.X;
+			float distanceY = player.Center.Y - NPC.Center.Y;
 			distanceX = Math.Abs(distanceX);
 			distanceY = Math.Abs(distanceY);
 			if (distanceX < 1200 && distanceY < 800)
@@ -210,10 +210,10 @@ namespace SOTS.NPCs
 			}
 			if(!hasSeenPlayer)
 			{
-				if (npc.ai[0] == 0 && tracerPosX == 0 && tracerPosY == 0)
+				if (NPC.ai[0] == 0 && tracerPosX == 0 && tracerPosY == 0)
 				{
-					tracerPosX = npc.Center.X;
-					tracerPosY = npc.Center.Y;
+					tracerPosX = NPC.Center.X;
+					tracerPosY = NPC.Center.Y;
 					lookAtPos = new Vector2(tracerPosX, tracerPosY);
 				}
 			}
@@ -223,58 +223,58 @@ namespace SOTS.NPCs
 		{
 			if(Main.rand.NextBool(5))
             {
-				int dust = Dust.NewDust(npc.position, npc.width, npc.height, 242);
+				int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, 242);
 				Main.dust[dust].velocity *= 0.1f;
 				Main.dust[dust].scale *= 2f;
 				Main.dust[dust].noGravity = true;
 			}
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			counter++;
 			MoveToPlayer();
 			MoveCursorToPlayer();
 			MoveEyesToCursor();
-			npc.ai[0]++;
-			if (npc.ai[1] > 0)
+			NPC.ai[0]++;
+			if (NPC.ai[1] > 0)
 			{
-				npc.ai[1] -= 0.05f;
+				NPC.ai[1] -= 0.05f;
 			}
-			if (npc.ai[1] < 0)
+			if (NPC.ai[1] < 0)
 			{
-				npc.ai[1] = 0;
+				NPC.ai[1] = 0;
 			}
-			if (npc.ai[0] >= 240 && npc.ai[0] <= 270)
+			if (NPC.ai[0] >= 240 && NPC.ai[0] <= 270)
 			{
-				int damage2 = npc.damage / 2;
+				int damage2 = NPC.damage / 2;
 				if (Main.expertMode)
 				{
 					damage2 = (int)(damage2 / Main.expertDamage);
 				}
 					
-				if(npc.ai[0] % 20 == 0)
+				if(NPC.ai[0] % 20 == 0)
 				{
-					Vector2 between = lookAtPos - npc.Center;
+					Vector2 between = lookAtPos - NPC.Center;
 					between.Normalize();
 
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						Projectile.NewProjectile(npc.Center.X + between.X * 24, npc.Center.Y + between.Y * 24, between.X * 5, between.Y * 5, mod.ProjectileType("OtherworldlyBolt"), damage2, 1f, Main.myPlayer, 0, 0);
+						Projectile.NewProjectile(NPC.Center.X + between.X * 24, NPC.Center.Y + between.Y * 24, between.X * 5, between.Y * 5, Mod.Find<ModProjectile>("OtherworldlyBolt").Type, damage2, 1f, Main.myPlayer, 0, 0);
 
-					SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f);
-					npc.ai[1] = 1;
+					SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f);
+					NPC.ai[1] = 1;
 				}
 			}
-			if (npc.ai[0] >= 440)
+			if (NPC.ai[0] >= 440)
 			{
-				npc.ai[0] = Main.rand.Next(-150, 100);
-				npc.netUpdate = true;
+				NPC.ai[0] = Main.rand.Next(-150, 100);
+				NPC.netUpdate = true;
 			}
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return 0;
 			//spawnrates manually added in SOTSNPCs.EditSpawnPool in order to avoid conflicts in hardmode
-			Player player = spawnInfo.player;
+			Player player = spawnInfo.Player;
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			bool correctBlock = spawnInfo.spawnTileType == mod.TileType("DullPlatingTile") || spawnInfo.spawnTileType == mod.TileType("PortalPlatingTile") || spawnInfo.spawnTileType == mod.TileType("AvaritianPlatingTile");
+			bool correctBlock = spawnInfo.spawnTileType == Mod.Find<ModTile>("DullPlatingTile") .Type|| spawnInfo.spawnTileType == Mod.Find<ModTile>("PortalPlatingTile") .Type|| spawnInfo.spawnTileType == Mod.Find<ModTile>("AvaritianPlatingTile").Type;
 			//correctBlock = true;
 			if (modPlayer.PlanetariumBiome && correctBlock)
 			{
@@ -287,12 +287,12 @@ namespace SOTS.NPCs
         }
         public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 40.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 40.0)
 				{
-					int dust = Dust.NewDust(npc.position, npc.width, npc.height, 242, (float)(2 * hitDirection), -2f, 0, default);
+					int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hitDirection), -2f, 0, default);
 					Main.dust[dust].velocity *= 2f;
 					Main.dust[dust].scale *= 4f;
 					Main.dust[dust].noGravity = true;
@@ -303,7 +303,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					int dust = Dust.NewDust(npc.position, npc.width, npc.height, 242, (float)(2 * hitDirection), -2f, 0, default);
+					int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hitDirection), -2f, 0, default);
 					Main.dust[dust].velocity *= 2f;
 					Main.dust[dust].scale *= 5f;
 					Main.dust[dust].noGravity = true;

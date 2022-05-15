@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.ai[0]--;
 				for (int i = 0; i < 5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
 					dust.velocity += Projectile.velocity * 0.225f;
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.position += Projectile.velocity * 2;
 				for (int i = 0; i < 1.5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.1f;
 					dust.velocity += Projectile.velocity * 0.5f;
@@ -164,11 +164,11 @@ namespace SOTS.Projectiles.Permafrost
 			if (iterator >= trailPos.Length)
 				Projectile.Kill();
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 8;
 			height = 8;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
 		int endHow = 0;
 		public override bool OnTileCollide(Vector2 oldVelocity)

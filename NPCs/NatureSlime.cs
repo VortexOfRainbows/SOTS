@@ -4,6 +4,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Void;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -26,25 +27,25 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 1f;
             NPC.width = 38;
             NPC.height = 38;
-            animationType = NPCID.BlueSlime;
+            AnimationType = NPCID.BlueSlime;
 			Main.npcFrameCount[NPC.type] = 2;  
-            npc.value = 100;
-            npc.npcSlots = .4f;
-			npc.alpha = 75;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
+            NPC.value = 100;
+            NPC.npcSlots = .4f;
+			NPC.alpha = 75;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
 			Banner = NPC.type;
 			BannerItem = ItemType<NatureSlimeBanner>();
 		}
 		public override bool PreAI()
 		{
-			npc.TargetClosest(true);
+			NPC.TargetClosest(true);
 			if(initiateSize == 1)
 			{
 				initiateSize = -1;
-				npc.scale = 1.1f; //why??
-				NPC.width = (int)(npc.width * npc.scale);
-				NPC.height = (int)(npc.height * npc.scale);
+				NPC.scale = 1.1f; //why??
+				NPC.width = (int)(NPC.width * NPC.scale);
+				NPC.height = (int)(NPC.height * NPC.scale);
 			}
 			return true;
 		}
@@ -64,19 +65,19 @@ namespace SOTS.NPCs
 			for(int i = 0; i < Main.maxNPCs; i++)
 			{
 				NPC pet = Main.npc[i];
-				if (pet.type == NPCType<BloomingHook>() && (int)pet.ai[0] == npc.whoAmI && pet.active)
+				if (pet.type == NPCType<BloomingHook>() && (int)pet.ai[0] == NPC.whoAmI && pet.active)
 				{
 					total++;
 				}
 			}
-			if (Main.netMode != 1 && counter >= 150 * (1 + total)) 
+			if (Main.netMode != NetmodeID.MultiplayerClient && counter >= 150 * (1 + total)) 
 			{
 				counter = 0;
 				if (total < 3)
 				{
-					int npc1 = NPC.NewNPC((int)npc.position.X + npc.width / 2, (int)npc.position.Y + npc.height, NPCType<BloomingHook>());
+					int npc1 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height, NPCType<BloomingHook>());
 					Main.npc[npc1].netUpdate = true;
-					Main.npc[npc1].ai[0] = npc.whoAmI;
+					Main.npc[npc1].ai[0] = NPC.whoAmI;
 				}
 			}
 		}
@@ -86,12 +87,12 @@ namespace SOTS.NPCs
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 100.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 100.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, new Color(102, 202, 71, 100), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)hitDirection, -1f, NPC.alpha, new Color(102, 202, 71, 100), 1f);
 					num++;
 				}
 			}
@@ -99,18 +100,15 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)(2 * hitDirection), -2f, npc.alpha, new Color(102, 202, 71, 100), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)(2 * hitDirection), -2f, NPC.alpha, new Color(102, 202, 71, 100), 1f);
 				}
 			}
 		}
-		public override void NPCLoot()
-		{
-			if (Main.rand.Next(10) == 0)
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FoulConcoction>(), Main.rand.Next(2) + 1);
-			}
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Gel, Main.rand.Next(1, 3));
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfNature>(), 1);
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfNature>(), 1, 1, 1));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FoulConcoction>(), 5, 1, 1));
 		}
 	}
 }

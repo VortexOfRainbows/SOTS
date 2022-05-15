@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Inferno
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(1);
-            aiType = 1;
+            AIType = 1;
 			Projectile.penetrate = 3;
 			Projectile.alpha = 0;
 			Projectile.width = 14;
@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Inferno
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("SharangaBlast"), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("SharangaBlast").Type, Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -54,10 +54,10 @@ namespace SOTS.Projectiles.Inferno
 			target.AddBuff(BuffID.OnFire, 60, false);
 			if(Projectile.owner == Main.myPlayer && Projectile.penetrate != 1)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("SharangaBlast"), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("SharangaBlast").Type, Projectile.damage, 0, Main.myPlayer);
 			}
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) 
 		{
 			width = 8;
 			height = 16;

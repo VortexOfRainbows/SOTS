@@ -22,32 +22,10 @@ namespace SOTS.Items.Fishing
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.SetResult(ItemID.CookedFish, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.Sashimi, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<Snakeskin>(), 4);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 1);
-			recipe.AddIngredient(ItemID.Daybloom, 1);
-			recipe.AddTile(TileID.Bottles);
-			recipe.SetResult(ItemID.SummoningPotion, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.CookingPots).ReplaceResult(ItemID.CookedFish);
+			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ItemID.Sashimi);
+			CreateRecipe(4).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<Snakeskin>());
+			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(this, 1).AddIngredient(ModContent.ItemType<SoulResidue>(), 1).AddIngredient(ItemID.Daybloom, 1).AddTile(TileID.Bottles).ReplaceResult(ItemID.SummoningPotion);
 		}
 	}
 }

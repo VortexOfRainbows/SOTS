@@ -35,19 +35,14 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.DD2_MonkStaffSwing;
 			Item.autoReuse = true;
-			Item.shoot = mod.ProjectileType("SupernovaHammer");
+			Item.shoot = Mod.Find<ModProjectile>("SupernovaHammer").Type;
 			Item.shootSpeed = 24f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Diamond, 5);
-			recipe.AddIngredient(null, "StarlightAlloy", 15);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Diamond, 5).AddIngredient(null, "StarlightAlloy", 15).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

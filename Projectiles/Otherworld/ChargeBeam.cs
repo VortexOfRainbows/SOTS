@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Otherworld
 						for (int i = 0; i < numberProjectiles; i++)
 						{
 							Vector2 perturbedSpeed = new Vector2(Projectile.velocity.X, Projectile.velocity.Y).RotatedBy(MathHelper.ToRadians((i - 1f) * 3f));
-							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("SpiralDeathBeam"), Projectile.damage, 1f, Main.myPlayer, (i * 360f / numberProjectiles));
+							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Mod.Find<ModProjectile>("SpiralDeathBeam").Type, Projectile.damage, 1f, Main.myPlayer, (i * 360f / numberProjectiles));
 						}
 					}
                 }

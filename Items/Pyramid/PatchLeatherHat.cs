@@ -23,7 +23,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == mod.ItemType("PatchLeatherTunic") && legs.type == mod.ItemType("PatchLeatherPants");
+            return body.type == Mod.Find<ModItem>("PatchLeatherTunic") .Type&& legs.type == Mod.Find<ModItem>("PatchLeatherPants").Type;
         }
 		int Probe = -1;
 		int Probe2 = -1;
@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
 			for(int i = 0; i < 1000; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if(Main.player[proj.owner] == player && proj.type == mod.ProjectileType("FlyingSnake") && proj.active)
+				if(Main.player[proj.owner] == player && proj.type == Mod.Find<ModProjectile>("FlyingSnake") .Type&& proj.active)
 				{
 					counter++;
 				}
@@ -54,33 +54,33 @@ namespace SOTS.Items.Pyramid
 				}
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FlyingSnake"), (int)(14 * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 1);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 1);
 				}
-				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("FlyingSnake"))
+				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != Mod.Find<ModProjectile>("FlyingSnake").Type)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FlyingSnake"), (int)(14 * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 1);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 1);
 				}
 
 				Main.projectile[Probe].timeLeft = 6;
 
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FlyingSnake"), (int)(14 * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 2);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 2);
 				}
-				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("FlyingSnake"))
+				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != Mod.Find<ModProjectile>("FlyingSnake").Type)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FlyingSnake"), (int)(14 * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 2);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 2);
 				}
 
 				Main.projectile[Probe2].timeLeft = 6;
 
 				if (Probe3 == -1)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FlyingSnake"), (int)(14 * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 3);
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 3);
 				}
-				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != mod.ProjectileType("FlyingSnake"))
+				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != Mod.Find<ModProjectile>("FlyingSnake").Type)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FlyingSnake"), (int)(14 * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 3);
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 3);
 				}
 				Main.projectile[Probe3].timeLeft = 6;
 			}
@@ -91,12 +91,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 24);
-			recipe.AddRecipeGroup("SOTS:EvilMaterial", 8);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Snakeskin>(), 24).AddRecipeGroup("SOTS:EvilMaterial", 8).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

@@ -26,12 +26,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1);
-			recipe.AddIngredient(ItemID.StoneBlock, 100);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1).AddIngredient(ItemID.StoneBlock, 100).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

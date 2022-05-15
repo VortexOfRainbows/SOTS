@@ -25,22 +25,16 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.meleeCrit += 3;
-			player.rangedCrit += 3;
-			player.magicCrit += 3;
-			player.thrownCrit += 3;
+			player.GetCritChance(DamageClass.Melee) += 3;
+			player.GetCritChance(DamageClass.Ranged) += 3;
+			player.GetCritChance(DamageClass.Magic) += 3;
+			player.GetCritChance(DamageClass.Throwing) += 3;
 			if(Main.rand.NextBool(2))
 				modPlayer.CritLifesteal += Main.rand.Next(3) + 3;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Wood, 20);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4);
-			recipe.AddIngredient(ItemID.SkyBlueFlower, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Wood, 20).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4).AddIngredient(ItemID.SkyBlueFlower, 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class VoidCharm : ModItem
@@ -61,21 +55,16 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.meleeCrit += 2;
-			player.rangedCrit += 2;
-			player.magicCrit += 2;
-			player.thrownCrit += 2;
+			player.GetCritChance(DamageClass.Melee) += 2;
+			player.GetCritChance(DamageClass.Ranged) += 2;
+			player.GetCritChance(DamageClass.Magic) += 2;
+			player.GetCritChance(DamageClass.Throwing) += 2;
 			if (Main.rand.NextBool(2))
 				modPlayer.CritVoidsteal += 2.5f + Main.rand.Next(2);
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Chocolate>(), 4);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Chocolate>(), 4).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 	public class SoulCharm : ModItem
@@ -96,24 +85,17 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.meleeCrit += 3;
-			player.rangedCrit += 3;
-			player.magicCrit += 3;
-			player.thrownCrit += 3;
+			player.GetCritChance(DamageClass.Melee) += 3;
+			player.GetCritChance(DamageClass.Ranged) += 3;
+			player.GetCritChance(DamageClass.Magic) += 3;
+			player.GetCritChance(DamageClass.Throwing) += 3;
 			modPlayer.CritManasteal += 7 + Main.rand.Next(4);
 			modPlayer.CritLifesteal += 2 + Main.rand.Next(2);
 			modPlayer.CritVoidsteal += 2.25f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CloverCharm>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<VoidCharm>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Starbelt>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CloverCharm>(), 1).AddIngredient(ModContent.ItemType<VoidCharm>(), 1).AddIngredient(ModContent.ItemType<Starbelt>(), 1).AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

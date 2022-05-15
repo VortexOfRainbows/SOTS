@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.height = 14;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -140,7 +140,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && proj.ai[0] == Projectile.ai[0])
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}
@@ -156,7 +156,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile proj = Main.projectile[owner];
 				if(proj.type == ModContent.ProjectileType<GenesisCore>() && proj.owner == Projectile.owner && proj.active && total >= 1)
 				{
-					Vector2 rotationDist = new Vector2(((GenesisCore)proj.modProjectile).DistanceMult * (16 + total * 5), 0).RotatedBy(MathHelper.ToRadians(proj.ai[0] * (3 - total * 0.2f) + (ofTotal % 2) * 90));
+					Vector2 rotationDist = new Vector2(((GenesisCore)proj.ModProjectile).DistanceMult * (16 + total * 5), 0).RotatedBy(MathHelper.ToRadians(proj.ai[0] * (3 - total * 0.2f) + (ofTotal % 2) * 90));
 					rotPos = proj.Center + new Vector2(rotationDist.X, 0).RotatedBy(MathHelper.ToRadians(ofTotal * (360 / total) + proj.ai[0]));
 					Projectile.scale = 0.9f + proj.ai[1];
 				}

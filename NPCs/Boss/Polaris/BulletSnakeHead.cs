@@ -24,16 +24,16 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.knockBackResist = 0f;
             NPC.width = 62; 
             NPC.height = 74;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.value = 0;
-            npc.npcSlots = 0;
-            npc.netAlways = true;
-            npc.buffImmune[BuffID.Frostburn] = true;
-            npc.buffImmune[BuffID.Ichor] = true;
-            npc.buffImmune[BuffID.OnFire] = true;
-            npc.ai[1] = -1;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.value = 0;
+            NPC.npcSlots = 0;
+            NPC.netAlways = true;
+            NPC.buffImmune[BuffID.Frostburn] = true;
+            NPC.buffImmune[BuffID.Ichor] = true;
+            NPC.buffImmune[BuffID.OnFire] = true;
+            NPC.ai[1] = -1;
         }
         public override Color? GetAlpha(Color drawColor)
         {
@@ -47,8 +47,8 @@ namespace SOTS.NPCs.Boss.Polaris
         {
             float speed = 17.5f;
             float acceleration = 0.2f;
-            Vector2 npcCenter = npc.Center;
-            Vector2 targetPos = Main.player[npc.target].Center;
+            Vector2 npcCenter = NPC.Center;
+            Vector2 targetPos = Main.player[NPC.target].Center;
             float targetRoundedPosX = targetPos.X;
             float targetRoundedPosY = targetPos.Y;
             float dirX = targetRoundedPosX - npcCenter.X;
@@ -59,108 +59,108 @@ namespace SOTS.NPCs.Boss.Polaris
             float newSpeed = speed / length;
             dirX = dirX * newSpeed;
             dirY = dirY * newSpeed;
-            if (npc.velocity.X > 0.0 && dirX > 0.0 || npc.velocity.X < 0.0 && dirX < 0.0 || (npc.velocity.Y > 0.0 && dirY > 0.0 || npc.velocity.Y < 0.0 && dirY < 0.0))
+            if (NPC.velocity.X > 0.0 && dirX > 0.0 || NPC.velocity.X < 0.0 && dirX < 0.0 || (NPC.velocity.Y > 0.0 && dirY > 0.0 || NPC.velocity.Y < 0.0 && dirY < 0.0))
             {
-                if (npc.velocity.X < dirX)
-                    npc.velocity.X = npc.velocity.X + acceleration;
-                else if (npc.velocity.X > dirX)
-                    npc.velocity.X = npc.velocity.X - acceleration;
-                if (npc.velocity.Y < dirY)
-                    npc.velocity.Y = npc.velocity.Y + acceleration;
-                else if (npc.velocity.Y > dirY)
-                    npc.velocity.Y = npc.velocity.Y - acceleration;
-                if (Math.Abs(dirY) < speed * 0.2 && (npc.velocity.X > 0.0 && dirX < 0.0 || npc.velocity.X < 0.0 && dirX > 0.0))
+                if (NPC.velocity.X < dirX)
+                    NPC.velocity.X = NPC.velocity.X + acceleration;
+                else if (NPC.velocity.X > dirX)
+                    NPC.velocity.X = NPC.velocity.X - acceleration;
+                if (NPC.velocity.Y < dirY)
+                    NPC.velocity.Y = NPC.velocity.Y + acceleration;
+                else if (NPC.velocity.Y > dirY)
+                    NPC.velocity.Y = NPC.velocity.Y - acceleration;
+                if (Math.Abs(dirY) < speed * 0.2 && (NPC.velocity.X > 0.0 && dirX < 0.0 || NPC.velocity.X < 0.0 && dirX > 0.0))
                 {
-                    if (npc.velocity.Y > 0.0)
-                        npc.velocity.Y = npc.velocity.Y + acceleration * 2f;
+                    if (NPC.velocity.Y > 0.0)
+                        NPC.velocity.Y = NPC.velocity.Y + acceleration * 2f;
                     else
-                        npc.velocity.Y = npc.velocity.Y - acceleration * 2f;
+                        NPC.velocity.Y = NPC.velocity.Y - acceleration * 2f;
                 }
-                if (Math.Abs(dirX) < speed * 0.2 && (npc.velocity.Y > 0.0 && dirY < 0.0 || npc.velocity.Y < 0.0 && dirY > 0.0))
+                if (Math.Abs(dirX) < speed * 0.2 && (NPC.velocity.Y > 0.0 && dirY < 0.0 || NPC.velocity.Y < 0.0 && dirY > 0.0))
                 {
-                    if (npc.velocity.X > 0.0)
-                        npc.velocity.X = npc.velocity.X + acceleration * 2f;
+                    if (NPC.velocity.X > 0.0)
+                        NPC.velocity.X = NPC.velocity.X + acceleration * 2f;
                     else
-                        npc.velocity.X = npc.velocity.X - acceleration * 2f;
+                        NPC.velocity.X = NPC.velocity.X - acceleration * 2f;
                 }
             }
             else if (absDirX > absDirY)
             {
-                if (npc.velocity.X < dirX)
-                    npc.velocity.X = npc.velocity.X + acceleration * 1.1f;
-                else if (npc.velocity.X > dirX)
-                    npc.velocity.X = npc.velocity.X - acceleration * 1.1f;
-                if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < speed * 0.5)
+                if (NPC.velocity.X < dirX)
+                    NPC.velocity.X = NPC.velocity.X + acceleration * 1.1f;
+                else if (NPC.velocity.X > dirX)
+                    NPC.velocity.X = NPC.velocity.X - acceleration * 1.1f;
+                if (Math.Abs(NPC.velocity.X) + Math.Abs(NPC.velocity.Y) < speed * 0.5)
                 {
-                    if (npc.velocity.Y > 0.0)
-                        npc.velocity.Y = npc.velocity.Y + acceleration;
+                    if (NPC.velocity.Y > 0.0)
+                        NPC.velocity.Y = NPC.velocity.Y + acceleration;
                     else
-                        npc.velocity.Y = npc.velocity.Y - acceleration;
+                        NPC.velocity.Y = NPC.velocity.Y - acceleration;
                 }
             }
             else
             {
-                if (npc.velocity.Y < dirY)
-                    npc.velocity.Y = npc.velocity.Y + acceleration * 1.1f;
-                else if (npc.velocity.Y > dirY)
-                    npc.velocity.Y = npc.velocity.Y - acceleration * 1.1f;
-                if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < speed * 0.5)
+                if (NPC.velocity.Y < dirY)
+                    NPC.velocity.Y = NPC.velocity.Y + acceleration * 1.1f;
+                else if (NPC.velocity.Y > dirY)
+                    NPC.velocity.Y = NPC.velocity.Y - acceleration * 1.1f;
+                if (Math.Abs(NPC.velocity.X) + Math.Abs(NPC.velocity.Y) < speed * 0.5)
                 {
-                    if (npc.velocity.X > 0.0)
-                        npc.velocity.X = npc.velocity.X + acceleration;
+                    if (NPC.velocity.X > 0.0)
+                        NPC.velocity.X = NPC.velocity.X + acceleration;
                     else
-                        npc.velocity.X = npc.velocity.X - acceleration;
+                        NPC.velocity.X = NPC.velocity.X - acceleration;
                 }
             }
-            if (npc.localAI[0] != 1)
-                npc.netUpdate = true;
-            npc.localAI[0] = 1f;
-            if ((npc.velocity.X > 0.0 && npc.oldVelocity.X < 0.0 || npc.velocity.X < 0.0 && npc.oldVelocity.X > 0.0 || (npc.velocity.Y > 0.0 && npc.oldVelocity.Y < 0.0 || npc.velocity.Y < 0.0 && npc.oldVelocity.Y > 0.0)) && !npc.justHit)
-                npc.netUpdate = true;
+            if (NPC.localAI[0] != 1)
+                NPC.netUpdate = true;
+            NPC.localAI[0] = 1f;
+            if ((NPC.velocity.X > 0.0 && NPC.oldVelocity.X < 0.0 || NPC.velocity.X < 0.0 && NPC.oldVelocity.X > 0.0 || (NPC.velocity.Y > 0.0 && NPC.oldVelocity.Y < 0.0 || NPC.velocity.Y < 0.0 && NPC.oldVelocity.Y > 0.0)) && !NPC.justHit)
+                NPC.netUpdate = true;
         }
         public override bool PreAI()
         {
             if (Main.netMode != 1)
             {
-                if (npc.ai[0] == 0)
+                if (NPC.ai[0] == 0)
                 {
-                    npc.realLife = npc.whoAmI;
-                    int latestNPC = npc.whoAmI;
+                    NPC.realLife = NPC.whoAmI;
+                    int latestNPC = NPC.whoAmI;
  
-                    latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BulletSnakeWing>(), npc.whoAmI, 0, latestNPC, 0, npc.whoAmI);
-                    Main.npc[latestNPC].realLife = npc.whoAmI;
-                    npc.ai[1] = latestNPC;
+                    latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeWing>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
+                    Main.npc[latestNPC].realLife = NPC.whoAmI;
+                    NPC.ai[1] = latestNPC;
                     for (int i = 0; i < 6; ++i)
                     {
-                        latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BulletSnakeBody>(), npc.whoAmI, 0, latestNPC, 0, npc.whoAmI);
-                        Main.npc[latestNPC].realLife = npc.whoAmI;
+                        latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeBody>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
+                        Main.npc[latestNPC].realLife = NPC.whoAmI;
                     }
-                    latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BulletSnakeEnd>(), npc.whoAmI, 0, latestNPC, 0, npc.whoAmI);
-                    Main.npc[latestNPC].realLife = npc.whoAmI;
-                    npc.ai[0] = 1;
-                    npc.netUpdate = true;
+                    latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeEnd>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
+                    Main.npc[latestNPC].realLife = NPC.whoAmI;
+                    NPC.ai[0] = 1;
+                    NPC.netUpdate = true;
                 }
             }
-            npc.TargetClosest(false);
+            NPC.TargetClosest(false);
             DoWormStuff();
-            if(npc.ai[1] != -1)
+            if(NPC.ai[1] != -1)
             {
-                NPC wings = Main.npc[(int)npc.ai[1]];
-                Vector2 toWings = wings.Center - npc.Center;
-                if (npc.velocity.X > 0)
-                    npc.direction = 1;
+                NPC wings = Main.npc[(int)NPC.ai[1]];
+                Vector2 toWings = wings.Center - NPC.Center;
+                if (NPC.velocity.X > 0)
+                    NPC.direction = 1;
                 else
-                    npc.direction = -1;
-                npc.spriteDirection = npc.direction;
-                npc.rotation = toWings.ToRotation() - (float)Math.PI / 2f;
+                    NPC.direction = -1;
+                NPC.spriteDirection = NPC.direction;
+                NPC.rotation = toWings.ToRotation() - (float)Math.PI / 2f;
             }
             return false;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, Color.White, npc.rotation, origin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
+            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, Color.White, NPC.rotation, origin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -170,8 +170,8 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(npc.lifeMax * 0.75f * bossLifeScale);  //boss life scale in expertmode
-            NPC.damage = (int)(npc.damage * 0.75f);  //boss damage increase in expermode
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);  //boss life scale in expertmode
+            NPC.damage = (int)(NPC.damage * 0.75f);  //boss damage increase in expermode
         }
         public override void PostAI()
 		{
@@ -179,12 +179,12 @@ namespace SOTS.NPCs.Boss.Polaris
 			{
 				//npc.velocity *= 0.9f;
 			}
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.9f / 255f, (255 - npc.alpha) * 0.1f / 255f, (255 - npc.alpha) * 0.3f / 255f);
-			if(Main.player[npc.target].dead)
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.9f / 255f, (255 - NPC.alpha) * 0.1f / 255f, (255 - NPC.alpha) * 0.3f / 255f);
+			if(Main.player[NPC.target].dead)
 			    despawn++;
 			if(despawn >= 600)
-			    npc.active = false;
-			npc.timeLeft = 100;
+			    NPC.active = false;
+			NPC.timeLeft = 100;
 		}
     }
 }

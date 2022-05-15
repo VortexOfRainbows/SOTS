@@ -23,16 +23,16 @@ namespace SOTS.NPCs.Boss.Polaris
 			NPC.knockBackResist = 0f;
             NPC.width = 48;
             NPC.height = 28;
-            npc.value = 0;
-            npc.npcSlots = 1f;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.netAlways = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
-			npc.buffImmune[BuffID.Ichor] = true;
-			npc.buffImmune[BuffID.OnFire] = true;
-			npc.gfxOffY = 0;
+            NPC.value = 0;
+            NPC.npcSlots = 1f;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.netAlways = true;
+			NPC.buffImmune[BuffID.Frostburn] = true;
+			NPC.buffImmune[BuffID.Ichor] = true;
+			NPC.buffImmune[BuffID.OnFire] = true;
+			NPC.gfxOffY = 0;
 		}
 		public override bool PreNPCLoot()
 		{
@@ -41,64 +41,64 @@ namespace SOTS.NPCs.Boss.Polaris
 		float WidthOffset = 0;
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, Color.White * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, Color.White * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/Polaris/PolarisCannonPump").Value;
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f + WidthOffset * npc.spriteDirection, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, Color.White * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f + WidthOffset * NPC.spriteDirection, texture.Height * 0.5f);
+			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, Color.White * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.lifeMax = (int)(npc.lifeMax * 0.75f * bossLifeScale); 
-			NPC.damage = (int)(npc.damage * 0.75f); 
+			NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale); 
+			NPC.damage = (int)(NPC.damage * 0.75f); 
 		}
 		public override void AI()
 		{	
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.9f / 255f, (255 - npc.alpha) * 0.1f / 255f, (255 - npc.alpha) * 0.3f / 255f);
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.9f / 255f, (255 - NPC.alpha) * 0.1f / 255f, (255 - NPC.alpha) * 0.3f / 255f);
 			if(runOnce)
 			{
-				int myID = (int)npc.ai[0];
-				npc.rotation = MathHelper.ToRadians(90 * myID);
-				npc.ai[3] = 90 * myID;
+				int myID = (int)NPC.ai[0];
+				NPC.rotation = MathHelper.ToRadians(90 * myID);
+				NPC.ai[3] = 90 * myID;
 				runOnce = false;
 			}
-			npc.ai[0]++;
-			int damage = npc.damage / 2;
+			NPC.ai[0]++;
+			int damage = NPC.damage / 2;
 			damage *= 2;
 			if (Main.expertMode)
 			{
 				damage = (int)(damage / Main.expertDamage);
 			}
-			Vector2 rotateVelocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(npc.ai[3]));
-			if(npc.scale >= 0.9f)
+			Vector2 rotateVelocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[3]));
+			if(NPC.scale >= 0.9f)
 			{
-				if (npc.ai[0] % 35 == 0 && npc.ai[0] <= 330)
+				if (NPC.ai[0] % 35 == 0 && NPC.ai[0] <= 330)
 				{
 					if (Main.netMode != 1)
 					{
-						Projectile.NewProjectile(npc.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
-						if (Main.expertMode && npc.ai[0] % 70 == 0)
+						Projectile.NewProjectile(NPC.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+						if (Main.expertMode && NPC.ai[0] % 70 == 0)
 							for (int i = -1; i < 2; i += 2)
-								Projectile.NewProjectile(npc.Center, rotateVelocity.RotatedBy(MathHelper.ToRadians(20f * i)), ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(NPC.Center, rotateVelocity.RotatedBy(MathHelper.ToRadians(20f * i)), ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 					}
 					WidthOffset = 13;
 				}
-				if (npc.ai[0] >= 360 && npc.ai[0] <= 400)
+				if (NPC.ai[0] >= 360 && NPC.ai[0] <= 400)
 				{
-					npc.ai[3] += 3f;
-					if(npc.ai[0] % 3 == 0)
+					NPC.ai[3] += 3f;
+					if(NPC.ai[0] % 3 == 0)
 					{
 						if (Main.netMode != 1)
 						{
 							float speed = 0.5f;
-							if (npc.ai[0] >= 380)
+							if (NPC.ai[0] >= 380)
 								speed = 1.25f;
-							Projectile.NewProjectile(npc.Center, rotateVelocity * speed, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+							Projectile.NewProjectile(NPC.Center, rotateVelocity * speed, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 						}
 						WidthOffset = 13;
 					}
@@ -113,31 +113,31 @@ namespace SOTS.NPCs.Boss.Polaris
             {
 				WidthOffset = 0;
             }
-			if(npc.ai[0] >= 420)
-				npc.ai[0] = 0;
-			NPC polaris = Main.npc[(int)npc.ai[1]];
+			if(NPC.ai[0] >= 420)
+				NPC.ai[0] = 0;
+			NPC polaris = Main.npc[(int)NPC.ai[1]];
 			if (!polaris.active || polaris.type != ModContent.NPCType<Polaris>())
 			{
-				npc.scale -= 0.008f;
-				npc.rotation += 0.3f;
-				if (npc.scale < 0)
-					npc.active = false;
+				NPC.scale -= 0.008f;
+				NPC.rotation += 0.3f;
+				if (NPC.scale < 0)
+					NPC.active = false;
 			}
 			else
 			{
 				float dist = 128;
-				rotateVelocity = new Vector2(dist, 0).RotatedBy(MathHelper.ToRadians(++npc.ai[3]));
-				npc.rotation = rotateVelocity.ToRotation() + (float)MathHelper.Pi;
+				rotateVelocity = new Vector2(dist, 0).RotatedBy(MathHelper.ToRadians(++NPC.ai[3]));
+				NPC.rotation = rotateVelocity.ToRotation() + (float)MathHelper.Pi;
 				if(rotateVelocity.X > 0)
                 {
-					npc.rotation -= MathHelper.Pi;
-					npc.spriteDirection = 1;
+					NPC.rotation -= MathHelper.Pi;
+					NPC.spriteDirection = 1;
                 }
 				else
                 {
-					npc.spriteDirection = -1;
+					NPC.spriteDirection = -1;
                 }
-				npc.Center = polaris.Center + rotateVelocity;
+				NPC.Center = polaris.Center + rotateVelocity;
 			}
 		}
 	}

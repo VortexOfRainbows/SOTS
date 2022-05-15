@@ -43,11 +43,11 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			return false;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 4;
 			height = 4;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Pyramid
 				NPC npc = Main.npc[parentID];
 				if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 				{
-					var Limb = this.projectile;
+					var Limb = this.Projectile;
 					Vector2 distanceToOwner = Limb.Center - npc.Center;
 					float distance = distanceToOwner.Length();
 					if (distance == 0)
@@ -190,7 +190,7 @@ namespace SOTS.Projectiles.Pyramid
 					int x = (int)Projectile.Center.X / 16;
 					int y = (int)Projectile.Center.Y / 16;
 					Tile tile = Framing.GetTileSafely(x, y);
-					if ((!WorldGen.InWorld(x, y, 20) || tile.active() && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType] && tile.TileType == ModContent.TileType<TrueSandstoneTile>()) || tile.WallType == ModContent.WallType<TrueSandstoneWallWall>())
+					if ((!WorldGen.InWorld(x, y, 20) || tile.HasTile && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType] && tile.TileType == ModContent.TileType<TrueSandstoneTile>()) || tile.WallType == ModContent.WallType<TrueSandstoneWallWall>())
 					{
 						Projectile.velocity *= 0.0f;
 					}

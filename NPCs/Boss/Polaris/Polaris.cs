@@ -16,23 +16,23 @@ namespace SOTS.NPCs.Boss.Polaris
 		int despawn = 0;
 		private float AICycle
 		{
-			get => npc.ai[0];
-			set => npc.ai[0] = value;
+			get => NPC.ai[0];
+			set => NPC.ai[0] = value;
 		}
 		private float AICycle2
 		{
-			get => npc.ai[1];
-			set => npc.ai[1] = value;
+			get => NPC.ai[1];
+			set => NPC.ai[1] = value;
 		}
 		private float AICycle3
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		private float transition
 		{
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
+			get => NPC.ai[3];
+			set => NPC.ai[3] = value;
 		}
         public override Color? GetAlpha(Color drawColor)
         {
@@ -51,17 +51,17 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.width = 162;
             NPC.height = 162;
             Main.npcFrameCount[NPC.type] = 1;
-            npc.value = 100000;
-            npc.npcSlots = 1f;
-            npc.boss = true;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris");
-			npc.netAlways = true;
-            npc.buffImmune[BuffID.Frostburn] = true;
-			npc.buffImmune[BuffID.Ichor] = true;
-			npc.buffImmune[BuffID.OnFire] = true;
+            NPC.value = 100000;
+            NPC.npcSlots = 1f;
+            NPC.boss = true;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris");
+			NPC.netAlways = true;
+            NPC.buffImmune[BuffID.Frostburn] = true;
+			NPC.buffImmune[BuffID.Ichor] = true;
+			NPC.buffImmune[BuffID.OnFire] = true;
 			bossBag = ModContent.ItemType<PolarisBossBag>();
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -106,11 +106,11 @@ namespace SOTS.NPCs.Boss.Polaris
                 {
 					yDir = -1;
 				}
-				Vector2 rotationOrigin = new Vector2(-3f * -direction, 6f) - npc.velocity * 2.4f;
+				Vector2 rotationOrigin = new Vector2(-3f * -direction, 6f) - NPC.velocity * 2.4f;
 				float overrideRotation = rotationOrigin.ToRotation() - MathHelper.ToRadians(90);
-				Vector2 fromBody = npc.Center + new Vector2(direction * 32, 32 * yDir).RotatedBy(npc.rotation);
+				Vector2 fromBody = NPC.Center + new Vector2(direction * 32, 32 * yDir).RotatedBy(NPC.rotation);
 				Vector2 drawPos = fromBody - Main.screenPosition + new Vector2(0, 2);
-				spriteBatch.Draw(texture, drawPos, null, Color.White, npc.rotation + overrideRotation, drawOrigin, 0.9f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, null, Color.White, NPC.rotation + overrideRotation, drawOrigin, 0.9f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
@@ -149,41 +149,41 @@ namespace SOTS.NPCs.Boss.Polaris
 				{
 					yDir = -1;
 				}
-				Vector2 rotationOrigin = new Vector2(-3f * -direction, 6f) - npc.velocity * 2.4f;
+				Vector2 rotationOrigin = new Vector2(-3f * -direction, 6f) - NPC.velocity * 2.4f;
 				float overrideRotation = rotationOrigin.ToRotation();
 				Vector2 dustVelo = new Vector2(6.0f, 0).RotatedBy(overrideRotation);
-				Vector2 fromBody = npc.Center + new Vector2(direction * 32, 32 * yDir).RotatedBy(npc.rotation);
+				Vector2 fromBody = NPC.Center + new Vector2(direction * 32, 32 * yDir).RotatedBy(NPC.rotation);
 				if(i >= 2)
-					particleListBlue.Add(new FireParticle(fromBody + dustVelo * npc.scale, dustVelo, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 1.1f)));
+					particleListBlue.Add(new FireParticle(fromBody + dustVelo * NPC.scale, dustVelo, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 1.1f)));
 				else
-					particleListRed.Add(new FireParticle(fromBody + dustVelo * npc.scale, dustVelo, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 1.1f)));
+					particleListRed.Add(new FireParticle(fromBody + dustVelo * NPC.scale, dustVelo, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 1.1f)));
 			}
 			cataloguePos();
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(npc.lifeMax * 0.63889f * bossLifeScale);  //boss life scale in expertmode
-            NPC.damage = (int)(npc.damage * 0.75f);  //boss damage increase in expermode
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.63889f * bossLifeScale);  //boss life scale in expertmode
+            NPC.damage = (int)(NPC.damage * 0.75f);  //boss damage increase in expermode
         }
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
 			SOTSWorld.downedAmalgamation = true;
 			potionType = ItemID.GreaterHealingPotion;
 			if(Main.expertMode)
-				npc.DropBossBags();
+				NPC.DropBossBags();
 			else 
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AbsoluteBar"), Main.rand.Next(26, 35)); 
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.FrostCore, Main.rand.Next(2) + 1); 
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("AbsoluteBar").Type, Main.rand.Next(26, 35)); 
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.FrostCore, Main.rand.Next(2) + 1); 
 			}
 		}
 		public void SpawnShard(int amt = 1)
 		{
-			Player player = Main.player[npc.target];
-			SoundEngine.PlaySound(SoundID.Item44, (int)npc.Center.X, (int)npc.Center.Y);
+			Player player = Main.player[NPC.target];
+			SoundEngine.PlaySound(SoundID.Item44, (int)NPC.Center.X, (int)NPC.Center.Y);
 			if (Main.netMode != 1)
 			{
-				int damage = npc.damage / 2;
+				int damage = NPC.damage / 2;
 				if (Main.expertMode)
 				{
 					damage = (int)(damage / Main.expertDamage);
@@ -191,28 +191,28 @@ namespace SOTS.NPCs.Boss.Polaris
 				for (int i = 0; i < amt; i++)
 				{
 					float max = 250 + 100 * i;
-					Projectile.NewProjectile(npc.Center + new Vector2(Main.rand.NextFloat(max), 0).RotatedBy(Main.rand.NextFloat(2f * (float)Math.PI)), Vector2.Zero, ModContent.ProjectileType<PolarMortar>(), (int)(damage * 0.8f), 0, Main.myPlayer, player.Center.X + Main.rand.NextFloat(-100, 100), player.Center.Y - Main.rand.NextFloat(100));
+					Projectile.NewProjectile(NPC.Center + new Vector2(Main.rand.NextFloat(max), 0).RotatedBy(Main.rand.NextFloat(2f * (float)Math.PI)), Vector2.Zero, ModContent.ProjectileType<PolarMortar>(), (int)(damage * 0.8f), 0, Main.myPlayer, player.Center.X + Main.rand.NextFloat(-100, 100), player.Center.Y - Main.rand.NextFloat(100));
 				}
 			}
 		}
 		public void SpawnCannons()
 		{
-			SoundEngine.PlaySound(SoundID.Item50, (int)npc.Center.X, (int)npc.Center.Y);
+			SoundEngine.PlaySound(SoundID.Item50, (int)NPC.Center.X, (int)NPC.Center.Y);
 			if (Main.netMode != 1)
 				for (int i = 0; i < 4; i++)
 				{
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<PolarisCannon>(), 0, i, npc.whoAmI);
+					NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisCannon>(), 0, i, NPC.whoAmI);
 				}
 		}
 		public void SpawnDragon()
 		{
-			Player player = Main.player[npc.target];
-			SoundEngine.PlaySound(SoundID.Item119, (int)(npc.Center.X), (int)(npc.Center.Y));
+			Player player = Main.player[NPC.target];
+			SoundEngine.PlaySound(SoundID.Item119, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 			if (Main.netMode != 1)
 			{
-				Vector2 vectorToPlayer = player.Center - npc.Center;
+				Vector2 vectorToPlayer = player.Center - NPC.Center;
 				vectorToPlayer = vectorToPlayer.SafeNormalize(Vector2.Zero) * -1200;
-				vectorToPlayer += npc.Center;
+				vectorToPlayer += NPC.Center;
 				NPC.NewNPC((int)vectorToPlayer.X, (int)vectorToPlayer.Y, ModContent.NPCType<BulletSnakeHead>());
 			}
 		}
@@ -221,15 +221,15 @@ namespace SOTS.NPCs.Boss.Polaris
 		{
 			variance++;
 			float idleAnim = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(variance * 3)).Y;
-			Player player = Main.player[npc.target];
-			npc.velocity *= 0.725f;
-			Vector2 vectorToPlayer = player.Center - npc.Center;
+			Player player = Main.player[NPC.target];
+			NPC.velocity *= 0.725f;
+			Vector2 vectorToPlayer = player.Center - NPC.Center;
 			float yDist = vectorToPlayer.Y * 1.35f;
 			float xDist = vectorToPlayer.X;
 			float length = (float)Math.Sqrt(xDist * xDist + yDist * yDist);
 			float baseSpeed = -9.5f;
-			int i = (int)npc.Center.X / 16;
-			int j = (int)npc.Center.Y / 16;
+			int i = (int)NPC.Center.X / 16;
+			int j = (int)NPC.Center.Y / 16;
 			if (SOTSWorldgenHelper.TrueTileSolid(i, j))
             {
 				baseSpeed = -1;
@@ -239,31 +239,31 @@ namespace SOTS.NPCs.Boss.Polaris
             {
 				speedMult *= 0.5f;
             }
-			npc.velocity += vectorToPlayer.SafeNormalize(Vector2.Zero) * speedMult * 0.6f;
+			NPC.velocity += vectorToPlayer.SafeNormalize(Vector2.Zero) * speedMult * 0.6f;
 		}
 		public override void AI()
 		{
 			MovetoPlayer();
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.9f / 255f, (255 - npc.alpha) * 0.1f / 255f, (255 - npc.alpha) * 0.3f / 255f);
-			Player player = Main.player[npc.target];
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.9f / 255f, (255 - NPC.alpha) * 0.1f / 255f, (255 - NPC.alpha) * 0.3f / 255f);
+			Player player = Main.player[NPC.target];
 			if(player.dead)
 			{
 				despawn++;
 			}
 			if(despawn >= 600)
 			{
-				npc.active = false;
+				NPC.active = false;
 			}
 			float shardRate = 120;
 			AICycle++;
-			if(npc.life < npc.lifeMax * 0.45f)
+			if(NPC.life < NPC.lifeMax * 0.45f)
 			{
 				AICycle = 0;
 				if(transition > 300)
 				{
 					AICycle2++;
 					AICycle3++;
-					shardRate *= (float)(npc.life + 500) / (float)(npc.lifeMax * 0.5f + 2500);
+					shardRate *= (float)(NPC.life + 500) / (float)(NPC.lifeMax * 0.5f + 2500);
 				}
 				else
 				{
@@ -281,19 +281,19 @@ namespace SOTS.NPCs.Boss.Polaris
 			}
 			if (transition > 0 && transition < 250)
 			{
-				npc.velocity *= 0.9f;
-				npc.dontTakeDamage = true;
+				NPC.velocity *= 0.9f;
+				NPC.dontTakeDamage = true;
 				if(transition % 30 == 0)
 				{
 					int index = (int)(transition / 30);
 					if(Main.netMode != 1)
-						NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<PolarisSpike>(), 0, index, npc.whoAmI);
-					SoundEngine.PlaySound(SoundID.Item50, (int)(npc.Center.X), (int)(npc.Center.Y));
+						NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisSpike>(), 0, index, NPC.whoAmI);
+					SoundEngine.PlaySound(SoundID.Item50, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 				}
 			}
 			else
 			{
-				npc.dontTakeDamage = false;
+				NPC.dontTakeDamage = false;
 			}
 			if (AICycle == 400)
 			{
@@ -326,7 +326,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			}
 			if (AICycle >= 2400 && AICycle <= 2600)
 			{
-				npc.rotation = MathHelper.ToRadians(Main.rand.NextFloat(360));
+				NPC.rotation = MathHelper.ToRadians(Main.rand.NextFloat(360));
 				if (AICycle % 20 == 0)
 				{
 					int extra = Main.expertMode ? 1 : 0;
@@ -335,9 +335,9 @@ namespace SOTS.NPCs.Boss.Polaris
 			}
 			else
             {
-				npc.rotation = npc.velocity.X * 0.08f;
-				npc.direction = 1;
-				npc.spriteDirection = 1;
+				NPC.rotation = NPC.velocity.X * 0.08f;
+				NPC.direction = 1;
+				NPC.spriteDirection = 1;
             }
 			if(AICycle >= 2600)
 			{
@@ -353,7 +353,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			if(AICycle2 == 900)
 			{
 				if (Main.netMode != 1)
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<PolarisLaser>(), 0, 0, npc.whoAmI);
+					NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisLaser>(), 0, 0, NPC.whoAmI);
 			}
 			if(AICycle2 == 1200)
 			{

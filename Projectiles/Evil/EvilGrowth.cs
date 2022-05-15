@@ -27,8 +27,8 @@ namespace SOTS.Projectiles.Evil
 			Projectile.timeLeft = MaxTimeLeft;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.magic = true;
-			Projectile.ranged = false;
+			Projectile.DamageType = DamageClass.Magic;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.alpha = 0;
 		}
         bool runOnce = true;

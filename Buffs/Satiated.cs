@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class Satiated : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Satiated");
 			Description.SetDefault("No more eating!");   

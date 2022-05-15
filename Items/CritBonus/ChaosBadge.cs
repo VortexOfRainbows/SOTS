@@ -22,26 +22,15 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.meleeCrit += 10;
-			player.rangedCrit += 10;
-			player.magicCrit += 10;
-			player.thrownCrit += 10;
+			player.GetCritChance(DamageClass.Melee) += 10;
+			player.GetCritChance(DamageClass.Ranged) += 10;
+			player.GetCritChance(DamageClass.Magic) += 10;
+			player.GetCritChance(DamageClass.Throwing) += 10;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.CobaltBar, 10);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.PalladiumBar, 10);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.CobaltBar, 10).AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 4).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ItemID.PalladiumBar, 10).AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

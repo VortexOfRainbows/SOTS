@@ -37,12 +37,7 @@ namespace SOTS.Items.Tools
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 15);
-			recipe.AddRecipeGroup(RecipeGroupID.Wood, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 15).AddRecipeGroup(RecipeGroupID.Wood, 20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

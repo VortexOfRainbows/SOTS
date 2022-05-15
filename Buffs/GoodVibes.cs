@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class GoodVibes : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Good Vibes");
 			Description.SetDefault("Increased stats while not moving");   
@@ -15,8 +15,8 @@ namespace SOTS.Buffs
         }
 		public override void Update(Player player, ref int buffIndex)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			//VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			modPlayer.attackSpeedMod += 0.05f;
 			if(Math.Abs(player.velocity.X) < 0.1f && Math.Abs(player.velocity.Y) < 0.1f)
 			{	

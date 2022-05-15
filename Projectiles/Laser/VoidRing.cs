@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.width = 96;
 			Projectile.height = 96;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 60;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;

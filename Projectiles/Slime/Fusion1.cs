@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Slime
 		public override void SetDefaults()
         {
 			Projectile.CloneDefaults(14);
-            aiType = 14; 
+            AIType = 14; 
 			Projectile.height = 10;
 			Projectile.width = 10;
 			Projectile.friendly = true;
@@ -50,8 +50,8 @@ namespace SOTS.Projectiles.Slime
 			Projectile.timeLeft = 900;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.magic = false;
-			Projectile.ranged = true;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.extraUpdates = 3;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Slime
 			}
 			if (end || Main.rand.NextBool(18))
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(250, 100, 190, 40);
 				dust.noGravity = true;

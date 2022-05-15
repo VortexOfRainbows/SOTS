@@ -27,12 +27,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 16);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 24);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 16).AddIngredient(ModContent.ItemType<Wormwood>(), 24).AddTile(TileID.Anvils).Register();
 		}
 		
 	}

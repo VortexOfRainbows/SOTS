@@ -21,18 +21,12 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.height = 40;   
             Item.value = Item.sellPrice(0, 3, 80, 0);
             Item.rare = ItemRarityID.LightPurple;
-			Item.shoot = mod.ProjectileType("InfernoHook"); 
+			Item.shoot = Mod.Find<ModProjectile>("InfernoHook").Type; 
             Item.shootSpeed = 26f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "WormWoodHook", 1);
-			recipe.AddIngredient(null, "FragmentOfInferno", 2);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 10);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "WormWoodHook", 1).AddIngredient(null, "FragmentOfInferno", 2).AddIngredient(null, "OtherworldlyAlloy", 10).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

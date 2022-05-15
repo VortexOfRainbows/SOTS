@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.penetrate = -1; 
             Projectile.friendly = true; 
             Projectile.tileCollide = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.alpha = 255;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 40;
@@ -37,11 +37,11 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			return false;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 4;
 			height = 4;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for(int i = 0; i < Main.rand.Next(2) + 1; i++)
 			{
-				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num];
 				dust.velocity = Projectile.velocity * 0.3f;
 				if (Projectile.ai[0] == 2)

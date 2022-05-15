@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.alpha = 0;

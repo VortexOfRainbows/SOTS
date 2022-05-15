@@ -38,7 +38,7 @@ namespace SOTS.Projectiles
 			Projectile.timeLeft = 3000;
 			Projectile.friendly = true;
 			Projectile.aiStyle = 15;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
         }
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
             target.immune[Projectile.owner] = 15;
 			Projectile.timeLeft = 3000;
 			Projectile.friendly = true;

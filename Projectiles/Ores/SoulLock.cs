@@ -23,14 +23,14 @@ namespace SOTS.Projectiles.Ores
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 2;
 			Projectile.width = 2;
 			Projectile.penetrate = 1;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 60;
 			Projectile.tileCollide = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.hostile = false;
 			Projectile.alpha = 255;
 		}
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Ores
 			
 			if(player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, 0);	
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, heal, 0);	
 			}
         }
 		public override void Kill(int timeLeft)

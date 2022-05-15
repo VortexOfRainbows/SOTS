@@ -30,7 +30,7 @@ namespace SOTS.Items.Celestial
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item22;
             Item.autoReuse = true;
-            Item.shoot = mod.ProjectileType("PlasmaCutter"); 
+            Item.shoot = Mod.Find<ModProjectile>("PlasmaCutter").Type; 
             Item.shootSpeed = 0f;
 			Item.channel = true;
 			Item.axe = 200;
@@ -77,13 +77,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 10);
-			recipe.AddIngredient(null, "ChainedPlasma", 1);
-			recipe.AddIngredient(ItemID.ButchersChainsaw, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "SanguiteBar", 10).AddIngredient(null, "ChainedPlasma", 1).AddIngredient(ItemID.ButchersChainsaw, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

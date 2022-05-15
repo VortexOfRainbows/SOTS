@@ -39,43 +39,43 @@ namespace SOTS.NPCs.Boss
             NPC.knockBackResist = 0f;
             NPC.width = 14;
             NPC.height = 26;
-            animationType = NPCID.CaveBat;
+            AnimationType = NPCID.CaveBat;
             Main.npcFrameCount[NPC.type] = 5;
-            npc.value = 0;
-            npc.npcSlots = 1f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
+            NPC.value = 0;
+            NPC.npcSlots = 1f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
             //npc.DeathSound = SoundID.NPCHit3;
-            npc.netAlways = true;
+            NPC.netAlways = true;
 		}
 		public override void AI()
 		{	
 			timeLeft++;
 			if(timeLeft > 180)
 			{
-				npc.active = false;
+				NPC.active = false;
 			}
 			if(Main.netMode != 1)
 			{
-				npc.netUpdate = true;
+				NPC.netUpdate = true;
 			}
-			Player player  = Main.player[npc.target];
+			Player player  = Main.player[NPC.target];
 			if(initiate == true)
 			{
-				initialVelocityX = npc.velocity.X;
-				initialVelocityY = npc.velocity.Y;
+				initialVelocityX = NPC.velocity.X;
+				initialVelocityY = NPC.velocity.Y;
 				initiate = false;
 			}
 			
-				npc.rotation = 0;
-				npc.velocity.X = initialVelocityX;
-				npc.velocity.Y = initialVelocityY;
+				NPC.rotation = 0;
+				NPC.velocity.X = initialVelocityX;
+				NPC.velocity.Y = initialVelocityY;
 				
 			if(Main.rand.Next(2) == 0)
 			{
-				int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 14, 26, 72);
+				int num1 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), 14, 26, 72);
 
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
@@ -85,7 +85,7 @@ namespace SOTS.NPCs.Boss
 		{
 			for(int i = 0; i < 20; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 14, 26, 72);
+				int num1 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), 14, 26, 72);
 
 				Main.dust[num1].noGravity = true;	
 			}

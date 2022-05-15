@@ -16,8 +16,8 @@ namespace SOTS.NPCs.Constructs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Earthen Spirit");
-			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;   
+			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;   
 		}
 		public override void SetDefaults()
 		{
@@ -29,16 +29,16 @@ namespace SOTS.NPCs.Constructs
             NPC.width = 58;
             NPC.height = 58;
 			Main.npcFrameCount[NPC.type] = 1;   
-            npc.value = 32500;
-            npc.npcSlots = 4f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = true;
-			npc.rarity = 2;
+            NPC.value = 32500;
+            NPC.npcSlots = 4f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = true;
+			NPC.rarity = 2;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -52,14 +52,14 @@ namespace SOTS.NPCs.Constructs
 			writer.Write(saveData);
 			writer.Write(dmg);
 			writer.Write(owner);
-			writer.Write(npc.scale);
-			writer.Write(npc.width);
-			writer.Write(npc.height);
+			writer.Write(NPC.scale);
+			writer.Write(NPC.width);
+			writer.Write(NPC.height);
 			writer.Write(reticlePos.X);
 			writer.Write(reticlePos.Y);
-			writer.Write(npc.alpha);
+			writer.Write(NPC.alpha);
 			writer.Write(reticleAlpha);
-			writer.Write(npc.dontTakeDamage);
+			writer.Write(NPC.dontTakeDamage);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
@@ -68,14 +68,14 @@ namespace SOTS.NPCs.Constructs
 			saveData = reader.ReadSingle();
 			dmg = reader.ReadInt32();
 			owner = reader.ReadInt32();
-			npc.scale = reader.ReadSingle();
+			NPC.scale = reader.ReadSingle();
 			NPC.width = reader.ReadInt32();
 			NPC.height = reader.ReadInt32();
 			reticlePos.X = reader.ReadSingle();
 			reticlePos.Y = reader.ReadSingle();
-			npc.alpha = reader.ReadInt32();
+			NPC.alpha = reader.ReadInt32();
 			reticleAlpha = reader.ReadSingle();
-			npc.dontTakeDamage = reader.ReadBoolean();
+			NPC.dontTakeDamage = reader.ReadBoolean();
 		}
 		private int InitiateHealth = 900;
 		private float ExpertHealthMult = 1.5f;
@@ -88,25 +88,25 @@ namespace SOTS.NPCs.Constructs
 		int owner = -1;
 		public override bool PreAI()
 		{
-			Player player = Main.player[npc.target];
-			if (npc.HasPlayerTarget)
+			Player player = Main.player[NPC.target];
+			if (NPC.HasPlayerTarget)
 			{
-				npc.TargetClosest(false);
+				NPC.TargetClosest(false);
 			}
 			else
 			{
-				npc.TargetClosest(true);
+				NPC.TargetClosest(true);
 			}
-			if (npc.ai[1] > 0 && saveData == -1)
+			if (NPC.ai[1] > 0 && saveData == -1)
 			{
-				npc.scale = 5f / (npc.ai[1] + 6);
-				NPC.width = (int)(npc.width * npc.scale);
-				NPC.height = (int)(npc.height * npc.scale);
-				saveData = npc.ai[1] *= 20;
-				owner = (int)npc.ai[2];
+				NPC.scale = 5f / (NPC.ai[1] + 6);
+				NPC.width = (int)(NPC.width * NPC.scale);
+				NPC.height = (int)(NPC.height * NPC.scale);
+				saveData = NPC.ai[1] *= 20;
+				owner = (int)NPC.ai[2];
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				return false;
 			}
@@ -115,14 +115,14 @@ namespace SOTS.NPCs.Constructs
 				saveData = 0;
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				return false;
 			}
-			if(npc.alpha >= 200 && dmg == -1)
+			if(NPC.alpha >= 200 && dmg == -1)
 			{
-				npc.dontTakeDamage = true;
-				dmg = npc.damage;
+				NPC.dontTakeDamage = true;
+				dmg = NPC.damage;
 				NPC.damage = 0;
 				for(int i = 0; i < 10; i++)
 				{
@@ -130,25 +130,25 @@ namespace SOTS.NPCs.Constructs
 					int x = (int)reticlePos.X / 16;
 					int y = (int)reticlePos.Y / 16;
 					Tile tile = Framing.GetTileSafely(x, y);
-					if(!tile.active() || !Main.tileSolid[tile.TileType])
+					if(!tile.HasTile || !Main.tileSolid[tile.TileType])
 					{
 						break;
 					}
 				}
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 			}
-			else if (dmg != -1 && npc.alpha < 200)
+			else if (dmg != -1 && NPC.alpha < 200)
 			{
 				NPC.damage = dmg;
 				dmg = -1;
-				npc.dontTakeDamage = false;
+				NPC.dontTakeDamage = false;
 			}
 			if (saveData > 0)
 			{
-				npc.dontTakeDamage = true;
+				NPC.dontTakeDamage = true;
 			}
 			if(owner != -1)
 			{
@@ -164,7 +164,7 @@ namespace SOTS.NPCs.Constructs
 						phase = 2;
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							npc.netUpdate = true;
+							NPC.netUpdate = true;
 						}
 					}
 				}
@@ -173,53 +173,53 @@ namespace SOTS.NPCs.Constructs
 					counter = 100000;
 				}
 			}
-			npc.timeLeft = 300000;
+			NPC.timeLeft = 300000;
 			return saveData != -1;
 		}
 		public override void AI()
 		{	
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (phase == 3)
 			{
 				NPC.aiStyle =-1;
 				if (owner != -1)
 				{
-					npc.ai[0] = Main.npc[owner].ai[0];
+					NPC.ai[0] = Main.npc[owner].ai[0];
 				}
 				else
 				{
-					npc.ai[0]++;
+					NPC.ai[0]++;
 				}
-				if (npc.ai[0] >= 180 + saveData)
+				if (NPC.ai[0] >= 180 + saveData)
 				{
-					if (npc.alpha >= 255 && npc.ai[0] >= 320 - saveData)
+					if (NPC.alpha >= 255 && NPC.ai[0] >= 320 - saveData)
 					{
-						npc.velocity *= 0;
-						npc.alpha = 255;
+						NPC.velocity *= 0;
+						NPC.alpha = 255;
 						reticleAlpha += 0.007f;
 
 						if (Main.netMode != 1)
-							npc.position = reticlePos - new Vector2(npc.width / 2, npc.height / 2);
+							NPC.position = reticlePos - new Vector2(NPC.width / 2, NPC.height / 2);
 
 						if (reticleAlpha >= 1)
 						{
 							reticlePos = new Vector2(-1,-1);
 							reticleAlpha = 0;
-							npc.alpha = 0;
-							npc.ai[0] = -20;
-							SoundEngine.PlaySound(2, (int)(npc.Center.X), (int)(npc.Center.Y), 14, 2.0f - saveData * 0.02f);
+							NPC.alpha = 0;
+							NPC.ai[0] = -20;
+							SoundEngine.PlaySound(2, (int)(NPC.Center.X), (int)(NPC.Center.Y), 14, 2.0f - saveData * 0.02f);
 							for (int i = 0; i < 360; i += 10)
 							{
-								Vector2 circularLocation = new Vector2(16 - npc.width, 0).RotatedBy(MathHelper.ToRadians(i));
+								Vector2 circularLocation = new Vector2(16 - NPC.width, 0).RotatedBy(MathHelper.ToRadians(i));
 
-								int num1 = Dust.NewDust(new Vector2(npc.Center.X + circularLocation.X - 4, npc.Center.Y + circularLocation.Y - 4), 4, 4, 222);
+								int num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, 222);
 								Main.dust[num1].noGravity = true;
 								Main.dust[num1].scale = 1.2f;
 								Main.dust[num1].velocity = circularLocation * 0.25f + new Vector2(Main.rand.Next(-20,21), Main.rand.Next(-20, 21)) * 0.1f;
 
 
-								num1 = Dust.NewDust(new Vector2(npc.Center.X + circularLocation.X - 4, npc.Center.Y + circularLocation.Y - 4), 4, 4, 222);
+								num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, 222);
 								Main.dust[num1].noGravity = true;
 								Main.dust[num1].scale = 1.5f;
 								Main.dust[num1].velocity = circularLocation * 0.45f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.2f;
@@ -231,56 +231,56 @@ namespace SOTS.NPCs.Constructs
 									float degrees = i * 45;
 									Vector2 rotate = new Vector2(2.75f, 0).RotatedBy(MathHelper.ToRadians(degrees));
 									if (Main.netMode != NetmodeID.MultiplayerClient)
-										Projectile.NewProjectile(npc.Center, rotate, ModContent.ProjectileType<EarthenBolt>(), 20, 0, Main.myPlayer);
+										Projectile.NewProjectile(NPC.Center, rotate, ModContent.ProjectileType<EarthenBolt>(), 20, 0, Main.myPlayer);
 								}
 							}
 						}
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							npc.netUpdate = true;
+							NPC.netUpdate = true;
 						}
 					}
-					else if(npc.velocity.X != 0 || npc.velocity.Y != 0)
+					else if(NPC.velocity.X != 0 || NPC.velocity.Y != 0)
 					{
-						npc.alpha += 5;
+						NPC.alpha += 5;
 					}
 				}
-				else if (npc.ai[0] >= 0)
+				else if (NPC.ai[0] >= 0)
 				{
 					Vector2 rotatePos = new Vector2(128, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 1.4f - saveData * 2));
 					rotatePos += player.Center;
 					rotatePos.Y -= 324;
 
-					Vector2 velo = rotatePos - npc.Center;
+					Vector2 velo = rotatePos - NPC.Center;
 					velo.Normalize();
-					if (6 >= (rotatePos - npc.Center).Length() + 1)
+					if (6 >= (rotatePos - NPC.Center).Length() + 1)
 					{
-						velo *= (rotatePos - npc.Center).Length() + 1;
+						velo *= (rotatePos - NPC.Center).Length() + 1;
 					}
 					else
 					{
 						velo *= 6;
 					}
-					npc.velocity = velo;
-					npc.active = true;
+					NPC.velocity = velo;
+					NPC.active = true;
 				}
 			}
 			if(phase == 2)
 			{
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				NPC.aiStyle =-1;
-				npc.ai[0] = 0;
-				npc.ai[1] = 0;
+				NPC.ai[0] = 0;
+				NPC.ai[1] = 0;
 				phase = 3;
 			}
 			else if(phase == 1)
 			{
 				counter++;
 			}
-			if(Main.player[npc.target].dead)
+			if(Main.player[NPC.target].dead)
 			{
 				counter++;
 			}
@@ -288,39 +288,39 @@ namespace SOTS.NPCs.Constructs
 			{
 				if (Main.netMode != 1)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				phase = 1;
 				NPC.aiStyle =-1;
-				npc.velocity.Y -= 0.014f;
-				npc.dontTakeDamage = true;
+				NPC.velocity.Y -= 0.014f;
+				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<CopyDust4>());
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>());
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(255, 191, 0);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
-			dust.alpha = npc.alpha;
+			dust.alpha = NPC.alpha;
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < npc.oldPos.Length; k++) {
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + new Vector2(npc.width/2, npc.height/2);
-				Color color = lightColor * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			for (int k = 0; k < NPC.oldPos.Length; k++) {
+				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + new Vector2(NPC.width/2, NPC.height/2);
+				Color color = lightColor * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for (int i = 0; i < 50; i++)
 				{
-					int dust3 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 267);
+					int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 2.5f;
 					dust4.color = new Color(255, 191, 0);
@@ -332,13 +332,13 @@ namespace SOTS.NPCs.Constructs
 				{
 					phase = 2;
 					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenReticle").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -346,18 +346,18 @@ namespace SOTS.NPCs.Constructs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f;
 				float y = Main.rand.Next(-10, 11) * 0.45f;
-				Main.spriteBatch.Draw(texture,new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y),null, color * ((255 - npc.alpha)/255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture,new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y),null, color * ((255 - NPC.alpha)/255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 
 				x = Main.rand.Next(-10, 11) * 0.125f;
 				y = Main.rand.Next(-10, 11) * 0.125f;
 				if (reticlePos.X != -1 && reticlePos.Y != -1)
-					Main.spriteBatch.Draw(texture2,new Vector2((float)(reticlePos.X - (int)Main.screenPosition.X) + x, (float)(reticlePos.Y - (int)Main.screenPosition.Y) + y),null, color * reticleAlpha, MathHelper.ToRadians(npc.ai[0] * 6f), drawOrigin, npc.scale * reticleAlpha, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2,new Vector2((float)(reticlePos.X - (int)Main.screenPosition.X) + x, (float)(reticlePos.Y - (int)Main.screenPosition.Y) + y),null, color * reticleAlpha, MathHelper.ToRadians(NPC.ai[0] * 6f), drawOrigin, NPC.scale * reticleAlpha, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingEarth>(), 1);	
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingEarth>(), 1);	
 		}	
 	}
 }

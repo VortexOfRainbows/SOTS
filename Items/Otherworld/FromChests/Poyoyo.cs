@@ -37,18 +37,14 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
             Item.autoReuse = false; 
-            Item.shoot = mod.ProjectileType("Poyoyo"); 
+            Item.shoot = Mod.Find<ModProjectile>("Poyoyo").Type; 
             Item.noUseGraphic = true; 
             Item.noMelee = true;
             Item.UseSound = SoundID.Item1;
         }
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(null, "StarlightAlloy", 8);
-            recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(null, "StarlightAlloy", 8).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
         }
     }
 }

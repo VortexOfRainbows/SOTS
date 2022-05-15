@@ -19,7 +19,7 @@ namespace SOTS.Items.Tools
 			Item.height = 34;
 			Item.useTime = 12;
 			Item.useAnimation = 12;
-			Item.useStyle = ItemUseStyleID.Stabbing;
+			Item.useStyle = ItemUseStyleID.Thrust;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Cyan;
 			Item.UseSound = SoundID.Item1;
@@ -28,7 +28,7 @@ namespace SOTS.Items.Tools
 		{
 			player.rulerGrid = true;
 		}
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;

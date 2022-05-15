@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Otherworld
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.65f, 0.75f);
 
 			Player player  = Main.player[(int)Projectile.ai[1]];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int dust = Dust.NewDust(Projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Electric, 0, 0, Projectile.alpha, default, 1.25f);
 			Main.dust[dust].noGravity = true;
 			Main.dust[dust].velocity *= 0.1f;

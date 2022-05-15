@@ -21,7 +21,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void UpdateInventory(Player player)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			modPlayer.weakerCurse = true;
 		}
 	}

@@ -24,17 +24,17 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.friendly = true;
 			Projectile.timeLeft = 900;
 			Projectile.tileCollide = false;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.hostile = false;
 			Projectile.netImportant = true;
 			Projectile.alpha = 0;
 			Projectile.extraUpdates = 899;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 8;
 			height = 8;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
 		Vector2 aimTo = new Vector2(0, 0);
 		bool runOnce = true;
@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Otherworld
 		public override void AI()
 		{
 			Player player  = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (player.dead)
 			{
 				Projectile.Kill();
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				for (int i = 0; i < 12; i++)
 				{
-					var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+					var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
 					Dust dust = Main.dust[num371];
 					dust.velocity += Projectile.velocity * 0.5f;
 					dust.noGravity = true;
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 rotational = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(counter * 4));
 			for (int i = -1; i < 2; i += 2)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5), 4, 4, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5), 4, 4, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.position += new Vector2(0, rotational.X * i).RotatedBy(Projectile.velocity.ToRotation());
 				dust.velocity *= 0.1f;
@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for(int i = 0; i < 20; i++)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.velocity += Projectile.velocity * 0.3f;
 				dust.noGravity = true;
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Otherworld
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.skywardBlades++;
 			modPlayer.SendClientChanges(modPlayer);
 			base.OnHitNPC(target, damage, knockback, crit);

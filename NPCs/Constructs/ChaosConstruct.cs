@@ -32,16 +32,16 @@ namespace SOTS.NPCs.Constructs
 			NPC.width = 102;
 			NPC.height = 100;
 			Main.npcFrameCount[NPC.type] = 1;
-			npc.value = Item.buyPrice(0, 4, 50, 0);
-			npc.npcSlots = 4f;
-			npc.lavaImmune = true;
-			npc.noGravity = true;
-			npc.noTileCollide = true;
-			npc.netAlways = true;
-			npc.alpha = 0;
-			npc.HitSound = SoundID.NPCHit4;
-			npc.DeathSound = SoundID.NPCDeath14;
-			npc.rarity = 5;
+			NPC.value = Item.buyPrice(0, 4, 50, 0);
+			NPC.npcSlots = 4f;
+			NPC.lavaImmune = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.netAlways = true;
+			NPC.alpha = 0;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath14;
+			NPC.rarity = 5;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -50,11 +50,11 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Vector2 origin = new Vector2(npc.width / 2, npc.height / 2);
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 origin = new Vector2(NPC.width / 2, NPC.height / 2);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			DrawWings();
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, dir, origin, npc.scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir, origin, npc.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, drawColor, dir, origin, NPC.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, Color.White, dir, origin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		float wingSpeedMult = 1f;
@@ -93,8 +93,8 @@ namespace SOTS.NPCs.Constructs
 			int amtOfParticles = 120;
 			for(int j = -1; j <= 1; j+= 2)
 			{
-				float positionalRotation = npc.rotation + MathHelper.ToRadians(wingHeight * -j);
-				Vector2 position = npc.Center + new Vector2(-28 * j, 20).RotatedBy(npc.rotation) + new Vector2((width + npc.width) / 2 * j, 0).RotatedBy(positionalRotation);
+				float positionalRotation = NPC.rotation + MathHelper.ToRadians(wingHeight * -j);
+				Vector2 position = NPC.Center + new Vector2(-28 * j, 20).RotatedBy(NPC.rotation) + new Vector2((width + NPC.width) / 2 * j, 0).RotatedBy(positionalRotation);
 				float degreesCount = 0f;
 				float flapMult = 0.0f;
 				float baseGrowth = 0.35f;
@@ -157,24 +157,24 @@ namespace SOTS.NPCs.Constructs
 					circular.X *= width / 2 * j;
 					circular.Y *= height / 2;
 					circular = circular.RotatedBy(positionalRotation);
-					Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, npc.scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, NPC.scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
 				}
 			}
         }
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				if(Main.netMode != NetmodeID.Server)
 				{
 					for (int k = 0; k < 30; k++)
 					{
-						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 					}
 					for (int i = 1; i <= 7; i++)
-						Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
+						Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
 					for (int i = 0; i < 9; i++)
-						Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+						Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
                 }
 			}
 		}
@@ -182,42 +182,42 @@ namespace SOTS.NPCs.Constructs
 		Vector2 aimTo = Vector2.Zero;
 		public override bool PreAI()
 		{
-			Player player = Main.player[npc.target];
-			npc.TargetClosest(false);
+			Player player = Main.player[NPC.target];
+			NPC.TargetClosest(false);
 			WingStuff();
 			return true;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.45f / 155f, (255 - npc.alpha) * 0.25f / 155f, (255 - npc.alpha) * 0.45f / 155f);
-			if (npc.ai[0] == 0)
+			Player player = Main.player[NPC.target];
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.45f / 155f, (255 - NPC.alpha) * 0.25f / 155f, (255 - NPC.alpha) * 0.45f / 155f);
+			if (NPC.ai[0] == 0)
 			{
-				npc.ai[1]++;
+				NPC.ai[1]++;
 				if (forceWingHeight)
 				{
-					float mult = npc.ai[1] / 20f;
+					float mult = NPC.ai[1] / 20f;
 					wingHeight = MathHelper.Lerp(wingHeight, lastWingHeight, mult);
 					if (mult >= 1)
 						forceWingHeight = false;
-					npc.rotation = npc.velocity.X * 0.06f;
-					aimTo = Vector2.Lerp(aimTo, npc.Center + new Vector2(0, 400).RotatedBy(npc.rotation), mult);
+					NPC.rotation = NPC.velocity.X * 0.06f;
+					aimTo = Vector2.Lerp(aimTo, NPC.Center + new Vector2(0, 400).RotatedBy(NPC.rotation), mult);
 				}
 				else
 				{
-					npc.rotation = npc.velocity.X * 0.06f;
-					aimTo = npc.Center + new Vector2(0, 400).RotatedBy(npc.rotation);
+					NPC.rotation = NPC.velocity.X * 0.06f;
+					aimTo = NPC.Center + new Vector2(0, 400).RotatedBy(NPC.rotation);
 					DoPassiveMovement();
-					if (npc.ai[1] > 180)
+					if (NPC.ai[1] > 180)
 					{
-						float wingSpeed = (npc.ai[1] - 180) / 60f;
+						float wingSpeed = (NPC.ai[1] - 180) / 60f;
 						wingSpeedMult = 1 - wingSpeed;
-						if (npc.ai[1] > 240)
+						if (NPC.ai[1] > 240)
 						{
-							npc.ai[0] = Main.rand.Next(2) + 1;
-							npc.ai[1] = 0;
+							NPC.ai[0] = Main.rand.Next(2) + 1;
+							NPC.ai[1] = 0;
 							if(Main.netMode == NetmodeID.Server)
-								npc.netUpdate = true;
+								NPC.netUpdate = true;
 						}
 					}
 					else
@@ -229,134 +229,134 @@ namespace SOTS.NPCs.Constructs
 					}
 				}
 			}
-			else if(npc.ai[0] == 1)
+			else if(NPC.ai[0] == 1)
 			{
-				npc.ai[1]++;
+				NPC.ai[1]++;
 				forceWingHeight = true;
-				if(npc.ai[1] > 20)
+				if(NPC.ai[1] > 20)
 				{
 					aimTo = Vector2.Lerp(aimTo, player.Center, 0.08f);
 					wingHeight = 50;
-					Vector2 toPlayer = aimTo - npc.Center;
-					npc.velocity *= 0.96f;
-					if (npc.ai[1] > 70)
+					Vector2 toPlayer = aimTo - NPC.Center;
+					NPC.velocity *= 0.96f;
+					if (NPC.ai[1] > 70)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.3f, -0.4f);
-						int damage2 = npc.damage / 2;
+						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.3f, -0.4f);
+						int damage2 = NPC.damage / 2;
 						if (Main.expertMode)
 						{
 							damage2 = (int)(damage2 / Main.expertDamage);
 						}
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							Projectile.NewProjectile(npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * 4f, ModContent.ProjectileType<ChaosCircle>(), damage2, 0, Main.myPlayer);
+							Projectile.NewProjectile(NPC.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * 4f, ModContent.ProjectileType<ChaosCircle>(), damage2, 0, Main.myPlayer);
 						}
-						npc.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 9f;
-						npc.ai[1] = 40;
-						npc.ai[2]++;
+						NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 9f;
+						NPC.ai[1] = 40;
+						NPC.ai[2]++;
 					}
 					else
                     {
 						float scalingSpeed = (float)Math.Sqrt(toPlayer.Length()) * 0.005f;
-						npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.10f + scalingSpeed);
+						NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.10f + scalingSpeed);
 					}
-					if(npc.ai[2] > 6 && npc.ai[1] > 60)
+					if(NPC.ai[2] > 6 && NPC.ai[1] > 60)
 					{
-						npc.ai[0] = 0;
-						npc.ai[1] = 0;
-						npc.ai[2] = 0;
+						NPC.ai[0] = 0;
+						NPC.ai[1] = 0;
+						NPC.ai[2] = 0;
 					}
                 }
 				else
 				{
-					npc.velocity *= 0.96f;
-					aimTo = Vector2.Lerp(aimTo, player.Center, npc.ai[1] / 30f);
-					wingHeight = MathHelper.Lerp(lastWingHeight, 50, npc.ai[1] / 20f);
+					NPC.velocity *= 0.96f;
+					aimTo = Vector2.Lerp(aimTo, player.Center, NPC.ai[1] / 30f);
+					wingHeight = MathHelper.Lerp(lastWingHeight, 50, NPC.ai[1] / 20f);
                 }
 			}
-			else if (npc.ai[0] == 2)
+			else if (NPC.ai[0] == 2)
 			{
-				npc.ai[1]++;
+				NPC.ai[1]++;
 				forceWingHeight = true;
-				if (npc.ai[1] > 20)
+				if (NPC.ai[1] > 20)
 				{
 					aimTo = Vector2.Lerp(aimTo, player.Center, 0.08f);
 					wingHeight = 50;
-					Vector2 toPlayer = aimTo - npc.Center;
-					npc.velocity *= 0.96f;
-					if (npc.ai[1] > 100)
+					Vector2 toPlayer = aimTo - NPC.Center;
+					NPC.velocity *= 0.96f;
+					if (NPC.ai[1] > 100)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.3f, -0.4f);
-						int damage2 = npc.damage / 2;
+						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.3f, -0.4f);
+						int damage2 = NPC.damage / 2;
 						if (Main.expertMode)
 						{
 							damage2 = (int)(damage2 / Main.expertDamage);
 						}
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{ 
-							Projectile.NewProjectile(npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * (11f + 5f * npc.ai[2]), ModContent.ProjectileType<ChaosSphere>(), (int)(damage2 * 1.2f), 0, Main.myPlayer, 220 - npc.ai[2] * 80);
+							Projectile.NewProjectile(NPC.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * (11f + 5f * NPC.ai[2]), ModContent.ProjectileType<ChaosSphere>(), (int)(damage2 * 1.2f), 0, Main.myPlayer, 220 - NPC.ai[2] * 80);
 						}
-						npc.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 14f;
-						npc.ai[1] = 20;
-						npc.ai[2]++;
+						NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 14f;
+						NPC.ai[1] = 20;
+						NPC.ai[2]++;
 					}
 					else
 					{
 						float scalingSpeed = (float)Math.Sqrt(toPlayer.Length()) * 0.002f;
-						npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.07f + scalingSpeed);
+						NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.07f + scalingSpeed);
 					}
-					if (npc.ai[2] > 1 && npc.ai[1] > 70)
+					if (NPC.ai[2] > 1 && NPC.ai[1] > 70)
 					{
-						npc.ai[0] = 0;
-						npc.ai[1] = 0;
-						npc.ai[2] = 0;
+						NPC.ai[0] = 0;
+						NPC.ai[1] = 0;
+						NPC.ai[2] = 0;
 					}
 				}
 				else
 				{
-					npc.velocity *= 0.96f;
-					aimTo = Vector2.Lerp(aimTo, player.Center, npc.ai[1] / 30f);
-					wingHeight = MathHelper.Lerp(lastWingHeight, 50, npc.ai[1] / 20f);
+					NPC.velocity *= 0.96f;
+					aimTo = Vector2.Lerp(aimTo, player.Center, NPC.ai[1] / 30f);
+					wingHeight = MathHelper.Lerp(lastWingHeight, 50, NPC.ai[1] / 20f);
 				}
 			}
 			else
             {
-				aimTo = npc.Center;
+				aimTo = NPC.Center;
 			}
-			dir = (aimTo - npc.Center).ToRotation() - MathHelper.ToRadians(90);
-			npc.rotation = dir;
-			npc.ai[3]++;
+			dir = (aimTo - NPC.Center).ToRotation() - MathHelper.ToRadians(90);
+			NPC.rotation = dir;
+			NPC.ai[3]++;
 		}
 		public void DoPassiveMovement()
 		{
-			Player player = Main.player[npc.target];
-			float sinusoid = (float)Math.Sin(MathHelper.ToRadians(npc.ai[3]));
+			Player player = Main.player[NPC.target];
+			float sinusoid = (float)Math.Sin(MathHelper.ToRadians(NPC.ai[3]));
 			Vector2 offset = new Vector2(0, -300).RotatedBy(MathHelper.ToRadians(sinusoid * 30));
 			offset.X *= 1.5f;
 			Vector2 position = player.Center + offset;
-			float verticalOffset = 40 + 40 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] * 2f));
+			float verticalOffset = 40 + 40 * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 2f));
 			position.Y -= verticalOffset;
-			Vector2 goTo = position - npc.Center;
+			Vector2 goTo = position - NPC.Center;
 			float speed = 12f;
 			if(goTo.Length() < speed)
             {
 				speed = goTo.Length();
             }
-			npc.velocity *= 0.3f;
-			npc.velocity += 0.6f * speed * goTo.SafeNormalize(Vector2.Zero);
+			NPC.velocity *= 0.3f;
+			NPC.velocity += 0.6f * speed * goTo.SafeNormalize(Vector2.Zero);
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosRubble>());
-			Main.npc[n].velocity = npc.oldVelocity + Main.rand.NextVector2Circular(5, 5);
+			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ChaosRubble>());
+			Main.npc[n].velocity = NPC.oldVelocity + Main.rand.NextVector2Circular(5, 5);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n, 0, counter2);
+			n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n, 0, counter2);
 			Main.npc[n].velocity.Y = -10f;
-			Main.npc[n].velocity += npc.oldVelocity * 0.4f;
+			Main.npc[n].velocity += NPC.oldVelocity * 0.4f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfChaos>(), Main.rand.Next(4) + 4);
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfChaos>(), Main.rand.Next(4) + 4);
 		}	
 	}
 }

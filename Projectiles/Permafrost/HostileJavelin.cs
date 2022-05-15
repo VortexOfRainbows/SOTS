@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Permafrost
 		
         public override void SetDefaults()
         {
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.hostile = true;
 			Projectile.width = 38;
 			Projectile.height = 38;
@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 14;
 			height = 14;

@@ -9,7 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Audio;
-using Terraria.World.Generation;
+using Terraria.WorldBuilding;
 using Terraria.Enums;
 using System.Diagnostics.Contracts;
 
@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.height = 78;
             //Projectile.aiStyle = 140;
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.alpha = (int)byte.MaxValue;
             Projectile.hide = true;
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Otherworld
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, mod.ProjectileType("Seeker"), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
+                        Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("Seeker").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Otherworld
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, mod.ProjectileType("Seeker"), (int)(0.7f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
+                        Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("Seeker").Type, (int)(0.7f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
                     }
                 }
             }
@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Otherworld
                             num3;
                 var vec = Projectile.Center + (num7 + (num5 == -1 ? 3.141593f : 0.0f)).ToRotationVector2() * 42f;
 
-                var dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, mod.DustType("CopyDust4"), player.velocity.X, player.velocity.Y, 200, new Color(), 1f);
+                var dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, Mod.Find<ModDust>("CopyDust4").Type, player.velocity.X, player.velocity.Y, 200, new Color(), 1f);
                 dust.velocity = Projectile.DirectionTo(dust.position) * 0.1f + dust.velocity * 0.1f;
                 dust.color = new Color(250, 250, 250, 120);
                 dust.noGravity = true;
@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.Otherworld
 
                 if (num6 >= 0.75)
                 {
-                    dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, mod.DustType("CopyDust4"), player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
+                    dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, Mod.Find<ModDust>("CopyDust4").Type, player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
                     dust.velocity = Projectile.DirectionTo(dust.position) * 0.1f + dust.velocity * 0.1f;
                     dust.noGravity = true;
                     dust.color = new Color(0, 200, 220, 100);
@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Otherworld
                 {
                     for (var index = 0; index < 5; ++index)
                     {
-                        dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, mod.DustType("CopyDust4"), player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
+                        dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, Mod.Find<ModDust>("CopyDust4").Type, player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
                         dust.velocity *= 1f;
                         dust.noGravity = true;
                         dust.scale += 0.1f;
@@ -194,7 +194,7 @@ namespace SOTS.Projectiles.Otherworld
                         }
                     }
 
-                    Projectile.NewProjectile(vec + new Vector2((float)(num5 * 20), -60f), Vector2.Zero, mod.ProjectileType("SupernovaSmash"), (int)Damage, 0.0f, Projectile.owner, 0.0f, 0.0f);
+                    Projectile.NewProjectile(vec + new Vector2((float)(num5 * 20), -60f), Vector2.Zero, Mod.Find<ModProjectile>("SupernovaSmash").Type, (int)Damage, 0.0f, Projectile.owner, 0.0f, 0.0f);
                     Main.PlayTrackedSound((SoundStyle)SoundID.DD2_MonkStaffGroundImpact, Projectile.Center);
                 }
                 Projectile.position = vector2_1 - Projectile.Size / 2f;

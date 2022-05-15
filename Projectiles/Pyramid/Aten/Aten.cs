@@ -19,11 +19,11 @@ namespace SOTS.Projectiles.Pyramid.Aten
             int width = 48;
             hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 32;
             height = 32;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void OnLaunch(Player player)
         {
@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             Projectile.Size = new Vector2(34, 34);
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.localNPCHitCooldown = 15;
             Projectile.usesLocalNPCImmunity = true;
@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             if (Projectile.localAI[0] == 0)
             {
-                SOTS.primitives.CreateTrail(new AtenPrimTrail(projectile));
+                SOTS.primitives.CreateTrail(new AtenPrimTrail(Projectile));
             }
             if (Projectile.localAI[0] % 24 == 0 && summonedNum < 9) //prevent spawning more in multiplayer with Main.myPlayer == Projectile.owner
             {
@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         public override void SetDefaults()
         {
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.Size = new Vector2(12, 12);
             Projectile.tileCollide = false;
             Projectile.timeLeft = 180;

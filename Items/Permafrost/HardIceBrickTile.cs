@@ -9,7 +9,7 @@ namespace SOTS.Items.Permafrost
 {
 	public class HardIceBrickTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -38,7 +38,7 @@ namespace SOTS.Items.Permafrost
 	}
 	public class HardIceBrickWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(80, 35, 180));

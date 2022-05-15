@@ -23,16 +23,12 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void UpdateEquip(Player player)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.shardSpellExtra++;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "FrigidBar", 8);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<FrigidBar>(8).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

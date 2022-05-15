@@ -26,22 +26,8 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
-			recipe.AddIngredient(ItemID.HerbBag, 1);
-			recipe.AddIngredient(ItemID.DirtBlock, 40);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 40);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
-			recipe.AddRecipeGroup("SOTS:AlchSeeds", 20);
-			recipe.AddIngredient(ItemID.DirtBlock, 40);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 40);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingNature>(), 1).AddIngredient(ItemID.HerbBag, 1).AddIngredient(ItemID.DirtBlock, 40).AddIngredient(ModContent.ItemType<NaturePlating>(), 40).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingNature>(), 1).AddRecipeGroup("SOTS:AlchSeeds", 20).AddIngredient(ItemID.DirtBlock, 40).AddIngredient(ModContent.ItemType<NaturePlating>(), 40).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class Hydroponics : ModTile
@@ -50,7 +36,7 @@ namespace SOTS.Items.Furniture.Nature
 		{
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -95,7 +81,7 @@ namespace SOTS.Items.Furniture.Nature
 							break;
 						}
 					}
-					else if(tile != null && (!tile.active() || tile.TileType != ModContent.TileType<Hydroponics>()))
+					else if(tile != null && (!tile.HasTile || tile.TileType != ModContent.TileType<Hydroponics>()))
 					{
 						noBreak = false;
 						break;
@@ -109,7 +95,7 @@ namespace SOTS.Items.Furniture.Nature
 		public static void Kill(int i, int j)
 		{
 			Tile tileTL = Framing.GetTileSafely(i, j);
-			if (tileTL.frameX == 0 && tileTL.frameY == 0 && tileTL.type == ModContent.TileType<Hydroponics>() && tileTL.active())
+			if (tileTL.TileFrameX == 0 && tileTL.TileFrameY == 0 && tileTL.TileType == ModContent.TileType<Hydroponics>() && tileTL.HasTile)
 			{
 				for (int y = 0; y < 6; y++)
 				{
@@ -155,7 +141,7 @@ namespace SOTS.Items.Furniture.Nature
 				for (int x = 0; x < 6; x++)
 				{
 					Tile growTile = Main.tile[i + x, j + y];
-					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
+					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
 					{
 						SetPlant(i + x, j + y, Main.rand.Next(7));
 						NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
@@ -259,7 +245,7 @@ namespace SOTS.Items.Furniture.Nature
 				}
 			}
 		}
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
 		{
 			GetTopLeft(ref i, ref j);
 			for (int y = 0; y < 6; y += 2)
@@ -267,7 +253,7 @@ namespace SOTS.Items.Furniture.Nature
 				for (int x = 1; x <= 4; x++)
 				{
 					Tile growTile = Main.tile[i + x, j + y];
-					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
+					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
 					{
 						if (growtile.TileFrameY > 72)
 							SetPlant(i + x, j + y, Main.rand.Next(7));
@@ -441,7 +427,7 @@ namespace SOTS.Items.Furniture.Nature
 			Tile growTile = Main.tile[i, j];
 			int x = i - left;
 			int y = j - top;
-			if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
+			if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
 			{
 				if (growtile.TileFrameY == 72)
 				{

@@ -46,13 +46,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<HelicopterParts>(), 2);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12).AddIngredient(ModContent.ItemType<HelicopterParts>(), 2).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

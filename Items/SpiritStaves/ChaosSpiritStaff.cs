@@ -43,13 +43,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingBrilliance>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Chaos.PhaseBar>(), 10);
-			recipe.AddIngredient(ItemID.SoulofLight, 5);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Fragments.DissolvingBrilliance>(), 1).AddIngredient(ModContent.ItemType<Chaos.PhaseBar>(), 10).AddIngredient(ItemID.SoulofLight, 5).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

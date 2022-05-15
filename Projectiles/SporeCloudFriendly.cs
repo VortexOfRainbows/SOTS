@@ -22,7 +22,7 @@ namespace SOTS.Projectiles
 			Projectile.alpha = 45;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

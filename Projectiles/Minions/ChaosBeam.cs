@@ -39,11 +39,11 @@ namespace SOTS.Projectiles.Minions
         {
             return false; 
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 8;
 			height = 8;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
 		float scaleMod = 0.4f;
 		int counter = 0;

@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Otherworld
         {
 			Projectile.height = 16;
 			Projectile.width = 20;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 7200;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Otherworld
 					SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 9, 0.75f);
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(Projectile.Center, new Vector2(4, 0).RotatedBy(Projectile.rotation), mod.ProjectileType("MacaroniBeam"), Projectile.damage, Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.Center, new Vector2(4, 0).RotatedBy(Projectile.rotation), Mod.Find<ModProjectile>("MacaroniBeam").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
 					}
 					Projectile.Kill();
 				}

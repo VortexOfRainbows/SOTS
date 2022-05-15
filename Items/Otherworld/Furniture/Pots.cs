@@ -14,7 +14,7 @@ namespace SOTS.Items.Otherworld.Furniture
 {
 	internal class SkyPots : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSpelunker[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -71,8 +71,8 @@ namespace SOTS.Items.Otherworld.Furniture
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
             SoundEngine.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
-            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore1"), 1f);
-            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore2"), 1f);
+            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore1"), 1f);
+            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore2"), 1f);
             int num = 0;
             if(frameY < 36)
             {
@@ -98,65 +98,65 @@ namespace SOTS.Items.Otherworld.Furniture
             {
                 if(Main.rand.NextBool(2))
                    Item.NewItem(i * 16, j * 16, 16, 16, ItemID.Star, 1, false, 0, false, false);
-                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore6"), 1f);
+                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore6"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 2) //heart pot
             {
                 if (Main.rand.NextBool(2))
                     Item.NewItem(i * 16, j * 16, 16, 16, ItemID.Heart, 1, false, 0, false, false);
-                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore7"), 1f);
+                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore7"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 3) //void pot?
             {
-                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore8"), 1f);
+                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore8"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 4)
             {
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore9"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore9"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore10"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore10"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore11"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore11"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 5)
             {
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore12"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore12"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore13"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore13"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore14"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore14"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
 
 
@@ -167,7 +167,7 @@ namespace SOTS.Items.Otherworld.Furniture
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile((float)(i * 16 + 16), (float)(j * 16 + 16), 0.0f, -12f, ProjectileID.CoinPortal, 0, 0.0f, Main.myPlayer, 0.0f, 0.0f);
             }
-            else if (WorldGen.genRand.Next(40) == 0 && Main.wallDungeon[(int)Main.tile[i, j].wall])
+            else if (WorldGen.genRand.Next(40) == 0 && Main.wallDungeon[(int)Main.tile[i, j].WallType])
                 Item.NewItem(i * 16, j * 16, 16, 16, 327, 1, false, 0, false, false);
             else if (WorldGen.genRand.Next(35) == 0 || Main.rand.Next(35) == 0 && Main.expertMode)
             {
@@ -453,7 +453,7 @@ namespace SOTS.Items.Otherworld.Furniture
                 }
             }
             if (SOTSWorld.downedAdvisor && Main.rand.Next(50) == 0)
-                Item.NewItem(i * 16, j * 16, 16, 16, mod.ItemType("TwilightShard"), 1, false, 0, false, false);
+                Item.NewItem(i * 16, j * 16, 16, 16, Mod.Find<ModItem>("TwilightShard").Type, 1, false, 0, false, false);
         }
     }
     /*internal class Pots : ModItem

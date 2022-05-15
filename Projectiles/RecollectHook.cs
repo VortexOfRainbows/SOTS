@@ -49,7 +49,7 @@ namespace SOTS.Projectiles
             if (hookId == -1)
             {
                 NPC hook = Main.npc[(int)Projectile.ai[1]];
-                if (hook.type == mod.NPCType("HookTurret") && hook.active && (int)hook.localAI[0] == owner.whoAmI)
+                if (hook.type == Mod.Find<ModNPC>("HookTurret") .Type&& hook.active && (int)hook.localAI[0] == owner.whoAmI)
                 {
                     Vector2 toHook = hook.Center - Projectile.Center;
                     toHook = toHook.SafeNormalize(Vector2.Zero);
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles
             else
             {
                 NPC hook = Main.npc[hookId];
-                if (hook.type == mod.NPCType("HookTurret") && hook.active && (int)hook.localAI[0] == owner.whoAmI)
+                if (hook.type == Mod.Find<ModNPC>("HookTurret") .Type&& hook.active && (int)hook.localAI[0] == owner.whoAmI)
                 {
                     hook.Center = Projectile.Center;
                 }
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles
                 Vector2 toOwner = owner.Center - Projectile.Center;
                 if (toOwner.Length() < rotationDist)
                 {
-                    if (hook.type == mod.NPCType("HookTurret") && hook.active && (int)hook.localAI[0] == owner.whoAmI)
+                    if (hook.type == Mod.Find<ModNPC>("HookTurret") .Type&& hook.active && (int)hook.localAI[0] == owner.whoAmI)
                     {
                         float healthMult = (float)owner.life / (float)owner.lifeMax;
                         if (healthMult > 1) 

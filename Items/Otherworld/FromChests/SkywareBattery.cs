@@ -64,21 +64,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PlatinumBattery>(), 1);
-			recipe.AddIngredient(ItemID.ArmorPolish, 1);
-			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<GoldBattery>(), 1);
-			recipe.AddIngredient(ItemID.ArmorPolish, 1);
-			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PlatinumBattery>(), 1).AddIngredient(ItemID.ArmorPolish, 1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<GoldBattery>(), 1).AddIngredient(ItemID.ArmorPolish, 1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

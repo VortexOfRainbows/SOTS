@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.height = 16;
 			Projectile.hostile = true;
 			Projectile.friendly = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.extraUpdates = 10;
 			Projectile.timeLeft = 1200;
 			Projectile.tileCollide = true;

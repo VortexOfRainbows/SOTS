@@ -26,7 +26,7 @@ namespace SOTS.Items.Potions
             Item.buffType = ModContent.BuffType<SoulAccess>();   
             Item.buffTime = 22000;  
             Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatingUsing;        
+            Item.useStyle = ItemUseStyleID.EatFood;        
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;
@@ -35,15 +35,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<PhantomFish>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Peanut>(), 1);
-			recipe.AddIngredient(ItemID.Deathweed, 1);
-			recipe.AddTile(13);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ModContent.ItemType<PhantomFish>(), 1).AddIngredient(ModContent.ItemType<SoulResidue>(), 1).AddIngredient(ModContent.ItemType<Peanut>(), 1).AddIngredient(ItemID.Deathweed, 1).AddTile(13).Register();
 		}
 	}
 }

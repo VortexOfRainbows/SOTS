@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class CyberneticEnhancements : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cybernetic Enhancements");
 			Description.SetDefault("Increased void damage by 10%");   

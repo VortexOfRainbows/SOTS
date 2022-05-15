@@ -30,7 +30,7 @@ namespace SOTS.Items.Otherworld
             Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item92;
             Item.autoReuse = true;
-            Item.shoot = mod.ProjectileType("FriendlyOtherworldlyBall");
+            Item.shoot = Mod.Find<ModProjectile>("FriendlyOtherworldlyBall").Type;
 			Item.shootSpeed = 10; //not important
 			if (!Main.dedServ)
 			{
@@ -53,7 +53,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void HoldItem(Player player)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			ref int index = ref modPlayer.phaseCannonIndex;
 			if (index >= 0)
 			{
@@ -76,7 +76,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			ref int index = ref modPlayer.phaseCannonIndex;
 			if (index < 0)
 			{

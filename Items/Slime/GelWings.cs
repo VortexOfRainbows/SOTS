@@ -81,13 +81,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 8);
-			recipe.AddIngredient(null, "Wormwood", 24);
-			recipe.AddIngredient(ItemID.Feather, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 8).AddIngredient(null, "Wormwood", 24).AddIngredient(ItemID.Feather, 10).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class GelWingsPlayer : ModPlayer

@@ -44,13 +44,7 @@ namespace SOTS.Items.Inferno
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.HellwingBow, 1);
-			recipe.AddIngredient(ItemID.MoltenFury, 1);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.HellwingBow, 1).AddIngredient(ItemID.MoltenFury, 1).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

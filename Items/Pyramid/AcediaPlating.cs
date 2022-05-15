@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Cyan;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AcediaPlatingTile");
+			Item.createTile = Mod.Find<ModTile>("AcediaPlatingTile").Type;
 		}
 	}
 	public class AcediaPlatingTile : ModTile
@@ -59,20 +59,20 @@ namespace SOTS.Items.Pyramid
 				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 1f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			//Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("AcediaPlating");
+			drop = Mod.Find<ModItem>("AcediaPlating").Type;
 			AddMapEntry(new Color(44, 12, 62));
 			MineResist = 2f;
 			MinPick = 250;
 			soundType = 21;
 			soundStyle = 2;
-			DustType = mod.DustType("AcedianDust");
+			DustType = Mod.Find<ModDust>("AcedianDust").Type;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override bool CanExplode(int i, int j)

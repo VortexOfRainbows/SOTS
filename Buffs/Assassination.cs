@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Assassination : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Assassination");
 			Description.SetDefault("Execute enemies below 10% health");   
@@ -15,7 +15,7 @@ namespace SOTS.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             modPlayer.assassinateNum *= 0.9f;
             modPlayer.assassinate = true;
             modPlayer.assassinateFlat += 20;

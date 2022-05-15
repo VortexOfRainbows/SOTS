@@ -67,13 +67,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 15);
-			recipe.AddIngredient(ItemID.VenusMagnum, 1);
-			recipe.AddIngredient(ModContent.ItemType<GhoulBlaster>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PhaseBar>(), 15).AddIngredient(ItemID.VenusMagnum, 1).AddIngredient(ModContent.ItemType<GhoulBlaster>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

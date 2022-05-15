@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Evil
 			Projectile.friendly = true;
 			Projectile.hostile = false;
 			Projectile.tileCollide = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 30;
 			Projectile.width = 14;

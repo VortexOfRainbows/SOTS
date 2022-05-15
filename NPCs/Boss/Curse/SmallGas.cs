@@ -30,18 +30,18 @@ namespace SOTS.NPCs.Boss.Curse
             NPC.width = 45;
             NPC.height = 45;
 			Main.npcFrameCount[NPC.type] = 1;  
-            npc.value = 0;
-            npc.npcSlots = 1f;
-			npc.dontCountMe = true;
-			npc.HitSound = null;
-			npc.DeathSound = null;
-			npc.lavaImmune = true;
-			npc.netAlways = true;
-			npc.buffImmune[BuffID.OnFire] = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
-			npc.noTileCollide = true;
-			npc.noGravity = true;
-			npc.dontTakeDamage = true;
+            NPC.value = 0;
+            NPC.npcSlots = 1f;
+			NPC.dontCountMe = true;
+			NPC.HitSound = null;
+			NPC.DeathSound = null;
+			NPC.lavaImmune = true;
+			NPC.netAlways = true;
+			NPC.buffImmune[BuffID.OnFire] = true;
+			NPC.buffImmune[BuffID.Frostburn] = true;
+			NPC.noTileCollide = true;
+			NPC.noGravity = true;
+			NPC.dontTakeDamage = true;
 		}
 		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
 		public void catalogueParticles()
@@ -66,13 +66,13 @@ namespace SOTS.NPCs.Boss.Curse
 						i--;
 					}
 					else if (!particle.noMovement)
-						particle.position += npc.velocity * 0.925f;
+						particle.position += NPC.velocity * 0.925f;
 				}
 			}
 		}
         public override bool PreAI()
 		{
-			int parentID = (int)npc.ai[0];
+			int parentID = (int)NPC.ai[0];
 			if (parentID >= 0)
 			{
 				NPC npc2 = Main.npc[parentID];
@@ -80,22 +80,22 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					if(Main.netMode != NetmodeID.Server)
 					{
-						if (npc.timeLeft == 2)
+						if (NPC.timeLeft == 2)
 						{
 							PharaohsCurse curse = npc2.modNPC as PharaohsCurse;
 							for (int j = 0; j < 40; j++)
 							{
 								Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-								curse.foamParticleList1.Add(new CurseFoam(npc.Center, rotational, 1.55f, true));
+								curse.foamParticleList1.Add(new CurseFoam(NPC.Center, rotational, 1.55f, true));
 							}
 						}
-						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Npc[npc.type].Value, npc.Center, 1.0f * npc.scale, foamParticleList1, 1, 0, 40, npc.rotation);
-						PharaohsCurse.SpawnPassiveDust(GetTexture("SOTS/NPCs/Boss/Curse/SmallGasFill"), npc.Center + new Vector2(0, 10), 1.0f * npc.scale, foamParticleList1, 1, 0, 100, npc.rotation);
+						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value, NPC.Center, 1.0f * NPC.scale, foamParticleList1, 1, 0, 40, NPC.rotation);
+						PharaohsCurse.SpawnPassiveDust(GetTexture("SOTS/NPCs/Boss/Curse/SmallGasFill"), NPC.Center + new Vector2(0, 10), 1.0f * NPC.scale, foamParticleList1, 1, 0, 100, NPC.rotation);
 					}
 				}
 				else
 				{
-					npc.active = false;
+					NPC.active = false;
 				}
 			}
 			catalogueParticles();
@@ -103,7 +103,7 @@ namespace SOTS.NPCs.Boss.Curse
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return npc.ai[3] > 90;
+            return NPC.ai[3] > 90;
         }
         bool[] ignore;
 		public override void PostAI()
@@ -118,11 +118,11 @@ namespace SOTS.NPCs.Boss.Curse
 				ignore[TileType<TrueSandstoneTile>()] = false;
 				ignore[TileType<AncientGoldGateTile>()] = false;
 			}
-			npc.velocity = Collision.AdvancedTileCollision(ignore, npc.position, npc.velocity, npc.width, npc.height, true, true);
+			NPC.velocity = Collision.AdvancedTileCollision(ignore, NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 		}
 		public void ParticleExplosion(int amt = 160, bool quiet = false)
 		{
-			int parentID = (int)npc.ai[0];
+			int parentID = (int)NPC.ai[0];
 			if (parentID >= 0)
 			{
 				NPC npc2 = Main.npc[parentID];
@@ -135,54 +135,54 @@ namespace SOTS.NPCs.Boss.Curse
 						{
 							float scale = Main.rand.NextFloat(0.5f, 1.5f);
 							Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 8.5f) / scale).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-							curse.foamParticleList1.Add(new CurseFoam(npc.Center, rotational, 1.75f * scale, true));
+							curse.foamParticleList1.Add(new CurseFoam(NPC.Center, rotational, 1.75f * scale, true));
 						}
 					}
 				}
 				else
 				{
-					npc.active = false;
+					NPC.active = false;
 				}
 			}
 			if (!quiet)
-				SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
+				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
 		}
 		public override void AI()
 		{
-			npc.ai[3]++;
-			Player player = Main.player[npc.target];
-			npc.ai[1]++;
-			if(npc.ai[1] % 720 == 630 || npc.ai[2] > 0) //do slam attack
+			NPC.ai[3]++;
+			Player player = Main.player[NPC.target];
+			NPC.ai[1]++;
+			if(NPC.ai[1] % 720 == 630 || NPC.ai[2] > 0) //do slam attack
 			{
-				npc.velocity.X *= 0.5f;
-				npc.ai[2]++;
-				if (npc.ai[2] < 60)
+				NPC.velocity.X *= 0.5f;
+				NPC.ai[2]++;
+				if (NPC.ai[2] < 60)
 				{
-					float waveY = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2] * 4f));
-					npc.velocity.Y *= 0.875f;
-					npc.velocity.Y -= 0.4f * waveY;
-					if (npc.ai[2] == 40)
+					float waveY = (float)Math.Sin(MathHelper.ToRadians(NPC.ai[2] * 4f));
+					NPC.velocity.Y *= 0.875f;
+					NPC.velocity.Y -= 0.4f * waveY;
+					if (NPC.ai[2] == 40)
 					{
 						SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
 					}
 				}
 				else
 				{
-					if (npc.ai[2] == 60)
+					if (NPC.ai[2] == 60)
 					{
 						SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
-						npc.velocity.Y += 4.5f;
+						NPC.velocity.Y += 4.5f;
 					}
-					npc.velocity.Y += 0.8f;
+					NPC.velocity.Y += 0.8f;
 					//Check for tile collide
-					Vector2 temp = npc.velocity;
-					npc.velocity = Collision.AdvancedTileCollision(ignore, npc.position, npc.velocity, npc.width, npc.height, true, true);
-					if (npc.velocity != temp)
+					Vector2 temp = NPC.velocity;
+					NPC.velocity = Collision.AdvancedTileCollision(ignore, NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
+					if (NPC.velocity != temp)
 					{
 						ParticleExplosion();
 						if (Main.netMode != 1)
 						{
-							int damage = npc.damage / 2;
+							int damage = NPC.damage / 2;
 							if (Main.expertMode)
 							{
 								damage = (int)(damage / Main.expertDamage);
@@ -190,25 +190,25 @@ namespace SOTS.NPCs.Boss.Curse
 							for (int i = 0; i < 6; i++)
 							{
 								Vector2 outWards = new Vector2(-2f, 0).RotatedBy(MathHelper.ToRadians(30 + i / 2 * 40));
-								Projectile.NewProjectile(npc.Center, outWards, ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, (int)npc.ai[0], (i % 2 * 2 - 1) * 0.8f);
+								Projectile.NewProjectile(NPC.Center, outWards, ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, (int)NPC.ai[0], (i % 2 * 2 - 1) * 0.8f);
 							}
 						}
-						npc.active = false;
+						NPC.active = false;
 					}
 				}
 			}
 			else
 			{
-				Vector2 rotatePos = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(npc.ai[1]));
+				Vector2 rotatePos = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[1]));
 				Vector2 toPos = rotatePos + player.Center;
-				Vector2 goToPos = npc.Center - toPos;
+				Vector2 goToPos = NPC.Center - toPos;
 				float length = goToPos.Length() + 0.1f;
 				if (length > 12)
 				{
 					length = 12;
 				}
 				goToPos = goToPos.SafeNormalize(Vector2.Zero);
-				npc.velocity = goToPos * -length;
+				NPC.velocity = goToPos * -length;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
@@ -217,7 +217,7 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			int parentID = (int)npc.ai[0];
+			int parentID = (int)NPC.ai[0];
 			if (parentID >= 0 && Main.netMode != NetmodeID.Server)
 			{
 				NPC npc2 = Main.npc[parentID];
@@ -227,17 +227,17 @@ namespace SOTS.NPCs.Boss.Curse
 					for (int j = 0; j < 40; j++)
 					{
 						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-						curse.foamParticleList1.Add(new CurseFoam(npc.Center, rotational, 1.55f, true));
+						curse.foamParticleList1.Add(new CurseFoam(NPC.Center, rotational, 1.55f, true));
 					}
 				}
 			}
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
-				SoundEngine.PlaySound(3, (int)npc.Center.X, (int)npc.Center.Y, 54, 1.2f, -0.25f);
+				SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 60.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 					num++;
 				}
 			}
@@ -245,7 +245,7 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 				}
 			}
 		}

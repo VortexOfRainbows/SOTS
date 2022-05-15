@@ -14,7 +14,7 @@ namespace SOTS.Items.Furniture
         public abstract class OpenVariant<TClosed> : ModTile where TClosed : ModTile
         {
             protected virtual Color MapColor => new Color(191, 142, 111, 255);
-            public override void SetDefaults()
+            public override void SetStaticDefaults()
             {
                 Main.tileFrameImportant[Type] = true;
                 Main.tileSolid[Type] = false;
@@ -85,7 +85,7 @@ namespace SOTS.Items.Furniture
                 player.cursorItemIconID = ModContent.ItemType<TDrop>();
             }
         }
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileBlockLight[Type] = true;

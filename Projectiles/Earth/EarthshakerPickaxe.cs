@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Earth
             Projectile.hostile = false; 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
 			Projectile.alpha = 0;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)

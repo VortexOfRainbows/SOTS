@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Minions
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(263);
-			aiType = 263;
+			AIType = 263;
 			Projectile.height = 48;
 			Projectile.width = 48;
 			Projectile.penetrate = -1;

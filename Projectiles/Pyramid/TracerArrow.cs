@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Pyramid
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(1);
-            aiType = 1;
+            AIType = 1;
 			Projectile.alpha = 100;
 			Projectile.width = 18;
 			Projectile.height = 38;

@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Minions
 			DisplayName.SetDefault("Holo Eye");
 			Main.projFrames[Projectile.type] = 1;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-			ProjectileID.Sets.Homing[Projectile.type] = true;
+			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 		public sealed override void SetDefaults()
 		{
@@ -288,7 +288,7 @@ namespace SOTS.Projectiles.Minions
 				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.75f);
 				if (Main.myPlayer == Projectile.owner)
 				{
-					Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, mod.ProjectileType("DestabilizingBeam"), Projectile.damage, 1f, owner.whoAmI, 0, -1);
+					Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, Mod.Find<ModProjectile>("DestabilizingBeam").Type, Projectile.damage, 1f, owner.whoAmI, 0, -1);
 				}
 				eyeReset = -0.9f;
 				aiCounter2 = -60;
@@ -302,7 +302,7 @@ namespace SOTS.Projectiles.Minions
 					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 0.5f);
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, mod.ProjectileType("CodeBurst"), Projectile.damage, 1f, owner.whoAmI, 0, -1);
+						Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, Mod.Find<ModProjectile>("CodeBurst").Type, Projectile.damage, 1f, owner.whoAmI, 0, -1);
 					}
 					eyeReset = -0.8f;
 					aiCounter2 = 0;

@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Lightning
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 43;
 			Projectile.width = 43;
 			Projectile.penetrate = 24;
@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Lightning
 			Projectile.timeLeft = 120;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Lightning
 		public override void Kill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			
 			Vector2 cursorArea = Main.MouseWorld;
 			
@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Lightning
 			if(Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 3; i++)
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 4.25f, 0f);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, Mod.Find<ModProjectile>("PurpleLightning").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 4.25f, 0f);
 			}
 		}
 	}

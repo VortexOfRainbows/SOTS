@@ -42,11 +42,7 @@ namespace SOTS.Items.GhostTown
         }
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 18);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 18).AddTile(TileID.Anvils).Register();
         }
         public Vector2 EdgeOfRect(Rectangle rect, float rad)
         {

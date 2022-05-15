@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Items.Fragments;
+using Terraria.Audio;
 
 namespace SOTS.Items.Void
 {
@@ -27,7 +28,7 @@ namespace SOTS.Items.Void
 			Item.consumable = true;
 			ItemID.Sets.ItemNoGravity[Item.type] = false;
 		}
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			SoundEngine.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 39);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -42,15 +43,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1);
-			recipe.AddIngredient(ItemID.ManaCrystal, 1);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 5);
-			recipe.AddIngredient(ItemID.ShadowScale, 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1).AddIngredient(ItemID.ManaCrystal, 1).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 5).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 5).AddIngredient(ItemID.ShadowScale, 15).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

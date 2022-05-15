@@ -26,21 +26,21 @@ namespace SOTS.NPCs.Boss
             NPC.knockBackResist = 0f;
             NPC.width = 72;
             NPC.height = 118;
-            animationType = NPCID.CaveBat;
+            AnimationType = NPCID.CaveBat;
             Main.npcFrameCount[NPC.type] = 5;
-            npc.npcSlots = 1f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-			npc.netUpdate = true;
-			npc.netAlways = true;
-            npc.HitSound = SoundID.NPCHit3;
-            npc.DeathSound = SoundID.NPCDeath6;
+            NPC.npcSlots = 1f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+			NPC.netUpdate = true;
+			NPC.netAlways = true;
+            NPC.HitSound = SoundID.NPCHit3;
+            NPC.DeathSound = SoundID.NPCDeath6;
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.damage = (int)(npc.damage * 0.75f);  
+            NPC.damage = (int)(NPC.damage * 0.75f);  
         }
 		public void GenerateDust()
 		{
@@ -50,7 +50,7 @@ namespace SOTS.NPCs.Boss
 				{
 					Vector2 circularLocation = new Vector2(48 + j * 12, 0).RotatedBy(MathHelper.ToRadians(i + j * 10));
 					
-					int num1 = Dust.NewDust(new Vector2(npc.Center.X + circularLocation.X - 4, npc.Center.Y + circularLocation.Y - 4), 4, 4, 134);
+					int num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, 134);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 0.1f;
 				}
@@ -58,44 +58,44 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void AI()
 		{
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 2.5f / 255f, (255 - npc.alpha) * 1.6f / 255f, (255 - npc.alpha) * 2.4f / 255f);
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 2.5f / 255f, (255 - NPC.alpha) * 1.6f / 255f, (255 - NPC.alpha) * 2.4f / 255f);
 			float rotateAmount = 170 * 0.012f;
 			int dist = 360;
 			
-			Player target = Main.player[npc.target];
+			Player target = Main.player[NPC.target];
 			
-            npc.TargetClosest(false);
+            NPC.TargetClosest(false);
 			
-			if(Main.rand.Next(3) == 0 && npc.ai[0] % 40 == 0)
-					Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-50,51), npc.Center.Y + Main.rand.Next(-50,51), Main.rand.Next(-2,3), Main.rand.Next(-2,3), mod.ProjectileType("plusBeam"), 40, 0, 0);
+			if(Main.rand.NextBool(3) && NPC.ai[0] % 40 == 0)
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + Main.rand.Next(-50,51), NPC.Center.Y + Main.rand.Next(-50,51), Main.rand.Next(-2,3), Main.rand.Next(-2,3), Mod.Find<ModProjectile>("plusBeam").Type, 40, 0, 0);
 				
-			if(Main.rand.Next(3) == 0 && npc.ai[0] % 40 == 20)
-					Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-50,51), npc.Center.Y + Main.rand.Next(-50,51), Main.rand.Next(-2,3), Main.rand.Next(-2,3), mod.ProjectileType("XBeam"), 40, 0, 0);
+			if(Main.rand.NextBool(3) && NPC.ai[0] % 40 == 20)
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + Main.rand.Next(-50,51), NPC.Center.Y + Main.rand.Next(-50,51), Main.rand.Next(-2,3), Main.rand.Next(-2,3), Mod.Find<ModProjectile>("XBeam").Type, 40, 0, 0);
 
 			double deg = (double)rotateTimer; 
 			double rad = deg * (Math.PI / 180);
 			rotateTimer += rotateAmount;
 			
-			float rotateToX = target.Center.X - (int)(Math.Cos(rad) * dist) - npc.width/2;
-			float rotateToY = target.Center.Y - (int)(Math.Sin(rad) * dist) - npc.height/2;
+			float rotateToX = target.Center.X - (int)(Math.Cos(rad) * dist) - NPC.width/2;
+			float rotateToY = target.Center.Y - (int)(Math.Sin(rad) * dist) - NPC.height/2;
 	
 			
 			int originY = (int)target.position.Y;
 			int originX = (int)target.position.X;
 			
-			npc.ai[0] += 1;
+			NPC.ai[0] += 1;
 			
-			if(npc.ai[0] == 20)
+			if(NPC.ai[0] == 20)
 			GenerateDust();
 		
-			if(npc.ai[0] >= 30 && npc.ai[0] < 120)
+			if(NPC.ai[0] >= 30 && NPC.ai[0] < 120)
 			{
-				npc.position.X = rotateToX;
-				npc.position.Y = rotateToY;
+				NPC.position.X = rotateToX;
+				NPC.position.Y = rotateToY;
 			}
-			if(npc.ai[0] >= 240)
+			if(NPC.ai[0] >= 240)
 			{
-				npc.ai[0] = 0;
+				NPC.ai[0] = 0;
 				
 				GenerateDust();
 				int randY = Main.rand.Next(-500,501);
@@ -110,32 +110,32 @@ namespace SOTS.NPCs.Boss
 					randX -= 350;
 				}
 				
-				npc.position.X = originX + randX - npc.width/2;
-				npc.position.Y = originY + randY - npc.height/2;
+				NPC.position.X = originX + randX - NPC.width/2;
+				NPC.position.Y = originY + randY - NPC.height/2;
 				GenerateDust();
 				
-				float travelToX = target.position.X + (float)target.width * 0.5f - npc.Center.X;
-				float travelToY = target.position.Y + (float)target.height * 0.5f  - npc.Center.Y;
+				float travelToX = target.position.X + (float)target.width * 0.5f - NPC.Center.X;
+				float travelToY = target.position.Y + (float)target.height * 0.5f  - NPC.Center.Y;
 				float distance = (float)System.Math.Sqrt((double)(travelToX * travelToX + travelToY * travelToY));
 
 				distance = 2.25f / distance;
 						
 				travelToX *= distance * 5;
 				travelToY *= distance * 5;
-				npc.velocity.X = travelToX;
-				npc.velocity.Y = travelToY;
+				NPC.velocity.X = travelToX;
+				NPC.velocity.Y = travelToY;
 			}
-			if(Main.player[npc.target].dead)
+			if(Main.player[NPC.target].dead)
 			{
 				despawn++;
 			}
 			if(despawn >= 360)
 			{
-				npc.active = false;
+				NPC.active = false;
 			}
 			else
 			{
-				npc.timeLeft = 1000;
+				NPC.timeLeft = 1000;
 			}
 		}
 	}

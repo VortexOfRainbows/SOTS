@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Earth
         public override void SetDefaults()
         {
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = -1;
 			Projectile.width = 34;
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Earth
 			if (Main.myPlayer == Projectile.owner)
 				Projectile.netUpdate = true;
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 20;
 			height = 20;

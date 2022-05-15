@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.extraUpdates = 4;
 			Projectile.timeLeft = 900;
 			Projectile.tileCollide = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = -1;
 		}
         Vector2[] trailPos = new Vector2[60];

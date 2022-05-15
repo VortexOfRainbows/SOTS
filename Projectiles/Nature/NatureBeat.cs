@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Nature
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
 			if(Main.rand.NextBool(3))
-				VoidPlayer.VoidBurn(mod, target, 3, 90);
+				VoidPlayer.VoidBurn(Mod, target, 3, 90);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

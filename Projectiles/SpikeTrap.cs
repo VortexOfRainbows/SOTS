@@ -14,7 +14,7 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(24);
-            aiType = 24; 
+            AIType = 24; 
             Projectile.width = 18;
             Projectile.height = 18; 
             Projectile.timeLeft = 1275;
@@ -23,10 +23,10 @@ namespace SOTS.Projectiles
             Projectile.hostile = false; 
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
 			Projectile.alpha = 0;
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 14;
 			height = 14;

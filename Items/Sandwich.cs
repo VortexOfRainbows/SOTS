@@ -26,19 +26,13 @@ namespace SOTS.Items
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 1;
-			modPlayer.petPinky += (int)(Item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.petPinky += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f)));
 			modPlayer.baguetteDrops = true;
 			modPlayer.additionalHeal += 40;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "Baguette", 1);
-			recipe.AddIngredient(null, "RoyalJelly", 1);
-			recipe.AddIngredient(null, "PeanutButter", 1);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "Baguette", 1).AddIngredient(null, "RoyalJelly", 1).AddIngredient(null, "PeanutButter", 1).AddTile(TileID.CookingPots).Register();
 		}
 	}
 }

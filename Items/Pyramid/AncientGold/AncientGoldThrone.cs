@@ -29,21 +29,16 @@ namespace SOTS.Items.Pyramid.AncientGold
             Item.rare = ItemRarityID.LightRed;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = mod.TileType("AncientGoldThroneTile");
+            Item.createTile = Mod.Find<ModTile>("AncientGoldThroneTile").Type;
         }
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 30);
-            recipe.AddIngredient(ItemID.Silk, 20);
-            recipe.AddTile(TileID.Sawmill);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 30).AddIngredient(ItemID.Silk, 20).AddTile(TileID.Sawmill).Register();
         }
     }
     public class AncientGoldThroneTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -70,7 +65,7 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 48, 64, mod.ItemType("AncientGoldThrone"));
+            Item.NewItem(i * 16, j * 16, 48, 64, Mod.Find<ModItem>("AncientGoldThrone").Type);
         }
     }
 }

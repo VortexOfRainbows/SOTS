@@ -15,7 +15,7 @@ namespace SOTS.Items.Otherworld.Furniture
 {
 	public class LockedMeteoriteChest : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
@@ -96,7 +96,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
 			Chest.DestroyChest(i, j);
 		}
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
@@ -209,7 +209,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				if (player.cursorItemIconText == "Meteorite Chest")
 				{
 					player.cursorItemIconID = ItemID.MeteoriteChest;
-					if (Main.tile[left, top].frameX / 36 == 1)
+					if (Main.tile[left, top].TileFrameX / 36 == 1)
 						player.cursorItemIconID = ItemType<MeteoriteKey>();
 					player.cursorItemIconText = "";
 				}

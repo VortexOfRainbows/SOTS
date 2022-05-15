@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Ores
             Projectile.hostile = false; 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
             Projectile.aiStyle = 0; 
 			Projectile.alpha = 0;
 			Projectile.timeLeft = 100;
@@ -73,8 +73,8 @@ namespace SOTS.Projectiles.Ores
 		}
 		public void LaunchLaser(Vector2 area)
 		{
-			Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, mod.ProjectileType("BrightRedLaser"), (int)(Projectile.damage * 1f), 0, Projectile.owner, area.X, area.Y);
-			proj.melee = true;
+			Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, Mod.Find<ModProjectile>("BrightRedLaser").Type, (int)(Projectile.damage * 1f), 0, Projectile.owner, area.X, area.Y);
+			proj.DamageType = DamageClass.Melee;
 			proj.minion = false;
 		}
 	}

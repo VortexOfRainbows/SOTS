@@ -22,7 +22,7 @@ namespace SOTS.NPCs.Boss.Lux
         public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(despawnTimer);
-			writer.Write(npc.alpha);
+			writer.Write(NPC.alpha);
 			writer.Write(attackTimer3);
 			writer.Write(attackTimer4);
 			writer.Write(SecondPhase);
@@ -32,7 +32,7 @@ namespace SOTS.NPCs.Boss.Lux
         public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			despawnTimer = reader.ReadSingle();
-			npc.alpha = reader.ReadInt32();
+			NPC.alpha = reader.ReadInt32();
 			attackTimer3 = reader.ReadSingle();
 			attackTimer4 = reader.ReadSingle();
 			SecondPhase = reader.ReadBoolean();
@@ -43,23 +43,23 @@ namespace SOTS.NPCs.Boss.Lux
         List<RingManager> rings = new List<RingManager>();
 		private float wingCounter
 		{
-			get => npc.ai[0];
-			set => npc.ai[0] = value;
+			get => NPC.ai[0];
+			set => NPC.ai[0] = value;
 		}
 		private float attackPhase
 		{
-			get => npc.ai[1];
-			set => npc.ai[1] = value;
+			get => NPC.ai[1];
+			set => NPC.ai[1] = value;
 		}
 		private float attackTimer1
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		private float attackTimer2
 		{
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
+			get => NPC.ai[3];
+			set => NPC.ai[3] = value;
 		}
 		private float attackTimer3 = 0;
 		private float attackTimer4 = 0;
@@ -76,14 +76,14 @@ namespace SOTS.NPCs.Boss.Lux
 		public float compressWings = 0;
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
-			for (int k = 0; k < npc.oldPos.Length; k++)
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
+			for (int k = 0; k < NPC.oldPos.Length; k++)
 			{
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
-				Color color = npc.GetAlpha(VoidPlayer.pastelRainbow) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
+				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = NPC.GetAlpha(VoidPlayer.pastelRainbow) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				color.A = 0;
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			float bonusScale = drawNewWingsCounter * 0.1f;
 			float bonusWidth = drawNewWingsCounter * 16f + wingOutwardOffset;
@@ -111,8 +111,8 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				Color color = new Color(100, 100, 100, 0);
@@ -124,7 +124,7 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				else
 					circular *= 0f;
-				Main.spriteBatch.Draw(texture, npc.Center + circular - Main.screenPosition, null, npc.GetAlpha(color), 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, NPC.Center + circular - Main.screenPosition, null, NPC.GetAlpha(color), 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			if (!desperation || attackTimer1 < 100)
 				DrawRings(spriteBatch, true);
@@ -158,8 +158,8 @@ namespace SOTS.NPCs.Boss.Lux
 			dipAndRise = MathHelper.Clamp(dipAndRise, -1, 1);
 			for (int j = -1; j <= 1; j += 2)
 			{
-				float positionalRotation = npc.rotation + MathHelper.ToRadians((wingHeight + degreeOffset) * -j);
-				Vector2 position = npc.Center + new Vector2(-28 * j * (1 - drawNewWingsCounter), 16).RotatedBy(npc.rotation) + new Vector2(((width + npc.width) / 2 + 54 + widthOffset) * j, 0).RotatedBy(positionalRotation);
+				float positionalRotation = NPC.rotation + MathHelper.ToRadians((wingHeight + degreeOffset) * -j);
+				Vector2 position = NPC.Center + new Vector2(-28 * j * (1 - drawNewWingsCounter), 16).RotatedBy(NPC.rotation) + new Vector2(((width + NPC.width) / 2 + 54 + widthOffset) * j, 0).RotatedBy(positionalRotation);
 				float degreesCount = 0f;
 				float flapMult = 0.0f;
 				float baseGrowth = 0.35f;
@@ -186,7 +186,7 @@ namespace SOTS.NPCs.Boss.Lux
 						if (degreesCount < 0)
 							sinusoid = 0;
 						float radians = MathHelper.ToRadians(i * 360f / amtOfParticles);
-						Color c = npc.GetAlpha(VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount)));
+						Color c = NPC.GetAlpha(VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount)));
 						Vector2 circular = new Vector2(-1, 0).RotatedBy(radians);
 						float increaseAmount = 1f;
 						if (i < amtOfParticles / 2)
@@ -225,7 +225,7 @@ namespace SOTS.NPCs.Boss.Lux
 						circular.X *= width / 2 * j;
 						circular.Y *= height / 2;
 						circular = circular.RotatedBy(positionalRotation);
-						Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, npc.scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, NPC.scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
 					}
 					else
                     {
@@ -240,7 +240,7 @@ namespace SOTS.NPCs.Boss.Lux
 				return;
 			for(int i = 0; i < rings.Count; i++)
 			{
-				rings[i].Draw(spriteBatch, 4 - i, (1 - npc.alpha / 255f), drawNewWingsCounter, 1f, npc.rotation, front);
+				rings[i].Draw(spriteBatch, 4 - i, (1 - NPC.alpha / 255f), drawNewWingsCounter, 1f, NPC.rotation, front);
 				if (compressWings >= 2)
 					break;
 			}
@@ -249,8 +249,8 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			Main.npcFrameCount[NPC.type] = 1;
 			DisplayName.SetDefault("Lux");
-			NPCID.Sets.TrailCacheLength[npc.type] = 10;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 10;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;
 		}
 		public override void SetDefaults()
 		{
@@ -261,16 +261,16 @@ namespace SOTS.NPCs.Boss.Lux
             NPC.knockBackResist = 0f;
             NPC.width = 70;
             NPC.height = 70;
-            npc.value = Item.buyPrice(0, 20, 0, 0);
-            npc.npcSlots = 10f;
-            npc.boss = true;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = false;
-			music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor");
+            NPC.value = Item.buyPrice(0, 20, 0, 0);
+            NPC.npcSlots = 10f;
+            NPC.boss = true;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = false;
+			music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor");
 			musicPriority = MusicPriority.BossHigh;
 			SetupDebuffImmunities();
 			bossBag = ModContent.ItemType<LuxBag>();
@@ -316,12 +316,12 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public void SetupDebuffImmunities()
         {
-			npc.buffImmune[BuffID.OnFire] = true;
-			npc.buffImmune[BuffID.Poisoned] = true;
-			npc.buffImmune[BuffID.Venom] = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
-			npc.buffImmune[BuffID.Ichor] = true;
-			npc.buffImmune[BuffID.BetsysCurse] = true;
+			NPC.buffImmune[BuffID.OnFire] = true;
+			NPC.buffImmune[BuffID.Poisoned] = true;
+			NPC.buffImmune[BuffID.Venom] = true;
+			NPC.buffImmune[BuffID.Frostburn] = true;
+			NPC.buffImmune[BuffID.Ichor] = true;
+			NPC.buffImmune[BuffID.BetsysCurse] = true;
 		}
         public override void BossLoot(ref string name, ref int potionType)
         {
@@ -342,46 +342,46 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			if (Main.expertMode)
 			{
-				npc.DropBossBags();
+				NPC.DropBossBags();
 			}
 			else
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(90, 151)); //9 to 15 bars
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SoulofLight, Main.rand.Next(10, 20));
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(90, 151)); //9 to 15 bars
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.SoulofLight, Main.rand.Next(10, 20));
 			}
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return attackPhase != -1 && !npc.dontTakeDamage;
+            return attackPhase != -1 && !NPC.dontTakeDamage;
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f); //90000 hp
-			NPC.damage = (int)(npc.damage * 0.75f); //150 damage
+			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f); //90000 hp
+			NPC.damage = (int)(NPC.damage * 0.75f); //150 damage
 		}
 		bool runOnce = true;
 		public bool TargettingUnit()
 		{
-			npc.velocity.X *= 0.93f; //consequence of being programmed with an aiStyle = 0
-			if ((double)npc.velocity.X > -0.1 && (double)npc.velocity.X < 0.1) //consequence of being programmed with an aiStyle = 0
+			NPC.velocity.X *= 0.93f; //consequence of being programmed with an aiStyle = 0
+			if ((double)NPC.velocity.X > -0.1 && (double)NPC.velocity.X < 0.1) //consequence of being programmed with an aiStyle = 0
 			{
-				npc.velocity.X = 0f;
+				NPC.velocity.X = 0f;
 			}
-			if (!npc.HasValidTarget)
-				npc.TargetClosest(false);
+			if (!NPC.HasValidTarget)
+				NPC.TargetClosest(false);
 			else
 			{
-				if (npc.Center.X < Main.player[npc.target].Center.X)
-					npc.direction = -1;
+				if (NPC.Center.X < Main.player[NPC.target].Center.X)
+					NPC.direction = -1;
 				else
-					npc.direction = 1;
+					NPC.direction = 1;
 			}
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			if (despawnTimer > 300)
 			{
 				despawnTimer++;
 				if (despawnTimer > 900)
-					npc.active = false;
+					NPC.active = false;
 				return true;
 			}
 			else
@@ -403,37 +403,37 @@ namespace SOTS.NPCs.Boss.Lux
 				allWingsForced = false;
 				modifyRotation(false, true);
 				attackPhase = -2;
-				npc.dontTakeDamage = true;
-				npc.velocity.X *= 0.9f;
+				NPC.dontTakeDamage = true;
+				NPC.velocity.X *= 0.9f;
 				if (despawnTimer > 390)
-					npc.velocity.Y -= 0.10f;
+					NPC.velocity.Y -= 0.10f;
 				else
 				{
 					for (int i = 0; i < 4; i++)
 					{
-						rings[i].MoveTo(npc.Center, true);
+						rings[i].MoveTo(NPC.Center, true);
 						rings[i].ResetVariables();
 					}
 				}
 			}
-			int damage = npc.damage / 2;
+			int damage = NPC.damage / 2;
 			if (Main.expertMode)
 			{
 				damage = (int)(damage / Main.expertDamage);
 			}
-			Player player = Main.player[npc.target];
-			Vector2 toPlayer = player.Center - npc.Center;
-			npc.TargetClosest(false);
+			Player player = Main.player[NPC.target];
+			Vector2 toPlayer = player.Center - NPC.Center;
+			NPC.TargetClosest(false);
 			for (int i = 0; i < 4; i++)
 			{
 				if (runOnce)
 					rings.Add(new RingManager(MathHelper.PiOver2 * i, 0.6f, 4 - (i / 2), 60 + (i / 2) * 24));
 				else
-					rings[i].CalculationStuff(npc.Center);
+					rings[i].CalculationStuff(NPC.Center);
 			}
 			if (runOnce)
 			{
-				npc.dontTakeDamage = true;
+				NPC.dontTakeDamage = true;
 				attackTimer1 = -90;
 				attackPhase = -1;
 				runOnce = false;
@@ -445,7 +445,7 @@ namespace SOTS.NPCs.Boss.Lux
 					for (int i = 0; i < 4; i++)
 					{
 						rings[i].ResetVariables();
-						rings[i].MoveTo(npc.Center, true);
+						rings[i].MoveTo(NPC.Center, true);
 					}
 				if (attackPhase != DesperationPhase)
 				{
@@ -459,8 +459,8 @@ namespace SOTS.NPCs.Boss.Lux
                     }
 					SwapPhase(DesperationPhase);
                 }
-				npc.dontTakeDamage = true;
-				npc.life = 1;
+				NPC.dontTakeDamage = true;
+				NPC.life = 1;
 				NPC.lifeMax = 1;
 				attackTimer1++;
 				float lerp = attackTimer1 / 150f;
@@ -472,33 +472,33 @@ namespace SOTS.NPCs.Boss.Lux
 				{
 					if (attackTimer2 == 0 && attackTimer3 == 0)
 					{
-						attackTimer2 = npc.Center.X;
-						attackTimer3 = npc.Center.Y;
+						attackTimer2 = NPC.Center.X;
+						attackTimer3 = NPC.Center.Y;
 					}
-					npc.Center = new Vector2(attackTimer2, attackTimer3);
+					NPC.Center = new Vector2(attackTimer2, attackTimer3);
 					if(attackTimer1 == 181 && Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						npc.velocity *= 0f;
+						NPC.velocity *= 0f;
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							int n = NPC.NewNPC((int)npc.Center.X + 10, (int)npc.position.Y + 12, ModContent.NPCType<Collector2>());
+							int n = NPC.NewNPC((int)NPC.Center.X + 10, (int)NPC.position.Y + 12, ModContent.NPCType<Collector2>());
 							Main.npc[n].netUpdate = true;
 							attackTimer4 = n;
-							npc.netUpdate = true;
+							NPC.netUpdate = true;
 						}
 					}
 					if (attackTimer4 != -1)
 					{
-						npc.velocity *= 0f;
+						NPC.velocity *= 0f;
 						NPC collector = Main.npc[(int)(attackTimer4 + 0.5f)];
 						if (collector.type != ModContent.NPCType<Collector2>())
 						{
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								NPC npc2 = Main.npc[NPC.NewNPC((int)npc.Center.X + 10, (int)npc.position.Y + 12, ModContent.NPCType<Collector2>())];
+								NPC npc2 = Main.npc[NPC.NewNPC((int)NPC.Center.X + 10, (int)NPC.position.Y + 12, ModContent.NPCType<Collector2>())];
 								npc2.netUpdate = true;
 								attackTimer4 = npc2.whoAmI;
-								npc.netUpdate = true;
+								NPC.netUpdate = true;
 							}
 						}
 						else
@@ -506,8 +506,8 @@ namespace SOTS.NPCs.Boss.Lux
 							float ai3 = collector.ai[3];
 							if (ai3 < 80 && ai3 > 0)
 							{
-								npc.scale -= 0.012f;
-								int dust3 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<CopyDust4>(), 0, 0, 0, VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true));
+								NPC.scale -= 0.012f;
+								int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), 0, 0, 0, VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true));
 								Dust dust4 = Main.dust[dust3];
 								dust4.velocity *= 2.5f;
 								dust4.noGravity = true;
@@ -517,7 +517,7 @@ namespace SOTS.NPCs.Boss.Lux
 								{
 									if (Main.netMode != NetmodeID.MultiplayerClient)
 									{
-										int item = Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingBrilliance>(), 1);
+										int item = Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingBrilliance>(), 1);
 										Main.item[item].velocity = new Vector2(0, 5).RotatedBy(MathHelper.ToRadians(50 * ((ai3 - 50) / 25)));
 										NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 									}
@@ -525,9 +525,9 @@ namespace SOTS.NPCs.Boss.Lux
 							}
 							if (ai3 >= 90)
 							{
-								npc.StrikeNPC(10000, 0, 0);
+								NPC.StrikeNPC(10000, 0, 0);
 								if (Main.netMode == NetmodeID.Server)
-									NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, npc.whoAmI, 10000, 0, 0, 0, 0, 0);
+									NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, NPC.whoAmI, 10000, 0, 0, 0, 0, 0);
 							}
 						}
 					}
@@ -535,7 +535,7 @@ namespace SOTS.NPCs.Boss.Lux
 				else
 				{
 					IdleTimer += 0.1f + 1.4f * (float)Math.Sin(MathHelper.Pi * attackTimer1 / 180f);
-					npc.Center += new Vector2(0, 3f * attackTimer1 / 180f * (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)) * (float)Math.Sin(MathHelper.Pi * attackTimer1 / 180f));
+					NPC.Center += new Vector2(0, 3f * attackTimer1 / 180f * (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)) * (float)Math.Sin(MathHelper.Pi * attackTimer1 / 180f));
 				}
 			}
 			else
@@ -545,24 +545,24 @@ namespace SOTS.NPCs.Boss.Lux
 					float lightMult = attackTimer1 / 120f;
 					lightMult = MathHelper.Clamp(lightMult, 0, 1);
 					SOTS.LuxLightingFadeIn = lightMult;
-					npc.velocity *= 0.95f;
+					NPC.velocity *= 0.95f;
 					attackTimer1++;
 					if (attackTimer1 % 30 == 0 && attackTimer1 < 100 && attackTimer1 > 20)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.25f, 0.1f);
+						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.25f, 0.1f);
 					}
 					if (attackTimer1 == 120)
 					{
-						SoundEngine.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f, 0.1f);
+						SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f, 0.1f);
 						Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
 					}
 					if (attackTimer1 > 60)
 					{
-						npc.dontTakeDamage = true;
+						NPC.dontTakeDamage = true;
 						float mult = (attackTimer1 - 60f) / 60f;
 						mult = MathHelper.Clamp(mult, 0, 1f);
 						wingSpeedMult = MathHelper.Lerp(2f, 1.0f, mult);
-						npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 6f * (1 - mult));
+						NPC.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 6f * (1 - mult));
 						if (attackTimer1 > 120)
 						{
 							SwapPhase(LaserOrbPhase);
@@ -575,7 +575,7 @@ namespace SOTS.NPCs.Boss.Lux
 						wingSpeedMult = MathHelper.Lerp(0f, 2f, mult);
 						drawNewWingsCounter = mult;
 						if (attackTimer1 > 0)
-							npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 6f * mult);
+							NPC.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 6f * mult);
 					}
 					else
 					{
@@ -587,15 +587,15 @@ namespace SOTS.NPCs.Boss.Lux
 				{
 					SOTS.LuxLightingFadeIn = 1f;
 					IdleTimer++;
-					npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)));
+					NPC.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)));
 				}
 				if (attackPhase == LaserOrbPhase)
 				{
 					drawNewWingsCounter = 1;
 					allWingsForced = false;
 					modifyRotation(false, false);
-					npc.velocity *= 0.95f;
-					npc.dontTakeDamage = false;
+					NPC.velocity *= 0.95f;
+					NPC.dontTakeDamage = false;
 					if (attackTimer2 == 0)
 					{
 						Vector2 toLocation = player.Center + new Vector2(0, -240);
@@ -609,17 +609,17 @@ namespace SOTS.NPCs.Boss.Lux
 						wingHeightLerp = attackTimer1 / 120f * 0.9f;
 						wingSpeedMult = 1 - attackTimer1 / 120f * 0.2f;
 					}
-					Vector2 laserPos = npc.Center + new Vector2(0, -196);
+					Vector2 laserPos = NPC.Center + new Vector2(0, -196);
 					Vector2 otherLaserPosition = new Vector2(attackTimer3, attackTimer4);
 					if (SecondPhase && attackTimer1 > 70)
 					{
 						if (attackTimer3 == 0 && attackTimer4 == 0)
 						{
-							otherLaserPosition = npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 320 + Main.rand.NextVector2Circular(128, 128);
+							otherLaserPosition = NPC.Center + toPlayer.SafeNormalize(Vector2.Zero) * 320 + Main.rand.NextVector2Circular(128, 128);
 							attackTimer3 = otherLaserPosition.X;
 							attackTimer4 = otherLaserPosition.Y;
 							if (Main.netMode == NetmodeID.Server)
-								npc.netUpdate = true;
+								NPC.netUpdate = true;
 						}
 					}
 					if (attackTimer1 > 90 && attackTimer1 < 120)
@@ -646,12 +646,12 @@ namespace SOTS.NPCs.Boss.Lux
 						{
 							if (SecondPhase)
 							{
-								Projectile.NewProjectile(otherLaserPosition, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target, -1); //Projectile.ai[1] value of -1 to carry on weaker dogma sphere projectile
-								Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target, -2);
+								Projectile.NewProjectile(otherLaserPosition, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target, -1); //Projectile.ai[1] value of -1 to carry on weaker dogma sphere projectile
+								Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target, -2);
 							}
 							else
 							{
-								Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target);
+								Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target);
 							}
 						}
 					}
@@ -660,7 +660,7 @@ namespace SOTS.NPCs.Boss.Lux
 						for (int i = 0; i < 4; i++)
 						{
 							rings[i].ResetVariables();
-							rings[i].MoveTo(npc.Center, true);
+							rings[i].MoveTo(NPC.Center, true);
 						}
 						float resetForceHeight = (1 - (attackTimer1 - 550) / 60f);
 						if (resetForceHeight < 0)
@@ -677,7 +677,7 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				if (attackPhase == ShotgunPhase)
 				{
-					npc.velocity *= 0.93f;
+					NPC.velocity *= 0.93f;
 					attackTimer1++;
 					bool end = attackTimer3 > 5;
 					if (end)
@@ -724,18 +724,18 @@ namespace SOTS.NPCs.Boss.Lux
 							float localCounter = attackTimer1 - 100;
 							if (localCounter % 6 == 0)
 							{
-								Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
-								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
+								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 4 - (int)attackTimer3 % 2;
 									for (int i = 0; i <= amt; i++)
 									{
 										float radians = MathHelper.ToRadians(28f * (i - amt / 2f));
-										Projectile.NewProjectile(npc.Center + outward * 72, outward.RotatedBy(radians) * 5f, ModContent.ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.Center + outward * 72, outward.RotatedBy(radians) * 5f, ModContent.ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
-								npc.velocity -= outward * 1.5f;
+								NPC.velocity -= outward * 1.5f;
 							}
 						}
 						if (attackTimer1 >= 150)
@@ -747,7 +747,7 @@ namespace SOTS.NPCs.Boss.Lux
 						if (speedMult > 1)
 							speedMult = 1;
 						if (attackTimer1 < 90)
-							npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
+							NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
 					}
 				}
 				if (attackPhase == SubspaceCrossPhase)
@@ -755,11 +755,11 @@ namespace SOTS.NPCs.Boss.Lux
 					modifyRotation(true);
 					rings[0].aiming = true;
 					rings[0].targetRadius = 60;
-					npc.velocity *= 0.6f;
+					NPC.velocity *= 0.6f;
 					float distance = toPlayer.Length();
 					int ring = 3 - ((int)attackTimer3 % 3);
 					distance = (float)Math.Pow(distance, 1.2) * 0.01f - 12;
-					npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * distance * 0.25f;
+					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * distance * 0.25f;
 					attackTimer1++;
 					if (attackTimer3 > 12)
 					{
@@ -767,7 +767,7 @@ namespace SOTS.NPCs.Boss.Lux
 						if (attackTimer1 > 150)
 						{
 							for (int i = 1; i < 4; i++)
-								rings[i].MoveTo(npc.Center, true);
+								rings[i].MoveTo(NPC.Center, true);
 							rings[0].ResetVariables();
 							if(attackTimer1 > 180)
 								SwapPhase(PickRandom((int)attackPhase));
@@ -793,11 +793,11 @@ namespace SOTS.NPCs.Boss.Lux
 							attackTimer2++;
 							if (attackTimer2 > 70)
 							{
-								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
-									Projectile.NewProjectile(npc.Center + outward * 72, outward * 3f, ModContent.ProjectileType<ChaosDart>(), damage, 0, Main.myPlayer, npc.target);
+									Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
+									Projectile.NewProjectile(NPC.Center + outward * 72, outward * 3f, ModContent.ProjectileType<ChaosDart>(), damage, 0, Main.myPlayer, NPC.target);
 								}
 								attackTimer2 = 0;
 							}
@@ -825,9 +825,9 @@ namespace SOTS.NPCs.Boss.Lux
 							explodeMult = 1;
 						if (slowDownMult > 1)
 							slowDownMult = 1;
-						npc.alpha = (int)(255 * (1 - explodeMult));
+						NPC.alpha = (int)(255 * (1 - explodeMult));
 						speed2 *= 0.5f * (1 - slowDownMult) * (1 - slowDownMult);
-						npc.velocity *= (1 - slowDownMult);
+						NPC.velocity *= (1 - slowDownMult);
 						if (attackTimer1 > timeToExplosion + 60f)
 						{
 							forcedWingHeight = 0;
@@ -851,7 +851,7 @@ namespace SOTS.NPCs.Boss.Lux
 					else
 					{
 						wingSpeedMult = 1;
-						npc.alpha += 3 + ((int)attackTimer1 % 3 / 2);
+						NPC.alpha += 3 + ((int)attackTimer1 % 3 / 2);
 						float compressMult = attackTimer1 / (30f + timeBetweenShots);
 						if (compressMult > 1)
 							compressMult = 1;
@@ -866,7 +866,7 @@ namespace SOTS.NPCs.Boss.Lux
 							{
 								Vector2 spawnPosition = new Vector2(attackTimer2, attackTimer3);
 								if (attackTimer2 <= 0 || attackTimer3 <= 0)
-									spawnPosition = npc.Center;
+									spawnPosition = NPC.Center;
 								int timeUntilEnd = 90 + timeBetweenShots * (int)(maxCharges - attackTimer4);
 								Vector2 rotate = spawnPosition - player.Center;
 								float lengthX = player.velocity.X * 1.2f;
@@ -875,10 +875,10 @@ namespace SOTS.NPCs.Boss.Lux
 								if (length > 70)
 									length = 70;
 								Vector2 spawnAt = player.Center + Main.rand.NextVector2Circular(96, 96) + player.velocity * length;
-								Projectile.NewProjectile(spawnAt, spawnPosition, ModContent.ProjectileType<ChaosDiamond>(), (int)(damage * 1.5f), 1, Main.myPlayer, timeUntilEnd, npc.target);
+								Projectile.NewProjectile(spawnAt, spawnPosition, ModContent.ProjectileType<ChaosDiamond>(), (int)(damage * 1.5f), 1, Main.myPlayer, timeUntilEnd, NPC.target);
 								attackTimer2 = spawnAt.X;
 								attackTimer3 = spawnAt.Y;
-								npc.netUpdate = true;
+								NPC.netUpdate = true;
 							}
 							attackTimer1 = 30;
 							attackTimer4++;
@@ -886,12 +886,12 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 					if (speed2 > toPlayer.Length())
 						speed2 = toPlayer.Length();
-					npc.velocity = toPlayer.SafeNormalize(Vector2.Zero) * speed2 * 0.25f;
+					NPC.velocity = toPlayer.SafeNormalize(Vector2.Zero) * speed2 * 0.25f;
 				}
 				if (attackPhase == ScatterBulletsPhase)
 				{
 					modifyRotation(false);
-					npc.velocity *= 0.93f;
+					NPC.velocity *= 0.93f;
 					attackTimer1++;
 					bool end = attackTimer3 > 7;
 					if (SecondPhase)
@@ -932,7 +932,7 @@ namespace SOTS.NPCs.Boss.Lux
 						}
 						else if (attackTimer1 == 95)
 						{
-							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								if (SecondPhase)
@@ -944,7 +944,7 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = -amt; i <= amt; i++)
 									{
 										float radians = startRadians + MathHelper.ToRadians(i * 30f);
-										Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 2.5f, ModContent.ProjectileType<ChaosDart2>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 2.5f, ModContent.ProjectileType<ChaosDart2>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
 								else
@@ -956,7 +956,7 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = 0; i <= amt; i++)
 									{
 										float radians = startRadians + MathHelper.ToRadians(i * 360f / amt);
-										Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
 							}
@@ -975,12 +975,12 @@ namespace SOTS.NPCs.Boss.Lux
 						if (speedMult > 1)
 							speedMult = 1;
 						if (attackTimer1 < 90)
-							npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
+							NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
 					}
 				}
 				if (attackPhase == BigLaserPhase)
 				{
-					npc.velocity *= 0.964f;
+					NPC.velocity *= 0.964f;
 					attackTimer1++;
 					int cycles = 3;
 					if (SecondPhase)
@@ -1016,20 +1016,20 @@ namespace SOTS.NPCs.Boss.Lux
 							}
 							if (attackTimer1 % 20 == 0)
 							{
-								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.6f, 0.1f - 0.1f * attackTimer1 / 20f);
+								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.6f, 0.1f - 0.1f * attackTimer1 / 20f);
 							}
 						}
 						if (attackTimer1 >= 120)
 						{
 							if (attackTimer1 % 5 == 0)
 							{
-								Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									Projectile.NewProjectile(npc.Center, outward * 4, ModContent.ProjectileType<ChaosEraser>(), (int)(damage * 1.4f), 0, Main.myPlayer, npc.target, 0.023f * attackTimer2 * 30f / numberOfShots);
+									Projectile.NewProjectile(NPC.Center, outward * 4, ModContent.ProjectileType<ChaosEraser>(), (int)(damage * 1.4f), 0, Main.myPlayer, NPC.target, 0.023f * attackTimer2 * 30f / numberOfShots);
 								}
 								attackTimer2++;
-								npc.velocity -= outward * 1f;
+								NPC.velocity -= outward * 1f;
 							}
 						}
 						else if (attackTimer1 % 2 == 0 && SecondPhase && attackTimer1 > 60)
@@ -1050,7 +1050,7 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 					allWingsForced = false;
 					modifyRotation(false, true);
-					npc.velocity *= 0.9f;
+					NPC.velocity *= 0.9f;
 					attackTimer1++;
 					compressWings = attackTimer1 / 180f;
 					if (compressWings > 1)
@@ -1068,10 +1068,10 @@ namespace SOTS.NPCs.Boss.Lux
 							teleport(player.Center + new Vector2(0, -240), player.Center);
 							attackTimer2 = player.Center.X;
 							attackTimer3 = player.Center.Y - 240;
-							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
+							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.2f, 0.4f);
 							for (int i = 0; i < 120; i++)
 							{
-								Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+								Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 								dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 								dust.noGravity = true;
 								dust.fadeIn = 0.1f;
@@ -1081,7 +1081,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 								for (int i = 0; i < 3; i++)
 								{
-									int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<FakeLux>(), 0, npc.whoAmI, 120 * i, 0, attackPhase == RGBPhase ? 1 : 0); //summons 120, 240, and 360
+									int npc1 = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<FakeLux>(), 0, NPC.whoAmI, 120 * i, 0, attackPhase == RGBPhase ? 1 : 0); //summons 120, 240, and 360
 									Main.npc[npc1].netUpdate = true;
 								}
 						}
@@ -1098,13 +1098,13 @@ namespace SOTS.NPCs.Boss.Lux
 								if (attackTimer4 > end + 120)
 								{
 									compressWings = 0;
-									npc.alpha = 0;
+									NPC.alpha = 0;
 									SwapPhase(PickRandom(RGBPhase));
 									teleport(new Vector2(player.Center.X, player.Center.Y - 240), player.Center);
-									SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
+									SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.2f, 0.4f);
 									for (int i = 0; i < 120; i++)
 									{
-										Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+										Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 										dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 										dust.noGravity = true;
 										dust.fadeIn = 0.1f;
@@ -1112,11 +1112,11 @@ namespace SOTS.NPCs.Boss.Lux
 										dust.velocity *= 4f;
 									}
 								}
-								npc.alpha += 4;
+								NPC.alpha += 4;
 							}
 							else if (rnTimer >= 200)
 							{
-								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 8;
@@ -1125,28 +1125,28 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = 0; i <= amt; i++)
 									{
 										float radians = MathHelper.ToRadians(i * 360f / amt);
-										Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
 								attackTimer1 -= 200;
 							}
 							else if (rnTimer % 50 == 0)
 							{
-								nextDestination = npc.Center + toPlayer * (0.4f + 0.7f * multiplier) + Main.rand.NextVector2CircularEdge(80, 80) * (1.0f - 0.7f * multiplier);
+								nextDestination = NPC.Center + toPlayer * (0.4f + 0.7f * multiplier) + Main.rand.NextVector2CircularEdge(80, 80) * (1.0f - 0.7f * multiplier);
 								attackTimer2 = nextDestination.X;
 								attackTimer3 = nextDestination.Y;
-								npc.netUpdate = true;
+								NPC.netUpdate = true;
 							}
 							else
 							{
 								float lerpSpeed = 0.065f;
 								if (attackPhase == RGBPhase)
 									lerpSpeed = 0.03f;
-								npc.Center = Vector2.Lerp(npc.Center, nextDestination, lerpSpeed);
+								NPC.Center = Vector2.Lerp(NPC.Center, nextDestination, lerpSpeed);
 							}
 						}
 						if (attackTimer4 < end)
-							npc.alpha = 0;
+							NPC.alpha = 0;
 						SecondPhase = true;
 					}
 					else
@@ -1156,13 +1156,13 @@ namespace SOTS.NPCs.Boss.Lux
 							float rnMult = (attackTimer1 - 90f) / 60f;
 							if (rnMult > 1)
 								rnMult = 1;
-							npc.alpha = (int)(rnMult * 255);
+							NPC.alpha = (int)(rnMult * 255);
 						}
 					}
 				}
 				if (attackPhase == HelixColumnPhase)
 				{
-					npc.velocity *= 0.93f;
+					NPC.velocity *= 0.93f;
 					attackTimer1++;
 					bool end = attackTimer3 > 6;
 					if (end)
@@ -1206,8 +1206,8 @@ namespace SOTS.NPCs.Boss.Lux
 							float localCounter = attackTimer1 - 100;
 							if (localCounter % 5 == 0)
 							{
-								Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
-								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
+								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									float degrees = attackTimer4 * 90f;
@@ -1215,15 +1215,15 @@ namespace SOTS.NPCs.Boss.Lux
 									direction.Y *= 0.75f;
 									Vector2 spreadOut = new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(degrees));
 									spreadOut.X *= 0.825f;
-									Vector2 destinationTop = npc.Center + direction * 3000 + spreadOut;
-									Vector2 destinationBot = npc.Center + direction * 3000 - spreadOut;
+									Vector2 destinationTop = NPC.Center + direction * 3000 + spreadOut;
+									Vector2 destinationBot = NPC.Center + direction * 3000 - spreadOut;
 									float num = localCounter / 70f;
 									if (attackTimer3 % 2 == 0)
 										num = 1 - num;
 									Vector2 destination = Vector2.Lerp(destinationTop, destinationBot, num);
-									Projectile.NewProjectile(npc.Center + outward * 96, direction, ModContent.ProjectileType<ThunderSpawnBeam>(), damage, npc.target, Main.myPlayer, destination.X, destination.Y);
+									Projectile.NewProjectile(NPC.Center + outward * 96, direction, ModContent.ProjectileType<ThunderSpawnBeam>(), damage, NPC.target, Main.myPlayer, destination.X, destination.Y);
 								}
-								npc.velocity -= outward * 2f;
+								NPC.velocity -= outward * 2f;
 							}
 						}
 						if (attackTimer1 >= 171)
@@ -1235,18 +1235,18 @@ namespace SOTS.NPCs.Boss.Lux
 						if (speedMult > 1)
 							speedMult = 1;
 						if (attackTimer1 < 90)
-							npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
+							NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
 					}
 				}
 			}
 			WingStuff();
-			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
+			NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 255);
 			if(attackPhase != DesperationPhase && !despawn)
 			{
-				if (npc.alpha > 150)
-					npc.dontTakeDamage = true;
+				if (NPC.alpha > 150)
+					NPC.dontTakeDamage = true;
 				else if (attackPhase != SetupPhase)
-					npc.dontTakeDamage = false;
+					NPC.dontTakeDamage = false;
 			}
 			return true;
 		}
@@ -1254,9 +1254,9 @@ namespace SOTS.NPCs.Boss.Lux
 		public float aimToPlayer = 0;
 		public void modifyRotation(bool aimAtPlayer, bool modifyWings = true)
 		{
-			Player player = Main.player[npc.target];
-			Vector2 toPlayer = player.Center - npc.Center;
-			npc.rotation = npc.velocity.X * 0.06f;
+			Player player = Main.player[NPC.target];
+			Vector2 toPlayer = player.Center - NPC.Center;
+			NPC.rotation = NPC.velocity.X * 0.06f;
 			if (aimAtPlayer)
 			{
 				if (modifyWings)
@@ -1274,38 +1274,38 @@ namespace SOTS.NPCs.Boss.Lux
 			if (modifyWings)
 				wingHeightLerp = aimToPlayer / timeToAimAtPlayer * 0.85f;
 			float r = toPlayer.ToRotation() - MathHelper.PiOver2;
-			float x = npc.rotation - r;
+			float x = NPC.rotation - r;
 			x = MathHelper.WrapAngle(x);
 			float lerpedAngle = MathHelper.Lerp(x, 0, aimToPlayer / timeToAimAtPlayer);
 			lerpedAngle += r;
-			npc.rotation = lerpedAngle;
+			NPC.rotation = lerpedAngle;
 
 		}
 		public override void PostAI()
 		{
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
-			dust.color = npc.GetAlpha(VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true));
+			dust.color = NPC.GetAlpha(VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true));
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				if(attackPhase != DesperationPhase)
                 {
 					desperation = true;
-					npc.dontTakeDamage = true;
-					npc.life = 1;
+					NPC.dontTakeDamage = true;
+					NPC.life = 1;
 					NPC.lifeMax = 1;
 				}
 				if (Main.netMode != NetmodeID.Server)
 				{
 					for (int i = 0; i < 50; i++)
 					{
-						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
@@ -1327,12 +1327,12 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				Projectile.NewProjectile(npc.Center, playerDestination, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
+				Projectile.NewProjectile(NPC.Center, playerDestination, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
 			}
 			if(!serverOnly || Main.netMode != NetmodeID.MultiplayerClient)
-				npc.Center = destination;
+				NPC.Center = destination;
 			if(Main.netMode == NetmodeID.Server)
-				npc.netUpdate = true;
+				NPC.netUpdate = true;
 		}
 		public const int SetupPhase = -1;
 		public const int LaserOrbPhase = 0;
@@ -1370,7 +1370,7 @@ namespace SOTS.NPCs.Boss.Lux
 			float healthRange = 0.45f;
 			if (Main.expertMode)
 				healthRange = 0.55f;
-			return !SecondPhase && npc.life <= (npc.lifeMax  * healthRange);
+			return !SecondPhase && NPC.life <= (NPC.lifeMax  * healthRange);
 		}
 		public void SwapPhase(int phase)
 		{
@@ -1401,7 +1401,7 @@ namespace SOTS.NPCs.Boss.Lux
 				attackTimer1 = 0;
 			}
 			if (Main.netMode == NetmodeID.Server)
-				npc.netUpdate = true;
+				NPC.netUpdate = true;
         }
 	}
 	public class RingManager

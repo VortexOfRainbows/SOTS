@@ -29,16 +29,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1);
-			recipe.SetResult(this, 20);
-			recipe.AddRecipe();
+			CreateRecipe(20).AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1).Register();
 		}
 	}
 	public class DissolvingAuroraTile : ModTile
 	{
 		public static Color color = new Color(45, 95, 115);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
@@ -201,7 +198,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			DrawEffects(i, j, spriteBatch, mod);
+			DrawEffects(i, j, spriteBatch, Mod);
 			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

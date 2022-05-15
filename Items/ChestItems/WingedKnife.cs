@@ -14,7 +14,7 @@ namespace SOTS.Items.ChestItems
 		{
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 12;
-			Item.thrown = true;
+			Item.DamageType = DamageClass.Throwing;
 			Item.rare = ItemRarityID.Blue;
 			Item.width = 46;
 			Item.height = 36;
@@ -22,7 +22,7 @@ namespace SOTS.Items.ChestItems
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.autoReuse = true;            
-			Item.shoot = mod.ProjectileType("WingedKnife"); 
+			Item.shoot = Mod.Find<ModProjectile>("WingedKnife").Type; 
             Item.shootSpeed = 12f;
 			Item.consumable = false;
 			Item.knockBack = 1.5f;

@@ -36,7 +36,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.UseSound = SoundID.Item5;
 			Item.autoReuse = false;
 			Item.channel = true;
-			Item.shoot = mod.ProjectileType("Starshot");
+			Item.shoot = Mod.Find<ModProjectile>("Starshot").Type;
 			Item.shootSpeed = 24f;
 			Item.useAmmo = AmmoID.Arrow;
 			Item.noMelee = true;
@@ -45,17 +45,13 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("StarshotCrossbow"), 0, 0, player.whoAmI, 0, type);
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Starshot"), damage, knockBack, player.whoAmI, 0, type);
+			Projectile.NewProjectile(position.X, position.Y, 0, 0, Mod.Find<ModProjectile>("StarshotCrossbow").Type, 0, 0, player.whoAmI, 0, type);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, Mod.Find<ModProjectile>("Starshot").Type, damage, knockBack, player.whoAmI, 0, type);
 			return false;
         }
         public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "StarlightAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "StarlightAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

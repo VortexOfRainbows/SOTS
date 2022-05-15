@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Pyramid
         {
 			Projectile.height = 60;
 			Projectile.width = 60;
-			Projectile.magic = false;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.friendly = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 480;
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Pyramid
 				if(Main.rand.NextBool(2))
 				{
 					Vector2 circular = new Vector2(Projectile.width * 0.6f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					int num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, mod.DustType("CopyDust4"));
+					int num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
 					Dust dust = Main.dust[num2];
 					dust.color = new Color(127, 80, 80, 40);
 					dust.noGravity = true;
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Pyramid
 					dust.velocity *= 0.2f;
 					dust.velocity += circular.RotatedBy(MathHelper.ToRadians(80 * direction)).SafeNormalize(Vector2.Zero) * (1.3f + Projectile.scale * 0.7f);
 					circular = new Vector2(Projectile.width * 0.2f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, mod.DustType("CopyDust4"));
+					num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
 					dust = Main.dust[num2];
 					dust.color = new Color(255, 164, 164, 40);
 					dust.noGravity = true;

@@ -54,10 +54,10 @@ namespace SOTS.Projectiles.Otherworld
 			loc.Y += Main.rand.Next(-5, 6);
 			loc *= 0.1f;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			fallThrough = false;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void Kill(int timeLeft)
 		{

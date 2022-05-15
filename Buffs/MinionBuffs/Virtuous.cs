@@ -6,7 +6,7 @@ namespace SOTS.Buffs.MinionBuffs
 {
     public class Virtuous : ModBuff
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Virtuous");
 			Description.SetDefault("'Spiritual Companionship'");

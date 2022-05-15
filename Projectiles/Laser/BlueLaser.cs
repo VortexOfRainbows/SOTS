@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Laser
             Projectile.friendly = true;     //this defines if the projectile is frendly
             Projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
             Projectile.tileCollide = false;   //this defines if the tile can colide with walls
-            Projectile.magic = true;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.hide = true;
         }
 

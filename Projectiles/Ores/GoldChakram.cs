@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Ores
 			Projectile.height = 32;
 			Projectile.width = 32;
 			Projectile.penetrate = -1;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.tileCollide = true;
 			Projectile.timeLeft = 715;
 			Projectile.friendly = true;

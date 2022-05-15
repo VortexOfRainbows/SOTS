@@ -1,8 +1,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
+using SOTS.Items.Fragments;
+using SOTS.Items.Fishing;
 
 namespace SOTS.Items.Potions
 {
@@ -20,7 +20,7 @@ namespace SOTS.Items.Potions
             Item.value = Item.sellPrice(0, 0, 10, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 30;
-            Item.buffType = mod.BuffType("DoubleVision");   
+            Item.buffType = ModContent.BuffType<Buffs.DoubleVision>();   
 			int minute = 3600;
             Item.buffTime = minute * 6;
             Item.UseSound = SoundID.Item3;            
@@ -28,12 +28,11 @@ namespace SOTS.Items.Potions
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;
-            Item.consumable = true;       
-			
+            Item.consumable = true;
 		}
-		public override bool UseItem(Player player) 
+		public override bool? UseItem(Player player) 
 		{
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			if(modPlayer.doubledActive == 0)
 			{
 				modPlayer.doubledAmount = 0;
@@ -47,16 +46,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "Curgeon", 1);
-			recipe.AddIngredient(null, "PhantomFish", 1);
-			recipe.AddIngredient(null, "SeaSnake", 1);
-			recipe.AddIngredient(null, "FragmentOfTide", 1);
-			recipe.AddIngredient(ItemID.Shiverthorn, 1);
-			recipe.AddTile(13);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient<Curgeon>(1).AddIngredient<PhantomFish>(1).AddIngredient<SeaSnake>(1).AddIngredient<FragmentOfTide>(1).AddIngredient(ItemID.Shiverthorn, 1).AddTile(13).Register();
 		}
 	}
 }

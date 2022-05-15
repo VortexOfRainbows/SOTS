@@ -73,19 +73,14 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<BladeGenerator>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<TwilightBeads>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<BladeGenerator>(), 1).AddIngredient(ModContent.ItemType<TwilightBeads>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			BeadPlayer beadPlayer = player.GetModPlayer<BeadPlayer>();
 			BladePlayer bladePlayer = player.GetModPlayer<BladePlayer>();
-			int damage = (int)(Item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f) + (voidPlayer.voidDamage - 1f)));
+			int damage = (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f) + (voidPlayer.voidDamage - 1f)));
 
 			voidPlayer.bonusVoidGain += 1f;
 			bladePlayer.maxBlades += 9;

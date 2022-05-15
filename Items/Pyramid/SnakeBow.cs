@@ -38,17 +38,11 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "Snakeskin", 18);
-			recipe.AddIngredient(ItemID.Leather, 4);
-			recipe.AddIngredient(ItemID.WoodenBow, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "Snakeskin", 18).AddIngredient(ItemID.Leather, 4).AddIngredient(ItemID.WoodenBow, 1).AddTile(TileID.Anvils).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Snake"), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, Mod.Find<ModProjectile>("Snake").Type, damage, knockBack, player.whoAmI);
 			return false; 
 		}
 	}

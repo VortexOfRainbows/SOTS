@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Items.Banners;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -15,33 +16,33 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-			npc.CloneDefaults(NPCID.Slimer);
-            NPC.aiStyle =44;
+			NPC.CloneDefaults(NPCID.Slimer);
+            NPC.aiStyle = 44;
             NPC.lifeMax = 20;
             NPC.damage = 8; 
             NPC.defense = 0; 
             NPC.knockBackResist = 0.45f;
             NPC.width = 92;
             NPC.height = 48;
-            animationType = NPCID.Slimer;  
+            AnimationType = NPCID.Slimer;  
 			Main.npcFrameCount[NPC.type] = 4;  
-            npc.value = 15;
-            npc.npcSlots = 0.85f;
-            npc.noGravity = true;
-			npc.alpha = 90;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
+            NPC.value = 15;
+            NPC.npcSlots = 0.85f;
+            NPC.noGravity = true;
+			NPC.alpha = 90;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
 			Banner = NPC.type;
 			BannerItem = ItemType<BlueSlimerBanner>();
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 110.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 110.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, new Color(0, 80, 255, 100), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)hitDirection, -1f, NPC.alpha, new Color(0, 80, 255, 100), 1f);
 					num++;
 				}
 			}
@@ -49,7 +50,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 60; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)(2 * hitDirection), -2f, npc.alpha, new Color(0, 80, 255, 100), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)(2 * hitDirection), -2f, NPC.alpha, new Color(0, 80, 255, 100), 1f);
 				}
 				/*
 				int num1 = Main.rand.Next(4);
@@ -63,17 +64,18 @@ namespace SOTS.NPCs
 					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore4"), 1f); */
 			}
 		}
-		public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Feather, 5, 1, 2));
+		}
+        public override void OnKill()
 		{
 			if (Main.expertMode)
 			{
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.BlueSlime);
+				NPC npc = NPC.NewNPCDirect(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.BlueSlime); //this should sync it in multiplayer
+				npc.netUpdate = true;
 			}
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Gel), Main.rand.Next(3) + 1);
-			if(Main.rand.Next(5) == 0)
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Feather), Main.rand.Next(2) + 1);	
-			}
-		}	
-	}
+        }
+    }
 }

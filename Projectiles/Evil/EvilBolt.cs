@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Evil
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			VoidPlayer.VoidBurn(mod, target, 10, 240);
+			VoidPlayer.VoidBurn(Mod, target, 10, 240);
 		}
         public override bool PreDraw(ref Color lightColor)
 		{

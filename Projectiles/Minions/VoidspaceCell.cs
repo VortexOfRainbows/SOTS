@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			Player player = Main.player[Projectile.owner];
 			float mult = counter / 45f;
-			sphereRadius = 105f + (300f * (player.minionDamage + (player.allDamage - 1f))) * mult;
+			sphereRadius = 105f + (300f * (player.GetDamage(DamageClass.Summon) + (player.allDamage - 1f))) * mult;
 			if(counter < 45)
 				counter++;
 			cataloguePos();
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Minions
 					int i2 = (int)(circular.X + Projectile.Center.X) / 16;
 					int j2 = (int)(circular.Y + Projectile.Center.Y) / 16;
 					bool disable = false;
-					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].HasTile && Main.tileSolidTop[Main.tile[i2, j2].type] == false && Main.tileSolid[Main.tile[i2, j2].type] == true)
+					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].HasTile && Main.tileSolidTop[Main.tile[i2, j2].TileType] == false && Main.tileSolid[Main.tile[i2, j2].TileType] == true)
 						disable = true;
 					if(!disable)
 						for(int j = 0; j < Main.maxProjectiles; j++)
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Minions
 			for (int j2 = 1; j2 < maxLength; j2++)
 			{
 				Tile tile2 = Framing.GetTileSafely(i, j - j2);
-				if ((tile2.active() && Main.tileSolid[tile2.type] && !Main.tileSolidTop[tile2.type]) || !WorldGen.InWorld(i, j - j2, 27))
+				if ((tile2.HasTile && Main.tileSolid[tile2.TileType] && !Main.tileSolidTop[tile2.TileType]) || !WorldGen.InWorld(i, j - j2, 27))
 				{
 					maxLength = j2;
 					break;
@@ -149,7 +149,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) 
 		{
-			//SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+			//SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(0, 20, 0, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
 			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(5, 30, 5, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
 			return true;
@@ -194,7 +194,7 @@ namespace SOTS.Projectiles.Minions
                 Player target = Main.player[i];
 				if((Projectile.Center - target.Center).Length() <= sphereRadius + 4f && target.active)
 				{
-					target.AddBuff(mod.BuffType("AuraBoost"), 330, false);
+					target.AddBuff(Mod.Find<ModBuff>("AuraBoost").Type, 330, false);
 				}
             }
         }

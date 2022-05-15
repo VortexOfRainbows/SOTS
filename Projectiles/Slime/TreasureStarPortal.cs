@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Slime
         {
 			Projectile.height = 54;
 			Projectile.width = 54;
-			Projectile.magic = false;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.friendly = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 480;

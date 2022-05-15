@@ -26,7 +26,7 @@ namespace SOTS.Items.Tide
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;
-			Item.shoot = mod.ProjectileType("Riptide");
+			Item.shoot = Mod.Find<ModProjectile>("Riptide").Type;
 			Item.shootSpeed = 3.0f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -58,26 +58,9 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Trident, 1);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Spear, 1);
-			recipe.AddIngredient(ItemID.GoldBar, 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Trident, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Spear, 1);
-			recipe.AddIngredient(ItemID.PlatinumBar, 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Trident, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Trident, 1).AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 10).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ItemID.Spear, 1).AddIngredient(ItemID.GoldBar, 8).AddTile(TileID.Anvils).ReplaceResult(ItemID.Trident);
+			CreateRecipe(1).AddIngredient(ItemID.Spear, 1).AddIngredient(ItemID.PlatinumBar, 8).AddTile(TileID.Anvils).ReplaceResult(ItemID.Trident);
 		}
 		public override bool CanUseItem(Player player)
 		{

@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class AuraBoost : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Aura Boost");
 			Description.SetDefault("Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%");   

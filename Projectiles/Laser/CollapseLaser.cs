@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.alpha = 255;
@@ -168,7 +168,7 @@ namespace SOTS.Projectiles.Laser
 				if(distance < 24 && Projectile.friendly)
 				{
 					if(Projectile.owner == Main.myPlayer)
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("ContinuumExplosion"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, Projectile.ai[0]);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, Mod.Find<ModProjectile>("ContinuumExplosion").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, Projectile.ai[0]);
 					currentNPC = -1;
 					posListX.Add(npc.Center.X);
 					posListY.Add(npc.Center.Y);
@@ -307,7 +307,7 @@ namespace SOTS.Projectiles.Laser
 			{
 				if(completedLoads > 0 && spriteBatch != null)
 				{
-					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[mod.ProjectileType("ContinuumSphere")].Value, drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Mod.Find<ModProjectile>("ContinuumSphere").Type].Value, drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
 					spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
 				}
 			}

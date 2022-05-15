@@ -30,7 +30,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.Item8;
             Item.autoReuse = true;
-            Item.shoot = mod.ProjectileType("MacaroniMoon");
+            Item.shoot = Mod.Find<ModProjectile>("MacaroniMoon").Type;
             Item.shootSpeed = 4.25f;
 			if (!Main.dedServ)
 			{
@@ -71,12 +71,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "PlatinumSoulStaff", 1);
-			recipe.AddIngredient(null, "StarlightAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "PlatinumSoulStaff", 1).AddIngredient(null, "StarlightAlloy", 8).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

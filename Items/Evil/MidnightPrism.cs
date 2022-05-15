@@ -32,19 +32,14 @@ namespace SOTS.Items.Evil
 			player.statLifeMax2 += 40;
 			player.armorPenetration += 8;
 			modPlayer.CritNightmare = true;
-			player.magicCrit += 5;
-			player.meleeCrit += 5;
-			player.rangedCrit += 5;
-			player.thrownCrit += 5;
+			player.GetCritChance(DamageClass.Magic) += 5;
+			player.GetCritChance(DamageClass.Melee) += 5;
+			player.GetCritChance(DamageClass.Ranged) += 5;
+			player.GetCritChance(DamageClass.Throwing) += 5;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PrismarineNecklace>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<WitchHeart>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PrismarineNecklace>(), 1).AddIngredient(ModContent.ItemType<WitchHeart>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

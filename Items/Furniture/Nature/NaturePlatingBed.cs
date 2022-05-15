@@ -19,12 +19,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 15);
-			recipe.AddIngredient(ItemID.Silk, 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<NaturePlating>(), 15).AddIngredient(ItemID.Silk, 5).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class NaturePlatingBedTile : Bed<NaturePlatingBed>

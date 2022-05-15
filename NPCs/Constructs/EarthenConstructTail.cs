@@ -23,48 +23,48 @@ namespace SOTS.NPCs.Constructs
             NPC.defense = 12;
             NPC.lifeMax = 20000;  
             NPC.knockBackResist = 0.0f;
-            npc.behindTiles = true;
-            npc.noTileCollide = true;
-            npc.noGravity = true;
-            npc.dontCountMe = true;
-            npc.HitSound = SoundID.NPCHit4;
-            npc.DeathSound = SoundID.NPCDeath14;
+            NPC.behindTiles = true;
+            NPC.noTileCollide = true;
+            NPC.noGravity = true;
+            NPC.dontCountMe = true;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath14;
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(npc.scale);
-            writer.Write(npc.width);
-            writer.Write(npc.height);
+            writer.Write(NPC.scale);
+            writer.Write(NPC.width);
+            writer.Write(NPC.height);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            npc.scale = reader.ReadSingle();
+            NPC.scale = reader.ReadSingle();
             NPC.width = reader.ReadInt32();
             NPC.height = reader.ReadInt32();
         }
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life <= 0)
+            if (NPC.life <= 0)
             {
                 for (int k = 0; k < 10; k++)
                 {
-                    Dust.NewDust(npc.position, npc.width, npc.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
                 }
                 for (int i = 0; i < 5; i++)
                 {
-                    int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<BigEarthDust>());
+                    int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<BigEarthDust>());
                     Main.dust[dust].velocity *= 5f;
                 }
                 if(Main.rand.NextBool(3))
-                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore3"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore3"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore4"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore4"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore5"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore5"), 1f);
                 for (int i = 0; i < 4; i++)
-                    Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
             }
         }
         Vector2 ownerVelocity = Vector2.Zero;
@@ -72,48 +72,48 @@ namespace SOTS.NPCs.Constructs
         {
             if (Main.netMode != 1)
             {
-                if (!Main.npc[(int)npc.ai[1]].active)
+                if (!Main.npc[(int)NPC.ai[1]].active)
                 {
-                    npc.life = 0;
-                    npc.HitEffect(0, 10.0);
-                    npc.active = false;
-                    NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
+                    NPC.life = 0;
+                    NPC.HitEffect(0, 10.0);
+                    NPC.active = false;
+                    NetMessage.SendData(28, -1, -1, null, NPC.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
                     return false;
                 }
             }
-            if (npc.ai[3] > 0)
+            if (NPC.ai[3] > 0)
             {
-                npc.realLife = (int)npc.ai[3];
-                ownerVelocity = Main.npc[(int)npc.ai[3]].velocity;
+                NPC.realLife = (int)NPC.ai[3];
+                ownerVelocity = Main.npc[(int)NPC.ai[3]].velocity;
             }
-            if (npc.ai[2] >= 0)
+            if (NPC.ai[2] >= 0)
             {
-                npc.scale = 5f / (npc.ai[2] + 6);
-                NPC.width = (int)(npc.width * npc.scale);
-                NPC.height = (int)(npc.height * npc.scale);
-                npc.ai[2] = -npc.ai[2];
+                NPC.scale = 5f / (NPC.ai[2] + 6);
+                NPC.width = (int)(NPC.width * NPC.scale);
+                NPC.height = (int)(NPC.height * NPC.scale);
+                NPC.ai[2] = -NPC.ai[2];
                 if(Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    npc.netUpdate = true;
+                    NPC.netUpdate = true;
                 }
             }
  
-            if (Main.npc[(int)npc.ai[1]].active && npc.ai[1] < (double)Main.npc.Length)
+            if (Main.npc[(int)NPC.ai[1]].active && NPC.ai[1] < (double)Main.npc.Length)
             {
-                Vector2 npcCenter = npc.Center;
-                float dirX = Main.npc[(int)npc.ai[1]].position.X + (float)(Main.npc[(int)npc.ai[1]].width / 2f) - npcCenter.X;
-                float dirY = Main.npc[(int)npc.ai[1]].position.Y + (float)(Main.npc[(int)npc.ai[1]].height / 2f) - npcCenter.Y;
-                npc.rotation = new Vector2(dirX, dirY).ToRotation() + 1.57f;
+                Vector2 npcCenter = NPC.Center;
+                float dirX = Main.npc[(int)NPC.ai[1]].position.X + (float)(Main.npc[(int)NPC.ai[1]].width / 2f) - npcCenter.X;
+                float dirY = Main.npc[(int)NPC.ai[1]].position.Y + (float)(Main.npc[(int)NPC.ai[1]].height / 2f) - npcCenter.Y;
+                NPC.rotation = new Vector2(dirX, dirY).ToRotation() + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
                 if (length <= 0)
                     length = 1;
-                float dist = (length - (float)npc.width) / length;
+                float dist = (length - (float)NPC.width) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
-                npc.velocity = Vector2.Zero;
-                npc.position.X = npc.position.X + posX;
-                npc.position.Y = npc.position.Y + posY;
-                npc.spriteDirection = Main.npc[(int)npc.ai[3]].spriteDirection;
+                NPC.velocity = Vector2.Zero;
+                NPC.position.X = NPC.position.X + posX;
+                NPC.position.Y = NPC.position.Y + posY;
+                NPC.spriteDirection = Main.npc[(int)NPC.ai[3]].spriteDirection;
             }
             return false;
         }
@@ -123,8 +123,8 @@ namespace SOTS.NPCs.Constructs
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstruct").Value;
             Vector2 origin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-            Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, null, drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[1]), origin2, npc.scale + 0.04f, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale + 0.04f, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            Main.spriteBatch.Draw(texture2, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation - MathHelper.ToRadians(NPC.localAI[1]), origin2, NPC.scale + 0.04f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale + 0.04f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -133,8 +133,8 @@ namespace SOTS.NPCs.Constructs
         }
 		public override void PostAI()
 		{
-            npc.localAI[1] += (float)Math.Sqrt(ownerVelocity.Length()) * -npc.spriteDirection;
-			npc.timeLeft = 100;
+            NPC.localAI[1] += (float)Math.Sqrt(ownerVelocity.Length()) * -NPC.spriteDirection;
+			NPC.timeLeft = 100;
 		}
     }
 }

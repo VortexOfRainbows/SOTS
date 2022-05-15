@@ -54,16 +54,12 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 2);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TwilightGel>(), 2).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 	public class HardlightBlockTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = true;
@@ -138,7 +134,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 128f, 0.725f);
 			if (alphaScale <= 0.00001f)
 				return;
-			if(!Main.tile[i, j].nactive())
+			if(!Main.tile[i, j].HasUnactuatedTile)
             {
 				alphaScale *= 0.45f;
             }
@@ -364,7 +360,7 @@ namespace SOTS.Items.Otherworld.Blocks
         }
 		public static bool isHardlightBlock(Tile tile)
         {
-			return tile.active() && tile.TileType == ModContent.TileType<HardlightBlockTile>();
+			return tile.HasTile && tile.TileType == ModContent.TileType<HardlightBlockTile>();
 		}
 		public static bool isHardlightBlock(int i, int j)
 		{

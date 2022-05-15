@@ -1,13 +1,8 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil.Cil;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.FromChests;
-using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 namespace SOTS.Items
 {
@@ -36,7 +31,7 @@ namespace SOTS.Items
 			player.hasPaladinShield = true;
 			player.maxMinions += 1;
 			player.maxTurrets += 1;
-			player.allDamage += 0.1f;
+			player.GetDamage(DamageClass.Generic) += 0.1f;
 			PlatformPlayer modPlayer = player.GetModPlayer<PlatformPlayer>();
 			modPlayer.platformPairs += 2;
 			modPlayer.fortress = true;
@@ -45,17 +40,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PlatformGenerator>(), 1);
-			recipe.AddIngredient(ItemID.PaladinsShield, 1);
-			recipe.AddIngredient(ItemID.PygmyNecklace, 1);
-			recipe.AddRecipeGroup("SOTS:T2DD2Armor", 1);
-			recipe.AddRecipeGroup("SOTS:T2DD2Accessory", 1);
-			recipe.AddIngredient(ItemID.SpectreBar, 10);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PlatformGenerator>(), 1).AddIngredient(ItemID.PaladinsShield, 1).AddIngredient(ItemID.PygmyNecklace, 1).AddRecipeGroup("SOTS:T2DD2Armor", 1).AddRecipeGroup("SOTS:T2DD2Accessory", 1).AddIngredient(ItemID.SpectreBar, 10).AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

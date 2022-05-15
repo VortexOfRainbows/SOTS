@@ -18,12 +18,7 @@ namespace SOTS.Items.Furniture.Nature
         }
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 6);
-            recipe.AddIngredient(ItemID.Torch, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<NaturePlating>(), 6).AddIngredient(ItemID.Torch, 1).AddTile(TileID.Anvils).Register();
         }
     }
     public class NaturePlatingLanternTile : Lantern<NaturePlatingLantern>

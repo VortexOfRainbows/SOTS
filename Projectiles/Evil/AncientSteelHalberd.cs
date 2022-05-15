@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Evil
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 			Projectile.ownerHitCheck = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;

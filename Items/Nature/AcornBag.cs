@@ -44,13 +44,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddRecipeGroup(RecipeGroupID.Wood, 20);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4);
-			recipe.AddIngredient(ItemID.Acorn, 10);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddRecipeGroup(RecipeGroupID.Wood, 20).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4).AddIngredient(ItemID.Acorn, 10).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 }

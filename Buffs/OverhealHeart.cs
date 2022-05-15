@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class OverhealHeart : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
            DisplayName.SetDefault("Drop Heart");
 			Description.SetDefault("");   
@@ -19,7 +19,7 @@ namespace SOTS.Buffs
 		{
 			
 				Player player  = Main.player[target.target];
-			if(target.type == mod.NPCType("Libra"))
+			if(target.type == Mod.Find<ModNPC>("Libra").Type)
 			{
 				if(player.name == "Xypher" || player.name == "X")
 				{
@@ -30,7 +30,7 @@ namespace SOTS.Buffs
 					Main.NewText("Luck, that was all just luck.", 255, 255, 255);
 					
 				}
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, (mod.ItemType("ManaMaterial")), 1);
+					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, (Mod.Find<ModItem>("ManaMaterial").Type), 1);
 					target.timeLeft = 1;
 					target.timeLeft--;
 					target.life = 0;

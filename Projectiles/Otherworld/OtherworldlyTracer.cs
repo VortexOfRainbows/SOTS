@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.alpha = 100;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.ignoreWater = true;
 		}
         public override bool CanHitPlayer(Player target)
@@ -88,11 +88,11 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				Lighting.AddLight(Projectile.Center, 0.95f * ((255 - Projectile.alpha)/255), 0.45f * ((255 - Projectile.alpha) / 255), 0.95f * ((255 - Projectile.alpha)/255));
 				NPC owner = Main.npc[(int)Projectile.ai[1]];
-				if (!owner.active || !(owner.type == mod.NPCType("OtherworldlyConstructHead2") || owner.type == mod.NPCType("OtherworldlyConstructHead") || owner.type == mod.NPCType("TheAdvisorHead")))
+				if (!owner.active || !(owner.type == Mod.Find<ModNPC>("OtherworldlyConstructHead2") .Type|| owner.type == Mod.Find<ModNPC>("OtherworldlyConstructHead") .Type|| owner.type == Mod.Find<ModNPC>("TheAdvisorHead").Type))
 				{
 					Projectile.Kill();
 				}
-				if (owner.type == mod.NPCType("TheAdvisorHead"))
+				if (owner.type == Mod.Find<ModNPC>("TheAdvisorHead").Type)
 					Projectile.extraUpdates = 1;
 			}
 			if(Projectile.ai[1] == -3)

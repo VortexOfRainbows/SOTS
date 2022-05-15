@@ -36,7 +36,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.DD2_GhastlyGlaivePierce;
 			Item.autoReuse = true;            
-			Item.shoot = mod.ProjectileType("HardlightGlaive"); 
+			Item.shoot = Mod.Find<ModProjectile>("HardlightGlaive").Type; 
             Item.shootSpeed = 6.2f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -47,14 +47,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "CursedImpale", 1);
-			recipe.AddIngredient(null, "ImperialPike", 1);
-			recipe.AddIngredient(null, "GoldGlaive", 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "CursedImpale", 1).AddIngredient(null, "ImperialPike", 1).AddIngredient(null, "GoldGlaive", 1).AddIngredient(null, "HardlightAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

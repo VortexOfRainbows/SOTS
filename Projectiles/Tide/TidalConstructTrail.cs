@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Tide
 			if(Projectile.ai[1] != -1 && end == false)
 			{
 				NPC npc = Main.npc[(int)Projectile.ai[1]];
-				if(npc.active && npc.type == mod.ProjectileType("TidalConstruct"))
+				if(npc.active && npc.type == Mod.Find<ModProjectile>("TidalConstruct").Type)
 				{
 					Projectile.active = true;
 					if (Projectile.timeLeft < 30)

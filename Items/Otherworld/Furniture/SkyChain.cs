@@ -30,17 +30,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 4);
-			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 4);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<AvaritianPlating>(), 4).AddIngredient(ModContent.ItemType<TwilightGel>(), 4).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}	
 	public class SkyChainTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -59,7 +54,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			if(Main.tile[i,j].frameX < 18)
+			if(Main.tile[i,j].TileFrameX < 18)
 			{
 				r = 0.425f;
 				g = 0.425f;
@@ -107,7 +102,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			for(int j2 = 1; j2 < maxLength; j2++)
 			{
 				Tile tile2 = Framing.GetTileSafely(i, j - j2);
-				if ((tile2.active() && Main.tileSolid[tile2.type] && !Main.tileSolidTop[tile2.type]) || !WorldGen.InWorld(i, j - j2, 27))
+				if ((tile2.HasTile && Main.tileSolid[tile2.TileType] && !Main.tileSolidTop[tile2.TileType]) || !WorldGen.InWorld(i, j - j2, 27))
 				{
 					maxLength = j2;
 					break;

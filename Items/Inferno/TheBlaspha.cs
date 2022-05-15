@@ -48,14 +48,7 @@ namespace SOTS.Items.Inferno
         }
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(ItemID.SniperRifle, 1);
-            recipe.AddIngredient(ItemID.TacticalShotgun, 1);
-            recipe.AddIngredient(ModContent.ItemType<Doomstick>(), 1);
-            recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ItemID.SniperRifle, 1).AddIngredient(ItemID.TacticalShotgun, 1).AddIngredient(ModContent.ItemType<Doomstick>(), 1).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddTile(TileID.MythrilAnvil).Register();
         }
     }
 }

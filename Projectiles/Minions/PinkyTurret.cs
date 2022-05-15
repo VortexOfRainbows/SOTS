@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Minions
 					Vector2 shootTo = new Vector2(dX * speed, dY * speed);
 					if (Projectile.owner == Main.myPlayer)
 					{
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootTo.X, shootTo.Y, mod.ProjectileType("PinkBubble"), Projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootTo.X, shootTo.Y, Mod.Find<ModProjectile>("PinkBubble").Type, Projectile.damage, 0, Main.myPlayer);
 					}
 					SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 21);
 				}

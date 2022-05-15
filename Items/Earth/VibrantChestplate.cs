@@ -29,15 +29,11 @@ namespace SOTS.Items.Earth
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidDamage += 0.10f;
-			player.rangedDamage += 0.05f;
+			player.GetDamage(DamageClass.Ranged) += 0.05f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 12);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantBar>(), 12).AddTile(TileID.Anvils).Register();
 		}
 
 	}

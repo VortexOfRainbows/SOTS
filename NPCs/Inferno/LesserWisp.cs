@@ -33,19 +33,19 @@ namespace SOTS.NPCs.Inferno
             NPC.width = 26;
             NPC.height = 32;
 			Main.npcFrameCount[NPC.type] = 1;  
-            npc.value = 50;
-            npc.npcSlots = 0.25f;
-            npc.HitSound = SoundID.NPCHit30;
-            npc.DeathSound = SoundID.NPCDeath6;
-			npc.lavaImmune = true;
-			npc.netAlways = true;
-			npc.buffImmune[BuffID.OnFire] = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
-			npc.buffImmune[BuffID.Ichor] = true;
-			npc.noTileCollide = true;
-			npc.noGravity = true;
-			npc.ai[0] = 0;
-			npc.ai[2] = 1;
+            NPC.value = 50;
+            NPC.npcSlots = 0.25f;
+            NPC.HitSound = SoundID.NPCHit30;
+            NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.lavaImmune = true;
+			NPC.netAlways = true;
+			NPC.buffImmune[BuffID.OnFire] = true;
+			NPC.buffImmune[BuffID.Frostburn] = true;
+			NPC.buffImmune[BuffID.Ichor] = true;
+			NPC.noTileCollide = true;
+			NPC.noGravity = true;
+			NPC.ai[0] = 0;
+			NPC.ai[2] = 1;
 			Banner = NPC.type;
 			BannerItem = ItemType<LesserWispBanner>();
 		}
@@ -58,7 +58,7 @@ namespace SOTS.NPCs.Inferno
 		{
 			if(sans)
 			{
-				if (npc.ai[3] >= 24)
+				if (NPC.ai[3] >= 24)
 				{
 					damage = 999999 + defense / 2;
 					crit = false;
@@ -66,10 +66,10 @@ namespace SOTS.NPCs.Inferno
 				}
 				else
 				{
-					CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), new Color(125, 125, 125, 125), "MISS", false, false);
+					CombatText.NewText(new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height), new Color(125, 125, 125, 125), "MISS", false, false);
 					damage = 0;
-					npc.ai[3]++;
-					npc.netUpdate = true;
+					NPC.ai[3]++;
+					NPC.netUpdate = true;
 				}
 				return false;
 			}
@@ -86,7 +86,7 @@ namespace SOTS.NPCs.Inferno
 				if(sans)
 					color = new Color(60, 90, 115, 0);
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
-				color = npc.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
+				color = NPC.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
@@ -99,44 +99,44 @@ namespace SOTS.NPCs.Inferno
 			color = sans ? new Color(50, 50, 90, 0) : new Color(80, 80, 80, 0);
 			for (int k = 0; k < 12; k++)
 			{
-				Vector2 drawPos = npc.Center - Main.screenPosition;
+				Vector2 drawPos = NPC.Center - Main.screenPosition;
 				Vector2 circular = new Vector2(Main.rand.NextFloat(0, 3), 0).RotatedBy(Math.PI / 6 * k);
-				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * 0.9f, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * 0.9f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
-			texture = sans ? GetTexture("SOTS/NPCs/Inferno/SansWisp") : Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, sans ? Color.White : new Color(180, 180, 180), npc.rotation, drawOrigin, npc.scale * 0.9f, SpriteEffects.None, 0f);
+			texture = sans ? GetTexture("SOTS/NPCs/Inferno/SansWisp") : Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, sans ? Color.White : new Color(180, 180, 180), NPC.rotation, drawOrigin, NPC.scale * 0.9f, SpriteEffects.None, 0f);
 			return false;
 		}
         public override bool PreAI()
         {
-			if(npc.ai[0] == 0)
+			if(NPC.ai[0] == 0)
             {
 				if(Main.netMode != 1)
 				{
-					npc.ai[1] = -240;
+					NPC.ai[1] = -240;
 					if (Main.rand.NextBool(100))
                     {
-						npc.ai[2] = -1;
-						npc.ai[1] = -120;
+						NPC.ai[2] = -1;
+						NPC.ai[1] = -120;
 					}
 					else
 						for (int i = 0; i < Main.rand.Next(2, 4); i++)
-							NPC.NewNPC((int)npc.Center.X, (int)npc.position.Y + npc.height, this.npc.type, 0, -1, -Main.rand.Next(120) - 240);
-					npc.netUpdate = true;
+							NPC.NewNPC((int)NPC.Center.X, (int)NPC.position.Y + NPC.height, this.NPC.type, 0, -1, -Main.rand.Next(120) - 240);
+					NPC.netUpdate = true;
 				}
-				npc.ai[0] = -1;
+				NPC.ai[0] = -1;
 			}
-			if(npc.ai[2] == -1)
+			if(NPC.ai[2] == -1)
             {
 				sans = true;
-				npc.HitSound = SoundID.DD2_SkeletonHurt;
-				npc.DeathSound = SoundID.DD2_SkeletonDeath;
+				NPC.HitSound = SoundID.DD2_SkeletonHurt;
+				NPC.DeathSound = SoundID.DD2_SkeletonDeath;
 			}
 			else
             {
 				sans = false;
-				npc.HitSound = SoundID.NPCHit30;
-				npc.DeathSound = SoundID.NPCDeath6;
+				NPC.HitSound = SoundID.NPCHit30;
+				NPC.DeathSound = SoundID.NPCDeath6;
 			}
 			if(Main.netMode != NetmodeID.Server)
 			{
@@ -145,7 +145,7 @@ namespace SOTS.NPCs.Inferno
 					Vector2 rotational = new Vector2(0, -4.4f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-20f, 20f)));
 					rotational.X *= 0.5f;
 					rotational.Y *= 1f;
-					particleList.Add(new FireParticle(npc.Center, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.2f, 1.6f)));
+					particleList.Add(new FireParticle(NPC.Center, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.2f, 1.6f)));
 				}
 				cataloguePos();
 			}
@@ -154,7 +154,7 @@ namespace SOTS.NPCs.Inferno
 				Color color = new Color(155, 69, 0, 0);
 				if (sans)
 					color = new Color(80, 150, 200, 0);
-				int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y) - new Vector2(5), npc.width, npc.height, 267);
+				int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y) - new Vector2(5), NPC.width, NPC.height, 267);
 				Dust dust = Main.dust[dust2];
 				dust.color = color;
 				dust.noGravity = true;
@@ -179,8 +179,8 @@ namespace SOTS.NPCs.Inferno
 		}
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			Player player = Main.player[NPC.target];
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int orbital = modPlayer.orbitalCounter;
 			bool found = false;
 			int ofTotal = 0;
@@ -188,9 +188,9 @@ namespace SOTS.NPCs.Inferno
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				NPC other = Main.npc[i];
-				if (npc.type == other.type && other.active && npc.active && npc.target == other.target)
+				if (NPC.type == other.type && other.active && NPC.active && NPC.target == other.target)
 				{
-					if (npc == other)
+					if (NPC == other)
 					{
 						found = true;
 					}
@@ -199,12 +199,12 @@ namespace SOTS.NPCs.Inferno
 					total++;
 				}
 			}
-			npc.localAI[1]++;
-			npc.rotation = npc.velocity.X * 0.03f;
+			NPC.localAI[1]++;
+			NPC.rotation = NPC.velocity.X * 0.03f;
 
-			float dynamicAddition = (float)Math.Sin(MathHelper.ToRadians(npc.localAI[1] * 2)) * 6;
+			float dynamicAddition = (float)Math.Sin(MathHelper.ToRadians(NPC.localAI[1] * 2)) * 6;
 			Vector2 circular = player.Center + new Vector2(0, dynamicAddition) + new Vector2(156 + 4 * total, 0).RotatedBy(MathHelper.ToRadians(orbital * 0.75f + (360f * ofTotal / total)));
-			Vector2 toPlayer = circular - npc.Center;
+			Vector2 toPlayer = circular - NPC.Center;
 			float speed = 7.8f;
 			if (sans)
 				speed = 20f;
@@ -213,12 +213,12 @@ namespace SOTS.NPCs.Inferno
             {
 				speed = length;
             }
-			npc.velocity *= 0.5f;
-			npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed * 0.5f;
-			npc.ai[1]++;
-			if (npc.ai[1] > 0)
+			NPC.velocity *= 0.5f;
+			NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed * 0.5f;
+			NPC.ai[1]++;
+			if (NPC.ai[1] > 0)
             {
-				float num = npc.ai[1];
+				float num = NPC.ai[1];
 				float chargeMult = (40f - Math.Abs(num)) / 40f;
 				float min = 0;
 				if (sans)
@@ -227,14 +227,14 @@ namespace SOTS.NPCs.Inferno
 				{
 					chargeMult = min;
 				}
-				npc.velocity *= chargeMult;
-				if (npc.ai[1] == 40 || (sans && npc.ai[1] > 40 && npc.ai[1] % 8 == 0))
+				NPC.velocity *= chargeMult;
+				if (NPC.ai[1] == 40 || (sans && NPC.ai[1] > 40 && NPC.ai[1] % 8 == 0))
                 {
 					if(Main.netMode != 1)
 					{
-						toPlayer = player.Center - npc.Center;
+						toPlayer = player.Center - NPC.Center;
 						toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
-						int Damage = npc.damage / 2;
+						int Damage = NPC.damage / 2;
 						if (Main.expertMode)
 						{
 							Damage = (int)(Damage / Main.expertDamage);
@@ -243,11 +243,11 @@ namespace SOTS.NPCs.Inferno
 							Damage = (int)(Damage * 1.5f);
 						if(!sans)
 						{
-							Projectile.NewProjectile(npc.Center + toPlayer * 40, toPlayer * 5, ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, 0);
+							Projectile.NewProjectile(NPC.Center + toPlayer * 40, toPlayer * 5, ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, 0);
 						}
 						else
 						{
-							Vector2 spawnPos = npc.Center + toPlayer * 40;
+							Vector2 spawnPos = NPC.Center + toPlayer * 40;
 							Vector2 velo = toPlayer * 5;
 							int randMod1 = Main.rand.Next(4);
 							int randMod2 = Main.rand.Next(11);
@@ -278,14 +278,14 @@ namespace SOTS.NPCs.Inferno
 						}
 					}
                 }
-				if (npc.ai[1] >= 80)
+				if (NPC.ai[1] >= 80)
                 {
 					if (sans)
-						npc.ai[1] = -120;
+						NPC.ai[1] = -120;
 					else
-						npc.ai[1] = -(Main.rand.Next(35, 80 + 20 * total) + total * 10);
+						NPC.ai[1] = -(Main.rand.Next(35, 80 + 20 * total) + total * 10);
 					if (Main.netMode != 1)
-						npc.netUpdate = true;
+						NPC.netUpdate = true;
 				}
             }
 		}
@@ -296,20 +296,20 @@ namespace SOTS.NPCs.Inferno
 		public override void NPCLoot()
 		{ 
 			if(sans)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BookOfVirtues>(), 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<BookOfVirtues>(), 1);
 			if (Main.rand.NextBool(15))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, sans ? ItemID.LivingUltrabrightFireBlock : ItemID.LivingFireBlock, Main.rand.Next(10, 21));
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, sans ? ItemID.LivingUltrabrightFireBlock : ItemID.LivingFireBlock, Main.rand.Next(10, 21));
 			else if (Main.rand.NextBool(25))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, sans ? ItemType<FragmentOfChaos>() : ItemType<FragmentOfInferno>(), 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, sans ? ItemType<FragmentOfChaos>() : ItemType<FragmentOfInferno>(), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 20.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 20.0)
 				{
-					Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, sans ? 26 : DustID.Fire, (float)(2 * hitDirection), -2f, 0, default, 0.5f);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Fire, (float)(2 * hitDirection), -2f, 0, default, 0.5f);
 					dust.scale *= sans? 1.1f : 1.75f;
 					num++;
 				}
@@ -331,7 +331,7 @@ namespace SOTS.NPCs.Inferno
 				}
 				for (int k = 0; k < 30; k++)
 				{
-					Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, sans ? 26 : DustID.Fire, (float)(2 * hitDirection), -2f, 0, default, 1f);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Fire, (float)(2 * hitDirection), -2f, 0, default, 1f);
 					dust.scale *= sans ? 1.25f : 2.5f;
 				}
 			}

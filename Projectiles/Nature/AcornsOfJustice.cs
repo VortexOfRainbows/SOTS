@@ -18,9 +18,9 @@ namespace SOTS.Projectiles.Nature
 			Projectile.aiStyle = 1;
 			Projectile.width = 30;
 			Projectile.height = 30;
-            Projectile.magic = true;
+            Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = 1;
-			Projectile.ranged = false;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.alpha = 0; 
 			Projectile.friendly = true;
 		}

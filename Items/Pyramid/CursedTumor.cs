@@ -25,12 +25,12 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Pink;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("CursedTumorTile");
+			Item.createTile = Mod.Find<ModTile>("CursedTumorTile").Type;
 		}
 	}
 	public class CursedTumorTile : ModTile
 	{
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;

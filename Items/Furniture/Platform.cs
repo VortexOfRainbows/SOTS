@@ -10,7 +10,7 @@ namespace SOTS.Items.Furniture
     {
         protected virtual Color MapColor => new Color(191, 142, 111, 255);
         protected virtual bool BreaksInLava => true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;

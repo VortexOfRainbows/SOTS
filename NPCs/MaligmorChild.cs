@@ -14,18 +14,18 @@ namespace SOTS.NPCs
 	{
 		private float ownerID
 		{
-			get => npc.ai[0];
-			set => npc.ai[0] = value;
+			get => NPC.ai[0];
+			set => NPC.ai[0] = value;
 		}
 		private float aiCounter
 		{
-			get => npc.ai[1];
-			set => npc.ai[1] = value;
+			get => NPC.ai[1];
+			set => NPC.ai[1] = value;
 		}
 		private float aiCounter2
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -48,12 +48,12 @@ namespace SOTS.NPCs
             NPC.width = 16;
             NPC.height = 16;
 			Main.npcFrameCount[NPC.type] = 3;  
-            npc.value = 0;
-            npc.npcSlots = 0f;
-			npc.noGravity = true;
-			npc.alpha = 0;
-			npc.HitSound = SoundID.NPCHit19;
-			npc.DeathSound = SoundID.NPCDeath1;
+            NPC.value = 0;
+            NPC.npcSlots = 0f;
+			NPC.noGravity = true;
+			NPC.alpha = 0;
+			NPC.HitSound = SoundID.NPCHit19;
+			NPC.DeathSound = SoundID.NPCDeath1;
 			//Banner = NPC.type;
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -67,12 +67,12 @@ namespace SOTS.NPCs
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 3 * 0.5f);
-			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, npc.frame, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			spriteBatch.Draw(texture, drawPos, NPC.frame, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			texture = GetTexture("SOTS/NPCs/MaligmorChildEye");
-			spriteBatch.Draw(texture, drawPos, npc.frame, Color.White, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, NPC.frame, Color.White, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		bool runOnce = true;
@@ -82,9 +82,9 @@ namespace SOTS.NPCs
 			if(runOnce && Main.netMode != 1)
             {
 				NPC.frame.Y = Main.rand.Next(3) * 26;
-				npc.netUpdate = true;
+				NPC.netUpdate = true;
 			}
-			npc.TargetClosest(true);
+			NPC.TargetClosest(true);
 			return true;
 		}
 		public override void AI()
@@ -95,57 +95,57 @@ namespace SOTS.NPCs
 			aiCounter++;
 			if(!fallen)
 			{
-				if (owner.type != mod.NPCType("Maligmor") || !owner.active)
+				if (owner.type != Mod.Find<ModNPC>("Maligmor") .Type|| !owner.active)
 				{
 					fallen = true;
-					npc.velocity.X += Main.rand.NextFloat(-4f, 4f);
-					npc.velocity.Y += Main.rand.NextFloat(-4f, 4f);
+					NPC.velocity.X += Main.rand.NextFloat(-4f, 4f);
+					NPC.velocity.Y += Main.rand.NextFloat(-4f, 4f);
 					runOnce = false;
 					return;
 				}
-				float bonusSpeedMult = 1.0f + ((npc.whoAmI % 11 - 5) * 0.05f);
-				Vector2 circular = owner.Center + new Vector2(36 + npc.ai[3] + (float)Math.Sin(MathHelper.ToRadians(aiCounter)) * 4f, 0).RotatedBy(MathHelper.ToRadians(aiCounter2 * bonusSpeedMult));
-				Vector2 goTo = circular - npc.Center;
+				float bonusSpeedMult = 1.0f + ((NPC.whoAmI % 11 - 5) * 0.05f);
+				Vector2 circular = owner.Center + new Vector2(36 + NPC.ai[3] + (float)Math.Sin(MathHelper.ToRadians(aiCounter)) * 4f, 0).RotatedBy(MathHelper.ToRadians(aiCounter2 * bonusSpeedMult));
+				Vector2 goTo = circular - NPC.Center;
 				float length = goTo.Length();
 				float speed = 4f + length * 0.0005f;
 				if (speed > length)
 					speed = length;
-				npc.velocity *= 0.75f;
-				npc.velocity += goTo.SafeNormalize(Vector2.Zero) * speed;
-				npc.rotation = circular.Y * 0.06f;
+				NPC.velocity *= 0.75f;
+				NPC.velocity += goTo.SafeNormalize(Vector2.Zero) * speed;
+				NPC.rotation = circular.Y * 0.06f;
 				if (runOnce)
 				{
 					for (int k = 0; k < 20; k++)
 					{
-						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
+						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
 						dust.scale *= 1.2f;
 						dust.velocity *= 0.6f;
-						dust.velocity += npc.velocity * 1.5f;
+						dust.velocity += NPC.velocity * 1.5f;
 						dust.noGravity = true;
 					}
 					runOnce = false;
 				}
-				if (npc.ai[3] > 0)
-					npc.ai[3] *= 0.993f;
+				if (NPC.ai[3] > 0)
+					NPC.ai[3] *= 0.993f;
 				else
-					npc.ai[3] = 0;
+					NPC.ai[3] = 0;
 			}
 			else
             {
-				npc.velocity.X *= 1f;
-				npc.velocity.Y += 0.11f;
-				npc.rotation += npc.velocity.X * 0.0006f;
+				NPC.velocity.X *= 1f;
+				NPC.velocity.Y += 0.11f;
+				NPC.rotation += NPC.velocity.X * 0.0006f;
 				//npc.noTileCollide = false;
             }
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while (num < damage / npc.lifeMax * 30.0)
+				while (num < damage / NPC.lifeMax * 30.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
 					num++;
 				}
 			}
@@ -153,7 +153,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
 				}
 			}
 		}

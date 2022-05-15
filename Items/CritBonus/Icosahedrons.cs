@@ -25,20 +25,14 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritFrost = true;
-			player.meleeCrit += 3;
-			player.rangedCrit += 3;
-			player.magicCrit += 3;
-			player.thrownCrit += 3;
+			player.GetCritChance(DamageClass.Melee) += 3;
+			player.GetCritChance(DamageClass.Ranged) += 3;
+			player.GetCritChance(DamageClass.Magic) += 3;
+			player.GetCritChance(DamageClass.Throwing) += 3;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1);
-			recipe.AddIngredient(ItemID.FrostCore, 1);
-			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 6);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1).AddIngredient(ItemID.FrostCore, 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 6).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 	public class CursedIcosahedron : ModItem
@@ -60,21 +54,14 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritCurseFire = true;
-			player.meleeCrit += 3;
-			player.rangedCrit += 3;
-			player.magicCrit += 3;
-			player.thrownCrit += 3;
+			player.GetCritChance(DamageClass.Melee) += 3;
+			player.GetCritChance(DamageClass.Ranged) += 3;
+			player.GetCritChance(DamageClass.Magic) += 3;
+			player.GetCritChance(DamageClass.Throwing) += 3;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<BorealisIcosahedron>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<HellfireIcosahedron>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
-			recipe.AddIngredient(ItemID.CursedFlame, 10);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<BorealisIcosahedron>(), 1).AddIngredient(ModContent.ItemType<HellfireIcosahedron>(), 1).AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1).AddIngredient(ItemID.CursedFlame, 10).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 	public class HellfireIcosahedron : ModItem
@@ -96,19 +83,14 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritFire = true;
-			player.meleeCrit += 3;
-			player.rangedCrit += 3;
-			player.magicCrit += 3;
-			player.thrownCrit += 3;
+			player.GetCritChance(DamageClass.Melee) += 3;
+			player.GetCritChance(DamageClass.Ranged) += 3;
+			player.GetCritChance(DamageClass.Magic) += 3;
+			player.GetCritChance(DamageClass.Throwing) += 3;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.HellstoneBar, 6);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 6);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.HellstoneBar, 6).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 6).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

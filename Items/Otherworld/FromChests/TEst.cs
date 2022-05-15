@@ -28,7 +28,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 17;
 			//Item.useTime = 3;
-			Item.thrown = true;
+			Item.DamageType = DamageClass.Throwing;
 			Item.rare = ItemRarityID.Green;
 			Item.autoReuse = false;            
 			Item.shoot = ModContent.ProjectileType<ThunderBall>(); 

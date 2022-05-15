@@ -23,12 +23,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<HardIceBrick>(), 100);
-			recipe.AddIngredient(ModContent.ItemType<FrostedKey>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<HardIceBrick>(), 100).AddIngredient(ModContent.ItemType<FrostedKey>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

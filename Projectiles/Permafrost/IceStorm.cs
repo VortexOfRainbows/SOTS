@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Permafrost
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 34;
 			Projectile.width = 34;
 			Projectile.penetrate = -1;
@@ -25,13 +25,13 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.timeLeft = 90;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.alpha = 255;
 		}
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			Vector2 circularLocation = new Vector2(-distance, 4).RotatedBy(MathHelper.ToRadians(rotation));
 			rotation += 15;
 			distance -= 0.525f + 0.1f * modPlayer.shardSpellExtra;

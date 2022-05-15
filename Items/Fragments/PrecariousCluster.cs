@@ -27,14 +27,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddIngredient(null, "DissolvingEarth", 1);
-			recipe.AddIngredient(null, "DissolvingAurora", 1);
-			recipe.AddIngredient(null, "DissolvingNature", 1);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "DissolvingAether", 1).AddIngredient(null, "DissolvingEarth", 1).AddIngredient(null, "DissolvingAurora", 1).AddIngredient(null, "DissolvingNature", 1).AddTile(TileID.DemonAltar).Register();
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -97,7 +90,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void UpdateInventory(Player player)
 		{
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
 			aetherPlayer.aetherNum += Item.stack;
 			for (int i = 0; i < Item.stack; i++)
 			{
@@ -146,14 +139,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1).AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1).AddTile(TileID.DemonAltar).Register();
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -218,7 +204,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void UpdateInventory(Player player)
 		{
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
 			aetherPlayer.infernoNum += Item.stack;
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			for (int i = 0; i < Item.stack; i++)

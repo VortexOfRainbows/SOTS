@@ -22,7 +22,7 @@ namespace SOTS.Projectiles
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 1000000;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
         } 
         public override bool? SingleGrappleHook(Player player)
         {

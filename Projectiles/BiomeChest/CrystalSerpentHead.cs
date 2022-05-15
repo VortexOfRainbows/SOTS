@@ -42,7 +42,6 @@ namespace SOTS.Projectiles.BiomeChest
 			Main.projPet[Projectile.type] = true;
             //ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-			ProjectileID.Sets.Homing[Projectile.type] = true;
 		}
         public const float BaseAttackRate = 54;
         public const float framePerAttack = 11f;
@@ -62,7 +61,7 @@ namespace SOTS.Projectiles.BiomeChest
                         color = 0;
                     Vector2 to = toCenter - position;
                     to = to.SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(position, to * 13, ModContent.ProjectileType<StarBolt>(), Projectile.damage, Projectile.knockBack, Projectile.owner, color);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, to * 13, ModContent.ProjectileType<StarBolt>(), Projectile.damage, Projectile.knockBack, Projectile.owner, color);
                 }
             }
         }
@@ -92,7 +91,7 @@ namespace SOTS.Projectiles.BiomeChest
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
             Vector2 first = Projectile.Center;
-            spriteBatch.Draw(texture, first - Main.screenPosition, null, (Color)GetAlpha(lightColor), Projectile.rotation, origin, 1.0f * generalScale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.spriteBatch.Draw(texture, first - Main.screenPosition, null, (Color)GetAlpha(lightColor), Projectile.rotation, origin, 1.0f * generalScale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             for (int i = 0; i < segments.Count; i++)
             {
                 float alpha = 0.16f * (segments[i].aliveCounter + 1);
@@ -121,16 +120,15 @@ namespace SOTS.Projectiles.BiomeChest
                 }
                 float rotation = segments[i].rotation;
                 int spriteDirection = toOther.X > 0f ? 1 : -1;
-                spriteBatch.Draw(texture, segments[i].position + Projectile.velocity - Main.screenPosition, frame, (Color)GetAlpha(lightColor) * alpha, rotation, origin, 1.0f * generalScale, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                Main.spriteBatch.Draw(texture, segments[i].position + Projectile.velocity - Main.screenPosition, frame, (Color)GetAlpha(lightColor) * alpha, rotation, origin, 1.0f * generalScale, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
                 first = segments[i].position;
             }
             //Main.spriteBatch.Draw(texture, Projectile.Center + Vector2.UnitY.RotatedBy((double)num2 * 6.28318548202515 / 4.0, new Vector2()) * num1, new Microsoft.Xna.Framework.Rectangle?(r), alpha * 0.1f, Projectile.rotation, origin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
             return false;
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            drawCacheProjsBehindProjectiles.Add(index);
-            base.DrawBehind(index, drawCacheProjsBehindNPCsAndTiles, drawCacheProjsBehindNPCs, drawCacheProjsBehindProjectiles, drawCacheProjsOverWiresUI);
+            behindProjectiles.Add(index);
         }
         public float generalScale = 0.75f;
         int totalSegments = 1;
@@ -157,7 +155,7 @@ namespace SOTS.Projectiles.BiomeChest
                     Projectile.Kill();
                 return false;
             }
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             int ownedCounter = 1;
             int targetLength = 2;
             for (int i = 0; i < Main.projectile.Length; i++)
@@ -196,7 +194,7 @@ namespace SOTS.Projectiles.BiomeChest
         public sealed override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             if ((int)Main.time % 120 == 0)
             {
                 Projectile.netUpdate = true;

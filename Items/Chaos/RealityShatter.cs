@@ -88,12 +88,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()	
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 21);
-			recipe.AddIngredient(ModContent.ItemType<SandstoneEdge>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PhaseBar>(), 21).AddIngredient(ModContent.ItemType<SandstoneEdge>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

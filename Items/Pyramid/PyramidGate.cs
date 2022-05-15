@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid
 	}	
 	public class PyramidGateTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = true;
@@ -95,7 +95,7 @@ namespace SOTS.Items.Pyramid
 				player.cursorItemIconID = 0;
 			}
 		}
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
@@ -178,15 +178,15 @@ namespace SOTS.Items.Pyramid
 					int goreIndex2 = Gore.NewGore(center - new Vector2(16, 40) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
 					Main.gore[goreIndex2].scale = 0.9f;
 				}
-				int goreIndex = Gore.NewGore(new Vector2(i * 16, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore1"), 1f);
+				int goreIndex = Gore.NewGore(new Vector2(i * 16, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore1"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 - 16, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore2"), 1f);
+				goreIndex = Gore.NewGore(new Vector2(i * 16 - 16, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore2"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 + 16, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore3"), 1f);
+				goreIndex = Gore.NewGore(new Vector2(i * 16 + 16, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore3"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 + 32, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore4"), 1f);
+				goreIndex = Gore.NewGore(new Vector2(i * 16 + 32, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore4"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 - 32, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore5"), 1f);
+				goreIndex = Gore.NewGore(new Vector2(i * 16 - 32, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore5"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
 			}
 			for (j = 0; j < 30; j++)

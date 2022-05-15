@@ -25,28 +25,28 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 1f;
             NPC.width = 36;
             NPC.height = 28;
-            animationType = NPCID.BlueSlime;
+            AnimationType = NPCID.BlueSlime;
 			Main.npcFrameCount[NPC.type] = 2;  
-            npc.value = 1800;
-            npc.npcSlots = .5f;
-			npc.alpha = 70;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
+            NPC.value = 1800;
+            NPC.npcSlots = .5f;
+			NPC.alpha = 70;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
 			Banner = NPC.type;
 			BannerItem = ItemType<FluxSlimeBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PinkyGrappleSpike");
-			Vector2 drawPos = new Vector2(npc.Center.X, npc.position.Y + npc.height - 10) - Main.screenPosition;
-			drawColor = npc.GetAlpha(drawColor);
+			Vector2 drawPos = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height - 10) - Main.screenPosition;
+			drawColor = NPC.GetAlpha(drawColor);
 			if (initiateSize == -1)
 			{
 				for (int i = 0; i < 7; i++)
 				{
 					counterArr[i] += randSeed1[i];
 					
-					Vector2 circular = new Vector2(-17 * npc.scale, 0).RotatedBy(MathHelper.ToRadians(i * 30));
+					Vector2 circular = new Vector2(-17 * NPC.scale, 0).RotatedBy(MathHelper.ToRadians(i * 30));
 					int direction = 1;
 					if(circular.X < 0)
                     {
@@ -59,12 +59,12 @@ namespace SOTS.NPCs
 					if(NPC.frame.Y == 0)
 					{
 						if(i == 0 || i == 6)
-							circular.Y -= 2 * npc.scale;
-						circular.Y += 2 * npc.scale;
+							circular.Y -= 2 * NPC.scale;
+						circular.Y += 2 * NPC.scale;
 					}
 					else
 					{
-						circular.X -= 2 * npc.scale * direction;
+						circular.X -= 2 * NPC.scale * direction;
 						//circular.Y -= 2 * npc.scale;
 					}
 					int frame = 0;
@@ -87,7 +87,7 @@ namespace SOTS.NPCs
 						randSeed1[i] = Main.rand.NextFloat(0.8f, 1.2f);
 					}
 					Rectangle FrameSize = new Rectangle(0, texture.Height / 4 * frame, texture.Width, texture.Height / 4);
-					spriteBatch.Draw(texture, drawPos + circular, FrameSize, drawColor, MathHelper.ToRadians(i * 30) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2, 3.5f), npc.scale * 0.75f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + circular, FrameSize, drawColor, MathHelper.ToRadians(i * 30) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2, 3.5f), NPC.scale * 0.75f, SpriteEffects.None, 0f);
 				}
 			}
 			return true;
@@ -96,22 +96,22 @@ namespace SOTS.NPCs
 		float[] randSeed1 = new float[7];
 		public override bool PreAI()
 		{
-			npc.TargetClosest(true);
+			NPC.TargetClosest(true);
 			if(initiateSize == 1)
 			{
 				if (Main.netMode != 1)
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				for (int i = 0; i < counterArr.Length; i++)
 				{
 					counterArr[i] = 0;
 					randSeed1[i] = Main.rand.NextFloat(0.8f, 1.2f);
 				}
-				npc.Center = npc.position;
+				NPC.Center = NPC.position;
 				initiateSize = -1;
-				npc.scale = 1.25f;
-				NPC.width = (int)(npc.width * npc.scale);
-				NPC.height = (int)(npc.height * npc.scale);
-				npc.position = npc.Center;
+				NPC.scale = 1.25f;
+				NPC.width = (int)(NPC.width * NPC.scale);
+				NPC.height = (int)(NPC.height * NPC.scale);
+				NPC.position = NPC.Center;
 			}
 			return true;
 		}
@@ -131,7 +131,7 @@ namespace SOTS.NPCs
 			for(int i = 0; i < Main.maxNPCs; i++)
 			{
 				NPC pet = Main.npc[i];
-				if (pet.type == mod.NPCType("FluxSlimeBall") && (int)pet.ai[0] == npc.whoAmI && pet.active)
+				if (pet.type == Mod.Find<ModNPC>("FluxSlimeBall") .Type&& (int)pet.ai[0] == NPC.whoAmI && pet.active)
 				{
 					total++;
 				}
@@ -141,18 +141,18 @@ namespace SOTS.NPCs
 				counter = 0;
 				if (total < 3)
 				{
-					int npc1 = NPC.NewNPC((int)npc.position.X + npc.width / 2, (int)npc.position.Y + npc.height, mod.NPCType("FluxSlimeBall"), 0, npc.whoAmI, Main.rand.NextFloat(360), 0, Main.rand.NextFloat(0.8f, 1.2f));
+					int npc1 = NPC.NewNPC((int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height, Mod.Find<ModNPC>("FluxSlimeBall").Type, 0, NPC.whoAmI, Main.rand.NextFloat(360), 0, Main.rand.NextFloat(0.8f, 1.2f));
 				}
 			}
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 110.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 110.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.PinkSlime, (float)hitDirection, -1f, npc.alpha);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)hitDirection, -1f, NPC.alpha);
 					num++;
 				}
 			}
@@ -160,7 +160,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 45; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.PinkSlime, (float)(2 * hitDirection), -2f, npc.alpha);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)(2 * hitDirection), -2f, NPC.alpha);
 				}
 			}
 		}
@@ -168,12 +168,12 @@ namespace SOTS.NPCs
 		{
 			if (Main.rand.Next(6) == 0)
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FoulConcoction"), Main.rand.Next(2) + 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("FoulConcoction").Type, Main.rand.Next(2) + 1);
 			}
 			if(!Main.rand.NextBool(5) || Main.expertMode)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("VialofAcid"), Main.rand.Next(2) + 1);
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.PinkGel, Main.rand.Next(4, 7));
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfNature"), 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("VialofAcid").Type, Main.rand.Next(2) + 1);
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.PinkGel, Main.rand.Next(4, 7));
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("FragmentOfNature").Type, 1);
 		}
 	}
 }

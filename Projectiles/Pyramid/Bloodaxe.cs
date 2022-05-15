@@ -15,7 +15,8 @@ namespace SOTS.Projectiles.Pyramid
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(274);
-            aiType = 274;
+            AIType = 274;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 0;
 			Projectile.timeLeft = 255;
 			Projectile.width = 40;
@@ -50,9 +51,9 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.alpha++;
 			float minDist = 360;
 			int target2 = -1;
-			float dX = 0f;
-			float dY = 0f;
-			float distance = 0;
+			float dX;
+			float dY;
+			float distance;
 			float speed = 0.5f;
 			if(Projectile.friendly == true && Projectile.hostile == false && Projectile.timeLeft > 110)
 			{
@@ -71,7 +72,6 @@ namespace SOTS.Projectiles.Pyramid
 						}
 					}
 				}
-				
 				if(target2 != -1)
 				{
 					NPC toHit = Main.npc[target2];
@@ -85,7 +85,6 @@ namespace SOTS.Projectiles.Pyramid
 					}
 				}
 			}
-			
 		}
         public override void Kill(int timeLeft)
         {
@@ -96,7 +95,6 @@ namespace SOTS.Projectiles.Pyramid
 				dust.scale *= 2;
 				dust.noGravity = true;
             }
-            base.Kill(timeLeft);
         }
     }
 }

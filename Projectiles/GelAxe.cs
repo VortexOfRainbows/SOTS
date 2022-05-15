@@ -14,17 +14,17 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(3);
-            aiType = 3;
+            AIType = 3;
 			Projectile.penetrate = 3;
 			Projectile.alpha = 25;
 			Projectile.width = 32;
 			Projectile.height = 20;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 16;
 			height = 12;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{	

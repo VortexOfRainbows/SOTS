@@ -22,21 +22,16 @@ namespace SOTS.Items.Permafrost
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return head.type == mod.ItemType("FrostArtifactHelmet") && legs.type == mod.ItemType("FrostArtifactTrousers");
+            return head.type == Mod.Find<ModItem>("FrostArtifactHelmet") .Type&& legs.type == Mod.Find<ModItem>("FrostArtifactTrousers").Type;
         }
 		public override void UpdateEquip(Player player)
 		{
-			player.meleeCrit += 16;
-			player.rangedCrit += 16;
+			player.GetCritChance(DamageClass.Melee) += 16;
+			player.GetCritChance(DamageClass.Ranged) += 16;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.FrostBreastplate, 1);
-			recipe.AddIngredient(null, "AbsoluteBar", 24);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.FrostBreastplate, 1).AddIngredient(null, "AbsoluteBar", 24).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

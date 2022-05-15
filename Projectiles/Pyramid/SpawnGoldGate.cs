@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				for (int y = top; y < top + 5; y++)
 				{
-					if (Main.tile[x, y].type != ModContent.TileType<AncientGoldGateTile>() && Main.tile[x, y].type != ModContent.TileType<TrueSandstoneTile>())
+					if (Main.tile[x, y].TileType != ModContent.TileType<AncientGoldGateTile>() && Main.tile[x, y].TileType != ModContent.TileType<TrueSandstoneTile>())
 						WorldGen.KillTile(x, y, false, false, false);
 					else
 						valid = false;
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Pyramid
 					for (int y = top; y < top + 5; y++)
 					{
 						if (Projectile.ai[0] != -1 && placed)
-							Main.tile[x, y].frameX += 36;
+							Main.tile[x, y].TileFrameX += 36;
 						NetMessage.SendTileSquare(-1, x, y, 2);
 					}
 				}

@@ -38,9 +38,9 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				foreach (TooltipLine line in tooltips) //goes through each tooltip line
 				{
-					if (line.mod == "Terraria" && line.Name == "Tooltip0")
+					if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 					{
-						line.text = "Increases your max number of minions and sentries by 1" +
+						line.Text = "Increases your max number of minions and sentries by 1" +
 							"\nIncreases minion and melee damage by 7%" +
 							"\nIncreased max void by 50" +
 							"\nProvides a Holo Eye minion to assist in combat" +
@@ -55,10 +55,10 @@ namespace SOTS.Items.Otherworld.FromChests
 			}
 			foreach (TooltipLine line in tooltips) //goes through each tooltip line
 			{
-				if (line.mod == "Terraria" && line.Name == "Tooltip0")
+				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string key = "Unbound";
-					line.text = "Increases your max number of minions and sentries by 1" +
+					line.Text = "Increases your max number of minions and sentries by 1" +
 						"\nIncreases minion and melee damage by 7%" +
 						"\nIncreased max void by 50" +
 						"\nProvides a Holo Eye minion to assist in combat" +
@@ -73,7 +73,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == mod.ItemType("TwilightAssassinsChestplate") && legs.type == mod.ItemType("TwilightAssassinsLeggings");
+            return body.type == Mod.Find<ModItem>("TwilightAssassinsChestplate") .Type&& legs.type == Mod.Find<ModItem>("TwilightAssassinsLeggings").Type;
         }
         public override void UpdateArmorSet(Player player)
 		{
@@ -108,24 +108,18 @@ namespace SOTS.Items.Otherworld.FromChests
 			TWAP.glowNum += 0.2f;
 			player.maxMinions++;
 			player.maxTurrets++;
-			player.minionDamage += 0.07f;
-			player.meleeDamage += 0.07f;
+			player.GetDamage(DamageClass.Summon) += 0.07f;
+			player.GetDamage(DamageClass.Melee) += 0.07f;
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			voidPlayer.voidMeterMax2 += 50;
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			if(!modPlayer.HoloEye)
-				modPlayer.HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+				modPlayer.HoloEyeDamage += (int)(33 * (1f + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f)));
 			modPlayer.HoloEye = true;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 12).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 12).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 
@@ -152,14 +146,14 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return head.type == mod.ItemType("TwilightAssassinsCirclet") && legs.type == mod.ItemType("TwilightAssassinsLeggings");
+			return head.type == Mod.Find<ModItem>("TwilightAssassinsCirclet") .Type&& legs.type == Mod.Find<ModItem>("TwilightAssassinsLeggings").Type;
 		}
 		public override void UpdateEquip(Player player)
 		{
 			TwilightAssassinPlayer TWAP = player.GetModPlayer<TwilightAssassinPlayer>();
 			TWAP.glowNum += 0.2f;
 			player.maxMinions++;
-			player.meleeCrit += 10;
+			player.GetCritChance(DamageClass.Melee) += 10;
 			player.lifeRegen += 2;
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			voidPlayer.voidRegenSpeed += 0.1f;
@@ -188,13 +182,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.HellstoneBar, 12);
-			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.HellstoneBar, 12).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 20).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 
@@ -216,7 +204,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == mod.ItemType("TwilightAssassinsLeggings") && head.type == mod.ItemType("TwilightAssassinsCirclet");
+			return body.type == Mod.Find<ModItem>("TwilightAssassinsLeggings") .Type&& head.type == Mod.Find<ModItem>("TwilightAssassinsCirclet").Type;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -250,13 +238,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 16);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 16).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 	public class TwilightAssassinPlayer : ModPlayer
@@ -266,8 +248,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			if(glowNum > 0)
             {
-				float alpha = 1 - player.shadow;
-				Lighting.AddLight(player.Center, alpha * glowNum * new Vector3(200, 220, 255) / 255f);
+				float alpha = 1 - Player.shadow;
+				Lighting.AddLight(Player.Center, alpha * glowNum * new Vector3(200, 220, 255) / 255f);
 			}
 			glowNum = 0;
             base.ResetEffects();

@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.localNPCHitCooldown = 30;

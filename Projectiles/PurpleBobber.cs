@@ -25,10 +25,10 @@ namespace SOTS.Projectiles
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 2000;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             fallThrough = true;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void AI()
         {
@@ -41,7 +41,7 @@ namespace SOTS.Projectiles
 			{
 				rodBobberType = (int)Projectile.knockBack;
 				Projectile.aiStyle = 61;
-				aiType = (int)Projectile.knockBack;
+				AIType = (int)Projectile.knockBack;
 				Projectile.timeLeft = 2000;
 				return false;
 			}

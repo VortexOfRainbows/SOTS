@@ -76,7 +76,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.minionDamage += 0.1f;
+			player.GetDamage(DamageClass.Summon) += 0.1f;
 			PlatformPlayer modPlayer = player.GetModPlayer<PlatformPlayer>();
 			modPlayer.platformPairs++;
 			if(hideVisual)
@@ -84,12 +84,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 8);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 8).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 	public class PlatformPlayer : ModPlayer
@@ -102,27 +97,27 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void ResetEffects()
 		{
 			int type = ModContent.ProjectileType<HoloPlatform>();
-			if(Main.myPlayer == player.whoAmI)
+			if(Main.myPlayer == Player.whoAmI)
 			{
 				for (int i = 0; i < platformPairs; i++)
 				{
 					if (platforms1[i] == -1)
 					{
-						platforms1[i] = Projectile.NewProjectile(player.Center.X - 160 - (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, -1);
+						platforms1[i] = Projectile.NewProjectile(Player.Center.X - 160 - (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, -1);
 					}
 					if (!Main.projectile[platforms1[i]].active || Main.projectile[platforms1[i]].type != type || Main.projectile[platforms1[i]].ai[0] != i || Main.projectile[platforms1[i]].ai[1] != -1)
 					{
-						platforms1[i] = Projectile.NewProjectile(player.Center.X - 160 - (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, -1);
+						platforms1[i] = Projectile.NewProjectile(Player.Center.X - 160 - (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, -1);
 					}
 					Main.projectile[platforms1[i]].timeLeft = 6;
 
 					if (platforms2[i] == -1)
 					{
-						platforms2[i] = Projectile.NewProjectile(player.Center.X + 160 + (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, 1);
+						platforms2[i] = Projectile.NewProjectile(Player.Center.X + 160 + (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, 1);
 					}
 					if (!Main.projectile[platforms2[i]].active || Main.projectile[platforms2[i]].type != type || Main.projectile[platforms2[i]].ai[0] != i || Main.projectile[platforms2[i]].ai[1] != 1)
 					{
-						platforms2[i] = Projectile.NewProjectile(player.Center.X + 160 + (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, 1);
+						platforms2[i] = Projectile.NewProjectile(Player.Center.X + 160 + (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, 1);
 					}
 					Main.projectile[platforms2[i]].timeLeft = 6;
 				}

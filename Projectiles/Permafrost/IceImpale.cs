@@ -1,13 +1,7 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using SOTS.Void;
 using SOTS.Dusts;
 
@@ -21,6 +15,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
         {
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = -1;
@@ -38,11 +33,11 @@ namespace SOTS.Projectiles.Permafrost
 			if(!hasHit)
             {
 				if(player.whoAmI == Main.myPlayer)
-					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, Projectile.owner, 3f, 4);
+					Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center, Vector2.Zero, ModContent.ProjectileType<Base.HealProj>(), 2, 0, Projectile.owner, 3f, 4);
 				hasHit = true;
             }
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 30;
             height = 30;
@@ -53,7 +48,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("IcePulse"), Projectile.damage, 0, Projectile.owner, -1);
+				Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<IcePulse>(), Projectile.damage, 0, Projectile.owner, -1);
 			}
 		}
 		public override void AI()

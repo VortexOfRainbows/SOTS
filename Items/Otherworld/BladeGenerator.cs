@@ -77,7 +77,7 @@ namespace SOTS.Items.Otherworld
 		{
 			BladePlayer modPlayer = player.GetModPlayer<BladePlayer>();
 			modPlayer.maxBlades += 9;
-			modPlayer.bladeDamage += (int)(Item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.bladeDamage += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f)));
 			modPlayer.bladeGeneration++;
 		}
 	}
@@ -107,7 +107,7 @@ namespace SOTS.Items.Otherworld
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (ModContent.ProjectileType<TwilightBlade>() == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)
+				if (ModContent.ProjectileType<TwilightBlade>() == proj.type && proj.active && proj.owner == Player.whoAmI && proj.timeLeft > 748)
 				{
 					currentBlades++;
 				}
@@ -115,8 +115,8 @@ namespace SOTS.Items.Otherworld
 			if (bladeGenSpeed < bladeGeneration)
 			{
 				bladeGeneration -= bladeGenSpeed;
-				if(maxBlades > 0 && currentBlades < maxBlades && attackNum < 10 && player.whoAmI == Main.myPlayer)
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<TwilightBlade>(), bladeDamage, 1f, player.whoAmI);
+				if(maxBlades > 0 && currentBlades < maxBlades && attackNum < 10 && Player.whoAmI == Main.myPlayer)
+					Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<TwilightBlade>(), bladeDamage, 1f, Player.whoAmI);
 			}
 			if(attackNum >= 10)
 			{

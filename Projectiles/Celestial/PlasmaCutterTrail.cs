@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.timeLeft = 3600;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 255;
 			Projectile.ai[1] = -1;
 			Projectile.extraUpdates = 1;

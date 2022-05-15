@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Bluefire : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bluefire");
 			Description.SetDefault("Killed enemies explode into flames");   

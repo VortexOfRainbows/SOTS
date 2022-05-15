@@ -26,18 +26,12 @@ namespace SOTS.Items.Inferno
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.petFreeWisp += (int)(Item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.petFreeWisp += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, Item.damage);
 			modPlayer.BlueFireOrange = true;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Glass, 20);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<BluefirePotion>(), 8);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Glass, 20).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddIngredient(ModContent.ItemType<BluefirePotion>(), 8).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

@@ -28,13 +28,13 @@ namespace SOTS.NPCs.Constructs
 		}
 		private float attackPhase
 		{
-			get => npc.ai[0];
-			set => npc.ai[0] = value;
+			get => NPC.ai[0];
+			set => NPC.ai[0] = value;
 		}
 		private float attackTimer
 		{
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
+			get => NPC.ai[3];
+			set => NPC.ai[3] = value;
 		}
 
 		public override void SetStaticDefaults()
@@ -51,16 +51,16 @@ namespace SOTS.NPCs.Constructs
 			NPC.width = 98;
 			NPC.height = 78;
 			Main.npcFrameCount[NPC.type] = 1;
-			npc.value = Item.buyPrice(0, 10, 0, 0);
-			npc.npcSlots = 4f;
-			npc.lavaImmune = true;
-			npc.noGravity = true;
-			npc.noTileCollide = true;
-			npc.netAlways = true;
-			npc.alpha = 0;
-			npc.HitSound = SoundID.NPCHit7;
-			npc.DeathSound = SoundID.NPCDeath14;
-			npc.rarity = 5;
+			NPC.value = Item.buyPrice(0, 10, 0, 0);
+			NPC.npcSlots = 4f;
+			NPC.lavaImmune = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.netAlways = true;
+			NPC.alpha = 0;
+			NPC.HitSound = SoundID.NPCHit7;
+			NPC.DeathSound = SoundID.NPCDeath14;
+			NPC.rarity = 5;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -97,7 +97,7 @@ namespace SOTS.NPCs.Constructs
 				}
 				if (percent > 0 && attackTimer < infernoDuration + infernoEndDuration - 120)
 				{
-					Vector2 fireFrom = npc.Center + (aimTo - npc.Center).SafeNormalize(Vector2.Zero) * 90;
+					Vector2 fireFrom = NPC.Center + (aimTo - NPC.Center).SafeNormalize(Vector2.Zero) * 90;
 					Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
 					Color color = VoidPlayer.InfernoColorAttemptDegrees(attackTimer * 3);
 					color.A = 0;
@@ -123,9 +123,9 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Vector2 origin = new Vector2(npc.width / 2, npc.height / 2);
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
+			Vector2 origin = new Vector2(NPC.width / 2, NPC.height / 2);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			dir = (float)Math.Atan2(aimTo.Y - NPC.Center.Y, aimTo.X - NPC.Center.X);
 			bool flip = false;
 			if (Math.Abs(MathHelper.WrapAngle(dir)) <= MathHelper.ToRadians(90))
 			{
@@ -141,8 +141,8 @@ namespace SOTS.NPCs.Constructs
 						probes[i].Draw();
 				}
 			}
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, dir - bonusDir, origin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/InfernoConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir - bonusDir, origin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, drawColor, dir - bonusDir, origin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/InfernoConstructGlow"), NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, Color.White, dir - bonusDir, origin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			if (!runOnce)
 			{
 				for (int i = 0; i < probes.Count; i++)
@@ -163,7 +163,7 @@ namespace SOTS.NPCs.Constructs
 				Color color = VoidPlayer.Inferno1;
 				color.A = 0;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
-				color = npc.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
+				color = NPC.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
@@ -174,22 +174,22 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				if(Main.netMode != NetmodeID.Server)
 				{
 					for (int k = 0; k < 30; k++)
 					{
-						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
-						Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+						Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
 					}
 					for (int i = 1; i <= 7; i++)
-						Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);
+						Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);
 					for (int i = 0; i < 9; i++)
-						Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+						Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 					for (int i = 0; i < probes.Count; i++)
 					{
-						Gore.NewGore(probes[i].position - new Vector2(13, 13), npc.velocity, mod.GetGoreSlot("Gores/InfernoConstruct/InfernoChildGore"), 1f);
+						Gore.NewGore(probes[i].position - new Vector2(13, 13), NPC.velocity, Mod.GetGoreSlot("Gores/InfernoConstruct/InfernoChildGore"), 1f);
 						for (int k = 0; k < 6; k++)
 						{
 							Dust dust = Dust.NewDustDirect(probes[i].position, 0, 0, DustID.Fire);
@@ -210,40 +210,40 @@ namespace SOTS.NPCs.Constructs
 		int probeAttackTimer = 0;
 		public override bool PreAI()
 		{
-			Player player = Main.player[npc.target];
-			npc.TargetClosest(false);
+			Player player = Main.player[NPC.target];
+			NPC.TargetClosest(false);
 			aimTo = player.Center;
 			if (runOnce)
             {
 				for(int i = 0; i < ProbeCount; i++)
                 {
-					probes.Add(new InfernoProbe(npc.Center, aimTo));
+					probes.Add(new InfernoProbe(NPC.Center, aimTo));
                 }
 				runOnce = false;
 			}
 			float xCompress = 0.4f;
-			npc.ai[1] += spinSpeed;
-			npc.ai[2] += spinDynamicSpeed;
+			NPC.ai[1] += spinSpeed;
+			NPC.ai[2] += spinDynamicSpeed;
 			spinSpeed = MathHelper.Lerp(spinSpeed, 1, 0.05f);
 			spinDynamicSpeed = MathHelper.Lerp(spinDynamicSpeed, 1, 0.05f);
-			float dynamicDegrees = 15 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
+			float dynamicDegrees = 15 * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[2]));
 			for (int i = 0; i < ProbeCount; i++)
 			{
-				float degrees = npc.ai[1] + i * (360f / ProbeCount);
+				float degrees = NPC.ai[1] + i * (360f / ProbeCount);
 				probes[i].aimTo = player.Center;
 				Vector2 circularLocation = new Vector2(0, rotateLength).RotatedBy(MathHelper.ToRadians(degrees));
 				circularLocation.X *= xCompress;
-				circularLocation = circularLocation.RotatedBy(npc.rotation + MathHelper.ToRadians(dynamicDegrees));
-				probes[i].position = npc.Center + circularLocation;
+				circularLocation = circularLocation.RotatedBy(NPC.rotation + MathHelper.ToRadians(dynamicDegrees));
+				probes[i].position = NPC.Center + circularLocation;
 				probes[i].degrees = degrees % 360;
-				probes[i].velocity = npc.velocity;
+				probes[i].velocity = NPC.velocity;
 				probes[i].Update();
 			}
 			rotateLength = MathHelper.Lerp(rotateLength, targetRotateLength, 0.05f);
 			targetRotateLength = 72;
 			if (Main.rand.NextBool(7))
             {
-				Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire);
+				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Fire);
 				dust.scale *= 1.6f;
 				dust.noGravity = true;
 				dust.velocity *= 0.2f;
@@ -252,9 +252,9 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.45f / 155f, (255 - npc.alpha) * 0.25f / 155f, (255 - npc.alpha) * 0.45f / 155f);
-			Vector2 toPlayer = player.Center - npc.Center;
+			Player player = Main.player[NPC.target];
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.45f / 155f, (255 - NPC.alpha) * 0.25f / 155f, (255 - NPC.alpha) * 0.45f / 155f);
+			Vector2 toPlayer = player.Center - NPC.Center;
 			if(attackPhase == 0)
 			{
 				aimTo = player.Center;
@@ -277,11 +277,11 @@ namespace SOTS.NPCs.Constructs
 				{
 					speed = -2 + distToPlayer * -0.001f;
 				}
-				if (player.Center.X < npc.Center.X)
+				if (player.Center.X < NPC.Center.X)
 					direction = 1;
 				else
 					direction = -1;
-				npc.velocity = Vector2.Lerp(npc.velocity, toPlayer.SafeNormalize(Vector2.Zero) * speed, 0.1f);
+				NPC.velocity = Vector2.Lerp(NPC.velocity, toPlayer.SafeNormalize(Vector2.Zero) * speed, 0.1f);
 				if(attackTimer > 180)
                 {
 					attackTimer = 0;
@@ -298,7 +298,7 @@ namespace SOTS.NPCs.Constructs
 				if(attackTimer < 0)
 				{
 					probeAttackTimer = 0;
-					if (aimTo.X < npc.Center.X)
+					if (aimTo.X < NPC.Center.X)
 						direction = 1;
 					else
 						direction = -1;
@@ -306,10 +306,10 @@ namespace SOTS.NPCs.Constructs
 				attackTimer++; 
 				probeAttackTimer++;
 				Vector2 normal = new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(attackTimer * 0.5f * direction));
-				npc.velocity *= 0.9f;
-				npc.velocity = normal * 0.2f;
-				Vector2 targetAimTo = npc.Center + normal * 32;
-				Vector2 fireFrom = npc.Center + normal.SafeNormalize(Vector2.Zero) * 90;
+				NPC.velocity *= 0.9f;
+				NPC.velocity = normal * 0.2f;
+				Vector2 targetAimTo = NPC.Center + normal * 32;
+				Vector2 fireFrom = NPC.Center + normal.SafeNormalize(Vector2.Zero) * 90;
 				float lerp = 1 + attackTimer / 90f;
 				if (lerp > 1)
 					lerp = 1;
@@ -380,10 +380,10 @@ namespace SOTS.NPCs.Constructs
 					Vector2 launchvelo = normal * Main.rand.NextFloat(2.75f, 3.25f);
 					if (attackTimer % (fireRate * 2) == 0)
 					{
-						npc.Center -= normal * 1.5f;
+						NPC.Center -= normal * 1.5f;
 						SoundEngine.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 34, 1f, 0.5f);
 					}
-					int damage = npc.damage / 2;
+					int damage = NPC.damage / 2;
 					if (Main.expertMode)
 					{
 						damage = (int)(damage / Main.expertDamage);
@@ -402,8 +402,8 @@ namespace SOTS.NPCs.Constructs
 					}
 				}
 			}
-			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
-			npc.rotation = dir;
+			dir = (float)Math.Atan2(aimTo.Y - NPC.Center.Y, aimTo.X - NPC.Center.X);
+			NPC.rotation = dir;
 			if (Main.netMode != NetmodeID.Server)
 			{
 				for (int i = 0; i < (SOTS.Config.lowFidelityMode ? 2 : 3); i++)
@@ -419,67 +419,67 @@ namespace SOTS.NPCs.Constructs
 						rotational.X *= 0.4f;
 						rotational.Y *= 1.1f;
 					}
-					rotational = rotational.RotatedBy(npc.rotation);
-					particleList.Add(new FireParticle(npc.Center + new Vector2(-30, 0).RotatedBy(npc.rotation), rotational + npc.velocity * Main.rand.NextFloat(0.8f), Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.6f, 2f)));
+					rotational = rotational.RotatedBy(NPC.rotation);
+					particleList.Add(new FireParticle(NPC.Center + new Vector2(-30, 0).RotatedBy(NPC.rotation), rotational + NPC.velocity * Main.rand.NextFloat(0.8f), Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.6f, 2f)));
 				}
 				cataloguePos();
 			}
-			npc.spriteDirection = -direction;
+			NPC.spriteDirection = -direction;
 		}
 		public const int timeBetweenDashes = 80;
 		public void DashAttacks(float distance, float speedMult, int amt = 4)
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			int timer = (int)attackTimer % timeBetweenDashes;
 			if (timer <= 30)
 			{
 				targetRotateLength = 90;
 				Vector2 dashArea = player.Center + new Vector2(distance * direction, 0);
-				Vector2 toPlayer = dashArea - npc.Center;
+				Vector2 toPlayer = dashArea - NPC.Center;
 				float distToPlayer = toPlayer.Length();
 				float speed = 10 * speedMult + distToPlayer * 0.0005f;
 				if (speed > distToPlayer)
 				{
 					speed = distToPlayer;
 				}
-				npc.velocity = Vector2.Lerp(npc.velocity, toPlayer.SafeNormalize(Vector2.Zero) * speed, 0.1f);
-				if (npc.velocity.Length() < 2)
+				NPC.velocity = Vector2.Lerp(NPC.velocity, toPlayer.SafeNormalize(Vector2.Zero) * speed, 0.1f);
+				if (NPC.velocity.Length() < 2)
 					aimTo = player.Center;
-				aimTo = Vector2.Lerp(npc.Center + npc.velocity * 6, player.Center, timer / 30f);
+				aimTo = Vector2.Lerp(NPC.Center + NPC.velocity * 6, player.Center, timer / 30f);
 			}
 			else if (timer < 50)
 			{
 				targetRotateLength = 112;
 				aimTo = player.Center;
-				float toPlayerY = (float)(Math.Sign(player.Center.Y - npc.Center.Y) * Math.Sqrt(Math.Abs(player.Center.Y - npc.Center.Y)));
+				float toPlayerY = (float)(Math.Sign(player.Center.Y - NPC.Center.Y) * Math.Sqrt(Math.Abs(player.Center.Y - NPC.Center.Y)));
 				float current = timer - 40;
 				float sin = (float)Math.Sin(MathHelper.ToRadians(current * 12f));
-				npc.velocity *= 0.1f;
-				npc.velocity.X += sin * 5f * direction;
-				npc.velocity.Y += sin * 0.125f * toPlayerY;
+				NPC.velocity *= 0.1f;
+				NPC.velocity.X += sin * 5f * direction;
+				NPC.velocity.Y += sin * 0.125f * toPlayerY;
 				spinSpeed = 0.5f;
 				spinDynamicSpeed = 2f;
 			}
 			if (timer == 50)
 			{
 				targetRotateLength = 112;
-				Vector2 toPlayer = player.Center - npc.Center;
-				SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.3f);
-				npc.velocity += 23f * toPlayer.SafeNormalize(Vector2.Zero);
-				npc.velocity.Y *= 0.5f;
+				Vector2 toPlayer = player.Center - NPC.Center;
+				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.1f, 0.3f);
+				NPC.velocity += 23f * toPlayer.SafeNormalize(Vector2.Zero);
+				NPC.velocity.Y *= 0.5f;
 			}
 			if (timer > 50)
 			{
 				targetRotateLength = 112;
-				aimTo = npc.Center + npc.velocity * 6;
-				npc.velocity += new Vector2(1.1f * speedMult * Math.Sign(npc.velocity.X), 0);
+				aimTo = NPC.Center + NPC.velocity * 6;
+				NPC.velocity += new Vector2(1.1f * speedMult * Math.Sign(NPC.velocity.X), 0);
 				spinSpeed = 3.5f;
 				spinDynamicSpeed = 1f;
 				if(attackTimer % 4 == 0)
                 {
 					int num = (int)attackTimer % probes.Count;
 					InfernoProbe probe = probes[num];
-					int damage = npc.damage / 2;
+					int damage = NPC.damage / 2;
 					if (Main.expertMode)
 					{
 						damage = (int)(damage / Main.expertDamage);
@@ -499,11 +499,11 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<InfernoSpirit>());	
+			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<InfernoSpirit>());	
 			Main.npc[n].velocity.Y = -10f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(4) + 4);
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(4) + 4);
 		}	
 	}
 	public class InfernoProbe

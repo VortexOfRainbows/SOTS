@@ -36,15 +36,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemType<PrecariousCluster>(), 1);
-			recipe.AddIngredient(ItemType<TwilightShard>(), 20);
-			recipe.AddIngredient(ItemType<OtherworldlyAlloy>(), 20);
-			recipe.AddIngredient(ItemType<HardlightAlloy>(), 10);
-			recipe.AddIngredient(ItemType<StarlightAlloy>(), 10);
-			recipe.AddTile(TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemType<PrecariousCluster>(), 1).AddIngredient(ItemType<TwilightShard>(), 20).AddIngredient(ItemType<OtherworldlyAlloy>(), 20).AddIngredient(ItemType<HardlightAlloy>(), 10).AddIngredient(ItemType<StarlightAlloy>(), 10).AddTile(TileType<HardlightFabricatorTile>()).Register();
 		}
 		public static void AddTransmutationRecipes(Mod mod) //called in SOTS
         {
@@ -154,7 +146,7 @@ namespace SOTS.Items.Otherworld.Furniture
 	}
 	public class TransmutationAltarTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -222,7 +214,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 		}
 		float cooldown = 0f;
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			int left = i - tile.TileFrameX / 18;
@@ -551,7 +543,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool ValidTile(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.active() && tile.TileType == (ushort)TileType<TransmutationAltarTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
+			return tile.HasTile && tile.TileType == (ushort)TileType<TransmutationAltarTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
 		}
 
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)

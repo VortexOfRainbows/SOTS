@@ -20,35 +20,32 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Frigid Robe");
 			Tooltip.SetDefault("Frigid Javelin gains better bouncing capabilities");
+			ArmorIDs.Body.Sets.HidesHands[Type] = false;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return head.type == mod.ItemType("FrigidCrown") && legs.type == mod.ItemType("FrigidGreaves");
+			return head.type == ModContent.ItemType<FrigidCrown>() && legs.type == ModContent.ItemType<FrigidGreaves>();
 		}
 		public override void UpdateArmorSet(Player player)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.setBonus = "Frigid Javelin no longer costs void\nDecreases void damage by 15%";
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			vPlayer.voidDamage -= 0.15f;
 			modPlayer.frigidJavelinNoCost = true;
 		}
-		public override void DrawHands(ref bool drawHands, ref bool drawArms)
+		/*public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{
 			drawHands = true;
-		}
+		}*/
 		public override void UpdateEquip(Player player)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.frigidJavelinBoost += 3;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "FrigidBar", 16);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<FrigidBar>(16).AddTile(TileID.Anvils).Register();
 		}
 
 	}

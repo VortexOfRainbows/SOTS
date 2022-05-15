@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			VoidPlayer.VoidBurn(mod, target, 5, 180);
+			VoidPlayer.VoidBurn(Mod, target, 5, 180);
 		}
 		public override void AI()
 		{

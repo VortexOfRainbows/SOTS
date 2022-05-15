@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.friendly = true;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 3;
 			Projectile.scale = 0.75f;
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(endHow == 1 && endHow != 2 && Main.rand.NextBool(18))
 			{
-				int dust1 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				int dust1 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[dust1];
 				dust.scale *= 1f * (10f - iterator)/10f;
 				dust.velocity += Projectile.velocity * 0.3f;
@@ -159,7 +159,7 @@ namespace SOTS.Projectiles.Otherworld
 						if (Projectile.owner == Main.myPlayer)
 						{
 							Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 45f));
-							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("PhaseColumn"), Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
+							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Mod.Find<ModProjectile>("PhaseColumn").Type, Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
 						}
 					}
 				}

@@ -25,14 +25,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantOre>(), 10);
-			recipe.AddIngredient(ItemID.GlowingMushroom, 2);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 1);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 1);
-			recipe.AddTile(TileID.Furnaces);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
+			CreateRecipe(2).AddIngredient(ModContent.ItemType<VibrantOre>(), 10).AddIngredient(ItemID.GlowingMushroom, 2).AddRecipeGroup(RecipeGroupID.IronBar, 1).AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 1).AddTile(TileID.Furnaces).Register();
 		}
 	}
 }

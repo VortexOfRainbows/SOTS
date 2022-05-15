@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Fat : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fat");
 			Description.SetDefault("Speed decreased, endurance increased");   

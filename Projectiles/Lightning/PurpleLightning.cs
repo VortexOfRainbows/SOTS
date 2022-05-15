@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Lightning
         {
 			Projectile.penetrate = -1; 
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 1200;
 			Projectile.width = 12;
 			Projectile.height = 12;
@@ -198,7 +198,7 @@ namespace SOTS.Projectiles.Lightning
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("PurpleLightningZap"), (int)(Projectile.damage * 0.7f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[0]);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("PurpleLightningZap").Type, (int)(Projectile.damage * 0.7f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[0]);
 					}
 				}
 			}

@@ -7,7 +7,7 @@ namespace SOTS.Buffs.MinionBuffs
 {
     public class SquirrelBuff : ModBuff
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Squirrel");
 			Description.SetDefault("Squirrels assist you in combat");

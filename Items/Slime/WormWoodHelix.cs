@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -35,34 +36,28 @@ namespace SOTS.Items.Slime
         {
             return new Vector2(-2f, 0.5f);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			if(type == ProjectileID.Bullet)
 			{
-				speedX *= 0.65f;
-				speedY *= 0.65f;
-				Vector2 projVelocity1 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(45));
-				Vector2 projVelocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(315));
-				Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity1.X * 0.325f, projVelocity1.Y * 0.325f, mod.ProjectileType("Fusion1"), damage, knockBack, Main.myPlayer);
-				Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity2.X * 0.325f, projVelocity2.Y * 0.325f, mod.ProjectileType("Fusion2"), damage, knockBack, Main.myPlayer);
+				velocity *= 0.65f;
+				Vector2 projVelocity1 = velocity.RotatedBy(MathHelper.ToRadians(45));
+				Vector2 projVelocity2 = velocity.RotatedBy(MathHelper.ToRadians(315));
+				Projectile.NewProjectile(source, position.X + velocity.X * 4, position.Y + velocity.Y * 4, projVelocity1.X * 0.325f, projVelocity1.Y * 0.325f, ModContent.ProjectileType<Projectiles.Slime.Fusion1>(), damage, knockback, Main.myPlayer);
+				Projectile.NewProjectile(source, position.X + velocity.Y * 4, position.Y + velocity.Y * 4, projVelocity2.X * 0.325f, projVelocity2.Y * 0.325f, ModContent.ProjectileType<Projectiles.Slime.Fusion2>(), damage, knockback, Main.myPlayer);
 			}
 			else
 			{
-				Vector2 projVelocity1 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-2f));
-				Vector2 projVelocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(2f));
-				Projectile.NewProjectile(position.X + speedX, position.Y, projVelocity1.X, projVelocity1.Y, type, damage, knockBack, Main.myPlayer);
-				Projectile.NewProjectile(position.X + speedX, position.Y, projVelocity2.X, projVelocity2.Y, type, damage, knockBack, Main.myPlayer);
+				Vector2 projVelocity1 = velocity.RotatedBy(MathHelper.ToRadians(-2f));
+				Vector2 projVelocity2 = velocity.RotatedBy(MathHelper.ToRadians(2f));
+				Projectile.NewProjectile(source, position.X + velocity.X, position.Y, projVelocity1.X, projVelocity1.Y, type, damage, knockback, Main.myPlayer);
+				Projectile.NewProjectile(source, position.X + velocity.Y, position.Y, projVelocity2.X, projVelocity2.Y, type, damage, knockback, Main.myPlayer);
 			}
 			return false;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 24);
-			recipe.AddIngredient(null, "Wormwood", 24);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<CorrosiveGel>(24).AddIngredient<Wormwood>(24).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

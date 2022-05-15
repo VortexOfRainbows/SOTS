@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.width = 32;
 			Projectile.height = 32;
 			Projectile.timeLeft = 40;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;

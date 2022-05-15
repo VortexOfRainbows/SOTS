@@ -23,12 +23,7 @@ namespace SOTS.Items.Furniture.Goopwood
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 9);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 9).AddRecipeGroup(RecipeGroupID.IronBar, 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class GoopwoodBarrelTile : ContainerType

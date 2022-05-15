@@ -13,7 +13,7 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(48);
-            aiType = 48; 
+            AIType = 48; 
 			Projectile.penetrate = 1;
 		}
 		public override void Kill(int timeLeft)

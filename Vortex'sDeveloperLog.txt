@@ -44,9 +44,13 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
-5/13/22
+5/13/22 & 5/14/22
 1. More Portings. Errors to around 17900. Will start going slower now that port changes are more complicated.
-2. 
+2. TMODPORTER: Errors from 17900 down to 9100!
+	1. MASSIVE PROGRESS, THANKS TMODPORTER!
+	2. After some more stuff, up to 9730 errors. This is because Tmodporter would actual mess up some things in Worldgen if not done properly.
+		1. About 6300+ of these are in the Worldgen Methods which I will tackle next.
+3. Frigid Javelin should now no longer consume void with set bonus enabled
 
 5/8/22
 1. More porting progess. Errors down from around 40000 to around 20000!

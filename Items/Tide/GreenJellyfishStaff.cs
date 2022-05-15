@@ -43,13 +43,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PurpleJellyfishStaff>(), 1);
-			recipe.AddIngredient(ItemID.SoulofLight, 15);
-			recipe.AddIngredient(ItemID.SoulofSight, 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PurpleJellyfishStaff>(), 1).AddIngredient(ItemID.SoulofLight, 15).AddIngredient(ItemID.SoulofSight, 15).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

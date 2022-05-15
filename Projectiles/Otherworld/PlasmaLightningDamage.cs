@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.width = 24;
 			Projectile.penetrate = 1;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 6;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("PlasmaLightningZap"), (int)(Projectile.damage * 0.7f), target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[1]);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("PlasmaLightningZap").Type, (int)(Projectile.damage * 0.7f), target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[1]);
 					}
 				}
 			}
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(160, 200, 220, 70), new Color(120, 140, 180, 70), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);

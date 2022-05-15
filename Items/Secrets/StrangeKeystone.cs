@@ -45,7 +45,7 @@ namespace SOTS.Items.Secrets
 	}
 	public class StrangeKeystoneTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
 		    MineResist = 0.01f;
 		    MinPick = 0;

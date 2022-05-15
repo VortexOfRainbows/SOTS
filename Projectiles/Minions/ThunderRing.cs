@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.width = 48;
 			Projectile.height = 48;
 			Projectile.friendly = true;
-			Projectile.melee = false;
+			// Projectile.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.timeLeft = 40;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;

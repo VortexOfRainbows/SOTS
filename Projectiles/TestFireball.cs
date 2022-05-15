@@ -29,7 +29,7 @@ namespace SOTS.Projectiles
             Projectile.penetrate = 2;
             Projectile.timeLeft = 270;
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
         }
         public override void AI()
         {

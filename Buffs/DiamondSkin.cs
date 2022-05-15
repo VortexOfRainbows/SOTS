@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class DiamondSkin : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Diamond Skin");
 			Description.SetDefault("15 increased defense, 15% reduced damage taken, and 15% increased movement speed");   

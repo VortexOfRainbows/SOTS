@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 7200;
 			Projectile.tileCollide = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.extraUpdates = 3;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20 * (1 + Projectile.extraUpdates);
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for (int i = 0; i < 14; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;
@@ -136,7 +136,7 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.timeLeft = 40;
 			if ((Main.rand.NextBool(2) && end) || Main.rand.NextBool(22))
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;

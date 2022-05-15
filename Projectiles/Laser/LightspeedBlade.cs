@@ -19,13 +19,13 @@ namespace SOTS.Projectiles.Laser
 			Projectile.width = 48;
 			Projectile.height = 48;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.extraUpdates = 16;
 			Projectile.timeLeft = 6000;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 16;
 			height = 16;
@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Laser
 			if (Projectile.owner == Main.myPlayer)
 			{
 				Projectile.netUpdate = true;
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("VoidRing"), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("VoidRing").Type, Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 	}

@@ -38,17 +38,17 @@ namespace SOTS.Items.Furniture
             int y = j - tile.TileFrameY / 18;
             if (tile.TileFrameX >= 36)
             {
-                Main.tile[x, y].frameX += -36;
-                Main.tile[x + 1, y].frameX += -36;
-                Main.tile[x, y + 1].frameX += -36;
-                Main.tile[x + 1, y + 1].frameX += -36;
+                Main.tile[x, y].TileFrameX += -36;
+                Main.tile[x + 1, y].TileFrameX += -36;
+                Main.tile[x, y + 1].TileFrameX += -36;
+                Main.tile[x + 1, y + 1].TileFrameX += -36;
             }
             else
             {
-                Main.tile[x, y].frameX += 36;
-                Main.tile[x + 1, y].frameX += 36;
-                Main.tile[x, y + 1].frameX += 36;
-                Main.tile[x + 1, y + 1].frameX += 36;
+                Main.tile[x, y].TileFrameX += 36;
+                Main.tile[x + 1, y].TileFrameX += 36;
+                Main.tile[x, y + 1].TileFrameX += 36;
+                Main.tile[x + 1, y + 1].TileFrameX += 36;
             }
             Wiring.SkipWire(x, y);
             Wiring.SkipWire(x + 1, y);

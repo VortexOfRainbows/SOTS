@@ -26,7 +26,7 @@ namespace SOTS.Items.Pyramid
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;            
 			Item.noMelee = false;
-			Item.shoot = mod.ProjectileType("Bloodaxe");  
+			Item.shoot = Mod.Find<ModProjectile>("Bloodaxe").Type;  
             Item.shootSpeed = 13.5f;
 		}
 		public override int GetVoid(Player player)

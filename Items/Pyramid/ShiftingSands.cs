@@ -28,7 +28,7 @@ namespace SOTS.Items.Pyramid
             Item.noMelee = true; 
             Item.autoReuse = true;
             Item.shootSpeed = 2f; 
-			Item.shoot = mod.ProjectileType("SandPuff");
+			Item.shoot = Mod.Find<ModProjectile>("SandPuff").Type;
 			Item.mana = 16;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

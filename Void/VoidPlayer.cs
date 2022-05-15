@@ -92,9 +92,9 @@ namespace SOTS.Void
 				if (cloneV.lootingSouls != lootingSouls || cloneV.voidMeterMax != voidMeterMax || cloneV.voidMeterMax2 != voidMeterMax2)
 				{
 					// Send a Mod Packet with the changes.
-					var packet = mod.GetPacket();
+					var packet = Mod.GetPacket();
 					packet.Write((byte)SOTSMessageType.SyncLootingSoulsAndVoidMax);
-					packet.Write((byte)player.whoAmI);
+					packet.Write((byte)Player.whoAmI);
 					packet.Write(lootingSouls);
 					packet.Write(voidMeterMax);
 					packet.Write(voidMeterMax2);
@@ -178,15 +178,15 @@ namespace SOTS.Void
 			if (voidShock)
 			{
 				genGore = false; //apparently, genGore false doesn't remove almost anygore what-so-ever
-				damageSource = PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[0]);
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, player.whoAmI);
+				damageSource = PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[0]);
+				Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
 				return true;
 			}
 			if (damage == 10.0 && voidRecovery)
 			{
 				genGore = false;
-				damageSource = PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]);
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, player.whoAmI);
+				damageSource = PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]);
+				Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
 				return true;
 			}
 			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
@@ -194,43 +194,43 @@ namespace SOTS.Void
 		public List<int> VoidMinions = new List<int>();
 		public override void UpdateBadLifeRegen()
 		{
-			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(Player);
 			if (voidShock)
 			{
-				player.lifeRegen = 0;
-				if (player.lifeRegen > 0)
+				Player.lifeRegen = 0;
+				if (Player.lifeRegen > 0)
 				{
-					player.lifeRegen = 0;
+					Player.lifeRegen = 0;
 				}
-				player.lifeRegenTime = 0;
+				Player.lifeRegenTime = 0;
 				if (sPlayer.VMincubator || sPlayer.VoidAnomaly) //also lengthens time of curse
-					player.lifeRegen -= 20; // -10 hp * 20 seconds = -200 hp
+					Player.lifeRegen -= 20; // -10 hp * 20 seconds = -200 hp
 				else
-					player.lifeRegen -= 16; // -8 hp * 10 seconds = -80 hp
-				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
+					Player.lifeRegen -= 16; // -8 hp * 10 seconds = -80 hp
+				if (Player.statLife <= 0 && Player.whoAmI == Main.myPlayer)
 				{
-					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
+					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
 				}
 			}
 			if (voidRecovery)
 			{
-				if (player.lifeRegen > 0)
+				if (Player.lifeRegen > 0)
 				{
-					player.lifeRegen = 0;
+					Player.lifeRegen = 0;
 				}
-				player.lifeRegenTime = 0;
-				player.lifeRegen -= 20;
-				player.lifeRegen -= player.statLifeMax2 / 20;
+				Player.lifeRegenTime = 0;
+				Player.lifeRegen -= 20;
+				Player.lifeRegen -= Player.statLifeMax2 / 20;
 				if (sPlayer.VMincubator || sPlayer.VoidAnomaly)
                 {
-					if(player.lifeRegen < 0)
+					if(Player.lifeRegen < 0)
                     {
-						player.lifeRegen = (int)(player.lifeRegen * 1.25f); //simply 1.25x the hp loss as normal
+						Player.lifeRegen = (int)(Player.lifeRegen * 1.25f); //simply 1.25x the hp loss as normal
                     }
                 }
-				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
+				if (Player.statLife <= 0 && Player.whoAmI == Main.myPlayer)
 				{
-					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
+					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
 				}
 			}
 		}
@@ -261,10 +261,10 @@ namespace SOTS.Void
 		}*/
 		public void UseSouls()
 		{
-			if (Main.mouseRight && Main.mouseRightRelease && player.ownedProjectileCounts[ProjectileType<HarvestingStrike>()] < 1)
+			if (Main.mouseRight && Main.mouseRightRelease && Player.ownedProjectileCounts[ProjectileType<HarvestingStrike>()] < 1)
 			{
-				if (Main.myPlayer == player.whoAmI)
-					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, ProjectileType<HarvestingStrike>(), 1, 0, player.whoAmI);
+				if (Main.myPlayer == Player.whoAmI)
+					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, ProjectileType<HarvestingStrike>(), 1, 0, Player.whoAmI);
 			}
 		}
 		public void ColorUpdate()
@@ -353,7 +353,7 @@ namespace SOTS.Void
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile projectile = Main.projectile[i];
-				if (Projectile.owner == player.whoAmI && Projectile.active && isVoidMinion(projectile))
+				if (Projectile.owner == Player.whoAmI && Projectile.active && isVoidMinion(projectile))
 				{
 					VoidMinions.Add(voidMinion(projectile));
 					whoAmI.Add(Projectile.whoAmI);
@@ -372,13 +372,13 @@ namespace SOTS.Void
 				{
 					int type = VoidMinions[i];
 					Projectile projectile = Main.projectile[whoAmI[i]];
-					if (Projectile.owner == player.whoAmI)
+					if (Projectile.owner == Player.whoAmI)
 					{
 						Projectile.active = false;
 						Projectile.Kill();
 					}
 					total -= minionVoidCost(type);
-					if (Projectile.owner == player.whoAmI)
+					if (Projectile.owner == Player.whoAmI)
 						VoidMinions.RemoveAt(i);
 					flag = true;
 				}
@@ -528,78 +528,78 @@ namespace SOTS.Void
 		}
         public override void PostUpdateEquips()
         {
-			for(int i = 0; i < player.inventory.Length; i++)
+			for(int i = 0; i < Player.inventory.Length; i++)
             {
-				Item item = player.inventory[i];
+				Item item = Player.inventory[i];
 				if(Item.modItem as VoidConsumable != null)
                 {
 					VoidConsumable vCon = Item.modItem as VoidConsumable;
-					vCon.SealedUpdateInventory(player);
+					vCon.SealedUpdateInventory(Player);
 				}
 			}
 			if (voidMeter < 0)
 			{
 				if (!voidShock && !voidRecovery)
 				{
-					SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+					SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(Player);
 					int time = 600;
 					if (sPlayer.VMincubator || sPlayer.VoidAnomaly)
 						time = 1200;
-					player.AddBuff(ModContent.BuffType<VoidShock>(), time);
-					if (player.whoAmI == Main.LocalPlayer.whoAmI)
-						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Shock"), 0.9f);
+					Player.AddBuff(ModContent.BuffType<VoidShock>(), time);
+					if (Player.whoAmI == Main.LocalPlayer.whoAmI)
+						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Player.Center.X, (int)Player.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Shock"), 0.9f);
 					//if(time < 120) time = 120;
 				}
-				if(flatVoidRegen > -1 && player.HasBuff(BuffType<VoidShock>()))
+				if(flatVoidRegen > -1 && Player.HasBuff(BuffType<VoidShock>()))
                 {
 					flatVoidRegen = -1;
                 }
-				player.lifeRegen += (int)(voidMeter * 0.2f);
+				Player.lifeRegen += (int)(voidMeter * 0.2f);
 				if (voidMeter <= -150)
 				{
 					voidMeter = -150;
 				}
 			}
-			if (player.HasBuff(BuffType<VoidShock>()) || player.HasBuff(BuffType<VoidRecovery>()))
+			if (Player.HasBuff(BuffType<VoidShock>()) || Player.HasBuff(BuffType<VoidRecovery>()))
 			{
 				int chance = 25;
-				if (player.HasBuff(BuffType<VoidRecovery>()))
+				if (Player.HasBuff(BuffType<VoidRecovery>()))
 					chance = 10;
 				if (Main.rand.NextBool(chance))
 				{
-					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 198);
 					dust.noGravity = true;
 					dust.velocity *= 4;
 					dust.scale = 2.2f;
 				}
 				if (Main.rand.NextBool(chance))
 				{
-					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 198);
 					dust.noGravity = true;
 					dust.velocity *= 3.5f;
 					dust.scale = 2.7f;
 				}
 				if (Main.rand.NextBool(chance))
 				{
-					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 198);
 					dust.noGravity = true;
 					dust.velocity *= 3f;
 					dust.scale = 3.2f;
 				}
 			}
-			if (player.HasBuff(BuffType<SulfurBurn>()))
+			if (Player.HasBuff(BuffType<SulfurBurn>()))
 			{
 				if (flatVoidRegen > 0)
 					flatVoidRegen *= 0.5f;
 				flatVoidRegen -= 100f;
 			}
-			if (player.HasBuff(BuffType<VoidBurn>()))
+			if (Player.HasBuff(BuffType<VoidBurn>()))
 			{
 				if (flatVoidRegen > 0)
 					flatVoidRegen *= 0.2f;
 				flatVoidRegen -= 2f;
 			}
-			if(player.HasBuff(BuffType<VoidMetamorphosis>()))
+			if(Player.HasBuff(BuffType<VoidMetamorphosis>()))
 			{
 				if (flatVoidRegen > 0)
 					flatVoidRegen *= 0.5f;
@@ -648,7 +648,7 @@ namespace SOTS.Void
 
 			voidSpeed = 1f; 
 			voidCost = 1f;
-			if(Main.myPlayer == player.whoAmI)
+			if(Main.myPlayer == Player.whoAmI)
 			{
 				int newVoidConsumption = RegisterVoidMinions();
 				if (VoidMinionConsumption != newVoidConsumption)
@@ -690,13 +690,13 @@ namespace SOTS.Void
 				frozenCounter = 0;
 				frozenDuration = 0;
 			}
-			if (this.frozenCounter == this.frozenMinTimer - 30 && Main.myPlayer == player.whoAmI)
+			if (this.frozenCounter == this.frozenMinTimer - 30 && Main.myPlayer == Player.whoAmI)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 29, 1.1f, -0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, -0.1f);
 			}
-			if (this.frozenDuration == 30 && Main.myPlayer == player.whoAmI)
+			if (this.frozenDuration == 30 && Main.myPlayer == Player.whoAmI)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 29, 1.1f, 0.3f);
+				SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, 0.3f);
 			}
 
 			frozenMaxDuration = 0;
@@ -708,8 +708,8 @@ namespace SOTS.Void
 				frozenVoidCount = voidMeter;
 				if(!isFull)
 				{
-					if (player.whoAmI == Main.LocalPlayer.whoAmI && !frozenVoid)
-						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Full"), 1.4f);
+					if (Player.whoAmI == Main.LocalPlayer.whoAmI && !frozenVoid)
+						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Player.Center.X, (int)Player.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Full"), 1.4f);
 					isFull = true;
 				}
 			}
@@ -770,7 +770,7 @@ namespace SOTS.Void
 		public int negativeVoidRegenPopupNumber = 1;
 		public void UpdateVoidRegen()
 		{
-			if (player.HasBuff(BuffType<DilationSickness>()))
+			if (Player.HasBuff(BuffType<DilationSickness>()))
 			{
 				voidRegenSpeed -= 0.9f;
 			}
@@ -795,7 +795,7 @@ namespace SOTS.Void
 					increaseAmount = 0;
 				}
 			}
-			else if(voidShock || voidMeter >= voidMeterMax2 || player.dead)
+			else if(voidShock || voidMeter >= voidMeterMax2 || Player.dead)
             {
 				increaseAmount = -4;
             }
@@ -808,7 +808,7 @@ namespace SOTS.Void
 				if(!voidRecovery)
 				{
 					float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
-					VoidEffect(player, (int)voidGain);
+					VoidEffect(Player, (int)voidGain);
 					voidMeter += voidGain;
 				}
 				else
@@ -827,13 +827,13 @@ namespace SOTS.Void
 					negativeVoidRegenCounter -= negativeVoidRegenPopupNumber;
 					if (voidMeter >= 0)
 					{
-						VoidEffect(player, -negativeVoidRegenPopupNumber, true);
-						if (player.HasBuff(BuffType<VoidMetamorphosis>()))
+						VoidEffect(Player, -negativeVoidRegenPopupNumber, true);
+						if (Player.HasBuff(BuffType<VoidMetamorphosis>()))
 						{
 							int healAmt = (int)(1.6 * negativeVoidRegenPopupNumber);
-							if (player.whoAmI == Main.myPlayer)
-								player.HealEffect(healAmt);
-							player.statLife += healAmt;
+							if (Player.whoAmI == Main.myPlayer)
+								Player.HealEffect(healAmt);
+							Player.statLife += healAmt;
 						}
 					}
 					voidMeter -= negativeVoidRegenPopupNumber;

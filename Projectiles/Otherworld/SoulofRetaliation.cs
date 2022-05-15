@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.friendly = false;
 			Projectile.timeLeft = 900;
 			Projectile.tileCollide = false;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.hostile = false;
 			Projectile.netImportant = true;
 			Projectile.alpha = 100;
@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Otherworld
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
 			Player player  = Main.player[Projectile.owner];
 			BeadPlayer beadPlayer = player.GetModPlayer<BeadPlayer>();
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int maxCounter = 230;
 			if(counter < maxCounter)
 			counter += 2;
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Otherworld
 					Projectile proj = Main.projectile[i];
 					if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && proj.timeLeft > 748 && Projectile.timeLeft > 748)
 					{
-						if (proj == projectile)
+						if (proj == Projectile)
 						{
 							found = true;
 						}
@@ -145,7 +145,7 @@ namespace SOTS.Projectiles.Otherworld
 				aimTo *= -12;
 				Projectile.velocity = aimTo;
 				if(Main.myPlayer == Projectile.owner)
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("DoubleLaser"), Projectile.damage, 1f, player.whoAmI, modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total));
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("DoubleLaser").Type, Projectile.damage, 1f, player.whoAmI, modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total));
 				Projectile.Kill();
 			}
 		}

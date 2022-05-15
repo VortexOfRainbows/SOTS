@@ -54,9 +54,9 @@ namespace SOTS.Items.Chaos
 			int unique = modPlayer.UniqueVisionNumber;
 			foreach (TooltipLine line in tooltips) //goes through each tooltip line
 			{
-				if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+				if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 				{
-					line.text = GetTooltip(GetGem(unique));
+					line.Text = GetTooltip(GetGem(unique));
 					return;
 				}
 			}
@@ -96,10 +96,10 @@ namespace SOTS.Items.Chaos
 					modPlayer.CritBonusMultiplier += 0.2f;
 					break;
 				case 4: //pyro, inferno
-					player.magicCrit += 6;
-					player.meleeCrit += 6;
-					player.rangedCrit += 6;
-					player.thrownCrit += 6;
+					player.GetCritChance(DamageClass.Magic) += 6;
+					player.GetCritChance(DamageClass.Melee) += 6;
+					player.GetCritChance(DamageClass.Ranged) += 6;
+					player.GetCritChance(DamageClass.Throwing) += 6;
 					break;
 				case 5: //hydro, tidal
 					player.statLifeMax2 += 40;
@@ -146,13 +146,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<TaintedKeystone>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).AddIngredient(ModContent.ItemType<TaintedKeystone>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

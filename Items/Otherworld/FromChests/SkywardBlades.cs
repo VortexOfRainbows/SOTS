@@ -30,7 +30,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item44;
 			Item.crit = 2;
-			Item.shoot = mod.ProjectileType("SkywardBladeBeam");
+			Item.shoot = Mod.Find<ModProjectile>("SkywardBladeBeam").Type;
 			Item.shootSpeed = 5.5f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -81,12 +81,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "PlatinumDart", 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "PlatinumDart", 1).AddIngredient(null, "HardlightAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

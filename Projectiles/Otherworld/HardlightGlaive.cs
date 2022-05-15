@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 			Projectile.ownerHitCheck = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Otherworld
 				SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
 				runOnce2 = false;
 				if(Projectile.owner == Main.myPlayer)
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, mod.ProjectileType("HardlightColumn"), (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, Mod.Find<ModProjectile>("HardlightColumn").Type, (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
 			}
 		}
 		int storeData = -1;
@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("HardlightTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("HardlightTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
 				Projectile.ai[1] = storeData;
 				Projectile.netUpdate = true;
 			}

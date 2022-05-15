@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.hostile = false;
 			Projectile.alpha = 0;
 			Projectile.hide = false;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
 		}

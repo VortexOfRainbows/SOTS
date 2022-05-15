@@ -52,16 +52,12 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Torch, 3);
-			recipe.AddIngredient(ItemType<RoyalGoldBrick>());
-			recipe.SetResult(this, 3);
-			recipe.AddRecipe();
+			CreateRecipe(3).AddIngredient(ItemID.Torch, 3).AddIngredient(ItemType<RoyalGoldBrick>()).Register();
 		}
 	}
 	public class AncientGoldTorchTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;

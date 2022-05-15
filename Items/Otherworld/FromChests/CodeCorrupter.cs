@@ -29,7 +29,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.Item96;
             Item.autoReuse = true;
-            Item.shoot = mod.ProjectileType("CodeBurst"); 
+            Item.shoot = Mod.Find<ModProjectile>("CodeBurst").Type; 
             Item.shootSpeed = 16.5f;
 			Item.reuseDelay = 8;
 			Item.mana = 14;
@@ -54,16 +54,12 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			position.X += speedX * 3f;
 			position.Y += speedY * 3f;
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY) * 0.75f, mod.ProjectileType("CodeVolley"), damage, knockBack, player.whoAmI) ;
+			Projectile.NewProjectile(position, new Vector2(speedX, speedY) * 0.75f, Mod.Find<ModProjectile>("CodeVolley").Type, damage, knockBack, player.whoAmI) ;
 			return true;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "HardlightAlloy", 16);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "HardlightAlloy", 16).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

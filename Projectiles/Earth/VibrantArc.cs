@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.tileCollide = true;
 			Projectile.width = 16;
 			Projectile.height = 16;
-            Projectile.magic = true;
+            Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = 1;
 			Projectile.alpha = 0; 
 			Projectile.friendly = true;

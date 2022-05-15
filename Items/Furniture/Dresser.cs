@@ -16,7 +16,7 @@ namespace SOTS.Items.Furniture
         protected virtual int DresserDrop => ItemID.Dresser;
         protected virtual int DustType => DustID.Dirt;
         protected virtual string DresserName => "Dresser";
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -47,17 +47,17 @@ namespace SOTS.Items.Furniture
             num = 0;
         }
         public override bool HasSmartInteract() => true;
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY == 0)
+            if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0)
             {
                 Main.CancelClothesWindow(true);
                 Main.mouseRightRelease = false;
-                int left = Main.tile[Player.tileTargetX, Player.tileTargetY].frameX / 18;
+                int left = Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameX / 18;
                 left %= 3;
                 left = Player.tileTargetX - left;
-                int top = Player.tileTargetY - Main.tile[Player.tileTargetX, Player.tileTargetY].frameY / 18;
+                int top = Player.tileTargetY - Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY / 18;
                 if (player.sign > -1)
                 {
                     SoundEngine.PlaySound(SoundID.MenuClose);
@@ -212,7 +212,7 @@ namespace SOTS.Items.Furniture
             }
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY > 0)
+            if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY > 0)
             {
                 player.cursorItemIconID = ItemID.FamiliarShirt;
             }

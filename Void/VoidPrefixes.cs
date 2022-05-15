@@ -28,8 +28,8 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			mod.AddPrefix("Awakened", new VoidPrefix(10));
-			mod.AddPrefix("Omniscient", new VoidPrefix(20));
+			Mod.AddPrefix("Awakened", new VoidPrefix(10));
+			Mod.AddPrefix("Omniscient", new VoidPrefix(20));
 			return false;
 		}
 		public override void Apply(Item item) => Item.GetGlobalItem<PrefixItem>().extraVoid = _power;
@@ -58,8 +58,8 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			mod.AddPrefix("Chained", new VoidGainPrefix(1));
-			mod.AddPrefix("Soulbound", new VoidGainPrefix(2));
+			Mod.AddPrefix("Chained", new VoidGainPrefix(1));
+			Mod.AddPrefix("Soulbound", new VoidGainPrefix(2));
 			return false;
 		}
 		public override void Apply(Item item) => Item.GetGlobalItem<PrefixItem>().extraVoidGain = _power;
@@ -85,7 +85,7 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			mod.AddPrefix("Famished", new Famished());
+			Mod.AddPrefix("Famished", new Famished());
 			return false;
 		}
 		public override void Apply(Item item)
@@ -120,7 +120,7 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			mod.AddPrefix("Precarious", new Precarious());
+			Mod.AddPrefix("Precarious", new Precarious());
 			return false;
 		}
 		public override void Apply(Item item)
@@ -156,7 +156,7 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			mod.AddPrefix("Potent", new Potent());
+			Mod.AddPrefix("Potent", new Potent());
 			return false;
 		}
 		public override void Apply(Item item)
@@ -191,7 +191,7 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			mod.AddPrefix("Omnipotent", new Omnipotent());
+			Mod.AddPrefix("Omnipotent", new Omnipotent());
 			return false;
 		}
 		public override void Apply(Item item)

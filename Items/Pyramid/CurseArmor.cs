@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
 		{
 			robes = true;
-			equipSlot = mod.GetEquipSlot("CursedRobe_Legs", EquipType.Legs);
+			equipSlot = Mod.GetEquipSlot("CursedRobe_Legs", EquipType.Legs);
 		}
 
 		public override void UpdateEquip(Player player)
@@ -49,13 +49,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 12);
-			recipe.AddRecipeGroup("SOTS:GemRobes", 1);
-			recipe.AddIngredient(ModContent.ItemType<RubyKeystone>(), 1);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 12).AddRecipeGroup("SOTS:GemRobes", 1).AddIngredient(ModContent.ItemType<RubyKeystone>(), 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]
@@ -80,9 +74,9 @@ namespace SOTS.Items.Pyramid
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			modPlayer.CurseVision = true;
 			vPlayer.voidDamage += 0.08f;
-			player.magicDamage += 0.08f;
+			player.GetDamage(DamageClass.Magic) += 0.08f;
 			vPlayer.voidCrit += 5;
-			player.magicCrit += 5;
+			player.GetCritChance(DamageClass.Magic) += 5;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
@@ -101,12 +95,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<RoyalRubyShard>(), 20);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 8).AddIngredient(ModContent.ItemType<RoyalRubyShard>(), 20).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class CurseHoodPlayer : ModPlayer

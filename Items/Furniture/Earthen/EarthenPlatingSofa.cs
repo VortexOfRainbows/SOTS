@@ -18,12 +18,7 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 5);
-			recipe.AddIngredient(ItemID.Silk, 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<EarthenPlating>(), 5).AddIngredient(ItemID.Silk, 2).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class EarthenPlatingSofaTile : Sofa<EarthenPlatingSofa>

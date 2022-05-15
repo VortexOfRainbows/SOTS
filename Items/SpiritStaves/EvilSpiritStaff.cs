@@ -45,15 +45,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingUmbra>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Pyramid.CursedBlade>(), 1);
-			recipe.AddIngredient(ItemID.SpectreBar, 10);
-			recipe.AddRecipeGroup("SOTS:EvilBar", 10);
-			recipe.AddIngredient(ItemID.SoulofSight, 5);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Fragments.DissolvingUmbra>(), 1).AddIngredient(ModContent.ItemType<Pyramid.CursedBlade>(), 1).AddIngredient(ItemID.SpectreBar, 10).AddRecipeGroup("SOTS:EvilBar", 10).AddIngredient(ItemID.SoulofSight, 5).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

@@ -48,6 +48,7 @@ using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Buffs.DilationSickness;
+using Terraria.Audio;
 
 namespace SOTS
 {
@@ -97,20 +98,17 @@ namespace SOTS
 			}
 			return Color.White;
         }
-		public override TagCompound Save() {
-			return new TagCompound {
-				
-				{"uniqueVisionNumber", UniqueVisionNumber},
-				};
-		}
-		public override void Load(TagCompound tag)
+		public override void SaveData(TagCompound tag)
 		{
-			if (tag.ContainsKey("uniqueVisionNumber"))
-				UniqueVisionNumber = tag.GetInt("uniqueVisionNumber");
+			tag["UniqueVisionNumber"] = UniqueVisionNumber;
+        }
+        public override void LoadData(TagCompound tag)
+		{
+			UniqueVisionNumber = tag.GetInt("UniqueVisionNumber");
 		}
 		public static SOTSPlayer ModPlayer(Player player)
 		{
-			return Player.GetModPlayer<SOTSPlayer>();
+			return player.GetModPlayer<SOTSPlayer>();
 		}
 		public void TrailStuff()
 		{
@@ -254,7 +252,7 @@ namespace SOTS
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
 			VoidPlayer voidPlayer = Player.GetModPlayer<VoidPlayer>();
-			ModPacket packet = mod.GetPacket();
+			ModPacket packet = Mod.GetPacket();
 			packet.Write((byte)SOTSMessageType.SOTSSyncPlayer);
 			packet.Write((byte)Player.whoAmI);
 			packet.Write(testPlayer.creativeFlight);
@@ -270,7 +268,7 @@ namespace SOTS
 				if (clone.skywardBlades != skywardBlades)
 				{
 					// Send a Mod Packet with the changes.
-					var packet = mod.GetPacket();
+					var packet = Mod.GetPacket();
 					packet.Write((byte)SOTSMessageType.SyncPlayerKnives);
 					packet.Write((byte)Player.whoAmI);
 					packet.Write(skywardBlades);
@@ -280,7 +278,7 @@ namespace SOTS
 				if (clone.UniqueVisionNumber != UniqueVisionNumber)
 				{
 					// Send a Mod Packet with the changes.
-					var packet = mod.GetPacket();
+					var packet = Mod.GetPacket();
 					packet.Write((byte)SOTSMessageType.SyncVisionNumber);
 					packet.Write((byte)Player.whoAmI);
 					packet.Write(UniqueVisionNumber);
@@ -400,7 +398,7 @@ namespace SOTS
 				if (BlinkType == 1 && !Player.HasBuff(BuffID.ChaosState) && !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen)
 				{
 					Vector2 toCursor = Main.MouseWorld - Player.Center;
-					Projectile.NewProjectile(Player.Center, toCursor.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<Blink1>(), 0, 0, Player.whoAmI);
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<Blink1>(), 0, 0, Player.whoAmI);
 				}
 			}
 			if (SOTS.ArmorSetHotKey.JustPressed)
@@ -440,11 +438,11 @@ namespace SOTS
 			{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, 0);
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != type || Main.projectile[Probe].owner != Player.whoAmI)
 				{
-					Probe = Projectile.NewProjectile(Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, 0);
 				}
 				if(!skipTimeleftReset)
 					Main.projectile[Probe].timeLeft = 6;
@@ -1299,7 +1297,7 @@ namespace SOTS
 							}
 						}
 					}
-					if (CritNightmare && (projectile != null || (Projectile.type != ModContent.ProjectileType<EvilGrowth>() && Projectile.type != ModContent.ProjectileType<EvilStrike>())))
+					if (CritNightmare && (projectile != null || (projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())))
 					{
 						if (nightmareArmCD <= 0)
 						{
@@ -1324,7 +1322,7 @@ namespace SOTS
 						}
 						else if (BlueFire)
 						{
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target),(target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.4f), 0, Main.myPlayer);
+							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.4f), 0, Main.myPlayer);
 						}
 						else if (BlueFireOrange)
 						{
@@ -1351,36 +1349,36 @@ namespace SOTS
 			for(int i = 0; i < 1000; i++)
             {
 				Projectile projectile = Main.projectile[i];
-				if(Projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && Projectile.active)
+				if(projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
                 {
 					seenSubspace = true;
-					int current = Projectile.alpha;
+					int current = projectile.alpha;
 					current -= 50;
 					if (current < 0)
 						current = 0;
 					float percent = (float)current / 205f;
-					if((int)Projectile.ai[1] == -1)
+					if((int)projectile.ai[1] == -1)
 					{
 						percent *= 0.5f;
-						Vector2 toSubEye = Projectile.Center - Player.Center;
+						Vector2 toSubEye = projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)
-							Main.screenPosition.X = (Main.screenPosition.X * (1f - percent)) + ((Projectile.Center.X - (screenDimensions.X / 2)) * percent);
+							Main.screenPosition.X = (Main.screenPosition.X * (1f - percent)) + ((projectile.Center.X - (screenDimensions.X / 2)) * percent);
 					}
 					else
 					{
-						Vector2 toSubEye = Projectile.Center - Player.Center;
+						Vector2 toSubEye = projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)
-							Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(Projectile.Center.X, Projectile.Center.Y) - (screenDimensions / 2)) * percent);
+							Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2)) * percent);
 					}
 					break;
                 }
 				if(!seenSubspace)
 				{
-					if (Projectile.type == ModContent.ProjectileType<Projectiles.Celestial.FluidFollower>() && Projectile.active && Projectile.owner == Main.myPlayer)
+					if (projectile.type == ModContent.ProjectileType<FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
 					{
-						Vector2 toSubEye = Projectile.Center - Player.Center;
+						Vector2 toSubEye = projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)
-							Main.screenPosition = new Vector2(Projectile.Center.X, Projectile.Center.Y) - (screenDimensions / 2);
+							Main.screenPosition = new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2);
 					}
 				}
             }
@@ -1425,7 +1423,7 @@ namespace SOTS
 		}
 		public static bool ZoneForest(Player player)
 		{
-			return !Player.GetModPlayer<SOTSPlayer>().PyramidBiome && !Player.ZoneDesert && !Player.ZoneCorrupt && !Player.ZoneDungeon && !Player.ZoneDungeon && !Player.ZoneHoly && !Player.ZoneMeteor && !Player.ZoneJungle && !Player.ZoneSnow && !Player.ZoneCrimson && !Player.ZoneGlowshroom && !Player.ZoneUndergroundDesert && (Player.ZoneDirtLayerHeight || Player.ZoneOverworldHeight) && !Player.ZoneBeach;
+			return !player.GetModPlayer<SOTSPlayer>().PyramidBiome && player.ZoneForest;
 		}
 	}
 }

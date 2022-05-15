@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Earth
 			{
 				if (runOnce)
 				{
-					SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
+					SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
 					for (int i = 0; i < 13; i++)
 					{
 						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());

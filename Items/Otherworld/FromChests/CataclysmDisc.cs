@@ -39,12 +39,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<GoldChakram>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<GoldChakram>(), 1).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

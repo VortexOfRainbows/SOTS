@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -23,7 +24,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
         {
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.friendly = true;
 			Projectile.width = 38;
 			Projectile.height = 38;
@@ -37,7 +38,7 @@ namespace SOTS.Projectiles.Permafrost
 			target.immune[Projectile.owner] = 3;
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 14;
 			height = 14;
@@ -47,7 +48,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (bounceCounter >= modPlayer.frigidJavelinBoost + 1)
 			{
 				storeRot = Projectile.rotation;
@@ -95,7 +96,7 @@ namespace SOTS.Projectiles.Permafrost
 			for (int k = 0; k < Projectile.oldPos.Length; k++) {
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -104,7 +105,7 @@ namespace SOTS.Projectiles.Permafrost
 			if(counter != -1)
 				counter += 3;
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Projectile.timeLeft <= 7170)
 			{
 				if(counter != -1)

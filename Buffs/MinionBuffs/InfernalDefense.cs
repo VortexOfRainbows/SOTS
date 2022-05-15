@@ -6,7 +6,7 @@ namespace SOTS.Buffs.MinionBuffs
 {
     public class InfernalDefense : ModBuff
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Infernal Defense");
 			Description.SetDefault("'Wisp Summoner'");

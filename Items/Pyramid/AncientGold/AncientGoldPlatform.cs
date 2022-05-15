@@ -26,23 +26,17 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AncientGoldPlatformTile");
+			Item.createTile = Mod.Find<ModTile>("AncientGoldPlatformTile").Type;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 1);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 2);
-			recipe.SetResult(ModContent.ItemType<RoyalGoldBrick>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(2).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 2).ReplaceResult(ModContent.ItemType<RoyalGoldBrick>());
 		}
 	}
 	public class AncientGoldPlatformTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;

@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Harmony : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Harmony"); //as per its name the sprite should be music related
 			Description.SetDefault("Buff companionship");   

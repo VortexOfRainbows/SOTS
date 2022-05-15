@@ -26,60 +26,60 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0.06f;
             NPC.width = 28;
             NPC.height = 42;
-            npc.value = 500;
-            npc.boss = false;
-            npc.lavaImmune = false;
-            npc.noGravity = false;
-            npc.netAlways = true;
-            npc.netUpdate = true;
-            npc.HitSound = SoundID.NPCHit4;
-            npc.DeathSound = null;
+            NPC.value = 500;
+            NPC.boss = false;
+            NPC.lavaImmune = false;
+            NPC.noGravity = false;
+            NPC.netAlways = true;
+            NPC.netUpdate = true;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = null;
 			Banner = NPC.type;
 			BannerItem = ItemType<SnakePotBanner>();
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if(npc.ai[0] >= 10 && npc.ai[0] <= 59)
-				npc.ai[0] = 0;
-			if (npc.life <= 0 && Main.netMode != NetmodeID.Server)
+			if(NPC.ai[0] >= 10 && NPC.ai[0] <= 59)
+				NPC.ai[0] = 0;
+			if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
 			{
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore1"), npc.scale);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore5"), npc.scale);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore12"), npc.scale);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore13"), npc.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore1"), NPC.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore5"), NPC.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore12"), NPC.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore13"), NPC.scale);
 			}
 		}
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
-			npc.ai[0]++;
-			if(npc.ai[0] == 60) //jump timer
+			Player player = Main.player[NPC.target];
+			NPC.ai[0]++;
+			if(NPC.ai[0] == 60) //jump timer
 			{
-				npc.ai[0]++;
+				NPC.ai[0]++;
 				float Speed = 4.2f;  //jump speed
-				Vector2 vector8 = new Vector2(npc.position.X + (npc.width / 2), npc.position.Y + (npc.height / 2));
+				Vector2 vector8 = new Vector2(NPC.position.X + (NPC.width / 2), NPC.position.Y + (NPC.height / 2));
 				float rotation = (float)Math.Atan2(vector8.Y - (player.position.Y + (player.height * 0.5f)), vector8.X - (player.position.X + (player.width * 0.5f)));
-				npc.velocity.X = (float)((Math.Cos(rotation) * Speed) * -1.5);
-				npc.velocity.Y = (float)((Math.Sin(rotation) * Speed) * -1) -5;
+				NPC.velocity.X = (float)((Math.Cos(rotation) * Speed) * -1.5);
+				NPC.velocity.Y = (float)((Math.Sin(rotation) * Speed) * -1) -5;
 			}
-			if(npc.ai[0] >= 60 && npc.velocity.X == 0) //continue air movement
+			if(NPC.ai[0] >= 60 && NPC.velocity.X == 0) //continue air movement
 			{
 				float Speed = 2.6f;  //jump speed
-				Vector2 vector8 = new Vector2(npc.position.X + (npc.width / 2), npc.position.Y + (npc.height / 2));
+				Vector2 vector8 = new Vector2(NPC.position.X + (NPC.width / 2), NPC.position.Y + (NPC.height / 2));
 				float rotation = (float)Math.Atan2(vector8.Y - (player.position.Y + (player.height * 0.5f)), vector8.X - (player.position.X + (player.width * 0.5f)));
-				npc.velocity.X = (float)((Math.Cos(rotation) * Speed) * -1);
+				NPC.velocity.X = (float)((Math.Cos(rotation) * Speed) * -1);
 			}
-			npc.rotation = npc.velocity.X * -0.045f;
-			if (npc.ai[0] >= 60 && npc.velocity.Y == 0)
+			NPC.rotation = NPC.velocity.X * -0.045f;
+			if (NPC.ai[0] >= 60 && NPC.velocity.Y == 0)
 			{
-				npc.velocity.X *= 1.05f;
-				npc.ai[0] = -Main.rand.Next(31);
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/PotSnake"), 1.5f, -0.1f);
+				NPC.velocity.X *= 1.05f;
+				NPC.ai[0] = -Main.rand.Next(31);
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/PotSnake"), 1.5f, -0.1f);
 			}
 		}
 		public override void NPCLoot()
 		{
-			SoundEngine.PlaySound(SoundID.Shatter, (int)(npc.Center.X), (int)(npc.Center.Y), 0, 0.8f, 0.05f);
+			SoundEngine.PlaySound(SoundID.Shatter, (int)(NPC.Center.X), (int)(NPC.Center.Y), 0, 0.8f, 0.05f);
 			int amount2 = 3;
 			if(Main.expertMode)
 			{
@@ -87,7 +87,7 @@ namespace SOTS.NPCs
 			} 
 			for(int amount = amount2; amount > 0; amount--)
 			{
-				int npcSpawn = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Snake>());	
+				int npcSpawn = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Snake>());	
 				Main.npc[npcSpawn].velocity.X += Main.rand.NextFloat(-1.6f,1.6f);
 				Main.npc[npcSpawn].velocity.Y -= Main.rand.NextFloat(5.25f,7.5f);
 				Main.npc[npcSpawn].netUpdate = true;
@@ -119,61 +119,61 @@ namespace SOTS.NPCs
 			NPC.width = 32;
 			NPC.height = 32;
 			Main.npcFrameCount[NPC.type] = 5;  
-			npc.value = 60;
-			npc.npcSlots = .2f;
-			npc.boss = false;
-			npc.lavaImmune = false;
-			npc.noGravity = false;
-			npc.noTileCollide = false;
-			npc.netAlways = true;
-			npc.netUpdate = true;
-			npc.dontTakeDamage = true;
-			npc.HitSound = SoundID.NPCHit1;
-			npc.DeathSound = SoundID.NPCDeath16;
+			NPC.value = 60;
+			NPC.npcSlots = .2f;
+			NPC.boss = false;
+			NPC.lavaImmune = false;
+			NPC.noGravity = false;
+			NPC.noTileCollide = false;
+			NPC.netAlways = true;
+			NPC.netUpdate = true;
+			NPC.dontTakeDamage = true;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath16;
 			Banner = NPC.type;
 			BannerItem = ItemType<SnakeBanner>();
-			npc.scale = 0.9f;
+			NPC.scale = 0.9f;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
-			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY + 2);
-			spriteBatch.Draw(texture, drawPos, npc.frame, drawColor, npc.rotation, drawOrigin, npc.scale * randMod, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			Vector2 drawPos = NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY + 2);
+			spriteBatch.Draw(texture, drawPos, NPC.frame, drawColor, NPC.rotation, drawOrigin, NPC.scale * randMod, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			texture = GetTexture("SOTS/NPCs/SnakeEye");
-			spriteBatch.Draw(texture, drawPos, npc.frame, Color.White, npc.rotation, drawOrigin, npc.scale * randMod, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(texture, drawPos, NPC.frame, Color.White, NPC.rotation, drawOrigin, NPC.scale * randMod, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for (int i = 0; i < 30; i++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, 2.5f * (float)hitDirection, -2.5f, 0, new Color(), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * (float)hitDirection, -2.5f, 0, new Color(), 1f);
 				}
 				int rand = Main.rand.Next(3);
 				if (rand == 0)
 				{
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore1"), npc.scale);
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore2"), npc.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore1"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore2"), NPC.scale);
 				}
 				else if(rand == 1)
 				{
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore1"), npc.scale);
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore3"), npc.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore1"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore3"), NPC.scale);
 				}
 				else
 				{
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore2"), npc.scale);
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore3"), npc.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore2"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore3"), NPC.scale);
 				}
 			}
 			else
 			{
-				for (int i = 0; i < damage / (float)npc.lifeMax * 50.0; i++)
+				for (int i = 0; i < damage / (float)NPC.lifeMax * 50.0; i++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, (float)hitDirection, -1f, 0, new Color(), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, (float)hitDirection, -1f, 0, new Color(), 0.8f);
 				}
 			}
 		}
@@ -183,10 +183,10 @@ namespace SOTS.NPCs
 		}  
 		public override void FindFrame(int frameHeight) 
 		{
-			npc.frameCounter++;
-			if (npc.frameCounter > 5f) 
+			NPC.frameCounter++;
+			if (NPC.frameCounter > 5f) 
 			{
-				npc.frameCounter = 0;
+				NPC.frameCounter = 0;
 				NPC.frame.Y += frameHeight;
 				if(NPC.frame.Y >= frameHeight * 5)
 				{
@@ -203,45 +203,45 @@ namespace SOTS.NPCs
             {
 				randMod = Main.rand.NextFloat(0.85f, 1.125f);
 				runOnce2 = false;
-				npc.netUpdate = true;
+				NPC.netUpdate = true;
 			}
 			if(runOnce && randMod != 1)
             {
 				runOnce = false;
-				NPC.lifeMax = (int)(randMod * npc.lifeMax + 0.5f);
-				npc.life = npc.lifeMax;
-				npc.scale *= 0.55f + 0.45f * randMod;
-				Vector2 temp = npc.Center;
-				NPC.width = (int)(npc.width * npc.scale);
-				NPC.height = (int)(npc.height * npc.scale);
-				npc.Center = temp;
+				NPC.lifeMax = (int)(randMod * NPC.lifeMax + 0.5f);
+				NPC.life = NPC.lifeMax;
+				NPC.scale *= 0.55f + 0.45f * randMod;
+				Vector2 temp = NPC.Center;
+				NPC.width = (int)(NPC.width * NPC.scale);
+				NPC.height = (int)(NPC.height * NPC.scale);
+				NPC.Center = temp;
 			}
-			npc.spriteDirection = npc.direction;
-			npc.TargetClosest(true);
+			NPC.spriteDirection = NPC.direction;
+			NPC.TargetClosest(true);
 			return true;
 		}
         public override void AI()
         {
-			if (Math.Abs(npc.velocity.Y) >= 0.2f)
+			if (Math.Abs(NPC.velocity.Y) >= 0.2f)
             {
-				if(npc.dontTakeDamage)
-					npc.velocity.X *= 0.985f;
+				if(NPC.dontTakeDamage)
+					NPC.velocity.X *= 0.985f;
 				else
-					npc.velocity.X *= 0.987f;
+					NPC.velocity.X *= 0.987f;
 			}
-			else if (npc.velocity.Y == 0)
-				npc.dontTakeDamage = false;
+			else if (NPC.velocity.Y == 0)
+				NPC.dontTakeDamage = false;
 			float speed = 2.3f / randMod;
-			npc.position.X -= npc.velocity.X;
-			Vector2 trueVelo = new Vector2(npc.velocity.X * speed, npc.velocity.Y);
-			trueVelo = Collision.TileCollision(npc.position, trueVelo, npc.width, npc.height, true);
-			npc.position.X += trueVelo.X;
-			npc.velocity.X = trueVelo.X / speed;
+			NPC.position.X -= NPC.velocity.X;
+			Vector2 trueVelo = new Vector2(NPC.velocity.X * speed, NPC.velocity.Y);
+			trueVelo = Collision.TileCollision(NPC.position, trueVelo, NPC.width, NPC.height, true);
+			NPC.position.X += trueVelo.X;
+			NPC.velocity.X = trueVelo.X / speed;
         }
         public override void NPCLoot()
 		{
 			if(Main.rand.NextBool(4))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Snakeskin"), Main.rand.Next(2) + 1);	
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("Snakeskin").Type, Main.rand.Next(2) + 1);	
 		}	
 	}
 }

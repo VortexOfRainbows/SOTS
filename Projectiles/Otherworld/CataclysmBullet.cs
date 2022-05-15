@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.height = 14;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = -1;
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("CataclysmLightningZap"), (int)(Projectile.damage * 0.2f), 0, Projectile.owner, npc.whoAmI);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("CataclysmLightningZap").Type, (int)(Projectile.damage * 0.2f), 0, Projectile.owner, npc.whoAmI);
 					}
 				}
 			}

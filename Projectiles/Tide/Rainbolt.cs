@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Tide
 			Projectile.timeLeft = 300;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.netImportant = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Tide
 		{
 			if (runOnce)
 			{
-				SOTS.primitives.CreateTrail(new WaterTrail(projectile));
+				SOTS.primitives.CreateTrail(new WaterTrail(Projectile));
 				runOnce = false;
 			}
 			Player player = Main.player[Projectile.owner];
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Tide
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}

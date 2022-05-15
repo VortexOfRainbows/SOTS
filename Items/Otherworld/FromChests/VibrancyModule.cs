@@ -59,12 +59,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantBar>(), 8).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

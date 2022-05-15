@@ -30,11 +30,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 200);
-			recipe.AddRecipe();
+			CreateRecipe(200).AddIngredient(ModContent.ItemType<VibrantBar>(), 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class VibrantArrow : ModItem
@@ -62,11 +58,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 200);
-			recipe.AddRecipe();
+			CreateRecipe(200).AddIngredient(ModContent.ItemType<VibrantBar>(), 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

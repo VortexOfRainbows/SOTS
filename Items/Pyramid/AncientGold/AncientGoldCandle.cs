@@ -31,17 +31,12 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 4);
-            recipe.AddIngredient(ModContent.ItemType<AncientGoldTorch>(), 1);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 4).AddIngredient(ModContent.ItemType<AncientGoldTorch>(), 1).AddTile(TileID.WorkBenches).Register();
         }
     }
     public class AncientGoldCandleTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = true;

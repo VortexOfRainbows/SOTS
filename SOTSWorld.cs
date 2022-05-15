@@ -22,7 +22,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using Terraria.World.Generation;
+using Terraria.WorldBuilding;
 using SOTS.Items.Flails;
 using SOTS.Items.Secrets;
 using SOTS.Items.Tools;
@@ -35,10 +35,11 @@ using static SOTS.SOTS;
 using Terraria.Graphics.Effects;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Chaos;
+using Terraria.IO;
 
 namespace SOTS
 {
-    public class SOTSWorld : ModWorld
+    public class SOTSWorld : ModSystem
 	{
 		public static int GlobalCounter = 0;
 		public const float GlobalFreezeStartup = 30f;
@@ -166,8 +167,8 @@ namespace SOTS
 		public static bool downedLux = false;
 		public static bool downedSubspace = false;
 		public static bool downedAdvisor = false;
-        public override void Initialize()
-		{
+        public override void OnWorldLoad()
+        {
 			GlobalCounter = 0;
 			GlobalTimeFreeze = 0;
 			GlobalFrozen = false;
@@ -180,42 +181,23 @@ namespace SOTS
 			downedLux = false;
 			downedSubspace = false;
 		}
-		public override TagCompound Save() {
-			var downed = new List<string>();
-			if (downedPinky) {
-				downed.Add("pinky");
-			}
-			if (downedAdvisor) {
-				downed.Add("advisor");
-			}
-			if (downedCurse) {
-				downed.Add("curse");
-			}
-			if (downedAmalgamation) {
-				downed.Add("amalgamation");
-			}
-			if (downedLux) {
-				downed.Add("lux");
-			}
-			if (downedSubspace) {
-				downed.Add("subspace");
-			}
-			return new TagCompound {
-				{"downed", downed}
-			};
+        public override void SaveWorldData(TagCompound tag)
+		{
+			tag["DownedPinky"] = downedPinky;
+			tag["DownedCurse"] = downedCurse;
+			tag["DownedAdvisor"] = downedAdvisor;
+			tag["DownedAmalgamation"] = downedAmalgamation;
+			tag["DownedLux"] = downedLux;
+			tag["DownedSubspace"] = downedSubspace;
 		}
-        public override void LoadLegacy(BinaryReader reader)
-        {
-            base.LoadLegacy(reader);
-        }
-        public override void Load(TagCompound tag) {
-			var downed = tag.GetList<string>("downed");
-			downedPinky = downed.Contains("pinky");
-			downedAdvisor = downed.Contains("advisor");
-			downedCurse = downed.Contains("curse");
-			downedAmalgamation = downed.Contains("amalgamation");
-			downedLux = downed.Contains("lux");
-			downedSubspace = downed.Contains("subspace");
+        public override void LoadWorldData(TagCompound tag)
+		{
+			downedPinky = tag.GetBool("DownedPinky");
+			downedCurse = tag.GetBool("DownedCurse");
+			downedAdvisor = tag.GetBool("DownedAdvisor");
+			downedAmalgamation = tag.GetBool("DownedAmalgamation");
+			downedLux = tag.GetBool("DownedLux");
+			downedSubspace = tag.GetBool("DownedSubspace");
 		}
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
@@ -247,10 +229,10 @@ namespace SOTS
 
 			tasks.Insert(genIndexOres, new PassLegacy("SOTSOres", GenSOTSOres));
 			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTSOres", GenSOTSGeodes));
-			tasks.Insert(genIndexGems + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexGems + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Surface Structures";
-				SOTSWorldgenHelper.GenerateStarterHouseFull(mod, Main.rand.Next(12));
+				SOTSWorldgenHelper.GenerateStarterHouseFull(Mod, Main.rand.Next(12));
 
 				int iceY = -1;
 				int iceX = -1;
@@ -261,12 +243,12 @@ namespace SOTS
 					{
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
 						bool allValid = totalChecks > 100 || (SOTSWorldgenHelper.TrueTileSolid(xCheck + 1, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck + 2, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck - 1, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck - 2, ydown));
-						if (tile.active() && tile.TileType == TileID.SnowBlock)
+						if (tile.HasTile && tile.TileType == TileID.SnowBlock)
 						{
 							iceY = ydown;
 							break;
 						}
-						else if (tile.active())
+						else if (tile.HasTile)
 						{
 							break;
 						}
@@ -299,9 +281,9 @@ namespace SOTS
 					for (int j = 0; j < Main.maxTilesY; j++)
 					{
 						Tile tile = Framing.GetTileSafely(fromBorder, j);
-						if (tile.liquidType() == 0 && tile.liquid > 1)
+						if (tile.LiquidType == 0 && tile.LiquidAmount > 1)
 						{
-							SOTSWorldgenHelper.GenerateCoconutIsland(mod, fromBorder, j, direction);
+							SOTSWorldgenHelper.GenerateCoconutIsland(Mod, fromBorder, j, direction);
 							coconutGenerated = true;
 							break;
 						}
@@ -309,7 +291,7 @@ namespace SOTS
 				}
 
 			}));
-			tasks.Insert(genIndexEnd + 4, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexEnd + 4, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Sky Artifacts";
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
@@ -332,12 +314,12 @@ namespace SOTS
 						for (int ydown = 0; ydown != -1; ydown++)
 						{
 							Tile tile = Framing.GetTileSafely(xCheck, ydown);
-							if (tile.active() && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
+							if (tile.HasTile && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
 							{
 								validLocation = true;
 								break;
 							}
-							else if (tile.active() && Main.tileSolid[tile.TileType])
+							else if (tile.HasTile && Main.tileSolid[tile.TileType])
 							{
 								break;
 							}
@@ -363,7 +345,7 @@ namespace SOTS
 							{
 								yLocation = 140;
 							}
-							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pX, yLocation, force))
+							if (SOTSWorldgenHelper.GeneratePlanetariumFull(Mod, pX, yLocation, force))
 							{
 								break;
 							}
@@ -380,12 +362,12 @@ namespace SOTS
 						for (int ydown = 0; ydown != -1; ydown++)
 						{
 							Tile tile = Framing.GetTileSafely(xCheck, ydown);
-							if (tile.active() && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
+							if (tile.HasTile && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
 							{
 								validLocation = true;
 								break;
 							}
-							else if(tile.active() && Main.tileSolid[tile.TileType])
+							else if(tile.HasTile && Main.tileSolid[tile.TileType])
                             {
 								break;
                             }
@@ -398,7 +380,7 @@ namespace SOTS
 							{
 								force = true;
 							}
-							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pX, 140, force))
+							if (SOTSWorldgenHelper.GeneratePlanetariumFull(Mod, pX, 140, force))
 							{
 								break;
 							}
@@ -421,23 +403,23 @@ namespace SOTS
 					for (int ydown = 0; ydown != -1; ydown++)
 					{
 						Tile tile = Framing.GetTileSafely(xCord, ydown);
-						if (tile.active() && Main.tileSolid[tile.TileType])
+						if (tile.HasTile && Main.tileSolid[tile.TileType])
 						{
 							if(tile.TileType == TileID.JungleGrass || tile.TileType == TileID.JunglePlants || tile.TileType == TileID.JunglePlants2 || overrideCounter > 100)
                             {
 								int y = 140 + Main.rand.Next(50);
 								if(!hasDoneJungle)
 								{
-									hasDoneJungle = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 3, mod);
+									hasDoneJungle = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 3, Mod);
 								}
 								break;
 							}
-							if (tile.TileType == TileID.Crimstone || tile.TileType == TileID.FleshGrass || tile.TileType == TileID.Crimsand || overrideCounter > 100)
+							if (tile.TileType == TileID.Crimstone || tile.TileType == TileID.CrimsonGrass || tile.TileType == TileID.Crimsand || overrideCounter > 100)
 							{
 								int y = 140 + Main.rand.Next(50);
 								if (!hasDoneEvil)
 								{
-									hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 0, mod);
+									hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 0, Mod);
 								}
 								break;
 							}
@@ -446,7 +428,7 @@ namespace SOTS
 								int y = 140 + Main.rand.Next(50);
 								if (!hasDoneEvil)
 								{
-									hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 1, mod);
+									hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 1, Mod);
 								}
 								break;
 							}
@@ -455,14 +437,14 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating A Pyramid";
-				PyramidWorldgenHelper.GenerateSOTSPyramid(mod);
+				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
 				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
 		}
-		private void GenSOTSOres(GenerationProgress progress)
+		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = "Generating SOTS Ores";
 			float max = 240;
@@ -482,7 +464,7 @@ namespace SOTS
 				}
 			}
 		}
-		private void GenSOTSGeodes(GenerationProgress progress)
+		private void GenSOTSGeodes(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = "Generating Fancy Geodes";
 			int max = 60;
@@ -512,11 +494,11 @@ namespace SOTS
 				}
 			}
 		}
-		public override void TileCountsAvailable(int[] tileCounts)
+        public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
 		{
-			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];  
+			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];
 			phaseBiome = tileCounts[ModContent.TileType<PhaseOreTile>()];
-			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()] + tileCounts[ModContent.TileType<AcediaGatewayTile>()];  
+			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()] + tileCounts[ModContent.TileType<AcediaGatewayTile>()];
 		}
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {
@@ -703,7 +685,7 @@ namespace SOTS
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
-					if (tile2.type == ModContent.TileType<VibrantBrickTile>() && tile.WallType == ModContent.WallType<VibrantWallWall>()) //locked chest
+					if (tile2.TileType == ModContent.TileType<VibrantBrickTile>() && tile.WallType == ModContent.WallType<VibrantWallWall>()) //locked chest
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<PerfectStar>());
 						slot++;
@@ -718,7 +700,7 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
 						slot++;
 					}
-					else if (tile2.type == ModContent.TileType<EarthenPlatingTile>() && tile.TileFrameX < 36)
+					else if (tile2.TileType == ModContent.TileType<EarthenPlatingTile>() && tile.TileFrameX < 36)
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<VisionAmulet>());
 						slot++;
@@ -748,7 +730,7 @@ namespace SOTS
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
-					if (tile2.type == ModContent.TileType<CharredWoodTile>() && tile.WallType == ModContent.WallType<HardIceBrickWallWall>())
+					if (tile2.TileType == ModContent.TileType<CharredWoodTile>() && tile.WallType == ModContent.WallType<HardIceBrickWallWall>())
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<GlazeBow>()); //Will be replaced with Glaze Repeater
 						slot++;
@@ -763,7 +745,7 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
 						slot++;
 					}
-					else if(tile2.type == ModContent.TileType<PyramidBrickTile>())
+					else if(tile2.TileType == ModContent.TileType<PyramidBrickTile>())
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
 						slot++;
@@ -778,7 +760,7 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
 						slot++;
 					}
-					else if (tile2.type == ModContent.TileType<DullPlatingTile>())
+					else if (tile2.TileType == ModContent.TileType<DullPlatingTile>())
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<BoneClapper>());
 						slot++;
@@ -1078,7 +1060,7 @@ namespace SOTS
 					int style = TileObjectData.GetTileStyle(tile);
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
 					Tile tile3 = Main.tile[chest.x, chest.y + 5];
-					if (style >= 23 && style <= 27 && (tile3.type == ModContent.TileType<DullPlatingTile>() || tile3.type == ModContent.TileType<AvaritianPlatingTile>()))
+					if (style >= 23 && style <= 27 && (tile3.TileType == ModContent.TileType<DullPlatingTile>() || tile3.TileType == ModContent.TileType<AvaritianPlatingTile>()))
                     {
 						int importantItem = 0;
 						int importantItem2 = 0;

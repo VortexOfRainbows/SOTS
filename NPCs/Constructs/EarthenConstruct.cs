@@ -25,23 +25,23 @@ namespace SOTS.NPCs.Constructs
             NPC.knockBackResist = 0f;
             NPC.width = 58; 
             NPC.height = 58; 
-            npc.lavaImmune = true;
-            npc.noGravity = true;         
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit4;
-            npc.DeathSound = SoundID.NPCDeath14;
-            npc.value = 5050;
-            npc.npcSlots = 3f;
-            npc.behindTiles = true;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;         
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath14;
+            NPC.value = 5050;
+            NPC.npcSlots = 3f;
+            NPC.behindTiles = true;
 			NPC.aiStyle =-1;
-            npc.rarity = 5;
+            NPC.rarity = 5;
         }
         public void DoSound()
         {
-            int minTilePosX = (int)(npc.position.X / 16.0) - 1;
-            int maxTilePosX = (int)((npc.position.X + npc.width) / 16.0) + 2;
-            int minTilePosY = (int)(npc.position.Y / 16.0) - 1;
-            int maxTilePosY = (int)((npc.position.Y + npc.height) / 16.0) + 2;
+            int minTilePosX = (int)(NPC.position.X / 16.0) - 1;
+            int maxTilePosX = (int)((NPC.position.X + NPC.width) / 16.0) + 2;
+            int minTilePosY = (int)(NPC.position.Y / 16.0) - 1;
+            int maxTilePosY = (int)((NPC.position.Y + NPC.height) / 16.0) + 2;
             if (minTilePosX < 0)
                 minTilePosX = 0;
             if (maxTilePosX > Main.maxTilesX)
@@ -56,23 +56,23 @@ namespace SOTS.NPCs.Constructs
             {
                 for (int j = minTilePosY; j < maxTilePosY; ++j)
                 {
-                    if (Main.tile[i, j] != null && (Main.tile[i, j].nactive() && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
+                    if (Main.tile[i, j] != null && (Main.tile[i, j].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
                     {
                         Vector2 vector2;
                         vector2.X = (float)(i * 16);
                         vector2.Y = (float)(j * 16);
-                        if (npc.position.X + npc.width > vector2.X && npc.position.X < vector2.X + 16.0 && (npc.position.Y + npc.height > (double)vector2.Y && npc.position.Y < vector2.Y + 16.0))
+                        if (NPC.position.X + NPC.width > vector2.X && NPC.position.X < vector2.X + 16.0 && (NPC.position.Y + NPC.height > (double)vector2.Y && NPC.position.Y < vector2.Y + 16.0))
                         {
-                            if (Main.rand.Next(100) == 0 && Main.tile[i, j].nactive())
+                            if (Main.rand.Next(100) == 0 && Main.tile[i, j].HasUnactuatedTile)
                                 WorldGen.KillTile(i, j, true, true, false);
                         }
                     }
                 }
             }
 
-            Vector2 npcCenter = new Vector2(npc.position.X + npc.width * 0.5f, npc.position.Y + npc.height * 0.5f);
-            float targetXPos = Main.player[npc.target].position.X + (Main.player[npc.target].width / 2);
-            float targetYPos = Main.player[npc.target].position.Y + (Main.player[npc.target].height / 2);
+            Vector2 npcCenter = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
+            float targetXPos = Main.player[NPC.target].position.X + (Main.player[NPC.target].width / 2);
+            float targetYPos = Main.player[NPC.target].position.Y + (Main.player[NPC.target].height / 2);
 
             float targetRoundedPosX = (float)((int)(targetXPos / 16.0) * 16);
             float targetRoundedPosY = (float)((int)(targetYPos / 16.0) * 16);
@@ -83,23 +83,23 @@ namespace SOTS.NPCs.Constructs
 
             float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
 
-            if (npc.soundDelay == 0)
+            if (NPC.soundDelay == 0)
             {
                 float num1 = length / 40f;
                 if (num1 < 15.0)
                     num1 = 15f;
                 if (num1 > 25.0)
                     num1 = 25f;
-                npc.soundDelay = (int)num1;
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                NPC.soundDelay = (int)num1;
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
             }
         }
         public void DoWormAI()
         {
-            int minTilePosX = (int)(npc.position.X / 16.0) - 1;
-            int maxTilePosX = (int)((npc.position.X + npc.width) / 16.0) + 2;
-            int minTilePosY = (int)(npc.position.Y / 16.0) - 1;
-            int maxTilePosY = (int)((npc.position.Y + npc.height) / 16.0) + 2;
+            int minTilePosX = (int)(NPC.position.X / 16.0) - 1;
+            int maxTilePosX = (int)((NPC.position.X + NPC.width) / 16.0) + 2;
+            int minTilePosY = (int)(NPC.position.Y / 16.0) - 1;
+            int maxTilePosY = (int)((NPC.position.Y + NPC.height) / 16.0) + 2;
             if (minTilePosX < 0)
                 minTilePosX = 0;
             if (maxTilePosX > Main.maxTilesX)
@@ -115,15 +115,15 @@ namespace SOTS.NPCs.Constructs
             {
                 for (int j = minTilePosY; j < maxTilePosY; ++j)
                 {
-                    if (Main.tile[i, j] != null && (Main.tile[i, j].nactive() && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
+                    if (Main.tile[i, j] != null && (Main.tile[i, j].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
                     {
                         Vector2 vector2;
                         vector2.X = (float)(i * 16);
                         vector2.Y = (float)(j * 16);
-                        if (npc.position.X + npc.width > vector2.X && npc.position.X < vector2.X + 16.0 && (npc.position.Y + npc.height > (double)vector2.Y && npc.position.Y < vector2.Y + 16.0))
+                        if (NPC.position.X + NPC.width > vector2.X && NPC.position.X < vector2.X + 16.0 && (NPC.position.Y + NPC.height > (double)vector2.Y && NPC.position.Y < vector2.Y + 16.0))
                         {
                             collision = true;
-                            if (Main.rand.Next(100) == 0 && Main.tile[i, j].nactive())
+                            if (Main.rand.Next(100) == 0 && Main.tile[i, j].HasUnactuatedTile)
                                 WorldGen.KillTile(i, j, true, true, false);
                         }
                     }
@@ -132,7 +132,7 @@ namespace SOTS.NPCs.Constructs
             // If there is no collision with tiles, we check if the distance between this NPC and its target is too large, so that we can still trigger 'collision'.
             if (!collision)
             {
-                Rectangle rectangle1 = new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
+                Rectangle rectangle1 = new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height);
                 int maxDistance = 1000;
                 bool playerCollision = true;
                 for (int index = 0; index < 255; ++index)
@@ -157,9 +157,9 @@ namespace SOTS.NPCs.Constructs
             // acceleration is exactly what it sounds like. The speed at which this NPC accelerates.
             float acceleration = 0.08f;
 
-            Vector2 npcCenter = new Vector2(npc.position.X + npc.width * 0.5f, npc.position.Y + npc.height * 0.5f);
-            float targetXPos = Main.player[npc.target].position.X + (Main.player[npc.target].width / 2);
-            float targetYPos = Main.player[npc.target].position.Y + (Main.player[npc.target].height / 2);
+            Vector2 npcCenter = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
+            float targetXPos = Main.player[NPC.target].position.X + (Main.player[NPC.target].width / 2);
+            float targetYPos = Main.player[NPC.target].position.Y + (Main.player[NPC.target].height / 2);
 
             float targetRoundedPosX = (float)((int)(targetXPos / 16.0) * 16);
             float targetRoundedPosY = (float)((int)(targetYPos / 16.0) * 16);
@@ -172,164 +172,164 @@ namespace SOTS.NPCs.Constructs
             // If we do not have any type of collision, we want the NPC to fall down and de-accelerate along the X axis.
             if (!collision)
             {
-                npc.TargetClosest(true);
-                npc.velocity.Y = npc.velocity.Y + 0.11f;
-                if (npc.velocity.Y > speed)
-                    npc.velocity.Y = speed;
-                if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < speed * 0.4)
+                NPC.TargetClosest(true);
+                NPC.velocity.Y = NPC.velocity.Y + 0.11f;
+                if (NPC.velocity.Y > speed)
+                    NPC.velocity.Y = speed;
+                if (Math.Abs(NPC.velocity.X) + Math.Abs(NPC.velocity.Y) < speed * 0.4)
                 {
-                    if (npc.velocity.X < 0.0)
-                        npc.velocity.X = npc.velocity.X - acceleration * 1.1f;
+                    if (NPC.velocity.X < 0.0)
+                        NPC.velocity.X = NPC.velocity.X - acceleration * 1.1f;
                     else
-                        npc.velocity.X = npc.velocity.X + acceleration * 1.1f;
+                        NPC.velocity.X = NPC.velocity.X + acceleration * 1.1f;
                 }
-                else if (npc.velocity.Y == speed)
+                else if (NPC.velocity.Y == speed)
                 {
-                    if (npc.velocity.X < dirX)
-                        npc.velocity.X = npc.velocity.X + acceleration;
-                    else if (npc.velocity.X > dirX)
-                        npc.velocity.X = npc.velocity.X - acceleration;
+                    if (NPC.velocity.X < dirX)
+                        NPC.velocity.X = NPC.velocity.X + acceleration;
+                    else if (NPC.velocity.X > dirX)
+                        NPC.velocity.X = NPC.velocity.X - acceleration;
                 }
-                else if (npc.velocity.Y > 4.0)
+                else if (NPC.velocity.Y > 4.0)
                 {
-                    if (npc.velocity.X < 0.0)
-                        npc.velocity.X = npc.velocity.X + acceleration * 0.9f;
+                    if (NPC.velocity.X < 0.0)
+                        NPC.velocity.X = NPC.velocity.X + acceleration * 0.9f;
                     else
-                        npc.velocity.X = npc.velocity.X - acceleration * 0.9f;
+                        NPC.velocity.X = NPC.velocity.X - acceleration * 0.9f;
                 }
             }
             // Else we want to play some audio (soundDelay) and move towards our target.
             else
             {
-                if (npc.soundDelay == 0)
+                if (NPC.soundDelay == 0)
                 {
                     float num1 = length / 40f;
                     if (num1 < 15.0)
                         num1 = 15f;
                     if (num1 > 25.0)
                         num1 = 25f;
-                    npc.soundDelay = (int)num1;
-                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                    NPC.soundDelay = (int)num1;
+                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
                 }
                 float absDirX = Math.Abs(dirX);
                 float absDirY = Math.Abs(dirY);
                 float newSpeed = speed / length;
                 dirX = dirX * newSpeed;
                 dirY = dirY * newSpeed;
-                if (npc.velocity.X > 0.0 && dirX > 0.0 || npc.velocity.X < 0.0 && dirX < 0.0 || (npc.velocity.Y > 0.0 && dirY > 0.0 || npc.velocity.Y < 0.0 && dirY < 0.0))
+                if (NPC.velocity.X > 0.0 && dirX > 0.0 || NPC.velocity.X < 0.0 && dirX < 0.0 || (NPC.velocity.Y > 0.0 && dirY > 0.0 || NPC.velocity.Y < 0.0 && dirY < 0.0))
                 {
-                    if (npc.velocity.X < dirX)
-                        npc.velocity.X = npc.velocity.X + acceleration;
-                    else if (npc.velocity.X > dirX)
-                        npc.velocity.X = npc.velocity.X - acceleration;
-                    if (npc.velocity.Y < dirY)
-                        npc.velocity.Y = npc.velocity.Y + acceleration;
-                    else if (npc.velocity.Y > dirY)
-                        npc.velocity.Y = npc.velocity.Y - acceleration;
-                    if (Math.Abs(dirY) < speed * 0.2 && (npc.velocity.X > 0.0 && dirX < 0.0 || npc.velocity.X < 0.0 && dirX > 0.0))
+                    if (NPC.velocity.X < dirX)
+                        NPC.velocity.X = NPC.velocity.X + acceleration;
+                    else if (NPC.velocity.X > dirX)
+                        NPC.velocity.X = NPC.velocity.X - acceleration;
+                    if (NPC.velocity.Y < dirY)
+                        NPC.velocity.Y = NPC.velocity.Y + acceleration;
+                    else if (NPC.velocity.Y > dirY)
+                        NPC.velocity.Y = NPC.velocity.Y - acceleration;
+                    if (Math.Abs(dirY) < speed * 0.2 && (NPC.velocity.X > 0.0 && dirX < 0.0 || NPC.velocity.X < 0.0 && dirX > 0.0))
                     {
-                        if (npc.velocity.Y > 0.0)
-                            npc.velocity.Y = npc.velocity.Y + acceleration * 2f;
+                        if (NPC.velocity.Y > 0.0)
+                            NPC.velocity.Y = NPC.velocity.Y + acceleration * 2f;
                         else
-                            npc.velocity.Y = npc.velocity.Y - acceleration * 2f;
+                            NPC.velocity.Y = NPC.velocity.Y - acceleration * 2f;
                     }
-                    if (Math.Abs(dirX) < speed * 0.2 && (npc.velocity.Y > 0.0 && dirY < 0.0 || npc.velocity.Y < 0.0 && dirY > 0.0))
+                    if (Math.Abs(dirX) < speed * 0.2 && (NPC.velocity.Y > 0.0 && dirY < 0.0 || NPC.velocity.Y < 0.0 && dirY > 0.0))
                     {
-                        if (npc.velocity.X > 0.0)
-                            npc.velocity.X = npc.velocity.X + acceleration * 2f;
+                        if (NPC.velocity.X > 0.0)
+                            NPC.velocity.X = NPC.velocity.X + acceleration * 2f;
                         else
-                            npc.velocity.X = npc.velocity.X - acceleration * 2f;
+                            NPC.velocity.X = NPC.velocity.X - acceleration * 2f;
                     }
                 }
                 else if (absDirX > absDirY)
                 {
-                    if (npc.velocity.X < dirX)
-                        npc.velocity.X = npc.velocity.X + acceleration * 1.1f;
-                    else if (npc.velocity.X > dirX)
-                        npc.velocity.X = npc.velocity.X - acceleration * 1.1f;
-                    if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < speed * 0.5)
+                    if (NPC.velocity.X < dirX)
+                        NPC.velocity.X = NPC.velocity.X + acceleration * 1.1f;
+                    else if (NPC.velocity.X > dirX)
+                        NPC.velocity.X = NPC.velocity.X - acceleration * 1.1f;
+                    if (Math.Abs(NPC.velocity.X) + Math.Abs(NPC.velocity.Y) < speed * 0.5)
                     {
-                        if (npc.velocity.Y > 0.0)
-                            npc.velocity.Y = npc.velocity.Y + acceleration;
+                        if (NPC.velocity.Y > 0.0)
+                            NPC.velocity.Y = NPC.velocity.Y + acceleration;
                         else
-                            npc.velocity.Y = npc.velocity.Y - acceleration;
+                            NPC.velocity.Y = NPC.velocity.Y - acceleration;
                     }
                 }
                 else
                 {
-                    if (npc.velocity.Y < dirY)
-                        npc.velocity.Y = npc.velocity.Y + acceleration * 1.1f;
-                    else if (npc.velocity.Y > dirY)
-                        npc.velocity.Y = npc.velocity.Y - acceleration * 1.1f;
-                    if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < speed * 0.5)
+                    if (NPC.velocity.Y < dirY)
+                        NPC.velocity.Y = NPC.velocity.Y + acceleration * 1.1f;
+                    else if (NPC.velocity.Y > dirY)
+                        NPC.velocity.Y = NPC.velocity.Y - acceleration * 1.1f;
+                    if (Math.Abs(NPC.velocity.X) + Math.Abs(NPC.velocity.Y) < speed * 0.5)
                     {
-                        if (npc.velocity.X > 0.0)
-                            npc.velocity.X = npc.velocity.X + acceleration;
+                        if (NPC.velocity.X > 0.0)
+                            NPC.velocity.X = NPC.velocity.X + acceleration;
                         else
-                            npc.velocity.X = npc.velocity.X - acceleration;
+                            NPC.velocity.X = NPC.velocity.X - acceleration;
                     }
                 }
             }
             // Set the correct rotation for this NPC.
-            npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
+            NPC.rotation = (float)Math.Atan2(NPC.velocity.Y, NPC.velocity.X) + 1.57f;
 
             // Some netupdate stuff (multiplayer compatibility).
             if (collision)
             {
-                if (npc.localAI[0] != 1)
-                    npc.netUpdate = true;
-                npc.localAI[0] = 1f;
+                if (NPC.localAI[0] != 1)
+                    NPC.netUpdate = true;
+                NPC.localAI[0] = 1f;
             }
             else
             {
-                if (npc.localAI[0] != 0.0)
-                    npc.netUpdate = true;
-                npc.localAI[0] = 0.0f;
+                if (NPC.localAI[0] != 0.0)
+                    NPC.netUpdate = true;
+                NPC.localAI[0] = 0.0f;
             }
-            if ((npc.velocity.X > 0.0 && npc.oldVelocity.X < 0.0 || npc.velocity.X < 0.0 && npc.oldVelocity.X > 0.0 || (npc.velocity.Y > 0.0 && npc.oldVelocity.Y < 0.0 || npc.velocity.Y < 0.0 && npc.oldVelocity.Y > 0.0)) && !npc.justHit)
-                npc.netUpdate = true;
+            if ((NPC.velocity.X > 0.0 && NPC.oldVelocity.X < 0.0 || NPC.velocity.X < 0.0 && NPC.oldVelocity.X > 0.0 || (NPC.velocity.Y > 0.0 && NPC.oldVelocity.Y < 0.0 || NPC.velocity.Y < 0.0 && NPC.oldVelocity.Y > 0.0)) && !NPC.justHit)
+                NPC.netUpdate = true;
         }
         bool worm = true;
         int[] segments = {-1,-1,-1,-1};
         public override bool PreAI()
         {
-            npc.TargetClosest(true);
-            if (Main.player[npc.target].dead || Vector2.Distance(Main.player[npc.target].Center, npc.Center) > 4800)
+            NPC.TargetClosest(true);
+            if (Main.player[NPC.target].dead || Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) > 4800)
             {
-                npc.active = false;
+                NPC.active = false;
                 return false;
             }
             if (Main.netMode != 1)
             {
-                if (npc.ai[0] == 0)
+                if (NPC.ai[0] == 0)
                 {
-                    npc.realLife = npc.whoAmI;
-                    int latestNPC = npc.whoAmI;
+                    NPC.realLife = NPC.whoAmI;
+                    int latestNPC = NPC.whoAmI;
                     int WormLength = 4;
                     for (int i = 0; i < WormLength; i++)
                     {
-                        latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthenConstructTail>(), npc.whoAmI, 0, latestNPC);
-                        Main.npc[latestNPC].realLife = npc.whoAmI;
-                        Main.npc[latestNPC].ai[3] = npc.whoAmI;
+                        latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EarthenConstructTail>(), NPC.whoAmI, 0, latestNPC);
+                        Main.npc[latestNPC].realLife = NPC.whoAmI;
+                        Main.npc[latestNPC].ai[3] = NPC.whoAmI;
                         Main.npc[latestNPC].ai[2] = i + 1;
                         segments[i] = latestNPC;
                     }
 
                     // We're setting npc.ai[0] to 1, so that this 'if' is not triggered again.
-                    npc.ai[0] = 1;
+                    NPC.ai[0] = 1;
                 }
-                npc.netUpdate = true;
+                NPC.netUpdate = true;
             }
-            if (Main.player[npc.target].dead)
+            if (Main.player[NPC.target].dead)
             {
-                npc.velocity.Y = 4;
+                NPC.velocity.Y = 4;
             }
             else
             {
                 if (worm) DoWormAI();
                 if (!worm) DoSound();
             }
-            npc.rotation = npc.velocity.ToRotation() + 1.57f;
+            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
 
             return false; //in order to make sure the vanilla worm ai doesn't crash the game
         }
@@ -355,14 +355,14 @@ namespace SOTS.NPCs.Constructs
         }
         public override void PostAI()
         {
-            if (!npc.active)
+            if (!NPC.active)
                 return;
-            Player player = Main.player[npc.target];
-            float distToPlayer = (player.Center - npc.Center).Length();
+            Player player = Main.player[NPC.target];
+            float distToPlayer = (player.Center - NPC.Center).Length();
             aiCounter++;
             eternalCounter++;
-            int i = (int)npc.Center.X / 16;
-            int j = (int)npc.Center.Y / 16;
+            int i = (int)NPC.Center.X / 16;
+            int j = (int)NPC.Center.Y / 16;
             if (distToPlayer <= 256 && aiCounter >= 196 && aiMode == -1)
             {
                 aiMode = 1;
@@ -373,55 +373,55 @@ namespace SOTS.NPCs.Constructs
             {
                 Tile tile = Framing.GetTileSafely(i, j - 1);
                 Vector2 goTo = player.Center;
-                if (!tile.active() && extraCounter < 256)
+                if (!tile.HasTile && extraCounter < 256)
                 {
                     extraCounter += 4;
                 }
                 goTo.Y += 256 + extraCounter;
                 Vector2 circularLocation = new Vector2(256, 0).RotatedBy(MathHelper.ToRadians(eternalCounter));
                 goTo.X += circularLocation.X;
-                Vector2 velo = goTo - npc.Center;
+                Vector2 velo = goTo - NPC.Center;
                 velo = velo.SafeNormalize(Vector2.Zero);
-                if (12 >= (goTo - npc.Center).Length())
+                if (12 >= (goTo - NPC.Center).Length())
                 {
-                    velo *= (goTo - npc.Center).Length();
+                    velo *= (goTo - NPC.Center).Length();
                 }
                 else
                 {
                     velo *= 12;
                 }
-                npc.velocity = velo;
+                NPC.velocity = velo;
                 if(aiCounter >= 196)
                 {
                     aiCounter = 0;
                     extraCounter = 0;
-                    npc.velocity *= 0;
+                    NPC.velocity *= 0;
                     aiMode = 2;
                 }
             }
             if(aiMode == 2)
             {
                 Tile tile = Framing.GetTileSafely(i, j);
-                npc.velocity.Y = -6f;
-                bool lineOfSight = Collision.CanHitLine(npc.position, npc.width, npc.height, npc.position + new Vector2(0, -128), npc.width, npc.height);
-                if (((!tile.active() || !Main.tileSolid[tile.TileType]) && lineOfSight) || npc.Center.Y < player.Center.Y)
+                NPC.velocity.Y = -6f;
+                bool lineOfSight = Collision.CanHitLine(NPC.position, NPC.width, NPC.height, NPC.position + new Vector2(0, -128), NPC.width, NPC.height);
+                if (((!tile.HasTile || !Main.tileSolid[tile.TileType]) && lineOfSight) || NPC.Center.Y < player.Center.Y)
                 {
                     aiCounter = 0;
                     aiMode = 3;
-                    npc.velocity.Y = 0;
+                    NPC.velocity.Y = 0;
                     extraCounter = 0;
                 }
             }
             if(aiMode >= 3 && aiMode <= 5)
             {
-                npc.velocity.X = 0;
-                npc.velocity.Y = -1;
+                NPC.velocity.X = 0;
+                NPC.velocity.Y = -1;
                 if (aiCounter >= 30)
                 {
                     LaunchBeams();
                     aiCounter = 0;
                     aiMode++;
-                    npc.position.Y += 30;
+                    NPC.position.Y += 30;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         for (int x = 0; x < 4; x++)
@@ -429,7 +429,7 @@ namespace SOTS.NPCs.Constructs
                             if (segments[x] != -1)
                             {
                                 NPC segment = Main.npc[segments[x]];
-                                if (segment.active && segment.type == ModContent.NPCType<EarthenConstructTail>() && (int)segment.ai[1] == npc.whoAmI)
+                                if (segment.active && segment.type == ModContent.NPCType<EarthenConstructTail>() && (int)segment.ai[1] == NPC.whoAmI)
                                 {
                                     segment.position.Y += 30;
                                     segment.netUpdate = true;
@@ -447,16 +447,16 @@ namespace SOTS.NPCs.Constructs
             }
             if (Main.netMode != NetmodeID.MultiplayerClient && eternalCounter % 30 == 0)
             {
-                npc.netUpdate = true;
+                NPC.netUpdate = true;
             }
-            npc.spriteDirection = npc.velocity.X > 0 ? 1 : -1;
+            NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
             doAIExtras();
         }
         public void LaunchBeams()
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient && !Main.player[npc.target].dead)
+            if (Main.netMode != NetmodeID.MultiplayerClient && !Main.player[NPC.target].dead)
             {
-                int damage = npc.damage / 2;
+                int damage = NPC.damage / 2;
                 if (Main.expertMode)
                 {
                     damage = (int)(damage / Main.expertDamage);
@@ -469,10 +469,10 @@ namespace SOTS.NPCs.Constructs
                 for(int i = 0; i < count; i++)
                 {
                     Vector2 circularLocation = new Vector2(0, -4).RotatedByRandom(MathHelper.ToRadians(17 + count));
-                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<EarthenShot>(), damage, 0, Main.myPlayer, 0, Main.player[npc.target].Center.Y - 32);
+                    Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<EarthenShot>(), damage, 0, Main.myPlayer, 0, Main.player[NPC.target].Center.Y - 32);
                 }
             }
-            SoundEngine.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
+            SoundEngine.PlaySound(SoundID.Item92, (int)(NPC.Center.X), (int)(NPC.Center.Y));
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
@@ -481,12 +481,12 @@ namespace SOTS.NPCs.Constructs
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstruct").Value;
             Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstructHeadGlow").Value;
             Vector2 origin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-            Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, null, drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[1]), origin2, npc.scale + 0.04f, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-            int i = (int)npc.Center.X / 16;
-            int j = (int)npc.Center.Y / 16;
+            Main.spriteBatch.Draw(texture2, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation - MathHelper.ToRadians(NPC.localAI[1]), origin2, NPC.scale + 0.04f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            int i = (int)NPC.Center.X / 16;
+            int j = (int)NPC.Center.Y / 16;
             if (!SOTSWorldgenHelper.Full(i - 1, j - 1, 3, 3))
-                Main.spriteBatch.Draw(texture3, npc.Center - Main.screenPosition, null, Color.White, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                Main.spriteBatch.Draw(texture3, NPC.Center - Main.screenPosition, null, Color.White, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -499,25 +499,25 @@ namespace SOTS.NPCs.Constructs
         {
             for (int k = 0; k < 20; k++)
             {
-                Dust.NewDust(npc.position, npc.width, npc.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
             }
             for (int i = 0; i < 30; i++)
             {
-                int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<BigEarthDust>());
+                int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<BigEarthDust>());
                 Main.dust[dust].velocity *= 5f;
             }
-            Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
-            Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore2"), 1f);
-            Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore3"), 1f);
-            Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore4"), 1f);
-            Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore5"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore2"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore3"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore4"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore5"), 1f);
             for (int i = 0; i < 9; i++)
-                Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+                Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
             gennedGore = true;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life <= 0 && Main.netMode != NetmodeID.Server)
+            if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
             {
                 if (!gennedGore) genGore(hitDirection);
             }
@@ -529,32 +529,32 @@ namespace SOTS.NPCs.Constructs
             if(Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int type = ModContent.NPCType<EarthenSpirit>();
-                int j = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 0);
+                int j = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 0);
                 Main.npc[j].velocity.Y = -10f;
                 Main.npc[j].netUpdate = true;
 
-                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 1, j);
+                int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 1, j);
                 Main.npc[n].velocity = new Vector2(1, -9f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 2, j);
+                n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 2, j);
                 Main.npc[n].velocity = new Vector2(-1, -9f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 3, j);
+                n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 3, j);
                 Main.npc[n].velocity = new Vector2(2, -8f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 4, j);
+                n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 4, j);
                 Main.npc[n].velocity = new Vector2(-2, -8f);
                 Main.npc[n].netUpdate = true;
             }
-            Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfEarth>(), Main.rand.Next(4) + 4);
+            Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfEarth>(), Main.rand.Next(4) + 4);
         }
         public void doAIExtras()
         {
-            npc.localAI[1] += (float)Math.Sqrt(npc.velocity.Length()) * -npc.spriteDirection;
-			npc.timeLeft = 100;
+            NPC.localAI[1] += (float)Math.Sqrt(NPC.velocity.Length()) * -NPC.spriteDirection;
+			NPC.timeLeft = 100;
 		}
     }
 }

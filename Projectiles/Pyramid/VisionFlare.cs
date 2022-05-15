@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Pyramid
         {
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.alpha = 255;
 			Projectile.timeLeft = 16;
 			Projectile.width = 200;

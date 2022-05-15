@@ -19,14 +19,14 @@ namespace SOTS.Projectiles.Permafrost
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 12;
 			Projectile.width = 12;
 			Projectile.penetrate = 12;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 1800;
 			Projectile.tileCollide = false;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.hostile = false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				Projectile.Kill();
 			}
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Projectile.timeLeft < 1740)
 			{
 				Vector2 toPlayer = player.Center - Projectile.Center;
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Permafrost
 						Projectile proj = Main.projectile[i];
 						if(Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 						{
-							if(proj == projectile)
+							if(proj == Projectile)
 							{
 								found = true;
 							}

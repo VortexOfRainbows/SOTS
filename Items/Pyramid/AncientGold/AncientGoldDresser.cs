@@ -25,20 +25,16 @@ namespace SOTS.Items.Pyramid.AncientGold
             Item.rare = ItemRarityID.LightRed;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = mod.TileType("AncientGoldDresserTile");
+            Item.createTile = Mod.Find<ModTile>("AncientGoldDresserTile").Type;
         }
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 16);
-            recipe.AddTile(TileID.Sawmill);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 16).AddTile(TileID.Sawmill).Register();
         }
     }
     public class AncientGoldDresserTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -65,7 +61,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             disableSmartCursor = true;
             AdjTiles = new int[] { TileID.Dressers };
             dresser = "Ancient Gold Dresser";
-            dresserDrop = mod.ItemType("AncientGoldDresser");
+            dresserDrop = Mod.Find<ModItem>("AncientGoldDresser").Type;
         }
         public override bool HasSmartInteract()
         {
@@ -74,14 +70,14 @@ namespace SOTS.Items.Pyramid.AncientGold
         public override void RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY == 0)
+            if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0)
             {
                 Main.CancelClothesWindow(true);
                 Main.mouseRightRelease = false;
-                int left = (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].frameX / 18);
+                int left = (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameX / 18);
                 left %= 3;
                 left = Player.tileTargetX - left;
-                int top = Player.tileTargetY - (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].frameY / 18);
+                int top = Player.tileTargetY - (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY / 18);
                 if (player.sign > -1)
                 {
                     SoundEngine.PlaySound(SoundID.MenuClose);
@@ -188,7 +184,7 @@ namespace SOTS.Items.Pyramid.AncientGold
                 }
                 if (player.cursorItemIconText == chest)
                 {
-                    player.cursorItemIconID = mod.ItemType("AncientGoldDresser");
+                    player.cursorItemIconID = Mod.Find<ModItem>("AncientGoldDresser").Type;
                     player.cursorItemIconText = "";
                 }
             }
@@ -229,13 +225,13 @@ namespace SOTS.Items.Pyramid.AncientGold
                 }
                 if (player.cursorItemIconText == chest)
                 {
-                    player.cursorItemIconID = mod.ItemType("AncientGoldDresser");
+                    player.cursorItemIconID = Mod.Find<ModItem>("AncientGoldDresser").Type;
                     player.cursorItemIconText = "";
                 }
             }
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY > 0)
+            if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY > 0)
             {
                 player.cursorItemIconID = ItemID.FamiliarShirt;
             }

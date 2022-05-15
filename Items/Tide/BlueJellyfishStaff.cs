@@ -35,12 +35,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Sapphire, 15);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Sapphire, 15).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

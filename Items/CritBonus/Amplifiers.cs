@@ -29,12 +29,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Amber, 5);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Amber, 5).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class BloodstainedCoin : ModItem
@@ -66,13 +61,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Vertebrae, 5);
-			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Vertebrae, 5).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class PutridCoin : ModItem
@@ -104,13 +93,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.RottenChunk, 5);
-			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.RottenChunk, 5).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class PolishedCoin : ModItem
@@ -132,10 +115,10 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.meleeCrit += 3;
-			player.rangedCrit += 3;
-			player.magicCrit += 3;
-			player.thrownCrit += 3;
+			player.GetCritChance(DamageClass.Melee) += 3;
+			player.GetCritChance(DamageClass.Ranged) += 3;
+			player.GetCritChance(DamageClass.Magic) += 3;
+			player.GetCritChance(DamageClass.Throwing) += 3;
 			if (Main.rand.NextBool(2))
 			{
 				modPlayer.CritBonusDamage += 20;
@@ -145,19 +128,8 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PutridCoin>(), 1);
-			recipe.AddIngredient(ItemID.MedicatedBandage, 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<BloodstainedCoin>(), 1);
-			recipe.AddIngredient(ItemID.MedicatedBandage, 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PutridCoin>(), 1).AddIngredient(ItemID.MedicatedBandage, 1).AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<BloodstainedCoin>(), 1).AddIngredient(ItemID.MedicatedBandage, 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 	public class FocusCrystal : ModItem
@@ -179,24 +151,17 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.meleeCrit += 5;
-			player.rangedCrit += 5;
-			player.magicCrit += 5;
-			player.thrownCrit += 5;
+			player.GetCritChance(DamageClass.Melee) += 5;
+			player.GetCritChance(DamageClass.Ranged) += 5;
+			player.GetCritChance(DamageClass.Magic) += 5;
+			player.GetCritChance(DamageClass.Throwing) += 5;
 			modPlayer.CritBonusDamage += 25;
 			player.buffImmune[BuffID.Bleeding] = true;
 			player.buffImmune[BuffID.Poisoned] = true;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PolishedCoin>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAmplifier>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 5);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PolishedCoin>(), 1).AddIngredient(ModContent.ItemType<OtherworldlyAmplifier>(), 1).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 5).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

@@ -22,16 +22,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
-			recipe.SetResult(this, 20);
-			recipe.AddRecipe();
+			CreateRecipe(20).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).Register();
 		}
 	}
 	public class DissolvingBrillianceTile : ModTile
 	{
 		public static Color color = new Color(231, 95, 203);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
@@ -118,7 +115,7 @@ namespace SOTS.Items.Fragments
 				}
 				Tile next = Framing.GetTileSafely(i + extraI, j + extraJ);
 				bool run = true;
-				if (next.active() && Main.tileSolid[next.type])
+				if (next.HasTile && Main.tileSolid[next.TileType])
 					run = false;
 				if (run)
 				{

@@ -43,12 +43,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 15);
-			recipe.AddIngredient(ItemID.ChainGun, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "SanguiteBar", 15).AddIngredient(ItemID.ChainGun, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		int num = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

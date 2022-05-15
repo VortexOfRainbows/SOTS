@@ -10,7 +10,7 @@ namespace SOTS.Dusts
         {
             dust.frame = new Rectangle(0, Main.rand.Next(3) * 10, 8, 8);
         }
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             updateType = 267;
         }

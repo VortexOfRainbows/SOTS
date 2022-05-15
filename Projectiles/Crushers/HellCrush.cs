@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Crushers
 			Projectile.width = 70;
             Main.projFrames[Projectile.type] = 5;
 			Projectile.penetrate = -1;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 24;
 			Projectile.tileCollide = false;
@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Crushers
 				for (float i = 0; i < Projectile.damage; i += ogDamage * 2.5f)
 				{ 
 					int proj = Projectile.NewProjectile((Projectile.Center.X), Projectile.Center.Y, Main.rand.Next(-100, 101) * 0.015f, Main.rand.Next(-100, 101) * 0.015f, 85, (int)(Projectile.damage * 0.1f), 0, Projectile.owner);
-					Main.projectile[proj].melee = true;
+					Main.projectile[proj].DamageType = DamageClass.Melee;
 					Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);
 				}
 			}

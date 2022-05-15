@@ -67,11 +67,7 @@ namespace SOTS.Items.Otherworld.FromChests
         }
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 16);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 16).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

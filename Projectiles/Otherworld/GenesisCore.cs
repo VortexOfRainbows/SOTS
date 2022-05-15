@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Otherworld
         {
 			Projectile.height = 30;
 			Projectile.width = 30;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 7200;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Otherworld
 						NPC npc = Main.npc[npcIndex];
 						if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 						{
-							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("OriginLightningZap"), (int)(Projectile.damage * 1f), 0, Projectile.owner, npc.whoAmI);
+							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("OriginLightningZap").Type, (int)(Projectile.damage * 1f), 0, Projectile.owner, npc.whoAmI);
 						}
 					}
 				}

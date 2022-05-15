@@ -15,7 +15,7 @@ namespace SOTS.Items.Otherworld.Furniture
 {
 	public class LockedSkywareChest : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
@@ -104,7 +104,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			Chest.DestroyChest(i, j);
 		}
 
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
@@ -218,7 +218,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				if (player.cursorItemIconText == "Skyware Chest")
 				{
 					player.cursorItemIconID = ItemID.SkywareChest;
-					if (Main.tile[left, top].frameX / 36 == 1)
+					if (Main.tile[left, top].TileFrameX / 36 == 1)
 						player.cursorItemIconID = ItemType<SkywareKey>();
 					player.cursorItemIconText = "";
 				}

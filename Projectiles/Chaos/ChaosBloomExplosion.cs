@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
 			Projectile.alpha = 255;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
             Projectile.idStaticNPCHitCooldown = 30;
             Projectile.usesIDStaticNPCImmunity = true;
         }

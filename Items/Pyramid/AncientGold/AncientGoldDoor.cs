@@ -28,20 +28,16 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AncientGoldDoorClosed");
+			Item.createTile = Mod.Find<ModTile>("AncientGoldDoorClosed").Type;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 6);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 6).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class AncientGoldDoorClosed : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileSolid[Type] = true;
@@ -74,7 +70,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			DustType = DustID.GoldCoin;
 			disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.ClosedDoor };
-			openDoorID = mod.TileType("AncientGoldDoorOpen");
+			openDoorID = Mod.Find<ModTile>("AncientGoldDoorOpen").Type;
 		}
 		public override bool HasSmartInteract()
 		{
@@ -98,7 +94,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 	}
 	public class AncientGoldDoorOpen : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileSolid[Type] = false;
@@ -152,7 +148,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			DustType = DustID.GoldCoin;
 			disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.OpenDoor };
-			closeDoorID = mod.TileType("AncientGoldDoorClosed");
+			closeDoorID = Mod.Find<ModTile>("AncientGoldDoorClosed").Type;
 		}
 		public override bool HasSmartInteract()
 		{

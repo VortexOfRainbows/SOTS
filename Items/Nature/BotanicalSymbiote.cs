@@ -27,7 +27,7 @@ namespace SOTS.Items.Nature
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if(Main.dayTime)
 				player.lifeRegen += 1;
-			modPlayer.symbioteDamage += (int)(Item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))) + 1;
+			modPlayer.symbioteDamage += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))) + 1;
 		}
 	}
 }

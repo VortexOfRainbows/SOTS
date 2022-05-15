@@ -24,11 +24,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<AvaritianPlating>(), 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class AvaritianPlatingWallWall : ModWall
@@ -49,7 +45,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			{
 				xLength -= 8;
 			}*/
-			Rectangle frame = new Rectangle(tile.wallFrameX() + xOff, tile.wallFrameY(), xLength, 32);
+			Rectangle frame = new Rectangle(tile.WallFrameX() + xOff, tile.WallFrameY(), xLength, 32);
 			Color color;
 			color = WorldGen.paintColor((int)tile.wallColor()) * (100f / 255f);
 			color.A = 0;
@@ -72,7 +68,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			DrawWallGlow(Type, i, j, spriteBatch);
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
@@ -87,7 +83,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			AvaritianPlatingWallWall.DrawWallGlow(Type, i, j, spriteBatch);
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<AvaritianDust>();

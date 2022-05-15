@@ -76,7 +76,7 @@ namespace SOTS.Items.Otherworld
 				if (NPC.downedBoss2 && Main.rand.Next(3) != 0 && typeAmt[0] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(mod.ItemType("SoulResidue"), rand);
+					player.QuickSpawnItem(Mod.Find<ModItem>("SoulResidue").Type, rand);
 					drops += rand;
 					typeAmt[0] += rand;
 				}

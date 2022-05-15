@@ -32,7 +32,7 @@ namespace SOTS.Items.MusicBoxes
 		}
 		/*public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
+			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "SubspaceSerpentTrophy", 1);
 			recipe.AddIngredient(ItemID.MusicBox);
 			recipe.AddTile(TileID.HeavyWorkBench);

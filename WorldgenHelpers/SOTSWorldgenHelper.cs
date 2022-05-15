@@ -29,14 +29,14 @@ namespace SOTS
 		public static bool CanExplodeTile(int i, int j)
 		{
 			bool canKillTile = true;
-			if (Main.tile[i, j] != null && Main.tile[i, j].HasTile)
+			if (Main.tile[i, j] != null && Main.tile[i, j].active())
 			{
 				canKillTile = true;
-				if (Main.tileDungeon[(int)Main.tile[i, j ].TileType] || Main.tile[i, j ].TileType == 88 || Main.tile[i, j ].TileType == 21 || Main.tile[i, j ].TileType == 26 || Main.tile[i, j ].TileType == 107 || Main.tile[i, j ].TileType == 108 || Main.tile[i, j ].TileType == 111 || Main.tile[i, j ].TileType == 226 || Main.tile[i, j ].TileType == 237 || Main.tile[i, j ].TileType == 221 || Main.tile[i, j ].TileType == 222 || Main.tile[i, j ].TileType == 223 || Main.tile[i, j ].TileType == 211 || Main.tile[i, j ].TileType == 404)
+				if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
 				{
 					canKillTile = false;
 				}
-				if (!Main.hardMode && Main.tile[i, j ].TileType == 58)
+				if (!Main.hardMode && Main.tile[i, j].type == 58)
 				{
 					canKillTile = false;
 				}
@@ -49,11 +49,11 @@ namespace SOTS
 		}
 		public static bool TrueTileSolid(int i, int j)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].nactive());
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive());
 		}
 		public static bool TileTopCapable(int i, int j)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && (Main.tileSolidTop[Main.tile[i, j ].TileType] || Main.tileSolid[Main.tile[i, j ].TileType]) && Main.tile[i, j].nactive());
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && (Main.tileSolidTop[Main.tile[i, j].type] || Main.tileSolid[Main.tile[i, j].type]) && Main.tile[i, j].nactive());
 		}
 		public static void GenerateAcediaRoom(int x, int y, Mod mod, int direction = 1)
 		{
@@ -112,7 +112,7 @@ namespace SOTS
 					{
 						Tile tile = Framing.GetTileSafely(k, l);
 						tile.active(true);
-						tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+						tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 						tile.slope(0);
 						tile.halfBrick(false);
 					}
@@ -134,19 +134,19 @@ namespace SOTS
 							{
 								case 0:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 1:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 2:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 3 : 4));
 									tile.halfBrick(false);
 									break;
@@ -160,13 +160,13 @@ namespace SOTS
 									break;
 								case 4:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 4 : 3));
 									tile.halfBrick(false);
 									break;
 								case 5:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 1 : 2));
 									tile.halfBrick(false);
 									break;
@@ -181,13 +181,13 @@ namespace SOTS
 									break;
 								case 7:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 8:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 2 : 1));
 									tile.halfBrick(false);
 									break;
@@ -210,7 +210,7 @@ namespace SOTS
 									break;
 								case 11:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<AcediaPlatingTile>();
+									tile.type = (ushort)ModContent.TileType<AcediaPlatingTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -268,25 +268,25 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 0:
-								tile.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+								tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 1:
-								tile.WallType = (ushort)ModContent.WallType<UnsafeOvergrownPyramidWallWall>();
+								tile.wall = (ushort)ModContent.WallType<UnsafeOvergrownPyramidWallWall>();
 								break;
 							case 2:
-								tile.WallType = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
+								tile.wall = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
 								break;
 							case 3:
-								tile.WallType = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
+								tile.wall = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
 								break;
 							case 4:
-								tile.WallType = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
+								tile.wall = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
 								break;
 							case 5:
-								tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 6:
-								tile.WallType = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
+								tile.wall = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
 								break;
 						}
 					}
@@ -469,7 +469,7 @@ namespace SOTS
 									break;
 								case 1:
 									tile.active(true);
-									tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+									tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 
@@ -480,20 +480,20 @@ namespace SOTS
 									break;
 								case 2:
 									tile.active(true);
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
-									tile.TileType = (ushort)mod.TileType("DullPlatingTile");
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.type = (ushort)mod.TileType("DullPlatingTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 
 									tile2.active(true);
-									tile2.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									tile2.type = (ushort)mod.TileType("DullPlatingTile");
 									tile2.slope(0);
 									tile2.halfBrick(false);
 									break;
 								case 3:
 									tile.active(true);
-									tile.TileType = (ushort)mod.TileType("PortalPlatingTile");
+									tile.type = (ushort)mod.TileType("PortalPlatingTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 
@@ -532,7 +532,7 @@ namespace SOTS
 									break;
 								case 6:
 									tile.active(true);
-									tile.TileType = (ushort)mod.TileType("PortalPlatingTile");
+									tile.type = (ushort)mod.TileType("PortalPlatingTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -549,7 +549,7 @@ namespace SOTS
 									break;
 								case 8:
 									tile.active(true);
-									tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+									tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 
@@ -572,7 +572,7 @@ namespace SOTS
 									break;
 								case 9:
 									tile.active(true);
-									tile.TileType = (ushort)mod.TileType("DullPlatingTile");
+									tile.type = (ushort)mod.TileType("DullPlatingTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 									tile2.active(true);
@@ -700,19 +700,19 @@ namespace SOTS
 						switch (_structure2[i, _structure2.GetLength(1) - j - 1])
 						{
 							case 0:
-								//tile.WallType = 0;
+								//tile.wall = 0;
 								break;
 							case 1:
-								tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
-								tile2.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+								tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+								tile2.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 								break;
 							case 2:
-								tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
-								tile2.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 3:
-								tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
-								tile2.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
+								tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
+								tile2.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 								break;
 						}
 					}
@@ -767,26 +767,26 @@ namespace SOTS
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 5:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("PortalPlatingTile");
+										tile.type = (ushort)mod.TileType("PortalPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -843,20 +843,20 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -901,7 +901,7 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 							}
 						}
@@ -956,7 +956,7 @@ namespace SOTS
 								{
 									case 0:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -964,14 +964,14 @@ namespace SOTS
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1019,13 +1019,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1075,20 +1075,20 @@ namespace SOTS
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("PortalPlatingTile");
+										tile.type = (ushort)mod.TileType("PortalPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1144,20 +1144,20 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("PortalPlatingTile");
+										tile.type = (ushort)mod.TileType("PortalPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1201,10 +1201,10 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 							}
 						}
@@ -1254,14 +1254,14 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1302,13 +1302,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1360,20 +1360,20 @@ namespace SOTS
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1428,20 +1428,20 @@ namespace SOTS
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1477,7 +1477,7 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 							}
 						}
@@ -1544,20 +1544,20 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1614,13 +1614,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1667,20 +1667,20 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("AvaritianPlatingTile");
+										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)mod.TileType("DullPlatingTile");
-										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.type = (ushort)mod.TileType("DullPlatingTile");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1719,13 +1719,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.WallType = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1815,25 +1815,25 @@ namespace SOTS
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = firstUniqueTile;
+										tile.type = firstUniqueTile;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 5:
 										tile.active(true);
-										tile.TileType = secondUniqueTile;
+										tile.type = secondUniqueTile;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 6:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1896,13 +1896,13 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 347;
+										tile.type = 347;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1917,7 +1917,7 @@ namespace SOTS
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 347;
+										tile.type = 347;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
@@ -1958,16 +1958,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 2:
-									tile.WallType = 174;
+									tile.wall = 174;
 									break;
 								case 3:
-									tile.WallType = 92;
+									tile.wall = 92;
 									break;
 							}
 						}
@@ -2025,13 +2025,13 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 140;
+										tile.type = 140;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 152;
+										tile.type = 152;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2046,13 +2046,13 @@ namespace SOTS
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 140;
+										tile.type = 140;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 6:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2093,16 +2093,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 2:
-									tile.WallType = 33;
+									tile.wall = 33;
 									break;
 								case 3:
-									tile.WallType = 88;
+									tile.wall = 88;
 									break;
 							}
 						}
@@ -2160,13 +2160,13 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 45;
+										tile.type = 45;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 121;
+										tile.type = 121;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2181,19 +2181,19 @@ namespace SOTS
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 45;
+										tile.type = 45;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 6:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 7:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2234,19 +2234,19 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
 									break;
 								case 2:
-									tile.WallType = 10;
+									tile.wall = 10;
 									break;
 								case 3:
-									tile.WallType = 89;
+									tile.wall = 89;
 									break;
 								case 4:
-									tile.WallType = 93;
+									tile.wall = 93;
 									break;
 							}
 						}
@@ -2304,19 +2304,19 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 60;
+										tile.type = 60;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 120;
+										tile.type = 120;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 62;
+										tile.type = 62;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2331,13 +2331,13 @@ namespace SOTS
 										break;
 									case 5:
 										tile.active(true);
-										tile.TileType = 60;
+										tile.type = 60;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 7:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2378,16 +2378,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
 									break;
 								case 2:
-									tile.WallType = 67;
+									tile.wall = 67;
 									break;
 								case 3:
-									tile.WallType = 91;
+									tile.wall = 91;
 									break;
 							}
 						}
@@ -2446,13 +2446,13 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 206;
+										tile.type = 206;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 148;
+										tile.type = 148;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2467,13 +2467,13 @@ namespace SOTS
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 206;
+										tile.type = 206;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 6:
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -2514,16 +2514,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
 									break;
 								case 2:
-									tile.WallType = 84;
+									tile.wall = 84;
 									break;
 								case 3:
-									tile.WallType = 90;
+									tile.wall = 90;
 									break;
 							}
 						}
@@ -2560,7 +2560,7 @@ namespace SOTS
 		}
 		public static bool SkytileValid(Tile tile, Mod mod)
 		{
-			return tile.active() && (tile.TileType == (ushort)ModContent.TileType<DullPlatingTile>() || tile.TileType == (ushort)ModContent.TileType<AvaritianPlatingTile>());
+			return tile.active() && (tile.type == (ushort)ModContent.TileType<DullPlatingTile>() || tile.type == (ushort)ModContent.TileType<AvaritianPlatingTile>());
 		}
 		public static void DistributeSkyThings(Mod mod, int maxChests = 30, int maxDisplays = 7, int maxPotGens = 5, int maxFabricators = 3, int ratePots = 5, int rateDecor = 45)
 		{
@@ -2613,19 +2613,19 @@ namespace SOTS
 						if (next % 3 == 0)
 						{
 							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedSkywareChest>(), style: 1);
-							tile.TileType = TileID.Sunplate;
+							tile.type = TileID.Sunplate;
 							tile2.type = TileID.Sunplate;
 						}
 						if (next % 3 == 1)
 						{
 							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedMeteoriteChest>(), style: 1);
-							tile.TileType = TileID.MeteoriteBrick;
+							tile.type = TileID.MeteoriteBrick;
 							tile2.type = TileID.MeteoriteBrick;
 						}
 						if (next % 3 == 2)
 						{
 							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedStrangeChest>(), style: 1);
-							tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+							tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
 							tile2.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
 						}
 						totalChests++;
@@ -2682,8 +2682,8 @@ namespace SOTS
 						ModTileEntity modTileEntity = ModTileEntity.GetTileEntity(ModContent.TileEntityType<PotTimer>());
 						WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<PotGeneratorTile>(), true, true, -1, 0);
 						modTileEntity.Place(i, j);
-						tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
-						tile2.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+						tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+						tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 						totalPotGens++;
 					}
 				}
@@ -2840,38 +2840,38 @@ namespace SOTS
 									break;
 								case 1:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope(0);
 									tile.halfBrick(true);
-									tile.WallType = (ushort)WallID.Stone;
+									tile.wall = (ushort)WallID.Stone;
 									break;
 								case 2:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Stone;
+									tile.wall = (ushort)WallID.Stone;
 									break;
 								case 3:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope((byte)(direction == 1 ? 2 : 1));
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Stone;
+									tile.wall = (ushort)WallID.Stone;
 									break;
 								case 4:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope((byte)(direction == 1 ? 3 : 4));
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Stone;
+									tile.wall = (ushort)WallID.Stone;
 									break;
 								case 5:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope((byte)(direction == 1 ? 4 : 3));
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Stone;
+									tile.wall = (ushort)WallID.Stone;
 									break;
 								case 6:
 									if (confirmPlatforms == 1)
@@ -2885,14 +2885,14 @@ namespace SOTS
 									break;
 								case 7:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.SandstoneBrick;
+									tile.wall = (ushort)WallID.SandstoneBrick;
 									break;
 								case 8:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope((byte)(direction == 1 ? 1 : 2));
 									tile.halfBrick(false);
 									break;
@@ -2906,70 +2906,70 @@ namespace SOTS
 									}
 									break;
 								case 10:
-									tile.WallType = (ushort)WallID.SandstoneBrick;
+									tile.wall = (ushort)WallID.SandstoneBrick;
 									break;
 								case 11:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.GrassUnsafe;
+									tile.wall = (ushort)WallID.GrassUnsafe;
 									break;
 								case 12:
 									tile.active(true);
-									tile.TileType = 53;
+									tile.type = 53;
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Sandstone;
+									tile.wall = (ushort)WallID.Sandstone;
 									break;
 								case 13:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
 									tile.slope(0);
 									tile.halfBrick(true);
-									tile.WallType = (ushort)WallID.GrassUnsafe;
+									tile.wall = (ushort)WallID.GrassUnsafe;
 									break;
 								case 14:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
 									tile.slope((byte)(direction == 1 ? 1 : 2));
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.GrassUnsafe;
+									tile.wall = (ushort)WallID.GrassUnsafe;
 									break;
 								case 15:
 									tile.active(true);
-									tile.TileType = 396;
+									tile.type = 396;
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Sandstone;
+									tile.wall = (ushort)WallID.Sandstone;
 									break;
 								case 16:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.GrassUnsafe;
+									tile.wall = (ushort)WallID.GrassUnsafe;
 									break;
 								case 17:
 									tile.active(true);
-									tile.TileType = 397;
+									tile.type = 397;
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Sandstone;
+									tile.wall = (ushort)WallID.Sandstone;
 									break;
 								case 19:
 									tile.active(true);
-									tile.TileType = 396;
+									tile.type = 396;
 									tile.slope((byte)(direction == 1 ? 3 : 4));
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Sandstone;
+									tile.wall = (ushort)WallID.Sandstone;
 									break;
 								case 20:
 									tile.active(true);
-									tile.TileType = 396;
+									tile.type = 396;
 									tile.slope((byte)(direction == 1 ? 4 : 3));
 									tile.halfBrick(false);
-									tile.WallType = (ushort)WallID.Sandstone;
+									tile.wall = (ushort)WallID.Sandstone;
 									break;
 								case 21:
 									if (confirmPlatforms == 1)
@@ -2987,12 +2987,12 @@ namespace SOTS
 										tile.slope(0);
 										tile.halfBrick(false);
 										WorldGen.PlaceTile(k - (direction != 1 ? 1 : 0), l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
-										tile.WallType = (ushort)WallID.SandstoneBrick;
+										tile.wall = (ushort)WallID.SandstoneBrick;
 									}
 									break;
 								case 23:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+									tile.type = (ushort)ModContent.TileType<PyramidBrickTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -3014,7 +3014,7 @@ namespace SOTS
 				for (int ydown = 0; ; ydown++)
 				{
 					Tile tile = Framing.GetTileSafely(xCheck, ydown);
-					if (tile.active() && Main.tileSolid[tile.TileType])
+					if (tile.active() && Main.tileSolid[tile.type])
 					{
 						spawnY = ydown;
 						break;
@@ -3062,12 +3062,12 @@ namespace SOTS
 							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
 							if (!tile.active())
 							{
-								tile.TileType = TileID.Dirt;
+								tile.type = TileID.Dirt;
 								tile.active(true);
 							}
-							if (!tile2.active() && tile.TileType == TileID.Dirt)
+							if (!tile2.active() && tile.type == TileID.Dirt)
 							{
-								tile.TileType = 2;
+								tile.type = 2;
 							}
 							tile.active();
 						}
@@ -3130,25 +3130,25 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 4;
+									tile.wall = 4;
 									break;
 								case 2:
-									tile.WallType = 78;
+									tile.wall = 78;
 									break;
 								case 3:
-									tile.WallType = 21;
+									tile.wall = 21;
 									break;
 								case 4:
-									tile.WallType = 27;
+									tile.wall = 27;
 									break;
 								case 5:
-									tile.WallType = 142;
+									tile.wall = 142;
 									break;
 								case 6:
-									tile.WallType = 5;
+									tile.wall = 5;
 									break;
 							}
 						}
@@ -3212,19 +3212,19 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 51;
+										tile.type = 51;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -3265,7 +3265,7 @@ namespace SOTS
 										break;
 									case 10:
 										tile.active(true);
-										tile.TileType = 54;
+										tile.type = 54;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -3352,25 +3352,25 @@ namespace SOTS
 										break;
 									case 24:
 										tile.active(true);
-										tile.TileType = 332;
+										tile.type = 332;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 25:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 26:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 27:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -3411,22 +3411,22 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 60;
+									tile.wall = 60;
 									break;
 								case 2:
-									tile.WallType = 78;
+									tile.wall = 78;
 									break;
 								case 3:
-									tile.WallType = 66;
+									tile.wall = 66;
 									break;
 								case 4:
-									tile.WallType = 1;
+									tile.wall = 1;
 									break;
 								case 5:
-									tile.WallType = 2;
+									tile.wall = 2;
 									break;
 							}
 						}
@@ -3478,7 +3478,7 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -3511,25 +3511,25 @@ namespace SOTS
 										break;
 									case 5:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 6:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 7:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 8:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -3587,22 +3587,22 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 4;
+									tile.wall = 4;
 									break;
 								case 2:
-									tile.WallType = 21;
+									tile.wall = 21;
 									break;
 								case 3:
-									tile.WallType = 27;
+									tile.wall = 27;
 									break;
 								case 4:
-									tile.WallType = 1;
+									tile.wall = 1;
 									break;
 								case 5:
-									tile.WallType = 2;
+									tile.wall = 2;
 									break;
 							}
 						}
@@ -3662,19 +3662,19 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 54;
+										tile.type = 54;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -3757,19 +3757,19 @@ namespace SOTS
 										break;
 									case 13:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 14:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 15:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -3833,37 +3833,37 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 60;
+									tile.wall = 60;
 									break;
 								case 2:
-									tile.WallType = 1;
+									tile.wall = 1;
 									break;
 								case 3:
-									tile.WallType = 4;
+									tile.wall = 4;
 									break;
 								case 4:
-									tile.WallType = 21;
+									tile.wall = 21;
 									break;
 								case 5:
-									tile.WallType = 27;
+									tile.wall = 27;
 									break;
 								case 6:
-									tile.WallType = 78;
+									tile.wall = 78;
 									break;
 								case 7:
-									tile.WallType = 106;
+									tile.wall = 106;
 									break;
 								case 8:
-									tile.WallType = 5;
+									tile.wall = 5;
 									break;
 								case 9:
-									tile.WallType = 115;
+									tile.wall = 115;
 									break;
 								case 10:
-									tile.WallType = 2;
+									tile.wall = 2;
 									break;
 							}
 						}
@@ -3930,85 +3930,85 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(2);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(1);
 										tile.halfBrick(false);
 										break;
 									case 5:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 6:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(3);
 										tile.halfBrick(false);
 										break;
 									case 7:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 8:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(2);
 										tile.halfBrick(false);
 										break;
 									case 9:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 10:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(4);
 										tile.halfBrick(false);
 										break;
 									case 11:
 										tile.active(true);
-										tile.TileType = 51;
+										tile.type = 51;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 12:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(4);
 										tile.halfBrick(false);
 										break;
 									case 13:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(3);
 										tile.halfBrick(false);
 										break;
 									case 14:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(1);
 										tile.halfBrick(false);
 										break;
@@ -4031,19 +4031,19 @@ namespace SOTS
 										break;
 									case 17:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(3);
 										tile.halfBrick(false);
 										break;
 									case 18:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(4);
 										tile.halfBrick(false);
 										break;
 									case 19:
 										tile.active(true);
-										tile.TileType = 54;
+										tile.type = 54;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4058,7 +4058,7 @@ namespace SOTS
 										break;
 									case 21:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
@@ -4095,7 +4095,7 @@ namespace SOTS
 										break;
 									case 25:
 										tile.active(true);
-										tile.TileType = 124;
+										tile.type = 124;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4212,13 +4212,13 @@ namespace SOTS
 										break;
 									case 40:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 41:
 										tile.active(true);
-										tile.TileType = 73;
+										tile.type = 73;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4233,25 +4233,25 @@ namespace SOTS
 										break;
 									case 43:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 44:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 45:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 46:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4297,25 +4297,25 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 106;
+									tile.wall = 106;
 									break;
 								case 2:
-									tile.WallType = 4;
+									tile.wall = 4;
 									break;
 								case 3:
-									tile.WallType = 78;
+									tile.wall = 78;
 									break;
 								case 4:
-									tile.WallType = 2;
+									tile.wall = 2;
 									break;
 								case 5:
-									tile.WallType = 1;
+									tile.wall = 1;
 									break;
 								case 6:
-									tile.WallType = 59;
+									tile.wall = 59;
 									break;
 							}
 						}
@@ -4356,13 +4356,13 @@ namespace SOTS
 								{
 									case -2:
 										tile.active(true);
-										tile.TileType = TileID.Cobweb;
+										tile.type = TileID.Cobweb;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 0:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4385,7 +4385,7 @@ namespace SOTS
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 124;
+										tile.type = 124;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4428,7 +4428,7 @@ namespace SOTS
 										break;
 									case 8:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4452,7 +4452,7 @@ namespace SOTS
 										break;
 									case 11:
 										tile.active(true);
-										tile.TileType = 332;
+										tile.type = 332;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4467,19 +4467,19 @@ namespace SOTS
 										break;
 									case 13:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 14:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 15:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4534,16 +4534,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 5;
+									tile.wall = 5;
 									break;
 								case 2:
-									tile.WallType = 4;
+									tile.wall = 4;
 									break;
 								case 3:
-									tile.WallType = 78;
+									tile.wall = 78;
 									break;
 							}
 						}
@@ -4610,19 +4610,19 @@ namespace SOTS
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 273;
+										tile.type = 273;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4646,7 +4646,7 @@ namespace SOTS
 										if (confirmPlatforms == 1)
 										{
 											tile.active(true);
-											tile.TileType = 332;
+											tile.type = 332;
 											tile.slope(0);
 											tile.halfBrick(false);
 										}
@@ -4687,19 +4687,19 @@ namespace SOTS
 										break;
 									case 12:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 15:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 14:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -4751,35 +4751,35 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 5;
+									tile.wall = 5;
 									break;
 								case 2:
-									tile.WallType = 16;
+									tile.wall = 16;
 									break;
 								case 3:
-									tile.WallType = 1;
+									tile.wall = 1;
 									break;
 								case 4:
-									tile.WallType = 63;
+									tile.wall = 63;
 									break;
 								case 5:
-									if (tile.WallType == 0)
-										tile.WallType = WallID.DirtUnsafe;
+									if (tile.wall == 0)
+										tile.wall = WallID.DirtUnsafe;
 									break;
 								case 6:
-									tile.WallType = 65;
+									tile.wall = 65;
 									break;
 								case 7:
-									tile.WallType = 66;
+									tile.wall = 66;
 									break;
 								case 8:
-									tile.WallType = 68;
+									tile.wall = 68;
 									break;
 								case 9:
-									tile.WallType = 59;
+									tile.wall = 59;
 									break;
 							}
 						}
@@ -4833,19 +4833,19 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 57;
+										tile.type = 57;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 57;
+										tile.type = 57;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 57;
+										tile.type = 57;
 										tile.slope(2);
 										tile.halfBrick(false);
 										break;
@@ -4860,13 +4860,13 @@ namespace SOTS
 										break;
 									case 5:
 										tile.active(true);
-										tile.TileType = 51;
+										tile.type = 51;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 6:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
@@ -4890,61 +4890,61 @@ namespace SOTS
 										break;
 									case 9:
 										tile.active(true);
-										tile.TileType = 331;
+										tile.type = 331;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 10:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 11:
 										tile.active(true);
-										tile.TileType = 57;
+										tile.type = 57;
 										tile.slope(1);
 										tile.halfBrick(false);
 										break;
 									case 12:
 										tile.active(true);
-										tile.TileType = 332;
+										tile.type = 332;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 13:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(2);
 										tile.halfBrick(false);
 										break;
 									case 14:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 15:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(1);
 										tile.halfBrick(false);
 										break;
 									case 16:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(1);
 										tile.halfBrick(false);
 										break;
 									case 17:
 										tile.active(true);
-										tile.TileType = 3;
+										tile.type = 3;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 18:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
@@ -4957,37 +4957,37 @@ namespace SOTS
 										break;
 									case 20:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 21:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 22:
 										tile.active(true);
-										tile.TileType = 52;
+										tile.type = 52;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 23:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(4);
 										tile.halfBrick(false);
 										break;
 									case 24:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 25:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(1);
 										tile.halfBrick(false);
 										break;
@@ -5031,7 +5031,7 @@ namespace SOTS
 										break;
 									case 30:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(2);
 										tile.halfBrick(false);
 										break;
@@ -5096,14 +5096,14 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 60;
+									tile.wall = 60;
 									break;
 								case 2:
-									if (tile.WallType == 0)
-										tile.WallType = 2;
+									if (tile.wall == 0)
+										tile.wall = 2;
 									break;
 							}
 						}
@@ -5172,25 +5172,25 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 192;
+										tile.type = 192;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 353;
+										tile.type = 353;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 51;
+										tile.type = 51;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5221,19 +5221,19 @@ namespace SOTS
 										break;
 									case 8:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 9:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 10:
 										tile.active(true);
-										tile.TileType = 191;
+										tile.type = 191;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
@@ -5246,31 +5246,31 @@ namespace SOTS
 										break;
 									case 12:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 13:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 14:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 15:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(3);
 										tile.halfBrick(false);
 										break;
 									case 16:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(1);
 										tile.halfBrick(false);
 										break;
@@ -5283,7 +5283,7 @@ namespace SOTS
 										break;
 									case 18:
 										tile.active(true);
-										tile.TileType = 2;
+										tile.type = 2;
 										tile.slope(2);
 										tile.halfBrick(false);
 										break;
@@ -5356,25 +5356,25 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 78;
+									tile.wall = 78;
 									break;
 								case 2:
-									tile.WallType = 4;
+									tile.wall = 4;
 									break;
 								case 3:
-									tile.WallType = 21;
+									tile.wall = 21;
 									break;
 								case 4:
-									tile.WallType = 27;
+									tile.wall = 27;
 									break;
 								case 5:
-									tile.WallType = 5;
+									tile.wall = 5;
 									break;
 								case 6:
-									tile.WallType = 1;
+									tile.wall = 1;
 									break;
 							}
 						}
@@ -5430,25 +5430,25 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 54;
+										tile.type = 54;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 4:
 										tile.active(true);
-										tile.TileType = 51;
+										tile.type = 51;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5497,7 +5497,7 @@ namespace SOTS
 										break;
 									case 12:
 										tile.active(true);
-										tile.TileType = 3;
+										tile.type = 3;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5571,7 +5571,7 @@ namespace SOTS
 										break;
 									case 23:
 										tile.active(true);
-										tile.TileType = TileID.WoodenBeam;
+										tile.type = TileID.WoodenBeam;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5604,19 +5604,19 @@ namespace SOTS
 										break;
 									case 27:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(true);
 										break;
 									case 28:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 29:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5663,22 +5663,22 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.WallType = 0;
+									tile.wall = 0;
 									break;
 								case 1:
-									tile.WallType = 5;
+									tile.wall = 5;
 									break;
 								case 2:
-									tile.WallType = 1;
+									tile.wall = 1;
 									break;
 								case 3:
-									tile.WallType = 4;
+									tile.wall = 4;
 									break;
 								case 4:
-									tile.WallType = 78;
+									tile.wall = 78;
 									break;
 								case 5:
-									tile.WallType = 106;
+									tile.wall = 106;
 									break;
 							}
 						}
@@ -5727,19 +5727,19 @@ namespace SOTS
 										break;
 									case 1:
 										tile.active(true);
-										tile.TileType = 38;
+										tile.type = 38;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 2:
 										tile.active(true);
-										tile.TileType = 51;
+										tile.type = 51;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 3:
 										tile.active(true);
-										tile.TileType = 30;
+										tile.type = 30;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5754,7 +5754,7 @@ namespace SOTS
 										break;
 									case 5:
 										tile.active(true);
-										tile.TileType = 124;
+										tile.type = 124;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5778,7 +5778,7 @@ namespace SOTS
 										break;
 									case 8:
 										tile.active(true);
-										tile.TileType = 332;
+										tile.type = 332;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5811,13 +5811,13 @@ namespace SOTS
 										break;
 									case 12:
 										tile.active(true);
-										tile.TileType = 1;
+										tile.type = 1;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
 									case 13:
 										tile.active(true);
-										tile.TileType = 0;
+										tile.type = 0;
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -5907,49 +5907,49 @@ namespace SOTS
 									break;
 								case 3:
 									tile.active(true);
-									tile.TileType = 2;
+									tile.type = 2;
 									tile.slope(2);
 									tile.halfBrick(false);
 									break;
 								case 4:
 									tile.active(true);
-									tile.TileType = 2;
+									tile.type = 2;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 5:
 									tile.active(true);
-									tile.TileType = 2;
+									tile.type = 2;
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 6:
 									tile.active(true);
-									tile.TileType = 0;
+									tile.type = 0;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 7:
 									tile.active(true);
-									tile.TileType = 2;
+									tile.type = 2;
 									tile.slope(1);
 									tile.halfBrick(false);
 									break;
 								case 8:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 9:
 									tile.active(true);
-									tile.TileType = 2;
+									tile.type = 2;
 									tile.slope(3);
 									tile.halfBrick(false);
 									break;
 								case 10:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(3);
 									tile.halfBrick(false);
 									break;
@@ -5964,19 +5964,19 @@ namespace SOTS
 									break;
 								case 12:
 									tile.active(true);
-									tile.TileType = 373;
+									tile.type = 373;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 13:
 									tile.active(true);
-									tile.TileType = 51;
+									tile.type = 51;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 14:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(4);
 									tile.halfBrick(false);
 									break;
@@ -5991,7 +5991,7 @@ namespace SOTS
 									break;
 								case 17:
 									tile.active(true);
-									tile.TileType = 73;
+									tile.type = 73;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6006,7 +6006,7 @@ namespace SOTS
 									break;
 								case 19:
 									tile.active(true);
-									tile.TileType = 321;
+									tile.type = 321;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6019,19 +6019,19 @@ namespace SOTS
 									break;
 								case 21:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 22:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(1);
 									tile.halfBrick(false);
 									break;
 								case 23:
 									tile.active(true);
-									tile.TileType = 321;
+									tile.type = 321;
 									tile.slope(3);
 									tile.halfBrick(false);
 									break;
@@ -6046,13 +6046,13 @@ namespace SOTS
 									break;
 								case 25:
 									tile.active(true);
-									tile.TileType = 124;
+									tile.type = 124;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 26:
 									tile.active(true);
-									tile.TileType = 321;
+									tile.type = 321;
 									tile.slope(4);
 									tile.halfBrick(false);
 									break;
@@ -6067,7 +6067,7 @@ namespace SOTS
 									break;
 								case 28:
 									tile.active(true);
-									tile.TileType = 2;
+									tile.type = 2;
 									tile.slope(4);
 									tile.halfBrick(false);
 									break;
@@ -6083,7 +6083,7 @@ namespace SOTS
 										tile.active(false);
 									WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
 									if (WaterBolt)
-										tile.TileFrameX = 90;
+										tile.frameX = 90;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6098,7 +6098,7 @@ namespace SOTS
 									break;
 								case 34:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(2);
 									tile.halfBrick(false);
 									break;
@@ -6111,7 +6111,7 @@ namespace SOTS
 									break;
 								case 36:
 									tile.active(true);
-									tile.TileType = 321;
+									tile.type = 321;
 									tile.slope(1);
 									tile.halfBrick(false);
 									break;
@@ -6126,7 +6126,7 @@ namespace SOTS
 									break;
 								case 38:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6177,25 +6177,25 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 8:
-								tile.WallType = 0;
+								tile.wall = 0;
 								break;
 							case 1:
-								tile.WallType = 68;
+								tile.wall = 68;
 								break;
 							case 2:
-								tile.WallType = 5;
+								tile.wall = 5;
 								break;
 							case 3:
-								tile.WallType = 147;
+								tile.wall = 147;
 								break;
 							case 4:
-								tile.WallType = 66;
+								tile.wall = 66;
 								break;
 							case 6:
-								tile.WallType = 2;
+								tile.wall = 2;
 								break;
 							case 7:
-								tile.WallType = 59;
+								tile.wall = 59;
 								break;
 						}
 					}
@@ -6250,37 +6250,37 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 1:
-								tile.WallType = WallID.MudstoneBrick;
+								tile.wall = WallID.MudstoneBrick;
 								tile.wallColor(PaintID.Gray);
 								break;
 							case 2:
-								tile.WallType = WallID.Ebonwood;
+								tile.wall = WallID.Ebonwood;
 								tile.wallColor(PaintID.Brown);
 								break;
 							case 3:
-								tile.WallType = 4;
+								tile.wall = 4;
 								break;
 							case 4:
-								tile.WallType = 5;
+								tile.wall = 5;
 								break;
 							case 5:
-								tile.WallType = WallID.PinkDungeonSlab;
+								tile.wall = WallID.PinkDungeonSlab;
 								tile.wallColor(PaintID.Gray);
 								break;
 							case 6:
-								tile.WallType = WallID.MetalFence;
+								tile.wall = WallID.MetalFence;
 								break;
 							case 7:
-								tile.WallType = 59;
+								tile.wall = 59;
 								break;
 							case 8:
-								tile.WallType = 1;
+								tile.wall = 1;
 								break;
 							case 9:
-								tile.WallType = 16;
+								tile.wall = 16;
 								break;
 							case 10:
-								tile.WallType = 2;
+								tile.wall = 2;
 								break;
 						}
 					}
@@ -6342,46 +6342,46 @@ namespace SOTS
 									break;
 								case 1:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(2);
 									tile.halfBrick(false);
 									break;
 								case 2:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 3:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(1);
 									tile.halfBrick(false);
 									break;
 								case 4:
 									tile.active(true);
-									tile.TileType = TileID.BlueDynastyShingles;
+									tile.type = TileID.BlueDynastyShingles;
 									tile.color(PaintID.Gray);
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 5:
 									tile.active(true);
-									tile.TileType = TileID.BlueDynastyShingles;
+									tile.type = TileID.BlueDynastyShingles;
 									tile.color(PaintID.Gray);
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 6:
 									tile.active(true);
-									tile.TileType = TileID.RichMahogany;
+									tile.type = TileID.RichMahogany;
 									tile.color(PaintID.Brown);
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 7:
 									tile.active(true);
-									tile.TileType = 30;
+									tile.type = 30;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6404,7 +6404,7 @@ namespace SOTS
 										tile.active(false);
 									WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
 									if (WaterBolt)
-										tile.TileFrameX = 90;
+										tile.frameX = 90;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6426,7 +6426,7 @@ namespace SOTS
 									break;
 								case 12:
 									tile.active(true);
-									tile.TileType = 38;
+									tile.type = 38;
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
@@ -6448,7 +6448,7 @@ namespace SOTS
 									break;
 								case 15:
 									tile.active(true);
-									tile.TileType = TileID.BlueDynastyShingles;
+									tile.type = TileID.BlueDynastyShingles;
 									tile.color(PaintID.Gray);
 									tile.slope(3);
 									tile.halfBrick(false);
@@ -6469,7 +6469,7 @@ namespace SOTS
 									break;
 								case 20:
 									tile.active(true);
-									tile.TileType = 124;
+									tile.type = 124;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6527,38 +6527,38 @@ namespace SOTS
 									break;
 								case 27:
 									tile.active(true);
-									tile.TileType = 3;
+									tile.type = 3;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 28:
 									tile.active(true);
-									tile.TileType = 2;
+									tile.type = 2;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 29:
 									tile.active(true);
-									tile.TileType = 0;
+									tile.type = 0;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 30:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 31:
 									tile.active(true);
-									tile.TileType = TileID.Mudstone;
+									tile.type = TileID.Mudstone;
 									tile.color(PaintID.Gray);
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 32:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope(1);
 									tile.halfBrick(false);
 									break;
@@ -6571,7 +6571,7 @@ namespace SOTS
 									break;
 								case 34:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
@@ -6584,7 +6584,7 @@ namespace SOTS
 									break;
 								case 36:
 									tile.active(true);
-									tile.TileType = 1;
+									tile.type = 1;
 									tile.slope(2);
 									tile.halfBrick(false);
 									break;
@@ -6627,12 +6627,12 @@ namespace SOTS
 						}
 					}
 					Tile tile = Main.tile[i, j];
-					if (Main.tileDungeon[tile.TileType])
+					if (Main.tileDungeon[tile.type])
 					{
 						i += dungeonSide * -16;
-						if (tile.TileType == TileID.GreenDungeonBrick)
+						if (tile.type == TileID.GreenDungeonBrick)
 							color = 1;
-						else if (tile.TileType == TileID.BlueDungeonBrick)
+						else if (tile.type == TileID.BlueDungeonBrick)
 							color = 2;
 						properGenerate = true;
 						break;
@@ -6656,7 +6656,7 @@ namespace SOTS
 					int tunnelY = spawnY - j;
 					Tile tile = Framing.GetTileSafely(tunnel, tunnelY);
 					Tile tileAbove = Framing.GetTileSafely(tunnel, tunnelY - 1);
-					if ((Main.tileDungeon[tile.TileType] || TileID.Spikes == tile.TileType) && tile.active())
+					if ((Main.tileDungeon[tile.type] || TileID.Spikes == tile.type) && tile.active())
 					{
 						if (Main.tileSolid[tileAbove.type] && !Main.tileSolidTop[tileAbove.type] && tileAbove.active())
 							tile.active(false);
@@ -6664,9 +6664,9 @@ namespace SOTS
 						{
 							tile.active(false);
 							int style = 7;
-							if (tile.TileType == TileID.GreenDungeonBrick)
+							if (tile.type == TileID.GreenDungeonBrick)
 								style = 8;
-							if (tile.TileType == TileID.BlueDungeonBrick)
+							if (tile.type == TileID.BlueDungeonBrick)
 								style = 6;
 							WorldGen.PlaceTile(tunnel, tunnelY, TileID.Platforms, true, true, -1, style);
 						}
@@ -6745,22 +6745,22 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 2:
-								tile.WallType = (ushort)WallType1;
+								tile.wall = (ushort)WallType1;
 								break;
 							case 3:
-								tile.WallType = WallID.Shadewood;
+								tile.wall = WallID.Shadewood;
 								break;
 							case 4:
-								tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 5:
-								tile.WallType = (ushort)WallType2;
+								tile.wall = (ushort)WallType2;
 								break;
 							case 6:
-								tile.WallType = (ushort)WallType3;
+								tile.wall = (ushort)WallType3;
 								break;
 							case 7:
-								tile.WallType = WallID.CobaltBrick;
+								tile.wall = WallID.CobaltBrick;
 								break;
 						}
 					}
@@ -6821,7 +6821,7 @@ namespace SOTS
 							{
 								case 0:
 									tile.active(true);
-									tile.TileType = (ushort)TileType1;
+									tile.type = (ushort)TileType1;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6835,25 +6835,25 @@ namespace SOTS
 									break;
 								case 2:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+									tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 3:
 									tile.active(true);
-									tile.TileType = (ushort)TileType1;
+									tile.type = (ushort)TileType1;
 									tile.slope(3);
 									tile.halfBrick(false);
 									break;
 								case 4:
 									tile.active(true);
-									tile.TileType = (ushort)TileType1;
+									tile.type = (ushort)TileType1;
 									tile.slope(4);
 									tile.halfBrick(false);
 									break;
 								case 5:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+									tile.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -6863,7 +6863,7 @@ namespace SOTS
 									else
 									{
 										WorldGen.PlaceTile(k, l, ModContent.TileType<ArkhalisChainTile>(), true, true, -1, 0);
-										tile.TileFrameX = 18;
+										tile.frameX = 18;
 										tile.slope(0);
 										tile.halfBrick(false);
 									}
@@ -6922,13 +6922,13 @@ namespace SOTS
 									break;
 								case 13:
 									tile.active(true);
-									tile.TileType = 527;
+									tile.type = 527;
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 14:
 									tile.active(true);
-									tile.TileType = (ushort)TileType1;
+									tile.type = (ushort)TileType1;
 									tile.slope(1);
 									tile.halfBrick(false);
 									break;
@@ -6954,13 +6954,13 @@ namespace SOTS
 									break;
 								case 18:
 									tile.active(true);
-									tile.TileType = (ushort)TileType1;
+									tile.type = (ushort)TileType1;
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 19:
 									tile.active(true);
-									tile.TileType = (ushort)TileType1;
+									tile.type = (ushort)TileType1;
 									tile.slope(2);
 									tile.halfBrick(false);
 									break;
@@ -7038,7 +7038,7 @@ namespace SOTS
 						int yPosition6 = spawnY + (int)(y * scale + 0.5f) - 17;
 						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
 						tile.active(false);
-						tile.WallType = 0;
+						tile.wall = 0;
 					}
 				}
 			}
@@ -7055,14 +7055,14 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 0:
-								tile.WallType = 0;
+								tile.wall = 0;
 								break;
 							case 1:
-								tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+								tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 								break;
 							case 2:
 								if (tile.active())
-									tile.WallType = 40;
+									tile.wall = 40;
 								break;
 						}
 					}
@@ -7124,31 +7124,31 @@ namespace SOTS
 							{
 								case 1:
 									tile.active(true);
-									tile.TileType = 147;
+									tile.type = 147;
 									tile.slope(2);
 									tile.halfBrick(false);
 									break;
 								case 2:
 									tile.active(true);
-									tile.TileType = 147;
+									tile.type = 147;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 3:
 									tile.active(true);
-									tile.TileType = 147;
+									tile.type = 147;
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 4:
 									tile.active(true);
-									tile.TileType = 147;
+									tile.type = 147;
 									tile.slope(1);
 									tile.halfBrick(false);
 									break;
 								case 5:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<HardIceBrickTile>();
+									tile.type = (ushort)ModContent.TileType<HardIceBrickTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -7156,12 +7156,12 @@ namespace SOTS
 									if (confirmPlatforms == 0)
 									{
 										tile.active(true);
-										tile.TileType = (ushort)ModContent.TileType<FrigidIceTile>();
+										tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
 										tile.slope(0);
 										tile.halfBrick(false);
-										if (i >= 22 && tile.WallType == 0)
+										if (i >= 22 && tile.wall == 0)
 										{
-											tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+											tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 										}
 									}
 									break;
@@ -7185,10 +7185,10 @@ namespace SOTS
 									if (confirmPlatforms == 0)
 									{
 										tile.active(true);
-										tile.TileType = 161;
+										tile.type = 161;
 										tile.slope(0);
 										tile.halfBrick(false);
-										tile.WallType = WallID.IceUnsafe;
+										tile.wall = WallID.IceUnsafe;
 									}
 									else
 									{
@@ -7209,12 +7209,12 @@ namespace SOTS
 										tile.slope(0);
 										tile.halfBrick(false);
 										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
-										tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 									}
 									break;
 								case 11:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<CharredWoodTile>();
+									tile.type = (ushort)ModContent.TileType<CharredWoodTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -7224,14 +7224,14 @@ namespace SOTS
 										tile.active(false);
 										tile.halfBrick(false);
 										tile.slope(0);
-										tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 									}
 									break;
 								case 13:
 									if (confirmPlatforms == 0 && TrueTileSolid(k, l))
 									{
 										tile.active(true);
-										tile.TileType = 147;
+										tile.type = 147;
 										tile.slope(0);
 										tile.halfBrick(false);
 									}
@@ -7245,7 +7245,7 @@ namespace SOTS
 		public static bool GenerateFrigidIceOre(int spawnX, int spawnY)
 		{
 			Tile tile = Framing.GetTileSafely(spawnX, spawnY);
-			if (!tile.active() || tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock || tile.TileType == TileID.Slush)
+			if (!tile.active() || tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock || tile.type == TileID.Slush)
 			{
 				float rand = Main.rand.NextFloat(2 * (float)Math.PI);
 				float interval = Main.rand.NextFloat(24, 32);
@@ -7261,8 +7261,8 @@ namespace SOTS
 						if (Math.Sqrt(x * x + (int)y * (int)y) <= radius + 0.5 && Math.Abs(MathHelper.WrapAngle(angle - rand)) < MathHelper.ToRadians(interval * noise))
 						{
 							tile = Framing.GetTileSafely(xP, yP);
-							if (!tile.active() || tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock || tile.TileType == TileID.Slush)
-								tile.TileType = (ushort)ModContent.TileType<FrigidIceTile>();
+							if (!tile.active() || tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock || tile.type == TileID.Slush)
+								tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
 						}
 					}
 				}
@@ -7291,24 +7291,24 @@ namespace SOTS
 						bool capable = true;
 						if (distance >= radius + 0.5 - radialMod && capable)
 						{
-							tile.TileType = (ushort)ModContent.TileType<EvostoneTile>();
+							tile.type = (ushort)ModContent.TileType<EvostoneTile>();
 							tile.active(true);
 						}
 						else if (distance >= radius + 0.5 - radialMod - radialMod1 && capable)
 						{
-							tile.WallType = WallID.Marble;
-							tile.TileType = TileID.Marble;
+							tile.wall = WallID.Marble;
+							tile.type = TileID.Marble;
 							tile.active(true);
 						}
 						else if (distance >= radius + 0.5 - radialMod - radialMod1 - radialMod2 && capable)
 						{
-							tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
-							tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
+							tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
 							tile.active(true);
 						}
 						else
 						{
-							tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
+							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
 							tile.active(false);
 						}
 					}
@@ -7511,7 +7511,7 @@ namespace SOTS
 						}
 					}
 					Tile tile = Main.tile[i, j];
-					if (tile.TileType == TileID.LihzahrdBrick)
+					if (tile.type == TileID.LihzahrdBrick)
 					{
 						templeX = i;
 						templeY = j;
@@ -7519,19 +7519,19 @@ namespace SOTS
 						break;
 					}
 				}
-				if(done)
-                {
+				if (done)
+				{
 					break;
-                }
+				}
 			}
-			if(templeX == 0 && templeY == 0)
-            {
-				for(int i = 0; i < 1000; i++)
+			if (templeX == 0 && templeY == 0)
+			{
+				for (int i = 0; i < 1000; i++)
 				{
 					int posX = Main.rand.Next(200, Main.maxTilesX - 200);
 					int posY = Main.rand.Next(Main.maxTilesY / 2, Main.maxTilesY - 200);
 					Tile tile = Main.tile[posX, posY];
-					if (tile.TileType == TileID.JungleGrass)
+					if (tile.type == TileID.JungleGrass)
 					{
 						GenerateBigGeode(posX, posY, jungleSide);
 						return;
@@ -7541,18 +7541,18 @@ namespace SOTS
 			int tilesLeft = 0;
 			int tilesRight = 0;
 			Point finalPoint = new Point(templeX, templeY);
-			for(int i = 1000; i > 0; i--)
-            {
+			for (int i = 1000; i > 0; i--)
+			{
 				int p = templeX + i;
 				if (!WorldGen.InWorld(p, templeY))
 				{
 					tilesRight = -1;
 					break;
-                }
-                else
+				}
+				else
 				{
 					Tile tile = Main.tile[p, templeY];
-					if (tile.TileType == TileID.JungleGrass)
+					if (tile.type == TileID.JungleGrass)
 					{
 						tilesRight = i;
 						break;
@@ -7570,7 +7570,7 @@ namespace SOTS
 				else
 				{
 					Tile tile = Main.tile[p, templeY];
-					if (tile.TileType == TileID.JungleGrass)
+					if (tile.type == TileID.JungleGrass)
 					{
 						tilesLeft = i;
 						break;
@@ -7579,10 +7579,10 @@ namespace SOTS
 			}
 			if (tilesLeft != -1 || tilesRight != -1)
 			{
-				if(tilesLeft > tilesRight)
-                {
+				if (tilesLeft > tilesRight)
+				{
 					finalPoint.X = templeX - tilesLeft;
-                }
+				}
 				else
 					finalPoint.X = templeX + tilesRight;
 				GenerateBigGeode(finalPoint.X, finalPoint.Y, jungleSide);
@@ -7708,24 +7708,24 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 1:
-								tile.WallType = 183;
+								tile.wall = 183;
 								break;
 							case 2:
-								tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
+								tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
 								tile.liquid = 0;
 								tile.liquidType(0);
 								break;
 							case 3:
-								tile.WallType = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
+								tile.wall = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
 								break;
 							case 4:
-								tile.WallType = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+								tile.wall = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
 								break;
 							case 5:
-								tile.WallType = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
+								tile.wall = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
 								break;
 							case 6:
-								tile.WallType = (ushort)ModContent.WallType<EarthWallWall>();
+								tile.wall = (ushort)ModContent.WallType<EarthWallWall>();
 								break;
 						}
 					}
@@ -7847,7 +7847,7 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									if (confirmPlatforms == 0 && (tile.WallType == ModContent.WallType<VibrantWallWall>() || tile.WallType == ModContent.WallType<EarthWallWall>() || tile.WallType == ModContent.WallType<EarthenPlatingWallWall>() || tile.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || tile.WallType == ModContent.WallType<EarthenPlatingBeamWall>()))
+									if (confirmPlatforms == 0 && (tile.wall == ModContent.WallType<VibrantWallWall>() || tile.wall == ModContent.WallType<EarthWallWall>() || tile.wall == ModContent.WallType<EarthenPlatingWallWall>() || tile.wall == ModContent.WallType<EarthenPlatingPanelWallWall>() || tile.wall == ModContent.WallType<EarthenPlatingBeamWall>()))
 									{
 										tile.active(false);
 										tile.halfBrick(false);
@@ -7856,38 +7856,38 @@ namespace SOTS
 									break;
 								case 1:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<EvostoneTile>();
+									tile.type = (ushort)ModContent.TileType<EvostoneTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 2:
 									tile.active(true);
-									tile.TileType = TileID.Marble;
+									tile.type = TileID.Marble;
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile.WallType = WallID.MarbleUnsafe;
+									tile.wall = WallID.MarbleUnsafe;
 									break;
 								case 3:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 4:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
 									tile.slope((byte)(direction == 1 ? 3 : 4));
 									tile.halfBrick(false);
 									break;
 								case 5:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
 									tile.slope((byte)(direction == 1 ? 4 : 3));
 									tile.halfBrick(false);
 									break;
 								case 6:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
 									tile.slope((byte)(direction == 1 ? 2 : 1));
 									tile.halfBrick(false);
 									break;
@@ -7902,19 +7902,19 @@ namespace SOTS
 									break;
 								case 8:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<EarthenPlatingTile>();
+									tile.type = (ushort)ModContent.TileType<EarthenPlatingTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 9:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<DissolvingEarthTile>();
+									tile.type = (ushort)ModContent.TileType<DissolvingEarthTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 10:
 									tile.active(true);
-									tile.TileType = 54;
+									tile.type = 54;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -7929,7 +7929,7 @@ namespace SOTS
 									break;
 								case 12:
 									tile.active(true);
-									tile.TileType = 214;
+									tile.type = 214;
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -7996,7 +7996,7 @@ namespace SOTS
 									break;
 								case 20:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<VibrantBrickTile>();
+									tile.type = (ushort)ModContent.TileType<VibrantBrickTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -8011,7 +8011,7 @@ namespace SOTS
 									break;
 								case 22:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
@@ -8049,7 +8049,7 @@ namespace SOTS
 									break;
 								case 28:
 									tile.active(true);
-									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
 									tile.slope((byte)(direction == 1 ? 1 : 2));
 									tile.halfBrick(false);
 									break;
@@ -8075,9 +8075,9 @@ namespace SOTS
 									}
 									break;
 							}
-							if(tile.TileType == ModContent.TileType<VibrantOreTile>() || tile.TileType == ModContent.TileType<VibrantBrickTile>())
+							if (tile.type == ModContent.TileType<VibrantOreTile>() || tile.type == ModContent.TileType<VibrantBrickTile>())
 							{
-								tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
+								tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
 							}
 						}
 					}
@@ -8090,18 +8090,18 @@ namespace SOTS
 			{
 				for (int l = (int)WorldGen.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
 				{
-					if (Main.tile[k, l].WallType == ModContent.WallType<VibrantWallWall>())
+					if (Main.tile[k, l].wall == ModContent.WallType<VibrantWallWall>())
 					{
-						if(removeWater)
+						if (removeWater)
 						{
 							Main.tile[k, l].liquidType(0);
 							Main.tile[k, l].liquid = 0;
 						}
 						else
 						{
-							if (Main.tile[k, l].type == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].HasTile && Main.tile[k, l].slope() == 0 && !Main.tile[k, l].IsHalfBlock)
+							if (Main.tile[k, l].type == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].active() && Main.tile[k, l].slope() == 0 && !Main.tile[k, l].halfBrick())
 							{
-								bool oneSideIsClear = !Main.tile[k - 1, l].HasTile || !Main.tile[k + 1, l].HasTile || !Main.tile[k, l + 1].HasTile || !Main.tile[k, l - 1].HasTile;
+								bool oneSideIsClear = !Main.tile[k - 1, l].active() || !Main.tile[k + 1, l].active() || !Main.tile[k, l + 1].active() || !Main.tile[k, l - 1].active();
 								if (oneSideIsClear)
 									for (int i = 0; i < 3; i++)
 										if (SOTSTile.GenerateVibrantCrystal(k, l)) break;
@@ -8126,26 +8126,26 @@ namespace SOTS
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					if ((whitelist == Main.tile[i,j].type) || (whitelist == -1 && Main.tile[i, j ].TileType != 48 && Main.tile[i, j ].TileType != 137 &&
-						Main.tile[i, j ].TileType != 232 && Main.tile[i, j ].TileType != 191 &&
-						Main.tile[i, j ].TileType != 151 && Main.tile[i, j ].TileType != 274))
+					if ((whitelist == Main.tile[i, j].type) || (whitelist == -1 && Main.tile[i, j].type != 48 && Main.tile[i, j].type != 137 &&
+						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
+						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274))
 					{
-						if (!Main.tile[i, j - 1].HasTile)
+						if (!Main.tile[i, j - 1].active())
 						{
 							if (WorldGen.SolidTile(i, j) &&
-								TileID.Sets.CanBeClearedDuringGeneration[Main.tile[i, j ].TileType])
+								TileID.Sets.CanBeClearedDuringGeneration[Main.tile[i, j].type])
 							{
-								if (!Main.tile[i - 1, j].IsHalfBlock &&
-									!Main.tile[i + 1, j].IsHalfBlock &&
+								if (!Main.tile[i - 1, j].halfBrick() &&
+									!Main.tile[i + 1, j].halfBrick() &&
 									Main.tile[i - 1, j].slope() == 0 &&
 									Main.tile[i + 1, j].slope() == 0)
 								{
 									if (WorldGen.SolidTile(i, j + 1))
 									{
 										if (!WorldGen.SolidTile(i - 1, j) &&
-											!Main.tile[i - 1, j + 1].IsHalfBlock &&
+											!Main.tile[i - 1, j + 1].halfBrick() &&
 											WorldGen.SolidTile(i - 1, j + 1) && WorldGen.SolidTile(i + 1, j) &&
-											!Main.tile[i + 1, j - 1].HasTile)
+											!Main.tile[i + 1, j - 1].active())
 										{
 											if (WorldGen.genRand.Next(2) == 0)
 											{
@@ -8157,9 +8157,9 @@ namespace SOTS
 											}
 										}
 										else if (!WorldGen.SolidTile(i + 1, j) &&
-												 !Main.tile[i + 1, j + 1].IsHalfBlock &&
+												 !Main.tile[i + 1, j + 1].halfBrick() &&
 												 WorldGen.SolidTile(i + 1, j + 1) && WorldGen.SolidTile(i - 1, j) &&
-												 !Main.tile[i - 1, j - 1].HasTile)
+												 !Main.tile[i - 1, j - 1].active())
 										{
 											if (WorldGen.genRand.Next(2) == 0)
 											{
@@ -8172,8 +8172,8 @@ namespace SOTS
 										}
 										else if (WorldGen.SolidTile(i + 1, j + 1) &&
 												 WorldGen.SolidTile(i - 1, j + 1) &&
-												 !Main.tile[i + 1, j].HasTile &&
-												 !Main.tile[i - 1, j].HasTile)
+												 !Main.tile[i + 1, j].active() &&
+												 !Main.tile[i - 1, j].active())
 										{
 											WorldGen.PoundTile(i, j);
 										}
@@ -8181,22 +8181,22 @@ namespace SOTS
 										if (WorldGen.SolidTile(i, j))
 										{
 											if (WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i + 1, j + 2) &&
-												!Main.tile[i + 1, j].HasTile &&
-												!Main.tile[i + 1, j + 1].HasTile &&
-												!Main.tile[i - 1, j - 1].HasTile)
+												!Main.tile[i + 1, j].active() &&
+												!Main.tile[i + 1, j + 1].active() &&
+												!Main.tile[i - 1, j - 1].active())
 											{
 												DespawnTile(i, j);
 											}
 											else if (WorldGen.SolidTile(i + 1, j) &&
 													 WorldGen.SolidTile(i - 1, j + 2) &&
-													 !Main.tile[i - 1, j].HasTile &&
-													 !Main.tile[i - 1, j + 1].HasTile &&
-													 !Main.tile[i + 1, j - 1].HasTile)
+													 !Main.tile[i - 1, j].active() &&
+													 !Main.tile[i - 1, j + 1].active() &&
+													 !Main.tile[i + 1, j - 1].active())
 											{
 												DespawnTile(i, j);
 											}
-											else if (!Main.tile[i - 1, j + 1].HasTile &&
-													 !Main.tile[i - 1, j].HasTile &&
+											else if (!Main.tile[i - 1, j + 1].active() &&
+													 !Main.tile[i - 1, j].active() &&
 													 WorldGen.SolidTile(i + 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
 												if (WorldGen.genRand.Next(5) == 0)
@@ -8212,8 +8212,8 @@ namespace SOTS
 													WorldGen.SlopeTile(i, j, 2);
 												}
 											}
-											else if (!Main.tile[i + 1, j + 1].HasTile &&
-													 !Main.tile[i + 1, j].HasTile &&
+											else if (!Main.tile[i + 1, j + 1].active() &&
+													 !Main.tile[i + 1, j].active() &&
 													 WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
 												if (WorldGen.genRand.Next(5) == 0)
@@ -8232,23 +8232,23 @@ namespace SOTS
 										}
 									}
 
-									if (WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].HasTile &&
-										!Main.tile[i + 1, j].HasTile)
+									if (WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].active() &&
+										!Main.tile[i + 1, j].active())
 									{
 										DespawnTile(i, j);
 									}
 								}
 							}
-							else if (!Main.tile[i, j].HasTile && Main.tile[i, j + 1].TileType != 151 &&
-									 Main.tile[i, j + 1].TileType != 274)
+							else if (!Main.tile[i, j].active() && Main.tile[i, j + 1].type != 151 &&
+									 Main.tile[i, j + 1].type != 274)
 							{
-								if (Main.tile[i + 1, j].TileType != 190 &&
-									Main.tile[i + 1, j].TileType != 48 &&
-									Main.tile[i + 1, j].TileType != 232 && WorldGen.SolidTile(i - 1, j + 1) &&
-									WorldGen.SolidTile(i + 1, j) && !Main.tile[i - 1, j].HasTile &&
-									!Main.tile[i + 1, j - 1].HasTile)
+								if (Main.tile[i + 1, j].type != 190 &&
+									Main.tile[i + 1, j].type != 48 &&
+									Main.tile[i + 1, j].type != 232 && WorldGen.SolidTile(i - 1, j + 1) &&
+									WorldGen.SolidTile(i + 1, j) && !Main.tile[i - 1, j].active() &&
+									!Main.tile[i + 1, j - 1].active())
 								{
-									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
 									if (WorldGen.genRand.Next(2) == 0)
 									{
 										WorldGen.SlopeTile(i, j, 2);
@@ -8259,13 +8259,13 @@ namespace SOTS
 									}
 								}
 
-								if (Main.tile[i + 1, j].TileType != 190 &&
-									Main.tile[i + 1, j].TileType != 48 &&
-									Main.tile[i + 1, j].TileType != 232 && WorldGen.SolidTile(i + 1, j + 1) &&
-									WorldGen.SolidTile(i - 1, j) && !Main.tile[i + 1, j].HasTile &&
-									!Main.tile[i - 1, j - 1].HasTile)
+								if (Main.tile[i - 1, j].type != 190 &&
+									Main.tile[i - 1, j].type != 48 &&
+									Main.tile[i - 1, j].type != 232 && WorldGen.SolidTile(i + 1, j + 1) &&
+									WorldGen.SolidTile(i - 1, j) && !Main.tile[i + 1, j].active() &&
+									!Main.tile[i - 1, j - 1].active())
 								{
-									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
 									if (WorldGen.genRand.Next(2) == 0)
 									{
 										WorldGen.SlopeTile(i, j, 1);
@@ -8277,9 +8277,9 @@ namespace SOTS
 								}
 							}
 						}
-						else if (!Main.tile[i, j + 1].HasTile && WorldGen.genRand.Next(2) == 0 &&
-								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].IsHalfBlock &&
-								 !Main.tile[i + 1, j].IsHalfBlock &&
+						else if (!Main.tile[i, j + 1].active() && WorldGen.genRand.Next(2) == 0 &&
+								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].halfBrick() &&
+								 !Main.tile[i + 1, j].halfBrick() &&
 								 Main.tile[i - 1, j].slope() == 0 &&
 								 Main.tile[i + 1, j].slope() == 0 && WorldGen.SolidTile(i, j - 1))
 						{
@@ -8295,7 +8295,7 @@ namespace SOTS
 							}
 						}
 
-						if (TileID.Sets.Conversion.Sand[Main.tile[i, j ].TileType])
+						if (TileID.Sets.Conversion.Sand[Main.tile[i, j].type])
 						{
 							Tile.SmoothSlope(i, j, false);
 						}
@@ -8306,24 +8306,24 @@ namespace SOTS
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
-					if (canRun && ((whitelist == Main.tile[i, j ].TileType) || 
-						(whitelist == -1 && Main.tile[i, j ].TileType != 137 && 
-						Main.tile[i, j ].TileType != 48 &&
-						Main.tile[i, j ].TileType != 232 && Main.tile[i, j ].TileType != 191 &&
-						Main.tile[i, j ].TileType != 151 && Main.tile[i, j ].TileType != 274 &&
-						Main.tile[i, j ].TileType != 75 && Main.tile[i, j ].TileType != 76 &&
-						Main.tile[i + 1, j].TileType != 137 &&
-						Main.tile[i + 1, j].TileType != 137)))
+					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].active() && WorldGen.SolidTile(i, j);
+					if (canRun && ((whitelist == Main.tile[i, j].type) ||
+						(whitelist == -1 && Main.tile[i, j].type != 137 &&
+						Main.tile[i, j].type != 48 &&
+						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
+						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274 &&
+						Main.tile[i, j].type != 75 && Main.tile[i, j].type != 76 &&
+						Main.tile[i - 1, j].type != 137 &&
+						Main.tile[i + 1, j].type != 137)))
 					{
 						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i + 1, j) &&
-							!Main.tile[i - 1, j].HasTile)
+							!Main.tile[i - 1, j].active())
 						{
 							WorldGen.SlopeTile(i, j, 2);
 						}
 
 						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i - 1, j) &&
-							!Main.tile[i + 1, j].HasTile)
+							!Main.tile[i + 1, j].active())
 						{
 							WorldGen.SlopeTile(i, j, 1);
 						}
@@ -8344,7 +8344,7 @@ namespace SOTS
 			}
 		}
 		public static void DespawnTile(int spawnX, int spawnY)
-        {
+		{
 			Main.tile[spawnX, spawnY].active(false);
 			NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, spawnX, spawnY, 0f, 0, 0, 0);
 		}

@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.height = 26;
 			Projectile.width = 26;
 			Projectile.penetrate = -1;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.tileCollide = true;
 			Projectile.timeLeft = 720;
 			Projectile.friendly = true;

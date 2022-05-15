@@ -17,21 +17,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<NaturePlating>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<NaturePlating>());
 		}
 	}
 	public class NaturePlatingWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Tungsten;
@@ -51,21 +43,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<NaturePlating>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<NaturePlating>());
 		}
 	}
 	public class NaturePlatingPanelWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Tungsten;
@@ -85,21 +69,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<EarthenPlating>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<EarthenPlating>());
 		}
 	}
 	public class EarthenPlatingWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
@@ -119,21 +95,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<EarthenPlating>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<EarthenPlating>());
 		}
 	}
 	public class EarthenPlatingPanelWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
@@ -153,21 +121,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<EarthenPlating>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<EarthenPlating>());
 		}
 	}
 	public class EarthenPlatingBeamWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;

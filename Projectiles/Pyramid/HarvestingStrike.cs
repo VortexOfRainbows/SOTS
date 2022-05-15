@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Pyramid
 						if (npc.active && npc.Hitbox.Intersects(Projectile.Hitbox) && (npc.realLife == npc.whoAmI || npc.realLife <= 0) && !npc.dontTakeDamage)
 						{
 							Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<HarvestLock>(), 0, 0, player.whoAmI, npc.whoAmI);
-							DebuffNPC debuffNPC = (DebuffNPC)mod.GetGlobalNPC("DebuffNPC");
+							DebuffNPC debuffNPC = (DebuffNPC)Mod.GetGlobalNPC("DebuffNPC");
 							debuffNPC = (DebuffNPC)debuffNPC.Instance(npc);
 							if (debuffNPC.HarvestCurse >= 99)
 							{

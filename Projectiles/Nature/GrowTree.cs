@@ -21,8 +21,8 @@ namespace SOTS.Projectiles.Nature
 			Projectile.timeLeft = 60;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.ranged = false;
-			Projectile.magic = true;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			Projectile.DamageType = DamageClass.Magic;
             Projectile.netImportant = true;
 			Projectile.alpha = 35;
 		}
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Nature
 			}
 				
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) 
 		{
 			width = 4;
 			height = 4;

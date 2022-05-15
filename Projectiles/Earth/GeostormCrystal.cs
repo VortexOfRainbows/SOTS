@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.hostile = false;
 			Projectile.timeLeft = 360;
 			Projectile.tileCollide = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.alpha = 255;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 100;
@@ -54,11 +54,11 @@ namespace SOTS.Projectiles.Earth
 			int width = 36;
 			hitbox = new Rectangle((int)(Projectile.Center.X - width), (int)(Projectile.Center.Y - width), width * 2, width * 2);
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 24;
 			height = 24;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
 		int endHow = 0;
 		public override bool PreDraw(ref Color lightColor)
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Earth
 				if (Projectile.timeLeft > 120)
                 {
 					if (Main.netMode != NetmodeID.Server)
-						SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, 12, 8));
+						SOTS.primitives.CreateTrail(new StarTrail(Projectile, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, 12, 8));
 					Projectile.timeLeft = 120;
 				}
 				count += 5;

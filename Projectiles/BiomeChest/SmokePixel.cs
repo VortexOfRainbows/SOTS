@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.width = 96;
 			Projectile.height = 96;
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 130;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;

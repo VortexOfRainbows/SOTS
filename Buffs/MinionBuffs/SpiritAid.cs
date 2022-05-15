@@ -6,7 +6,7 @@ namespace SOTS.Buffs.MinionBuffs
 {
 	public class NatureSpiritAid : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Nature Spirits assist you in combat");
@@ -23,7 +23,7 @@ namespace SOTS.Buffs.MinionBuffs
 	}
 	public class EarthenSpiritAid : ModBuff
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Earthen Spirits assist you in combat");
@@ -40,7 +40,7 @@ namespace SOTS.Buffs.MinionBuffs
 	}
 	public class PermafrostSpiritAid : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Permafrost Spirits assist you in combat");
@@ -57,7 +57,7 @@ namespace SOTS.Buffs.MinionBuffs
 	}
 	public class OtherworldlySpiritAid : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Otherworldly Spirits assist you in combat");
@@ -74,7 +74,7 @@ namespace SOTS.Buffs.MinionBuffs
 	}
 	public class TidalSpiritAid : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Tidal Spirits assist you in combat");
@@ -91,7 +91,7 @@ namespace SOTS.Buffs.MinionBuffs
 	}
 	public class EvilSpiritAid : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Evil Spirits assist you in combat");
@@ -108,7 +108,7 @@ namespace SOTS.Buffs.MinionBuffs
 	}
 	public class InfernoSpiritAid : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Inferno Spirits assist you in combat");
@@ -125,7 +125,7 @@ namespace SOTS.Buffs.MinionBuffs
 	}
 	public class ChaosSpiritAid : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Chaos Spirits assist you in combat");

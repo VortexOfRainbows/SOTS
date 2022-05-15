@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.timeLeft = 30;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
@@ -82,12 +82,12 @@ namespace SOTS.Projectiles.Otherworld
 				for(int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(i * 45));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("FriendlyOtherworldlyBolt"), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("FriendlyOtherworldlyBolt").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer);
 				}
 				for (int i = 0; i < 3; i++)
 				{
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.Next(120) + 120 * i));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("PhaseColumn"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 2, 0);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("PhaseColumn").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 2, 0);
 				}
 			}
 			for (int i = 0; i < 35; i++)

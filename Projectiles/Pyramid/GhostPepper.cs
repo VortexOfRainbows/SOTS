@@ -173,7 +173,7 @@ namespace SOTS.Projectiles.Pyramid
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.type == mod.ProjectileType("SoulofLooting") && proj.active && (int)proj.ai[0] == Projectile.owner)
+					if (proj.type == Mod.Find<ModProjectile>("SoulofLooting") .Type&& proj.active && (int)proj.ai[0] == Projectile.owner)
 					{
 						Vector2 toNPC = proj.Center - Projectile.Center;
 						if (toNPC.Length() < lastLength)

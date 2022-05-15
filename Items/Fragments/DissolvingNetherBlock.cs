@@ -21,15 +21,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
-			recipe.SetResult(this, 20);
-			recipe.AddRecipe();
+			CreateRecipe(20).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).Register();
 		}
 	}
 	public class DissolvingNetherTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
@@ -91,7 +88,7 @@ namespace SOTS.Items.Fragments
 				for (int j2 = 1; j2 < maxLength; j2++)
 				{
 					Tile tile2 = Framing.GetTileSafely(i, j - j2);
-					if ((tile2.active() && Main.tileSolid[tile2.type] && !Main.tileSolidTop[tile2.type]) || !WorldGen.InWorld(i, j - j2, 27))
+					if ((tile2.HasTile && Main.tileSolid[tile2.TileType] && !Main.tileSolidTop[tile2.TileType]) || !WorldGen.InWorld(i, j - j2, 27))
 					{
 						maxLength = j2;
 						break;
@@ -224,7 +221,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			DrawEffects(i, j, spriteBatch, mod);
+			DrawEffects(i, j, spriteBatch, Mod);
 			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

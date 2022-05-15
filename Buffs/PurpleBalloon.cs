@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class PurpleBalloon : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
 			DisplayName.SetDefault("Purple Balloon");
 			Description.SetDefault("Fishing friend");   
@@ -19,16 +19,16 @@ namespace SOTS.Buffs
         {
 			
 			player.buffTime[buffIndex] = 18000;
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.PurpleBalloon = true;
 			bool petProjectileNotSpawned = true;
-			if (player.ownedProjectileCounts[mod.ProjectileType("LuckyPurpleBalloon")] > 0)
+			if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("LuckyPurpleBalloon").Type] > 0)
 			{
 				petProjectileNotSpawned = false;
 			}
 			if (petProjectileNotSpawned && player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(player.position.X + player.width / 2, player.position.Y + player.height / 2, 0f, 0f, mod.ProjectileType("LuckyPurpleBalloon"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position.X + player.width / 2, player.position.Y + player.height / 2, 0f, 0f, Mod.Find<ModProjectile>("LuckyPurpleBalloon").Type, 0, 0f, player.whoAmI, 0f, 0f);
 			}
         }
     }

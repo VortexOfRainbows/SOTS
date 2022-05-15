@@ -17,8 +17,8 @@ namespace SOTS.NPCs.TreasureSlimes
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dungeon Treasure Slime");
-			NPCID.Sets.TrailCacheLength[npc.type] = 6;
-			NPCID.Sets.TrailingMode[npc.type] = 2;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
+			NPCID.Sets.TrailingMode[NPC.type] = 2;
 		}
 		public override void SetDefaults()
 		{
@@ -27,12 +27,12 @@ namespace SOTS.NPCs.TreasureSlimes
 			NPC.damage = 40;
 			NPC.defense = 36; //has crazy defense, but other stats are less than shadow
 			NPC.knockBackResist = 0.04f;
-			npc.value = Item.buyPrice(0, 5, 0, 0);
-			npc.Size = new Vector2(32, 40);
-			npc.npcSlots = 1f;
+			NPC.value = Item.buyPrice(0, 5, 0, 0);
+			NPC.Size = new Vector2(32, 40);
+			NPC.npcSlots = 1f;
 			Banner = NPC.type;
 			BannerItem = ItemType<DungeonTreasureSlimeBanner>();
-			npc.lavaImmune = true;
+			NPC.lavaImmune = true;
 			LootAmt = 4;
 			gelColor = color;
 			items = new List<TreasureSlimeItem>()
@@ -73,13 +73,13 @@ namespace SOTS.NPCs.TreasureSlimes
 		{
 			int type = Main.rand.Next(4);
 			if(type == 0)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.WaterCandle, 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.WaterCandle, 1);
 			if (type == 1)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GoldenKey, 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.GoldenKey, 1);
 			if (type == 2)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.LockBox, 1);
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.LockBox, 1);
 			if (type == 3)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Book, 5 + Main.rand.Next(6)); //5 to 10
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.Book, 5 + Main.rand.Next(6)); //5 to 10
 		}
     }
 }

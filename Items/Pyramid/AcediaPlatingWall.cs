@@ -29,32 +29,28 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "AcediaPlating", 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(null, "AcediaPlating", 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class AcediaPlatingWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
-			DustType = mod.DustType("AcedianDust");
-			drop = mod.ItemType("AcediaPlatingWall");
+			DustType = Mod.Find<ModDust>("AcedianDust").Type;
+			drop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}
 	public class UnsafeAcediaWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
-			DustType = mod.DustType("AcedianDust");
-			drop = mod.ItemType("AcediaPlatingWall");
+			DustType = Mod.Find<ModDust>("AcedianDust").Type;
+			drop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}

@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Pyramid
 			for (int i = 0; i < 360; i += particlesR)
 			{
 				Vector2 rotationalPos = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 22, 22, mod.DustType("CopyDust4"));
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 22, 22, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num1];
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;

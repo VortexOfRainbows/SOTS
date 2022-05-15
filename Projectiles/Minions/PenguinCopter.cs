@@ -16,9 +16,7 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-			ProjectileID.Sets.Homing[Projectile.type] = true;
 		}
-
 		public sealed override void SetDefaults()
 		{
 			Projectile.width = 72;
@@ -195,7 +193,7 @@ namespace SOTS.Projectiles.Minions
 						direction2 = direction;
 						if (Projectile.owner == Main.myPlayer)
 						{
-							Projectile.NewProjectile(Projectile.Center + offset, projVelo, mod.ProjectileType("PenguinMissile"), Projectile.damage, Projectile.knockBack, Projectile.owner);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + offset, projVelo, Mod.Find<ModProjectile>("PenguinMissile").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
 							Projectile.netUpdate = true;
 						}
 					}

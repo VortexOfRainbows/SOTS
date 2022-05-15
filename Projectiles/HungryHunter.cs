@@ -23,7 +23,7 @@ namespace SOTS.Projectiles
 			Projectile.timeLeft = 3000;
 			Projectile.friendly = true;
 			Projectile.aiStyle = 15;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
 		}
@@ -102,12 +102,12 @@ namespace SOTS.Projectiles
 			target.immune[Projectile.owner] = 0;
 			Player player = Main.player[Projectile.owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			Projectile.timeLeft = 3000;
 			Projectile.friendly = true;
 			latch = true;
 			if(player.whoAmI == Main.myPlayer)
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, Projectile.owner, 1, 5);
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 2, 0, Projectile.owner, 1, 5);
 			enemyIndex = target.whoAmI;
 			if(target.life <= 0)
 			{

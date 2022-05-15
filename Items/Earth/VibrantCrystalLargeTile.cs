@@ -15,7 +15,7 @@ namespace SOTS.Items.Earth
 {
 	public class VibrantCrystalLargeTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLighted[Type] = true;
@@ -171,48 +171,48 @@ namespace SOTS.Items.Earth
 			bool flag = true;
 			if (RoyalRubyShardTile.TileIsCapable(left, top + 2) && RoyalRubyShardTile.TileIsCapable(left + 1, top + 2)) //checks if below tile is active
 			{
-				if (Main.tile[left, top].frameY != 0)
+				if (Main.tile[left, top].TileFrameY != 0)
 				{
-					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36);
-					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36);
-					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36);
-					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36);
+					Main.tile[left, top].TileFrameY = (short)(Main.tile[left, top].TileFrameY % 36);
+					Main.tile[left + 1, top].TileFrameY = (short)(Main.tile[left + 1, top].TileFrameY % 36);
+					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36);
+					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36);
 				}
 				else
 					flag = false;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(left - 1, top) && RoyalRubyShardTile.TileIsCapable(left - 1, top + 1)) //checks if left tile is active
 			{
-				if(Main.tile[left, top].frameY != 108)
+				if(Main.tile[left, top].TileFrameY != 108)
 				{
-					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36 + 108);
-					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36 + 108);
-					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36 + 108);
-					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36 + 108);
+					Main.tile[left, top].TileFrameY = (short)(Main.tile[left, top].TileFrameY % 36 + 108);
+					Main.tile[left + 1, top].TileFrameY = (short)(Main.tile[left + 1, top].TileFrameY % 36 + 108);
+					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36 + 108);
+					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36 + 108);
 				}
 				else
 					flag = false;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(left + 2, top) && RoyalRubyShardTile.TileIsCapable(left + 2, top + 1)) //checks if right tile is active
 			{
-				if(Main.tile[left, top].frameY != 36)
+				if(Main.tile[left, top].TileFrameY != 36)
 				{
-					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36 + 36);
-					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36 + 36);
-					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36 + 36);
-					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36 + 36);
+					Main.tile[left, top].TileFrameY = (short)(Main.tile[left, top].TileFrameY % 36 + 36);
+					Main.tile[left + 1, top].TileFrameY = (short)(Main.tile[left + 1, top].TileFrameY % 36 + 36);
+					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36 + 36);
+					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36 + 36);
 				}
 				else
 					flag = false;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(left, top - 1) && RoyalRubyShardTile.TileIsCapable(left + 1, top - 1)) //checks if above tile is active
 			{
-				if(Main.tile[left, top].frameY != 72)
+				if(Main.tile[left, top].TileFrameY != 72)
 				{
-					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36 + 72);
-					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36 + 72);
-					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36 + 72);
-					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36 + 72);
+					Main.tile[left, top].TileFrameY = (short)(Main.tile[left, top].TileFrameY % 36 + 72);
+					Main.tile[left + 1, top].TileFrameY = (short)(Main.tile[left + 1, top].TileFrameY % 36 + 72);
+					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36 + 72);
+					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36 + 72);
 				}
 				else
 					flag = false;

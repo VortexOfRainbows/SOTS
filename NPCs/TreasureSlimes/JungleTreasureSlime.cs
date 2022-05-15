@@ -19,8 +19,8 @@ namespace SOTS.NPCs.TreasureSlimes
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Jungle Treasure Slime");
-			NPCID.Sets.TrailCacheLength[npc.type] = 6;
-			NPCID.Sets.TrailingMode[npc.type] = 2;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
+			NPCID.Sets.TrailingMode[NPC.type] = 2;
 		}
 		public override void SetDefaults()
 		{
@@ -29,9 +29,9 @@ namespace SOTS.NPCs.TreasureSlimes
 			NPC.damage = 50; //hits as hard and has way more health than shadow, but with less defense and less kb resist
 			NPC.defense = 0;
 			NPC.knockBackResist = 0.15f;
-			npc.value = Item.buyPrice(0, 4, 80, 0);
-			npc.Size = new Vector2(32, 40);
-			npc.npcSlots = 1f;
+			NPC.value = Item.buyPrice(0, 4, 80, 0);
+			NPC.Size = new Vector2(32, 40);
+			NPC.npcSlots = 1f;
 			Banner = NPC.type;
 			BannerItem = ItemType<JungleTreasureSlimeBanner>();
 			LootAmt = 4;
@@ -74,7 +74,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
         public override void AdditionalLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.JungleSpores, 3 + Main.rand.Next(4));
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.JungleSpores, 3 + Main.rand.Next(4));
 		}
     }
 }

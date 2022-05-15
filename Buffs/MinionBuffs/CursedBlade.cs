@@ -6,7 +6,7 @@ namespace SOTS.Buffs.MinionBuffs
 {
     public class CursedBlade : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cursed Blade");
             Description.SetDefault("Cursed Blades assist you in combat");

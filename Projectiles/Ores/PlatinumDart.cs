@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Ores
 			Projectile.width = 22;
 			Projectile.height = 22;
 			Projectile.penetrate = 2;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.alpha = 0; 
 			Projectile.friendly = true;
 			Projectile.tileCollide = true;
@@ -86,11 +86,11 @@ namespace SOTS.Projectiles.Ores
 					Projectile.velocity.Y = 30;
             }
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 12;
 			height = 12;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

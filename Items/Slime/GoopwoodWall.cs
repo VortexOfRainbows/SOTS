@@ -17,21 +17,13 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<Wormwood>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<Wormwood>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<Wormwood>());
 		}
 	}
 	public class GoopwoodWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 7;

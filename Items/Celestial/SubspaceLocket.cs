@@ -33,7 +33,7 @@ namespace SOTS.Items.Celestial
 		{
 			SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
 			modPlayer.servantActive = true;
-            player.allDamageMult -= 0.25f;
+            player.GetDamage(DamageClass.Generic) *= 0.75f;
         }
         public override void UpdateInventory(Player player)
         {
@@ -108,7 +108,7 @@ namespace SOTS.Items.Celestial
                 for (int i = 0; i < Main.projectile.Length; i++)
                 {
                     Projectile proj = Main.projectile[i];
-                    SubspaceServant subServ = proj.modProjectile as SubspaceServant;
+                    SubspaceServant subServ = proj.ModProjectile as SubspaceServant;
                     if (subServ != null && proj.owner == drawInfo.drawPlayer.whoAmI && proj.active)
                     {
                         float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
@@ -130,9 +130,9 @@ namespace SOTS.Items.Celestial
         {
             subspaceServantShader = 0;
             servantIsVanity = false;
-            for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
+            for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
             {
-                Item item = player.armor[i];
+                Item item = Player.armor[i];
                 if (Item.type == ModContent.ItemType<SubspaceLocket>())
                 {
                     servantActive = true;
@@ -160,28 +160,28 @@ namespace SOTS.Items.Celestial
 		public void Summon()
 		{
 			int type = ModContent.ProjectileType<SubspaceServant>();
-			if (Main.myPlayer == player.whoAmI)
+			if (Main.myPlayer == Player.whoAmI)
 			{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, 0, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(Player.Center, Vector2.Zero, type, 0, 0, Player.whoAmI, 0);
 				}
 				Projectile temp = Main.projectile[Probe];
-				if (!temp.active || temp.type != type || temp.owner != player.whoAmI)
+				if (!temp.active || temp.type != type || temp.owner != Player.whoAmI)
 				{
-					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, 0, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(Player.Center, Vector2.Zero, type, 0, 0, Player.whoAmI, 0);
 				}
 				Main.projectile[Probe].timeLeft = 6;
 			}
 		}
 		public void UseVanillaItemProjectile(Vector2 Center, Item sItem, out float shouldBeRotation, ref int shouldBeDirection, bool modded = false)
         {
-            Vector2 temp = player.position;
-            player.position = Center - new Vector2(10, 22);
+            Vector2 temp = Player.position;
+            Player.position = Center - new Vector2(10, 22);
             float shouldBeAnimation = 0;
             shouldBeRotation = 0;
-            int i = player.whoAmI;
-            var weaponDamage = player.GetWeaponDamage(sItem);
+            int i = Player.whoAmI;
+            var weaponDamage = Player.GetWeaponDamage(sItem);
             if (i == Main.myPlayer)
             {
                 var flag2 = true;
@@ -189,15 +189,15 @@ namespace SOTS.Items.Celestial
                 {
                     var shoot = sItem.shoot;
                     var speed = sItem.shootSpeed;
-                    if (player.inventory[player.selectedItem].thrown && (double)speed < 16.0)
+                    if (Player.inventory[Player.selectedItem].thrown && (double)speed < 16.0)
                     {
-                        speed *= player.thrownVelocity;
+                        speed *= Player.thrownVelocity;
                         if ((double)speed > 16.0)
                             speed = 16f;
                     }
 
                     if (sItem.melee)
-                        speed /= player.meleeSpeed;
+                        speed /= Player.meleeSpeed;
                     var canShoot = false;
                     var Damage = weaponDamage;
                     var knockBack = sItem.knockBack;
@@ -207,9 +207,9 @@ namespace SOTS.Items.Celestial
                         var flag1 = false;
                         for (var index = 54; index < 58; ++index)
                         {
-                            if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                            if (Player.inventory[index].ammo == sItem.useAmmo && Player.inventory[index].stack > 0)
                             {
-                                obj = player.inventory[index];
+                                obj = Player.inventory[index];
                                 break;
                             }
                         }
@@ -217,14 +217,14 @@ namespace SOTS.Items.Celestial
                         {
                             for (var index = 0; index < 54; ++index)
                             {
-                                if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                                if (Player.inventory[index].ammo == sItem.useAmmo && Player.inventory[index].stack > 0)
                                 {
-                                    obj = player.inventory[index];
+                                    obj = Player.inventory[index];
                                     break;
                                 }
                             }
                         }
-                        PickAmmo(sItem, ref shoot, ref speed, ref canShoot, ref Damage, ref knockBack, !ItemLoader.ConsumeAmmo(sItem, obj, player));
+                        PickAmmo(sItem, ref shoot, ref speed, ref canShoot, ref Damage, ref knockBack, !ItemLoader.ConsumeAmmo(sItem, obj, Player));
                     }
                     else
                         canShoot = true;
@@ -276,7 +276,7 @@ namespace SOTS.Items.Celestial
 
                     if (canShoot)
                     {
-                        var num1 = player.GetWeaponKnockback(sItem, knockBack);
+                        var num1 = Player.GetWeaponKnockback(sItem, knockBack);
                         if (shoot == 228)
                             num1 = 0.0f;
                         if (shoot == 1 && sItem.type == 120)
@@ -289,8 +289,8 @@ namespace SOTS.Items.Celestial
                             shoot = 442;
                         if (sItem.type == 2223)
                             shoot = 357;
-                        var vector2_1 = player.RotatedRelativePoint(Center, true);
-                        var vector2_2 = Vector2.UnitX.RotatedBy(player.fullRotation, new Vector2());
+                        var vector2_1 = Player.RotatedRelativePoint(Center, true);
+                        var vector2_2 = Vector2.UnitX.RotatedBy(Player.fullRotation, new Vector2());
                         var v1 = Main.MouseWorld - vector2_1;
                         var vector2_3 = shouldBeRotation.ToRotationVector2() * shouldBeDirection;
                         if (sItem.type == ItemID.BookStaff)// && player.itemAnimation != player.maxAnimation - 1)
@@ -304,7 +304,7 @@ namespace SOTS.Items.Celestial
                             shouldBeDirection = -1;
 
                         if (sItem.type == 3094 || sItem.type == 3378 || sItem.type == 3543)
-                            vector2_1.Y = player.position.Y + (float)(player.height / 3);
+                            vector2_1.Y = Player.position.Y + (float)(Player.height / 3);
                         if (sItem.type == 2611)
                         {
                             var vector2_4 = v1;
@@ -317,7 +317,7 @@ namespace SOTS.Items.Celestial
                             vector2_1 += v1.SafeNormalize(Vector2.Zero).RotatedBy((double)shouldBeDirection * -1.57079637050629, new Vector2()) * 24f;
                         if (shoot == ProjectileID.Starfury)
                         {
-                            vector2_1 = new Vector2((float)(player.position.X + player.width * 0.5 + (Main.rand.Next(201) * -shouldBeDirection) + (Main.mouseX + Main.screenPosition.X - player.position.X)), player.MountedCenter.Y - 600f);
+                            vector2_1 = new Vector2((float)(Player.position.X + Player.width * 0.5 + (Main.rand.Next(201) * -shouldBeDirection) + (Main.mouseX + Main.screenPosition.X - Player.position.X)), Player.MountedCenter.Y - 600f);
                             num1 = 0.0f;
                             Damage *= 2;
                         }
@@ -325,18 +325,18 @@ namespace SOTS.Items.Celestial
                         if (sItem.type == ItemID.Blowgun || sItem.type == ItemID.Blowpipe)
                         {
                             vector2_1.X += (float)(6 * shouldBeDirection);
-                            vector2_1.Y -= 6f * player.gravDir;
+                            vector2_1.Y -= 6f * Player.gravDir;
                         }
 
                         if (sItem.type == ItemID.DartPistol)
                         {
                             vector2_1.X -= (float)(4 * shouldBeDirection);
-                            vector2_1.Y -= 1f * player.gravDir;
+                            vector2_1.Y -= 1f * Player.gravDir;
                         }
 
                         var f1 = (float)Main.mouseX + Main.screenPosition.X - vector2_1.X;
                         var f2 = (float)Main.mouseY + Main.screenPosition.Y - vector2_1.Y;
-                        if ((double)player.gravDir == -1.0)
+                        if ((double)Player.gravDir == -1.0)
                             f2 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - vector2_1.Y;
                         var num3 = (float)Math.Sqrt((double)f1 * (double)f1 + (double)f2 * (double)f2);
                         var num4 = num3;
@@ -364,7 +364,7 @@ namespace SOTS.Items.Celestial
                         {
                             for (var index = 0; index < 1000; ++index)
                             {
-                                if (Main.projectile[index].active && Main.projectile[index].owner == player.whoAmI &&
+                                if (Main.projectile[index].active && Main.projectile[index].owner == Player.whoAmI &&
                                     (Main.projectile[index].type == 250 || Main.projectile[index].type == 251))
                                     Main.projectile[index].Kill();
                             }
@@ -406,14 +406,14 @@ namespace SOTS.Items.Celestial
                         {
                             vector2_1.X = (float)Main.mouseX + Main.screenPosition.X;
                             vector2_1.Y = (float)Main.mouseY + Main.screenPosition.Y;
-                            if ((double)player.gravDir == -1.0)
+                            if ((double)Player.gravDir == -1.0)
                                 vector2_1.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
                         }
-                        bool Shoot1 = ItemLoader.Shoot(sItem, player, ref vector2_1, ref num6, ref num7, ref shoot, ref Damage, ref knockBack);
-                        bool Shoot2 = PlayerHooks.Shoot(player, sItem, ref vector2_1, ref num6, ref num7, ref shoot, ref Damage, ref knockBack);
+                        bool Shoot1 = ItemLoader.Shoot(sItem, Player, ref vector2_1, ref num6, ref num7, ref shoot, ref Damage, ref knockBack);
+                        bool Shoot2 = PlayerHooks.Shoot(Player, sItem, ref vector2_1, ref num6, ref num7, ref shoot, ref Damage, ref knockBack);
                         if (!Shoot1 || !Shoot2)
                         {
-                            player.position = temp;
+                            Player.position = temp;
                             return;
                         }
                         if (shoot == 76)
@@ -445,11 +445,11 @@ namespace SOTS.Items.Celestial
                             for (var index1 = 0; index1 < num8; ++index1)
                             {
                                 vector2_1 = new Vector2(
-                                    (float)((double)player.position.X + (double)player.width * 0.5 +
+                                    (float)((double)Player.position.X + (double)Player.width * 0.5 +
                                              (double)(Main.rand.Next(201) * -shouldBeDirection) +
                                              ((double)Main.mouseX + (double)Main.screenPosition.X -
-                                              (double)player.position.X)), player.MountedCenter.Y - 600f);
-                                vector2_1.X = (float)(((double)vector2_1.X * 10.0 + (double)player.Center.X) / 11.0) +
+                                              (double)Player.position.X)), Player.MountedCenter.Y - 600f);
+                                vector2_1.X = (float)(((double)vector2_1.X * 10.0 + (double)Player.Center.X) / 11.0) +
                                               (float)Main.rand.Next(-100, 101);
                                 vector2_1.Y -= (float)(150 * index1);
                                 var num9 = (float)Main.mouseX + Main.screenPosition.X - vector2_1.X;
@@ -485,8 +485,8 @@ namespace SOTS.Items.Celestial
                             var SpeedY = num7 + (float)Main.rand.Next(-40, 41) * 0.02f;
                             var index = Projectile.NewProjectile(vector2_1.X, vector2_1.Y, SpeedX, SpeedY, shoot,
                                 Damage, num1, i, 0.0f, 0.0f);
-                            Main.projectile[index].ranged = true;
-                            Main.projectile[index].thrown = false;
+                            Main.projectile[index].DamageType = DamageClass.Ranged;
+                            // Main.projectile[index].thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
                         }
                         else if (sItem.type == 3107)
                         {
@@ -601,11 +601,11 @@ namespace SOTS.Items.Celestial
                             for (var index = 0; index < num8; ++index)
                             {
                                 vector2_1 = new Vector2(
-                                    (float)((double)player.position.X + (double)player.width * 0.5 +
+                                    (float)((double)Player.position.X + (double)Player.width * 0.5 +
                                              (double)(Main.rand.Next(201) * -shouldBeDirection) +
                                              ((double)Main.mouseX + (double)Main.screenPosition.X -
-                                              (double)player.position.X)), player.MountedCenter.Y - 600f);
-                                vector2_1.X = (float)(((double)vector2_1.X + (double)player.Center.X) / 2.0) +
+                                              (double)Player.position.X)), Player.MountedCenter.Y - 600f);
+                                vector2_1.X = (float)(((double)vector2_1.X + (double)Player.Center.X) / 2.0) +
                                               (float)Main.rand.Next(-200, 201);
                                 vector2_1.Y -= (float)(100 * index);
                                 var num9 = (float)Main.mouseX + Main.screenPosition.X - vector2_1.X;
@@ -631,11 +631,11 @@ namespace SOTS.Items.Celestial
                             for (var index = 0; index < num8; ++index)
                             {
                                 vector2_1 = new Vector2(
-                                    (float)((double)player.position.X + (double)player.width * 0.5 +
+                                    (float)((double)Player.position.X + (double)Player.width * 0.5 +
                                              (double)(Main.rand.Next(201) * -shouldBeDirection) +
                                              ((double)Main.mouseX + (double)Main.screenPosition.X -
-                                              (double)player.position.X)), player.MountedCenter.Y - 600f);
-                                vector2_1.X = (float)(((double)vector2_1.X + (double)player.Center.X) / 2.0) +
+                                              (double)Player.position.X)), Player.MountedCenter.Y - 600f);
+                                vector2_1.X = (float)(((double)vector2_1.X + (double)Player.Center.X) / 2.0) +
                                               (float)Main.rand.Next(-200, 201);
                                 vector2_1.Y -= (float)(100 * index);
                                 var num9 = (float)((double)Main.mouseX + (double)Main.screenPosition.X -
@@ -664,11 +664,11 @@ namespace SOTS.Items.Celestial
                             for (var index = 0; index < num8; ++index)
                             {
                                 vector2_1 = new Vector2(
-                                    (float)((double)player.position.X + (double)player.width * 0.5 +
+                                    (float)((double)Player.position.X + (double)Player.width * 0.5 +
                                              (double)(Main.rand.Next(201) * -shouldBeDirection) +
                                              ((double)Main.mouseX + (double)Main.screenPosition.X -
-                                              (double)player.position.X)), player.MountedCenter.Y - 600f);
-                                vector2_1.X = (float)(((double)vector2_1.X + (double)player.Center.X) / 2.0) +
+                                              (double)Player.position.X)), Player.MountedCenter.Y - 600f);
+                                vector2_1.X = (float)(((double)vector2_1.X + (double)Player.Center.X) / 2.0) +
                                               (float)Main.rand.Next(-200, 201);
                                 vector2_1.Y -= (float)(100 * index);
                                 var num9 = (float)Main.mouseX + Main.screenPosition.X - vector2_1.X;
@@ -691,11 +691,11 @@ namespace SOTS.Items.Celestial
                             var vector2_4 = Main.screenPosition +
                                                 new Vector2((float)Main.mouseX, (float)Main.mouseY);
                             var ai1 = vector2_4.Y;
-                            if ((double)ai1 > (double)player.Center.Y - 200.0)
-                                ai1 = player.Center.Y - 200f;
+                            if ((double)ai1 > (double)Player.Center.Y - 200.0)
+                                ai1 = Player.Center.Y - 200f;
                             for (var index = 0; index < 3; ++index)
                             {
-                                vector2_1 = player.Center +
+                                vector2_1 = Player.Center +
                                             new Vector2((float)(-Main.rand.Next(0, 401) * shouldBeDirection), -600f);
                                 vector2_1.Y -= (float)(100 * index);
                                 var vector2_5 = vector2_4 - vector2_1;
@@ -883,7 +883,7 @@ namespace SOTS.Items.Celestial
                             var flag4 = sItem.type == 3571 || sItem.type == 3569;
                             var i1 = (int)((double)Main.mouseX + (double)Main.screenPosition.X) / 16;
                             var j = (int)((double)Main.mouseY + (double)Main.screenPosition.Y) / 16;
-                            if ((double)player.gravDir == -1.0)
+                            if ((double)Player.gravDir == -1.0)
                                 j = (int)((double)Main.screenPosition.Y + (double)Main.screenHeight -
                                            (double)Main.mouseY) / 16;
                             if (!flag4)
@@ -898,7 +898,7 @@ namespace SOTS.Items.Celestial
 
                             Projectile.NewProjectile((float)Main.mouseX + Main.screenPosition.X, (float)(j * 16 - 24),
                                 0.0f, 15f, shoot, Damage, num1, i, 0.0f, 0.0f);
-                            player.UpdateMaxTurrets();
+                            Player.UpdateMaxTurrets();
                         }
                         else if (sItem.type == 1244 || sItem.type == 1256)
                         {
@@ -946,7 +946,7 @@ namespace SOTS.Items.Celestial
                                 ++num8;
                             if (Main.rand.Next(6) == 0)
                                 ++num8;
-                            if (player.strongBees && Main.rand.Next(3) == 0)
+                            if (Player.strongBees && Main.rand.Next(3) == 0)
                                 ++num8;
                             for (var index1 = 0; index1 < num8; ++index1)
                             {
@@ -955,8 +955,8 @@ namespace SOTS.Items.Celestial
                                 var SpeedX = num9 + (float)Main.rand.Next(-35, 36) * 0.02f;
                                 var SpeedY = num10 + (float)Main.rand.Next(-35, 36) * 0.02f;
                                 var index2 = Projectile.NewProjectile(vector2_1.X, vector2_1.Y, SpeedX, SpeedY,
-                                    player.beeType(), player.beeDamage(Damage), player.beeKB(num1), i, 0.0f, 0.0f);
-                                Main.projectile[index2].magic = true;
+                                    Player.beeType(), Player.beeDamage(Damage), Player.beeKB(num1), i, 0.0f, 0.0f);
+                                Main.projectile[index2].DamageType = DamageClass.Magic;
                             }
                         }
                         else if (sItem.type == 1155)
@@ -1193,7 +1193,7 @@ namespace SOTS.Items.Celestial
                         {
                             for (var index = 0; index < 1000; ++index)
                             {
-                                if (Main.projectile[index].active && Main.projectile[index].owner == player.whoAmI)
+                                if (Main.projectile[index].active && Main.projectile[index].owner == Player.whoAmI)
                                 {
                                     if (sItem.shoot == 72)
                                     {
@@ -1214,7 +1214,7 @@ namespace SOTS.Items.Celestial
                             Vector2 vector2_4;
                             vector2_4.X = (float)Main.mouseX + Main.screenPosition.X;
                             vector2_4.Y = (float)Main.mouseY + Main.screenPosition.Y;
-                            while (Collision.CanHitLine(player.position, player.width, player.height, vector2_1, 1, 1))
+                            while (Collision.CanHitLine(Player.position, Player.width, Player.height, vector2_1, 1, 1))
                             {
                                 vector2_1.X += num6;
                                 vector2_1.Y += num7;
@@ -1233,7 +1233,7 @@ namespace SOTS.Items.Celestial
                             Vector2 vector2_4;
                             vector2_4.X = (float)Main.mouseX + Main.screenPosition.X;
                             vector2_4.Y = (float)Main.mouseY + Main.screenPosition.Y;
-                            while (Collision.CanHitLine(player.position, player.width, player.height, vector2_1, 1, 1))
+                            while (Collision.CanHitLine(Player.position, Player.width, Player.height, vector2_1, 1, 1))
                             {
                                 vector2_1.X += num6;
                                 vector2_1.Y += num7;
@@ -1251,9 +1251,9 @@ namespace SOTS.Items.Celestial
                             var num8 = j1;
                             while (j1 < Main.maxTilesY - 10 && j1 - num8 < 30 &&
                                    (!WorldGen.SolidTile(i1, j1) &&
-                                    !TileID.Sets.Platforms[(int)Main.tile[i1, j1].type]))
+                                    !TileID.Sets.Platforms[(int)Main.tile[i1, j1].TileType]))
                                 ++j1;
-                            if (!WorldGen.SolidTile(i1, j1) && !TileID.Sets.Platforms[(int)Main.tile[i1, j1].type])
+                            if (!WorldGen.SolidTile(i1, j1) && !TileID.Sets.Platforms[(int)Main.tile[i1, j1].TileType])
                                 flag4 = true;
                             var num9 = (float)(j1 * 16);
                             var j2 = num8;
@@ -1286,7 +1286,7 @@ namespace SOTS.Items.Celestial
                         }
                         else if (sItem.type == 3858)
                         {
-                            var flag4 = player.altFunctionUse == 2;
+                            var flag4 = Player.altFunctionUse == 2;
                             var velocity = new Vector2(num6, num7);
                             if (flag4)
                             {
@@ -1426,19 +1426,19 @@ namespace SOTS.Items.Celestial
                             var num9 = num7;
                             var num10 = num8 + (float)Main.rand.Next(-1, 2) * 0.5f;
                             var num11 = num9 + (float)Main.rand.Next(-1, 2) * 0.5f;
-                            if (Collision.CanHitLine(player.Center, 0, 0, vector2_1 + new Vector2(num10, num11) * 2f, 0,
+                            if (Collision.CanHitLine(Player.Center, 0, 0, vector2_1 + new Vector2(num10, num11) * 2f, 0,
                                 0))
                                 vector2_1 += new Vector2(num10, num11);
-                            Projectile.NewProjectile(vector2_1.X, vector2_1.Y - player.gravDir * 4f, num10, num11, shoot,
+                            Projectile.NewProjectile(vector2_1.X, vector2_1.Y - Player.gravDir * 4f, num10, num11, shoot,
                                 Damage, num1, i, 0.0f, (float)Main.rand.Next(12) / 6f);
                         }
                         else
                         {
                             int index = Projectile.NewProjectile(vector2_1.X, vector2_1.Y, num6, num7, shoot, Damage, num1, i, 0.0f, 0.0f);
                             if (sItem.type == 726)
-                                Main.projectile[index].magic = true;
+                                Main.projectile[index].DamageType = DamageClass.Magic;
                             if (sItem.type == 724 || sItem.type == 676)
-                                Main.projectile[index].melee = true;
+                                Main.projectile[index].DamageType = DamageClass.Melee;
                             if (shoot == 80)
                             {
                                 Main.projectile[index].ai[0] = Player.tileTargetX;
@@ -1449,7 +1449,7 @@ namespace SOTS.Items.Celestial
                                 Main.projectile[index].ai[0] = Player.tileTargetX;
                                 Main.projectile[index].ai[1] = Player.tileTargetY;
                             }
-                            if ((player.thrownCost50 || player.thrownCost33) && player.inventory[player.selectedItem].thrown)
+                            if ((Player.thrownCost50 || Player.thrownCost33) && Player.inventory[Player.selectedItem].thrown)
                                 Main.projectile[index].noDropItem = true;
                         }
                     }
@@ -1459,20 +1459,20 @@ namespace SOTS.Items.Celestial
                     }
                 }
             }
-            player.position = temp;
+            Player.position = temp;
         }
         public Vector2 UseVanillaItemAnimation(Vector2 Center, Item sItem, int itemAnimation, int maxAnimation, ref int direction, ref float itemRotation)
         {
-            if (sItem.mana > 0 && (sItem.type != (int)sbyte.MaxValue || !player.spaceGun))
-                player.manaRegenDelay = (int)player.maxRegenDelay;
+            if (sItem.mana > 0 && (sItem.type != (int)sbyte.MaxValue || !Player.spaceGun))
+                Player.manaRegenDelay = (int)Player.maxRegenDelay;
             Vector2 itemLocation = Center;
             if (sItem.useStyle == 1)
             {
                 itemLocation = Center -= new Vector2(0, 22);
                 if(itemAnimation == maxAnimation)
                 { 
-                    var vector2_1 = player.RotatedRelativePoint(Center, true);
-                    var vector2_2 = Vector2.UnitX.RotatedBy(player.fullRotation, new Vector2());
+                    var vector2_1 = Player.RotatedRelativePoint(Center, true);
+                    var vector2_2 = Vector2.UnitX.RotatedBy(Player.fullRotation, new Vector2());
                     var v1 = Main.MouseWorld - vector2_1;
                     var vector2_3 = itemRotation.ToRotationVector2() * direction;
                     if (sItem.type == ItemID.BookStaff)// && player.itemAnimation != player.maxAnimation - 1)
@@ -1702,7 +1702,7 @@ namespace SOTS.Items.Celestial
                         r.Height = (int)((double)r.Height * 0.6);
                     }
                 }
-                ItemLoader.MeleeEffects(sItem, player, r);
+                ItemLoader.MeleeEffects(sItem, Player, r);
                 if (sItem.type == ItemID.NebulaBlaze)
                     flag2 = true;
                 if (sItem.type == ItemID.SpiritFlame)
@@ -1957,64 +1957,64 @@ namespace SOTS.Items.Celestial
                             (int)(((double)itemLocation.X + 6.0 + (double)Velocity.X) / 16.0),
                             (int)(((double)itemLocation.Y - 14.0) / 16.0), R, G, B);
                     }
-                    if (Main.myPlayer == player.whoAmI && sItem.damage > 0)
+                    if (Main.myPlayer == Player.whoAmI && sItem.damage > 0)
                     {
                         var num1 = sItem.damage;
                         if (sItem.melee)
-                            num1 = (int)(sItem.damage * player.meleeDamage);
+                            num1 = (int)(sItem.damage * Player.GetDamage(DamageClass.Melee));
                         if (sItem.ranged)
-                            num1 = (int)(sItem.damage * player.rangedDamage);
+                            num1 = (int)(sItem.damage * Player.GetDamage(DamageClass.Ranged));
                         if (sItem.magic)
-                            num1 = (int)(sItem.damage * player.magicDamage);
+                            num1 = (int)(sItem.damage * Player.GetDamage(DamageClass.Magic));
                         if (sItem.summon)
-                            num1 = (int)(sItem.damage * player.minionDamage);
+                            num1 = (int)(sItem.damage * Player.GetDamage(DamageClass.Summon));
                         if (sItem.thrown)
-                            num1 = (int)(sItem.damage * player.thrownDamage);
+                            num1 = (int)(sItem.damage * Player.GetDamage(DamageClass.Throwing));
                         var knockBack = sItem.knockBack;
                         var num2 = 1f;
-                        if (player.kbGlove)
+                        if (Player.kbGlove)
                             ++num2;
-                        if (player.kbBuff)
+                        if (Player.kbBuff)
                             num2 += 0.5f;
                         var num3 = knockBack * num2;
                         if (sItem.type != ItemID.GoldenBugNet)
                         {
                             for (var index1 = 0; index1 < 200; ++index1)
                             {
-                                if (Main.npc[index1].active && Main.npc[index1].immune[player.whoAmI] == 0)
+                                if (Main.npc[index1].active && Main.npc[index1].immune[Player.whoAmI] == 0)
                                 {
                                     if (!Main.npc[index1].dontTakeDamage)
                                     {
                                         if (!Main.npc[index1].friendly ||
-                                            Main.npc[index1].type == NPCID.Guide && player.killGuide ||
-                                            Main.npc[index1].type == NPCID.Clothier && player.killClothier)
+                                            Main.npc[index1].type == NPCID.Guide && Player.killGuide ||
+                                            Main.npc[index1].type == NPCID.Clothier && Player.killClothier)
                                         {
                                             var rectangle = new Rectangle((int)Main.npc[index1].position.X, (int)Main.npc[index1].position.Y, Main.npc[index1].width, Main.npc[index1].height);
                                             if (r.Intersects(rectangle))
                                             {
                                                 var crit = false;
-                                                if (sItem.melee && Main.rand.Next(1, 101) <= player.meleeCrit)
+                                                if (sItem.melee && Main.rand.Next(1, 101) <= Player.GetCritChance(DamageClass.Melee))
                                                     crit = true;
-                                                if (sItem.ranged && Main.rand.Next(1, 101) <= player.rangedCrit)
+                                                if (sItem.ranged && Main.rand.Next(1, 101) <= Player.GetCritChance(DamageClass.Ranged))
                                                     crit = true;
-                                                if (sItem.magic && Main.rand.Next(1, 101) <= player.magicCrit)
+                                                if (sItem.magic && Main.rand.Next(1, 101) <= Player.GetCritChance(DamageClass.Magic))
                                                     crit = true;
-                                                if (sItem.thrown && Main.rand.Next(1, 101) <= player.thrownCrit)
+                                                if (sItem.thrown && Main.rand.Next(1, 101) <= Player.GetCritChance(DamageClass.Throwing))
                                                     crit = true;
                                                 var banner = Item.NPCtoBanner(Main.npc[index1].BannerID());
-                                                if (banner > 0 && player.NPCBannerBuff[banner])
+                                                if (banner > 0 && Player.NPCBannerBuff[banner])
                                                     num1 = !Main.expertMode ? (int)(num1 * ItemID.Sets.BannerStrength[Item.BannerToItem(banner)].NormalDamageDealt) : (int)(num1 * ItemID.Sets.BannerStrength[Item.BannerToItem(banner)].ExpertDamageDealt);
                                                 var num8 = Main.DamageVar((float)num1);
-                                                player.OnHit(Main.npc[index1].Center.X, Main.npc[index1].Center.Y, Main.npc[index1]);
-                                                if (player.armorPenetration > 0)
-                                                    num8 += Main.npc[index1].checkArmorPenetration(player.armorPenetration);
-                                                NPCLoader.ModifyHitByItem(Main.npc[index1], player, sItem, ref num8, ref num3, ref crit);
-                                                PlayerHooks.ModifyHitNPC(player, sItem, Main.npc[index1], ref num8, ref num3, ref crit);
+                                                Player.OnHit(Main.npc[index1].Center.X, Main.npc[index1].Center.Y, Main.npc[index1]);
+                                                if (Player.armorPenetration > 0)
+                                                    num8 += Main.npc[index1].checkArmorPenetration(Player.armorPenetration);
+                                                NPCLoader.ModifyHitByItem(Main.npc[index1], Player, sItem, ref num8, ref num3, ref crit);
+                                                PlayerHooks.ModifyHitNPC(Player, sItem, Main.npc[index1], ref num8, ref num3, ref crit);
                                                 var num9 = (int)Main.npc[index1].StrikeNPC(num8, num3, direction, crit, false, false);
-                                                ItemLoader.OnHitNPC(sItem, player, Main.npc[index1], num8, knockBack, crit);
-                                                NPCLoader.OnHitByItem(Main.npc[index1], player, sItem, num8, num3, crit);
-                                                PlayerHooks.OnHitNPC(player, sItem, Main.npc[index1], num8, num3, crit);
-                                                player.StatusNPC(sItem.type, index1);
+                                                ItemLoader.OnHitNPC(sItem, Player, Main.npc[index1], num8, knockBack, crit);
+                                                NPCLoader.OnHitByItem(Main.npc[index1], Player, sItem, num8, num3, crit);
+                                                PlayerHooks.OnHitNPC(Player, sItem, Main.npc[index1], num8, num3, crit);
+                                                Player.StatusNPC(sItem.type, index1);
                                                 if (sItem.type == ItemID.Bladetongue)
                                                 {
                                                     var vector2_1 = new Vector2((direction * 100 + Main.rand.Next(-25, 26)), Main.rand.Next(-75, 76));
@@ -2024,14 +2024,14 @@ namespace SOTS.Items.Celestial
                                                         (float)(r.X + Main.rand.Next(r.Width)),
                                                         (float)(r.Y + Main.rand.Next(r.Height)));
                                                     vector2_2 = (vector2_2 + Main.npc[index1].Center * 2f) / 3f;
-                                                    Projectile.NewProjectile(vector2_2.X, vector2_2.Y, vector2_1.X, vector2_1.Y, ProjectileID.IchorSplash, (int)((double)num1 * 0.7), num3 * 0.7f, player.whoAmI, 0.0f, 0.0f);
+                                                    Projectile.NewProjectile(vector2_2.X, vector2_2.Y, vector2_1.X, vector2_1.Y, ProjectileID.IchorSplash, (int)((double)num1 * 0.7), num3 * 0.7f, Player.whoAmI, 0.0f, 0.0f);
                                                 }
 
                                                 var flag3 = !Main.npc[index1].immortal;
-                                                if (player.beetleOffense && flag3)
+                                                if (Player.beetleOffense && flag3)
                                                 {
-                                                    player.beetleCounter += (float)num9;
-                                                    player.beetleCountdown = 0;
+                                                    Player.beetleCounter += (float)num9;
+                                                    Player.beetleCountdown = 0;
                                                 }
 
                                                 if (sItem.type == 1826 && (Main.npc[index1].value > 0.0 || Main.npc[index1].damage > 0 && !Main.npc[index1].friendly)) pumpkinSword(index1, (int)((double)num1 * 1.5), num3);
@@ -2039,7 +2039,7 @@ namespace SOTS.Items.Celestial
                                                 if (sItem.type == 1123 && flag3)
                                                 {
                                                     var num10 = Main.rand.Next(1, 4);
-                                                    if (player.strongBees && Main.rand.Next(3) == 0)
+                                                    if (Player.strongBees && Main.rand.Next(3) == 0)
                                                         ++num10;
                                                     for (var index2 = 0; index2 < num10; ++index2)
                                                     {
@@ -2049,11 +2049,11 @@ namespace SOTS.Items.Celestial
                                                         var num12 = (float)Main.rand.Next(-35, 36) * 0.02f;
                                                         var SpeedX = num11 * 0.2f;
                                                         var SpeedY = num12 * 0.2f;
-                                                        Projectile.NewProjectile((float)(r.X + r.Width / 2), (float)(r.Y + r.Height / 2), SpeedX, SpeedY,player.beeType(), player.beeDamage(num8 / 3), player.beeKB(0.0f), player.whoAmI, 0.0f, 0.0f);
+                                                        Projectile.NewProjectile((float)(r.X + r.Width / 2), (float)(r.Y + r.Height / 2), SpeedX, SpeedY,Player.beeType(), Player.beeDamage(num8 / 3), Player.beeKB(0.0f), Player.whoAmI, 0.0f, 0.0f);
                                                     }
                                                 }
 
-                                                if (Main.npc[index1].value > 0.0 && player.coins && Main.rand.Next(5) == 0)
+                                                if (Main.npc[index1].value > 0.0 && Player.coins && Main.rand.Next(5) == 0)
                                                 {
                                                     var Type = 71;
                                                     if (Main.rand.Next(10) == 0)
@@ -2070,7 +2070,7 @@ namespace SOTS.Items.Celestial
 
                                                 var num13 = Item.NPCtoBanner(Main.npc[index1].BannerID());
                                                 if (num13 >= 0)
-                                                    player.lastCreatureHit = num13;
+                                                    Player.lastCreatureHit = num13;
                                                 if (Main.netMode != 0)
                                                 {
                                                     if (crit)
@@ -2079,38 +2079,38 @@ namespace SOTS.Items.Celestial
                                                         NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, index1, num8, num3, direction, 0, 0, 0);
                                                 }
 
-                                                if (player.accDreamCatcher)
-                                                    player.addDPS(num8);
-                                                Main.npc[index1].immune[player.whoAmI] = itemAnimation;
+                                                if (Player.accDreamCatcher)
+                                                    Player.addDPS(num8);
+                                                Main.npc[index1].immune[Player.whoAmI] = itemAnimation;
                                             }
                                         }
                                     }
                                 }
                             }
 
-                            if (player.hostile)
+                            if (Player.hostile)
                             {
                                 for (var index1 = 0; index1 < (int)byte.MaxValue; ++index1)
                                 {
-                                    if (index1 != player.whoAmI && Main.player[index1].active && Main.player[index1].hostile && !Main.player[index1].immune && !Main.player[index1].dead && (Main.player[player.whoAmI].team == 0 || Main.player[player.whoAmI].team != Main.player[index1].team))
+                                    if (index1 != Player.whoAmI && Main.player[index1].active && Main.player[index1].hostile && !Main.player[index1].immune && !Main.player[index1].dead && (Main.player[Player.whoAmI].team == 0 || Main.player[Player.whoAmI].team != Main.player[index1].team))
                                     {
                                         var rectangle = new Rectangle((int)Main.player[index1].position.X, (int)Main.player[index1].position.Y, Main.player[index1].width, Main.player[index1].height);
-                                        if (r.Intersects(rectangle) && player.CanHit((Entity)Main.player[index1]))
+                                        if (r.Intersects(rectangle) && Player.CanHit((Entity)Main.player[index1]))
                                         {
                                             var flag3 = false;
                                             if (Main.rand.Next(1, 101) <= 10)
                                                 flag3 = true;
                                             var num8 = Main.DamageVar((float)num1);
-                                            player.StatusPvP(sItem.type, index1);
-                                            player.OnHit(Main.player[index1].Center.X, Main.player[index1].Center.Y,
+                                            Player.StatusPvP(sItem.type, index1);
+                                            Player.OnHit(Main.player[index1].Center.X, Main.player[index1].Center.Y,
                                                 (Entity)Main.player[index1]);
-                                            var playerDeathReason = PlayerDeathReason.ByPlayer(player.whoAmI);
-                                            ItemLoader.ModifyHitPvp(sItem, player, Main.player[index1], ref num8, ref flag3);
-                                            PlayerHooks.ModifyHitPvp(player, sItem, Main.player[index1], ref num8, ref flag3);
+                                            var playerDeathReason = PlayerDeathReason.ByPlayer(Player.whoAmI);
+                                            ItemLoader.ModifyHitPvp(sItem, Player, Main.player[index1], ref num8, ref flag3);
+                                            PlayerHooks.ModifyHitPvp(Player, sItem, Main.player[index1], ref num8, ref flag3);
                                             var num9 = (int)Main.player[index1].Hurt(playerDeathReason, num8, direction, true, false, flag3, -1);
-                                            ItemLoader.OnHitPvp(sItem, player, Main.player[index1], num8, flag3);
-                                            PlayerHooks.OnHitPvp(player, sItem, Main.player[index1], num8, flag3);
-                                            player.StatusPvP(sItem.type, index1);
+                                            ItemLoader.OnHitPvp(sItem, Player, Main.player[index1], num8, flag3);
+                                            PlayerHooks.OnHitPvp(Player, sItem, Main.player[index1], num8, flag3);
+                                            Player.StatusPvP(sItem.type, index1);
                                             if (sItem.type == ItemID.Bladetongue)
                                             {
                                                 var vector2_1 = new Vector2(
@@ -2121,18 +2121,18 @@ namespace SOTS.Items.Celestial
                                                 var vector2_2 = new Vector2((float)(r.X + Main.rand.Next(r.Width)),
                                                     (float)(r.Y + Main.rand.Next(r.Height)));
                                                 vector2_2 = (vector2_2 + Main.player[index1].Center * 2f) / 3f;
-                                                Projectile.NewProjectile(vector2_2.X, vector2_2.Y, vector2_1.X, vector2_1.Y, ProjectileID.IchorSplash, (int)((double)num1 * 0.7), num3 * 0.7f, player.whoAmI, 0.0f, 0.0f);
+                                                Projectile.NewProjectile(vector2_2.X, vector2_2.Y, vector2_1.X, vector2_1.Y, ProjectileID.IchorSplash, (int)((double)num1 * 0.7), num3 * 0.7f, Player.whoAmI, 0.0f, 0.0f);
                                             }
 
-                                            if (player.beetleOffense)
+                                            if (Player.beetleOffense)
                                             {
-                                                player.beetleCounter += (float)num9;
-                                                player.beetleCountdown = 0;
+                                                Player.beetleCounter += (float)num9;
+                                                Player.beetleCountdown = 0;
                                             }
                                             if (sItem.type == ItemID.BeeKeeper)
                                             {
                                                 var num10 = Main.rand.Next(1, 4);
-                                                if (player.strongBees && Main.rand.Next(3) == 0)
+                                                if (Player.strongBees && Main.rand.Next(3) == 0)
                                                     ++num10;
                                                 for (var index2 = 0; index2 < num10; ++index2)
                                                 {
@@ -2142,7 +2142,7 @@ namespace SOTS.Items.Celestial
                                                     var num12 = (float)Main.rand.Next(-35, 36) * 0.02f;
                                                     var SpeedX = num11 * 0.2f;
                                                     var SpeedY = num12 * 0.2f;
-                                                    Projectile.NewProjectile(r.X + r.Width / 2, r.Y + r.Height / 2, SpeedX, SpeedY, player.beeType(), player.beeDamage(num8 / 3), player.beeKB(0.0f), player.whoAmI, 0.0f, 0.0f);
+                                                    Projectile.NewProjectile(r.X + r.Width / 2, r.Y + r.Height / 2, SpeedX, SpeedY, Player.beeType(), Player.beeDamage(num8 / 3), Player.beeKB(0.0f), Player.whoAmI, 0.0f, 0.0f);
                                                 }
                                             }
                                             //if (sItem.type == ItemID.TheHorsemansBlade && Main.npc[index1].value > 0.0)
@@ -2199,7 +2199,7 @@ namespace SOTS.Items.Celestial
                                 var num13 = num9 * 1.5f;
                                 var num14 = num11 * (float)direction;
                                 var num15 = num10;
-                                Projectile.NewProjectile((float)(r.X + r.Width / 2) + num14, (float)(r.Y + r.Height / 2) + num15, (float)direction * num13, num12 , ProjectileID.Mushroom, num1 / 2, 0.0f, player.whoAmI, 0.0f, 0.0f);
+                                Projectile.NewProjectile((float)(r.X + r.Width / 2) + num14, (float)(r.Y + r.Height / 2) + num15, (float)direction * num13, num12 , ProjectileID.Mushroom, num1 / 2, 0.0f, Player.whoAmI, 0.0f, 0.0f);
                             }
                         }
                     }
@@ -2218,8 +2218,8 @@ namespace SOTS.Items.Celestial
             var num4 = Main.rand.Next(2) != 0
                 ? num2 + (checkScreenHeight / 2 - num2)
                 : num2 - (checkScreenHeight / 2 + num2);
-            var num5 = num3 + (int)player.Center.X;
-            var num6 = num4 + (int)player.Center.Y;
+            var num5 = num3 + (int)Player.Center.X;
+            var num6 = num4 + (int)Player.Center.Y;
             var num7 = 8f;
             var vector2 = new Vector2(num5, num6);
             var num8 = Main.npc[i].Center.X - vector2.X;
@@ -2228,7 +2228,7 @@ namespace SOTS.Items.Celestial
             var num11 = num7 / num10;
             var SpeedX = num8 * num11;
             var SpeedY = num9 * num11;
-            Projectile.NewProjectile(num5, num6, SpeedX, SpeedY, ProjectileID.FlamingJack, dmg, kb, player.whoAmI, i, 0.0f);
+            Projectile.NewProjectile(num5, num6, SpeedX, SpeedY, ProjectileID.FlamingJack, dmg, kb, Player.whoAmI, i, 0.0f);
         }
         public void PickAmmo(Item sItem, ref int shoot, ref float speed, ref bool canShoot, ref int Damage, ref float KnockBack, bool dontConsume = false)
         {
@@ -2236,9 +2236,9 @@ namespace SOTS.Items.Celestial
             var flag1 = false;
             for (var index = 54; index < 58; ++index)
             {
-                if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                if (Player.inventory[index].ammo == sItem.useAmmo && Player.inventory[index].stack > 0)
                 {
-                    obj = player.inventory[index];
+                    obj = Player.inventory[index];
                     canShoot = true;
                     flag1 = true;
                     break;
@@ -2249,9 +2249,9 @@ namespace SOTS.Items.Celestial
             {
                 for (var index = 0; index < 54; ++index)
                 {
-                    if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                    if (Player.inventory[index].ammo == sItem.useAmmo && Player.inventory[index].stack > 0)
                     {
-                        obj = player.inventory[index];
+                        obj = Player.inventory[index];
                         canShoot = true;
                         break;
                     }
@@ -2297,7 +2297,7 @@ namespace SOTS.Items.Celestial
 
             if (sItem.type == ItemID.BeesKnees && shoot == 1)
                 shoot = 469;
-            if (player.magicQuiver && (sItem.useAmmo == AmmoID.Arrow || sItem.useAmmo == AmmoID.Stake))
+            if (Player.magicQuiver && (sItem.useAmmo == AmmoID.Arrow || sItem.useAmmo == AmmoID.Stake))
             {
                 KnockBack = (float)(int)((double)KnockBack * 1.1);
                 speed *= 1.1f;
@@ -2307,12 +2307,12 @@ namespace SOTS.Items.Celestial
             if (obj.ranged)
             {
                 if (obj.damage > 0)
-                    Damage += (int)((double)obj.damage * (double)player.rangedDamage);
+                    Damage += (int)((double)obj.damage * (double)Player.GetDamage(DamageClass.Ranged));
             }
             else
                 Damage += obj.damage;
 
-            if (sItem.useAmmo == AmmoID.Arrow && player.archery)
+            if (sItem.useAmmo == AmmoID.Arrow && Player.archery)
             {
                 if ((double)speed < 20.0)
                 {
@@ -2330,11 +2330,11 @@ namespace SOTS.Items.Celestial
                 flag2 = true;
             if (sItem.type == 3540 && Main.rand.Next(3) != 0)
                 flag2 = true;
-            if (player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
+            if (Player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
                 flag2 = true;
-            if (player.ammoBox && Main.rand.Next(5) == 0)
+            if (Player.ammoBox && Main.rand.Next(5) == 0)
                 flag2 = true;
-            if (player.ammoPotion && Main.rand.Next(5) == 0)
+            if (Player.ammoPotion && Main.rand.Next(5) == 0)
                 flag2 = true;
             if (sItem.type == 1782 && Main.rand.Next(3) == 0)
                 flag2 = true;
@@ -2348,16 +2348,16 @@ namespace SOTS.Items.Celestial
                 flag2 = true;
             if (sItem.type == 1553 && Main.rand.Next(2) == 0)
                 flag2 = true;
-            if (sItem.type == 434 && player.itemAnimation < sItem.useAnimation - 2)
+            if (sItem.type == 434 && Player.itemAnimation < sItem.useAnimation - 2)
                 flag2 = true;
-            if (player.ammoCost80 && Main.rand.Next(5) == 0)
+            if (Player.ammoCost80 && Main.rand.Next(5) == 0)
                 flag2 = true;
-            if (player.ammoCost75 && Main.rand.Next(4) == 0)
+            if (Player.ammoCost75 && Main.rand.Next(4) == 0)
                 flag2 = true;
-            if (shoot == 85 && player.itemAnimation < player.itemAnimationMax - 6)
+            if (shoot == 85 && Player.itemAnimation < Player.itemAnimationMax - 6)
                 flag2 = true;
             if ((shoot == 145 || shoot == 146 || (shoot == 147 || shoot == 148) || shoot == 149) &&
-                player.itemAnimation < player.itemAnimationMax - 5)
+                Player.itemAnimation < Player.itemAnimationMax - 5)
                 flag2 = true;
             if (flag2 || !obj.consumable)
                 return;

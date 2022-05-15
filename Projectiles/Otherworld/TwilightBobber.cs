@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Otherworld
                 int type = Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].type;
                 float gravDir = Main.player[Projectile.owner].gravDir;
 
-                if (type == mod.ItemType("TwilightFishingPole"))
+                if (type == Mod.Find<ModItem>("TwilightFishingPole").Type)
                 {
                     pPosX += (float)(43 * Main.player[Projectile.owner].direction);
                     if (Main.player[Projectile.owner].direction < 0)

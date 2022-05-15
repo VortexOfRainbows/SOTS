@@ -44,7 +44,7 @@ namespace SOTS.NPCs
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 48, 56), drawColor, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/BleedingGhastGlow");
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 48, 56), Color.White, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
@@ -75,7 +75,6 @@ namespace SOTS.NPCs
 				Main.dust[num1].velocity.Y = -3 + i * 1.5f;
 				Main.dust[num1].scale *= 1.25f + i * 0.15f;
 			}
-			int damage = SOTSNPCs.GetBaseDamage(NPC) / 2;
 			ai1++;
 			if (ai1 >= 600)
 			{
@@ -96,6 +95,7 @@ namespace SOTS.NPCs
 			}*/
 			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(75))
 			{
+				int damage = SOTSNPCs.GetBaseDamage(NPC) / 2;
 				Vector2 spawn = (NPC.position + new Vector2(8, 8) + new Vector2(Main.rand.Next(NPC.width - 16), Main.rand.Next(NPC.height - 16)));
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, NPC.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ModContent.ProjectileType<GhastDrop>(), damage, 1f, Main.myPlayer, -2, -1f);
 			}

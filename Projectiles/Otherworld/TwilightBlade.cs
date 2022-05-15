@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.friendly = false;
 			Projectile.timeLeft = 900;
 			Projectile.tileCollide = false;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.hostile = false;
 			Projectile.netImportant = true;
 			Projectile.alpha = 200;
@@ -65,7 +65,7 @@ namespace SOTS.Projectiles.Otherworld
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.65f, 0.75f);
 			Player player  = Main.player[Projectile.owner];
 			BladePlayer bladePlayer = player.GetModPlayer<BladePlayer>();
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (player.dead)
 			{
 				Projectile.Kill();
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile proj = Main.projectile[i];
 				if(Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && proj.timeLeft > 748 && Projectile.timeLeft > 748)
 				{
-					if(proj == projectile)
+					if(proj == Projectile)
 					{
 						found = true;
 					}

@@ -158,13 +158,13 @@ namespace SOTS.Projectiles.Celestial
 				if (player.ZoneUnderworldHeight)
 				{
 					SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
-					if (!NPC.AnyNPCs(mod.NPCType("SubspaceSerpentHead")))
+					if (!NPC.AnyNPCs(Mod.Find<ModNPC>("SubspaceSerpentHead").Type))
 					{
-						NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("SubspaceSerpentHead"));
+						NPC.SpawnOnPlayer(player.whoAmI, Mod.Find<ModNPC>("SubspaceSerpentHead").Type);
 						for (int king = 0; king < 200; king++)
 						{
 							NPC npc = Main.npc[king];
-							if (npc.type == mod.NPCType("SubspaceSerpentHead"))
+							if (npc.type == Mod.Find<ModNPC>("SubspaceSerpentHead").Type)
 							{
 								npc.position.X = Projectile.Center.X - npc.width / 2;
 								npc.position.Y = Projectile.Center.Y - npc.height / 2;

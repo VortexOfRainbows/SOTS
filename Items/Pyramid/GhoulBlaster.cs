@@ -35,16 +35,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.PhoenixBlaster, 1);
-			recipe.AddIngredient(null, "RoyalMagnum", 1);
-			recipe.AddIngredient(null, "CursedMatter", 4);
-			recipe.AddIngredient(null, "SoulResidue", 12);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddIngredient(ItemID.Ruby, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.PhoenixBlaster, 1).AddIngredient(null, "RoyalMagnum", 1).AddIngredient(null, "CursedMatter", 4).AddIngredient(null, "SoulResidue", 12).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override Vector2? HoldoutOffset()
 		{
@@ -63,7 +54,7 @@ namespace SOTS.Items.Pyramid
 			{
 				SoundEngine.PlaySound(SoundID.Item38, (int)(position.X), (int)(position.Y));
 				shotNum = 0;
-				Projectile.NewProjectile(position.X, position.Y, speedX * 0.9f, speedY * 0.9f, mod.ProjectileType("CurseSingularity"), damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(position.X, position.Y, speedX * 0.9f, speedY * 0.9f, Mod.Find<ModProjectile>("CurseSingularity").Type, damage, knockBack, player.whoAmI);
 				return false;
 			}
 			return true; 

@@ -25,12 +25,12 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("CursedHiveSafe");
+			Item.createTile = Mod.Find<ModTile>("CursedHiveSafe").Type;
 		}
 	}
 	public class CursedHiveSafe : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;
@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("CursedHiveBlock");
+			drop = Mod.Find<ModItem>("CursedHiveBlock").Type;
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
 			soundType = SoundID.Tink;
@@ -49,7 +49,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j ].TileType == mod.TileType("CursedHive"))
+			if (Main.tile[i, j ].TileType == Mod.Find<ModTile>("CursedHive").Type)
 			{
 				return true;
 			}
@@ -65,14 +65,14 @@ namespace SOTS.Items.Pyramid
 	}
 	public class CursedHive : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("CursedHiveBlock");
+			drop = Mod.Find<ModItem>("CursedHiveBlock").Type;
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
 			soundType = SoundID.Tink;
@@ -91,7 +91,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j ].TileType == mod.TileType("CursedHive"))
+			if (Main.tile[i, j ].TileType == Mod.Find<ModTile>("CursedHive").Type)
 			{
 				return true;
 			}
@@ -129,7 +129,7 @@ namespace SOTS.Items.Pyramid
 		{
 			if(Projectile.ai[0] == -1)
 			{
-				if (!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
+				if (!NPC.AnyNPCs(Mod.Find<ModNPC>("PharaohsCurse").Type))
 					if (Main.netMode != 1)
 					{
 						int npc1 = NPC.NewNPC((int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, ModContent.NPCType<PharaohsCurse>());
@@ -140,7 +140,7 @@ namespace SOTS.Items.Pyramid
             {
 				if (Main.netMode != 1)
 				{
-					int npc1 = NPC.NewNPC((int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, mod.NPCType("WallMimic"));
+					int npc1 = NPC.NewNPC((int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, Mod.Find<ModNPC>("WallMimic").Type);
 					Main.npc[npc1].netUpdate = true;
 					Main.npc[npc1].ai[2] = 900;
 				}
@@ -163,13 +163,13 @@ namespace SOTS.Items.Pyramid
 							{
 								canKillTile = false;
 							}
-							if (!TileLoader.CanExplode(i, j) && (Main.tile[i, j ].TileType != (ushort)mod.TileType("PyramidSlabTile")))
+							if (!TileLoader.CanExplode(i, j) && (Main.tile[i, j ].TileType != (ushort)Mod.Find<ModTile>("PyramidSlabTile").Type))
 							{
 								canKillTile = false;
 							}
 							if (canKillTile)
 							{
-								WorldGen.KillTile(i, j, false, false, Main.tile[i, j ].TileType == (ushort)mod.TileType("CursedHive"));
+								WorldGen.KillTile(i, j, false, false, Main.tile[i, j ].TileType == (ushort)Mod.Find<ModTile>("CursedHive").Type);
 								if (!Main.tile[i, j].HasTile && Main.netMode != 0)
 								{
 									NetMessage.SendData(17, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);

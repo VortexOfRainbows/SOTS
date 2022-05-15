@@ -105,12 +105,12 @@ namespace SOTS.Projectiles.Pyramid
         {
 			if(type != -3)
 			{
-				VoidPlayer.VoidBurn(mod, target, 10, 120);
+				VoidPlayer.VoidBurn(Mod, target, 10, 120);
 				target.AddBuff(type == -1 ? BuffID.CursedInferno : BuffID.Ichor, 240);
 			}
 			else
 			{
-				VoidPlayer.VoidBurn(mod, target, 4, 60);
+				VoidPlayer.VoidBurn(Mod, target, 4, 60);
 			}
         }
         public override void AI()

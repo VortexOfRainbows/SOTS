@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Shattered : ModBuff
     {	
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shattered");
 			Description.SetDefault("Next hit will hurt a lot!");   

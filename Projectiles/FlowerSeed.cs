@@ -23,8 +23,8 @@ namespace SOTS.Projectiles
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.magic = true;
-			Projectile.ranged = false;
+			Projectile.DamageType = DamageClass.Magic;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.alpha = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
@@ -160,7 +160,7 @@ namespace SOTS.Projectiles
 			}
 			Projectile.netUpdate = true;
         }
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) 
 		{
 			width = 2;
 			height = 2;

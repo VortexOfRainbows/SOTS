@@ -21,7 +21,7 @@ namespace SOTS.Items.Nature
 			Item.useTime = 29;
 			Item.useAnimation = 29;
 			Item.DamageType = DamageClass.Ranged;
-			Item.thrown = false;
+			// Item.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.width = 28;
@@ -47,14 +47,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<BerryBombs>(), 1);
-			recipe.AddIngredient(ItemID.JungleSpores, 12);
-			recipe.AddIngredient(ItemID.Stinger, 12);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6).AddIngredient(ModContent.ItemType<BerryBombs>(), 1).AddIngredient(ItemID.JungleSpores, 12).AddIngredient(ItemID.Stinger, 12).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

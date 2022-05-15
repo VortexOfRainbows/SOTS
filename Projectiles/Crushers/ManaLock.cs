@@ -23,14 +23,14 @@ namespace SOTS.Projectiles.Crushers
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 43;
 			Projectile.width = 43;
 			Projectile.penetrate = 1;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 60;
 			Projectile.tileCollide = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.hostile = false;
 			Projectile.alpha = 255;
 		}
@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Crushers
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 1, 0, player.whoAmI, (int)Projectile.ai[0], 3);	
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 1, 0, player.whoAmI, (int)Projectile.ai[0], 3);	
 			}
 			for(int i = 5; i > 0; i --)
 			{

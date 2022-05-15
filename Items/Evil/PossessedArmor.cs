@@ -43,17 +43,11 @@ namespace SOTS.Items.Evil
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 100;
-			player.rangedCrit += 10;
+			player.GetCritChance(DamageClass.Ranged) += 10;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantHelmet>(), 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantHelmet>(), 1).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -83,13 +77,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantLeggings>(), 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantLeggings>(), 1).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -117,17 +105,11 @@ namespace SOTS.Items.Evil
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidDamage += 0.15f;
-			player.rangedDamage += 0.1f;
+			player.GetDamage(DamageClass.Ranged) += 0.1f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantChestplate>(), 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantChestplate>(), 1).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

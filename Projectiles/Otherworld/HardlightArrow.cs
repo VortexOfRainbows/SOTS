@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.height = 32;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 3000;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.arrow = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -144,11 +144,11 @@ namespace SOTS.Projectiles.Otherworld
 			if (iterator >= trailPos.Length)
 				Projectile.Kill();
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 12;
 			height = 12;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         int endHow = 0;
 		public override bool OnTileCollide(Vector2 oldVelocity)

@@ -7,7 +7,7 @@ namespace SOTS.Buffs.MinionBuffs
 {
     public class Ethereal : ModBuff
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ethereal");
 			Description.SetDefault("Ethereal Flames assist you in combat");

@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.height = 26;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 510;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;

@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Crushers
 			Projectile.timeLeft = 40;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 10;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Crushers
 			if (runOnce)
 			{
 				trailPos[0] = Projectile.Center;
-				Projectile last = this.projectile;
+				Projectile last = this.Projectile;
 				bool found = false;
 				for (short i = 0; i < Main.maxProjectiles; i++)
 				{

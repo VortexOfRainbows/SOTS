@@ -4,6 +4,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.GhostTown;
 using SOTS.Items.Void;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,38 +19,38 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-			npc.CloneDefaults(NPCID.GoblinPeon);
-			aiType = NPCID.GoblinScout;
+			NPC.CloneDefaults(NPCID.GoblinPeon);
+			AIType = NPCID.GoblinScout;
 			NPC.lifeMax = 100;
 			NPC.damage = 24;
-			animationType = NPCID.GoblinPeon;
+			AnimationType = NPCID.GoblinPeon;
 			Main.npcFrameCount[NPC.type] = 16;
 			Banner = NPC.type;
 			BannerItem = ItemType<ArcticGoblinBanner>();
 		}
 		public override void AI()
 		{
-			npc.TargetClosest(true);
+			NPC.TargetClosest(true);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for (var i = 0; i < 30; ++i)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 53, 2.5f * (float)hitDirection, -2.5f, 0, new Color(), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 53, 2.5f * (float)hitDirection, -2.5f, 0, new Color(), 1f);
 				}
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/GoblinEskimoGore1"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/GoblinEskimoGore2"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/GoblinEskimoGore2"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/GoblinEskimoGore3"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/GoblinEskimoGore3"), 1f);
+				NPC.DeathGore("Gores/GoblinEskimoGore1");
+				NPC.DeathGore("Gores/GoblinEskimoGore2");
+				NPC.DeathGore("Gores/GoblinEskimoGore2");
+				NPC.DeathGore("Gores/GoblinEskimoGore3");
+				NPC.DeathGore("Gores/GoblinEskimoGore3");
 			}
 			else
 			{
-				for (int i = 0; i < damage / (float)npc.lifeMax * 50.0; i++)
+				for (int i = 0; i < damage / (float)NPC.lifeMax * 50.0; i++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 53, (float)hitDirection, -1f, 0, new Color(), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 53, (float)hitDirection, -1f, 0, new Color(), 0.8f);
 				}
 			}
 		}
@@ -57,19 +58,13 @@ namespace SOTS.NPCs
 		{
 			return 0;
 		}
-		public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.TatteredCloth, Main.rand.Next(2) + 1);
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfPermafrost>(), Main.rand.Next(2) + 1);
-
-			if(Main.rand.Next(2) == 0 || Main.expertMode)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<AncientSteelBar>(), Main.rand.Next(2) + 1);
-
-			if (Main.rand.NextBool(2) || Main.expertMode)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<StrawberryIcecream>(), 1);
-
-			if (Main.rand.NextBool(2))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SpikyBall, Main.rand.Next(1, 16));
+			npcLoot.Add(ItemDropRule.Common(ItemID.TatteredCloth, 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfPermafrost>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemID.SpikyBall, 2, 1, 15));
+			npcLoot.Add(ItemDropRule.Common(ItemType<AncientSteelBar>(), 1, 1, 1));
+			npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<StrawberryIcecream>(), 2, 1));
 		}
 	}
 }

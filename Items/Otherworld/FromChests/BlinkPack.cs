@@ -21,19 +21,19 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				foreach (TooltipLine line in tooltips) //goes through each tooltip line
 				{
-					if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
+						line.Text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
 						return;
 					}
 				}
 			}
 			foreach (TooltipLine line in tooltips) //goes through each tooltip line
 			{
-				if (line.mod == "Terraria" && line.Name == "Tooltip0")
+				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string key = "Unbound";
-					line.text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
+					line.Text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
 				}
 			}
 			base.ModifyTooltips(tooltips);
@@ -53,7 +53,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.BlinkType = 1;
-			modPlayer.BlinkDamage += (int)(Item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.BlinkDamage += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f)));
 			player.noFallDmg = true;
 		}
         public override void UpdateVanity(Player player, EquipType type)
@@ -69,12 +69,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
         public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "FragmentOfChaos", 5);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "FragmentOfChaos", 5).AddIngredient(null, "OtherworldlyAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

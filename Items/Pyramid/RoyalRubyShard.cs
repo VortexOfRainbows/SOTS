@@ -26,7 +26,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("RoyalRubyShardTile");
+			Item.createTile = Mod.Find<ModTile>("RoyalRubyShardTile").Type;
 		}
 		public override void PostUpdate()
 		{
@@ -109,64 +109,24 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Ruby, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfNature>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Emerald, 3);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Topaz, 3);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfPermafrost>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Diamond, 3);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Amethyst, 3);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Sapphire, 3);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfInferno>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Amber, 3);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Ruby);
+			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfNature>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Emerald);
+			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Topaz);
+			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfPermafrost>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Diamond);
+			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Amethyst);
+			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Sapphire);
+			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfInferno>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Amber);
 		}
 	}
 	public class RoyalRubyShardTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			drop = mod.ItemType("RoyalRubyShard");
+			drop = Mod.Find<ModItem>("RoyalRubyShard").Type;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Keystone Shard");
 			AddMapEntry(new Color(211, 69, 74), name);
@@ -257,7 +217,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public static bool TileIsCapable(Tile tile)
 		{
-			return tile.active() && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.TileType && !tile.IsActuated;
+			return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.TileType && !tile.IsActuated;
 		}
 		public static bool TileIsCapable(int i, int j)
         {

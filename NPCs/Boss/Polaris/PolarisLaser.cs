@@ -20,13 +20,13 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.knockBackResist = 0f;
             NPC.width = 52;
             NPC.height = 52;
-            npc.value = 0;
-            npc.npcSlots = 1f;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.netAlways = true;
-            npc.buffImmune[44] = true;
+            NPC.value = 0;
+            NPC.npcSlots = 1f;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.netAlways = true;
+            NPC.buffImmune[44] = true;
 		}
 		public override bool PreNPCLoot()
 		{
@@ -38,31 +38,31 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.lifeMax = (int)(npc.lifeMax * 0.75f * bossLifeScale);
-			NPC.damage = (int)(npc.damage * 0.75f);
+			NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+			NPC.damage = (int)(NPC.damage * 0.75f);
 		}
 		public override void AI()
 		{	
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.9f / 255f, (255 - npc.alpha) * 0.1f / 255f, (255 - npc.alpha) * 0.3f / 255f);
-			NPC polaris = Main.npc[(int)npc.ai[1]];
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.9f / 255f, (255 - NPC.alpha) * 0.1f / 255f, (255 - NPC.alpha) * 0.3f / 255f);
+			NPC polaris = Main.npc[(int)NPC.ai[1]];
 			if (!polaris.active || polaris.type != ModContent.NPCType<Polaris>())
 			{
-				npc.scale -= 0.008f;
-				npc.rotation += 0.3f;
-				if (npc.scale < 0)
-					npc.active = false;
+				NPC.scale -= 0.008f;
+				NPC.rotation += 0.3f;
+				if (NPC.scale < 0)
+					NPC.active = false;
 			}
 			else 
 			{
-				npc.ai[0]++;
-				if(npc.ai[0] >= 30)
+				NPC.ai[0]++;
+				if(NPC.ai[0] >= 30)
 				{
-					npc.ai[0] = 0;
-					npc.rotation += MathHelper.ToRadians(9);
-					npc.ai[2] += 9;
+					NPC.ai[0] = 0;
+					NPC.rotation += MathHelper.ToRadians(9);
+					NPC.ai[2] += 9;
 					if (Main.netMode != 1)
                     {
-						int damage = npc.damage / 2;
+						int damage = NPC.damage / 2;
 						damage *= 2;
 						if (Main.expertMode)
 						{
@@ -70,8 +70,8 @@ namespace SOTS.NPCs.Boss.Polaris
 						}
 						for (int i = 0; i < 4; i++)
 						{
-							Vector2 rotateVelocity = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(npc.ai[2] + 90 * i));
-							Projectile.NewProjectile(npc.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+							Vector2 rotateVelocity = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[2] + 90 * i));
+							Projectile.NewProjectile(NPC.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 						}
 					}
 				}

@@ -45,12 +45,12 @@ namespace SOTS.Projectiles.Minions
 			for (int k = 0; k < Projectile.oldPos.Length; k++) {
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(new Color(100, 100, 100, 0)) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(Color lightColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Minions
 			for (int i = 0; i < Main.maxProjectiles; i++)
 			{
 				Projectile other = Main.projectile[i];
-				if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && Math.Abs(Projectile.Center.X - other.Center.X) + Math.Abs(Projectile.Center.Y - other.Center.Y) < Projectile.width * widthMult && other.modProjectile as SpiritMinion != null)
+				if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && Math.Abs(Projectile.Center.X - other.Center.X) + Math.Abs(Projectile.Center.Y - other.Center.Y) < Projectile.width * widthMult && other.ModProjectile as SpiritMinion != null)
 				{
 					if (Projectile.position.X < other.position.X) Projectile.velocity.X -= overlapVelocity;
 					else Projectile.velocity.X += overlapVelocity;
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Minions
 				int i = (int)Projectile.Center.X / 16;
 				int j = (int)Projectile.Center.Y / 16;
 				Tile tile = Framing.GetTileSafely(i, j + 1);
-				if (!WorldGen.InWorld(i, j + 1, 20) || (tile.active() && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
+				if (!WorldGen.InWorld(i, j + 1, 20) || (tile.HasTile && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
 				{
 					Projectile.velocity.Y -= overlapVelocity * tileMult;
 				}
@@ -92,16 +92,16 @@ namespace SOTS.Projectiles.Minions
 		public void GoIdle(float speed = 10f) 
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (proj.modProjectile as SpiritMinion != null && proj.active && Projectile.active && proj.owner == Projectile.owner)
+				if (proj.ModProjectile as SpiritMinion != null && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}

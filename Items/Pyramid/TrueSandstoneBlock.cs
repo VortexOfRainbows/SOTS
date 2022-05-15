@@ -24,13 +24,13 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Yellow;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("TrueSandstoneTile");
+			Item.createTile = Mod.Find<ModTile>("TrueSandstoneTile").Type;
 			Item.expert = true;
 		}
 	}
 	public class TrueSandstoneTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;

@@ -20,21 +20,9 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
-			recipe.AddTile(TileID.Autohammer);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.SandstoneSlab, 2);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.SandstoneSlab, 2).AddTile(TileID.Autohammer).Register();
+			CreateRecipe(1).AddIngredient(ItemID.SandstoneSlab, 2).AddTile(TileID.LunarCraftingStation).Register();
+			CreateRecipe(2).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ItemID.SandstoneSlab);
 		}
 	}
 }

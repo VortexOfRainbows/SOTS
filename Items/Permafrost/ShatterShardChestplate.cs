@@ -22,7 +22,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return head.type == mod.ItemType("FrigidCrown") && legs.type == mod.ItemType("FrigidGreaves");
+            return head.type == Mod.Find<ModItem>("FrigidCrown") .Type&& legs.type == Mod.Find<ModItem>("FrigidGreaves").Type;
 		}
         public override void DrawHands(ref bool drawHands, ref bool drawArms)
         {
@@ -31,7 +31,7 @@ namespace SOTS.Items.Permafrost
         public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Increases life regen by 2\nImmunity to Chilled, Frozen, and Frostburn";
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 2;
 			player.buffImmune[BuffID.Chilled] = true;
 			player.buffImmune[BuffID.Frozen] = true;
@@ -40,7 +40,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void UpdateEquip(Player player)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int rand = Main.rand.Next(10);
 			if (rand >= 0 && rand <= 2) //0,1,2 30%
 				modPlayer.shardOnHit += 1;
@@ -51,11 +51,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "FrigidBar", 20);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "FrigidBar", 20).AddTile(TileID.Anvils).Register();
 		}
 
 	}

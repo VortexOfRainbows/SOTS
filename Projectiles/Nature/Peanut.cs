@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Nature
 		}
         public override void SetDefaults()
         {
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
 			Projectile.width = 26;
 			Projectile.height = 26;
@@ -22,11 +22,11 @@ namespace SOTS.Projectiles.Nature
 			Projectile.tileCollide = true;
 			Projectile.ignoreWater = false;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 12;
 			height = 12;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool PreAI()
 		{

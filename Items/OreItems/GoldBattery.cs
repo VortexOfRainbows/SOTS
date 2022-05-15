@@ -24,12 +24,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.GoldBar, 10);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.GoldBar, 10).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1).AddTile(TileID.Anvils).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

@@ -43,61 +43,61 @@ namespace SOTS.NPCs.Constructs
 			NPC.width = 120;
 			NPC.height = 70;
 			Main.npcFrameCount[NPC.type] = 3;  
-			npc.value = 3330;
-			npc.npcSlots = 3f;
-			npc.boss = false;
-			npc.lavaImmune = false;
-			npc.noGravity = false;
-			npc.noTileCollide = false;
-			npc.netAlways = true;
-			npc.HitSound = SoundID.NPCHit4;
-			npc.DeathSound = SoundID.NPCDeath14;
-			npc.rarity = 5;
+			NPC.value = 3330;
+			NPC.npcSlots = 3f;
+			NPC.boss = false;
+			NPC.lavaImmune = false;
+			NPC.noGravity = false;
+			NPC.noTileCollide = false;
+			NPC.netAlways = true;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath14;
+			NPC.rarity = 5;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/NatureConstructHead");
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/NatureConstructHeadGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
+			Vector2 drawPos = NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY);
 			if(NPC.frame.Y == 70) //frame 2
 				drawPos.Y -= 4;
 			if(NPC.frame.Y == 140) //frame 3
 				drawPos.Y -= 2;
 			bool flip = false;
-			Vector2 toPlayer = player.Center - npc.Center;
+			Vector2 toPlayer = player.Center - NPC.Center;
 			if(Math.Abs(MathHelper.WrapAngle(toPlayer.ToRotation())) <= MathHelper.ToRadians(90))
             {
 				flip = true;
             }
 			float bonusDir = !flip ? MathHelper.ToRadians(180) : 0;
-			spriteBatch.Draw(texture, drawPos, null, drawColor, dir - bonusDir, drawOrigin, npc.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-			spriteBatch.Draw(texture2, drawPos, null, Color.White, dir - bonusDir, drawOrigin, npc.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(texture, drawPos, null, drawColor, dir - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(texture2, drawPos, null, Color.White, dir - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			ai2 = 0;
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for (int k = 0; k < 20; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				for(int i = 0; i < 30; i ++)
 				{
-					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigNatureDust"));
+					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigNatureDust").Type);
 					Main.dust[dust].velocity *= 5f;
 				}
 				for(int i = 1; i < 8; i++)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NatureConstructGore" + i), 1f);
+					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NatureConstructGore" + i), 1f);
 				for(int i = 0; i < 9; i++)
-					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61,64), 1f);	
+					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61,64), 1f);	
 			}
 		}
 		public override void FindFrame(int frameHeight) 
 		{
-			float speed = Math.Abs(npc.velocity.X * 0.7f);
+			float speed = Math.Abs(NPC.velocity.X * 0.7f);
 			if (speed > 1.67f)
 				speed = 1.67f;
 			else if (speed <= 0.1f)
@@ -105,26 +105,26 @@ namespace SOTS.NPCs.Constructs
 				speed = 0;
 				NPC.frame.Y = 0;
             }
-			npc.frameCounter += speed;
-			if (npc.frameCounter > 10f) 
+			NPC.frameCounter += speed;
+			if (NPC.frameCounter > 10f) 
 			{
 				NPC.frame.Y = (NPC.frame.Y + frameHeight);
 				if(NPC.frame.Y >= frameHeight * 3)
 				{
 					NPC.frame.Y = 0;
 				}
-				npc.frameCounter = 0;
+				NPC.frameCounter = 0;
 			}
 		}
 		int shootingAI = 0;
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			if(delay <= (Main.expertMode ? 30 : 0) && !canSpell)
 			{
 				delay = 270 + Main.rand.Next(120);
 				if(Main.netMode != 1)
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				canSpell = true;
 			}
 			if(canSpell)
@@ -136,7 +136,7 @@ namespace SOTS.NPCs.Constructs
 					Vector2 circular2 = new Vector2(40, 0).RotatedBy(dir);
 					for (int i = 0; i < 20; i++)
 					{
-						int dust3 = Dust.NewDust(npc.Center + circular2 * 0.6f, 0, 0, 267);
+						int dust3 = Dust.NewDust(NPC.Center + circular2 * 0.6f, 0, 0, 267);
 						Dust dust4 = Main.dust[dust3];
 						dust4.velocity *= 1.2f;
 						dust4.velocity += circular2 * Main.rand.NextFloat(0.1f, 0.2f);
@@ -147,7 +147,7 @@ namespace SOTS.NPCs.Constructs
 					}
 					if (Main.netMode != 1)
 					{
-						int damage = npc.damage / 2;
+						int damage = NPC.damage / 2;
 						if (Main.expertMode)
 						{
 							damage = (int)(damage / Main.expertDamage);
@@ -155,40 +155,40 @@ namespace SOTS.NPCs.Constructs
 						for (int i = 0; i < 5; i++)
 						{
 							Vector2 circular = new Vector2(12, 0).RotatedBy(dir + MathHelper.ToRadians((i - 2) * 12.5f));
-							Projectile.NewProjectile(npc.Center + circular2, circular, ModContent.ProjectileType<NatureBolt>(), damage, 0, Main.myPlayer, Main.rand.NextFloat(30f + i * 15f, 40f + i * 20f), npc.target);
+							Projectile.NewProjectile(NPC.Center + circular2, circular, ModContent.ProjectileType<NatureBolt>(), damage, 0, Main.myPlayer, Main.rand.NextFloat(30f + i * 15f, 40f + i * 20f), NPC.target);
 						}
 					}
-					npc.velocity.Y -= 2.0f;
-					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.1f, -0.1f);
+					NPC.velocity.Y -= 2.0f;
+					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.1f, -0.1f);
                 }
 				if(sinPercent <= 0)
                 {
 					shootingAI = 0;
 					canSpell = false;
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						npc.netUpdate = true;
+						NPC.netUpdate = true;
 				}
-				Vector2 playerLocation = player.Center * (1 - sinPercent) + new Vector2(npc.Center.X, npc.Center.Y - 128) * sinPercent;
-				Vector2 toPlayer = playerLocation - npc.Center;
+				Vector2 playerLocation = player.Center * (1 - sinPercent) + new Vector2(NPC.Center.X, NPC.Center.Y - 128) * sinPercent;
+				Vector2 toPlayer = playerLocation - NPC.Center;
 				dir = toPlayer.ToRotation();
 				speedMod = 0.9f - sinPercent;
 				if(speedMod < 0)
 					speedMod = 0;
-				npc.velocity.X *= 1 - sinPercent;
+				NPC.velocity.X *= 1 - sinPercent;
 			}
 			else
             {
 				speedMod = 1f;
-				dir = (player.Center - npc.Center).ToRotation();
+				dir = (player.Center - NPC.Center).ToRotation();
 				delay--;
 			}
-			if(npc.velocity.X == 0 && npc.velocity.Y == 0)
+			if(NPC.velocity.X == 0 && NPC.velocity.Y == 0)
 			{
 				NPC.aiStyle =3;
-				aiType = 73;
+				AIType = 73;
 				initiateSpeed = -1;
 			}
-			else if (npc.velocity.Y == 0 && ai2 == 0)
+			else if (NPC.velocity.Y == 0 && ai2 == 0)
 			{
 				ai2 = 1;
 			}
@@ -200,24 +200,24 @@ namespace SOTS.NPCs.Constructs
 			{
 				if(ai2 >= 30)
 					ai2 = 30;
-				if(player.Center.X > npc.Center.X + 12)
+				if(player.Center.X > NPC.Center.X + 12)
 				{
-					npc.velocity.X = 1.1f * npc.scale * (float)(ai2 / 30f * speedMod);
-					npc.spriteDirection = 1;
+					NPC.velocity.X = 1.1f * NPC.scale * (float)(ai2 / 30f * speedMod);
+					NPC.spriteDirection = 1;
 				}
-				if(player.Center.X < npc.Center.X - 12)
+				if(player.Center.X < NPC.Center.X - 12)
 				{
-					npc.velocity.X = -1.1f * npc.scale * (float)(ai2 / 30f * speedMod);
-					npc.spriteDirection = -1;
+					NPC.velocity.X = -1.1f * NPC.scale * (float)(ai2 / 30f * speedMod);
+					NPC.spriteDirection = -1;
 				}
 			}
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("NatureSpirit"));	
+			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, Mod.Find<ModNPC>("NatureSpirit").Type);	
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfNature"), Main.rand.Next(4) + 4);	
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  Mod.Find<ModItem>("FragmentOfNature").Type, Main.rand.Next(4) + 4);	
 		}	
 	}
 }

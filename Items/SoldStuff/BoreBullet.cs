@@ -30,12 +30,7 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.EmptyBullet, 100);
-			recipe.AddIngredient(ModContent.ItemType<JuryRiggedDrill>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 100);
-			recipe.AddRecipe();
+			CreateRecipe(100).AddIngredient(ItemID.EmptyBullet, 100).AddIngredient(ModContent.ItemType<JuryRiggedDrill>(), 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 }

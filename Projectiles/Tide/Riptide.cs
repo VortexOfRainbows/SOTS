@@ -15,8 +15,8 @@ namespace SOTS.Projectiles.Tide
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(64);
-            aiType = 64;
-            Projectile.melee = true;
+            AIType = 64;
+            Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 0;
             Projectile.scale = 1.0f;
             Projectile.ignoreWater = true;
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Tide
                     if ((wasInWaterX > 0 && (veloLength > 8f || counter > -24)) || j < 0.0f)
                         for (int i = 0; i < 2; i++)
                         {
-                            Entity ent = j < 0.0f ? (Entity)projectile : player;
+                            Entity ent = j < 0.0f ? (Entity)Projectile : player;
                             Vector2 circular = new Vector2(1f, 0).RotatedBy(MathHelper.ToRadians(counter * 11 + i * 180 + player.velocity.ToRotation()));
                             float playerW = ent.width * circular.X;
                             float playerH = ent.height * circular.Y;

@@ -35,7 +35,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/HardlightScytheGlow").Value;
 			}
-			Item.shoot = mod.ProjectileType("ScytheSlash");
+			Item.shoot = Mod.Find<ModProjectile>("ScytheSlash").Type;
 			Item.shootSpeed = 15f;
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
@@ -49,7 +49,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			if (Main.rand.NextBool(10))
 			{
-				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, mod.DustType("CopyDust4"), 0, -2, 200, new Color(), 1f);
+				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, Mod.Find<ModDust>("CopyDust4").Type, 0, -2, 200, new Color(), 1f);
 				dust.velocity *= 0.4f;
 				dust.color = new Color(100, 100, 255, 120);
 				dust.noGravity = true;
@@ -69,7 +69,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
 				if (crit && Main.myPlayer == player.whoAmI)
 				{
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("SoulofRetaliation"), damage + modPlayer.soulDamage, 1f, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Mod.Find<ModProjectile>("SoulofRetaliation").Type, damage + modPlayer.soulDamage, 1f, player.whoAmI);
 				}
 			}
 		}
@@ -79,12 +79,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PlatinumScythe>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 12);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PlatinumScythe>(), 1).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

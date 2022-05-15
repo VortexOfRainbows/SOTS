@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class SpawnBossCurse : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
 			DisplayName.SetDefault("Debug");
 			Description.SetDefault("This is a work around since I don't know how to program multiplayer");   
@@ -15,13 +15,13 @@ namespace SOTS.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-			if(!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
+			if(!NPC.AnyNPCs(Mod.Find<ModNPC>("PharaohsCurse").Type))
 			{
-				NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("PharaohsCurse"));
+				NPC.SpawnOnPlayer(player.whoAmI, Mod.Find<ModNPC>("PharaohsCurse").Type);
 				for(int king = 0; king < 200; king++)
 				{
 					NPC npc = Main.npc[king];
-					if(npc.type == mod.NPCType("PharaohsCurse"))
+					if(npc.type == Mod.Find<ModNPC>("PharaohsCurse").Type)
 					{
 						npc.position.X = player.Center.X - npc.width/2;
 						npc.position.Y = player.Center.Y - npc.height/2 - 200;

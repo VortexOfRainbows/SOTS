@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.penetrate = 2;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 1800;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.tileCollide = true;
 			Projectile.alpha = 255;
 		}

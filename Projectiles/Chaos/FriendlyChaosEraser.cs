@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Chaos
             Projectile.height = 20;
             Projectile.timeLeft = 60;
             Projectile.penetrate = -1;
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = false;

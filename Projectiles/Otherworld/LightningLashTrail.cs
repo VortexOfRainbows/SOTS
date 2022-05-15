@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.timeLeft = 3600;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.alpha = 255;
 			Projectile.ai[1] = -1;
 			Projectile.extraUpdates = 1;
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(Projectile.ai[1] != -1 && end == false)
 			{
 				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
-				if(proj.active && proj.type == mod.ProjectileType("LightningLash") && proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
+				if(proj.active && proj.type == Mod.Find<ModProjectile>("LightningLash") .Type&& proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
 				{
 					Vector2 center = proj.Center;
 					Projectile.position.X = center.X - Projectile.width/2;

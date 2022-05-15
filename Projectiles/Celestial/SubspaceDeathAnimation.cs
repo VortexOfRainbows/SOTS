@@ -248,14 +248,14 @@ namespace SOTS.Projectiles.Celestial
 							dust.color = new Color(50, 150, 50);
 						}
 					}
-					int gore = mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentBodyGore");
+					int gore = Mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentBodyGore");
 					if (segmentsDead == 0)
 					{
-						gore = mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentHeadGore");
+						gore = Mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentHeadGore");
 					}
 					else if (segmentsDead == segments.Count)
 					{
-						gore = mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentTailGore");
+						gore = Mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentTailGore");
 					}
 					Gore gore2 = Main.gore[Gore.NewGore(atLoc - new Vector2(18, 18), default(Vector2), gore, 1.0f)];
 					gore2.velocity *= 0.2f;

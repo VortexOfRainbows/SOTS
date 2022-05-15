@@ -23,21 +23,21 @@ namespace SOTS.Projectiles.Tide
 			Projectile.timeLeft = 1200;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.netImportant = true;
 		}
 		int tileCount = 0;
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 16;
 			height = 16;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
 			if(tileCount <= 2)
 			{
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/DumbFishSound"), 2.0f, -0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/DumbFishSound"), 2.0f, -0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
 				for (int i = 0; i < 30; i++)
 				{
 					Vector2 circular = new Vector2(4, 0).RotatedBy(Projectile.velocity.ToRotation() + MathHelper.ToRadians(i * 12));
@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Tide
 							dust.velocity = Vector2.Zero + 0.6f * circular;
 						}
 				}
-				SOTS.primitives.CreateTrail(new WaterTrail(projectile, 24));
+				SOTS.primitives.CreateTrail(new WaterTrail(Projectile, 24));
 				runOnce = false;
 			}
 			Projectile.rotation += Projectile.direction * MathHelper.ToRadians(14 + accelerate * 12);
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Tide
 		}
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/DumbFishSound"), 2.0f, -0.6f + Main.rand.NextFloat(-0.1f, 0.1f));
+			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/DumbFishSound"), 2.0f, -0.6f + Main.rand.NextFloat(-0.1f, 0.1f));
 			for (int i = 0; i < 30; i++)
 			{
 				Vector2 circular = new Vector2(4, 0).RotatedBy(Projectile.velocity.ToRotation() + MathHelper.ToRadians(i * 12));

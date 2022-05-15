@@ -16,11 +16,7 @@ namespace SOTS.Items.Furniture.Goopwood
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 6);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 6).AddTile(TileID.WorkBenches).Register();
 		}
     }
     public class GoopwoodDoorClosed : CompleteDoor<GoopwoodDoor, GoopwoodDoorClosed.GoopwoodDoorOpen>

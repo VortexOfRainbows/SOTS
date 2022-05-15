@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using SOTS.Projectiles.Pyramid;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs.Boss.Curse;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -50,15 +51,15 @@ namespace SOTS.Projectiles.Minions
 				if(i != length)
 				{
 					Vector2 toProj2 = new Vector2(4 + i * 2, 0).RotatedBy(rotation);
-					spriteBatch.Draw(texture2, Projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(4, 4), Projectile.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, Projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(4, 4), Projectile.scale, SpriteEffects.None, 0f);
 				}
 				else
 				{
 					Vector2 toProj2 = new Vector2(5 + i * 2, 0).RotatedBy(rotation);
-					spriteBatch.Draw(texture3, Projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(6, 6), Projectile.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture3, Projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(6, 6), Projectile.scale, SpriteEffects.None, 0f);
 				}
 			}
-			spriteBatch.Draw(texture, drawPos, null, lightColor, rotation + MathHelper.Pi / 4, origin, Projectile.scale * 1.0f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, drawPos, null, lightColor, rotation + MathHelper.Pi / 4, origin, Projectile.scale * 1.0f, SpriteEffects.None, 0f);
 			return false;
 		}
 		private const int attackTimerMax = 180;
@@ -76,7 +77,7 @@ namespace SOTS.Projectiles.Minions
 			target.immune[Projectile.owner] = 0;
 			canAttack = false;
 			Projectile.netUpdate = true;
-			Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<CursedStab>(), Projectile.damage, 0, Main.myPlayer, 0, target.whoAmI);
+			Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center, Vector2.Zero, ModContent.ProjectileType<CursedStab>(), Projectile.damage, 0, Main.myPlayer, 0, target.whoAmI);
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -105,7 +106,7 @@ namespace SOTS.Projectiles.Minions
 		public void Idle()
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
@@ -114,7 +115,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}
@@ -183,7 +184,7 @@ namespace SOTS.Projectiles.Minions
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 
 			#region Active check
 			if (player.dead || !player.active)

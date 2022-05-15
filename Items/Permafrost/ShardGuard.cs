@@ -28,18 +28,18 @@ namespace SOTS.Items.Permafrost
 		int[] Probes = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public void ProbesGen(Player player)
 		{
-			int type = mod.ProjectileType("BlizzardProbe"); 
+			int type = Mod.Find<ModProjectile>("BlizzardProbe").Type; 
 			if (player.whoAmI == Main.myPlayer)
 			{
 				for (int i = 0; i < Probes.Length; i++)
 				{
 					if (Probes[i] == -1)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					if (!Main.projectile[Probes[i]].active || Main.projectile[Probes[i]].type != type || Main.projectile[Probes[i]].ai[0] != i)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					Main.projectile[Probes[i]].timeLeft = 6;
 				}
@@ -47,7 +47,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int rand = Main.rand.Next(10);
 			if (rand >= 0 && rand <= 1) //0,1,2 20%
 				modPlayer.shardOnHit += 3;
@@ -56,7 +56,7 @@ namespace SOTS.Items.Permafrost
 			if (rand >= 5) //5,6,7,8,9 50%
 				modPlayer.shardOnHit += 5;
 
-			modPlayer.bonusShardDamage += (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.bonusShardDamage += (int)(Item.damage * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f)));
 			player.statLifeMax2 += 10;
 
 			if ((double)player.statLife <= (double)player.statLifeMax * 0.5)
@@ -68,14 +68,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "DissolvingAurora", 1);
-			recipe.AddIngredient(ItemID.FrozenTurtleShell, 1);
-			recipe.AddIngredient(null, "PermafrostMedallion", 1);
-			recipe.AddIngredient(null, "ShatterHeartShield", 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "DissolvingAurora", 1).AddIngredient(ItemID.FrozenTurtleShell, 1).AddIngredient(null, "PermafrostMedallion", 1).AddIngredient(null, "ShatterHeartShield", 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

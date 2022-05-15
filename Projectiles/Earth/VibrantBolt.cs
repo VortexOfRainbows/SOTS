@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Earth
         public override void SetDefaults()
         {
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = 1;
 			Projectile.width = 24;

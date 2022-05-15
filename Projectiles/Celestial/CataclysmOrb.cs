@@ -17,11 +17,11 @@ namespace SOTS.Projectiles.Celestial
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(48);
-            aiType = 48; 
-			Projectile.thrown = false;
-			Projectile.magic = false;
-			Projectile.melee = false;
-			Projectile.ranged = true;
+            AIType = 48; 
+			// Projectile.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Projectile.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.width = 14;
 			Projectile.height = 14;
 			Projectile.penetrate = 1;
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Celestial
 			SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
 			for (int i = 0; i < 10; i++)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.velocity += Projectile.velocity * 0.1f;
 				dust.noGravity = true;

@@ -24,12 +24,12 @@ namespace SOTS.Projectiles.Laser
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 24;
 			Projectile.width = 24;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 2;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;

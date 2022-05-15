@@ -34,13 +34,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddRecipeGroup(RecipeGroupID.Wood, 20);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4);
-			recipe.AddIngredient(ItemID.YellowMarigold, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddRecipeGroup(RecipeGroupID.Wood, 20).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4).AddIngredient(ItemID.YellowMarigold, 1).AddTile(TileID.WorkBenches).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

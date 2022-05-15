@@ -37,12 +37,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "GoldArkStaff", 1);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 16);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "GoldArkStaff", 1).AddIngredient(null, "OtherworldlyAlloy", 16).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Pyramid
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc1 = Main.npc[i];
-				if(npc1.type == mod.NPCType("PharaohsCurse") && npc1.active)
+				if(npc1.type == Mod.Find<ModNPC>("PharaohsCurse") .Type&& npc1.active)
 				{
 					pIndex = i;
 					break;

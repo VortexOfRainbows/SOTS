@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Crushers
         public override void SetDefaults()
         {
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.ignoreWater = false;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 60;

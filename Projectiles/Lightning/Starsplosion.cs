@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Lightning
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 64;
 			Projectile.width = 64;
 			Projectile.penetrate = -1;

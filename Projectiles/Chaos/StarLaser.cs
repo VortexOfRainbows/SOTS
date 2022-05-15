@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 1500;
 			Projectile.width = 24;
 			Projectile.height = 24;
@@ -35,11 +35,11 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.localNPCHitCooldown = 15;
 			Projectile.usesLocalNPCImmunity = true;
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 8;
 			height = 8;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
 		bool runOnce = true;
 		Vector2[] trailPos = new Vector2[10];

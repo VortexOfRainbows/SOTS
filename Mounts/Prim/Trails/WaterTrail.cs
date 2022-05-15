@@ -7,21 +7,20 @@ using System;
 
 namespace SOTS.Prim.Trails
 {
-	class StarTrail : PrimTrail
+	class WaterTrail : PrimTrail
 	{
-		public Color color2 = new Color(140, 140, 130);
-		public StarTrail(Projectile projectile, Color colorStart, Color colorEnd, int width = 12, int length = 18)
+		public WaterTrail(Projectile projectile, int width = 12)
 		{
 			Entity = projectile;
 			EntityType = Projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
-			Color = colorStart;
-			color2 = colorEnd;
+			Color = new Color(46, 104, 234);
 			Width = width;
-			Cap = length;
+			Cap = 20;
 			Pixellated = false;
 		}
 		public override void SetDefaults() => AlphaValue = 0.6f;
+
 		public override void PrimStructure(SpriteBatch spriteBatch)
 		{
 			if (PointCount <= 6) return;
@@ -30,7 +29,7 @@ namespace SOTS.Prim.Trails
 			{
 				if (i != Points.Count - 1)
 				{
-					widthVar = MathHelper.Lerp(0, Width, (float)Math.Sqrt(i / (float)Points.Count));
+					widthVar = MathHelper.Lerp(0, Width, i / (float)Points.Count);
 					Color colorvar = Color.Lerp(Color, new Color(140, 193, 252), ((float)i / (float)Points.Count));
 					Vector2 normal = CurveNormal(Points, i);
 					Vector2 normalAhead = CurveNormal(Points, i + 1);
@@ -49,17 +48,20 @@ namespace SOTS.Prim.Trails
 				}
 			}
 		}
+
 		public override void SetShaders()
 		{
-			Effect effect = SOTS.WaterTrail; //we'll see how this works :D
-			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().GetTexture("TrailTextures/Trail_1"));
+			Effect effect = SOTS.WaterTrail;
+			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().Assets.Request<Texture2D>("TrailTextures/Trail_3").Value);
 			effect.Parameters["ColorOne"].SetValue(Color.ToVector4());
-			PrepareShader(effect, "MainPS", Counter / 12f);
+			PrepareShader(effect, "MainPS", Counter / 24f);
 		}
+
 		public override void OnUpdate()
 		{
 			if (!(Entity is Projectile proj))
 				return;
+
 			Counter++;
 			PointCount = Points.Count() * 6;
 

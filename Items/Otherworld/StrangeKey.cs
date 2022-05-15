@@ -34,17 +34,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<MeteoriteKey>(), 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<SkywareKey>(), 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<MeteoriteKey>(), 1).AddTile(mod.TileType("TransmutationAltarTile")).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SkywareKey>(), 1).AddTile(mod.TileType("TransmutationAltarTile")).Register();
 		}
 	}
 }

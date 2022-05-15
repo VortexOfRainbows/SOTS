@@ -51,12 +51,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.EndlessMusketPouch, 1);
-			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 8);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.EndlessMusketPouch, 1).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 8).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

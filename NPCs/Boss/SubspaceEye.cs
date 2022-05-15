@@ -22,19 +22,19 @@ namespace SOTS.NPCs.Boss
             NPC.knockBackResist = 0f;
             NPC.width = 68;
             NPC.height = 60;
-            npc.value = 0;
-            npc.npcSlots = 1f;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit3;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = true;
-            npc.buffImmune[44] = true;
-            npc.hide = true;
-            npc.dontCountMe = true;
-            npc.alpha = 255;
-            npc.dontTakeDamage = true;
+            NPC.value = 0;
+            NPC.npcSlots = 1f;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit3;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = true;
+            NPC.buffImmune[44] = true;
+            NPC.hide = true;
+            NPC.dontCountMe = true;
+            NPC.alpha = 255;
+            NPC.dontTakeDamage = true;
         }
         public override void DrawBehind(int index)
         {
@@ -44,10 +44,10 @@ namespace SOTS.NPCs.Boss
         public float eyeRecoil = 1;
         public override void FindFrame(int frameHeight)
         {
-            npc.frameCounter++;
-            if(npc.frameCounter > 4)
+            NPC.frameCounter++;
+            if(NPC.frameCounter > 4)
             {
-                npc.frameCounter = 0;
+                NPC.frameCounter = 0;
                 frame++;
                 if(frame >= 8)
                 {
@@ -65,14 +65,14 @@ namespace SOTS.NPCs.Boss
             {
                 Vector2 circular = new Vector2(Main.rand.NextFloat(2.5f, 5f), 0).RotatedBy(MathHelper.ToRadians(a));
                 Color color = new Color(100, 255, 100, 0);
-                Main.spriteBatch.Draw(texture2, npc.Center + circular - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), color * ((255f - npc.alpha) / 255f) * 0.5f, npc.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+                Main.spriteBatch.Draw(texture2, NPC.Center + circular - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), color * ((255f - NPC.alpha) / 255f) * 0.5f, NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             }
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             Player player = Main.player[Main.myPlayer];
-            Vector2 toPlayer = player.Center - npc.Center;
+            Vector2 toPlayer = player.Center - NPC.Center;
             Vector2 eyeOffset = new Vector2(8 * eyeRecoil, 0).RotatedBy(toPlayer.ToRotation());
             eyeOffset.Y *= 0.5f;
-            Main.spriteBatch.Draw(texture3, npc.Center + eyeOffset - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+            Main.spriteBatch.Draw(texture3, NPC.Center + eyeOffset - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -93,20 +93,20 @@ namespace SOTS.NPCs.Boss
             if(runOnce)
             {
                 if (Main.netMode != 1)
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, npc.whoAmI);
+                    Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, NPC.whoAmI);
                 runOnce = false;
             }
-            if(npc.ai[3] == -1)
+            if(NPC.ai[3] == -1)
             {
-                if (npc.alpha < 255)
-                    npc.alpha++;
+                if (NPC.alpha < 255)
+                    NPC.alpha++;
                 else
-                    npc.active = false;
+                    NPC.active = false;
             }
-            else if (npc.alpha > 0)
-                npc.alpha--;
+            else if (NPC.alpha > 0)
+                NPC.alpha--;
             else
-                npc.dontTakeDamage = true;
+                NPC.dontTakeDamage = true;
         }
 	}
 }

@@ -12,8 +12,8 @@ namespace SOTS.Projectiles.Ores
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.TheRottedFork); //obsidian swordfish
-            aiType = ProjectileID.TheRottedFork;
-            Projectile.melee = true;
+            AIType = ProjectileID.TheRottedFork;
+            Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 0; 
 		}
 	}

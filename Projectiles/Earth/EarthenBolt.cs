@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			VoidPlayer.VoidBurn(mod, target, 5, 150);
+			VoidPlayer.VoidBurn(Mod, target, 5, 150);
 		}
 	}
 }

@@ -13,8 +13,8 @@ namespace SOTS.Projectiles.Crushers
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(410);
-			aiType = 410; 
-			Projectile.melee = true;
+			AIType = 410; 
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 255;
 			Projectile.usesLocalNPCImmunity = true;

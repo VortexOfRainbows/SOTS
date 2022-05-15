@@ -20,17 +20,8 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.LihzahrdBrick, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.LihzahrdBrickWall, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ItemID.LihzahrdBrick, 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(ItemID.LihzahrdBrickWall, 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 }

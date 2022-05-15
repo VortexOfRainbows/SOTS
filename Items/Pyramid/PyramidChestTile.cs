@@ -13,7 +13,7 @@ namespace SOTS.Items.Pyramid
 {
 	public class PyramidChestTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileSpelunker[Type] = true;
@@ -41,7 +41,7 @@ namespace SOTS.Items.Pyramid
 			disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Containers };
 			chest = "Pyramid Chest";
-			chestDrop = mod.ItemType("PyramidChest");
+			chestDrop = Mod.Find<ModItem>("PyramidChest").Type;
 		}
 		public override bool HasSmartInteract()
 		{
@@ -183,7 +183,7 @@ namespace SOTS.Items.Pyramid
 				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Pyramid Chest";
 				if (player.cursorItemIconText == "Pyramid Chest")
 				{
-					player.cursorItemIconID = mod.ItemType("PyramidChest");
+					player.cursorItemIconID = Mod.Find<ModItem>("PyramidChest").Type;
 					player.cursorItemIconText = "";
 				}
 			}

@@ -38,8 +38,8 @@ namespace SOTS.Projectiles
 			Projectile.timeLeft = 330;
 			Projectile.tileCollide = false;
 			Projectile.hostile = true;
-			Projectile.magic = false;
-			Projectile.ranged = false;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.netImportant = true;
 		}
 		public override void Kill(int timeLeft)

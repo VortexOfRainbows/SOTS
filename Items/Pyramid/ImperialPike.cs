@@ -27,7 +27,7 @@ namespace SOTS.Items.Pyramid
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
-			Item.shoot = mod.ProjectileType("PyramidSpear");
+			Item.shoot = Mod.Find<ModProjectile>("PyramidSpear").Type;
 			Item.shootSpeed = 5.5f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;

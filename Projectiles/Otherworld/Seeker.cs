@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Otherworld
         {
 			Projectile.height = 16;
 			Projectile.width = 16;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 7200;
 			Projectile.friendly = true;
 			Projectile.hostile = false;
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Otherworld
 					for (int i = 0; i < 2; i++)
 					{
 						Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, mod.ProjectileType("Seeker"), (int)(0.75f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
+						Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("Seeker").Type, (int)(0.75f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
 					}
 				}
 			}
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Otherworld
 		public override void AI()
 		{
 			Projectile.ai[0]++;
-			int num1 = Dust.NewDust(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), 8, 8, mod.DustType("CopyDust4"));
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), 8, 8, Mod.Find<ModDust>("CopyDust4").Type);
 			Dust dust = Main.dust[num1];
 			dust.velocity *= 0.2f;
 			dust.noGravity = true;

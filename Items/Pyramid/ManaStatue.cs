@@ -13,7 +13,7 @@ namespace SOTS.Items.Pyramid
 {
     public class ManaStatue : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);

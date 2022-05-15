@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Nature
         {
             Projectile.width = 20;
             Projectile.height = 20;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
             Projectile.hostile = false;
 			Projectile.tileCollide = false;
@@ -24,11 +24,11 @@ namespace SOTS.Projectiles.Nature
 			Projectile.alpha = 0;
 			Projectile.penetrate = 1;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 16;
 			height = 16;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool PreAI()
 		{
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.width = 40;
 			Main.projFrames[Projectile.type] = 4;
 			Projectile.penetrate = -1;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 4;
 			Projectile.tileCollide = false;

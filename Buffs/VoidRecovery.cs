@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class VoidRecovery : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Void Recovery");
 			Description.SetDefault("Soul returning");   

@@ -56,13 +56,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.ReinforcedFishingPole, 1);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.ReinforcedFishingPole, 1).AddIngredient(null, "DissolvingAether", 1).AddIngredient(null, "HardlightAlloy", 8).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

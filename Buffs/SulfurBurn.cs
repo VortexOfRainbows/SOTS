@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class SulfurBurn : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
            DisplayName.SetDefault("Sulfur Burn");
 			Description.SetDefault("Soul power draining");   

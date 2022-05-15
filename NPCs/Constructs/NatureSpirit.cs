@@ -14,8 +14,8 @@ namespace SOTS.NPCs.Constructs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Nature Spirit");
-			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;   
+			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;   
 		}
 		public override void SetDefaults()
 		{
@@ -27,16 +27,16 @@ namespace SOTS.NPCs.Constructs
             NPC.width = 58;
             NPC.height = 58;
 			Main.npcFrameCount[NPC.type] = 1;   
-            npc.value = 30000;
-            npc.npcSlots = 4f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = false;
-			npc.rarity = 2;
+            NPC.value = 30000;
+            NPC.npcSlots = 4f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = false;
+			NPC.rarity = 2;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -62,51 +62,51 @@ namespace SOTS.NPCs.Constructs
 		{
 			if (Main.netMode != 1)
 			{
-				int damage = npc.damage / 2;
+				int damage = NPC.damage / 2;
 				if (Main.expertMode)
 				{
 					damage = (int)(damage / Main.expertDamage);
 				}
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f), mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, Main.rand.NextFloat(15f, 25f), npc.target);
+				Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f), Mod.Find<ModProjectile>("NatureBolt").Type, damage, 0, Main.myPlayer, Main.rand.NextFloat(15f, 25f), NPC.target);
 			}
-			SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.55f, 0.4f);
+			SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.55f, 0.4f);
 		}
 		public override void AI()
 		{	
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			if(phase == 3)
 			{
 				if (Main.netMode != 1)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
-				npc.dontTakeDamage = false;
-				npc.ai[0]++;
+				NPC.dontTakeDamage = false;
+				NPC.ai[0]++;
 				float speed = 6f;
-				Vector2 rotatePos = new Vector2(npc.ai[1], 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * 0.6f));
+				Vector2 rotatePos = new Vector2(NPC.ai[1], 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * 0.6f));
 				rotatePos = player.Center + rotatePos;
-				Vector2 vectorTo = rotatePos - npc.Center;
+				Vector2 vectorTo = rotatePos - NPC.Center;
 				float distance = vectorTo.Length();
-				if(npc.ai[1] < 100)
+				if(NPC.ai[1] < 100)
 				{
 					speed = 1f;
 				}
 				Vector2 goTo = new Vector2((speed < distance ? speed : distance), 0).RotatedBy(Math.Atan2(vectorTo.Y, vectorTo.X));
-				npc.velocity = goTo;
-				if((int)npc.ai[0] % 20 == 0)
+				NPC.velocity = goTo;
+				if((int)NPC.ai[0] % 20 == 0)
 				{
 					SpellLaunch();
 				}
-				if(npc.ai[0] >= 600)
+				if(NPC.ai[0] >= 600)
 				{
-					npc.ai[1]--;
-					if(npc.ai[0] >= 1100)
+					NPC.ai[1]--;
+					if(NPC.ai[0] >= 1100)
 					{
-						if(npc.ai[1] < -400)
+						if(NPC.ai[1] < -400)
 						{
-							npc.ai[1] = 340;
+							NPC.ai[1] = 340;
 						}
-						npc.ai[0] = 0;
+						NPC.ai[0] = 0;
 					}
 				}
 			}
@@ -114,19 +114,19 @@ namespace SOTS.NPCs.Constructs
 			{
 				if (Main.netMode != 1)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
-				npc.dontTakeDamage = false;
+				NPC.dontTakeDamage = false;
 				NPC.aiStyle =-1;
-				npc.ai[0] = 0;
-				npc.ai[1] = 300;
+				NPC.ai[0] = 0;
+				NPC.ai[1] = 300;
 				phase = 3;
 			}
 			else if(phase == 1)
 			{
 				counter++;
 			}
-			if(Main.player[npc.target].dead)
+			if(Main.player[NPC.target].dead)
 			{
 				counter++;
 			}
@@ -134,14 +134,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				if (Main.netMode != 1)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				phase = 1;
 				NPC.aiStyle =-1;
-				npc.velocity.Y -= 0.014f;
-				npc.dontTakeDamage = true;
+				NPC.velocity.Y -= 0.014f;
+				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 267);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(64, 178, 77);
 			dust.noGravity = true;
@@ -150,22 +150,22 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
-			for (int k = 0; k < npc.oldPos.Length; k++) {
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
-				Color color = npc.GetAlpha(lightColor) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
+			for (int k = 0; k < NPC.oldPos.Length; k++) {
+				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = NPC.GetAlpha(lightColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for (int i = 0; i < 50; i++)
 				{
-					int dust3 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 267);
+					int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 2.5f;
 					dust4.color = new Color(64, 178, 77);
@@ -177,28 +177,28 @@ namespace SOTS.NPCs.Constructs
 				{
 					phase = 2;
 					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f;
 				float y = Main.rand.Next(-10, 11) * 0.45f;
 				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y),
+				new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y),
 				null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingNature"), 1);	
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  Mod.Find<ModItem>("DissolvingNature").Type, 1);	
 		}	
 	}
 }

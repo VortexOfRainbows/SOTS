@@ -27,20 +27,20 @@ namespace SOTS.NPCs.Constructs
 			NPC.width = 72;
 			NPC.height = 74;
 			Main.npcFrameCount[NPC.type] = 1;  
-			npc.value = 12550;
-			npc.npcSlots = 0f;
-			npc.lavaImmune = true;
-			npc.noGravity = true;
-			npc.noTileCollide = false;
-			npc.netAlways = true;
-			npc.alpha = 0;
-			npc.HitSound = SoundID.NPCHit4;
-			npc.DeathSound = SoundID.NPCDeath14;
+			NPC.value = 12550;
+			NPC.npcSlots = 0f;
+			NPC.lavaImmune = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = false;
+			NPC.netAlways = true;
+			NPC.alpha = 0;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath14;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
-			npc.rotation = dir + (npc.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
+			dir = (float)Math.Atan2(aimTo.Y - NPC.Center.Y, aimTo.X - NPC.Center.X);
+			NPC.rotation = dir + (NPC.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
 			if (hookTile.X < 0 || hookTile.Y < 0)
 				return true;
 			Draw(true, drawColor);
@@ -48,10 +48,10 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void Draw(bool drawTexture, Color drawColor)
 		{
-			float npcRadians = npc.rotation + (npc.spriteDirection + 1) * 0.5f * MathHelper.ToRadians(180);
+			float npcRadians = NPC.rotation + (NPC.spriteDirection + 1) * 0.5f * MathHelper.ToRadians(180);
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/OtherworldVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 npcPos = new Vector2(npc.Center.X, npc.Center.Y) + new Vector2(npc.width / 2, 0).RotatedBy(npcRadians);
+			Vector2 npcPos = new Vector2(NPC.Center.X, NPC.Center.Y) + new Vector2(NPC.width / 2, 0).RotatedBy(npcRadians);
 			Vector2 distanceToOwner = npcPos - hookTile;
 			Vector2 centerOfCircle = hookTile + distanceToOwner / 4;
 			float startingRadians = distanceToOwner.ToRotation();
@@ -74,13 +74,13 @@ namespace SOTS.NPCs.Constructs
 				Vector2 drawPos = pos - Main.screenPosition;
 				if (drawTexture)
 				{
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 				}
 				else
 				{
 					if(Main.rand.NextBool(2))
 					{
-						Gore.NewGore(pos - Vector2.One * texture.Width / 2, npc.velocity, mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
 					}
 				}
 			}
@@ -101,13 +101,13 @@ namespace SOTS.NPCs.Constructs
 				Vector2 drawPos = pos - Main.screenPosition;
 				if (drawTexture)
 				{
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 				}
 				else
 				{
 					if (Main.rand.NextBool(2))
 					{
-						Gore.NewGore(pos - Vector2.One * texture.Width / 2, npc.velocity, mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
 					}
 				}
 			}
@@ -123,7 +123,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 		}
 		public override bool CheckActive()
@@ -132,24 +132,24 @@ namespace SOTS.NPCs.Constructs
         }
         public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for (int k = 0; k < 20; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				for (int i = 0; i < 30; i++)
 				{
-					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigAetherDust"));
+					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigAetherDust").Type);
 					Main.dust[dust].velocity *= 5f;
 				}
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
 				for (int i = 0; i < 9; i++)
-					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 				if(Main.netMode != 2)
                 {
 					Draw(false, Color.White);
@@ -176,11 +176,11 @@ namespace SOTS.NPCs.Constructs
 					if (r > 180)
 						break;
 					Vector2 rotationalDistance = new Vector2(-blockDist, 0).RotatedBy(MathHelper.ToRadians(r));
-					Vector2 pos = npc.Center + rotationalDistance;
+					Vector2 pos = NPC.Center + rotationalDistance;
 					int i = (int)(pos.X / 16);
 					int j = (int)(pos.Y / 16);
 					Tile tile = Framing.GetTileSafely(i, j);
-					if (tile.nactive() && Main.tileSolid[(int)tile.TileType])
+					if (tile.HasUnactuatedTile && Main.tileSolid[(int)tile.TileType])
 					{
 						foundTile = true;
 						return new Vector2(i * 16, j * 16) + new Vector2(8, 8);
@@ -202,11 +202,11 @@ namespace SOTS.NPCs.Constructs
 					if (r > 360)
 						break;
 					Vector2 rotationalDistance = new Vector2(-blockDist, 0).RotatedBy(MathHelper.ToRadians(r));
-					Vector2 pos = npc.Center + rotationalDistance;
+					Vector2 pos = NPC.Center + rotationalDistance;
 					int i = (int)(pos.X / 16);
 					int j = (int)(pos.Y / 16);
 					Tile tile = Framing.GetTileSafely(i, j);
-					if (tile.nactive() && Main.tileSolid[(int)tile.TileType])
+					if (tile.HasUnactuatedTile && Main.tileSolid[(int)tile.TileType])
 					{
 						foundTile = true;
 						return new Vector2(i * 16, j * 16) + new Vector2(8, 8);
@@ -214,25 +214,25 @@ namespace SOTS.NPCs.Constructs
 				}
 				blockDist += 16f;
 			}
-			return new Vector2(npc.Center.X, npc.Center.Y);
+			return new Vector2(NPC.Center.X, NPC.Center.Y);
 		}
 		public override bool PreAI()
 		{
-			npc.dontCountMe = true;
-			Player player = Main.player[npc.target];
-			npc.TargetClosest(true);
+			NPC.dontCountMe = true;
+			Player player = Main.player[NPC.target];
+			NPC.TargetClosest(true);
 			if((aimTo.X == -1 && aimTo.Y == -1) || (hookTile.X == -1 && hookTile.Y == -1))
 			{
-				aimTo = npc.Center;
+				aimTo = NPC.Center;
 				if(hookTile.X == -1 && hookTile.Y == -1)
 					hookTile = findClosestTile();
 				return false;
 			}
 			aimTo = player.Center;
-			if(npc.ai[2] <= 0 && npc.ai[3] <= 0)
+			if(NPC.ai[2] <= 0 && NPC.ai[3] <= 0)
 			{
-				npc.ai[2] = hookTile.X;
-				npc.ai[3] = hookTile.Y;
+				NPC.ai[2] = hookTile.X;
+				NPC.ai[3] = hookTile.Y;
 			}
 			return true;
 		}
@@ -241,21 +241,21 @@ namespace SOTS.NPCs.Constructs
 		Vector2 rotateVector = new Vector2(12, 0);
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			Vector2 dynamicAddition = new Vector2(0.4f, 0).RotatedBy(MathHelper.ToRadians(ai1));
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.45f / 155f, (255 - npc.alpha) * 0.25f / 155f, (255 - npc.alpha) * 0.45f / 155f);
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.45f / 155f, (255 - NPC.alpha) * 0.25f / 155f, (255 - NPC.alpha) * 0.45f / 155f);
 			ai1++;
-			if(npc.ai[0] < 0)
+			if(NPC.ai[0] < 0)
 			{
-				npc.velocity *= 0.98f;
+				NPC.velocity *= 0.98f;
 				return;
 			}
-			npc.velocity = dynamicAddition;
-			float dir2 = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
-			Vector2 distanceToOwner = hookTile - npc.Center;
-			Vector2 distanceToOwner2 = hookTile - npc.Center;
-			Vector2 distanceToTarget = player.Center - npc.Center;
-			Vector2 distanceToTarget2 = player.Center - npc.Center;
+			NPC.velocity = dynamicAddition;
+			float dir2 = (float)Math.Atan2(aimTo.Y - NPC.Center.Y, aimTo.X - NPC.Center.X);
+			Vector2 distanceToOwner = hookTile - NPC.Center;
+			Vector2 distanceToOwner2 = hookTile - NPC.Center;
+			Vector2 distanceToTarget = player.Center - NPC.Center;
+			Vector2 distanceToTarget2 = player.Center - NPC.Center;
 
 			distanceToTarget.Normalize();
 			rotateVector += distanceToTarget * 1;
@@ -267,7 +267,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				added = Vector2.Zero;
 			}
-			Vector2 newLocation = npc.Center + added + dynamicAddition;
+			Vector2 newLocation = NPC.Center + added + dynamicAddition;
 			if((player.Center - newLocation).Length() < maxDistPlayer + 60)
 			{
 				flag = true;
@@ -282,47 +282,47 @@ namespace SOTS.NPCs.Constructs
 			}
 			if ((player.Center - newLocation).Length() < maxDistPlayer)
 			{
-				npc.velocity = -0.3f * added + -0.1f * dynamicAddition;
+				NPC.velocity = -0.3f * added + -0.1f * dynamicAddition;
 			}
 			if(!flag)
 			{
-				npc.velocity = added + dynamicAddition;
+				NPC.velocity = added + dynamicAddition;
 			}
 			if(distanceToOwner.Length() > maxDistNPC || flag2)
 			{
 				flag2 = true;
-				npc.velocity = distanceToOwner2 * 0.002f + distanceToOwner2.SafeNormalize(new Vector2(0, 1)) * 0.5f + -0.1f * dynamicAddition;
+				NPC.velocity = distanceToOwner2 * 0.002f + distanceToOwner2.SafeNormalize(new Vector2(0, 1)) * 0.5f + -0.1f * dynamicAddition;
 			}
 
 		}
 		public override void PostAI()
 		{
-			Player player = Main.player[npc.target];
-			Vector2 toPlayer = player.Center - npc.Center;
+			Player player = Main.player[NPC.target];
+			Vector2 toPlayer = player.Center - NPC.Center;
 			Vector2 playerLoc = player.Center;
-			bool lineOfSight = Collision.CanHitLine(npc.position, npc.width, npc.height, player.position, player.width, player.height);
-			if ((toPlayer.Length() > 900 || !lineOfSight) && npc.ai[0] < 270)
+			bool lineOfSight = Collision.CanHitLine(NPC.position, NPC.width, NPC.height, player.position, player.width, player.height);
+			if ((toPlayer.Length() > 900 || !lineOfSight) && NPC.ai[0] < 270)
 				return;
 			if(toPlayer.Length() < 240)
 			{
 				float rot = toPlayer.ToRotation();
 				Vector2 circular = new Vector2(240, 0).RotatedBy(rot);
-				playerLoc = circular + npc.Center;
+				playerLoc = circular + NPC.Center;
 			}
-			npc.ai[0]++;
-			if (npc.ai[0] >= 270)
+			NPC.ai[0]++;
+			if (NPC.ai[0] >= 270)
 			{
 				glow = true;
-				npc.velocity *= 0.25f;
-				if (npc.ai[0] % 90 == 0)
+				NPC.velocity *= 0.25f;
+				if (NPC.ai[0] % 90 == 0)
 				{
-					int damage = npc.damage / 2;
+					int damage = NPC.damage / 2;
 					if (Main.expertMode)
 					{
 						damage = (int)(damage / Main.expertDamage);
 					}
-					npc.ai[1]++;
-					if (npc.ai[1] < 6)
+					NPC.ai[1]++;
+					if (NPC.ai[1] < 6)
 					{
 						float locX = playerLoc.X + Main.rand.Next(-200, 201);
 						float locY = playerLoc.Y + Main.rand.Next(-200, 201);
@@ -345,31 +345,31 @@ namespace SOTS.NPCs.Constructs
 						}
 						SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
 						if (Main.netMode != 1)
-							Projectile.NewProjectile(locX, locY, 0, 0, mod.ProjectileType("OtherworldlyTracer"), damage, 0f, Main.myPlayer, 751 - npc.ai[0], npc.whoAmI);
+							Projectile.NewProjectile(locX, locY, 0, 0, Mod.Find<ModProjectile>("OtherworldlyTracer").Type, damage, 0f, Main.myPlayer, 751 - NPC.ai[0], NPC.whoAmI);
 					}
 				}
-				if (npc.ai[1] >= 6)
+				if (NPC.ai[1] >= 6)
 				{
-					npc.ai[1] = 0;
-					npc.ai[0] = -90;
-					SoundEngine.PlaySound(SoundID.Item92, npc.Center);
+					NPC.ai[1] = 0;
+					NPC.ai[0] = -90;
+					SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
-						if (proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)
+						if (proj.active && proj.type == Mod.Find<ModProjectile>("OtherworldlyTracer") .Type&& proj.ai[1] == NPC.whoAmI)
 						{
-							int damage = npc.damage / 2;
+							int damage = NPC.damage / 2;
 							if (Main.expertMode)
 							{
 								damage = (int)(damage / Main.expertDamage);
 							}
-							Vector2 toProj = proj.Center - npc.Center;
+							Vector2 toProj = proj.Center - NPC.Center;
 							toProj /= 30f;
 							if (Main.netMode != 1)
-								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, toProj.X, toProj.Y, mod.ProjectileType("OtherworldlyBall"), damage, 0, Main.myPlayer);
+								Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, toProj.X, toProj.Y, Mod.Find<ModProjectile>("OtherworldlyBall").Type, damage, 0, Main.myPlayer);
 						}
 					}
-					npc.velocity = -12 * toPlayer.SafeNormalize(new Vector2(0, 1));
+					NPC.velocity = -12 * toPlayer.SafeNormalize(new Vector2(0, 1));
 				}
 			}
 			else
@@ -377,13 +377,13 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<OtherworldlySpirit>());	
+			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OtherworldlySpirit>());	
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].localAI[1] = -1;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 3);
-			if ((Main.expertMode || Main.rand.Next(2) == 0) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TwilightShard>(), 1);
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 3);
+			if ((Main.expertMode || Main.rand.Next(2) == 0) && SOTSWorld.downedAdvisor) Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<TwilightShard>(), 1);
 		}	
 	}
 }

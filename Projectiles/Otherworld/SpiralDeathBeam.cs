@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.width = 16;
 			Projectile.height = 20;
 			Projectile.timeLeft = 100;
-			Projectile.magic = false;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.penetrate = -1;
 			Projectile.hostile = true;
 			Projectile.friendly = false;

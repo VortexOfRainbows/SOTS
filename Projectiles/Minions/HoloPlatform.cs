@@ -203,7 +203,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile partner = Main.projectile[i];
 				if (partner.type == Projectile.type && partner.ai[0] == Projectile.ai[0] && partner.ai[1] == -Projectile.ai[1] && partner.owner == Projectile.owner)
 				{
-					HoloPlatform proj = (HoloPlatform)partner.modProjectile;
+					HoloPlatform proj = (HoloPlatform)partner.ModProjectile;
 					proj.positionToPlayer = new Vector2(-positionToPlayer.X, positionToPlayer.Y);
 					partner.netUpdate = true;
 				}
@@ -299,7 +299,7 @@ namespace SOTS.Projectiles.Minions
 					Projectile partner = Main.projectile[i];
 					if (partner.type == Projectile.type && partner.ai[0] == Projectile.ai[0] && partner.ai[1] == -Projectile.ai[1] && partner.owner == Projectile.owner)
 					{
-						HoloPlatform proj = (HoloPlatform)partner.modProjectile;
+						HoloPlatform proj = (HoloPlatform)partner.ModProjectile;
 						if (proj.SentryID == SentryID)
 							isPartners = true;
 					}

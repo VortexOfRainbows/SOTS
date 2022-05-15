@@ -26,16 +26,11 @@ namespace SOTS.Items.Pyramid
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidDamage += 0.08f;
 			voidPlayer.voidCost -= 0.08f;
-			player.magicDamage += 0.08f;
+			player.GetDamage(DamageClass.Magic) += 0.08f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 4);
-			recipe.AddIngredient(ItemID.Ruby, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 4).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

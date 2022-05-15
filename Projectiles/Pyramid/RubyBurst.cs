@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.width = 2;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 90;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;

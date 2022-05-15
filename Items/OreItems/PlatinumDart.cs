@@ -20,7 +20,7 @@ namespace SOTS.Items.OreItems
 			Item.useTime = 15;
 			Item.useAnimation = 15;
 			Item.DamageType = DamageClass.Ranged;
-			Item.thrown = false;
+			// Item.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Item.value = Item.sellPrice(0, 0, 35, 0);
 			Item.rare = ItemRarityID.Green;
 			Item.width = 22;
@@ -37,11 +37,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.PlatinumBar, 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.PlatinumBar, 15).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

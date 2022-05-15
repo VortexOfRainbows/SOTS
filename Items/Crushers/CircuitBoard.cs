@@ -24,7 +24,7 @@ namespace SOTS.Items.Crushers
 		{
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			player.meleeSpeed += 0.05f;
-			player.meleeDamage += 0.05f;
+			player.GetDamage(DamageClass.Melee) += 0.05f;
 			vPlayer.CrushTransformer += 0.1f;
 			vPlayer.CrushResistor = true;
 			vPlayer.CrushCapacitor = true;
@@ -33,14 +33,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CrushingAmplifier>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CrushingCapacitor>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CrushingResistor>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CrushingTransformer>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CrushingAmplifier>(), 1).AddIngredient(ModContent.ItemType<CrushingCapacitor>(), 1).AddIngredient(ModContent.ItemType<CrushingResistor>(), 1).AddIngredient(ModContent.ItemType<CrushingTransformer>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

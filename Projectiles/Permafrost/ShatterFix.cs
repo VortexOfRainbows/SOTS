@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.brokenFrigidSword = 3;
 			player.heldProj = Projectile.whoAmI;
 

@@ -24,28 +24,23 @@ namespace SOTS.Items.Slime
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Blue;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("WormwoodTile");
+			Item.createTile = Mod.Find<ModTile>("WormwoodTile").Type;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddRecipeGroup(RecipeGroupID.Wood, 2);
-			recipe.AddIngredient(ItemID.Gel, 5);
-			recipe.AddTile(TileID.Solidifier);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
+			CreateRecipe(2).AddRecipeGroup(RecipeGroupID.Wood, 2).AddIngredient(ItemID.Gel, 5).AddTile(TileID.Solidifier).Register();
 		}
 	}
 	public class WormwoodTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("Wormwood");
+			drop = Mod.Find<ModItem>("Wormwood").Type;
 			AddMapEntry(new Color(140, 70, 20));
 			DustType = 7; //dynasty wood dust
 		}

@@ -415,7 +415,7 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
 			aetherPlayer.aetherNum += Item.stack;
 		}
 	}
@@ -571,7 +571,7 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
 			aetherPlayer.infernoNum++;
 		}
 	}
@@ -658,7 +658,7 @@ namespace SOTS.Items.Fragments
         {
 			if (infernoNum > 10)
 				infernoNum = 10;
-			player.lifeRegen -= infernoNum * 2;
+			Player.lifeRegen -= infernoNum * 2;
 			infernoNum = 0;
 		}
         public override void ResetEffects()
@@ -667,9 +667,9 @@ namespace SOTS.Items.Fragments
 			{
 				return;
 			}
-			float projectedGravity = player.gravity;
-			float projectedFallSpeed = player.maxFallSpeed;
-			float projectedJumpSpeedBoost = player.jumpSpeedBoost;
+			float projectedGravity = Player.gravity;
+			float projectedFallSpeed = Player.maxFallSpeed;
+			float projectedJumpSpeedBoost = Player.jumpSpeedBoost;
 			float mult = 1f - 1f / (0.3f * aetherNum + 1); //around 0.3f at 1
 			float mult2 = 1f - 1f / (0.3f * aetherNum + 1); //around 0.3f at 1
 			projectedGravity -= 1f * mult;
@@ -687,17 +687,17 @@ namespace SOTS.Items.Fragments
 			{
 				projectedFallSpeed = 1.75f;
 			}
-			if (player.gravity > projectedGravity)
-				player.gravity = projectedGravity;
+			if (Player.gravity > projectedGravity)
+				Player.gravity = projectedGravity;
 
-			if (player.maxFallSpeed > projectedFallSpeed)
-				player.maxFallSpeed = projectedFallSpeed;
+			if (Player.maxFallSpeed > projectedFallSpeed)
+				Player.maxFallSpeed = projectedFallSpeed;
 
-			if (player.jumpSpeedBoost < projectedJumpSpeedBoost)
-				player.jumpSpeedBoost = projectedJumpSpeedBoost;
+			if (Player.jumpSpeedBoost < projectedJumpSpeedBoost)
+				Player.jumpSpeedBoost = projectedJumpSpeedBoost;
 			if (aetherNum >= 4)
 			{
-				player.noFallDmg = true;
+				Player.noFallDmg = true;
 			}
 			aetherNum = 0;
 		}

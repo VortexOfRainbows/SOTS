@@ -215,8 +215,8 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.magic = false; //both damage types just in case i wanna repurpose it
-			Projectile.melee = true;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ; //both damage types just in case i wanna repurpose it
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 		}

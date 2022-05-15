@@ -30,22 +30,18 @@ namespace SOTS.Items.Earth
 			player.setBonus = "Increases void gain by 2\nGrants autofire to the Vibrant Pistol at the cost of accuracy";
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 2f;
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.VibrantArmor = true;
 		}
 		public override void UpdateEquip(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 50;
-			player.rangedCrit += 5;
+			player.GetCritChance(DamageClass.Ranged) += 5;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantBar>(), 10).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

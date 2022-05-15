@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Lightning
 			Projectile.width = 12;
 			Projectile.height = 12;
 			Projectile.friendly = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Lightning
 					trailPos[i] = addPos;
 					int u = (int)addPos.X / 16;
 					int j = (int)addPos.Y / 16;
-					if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].type] == false && Main.tileSolid[Main.tile[u, j].type] == true)
+					if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].TileType] == false && Main.tileSolid[Main.tile[u, j].TileType] == true)
 					{
 						int dust = Dust.NewDust(new Vector2(addPos.X - 16, addPos.Y - 16), 24, 24, 107);
 						Main.dust[dust].scale *= 1f;
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Lightning
 					if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly && !npc.dontTakeDamage)
 					{
 						if (Projectile.owner == Main.myPlayer && Projectile.friendly)
-							Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("GreenExplosion"), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1f, Projectile.ai[1]);
+							Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("GreenExplosion").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, -1f, Projectile.ai[1]);
 						if (Projectile.friendly)
 							collided = true;
 						for (int k = i + 1; k < trailPos.Length; k++)

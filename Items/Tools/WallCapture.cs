@@ -35,7 +35,7 @@ namespace SOTS.Items.Tools
 			Item.height = 18;
 			Item.useTime = 12;
 			Item.useAnimation = 12;
-			Item.useStyle = ItemUseStyleID.Stabbing;
+			Item.useStyle = ItemUseStyleID.Thrust;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Cyan;
 			Item.UseSound = SoundID.Item1;
@@ -142,7 +142,7 @@ namespace SOTS.Items.Tools
 			} */
 		}
 		bool complete = false;
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			#region tile finder
 			if(complete)

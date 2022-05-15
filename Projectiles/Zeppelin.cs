@@ -33,9 +33,9 @@ namespace SOTS.Projectiles
             Projectile.aiStyle = 99;
             Projectile.friendly = true; 
             Projectile.penetrate = -1; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
         }
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) 
 		{
 			width = 14;
 			height = 14;
@@ -47,7 +47,7 @@ namespace SOTS.Projectiles
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1f / 255f, (255 - Projectile.alpha) * 1.45f / 255f);
 			if(storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("Razorwater"), (int)(Projectile.damage * 0.75f) + 1, 0, Main.myPlayer, 0, Projectile.whoAmI);
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("Razorwater").Type, (int)(Projectile.damage * 0.75f) + 1, 0, Main.myPlayer, 0, Projectile.whoAmI);
 			}
         }
     }

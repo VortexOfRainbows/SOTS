@@ -23,17 +23,17 @@ namespace SOTS.Projectiles
             Projectile.hostile = false; 
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true; 
-            Projectile.ranged = true; 
+            Projectile.DamageType = DamageClass.Ranged; 
             Projectile.aiStyle = 0; 
 			Projectile.alpha = 255;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 20;
 			height = 20;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {

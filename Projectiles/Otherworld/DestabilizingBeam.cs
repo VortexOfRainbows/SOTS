@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 position = currentPos;
 				int i = (int)(position.X / 16);
 				int j = (int)(position.Y / 16);
-					if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].nactive() && Distance < 119))
+					if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].HasUnactuatedTile && Distance < 119))
 				{
 					previousDistance = Distance;
 					Distance = 119;
@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Otherworld
 				rotate += 6;
 				Vector2 laserVelo = new Vector2((14f) * size, 0f).RotatedBy(radianDir) + rotateVector;
 
-				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].nactive() && Distance < 119))
+				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].HasUnactuatedTile && Distance < 119))
 				{
 					position -= laserVelo;
 					Vector2 velo = new Vector2(0, Main.rand.Next(-7, 8) * size).RotatedBy(laserVelo.ToRotation());
@@ -138,7 +138,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				if(dust || Main.rand.Next(250) == 0)
 				{
-					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, mod.DustType("CodeDust2"));
+					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CodeDust2").Type);
 					Main.dust[num1].velocity *= 1.75f;
 					Main.dust[num1].scale *= 2.75f;
 				}

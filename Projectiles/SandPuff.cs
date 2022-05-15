@@ -15,7 +15,7 @@ namespace SOTS.Projectiles
         {
 			Projectile.height = 40;
 			Projectile.width = 40;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.friendly = true;
 			Projectile.penetrate = 8;
 			Projectile.alpha = 35;

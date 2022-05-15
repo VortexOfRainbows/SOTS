@@ -46,17 +46,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Hellbreaker>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<WormWoodCollapse>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CrabClaw>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 5);
-			recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddIngredient(ItemID.SoulofLight, 10);
-			recipe.AddIngredient(ItemID.Amethyst, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Hellbreaker>(), 1).AddIngredient(ModContent.ItemType<WormWoodCollapse>(), 1).AddIngredient(ModContent.ItemType<CrabClaw>(), 1).AddIngredient(ModContent.ItemType<CursedMatter>(), 5).AddIngredient(ItemID.SoulofNight, 10).AddIngredient(ItemID.SoulofLight, 10).AddIngredient(ItemID.Amethyst, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

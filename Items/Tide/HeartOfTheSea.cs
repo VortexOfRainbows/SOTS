@@ -23,7 +23,7 @@ namespace SOTS.Items.Tide
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.rippleBonusDamage += 2;
 			if(!hideVisual)
 				modPlayer.rippleEffect = true;
@@ -32,13 +32,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.LifeCrystal, 1);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<RipplePotion>(), 8);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.LifeCrystal, 1).AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1).AddIngredient(ModContent.ItemType<RipplePotion>(), 8).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

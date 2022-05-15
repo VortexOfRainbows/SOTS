@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	}
 	public class PyramidRubbleTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;
@@ -79,7 +79,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	}
 	public class RuinedPyramidBrickTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;

@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Frenzy : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frenzy");
 			Description.SetDefault("Melee Speed increased by 100%");   

@@ -62,12 +62,12 @@ namespace SOTS
 		}
 		public override void UpdateAccessory(Item item, Player player, bool hideVisual)
 		{
-			if (extraVoid > 0 && (Item.prefix == mod.GetPrefix("Awakened").Type || Item.prefix == mod.GetPrefix("Omniscient").Type))
+			if (extraVoid > 0 && (Item.prefix == Mod.GetPrefix("Awakened").Type || Item.prefix == Mod.GetPrefix("Omniscient").Type))
 			{
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				voidPlayer.voidMeterMax2 += extraVoid;
 			}
-			if (extraVoidGain > 0 && (Item.prefix == mod.GetPrefix("Chained").Type || Item.prefix == mod.GetPrefix("Soulbound").Type))
+			if (extraVoidGain > 0 && (Item.prefix == Mod.GetPrefix("Chained").Type || Item.prefix == Mod.GetPrefix("Soulbound").Type))
 			{
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				voidPlayer.bonusVoidGain += extraVoidGain;
@@ -78,18 +78,18 @@ namespace SOTS
 			if (!Item.social && Item.prefix > 0)
 			{
 				int voidTooltip = extraVoid;
-				if (extraVoid > 0 && (Item.prefix == mod.GetPrefix("Awakened").Type || Item.prefix == mod.GetPrefix("Omniscient").Type))
+				if (extraVoid > 0 && (Item.prefix == Mod.GetPrefix("Awakened").Type || Item.prefix == Mod.GetPrefix("Omniscient").Type))
 				{
-					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " max void")
+					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + " max void")
 					{
 						isModifier = true
 					};
 					tooltips.Add(line);
 				}
-				if (extraVoidGain > 0 && (Item.prefix == mod.GetPrefix("Chained").Type || Item.prefix == mod.GetPrefix("Soulbound").Type))
+				if (extraVoidGain > 0 && (Item.prefix == Mod.GetPrefix("Chained").Type || Item.prefix == Mod.GetPrefix("Soulbound").Type))
 				{
 					voidTooltip = extraVoidGain;
-					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " void gain")
+					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + " void gain")
 					{
 						isModifier = true
 					};
@@ -104,11 +104,11 @@ namespace SOTS
 						int intMax = (int)(voidCostMultiplier * voidAmt);
 						float mult = intMax / (float)voidAmt;
 						int voidCostTooltip = (int)(100f * (mult - 1f));
-						if (voidCostTooltip != 0 && (Item.prefix == mod.GetPrefix("Famished").Type || Item.prefix == mod.GetPrefix("Precarious").Type || Item.prefix == mod.GetPrefix("Potent").Type || Item.prefix == mod.GetPrefix("Omnipotent").Type))
+						if (voidCostTooltip != 0 && (Item.prefix == Mod.GetPrefix("Famished").Type || Item.prefix == Mod.GetPrefix("Precarious").Type || Item.prefix == Mod.GetPrefix("Potent").Type || Item.prefix == Mod.GetPrefix("Omnipotent").Type))
 						{
 							string sign = (voidCostTooltip > 0 ? "+" : "");
 							Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
-							TooltipLine line = new TooltipLine(mod, "PrefixAwakened", sign + voidCostTooltip + "% void cost")
+							TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", sign + voidCostTooltip + "% void cost")
 							{
 								overrideColor = baseColor
 							};
@@ -274,9 +274,9 @@ namespace SOTS
 			{
 				foreach (TooltipLine line2 in tooltips)
 				{
-					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
-						line2.overrideColor = new Color(0, 130, 235, 255);
+						line2.OverrideColor = new Color(0, 130, 235, 255);
 					}
 				}
 			}
@@ -284,9 +284,9 @@ namespace SOTS
 			{
 				foreach (TooltipLine line2 in tooltips)
 				{
-					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
-						line2.overrideColor = new Color(210, 0, 0);
+						line2.OverrideColor = new Color(210, 0, 0);
 					}
 				}
 			}
@@ -295,9 +295,9 @@ namespace SOTS
 				Color overrideColor = new Color(50, 50, 50);
 				foreach (TooltipLine line2 in tooltips)
 				{
-					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
-						line2.overrideColor = overrideColor;
+						line2.OverrideColor = overrideColor;
 					}
 				}
 			}
@@ -328,9 +328,9 @@ namespace SOTS
 				Color color = new Color(211, 0, 194);
 				foreach (TooltipLine line2 in tooltips)
 				{
-					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
-						line2.overrideColor = color;
+						line2.OverrideColor = color;
 					}
 				}
 				dedicatedColor = new Color(255, 158, 235);
@@ -358,8 +358,8 @@ namespace SOTS
 			}
 			if (dedicated)
 			{
-				TooltipLine line = new TooltipLine(mod, "Dedicated", "Dedicated Item");
-				line.overrideColor = dedicatedColor;
+				TooltipLine line = new TooltipLine(Mod, "Dedicated", "Dedicated Item");
+				line.OverrideColor = dedicatedColor;
 				tooltips.Add(line);
 			}
 		}
@@ -375,9 +375,9 @@ namespace SOTS
                 {
 					Tile tile = Framing.GetTileSafely(x + i, y + j);
 					int type = 0;
-					if (Main.tile[x + i, y + j].frameX >= 18 && Main.tile[x + i, y + j].frameX < 36 && Main.tile[x + i, y + j].frameY % 36 >= 18)
+					if (Main.tile[x + i, y + j].TileFrameX >= 18 && Main.tile[x + i, y + j].TileFrameX < 36 && Main.tile[x + i, y + j].TileFrameY % 36 >= 18)
 						type = 1;
-					if (tile.TileType == mod.TileType("TransmutationAltarTile") && type == 1)
+					if (tile.TileType == Mod.Find<ModTile>("TransmutationAltarTile") .Type&& type == 1)
 					{
 						Vector2 newBetween = new Vector2(i * 16, j * 16);
 						if (newBetween.Length() < between.Length())
@@ -402,9 +402,9 @@ namespace SOTS
 				{
 					Tile tile = Framing.GetTileSafely(x + i, y + j);
 					int type = 0;
-					if (Main.tile[x + i, y + j].frameX >= 18 && Main.tile[x + i, y + j].frameX < 36 && Main.tile[x + i, y + j].frameY % 36 >= 18)
+					if (Main.tile[x + i, y + j].TileFrameX >= 18 && Main.tile[x + i, y + j].TileFrameX < 36 && Main.tile[x + i, y + j].TileFrameY % 36 >= 18)
 						type = 1;
-					if (tile.TileType == mod.TileType("TransmutationAltarTile") && type == 1)
+					if (tile.TileType == Mod.Find<ModTile>("TransmutationAltarTile") .Type&& type == 1)
 					{
 						Vector2 newBetween = new Vector2(i * 16, j * 16);
 						if (newBetween.Length() < between.Length())
@@ -420,7 +420,7 @@ namespace SOTS
 		public override void OnCraft(Item item, Recipe recipe)
 		{
 			Player player = Main.LocalPlayer;
-			if (recipe.requiredTile[0] == TileID.DemonAltar || recipe.requiredTile[0] == mod.TileType("TransmutationAltarTile"))
+			if (recipe.requiredTile[0] == TileID.DemonAltar || recipe.requiredTile[0] == Mod.Find<ModTile>("TransmutationAltarTile").Type)
             {
 				Tile tile = FindTATile(player);
 				if(tile != null)
@@ -437,8 +437,8 @@ namespace SOTS
 					TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
 
 
-					Projectile projectile = Main.projectile[Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("DataTransferProj"), 0, 0, Main.myPlayer, index, 0)];
-					DataTransferProj proj = (DataTransferProj)Projectile.modProjectile;
+					Projectile projectile = Main.projectile[Projectile.NewProjectile(player.Center, Vector2.Zero, Mod.Find<ModProjectile>("DataTransferProj").Type, 0, 0, Main.myPlayer, index, 0)];
+					DataTransferProj proj = (DataTransferProj)Projectile.ModProjectile;
 					proj.itemsArray[0] = item2.type;
 					proj.itemAmountsArray[0] = item2.stack;
 					int amountOfUniqueItems = 0;
@@ -500,7 +500,7 @@ namespace SOTS
 			}
 			return base.CanUseItem(item, player);
         }
-        public override bool UseItem(Item item, Player player)
+        public override bool? UseItem(Item item, Player player)
 		{
 			return base.UseItem(item, player);
         }

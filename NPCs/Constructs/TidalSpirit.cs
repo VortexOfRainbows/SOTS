@@ -15,8 +15,8 @@ namespace SOTS.NPCs.Constructs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tidal Spirit");
-			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -40,16 +40,16 @@ namespace SOTS.NPCs.Constructs
             NPC.width = 58;
             NPC.height = 58;
 			Main.npcFrameCount[NPC.type] = 1;   
-            npc.value = 35075;
-            npc.npcSlots = 7f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = false;
-			npc.rarity = 2;
+            NPC.value = 35075;
+            NPC.npcSlots = 7f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = false;
+			NPC.rarity = 2;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -64,60 +64,60 @@ namespace SOTS.NPCs.Constructs
 		int direction = 1;
 		public override void AI()
 		{
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.15f / 255f, (255 - npc.alpha) * 0.25f / 255f, (255 - npc.alpha) * 0.65f / 255f);
-			Player player = Main.player[npc.target];
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);
+			Player player = Main.player[NPC.target];
 			if(phase == 3)
 			{
-				npc.dontTakeDamage = false;
+				NPC.dontTakeDamage = false;
 				if (Main.netMode != 1)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 
-				if(npc.ai[3] % 2 == 0)
+				if(NPC.ai[3] % 2 == 0)
 				{
-					if (npc.ai[1] < 360)
+					if (NPC.ai[1] < 360)
 					{
-						if (npc.ai[1] > 270)
+						if (NPC.ai[1] > 270)
 						{
-							npc.velocity *= 0.1f;
-							if (npc.ai[2] % 14 == 0)
+							NPC.velocity *= 0.1f;
+							if (NPC.ai[2] % 14 == 0)
 							{
-								Vector2 toPlayer = player.Center - npc.Center;
+								Vector2 toPlayer = player.Center - NPC.Center;
 								toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0));
 								if (projectileVelo == Vector2.Zero)
 									projectileVelo = toPlayer;
-								int damage2 = npc.damage / 2;
+								int damage2 = NPC.damage / 2;
 								if (Main.expertMode)
 								{
 									damage2 = (int)(damage2 / Main.expertDamage);
 								}
-								SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
+								SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 21, 0.8f);
 								int last = -1;
 								for (int i = 0; i < 2; i++)
 								{
 									float spread = 11.5f;
-									Vector2 circleGen = new Vector2(spread, 0).RotatedBy(MathHelper.ToRadians(npc.ai[2] * 2.0f));
+									Vector2 circleGen = new Vector2(spread, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[2] * 2.0f));
 									Vector2 velo = projectileVelo.RotatedBy(MathHelper.ToRadians(circleGen.X - (i * 2 - 1) * 11.5f));
 									float speed = 7f;
 									if (Main.netMode != 1)
 									{
-										int temp = Projectile.NewProjectile(npc.Center, velo * speed, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
+										int temp = Projectile.NewProjectile(NPC.Center, velo * speed, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
 										last = temp;
 									}
 								}
-								npc.ai[1] += 5;
+								NPC.ai[1] += 5;
 							}
-							npc.ai[2]++;
+							NPC.ai[2]++;
 						}
 						else
 						{
-							npc.ai[1]++;
-							npc.ai[0]++;
-							Vector2 circleGen = new Vector2(20f, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0]));
+							NPC.ai[1]++;
+							NPC.ai[0]++;
+							Vector2 circleGen = new Vector2(20f, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0]));
 							Vector2 rotatePos = new Vector2(720 * direction, 0).RotatedBy(MathHelper.ToRadians(circleGen.X));
 							//Vector2 rotateAround = new Vector2(npc.ai[1], 0).RotatedBy(MathHelper.ToRadians(npc.ai[1] * 2));
-							Vector2 toCircle = rotatePos + player.Center - npc.Center;
+							Vector2 toCircle = rotatePos + player.Center - NPC.Center;
 							float dist = toCircle.Length();
 							toCircle = toCircle.SafeNormalize(Vector2.Zero);
 							float speed = 9.5f;
@@ -126,42 +126,42 @@ namespace SOTS.NPCs.Constructs
 								speed = dist;
 							}
 							toCircle *= speed;
-							npc.velocity = toCircle;
+							NPC.velocity = toCircle;
 						}
 					}
 					else
 					{
 						if (Main.netMode != 1)
-							npc.netUpdate = true;
-						npc.ai[0] += Main.rand.Next(180);
-						npc.ai[1] = 0;
-						npc.ai[2] = 0;
-						npc.ai[3]++;
+							NPC.netUpdate = true;
+						NPC.ai[0] += Main.rand.Next(180);
+						NPC.ai[1] = 0;
+						NPC.ai[2] = 0;
+						NPC.ai[3]++;
 						projectileVelo = Vector2.Zero;
 						direction *= -1;
 					}
 				}
 				else
 				{
-					npc.ai[0]++;
-					if (npc.ai[1] < 440)
+					NPC.ai[0]++;
+					if (NPC.ai[1] < 440)
 					{
-						npc.ai[1] += 1.15f;
+						NPC.ai[1] += 1.15f;
 					}
 					else
 					{
-						npc.ai[2]++;
-						if (npc.ai[2] % 100 == 0)
+						NPC.ai[2]++;
+						if (NPC.ai[2] % 100 == 0)
 						{
-							Vector2 toPlayer = player.Center - npc.Center;
+							Vector2 toPlayer = player.Center - NPC.Center;
 							toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-25f, 25f)));
 							projectileVelo = toPlayer;
-							int damage2 = npc.damage / 2;
+							int damage2 = NPC.damage / 2;
 							if (Main.expertMode)
 							{
 								damage2 = (int)(damage2 / Main.expertDamage);
 							}
-							SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
+							SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 21, 0.8f);
 							int last = -1;
 							for (int i = 0; i < 2; i++)
 							{
@@ -169,27 +169,27 @@ namespace SOTS.NPCs.Constructs
 								float speed2 = 5.7f;
 								if (Main.netMode != 1)
 								{
-									int temp = Projectile.NewProjectile(npc.Center, velo * speed2, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
+									int temp = Projectile.NewProjectile(NPC.Center, velo * speed2, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
 									last = temp;
 								}
 							}
 						}
-						else if(npc.ai[2] > 600) //6 * 72
+						else if(NPC.ai[2] > 600) //6 * 72
 						{
 							if (Main.netMode != 1)
-								npc.netUpdate = true;
-							npc.ai[0] += Main.rand.Next(180);
-							npc.ai[1] = 0;
-							npc.ai[2] = 0;
-							npc.ai[3]++;
+								NPC.netUpdate = true;
+							NPC.ai[0] += Main.rand.Next(180);
+							NPC.ai[1] = 0;
+							NPC.ai[2] = 0;
+							NPC.ai[3]++;
 							projectileVelo = Vector2.Zero;
 							direction *= -1;
 						}
 					}
-					Vector2 circleGen = new Vector2(20f + npc.ai[1] * 0.015f, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * 2.15f));
-					Vector2 rotatePos = new Vector2(0, (npc.ai[1] + 60) * -1).RotatedBy(MathHelper.ToRadians(circleGen.X));
+					Vector2 circleGen = new Vector2(20f + NPC.ai[1] * 0.015f, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * 2.15f));
+					Vector2 rotatePos = new Vector2(0, (NPC.ai[1] + 60) * -1).RotatedBy(MathHelper.ToRadians(circleGen.X));
 					rotatePos.Y *= 0.85f;
-					Vector2 toCircle = rotatePos + player.Center - npc.Center;
+					Vector2 toCircle = rotatePos + player.Center - NPC.Center;
 					float dist = toCircle.Length();
 					toCircle = toCircle.SafeNormalize(Vector2.Zero);
 					float speed = 12.5f;
@@ -198,27 +198,27 @@ namespace SOTS.NPCs.Constructs
 						speed = dist;
 					}
 					toCircle *= speed;
-					npc.velocity = toCircle;
+					NPC.velocity = toCircle;
 				}
 			}
 			if (phase == 2)
 			{
 				if (Main.netMode != 1)
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				direction = Main.rand.Next(2) * 2 - 1;
-				npc.dontTakeDamage = false;
+				NPC.dontTakeDamage = false;
 				NPC.aiStyle =-1;
-				npc.ai[0] = Main.rand.Next(180);
-				npc.ai[1] = 0;
-				npc.ai[2] = 0;
-				npc.ai[3] = 0;
+				NPC.ai[0] = Main.rand.Next(180);
+				NPC.ai[1] = 0;
+				NPC.ai[2] = 0;
+				NPC.ai[3] = 0;
 				phase = 3;
 			}
 			else if(phase == 1)
 			{
 				counter++;
 			}
-			if(Main.player[npc.target].dead)
+			if(Main.player[NPC.target].dead)
 			{
 				counter++;
 			}
@@ -226,14 +226,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				if (Main.netMode != 1)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				phase = 1;
 				NPC.aiStyle =-1;
-				npc.velocity.Y -= 0.014f;
-				npc.dontTakeDamage = true;
+				NPC.velocity.Y -= 0.014f;
+				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 267);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(64, 72, 178);
 			dust.noGravity = true;
@@ -242,22 +242,22 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
-			for (int k = 0; k < npc.oldPos.Length; k++) {
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
-				Color color = npc.GetAlpha(lightColor) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
+			for (int k = 0; k < NPC.oldPos.Length; k++) {
+				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = NPC.GetAlpha(lightColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for(int i = 0; i < 50; i ++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 267);
+					Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
 					dust.color = new Color(64, 72, 178);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
@@ -268,28 +268,28 @@ namespace SOTS.NPCs.Constructs
 				{
 					phase = 2;
 					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f;
 				float y = Main.rand.Next(-10, 11) * 0.45f;
 				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y),
+				new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y),
 				null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingDeluge"), 1);	
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  Mod.Find<ModItem>("DissolvingDeluge").Type, 1);	
 		}	
 	}
 }

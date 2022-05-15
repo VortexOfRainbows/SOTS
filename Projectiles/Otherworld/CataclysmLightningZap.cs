@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.height = 14;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly)
 				{
 					if (Projectile.owner == Main.myPlayer && Projectile.friendly)
-						Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("CataclysmBulletDamage"), Projectile.damage, 2f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
+						Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("CataclysmBulletDamage").Type, Projectile.damage, 2f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
 					if(Projectile.friendly)
                     {
 						hit = true;

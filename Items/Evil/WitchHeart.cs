@@ -27,21 +27,15 @@ namespace SOTS.Items.Evil
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritNightmare = true;
-			player.magicCrit += 5;
-			player.meleeCrit += 5;
-			player.rangedCrit += 5;
-			player.thrownCrit += 5;
+			player.GetCritChance(DamageClass.Magic) += 5;
+			player.GetCritChance(DamageClass.Melee) += 5;
+			player.GetCritChance(DamageClass.Ranged) += 5;
+			player.GetCritChance(DamageClass.Throwing) += 5;
 			player.statLifeMax2 += 20;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.LifeFruit, 4);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<NightmarePotion>(), 8);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.LifeFruit, 4).AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1).AddIngredient(ModContent.ItemType<NightmarePotion>(), 8).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

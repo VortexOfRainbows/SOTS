@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class VoidBurn : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Void Burn");
 			Description.SetDefault("Increases void drain by 2");   

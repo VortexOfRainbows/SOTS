@@ -21,7 +21,7 @@ namespace SOTS.Items.Furniture
 		{
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = true;
@@ -60,7 +60,7 @@ namespace SOTS.Items.Furniture
 		{
 
 		}
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
 			UpdateDoor(i, j, true);
 			return true;
@@ -84,7 +84,7 @@ namespace SOTS.Items.Furniture
 				for (int k = 0; k < 3; k++)
 				{
 					Tile targetTile = Main.tile[i, top + k];
-					targetTile.type = (ushort)ModContent.TileType<TOpen>();
+					targetTile.TileType = (ushort)ModContent.TileType<TOpen>();
 					targettile.TileFrameX *= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
@@ -117,7 +117,7 @@ namespace SOTS.Items.Furniture
 		{
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = false;
 			Main.tileLighted[Type] = true;
@@ -156,7 +156,7 @@ namespace SOTS.Items.Furniture
         {
 
         }
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
 			UpdateDoor(i, j, true);
 			return true;
@@ -180,7 +180,7 @@ namespace SOTS.Items.Furniture
 				for (int k = 0; k < 3; k++)
 				{
 					Tile targetTile = Main.tile[i, top + k];
-					targetTile.type = (ushort)ModContent.TileType<TClosed>();
+					targetTile.TileType = (ushort)ModContent.TileType<TClosed>();
 					targettile.TileFrameX /= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);

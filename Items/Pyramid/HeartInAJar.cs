@@ -24,7 +24,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CurseAura = true;
 			if(!hideVisual)
 				for(int j = 0; j < 90; j++)
@@ -33,7 +33,7 @@ namespace SOTS.Items.Pyramid
 					int i2 = (int)(circular.X + player.Center.X) / 16;
 					int j2 = (int)(circular.Y + player.Center.Y) / 16;
 					bool disable = false;
-					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].HasTile && Main.tileSolidTop[Main.tile[i2, j2].type] == false && Main.tileSolid[Main.tile[i2, j2].type] == true)
+					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].HasTile && Main.tileSolidTop[Main.tile[i2, j2].TileType] == false && Main.tileSolid[Main.tile[i2, j2].TileType] == true)
 						disable = true;
 					if (!disable)
 					{

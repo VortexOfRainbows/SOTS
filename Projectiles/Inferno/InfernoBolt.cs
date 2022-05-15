@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
                 else if(Projectile.ai[1] == -2)
                     SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.2f);
                 if (Main.netMode != NetmodeID.Server)
-                    SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
+                    SOTS.primitives.CreateTrail(new StarTrail(Projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
                 runOnce = false;
                 for (int i = 0; i < 5; i++)
                 {
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Inferno
             if(Main.rand.NextBool(3))
                 target.AddBuff(BuffID.OnFire, 180, false);
             else
-                VoidPlayer.VoidBurn(mod, target, 30, 270);
+                VoidPlayer.VoidBurn(Mod, target, 30, 270);
         }
         public override void AI()
         {

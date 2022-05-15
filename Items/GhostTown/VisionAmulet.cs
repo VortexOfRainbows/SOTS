@@ -51,9 +51,9 @@ namespace SOTS.Items.GhostTown
 			int unique = modPlayer.UniqueVisionNumber;
 			foreach (TooltipLine line in tooltips) //goes through each tooltip line
 			{
-				if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+				if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 				{
-					line.text = GetTooltip(GetGem(unique), GetFrame(unique));
+					line.Text = GetTooltip(GetGem(unique), GetFrame(unique));
 					return;
 				}
 			}
@@ -92,10 +92,10 @@ namespace SOTS.Items.GhostTown
 					modPlayer.attackSpeedMod += 0.12f;
 					break;
 				case 3: //cyro
-					player.magicCrit += 10;
-					player.meleeCrit += 10;
-					player.rangedCrit += 10;
-					player.thrownCrit += 10;
+					player.GetCritChance(DamageClass.Magic) += 10;
+					player.GetCritChance(DamageClass.Melee) += 10;
+					player.GetCritChance(DamageClass.Ranged) += 10;
+					player.GetCritChance(DamageClass.Throwing) += 10;
 					break;
 				case 4: //pyro
 					modPlayer.CritBonusMultiplier += 0.3f;

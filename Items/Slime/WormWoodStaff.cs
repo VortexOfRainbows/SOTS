@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -27,7 +28,7 @@ namespace SOTS.Items.Slime
             Item.rare = ItemRarityID.LightRed;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = false;
-			Item.shoot = mod.ProjectileType("WormBullet"); 
+			Item.shoot = ModContent.ProjectileType<Projectiles.Slime.WormBullet>(); 
             Item.shootSpeed = 2.75f;
 			Item.noMelee = true;
 		}
@@ -37,25 +38,20 @@ namespace SOTS.Items.Slime
 			projectileNum = 0;
 			return base.CanUseItem(player);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			int numberProjectiles = 1;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-			    Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-5 + ((projectileNum % 3) * 5)));
-			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+			    Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(-5 + ((projectileNum % 3) * 5)));
+			    Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 			}
 			projectileNum++;
 			return false; 
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 32);
-			recipe.AddIngredient(null, "Wormwood", 16);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 32).AddIngredient<Wormwood>(16).AddTile(TileID.Anvils).Register();
 		}
 		
 	}

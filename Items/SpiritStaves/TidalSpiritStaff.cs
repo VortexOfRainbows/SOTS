@@ -45,13 +45,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingDeluge>(), 1);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
-			recipe.AddIngredient(ItemID.SoulofMight, 5);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Fragments.DissolvingDeluge>(), 1).AddRecipeGroup(RecipeGroupID.IronBar, 10).AddIngredient(ItemID.SoulofMight, 5).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

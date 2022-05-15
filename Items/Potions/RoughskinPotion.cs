@@ -30,23 +30,8 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
-			recipe.AddIngredient(null, "Snakeskin", 8);
-			recipe.AddIngredient(ItemID.Blinkroot, 1);
-			recipe.AddTile(TileID.Bottles);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
-			recipe.AddIngredient(null, "SeaSnake", 1);
-			recipe.AddIngredient(ItemID.Blinkroot, 1);
-			recipe.AddTile(TileID.Bottles);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1).AddIngredient(null, "Snakeskin", 8).AddIngredient(ItemID.Blinkroot, 1).AddTile(TileID.Bottles).Register();
+			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1).AddIngredient(null, "SeaSnake", 1).AddIngredient(ItemID.Blinkroot, 1).AddTile(TileID.Bottles).Register();
 		}
 	}
 }

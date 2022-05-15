@@ -15,8 +15,8 @@ namespace SOTS.Projectiles.Pyramid
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(64);
-            aiType = 64;
-            Projectile.melee = true;
+            AIType = 64;
+            Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 0;
 		}
 		int storeData = -1;
@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("EmeraldTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("EmeraldTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
 				Projectile.ai[1] = storeData;
 				Projectile.netUpdate = true;
 			}

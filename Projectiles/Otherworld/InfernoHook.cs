@@ -41,8 +41,8 @@ namespace SOTS.Projectiles.Otherworld
         {
             if (storeData1 == -1 && Projectile.owner == Main.myPlayer)
             {
-                storeData1 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("InfernoTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, -1, Projectile.whoAmI);
-                storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("InfernoTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, 1, Projectile.whoAmI);
+                storeData1 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("InfernoTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, -1, Projectile.whoAmI);
+                storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("InfernoTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, 1, Projectile.whoAmI);
                 Projectile.netUpdate = true;
             }
             if(Projectile.velocity.Length() > 1)
@@ -53,11 +53,11 @@ namespace SOTS.Projectiles.Otherworld
                 Main.dust[num1].velocity *= 0.2f;
             }
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 16;
             height = 16;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool? SingleGrappleHook(Player player)
         {

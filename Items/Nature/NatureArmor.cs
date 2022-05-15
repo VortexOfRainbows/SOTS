@@ -38,7 +38,7 @@ namespace SOTS.Items.Nature
 			if (Main.myPlayer == player.whoAmI)
 			{
 				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
-				int damage = (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+				int damage = (int)(11 * (1f + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f)));
 				for(int i = 0; i < 3; i++)
 					sPlayer.runPets(ref Probes[i], ModContent.ProjectileType<BloomingHook>(), damage, 1f, false);
 			}
@@ -49,12 +49,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 5);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 20).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 5).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -79,17 +74,12 @@ namespace SOTS.Items.Nature
 		}
 		public override void UpdateEquip(Player player)
 		{
-			player.minionDamage += 0.05f;
+			player.GetDamage(DamageClass.Summon) += 0.05f;
 			player.moveSpeed += 0.05f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 16);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 16).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -130,12 +120,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 22);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 22).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 }

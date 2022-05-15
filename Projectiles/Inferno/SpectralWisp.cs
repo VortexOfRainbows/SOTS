@@ -63,10 +63,10 @@ namespace SOTS.Projectiles.Inferno
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				color = new Color(100, 100, 100, 0) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
 			}
 			float modifier = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 4)) * 1.5f;
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}
@@ -145,7 +145,7 @@ namespace SOTS.Projectiles.Inferno
 				int i2 = (int)current.X / 16;
 				int j = (int)current.Y / 16;
 				Tile tile = Framing.GetTileSafely(i2, j);
-				if (!WorldGen.InWorld(i2, j, 20) || (tile.active() && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
+				if (!WorldGen.InWorld(i2, j, 20) || (tile.HasTile && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
 				{
 					break;
 				}
@@ -198,7 +198,7 @@ namespace SOTS.Projectiles.Inferno
 		public void FindPassivePosition(ref Vector2 goTo, ref Vector2 toLocation)
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int ofTotal = 0;
 			int total = 0;
 			if (Main.myPlayer == player.whoAmI)
@@ -207,9 +207,9 @@ namespace SOTS.Projectiles.Inferno
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if ((proj.type == Projectile.type || proj.modProjectile as WispMinion != null) && proj.active && Projectile.active && proj.owner == Projectile.owner)
+					if ((proj.type == Projectile.type || proj.ModProjectile as WispMinion != null) && proj.active && Projectile.active && proj.owner == Projectile.owner)
 					{
-						if (proj == projectile)
+						if (proj == Projectile)
 						{
 							found = true;
 						}
@@ -268,7 +268,7 @@ namespace SOTS.Projectiles.Inferno
 		public float midCounterMult = 0.25f;
 		public virtual void DoAttack(Vector2 toNPC)
 		{
-			Projectile.NewProjectile(Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 40, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, 1f, Main.myPlayer, 0, 0);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 40, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, 1f, Main.myPlayer, 0, 0);
 		}
 		public sealed override void AI()
 		{
@@ -359,10 +359,10 @@ namespace SOTS.Projectiles.Inferno
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				color = new Color(100, 100, 100, 0) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
 			}
 			float modifier = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 4)) * 1.5f;
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
@@ -415,7 +415,7 @@ namespace SOTS.Projectiles.Inferno
 			int heal = 1;
 			if (player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, -1);
+				Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, heal, -1);
 			}
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
@@ -472,10 +472,10 @@ namespace SOTS.Projectiles.Inferno
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				color = new Color(100, 100, 100, 0) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
 			}
 			float modifier = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 4)) * 1.5f;
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}
@@ -528,7 +528,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
-			Projectile.NewProjectile(Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, 1f, Main.myPlayer, -1, 0);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, 1f, Main.myPlayer, -1, 0);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -561,10 +561,10 @@ namespace SOTS.Projectiles.Inferno
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				color = new Color(100, 100, 100, 0) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
 			}
 			float modifier = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 4)) * 1.5f;
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}
@@ -620,7 +620,7 @@ namespace SOTS.Projectiles.Inferno
 			for(int i = -1; i <= 1; i++)
 			{
 				Vector2 rotateVelo = toNPC.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(10 * i));
-				Projectile.NewProjectile(Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, rotateVelo * 4.5f, ModContent.ProjectileType<PurpleHomingBolt>(), Projectile.damage, 1f, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, rotateVelo * 4.5f, ModContent.ProjectileType<PurpleHomingBolt>(), Projectile.damage, 1f, Main.myPlayer);
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
@@ -654,10 +654,10 @@ namespace SOTS.Projectiles.Inferno
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				color = new Color(100, 100, 100, 0) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
 			}
 			float modifier = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 4)) * 1.5f;
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}
@@ -711,7 +711,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
-			Projectile.NewProjectile(Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<OrangeWispLaser>(), Projectile.damage, 1f, Main.myPlayer, -1, 0);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<OrangeWispLaser>(), Projectile.damage, 1f, Main.myPlayer, -1, 0);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -744,10 +744,10 @@ namespace SOTS.Projectiles.Inferno
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				color = new Color(100, 100, 100, 0) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.1f + 0.70f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), SpriteEffects.None, 0f);
 			}
 			float modifier = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 4)) * 1.5f;
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}

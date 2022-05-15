@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Nightmare : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nightmare");
 			Description.SetDefault("Compress enemies together with critical strikes");   

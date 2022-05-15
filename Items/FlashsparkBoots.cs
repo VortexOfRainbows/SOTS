@@ -28,13 +28,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-		    recipe.AddIngredient(ItemID.FrostsparkBoots, 1);
-			recipe.AddIngredient(ItemID.LavaWaders, 1);
-			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.FrostsparkBoots, 1).AddIngredient(ItemID.LavaWaders, 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12).AddTile(TileID.TinkerersWorkbench).Register();
 		}
         bool activateParticle = false;
         int hasActivate = -1;

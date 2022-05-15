@@ -16,11 +16,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DullPlating>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DullPlating>(), 1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class SafeDullPlatingWallWall : ModWall
@@ -30,7 +26,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			texture = "SOTS/Items/Otherworld/Blocks/DullPlatingWallWall";
 			return base.Autoload(ref name, ref texture);
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
@@ -40,7 +36,7 @@ namespace SOTS.Items.Otherworld.Blocks
 	}
 	public class DullPlatingWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<AvaritianDust>();

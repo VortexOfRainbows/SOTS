@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class Brittle : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Brittle");
 			Description.SetDefault("Getting hit surrounds you with ice shards");   
@@ -15,7 +15,7 @@ namespace SOTS.Buffs
         }
 		public override void Update(Player player, ref int buffIndex)
         {
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             modPlayer.bonusShardDamage += 10;
             modPlayer.shardOnHit += 1;
         }

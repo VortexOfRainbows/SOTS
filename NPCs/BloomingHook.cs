@@ -14,18 +14,18 @@ namespace SOTS.NPCs
 	{
 		private float ownerID
 		{
-			get => npc.ai[0];
-			set => npc.ai[0] = value;
+			get => NPC.ai[0];
+			set => NPC.ai[0] = value;
 		}
 		private float aiCounter
 		{
-			get => npc.ai[1];
-			set => npc.ai[1] = value;
+			get => NPC.ai[1];
+			set => NPC.ai[1] = value;
 		}
 		private float aiCounter2
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -42,12 +42,12 @@ namespace SOTS.NPCs
             NPC.width = 38;
             NPC.height = 38;
 			Main.npcFrameCount[NPC.type] = 14;  
-            npc.value = 0;
-            npc.npcSlots = 0f;
-			npc.noGravity = true;
-			npc.alpha = 75;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
+            NPC.value = 0;
+            NPC.npcSlots = 0f;
+			NPC.noGravity = true;
+			NPC.alpha = 75;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
 			//Banner = NPC.type;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -57,7 +57,7 @@ namespace SOTS.NPCs
 			NPC owner = Main.npc[(int)ownerID];
 			if (owner.type == ModContent.NPCType<NatureSlime>() && owner.active)
 			{
-				Vector2 distanceToOwner = npc.Center - owner.Center;
+				Vector2 distanceToOwner = NPC.Center - owner.Center;
 				float radius = distanceToOwner.Length() / 2;
 				if (distanceToOwner.X < 0)
 				{
@@ -74,31 +74,31 @@ namespace SOTS.NPCs
 					Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(18 * i));
 					Vector2 dynamicAddition = new Vector2(0.5f + 2.0f * circular.Y, 0).RotatedBy(MathHelper.ToRadians(i * 36 + aiCounter * 2));
 					Vector2 drawPos = pos - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, npc.scale * 0.9f, SpriteEffects.None, 0f); 
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, NPC.scale * 0.9f, SpriteEffects.None, 0f); 
 				}
 			}
 			return true;
 		}
 		public override bool PreAI()
 		{
-			npc.TargetClosest(true);
+			NPC.TargetClosest(true);
 			return true;
 		}
 		int frame = 0;
 		Vector2 rotateVector = new Vector2(12, 0);
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			NPC owner = Main.npc[(int)ownerID];
 			aiCounter++;
 			if (owner.type != ModContent.NPCType<NatureSlime>() || !owner.active)
 			{
-				npc.active = false;
+				NPC.active = false;
 			}
-			Vector2 distanceToOwner = owner.Center - npc.Center;
-			Vector2 distanceToOwner2 = owner.Center - npc.Center;
-			Vector2 distanceToTarget = player.Center - npc.Center;
-			Vector2 distanceToTarget2 = player.Center - npc.Center;
+			Vector2 distanceToOwner = owner.Center - NPC.Center;
+			Vector2 distanceToOwner2 = owner.Center - NPC.Center;
+			Vector2 distanceToTarget = player.Center - NPC.Center;
+			Vector2 distanceToTarget2 = player.Center - NPC.Center;
 
 			distanceToTarget.Normalize();
 			rotateVector += distanceToTarget * 1;
@@ -107,21 +107,21 @@ namespace SOTS.NPCs
 			if(distanceToOwner.Length() >= 64)
 			{
 				distanceToOwner.Normalize();
-				npc.velocity = distanceToOwner * (distanceToOwner2.Length() - 64);
+				NPC.velocity = distanceToOwner * (distanceToOwner2.Length() - 64);
 			}
-			else if (npc.Center.Y > owner.Center.Y)
+			else if (NPC.Center.Y > owner.Center.Y)
 			{
-				npc.velocity.Y = -1;
+				NPC.velocity.Y = -1;
 			}
 			else
 			{
 				Vector2 dynamicAddition = new Vector2(0.4f, 0).RotatedBy(MathHelper.ToRadians(aiCounter * 2));
-				Vector2 added = new Vector2(1.2f, 0).RotatedBy(npc.rotation);
+				Vector2 added = new Vector2(1.2f, 0).RotatedBy(NPC.rotation);
 				if (distanceToTarget2.Length() > 256f)
 				{
 					added = Vector2.Zero;
 				}
-				npc.velocity = added + dynamicAddition;
+				NPC.velocity = added + dynamicAddition;
 			}
 
 
@@ -130,37 +130,37 @@ namespace SOTS.NPCs
 			{
 				// Fix overlap with other minions
 				NPC other = Main.npc[i];
-				if (i != npc.whoAmI && other.active && (int)other.ai[0] == (int)ownerID && Math.Abs(npc.position.X - other.position.X) + Math.Abs(npc.position.Y - other.position.Y) < npc.width && other.type == npc.type)
+				if (i != NPC.whoAmI && other.active && (int)other.ai[0] == (int)ownerID && Math.Abs(NPC.position.X - other.position.X) + Math.Abs(NPC.position.Y - other.position.Y) < NPC.width && other.type == NPC.type)
 				{
-					if (npc.position.X < other.position.X) npc.velocity.X -= overlapVelocity;
-					else npc.velocity.X += overlapVelocity;
+					if (NPC.position.X < other.position.X) NPC.velocity.X -= overlapVelocity;
+					else NPC.velocity.X += overlapVelocity;
 
-					if (npc.position.Y < other.position.Y) npc.velocity.Y -= overlapVelocity;
-					else npc.velocity.Y += overlapVelocity;
+					if (NPC.position.Y < other.position.Y) NPC.velocity.Y -= overlapVelocity;
+					else NPC.velocity.Y += overlapVelocity;
 				}
 			}
 
 
-			npc.rotation = rotateVector.ToRotation() + MathHelper.ToRadians(90) + npc.velocity.X * 0.075f;
+			NPC.rotation = rotateVector.ToRotation() + MathHelper.ToRadians(90) + NPC.velocity.X * 0.075f;
 			aiCounter2++;
 			if (aiCounter2 >= 210 && (distanceToTarget2.Length() < 196f || frame != 0))
 			{
-				npc.frameCounter++;
-				if (npc.frameCounter >= 6)
+				NPC.frameCounter++;
+				if (NPC.frameCounter >= 6)
 				{
 					frame++;
 					if (frame == 7)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 30, 0.7f, -0.4f);
+						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							int damage = npc.damage / 2;
+							int damage = NPC.damage / 2;
 							if (Main.expertMode)
 							{
 								damage = (int)(damage / Main.expertDamage);
 							}
-							Projectile.NewProjectile(npc.Center, rotateVector * 0.4f, ModContent.ProjectileType<FlowerBolt>(), damage, 0, Main.myPlayer);
-							npc.netUpdate = true;
+							Projectile.NewProjectile(NPC.Center, rotateVector * 0.4f, ModContent.ProjectileType<FlowerBolt>(), damage, 0, Main.myPlayer);
+							NPC.netUpdate = true;
 						}
 					}
 					if (frame >= 13)
@@ -168,21 +168,21 @@ namespace SOTS.NPCs
 						aiCounter2 = 0;
 						frame = 0;
 					}
-					npc.frameCounter = 0;
+					NPC.frameCounter = 0;
 				}
 			}
-			npc.frame = new Rectangle(0, npc.height * frame, npc.width, npc.height);
+			NPC.frame = new Rectangle(0, NPC.height * frame, NPC.width, NPC.height);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 30.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 30.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Grass, (float)hitDirection * 0.75f, -1f, npc.alpha, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)hitDirection * 0.75f, -1f, NPC.alpha, default, 1f);
 					if(Main.rand.NextBool(4))
-						Dust.NewDust(npc.position, npc.width, npc.height, 231, (float)hitDirection, -1f, npc.alpha, default, 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hitDirection, -1f, NPC.alpha, default, 1f);
 					num++;
 				}
 			}
@@ -190,9 +190,9 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 15; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Grass, (float)(1.5f * hitDirection), -2f, npc.alpha, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)(1.5f * hitDirection), -2f, NPC.alpha, default, 1f);
 					if (Main.rand.NextBool(2))
-						Dust.NewDust(npc.position, npc.width, npc.height, 231, (float)hitDirection, -1f, npc.alpha, default, 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hitDirection, -1f, NPC.alpha, default, 1f);
 				}
 			}
 		}

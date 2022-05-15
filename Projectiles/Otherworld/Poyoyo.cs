@@ -40,9 +40,9 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.aiStyle = 99;
             Projectile.friendly = true; 
             Projectile.penetrate = -1; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
         }
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) 
 		{
 			width = 14;
 			height = 14;
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Otherworld
         {
             if (storeData == -1 && Projectile.owner == Main.myPlayer)
             {
-                storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("RainbowTrail"), (int)(Projectile.damage * 0.6f) + 1, 0, Projectile.owner, 0, Projectile.whoAmI);
+                storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("RainbowTrail").Type, (int)(Projectile.damage * 0.6f) + 1, 0, Projectile.owner, 0, Projectile.whoAmI);
             }
         }
     }

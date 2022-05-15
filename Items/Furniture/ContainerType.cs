@@ -25,7 +25,7 @@ namespace SOTS.Items.Furniture
         protected virtual int ChestDrop => ItemID.Chest;
         protected virtual int DustType => DustID.Dirt;
         protected virtual string ChestName => "Chest";
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             ChestStatics();
             Main.tileContainer[Type] = true;
@@ -89,7 +89,7 @@ namespace SOTS.Items.Furniture
         {
             return false;
         }
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
             Tile tile = Main.tile[i, j];

@@ -26,19 +26,14 @@ namespace SOTS.Items.Pyramid
 			Item.rare = 5;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;            
-			Item.shoot = mod.ProjectileType("CurseSpear"); 
+			Item.shoot = Mod.Find<ModProjectile>("CurseSpear").Type; 
             Item.shootSpeed = 5;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "CursedMatter", 7);
-			recipe.AddIngredient(ItemID.Ruby, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "CursedMatter", 7).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

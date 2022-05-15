@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.tileCollide = false;
 			Projectile.timeLeft = 85;
 			Projectile.alpha = 255;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 5;
 		}

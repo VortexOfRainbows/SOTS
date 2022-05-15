@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class IceShield : ModBuff
     {	
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ice Shield");
 			Description.SetDefault("A holy levitating ice shield surrounds you");
@@ -15,7 +15,7 @@ namespace SOTS.Buffs
  
         public override void Update(Player player, ref int buffIndex)
         {
-            player.mount.SetMount(mod.MountType("IceShield"), player);
+            player.mount.SetMount(Mod.Find<ModMountData>("IceShield").Type, player);
             player.buffTime[buffIndex] = 10;
         }
     }

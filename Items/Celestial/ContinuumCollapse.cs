@@ -27,7 +27,7 @@ namespace SOTS.Items.Celestial
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = true;            
-			Item.shoot = mod.ProjectileType("ContinuumSphere"); 
+			Item.shoot = Mod.Find<ModProjectile>("ContinuumSphere").Type; 
 			Item.shootSpeed = 1;
 			Item.knockBack = 3;
 			Item.channel = true;

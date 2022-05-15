@@ -25,7 +25,7 @@ namespace SOTS.Items.Potions
             Item.buffType = ModContent.BuffType<Nightmare>();   
             Item.buffTime = 21900;  
             Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatingUsing;        
+            Item.useStyle = ItemUseStyleID.EatFood;        
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;
@@ -33,15 +33,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 1);
-			recipe.AddIngredient(ItemID.Deathweed, 1);
-			recipe.AddTile(TileID.Bottles);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1).AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1).AddIngredient(ItemID.SoulofNight, 1).AddIngredient(ItemID.Deathweed, 1).AddTile(TileID.Bottles).Register();
 		}
 	}
 }

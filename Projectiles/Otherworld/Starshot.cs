@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.width = 22;
             Projectile.height = 24;
             Projectile.friendly = true;
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.alpha = 100;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
@@ -133,7 +133,7 @@ namespace SOTS.Projectiles.Otherworld
 
             for (int i = 0; i < 30; i++)
             {
-                int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+                int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
                 Dust dust = Main.dust[num1];
                 dust.velocity *= 0.2f;
                 dust.noGravity = true;
@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Otherworld
 
             base.Kill(timeLeft);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             fallThrough = true;
             return true;

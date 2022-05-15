@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Earth
             Projectile.hostile = false; 
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
 			Projectile.alpha = 0;
         }
         public override bool PreDraw(ref Color lightColor)
@@ -125,11 +125,11 @@ namespace SOTS.Projectiles.Earth
             Projectile.direction = overrideDirection.X > 0 ? 1 : -1;
             Lighting.AddLight(Projectile.Center, new Color(97, 200, 225).ToVector3() * 0.5f);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 8;
             height = 8;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

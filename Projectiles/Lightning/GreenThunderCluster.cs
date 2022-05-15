@@ -1,13 +1,8 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles.Lightning
 {    
@@ -18,20 +13,18 @@ namespace SOTS.Projectiles.Lightning
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Thunder Cluster");
-			
 		}
-		
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(263);
-            aiType = 263; 
+            AIType = 263; 
 			Projectile.height = 43;
 			Projectile.width = 43;
 			Projectile.penetrate = 24;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 60;
 			Projectile.tileCollide = true;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.hostile = false;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
@@ -53,9 +46,6 @@ namespace SOTS.Projectiles.Lightning
 			distance -= 0.5f;
 			Projectile.scale *= 0.98f;
 			Projectile.alpha++;
-			
-			Player player  = Main.player[Projectile.owner];
-			
 			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
@@ -66,24 +56,19 @@ namespace SOTS.Projectiles.Lightning
         }
 		public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-		
-			Vector2 cursorArea = Main.MouseWorld;
-		
-			float shootToX = cursorArea.X - Projectile.Center.X;
-			float shootToY = cursorArea.Y - Projectile.Center.Y;
-			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-
-			distance = 6.25f / distance;
-	   
-			shootToX *= distance * 5;
-			shootToY *= distance * 5;
-	   
-			SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
-				
-			if(Projectile.owner == Main.myPlayer)
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("GreenLightning"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 5f);
+			SoundEngine.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			if (Projectile.owner == Main.myPlayer)
+			{
+				Player player = Main.player[Projectile.owner];
+				Vector2 cursorArea = Main.MouseWorld;
+				float shootToX = cursorArea.X - Projectile.Center.X;
+				float shootToY = cursorArea.Y - Projectile.Center.Y;
+				float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+				distance = 6.25f / distance;
+				shootToX *= distance * 5;
+				shootToY *= distance * 5;
+				Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, ModContent.ProjectileType<GreenLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 5f);
+			}
 		}
 	}
 }

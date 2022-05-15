@@ -51,7 +51,7 @@ namespace SOTS.Items.Chaos
 		{
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			SOTSPlayer.ModPlayer(player).attackSpeedMod += 0.25f;
-			player.meleeDamage += 0.05f;
+			player.GetDamage(DamageClass.Melee) += 0.05f;
 			vPlayer.voidCost -= 0.1f;
 			vPlayer.CrushResistor = true;
 			vPlayer.CrushCapacitor = true;
@@ -60,13 +60,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<CircuitBoard>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<VibrancyModule>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PhaseBar>(), 20).AddIngredient(ModContent.ItemType<CircuitBoard>(), 1).AddIngredient(ModContent.ItemType<VibrancyModule>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

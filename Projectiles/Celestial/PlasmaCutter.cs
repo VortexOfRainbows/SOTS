@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Celestial
             Projectile.hostile = false; 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
 			Projectile.alpha = 0;
 			Projectile.extraUpdates = 2;
 			Projectile.usesLocalNPCImmunity = true;
@@ -166,13 +166,13 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 16, Projectile.identity);
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("PlasmaCutterTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 16, Projectile.identity);
 				Projectile.ai[1] = storeData;
 				Projectile.netUpdate = true;
 			}
 			if (storeData2 == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -16, Projectile.identity);
+				storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("PlasmaCutterTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -16, Projectile.identity);
 				Projectile.ai[0] = storeData2;
 				Projectile.netUpdate = true;
 			}

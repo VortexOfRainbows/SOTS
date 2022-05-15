@@ -62,20 +62,15 @@ namespace SOTS.Items.Otherworld.FromChests
 				speedY *= 1.7f;
 
 			}
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("BombFlare"), damage, knockBack, player.whoAmI, ai);
+			Projectile.NewProjectile(position, new Vector2(speedX, speedY), Mod.Find<ModProjectile>("BombFlare").Type, damage, knockBack, player.whoAmI, ai);
 			speedX *= 0f;
 			speedY *= 0f;
-			type = mod.ProjectileType("FlareDetonatorHold");
+			type = Mod.Find<ModProjectile>("FlareDetonatorHold").Type;
 			return true;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.FlareGun, 1);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.FlareGun, 1).AddIngredient(null, "OtherworldlyAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

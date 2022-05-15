@@ -36,12 +36,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "DissolvingEarth", 1);
-			recipe.AddIngredient(ItemID.GoldBar, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "DissolvingEarth", 1).AddIngredient(ItemID.GoldBar, 20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

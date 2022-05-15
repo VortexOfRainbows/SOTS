@@ -22,20 +22,15 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == mod.ItemType("PatchLeatherTunic") && head.type == mod.ItemType("PatchLeatherHat");
+            return body.type == Mod.Find<ModItem>("PatchLeatherTunic") .Type&& head.type == Mod.Find<ModItem>("PatchLeatherHat").Type;
         }
 		public override void UpdateEquip(Player player)
 		{
-			player.minionDamage += 0.10f;
+			player.GetDamage(DamageClass.Summon) += 0.10f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 20);
-			recipe.AddRecipeGroup("SOTS:EvilMaterial", 6);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Snakeskin>(), 20).AddRecipeGroup("SOTS:EvilMaterial", 6).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

@@ -55,14 +55,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 24);
-			recipe.AddIngredient(ModContent.ItemType<PerfectStar>(), 1);
-			recipe.AddIngredient(ItemID.LaserMachinegun, 1);
-			recipe.AddIngredient(ItemID.Razorpine, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PhaseBar>(), 24).AddIngredient(ModContent.ItemType<PerfectStar>(), 1).AddIngredient(ItemID.LaserMachinegun, 1).AddIngredient(ItemID.Razorpine, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

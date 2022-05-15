@@ -274,7 +274,7 @@ namespace SOTS.Items.Pyramid
 				if (i == -1)
 				{
 					if (j > 12)
-						dust(mod, finalPos + circularLocation, i, alpha1, alpha2, final, player.whoAmI);
+						dust(Mod, finalPos + circularLocation, i, alpha1, alpha2, final, player.whoAmI);
 					if(j == 159)
 					{
 						finalPos += toVelo * 12;
@@ -283,7 +283,7 @@ namespace SOTS.Items.Pyramid
 							Vector2 circularRotation = new Vector2(-16, 0).RotatedBy(MathHelper.ToRadians(u));
 							if (Main.myPlayer == player.whoAmI)
 							{
-								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, mod.DustType("ShortlivedCurseDust"));
+								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
 								Main.dust[num].velocity *= 0.1f;
 								Main.dust[num].alpha = 255 - (alpha1 < 45 ? alpha1 : 45);
 								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
@@ -302,7 +302,7 @@ namespace SOTS.Items.Pyramid
 				if (i == 1)
 				{
 					if(j > 12)
-						dust(mod, finalPos + circularLocation, i, alpha1, alpha2, final, player.whoAmI);
+						dust(Mod, finalPos + circularLocation, i, alpha1, alpha2, final, player.whoAmI);
 					if (j == 159)
 					{
 						finalPos += toVelo * 12;
@@ -311,7 +311,7 @@ namespace SOTS.Items.Pyramid
 							Vector2 circularRotation = new Vector2(-16, 0).RotatedBy(MathHelper.ToRadians(u));
 							if (Main.myPlayer == player.whoAmI)
 							{	
-								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, mod.DustType("ShortlivedCurseDust"));
+								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
 								Main.dust[num].velocity *= 0.1f;
 								Main.dust[num].alpha = 255 - (alpha2 < 45 ? alpha2 : 45);
 								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
@@ -347,14 +347,14 @@ namespace SOTS.Items.Pyramid
 			}
 			else if (type == -1 && alpha1 > 0 && Main.myPlayer == whoAmI)
 			{
-				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, mod.DustType("ShortlivedCurseDust"));
+				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
 				Main.dust[num].velocity *= 0.1f;
 				Main.dust[num].alpha = 255 - (alpha1 < 45 ? alpha1 : 45);
 				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 			}
 			else if (type == 1 && alpha2 > 0 && Main.myPlayer == whoAmI)
 			{
-				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, mod.DustType("ShortlivedCurseDust"));
+				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
 				Main.dust[num].velocity *= 0.1f;
 				Main.dust[num].alpha = 255 - (alpha2 < 45 ? alpha2 : 45);
 				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
@@ -379,7 +379,7 @@ namespace SOTS.Items.Pyramid
 			player.immuneTime = 30;
 			voidPlayer.voidMeter -= value / damageMult - 5;
 			if (Main.myPlayer == player.whoAmI)
-				Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DarkEyeDamage"), (int)(1.25f * value * voidPlayer.voidDamage), 0, Main.myPlayer);
+				Projectile.NewProjectile(npc.Center, Vector2.Zero, Mod.Find<ModProjectile>("DarkEyeDamage").Type, (int)(1.25f * value * voidPlayer.voidDamage), 0, Main.myPlayer);
 		}
 		public void teleportEffect(Player player)
 		{
@@ -453,7 +453,7 @@ namespace SOTS.Items.Pyramid
 							for (int w = -1; w < 2; w++)
 							{
 								Tile tile = Framing.GetTileSafely(i + k, j + w);
-								if(Main.tileSolid[tile.TileType] == true && !tile.IsActuated && Main.tileSolidTop[tile.TileType] == false && tile.active())
+								if(Main.tileSolid[tile.TileType] == true && !tile.IsActuated && Main.tileSolidTop[tile.TileType] == false && tile.HasTile)
 								{
 									flag = false;
 								}
@@ -463,7 +463,7 @@ namespace SOTS.Items.Pyramid
 						{
 							teleportEffect(player);
 							if (Main.myPlayer == player.whoAmI)
-								Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("multiplayerDarkEye"), alpha2, rotation, Main.myPlayer, 1, alpha1);
+								Projectile.NewProjectile(player.Center, Vector2.Zero, Mod.Find<ModProjectile>("multiplayerDarkEye").Type, alpha2, rotation, Main.myPlayer, 1, alpha1);
 							if (npcPosStore2 != player.Center)
 							{
 								for (int k = 0; k < Main.npc.Length; k++)
@@ -494,7 +494,7 @@ namespace SOTS.Items.Pyramid
 							for (int w = -1; w < 2; w++)
 							{
 								Tile tile = Framing.GetTileSafely(i + k, j + w);
-								if (Main.tileSolid[tile.TileType] == true && !tile.IsActuated && Main.tileSolidTop[tile.TileType] == false && tile.active())
+								if (Main.tileSolid[tile.TileType] == true && !tile.IsActuated && Main.tileSolidTop[tile.TileType] == false && tile.HasTile)
 								{
 									flag = false;
 								}
@@ -504,7 +504,7 @@ namespace SOTS.Items.Pyramid
 						{
 							teleportEffect(player);
 							if (Main.myPlayer == player.whoAmI)
-								Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("multiplayerDarkEye"), alpha2, rotation, Main.myPlayer, -1, alpha1);
+								Projectile.NewProjectile(player.Center, Vector2.Zero, Mod.Find<ModProjectile>("multiplayerDarkEye").Type, alpha2, rotation, Main.myPlayer, -1, alpha1);
 							if (npcPosStore1 != player.Center)
 							{
 								for (int k = 0; k < Main.npc.Length; k++)
@@ -562,7 +562,7 @@ namespace SOTS.Items.Pyramid
 			{
 				Vector2 velo = Vector2.Zero;
 				effect = true;
-				Vector2 finalPos = TheDarkEye.StaticDrawDetect(mod, Projectile.Center, (int)Projectile.ai[0], (int)Projectile.ai[1], Projectile.damage, (int)Projectile.knockBack, ref velo, true, player);
+				Vector2 finalPos = TheDarkEye.StaticDrawDetect(Mod, Projectile.Center, (int)Projectile.ai[0], (int)Projectile.ai[1], Projectile.damage, (int)Projectile.knockBack, ref velo, true, player);
 				SoundEngine.PlaySound(SoundID.Item8, Main.player[Projectile.owner].Center);
 				player.position = finalPos - new Vector2(player.width / 2, player.height / 2);
 				if(player.velocity.Y > 1)
@@ -589,9 +589,9 @@ namespace SOTS.Items.Pyramid
 		{
 			bool dashAccessoryEquipped = false;
 
-			for (int i = 3; i < 8 + player.extraAccessorySlots; i++)
+			for (int i = 3; i < 8 + Player.extraAccessorySlots; i++)
 			{
-				Item item = player.armor[i];
+				Item item = Player.armor[i];
 
 				if (Item.type == ItemType<TheDarkEye>())
 				{ 
@@ -599,17 +599,17 @@ namespace SOTS.Items.Pyramid
 				}
 			}
 
-			if (!dashAccessoryEquipped || player.mount.Active || DashActive || player.grappling[0] >= 0)
+			if (!dashAccessoryEquipped || Player.mount.Active || DashActive || Player.grappling[0] >= 0)
 				return;
 
-			if (player.controlRight && player.releaseRight && player.doubleTapCardinalTimer[DashRight] < 15)
+			if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15)
 				DashDir = DashRight;
-			else if (player.controlLeft && player.releaseLeft && player.doubleTapCardinalTimer[DashLeft] < 15)
+			else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15)
 				DashDir = DashLeft;
 			else
 				return; 
 
-			if(Main.myPlayer == player.whoAmI)
+			if(Main.myPlayer == Player.whoAmI)
 				DashActive = true;
 			//Here you'd be able to set an effect that happens when the dash first activates
 			//Some examples include:  the larger smoke effect from the Master Ninja Gear and Tabi

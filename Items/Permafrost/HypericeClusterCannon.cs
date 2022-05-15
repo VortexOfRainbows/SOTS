@@ -27,7 +27,7 @@ namespace SOTS.Items.Permafrost
             Item.rare = 7;
             Item.UseSound = SoundID.Item61;
             Item.autoReuse = true;
-            Item.shoot = mod.ProjectileType("HypericeRocket"); 
+            Item.shoot = Mod.Find<ModProjectile>("HypericeRocket").Type; 
             Item.shootSpeed = 8;
 			Item.useAmmo = ItemID.Snowball;
 		}
@@ -37,18 +37,12 @@ namespace SOTS.Items.Permafrost
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("HypericeRocket"), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, Mod.Find<ModProjectile>("HypericeRocket").Type, damage, knockBack, player.whoAmI);
 			return false; 
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "AbsoluteBar", 16);
-			recipe.AddIngredient(null, "CryoCannon", 1);
-			recipe.AddIngredient(ItemID.SnowballCannon, 1);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "AbsoluteBar", 16).AddIngredient(null, "CryoCannon", 1).AddIngredient(ItemID.SnowballCannon, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

@@ -31,13 +31,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 25);
-			recipe.AddIngredient(ModContent.ItemType<EmeraldBracelet>(), 1);
-			recipe.AddIngredient(ItemID.BandofRegeneration, 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SoulResidue>(), 25).AddIngredient(ModContent.ItemType<EmeraldBracelet>(), 1).AddIngredient(ItemID.BandofRegeneration, 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

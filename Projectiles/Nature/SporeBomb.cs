@@ -14,11 +14,11 @@ namespace SOTS.Projectiles.Nature
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(48);
-            aiType = 48; 
-			Projectile.thrown = false;
-			Projectile.magic = false;
-			Projectile.melee = false;
-			Projectile.ranged = true;
+            AIType = 48; 
+			// Projectile.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Projectile.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.width = 14;
 			Projectile.height = 14;
 			Projectile.penetrate = 1;

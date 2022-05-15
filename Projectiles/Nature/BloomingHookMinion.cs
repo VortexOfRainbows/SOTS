@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Nature
 			DisplayName.SetDefault("Blooming Hook");
 			Main.projFrames[Projectile.type] = 14;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-			ProjectileID.Sets.Homing[Projectile.type] = true;
+			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 		public sealed override void SetDefaults()
 		{

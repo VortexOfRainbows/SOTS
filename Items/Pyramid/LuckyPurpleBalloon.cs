@@ -14,8 +14,8 @@ namespace SOTS.Items.Pyramid
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.Carrot);
-            Item.shoot = mod.ProjectileType("LuckyPurpleBalloon");
-            Item.buffType = mod.BuffType("PurpleBalloon");
+            Item.shoot = Mod.Find<ModProjectile>("LuckyPurpleBalloon").Type;
+            Item.buffType = Mod.Find<ModBuff>("PurpleBalloon").Type;
             Item.value = Item.sellPrice(0, 2, 25, 0);
             Item.rare = 5;
 			Item.width = 18;
@@ -23,12 +23,7 @@ namespace SOTS.Items.Pyramid
         }
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "CursedMatter", 4);
-			recipe.AddIngredient(ItemID.Sapphire, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "CursedMatter", 4).AddIngredient(ItemID.Sapphire, 1).AddTile(TileID.Anvils).Register();
 		}
         public override void UseStyle(Player player)
         {

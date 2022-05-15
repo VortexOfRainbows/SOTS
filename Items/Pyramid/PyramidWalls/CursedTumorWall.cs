@@ -18,17 +18,8 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CursedTumor>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<CursedTumor>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<CursedTumor>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<CursedTumor>());
 		}
 	}
 	public class UnsafeCursedTumorWall : ModItem
@@ -49,7 +40,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	}
 	public class CursedTumorWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
@@ -66,7 +57,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			texture = "SOTS/Items/Pyramid/PyramidWalls/CursedTumorWallWall";
 			return base.Autoload(ref name, ref texture);
         }
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<CurseDust3>();

@@ -51,11 +51,11 @@ namespace SOTS.Projectiles.Permafrost
 			hitbox = new Rectangle((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width/2, width, width);
             base.ModifyDamageHitbox(ref hitbox);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 6;
 			height = 6;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void Kill(int timeLeft)
 		{
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Permafrost
 			Vector2 velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 8;
 			int i = (int)(Projectile.Center.X + velocity.X) / 16;
 			int j = (int)(Projectile.Center.Y + velocity.Y) / 16;
-			if (Main.tile[i, j].HasTile && Main.tile[i,j].type == ModContent.TileType<FrigidIceTile>())
+			if (Main.tile[i, j].HasTile && Main.tile[i,j].TileType == ModContent.TileType<FrigidIceTile>())
 			{
 				WorldGen.KillTile(i, j, false, false, false);
 				if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)

@@ -50,7 +50,7 @@ namespace SOTS.Items.Chaos
 	}
 	public class PhaseOreTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileShine[Type] = 200;
 			Main.tileShine2[Type] = true;
@@ -74,7 +74,7 @@ namespace SOTS.Items.Chaos
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			SoundEngine.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.25f, 0.6f);
 			int type = Main.rand.Next(3) + 1;
-			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 1.85f, -0.2f + Main.rand.NextFloat(0.1f, 0.2f));
+			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 1.85f, -0.2f + Main.rand.NextFloat(0.1f, 0.2f));
 			return false;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

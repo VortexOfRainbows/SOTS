@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.width = 70;
             Main.projFrames[Projectile.type] = 5;
 			Projectile.penetrate = -1;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 24;
 			Projectile.tileCollide = false;

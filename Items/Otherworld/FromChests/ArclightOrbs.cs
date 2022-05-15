@@ -27,7 +27,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.height = 30;
 			Item.maxStack = 1;
 			Item.autoReuse = true;            
-			Item.shoot = mod.ProjectileType("ArclightBomb"); 
+			Item.shoot = Mod.Find<ModProjectile>("ArclightBomb").Type; 
             Item.shootSpeed = 17.75f;
 			Item.consumable = false;
 			Item.noMelee = true;
@@ -49,12 +49,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "SporeBombs", 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "SporeBombs", 1).AddIngredient(null, "HardlightAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
 	}
 }

@@ -26,26 +26,19 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<WormWoodParasite>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<VoidenBracelet>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<SkywareBattery>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 15).AddIngredient(ModContent.ItemType<WormWoodParasite>(), 1).AddIngredient(ModContent.ItemType<VoidenBracelet>(), 1).AddIngredient(ModContent.ItemType<SkywareBattery>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidDamage += 0.1f;
 			voidPlayer.voidCost -= 0.08f;
-			player.magicDamage += 0.1f;
+			player.GetDamage(DamageClass.Magic) += 0.1f;
 			voidPlayer.bonusVoidGain += 4;
 			voidPlayer.voidMeterMax2 += 50;
 			voidPlayer.voidCrit += 10;
 
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			if(modPlayer.onhit == 1)
 			{
 				voidPlayer.voidMeter += 3 + (modPlayer.onhitdamage / 9);

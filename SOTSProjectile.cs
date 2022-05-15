@@ -173,7 +173,7 @@ namespace SOTS
 			// Send a Mod Packet with the changes.
 			if(type == 0)
 			{
-				var packet = mod.GetPacket();
+				var packet = Mod.GetPacket();
 				packet.Write((byte)SOTSMessageType.SyncGlobalProj);
 				packet.Write((byte)player.whoAmI);
 				packet.Write(Projectile.identity);
@@ -184,7 +184,7 @@ namespace SOTS
 			if (type == 1) //can be called by server or player
 			{
 				int playerWhoAmI = player != null ? player.whoAmI : -1;
-				var packet = mod.GetPacket();
+				var packet = Mod.GetPacket();
 				packet.Write((byte)SOTSMessageType.SyncGlobalProjTime);
 				packet.Write(playerWhoAmI);
 				packet.Write(Projectile.whoAmI);
@@ -373,7 +373,7 @@ namespace SOTS
 					float minDist = modPlayer.typhonRange * 2;
 					int target2 = -1;
 					float speed = Projectile.velocity.Length();
-					bool capable = speed > 1f && (Projectile.ranged || Projectile.melee || Projectile.magic || Projectile.thrown || (!Projectile.sentry && !Projectile.minion)) && (Projectile.modProjectile == null || Projectile.modProjectile.ShouldUpdatePosition()) && (Projectile.modProjectile == null || Projectile.modProjectile.CanDamage());
+					bool capable = speed > 1f && (Projectile.ranged || Projectile.melee || Projectile.magic || Projectile.thrown || (!Projectile.sentry && !Projectile.minion)) && (Projectile.ModProjectile == null || Projectile.ModProjectile.ShouldUpdatePosition()) && (Projectile.ModProjectile == null || Projectile.ModProjectile.CanDamage());
 					if (Projectile.friendly == true && Projectile.hostile == false && player.heldProj != Projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(Projectile.type)))
 					{
 						//Main.NewText("past Check " + Projectile.whoAmI);
@@ -414,7 +414,7 @@ namespace SOTS
 									{
 										LaserTo(petAdvisorID, projectile, 90 - (int)close);
 										float recalc = (close - 40) / 40f; //1 max, -1 min
-										AdvisorPet pet = (AdvisorPet)proj.modProjectile;
+										AdvisorPet pet = (AdvisorPet)proj.ModProjectile;
 										float num = -1f * recalc;
 										pet.eyeReset = num - 1.5f;
 										pet.fireToX = Projectile.Center.X;
@@ -550,7 +550,7 @@ namespace SOTS
 				Projectile hook = Main.projectile[bloomingHookAssignment];
 				if (hook.active && hook.type == ModContent.ProjectileType<BloomingHookMinion>())
                 {
-					BloomingHookMinion minion = hook.modProjectile as BloomingHookMinion;
+					BloomingHookMinion minion = hook.ModProjectile as BloomingHookMinion;
 					minion.Draw(spriteBatch, lightColor);
                 }
 			}*/

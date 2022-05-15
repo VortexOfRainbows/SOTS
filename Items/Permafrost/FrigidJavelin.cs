@@ -27,7 +27,7 @@ namespace SOTS.Items.Permafrost
             Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
-			Item.shoot = mod.ProjectileType("FrigidJavelin"); 
+			Item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.FrigidJavelin>(); 
             Item.shootSpeed = 12f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -39,28 +39,20 @@ namespace SOTS.Items.Permafrost
 		}
 		public override int GetVoid(Player player)
 		{
-			return  5;
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			if(modPlayer.frigidJavelinNoCost)
-            {
-				return  0;
-            }
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			if (modPlayer.frigidJavelinNoCost)
+			{
+				return 0;
+			}
+			return 5;
 		}
 		public override float UseTimeMultiplier(Player player)
 		{
 			return 1f;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			return true;
-		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "FrigidBar", 12);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<FrigidBar>(12).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

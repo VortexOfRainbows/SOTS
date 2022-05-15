@@ -46,12 +46,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.HellstoneBar, 12);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.HellstoneBar, 12).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 2).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

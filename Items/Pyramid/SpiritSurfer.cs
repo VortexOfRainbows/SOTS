@@ -26,13 +26,7 @@ namespace SOTS.Items.Pyramid
         }
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<AncientGold.RoyalGoldBrick>(), 50);
-			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 35);
-			recipe.AddIngredient(ItemID.FlyingCarpet, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientGold.RoyalGoldBrick>(), 50).AddIngredient(ModContent.ItemType<SoulResidue>(), 35).AddIngredient(ItemID.FlyingCarpet, 1).AddTile(TileID.Anvils).Register();
 		}
     }
 }

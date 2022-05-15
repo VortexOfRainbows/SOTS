@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Inferno
             Projectile.penetrate = 5;
             Projectile.timeLeft = 80;
             Projectile.friendly = true;
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 90;
             Projectile.extraUpdates = 1;
@@ -186,7 +186,7 @@ namespace SOTS.Projectiles.Inferno
             Projectile.penetrate = -1;
             Projectile.timeLeft = 60;
             Projectile.friendly = true;
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.scale = 1f;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 90;

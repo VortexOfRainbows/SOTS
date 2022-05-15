@@ -24,12 +24,12 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("RoyalGoldBrickTile");
+			Item.createTile = Mod.Find<ModTile>("RoyalGoldBrickTile").Type;
 		}
 	}
 	public class RoyalGoldBrickTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileBrick[Type] = false;

@@ -22,7 +22,7 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(198);
-            aiType = 198;
+            AIType = 198;
 			Projectile.netImportant = true;
             Projectile.width = 18;
             Projectile.height = 34; 
@@ -36,14 +36,14 @@ namespace SOTS.Projectiles
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
-			player.hornet = false; // Relic from aiType
+			player.hornet = false; // Relic from AIType
             return true;
         }
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-            if (player.dead || (player.ownedProjectileCounts[mod.ProjectileType("LuckyPurpleBalloon")] > 1 && Projectile.alpha < 30))
+            if (player.dead || (player.ownedProjectileCounts[Mod.Find<ModProjectile>("LuckyPurpleBalloon").Type] > 1 && Projectile.alpha < 30))
             {
                 modPlayer.PurpleBalloon = false;
             }

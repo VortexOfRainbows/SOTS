@@ -27,7 +27,7 @@ namespace SOTS.Items.Void
 			Item.consumable = true;
 			ItemID.Sets.ItemNoGravity[Item.type] = false; 
 		}
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			SoundEngine.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 39);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -42,12 +42,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 15).AddIngredient(ModContent.ItemType<SoulResidue>(), 10).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

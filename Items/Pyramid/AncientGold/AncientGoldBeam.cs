@@ -24,29 +24,21 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
-			Item.createWall = mod.WallType("AncientGoldBeamWall");
+			Item.createWall = Mod.Find<ModWall>("AncientGoldBeamWall").Type;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PyramidBrick>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<PyramidBrick>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<PyramidBrick>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<PyramidBrick>());
 		}
 	}
 	public class AncientGoldBeamWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			drop = mod.ItemType("AncientGoldBeam");
+			drop = Mod.Find<ModItem>("AncientGoldBeam").Type;
 			AddMapEntry(new Color(170, 144, 18));
 		}
 	}
@@ -69,29 +61,21 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
-			Item.createWall = mod.WallType("AncientGoldBrickWallTile");
+			Item.createWall = Mod.Find<ModWall>("AncientGoldBrickWallTile").Type;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PyramidBrick>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<PyramidBrick>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<PyramidBrick>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<PyramidBrick>());
 		}
 	}
 	public class AncientGoldBrickWallTile : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			drop = mod.ItemType("AncientGoldBrickWall");
+			drop = Mod.Find<ModItem>("AncientGoldBrickWall").Type;
 			AddMapEntry(new Color(150, 130, 15));
 		}
 	}

@@ -24,17 +24,17 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
-			Item.createWall = mod.WallType("TrueSandstoneWallWall");
+			Item.createWall = Mod.Find<ModWall>("TrueSandstoneWallWall").Type;
 			Item.expert = true;
 		}
 	}
 	public class TrueSandstoneWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			DustType = 32;
-			drop = mod.ItemType("TrueSandstoneWall");
+			drop = Mod.Find<ModItem>("TrueSandstoneWall").Type;
 			AddMapEntry(new Color(155, 110, 55));
 		}
 		public override bool CanExplode(int i, int j)

@@ -39,7 +39,7 @@ namespace SOTS.Items
 			writer.Write(Item.velocity.X);
 			writer.Write(Item.velocity.Y);
 		}
-        public override void NetRecieve(BinaryReader reader)
+        public override void NetReceive(BinaryReader reader)
         {
 			runOnce = reader.ReadBoolean();
 			ended = reader.ReadBoolean();
@@ -130,7 +130,7 @@ namespace SOTS.Items
 			writer.Write(Item.velocity.X);
 			writer.Write(Item.velocity.Y);
 		}
-		public override void NetRecieve(BinaryReader reader)
+		public override void NetReceive(BinaryReader reader)
 		{
 			runOnce = reader.ReadBoolean();
 			ended = reader.ReadBoolean();

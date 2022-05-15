@@ -31,12 +31,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Gel, 20);
-			recipe.AddIngredient(ItemID.IronBar, 1);
-			recipe.AddTile(TileID.Solidifier);
-			recipe.SetResult(this, 100);
-			recipe.AddRecipe();
+			CreateRecipe(100).AddIngredient(ItemID.Gel, 20).AddIngredient(ItemID.IronBar, 1).AddTile(TileID.Solidifier).Register();
 		}
 	}
 }

@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.height = 48;
 			Projectile.hostile = false;
 			Projectile.friendly = false;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 120;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;

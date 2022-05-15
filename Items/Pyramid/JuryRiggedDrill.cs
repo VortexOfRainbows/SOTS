@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 			Item.rare = 5;
 			Item.UseSound = SoundID.Item23;
 			Item.autoReuse = true;
-			Item.shoot = mod.ProjectileType("JuryRiggedDrill");
+			Item.shoot = Mod.Find<ModProjectile>("JuryRiggedDrill").Type;
 			Item.shootSpeed = 20f;
 			Item.consumable = true;
 			Item.maxStack = 999;

@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Infected : ModBuff
     {	
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Infected");
 			Description.SetDefault("");   

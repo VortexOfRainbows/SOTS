@@ -13,8 +13,8 @@ namespace SOTS.Projectiles.Pyramid
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(64);
-            aiType = 64;
-            Projectile.melee = true;
+            AIType = 64;
+            Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 0; 
 		}
         int counter = 0;

@@ -11,7 +11,7 @@ namespace SOTS.Items.Permafrost
 {
 	public class FrostArtifactTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = false;
 			Main.tileFrameImportant[Type] = true;
@@ -29,7 +29,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void NearbyEffects(int i, int j, bool closer) 
 		{
-			if(closer && Main.tile[i, j + 1].TileType == ModContent.TileType<FrostArtifactTile>() && Main.tile[i - 1, j + 1].type == ModContent.TileType<FrostArtifactTile>() && Main.tile[i + 1, j + 1].type == ModContent.TileType<FrostArtifactTile>())
+			if(closer && Main.tile[i, j + 1].TileType == ModContent.TileType<FrostArtifactTile>() && Main.tile[i - 1, j + 1].TileType == ModContent.TileType<FrostArtifactTile>() && Main.tile[i + 1, j + 1].TileType == ModContent.TileType<FrostArtifactTile>())
 			{
 				int xlocation = i * 16 + 8;
 				int ylocation = j * 16 + 8;

@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Projectiles
+namespace SOTS.Projectiles.Slime
 {    
     public class WormBullet : ModProjectile 
     {
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles
 			Projectile.timeLeft = 7200;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.extraUpdates = 1;
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles
 		{
 			for(int i = 0; i < 30; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(250, 100, 190, 40);
 				dust.noGravity = true;
@@ -87,11 +87,11 @@ namespace SOTS.Projectiles
 				dust.alpha = 255 - (int)(255 * (Projectile.timeLeft / 60f));
 			}
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 16;
 			height = 16;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
 		bool runOnce = true;
 		float direction = 0.03f;
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles
 			}
 			if(end || Main.rand.NextBool(10))
             {
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(250, 100, 190, 40);
 				dust.noGravity = true;

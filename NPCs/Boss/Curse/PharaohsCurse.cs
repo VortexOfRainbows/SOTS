@@ -19,35 +19,35 @@ namespace SOTS.NPCs.Boss.Curse
 			writer.Write(direction);
 			writer.Write(enteredSecondPhase);
 			writer.Write(smaller);
-			writer.Write(npc.dontTakeDamage);
+			writer.Write(NPC.dontTakeDamage);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			direction = reader.ReadInt32();
 			enteredSecondPhase = reader.ReadBoolean();
 			smaller = reader.ReadBoolean();
-			npc.dontTakeDamage = reader.ReadBoolean();
+			NPC.dontTakeDamage = reader.ReadBoolean();
 		}
 		int despawn = 0;
 		private float ai1
 		{
-			get => npc.ai[0];
-			set => npc.ai[0] = value;
+			get => NPC.ai[0];
+			set => NPC.ai[0] = value;
 		}
 		private float ai2
 		{
-			get => npc.ai[1];
-			set => npc.ai[1] = value;
+			get => NPC.ai[1];
+			set => NPC.ai[1] = value;
 		}
 		private float ai3
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		private float aiPhase
 		{
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
+			get => NPC.ai[3];
+			set => NPC.ai[3] = value;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -63,40 +63,40 @@ namespace SOTS.NPCs.Boss.Curse
 			NPC.knockBackResist = 0f;
 			NPC.width = 42;
 			NPC.height = 54;
-			npc.npcSlots = 20f;
-			npc.value = Item.buyPrice(0, 7, 0, 0);
-			npc.boss = true;
-			npc.lavaImmune = true;
-			npc.noGravity = true;
-			npc.noTileCollide = true;
-			npc.HitSound = null;
-			npc.DeathSound = SoundID.NPCDeath6;
+			NPC.npcSlots = 20f;
+			NPC.value = Item.buyPrice(0, 7, 0, 0);
+			NPC.boss = true;
+			NPC.lavaImmune = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.HitSound = null;
+			NPC.DeathSound = SoundID.NPCDeath6;
 			music = MusicID.Sandstorm;
 			musicPriority = MusicPriority.BossMedium;
-			npc.buffImmune[24] = true;
-			npc.buffImmune[39] = true;
-			npc.buffImmune[44] = true;
-			npc.buffImmune[69] = true;
-			npc.buffImmune[70] = true;
-			npc.buffImmune[153] = true;
+			NPC.buffImmune[24] = true;
+			NPC.buffImmune[39] = true;
+			NPC.buffImmune[44] = true;
+			NPC.buffImmune[69] = true;
+			NPC.buffImmune[70] = true;
+			NPC.buffImmune[153] = true;
 			bossBag = ModContent.ItemType<CurseBag>();
-			npc.netAlways = true;
-			npc.alpha = 255;
-			npc.dontTakeDamage = true;
+			NPC.netAlways = true;
+			NPC.alpha = 255;
+			NPC.dontTakeDamage = true;
 		}
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return npc.alpha == 0 && !npc.dontTakeDamage;
+			return NPC.alpha == 0 && !NPC.dontTakeDamage;
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
-				SoundEngine.PlaySound(3, (int)npc.Center.X, (int)npc.Center.Y, 54, 1.2f, -0.25f);
+				SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 60.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 					num++;
 				}
 			}
@@ -105,19 +105,19 @@ namespace SOTS.NPCs.Boss.Curse
 				if (!enteredSecondPhase) // enter second phase
 				{
 					enteredSecondPhase = true;
-					int temp = npc.lifeMax;
+					int temp = NPC.lifeMax;
 					NPC.lifeMax = (int)(temp * 1.0f);
-					npc.life = npc.lifeMax;
-					npc.netUpdate = true;
+					NPC.life = NPC.lifeMax;
+					NPC.netUpdate = true;
 				}
 				else if(aiPhase == 7)
 				{
 					for (int k = 0; k < 240; k++)
 					{
-						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 						dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) + new Vector2(0, -2);
 						dust.scale *= Main.rand.NextFloat(2) + 1;
-						dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+						dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 						dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 						dust.scale *= Main.rand.NextFloat(2) + 1;
 						dust.noGravity = true;
@@ -127,7 +127,7 @@ namespace SOTS.NPCs.Boss.Curse
                 {
 					TransitionPhase(7);
 					NPC.lifeMax = 666;
-					npc.life = 666;
+					NPC.life = 666;
 				}
 			}
 		}
@@ -141,17 +141,17 @@ namespace SOTS.NPCs.Boss.Curse
 			potionType = ItemID.HealingPotion;
 			if (Main.expertMode)
 			{
-				npc.DropBossBags();
+				NPC.DropBossBags();
 			}
 			else
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CursedMatter>(), Main.rand.Next(12, 25));
+				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<CursedMatter>(), Main.rand.Next(12, 25));
 			}
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.625f);
-			NPC.damage = (int)(npc.damage * 0.75f);
+			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.625f);
+			NPC.damage = (int)(NPC.damage * 0.75f);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -174,15 +174,15 @@ namespace SOTS.NPCs.Boss.Curse
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == npc.whoAmI)
+					if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == NPC.whoAmI)
 					{
-						CurseWave ring = proj.modProjectile as CurseWave;
+						CurseWave ring = proj.ModProjectile as CurseWave;
 						ring.DrawTelegraph(spriteBatch, drawColor);
 						slots.Add(i);
 					}
-					if (proj.type == ModContent.ProjectileType<ShadeSpear>() && proj.active && proj.ai[0] == npc.whoAmI)
+					if (proj.type == ModContent.ProjectileType<ShadeSpear>() && proj.active && proj.ai[0] == NPC.whoAmI)
 					{
-						ShadeSpear spear = proj.modProjectile as ShadeSpear;
+						ShadeSpear spear = proj.ModProjectile as ShadeSpear;
 						spear.setRand();
 						shadeSpearSlots.Add(i);
 					}
@@ -190,7 +190,7 @@ namespace SOTS.NPCs.Boss.Curse
 				for(int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC npc2 = Main.npc[i];
-					if (npc2.type == ModContent.NPCType<SmallGas>() && npc2.active && npc2.ai[0] == npc.whoAmI)
+					if (npc2.type == ModContent.NPCType<SmallGas>() && npc2.active && npc2.ai[0] == NPC.whoAmI)
 					{
 						npcSlots.Add(i);
 					}
@@ -205,22 +205,22 @@ namespace SOTS.NPCs.Boss.Curse
 					for (int i = 0; i < slots.Count; i++)
 					{
 						Projectile proj = Main.projectile[slots[i]];
-						if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == npc.whoAmI)
+						if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == NPC.whoAmI)
 						{
-							CurseWave ring = proj.modProjectile as CurseWave;
+							CurseWave ring = proj.ModProjectile as CurseWave;
 							List<CurseFoam> list = ring.foamParticleList1;
 							DrawFoam(list, 2, j, (byte)fadeIn);
 						}
-						if (j <= 1 && proj.type == ModContent.ProjectileType<ShadeSpear>() && proj.active && proj.ai[0] == npc.whoAmI)
+						if (j <= 1 && proj.type == ModContent.ProjectileType<ShadeSpear>() && proj.active && proj.ai[0] == NPC.whoAmI)
 						{
-							ShadeSpear spear = proj.modProjectile as ShadeSpear;
+							ShadeSpear spear = proj.ModProjectile as ShadeSpear;
 							spear.TruePreDraw(spriteBatch, j);
 						}
 					}
 					for(int i = 0; i < npcSlots.Count; i++)
 					{
 						NPC npc2 = Main.npc[npcSlots[i]];
-						if (npc2.type == ModContent.NPCType<SmallGas>() && npc2.active && npc2.ai[0] == npc.whoAmI)
+						if (npc2.type == ModContent.NPCType<SmallGas>() && npc2.active && npc2.ai[0] == NPC.whoAmI)
 						{
 							SmallGas gas = npc2.modNPC as SmallGas;
 							List<CurseFoam> list = gas.foamParticleList1;
@@ -239,16 +239,16 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 				//DrawLimbs(spriteBatch, false, 1);
 			}
-			Vector2 drawPos3 = npc.Center - Main.screenPosition;
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 drawPos3 = NPC.Center - Main.screenPosition;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			if (!enteredSecondPhase || (ai1 < 1 && ai2 < 90))
 			{
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-				spriteBatch.Draw(texture, drawPos3, null, npc.GetAlpha(drawColor), npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos3, null, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			else
 			{
-				DrawEye(spriteBatch, npc.Center, true);
+				DrawEye(spriteBatch, NPC.Center, true);
 			}
 			if (!runOnce)
 			{
@@ -256,9 +256,9 @@ namespace SOTS.NPCs.Boss.Curse
 					for (int i = 0; i < shadeSpearSlots.Count; i++)
 					{
 						Projectile proj = Main.projectile[shadeSpearSlots[i]];
-						if (j <= 1 && proj.type == ModContent.ProjectileType<ShadeSpear>() && proj.active && proj.ai[0] == npc.whoAmI)
+						if (j <= 1 && proj.type == ModContent.ProjectileType<ShadeSpear>() && proj.active && proj.ai[0] == NPC.whoAmI)
 						{
-							ShadeSpear spear = proj.modProjectile as ShadeSpear;
+							ShadeSpear spear = proj.ModProjectile as ShadeSpear;
 							spear.TruePreDraw(spriteBatch, j);
 						}
 					}
@@ -279,13 +279,13 @@ namespace SOTS.NPCs.Boss.Curse
 			float alphaMult = ai1 / 200f * shadeAlpha;
 			Vector2 drawOrigin = new Vector2(textureP.Width * 0.5f, textureP.Height * 0.5f);
 			float randOffsetMult = 1 - startParticles;
-			spriteBatch.Draw(texture, position - Main.screenPosition, frame, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale * scale - randOffsetMult * 0.45f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, position - Main.screenPosition, frame, NPC.GetAlpha(Color.White) * alphaMult, NPC.rotation, drawOrigin, NPC.scale * scale - randOffsetMult * 0.45f, SpriteEffects.None, 0f);
 			if (eyeFrame == 2 && pupil)
 			{
-				Player player = Main.player[npc.target];
+				Player player = Main.player[NPC.target];
 				Vector2 toLocation = EyeDirection.SafeNormalize(Vector2.Zero) * -2 * eyeOffsetMult;
 				Vector2 randOffset = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * randOffsetMult * 6f;
-				spriteBatch.Draw(textureP, position + toLocation + randOffset - Main.screenPosition + new Vector2(0, -2.6f) * randOffsetMult * 2f, null, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale * scale + randOffsetMult * 0.5f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(textureP, position + toLocation + randOffset - Main.screenPosition + new Vector2(0, -2.6f) * randOffsetMult * 2f, null, NPC.GetAlpha(Color.White) * alphaMult, NPC.rotation, drawOrigin, NPC.scale * scale + randOffsetMult * 0.5f, SpriteEffects.None, 0f);
 			}
 		}
 		public void DrawFoam(List<CurseFoam> dustList, int startPoint = 2, int overrideStart = -1, byte fadeIn = 0)
@@ -454,14 +454,14 @@ namespace SOTS.NPCs.Boss.Curse
 					if (i == 1)
 						xOff = 54;
 					Vector2 offset = new Vector2(xOff, 6) * 16;
-					Vector2 center = new Vector2((int)(npc.Center.X / 16), (int)(npc.Center.Y / 16)) * 16;
+					Vector2 center = new Vector2((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16)) * 16;
 					center += offset;
 					Projectile.NewProjectile(center, Vector2.Zero, ModContent.ProjectileType<SpawnGoldGate>(), 0, 0, Main.myPlayer, i * 2 - 1, 0);
 				}
         }
 		public override bool PreAI()
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			playerPosCounter++;
 			if (runOnce)
 			{
@@ -471,7 +471,7 @@ namespace SOTS.NPCs.Boss.Curse
 				aiPhase = -1;
 				runOnce = false;
 				direction = Main.rand.Next(2) * 2 - 1;
-				CenterPosition = npc.Center;
+				CenterPosition = NPC.Center;
 			}
 			if(playerValidPosition && playerPosCounter % 60 == 0)
             {
@@ -488,10 +488,10 @@ namespace SOTS.NPCs.Boss.Curse
 					eyeOffsetMult = 1;
 				}
 			}
-			npc.TargetClosest();
+			NPC.TargetClosest();
 			if (aiPhase != -1)
-				npc.rotation = npc.velocity.X * 0.05f;
-			Lighting.AddLight(npc.Center, new Vector3(110 / 255f, 36 / 255f, 20 / 255f));
+				NPC.rotation = NPC.velocity.X * 0.05f;
+			Lighting.AddLight(NPC.Center, new Vector3(110 / 255f, 36 / 255f, 20 / 255f));
 			if (Main.netMode != NetmodeID.Server)
 			{
 				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/FartGas");
@@ -503,30 +503,30 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 				if (startParticles != 0.0f)
 				{
-					SpawnPassiveDust(texture, npc.Center + new Vector2(0, smaller? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 40 : 50, npc.rotation);
-					SpawnPassiveDust(textureFill, npc.Center + new Vector2(0, smaller ? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 100 : 200, npc.rotation);
+					SpawnPassiveDust(texture, NPC.Center + new Vector2(0, smaller? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 40 : 50, NPC.rotation);
+					SpawnPassiveDust(textureFill, NPC.Center + new Vector2(0, smaller ? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 100 : 200, NPC.rotation);
 					if(!enteredSecondPhase)
-						SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/FartGasBorder"), npc.Center + new Vector2(0, 10), 1.2f * startParticles, foamParticleList4, 0.2f, 2, 3600, npc.rotation);
+						SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/FartGasBorder"), NPC.Center + new Vector2(0, 10), 1.2f * startParticles, foamParticleList4, 0.2f, 2, 3600, NPC.rotation);
 				}
-				int alphaCounter = enteredSecondPhase ? (int)(255 * ai2 / 90f) : npc.alpha;
+				int alphaCounter = enteredSecondPhase ? (int)(255 * ai2 / 90f) : NPC.alpha;
 				if(!enteredSecondPhase || (ai1 < 1 && ai2 < 90))
 				{
 					texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/PharaohsCurseOutline");
-					SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, (int)(30 * (1f + Math.Pow(alphaCounter, 0.5f))), npc.rotation);
-					SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList3, 0.125f, 1, (int)(60 * (1f + Math.Pow(alphaCounter, 0.5f))), npc.rotation);
+					SpawnPassiveDust(texture, NPC.Center, 1.0f, foamParticleList2, 0.1f, 1, (int)(30 * (1f + Math.Pow(alphaCounter, 0.5f))), NPC.rotation);
+					SpawnPassiveDust(texture, NPC.Center, 1.0f, foamParticleList3, 0.125f, 1, (int)(60 * (1f + Math.Pow(alphaCounter, 0.5f))), NPC.rotation);
 				}
 			}
 			cataloguePos();
-			bool inRange = Vector2.Distance(player.Center, npc.Center) <= 1600f;
+			bool inRange = Vector2.Distance(player.Center, NPC.Center) <= 1600f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
-				npc.netUpdate = true;
+				NPC.netUpdate = true;
 			if (player.dead || !SOTSPlayer.ModPlayer(player).PyramidBiome || !inRange || !playerValidPosition)
 			{
 				despawn++;
 			}
 			if (despawn >= 600)
 			{
-				npc.active = false;
+				NPC.active = false;
 			}
 			return inRange;
 		}
@@ -608,7 +608,7 @@ namespace SOTS.NPCs.Boss.Curse
 						i--;
 					}
 					else if (!particle.noMovement)
-						particle.position += npc.velocity * 0.825f;
+						particle.position += NPC.velocity * 0.825f;
 				}
 			}
 			for (int i = 0; i < foamParticleList2.Count; i++)
@@ -622,7 +622,7 @@ namespace SOTS.NPCs.Boss.Curse
 					i--;
 				}
 				else if (!particle.noMovement)
-					particle.position += npc.velocity * 0.9f;
+					particle.position += NPC.velocity * 0.9f;
 			}
 			for (int i = 0; i < foamParticleList3.Count; i++)
 			{
@@ -635,7 +635,7 @@ namespace SOTS.NPCs.Boss.Curse
 					i--;
 				}
 				else if (!particle.noMovement)
-					particle.position += npc.velocity;
+					particle.position += NPC.velocity;
 			}
 			for (int i = 0; i < foamParticleList4.Count; i++)
 			{
@@ -652,20 +652,20 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public void MoveTo(Vector2 goTo, float slowDownMult, float flatSpeed, float distanceMult = 1f)
 		{
-			Vector2 toDestination = goTo - npc.Center;
+			Vector2 toDestination = goTo - NPC.Center;
 			float speed = (flatSpeed + toDestination.Length() * 0.00045f * distanceMult);
 			if (speed > toDestination.Length())
 			{
 				speed = toDestination.Length();
 			}
-			npc.velocity *= slowDownMult;
-			npc.velocity += toDestination.SafeNormalize(Vector2.Zero) * speed * 0.75f;
+			NPC.velocity *= slowDownMult;
+			NPC.velocity += toDestination.SafeNormalize(Vector2.Zero) * speed * 0.75f;
 		}
 		public void MimicPolarisMovement(float speed)
 		{
-			Player player = Main.player[npc.target];
-			npc.velocity *= 0.5f;
-			Vector2 vectorToPlayer = player.Center - npc.Center;
+			Player player = Main.player[NPC.target];
+			NPC.velocity *= 0.5f;
+			Vector2 vectorToPlayer = player.Center - NPC.Center;
 			float yDist = vectorToPlayer.Y * 1.15f;
 			float xDist = vectorToPlayer.X;
 			float length = (float)Math.Sqrt(xDist * xDist + yDist * yDist);
@@ -674,7 +674,7 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				speedMult *= 0.5f;
 			}
-			npc.velocity += vectorToPlayer.SafeNormalize(Vector2.Zero) * speedMult * speed;
+			NPC.velocity += vectorToPlayer.SafeNormalize(Vector2.Zero) * speedMult * speed;
 		}
 		public Vector2 CenterPosition;
 		float dustAcceleration = 0f;
@@ -686,19 +686,19 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			if (style == 0)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
+				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
 				ParticleExplosion(120, true);
 				if (Main.netMode == 1)
 					return;
 				for (int i = 0; i < 6; i++)
 				{
 					Vector2 outWards = new Vector2(-2f * Main.rand.NextFloat(0.9f, 1.1f), 0).RotatedBy(MathHelper.ToRadians(i * 60 + 30));
-					int damage = npc.damage / 2;
+					int damage = NPC.damage / 2;
 					if (Main.expertMode)
 					{
 						damage = (int)(damage / Main.expertDamage);
 					}
-					Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseRing>(), damage, 0f, Main.myPlayer, npc.whoAmI);
+					Projectile.NewProjectile(NPC.Center, outWards, ModContent.ProjectileType<CurseRing>(), damage, 0f, Main.myPlayer, NPC.whoAmI);
 				}
 			}
 			else
@@ -708,24 +708,24 @@ namespace SOTS.NPCs.Boss.Curse
 				for (int i = 0; i < 12; i++)
 				{
 					Vector2 outWards = new Vector2(-2f, 0).RotatedBy(MathHelper.ToRadians(i / 2 * 60));
-					int damage = npc.damage / 2;
+					int damage = NPC.damage / 2;
 					if (Main.expertMode)
 					{
 						damage = (int)(damage / Main.expertDamage);
 					}
-					Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, npc.whoAmI, (i % 2 * 2 - 1));
+					Projectile.NewProjectile(NPC.Center, outWards, ModContent.ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, NPC.whoAmI, (i % 2 * 2 - 1));
 				}
 			}
 		}
 		public void ParticleExplosion(int amt = 240, bool quiet = false)
 		{
 			if(!quiet)
-				SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
+				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
 			for (int j = 0; j < amt; j++)
 			{
 				float scale = Main.rand.NextFloat(0.5f, 1.5f);
 				Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 8.5f) / scale).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-				foamParticleList1.Add(new CurseFoam(npc.Center, rotational, 1.75f * scale, true));
+				foamParticleList1.Add(new CurseFoam(NPC.Center, rotational, 1.75f * scale, true));
 			}
 		}
 		public override void AI()
@@ -736,10 +736,10 @@ namespace SOTS.NPCs.Boss.Curse
 				resetListTimer = 1800;
 				ResetLists();
 			}
-			Player player = Main.player[npc.target];
-			if(enteredSecondPhase && ai1 < 1 && !npc.dontTakeDamage)
+			Player player = Main.player[NPC.target];
+			if(enteredSecondPhase && ai1 < 1 && !NPC.dontTakeDamage)
             {
-				npc.dontTakeDamage = true;
+				NPC.dontTakeDamage = true;
 				TransitionPhase(3);
 			}
 			ai2++;
@@ -771,20 +771,20 @@ namespace SOTS.NPCs.Boss.Curse
 				else
 				{
 					startParticles = 0.0f;
-					npc.alpha = 255 - (int)ai2;
-					if (npc.alpha < 0)
-						npc.alpha = 0;
-					npc.velocity.Y = -1 * (0.25f + 0.5f * ai2 / timeToStart);
+					NPC.alpha = 255 - (int)ai2;
+					if (NPC.alpha < 0)
+						NPC.alpha = 0;
+					NPC.velocity.Y = -1 * (0.25f + 0.5f * ai2 / timeToStart);
 					float rotationLimit = 1500f;
-					npc.rotation = MathHelper.ToRadians(rotationLimit - rotationLimit * (float)Math.Pow(ai2 / timeToStart, 0.5f));
+					NPC.rotation = MathHelper.ToRadians(rotationLimit - rotationLimit * (float)Math.Pow(ai2 / timeToStart, 0.5f));
 				}
 				if (ai2 >= timeToStart + 30)
 				{
 					startParticles = 1;
 					TransitionPhase(0);
 					ai2 = -30;
-					npc.alpha = 0;
-					npc.dontTakeDamage = false;
+					NPC.alpha = 0;
+					NPC.dontTakeDamage = false;
 				}
 			}
 			if (aiPhase == 0)
@@ -809,12 +809,12 @@ namespace SOTS.NPCs.Boss.Curse
 							{
 								float rand = Main.rand.NextFloat(-10, 10);
 								Vector2 outWards = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(90 * i + rand));
-								int damage = npc.damage / 2;
+								int damage = NPC.damage / 2;
 								if (Main.expertMode)
 								{
 									damage = (int)(damage / Main.expertDamage);
 								}
-								Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, npc.whoAmI);
+								Projectile.NewProjectile(NPC.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, NPC.whoAmI);
 							}
 						}
 					}
@@ -856,7 +856,7 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 				else
 				{
-					npc.velocity *= 0.1f;
+					NPC.velocity *= 0.1f;
 				}
 				if(ai2 % 240 == 0 && ai2 < 720)
                 {
@@ -882,28 +882,28 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					if (PharaohsShade == -1)
 					{
-						PharaohsShade = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Pyramid.PharaohShade>(), 0, 0, Main.myPlayer, (npc.whoAmI + 0.5f), 0);
+						PharaohsShade = Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Pyramid.PharaohShade>(), 0, 0, Main.myPlayer, (NPC.whoAmI + 0.5f), 0);
 					}
 				}
 				if (ai2 < 150)
 				{
-					npc.velocity *= 0.975f;
-					npc.position.Y -= 0.1f;
+					NPC.velocity *= 0.975f;
+					NPC.position.Y -= 0.1f;
 					if (ai2 == 90 && Main.netMode != NetmodeID.Server)
 					{
 						for (int k = 0; k < 6; k++)
-							Gore.NewGore(npc.Center - new Vector2(16, 16), npc.velocity * 0.1f, mod.GetGoreSlot("Gores/Curse/PharaohsMask" + (1 + k)), 1f);
+							Gore.NewGore(NPC.Center - new Vector2(16, 16), NPC.velocity * 0.1f, Mod.GetGoreSlot("Gores/Curse/PharaohsMask" + (1 + k)), 1f);
 						ParticleExplosion();
 						for (int i = 0; i < 3; i++)
 						{
-							int goreIndex = Gore.NewGore(npc.Center - new Vector2(16, 16), default(Vector2), Main.rand.Next(61, 64), 1f);
+							int goreIndex = Gore.NewGore(NPC.Center - new Vector2(16, 16), default(Vector2), Main.rand.Next(61, 64), 1f);
 							Main.gore[goreIndex].scale = 0.55f;
 						}
 					}
 				}
 				else if (ai1 < 200)
 				{
-					npc.velocity *= 0.95f;
+					NPC.velocity *= 0.95f;
 					ai1++;
 					if (ai1 < 170)
 					{
@@ -921,22 +921,22 @@ namespace SOTS.NPCs.Boss.Curse
 						}
 						if(ai1 == 182)
 						{
-							SoundEngine.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.25f);
+							SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.25f);
 						}
                     }
 				}
 				else
 				{
-					npc.dontTakeDamage = false;
+					NPC.dontTakeDamage = false;
 					TransitionPhase(4);
 				}
 			}
-			Vector2 center = npc.Center + new Vector2(0, 4);
+			Vector2 center = NPC.Center + new Vector2(0, 4);
 			if (aiPhase == 4)
 			{
 				if (ai2 >= 120 && ai2 <= 1290)
 				{
-					int damage = npc.damage / 2;
+					int damage = NPC.damage / 2;
 					if (Main.expertMode)
 					{
 						damage = (int)(damage / Main.expertDamage);
@@ -948,7 +948,7 @@ namespace SOTS.NPCs.Boss.Curse
 							for (int i = 1; i < 3; i++)
 							{
 								Vector2 outWards = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(180 * i));
-								Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, npc.whoAmI, 180 * i);
+								Projectile.NewProjectile(NPC.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, NPC.whoAmI, 180 * i);
 							}
 						}
 					}
@@ -958,21 +958,21 @@ namespace SOTS.NPCs.Boss.Curse
 						if (currentCounter == 150 || currentCounter == 230 || currentCounter == 10)
 						{
 							eyeOffsetMult = -1f;
-							SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.875f, 0.2f);
+							SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.875f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Vector2 toPlayer = npc.Center - player.Center;
+								Vector2 toPlayer = NPC.Center - player.Center;
 								toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -1.25f;
 								for (int i = 0; i < 4; i++)
 								{
 									Vector2 random = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * 0.225f;
-									Projectile.NewProjectile(center + toPlayer * 8, toPlayer + random, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.25f), 0f, Main.myPlayer, npc.whoAmI, 0);
+									Projectile.NewProjectile(center + toPlayer * 8, toPlayer + random, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.25f), 0f, Main.myPlayer, NPC.whoAmI, 0);
 								}
 							}
 						}
 						if(currentCounter % 5 == 0 && currentCounter >= 40 && currentCounter <= 60)
 						{
-							SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.75f, 0.75f);
+							SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.75f, 0.75f);
 							eyeOffsetMult = -1f;
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
@@ -980,10 +980,10 @@ namespace SOTS.NPCs.Boss.Curse
 								for (int i = 0; i < 2; i++)
 								{
 									int direction = i * 2 - 1;
-									Vector2 toPlayer = npc.Center - player.Center;
+									Vector2 toPlayer = NPC.Center - player.Center;
 									toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -1.25f;
 									toPlayer = toPlayer.RotatedBy(MathHelper.ToRadians(spread * direction));
-									Projectile.NewProjectile(center + toPlayer * 8, toPlayer, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.0f), 0f, Main.myPlayer, npc.whoAmI, 0);
+									Projectile.NewProjectile(center + toPlayer * 8, toPlayer, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.0f), 0f, Main.myPlayer, NPC.whoAmI, 0);
 								}
 							}
                         }
@@ -1017,24 +1017,24 @@ namespace SOTS.NPCs.Boss.Curse
 						int cycleAI = (int)ai2 % total;
 						if (cycleAI < 280)
 						{
-							Vector2 toPlayer = npc.Center - player.Center;
+							Vector2 toPlayer = NPC.Center - player.Center;
 							EyeDirection = toPlayer;
 							cycleAI %= 140;
 						}
 						else if (cycleAI % amt == 0)
 						{
 							eyeOffsetMult = -1f;
-							SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.825f, 0.3f);
+							SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.825f, 0.3f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								int damage = npc.damage / 2;
+								int damage = NPC.damage / 2;
 								if (Main.expertMode)
 								{
 									damage = (int)(damage / Main.expertDamage);                 
 								}
 								Vector2 circular = new Vector2(-1.05f * direction).RotatedBy(MathHelper.ToRadians((cycleAI - 280) * 6 + ai3));
 								EyeDirection = circular;
-								Projectile.NewProjectile(center + circular * 8, circular, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.1f), 0f, Main.myPlayer, npc.whoAmI, 0);
+								Projectile.NewProjectile(center + circular * 8, circular, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.1f), 0f, Main.myPlayer, NPC.whoAmI, 0);
 							}
 						}
 						if (cycleAI == 139 || cycleAI == total - 1)
@@ -1089,7 +1089,7 @@ namespace SOTS.NPCs.Boss.Curse
 						{
 							if (cycleAI == 81)
 							{
-								SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.75f, 0.3f);
+								SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 73, 1.75f, 0.3f);
 							}
 							MoveTo(storeDashArea, 0.0f, 16f, 4f);
 						}
@@ -1098,7 +1098,7 @@ namespace SOTS.NPCs.Boss.Curse
             }
 			else
             {
-				Vector2 toPlayer = npc.Center - player.Center;
+				Vector2 toPlayer = NPC.Center - player.Center;
 				EyeDirection = toPlayer;
 			}
 			if (aiPhase == 6)
@@ -1118,7 +1118,7 @@ namespace SOTS.NPCs.Boss.Curse
                     {
 						eyeFrame = 0;
                     }
-					npc.position += new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), Main.rand.NextFloat(-1.5f, 1.5f));
+					NPC.position += new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), Main.rand.NextFloat(-1.5f, 1.5f));
 					ChangeShade(0.2f, 0.02f);
                 }
 				else
@@ -1130,7 +1130,7 @@ namespace SOTS.NPCs.Boss.Curse
 						if (Main.netMode != 1)
    							for (int i = 2; i <= 4; i++)
 							{
-								int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SmallGas>(), 0, npc.whoAmI, i * 90, 0, 0); //summons 180, 270, and 360
+								int npc1 = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SmallGas>(), 0, NPC.whoAmI, i * 90, 0, 0); //summons 180, 270, and 360
 								Main.npc[npc1].netUpdate = true;
 							}
                     }
@@ -1168,13 +1168,13 @@ namespace SOTS.NPCs.Boss.Curse
 					}
 					if (ai2 % 720 == 630 || ai3 > 0) //do slam attack
 					{
-						npc.velocity.X *= 0.5f;
+						NPC.velocity.X *= 0.5f;
 						ai3++;
 						if (ai3 < 60)
 						{
 							float waveY = (float)Math.Sin(MathHelper.ToRadians(ai3 * 4f));
-							npc.velocity.Y *= 0.875f;
-							npc.velocity.Y -= 0.4f * waveY;
+							NPC.velocity.Y *= 0.875f;
+							NPC.velocity.Y -= 0.4f * waveY;
 							if (ai3 == 40)
 							{
 								SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
@@ -1185,17 +1185,17 @@ namespace SOTS.NPCs.Boss.Curse
 							if (ai3 == 60)
 							{
 								SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
-								npc.velocity.Y += 4.5f;
+								NPC.velocity.Y += 4.5f;
 							}
-							npc.velocity.Y += 0.8f;
-							Vector2 temp = npc.velocity;
-							npc.velocity = Collision.AdvancedTileCollision(ignore, npc.position, npc.velocity, npc.width, npc.height, true, true);
-							if (npc.velocity != temp)
+							NPC.velocity.Y += 0.8f;
+							Vector2 temp = NPC.velocity;
+							NPC.velocity = Collision.AdvancedTileCollision(ignore, NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
+							if (NPC.velocity != temp)
 							{
 								ParticleExplosion();
 								if (Main.netMode != 1)
 								{
-									int damage = npc.damage / 2;
+									int damage = NPC.damage / 2;
 									if (Main.expertMode)
 									{
 										damage = (int)(damage / Main.expertDamage);
@@ -1203,7 +1203,7 @@ namespace SOTS.NPCs.Boss.Curse
 									for (int i = 0; i < 6; i++)
 									{
 										Vector2 outWards = new Vector2(-2f, 0).RotatedBy(MathHelper.ToRadians(30 + i / 2 * 40));
-										Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, npc.whoAmI, (i % 2 * 2 - 1) * 0.8f);
+										Projectile.NewProjectile(NPC.Center, outWards, ModContent.ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, NPC.whoAmI, (i % 2 * 2 - 1) * 0.8f);
 									}
 								}
 								TransitionPhase(4);
@@ -1214,20 +1214,20 @@ namespace SOTS.NPCs.Boss.Curse
 					{
 						Vector2 rotatePos = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(ai2));
 						Vector2 toPos = rotatePos + player.Center;
-						Vector2 goToPos = npc.Center - toPos;
+						Vector2 goToPos = NPC.Center - toPos;
 						float length = goToPos.Length() + 0.1f;
 						if (length > 12)
 						{
 							length = 12;
 						}
 						goToPos = goToPos.SafeNormalize(Vector2.Zero);
-						npc.velocity = goToPos * -length;
+						NPC.velocity = goToPos * -length;
 					}
 				}
 			}
 			if(aiPhase == 7)
             {
-				npc.dontTakeDamage = true;
+				NPC.dontTakeDamage = true;
 				eyeOffsetMult = 0;
 				if(startParticles > 0.5f)
                 {
@@ -1238,7 +1238,7 @@ namespace SOTS.NPCs.Boss.Curse
 					startParticles = 0.5f;
 					if(ai2 > 180)
                     {
-						npc.StrikeNPC(667 + npc.defense / 2, 0, 0);
+						NPC.StrikeNPC(667 + NPC.defense / 2, 0, 0);
                     }
 				}
             }
@@ -1260,17 +1260,17 @@ namespace SOTS.NPCs.Boss.Curse
             }
 			if(shadeAlpha <= 0.65f)
             {
-				npc.dontTakeDamage = true;
+				NPC.dontTakeDamage = true;
             }
 			else
 			{
-				npc.dontTakeDamage = false;
+				NPC.dontTakeDamage = false;
 			}
 			shadeAlpha = MathHelper.Clamp(shadeAlpha, 0, 1);
         }
 		public void DashAttacks(float distance, float speedMult, int amt = 4)
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			if (ai2 <= 40)
 			{
 				Vector2 dashArea = player.Center + new Vector2(distance * direction, 0);
@@ -1280,17 +1280,17 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				float current = ai2 - 60;
 				float sin = (float)Math.Sin(MathHelper.ToRadians(current * 180 / 20f));
-				npc.velocity *= 0.1f;
-				npc.velocity.X += sin * -5 * direction;
+				NPC.velocity *= 0.1f;
+				NPC.velocity.X += sin * -5 * direction;
 			}
 			if (ai2 == 60)
 			{
-				SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.75f, 0.2f);
-				npc.velocity += new Vector2(-24 * direction * speedMult, 0);
+				SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 73, 1.75f, 0.2f);
+				NPC.velocity += new Vector2(-24 * direction * speedMult, 0);
 			}
 			if (ai2 > 60)
 			{
-				npc.velocity += new Vector2(-1f * speedMult * direction, 0);
+				NPC.velocity += new Vector2(-1f * speedMult * direction, 0);
 			}
 			if (ai2 > 95)
 			{
@@ -1314,7 +1314,7 @@ namespace SOTS.NPCs.Boss.Curse
 		bool[] ignore;
 		public override void PostAI()
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			if(ignore == null)
 			{
 				ignore = new bool[Main.tileSolid.Length];
@@ -1325,14 +1325,14 @@ namespace SOTS.NPCs.Boss.Curse
 				ignore[ModContent.TileType<TrueSandstoneTile>()] = false;
 				ignore[ModContent.TileType<AncientGoldGateTile>()] = false;
 			}
-			npc.velocity = Collision.AdvancedTileCollision(ignore, npc.position, npc.velocity, npc.width, npc.height, true, true);
+			NPC.velocity = Collision.AdvancedTileCollision(ignore, NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 		}
 		public void TransitionPhase(int nextPhase)
 		{
 			smaller = false;
 			if(nextPhase == 0)
 			{
-				if (npc.Center.X > Main.player[npc.target].Center.X)
+				if (NPC.Center.X > Main.player[NPC.target].Center.X)
 					direction = 1;
 				else
 					direction = -1;
@@ -1373,7 +1373,7 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public bool PlayerValidPosition()
         {
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			int foundTrueTiles = 0;
 			for(int checkDir = 0; checkDir < 4; checkDir++)
             {

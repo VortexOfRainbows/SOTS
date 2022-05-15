@@ -19,12 +19,12 @@ namespace SOTS.Projectiles.Permafrost
             Projectile.aiStyle = 99; 
             Projectile.friendly = true;	
             Projectile.penetrate = -1;	
-			Projectile.melee = true;	        
+			Projectile.DamageType = DamageClass.Melee;	        
             ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 10f;
             ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 196f;
             ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 12f;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 16;
             height = 16;

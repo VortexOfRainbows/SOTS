@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class SurpriseAttack : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Surprise Attack");
 			Description.SetDefault("Melee damage increased by 50%\n'*Teleports behind you*'");   
@@ -16,7 +16,7 @@ namespace SOTS.Buffs
         }
 		public override void Update(Player player, ref int buffIndex)
 		{
-            player.meleeDamage += 0.5f;
+            player.GetDamage(DamageClass.Melee) += 0.5f;
         }
     }
 }

@@ -6,6 +6,7 @@ using Terraria.ID;
 using SOTS.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.MinionBuffs;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -18,7 +19,6 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-			ProjectileID.Sets.Homing[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.4f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, color * 0.4f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -118,13 +118,13 @@ namespace SOTS.Projectiles.Minions
 			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(Color lightColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorSquirrelArm").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorSquirrelArmGlow").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = Projectile.Center - Main.screenPosition;
-			Main.spriteBatch.Draw(texture, drawPos + gunVelocity, null, drawColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			Main.spriteBatch.Draw(texture, drawPos + gunVelocity, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			Color color = new Color(100, 100, 100, 0);
 			for (int j = 0; j < glow / 2; j++)
 			{
@@ -184,7 +184,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}
@@ -323,7 +323,7 @@ namespace SOTS.Projectiles.Minions
 							projVelo.Y += Main.rand.Next(-14, 4) * (0.1f + 0.03f * i);
 							if (Projectile.owner == Main.myPlayer)
 							{
-								Projectile.NewProjectile(Projectile.Center + offset, projVelo, mod.ProjectileType("TerminatorAcorn"), (int)(Projectile.damage * (1f - i * 0.125f)) + 1, Projectile.knockBack, Projectile.owner, i);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + offset, projVelo, ModContent.ProjectileType<TerminatorAcorn>(), (int)(Projectile.damage * (1f - i * 0.125f)) + 1, Projectile.knockBack, Projectile.owner, i);
 								Projectile.netUpdate = true;
 							}
 						}

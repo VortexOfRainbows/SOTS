@@ -37,7 +37,7 @@ namespace SOTS.NPCs
     public class SOTSNPCs : GlobalNPC
 	{
 		/// <summary>
-		/// Gets the damage of a NPC prior Expert, Master, Journey modifiers
+		/// Gets the damage of a NPC prior Expert, Master, and Journey modifiers
 		/// </summary>
 		public static int GetBaseDamage(NPC npc)
         {
@@ -166,9 +166,9 @@ namespace SOTS.NPCs
 							}
 						}
 						if(npc.type == ModContent.NPCType<PhaseAssaulterHead>())
-							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterHeadGore"), 1f);
+							Gore.NewGore(npc.position, npc.velocity, Mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterHeadGore"), 1f);
 						if (npc.type == ModContent.NPCType<PhaseAssaulterBody>())
-							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterBodyGore"), 1f);
+							Gore.NewGore(npc.position, npc.velocity, Mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterBodyGore"), 1f);
 						if (npc.type == ModContent.NPCType<PhaseAssaulterTail>())
 						{
 							PhaseAssaulterTail tail = npc.modNPC as PhaseAssaulterTail;
@@ -182,7 +182,7 @@ namespace SOTS.NPCs
 									}
                                 }
                             }
-							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterTailGore"), 1f);
+							Gore.NewGore(npc.position, npc.velocity, Mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterTailGore"), 1f);
 						}
 					}
 				}
@@ -475,7 +475,7 @@ namespace SOTS.NPCs
 			{
 				Tile tile = Framing.GetTileSafely(i, j + k);
 				bool correctType = tile.TileType == ModContent.TileType<DullPlatingTile>() || tile.TileType == ModContent.TileType<AvaritianPlatingTile>() || tile.TileType == ModContent.TileType<PortalPlatingTile>();
-				if (tile.active() && (Main.tileSolid[tile.TileType] || correctType) && tile.nactive())
+				if (tile.HasTile && (Main.tileSolid[tile.TileType] || correctType) && tile.HasUnactuatedTile)
 				{
 					dist = k;
 					flag = true;
@@ -494,15 +494,15 @@ namespace SOTS.NPCs
         }
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
-			Player player = spawnInfo.player;
+			Player player = spawnInfo.Player;
 			float constructRateMultiplier = 1f;
 			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
 				constructRateMultiplier = 0f;
 			bool ZoneForest = SOTSPlayer.ZoneForest(player);
-			bool ZonePlanetarium = spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome;
-			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
+			bool ZonePlanetarium = spawnInfo.Player.GetModPlayer<SOTSPlayer>().PlanetariumBiome;
+			if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].wall;
+				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].WallType;
 				bool isValidTile = spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>();
 				bool isValidWall = WallType(tileWall) == 1;
 				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>()
@@ -596,7 +596,7 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.006f * constructRateMultiplier * rateMult);
 				pool.Add(ModContent.NPCType<HallowTreasureSlime>(), 0.0075f);
 			}
-			if (player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
+			if (player.ZoneBeach && !spawnInfo.Player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
 			{
 				if (player.statLifeMax2 >= 120)
 				{
@@ -650,9 +650,9 @@ namespace SOTS.NPCs
 			{
 				pool.Add(ModContent.NPCType<DungeonTreasureSlime>(), SpawnCondition.DungeonNormal.Chance * 0.015f); //this is about 75% of dungeon slime spawn rate
 			}
-			if (spawnInfo.player.ZoneSnow)
+			if (spawnInfo.Player.ZoneSnow)
 			{
-				if(!spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.player.ZoneOverworldHeight)
+				if(!spawnInfo.Player.ZoneCorrupt && !spawnInfo.Player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.Player.ZoneOverworldHeight)
 					pool.Add(ModContent.NPCType<ArcticGoblin>(), SpawnCondition.Overworld.Chance * 0.1f);
 				if (player.statLifeMax2 >= 120)
 					pool.Add(ModContent.NPCType<PermafrostConstruct>(), (spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.02f : 0.015f) * constructRateMultiplier);
@@ -665,7 +665,7 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<IceTreasureSlime>(), spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.03f : 0.01f);
 				}
 			}
-			else if(Main.invasionType == InvasionID.GoblinArmy && spawnInfo.player.ZoneOverworldHeight && spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson)
+			else if(Main.invasionType == InvasionID.GoblinArmy && spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.ZoneSnow && !spawnInfo.Player.ZoneCorrupt && !spawnInfo.Player.ZoneCrimson)
 			{
 				pool.Add(ModContent.NPCType<ArcticGoblin>(), 0.1f);
 			}
@@ -675,7 +675,7 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<NatureConstruct>(), ((SpawnCondition.SurfaceJungle.Chance * 0.03f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f)) * constructRateMultiplier);
 				pool.Add(ModContent.NPCType<JungleTreasureSlime>(), (SpawnCondition.SurfaceJungle.Chance * 0.05f) + (SpawnCondition.UndergroundJungle.Chance * 0.015f));
 			}
-			if (spawnInfo.player.ZoneUnderworldHeight)
+			if (spawnInfo.Player.ZoneUnderworldHeight)
 			{
 				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.07f);
 				if(NPC.downedBoss3)
@@ -691,9 +691,9 @@ namespace SOTS.NPCs
 			{
 				pool.Add(ModContent.NPCType<GoldenTreasureSlime>(), SpawnCondition.Underground.Chance * 0.03f);
 			}
-			if (spawnInfo.player.ZoneSkyHeight)
+			if (spawnInfo.Player.ZoneSkyHeight)
 			{
-				if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PhaseBiome)
+				if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().PhaseBiome)
 				{
 					if (NPC.CountNPCS(ModContent.NPCType<PhaseSpeeder>()) < 2) //only two speeders max
 						pool.Add(ModContent.NPCType<PhaseSpeeder>(), SpawnCondition.Sky.Chance * 10f);

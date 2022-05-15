@@ -71,7 +71,7 @@ namespace SOTS
 		}
 		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{
-			if(Framing.GetTileSafely(i, j).active())
+			if(Framing.GetTileSafely(i, j).HasTile)
             {
 				Tile tile = Framing.GetTileSafely(i, j);
 				if(tile.TileType == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.TileType == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
@@ -239,11 +239,11 @@ namespace SOTS
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.active && proj.modProjectile is HoloPlatform hPlatform)
+					if (proj.active && proj.ModProjectile is HoloPlatform hPlatform)
 					{
 						hPlatform.Draw(Main.spriteBatch); //change later
 					}
-					if (proj.active && proj.modProjectile is ChaosDiamondLaser dLaser)
+					if (proj.active && proj.ModProjectile is ChaosDiamondLaser dLaser)
 					{
 						dLaser.DrawBlack(Main.spriteBatch); //change later
 					}
@@ -291,11 +291,11 @@ namespace SOTS
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.active && proj.modProjectile is IOrbitingProj modProj && modProj.inFront)
+					if (proj.active && proj.ModProjectile is IOrbitingProj modProj && modProj.inFront)
 					{
 						modProj.Draw(Main.spriteBatch, Color.White);
 					}
-					if (proj.active && proj.modProjectile is IncineratorGloveProjectile modProj2)
+					if (proj.active && proj.ModProjectile is IncineratorGloveProjectile modProj2)
 					{
 						modProj2.Draw(Main.spriteBatch, Color.White); 
 					}

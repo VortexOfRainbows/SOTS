@@ -25,7 +25,7 @@ namespace SOTS.Items.Crushers
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			vPlayer.BonusCrushRangeMax++;
 			vPlayer.BonusCrushRangeMin++;
-			player.meleeDamage += 0.05f;
+			player.GetDamage(DamageClass.Melee) += 0.05f;
 		}
 	}
 }

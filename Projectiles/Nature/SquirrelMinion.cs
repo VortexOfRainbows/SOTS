@@ -1,10 +1,5 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -18,21 +13,19 @@ namespace SOTS.Projectiles.Nature
 			DisplayName.SetDefault("Squirrel");
 			Main.projFrames[Projectile.type] = 6;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
-			ProjectileID.Sets.Homing[Projectile.type] = true;
+			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 
 		public sealed override void SetDefaults()
 		{
 			Projectile.CloneDefaults(393); //pirate
-            aiType = 393; 
+            AIType = 393; 
 			Projectile.width = 50;
 			Projectile.height = 32;
 			Projectile.tileCollide = true;
-			drawOriginOffsetY = 2;
+			DrawOriginOffsetY = 2;
 			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.minionSlots = 1f;
@@ -89,9 +82,9 @@ namespace SOTS.Projectiles.Nature
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(mod.BuffType("SquirrelBuff"));
+				player.ClearBuff(Mod.Find<ModBuff>("SquirrelBuff").Type);
 			}
-			if (player.HasBuff(mod.BuffType("SquirrelBuff")))
+			if (player.HasBuff(Mod.Find<ModBuff>("SquirrelBuff").Type))
 			{
 				Projectile.timeLeft = 2;
 			}

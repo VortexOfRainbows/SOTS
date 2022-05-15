@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.height = 14;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Otherworld
 					trailPos[i] = addPos;
 					int u = (int)addPos.X / 16;
 					int j = (int)addPos.Y / 16;
-					if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].type] == false && Main.tileSolid[Main.tile[u, j].type] == true)
+					if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].TileType] == false && Main.tileSolid[Main.tile[u, j].TileType] == true)
 					{
 						int dust = Dust.NewDust(new Vector2(addPos.X - 16, addPos.Y - 16), 24, 24, 235);
 						Main.dust[dust].scale *= 1f;

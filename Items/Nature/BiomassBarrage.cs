@@ -39,27 +39,8 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<BiomassBlast>(), 1);
-			recipe.AddIngredient(ModContent.ItemType <CursedMatter>(), 3);
-			recipe.AddIngredient(ItemID.OrichalcumBar, 12);
-			recipe.AddIngredient(ItemID.SoulofLight, 12);
-			recipe.AddIngredient(ItemID.SoulofNight, 12);
-			recipe.AddIngredient(ItemID.Emerald, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<BiomassBlast>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 3);
-			recipe.AddIngredient(ItemID.MythrilBar, 12);
-			recipe.AddIngredient(ItemID.SoulofLight, 12);
-			recipe.AddIngredient(ItemID.SoulofNight, 12);
-			recipe.AddIngredient(ItemID.Emerald, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<BiomassBlast>(), 1).AddIngredient(ModContent.ItemType <CursedMatter>(), 3).AddIngredient(ItemID.OrichalcumBar, 12).AddIngredient(ItemID.SoulofLight, 12).AddIngredient(ItemID.SoulofNight, 12).AddIngredient(ItemID.Emerald, 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<BiomassBlast>(), 1).AddIngredient(ModContent.ItemType<CursedMatter>(), 3).AddIngredient(ItemID.MythrilBar, 12).AddIngredient(ItemID.SoulofLight, 12).AddIngredient(ItemID.SoulofNight, 12).AddIngredient(ItemID.Emerald, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

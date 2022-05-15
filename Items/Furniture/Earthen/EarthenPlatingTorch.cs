@@ -37,11 +37,7 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.Torch, 3);
-			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>());
-			recipe.SetResult(this, 3);
-			recipe.AddRecipe();
+			CreateRecipe(3).AddIngredient(ItemID.Torch, 3).AddIngredient(ModContent.ItemType<EarthenPlating>()).Register();
 		}
 	}
 	public class EarthenPlatingTorchTile : ModTile
@@ -60,7 +56,7 @@ namespace SOTS.Items.Furniture.Earthen
 			dust.velocity *= 2.4f;
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;

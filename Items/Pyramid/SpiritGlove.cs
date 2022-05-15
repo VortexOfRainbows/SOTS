@@ -25,17 +25,11 @@ namespace SOTS.Items.Pyramid
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidRegenSpeed += 0.05f;
-			player.meleeCrit += 8;
+			player.GetCritChance(DamageClass.Melee) += 8;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 32);
-			recipe.AddIngredient(ItemID.Emerald, 1);
-			recipe.AddRecipeGroup("SOTS:GoldBar", 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SoulResidue>(), 32).AddIngredient(ItemID.Emerald, 1).AddRecipeGroup("SOTS:GoldBar", 8).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

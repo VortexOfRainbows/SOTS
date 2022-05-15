@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.hostile = false; 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true; 
-            Projectile.melee = true; 
+            Projectile.DamageType = DamageClass.Melee; 
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 			Projectile.usesLocalNPCImmunity = true;
@@ -121,13 +121,13 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				if (storeData == -1 && Projectile.owner == Main.myPlayer)
 				{
-					storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("DigitalTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 1, Projectile.identity);
+					storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("DigitalTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 1, Projectile.identity);
 					Projectile.localAI[1] = storeData;
 					Projectile.netUpdate = true;
 				}
 				if (storeData2 == -1 && Projectile.owner == Main.myPlayer)
 				{
-					storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("DigitalTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -1, Projectile.identity);
+					storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("DigitalTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -1, Projectile.identity);
 					Projectile.localAI[0] = storeData2;
 					Projectile.netUpdate = true;
 				}
@@ -219,7 +219,7 @@ namespace SOTS.Projectiles.Otherworld
 					{
 						float dustScale = 1f;
 						float rand = Main.rand.NextFloat(0.9f, 1.35f);
-						int type = mod.DustType("CodeDust2");
+						int type = Mod.Find<ModDust>("CodeDust2").Type;
 						if (Main.rand.NextBool(3))
                         {
 							type = DustID.Electric;
@@ -237,7 +237,7 @@ namespace SOTS.Projectiles.Otherworld
 					for (int i = 0; i < amt / 2; i++)
 					{
 						float rand = Main.rand.NextFloat(0.9f, 1.35f);
-						int type = mod.DustType("CodeDust2");
+						int type = Mod.Find<ModDust>("CodeDust2").Type;
 						if (Main.rand.NextBool(2))
 						{
 							type = DustID.Electric;

@@ -15,10 +15,10 @@ namespace SOTS.Projectiles.Minions
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(ProjectileID.RocketSnowmanI);
-            aiType = ProjectileID.RocketSnowmanI;
+            AIType = ProjectileID.RocketSnowmanI;
 			Projectile.alpha = 0;
 			Projectile.penetrate = 1; 
-			Projectile.ranged = false;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.minion = true;
 			Projectile.width = 24;
 			Projectile.height = 44;
@@ -44,14 +44,14 @@ namespace SOTS.Projectiles.Minions
 				int speedX = Main.rand.Next(7);
 				if (Main.rand.Next(5) <= 1)
 				{
-					Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, mod.GetGoreSlot("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
+					Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Mod.GetGoreSlot("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
 					int goreIndex = Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Main.rand.Next(61, 64), 1f);
 					Main.gore[goreIndex].scale = 0.65f;
 				}
 				if (Main.rand.Next(5) <= 1)
 				{
 					if (i == 0 || i == 2)
-						Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, mod.GetGoreSlot("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
+						Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Mod.GetGoreSlot("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
 				}
 			}
 			SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.45f);
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Minions
 			genGore();
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("SharangaBlastSummon").Type, Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override void AI()

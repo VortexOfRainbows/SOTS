@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class IntimidatingPresence : ModBuff
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Intimidating Presence");
 			Description.SetDefault("Drastically lowered enemy spawns");

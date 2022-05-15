@@ -61,7 +61,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (broken == 1 || modPlayer.brokenFrigidSword >= 1)
 			{
 				Item.useStyle = 4;
@@ -121,7 +121,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (crit && player.whoAmI == Main.myPlayer)
 			{
 				for(int i = 0; i < 4; i++)
@@ -136,11 +136,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FrigidBar>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<FrigidBar>(), 8).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

@@ -25,14 +25,8 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>());
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 2);
-			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(2).AddIngredient(ModContent.ItemType<NaturePlating>()).Register();
+			CreateRecipe(1).AddIngredient(this, 2).ReplaceResult(ModContent.ItemType<NaturePlating>());
 		}
 	}
 	public class NaturePlatingPlatformTile : ModTile
@@ -46,7 +40,7 @@ namespace SOTS.Items.Furniture.Nature
 			Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
 			SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;

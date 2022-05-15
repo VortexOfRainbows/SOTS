@@ -22,21 +22,14 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.meleeCrit += 20;
-			player.rangedCrit += 20;
-			player.magicCrit += 20;
-			player.thrownCrit += 20;
+			player.GetCritChance(DamageClass.Melee) += 20;
+			player.GetCritChance(DamageClass.Ranged) += 20;
+			player.GetCritChance(DamageClass.Magic) += 20;
+			player.GetCritChance(DamageClass.Throwing) += 20;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<SnakeEyes>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<ChaosBadge>(), 1);
-			recipe.AddIngredient(ItemID.EyeoftheGolem, 1);
-			//recipe.AddIngredient(ItemID.SpookyWood, 1); //To be replaced later (dissolving chaos)
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SnakeEyes>(), 1).AddIngredient(ModContent.ItemType<ChaosBadge>(), 1).AddIngredient(ItemID.EyeoftheGolem, 1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

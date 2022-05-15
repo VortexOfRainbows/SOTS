@@ -101,11 +101,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 100);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 100).AddTile(TileID.DemonAltar).Register();
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace SOTS.Items
 {
 	public class TheBars : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileShine[Type] = 1100;
 			Main.tileSolid[Type] = true;
@@ -117,7 +117,7 @@ namespace SOTS.Items
 			int style = tile.TileFrameX / 18;
 			if (style == 1 || style == 2)
 			{
-				if (tileAbove.active() && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
+				if (tileAbove.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
                 {
 					style = 2;
 				}
@@ -128,7 +128,7 @@ namespace SOTS.Items
 			}
 			if (style == 3 || style == 4)
 			{
-				if (tileAbove.active() && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
+				if (tileAbove.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
 				{
 					style = 4;
 				}
@@ -139,7 +139,7 @@ namespace SOTS.Items
 			}
 			if (style == 5 || style == 6)
 			{
-				if (tileAbove.active() && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
+				if (tileAbove.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
 				{
 					style = 6;
 				}

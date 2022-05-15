@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.alpha = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
@@ -143,11 +143,11 @@ namespace SOTS.Projectiles.Pyramid
 				Main.dust[num1].noGravity = true;
 			}
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 12;
 			height = 12;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{

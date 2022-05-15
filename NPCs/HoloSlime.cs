@@ -35,17 +35,17 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 1.25f;
             NPC.width = 36;
             NPC.height = 32;
-            animationType = NPCID.BlueSlime;
+            AnimationType = NPCID.BlueSlime;
 			Main.npcFrameCount[NPC.type] = 2;  
-            npc.value = 200;
-            npc.npcSlots = 1.25f;
-            npc.lavaImmune = true;
-            npc.netAlways = true;
-			npc.alpha = 40;
-			npc.HitSound = SoundID.NPCHit53;
-			npc.DeathSound = SoundID.NPCDeath1;
-			npc.buffImmune[BuffID.OnFire] = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
+            NPC.value = 200;
+            NPC.npcSlots = 1.25f;
+            NPC.lavaImmune = true;
+            NPC.netAlways = true;
+			NPC.alpha = 40;
+			NPC.HitSound = SoundID.NPCHit53;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.buffImmune[BuffID.OnFire] = true;
+			NPC.buffImmune[BuffID.Frostburn] = true;
 			//npc.DeathSound = SoundID.NPCDeath14;
 			Banner = NPC.type;
 			BannerItem = ItemType<HoloSlimeBanner>();
@@ -56,7 +56,7 @@ namespace SOTS.NPCs
 			for(int k = 0; k < dist; k++)
 			{
 				Tile tile = Framing.GetTileSafely(i, j + k);
-				if(tile.active() && Main.tileSolid[tile.TileType])
+				if(tile.HasTile && Main.tileSolid[tile.TileType])
 				{
 					flag = true;
 					break;
@@ -70,12 +70,12 @@ namespace SOTS.NPCs
 			{
 				return null;
 			}
-			int i = (int)npc.Center.X / 16;
+			int i = (int)NPC.Center.X / 16;
 			int valid = 0;
-			int j = (int)npc.Center.Y / 16;
+			int j = (int)NPC.Center.Y / 16;
 			for (int k = 0; k < width; k++)
 			{
-				j = (int)npc.Center.Y / 16;
+				j = (int)NPC.Center.Y / 16;
 				i += direction;
 				for (int h = 0; h < height && h < k + 10; h++)
 				{
@@ -91,14 +91,14 @@ namespace SOTS.NPCs
 		}
 		public void WarpToPlayer()
 		{
-			Player player = Main.player[npc.target];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			float distX = npc.Center.X - player.Center.X;
+			Player player = Main.player[NPC.target];
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			float distX = NPC.Center.X - player.Center.X;
 			bool left = distX > 0;
-			float distY = npc.Center.Y - (player.Center.Y - 112);
+			float distY = NPC.Center.Y - (player.Center.Y - 112);
 			Vector2 toPlayer = new Vector2(-distX, -distY);
 			float length = toPlayer.Length() + 0.1f;
-			Vector2 checkPos = npc.Center;
+			Vector2 checkPos = NPC.Center;
 			if(length >= 1.1f)
 			{
 				int valid = 0;
@@ -111,24 +111,24 @@ namespace SOTS.NPCs
 					autoOverride += 4;
 					checkPos += toPlayer;
 
-					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, npc.alpha, default, 1f);
+					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, NPC.alpha, default, 1f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 0.1f;
 					Vector2 circularPosition = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + autoOverride * 2));
-					dust = Dust.NewDust(checkPos + circularPosition, 0, 0, DustID.Electric, 0, 0, npc.alpha, default, 1f);
+					dust = Dust.NewDust(checkPos + circularPosition, 0, 0, DustID.Electric, 0, 0, NPC.alpha, default, 1f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 0.1f;
 
-					npc.position = checkPos - new Vector2(npc.width / 2, npc.height / 2);
+					NPC.position = checkPos - new Vector2(NPC.width / 2, NPC.height / 2);
 					if (valid >= 5 || (w >= 30 * distance && !AirBelow((int)checkPos.X / 16, (int)checkPos.Y / 16 + 6, 6) && AirBelow((int)checkPos.X / 16, (int)checkPos.Y / 16 - 3, 5)))
 					{
 						break;
 					}
 				}
-				npc.velocity += new Vector2(toPlayer.X, toPlayer.Y * 0.5f);
+				NPC.velocity += new Vector2(toPlayer.X, toPlayer.Y * 0.5f);
 				for (int i = 0; i < 20; i++)
 				{
-					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, npc.alpha, default, 1.25f);
+					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, NPC.alpha, default, 1.25f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 1.5f;
 				}
@@ -136,14 +136,14 @@ namespace SOTS.NPCs
 		}
 		public void WarpToLocation(Vector2 to)
 		{
-			Player player = Main.player[npc.target];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			float distX = npc.Center.X - to.X;
+			Player player = Main.player[NPC.target];
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			float distX = NPC.Center.X - to.X;
 			bool left = distX > 0;
-			float distY = npc.Center.Y - to.Y;
+			float distY = NPC.Center.Y - to.Y;
 			Vector2 toPlayer = new Vector2(-distX, -distY);
 			float length = toPlayer.Length() + 0.1f;
-			Vector2 checkPos = npc.Center;
+			Vector2 checkPos = NPC.Center;
 			if (length >= 1.1f)
 			{
 				int valid = 0;
@@ -156,20 +156,20 @@ namespace SOTS.NPCs
 					autoOverride += 4;
 					checkPos += toPlayer;
 
-					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, npc.alpha, default, 1f);
+					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, NPC.alpha, default, 1f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 0.1f;
 					Vector2 circularPosition = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + autoOverride * 2));
-					dust = Dust.NewDust(checkPos + circularPosition, 0, 0, DustID.Electric, 0, 0, npc.alpha, default, 1f);
+					dust = Dust.NewDust(checkPos + circularPosition, 0, 0, DustID.Electric, 0, 0, NPC.alpha, default, 1f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 0.1f;
 
-					npc.position = checkPos - new Vector2(npc.width / 2, npc.height / 2);
+					NPC.position = checkPos - new Vector2(NPC.width / 2, NPC.height / 2);
 				}
-				npc.velocity += new Vector2(toPlayer.X, toPlayer.Y * 0.5f);
+				NPC.velocity += new Vector2(toPlayer.X, toPlayer.Y * 0.5f);
 				for (int i = 0; i < 20; i++)
 				{
-					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, npc.alpha, default, 1.25f);
+					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, NPC.alpha, default, 1.25f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 1.5f;
 				}
@@ -178,17 +178,17 @@ namespace SOTS.NPCs
 		int justWarped = 0;
 		public override void AI()
 		{
-			npc.TargetClosest(true);
-			Player player = Main.player[npc.target];
+			NPC.TargetClosest(true);
+			Player player = Main.player[NPC.target];
 			if (!player.dead)
 			{
-				npc.timeLeft = 300;
+				NPC.timeLeft = 300;
 			}
-			int i = (int)npc.Center.X / 16;
-			int j = (int)npc.Center.Y / 16;
-			if(AirBelow(i, j, 36) && npc.velocity.Y != 0f && justWarped <= 0 && npc.Center.Y > player.Center.Y)
+			int i = (int)NPC.Center.X / 16;
+			int j = (int)NPC.Center.Y / 16;
+			if(AirBelow(i, j, 36) && NPC.velocity.Y != 0f && justWarped <= 0 && NPC.Center.Y > player.Center.Y)
 			{
-				int direction = npc.velocity.X > 0f ? 1 : npc.velocity.X < 0f ? -1 : 0;
+				int direction = NPC.velocity.X > 0f ? 1 : NPC.velocity.X < 0f ? -1 : 0;
 				Vector2? travelTo = findSolidGround(80, 40, direction);
 				if(travelTo != null)
 				{
@@ -196,9 +196,9 @@ namespace SOTS.NPCs
 					justWarped = 60;
 					if(Main.netMode != 1)
 					{
-						npc.netUpdate = true;
+						NPC.netUpdate = true;
 					}
-					SoundEngine.PlaySound(SoundID.Item8, npc.Center);
+					SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
 				}
 				if(direction == 0)
 				{
@@ -206,9 +206,9 @@ namespace SOTS.NPCs
 					justWarped = 60;
 					if (Main.netMode != 1)
 					{
-						npc.netUpdate = true;
+						NPC.netUpdate = true;
 					}
-					SoundEngine.PlaySound(SoundID.Item8, npc.Center);
+					SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
 				}
 			}
 			justWarped--;
@@ -218,13 +218,13 @@ namespace SOTS.NPCs
 				justWarped = 120;
 				if (Main.netMode != 1)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
-				SoundEngine.PlaySound(SoundID.Item8, npc.Center);
+				SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
 			}
-			npc.velocity.Y *= 0.96f;
+			NPC.velocity.Y *= 0.96f;
 
-			npc.ai[0]++; //speed up jumping speed
+			NPC.ai[0]++; //speed up jumping speed
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -243,9 +243,9 @@ namespace SOTS.NPCs
 				float y = Main.rand.Next(-10, 11) * 0.075f;
 
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 2), new Rectangle(0, NPC.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f) * 0.5f, 0f, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f) * 0.5f, 0f, drawOrigin2, NPC.scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
@@ -255,10 +255,10 @@ namespace SOTS.NPCs
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life > 0)
+			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 70.0)
+				while ((double)num < damage / (double)NPC.lifeMax * 70.0)
 				{
 					float scale = 1f;
 					int type = DustID.Electric;
@@ -267,7 +267,7 @@ namespace SOTS.NPCs
 						type = ModContent.DustType<Dusts.CodeDust2>();
 						scale = 2f;
 					}
-					Dust.NewDust(npc.position, npc.width, npc.height, type, (float)(2 * hitDirection), -2f, 0, default, 0.65f * scale);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, (float)(2 * hitDirection), -2f, 0, default, 0.65f * scale);
 					num++;
 				}
 			}
@@ -282,15 +282,15 @@ namespace SOTS.NPCs
 						type = ModContent.DustType<Dusts.CodeDust2>();
 						scale = 2f;
 					}
-					Dust.NewDust(npc.position, npc.width, npc.height, type, (float)(2 * hitDirection), -2f, 0, default, scale);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, (float)(2 * hitDirection), -2f, 0, default, scale);
 				}
 			}
 		}
 		public override void NPCLoot()
 		{
-			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightShard>(), 1);
+			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightShard>(), 1);
 
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
 		}
 	}
 }

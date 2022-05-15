@@ -21,11 +21,11 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             int width = 64;
             hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 32;
             height = 32;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void OnLaunch(Player player)
         {
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         {
             Projectile.Size = new Vector2(50, 68);
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.localNPCHitCooldown = 15;
             Projectile.usesLocalNPCImmunity = true;
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         {
             if (Projectile.localAI[0] == 0)
             {
-                SOTS.primitives.CreateTrail(new NorthStarTrail(projectile));
+                SOTS.primitives.CreateTrail(new NorthStarTrail(Projectile));
             }
             if (Projectile.localAI[0] % 18 == 0 && summonedNum < 8) //prevent spawning more in multiplayer with Main.myPlayer == Projectile.owner
             {
@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         public override void SetDefaults()
         {
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.Size = new Vector2(20, 20);
             Projectile.tileCollide = false;
             Projectile.timeLeft = 180;

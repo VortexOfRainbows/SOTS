@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Pyramid
             Projectile.hostile = false; 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true; 
-            Projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
 			Projectile.extraUpdates = 1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;

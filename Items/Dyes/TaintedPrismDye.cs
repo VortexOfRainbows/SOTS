@@ -102,12 +102,7 @@ namespace SOTS.Items.Dyes
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 1);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddTile(TileID.DyeVat);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 1).AddIngredient(ItemID.BottledWater, 1).AddTile(TileID.DyeVat).Register();
 		}
 	}
 }

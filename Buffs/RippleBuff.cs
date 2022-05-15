@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class RippleBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ripple");
 			Description.SetDefault("Release waves of damage periodically");   
@@ -15,7 +15,7 @@ namespace SOTS.Buffs
         }
 		public override void Update(Player player, ref int buffIndex)
         {
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             modPlayer.rippleBonusDamage += 2;
             modPlayer.rippleEffect = true;
             modPlayer.rippleTimer++;

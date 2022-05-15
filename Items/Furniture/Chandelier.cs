@@ -59,15 +59,15 @@ namespace SOTS.Items.Furniture
                     {
                         Main.tile[m, n] = new Tile();
                     }
-                    if (Main.tile[m, n].HasTile && Main.tile[m, n].type == Type)
+                    if (Main.tile[m, n].HasTile && Main.tile[m, n].TileType == Type)
                     {
-                        if (Main.tile[m, n].frameX < 54)
+                        if (Main.tile[m, n].TileFrameX < 54)
                         {
-                            Main.tile[m, n].frameX += 54;
+                            Main.tile[m, n].TileFrameX += 54;
                         }
                         else
                         {
-                            Main.tile[m, n].frameX -= 54;
+                            Main.tile[m, n].TileFrameX -= 54;
                         }
                     }
                 }

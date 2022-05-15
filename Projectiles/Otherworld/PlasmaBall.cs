@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 3000;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
             Projectile.alpha = 0;
         }
         public override bool PreDrawExtras(SpriteBatch spriteBatch)
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Otherworld
                     NPC npc = Main.npc[npcIndex];
                     if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
                     {
-                        Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("PlasmaLightningZap"), (int)(Projectile.damage * 0.7f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, 3);
+                        Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("PlasmaLightningZap").Type, (int)(Projectile.damage * 0.7f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, 3);
                     }
                 }
             }

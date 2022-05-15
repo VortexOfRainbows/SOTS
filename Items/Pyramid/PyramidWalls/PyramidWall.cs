@@ -17,17 +17,8 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PyramidSlab>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PyramidWall>(), 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<PyramidSlab>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<PyramidSlab>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PyramidWall>(), 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<PyramidSlab>());
 		}
 	}
 	public class UnsafePyramidWall : ModItem
@@ -48,7 +39,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	}
 	public class PyramidWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			Main.wallLargeFrames[Type] = (byte)1;
@@ -64,7 +55,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			texture = "SOTS/Items/Pyramid/PyramidWalls/PyramidWallWall";
 			return base.Autoload(ref name, ref texture);
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallLargeFrames[Type] = (byte)1;
 			Main.wallHouse[Type] = false;

@@ -43,13 +43,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingNature>(), 1);
-			recipe.AddRecipeGroup("SOTS:SilverBar", 12);
-			recipe.AddIngredient(ItemID.JungleSpores, 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Fragments.DissolvingNature>(), 1).AddRecipeGroup("SOTS:SilverBar", 12).AddIngredient(ItemID.JungleSpores, 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Tide
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(616);
-            aiType = 616;
+            AIType = 616;
 			Projectile.alpha = 255;
 			Projectile.timeLeft = 240;
 			Projectile.width = 4;
@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Tide
 		public override void AI()
 		{
 			if (Projectile.penetrate != 5)
-				aiType = 0;
+				AIType = 0;
 			Projectile.velocity.Y += 0.09f;
 			Projectile.alpha = 255;
 			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 212);

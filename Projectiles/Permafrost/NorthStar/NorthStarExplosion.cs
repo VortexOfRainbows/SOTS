@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
 			Projectile.alpha = 255;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 10;
             Projectile.usesLocalNPCImmunity = true;
         }

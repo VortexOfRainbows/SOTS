@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.height = 10;
 			Projectile.width = 18;
 			Projectile.penetrate = -1;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.usesIDStaticNPCImmunity = true;

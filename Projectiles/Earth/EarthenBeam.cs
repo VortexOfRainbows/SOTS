@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Earth
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Projectile.netUpdate = true;
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("EarthenRing"), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("EarthenRing").Type, Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 	}

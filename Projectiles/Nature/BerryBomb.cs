@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles.Nature
 {    
@@ -21,11 +22,11 @@ namespace SOTS.Projectiles.Nature
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(48);
-            aiType = 48; 
-			Projectile.thrown = false;
-			Projectile.magic = false;
-			Projectile.melee = false;
-			Projectile.ranged = true;
+            AIType = 48; 
+			// Projectile.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			// Projectile.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.width = 22;
 			Projectile.height = 26;
 			Projectile.penetrate = 1;
@@ -33,7 +34,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 		}
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 14;
 			height = 14;
@@ -63,7 +64,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				for(int i = 0; i < 3; i++)
 				{ 
-					Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SlimeGun, 0, Projectile.owner);
+					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SlimeGun, 0, Projectile.owner);
 					proj.timeLeft = Main.rand.Next(12, 24);
 				}
 			}

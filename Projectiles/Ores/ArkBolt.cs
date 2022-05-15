@@ -17,9 +17,9 @@ namespace SOTS.Projectiles.Ores
 			Projectile.aiStyle = 1;
 			Projectile.width = 12;
 			Projectile.height = 12;
-            Projectile.magic = true;
+            Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = 1;
-			Projectile.ranged = false;
+			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.alpha = 0; 
 			Projectile.friendly = true;
 		}
@@ -110,8 +110,8 @@ namespace SOTS.Projectiles.Ores
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[Projectile.owner];
-			int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), (int)(Projectile.damage * 1.5f) + 1, 0, Projectile.owner, area.X, area.Y);
-			Main.projectile[Probe].magic = true;
+			int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("BrightRedLaser").Type, (int)(Projectile.damage * 1.5f) + 1, 0, Projectile.owner, area.X, area.Y);
+			Main.projectile[Probe].DamageType = DamageClass.Magic;
 			Main.projectile[Probe].minion = false;
 		}
 	}

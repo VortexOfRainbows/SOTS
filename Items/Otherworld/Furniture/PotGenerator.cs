@@ -79,13 +79,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemType<DissolvingAether>(), 1);
-			recipe.AddIngredient(ItemType<TwilightShard>(), 5);
-			recipe.AddIngredient(ItemType<TwilightGel>(), 30);
-			recipe.AddTile(TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemType<DissolvingAether>(), 1).AddIngredient(ItemType<TwilightShard>(), 5).AddIngredient(ItemType<TwilightGel>(), 30).AddTile(TileType<HardlightFabricatorTile>()).Register();
 		}
 	}	
 	public class PotGeneratorTile : ModTile
@@ -112,7 +106,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
@@ -163,7 +157,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				player.cursorItemIconID = 0;
 			}
 		}
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
 			Main.mouseRightRelease = true;
 			Player player = Main.LocalPlayer;
@@ -282,7 +276,7 @@ namespace SOTS.Items.Otherworld.Furniture
             {
 				for (int i = 0; i < 3600; i++)
 				{
-					if (WorldGen.InWorld(whereX, Position.Y + i, 10) && Main.tile[whereX, Position.Y + i].HasTile && Main.tile[whereX + 1, Position.Y + i].HasTile && Main.tile[whereX, Position.Y + i].type == TileType<PotGeneratorTile>() && Main.tile[whereX + 1, Position.Y + i].type == TileType<PotGeneratorTile>())
+					if (WorldGen.InWorld(whereX, Position.Y + i, 10) && Main.tile[whereX, Position.Y + i].HasTile && Main.tile[whereX + 1, Position.Y + i].HasTile && Main.tile[whereX, Position.Y + i].TileType == TileType<PotGeneratorTile>() && Main.tile[whereX + 1, Position.Y + i].TileType == TileType<PotGeneratorTile>())
 					{
 						amt++;
 					}
@@ -375,7 +369,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool ValidTile(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.active() && tile.TileType == (ushort)ModContent.TileType<PotGeneratorTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
+			return tile.HasTile && tile.TileType == (ushort)ModContent.TileType<PotGeneratorTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
 		}
 
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)

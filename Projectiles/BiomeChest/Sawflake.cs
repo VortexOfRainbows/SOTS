@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.width = 50;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 144;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
@@ -52,11 +52,11 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.tileCollide = false;
             return false;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 32;
 			height = 32;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

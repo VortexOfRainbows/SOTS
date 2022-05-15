@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.width = 16;
 			Projectile.height = 20;
 			Projectile.timeLeft = 120;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Otherworld
 						if(npc.immune[Projectile.owner] <= 0)
 						{
 							if (Projectile.owner == Main.myPlayer)
-								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("DoubleLaserExplosion"), Projectile.damage, Projectile.knockBack, Projectile.owner);
+								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, Mod.Find<ModProjectile>("DoubleLaserExplosion").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
 						}
 					}
 					previousDistance = Distance;

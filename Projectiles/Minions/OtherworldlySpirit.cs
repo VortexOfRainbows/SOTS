@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Minions
 		public override void AI() 
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			#region Active check
 			if (player.dead || !player.active) 
 			{
@@ -164,7 +164,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}

@@ -31,19 +31,14 @@ namespace SOTS.Items.ChestItems
 					critbonus++;
 				}
 			}
-			player.meleeCrit += (int)(critbonus * 0.25f);
-			player.rangedCrit += (int)(critbonus * 0.25f);
-			player.magicCrit += (int)(critbonus * 0.25f);
-			player.thrownCrit += (int)(critbonus * 0.25f);
+			player.GetCritChance(DamageClass.Melee) += (int)(critbonus * 0.25f);
+			player.GetCritChance(DamageClass.Ranged) += (int)(critbonus * 0.25f);
+			player.GetCritChance(DamageClass.Magic) += (int)(critbonus * 0.25f);
+			player.GetCritChance(DamageClass.Throwing) += (int)(critbonus * 0.25f);
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "DissolvingAurora", 1);
-			recipe.AddIngredient(ItemID.PlatinumBar, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "DissolvingAurora", 1).AddIngredient(ItemID.PlatinumBar, 20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

@@ -53,7 +53,7 @@ namespace SOTS.Items.Otherworld
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (ModContent.ProjectileType<SoulofRetaliation>() == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)
+				if (ModContent.ProjectileType<SoulofRetaliation>() == proj.type && proj.active && proj.owner == Player.whoAmI && proj.timeLeft > 748)
 				{
 					currentSouls++;
 				}
@@ -79,11 +79,11 @@ namespace SOTS.Items.Otherworld
 		}
 		public void SpawnSouls()
 		{
-			if (attackNum < 10 && player.whoAmI == Main.myPlayer && spawnSouls && RetaliationSouls)
+			if (attackNum < 10 && Player.whoAmI == Main.myPlayer && spawnSouls && RetaliationSouls)
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, player.whoAmI);
+					Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, Player.whoAmI);
 				}
 			}
 		}

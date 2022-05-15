@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.tileCollide = false;
 			Projectile.hide = true;
 			Projectile.ownerHitCheck = true;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 		}
 	}
 }

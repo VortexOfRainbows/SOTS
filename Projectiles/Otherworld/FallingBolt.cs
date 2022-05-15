@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Otherworld
 			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
 			if (Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("AvaritianExplosion"), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("AvaritianExplosion").Type, Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override void AI()

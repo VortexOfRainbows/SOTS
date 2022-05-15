@@ -30,12 +30,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.ShoeSpikes, 1); 
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.ShoeSpikes, 1).AddIngredient(null, "FragmentOfPermafrost", 4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

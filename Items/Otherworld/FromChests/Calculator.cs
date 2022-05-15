@@ -23,12 +23,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "PrecariousCluster", 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 10);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "PrecariousCluster", 1).AddIngredient(null, "HardlightAlloy", 10).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
 		}
         public override void UpdateVanity(Player player, EquipType type)
 		{

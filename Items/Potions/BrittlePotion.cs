@@ -18,7 +18,7 @@ namespace SOTS.Items.Potions
             Item.value = Item.sellPrice(0, 0, 2, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.maxStack = 30;
-            Item.buffType = mod.BuffType("Brittle");   
+            Item.buffType = Mod.Find<ModBuff>("Brittle").Type;   
             Item.buffTime = 3600 * 4 + 300;  
             Item.UseSound = SoundID.Item3;            
             Item.useStyle = ItemUseStyleID.EatFood;      
@@ -29,13 +29,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 1);
-			recipe.AddIngredient(ItemID.Shiverthorn, 1);
-			recipe.AddTile(13);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(null, "FragmentOfPermafrost", 1).AddIngredient(ItemID.Shiverthorn, 1).AddTile(13).Register();
 		}
 	}
 }

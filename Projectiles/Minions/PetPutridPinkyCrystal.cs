@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Minions
 		public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
-			player.hornet = false; // Relic from aiType
+			player.hornet = false; // Relic from AIType
 			if (Main.myPlayer != Projectile.owner)
 				Projectile.timeLeft = 20;
 			for(int i = 0; i < Main.projectile.Length; i++)
@@ -105,7 +105,7 @@ namespace SOTS.Projectiles.Minions
 				for (int i = 0; i < hooks.Length; i++)
 				{
 					Projectile hook = Main.projectile[hooks[i]];
-					FluxSlimeBall slimeBall = hook.modProjectile as FluxSlimeBall;
+					FluxSlimeBall slimeBall = hook.ModProjectile as FluxSlimeBall;
 					if (hook.ai[0] == (int)Projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>())
 					{
 						if (slimeBall != null)
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Minions
 				for (int i = 0; i < hooks.Length; i++)
 				{
 					Projectile hook = Main.projectile[hooks[i]];
-					FluxSlimeBall slimeBall = hook.modProjectile as FluxSlimeBall;
+					FluxSlimeBall slimeBall = hook.ModProjectile as FluxSlimeBall;
 					if ((int)hook.ai[0] == Projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>() && (hook.Center - Projectile.Center).Length() < 48)
 					{
 						if (slimeBall != null)
@@ -156,7 +156,7 @@ namespace SOTS.Projectiles.Minions
 				if(decidedHook != -1)
 				{
 					Projectile hook = Main.projectile[hooks[decidedHook]];
-					FluxSlimeBall slimeBall = hook.modProjectile as FluxSlimeBall;
+					FluxSlimeBall slimeBall = hook.ModProjectile as FluxSlimeBall;
 					if(slimeBall != null)
                     {
 						if(slimeBall.targetID == -1)

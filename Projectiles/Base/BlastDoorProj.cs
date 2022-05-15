@@ -29,9 +29,9 @@ namespace SOTS.Projectiles.Base
 		public override void Kill(int timeLeft)
 		{
 			if(Projectile.ai[0] == 1)
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorClose"), 1f, 0.0f);
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorClose"), 1f, 0.0f);
 			else
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorOpen"), 1f, 0.0f);
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorOpen"), 1f, 0.0f);
 		}
 	}
 }

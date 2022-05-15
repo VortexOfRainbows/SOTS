@@ -45,7 +45,7 @@ namespace SOTS.Items.Pyramid
 	}
 	public class CursedAppleTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -62,7 +62,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, mod.ItemType("CursedApple"));//this defines what to drop when this tile is destroyed
+			Item.NewItem(i * 16, j * 16, 32, 32, Mod.Find<ModItem>("CursedApple").Type);//this defines what to drop when this tile is destroyed
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.timeLeft = 720;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = 1;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

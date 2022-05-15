@@ -24,20 +24,14 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNatureBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingNatureBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingNatureBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingNatureBlock>());
 		}
 	}
 	public class NatureWallWall : ModWall
 	{
 		public Color color = new Color(45, 130, 60);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<NatureWall>();
@@ -66,20 +60,14 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingEarthBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingEarthBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingEarthBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingEarthBlock>());
 		}
 	}
 	public class EarthWallWall : ModWall
 	{
 		public Color color = new Color(190, 145, 0);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<EarthWall>();
@@ -108,20 +96,14 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingDelugeBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingDelugeBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingDelugeBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingDelugeBlock>());
 		}
 	}
 	public class DelugeWallWall : ModWall
 	{
 		public Color color = new Color(50, 55, 135);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<DelugeWall>();
@@ -150,20 +132,14 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAetherBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingAetherBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingAetherBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingAetherBlock>());
 		}
 	}
 	public class AetherWallWall : ModWall
 	{
 		public Color color = new Color(130, 25, 180);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<AetherWall>();
@@ -192,20 +168,14 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAuroraBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingAuroraBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingAuroraBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingAuroraBlock>());
 		}
 	}
 	public class AuroraWallWall : ModWall
 	{
 		public Color color = new Color(35, 70, 85);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<AuroraWall>();
@@ -229,7 +199,7 @@ namespace SOTS.Items.Fragments
 	public class UmbraWallWall : ModWall
 	{
 		public Color color = new Color(190, 25, 0);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<UmbraWall>();
@@ -258,20 +228,14 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbraBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingUmbraBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingUmbraBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingUmbraBlock>());
 		}
 	}
 	public class NetherWallWall : ModWall
 	{
 		public Color color = new Color(155, 50, 9);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<UmbraWall>();
@@ -300,14 +264,8 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNetherBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingNetherBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingNetherBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingNetherBlock>());
 		}
 	}
 	public class BrillianceWall : ElementalWall
@@ -318,20 +276,14 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingBrillianceBlock>(), 1);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.SetResult(ModContent.ItemType<DissolvingBrillianceBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingBrillianceBlock>(), 1).Register();
+			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingBrillianceBlock>());
 		}
 	}
 	public class BrillianceWallWall : ModWall
 	{
 		public Color color = new Color(231, 95, 203);
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			drop = ModContent.ItemType<BrillianceWall>();

@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Minions
 		public override void AI()
         {
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Projectile.timeLeft > 100)
 			{
 				Projectile.timeLeft = 300;
@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Minions
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[Projectile.owner];
-			int laser = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), Projectile.damage, 0, Projectile.owner, area.X, area.Y);
+			int laser = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("BrightRedLaser").Type, Projectile.damage, 0, Projectile.owner, area.X, area.Y);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

@@ -167,11 +167,11 @@ namespace SOTS.Projectiles.Laser
 							shootToY2 *= distance2 * 5f;
 							if (orbs.Length != 1)
 							{
-								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("SmallCollapseLaser"), (int)(Projectile.damage), 1f, Projectile.owner, Projectile.ai[1], ai2); //second ai slot is scale
+								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, Mod.Find<ModProjectile>("SmallCollapseLaser").Type, (int)(Projectile.damage), 1f, Projectile.owner, Projectile.ai[1], ai2); //second ai slot is scale
 							}
 							else
 							{
-								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("CollapseLaser"), Projectile.damage * 3, 1f, Projectile.owner, Projectile.ai[1], 0f);
+								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, Mod.Find<ModProjectile>("CollapseLaser").Type, Projectile.damage * 3, 1f, Projectile.owner, Projectile.ai[1], 0f);
 							}
 						}
 					}

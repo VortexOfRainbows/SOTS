@@ -38,8 +38,8 @@ namespace SOTS.Projectiles
 			Projectile.timeLeft = 3600;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			Projectile.magic = false;
-			Projectile.melee = true;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 140;
 			Projectile.ai[1] = -1;
 		}
@@ -49,7 +49,7 @@ namespace SOTS.Projectiles
 			if(Projectile.ai[1] != -1)
 			{
 				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
-				if(proj.active && proj.type == mod.ProjectileType("Zeppelin") && proj.owner == Projectile.owner)
+				if(proj.active && proj.type == Mod.Find<ModProjectile>("Zeppelin") .Type&& proj.owner == Projectile.owner)
 				{
 					Projectile.position.X = proj.Center.X - Projectile.width/2;
 					Projectile.position.Y = proj.Center.Y - Projectile.height/2;

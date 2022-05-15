@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Minions
 					Projectile proj = Main.projectile[i];
 					if(Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 					{
-						if(proj == projectile)
+						if(proj == Projectile)
 						{
 							found = true;
 						}

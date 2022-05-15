@@ -142,11 +142,11 @@ namespace SOTS
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
 				Filters.Scene["VMFilter"] = new Filter(new ScreenShaderData(voidMageShader, "VMShaderPass"), EffectPriority.VeryHigh);
 				Filters.Scene["VMFilter"].Load();
-				AtenTrail = Instance.GetEffect("Effects/AtenTrail");
-				WaterTrail = Instance.GetEffect("Effects/WaterTrail");
-				FireballShader = Instance.GetEffect("Effects/FireballShader");
-				GodrayShader = Instance.GetEffect("Effects/GodrayShader");
-				VisionShader = Instance.GetEffect("Effects/VisionShader");
+				AtenTrail = Instance.Assets.Request<Effect>("Effects/AtenTrail").Value;
+				WaterTrail = Instance.Assets.Request<Effect>("Effects/WaterTrail").Value;
+				FireballShader = Instance.Assets.Request<Effect>("Effects/FireballShader").Value;
+				GodrayShader = Instance.Assets.Request<Effect>("Effects/GodrayShader").Value;
+				VisionShader = Instance.Assets.Request<Effect>("Effects/VisionShader").Value;
 				primitives = new PrimTrailManager();
 				primitives.LoadContent(Main.graphics.GraphicsDevice);
 			}
@@ -463,55 +463,9 @@ namespace SOTS
 		}
 		public override void AddRecipes()
 		{
-			TransmutationAltar.AddTransmutationRecipes(this);
-
-			Recipe recipe = new Recipe(this);
-			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 30);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.SlimeStaff, 1);
-			recipe.AddRecipe();
-			
-			/*just in case temple gets cucked
-			recipe = new Recipe(this);
-			recipe.AddIngredient(ItemID.TempleKey, 2);
-			recipe.AddIngredient(ItemID.LihzahrdPowerCell, 1); //power cell
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.LihzahrdAltar, 1); //altar
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(this);
-			recipe.AddIngredient(ItemID.TempleKey, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.LihzahrdPowerCell, 2); //power cell
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(this);
-			recipe.AddIngredient(ItemID.LihzahrdBrick, 30); //lizahrd brick
-			recipe.AddIngredient(ItemID.FallenStar, 5); //lizahrd brick
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.LihzahrdPowerCell, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(this);
-			recipe.AddIngredient(ItemID.TempleKey, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.LihzahrdBrick, 75);
-			recipe.AddRecipe(); */
-
-			recipe = new Recipe(this);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25);
-			recipe.AddIngredient(ItemID.HermesBoots, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.FlowerBoots, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(this);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 10);
-			recipe.AddIngredient(ItemID.WaterWalkingPotion, 5);
-			recipe.AddIngredient(ItemID.HermesBoots, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.WaterWalkingBoots, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 30).AddTile(TileID.Anvils).ReplaceResult(ItemID.SlimeStaff);
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.FlowerBoots);
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 10).AddIngredient(ItemID.WaterWalkingPotion, 5).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.WaterWalkingBoots);
 		}
 		public override void AddRecipeGroups()
 		{
@@ -863,15 +817,15 @@ namespace SOTS
 		}
 		public static Similarity GetSimilarity(Tile check, int myType, int mergeType)
 		{
-			if (check == null || !check.active())
+			if (check == null || !check.HasTile)
 			{
 				return Similarity.None;
 			}
-			if (check.type == myType || Main.tileMerge[myType][check.type])
+			if (check.TileType == myType || Main.tileMerge[myType][check.TileType])
 			{
 				return Similarity.Same;
 			}
-			if (check.type == mergeType)
+			if (check.TileType == mergeType)
 			{
 				return Similarity.Merge;
 			}
@@ -1469,29 +1423,29 @@ namespace SOTS
 				bool mergedUp;
 				bool mergedLeft;
 				bool mergedRight;
-				if (north != null && north.active() && tileMergeTypes[myType][north.type])
+				if (north != null && north.HasTile && tileMergeTypes[myType][north.TileType])
 				{
-					MergeWith(myType, north.type, merge: false);
+					MergeWith(myType, north.TileType, merge: false);
 					TileID.Sets.ChecksForMerge[myType] = true;
-					MergeWithFrameExplicit(x, y - 1, north.type, myType, out mergedUp, out mergedLeft, out mergedRight, out forceSameUp, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
+					MergeWithFrameExplicit(x, y - 1, north.TileType, myType, out mergedUp, out mergedLeft, out mergedRight, out forceSameUp, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
 				}
-				if (west != null && west.active() && tileMergeTypes[myType][west.type])
+				if (west != null && west.HasTile && tileMergeTypes[myType][west.TileType])
 				{
-					MergeWith(myType, west.type, merge: false);
+					MergeWith(myType, west.TileType, merge: false);
 					TileID.Sets.ChecksForMerge[myType] = true;
-					MergeWithFrameExplicit(x - 1, y, west.type, myType, out mergedRight, out mergedLeft, out forceSameLeft, out mergedUp, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
+					MergeWithFrameExplicit(x - 1, y, west.TileType, myType, out mergedRight, out mergedLeft, out forceSameLeft, out mergedUp, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
 				}
-				if (east != null && east.active() && tileMergeTypes[myType][east.type])
+				if (east != null && east.HasTile && tileMergeTypes[myType][east.TileType])
 				{
-					MergeWith(myType, east.type, merge: false);
+					MergeWith(myType, east.TileType, merge: false);
 					TileID.Sets.ChecksForMerge[myType] = true;
-					MergeWithFrameExplicit(x + 1, y, east.type, myType, out mergedUp, out forceSameRight, out mergedLeft, out mergedRight, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
+					MergeWithFrameExplicit(x + 1, y, east.TileType, myType, out mergedUp, out forceSameRight, out mergedLeft, out mergedRight, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
 				}
-				if (south != null && south.active() && tileMergeTypes[myType][south.type])
+				if (south != null && south.HasTile && tileMergeTypes[myType][south.TileType])
 				{
-					MergeWith(myType, south.type, merge: false);
+					MergeWith(myType, south.TileType, merge: false);
 					TileID.Sets.ChecksForMerge[myType] = true;
-					MergeWithFrameExplicit(x, y + 1, south.type, myType, out forceSameDown, out mergedRight, out mergedLeft, out mergedUp, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
+					MergeWithFrameExplicit(x, y + 1, south.TileType, myType, out forceSameDown, out mergedRight, out mergedLeft, out mergedUp, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame: false);
 				}
 				MergeWithFrameExplicit(x, y, myType, mergeType, out mergedUp, out mergedLeft, out mergedRight, out var _, forceSameDown, forceSameUp, forceSameLeft, forceSameRight);
 			}

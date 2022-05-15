@@ -28,7 +28,7 @@ namespace SOTS.Items.Earth
 	}	
 	public class BigCrystalTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;

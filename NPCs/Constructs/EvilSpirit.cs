@@ -21,8 +21,8 @@ namespace SOTS.NPCs.Constructs
 		{
 			Main.npcFrameCount[NPC.type] = 1;
 			DisplayName.SetDefault("Evil Spirit");
-			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -43,16 +43,16 @@ namespace SOTS.NPCs.Constructs
             NPC.knockBackResist = 0f;
             NPC.width = 70;
             NPC.height = 70;
-            npc.value = Item.buyPrice(0, 10, 0, 0);
-            npc.npcSlots = 7f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = false;
-			npc.rarity = 2;
+            NPC.value = Item.buyPrice(0, 10, 0, 0);
+            NPC.npcSlots = 7f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = false;
+			NPC.rarity = 2;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -70,17 +70,17 @@ namespace SOTS.NPCs.Constructs
 		float lastDistMult = 1f;
 		public void UpdateEyes(bool draw = false, int ring = -2, float distMult = 1f)
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			lastDistMult = distMult;
 			for (int i = 0; i < eyes.Count; i++)
             {
 				EvilEye eye = eyes[i];
 				float mult = 256f / (eye.offset.Length() + 24);
 				int direction = (((int)(eye.offset.Length() + 0.5f) % (2 * range)) / range) % 2 == 0 ? -1 : 1;
-				float rotation = (npc.rotation + MathHelper.ToRadians(counter2 * direction)) * mult;
+				float rotation = (NPC.rotation + MathHelper.ToRadians(counter2 * direction)) * mult;
 				if (draw)
 				{
-					eye.Draw(npc.Center, rotation, distMult);
+					eye.Draw(NPC.Center, rotation, distMult);
 				}
 				else
 				{
@@ -89,35 +89,35 @@ namespace SOTS.NPCs.Constructs
 					{
 						eye.Fire(player.Center);
                     }
-					eye.Update(npc.Center, rotation, distMult);
+					eye.Update(NPC.Center, rotation, distMult);
 				}
             }
         }
 		public override void AI()
 		{
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.15f / 255f, (255 - npc.alpha) * 0.25f / 255f, (255 - npc.alpha) * 0.65f / 255f);
-			Player player = Main.player[npc.target];
-			float mult = (100 + npc.ai[2]) / 100f;
+			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);
+			Player player = Main.player[NPC.target];
+			float mult = (100 + NPC.ai[2]) / 100f;
 			UpdateEyes(false, -2, mult);
 			counter2++;
 			if (phase == 3)
 			{
 				NPC.aiStyle =-1;
-				npc.dontTakeDamage = false;
-				int damage = npc.damage / 2;
+				NPC.dontTakeDamage = false;
+				int damage = NPC.damage / 2;
 				if (Main.expertMode)
 				{
 					damage = (int)(damage / Main.expertDamage);
 				}
-				if (npc.ai[0] >= 0 && npc.ai[2] >= 0)
+				if (NPC.ai[0] >= 0 && NPC.ai[2] >= 0)
 				{
-					npc.velocity *= 0.95f;
-					int counterR = (int)(npc.ai[0]);
+					NPC.velocity *= 0.95f;
+					int counterR = (int)(NPC.ai[0]);
 					if(startEyes < 180)
 					{
 						if (startEyes % 6 == 0)
 						{
-							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 30, 0.7f, -0.4f);
+							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
 						}
 					}
 					if(startEyes < 120)
@@ -152,86 +152,86 @@ namespace SOTS.NPCs.Constructs
 							circular = new Vector2(-6 * range, 0).RotatedBy(MathHelper.ToRadians(startEyes * 4f));
 							eyes.Add(new EvilEye(circular, damage));
 						}
-						Vector2 toPlayer = player.Center - npc.Center;
+						Vector2 toPlayer = player.Center - NPC.Center;
 						float speed = 12 + toPlayer.Length() * 0.01f;
 						if (counterR % 180 == 120)
 						{
 							if (Main.netMode == NetmodeID.Server)
-								npc.netUpdate = true;
-							npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed;
+								NPC.netUpdate = true;
+							NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed;
 						}
 						if(counterR % 180 == 0)
 						{
-							npc.ai[1]++;
-							if (npc.ai[1] > 6)
+							NPC.ai[1]++;
+							if (NPC.ai[1] > 6)
 							{
-								npc.ai[1] = 0;
+								NPC.ai[1] = 0;
 							}
-							if (npc.ai[1] > 0)
+							if (NPC.ai[1] > 0)
                             {
-								int ring = (int)npc.ai[1];
+								int ring = (int)NPC.ai[1];
 								UpdateEyes(false, ring);
                             }
 						}
 						if (counterR % 180 == 40)
 						{
-							if(npc.ai[1] > 0)
+							if(NPC.ai[1] > 0)
 							{
-								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 46, 1.1f, -0.15f);
+								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 46, 1.1f, -0.15f);
 							}
-							if(npc.ai[1] >= 6)
+							if(NPC.ai[1] >= 6)
                             {
-								npc.ai[3] = 0;
-								npc.ai[2] = -1;
-								npc.ai[1] = 0;
-								npc.ai[0] = 0;
+								NPC.ai[3] = 0;
+								NPC.ai[2] = -1;
+								NPC.ai[1] = 0;
+								NPC.ai[0] = 0;
                             }
 						}
 						float sin = (float)Math.Sin(MathHelper.ToRadians(counterR * 2));
 						Vector2 additional = new Vector2(0, sin * 0.1f);
-						npc.velocity += additional;
-						npc.rotation += npc.velocity.X * 0.005f;
+						NPC.velocity += additional;
+						NPC.rotation += NPC.velocity.X * 0.005f;
 					}
 					if(startEyes < 180)
 						startEyes++;
-					npc.ai[0]++;
+					NPC.ai[0]++;
 				} 
-				else if(npc.ai[2] < 0)
+				else if(NPC.ai[2] < 0)
 				{
 					counter2++;
-					npc.velocity *= 0.9912f;
-					if (npc.ai[2] > -80 && npc.ai[3] < 3)
-						npc.ai[2] -= 0.5f;
+					NPC.velocity *= 0.9912f;
+					if (NPC.ai[2] > -80 && NPC.ai[3] < 3)
+						NPC.ai[2] -= 0.5f;
 					else
 					{
-						int counterR = (int)(npc.ai[0] - 120);
-						Vector2 toPlayer = player.Center - npc.Center;
+						int counterR = (int)(NPC.ai[0] - 120);
+						Vector2 toPlayer = player.Center - NPC.Center;
 						float speed = 11 + toPlayer.Length() * 0.0005f;
-						if(npc.ai[3] < 3)
+						if(NPC.ai[3] < 3)
 						{
-							npc.ai[0]++;
+							NPC.ai[0]++;
 							if (counterR % 150 == 30)
 							{
-								npc.velocity *= 0.1f;
-								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 105, 1.2f, -0.25f);
+								NPC.velocity *= 0.1f;
+								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 105, 1.2f, -0.25f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 8;
 									for (int i = 0; i < amt; i++)
 									{
-										Vector2 toPosition = player.Center - npc.Center;
+										Vector2 toPosition = player.Center - NPC.Center;
 										Vector2 velo = toPosition.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(i * 360f / amt));
-										Projectile.NewProjectile(npc.Center + velo * 24, velo * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.065f + Main.rand.NextFloat(0.02f));
+										Projectile.NewProjectile(NPC.Center + velo * 24, velo * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.065f + Main.rand.NextFloat(0.02f));
 										if (Main.rand.NextBool(3))
 										{
 											Vector2 secondVelo = velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45)));
-											Projectile.NewProjectile(npc.Center + secondVelo * 24, secondVelo * -0.2f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.1f + Main.rand.NextFloat(0.05f));
+											Projectile.NewProjectile(NPC.Center + secondVelo * 24, secondVelo * -0.2f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.1f + Main.rand.NextFloat(0.05f));
 										}
 									}
 								}
 								for (int i = 0; i < 60; i++)
 								{
-									Dust dust3 = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+									Dust dust3 = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 									dust3.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
 									dust3.noGravity = true;
 									dust3.fadeIn = 0.1f;
@@ -241,51 +241,51 @@ namespace SOTS.NPCs.Constructs
 							}
 							else if (counterR % 150 == 60)
 							{
-								npc.ai[3]++;
-								npc.velocity *= 0.5f;
-								npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed;
+								NPC.ai[3]++;
+								NPC.velocity *= 0.5f;
+								NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed;
 							}
 							else if (counterR % 30 == 0)
 							{
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									Vector2 toPosition = player.Center - npc.Center;
-									Projectile.NewProjectile(npc.Center, toPosition.SafeNormalize(Vector2.Zero) * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.05f);
+									Vector2 toPosition = player.Center - NPC.Center;
+									Projectile.NewProjectile(NPC.Center, toPosition.SafeNormalize(Vector2.Zero) * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.05f);
 								}
 							}
 							else
 							{
-								npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed * 0.04f;
+								NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed * 0.04f;
 							}
 						}
 						else
 						{
-							npc.velocity *= 0.99f;
-							npc.ai[2] += 0.5f;
-							npc.ai[1] = 0;
-							npc.ai[0] = 0;
+							NPC.velocity *= 0.99f;
+							NPC.ai[2] += 0.5f;
+							NPC.ai[1] = 0;
+							NPC.ai[0] = 0;
 						}
-						npc.rotation += npc.velocity.X * 0.01f;
+						NPC.rotation += NPC.velocity.X * 0.01f;
 					}
                 }
 			}
 			if (phase == 2)
 			{
 				if (Main.netMode != NetmodeID.MultiplayerClient)
-					npc.netUpdate = true;
-				npc.dontTakeDamage = false;
+					NPC.netUpdate = true;
+				NPC.dontTakeDamage = false;
 				NPC.aiStyle =-1;
-				npc.ai[0] = 0;
-				npc.ai[1] = 0;
-				npc.ai[2] = 0;
-				npc.ai[3] = 0;
+				NPC.ai[0] = 0;
+				NPC.ai[1] = 0;
+				NPC.ai[2] = 0;
+				NPC.ai[3] = 0;
 				phase = 3;
 			}
 			else if(phase == 1)
 			{
 				counter++;
 			}
-			if(Main.player[npc.target].dead)
+			if(Main.player[NPC.target].dead)
 			{
 				counter++;
 			}
@@ -297,14 +297,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				phase = 1;
 				NPC.aiStyle =-1;
-				npc.velocity.Y -= 0.014f;
-				npc.dontTakeDamage = true;
+				NPC.velocity.Y -= 0.014f;
+				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
 			dust.noGravity = true;
@@ -313,22 +313,22 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
-			for (int k = 0; k < npc.oldPos.Length; k++) {
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
-				Color color = npc.GetAlpha(Color.Black) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
+			for (int k = 0; k < NPC.oldPos.Length; k++) {
+				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = NPC.GetAlpha(Color.Black) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				for(int i = 0; i < 50; i ++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+					Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 					dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
@@ -339,7 +339,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					phase = 2;
 					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 				if(Main.netMode != NetmodeID.Server)
                 {
@@ -348,29 +348,29 @@ namespace SOTS.NPCs.Constructs
 						EvilEye eye = eyes[i];
 						float mult = 256f / (eye.offset.Length() + 24);
 						int direction = (((int)(eye.offset.Length() + 0.5f) % (2 * range)) / range) % 2 == 0 ? -1 : 1;
-						float rotation = (npc.rotation + MathHelper.ToRadians(counter2 * direction)) * mult;
-						eye.Update(npc.Center, rotation, lastDistMult, true);
+						float rotation = (NPC.rotation + MathHelper.ToRadians(counter2 * direction)) * mult;
+						eye.Update(NPC.Center, rotation, lastDistMult, true);
 					}
 				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = VoidPlayer.EvilColor * 1.3f;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
-				Main.spriteBatch.Draw(texture, npc.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, NPC.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			float mult = (100 + npc.ai[2]) / 100f;
+			float mult = (100 + NPC.ai[2]) / 100f;
 			if (Main.netMode != NetmodeID.Server) //pretty sure drawcode doesn't run in multiplayer anyways but may as well
 				UpdateEyes(true, -2, mult);
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingUmbra>(), 1);	
+			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingUmbra>(), 1);	
 		}	
 	}
 	public class EvilEye

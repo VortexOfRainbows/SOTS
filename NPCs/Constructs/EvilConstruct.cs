@@ -7,6 +7,8 @@ using SOTS.Items.Fragments;
 using SOTS.Projectiles.Evil;
 using SOTS.Void;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -53,13 +55,16 @@ namespace SOTS.NPCs.Constructs
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-			for (int i = 0; i < Main.projectile.Length; i++)
+			if(NPC.active)
 			{
-				Projectile proj = Main.projectile[i];
-				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == NPC.whoAmI)
+				for (int i = 0; i < Main.projectile.Length; i++)
 				{
-					Vector2 toNPC = NPC.Center - proj.Center;
-					Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16);
+					Projectile proj = Main.projectile[i];
+					if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == NPC.whoAmI)
+					{
+						Vector2 toNPC = NPC.Center - proj.Center;
+						Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16);
+					}
 				}
 			}
 			float dir = (float)Math.Atan2(aimTo.Y - NPC.Center.Y, aimTo.X - NPC.Center.X);
@@ -67,7 +72,7 @@ namespace SOTS.NPCs.Constructs
 			float rotation = dir + (NPC.spriteDirection - 1) * 0.5f * MathHelper.ToRadians(180);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), drawColor * ((255 - NPC.alpha) / 255f), rotation, drawOrigin, NPC.scale * 0.95f, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), drawColor * ((255 - NPC.alpha) / 255f), rotation, drawOrigin, NPC.scale * 0.95f, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
 		public void Draw(Vector2 to, bool gore = false)
@@ -152,7 +157,7 @@ namespace SOTS.NPCs.Constructs
 					}
 					else if(!Main.rand.NextBool(3))
 					{
-						Gore.NewGore(position, Vector2.Zero, mod.GetGoreSlot("Gores/EvilConstruct/EvilDrillArmGore" + (1 + Main.rand.Next(2))), 1f);
+						NPC.DeathGoreAtPosition("Gores/EvilConstruct/EvilDrillArmGore" + (1 + Main.rand.Next(2)), position, Vector2.Zero);
 					}
 					flag2 = true;
 				}
@@ -167,7 +172,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			float dir = (float)Math.Atan2(aimTo.Y - NPC.Center.Y, aimTo.X - NPC.Center.X);
 			float rotation = dir + (NPC.spriteDirection - 1) * 0.5f * MathHelper.ToRadians(180);
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), rotation, drawOrigin, NPC.scale * 0.95f, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), rotation, drawOrigin, NPC.scale * 0.95f, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			if(glowTimer > 0)
             {
 				color = new Color(100, 100, 100, 0);
@@ -177,7 +182,7 @@ namespace SOTS.NPCs.Constructs
 				int amt = (int)(1 + 6 * percent);
 				for(int i = 0; i < amt; i++)
 				{
-					Main.spriteBatch.Draw(texture2, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY) + Main.rand.NextVector2Circular(2, 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f) * 0.6f, rotation, drawOrigin, NPC.scale * 0.95f, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY) + Main.rand.NextVector2Circular(2, 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f) * 0.6f, rotation, drawOrigin, NPC.scale * 0.95f, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
             }
 		}
@@ -240,12 +245,12 @@ namespace SOTS.NPCs.Constructs
 							center += circular;
 							if (SOTSWorldgenHelper.TrueTileSolid(i2, j2))
 							{
-								Projectile.NewProjectile(new Vector2(i2, j2) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<EvilArm>(), dmg2, 0, Main.myPlayer, NPC.whoAmI);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(i2, j2) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<EvilArm>(), dmg2, 0, Main.myPlayer, NPC.whoAmI);
 								break;
 							}
 							else if (j == 59)
 							{
-								Projectile.NewProjectile(NPC.Center + circular * 5, Vector2.Zero, ModContent.ProjectileType<EvilArm>(), dmg2, 0, Main.myPlayer, NPC.whoAmI);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + circular * 5, Vector2.Zero, ModContent.ProjectileType<EvilArm>(), dmg2, 0, Main.myPlayer, NPC.whoAmI);
 							}
 						}
 					}
@@ -263,7 +268,7 @@ namespace SOTS.NPCs.Constructs
 				for(int i = 0; i < Main.maxProjectiles; i++)
                 {
 					Projectile projectile = Main.projectile[i];
-					if(Projectile.identity == currentArmID)
+					if(projectile.identity == currentArmID)
                     {
 						proj = projectile;
 						break;
@@ -310,7 +315,7 @@ namespace SOTS.NPCs.Constructs
 				Projectile proj = Main.projectile[i];
 				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == NPC.whoAmI)
 				{
-					EvilArm arm = proj.modProjectile as EvilArm;
+					EvilArm arm = proj.ModProjectile as EvilArm;
 					float speed = 4f;
 					if(arm.startAnim && NPC.ai[2] >= 1)
                     {
@@ -469,7 +474,7 @@ namespace SOTS.NPCs.Constructs
 							{
 								float spread = i * 25f;
 								Vector2 fireSpread = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(spread) + toPlayer.ToRotation());
-								Projectile.NewProjectile(NPC.Center + fireSpread * 16, fireSpread, ModContent.ProjectileType<EvilWave>(), dmg2, 0, Main.myPlayer, 0.12f + 0.03f * num);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + fireSpread * 16, fireSpread, ModContent.ProjectileType<EvilWave>(), dmg2, 0, Main.myPlayer, 0.12f + 0.03f * num);
 							}
 						}
 						NPC.velocity = NPC.velocity * 0.5f + toPlayer.SafeNormalize(Vector2.Zero) * -(3 + num);
@@ -517,7 +522,7 @@ namespace SOTS.NPCs.Constructs
 				Projectile proj = Main.projectile[i];
 				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == NPC.whoAmI)
 				{
-					EvilArm arm = proj.modProjectile as EvilArm;
+					EvilArm arm = proj.ModProjectile as EvilArm;
 					if(!arm.launch && proj.ai[1] >= 0 && arm.stabbyCounter == 0)
 					{
 						float num = Vector2.Distance(proj.Center, player.Center);
@@ -547,16 +552,19 @@ namespace SOTS.NPCs.Constructs
 				trueArm.Launch();
             }
 		}
-		public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 1, 4, 7));
+		}
+        public override void OnKill()
 		{
-			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EvilSpirit>());	
+			int n = NPC.NewNPC(NPC.GetSource_Death(),(int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EvilSpirit>());
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].localAI[1] = -1;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  ModContent.ItemType<FragmentOfEvil>(), Main.rand.Next(4) + 4);
-		}	
-	}
+		}
+    }
 	public class EvilArm : ModProjectile
     {
         public override void SendExtraAI(BinaryWriter writer)

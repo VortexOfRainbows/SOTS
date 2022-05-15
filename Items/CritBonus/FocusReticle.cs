@@ -69,23 +69,17 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
-			player.meleeCrit += 20;
-			player.rangedCrit += 20;
-			player.magicCrit += 20;
-			player.thrownCrit += 20;
+			player.GetCritChance(DamageClass.Melee) += 20;
+			player.GetCritChance(DamageClass.Ranged) += 20;
+			player.GetCritChance(DamageClass.Magic) += 20;
+			player.GetCritChance(DamageClass.Throwing) += 20;
 			modPlayer.CritBonusDamage += 25;
             player.buffImmune[BuffID.Bleeding] = true; 
             player.buffImmune[BuffID.Poisoned] = true; 
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FocusCrystal>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<EyeOfChaos>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 10);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<FocusCrystal>(), 1).AddIngredient(ModContent.ItemType<EyeOfChaos>(), 1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 10).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 	public class BagOfCharms : ModItem
@@ -107,10 +101,10 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.meleeCrit += 5;
-			player.rangedCrit += 5;
-			player.magicCrit += 5;
-			player.thrownCrit += 5;
+			player.GetCritChance(DamageClass.Melee) += 5;
+			player.GetCritChance(DamageClass.Ranged) += 5;
+			player.GetCritChance(DamageClass.Magic) += 5;
+			player.GetCritChance(DamageClass.Throwing) += 5;
 			modPlayer.CritLifesteal += 1 + (Main.rand.Next(3) == 0 ? 1 : 0);
 			modPlayer.CritVoidsteal += 1.25f;
 			modPlayer.CritManasteal += 5 + Main.rand.Next(4);
@@ -118,13 +112,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CursedIcosahedron>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<SoulCharm>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 10);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedIcosahedron>(), 1).AddIngredient(ModContent.ItemType<SoulCharm>(), 1).AddIngredient(ModContent.ItemType<PhaseBar>(), 10).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

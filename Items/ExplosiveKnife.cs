@@ -19,7 +19,7 @@ namespace SOTS.Items
 			Item.damage = 15;
 			Item.useTime = 17;
 			Item.useAnimation = 17;
-			Item.thrown = true;
+			Item.DamageType = DamageClass.Throwing;
 			Item.rare = ItemRarityID.Green;
 			Item.autoReuse = true;            
 			Item.shoot = ModContent.ProjectileType<Projectiles.ExplosiveKnife>(); 
@@ -32,13 +32,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.ThrowingKnife, 15);
-			recipe.AddIngredient(ItemID.Grenade, 15);
-			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 15);
-			recipe.AddRecipe();
+			CreateRecipe(15).AddIngredient(ItemID.ThrowingKnife, 15).AddIngredient(ItemID.Grenade, 15).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

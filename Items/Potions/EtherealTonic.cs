@@ -40,7 +40,7 @@ namespace SOTS.Items.Potions
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 30;
             Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatingUsing;        
+            Item.useStyle = ItemUseStyleID.EatFood;        
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;
@@ -52,7 +52,7 @@ namespace SOTS.Items.Potions
 		{
 			return true;
 		}
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			int minute = 3600;
 			int buff1 = ModContent.BuffType<Harmony>();
@@ -68,10 +68,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).Register();
 		}
 	}
 }

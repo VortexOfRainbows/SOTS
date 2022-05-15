@@ -24,26 +24,22 @@ namespace SOTS.Items.Permafrost
 		int[] Probes = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "AbsoluteBar", 7);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "AbsoluteBar", 7).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			int type = mod.ProjectileType("BlizzardProbe");
+			int type = Mod.Find<ModProjectile>("BlizzardProbe").Type;
 			if(player.whoAmI == Main.myPlayer)
 			{
 				for (int i = 0; i < Probes.Length; i++)
 				{
 					if (Probes[i] == -1)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					if (!Main.projectile[Probes[i]].active || Main.projectile[Probes[i]].type != type || Main.projectile[Probes[i]].ai[0] != i)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					Main.projectile[Probes[i]].timeLeft = 6;
 				}

@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.width = 36;
 			Projectile.height = 6;
 			Projectile.penetrate = -1;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.alpha = 0; 
 			Projectile.friendly = true;
 			Projectile.tileCollide = true;
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.BiomeChest
 			hitbox = new Rectangle((int)Projectile.Center.X - 3, (int)Projectile.Center.Y - 3, 6, 6);
             base.ModifyDamageHitbox(ref hitbox);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
 			width = 6;
 			height = 6;

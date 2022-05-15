@@ -65,7 +65,7 @@ namespace SOTS.Items.Potions
 		{
 			return true;
 		}
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			int minute = 3600;
 			int type1 = -1;
@@ -116,10 +116,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "DissolvingNature", 1);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(null, "DissolvingNature", 1).Register();
 		}
 	}
 }

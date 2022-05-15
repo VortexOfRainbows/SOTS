@@ -26,32 +26,18 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("PyramidBrickTile");
+			Item.createTile = Mod.Find<ModTile>("PyramidBrickTile").Type;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.SandstoneBrick, 1);
-			recipe.AddTile(TileID.Autohammer);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.SandstoneBrick, 1);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.SandstoneBrick, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.SandstoneBrick, 1).AddTile(TileID.Autohammer).Register();
+			CreateRecipe(1).AddIngredient(ItemID.SandstoneBrick, 1).AddTile(TileID.LunarCraftingStation).Register();
+			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ItemID.SandstoneBrick);
 		}
 	}
 	public class PyramidBrickTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;

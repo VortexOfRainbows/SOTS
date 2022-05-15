@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class SpiritSurfer : ModBuff
     {	
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spirit Surfer");
 			Description.SetDefault("Surf across the interdimensional plane!");
@@ -15,7 +15,7 @@ namespace SOTS.Buffs
  
         public override void Update(Player player, ref int buffIndex)
         {
-            player.mount.SetMount(mod.MountType("SpiritSurfer"), player);
+            player.mount.SetMount(Mod.Find<ModMountData>("SpiritSurfer").Type, player);
             player.buffTime[buffIndex] = 10;
         }
     }

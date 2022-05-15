@@ -25,27 +25,14 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DullPlatingWall>(), 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DullPlating>(), 1);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 1);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this, 10);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DullPlatingWall>(), 4).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DullPlating>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
+			CreateRecipe(10).AddIngredient(ModContent.ItemType<TwilightGel>(), 5).AddIngredient(ModContent.ItemType<TwilightShard>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 	public class AvaritianPlatingTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;

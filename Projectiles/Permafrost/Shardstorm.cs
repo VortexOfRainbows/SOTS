@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.hostile = false;
 			Projectile.timeLeft = 37;
 			Projectile.tileCollide = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.alpha = 255;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 100;
@@ -76,11 +76,11 @@ namespace SOTS.Projectiles.Permafrost
             target.immune[Projectile.owner] = 0; 
 			triggerStop();
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 24;
 			height = 24;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+			return true;
 		}
 		int endHow = 0;
 		public override bool OnTileCollide(Vector2 oldVelocity)
@@ -209,7 +209,7 @@ namespace SOTS.Projectiles.Permafrost
 					}
 					for (int i = 0; i < num; i++)
 					{
-						int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
+						int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
 						Dust dust = Main.dust[num1];
 						dust.velocity *= 2.75f * veloM;
 						dust.velocity += Projectile.velocity * 0.15f * veloM;

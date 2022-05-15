@@ -7,14 +7,14 @@ using System;
 
 namespace SOTS.Prim.Trails
 {
-	class AtenPrimTrail : PrimTrail
+	class NorthStarTrail : PrimTrail
 	{
-		public AtenPrimTrail(Projectile projectile)
+		public NorthStarTrail(Projectile projectile)
 		{
 			Entity = projectile;
 			EntityType = Projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
-			Color = new Color(255, 230, 138);
+			Color = new Color(150, 180, 240);
 			Width = 20;
 			Cap = 20;
 			Pixellated = false;
@@ -31,7 +31,7 @@ namespace SOTS.Prim.Trails
 				if (i == 0)
 				{
 					widthVar = MathHelper.Lerp(0, Width, i / (float)Points.Count);
-					Color colorvar = Color.Lerp(Color, new Color(255, 160, 40), (i / (float)Points.Count));
+					Color colorvar = Color.Lerp(Color, new Color(25, 55, 110), (i / (float)Points.Count));
 					Vector2 normalAhead = CurveNormal(Points, i + 1);
 					Vector2 secondUp = Points[i + 1] - normalAhead * widthVar;
 					Vector2 secondDown = Points[i + 1] + normalAhead * widthVar;
@@ -44,7 +44,7 @@ namespace SOTS.Prim.Trails
 					if (i != Points.Count - 1)
 					{
 						widthVar = MathHelper.Lerp(0, Width, i / (float)Points.Count);
-						Color colorvar = Color.Lerp(Color, new Color(255, 160, 40), ((float)i / (float)Points.Count));
+						Color colorvar = Color.Lerp(Color, new Color(25, 55, 110), ((float)i / (float)Points.Count));
 						Vector2 normal = CurveNormal(Points, i);
 						Vector2 normalAhead = CurveNormal(Points, i + 1);
 						Vector2 firstUp = Points[i] - normal * widthVar;
@@ -67,7 +67,7 @@ namespace SOTS.Prim.Trails
 		public override void SetShaders()
 		{
 			Effect effect = SOTS.AtenTrail;
-			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().GetTexture("TrailTextures/Trail_3"));
+			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().Assets.Request<Texture2D>("TrailTextures/Trail_3").Value);
 			effect.Parameters["ColorOne"].SetValue(Color.ToVector4());
 			effect.Parameters["ColorTwo"].SetValue(Color.ToVector4());
 			PrepareShader(effect, "MainPS", Counter / 24f);

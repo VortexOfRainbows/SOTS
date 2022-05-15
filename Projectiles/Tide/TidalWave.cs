@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			VoidPlayer.VoidBurn(mod, target, 8, 210);
+			VoidPlayer.VoidBurn(Mod, target, 8, 210);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

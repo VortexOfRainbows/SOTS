@@ -25,7 +25,7 @@ namespace SOTS.Items.Secrets
 	}
 	public class RefractingCrystalBlockTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -135,14 +135,14 @@ namespace SOTS.Items.Secrets
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}
 					if (!found)
 						ofTotal++;
 					total++;
-					if (proj.ai[0] == 1 && proj != projectile)
+					if (proj.ai[0] == 1 && proj != Projectile)
 						projID = proj.whoAmI;
 				}
 			}
@@ -171,7 +171,7 @@ namespace SOTS.Items.Secrets
 							for (int k = 30; k < i; k++)
 							{
 								Tile tile = Framing.GetTileSafely(k, j);
-								if (tile.active() && tile.TileType == ModContent.TileType<OvergrownPyramidTile>())
+								if (tile.HasTile && tile.TileType == ModContent.TileType<OvergrownPyramidTile>())
 								{
 									direction = -1;
 								}
@@ -190,7 +190,7 @@ namespace SOTS.Items.Secrets
 							{
 								count++;
 							}
-							if (tile.active() && !Main.tileContainer[tile.TileType])
+							if (tile.HasTile && !Main.tileContainer[tile.TileType])
 							{
 								for (int k = 0; k < 3; k++)
 								{

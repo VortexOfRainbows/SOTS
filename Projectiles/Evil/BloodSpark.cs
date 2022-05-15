@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Evil
 			Projectile.height = 96;
 			Projectile.width = 96;
 			Projectile.penetrate = -1;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 5;
 			Projectile.tileCollide = false;

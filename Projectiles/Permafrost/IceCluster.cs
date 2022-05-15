@@ -18,9 +18,9 @@ namespace SOTS.Projectiles.Permafrost
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(48);
-            aiType = 48;
-			Projectile.ranged = true;
-			Projectile.thrown = false;
+            AIType = 48;
+			Projectile.DamageType = DamageClass.Ranged;
+			// Projectile.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.penetrate = 1;
 			Projectile.width = 18;
 			Projectile.height = 18;
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("IcePulse"), Projectile.damage, 0, Projectile.owner, alt ? -1 : 0);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("IcePulse").Type, Projectile.damage, 0, Projectile.owner, alt ? -1 : 0);
 				for (int i = 0; i < 15; i++)
 				{
 					int snow = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, alt ? ModContent.DustType<ModIceDust>() : ModContent.DustType<ModSnowDust>());

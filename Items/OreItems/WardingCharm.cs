@@ -23,82 +23,17 @@ namespace SOTS.Items.OreItems
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.CopperBar, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.TinBar, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1); 
-			recipe.AddIngredient(null, "FragmentOfNature", 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Bezoar); //obtainable prehardmode
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfEvil", 10);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.AdhesiveBandage);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfEvil", 10);
-			recipe.AddIngredient(ItemID.DemoniteBar, 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.Vitamins);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfTide", 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Nazar); //obtainable prehardmode
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfChaos", 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.Megaphone);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfOtherworld", 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.FastClock);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfInferno", 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.ArmorPolish);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.Blindfold);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(null, "FragmentOfEarth", 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.TrifoldMap);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.CopperBar, 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ItemID.TinBar, 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfNature", 10).AddTile(TileID.Anvils).ReplaceResult(ItemID.Bezoar);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfEvil", 10).AddIngredient(ItemID.CrimtaneBar, 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.AdhesiveBandage);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfEvil", 10).AddIngredient(ItemID.DemoniteBar, 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.Vitamins);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfTide", 10).AddTile(TileID.Anvils).ReplaceResult(ItemID.Nazar);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfChaos", 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.Megaphone);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfOtherworld", 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.FastClock);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfInferno", 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.ArmorPolish);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfPermafrost", 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.Blindfold);
+			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(null, "FragmentOfEarth", 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.TrifoldMap);
 		}
 	}
 }

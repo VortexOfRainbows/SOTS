@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class Roughskin : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Roughskin");
 			Description.SetDefault("4 increased defense and 4% increased damage");   

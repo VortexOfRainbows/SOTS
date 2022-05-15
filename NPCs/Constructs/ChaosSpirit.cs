@@ -21,13 +21,13 @@ namespace SOTS.NPCs.Constructs
 		Vector2 baseVelo = Vector2.Zero;
 		public void WingStuff()
 		{
-			npc.ai[3] += 1.5f;
-			npc.ai[2] += 7.5f * wingSpeedMult;
-			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
+			NPC.ai[3] += 1.5f;
+			NPC.ai[2] += 7.5f * wingSpeedMult;
+			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(NPC.ai[2]));
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
 			wingHeight = 19 + dipAndRise * 27;
 			baseVelo *= 0.935f;
-			baseVelo += npc.velocity.SafeNormalize(Vector2.Zero) * (float)Math.Sqrt(npc.velocity.Length());
+			baseVelo += NPC.velocity.SafeNormalize(Vector2.Zero) * (float)Math.Sqrt(NPC.velocity.Length());
 		}
 		Vector2 lastCenter = Vector2.Zero;
 		public void DrawChains(bool doDust = false)
@@ -35,15 +35,15 @@ namespace SOTS.NPCs.Constructs
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosSpiritChain");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 ownerCenter = lastCenter;
-			float dynamicScaling = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2] * 0.15f)) * 10;
+			float dynamicScaling = (float)Math.Sin(MathHelper.ToRadians(NPC.ai[2] * 0.15f)) * 10;
 			float moreScaling = 1.1f - 0.1f * Math.Abs(dynamicScaling) / 10f;
-			float tightenScale = ((ownerCenter - npc.Center).Length() - 300) / 80f;
+			float tightenScale = ((ownerCenter - NPC.Center).Length() - 300) / 80f;
 			tightenScale = 1 - tightenScale;
 			tightenScale = MathHelper.Clamp(tightenScale, 0, 1);
 			Vector2 p0 = ownerCenter;
 			Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling)) * 4f * moreScaling * tightenScale;
-			Vector2 p2 = npc.Center - baseVelo * 8f * moreScaling * tightenScale;
-			Vector2 p3 = npc.Center;
+			Vector2 p2 = NPC.Center - baseVelo * 8f * moreScaling * tightenScale;
+			Vector2 p3 = NPC.Center;
 			int segments = 16;
 			for (int i = 0; i < segments; i++)
 			{
@@ -59,7 +59,7 @@ namespace SOTS.NPCs.Constructs
 						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f;
 						color.A = 0;
 						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
-						Main.spriteBatch.Draw(texture, drawPos2 - Main.screenPosition + circular, null, color, rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos2 - Main.screenPosition + circular, null, color, rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 					}
 				}
 				else
@@ -161,8 +161,8 @@ namespace SOTS.NPCs.Constructs
 		{
 			Main.npcFrameCount[NPC.type] = 1;
 			DisplayName.SetDefault("Chaos Spirit");
-			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;
 		}
 		public override void SetDefaults()
 		{
@@ -173,16 +173,16 @@ namespace SOTS.NPCs.Constructs
             NPC.knockBackResist = 0f;
             NPC.width = 70;
             NPC.height = 70;
-            npc.value = Item.buyPrice(0, 0, 0, 0);
-            npc.npcSlots = 10f;
-            npc.boss = false;
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = false;
-			npc.rarity = 2;
+            NPC.value = Item.buyPrice(0, 0, 0, 0);
+            NPC.npcSlots = 10f;
+            NPC.boss = false;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.netAlways = false;
+			NPC.rarity = 2;
 		}
 		bool rubbleActive = true;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -196,9 +196,9 @@ namespace SOTS.NPCs.Constructs
 		}
         public override bool PreAI()
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			WingStuff();
-			int rubble = (int)npc.ai[0];
+			int rubble = (int)NPC.ai[0];
 			bool ownerActive = false;
 			NPC owner;
 			if (rubble >= 0)
@@ -206,11 +206,11 @@ namespace SOTS.NPCs.Constructs
 				owner = Main.npc[rubble];
 				if(owner.active && owner.type == ModContent.NPCType<ChaosRubble>())
                 {
-					Vector2 toRubble = owner.Center - npc.Center;
+					Vector2 toRubble = owner.Center - NPC.Center;
 					if(toRubble.Length() > 560)
                     {
 						float fromRubble = toRubble.Length() - 560;
-						npc.Center += toRubble.SafeNormalize(Vector2.Zero) * fromRubble;
+						NPC.Center += toRubble.SafeNormalize(Vector2.Zero) * fromRubble;
                     }
 					ownerActive = true;
 				}
@@ -220,48 +220,48 @@ namespace SOTS.NPCs.Constructs
 			{
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
-				npc.dontTakeDamage = true;
-				npc.velocity.Y -= 0.026f;
-				npc.velocity.X *= 1.095f;
+				NPC.dontTakeDamage = true;
+				NPC.velocity.Y -= 0.026f;
+				NPC.velocity.X *= 1.095f;
 				if(Main.netMode != NetmodeID.Server && rubble != -2 && rubbleActive)
 				{
 					DrawChains(true);
 					rubbleActive = false;
-					npc.ai[0] = -2;
+					NPC.ai[0] = -2;
 				}
 			}
 			else
 			{
 				owner = Main.npc[rubble];
-				npc.ai[1]++;
+				NPC.ai[1]++;
 				DoPassiveMovement(Vector2.Lerp(player.Center, owner.Center, 0.6f));
 			}
-			npc.velocity.Y -= 0.014f;
-			npc.rotation = npc.velocity.X * 0.06f;
+			NPC.velocity.Y -= 0.014f;
+			NPC.rotation = NPC.velocity.X * 0.06f;
 			return true;
 		}
 		public void DoPassiveMovement(Vector2 center)
 		{
-			float sinusoid = (float)Math.Sin(MathHelper.ToRadians(npc.ai[3]));
+			float sinusoid = (float)Math.Sin(MathHelper.ToRadians(NPC.ai[3]));
 			Vector2 offset = new Vector2(0, -300).RotatedBy(MathHelper.ToRadians(sinusoid * 30));
 			offset.X *= 1.5f;
 			Vector2 position = center + offset;
-			float verticalOffset = 40 + 40 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] * 2f));
+			float verticalOffset = 40 + 40 * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 2f));
 			position.Y -= verticalOffset;
-			Vector2 goTo = position - npc.Center;
+			Vector2 goTo = position - NPC.Center;
 			float speed = 13f;
 			if (goTo.Length() < speed)
 			{
 				speed = goTo.Length();
 			}
-			npc.velocity *= 0.3f;
-			npc.velocity += 0.6f * speed * goTo.SafeNormalize(Vector2.Zero);
+			NPC.velocity *= 0.3f;
+			NPC.velocity += 0.6f * speed * goTo.SafeNormalize(Vector2.Zero);
 		}
 		public override void AI()
 		{
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
 			dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 			dust.noGravity = true;
@@ -270,28 +270,28 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
-			for (int k = 0; k < npc.oldPos.Length; k++) {
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
-				Color color = VoidPlayer.pastelRainbow * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
+			for (int k = 0; k < NPC.oldPos.Length; k++) {
+				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = VoidPlayer.pastelRainbow * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				color.A = 0;
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			if((int)npc.ai[0] != -2 && lastCenter != Vector2.Zero)
+			if((int)NPC.ai[0] != -2 && lastCenter != Vector2.Zero)
 				DrawChains();
-			DrawWings(wingHeight, npc.ai[2], npc.rotation, npc.Center, Color.White);
+			DrawWings(wingHeight, NPC.ai[2], NPC.rotation, NPC.Center, Color.White);
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (NPC.life <= 0)
 			{
 				if(Main.netMode	!= NetmodeID.Server)
 				{
 					for (int i = 0; i < 50; i++)
 					{
-						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
@@ -304,8 +304,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				Color color = new Color(100, 100, 100, 0);
@@ -317,13 +317,13 @@ namespace SOTS.NPCs.Constructs
 				}
 				else
 					circular *= 0f;
-				Main.spriteBatch.Draw(texture, npc.Center + circular - Main.screenPosition, null, color, 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, NPC.Center + circular - Main.screenPosition, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Lux>(), 0, npc.ai[2]);
+			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Lux>(), 0, NPC.ai[2]);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
 		}

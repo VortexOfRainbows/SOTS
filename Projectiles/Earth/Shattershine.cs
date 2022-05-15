@@ -21,11 +21,11 @@ namespace SOTS.Projectiles.Earth
             int width = 40;
             hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 24;
             height = 24;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            return true;
         }
         public override void OnLaunch(Player player)
         {
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Earth
         {
             Projectile.Size = new Vector2(46, 46);
             Projectile.friendly = true;
-            Projectile.melee = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.localNPCHitCooldown = 15;
             Projectile.usesLocalNPCImmunity = true;

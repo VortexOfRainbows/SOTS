@@ -54,17 +54,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<TerminalCluster>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<GlazeBow>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<SpectreSpiritStorm>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<StarshotCrossbow>(), 1);
-			recipe.AddIngredient(ItemID.ChlorophyteShotbow, 1);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 6);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TerminalCluster>(), 1).AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1).AddIngredient(ModContent.ItemType<GlazeBow>(), 1).AddIngredient(ModContent.ItemType<SpectreSpiritStorm>(), 1).AddIngredient(ModContent.ItemType<StarshotCrossbow>(), 1).AddIngredient(ItemID.ChlorophyteShotbow, 1).AddIngredient(ModContent.ItemType<PhaseBar>(), 6).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

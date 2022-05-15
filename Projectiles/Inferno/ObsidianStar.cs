@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Inferno
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(3);
-            aiType = 3;
+            AIType = 3;
 			Projectile.width = 32;
 			Projectile.height = 32;
 			Projectile.penetrate = 1;
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("HellfuryCrush"), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HellfuryCrush").Type, Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 	}

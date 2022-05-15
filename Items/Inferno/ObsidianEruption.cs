@@ -27,19 +27,12 @@ namespace SOTS.Items.Inferno
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;            
-			Item.shoot = mod.ProjectileType("ObsidianStar"); 
+			Item.shoot = Mod.Find<ModProjectile>("ObsidianStar").Type; 
             Item.shootSpeed = 26.5f;
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.MeteoriteBar, 12);
-			recipe.AddIngredient(ItemID.Obsidian, 36);
-			recipe.AddIngredient(null, "FragmentOfInferno", 3);
-			recipe.AddIngredient(null, "FragmentOfOtherworld", 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.MeteoriteBar, 12).AddIngredient(ItemID.Obsidian, 36).AddIngredient(null, "FragmentOfInferno", 3).AddIngredient(null, "FragmentOfOtherworld", 2).AddTile(TileID.Anvils).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.width = 46;
 			Projectile.height = 32;
 			Projectile.friendly = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 6000;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;

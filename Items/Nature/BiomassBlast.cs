@@ -39,25 +39,8 @@ namespace SOTS.Items.Nature
         }
         public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Scatterseed>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
-			recipe.AddIngredient(ItemID.Vilethorn, 1);
-			recipe.AddIngredient(ItemID.Acorn, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Scatterseed>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
-			recipe.AddIngredient(ItemID.CrimsonRod, 1);
-			recipe.AddIngredient(ItemID.Acorn, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Scatterseed>(), 1).AddIngredient(ModContent.ItemType<Snakeskin>(), 12).AddIngredient(ModContent.ItemType<DissolvingNature>(), 1).AddIngredient(ItemID.Vilethorn, 1).AddIngredient(ItemID.Acorn, 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Scatterseed>(), 1).AddIngredient(ModContent.ItemType<Snakeskin>(), 12).AddIngredient(ModContent.ItemType<DissolvingNature>(), 1).AddIngredient(ItemID.CrimsonRod, 1).AddIngredient(ItemID.Acorn, 20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

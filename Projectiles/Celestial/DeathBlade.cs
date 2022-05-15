@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Celestial
 		}
         public override void SetDefaults()
         {
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.friendly = true;
 			Projectile.width = 66;
 			Projectile.height = 46;

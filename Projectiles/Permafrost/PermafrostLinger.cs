@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.height = 40;
 			Main.projFrames[Projectile.type] = 4;
 			Projectile.penetrate = -1;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 180;
 			Projectile.tileCollide = false;
@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			VoidPlayer.VoidBurn(mod, target, 10, 180);
+			VoidPlayer.VoidBurn(Mod, target, 10, 180);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

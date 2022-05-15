@@ -15,7 +15,7 @@ namespace SOTS.Items.Pyramid
 {
 	public class RubyKeystoneTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -117,8 +117,8 @@ namespace SOTS.Items.Pyramid
 				{
 					for (int y = top; y < top + 5; y++)
 					{
-						if (Main.tile[x, y].frameY < 360)
-							Main.tile[x, y].frameY += 90;
+						if (Main.tile[x, y].TileFrameY < 360)
+							Main.tile[x, y].TileFrameY += 90;
 					}
 				}
 				NetMessage.SendTileSquare(-1, left + 2, top + 2, 5);
@@ -132,7 +132,7 @@ namespace SOTS.Items.Pyramid
 			int top = j - (tile.TileFrameY / 18) % 5;
 			left += 2;
 			top += 2;
-			if(Main.tile[left, top].frameY >= 360)
+			if(Main.tile[left, top].TileFrameY >= 360)
 			{
 				Main.LocalPlayer.AddBuff(ModContent.BuffType<CreativeShock2>(), 480);
 				if (Main.netMode != NetmodeID.MultiplayerClient && fail)
@@ -225,7 +225,7 @@ namespace SOTS.Items.Pyramid
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, Mod.Find<ModDust>("CopyDust4").Type);
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(255, 10, 30, 40);
 				dust.noGravity = true;
@@ -261,7 +261,7 @@ namespace SOTS.Items.Pyramid
 					Projectile proj = Main.projectile[k];
 					if (Projectile.type == proj.type && proj.active && Projectile.active && Vector2.Distance(proj.Center, Projectile.Center) <= 64f)
 					{
-						if ((int)proj.ai[0] == 1 && proj != projectile)
+						if ((int)proj.ai[0] == 1 && proj != Projectile)
                         {
 							foundLeader = true;
 							projID = proj.whoAmI;
@@ -284,7 +284,7 @@ namespace SOTS.Items.Pyramid
 			int i = (int)leader.Center.X / 16;
 			int j = (int)leader.Center.Y / 16;
 			Tile current = Framing.GetTileSafely(i, j);
-			if (!current.active() || current.type != ModContent.TileType<RubyKeystoneTile>() || current.frameY < 360 || !leader.active) //making sure the projectile can exist based on leader tile position
+			if (!current.HasTile || current.TileType != ModContent.TileType<RubyKeystoneTile>() || current.TileFrameY < 360 || !leader.active) //making sure the projectile can exist based on leader tile position
 			{
 				Projectile.Kill();
 				Projectile.active = false;
@@ -297,7 +297,7 @@ namespace SOTS.Items.Pyramid
 				Projectile proj = Main.projectile[k];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && Vector2.Distance(proj.Center, leader.Center) <= 64f) //if close to leader
 				{
-					if (proj == projectile)
+					if (proj == Projectile)
 					{
 						found = true;
 					}
@@ -320,7 +320,7 @@ namespace SOTS.Items.Pyramid
 					}
 				}
 			Projectile.timeLeft = 7200;
-			if (leader == projectile) //if this projectile is the leader
+			if (leader == Projectile) //if this projectile is the leader
 			{
 				Projectile.ai[0] = 1;
 				Projectile.alpha = 255;
@@ -334,8 +334,8 @@ namespace SOTS.Items.Pyramid
 						{
 							for (int y = -range; y <= range; y++)
 							{
-								if (Main.tile[i + x, j + y].frameY >= 360)
-									Main.tile[i + x, j + y].frameY = (short)(Main.tile[i + x, j + y].frameY % 90);
+								if (Main.tile[i + x, j + y].TileFrameY >= 360)
+									Main.tile[i + x, j + y].TileFrameY = (short)(Main.tile[i + x, j + y].TileFrameY % 90);
 								if (Main.netMode == 2)
 									NetMessage.SendTileSquare(-1, i, j, 5);
 

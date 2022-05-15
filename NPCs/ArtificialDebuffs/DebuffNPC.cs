@@ -116,7 +116,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     debuffTime = 300;
                     vDamage = 50;
                 }
-                VoidPlayer.VoidBurn(mod, target, vDamage, debuffTime);
+                VoidPlayer.VoidBurn(Mod, target, vDamage, debuffTime);
             }
             bool canHappen = (Main.dayTime ? (Main.expertMode ? Main.rand.NextBool(3) : Main.rand.NextBool(5)) : Main.rand.NextBool(2));
             if((npc.type == NPCID.DungeonGuardian || vanillaNPCHasVoidDamage.Contains(npc.type)) && canHappen && target.whoAmI == Main.myPlayer)
@@ -126,14 +126,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     vDamage = 6969;
                 }
-                VoidPlayer.VoidDamage(mod, target, vDamage);
+                VoidPlayer.VoidDamage(Mod, target, vDamage);
             }
             if(npc.type == NPCType<Teratoma>() || npc.type == NPCType<Maligmor>() || npc.type == NPCType<MaligmorChild>() || npc.type == NPCType<Ghast>() || npc.type == NPCType<BleedingGhast>() || npc.type == NPCType<FlamingGhast>())
             {
                 int vDamage = 8;
                 if (npc.type == NPCType<Teratoma>() || npc.type == NPCType<BleedingGhast>() || npc.type == NPCType<FlamingGhast>())
                     vDamage = 20;
-                VoidPlayer.VoidDamage(mod, target, vDamage);
+                VoidPlayer.VoidDamage(Mod, target, vDamage);
             }
             base.OnHitPlayer(npc, target, damage, crit);
         }
@@ -246,7 +246,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             if (type == 0) //should be called by player
             {
                 byte playerWhoAmI = (byte)player.whoAmI;
-                var packet = mod.GetPacket();
+                var packet = Mod.GetPacket();
                 packet.Write((byte)SOTSMessageType.SyncGlobalNPC);
                 packet.Write(playerWhoAmI);
                 packet.Write(npc.whoAmI);
@@ -259,7 +259,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             else if(type == 1) //can be called by server or player
             {
                 int playerWhoAmI = player != null ? player.whoAmI : -1;
-                var packet = mod.GetPacket();
+                var packet = Mod.GetPacket();
                 packet.Write((byte)SOTSMessageType.SyncGlobalNPCTime);
                 packet.Write(playerWhoAmI);
                 packet.Write(npc.whoAmI);
@@ -740,7 +740,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 Projectile proj = Main.projectile[i];
                 if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Minions.FluxSlimeBall>())
                 {
-                    Projectiles.Minions.FluxSlimeBall slimeBall = proj.modProjectile as Projectiles.Minions.FluxSlimeBall;
+                    Projectiles.Minions.FluxSlimeBall slimeBall = proj.ModProjectile as Projectiles.Minions.FluxSlimeBall;
                     if (slimeBall != null)
                     {
                         if (slimeBall.targetID == npc.whoAmI && slimeBall.hasHit)
@@ -761,7 +761,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Doomhook>())
                 {
-                    Projectiles.Doomhook hook = proj.modProjectile as Projectiles.Doomhook;
+                    Projectiles.Doomhook hook = proj.ModProjectile as Projectiles.Doomhook;
                     if (hook != null)
                     {
                         if (hook.targetID == npc.whoAmI && hook.hasHit && !hook.letGo)
@@ -824,7 +824,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     bool isFlower = false;
                     if (proj.type == ProjectileType<FloweringBud>())
                     {
-                        FloweringBud flower = proj.modProjectile as FloweringBud;
+                        FloweringBud flower = proj.ModProjectile as FloweringBud;
                         if (flower.effected[npc.whoAmI])
                             contains = true;
                         index = flower.enemyIndex;
@@ -832,7 +832,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     }
                     if (proj.type == ProjectileType<EvilGrowth>())
                     {
-                        EvilGrowth evil = proj.modProjectile as EvilGrowth;
+                        EvilGrowth evil = proj.ModProjectile as EvilGrowth;
                         if (evil.effected[npc.whoAmI])
                             contains = true;
                     }
@@ -974,13 +974,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     bool contains = false;
                     if(proj.type == ProjectileType<FloweringBud>())
                     {
-                        FloweringBud flower = proj.modProjectile as FloweringBud;
+                        FloweringBud flower = proj.ModProjectile as FloweringBud;
                         if (flower.effected[npc.whoAmI])
                             contains = true;
                     }
                     if(proj.type == ProjectileType<EvilGrowth>())
                     {
-                        EvilGrowth evil = proj.modProjectile as EvilGrowth;
+                        EvilGrowth evil = proj.ModProjectile as EvilGrowth;
                         if (evil.effected[npc.whoAmI])
                             contains = true;
                     }

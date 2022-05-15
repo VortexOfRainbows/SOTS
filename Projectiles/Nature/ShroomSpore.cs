@@ -13,13 +13,13 @@ namespace SOTS.Projectiles.Nature
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(512);
-            aiType = 512;
+            AIType = 512;
 			Projectile.height = 16;
 			Projectile.width = 16;
 			Projectile.penetrate = 4;
-			Projectile.thrown = false;
-			Projectile.melee = true;
-			Projectile.magic = false;
+			// Projectile.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+			Projectile.DamageType = DamageClass.Melee;
+			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.tileCollide = true;
 			Projectile.alpha = 100;
 			Projectile.timeLeft = 100;

@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.width = 16;
 			Projectile.height = 16;
 			Projectile.timeLeft = 180;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = false;
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Inferno
 				int x = (int)current.X / 16;
 				int y = (int)current.Y / 16;
 				Tile tile = Framing.GetTileSafely(x, y);
-				if (!WorldGen.InWorld(x, y, 20) || (tile.active() && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
+				if (!WorldGen.InWorld(x, y, 20) || (tile.HasTile && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
 				{
 					break;
 				}
@@ -176,7 +176,7 @@ namespace SOTS.Projectiles.Inferno
 					int x = (int)(Projectile.Center.X + offset.X) / 16;
 					int y = (int)(Projectile.Center.Y + offset.Y) / 16;
 					Tile tile = Framing.GetTileSafely(x, y);
-					if (!WorldGen.InWorld(x, y, 20) || (tile.active() && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
+					if (!WorldGen.InWorld(x, y, 20) || (tile.HasTile && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
 					{
 						break;
 					}

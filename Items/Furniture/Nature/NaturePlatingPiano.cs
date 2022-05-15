@@ -18,13 +18,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 15);
-			recipe.AddIngredient(ItemID.Bone, 4);
-			recipe.AddIngredient(ItemID.Book, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<NaturePlating>(), 15).AddIngredient(ItemID.Bone, 4).AddIngredient(ItemID.Book, 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class NaturePlatingPianoTile : Piano<NaturePlatingPiano>

@@ -26,22 +26,17 @@ namespace SOTS.Items.Pyramid.AncientGold
             Item.rare = ItemRarityID.LightRed;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = mod.TileType("AncientGoldCandelabraTile");
+            Item.createTile = Mod.Find<ModTile>("AncientGoldCandelabraTile").Type;
         }
 
         public override void AddRecipes()
         {
-            Recipe recipe = new Recipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<AncientGoldTorch>(), 3);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 5).AddIngredient(ModContent.ItemType<AncientGoldTorch>(), 3).AddTile(TileID.WorkBenches).Register();
         }
     }
     public class AncientGoldCandelabraTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -66,13 +61,13 @@ namespace SOTS.Items.Pyramid.AncientGold
             {
                 for (int y = top; y < top + 2; y++)
                 {
-                    if (Main.tile[x, y].frameX >= 36)
+                    if (Main.tile[x, y].TileFrameX >= 36)
                     {
-                        Main.tile[x, y].frameX -= 36;
+                        Main.tile[x, y].TileFrameX -= 36;
                     }
                     else
                     {
-                        Main.tile[x, y].frameX += 36;
+                        Main.tile[x, y].TileFrameX += 36;
                     }
                 }
             }
@@ -103,7 +98,7 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("AncientGoldCandelabra"));
+            Item.NewItem(i * 16, j * 16, 32, 16, Mod.Find<ModItem>("AncientGoldCandelabra").Type);
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

@@ -30,12 +30,12 @@ namespace SOTS.Items.Pyramid
 			Item.rare = ItemRarityID.Purple;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AcediaGatewayTile");
+			Item.createTile = Mod.Find<ModTile>("AcediaGatewayTile").Type;
 		}
 	}	
 	public class AcediaGatewayTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -54,7 +54,7 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Strange Gateway");
 			AddMapEntry(new Color(44, 12, 62), name);
 			disableSmartCursor = true;
-			DustType = mod.DustType("AcedianDust");
+			DustType = Mod.Find<ModDust>("AcedianDust").Type;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

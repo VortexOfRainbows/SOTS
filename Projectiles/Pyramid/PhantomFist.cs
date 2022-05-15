@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Pyramid
         public override void SetDefaults()
         {
 			Projectile.aiStyle = 0;
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.width = 44;
 			Projectile.height = 28;

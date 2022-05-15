@@ -18,12 +18,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddRecipeGroup("SOTS:EvilMaterial", 20);
-			recipe.AddRecipeGroup("SOTS:GoldBar", 10);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddRecipeGroup("SOTS:EvilMaterial", 20).AddRecipeGroup("SOTS:GoldBar", 10).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

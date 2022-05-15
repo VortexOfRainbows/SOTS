@@ -6,7 +6,7 @@ namespace SOTS.Buffs
 {
     public class VoidSickness : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Void Sickness");
 			Description.SetDefault("Decreases void damage by 10%");   

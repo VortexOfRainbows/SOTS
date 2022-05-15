@@ -3,6 +3,7 @@ using SOTS.NPCs.ArtificialDebuffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
  
 namespace SOTS.Projectiles.Base
 {    
@@ -15,7 +16,7 @@ namespace SOTS.Projectiles.Base
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(ProjectileID.VortexBeaterRocket);
-            aiType = ProjectileID.VortexBeaterRocket; 
+            AIType = ProjectileID.VortexBeaterRocket; 
             Projectile.width = 18;
             Projectile.height = 22; 
             Projectile.timeLeft = 1800;
@@ -24,7 +25,7 @@ namespace SOTS.Projectiles.Base
             Projectile.hostile = false; 
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true; 
-            Projectile.ranged = true; 
+            Projectile.DamageType = DamageClass.Ranged; 
 		}
 		int bounceCounter = 0;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

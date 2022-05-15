@@ -81,18 +81,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 3);
-			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 20);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddIngredient(ModContent.ItemType<TwilightShard>(), 3).AddIngredient(ModContent.ItemType<TwilightGel>(), 20).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}	
 	public class DigitalDisplayTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;

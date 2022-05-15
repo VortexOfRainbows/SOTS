@@ -36,13 +36,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.DemonScythe, 1);
-			recipe.AddIngredient(ItemID.SoulofFright, 10);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.DemonScythe, 1).AddIngredient(ItemID.SoulofFright, 10).AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

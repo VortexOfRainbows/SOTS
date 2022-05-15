@@ -5,7 +5,7 @@ namespace SOTS.Buffs
 {
     public class CreativeShock2 : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Creative Shock");
 			Description.SetDefault("You have lost the power of creation!");   

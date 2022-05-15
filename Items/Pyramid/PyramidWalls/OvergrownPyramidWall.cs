@@ -21,17 +21,8 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<OvergrownPyramidBlock>(), 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ModContent.ItemType<OvergrownPyramidBlock>(), 1);
-			recipe.AddRecipe();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<OvergrownPyramidBlock>(), 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<OvergrownPyramidBlock>());
 		}
 	}
 	public class UnsafeOvergrownPyramidWall : ModItem
@@ -52,7 +43,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	}
 	public class OvergrownPyramidWallWall : ModWall
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Grass;
@@ -67,7 +58,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			texture = "SOTS/Items/Pyramid/PyramidWalls/OvergrownPyramidWallWall";
 			return base.Autoload(ref name, ref texture);
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			DustType = DustID.Grass;
