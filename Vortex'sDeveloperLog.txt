@@ -34,7 +34,14 @@ Update Objectives:
 	1. Thermal Polarizer (grants some stats and inverses the effects of Dissolving Permafrost, Inferno, up to a certain point)
 	2. Exotic Polarizer (grants some stats and inverses the effects of Dissolving Brilliance, Evil, Otherworld, up to a certain point)
 5. Blazing Quiver (Dissolving Inferno + Molten Quiver)
-6. Chthonic Reforge
+6. Pistol Shrimp
+	1. It's a shrimp and a pistol
+	2. magic weapon that fires homing bubbles, can be obtained fishing in ocean or something
+7. Chthonic Reforge
+8. Plasma Shrimp
+	1. Pistol Shrimp but accessory
+	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
+	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope 
 
 Low Priority Objectives:
 1. Archaelogist NPC
