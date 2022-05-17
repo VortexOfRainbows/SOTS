@@ -51,6 +51,10 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+5/16/22
+1. 9730 -> 7400 errors
+	1. Fixed/Patched worldgenhelper (normal) and worldgenhelper (pyramid)
+
 5/13/22 & 5/14/22
 1. More Portings. Errors to around 17900. Will start going slower now that port changes are more complicated.
 2. TMODPORTER: Errors from 17900 down to 9100!

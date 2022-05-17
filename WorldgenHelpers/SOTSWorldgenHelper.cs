@@ -3,7 +3,6 @@ using System.Diagnostics;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Items.Otherworld;
-using Microsoft.Xna.Framework;
 using SOTS.Items.Pyramid;
 using SOTS.Items.ChestItems;
 using System;
@@ -21,6 +20,7 @@ using SOTS.Items.Nvidia;
 using SOTS.Items.Chaos;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Fragments;
+using Microsoft.Xna.Framework;
 
 namespace SOTS
 {
@@ -29,14 +29,14 @@ namespace SOTS
 		public static bool CanExplodeTile(int i, int j)
 		{
 			bool canKillTile = true;
-			if (Main.tile[i, j] != null && Main.tile[i, j].active())
+			if (Main.tile[i, j] != null && Main.tile[i, j].HasTile)
 			{
 				canKillTile = true;
-				if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
+				if (Main.tileDungeon[(int)Main.tile[i, j].TileType] || Main.tile[i, j].TileType == 88 || Main.tile[i, j].TileType == 21 || Main.tile[i, j].TileType == 26 || Main.tile[i, j].TileType == 107 || Main.tile[i, j].TileType == 108 || Main.tile[i, j].TileType == 111 || Main.tile[i, j].TileType == 226 || Main.tile[i, j].TileType == 237 || Main.tile[i, j].TileType == 221 || Main.tile[i, j].TileType == 222 || Main.tile[i, j].TileType == 223 || Main.tile[i, j].TileType == 211 || Main.tile[i, j].TileType == 404)
 				{
 					canKillTile = false;
 				}
-				if (!Main.hardMode && Main.tile[i, j].type == 58)
+				if (!Main.hardMode && Main.tile[i, j].TileType == 58)
 				{
 					canKillTile = false;
 				}
@@ -49,11 +49,11 @@ namespace SOTS
 		}
 		public static bool TrueTileSolid(int i, int j)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive());
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j].TileType] == false && Main.tileSolid[Main.tile[i, j].TileType] == true && Main.tile[i, j].HasUnactuatedTile);
 		}
 		public static bool TileTopCapable(int i, int j)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && (Main.tileSolidTop[Main.tile[i, j].type] || Main.tileSolid[Main.tile[i, j].type]) && Main.tile[i, j].nactive());
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && (Main.tileSolidTop[Main.tile[i, j].TileType] || Main.tileSolid[Main.tile[i, j].TileType]) && Main.tile[i, j].HasUnactuatedTile);
 		}
 		public static void GenerateAcediaRoom(int x, int y, Mod mod, int direction = 1)
 		{
@@ -111,10 +111,10 @@ namespace SOTS
 					if (WorldGen.InWorld(k, l, 30))
 					{
 						Tile tile = Framing.GetTileSafely(k, l);
-						tile.active(true);
-						tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-						tile.slope(0);
-						tile.halfBrick(false);
+						tile.HasTile = true;
+						tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+						tile.Slope = 0;
+						tile.IsHalfBlock = false;
 					}
 				}
 			}
@@ -133,86 +133,86 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 1:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
-									tile.slope((byte)(direction == 1 ? 3 : 4));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 3 : 4);
+									tile.IsHalfBlock = false;
 									break;
 								case 3:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 4:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
-									tile.slope((byte)(direction == 1 ? 4 : 3));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 4 : 3);
+									tile.IsHalfBlock = false;
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
-									tile.slope((byte)(direction == 1 ? 1 : 2));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 1 : 2);
+									tile.IsHalfBlock = false;
 									break;
 								case 6:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k - (direction == 1 ? 1 : 0), l, (ushort)ModContent.TileType<CursedAppleTile>(), true, true, -1, 0);
 									}
 									break;
 								case 7:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 8:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
-									tile.slope((byte)(direction == 1 ? 2 : 1));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 2 : 1);
+									tile.IsHalfBlock = false;
 									break;
 								case 9:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 10:
 									if (confirmPlatforms == 2)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<AcediaGatewayTile>(), true, true, -1, 0);
 									}
 									break;
 								case 11:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<AcediaPlatingTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<AcediaPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 							}
 						}
@@ -268,25 +268,25 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 0:
-								tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 1:
-								tile.wall = (ushort)ModContent.WallType<UnsafeOvergrownPyramidWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafeOvergrownPyramidWallWall>();
 								break;
 							case 2:
-								tile.wall = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
 								break;
 							case 3:
-								tile.wall = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
+								tile.WallType = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
 								break;
 							case 4:
-								tile.wall = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
 								break;
 							case 5:
-								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 6:
-								tile.wall = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
 								break;
 						}
 					}
@@ -305,7 +305,7 @@ namespace SOTS
 					if (WorldGen.InWorld(k, l, 30))
 					{
 						Tile tile = Framing.GetTileSafely(k, l);
-						if (tile.active())
+						if (tile.HasTile)
 						{
 							counting++;
 						}
@@ -327,7 +327,7 @@ namespace SOTS
 					if (WorldGen.InWorld(k, l, 30))
 					{
 						Tile tile = Framing.GetTileSafely(k, l);
-						if (tile.active())
+						if (tile.HasTile)
 						{
 							return false;
 						}
@@ -462,129 +462,129 @@ namespace SOTS
 								case 0:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 1:
-									tile.active(true);
-									tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 
-									tile2.active(true);
-									tile2.type = (ushort)mod.TileType("AvaritianPlatingTile");
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile2.HasTile = true;
+									tile2.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 									break;
 								case 2:
-									tile.active(true);
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-									tile.type = (ushort)mod.TileType("DullPlatingTile");
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 
-									tile2.active(true);
-									tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-									tile2.type = (ushort)mod.TileType("DullPlatingTile");
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile2.HasTile = true;
+									tile2.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile2.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = (ushort)mod.TileType("PortalPlatingTile");
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<PortalPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 
-									tile2.active(true);
-									tile2.type = (ushort)mod.TileType("PortalPlatingTile");
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile2.HasTile = true;
+									tile2.TileType = (ushort)ModContent.TileType<PortalPlatingTile>();
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 									break;
 								case 4:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, mod.TileType("CrystalStatue"), true, true, -1, 1);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, ModContent.TileType<CrystalStatue>(), true, true, -1, 1);
 
-										tile2.active(false);
-										tile2.slope(0);
-										tile2.halfBrick(false);
-										WorldGen.PlaceTile(k2 - 1, l, mod.TileType("CrystalStatue"), true, true, -1, 1);
+										tile2.HasTile = false;
+										tile2.Slope = 0;
+										tile2.IsHalfBlock = false;
+										WorldGen.PlaceTile(k2 - 1, l, ModContent.TileType<CrystalStatue>(), true, true, -1, 1);
 									}
 									break;
 								case 5:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceChest(k, l, (ushort)ModContent.TileType<LockedStrangeChest>(), style: 1);
 
-										tile2.active(false);
-										tile2.slope(0);
-										tile2.halfBrick(false);
+										tile2.HasTile = false;
+										tile2.Slope = 0;
+										tile2.IsHalfBlock = false;
 										WorldGen.PlaceChest(k2 - 1, l, (ushort)ModContent.TileType<LockedStrangeChest>(), style: 1);
 									}
 									break;
 								case 6:
-									tile.active(true);
-									tile.type = (ushort)mod.TileType("PortalPlatingTile");
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<PortalPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 7:
-									tile.active(false);
-									tile.slope(0);
-									tile.halfBrick(false);
-									WorldGen.PlaceTile(k, l, mod.TileType("SkyChainTile"), true, true, -1, 0);
+									tile.HasTile = false;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									WorldGen.PlaceTile(k, l, ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
 
-									tile2.active(false);
-									tile2.slope(0);
-									tile2.halfBrick(false);
-									WorldGen.PlaceTile(k2, l, mod.TileType("SkyChainTile"), true, true, -1, 0);
+									tile2.HasTile = false;
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
+									WorldGen.PlaceTile(k2, l, ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
 									break;
 								case 8:
-									tile.active(true);
-									tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 
-									tile2.active(true);
-									tile2.type = (ushort)mod.TileType("AvaritianPlatingTile");
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile2.HasTile = true;
+									tile2.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 
 									Tile tile3 = Framing.GetTileSafely(k, l - 1);
 									Tile tile4 = Framing.GetTileSafely(k2, l - 1);
-									tile3.active(false);
-									tile3.slope(0);
-									tile3.halfBrick(false);
-									WorldGen.PlaceTile(k, l - 1, mod.TileType("SkyChainTile"), true, true, -1, 0);
+									tile3.HasTile = false;
+									tile3.Slope = 0;
+									tile3.IsHalfBlock = false;
+									WorldGen.PlaceTile(k, l - 1, ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
 
-									tile4.active(false);
-									tile4.slope(0);
-									tile4.halfBrick(false);
-									WorldGen.PlaceTile(k2, l - 1, mod.TileType("SkyChainTile"), true, true, -1, 0);
+									tile4.HasTile = false;
+									tile4.Slope = 0;
+									tile4.IsHalfBlock = false;
+									WorldGen.PlaceTile(k2, l - 1, ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
 									break;
 								case 9:
-									tile.active(true);
-									tile.type = (ushort)mod.TileType("DullPlatingTile");
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile2.active(true);
-									tile2.type = (ushort)mod.TileType("DullPlatingTile");
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile2.HasTile = true;
+									tile2.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 									break;
 								case 10:
-									tile.active(false);
-									tile.slope(0);
-									tile.halfBrick(false);
-									WorldGen.PlaceTile(k, l, mod.TileType("AvaritianGatewayTile"), true, true, -1, 0);
+									tile.HasTile = false;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									WorldGen.PlaceTile(k, l, ModContent.TileType<AvaritianGatewayTile>(), true, true, -1, 0);
 									break;
 							}
 						}
@@ -700,19 +700,19 @@ namespace SOTS
 						switch (_structure2[i, _structure2.GetLength(1) - j - 1])
 						{
 							case 0:
-								//tile.wall = 0;
+								//tile.WallType = 0;
 								break;
 							case 1:
-								tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
-								tile2.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+								tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
+								tile2.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 								break;
 							case 2:
-								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-								tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile2.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 3:
-								tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
-								tile2.wall = (ushort)ModContent.WallType<HologlassWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
+								tile2.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
 								break;
 						}
 					}
@@ -760,35 +760,35 @@ namespace SOTS
 										break;
 									case 1:
 										if (confirmPlatforms == 0)
-											tile.active(false);
-										WorldGen.PlaceTile(k, l, mod.TileType("SkyChainTile"), true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+											tile.HasTile = false;
+										WorldGen.PlaceTile(k, l, ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 5:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("PortalPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<PortalPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -842,23 +842,23 @@ namespace SOTS
 									case 0:
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -901,7 +901,7 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 									break;
 							}
 						}
@@ -955,25 +955,25 @@ namespace SOTS
 								switch (_structure[i, j])
 								{
 									case 0:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 1:
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1019,13 +1019,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1068,29 +1068,29 @@ namespace SOTS
 										break;
 									case 1:
 										if (confirmPlatforms == 0)
-											tile.active(false);
-										WorldGen.PlaceTile(k, l, (ushort)mod.TileType("SkyChainTile"), true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+											tile.HasTile = false;
+										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("PortalPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<PortalPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1143,23 +1143,23 @@ namespace SOTS
 									case 0:
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("PortalPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<PortalPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1201,10 +1201,10 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 							}
 						}
@@ -1253,17 +1253,17 @@ namespace SOTS
 									case 0:
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1302,13 +1302,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1353,29 +1353,29 @@ namespace SOTS
 										break;
 									case 1:
 										if (confirmPlatforms == 0)
-											tile.active(false);
-										WorldGen.PlaceTile(k, l, (ushort)mod.TileType("SkyChainTile"), true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+											tile.HasTile = false;
+										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1421,29 +1421,29 @@ namespace SOTS
 										break;
 									case 1:
 										if (confirmPlatforms == 0)
-											tile.active(false);
-										WorldGen.PlaceTile(k, l, (ushort)mod.TileType("SkyChainTile"), true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+											tile.HasTile = false;
+										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1477,7 +1477,7 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 									break;
 							}
 						}
@@ -1543,23 +1543,23 @@ namespace SOTS
 									case 0:
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1614,13 +1614,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1666,23 +1666,23 @@ namespace SOTS
 									case 0:
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1719,13 +1719,13 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
+									tile.WallType = (ushort)ModContent.WallType<PortalPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1801,41 +1801,41 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = firstUniqueTile;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = firstUniqueTile;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 5:
-										tile.active(true);
-										tile.type = secondUniqueTile;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = secondUniqueTile;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 6:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -1889,37 +1889,37 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 347;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 347;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 25);
 										}
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 347;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 347;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 								}
 							}
@@ -1958,16 +1958,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = 174;
+									tile.WallType = 174;
 									break;
 								case 3:
-									tile.wall = 92;
+									tile.WallType = 92;
 									break;
 							}
 						}
@@ -2018,43 +2018,43 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 140;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 140;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 152;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 152;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 24);
 										}
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 140;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 140;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 6:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -2093,16 +2093,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = 33;
+									tile.WallType = 33;
 									break;
 								case 3:
-									tile.wall = 88;
+									tile.WallType = 88;
 									break;
 							}
 						}
@@ -2153,49 +2153,49 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 45;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 45;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 121;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 121;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 26);
 										}
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 45;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 45;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 6:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 7:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -2234,19 +2234,19 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = 10;
+									tile.WallType = 10;
 									break;
 								case 3:
-									tile.wall = 89;
+									tile.WallType = 89;
 									break;
 								case 4:
-									tile.wall = 93;
+									tile.WallType = 93;
 									break;
 							}
 						}
@@ -2297,49 +2297,49 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 60;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 60;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 120;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 120;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 62;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 62;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 23);
 										}
 										break;
 									case 5:
-										tile.active(true);
-										tile.type = 60;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 60;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 7:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -2378,16 +2378,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = 67;
+									tile.WallType = 67;
 									break;
 								case 3:
-									tile.wall = 91;
+									tile.WallType = 91;
 									break;
 							}
 						}
@@ -2439,43 +2439,43 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 206;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 206;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 148;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 148;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 27);
 										}
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 206;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 206;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 6:
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -2514,16 +2514,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									tile.WallType = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
 									break;
 								case 2:
-									tile.wall = 84;
+									tile.WallType = 84;
 									break;
 								case 3:
-									tile.wall = 90;
+									tile.WallType = 90;
 									break;
 							}
 						}
@@ -2560,7 +2560,7 @@ namespace SOTS
 		}
 		public static bool SkytileValid(Tile tile, Mod mod)
 		{
-			return tile.active() && (tile.type == (ushort)ModContent.TileType<DullPlatingTile>() || tile.type == (ushort)ModContent.TileType<AvaritianPlatingTile>());
+			return tile.HasTile && (tile.TileType == (ushort)ModContent.TileType<DullPlatingTile>() || tile.TileType == (ushort)ModContent.TileType<AvaritianPlatingTile>());
 		}
 		public static void DistributeSkyThings(Mod mod, int maxChests = 30, int maxDisplays = 7, int maxPotGens = 5, int maxFabricators = 3, int ratePots = 5, int rateDecor = 45)
 		{
@@ -2613,20 +2613,20 @@ namespace SOTS
 						if (next % 3 == 0)
 						{
 							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedSkywareChest>(), style: 1);
-							tile.type = TileID.Sunplate;
-							tile2.type = TileID.Sunplate;
+							tile.TileType = TileID.Sunplate;
+							tile2.TileType = TileID.Sunplate;
 						}
 						if (next % 3 == 1)
 						{
 							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedMeteoriteChest>(), style: 1);
-							tile.type = TileID.MeteoriteBrick;
-							tile2.type = TileID.MeteoriteBrick;
+							tile.TileType = TileID.MeteoriteBrick;
+							tile2.TileType = TileID.MeteoriteBrick;
 						}
 						if (next % 3 == 2)
 						{
 							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedStrangeChest>(), style: 1);
-							tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
-							tile2.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+							tile.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+							tile2.TileType = (ushort)ModContent.TileType<AvaritianPlatingTile>();
 						}
 						totalChests++;
 						next++;
@@ -2677,13 +2677,12 @@ namespace SOTS
 				{
 					if (SkytileValid(tile2, mod) && SkytileValid(tile3, mod) && SkytileValid(tile4, mod) && Empty(i, j - 2, 2, 2))
 					{
-						tile.active(false);
-						tile2.active(false);
-						ModTileEntity modTileEntity = ModTileEntity.GetTileEntity(ModContent.TileEntityType<PotTimer>());
+						tile.HasTile = false;
+						tile2.HasTile = false;
 						WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<PotGeneratorTile>(), true, true, -1, 0);
-						modTileEntity.Place(i, j);
-						tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
-						tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+						ModTileEntity.PlaceEntityNet(i, j, ModContent.TileEntityType<PotTimer>());
+						tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
+						tile2.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 						totalPotGens++;
 					}
 				}
@@ -2839,162 +2838,162 @@ namespace SOTS
 								case 0:
 									break;
 								case 1:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope(0);
-									tile.halfBrick(true);
-									tile.wall = (ushort)WallID.Stone;
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
+									tile.WallType = (ushort)WallID.Stone;
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Stone;
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Stone;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope((byte)(direction == 1 ? 2 : 1));
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Stone;
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = (SlopeType)(direction == 1 ? 2 : 1);
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Stone;
 									break;
 								case 4:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope((byte)(direction == 1 ? 3 : 4));
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Stone;
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = (SlopeType)(direction == 1 ? 3 : 4);
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Stone;
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope((byte)(direction == 1 ? 4 : 3));
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Stone;
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = (SlopeType)(direction == 1 ? 4 : 3);
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Stone;
 									break;
 								case 6:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 20, true, true, -1, 18);
 										WorldGen.GrowPalmTree(k, l);
 									}
 									break;
 								case 7:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.SandstoneBrick;
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.SandstoneBrick;
 									break;
 								case 8:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope((byte)(direction == 1 ? 1 : 2));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = (SlopeType)(direction == 1 ? 1 : 2);
+									tile.IsHalfBlock = false;
 									break;
 								case 9:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<StrangeKeystoneTile>(), true, true, -1, 0);
 									}
 									break;
 								case 10:
-									tile.wall = (ushort)WallID.SandstoneBrick;
+									tile.WallType = (ushort)WallID.SandstoneBrick;
 									break;
 								case 11:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.GrassUnsafe;
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.GrassUnsafe;
 									break;
 								case 12:
-									tile.active(true);
-									tile.type = 53;
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Sandstone;
+									tile.HasTile = true;
+									tile.TileType = 53;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Sandstone;
 									break;
 								case 13:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
-									tile.slope(0);
-									tile.halfBrick(true);
-									tile.wall = (ushort)WallID.GrassUnsafe;
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
+									tile.WallType = (ushort)WallID.GrassUnsafe;
 									break;
 								case 14:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
-									tile.slope((byte)(direction == 1 ? 1 : 2));
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.GrassUnsafe;
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.Slope = (SlopeType)(direction == 1 ? 1 : 2);
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.GrassUnsafe;
 									break;
 								case 15:
-									tile.active(true);
-									tile.type = 396;
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Sandstone;
+									tile.HasTile = true;
+									tile.TileType = 396;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Sandstone;
 									break;
 								case 16:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.GrassUnsafe;
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.GrassUnsafe;
 									break;
 								case 17:
-									tile.active(true);
-									tile.type = 397;
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Sandstone;
+									tile.HasTile = true;
+									tile.TileType = 397;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Sandstone;
 									break;
 								case 19:
-									tile.active(true);
-									tile.type = 396;
-									tile.slope((byte)(direction == 1 ? 3 : 4));
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Sandstone;
+									tile.HasTile = true;
+									tile.TileType = 396;
+									tile.Slope = (SlopeType)(direction == 1 ? 3 : 4);
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Sandstone;
 									break;
 								case 20:
-									tile.active(true);
-									tile.type = 396;
-									tile.slope((byte)(direction == 1 ? 4 : 3));
-									tile.halfBrick(false);
-									tile.wall = (ushort)WallID.Sandstone;
+									tile.HasTile = true;
+									tile.TileType = 396;
+									tile.Slope = (SlopeType)(direction == 1 ? 4 : 3);
+									tile.IsHalfBlock = false;
+									tile.WallType = (ushort)WallID.Sandstone;
 									break;
 								case 21:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k - (direction != 1 ? 1 : 0), l, 376, true, true, -1, 0);
 									}
 									break;
 								case 22:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k - (direction != 1 ? 1 : 0), l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
-										tile.wall = (ushort)WallID.SandstoneBrick;
+										tile.WallType = (ushort)WallID.SandstoneBrick;
 									}
 									break;
 								case 23:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<PyramidBrickTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 							}
 						}
@@ -3014,7 +3013,7 @@ namespace SOTS
 				for (int ydown = 0; ; ydown++)
 				{
 					Tile tile = Framing.GetTileSafely(xCheck, ydown);
-					if (tile.active() && Main.tileSolid[tile.type])
+					if (tile.HasTile && Main.tileSolid[tile.TileType])
 					{
 						spawnY = ydown;
 						break;
@@ -3060,16 +3059,16 @@ namespace SOTS
 							int yPosition6 = spawnY + (int)(y * scale + 0.5f);
 							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
 							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
-							if (!tile.active())
+							if (!tile.HasTile)
 							{
-								tile.type = TileID.Dirt;
-								tile.active(true);
+								tile.TileType = TileID.Dirt;
+								tile.HasTile = true;
 							}
-							if (!tile2.active() && tile.type == TileID.Dirt)
+							if (!tile2.HasTile && tile.TileType == TileID.Dirt)
 							{
-								tile.type = 2;
+								tile.TileType = 2;
 							}
-							tile.active();
+							//tile.HasTile;
 						}
 					}
 				}
@@ -3130,25 +3129,25 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 4;
+									tile.WallType = 4;
 									break;
 								case 2:
-									tile.wall = 78;
+									tile.WallType = 78;
 									break;
 								case 3:
-									tile.wall = 21;
+									tile.WallType = 21;
 									break;
 								case 4:
-									tile.wall = 27;
+									tile.WallType = 27;
 									break;
 								case 5:
-									tile.wall = 142;
+									tile.WallType = 142;
 									break;
 								case 6:
-									tile.wall = 5;
+									tile.WallType = 5;
 									break;
 							}
 						}
@@ -3197,43 +3196,43 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 14:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 51;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 51;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
@@ -3241,138 +3240,138 @@ namespace SOTS
 									case 6:
 									case 8:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										else if (confirmPlatforms == 1)
 										{
 											WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(5));
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 										}
 										break;
 									case 7:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 33, true, true, -1, 1);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 9:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 10:
-										tile.active(true);
-										tile.type = 54;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 54;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 11:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 319, true, true, -1, 0);
 										}
 										break;
 									case 12:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 79, true, true, -1, 0);
 										}
 										break;
 									case 13:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 215, true, true, -1, 0);
 										}
 										break;
 									case 15:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 103, true, true, -1, 2);
 										}
 										break;
 									case 16:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 240, true, true, -1, 20);
 										}
 										break;
 									case 19:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 0);
 										}
 										break;
 									case 21:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 5);
 										}
 										break;
 									case 22:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 96, true, true, -1, 0);
 										}
 										break;
 									case 23:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 172, true, true, -1, 0);
 										}
 										break;
 									case 24:
-										tile.active(true);
-										tile.type = 332;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 332;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 25:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 26:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 27:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -3411,22 +3410,22 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 60;
+									tile.WallType = 60;
 									break;
 								case 2:
-									tile.wall = 78;
+									tile.WallType = 78;
 									break;
 								case 3:
-									tile.wall = 66;
+									tile.WallType = 66;
 									break;
 								case 4:
-									tile.wall = 1;
+									tile.WallType = 1;
 									break;
 								case 5:
-									tile.wall = 2;
+									tile.WallType = 2;
 									break;
 							}
 						}
@@ -3463,82 +3462,82 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 14:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 42, true, true, -1, 7);
 										}
 										break;
 									case 3:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 105, true, true, -1, 1);
 										}
 										break;
 									case 4:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 215, true, true, -1, 0);
 										}
 										break;
 									case 5:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 6:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 7:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 8:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 9:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
@@ -3587,22 +3586,22 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 4;
+									tile.WallType = 4;
 									break;
 								case 2:
-									tile.wall = 21;
+									tile.WallType = 21;
 									break;
 								case 3:
-									tile.wall = 27;
+									tile.WallType = 27;
 									break;
 								case 4:
-									tile.wall = 1;
+									tile.WallType = 1;
 									break;
 								case 5:
-									tile.wall = 2;
+									tile.WallType = 2;
 									break;
 							}
 						}
@@ -3647,131 +3646,131 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 16:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 54;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 54;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 5);
 										}
 										break;
 									case 5:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 6:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 55, true, true, -1, 3);
 										}
 										break;
 									case 7:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 0);
 										}
 										break;
 									case 8:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, TileID.Furnaces, true, true, -1, 0);
 										}
 										break;
 									case 9:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 10:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 239, true, true, -1, 2);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 11:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
-											WorldGen.PlaceTile(k, l, TileID.Anvils, true, true, -1, WorldGen.IronTierOre == 6 ? 0 : 1);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
+											WorldGen.PlaceTile(k, l, TileID.Anvils, true, true, -1, 0); // WorldGen.SavedOreTiers.Iron == 6 ? 0 : 1);
 										}
 										break;
 									case 12:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 18, true, true, -1, 0);
 										}
 										break;
 									case 13:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 14:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 15:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -3833,37 +3832,37 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 60;
+									tile.WallType = 60;
 									break;
 								case 2:
-									tile.wall = 1;
+									tile.WallType = 1;
 									break;
 								case 3:
-									tile.wall = 4;
+									tile.WallType = 4;
 									break;
 								case 4:
-									tile.wall = 21;
+									tile.WallType = 21;
 									break;
 								case 5:
-									tile.wall = 27;
+									tile.WallType = 27;
 									break;
 								case 6:
-									tile.wall = 78;
+									tile.WallType = 78;
 									break;
 								case 7:
-									tile.wall = 106;
+									tile.WallType = 106;
 									break;
 								case 8:
-									tile.wall = 5;
+									tile.WallType = 5;
 									break;
 								case 9:
-									tile.wall = 115;
+									tile.WallType = 115;
 									break;
 								case 10:
-									tile.wall = 2;
+									tile.WallType = 2;
 									break;
 							}
 						}
@@ -3923,161 +3922,161 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(2);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = (SlopeType)2;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 5:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 6:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(3);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = (SlopeType)3;
+										tile.IsHalfBlock = false;
 										break;
 									case 7:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 8:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(2);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = (SlopeType)2;
+										tile.IsHalfBlock = false;
 										break;
 									case 9:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 10:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(4);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = (SlopeType)4;
+										tile.IsHalfBlock = false;
 										break;
 									case 11:
-										tile.active(true);
-										tile.type = 51;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 51;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 12:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(4);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = (SlopeType)4;
+										tile.IsHalfBlock = false;
 										break;
 									case 13:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(3);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = (SlopeType)3;
+										tile.IsHalfBlock = false;
 										break;
 									case 14:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 15:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										else if (confirmPlatforms == 1)
 										{
 											WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(5));
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 										}
 										break;
 									case 16:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 17:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(3);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = (SlopeType)3;
+										tile.IsHalfBlock = false;
 										break;
 									case 18:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(4);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = (SlopeType)4;
+										tile.IsHalfBlock = false;
 										break;
 									case 19:
-										tile.active(true);
-										tile.type = 54;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 54;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 20:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 240, true, true, -1, 48);
 										}
 										break;
 									case 21:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 32:
 									case 22:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 0);
 										}
 										break;
 									case 23:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											int temp = Main.player[Main.myPlayer].direction;
 											Main.player[Main.myPlayer].direction = -1;
 											WorldGen.PlaceTile(k, l, 79, true, true, Main.myPlayer, 0);
@@ -4087,173 +4086,173 @@ namespace SOTS
 									case 24:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 18, true, true, -1, 0);
 										}
 										break;
 									case 25:
-										tile.active(true);
-										tile.type = 124;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 124;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 26:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 27:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 0);
 										}
 										break;
 									case 28:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 304, true, true, -1, 0);
 										}
 										break;
 									case 29:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 0);
 										}
 										break;
 									case 30:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 13, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 31:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 103, true, true, -1, 2);
 										}
 										break;
 									case 33:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 13, true, true, -1, 4);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 34:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 49, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 35:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 15, true, true, -1, 21);
 										}
 										break;
 									case 36:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 14, true, true, -1, 16);
 										}
 										break;
 									case 37:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 14, true, true, -1, 17);
 										}
 										break;
 									case 38:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 5);
 										}
 										break;
 									case 39:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 94, true, true, -1, 0);
 										}
 										break;
 									case 40:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 41:
-										tile.active(true);
-										tile.type = 73;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 73;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 42:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 254, true, true, -1, 4);
 										}
 										break;
 									case 43:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 44:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 45:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 46:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -4297,25 +4296,25 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 106;
+									tile.WallType = 106;
 									break;
 								case 2:
-									tile.wall = 4;
+									tile.WallType = 4;
 									break;
 								case 3:
-									tile.wall = 78;
+									tile.WallType = 78;
 									break;
 								case 4:
-									tile.wall = 2;
+									tile.WallType = 2;
 									break;
 								case 5:
-									tile.wall = 1;
+									tile.WallType = 1;
 									break;
 								case 6:
-									tile.wall = 59;
+									tile.WallType = 59;
 									break;
 							}
 						}
@@ -4355,133 +4354,133 @@ namespace SOTS
 								switch (_structure[i, j])
 								{
 									case -2:
-										tile.active(true);
-										tile.type = TileID.Cobweb;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = TileID.Cobweb;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 0:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 1:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 2:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, TileID.Banners, true, true, -1, 0);
 										}
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 124;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 124;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
 										if (confirmPlatforms == 0)
-											tile.active(false);
-										else if (!tile.active())
+											tile.HasTile = false;
+										else if (!tile.HasTile)
 										{
-											WorldGen.PlaceTile(k, l, TileID.MetalBars, true, true, -1, WorldGen.IronTierOre == 6 ? 2 : 3);
-											tile.slope(0);
-											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, TileID.MetalBars, true, true, -1, 0);// WorldGen.IronTierOre == 6 ? 2 : 3);
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 										}
 										break;
 									case 5:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, TileID.FishingCrate, true, true, -1, 0);
 										}
 										break;
 									case 6:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 7:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
-											WorldGen.PlaceTile(k, l, TileID.Anvils, true, true, -1, WorldGen.IronTierOre == 6 ? 0 : 1);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
+											WorldGen.PlaceTile(k, l, TileID.Anvils, true, true, -1, 0);// WorldGen.IronTierOre == 6 ? 0 : 1);
 										}
 										break;
 									case 8:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 9:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0);
 										}
 										break;
 									case 10:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 21, true, true, -1, 5);
 										}
 										break;
 									case 11:
-										tile.active(true);
-										tile.type = 332;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 332;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 12:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 215, true, true, -1, 0);
 										}
 										break;
 									case 13:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 14:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 15:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -4534,16 +4533,16 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 5;
+									tile.WallType = 5;
 									break;
 								case 2:
-									tile.wall = 4;
+									tile.WallType = 4;
 									break;
 								case 3:
-									tile.wall = 78;
+									tile.WallType = 78;
 									break;
 							}
 						}
@@ -4594,114 +4593,114 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 273;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 273;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 5:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 6:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 376, true, true, -1, 0);
 										}
 										break;
 									case 7:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(true);
-											tile.type = 332;
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = true;
+											tile.TileType = 332;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 										}
 										break;
 									case 8:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 9:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 15);
 										}
 										break;
 									case 10:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 15);
 										}
 										break;
 									case 11:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 215, true, true, -1, 0);
 										}
 										break;
 									case 12:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 15:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 14:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -4751,35 +4750,35 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 5;
+									tile.WallType = 5;
 									break;
 								case 2:
-									tile.wall = 16;
+									tile.WallType = 16;
 									break;
 								case 3:
-									tile.wall = 1;
+									tile.WallType = 1;
 									break;
 								case 4:
-									tile.wall = 63;
+									tile.WallType = 63;
 									break;
 								case 5:
-									if (tile.wall == 0)
-										tile.wall = WallID.DirtUnsafe;
+									if (tile.WallType == 0)
+										tile.WallType = WallID.DirtUnsafe;
 									break;
 								case 6:
-									tile.wall = 65;
+									tile.WallType = 65;
 									break;
 								case 7:
-									tile.wall = 66;
+									tile.WallType = 66;
 									break;
 								case 8:
-									tile.wall = 68;
+									tile.WallType = 68;
 									break;
 								case 9:
-									tile.wall = 59;
+									tile.WallType = 59;
 									break;
 							}
 						}
@@ -4826,214 +4825,214 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 57;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 57;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 57;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 57;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 57;
-										tile.slope(2);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 57;
+										tile.Slope = (SlopeType)2;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 85, true, true, -1, 2);
 										}
 										break;
 									case 5:
-										tile.active(true);
-										tile.type = 51;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 51;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 6:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 7:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 85, true, true, -1, 4);
 										}
 										break;
 									case 8:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 85, true, true, -1, 1);
 										}
 										break;
 									case 9:
-										tile.active(true);
-										tile.type = 331;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 331;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 10:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 11:
-										tile.active(true);
-										tile.type = 57;
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 57;
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 12:
-										tile.active(true);
-										tile.type = 332;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 332;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 13:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(2);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = (SlopeType)2;
+										tile.IsHalfBlock = false;
 										break;
 									case 14:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 15:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 16:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 17:
-										tile.active(true);
-										tile.type = 3;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 3;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 18:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 19:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 78, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 20:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 21:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 22:
-										tile.active(true);
-										tile.type = 52;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 52;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 23:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(4);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = (SlopeType)4;
+										tile.IsHalfBlock = false;
 										break;
 									case 24:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 25:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 26:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 27:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
-											tile.liquid = 46;
-											tile.liquidType(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
+											tile.LiquidAmount = 46;
+											tile.LiquidType = 0;
 										}
 										break;
 									case 28:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<EnchantedSwordShrineTile>(), true, true, -1, 0);
 										}
 										break;
 									case 29:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
-											tile.liquid = 255;
-											tile.liquidType(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
+											tile.LiquidAmount = 255;
+											tile.LiquidType = 0;
 										}
 										break;
 									case 30:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(2);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = (SlopeType)2;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -5096,14 +5095,14 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 60;
+									tile.WallType = 60;
 									break;
 								case 2:
-									if (tile.wall == 0)
-										tile.wall = 2;
+									if (tile.WallType == 0)
+										tile.WallType = 2;
 									break;
 							}
 						}
@@ -5165,148 +5164,148 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 192;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 192;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 353;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 353;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 51;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 51;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 5:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 6:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 23);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 7:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 85, true, true, -1, 1);
 										}
 										break;
 									case 8:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 9:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 10:
-										tile.active(true);
-										tile.type = 191;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 191;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 11:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 227, true, true, -1, 3);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 12:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 13:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 14:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 15:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(3);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = (SlopeType)3;
+										tile.IsHalfBlock = false;
 										break;
 									case 16:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 17:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 227, true, true, -1, 8);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 18:
-										tile.active(true);
-										tile.type = 2;
-										tile.slope(2);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 2;
+										tile.Slope = (SlopeType)2;
+										tile.IsHalfBlock = false;
 										break;
 									case 19:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 227, true, true, -1, 11);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 20:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 227, true, true, -1, 10);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 21:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 227, true, true, -1, 9);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -5356,25 +5355,25 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 78;
+									tile.WallType = 78;
 									break;
 								case 2:
-									tile.wall = 4;
+									tile.WallType = 4;
 									break;
 								case 3:
-									tile.wall = 21;
+									tile.WallType = 21;
 									break;
 								case 4:
-									tile.wall = 27;
+									tile.WallType = 27;
 									break;
 								case 5:
-									tile.wall = 5;
+									tile.WallType = 5;
 									break;
 								case 6:
-									tile.wall = 1;
+									tile.WallType = 1;
 									break;
 							}
 						}
@@ -5423,41 +5422,41 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 54;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 54;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
-										tile.active(true);
-										tile.type = 51;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 51;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 5:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 6:
 									case 7:
@@ -5465,160 +5464,160 @@ namespace SOTS
 									case 15:
 									case 20:
 										if (confirmPlatforms == 2)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 8:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 245, true, true, -1, 3);
 										}
 										break;
 									case 10:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 13, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 11:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 101, true, true, -1, 0);
 										}
 										break;
 									case 12:
-										tile.active(true);
-										tile.type = 3;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 3;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 13:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 14:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 89, true, true, -1, 1);
 										}
 										break;
 									case 16:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 78, true, true, -1, 0);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 17:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 18, true, true, -1, 0);
 										}
 										break;
 									case 18:
 										if (confirmPlatforms == 0)
-											tile.active(false);
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-										tile.slope(1);
-										tile.halfBrick(false);
+										tile.Slope = (SlopeType)1;
+										tile.IsHalfBlock = false;
 										break;
 									case 19:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 91, true, true, -1, 0);
 										}
 										break;
 									case 21:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 13);
 										}
 										break;
 									case 22:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 13);
 										}
 										break;
 									case 23:
-										tile.active(true);
-										tile.type = TileID.WoodenBeam;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = TileID.WoodenBeam;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 24:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 105, true, true, -1, 20);
 										}
 										break;
 									case 25:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 15, true, true, -1, 0);
 										}
 										break;
 									case 26:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 14, true, true, -1, 16);
 										}
 										break;
 									case 27:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(true);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
 										break;
 									case 28:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 29:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -5663,22 +5662,22 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.wall = 0;
+									tile.WallType = 0;
 									break;
 								case 1:
-									tile.wall = 5;
+									tile.WallType = 5;
 									break;
 								case 2:
-									tile.wall = 1;
+									tile.WallType = 1;
 									break;
 								case 3:
-									tile.wall = 4;
+									tile.WallType = 4;
 									break;
 								case 4:
-									tile.wall = 78;
+									tile.WallType = 78;
 									break;
 								case 5:
-									tile.wall = 106;
+									tile.WallType = 106;
 									break;
 							}
 						}
@@ -5720,106 +5719,106 @@ namespace SOTS
 									case 0:
 										if (confirmPlatforms == 0)
 										{
-											tile.active(false);
-											tile.halfBrick(false);
-											tile.slope(0);
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
 										}
 										break;
 									case 1:
-										tile.active(true);
-										tile.type = 38;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 38;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 2:
-										tile.active(true);
-										tile.type = 51;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 51;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 3:
-										tile.active(true);
-										tile.type = 30;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 30;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 4:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 91, true, true, -1, 0);
 										}
 										break;
 									case 5:
-										tile.active(true);
-										tile.type = 124;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 124;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 6:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 10, true, true, -1, 0);
 										}
 										break;
 									case 7:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 376, true, true, -1, 0);
 										}
 										break;
 									case 8:
-										tile.active(true);
-										tile.type = 332;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 332;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 9:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 17, true, true, -1, 0);
 										}
 										break;
 									case 10:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 11:
 										if (confirmPlatforms == 1)
 										{
-											tile.active(false);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 											WorldGen.PlaceTile(k, l, 16, true, true, -1, 0);
 										}
 										break;
 									case 12:
-										tile.active(true);
-										tile.type = 1;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 1;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 									case 13:
-										tile.active(true);
-										tile.type = 0;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 0;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										break;
 								}
 							}
@@ -5889,246 +5888,246 @@ namespace SOTS
 								case 0:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 1:
 									if (confirmPlatforms == 1 && !WorldGen.genRand.NextBool(3))
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, TileID.Saplings, true, true, -1, 0);
 										WorldGen.GrowTree(k, l);
 										WorldGen.GrowEpicTree(k, l);
 									}
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(2);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = (SlopeType)2;
+									tile.IsHalfBlock = false;
 									break;
 								case 4:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 6:
-									tile.active(true);
-									tile.type = 0;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 0;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 7:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 8:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 9:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(3);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = (SlopeType)3;
+									tile.IsHalfBlock = false;
 									break;
 								case 10:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(3);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = (SlopeType)3;
+									tile.IsHalfBlock = false;
 									break;
 								case 11:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 101, true, true, -1, 25);
 									}
 									break;
 								case 12:
-									tile.active(true);
-									tile.type = 373;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 373;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 13:
-									tile.active(true);
-									tile.type = 51;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 51;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 14:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(4);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = (SlopeType)4;
+									tile.IsHalfBlock = false;
 									break;
 								case 15:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 10, true, true, -1, 30);
 									}
 									break;
 								case 17:
-									tile.active(true);
-									tile.type = 73;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 73;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 18:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 215, true, true, -1, 0);
 									}
 									break;
 								case 19:
-									tile.active(true);
-									tile.type = 321;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 321;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 20:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 19, true, true, -1, 19);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 21:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 22:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 23:
-									tile.active(true);
-									tile.type = 321;
-									tile.slope(3);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 321;
+									tile.Slope = (SlopeType)3;
+									tile.IsHalfBlock = false;
 									break;
 								case 24:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 42, true, true, -1, 5);
 									}
 									break;
 								case 25:
-									tile.active(true);
-									tile.type = 124;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 124;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 26:
-									tile.active(true);
-									tile.type = 321;
-									tile.slope(4);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 321;
+									tile.Slope = (SlopeType)4;
+									tile.IsHalfBlock = false;
 									break;
 								case 27:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 104, true, true, -1, 6);
 									}
 									break;
 								case 28:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(4);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = (SlopeType)4;
+									tile.IsHalfBlock = false;
 									break;
 								case 29:
 									if (confirmPlatforms == 1)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 30:
 									if (confirmPlatforms == 1)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
 									if (WaterBolt)
-										tile.frameX = 90;
-									tile.slope(0);
-									tile.halfBrick(false);
+										tile.TileFrameX = 90;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 33:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 79, true, true, -1, 24);
 									}
 									break;
 								case 34:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(2);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = (SlopeType)2;
+									tile.IsHalfBlock = false;
 									break;
 								case 35:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 19, true, true, -1, 19);
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 36:
-									tile.active(true);
-									tile.type = 321;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 321;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 37:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 									}
 									break;
 								case 38:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 							}
 						}
@@ -6177,25 +6176,25 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 8:
-								tile.wall = 0;
+								tile.WallType = 0;
 								break;
 							case 1:
-								tile.wall = 68;
+								tile.WallType = 68;
 								break;
 							case 2:
-								tile.wall = 5;
+								tile.WallType = 5;
 								break;
 							case 3:
-								tile.wall = 147;
+								tile.WallType = 147;
 								break;
 							case 4:
-								tile.wall = 66;
+								tile.WallType = 66;
 								break;
 							case 6:
-								tile.wall = 2;
+								tile.WallType = 2;
 								break;
 							case 7:
-								tile.wall = 59;
+								tile.WallType = 59;
 								break;
 						}
 					}
@@ -6250,37 +6249,37 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 1:
-								tile.wall = WallID.MudstoneBrick;
-								tile.wallColor(PaintID.Gray);
+								tile.WallType = WallID.MudstoneBrick;
+								tile.WallColor = PaintID.GrayPaint;
 								break;
 							case 2:
-								tile.wall = WallID.Ebonwood;
-								tile.wallColor(PaintID.Brown);
+								tile.WallType = WallID.Ebonwood;
+								tile.WallColor = PaintID.BrownPaint;
 								break;
 							case 3:
-								tile.wall = 4;
+								tile.WallType = 4;
 								break;
 							case 4:
-								tile.wall = 5;
+								tile.WallType = 5;
 								break;
 							case 5:
-								tile.wall = WallID.PinkDungeonSlab;
-								tile.wallColor(PaintID.Gray);
+								tile.WallType = WallID.PinkDungeonSlab;
+								tile.WallColor = PaintID.GrayPaint;
 								break;
 							case 6:
-								tile.wall = WallID.MetalFence;
+								tile.WallType = WallID.MetalFence;
 								break;
 							case 7:
-								tile.wall = 59;
+								tile.WallType = 59;
 								break;
 							case 8:
-								tile.wall = 1;
+								tile.WallType = 1;
 								break;
 							case 9:
-								tile.wall = 16;
+								tile.WallType = 16;
 								break;
 							case 10:
-								tile.wall = 2;
+								tile.WallType = 2;
 								break;
 						}
 					}
@@ -6335,258 +6334,258 @@ namespace SOTS
 								case 0:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 1:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(2);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = (SlopeType)2;
+									tile.IsHalfBlock = false;
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 4:
-									tile.active(true);
-									tile.type = TileID.BlueDynastyShingles;
-									tile.color(PaintID.Gray);
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = TileID.BlueDynastyShingles;
+									tile.TileColor = PaintID.GrayPaint;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = TileID.BlueDynastyShingles;
-									tile.color(PaintID.Gray);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = TileID.BlueDynastyShingles;
+									tile.TileColor = PaintID.GrayPaint;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 6:
-									tile.active(true);
-									tile.type = TileID.RichMahogany;
-									tile.color(PaintID.Brown);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = TileID.RichMahogany;
+									tile.TileColor = PaintID.BrownPaint;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 7:
-									tile.active(true);
-									tile.type = 30;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 30;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 8:
 									if (confirmPlatforms == 2)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, TileID.Bottles, true, true, -1, 0);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 9:
 									if (confirmPlatforms == 2)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 19:
 									if (confirmPlatforms == 2)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
 									if (WaterBolt)
-										tile.frameX = 90;
-									tile.slope(0);
-									tile.halfBrick(false);
+										tile.TileFrameX = 90;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 10:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 101, true, true, -1, 5);
 									}
 									break;
 								case 11:
 									if (confirmPlatforms == 2)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, TileID.Candles, true, true, -1, 1);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 12:
-									tile.active(true);
-									tile.type = 38;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = 38;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 13:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 376, true, true, -1, 0);
 									}
 									break;
 								case 14:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 15:
-									tile.active(true);
-									tile.type = TileID.BlueDynastyShingles;
-									tile.color(PaintID.Gray);
-									tile.slope(3);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = TileID.BlueDynastyShingles;
+									tile.TileColor = PaintID.GrayPaint;
+									tile.Slope = (SlopeType)3;
+									tile.IsHalfBlock = false;
 									break;
 								case 16:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 13, true, true, -1, 4);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 18:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 13, true, true, -1, 3);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 20:
-									tile.active(true);
-									tile.type = 124;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 124;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 21:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 19, true, true, -1, 1);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 22:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 10, true, true, -1, 13);
 									}
 									break;
 								case 23:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 14, true, true, -1, 14);
 									}
 									break;
 								case 24:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 15, true, true, -1, 17);
 									}
 									break;
 								case 25:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 94, true, true, -1, 0);
 									}
 									break;
 								case 26:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 									}
 									break;
 								case 27:
-									tile.active(true);
-									tile.type = 3;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 3;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 28:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 29:
-									tile.active(true);
-									tile.type = 0;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 0;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 30:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 31:
-									tile.active(true);
-									tile.type = TileID.Mudstone;
-									tile.color(PaintID.Gray);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = TileID.Mudstone;
+									tile.TileColor = PaintID.GrayPaint;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 32:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 33:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 227, true, true, -1, 1);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 34:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 35:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 227, true, true, -1, 0);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 36:
-									tile.active(true);
-									tile.type = 1;
-									tile.slope(2);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 1;
+									tile.Slope = (SlopeType)2;
+									tile.IsHalfBlock = false;
 									break;
 							}
 						}
@@ -6627,12 +6626,12 @@ namespace SOTS
 						}
 					}
 					Tile tile = Main.tile[i, j];
-					if (Main.tileDungeon[tile.type])
+					if (Main.tileDungeon[tile.TileType])
 					{
 						i += dungeonSide * -16;
-						if (tile.type == TileID.GreenDungeonBrick)
+						if (tile.TileType == TileID.GreenDungeonBrick)
 							color = 1;
-						else if (tile.type == TileID.BlueDungeonBrick)
+						else if (tile.TileType == TileID.BlueDungeonBrick)
 							color = 2;
 						properGenerate = true;
 						break;
@@ -6656,17 +6655,17 @@ namespace SOTS
 					int tunnelY = spawnY - j;
 					Tile tile = Framing.GetTileSafely(tunnel, tunnelY);
 					Tile tileAbove = Framing.GetTileSafely(tunnel, tunnelY - 1);
-					if ((Main.tileDungeon[tile.type] || TileID.Spikes == tile.type) && tile.active())
+					if ((Main.tileDungeon[tile.TileType] || TileID.Spikes == tile.TileType) && tile.HasTile)
 					{
-						if (Main.tileSolid[tileAbove.type] && !Main.tileSolidTop[tileAbove.type] && tileAbove.active())
-							tile.active(false);
+						if (Main.tileSolid[tileAbove.TileType] && !Main.tileSolidTop[tileAbove.TileType] && tileAbove.HasTile)
+							tile.HasTile = false;
 						else
 						{
-							tile.active(false);
+							tile.HasTile = false;
 							int style = 7;
-							if (tile.type == TileID.GreenDungeonBrick)
+							if (tile.TileType == TileID.GreenDungeonBrick)
 								style = 8;
-							if (tile.type == TileID.BlueDungeonBrick)
+							if (tile.TileType == TileID.BlueDungeonBrick)
 								style = 6;
 							WorldGen.PlaceTile(tunnel, tunnelY, TileID.Platforms, true, true, -1, style);
 						}
@@ -6745,22 +6744,22 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 2:
-								tile.wall = (ushort)WallType1;
+								tile.WallType = (ushort)WallType1;
 								break;
 							case 3:
-								tile.wall = WallID.Shadewood;
+								tile.WallType = WallID.Shadewood;
 								break;
 							case 4:
-								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 5:
-								tile.wall = (ushort)WallType2;
+								tile.WallType = (ushort)WallType2;
 								break;
 							case 6:
-								tile.wall = (ushort)WallType3;
+								tile.WallType = (ushort)WallType3;
 								break;
 							case 7:
-								tile.wall = WallID.CobaltBrick;
+								tile.WallType = WallID.CobaltBrick;
 								break;
 						}
 					}
@@ -6813,163 +6812,163 @@ namespace SOTS
 							{
 								if (_structure[i, j] != 17 && _structure[i, j] != 16)
 								{
-									tile.liquidType(0);
-									tile.liquid = 0;
+									tile.LiquidType = 0;
+									tile.LiquidAmount = 0;
 								}
 							}
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.active(true);
-									tile.type = (ushort)TileType1;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)TileType1;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 1:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = (ushort)TileType1;
-									tile.slope(3);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)TileType1;
+									tile.Slope = (SlopeType)3;
+									tile.IsHalfBlock = false;
 									break;
 								case 4:
-									tile.active(true);
-									tile.type = (ushort)TileType1;
-									tile.slope(4);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)TileType1;
+									tile.Slope = (SlopeType)4;
+									tile.IsHalfBlock = false;
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 6:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									else
 									{
 										WorldGen.PlaceTile(k, l, ModContent.TileType<ArkhalisChainTile>(), true, true, -1, 0);
-										tile.frameX = 18;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.TileFrameX = 18;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 									}
 									break;
 								case 7:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, TileID.GoldCoinPile, true, true, -1, 0);
 									}
 									break;
 								case 8:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, TileID.FishingCrate, true, true, -1, 5);
 									}
 									break;
 								case 9:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, PlatformStyle);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 10:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<AncientGoldThroneTile>(), true, true, -1, 0);
 									}
 									break;
 								case 11:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 240, true, true, -1, 17);
 									}
 									break;
 								case 12:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 215, true, true, -1, 7);
 									}
 									break;
 								case 13:
-									tile.active(true);
-									tile.type = 527;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = 527;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 14:
-									tile.active(true);
-									tile.type = (ushort)TileType1;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)TileType1;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 16:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 145;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidAmount = 145;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 17:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 255;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidAmount = 255;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 18:
-									tile.active(true);
-									tile.type = (ushort)TileType1;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = (ushort)TileType1;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 19:
-									tile.active(true);
-									tile.type = (ushort)TileType1;
-									tile.slope(2);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)TileType1;
+									tile.Slope = (SlopeType)2;
+									tile.IsHalfBlock = false;
 									break;
 								case 20:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
 									}
 									break;
@@ -7037,8 +7036,8 @@ namespace SOTS
 						int xPosition6 = spawnX + x;
 						int yPosition6 = spawnY + (int)(y * scale + 0.5f) - 17;
 						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-						tile.active(false);
-						tile.wall = 0;
+						tile.HasTile = false;
+						tile.WallType = 0;
 					}
 				}
 			}
@@ -7055,14 +7054,14 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 0:
-								tile.wall = 0;
+								tile.WallType = 0;
 								break;
 							case 1:
-								tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 								break;
 							case 2:
-								if (tile.active())
-									tile.wall = 40;
+								if (tile.HasTile)
+									tile.WallType = 40;
 								break;
 						}
 					}
@@ -7123,81 +7122,81 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 1:
-									tile.active(true);
-									tile.type = 147;
-									tile.slope(2);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 147;
+									tile.Slope = (SlopeType)2;
+									tile.IsHalfBlock = false;
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = 147;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 147;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = 147;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = 147;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 4:
-									tile.active(true);
-									tile.type = 147;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 147;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<HardIceBrickTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<HardIceBrickTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 6:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(true);
-										tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
-										tile.slope(0);
-										tile.halfBrick(false);
-										if (i >= 22 && tile.wall == 0)
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<FrigidIceTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										if (i >= 22 && tile.WallType == 0)
 										{
-											tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+											tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 										}
 									}
 									break;
 								case 7:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, 4, true, true, -1, 9);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 8:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<FrostArtifactTile>(), true, true, -1, 0);
 									}
 									break;
 								case 9:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(true);
-										tile.type = 161;
-										tile.slope(0);
-										tile.halfBrick(false);
-										tile.wall = WallID.IceUnsafe;
+										tile.HasTile = true;
+										tile.TileType = 161;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										tile.WallType = WallID.IceUnsafe;
 									}
 									else
 									{
 										for (int up = 1; up <= 2; up++)
 										{
 											Tile tileAbove = Main.tile[k, l - up];
-											if (tileAbove.type == ModContent.TileType<FrigidIceTile>() && WorldGen.genRand.NextBool(2 + up))
+											if (tileAbove.TileType == ModContent.TileType<FrigidIceTile>() && WorldGen.genRand.NextBool(2 + up))
 											{
-												tileAbove.type = 161;
+												tileAbove.TileType = 161;
 											}
 										}
 									}
@@ -7205,35 +7204,35 @@ namespace SOTS
 								case 10:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
-										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+										tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 									}
 									break;
 								case 11:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<CharredWoodTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<CharredWoodTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 12:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 									}
 									break;
 								case 13:
 									if (confirmPlatforms == 0 && TrueTileSolid(k, l))
 									{
-										tile.active(true);
-										tile.type = 147;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = 147;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 									}
 									break;
 							}
@@ -7245,7 +7244,7 @@ namespace SOTS
 		public static bool GenerateFrigidIceOre(int spawnX, int spawnY)
 		{
 			Tile tile = Framing.GetTileSafely(spawnX, spawnY);
-			if (!tile.active() || tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock || tile.type == TileID.Slush)
+			if (!tile.HasTile || tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock || tile.TileType == TileID.Slush)
 			{
 				float rand = Main.rand.NextFloat(2 * (float)Math.PI);
 				float interval = Main.rand.NextFloat(24, 32);
@@ -7261,8 +7260,8 @@ namespace SOTS
 						if (Math.Sqrt(x * x + (int)y * (int)y) <= radius + 0.5 && Math.Abs(MathHelper.WrapAngle(angle - rand)) < MathHelper.ToRadians(interval * noise))
 						{
 							tile = Framing.GetTileSafely(xP, yP);
-							if (!tile.active() || tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock || tile.type == TileID.Slush)
-								tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
+							if (!tile.HasTile || tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock || tile.TileType == TileID.Slush)
+								tile.TileType = (ushort)ModContent.TileType<FrigidIceTile>();
 						}
 					}
 				}
@@ -7291,25 +7290,25 @@ namespace SOTS
 						bool capable = true;
 						if (distance >= radius + 0.5 - radialMod && capable)
 						{
-							tile.type = (ushort)ModContent.TileType<EvostoneTile>();
-							tile.active(true);
+							tile.TileType = (ushort)ModContent.TileType<EvostoneTile>();
+							tile.HasTile = true;
 						}
 						else if (distance >= radius + 0.5 - radialMod - radialMod1 && capable)
 						{
-							tile.wall = WallID.Marble;
-							tile.type = TileID.Marble;
-							tile.active(true);
+							tile.WallType = WallID.Marble;
+							tile.TileType = TileID.Marble;
+							tile.HasTile = true;
 						}
 						else if (distance >= radius + 0.5 - radialMod - radialMod1 - radialMod2 && capable)
 						{
-							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
-							tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
-							tile.active(true);
+							tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
+							tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+							tile.HasTile = true;
 						}
 						else
 						{
-							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
-							tile.active(false);
+							tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
+							tile.HasTile = false;
 						}
 					}
 				}
@@ -7511,7 +7510,7 @@ namespace SOTS
 						}
 					}
 					Tile tile = Main.tile[i, j];
-					if (tile.type == TileID.LihzahrdBrick)
+					if (tile.TileType == TileID.LihzahrdBrick)
 					{
 						templeX = i;
 						templeY = j;
@@ -7531,7 +7530,7 @@ namespace SOTS
 					int posX = Main.rand.Next(200, Main.maxTilesX - 200);
 					int posY = Main.rand.Next(Main.maxTilesY / 2, Main.maxTilesY - 200);
 					Tile tile = Main.tile[posX, posY];
-					if (tile.type == TileID.JungleGrass)
+					if (tile.TileType == TileID.JungleGrass)
 					{
 						GenerateBigGeode(posX, posY, jungleSide);
 						return;
@@ -7552,7 +7551,7 @@ namespace SOTS
 				else
 				{
 					Tile tile = Main.tile[p, templeY];
-					if (tile.type == TileID.JungleGrass)
+					if (tile.TileType == TileID.JungleGrass)
 					{
 						tilesRight = i;
 						break;
@@ -7570,7 +7569,7 @@ namespace SOTS
 				else
 				{
 					Tile tile = Main.tile[p, templeY];
-					if (tile.type == TileID.JungleGrass)
+					if (tile.TileType == TileID.JungleGrass)
 					{
 						tilesLeft = i;
 						break;
@@ -7708,24 +7707,24 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 1:
-								tile.wall = 183;
+								tile.WallType = 183;
 								break;
 							case 2:
-								tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
-								tile.liquid = 0;
-								tile.liquidType(0);
+								tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
+								tile.LiquidAmount = 0;
+								tile.LiquidType = 0;
 								break;
 							case 3:
-								tile.wall = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
 								break;
 							case 4:
-								tile.wall = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
 								break;
 							case 5:
-								tile.wall = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
+								tile.WallType = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
 								break;
 							case 6:
-								tile.wall = (ushort)ModContent.WallType<EarthWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<EarthWallWall>();
 								break;
 						}
 					}
@@ -7847,237 +7846,237 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									if (confirmPlatforms == 0 && (tile.wall == ModContent.WallType<VibrantWallWall>() || tile.wall == ModContent.WallType<EarthWallWall>() || tile.wall == ModContent.WallType<EarthenPlatingWallWall>() || tile.wall == ModContent.WallType<EarthenPlatingPanelWallWall>() || tile.wall == ModContent.WallType<EarthenPlatingBeamWall>()))
+									if (confirmPlatforms == 0 && (tile.WallType == ModContent.WallType<VibrantWallWall>() || tile.WallType == ModContent.WallType<EarthWallWall>() || tile.WallType == ModContent.WallType<EarthenPlatingWallWall>() || tile.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || tile.WallType == ModContent.WallType<EarthenPlatingBeamWall>()))
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 1:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<EvostoneTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<EvostoneTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = TileID.Marble;
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = WallID.MarbleUnsafe;
+									tile.HasTile = true;
+									tile.TileType = TileID.Marble;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.WallType = WallID.MarbleUnsafe;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 4:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
-									tile.slope((byte)(direction == 1 ? 3 : 4));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 3 : 4);
+									tile.IsHalfBlock = false;
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
-									tile.slope((byte)(direction == 1 ? 4 : 3));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 4 : 3);
+									tile.IsHalfBlock = false;
 									break;
 								case 6:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
-									tile.slope((byte)(direction == 1 ? 2 : 1));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 2 : 1);
+									tile.IsHalfBlock = false;
 									break;
 								case 7:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k - (direction == 1 ? 0 : 1), l, ModContent.TileType<EarthenPlatingStorageTile>(), true, true, -1, 0);
 									}
 									break;
 								case 8:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<EarthenPlatingTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<EarthenPlatingTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 9:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<DissolvingEarthTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<DissolvingEarthTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 10:
-									tile.active(true);
-									tile.type = 54;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 54;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 11: //left off here
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingBookcaseTile>(), true, true, -1, 0);
 									}
 									break;
 								case 12:
-									tile.active(true);
-									tile.type = 214;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 214;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 13:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingBlastDoorTileClosed>(), true, true, -1, 0);
 									}
 									break;
 								case 14:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingTorchTile>(), true, true, -1, 0);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 15:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingLampTile>(), true, true, -1, 0);
 									}
 									break;
 								case 16:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k - (direction == 1 ? 0 : 1), l, ModContent.TileType<EarthenPlatingStorageTile>(), true, true, -1, 1);
 									}
 									break;
 								case 17:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingChairTile>(), true, true, -1, 0);
 									}
 									break;
 								case 18:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingTableTile>(), true, true, -1, 0);
 									}
 									break;
 								case 19:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k + (direction == 1 ? 0 : 2), l, ModContent.TileType<BigCrystalTile>(), true, true, -1, 0);
 									}
 									break;
 								case 20:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<VibrantBrickTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<VibrantBrickTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 21:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingPlatformTile>(), true, true, -1, 0);
 									}
 									break;
 								case 22:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 23:
 								case 26:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 164;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidAmount = 164;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 24:
 								case 27:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 255;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidAmount = 255;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 25:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 96;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidAmount = 96;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 28:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
-									tile.slope((byte)(direction == 1 ? 1 : 2));
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<VibrantOreTile>();
+									tile.Slope = (SlopeType)(direction == 1 ? 1 : 2);
+									tile.IsHalfBlock = false;
 									break;
 								case 29:
 								case 31:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 65;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidAmount = 65;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 30:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 37;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidAmount = 37;
+										tile.LiquidType = 0;
 									}
 									break;
 							}
-							if (tile.type == ModContent.TileType<VibrantOreTile>() || tile.type == ModContent.TileType<VibrantBrickTile>())
+							if (tile.TileType == ModContent.TileType<VibrantOreTile>() || tile.TileType == ModContent.TileType<VibrantBrickTile>())
 							{
-								tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<VibrantWallWall>();
 							}
 						}
 					}
@@ -8090,18 +8089,19 @@ namespace SOTS
 			{
 				for (int l = (int)WorldGen.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
 				{
-					if (Main.tile[k, l].wall == ModContent.WallType<VibrantWallWall>())
+					if (Main.tile[k, l].WallType == ModContent.WallType<VibrantWallWall>())
 					{
 						if (removeWater)
 						{
-							Main.tile[k, l].liquidType(0);
-							Main.tile[k, l].liquid = 0;
+							Tile tile = Main.tile[k, l];
+							tile.LiquidType = 0;
+							tile.LiquidAmount = 0;
 						}
 						else
 						{
-							if (Main.tile[k, l].type == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].active() && Main.tile[k, l].slope() == 0 && !Main.tile[k, l].halfBrick())
+							if (Main.tile[k, l].TileType == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].HasTile && Main.tile[k, l].Slope == 0 && !Main.tile[k, l].IsHalfBlock)
 							{
-								bool oneSideIsClear = !Main.tile[k - 1, l].active() || !Main.tile[k + 1, l].active() || !Main.tile[k, l + 1].active() || !Main.tile[k, l - 1].active();
+								bool oneSideIsClear = !Main.tile[k - 1, l].HasTile || !Main.tile[k + 1, l].HasTile || !Main.tile[k, l + 1].HasTile || !Main.tile[k, l - 1].HasTile;
 								if (oneSideIsClear)
 									for (int i = 0; i < 3; i++)
 										if (SOTSTile.GenerateVibrantCrystal(k, l)) break;
@@ -8126,26 +8126,26 @@ namespace SOTS
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					if ((whitelist == Main.tile[i, j].type) || (whitelist == -1 && Main.tile[i, j].type != 48 && Main.tile[i, j].type != 137 &&
-						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
-						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274))
+					if ((whitelist == Main.tile[i, j].TileType) || (whitelist == -1 && Main.tile[i, j].TileType != 48 && Main.tile[i, j].TileType != 137 &&
+						Main.tile[i, j].TileType != 232 && Main.tile[i, j].TileType != 191 &&
+						Main.tile[i, j].TileType != 151 && Main.tile[i, j].TileType != 274))
 					{
-						if (!Main.tile[i, j - 1].active())
+						if (!Main.tile[i, j - 1].HasTile)
 						{
 							if (WorldGen.SolidTile(i, j) &&
-								TileID.Sets.CanBeClearedDuringGeneration[Main.tile[i, j].type])
+								TileID.Sets.CanBeClearedDuringGeneration[Main.tile[i, j].TileType])
 							{
-								if (!Main.tile[i - 1, j].halfBrick() &&
-									!Main.tile[i + 1, j].halfBrick() &&
-									Main.tile[i - 1, j].slope() == 0 &&
-									Main.tile[i + 1, j].slope() == 0)
+								if (!Main.tile[i - 1, j].IsHalfBlock &&
+									!Main.tile[i + 1, j].IsHalfBlock &&
+									Main.tile[i - 1, j].Slope == 0 &&
+									Main.tile[i + 1, j].Slope == 0)
 								{
 									if (WorldGen.SolidTile(i, j + 1))
 									{
 										if (!WorldGen.SolidTile(i - 1, j) &&
-											!Main.tile[i - 1, j + 1].halfBrick() &&
+											!Main.tile[i - 1, j + 1].IsHalfBlock &&
 											WorldGen.SolidTile(i - 1, j + 1) && WorldGen.SolidTile(i + 1, j) &&
-											!Main.tile[i + 1, j - 1].active())
+											!Main.tile[i + 1, j - 1].HasTile)
 										{
 											if (WorldGen.genRand.Next(2) == 0)
 											{
@@ -8157,9 +8157,9 @@ namespace SOTS
 											}
 										}
 										else if (!WorldGen.SolidTile(i + 1, j) &&
-												 !Main.tile[i + 1, j + 1].halfBrick() &&
+												 !Main.tile[i + 1, j + 1].IsHalfBlock &&
 												 WorldGen.SolidTile(i + 1, j + 1) && WorldGen.SolidTile(i - 1, j) &&
-												 !Main.tile[i - 1, j - 1].active())
+												 !Main.tile[i - 1, j - 1].HasTile)
 										{
 											if (WorldGen.genRand.Next(2) == 0)
 											{
@@ -8172,8 +8172,8 @@ namespace SOTS
 										}
 										else if (WorldGen.SolidTile(i + 1, j + 1) &&
 												 WorldGen.SolidTile(i - 1, j + 1) &&
-												 !Main.tile[i + 1, j].active() &&
-												 !Main.tile[i - 1, j].active())
+												 !Main.tile[i + 1, j].HasTile &&
+												 !Main.tile[i - 1, j].HasTile)
 										{
 											WorldGen.PoundTile(i, j);
 										}
@@ -8181,22 +8181,22 @@ namespace SOTS
 										if (WorldGen.SolidTile(i, j))
 										{
 											if (WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i + 1, j + 2) &&
-												!Main.tile[i + 1, j].active() &&
-												!Main.tile[i + 1, j + 1].active() &&
-												!Main.tile[i - 1, j - 1].active())
+												!Main.tile[i + 1, j].HasTile &&
+												!Main.tile[i + 1, j + 1].HasTile &&
+												!Main.tile[i - 1, j - 1].HasTile)
 											{
 												DespawnTile(i, j);
 											}
 											else if (WorldGen.SolidTile(i + 1, j) &&
 													 WorldGen.SolidTile(i - 1, j + 2) &&
-													 !Main.tile[i - 1, j].active() &&
-													 !Main.tile[i - 1, j + 1].active() &&
-													 !Main.tile[i + 1, j - 1].active())
+													 !Main.tile[i - 1, j].HasTile &&
+													 !Main.tile[i - 1, j + 1].HasTile &&
+													 !Main.tile[i + 1, j - 1].HasTile)
 											{
 												DespawnTile(i, j);
 											}
-											else if (!Main.tile[i - 1, j + 1].active() &&
-													 !Main.tile[i - 1, j].active() &&
+											else if (!Main.tile[i - 1, j + 1].HasTile &&
+													 !Main.tile[i - 1, j].HasTile &&
 													 WorldGen.SolidTile(i + 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
 												if (WorldGen.genRand.Next(5) == 0)
@@ -8212,8 +8212,8 @@ namespace SOTS
 													WorldGen.SlopeTile(i, j, 2);
 												}
 											}
-											else if (!Main.tile[i + 1, j + 1].active() &&
-													 !Main.tile[i + 1, j].active() &&
+											else if (!Main.tile[i + 1, j + 1].HasTile &&
+													 !Main.tile[i + 1, j].HasTile &&
 													 WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
 												if (WorldGen.genRand.Next(5) == 0)
@@ -8232,23 +8232,23 @@ namespace SOTS
 										}
 									}
 
-									if (WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].active() &&
-										!Main.tile[i + 1, j].active())
+									if (WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].HasTile &&
+										!Main.tile[i + 1, j].HasTile)
 									{
 										DespawnTile(i, j);
 									}
 								}
 							}
-							else if (!Main.tile[i, j].active() && Main.tile[i, j + 1].type != 151 &&
-									 Main.tile[i, j + 1].type != 274)
+							else if (!Main.tile[i, j].HasTile && Main.tile[i, j + 1].TileType != 151 &&
+									 Main.tile[i, j + 1].TileType != 274)
 							{
-								if (Main.tile[i + 1, j].type != 190 &&
-									Main.tile[i + 1, j].type != 48 &&
-									Main.tile[i + 1, j].type != 232 && WorldGen.SolidTile(i - 1, j + 1) &&
-									WorldGen.SolidTile(i + 1, j) && !Main.tile[i - 1, j].active() &&
-									!Main.tile[i + 1, j - 1].active())
+								if (Main.tile[i + 1, j].TileType != 190 &&
+									Main.tile[i + 1, j].TileType != 48 &&
+									Main.tile[i + 1, j].TileType != 232 && WorldGen.SolidTile(i - 1, j + 1) &&
+									WorldGen.SolidTile(i + 1, j) && !Main.tile[i - 1, j].HasTile &&
+									!Main.tile[i + 1, j - 1].HasTile)
 								{
-									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
 									if (WorldGen.genRand.Next(2) == 0)
 									{
 										WorldGen.SlopeTile(i, j, 2);
@@ -8259,13 +8259,13 @@ namespace SOTS
 									}
 								}
 
-								if (Main.tile[i - 1, j].type != 190 &&
-									Main.tile[i - 1, j].type != 48 &&
-									Main.tile[i - 1, j].type != 232 && WorldGen.SolidTile(i + 1, j + 1) &&
-									WorldGen.SolidTile(i - 1, j) && !Main.tile[i + 1, j].active() &&
-									!Main.tile[i - 1, j - 1].active())
+								if (Main.tile[i - 1, j].TileType != 190 &&
+									Main.tile[i - 1, j].TileType != 48 &&
+									Main.tile[i - 1, j].TileType != 232 && WorldGen.SolidTile(i + 1, j + 1) &&
+									WorldGen.SolidTile(i - 1, j) && !Main.tile[i + 1, j].HasTile &&
+									!Main.tile[i - 1, j - 1].HasTile)
 								{
-									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
 									if (WorldGen.genRand.Next(2) == 0)
 									{
 										WorldGen.SlopeTile(i, j, 1);
@@ -8277,11 +8277,11 @@ namespace SOTS
 								}
 							}
 						}
-						else if (!Main.tile[i, j + 1].active() && WorldGen.genRand.Next(2) == 0 &&
-								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].halfBrick() &&
-								 !Main.tile[i + 1, j].halfBrick() &&
-								 Main.tile[i - 1, j].slope() == 0 &&
-								 Main.tile[i + 1, j].slope() == 0 && WorldGen.SolidTile(i, j - 1))
+						else if (!Main.tile[i, j + 1].HasTile && WorldGen.genRand.Next(2) == 0 &&
+								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].IsHalfBlock &&
+								 !Main.tile[i + 1, j].IsHalfBlock &&
+								 Main.tile[i - 1, j].Slope == 0 &&
+								 Main.tile[i + 1, j].Slope == 0 && WorldGen.SolidTile(i, j - 1))
 						{
 							if (WorldGen.SolidTile(i - 1, j) && !WorldGen.SolidTile(i + 1, j) &&
 								WorldGen.SolidTile(i - 1, j - 1))
@@ -8295,7 +8295,7 @@ namespace SOTS
 							}
 						}
 
-						if (TileID.Sets.Conversion.Sand[Main.tile[i, j].type])
+						if (TileID.Sets.Conversion.Sand[Main.tile[i, j].TileType])
 						{
 							Tile.SmoothSlope(i, j, false);
 						}
@@ -8306,36 +8306,36 @@ namespace SOTS
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].active() && WorldGen.SolidTile(i, j);
-					if (canRun && ((whitelist == Main.tile[i, j].type) ||
-						(whitelist == -1 && Main.tile[i, j].type != 137 &&
-						Main.tile[i, j].type != 48 &&
-						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
-						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274 &&
-						Main.tile[i, j].type != 75 && Main.tile[i, j].type != 76 &&
-						Main.tile[i - 1, j].type != 137 &&
-						Main.tile[i + 1, j].type != 137)))
+					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
+					if (canRun && ((whitelist == Main.tile[i, j].TileType) ||
+						(whitelist == -1 && Main.tile[i, j].TileType != 137 &&
+						Main.tile[i, j].TileType != 48 &&
+						Main.tile[i, j].TileType != 232 && Main.tile[i, j].TileType != 191 &&
+						Main.tile[i, j].TileType != 151 && Main.tile[i, j].TileType != 274 &&
+						Main.tile[i, j].TileType != 75 && Main.tile[i, j].TileType != 76 &&
+						Main.tile[i - 1, j].TileType != 137 &&
+						Main.tile[i + 1, j].TileType != 137)))
 					{
 						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i + 1, j) &&
-							!Main.tile[i - 1, j].active())
+							!Main.tile[i - 1, j].HasTile)
 						{
 							WorldGen.SlopeTile(i, j, 2);
 						}
 
 						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i - 1, j) &&
-							!Main.tile[i + 1, j].active())
+							!Main.tile[i + 1, j].HasTile)
 						{
 							WorldGen.SlopeTile(i, j, 1);
 						}
 					}
 
-					if (Main.tile[i, j].slope() == 1 && !WorldGen.SolidTile(i - 1, j))
+					if (Main.tile[i, j].Slope == (SlopeType)1 && !WorldGen.SolidTile(i - 1, j))
 					{
 						WorldGen.SlopeTile(i, j, 0);
 						WorldGen.PoundTile(i, j);
 					}
 
-					if (Main.tile[i, j].slope() == 2 && !WorldGen.SolidTile(i + 1, j))
+					if (Main.tile[i, j].Slope == (SlopeType)2 && !WorldGen.SolidTile(i + 1, j))
 					{
 						WorldGen.SlopeTile(i, j, 0);
 						WorldGen.PoundTile(i, j);
@@ -8345,7 +8345,8 @@ namespace SOTS
 		}
 		public static void DespawnTile(int spawnX, int spawnY)
 		{
-			Main.tile[spawnX, spawnY].active(false);
+			Tile tile = Main.tile[spawnX, spawnY];
+			tile.HasTile = false;
 			NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, spawnX, spawnY, 0f, 0, 0, 0);
 		}
 	}
