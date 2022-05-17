@@ -26,15 +26,15 @@ namespace SOTS
                 for (int j = 10; j < Main.worldSurface * 0.35f + 40; j++)
                 {
                     Tile tile = Main.tile[i, j];
-                    if (tile.active() && tile.type == ModContent.TileType<PhaseOreTile>())
+                    if (tile.HasTile && tile.TileType == ModContent.TileType<PhaseOreTile>())
                     {
-                        tile.active(false);
+                        tile.HasTile = false;
                         amtDestroyed++;
                     }
                 }
             }
             if (Main.netMode == NetmodeID.Server)
-                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(amtDestroyed.ToString()), VoidPlayer.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(amtDestroyed.ToString()), VoidPlayer.ChaosPink);
             else
                 Main.NewText(amtDestroyed, VoidPlayer.ChaosPink);
         }
@@ -100,7 +100,7 @@ namespace SOTS
             string text = "Starlight solidifies in the upper atmosphere!";
             Generating = false;
             if (Main.netMode == NetmodeID.Server)
-                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), VoidPlayer.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), VoidPlayer.ChaosPink);
             else
                 Main.NewText(text, VoidPlayer.ChaosPink);
         }
