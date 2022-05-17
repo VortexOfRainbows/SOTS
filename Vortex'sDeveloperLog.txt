@@ -53,7 +53,7 @@ Low Priority Objectives:
 
 5/16/22
 1. 9730 -> 7400 errors
-	1. Fixed/Patched worldgenhelper (normal) and worldgenhelper (pyramid)
+	1. Fixed/Patched worldgenhelper (normal) and worldgenhelper (phase)
 
 5/13/22 & 5/14/22
 1. More Portings. Errors to around 17900. Will start going slower now that port changes are more complicated.
