@@ -81,13 +81,13 @@ namespace SOTS.Items.Fragments
 			}
 			for (int i = 0; i < Item.stack; i++)
 			{
-				if (player.allDamage > 0f)
+				if (player.GetDamage(DamageClass.Generic).Additive > 0f)
 				{
-					player.allDamage -= 0.1f;
+					player.GetDamage(DamageClass.Generic) -= 0.1f;
 				}
 				else
 				{
-					player.allDamage = 0;
+					player.GetDamage(DamageClass.Generic) -= player.GetDamage(DamageClass.Generic).Additive;
 				}
 			}
 		}
@@ -415,7 +415,7 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
 			aetherPlayer.aetherNum += Item.stack;
 		}
 	}
@@ -571,7 +571,7 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
 			aetherPlayer.infernoNum++;
 		}
 	}
@@ -652,6 +652,10 @@ namespace SOTS.Items.Fragments
 	}
 	public class AetherPlayer : ModPlayer
 	{
+		public static AetherPlayer ModPlayer(Player player)
+		{
+			return player.GetModPlayer<AetherPlayer>();
+		}
 		public int aetherNum = 0;
 		public int infernoNum = 0;
         public override void UpdateBadLifeRegen()

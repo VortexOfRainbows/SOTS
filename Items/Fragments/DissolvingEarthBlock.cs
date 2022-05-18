@@ -39,7 +39,7 @@ namespace SOTS.Items.Fragments
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<DissolvingEarthBlock>();
+			ItemDrop = ModContent.ItemType<DissolvingEarthBlock>();
 			AddMapEntry(new Color(255, 191, 0));
 			MineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
@@ -67,10 +67,10 @@ namespace SOTS.Items.Fragments
 			g *= 0.3f;
 			b *= 0.3f;
 		}
-		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
+		public static void DrawEffects(int i, int j, Mod mod, bool wall = false)
         {
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/EarthParticle").Value;
-			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/EarthBlockOutline").Value;
+			Texture2D texture = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/EarthParticle").Value;
+			Texture2D textureBlock = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/EarthBlockOutline").Value;
 			Color color;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -109,10 +109,10 @@ namespace SOTS.Items.Fragments
 				if (Main.tile[i, j].IsHalfBlock)
 					location.Y += 8;
 
-				if (Main.tile[i, j].slope() == 1)
+				if (Main.tile[i, j].Slope == (SlopeType)1)
 					location.Y += k;
 
-				if (Main.tile[i, j].slope() == 2)
+				if (Main.tile[i, j].Slope == (SlopeType)2)
 					location.Y += 15 - k;
 
 				location.X += k;
@@ -186,13 +186,13 @@ namespace SOTS.Items.Fragments
 							x = Math.Abs(x);
 					}
 					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero,
-					new Rectangle(0, 20 * (Main.tile[i, j].IsHalfBlock ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
+					new Rectangle(0, 20 * (Main.tile[i, j].IsHalfBlock ? 1 : (int)Main.tile[i, j].Slope > 0 ? (int)Main.tile[i, j].Slope + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
 				}
 			}
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			DrawEffects(i, j, spriteBatch, Mod);
+			DrawEffects(i, j, Mod);
 			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

@@ -301,26 +301,26 @@ namespace SOTS
             if (tile.WallType == WallType<NatureWallWall>() && tile.TileType != TileType<DissolvingNatureTile>())
                 DissolvingNatureTile.DrawEffects(i, j, Mod, true);
             if (tile.WallType == WallType<EarthWallWall>() && tile.TileType != TileType<DissolvingEarthTile>())
-                DissolvingEarthTile.DrawEffects(i, j, spriteBatch, Mod, true);
+                DissolvingEarthTile.DrawEffects(i, j, Mod, true);
             if (tile.WallType == WallType<AuroraWallWall>() && tile.TileType != TileType<DissolvingAuroraTile>())
-                DissolvingAuroraTile.DrawEffects(i, j, spriteBatch, Mod, true);
+                DissolvingAuroraTile.DrawEffects(i, j, Mod, true);
             if (tile.WallType == WallType<AetherWallWall>() && tile.TileType != TileType<DissolvingAetherTile>())
-                DissolvingAetherTile.DrawEffects(i, j, spriteBatch, Mod, true);
+                DissolvingAetherTile.DrawEffects(i, j, Mod, true);
             if (tile.WallType == WallType<DelugeWallWall>() && tile.TileType != TileType<DissolvingDelugeTile>())
-                DissolvingDelugeTile.DrawEffects(i, j, spriteBatch, Mod, true);
+                DissolvingDelugeTile.DrawEffects(i, j, Mod, true);
             if (tile.WallType == WallType<UmbraWallWall>() && tile.TileType != TileType<DissolvingUmbraTile>())
-                DissolvingUmbraTile.DrawEffects(i, j, spriteBatch, Mod, true);
+                DissolvingUmbraTile.DrawEffects(i, j, Mod, true);
             if (tile.WallType == WallType<NetherWallWall>() && tile.TileType != TileType<DissolvingNetherTile>())
-                DissolvingNetherTile.DrawEffects(i, j, spriteBatch, Mod, true);
+                DissolvingNetherTile.DrawEffects(i, j, Mod, true);
             if ((!Main.tile[i - 1, j].HasTile|| !Main.tileSolid[Main.tile[i - 1, j].TileType]) && (!Main.tile[i, j - 1].HasTile|| !Main.tileSolid[Main.tile[i, j - 1].TileType]))
             {
                 if (tile.WallType == WallType<BrillianceWallWall>() || tile.TileType == (ushort)TileType<DissolvingBrillianceTile>())
-                    DissolvingBrillianceTile.DrawEffects(i, j, spriteBatch, Mod, true);
+                    DissolvingBrillianceTile.DrawEffects(i, j, Mod, true);
             }
             if (Main.tile[i, j + 1].HasTile&& (Main.tile[i, j + 1].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i, j + 1].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
-                DissolvingBrillianceTile.DrawEffects(i, j + 1, spriteBatch, Mod, true);
+                DissolvingBrillianceTile.DrawEffects(i, j + 1, Mod, true);
             if (Main.tile[i + 1, j].HasTile&& (Main.tile[i + 1, j].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i + 1, j].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
-                DissolvingBrillianceTile.DrawEffects(i + 1, j, spriteBatch, Mod, true);
+                DissolvingBrillianceTile.DrawEffects(i + 1, j, Mod, true);
             return base.PreDraw(i, j, type, spriteBatch);
         }
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)

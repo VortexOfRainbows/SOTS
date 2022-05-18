@@ -54,6 +54,10 @@ namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
+		public static SOTSPlayer ModPlayer(Player player)
+		{
+			return player.GetModPlayer<SOTSPlayer>();
+		}
 		public static int[] locketBlacklist;
 		public static int[] typhonBlacklist;
 		public static int[] typhonWhitelist;
@@ -105,10 +109,6 @@ namespace SOTS
         public override void LoadData(TagCompound tag)
 		{
 			UniqueVisionNumber = tag.GetInt("UniqueVisionNumber");
-		}
-		public static SOTSPlayer ModPlayer(Player player)
-		{
-			return player.GetModPlayer<SOTSPlayer>();
 		}
 		public void TrailStuff()
 		{

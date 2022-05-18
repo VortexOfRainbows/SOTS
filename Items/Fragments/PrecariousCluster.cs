@@ -90,17 +90,17 @@ namespace SOTS.Items.Fragments
 		}
 		public override void UpdateInventory(Player player)
 		{
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
 			aetherPlayer.aetherNum += Item.stack;
 			for (int i = 0; i < Item.stack; i++)
 			{
-				if (player.allDamage > 0f)
+				if (player.GetDamage(DamageClass.Generic).Additive > 0f)
 				{
-					player.allDamage -= 0.1f;
+					player.GetDamage(DamageClass.Generic) -= 0.1f;
 				}
 				else
 				{
-					player.allDamage = 0;
+					player.GetDamage(DamageClass.Generic) -= player.GetDamage(DamageClass.Generic).Additive;
 				}
 				if (player.moveSpeed > 0f)
 				{
@@ -204,7 +204,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void UpdateInventory(Player player)
 		{
-			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(Mod, "AetherPlayer");
+			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
 			aetherPlayer.infernoNum += Item.stack;
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			for (int i = 0; i < Item.stack; i++)
