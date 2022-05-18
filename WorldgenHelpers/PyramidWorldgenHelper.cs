@@ -88,29 +88,29 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 0:
-								if (tile.wall == 0)
-									tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+								if (tile.WallType == 0)
+									tile.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 1:
-								tile.wall = 197;
+								tile.WallType = 197;
 								break;
 							case 2:
-								tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
 								break;
 							case 3:
-								tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 4:
-								tile.wall = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
+								tile.WallType = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
 								break;
 							case 5:
-								tile.wall = (ushort)ModContent.WallType<TrueSandstoneWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<TrueSandstoneWallWall>();
 								break;
 							case 6:
-								tile.wall = WallID.ArcaneRunes;
+								tile.WallType = WallID.ArcaneRunes;
 								break;
 							case 7:
-								tile.wall = (ushort)ModContent.WallType<AncientGoldBeamWall>();
+								tile.WallType = (ushort)ModContent.WallType<AncientGoldBeamWall>();
 								break;
 						}
 					}
@@ -183,194 +183,194 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 1:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<TrueSandstoneTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<TrueSandstoneTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<CursedTumorTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
-									tile.slope(3);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<CursedTumorTile>();
+									tile.Slope = (SlopeType)3;
+									tile.IsHalfBlock = false;
 									break;
 								case 4:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
-									tile.slope(4);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<CursedTumorTile>();
+									tile.Slope = (SlopeType)4;
+									tile.IsHalfBlock = false;
 									break;
 								case 6:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, TileID.Lamps, true, true, -1, 15);
 									}
 									break;
 								case 7:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<SarcophagusTile>(), true, true, -1, 0);
 									}
 									break;
 								case 8:
-									if (confirmPlatforms >= 1 && Main.rand.Next(9) > 1 && !tile.active() && Framing.GetTileSafely(k, l + 1).active())
+									if (confirmPlatforms >= 1 && Main.rand.Next(9) > 1 && !tile.HasTile && Framing.GetTileSafely(k, l + 1).HasTile)
 									{
-										tile.active(true);
-										tile.type = TileID.GoldCoinPile;
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = true;
+										tile.TileType = TileID.GoldCoinPile;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 									}
 									else
 									{
-										if (tile.type != TileID.GoldCoinPile)
-											tile.active(false);
+										if (tile.TileType != TileID.GoldCoinPile)
+											tile.HasTile = false;
 									}
 									break;
 								case 9:
 									if (confirmPlatforms == 0)
-										tile.active(false);
+										tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldPlatformTile>(), true, true, -1, 0);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 10:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 11:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 91, true, true, -1, 6);
 									}
 									break;
 								case 12:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 91, true, true, -1, 4);
 									}
 									break;
 								case 13:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldThroneTile>(), true, true, -1, 0);
 									}
 									break;
 								case 14:
 									if (confirmPlatforms >= 1)
 									{
-										if (!tile.active())
+										if (!tile.HasTile)
 										{
 											WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldCandelabraTile>(), true, true, -1, 0);
 										}
 									}
 									else
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 									}
 									break;
 								case 15:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldWorkbenchTile>(), true, true, -1, 0);
 									}
 									break;
 								case 16:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<CursedHive>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 17:
 									if (confirmPlatforms >= 1)
 									{
-										if (!tile.active())
+										if (!tile.HasTile)
 										{
 											WorldGen.PlaceTile(k, l, TileID.FishingCrate, true, true, -1, 2);
-											tile.slope(0);
-											tile.halfBrick(false);
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
 										}
 									}
 									else
 									{
-										tile.active(false);
+										tile.HasTile = false;
 									}
 									break;
 								case 18:
 									if (confirmPlatforms == 0)
-										tile.active(false);
-									else if (!tile.active())
+										tile.HasTile = false;
+									else if (!tile.HasTile)
 									{
 										WorldGen.PlaceTile(k, l, TileID.MetalBars, true, true, -1, 6);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 									}
 									break;
 								case 19:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldTableTile>(), true, true, -1, 0);
 									}
 									break;
 								case 20:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldDresserTile>(), true, true, -1, 0);
 									}
 									break;
 								case 21:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldGateTile>(), true, true, -1, 0);
 										int left = k - 1;
 										int top = l - 4;
@@ -379,7 +379,7 @@ namespace SOTS
 											for (int y = top; y < top + 5; y++)
 											{
 												if (direction == -1)
-													Main.tile[x, y].frameX += 36;
+													Main.tile[x, y].TileFrameX += 36;
 												NetMessage.SendTileSquare(-1, x, y, 2);
 											}
 										}
@@ -393,16 +393,16 @@ namespace SOTS
 		}
 		public static bool TileDungeon(Tile tile)
 		{
-			return tile.type == TileID.BlueDungeonBrick || tile.type == TileID.GreenDungeonBrick || tile.type == TileID.PinkDungeonBrick || tile.wall == 7 || tile.wall == 8 || tile.wall == 9 || tile.wall == 94 || tile.wall == 95 || tile.wall == 96 || tile.wall == 97 || tile.wall == 98 || tile.wall == 99;
+			return tile.TileType == TileID.BlueDungeonBrick || tile.TileType == TileID.GreenDungeonBrick || tile.TileType == TileID.PinkDungeonBrick || tile.WallType == 7 || tile.WallType == 8 || tile.WallType == 9 || tile.WallType == 94 || tile.WallType == 95 || tile.WallType == 96 || tile.WallType == 97 || tile.WallType == 98 || tile.WallType == 99;
 		}
 		public static void SetTilePyramid(Tile tile)
 		{
-			tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-			tile.slope(0);
-			tile.halfBrick(false);
-			tile.liquidType(0);
-			tile.liquid = 0;
-			tile.active(true);
+			tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+			tile.Slope = 0;
+			tile.IsHalfBlock = false;
+			tile.LiquidType = 0;
+			tile.LiquidType = 0;
+			tile.HasTile = true;
 		}
 		public static void GenerateSOTSPyramid(Mod mod)
 		{
@@ -421,7 +421,7 @@ namespace SOTS
 				for (int ydown = 0; ydown != -1; ydown++)
 				{
 					Tile tile = Framing.GetTileSafely(xCheck, ydown);
-					if (tile.active() && (tile.type == TileID.Sand || tile.type == TileID.Ebonsand || tile.type == TileID.Crimsand || checks >= 1000))
+					if (tile.HasTile && (tile.TileType == TileID.Sand || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand || checks >= 1000))
 					{
 						if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 60)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 120))) || checks > 200)
 						{
@@ -429,7 +429,7 @@ namespace SOTS
 						}
 						break;
 					}
-					else if (tile.active())
+					else if (tile.HasTile)
 					{
 						break;
 					}
@@ -485,14 +485,14 @@ namespace SOTS
 					if (!TileDungeon(tile)) //check for not dungeon!
 					{
 						if (pyramidLevel <= 15)
-							tile.wall = (ushort)ModContent.WallType<PyramidWallWall>();
+							tile.WallType = (ushort)ModContent.WallType<PyramidWallWall>();
 						else if (pyramidLevel == 16)
 						{
-							tile.wall = (ushort)ModContent.WallType<PyramidBrickWallWall>();
+							tile.WallType = (ushort)ModContent.WallType<PyramidBrickWallWall>();
 						}
 						else
 						{
-							tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+							tile.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 						}
 					}
 				}
@@ -503,8 +503,8 @@ namespace SOTS
 						for (int g = -pyramidLevel; g <= pyramidLevel - 10; g++)
 						{
 							Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-							if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
-								tile.active(false);
+							if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
+								tile.HasTile = false;
 						}
 					}
 					if (direction == 1)
@@ -512,8 +512,8 @@ namespace SOTS
 						for (int g = pyramidLevel; g >= -pyramidLevel + 10; g--)
 						{
 							Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-							if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
-								tile.active(false);
+							if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
+								tile.HasTile = false;
 						}
 					}
 				}
@@ -531,8 +531,8 @@ namespace SOTS
 							for (int g = pyramidLevel - 16; g <= pyramidLevel - 10; g++)
 							{
 								Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-								if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
-									tile.active(false);
+								if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
+									tile.HasTile = false;
 							}
 							endingTileX = pyramidX + (pyramidLevel - 13);
 						}
@@ -541,8 +541,8 @@ namespace SOTS
 							for (int g = -pyramidLevel + 16; g >= -pyramidLevel + 10; g--)
 							{
 								Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-								if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
-									tile.active(false);
+								if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
+									tile.HasTile = false;
 							}
 							endingTileX = pyramidX + (-pyramidLevel + 13);
 						}
@@ -551,10 +551,10 @@ namespace SOTS
 					{
 						Tile tile = Framing.GetTileSafely(pyramidX + (pyramidLevel - 16) * -direction, pyramidY + pyramidLevel);
 						SetTilePyramid(tile);
-						tile.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+						tile.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 						tile = Framing.GetTileSafely(pyramidX + (pyramidLevel - 10) * -direction, pyramidY + pyramidLevel);
 						SetTilePyramid(tile);
-						tile.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+						tile.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 						WorldGen.PlaceTile(pyramidX + (pyramidLevel - 13) * -direction, pyramidY + pyramidLevel, ModContent.TileType<PyramidGateTile>(), true, true);
 					}
 					endingTileY = pyramidY + pyramidLevel;
@@ -583,8 +583,8 @@ namespace SOTS
 					for (int h = 3; h >= -3; h--)
 					{
 						Tile tile = Framing.GetTileSafely(endingTileX + h, endingTileY);
-						if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
-							tile.active(false);
+						if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
+							tile.HasTile = false;
 					}
 					endingTileY++;
 					if (endingTileY - pyramidY >= size)
@@ -604,7 +604,7 @@ namespace SOTS
 							for (int check = -2; check <= 2; check++)
 							{
 								selectTile = Framing.GetTileSafely(findTileX + check, endingTileY + y1);
-								if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
+								if (selectTile.TileType != (ushort)ModContent.TileType<PyramidSlabTile>())
 								{
 									capable = false;
 									break;
@@ -612,7 +612,7 @@ namespace SOTS
 							}
 							selectTile = Framing.GetTileSafely(findTileX, endingTileY + y1);
 							if (capable)
-								selectTile.active(false);
+								selectTile.HasTile = false;
 						}
 					}
 					int spawnX = endingTileX + totalAmount * finalDirection - 4 * finalDirection;
@@ -634,7 +634,7 @@ namespace SOTS
 							for (int check = -2; check <= 2; check++)
 							{
 								selectTile = Framing.GetTileSafely(findTileX + check, endingTileY + y1);
-								if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
+								if (selectTile.TileType != (ushort)ModContent.TileType<PyramidSlabTile>())
 								{
 									capable = false;
 									break;
@@ -642,7 +642,7 @@ namespace SOTS
 							}
 							selectTile = Framing.GetTileSafely(findTileX, endingTileY + y1);
 							if (capable)
-								selectTile.active(false);
+								selectTile.HasTile = false;
 						}
 					}
 					int spawnX = endingTileX + length * finalDirection - 5 * finalDirection;
@@ -672,7 +672,7 @@ namespace SOTS
 					for (int check = -2; check <= 2; check++)
 					{
 						selectTile = Framing.GetTileSafely(findTileX + check, higherUpY + y1);
-						if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
+						if (selectTile.TileType != (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							capable = false;
 							break;
@@ -680,7 +680,7 @@ namespace SOTS
 					}
 					selectTile = Framing.GetTileSafely(findTileX, higherUpY + y1);
 					if (capable)
-						selectTile.active(false);
+						selectTile.HasTile = false;
 				}
 				int counterInvalid = 0;
 				for (int y1 = 2; y1 >= -2; y1--) //zeppelin room and burial room cooridor
@@ -700,7 +700,7 @@ namespace SOTS
 					for (int check = -2; check <= 2; check++)
 					{
 						selectTile = Framing.GetTileSafely(findTileX + check, higherUpY + y1);
-						if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
+						if (selectTile.TileType != (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							capable = false;
 							break;
@@ -708,12 +708,12 @@ namespace SOTS
 					}
 					selectTile = Framing.GetTileSafely(findTileX, higherUpY + y1);
 					if (capable)
-						selectTile.active(false);
+						selectTile.HasTile = false;
 					int failureC = 0;
 					for (int check = -1; check <= 1; check++)
 					{
 						selectTile = Framing.GetTileSafely(findTileX + check, higherUpY + y1);
-						if (!selectTile.active() && selectTile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>()) //end the cooridor upon reaching the stairwell
+						if (!selectTile.HasTile && selectTile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>()) //end the cooridor upon reaching the stairwell
 						{
 							failureC++;
 						}
@@ -727,9 +727,9 @@ namespace SOTS
 				{
 					int higherUpY = pyramidY + (size - 12);
 					Tile selectTile = Framing.GetTileSafely(findTileX, higherUpY + y1);
-					if (selectTile.type == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTile.active())
+					if (selectTile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTile.HasTile)
 					{
-						selectTile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
+						selectTile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
 					}
 				}
 				for (int findTileY = pyramidY + (size - 55); findTileY > pyramidY + 20; findTileY--) //generating spikes
@@ -739,9 +739,9 @@ namespace SOTS
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 					Tile tileLeft = Framing.GetTileSafely(findTileX - 1, findTileY);
 					Tile tileRight = Framing.GetTileSafely(findTileX + 1, findTileY);
-					if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+					if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
 					{
-						if (!(findTileY > pyramidY + (size - 70) && finalDirection == 1) && tileLeft.active() && tile.active() && !tileRight.active() && tileRight.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
+						if (!(findTileY > pyramidY + (size - 70) && finalDirection == 1) && tileLeft.HasTile && tile.HasTile && !tileRight.HasTile && tileRight.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 						{
 							//generate cooridor to the left
 							int randDistance = Main.rand.Next(min, max);
@@ -758,12 +758,12 @@ namespace SOTS
 										Tile selectTileLeft = Framing.GetTileSafely(coorXPos - 1, findTileY + y1);
 										Tile selectTileLeft2 = Framing.GetTileSafely(coorXPos - 2, findTileY + y1);
 										Tile selectTileLeft3 = Framing.GetTileSafely(coorXPos - 3, findTileY + y1);
-										if (selectTile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+										if (selectTile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
 										{
-											bool tile3isCursed = selectTileLeft3.type == ModContent.TileType<CursedTumorTile>() || selectTileLeft3.type == ModContent.TileType<CursedHive>() || selectTileLeft2.type == ModContent.TileType<CursedHive>() || selectTileLeft.type == ModContent.TileType<CursedHive>();
-											if (tile3isCursed || (selectTileLeft.type == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTileLeft2.type == (ushort)ModContent.TileType<PyramidSlabTile>()))
+											bool tile3isCursed = selectTileLeft3.TileType == ModContent.TileType<CursedTumorTile>() || selectTileLeft3.TileType == ModContent.TileType<CursedHive>() || selectTileLeft2.TileType == ModContent.TileType<CursedHive>() || selectTileLeft.TileType == ModContent.TileType<CursedHive>();
+											if (tile3isCursed || (selectTileLeft.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTileLeft2.TileType == (ushort)ModContent.TileType<PyramidSlabTile>()))
 											{
-												selectTile.active(false);
+												selectTile.HasTile = false;
 											}
 										}
 									}
@@ -772,7 +772,7 @@ namespace SOTS
 								}
 							}
 						}
-						if (!(findTileY > pyramidY + (size - 70) && finalDirection == -1) && tileRight.active() && tile.active() && !tileLeft.active() && tileLeft.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
+						if (!(findTileY > pyramidY + (size - 70) && finalDirection == -1) && tileRight.HasTile && tile.HasTile && !tileLeft.HasTile && tileLeft.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 						{
 							//generate cooridor to the right
 							int randDistance = Main.rand.Next(min, max);
@@ -789,12 +789,12 @@ namespace SOTS
 										Tile selectTileRight = Framing.GetTileSafely(coorXPos + 1, findTileY + y1);
 										Tile selectTileRight2 = Framing.GetTileSafely(coorXPos + 2, findTileY + y1);
 										Tile selectTileRight3 = Framing.GetTileSafely(coorXPos + 3, findTileY + y1);
-										if (selectTile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+										if (selectTile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
 										{
-											bool tile3isCursed = selectTileRight3.type == ModContent.TileType<CursedTumorTile>() || selectTileRight3.type == ModContent.TileType<CursedHive>() || selectTileRight2.type == ModContent.TileType<CursedHive>() || selectTileRight.type == ModContent.TileType<CursedHive>();
-											if (tile3isCursed || (selectTileRight.type == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTileRight2.type == (ushort)ModContent.TileType<PyramidSlabTile>()))
+											bool tile3isCursed = selectTileRight3.TileType == ModContent.TileType<CursedTumorTile>() || selectTileRight3.TileType == ModContent.TileType<CursedHive>() || selectTileRight2.TileType == ModContent.TileType<CursedHive>() || selectTileRight.TileType == ModContent.TileType<CursedHive>();
+											if (tile3isCursed || (selectTileRight.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTileRight2.TileType == (ushort)ModContent.TileType<PyramidSlabTile>()))
 											{
-												selectTile.active(false);
+												selectTile.HasTile = false;
 											}
 										}
 									}
@@ -805,7 +805,7 @@ namespace SOTS
 						}
 						Tile tileUp = Framing.GetTileSafely(findTileX, findTileY - 1);
 						Tile tileDown = Framing.GetTileSafely(findTileX, findTileY + 1);
-						if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tile.active() && tileLeft.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileLeft.active() && tileRight.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileRight.active() && (!tileUp.active() || !tileDown.active()))
+						if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && tile.HasTile && tileLeft.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && tileLeft.HasTile && tileRight.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && tileRight.HasTile && (!tileUp.HasTile || !tileDown.HasTile))
 						{
 							counterSpike++;
 							if (counterSpike >= 44)
@@ -825,29 +825,29 @@ namespace SOTS
 									Tile tileSpikeLL = Framing.GetTileSafely(findTileX - sizeSpike - 1, findTileY);
 									Tile tileSpikeLU = Framing.GetTileSafely(findTileX - sizeSpike, findTileY - 1);
 									Tile tileSpikeLD = Framing.GetTileSafely(findTileX - sizeSpike, findTileY + 1);
-									if (tileSpikeR.active() && tileSpikeR.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileSpikeL.active() && tileSpikeL.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+									if (tileSpikeR.HasTile && tileSpikeR.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && tileSpikeL.HasTile && tileSpikeL.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
 									{
-										bool ending = sizeSpike == spikeSize - 1 || !tileSpikeRR.active() || !tileSpikeLL.active();
+										bool ending = sizeSpike == spikeSize - 1 || !tileSpikeRR.HasTile || !tileSpikeLL.HasTile;
 										ushort type = ending ? (ushort)ModContent.TileType<RoyalGoldBrickTile>() : (ushort)ModContent.TileType<AncientGoldSpikeTile>();
-										if (tileSpikeLU.active() == false && tileSpikeLD.active() == true)
+										if (tileSpikeLU.HasTile == false && tileSpikeLD.HasTile == true)
 										{
-											tileSpikeL.type = type;
-											tileSpikeLD.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+											tileSpikeL.TileType = type;
+											tileSpikeLD.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
-										if (tileSpikeRU.active() == false && tileSpikeRD.active() == true)
+										if (tileSpikeRU.HasTile == false && tileSpikeRD.HasTile == true)
 										{
-											tileSpikeR.type = type;
-											tileSpikeRD.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+											tileSpikeR.TileType = type;
+											tileSpikeRD.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
-										if (tileSpikeLU.active() == true && tileSpikeLD.active() == false)
+										if (tileSpikeLU.HasTile == true && tileSpikeLD.HasTile == false)
 										{
-											tileSpikeL.type = type;
-											tileSpikeLU.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+											tileSpikeL.TileType = type;
+											tileSpikeLU.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
-										if (tileSpikeRU.active() == true && tileSpikeRD.active() == false)
+										if (tileSpikeRU.HasTile == true && tileSpikeRD.HasTile == false)
 										{
-											tileSpikeR.type = type;
-											tileSpikeRU.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+											tileSpikeR.TileType = type;
+											tileSpikeRU.TileType = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
 									}
 									else
@@ -882,7 +882,7 @@ namespace SOTS
 					for (int j = 0; j < structureHeight; j++)
 					{
 						Tile tile = Framing.GetTileSafely(findTileX + i, findTileY + j);
-						if (tile.active() && tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+						if (tile.HasTile && tile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							count++;
 						}
@@ -908,7 +908,7 @@ namespace SOTS
 					for (int j = 0; j < structureHeight; j++)
 					{
 						Tile tile = Framing.GetTileSafely(findTileX + i, findTileY + j);
-						if (tile.active() && tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+						if (tile.HasTile && tile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							count++;
 						}
@@ -931,7 +931,7 @@ namespace SOTS
 					{
 						int findTileX = pyramidX + WorldGen.genRand.Next(-width, width + 1);
 						Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-						if (tile.active() && tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+						if (tile.HasTile && tile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							counterRoom--;
 							bool canBeLeft = false;
@@ -946,12 +946,12 @@ namespace SOTS
 							for (int checkLeft = 0; checkLeft < 80; checkLeft++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX - checkLeft, findTileY);
-								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
+								if (!tileCheck.HasTile && tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesLeft = checkLeft;
 									break;
 								}
-								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.HasTile && (tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.TileType == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesLeft = -1;
 									break;
@@ -960,12 +960,12 @@ namespace SOTS
 							for (int checkRight = 0; checkRight < 80; checkRight++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX + checkRight, findTileY);
-								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
+								if (!tileCheck.HasTile && tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesRight = checkRight;
 									break;
 								}
-								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.HasTile && (tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.TileType == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesRight = -1;
 									break;
@@ -974,12 +974,12 @@ namespace SOTS
 							for (int checkUp = 0; checkUp < 40; checkUp++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY - checkUp);
-								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
+								if (!tileCheck.HasTile && tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesUp = checkUp;
 									break;
 								}
-								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.HasTile && (tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.TileType == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesUp = -1;
 									break;
@@ -988,12 +988,12 @@ namespace SOTS
 							for (int checkDown = 0; checkDown < 80; checkDown++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY + checkDown);
-								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
+								if (!tileCheck.HasTile && tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesDown = checkDown;
 									break;
 								}
-								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.HasTile && (tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.TileType == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesDown = -1;
 									break;
@@ -1004,7 +1004,7 @@ namespace SOTS
 								for (int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
 								{
 									Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-									if (tileCheck.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
+									if (tileCheck.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && tileCheck.HasTile && tileCheck.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 									{
 										squareCount++;
 									}
@@ -1080,12 +1080,12 @@ namespace SOTS
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 					for (int built = 0; built < 2; built++)
 					{
-						if (tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && (!tile.active() || WorldGen.genRand.NextBool((int)(size / 2.66f))))
+						if (tile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && (!tile.HasTile || WorldGen.genRand.NextBool((int)(size / 2.66f))))
 						{
 							Tile tile2 = Framing.GetTileSafely(findTileX, findTileY - 3);
 							Tile tile3 = Framing.GetTileSafely(findTileX, findTileY + 3);
-							bool tile2Valid = tile2.active() && tile2.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tile2.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>();
-							bool tile3Valid = tile3.active() && tile3.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tile3.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+							bool tile2Valid = tile2.HasTile && tile2.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && tile2.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+							bool tile3Valid = tile3.HasTile && tile3.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() && tile3.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 							if (tile2Valid && tile3Valid)
 							{
 								if (!WorldGen.genRand.NextBool(4))
@@ -1134,8 +1134,8 @@ namespace SOTS
 					Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY - 2);
 					Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY - 3);
 					Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY - 3);
-					bool validType = tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.type == (ushort)ModContent.TileType<PyramidBrickTile>() || tile.type == (ushort)ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == (ushort)ModContent.TileType<PyramidRubbleTile>();
-					if (validType && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
+					bool validType = tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.TileType == (ushort)ModContent.TileType<PyramidBrickTile>() || tile.TileType == (ushort)ModContent.TileType<RuinedPyramidBrickTile>() || tile.TileType == (ushort)ModContent.TileType<PyramidRubbleTile>();
+					if (validType && !tileLU.HasTile && !tileLU2.HasTile && !tileU.HasTile && !tileU2.HasTile)
 					{
 						if (WorldGen.genRand.NextBool(4))
 						{
@@ -1154,18 +1154,18 @@ namespace SOTS
 						}
 						else if (WorldGen.genRand.NextBool(size / 3))
 						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
+							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)ModContent.TileType<PyramidChestTile>()); //Chests
 						}
 						else if (WorldGen.genRand.NextBool((int)(size / 3.5f)))
 						{
 							GenerateCrate(findTileX, findTileY - 1, mod);
 						}
-						else if (!tileU3.active() && !tileLU3.active() && WorldGen.genRand.NextBool(size / 2))
+						else if (!tileU3.HasTile && !tileLU3.HasTile && WorldGen.genRand.NextBool(size / 2))
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 						}
 					}
-					if (tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && WorldGen.genRand.NextBool(500) && tile.type != ModContent.TileType<CursedTumorTile>() && tile.active())
+					if (tile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && WorldGen.genRand.NextBool(500) && tile.TileType != ModContent.TileType<CursedTumorTile>() && tile.HasTile)
 					{
 						int radius7 = 6;
 						for (int x = -radius7; x <= radius7; x++)
@@ -1179,10 +1179,10 @@ namespace SOTS
 									float distFromCenter = (float)Math.Sqrt(x * x + y * y);
 									int distRand = (int)distFromCenter;
 									Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
-									if (!tileRad.active() && tileRad.wall != ModContent.WallType<UnsafeCursedTumorWallWall>() && Main.rand.Next(100) > 4 + distRand * 5)
+									if (!tileRad.HasTile && tileRad.WallType != ModContent.WallType<UnsafeCursedTumorWallWall>() && Main.rand.Next(100) > 4 + distRand * 5)
 									{
-										tileRad.type = 51; //cobweb
-										tileRad.active(true);
+										tileRad.TileType = 51; //cobweb
+										tileRad.HasTile = true;
 									}
 								}
 							}
@@ -1198,18 +1198,18 @@ namespace SOTS
 				for (int findTileX = pyramidX + extraSize; findTileX > pyramidX - extraSize; findTileX--)
 				{
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					if (tile.type == ModContent.TileType<CursedTumorTile>() && tile.active())
+					if (tile.TileType == ModContent.TileType<CursedTumorTile>() && tile.HasTile)
 					{
-						tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
+						tile.WallType = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
 					}
-					if (width > 16 && WorldGen.genRand.NextBool((int)(2300 - width * 5f)) && tile.active() && (tile.type == ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>()))
+					if (width > 16 && WorldGen.genRand.NextBool((int)(2300 - width * 5f)) && tile.HasTile && (tile.TileType == ModContent.TileType<RuinedPyramidBrickTile>() || tile.TileType == ModContent.TileType<PyramidSlabTile>()))
 					{
 						int extraWidth = width / 50;
 						DoAltBlocksGeneration(findTileX, findTileY, 5 + extraWidth + WorldGen.genRand.Next(10 - worldSizeModifier), true);
 					}
 					if (!WorldGen.genRand.NextBool(5))
 					{
-						if (tile.active() && (tile.type == ModContent.TileType<CursedTumorTile>() || tile.wall == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
+						if (tile.HasTile && (tile.TileType == ModContent.TileType<CursedTumorTile>() || tile.WallType == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
 						{
 							int randType = Main.rand.Next(6);
 							if (randType == 0)
@@ -1217,7 +1217,7 @@ namespace SOTS
 								int left = findTileX;
 								int top = findTileY - 1;
 								Tile tile2 = Framing.GetTileSafely(left, top);
-								if (!tile2.active())
+								if (!tile2.HasTile)
 									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1Curse>(), false, false, -1, 0);
 							}
 							else if (randType == 1)
@@ -1230,7 +1230,7 @@ namespace SOTS
 									for (int j = top; j < top + 2; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1250,7 +1250,7 @@ namespace SOTS
 									for (int j = top; j < top + 2; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1270,7 +1270,7 @@ namespace SOTS
 									for (int j = top; j < top + 3; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1290,7 +1290,7 @@ namespace SOTS
 									for (int j = top; j < top + 3; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1301,7 +1301,7 @@ namespace SOTS
 									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
 							}
 						}
-						/*if (tile.active() && (tile.type == ModContent.TileType<MalditeTile>() || tile.wall == (ushort)ModContent.WallType<UnsafeMalditeWallWall>()))
+						/*if (tile.HasTile && (tile.TileType == ModContent.TileType<MalditeTile>() || tile.WallType == (ushort)ModContent.WallType<UnsafeMalditeWallWall>()))
 						{
 							int randType = Main.rand.Next(3);
 							if (randType == 0)
@@ -1309,7 +1309,7 @@ namespace SOTS
 								int left = findTileX;
 								int top = findTileY - 1;
 								Tile tile2 = Framing.GetTileSafely(left, top);
-								if (!tile2.active())
+								if (!tile2.HasTile)
 									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1Curse>(), false, false, -1, 1 + Main.rand.Next(2));
 							}
 							else if (randType == 1)
@@ -1322,7 +1322,7 @@ namespace SOTS
 									for (int j = top; j < top + 2; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1342,7 +1342,7 @@ namespace SOTS
 									for (int j = top; j < top + 3; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1355,7 +1355,7 @@ namespace SOTS
 						}*/
 					}
 					if (WorldGen.genRand.NextBool(3))
-						if (tile.wall != 0 && tile.active() && (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>() || tile.type == ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == ModContent.TileType<PyramidRubbleTile>() || tile.wall == (ushort)ModContent.WallType<PyramidWallWall>()))
+						if (tile.WallType != 0 && tile.HasTile && (tile.TileType == ModContent.TileType<PyramidBrickTile>() || tile.TileType == ModContent.TileType<PyramidSlabTile>() || tile.TileType == ModContent.TileType<RuinedPyramidBrickTile>() || tile.TileType == ModContent.TileType<PyramidRubbleTile>() || tile.WallType == (ushort)ModContent.WallType<PyramidWallWall>()))
 						{
 							int randType = Main.rand.Next(3);
 							if (randType == 0)
@@ -1363,7 +1363,7 @@ namespace SOTS
 								int left = findTileX;
 								int top = findTileY - 1;
 								Tile tile2 = Framing.GetTileSafely(left, top);
-								if (!tile2.active())
+								if (!tile2.HasTile)
 									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1>(), false, false, -1, Main.rand.Next(2));
 							}
 							else if (randType == 1)
@@ -1376,7 +1376,7 @@ namespace SOTS
 									for (int j = top; j < top + 2; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1396,7 +1396,7 @@ namespace SOTS
 									for (int j = top; j < top + 3; j++)
 									{
 										Tile tile2 = Framing.GetTileSafely(i, j);
-										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										if ((tile2.HasTile && j != findTileY) || (j == findTileY && !tile2.HasTile))
 										{
 											capable = false;
 											break;
@@ -1524,90 +1524,90 @@ namespace SOTS
 							switch (_zepline[y, x])
 							{
 								case 0:
-									if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
-										tile.active(false);
+									if (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
+										tile.HasTile = false;
 
-									if (tile2.type == (ushort)ModContent.TileType<PyramidSlabTile>())
-										tile2.active(false);
+									if (tile2.TileType == (ushort)ModContent.TileType<PyramidSlabTile>())
+										tile2.HasTile = false;
 									break;
 								case 1:
-									tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
-									tile.active(true);
-									tile.slope(4);
-									tile2.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
-									tile2.active(true);
-									tile2.slope(3);
+									tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
+									tile.HasTile = true;
+									tile.Slope = (SlopeType)4;
+									tile2.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
+									tile2.HasTile = true;
+									tile2.Slope = (SlopeType)3;
 									break;
 								case 2:
-									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-									tile.active(true);
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile2.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-									tile2.active(true);
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.HasTile = true;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile2.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile2.HasTile = true;
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 									break;
 								case 3:
-									tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274; //sandstone slab
-									tile.active(true);
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile2.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
-									tile2.active(true);
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274; //sandstone slab
+									tile.HasTile = true;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile2.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
+									tile2.HasTile = true;
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 									break;
 								case 4:
-									tile.type = 326; //waterfall
-									tile.active(true);
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.TileType = 326; //waterfall
+									tile.HasTile = true;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 
-									tile2.type = 326; //waterfall
-									tile2.active(true);
-									tile2.slope(0);
-									tile2.halfBrick(false);
+									tile2.TileType = 326; //waterfall
+									tile2.HasTile = true;
+									tile2.Slope = 0;
+									tile2.IsHalfBlock = false;
 									break;
 								case 5:
-									tile.type = 326; //waterfall
-									tile.active(true);
-									tile.halfBrick(true);
-									tile2.type = 326; //waterfall
-									tile2.active(true);
-									tile2.halfBrick(true);
+									tile.TileType = 326; //waterfall
+									tile.HasTile = true;
+									tile.IsHalfBlock = true;
+									tile2.TileType = 326; //waterfall
+									tile2.HasTile = true;
+									tile2.IsHalfBlock = true;
 									break;
 								case 6:
-									tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
-									tile.active(true);
-									tile.halfBrick(true);
-									tile2.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
-									tile2.active(true);
-									tile2.halfBrick(true);
+									tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
+									tile.HasTile = true;
+									tile.IsHalfBlock = true;
+									tile2.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
+									tile2.HasTile = true;
+									tile2.IsHalfBlock = true;
 									break;
 								case 7:
-									tile.type = (ushort)ModContent.TileType<RefractingCrystalBlockTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.active(true);
+									tile.TileType = (ushort)ModContent.TileType<RefractingCrystalBlockTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+									tile.HasTile = true;
 									break;
 								case 8:
-									tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
-									tile.active(true);
-									tile.slope(3);
-									tile2.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
-									tile2.active(true);
-									tile2.slope(4);
+									tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
+									tile.HasTile = true;
+									tile.Slope = (SlopeType)3;
+									tile2.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //274;
+									tile2.HasTile = true;
+									tile2.Slope = (SlopeType)4;
 									break;
 								case 9:
-									tile.liquidType(0);
-									tile.liquid = 255;
-									tile.active(false);
+									tile.LiquidType = 0;
+									tile.LiquidType = 255;
+									tile.HasTile = false;
 									WorldGen.SquareTileFrame(k, l, false);
 
-									tile2.liquidType(0);
-									tile2.liquid = 255;
-									tile2.active(false);
+									tile2.LiquidType = 0;
+									tile2.LiquidType = 255;
+									tile2.HasTile = false;
 									WorldGen.SquareTileFrame(k2, l, false);
 									break;
 							}
@@ -1629,16 +1629,16 @@ namespace SOTS
 						switch (_zeplineWalls[y, x])
 						{
 							case 0:
-								tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();  //sandbrick
-								tile2.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+								tile.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();  //sandbrick
+								tile2.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 1:
-								tile.wall = 226; //sandfall 
-								tile2.wall = 226;
+								tile.WallType = 226; //sandfall 
+								tile2.WallType = 226;
 								break;
 							case 2:
-								tile.wall = 136; //waterfall
-								tile2.wall = 136;
+								tile.WallType = 136; //waterfall
+								tile2.WallType = 136;
 								break;
 							case 3:
 								break;
@@ -1696,113 +1696,113 @@ namespace SOTS
 							switch (_structure[i, j])
 							{
 								case 0:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 1:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 									}
 									break;
 								case 2:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 3:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
-									tile.slope(0);
-									tile.halfBrick(true);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
+									tile.Slope = 0;
+									tile.IsHalfBlock = true;
 									break;
 								case 4:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 255;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidType = 255;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 5:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
-									tile.slope(4);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
+									tile.Slope = (SlopeType)4;
+									tile.IsHalfBlock = false;
 									break;
 								case 6:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
-									tile.slope(3);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
+									tile.Slope = (SlopeType)3;
+									tile.IsHalfBlock = false;
 									break;
 								case 7:
 									if (confirmPlatforms == 1)
 									{
-										tile.active(false);
-										tile.slope(0);
-										tile.halfBrick(false);
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 										if (type == 0)
-											WorldGen.PlaceTile(k, l, mod.TileType("EnchantedSwordShrineTile"), true, true, -1, 0);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<EnchantedSwordShrineTile>(), true, true, -1, 0);
 
 										if (type == 1)
-											WorldGen.PlaceTile(k, l, mod.TileType("EnchantedPickShrineTile"), true, true, -1, 0);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<EnchantedSwordShrineTile>(), true, true, -1, 0);
 									}
 									break;
 								case 8:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 								case 9:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(1);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = (SlopeType)1;
+									tile.IsHalfBlock = false;
 									break;
 								case 10:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
-										tile.liquid = 254;
-										tile.liquidType(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
+										tile.LiquidType = 254;
+										tile.LiquidType = 0;
 									}
 									break;
 								case 11:
-									tile.active(true);
-									tile.type = 2;
-									tile.slope(2);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = 2;
+									tile.Slope = (SlopeType)2;
+									tile.IsHalfBlock = false;
 									break;
 								case 12:
 									if (confirmPlatforms == 0)
 									{
-										tile.active(false);
-										tile.halfBrick(false);
-										tile.slope(0);
+										tile.HasTile = false;
+										tile.IsHalfBlock = false;
+										tile.Slope = 0;
 										for (int h = 1; h < 50; h++)
 										{
 											Tile tile2 = Framing.GetTileSafely(k, l - h);
 											Tile tile3 = Framing.GetTileSafely(k, l - h - 1);
 											Tile tile4 = Framing.GetTileSafely(k, l - h - 2);
 											Tile tile5 = Framing.GetTileSafely(k, l - h - 3);
-											if (tile2.type == ModContent.TileType<PyramidSlabTile>() && tile2.active() && tile3.type == ModContent.TileType<PyramidSlabTile>() && tile3.active() && tile4.type == ModContent.TileType<PyramidSlabTile>() && tile4.active() && tile5.type == ModContent.TileType<PyramidSlabTile>() && tile5.active())
+											if (tile2.TileType == ModContent.TileType<PyramidSlabTile>() && tile2.HasTile && tile3.TileType == ModContent.TileType<PyramidSlabTile>() && tile3.HasTile && tile4.TileType == ModContent.TileType<PyramidSlabTile>() && tile4.HasTile && tile5.TileType == ModContent.TileType<PyramidSlabTile>() && tile5.HasTile)
 											{
 												if (Main.rand.Next(h) <= Main.rand.Next(50))
 												{
-													tile2.active(false);
-													tile2.halfBrick(false);
-													tile2.slope(0);
+													tile2.HasTile = false;
+													tile2.IsHalfBlock = false;
+													tile2.Slope = 0;
 												}
 											}
 											else
@@ -1813,10 +1813,10 @@ namespace SOTS
 									}
 									break;
 								case 13:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<CursedHive>();
-									tile.slope(0);
-									tile.halfBrick(false);
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
 									break;
 							}
 						}
@@ -1826,12 +1826,12 @@ namespace SOTS
 		}
 		public static bool CanTunnelTile(Tile tile)
 		{
-			return tile.active() && (tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tile.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>())
-				&& (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.type == TileID.SandStoneSlab || tile.type == (ushort)ModContent.TileType<PyramidBrickTile>() || tile.type == (ushort)ModContent.TileType<RoyalGoldBrickTile>() || tile.type == (ushort)ModContent.TileType<AncientGoldSpikeTile>());
+			return tile.HasTile && (tile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tile.WallType == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>())
+				&& (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.TileType == TileID.SandStoneSlab || tile.TileType == (ushort)ModContent.TileType<PyramidBrickTile>() || tile.TileType == (ushort)ModContent.TileType<RoyalGoldBrickTile>() || tile.TileType == (ushort)ModContent.TileType<AncientGoldSpikeTile>());
 		}
 		public static bool StopTunnelTile(Tile tile)
 		{
-			return tile.active() && (tile.type == (ushort)ModContent.TileType<TrueSandstoneTile>() || tile.type == (ushort)ModContent.TileType<CursedTumorTile>());
+			return tile.HasTile && (tile.TileType == (ushort)ModContent.TileType<TrueSandstoneTile>() || tile.TileType == (ushort)ModContent.TileType<CursedTumorTile>());
 		}
 		public static void GeneratePyramidRoom(int x, int y, int direction, Mod mod)
 		{
@@ -1845,20 +1845,20 @@ namespace SOTS
 						Tile tileCheck = Framing.GetTileSafely(x + checkSquareX, y + checkSquareY);
 						if (checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
 						{
-							tileCheck.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstoneBrick
+							tileCheck.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstoneBrick
 						}
 						if (checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
 						{
-							tileCheck.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstoneBrick
+							tileCheck.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstoneBrick
 						}
-						tileCheck.wall = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
+						tileCheck.WallType = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
 					}
 				}
 				Tile initialTile = Framing.GetTileSafely(x, y);
 				int variation = WorldGen.genRand.Next(12);
 				if (direction == 0)
 				{
-					//tile.type = 200;
+					//tile.TileType = 200;
 					if (!WorldGen.genRand.NextBool(3))
 					{
 						for (int checkLeft = 0; checkLeft < 300; checkLeft++)
@@ -1876,7 +1876,7 @@ namespace SOTS
 									check5 = 5;
 								}
 								else
-									checkTile.active(false);
+									checkTile.HasTile = false;
 							}
 							if (check5 >= 5)
 							{
@@ -1925,43 +1925,43 @@ namespace SOTS
 										switch (_pyramidRoom[i, j])
 										{
 											case 0:
-												tile.active(false);
+												tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.halfBrick(true);
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.IsHalfBlock = true;
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
@@ -2015,49 +2015,49 @@ namespace SOTS
 										switch (_pyramidRoom[i, j])
 										{
 											case 0:
-												tile.active(false);
+												tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.halfBrick(true);
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.IsHalfBlock = true;
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //woodenspike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //woodenspike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 										}
 									}
@@ -2107,48 +2107,48 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.halfBrick(true);
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.IsHalfBlock = true;
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 16); //anvil
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 302); //glass kiln
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //woodenspike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //woodenspike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 										}
 									}
@@ -2198,47 +2198,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.halfBrick(true);
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.IsHalfBlock = true;
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 16); //anvil
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 										}
 									}
@@ -2288,47 +2288,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 16); //anvil
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 
@@ -2380,47 +2380,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -2471,47 +2471,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -2562,47 +2562,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 										}
 									}
@@ -2652,47 +2652,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 										}
 									}
@@ -2742,47 +2742,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 53; //sand
-												tile.active(true);
+												tile.TileType = 53; //sand
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.type = 53; //sand
-												tile.active(true);
+												tile.TileType = 53; //sand
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 										}
 									}
@@ -2832,121 +2832,121 @@ namespace SOTS
 											case 0:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 1:
-												tile.active(true);
-												tile.type = 213;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 213;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 2:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 3:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 4:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 241, true, true, -1, 8);
 												}
 												break;
 											case 5:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 241, true, true, -1, 1);
 												}
 												break;
 											case 6:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 241, true, true, -1, 0);
 												}
 												break;
 											case 7:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>(), true, true, -1, 0);
 												}
 												break;
 											case 8:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 85, true, true, -1, 2);
 												}
 												break;
 											case 9:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 85, true, true, -1, 8);
 												}
 												break;
 											case 10:
-												tile.active(true);
-												tile.type = 2;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 2;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 11:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 85, true, true, -1, 1);
 												}
 												break;
 											case 12:
-												tile.active(true);
-												tile.type = 2;
-												tile.slope(0);
-												tile.halfBrick(true);
+												tile.HasTile = true;
+												tile.TileType = 2;
+												tile.Slope = 0;
+												tile.IsHalfBlock = true;
 												break;
 											case 13:
-												tile.active(true);
-												tile.type = 1;
-												tile.slope(0);
-												tile.halfBrick(true);
+												tile.HasTile = true;
+												tile.TileType = 1;
+												tile.Slope = 0;
+												tile.IsHalfBlock = true;
 												break;
 											case 14:
-												tile.active(true);
-												tile.type = 1;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 1;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 15:
-												tile.active(true);
-												tile.type = 0;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 0;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 										}
 									}
@@ -2994,32 +2994,32 @@ namespace SOTS
 										switch (_structure[i, j])
 										{
 											case 0:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<CursedHive>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 1:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 2:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 3:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>(), true, true, -1, 0);
 												}
 												break;
 										}
@@ -3031,7 +3031,7 @@ namespace SOTS
 				}
 				if (direction == 1)
 				{
-					//tile.type = 100;
+					//tile.TileType = 100;
 					if (!WorldGen.genRand.NextBool(3))
 					{
 						for (int checkRight = 0; checkRight < 300; checkRight++)
@@ -3049,7 +3049,7 @@ namespace SOTS
 									check5 = 5;
 								}
 								else
-									checkTile.active(false);
+									checkTile.HasTile = false;
 							}
 							if (check5 >= 5)
 							{
@@ -3098,48 +3098,48 @@ namespace SOTS
 										switch (_pyramidRoom[i, j])
 										{
 											case 0:
-												tile.active(false);
+												tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 331; //silver coin
-												tile.active(true);
+												tile.TileType = 331; //silver coin
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 										}
 									}
@@ -3188,48 +3188,48 @@ namespace SOTS
 										switch (_pyramidRoom[i, j])
 										{
 											case 0:
-												tile.active(false);
+												tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 										}
 									}
@@ -3278,48 +3278,48 @@ namespace SOTS
 										switch (_pyramidRoom[i, j])
 										{
 											case 0:
-												tile.active(false);
+												tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 										}
 									}
@@ -3369,47 +3369,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 93; //tikitorch
-												tile.active(true);
+												tile.TileType = 93; //tikitorch
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 102, true, true, -1); //throne
 												break;
 										}
@@ -3460,47 +3460,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.halfBrick(true);
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.IsHalfBlock = true;
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(true);
+												tile.HasTile = true;
 												break;
 										}
 									}
@@ -3550,47 +3550,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -3641,47 +3641,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -3732,47 +3732,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
 										}
@@ -3823,47 +3823,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
 										}
@@ -3914,48 +3914,48 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 332; //coins
-												tile.active(true);
+												tile.TileType = 332; //coins
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 										}
 									}
@@ -4005,81 +4005,81 @@ namespace SOTS
 											case 0:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 1:
-												tile.active(true);
-												tile.type = 188;
-												tile.slope(0);
-												tile.halfBrick(true);
+												tile.HasTile = true;
+												tile.TileType = 188;
+												tile.Slope = 0;
+												tile.IsHalfBlock = true;
 												break;
 											case 2:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>();
-												tile.slope(0);
-												tile.halfBrick(true);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = true;
 												break;
 											case 3:
-												tile.active(true);
-												tile.type = 53;
-												tile.slope(1);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 53;
+												tile.Slope = (SlopeType)1;
+												tile.IsHalfBlock = false;
 												break;
 											case 4:
-												tile.active(true);
-												tile.type = 188;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 188;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 5:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>();
-												tile.slope(2);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+												tile.Slope = (SlopeType)2;
+												tile.IsHalfBlock = false;
 												break;
 											case 6:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 7:
-												tile.active(true);
-												tile.type = 53;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 53;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 8:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>();
-												tile.slope(3);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+												tile.Slope = (SlopeType)3;
+												tile.IsHalfBlock = false;
 												break;
 											case 9:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>();
-												tile.slope(1);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+												tile.Slope = (SlopeType)1;
+												tile.IsHalfBlock = false;
 												break;
 											case 10:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>(), true, true, -1, 0);
 												}
 												break;
 											case 11:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>(), true, true, -1, 0);
 												}
 												break;
 										}
@@ -4130,85 +4130,85 @@ namespace SOTS
 											case 0:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 1:
-												tile.active(true);
-												tile.type = 192;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 192;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 2:
-												tile.active(true);
-												tile.type = 191;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 191;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 3:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>(), true, true, -1, 0);
 												}
 												break;
 											case 4:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 86, true, true, -1, 0);
 												}
 												break;
 											case 5:
-												tile.active(true);
-												tile.type = 2;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 2;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 6:
-												tile.active(true);
-												tile.type = 0;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 0;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 7:
-												tile.active(true);
-												tile.type = 1;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 1;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 8:
-												tile.active(true);
-												tile.type = 1;
-												tile.slope(3);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 1;
+												tile.Slope = (SlopeType)3;
+												tile.IsHalfBlock = false;
 												break;
 											case 9:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>(), true, true, -1, 0);
 												}
 												break;
 											case 10:
-												tile.active(true);
-												tile.type = 1;
-												tile.slope(4);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 1;
+												tile.Slope = (SlopeType)4;
+												tile.IsHalfBlock = false;
 												break;
 											case 11:
-												tile.active(true);
-												tile.type = 1;
-												tile.slope(0);
-												tile.halfBrick(true);
+												tile.HasTile = true;
+												tile.TileType = 1;
+												tile.Slope = 0;
+												tile.IsHalfBlock = true;
 												break;
 										}
 									}
@@ -4220,7 +4220,7 @@ namespace SOTS
 				}
 				if (direction == 2)
 				{
-					//tile.type = 150;
+					//tile.TileType = 150;
 					if (!WorldGen.genRand.NextBool(3))
 					{
 						for (int checkUp = 0; checkUp < 300; checkUp++)
@@ -4238,7 +4238,7 @@ namespace SOTS
 									check5 = 5;
 								}
 								else
-									checkTile.active(false);
+									checkTile.HasTile = false;
 							}
 							if (check5 >= 5)
 							{
@@ -4287,48 +4287,48 @@ namespace SOTS
 										switch (_pyramidRoom[i, j])
 										{
 											case 0:
-												tile.active(false);
+												tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 										}
 									}
@@ -4378,47 +4378,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 												break;
 
@@ -4468,48 +4468,48 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 
 										}
@@ -4560,47 +4560,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 377); //sharpening station
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -4651,48 +4651,48 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.halfBrick(true);
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.IsHalfBlock = true;
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 77); //hellforge
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -4743,47 +4743,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 
@@ -4835,47 +4835,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -4926,47 +4926,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
 												if (confirmPlatforms == 1)
 													WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 215); //campfire
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 7:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -5017,47 +5017,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 
@@ -5109,47 +5109,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -5198,61 +5198,61 @@ namespace SOTS
 										switch (_structure[i, j])
 										{
 											case 0:
-												tile.active(true);
-												tile.type = 2;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 2;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 1:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 2:
-												tile.active(true);
-												tile.type = 0;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 0;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 3:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 4:
-												tile.active(true);
-												tile.type = 52;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 52;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 5:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>(), true, true, -1, 0);
 												}
 												break;
 											case 6:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 304, true, true, -1, 0);
 												}
 												break;
 											case 7:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 										}
 									}
@@ -5300,40 +5300,40 @@ namespace SOTS
 										switch (_structure[i, j])
 										{
 											case 0:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<CursedHive>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 1:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 2:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 3:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>(), true, true, -1, 0);
 												}
 												break;
 											case 4:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 										}
 									}
@@ -5345,7 +5345,7 @@ namespace SOTS
 				}
 				if (direction == 3)
 				{
-					//tile.type = 50;
+					//tile.TileType = 50;
 					if (!WorldGen.genRand.NextBool(3))
 					{
 						for (int checkDown = 0; checkDown < 300; checkDown++)
@@ -5363,7 +5363,7 @@ namespace SOTS
 									check5 = 5;
 								}
 								else
-									checkTile.active(false);
+									checkTile.HasTile = false;
 							}
 							if (check5 >= 5)
 							{
@@ -5412,48 +5412,48 @@ namespace SOTS
 										switch (_pyramidRoom[i, j])
 										{
 											case 0:
-												tile.active(false);
+												tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(0);
-												tile.liquid = 255;
+												tile.LiquidType = 0;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 										}
 									}
@@ -5503,42 +5503,42 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 												break;
 										}
@@ -5589,42 +5589,42 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 377); //sharpening station
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //heart crystal
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 												break;
 										}
@@ -5675,47 +5675,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 377); //sharpening station
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 
@@ -5767,47 +5767,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 377); //sharpening station
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 354); //bewitching table
 												break;
 										}
@@ -5858,47 +5858,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -5949,47 +5949,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
+												tile.HasTile = true;
 												break;
 											case 6:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -6040,47 +6040,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 355); //alchemy table
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 										}
@@ -6131,47 +6131,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
+												tile.HasTile = false;
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 
@@ -6223,47 +6223,47 @@ namespace SOTS
 										{
 											case 0:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												break;
 											case 1:
-												tile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274; //sandstoneslab
+												tile.HasTile = true;
 												break;
 											case 2:
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
+												tile.HasTile = true;
 												break;
 											case 3:
-												tile.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
-												tile.active(true);
+												tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstone brick
+												tile.HasTile = true;
 												break;
 											case 4:
-												tile.type = 51; //cobweb
-												tile.active(true);
+												tile.TileType = 51; //cobweb
+												tile.HasTile = true;
 												break;
 											case 5:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>()); //chest
 												break;
 											case 6:
-												tile.active(false);
-												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //chest
+												tile.HasTile = false;
+												WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>()); //chest
 												break;
 											case 7:
-												tile.type = 332; //gold coin
-												tile.active(true);
+												tile.TileType = 332; //gold coin
+												tile.HasTile = true;
 												break;
 											case 8:
-												tile.liquidType(1);
-												tile.liquid = 255;
+												tile.LiquidType = 1;
+												tile.LiquidType = 255;
 
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												tile.active(false);
+												tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
 
@@ -6315,67 +6315,67 @@ namespace SOTS
 											case 0:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 1:
-												tile.active(true);
-												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 2:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<PyramidChestTile>(), true, true, -1, 0);
 												}
 												break;
 											case 3:
-												tile.active(true);
-												tile.type = 170;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 170;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 4:
-												tile.active(true);
-												tile.type = 189;
-												tile.slope(0);
-												tile.halfBrick(true);
+												tile.HasTile = true;
+												tile.TileType = 189;
+												tile.Slope = 0;
+												tile.IsHalfBlock = true;
 												break;
 											case 5:
-												tile.active(true);
-												tile.type = 189;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 189;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 6:
-												tile.active(true);
-												tile.type = 2;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 2;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 7:
-												tile.active(true);
-												tile.type = 0;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 0;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 8:
-												tile.active(true);
-												tile.type = 189;
-												tile.slope(4);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 189;
+												tile.Slope = (SlopeType)4;
+												tile.IsHalfBlock = false;
 												break;
 											case 9:
-												tile.active(true);
-												tile.type = 189;
-												tile.slope(3);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 189;
+												tile.Slope = (SlopeType)3;
+												tile.IsHalfBlock = false;
 												break;
 										}
 									}
@@ -6425,152 +6425,152 @@ namespace SOTS
 											case 0:
 												if (confirmPlatforms == 0)
 												{
-													tile.active(false);
-													tile.halfBrick(false);
-													tile.slope(0);
+													tile.HasTile = false;
+													tile.IsHalfBlock = false;
+													tile.Slope = 0;
 												}
 												break;
 											case 1:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 240, true, true, -1, 12);
 												}
 												break;
 											case 2:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 240, true, true, -1, 13);
 												}
 												break;
 											case 3:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 242, true, true, -1, 13);
 												}
 												break;
 											case 4:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 242, true, true, -1, 8);
 												}
 												break;
 											case 5:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
 													WorldGen.PlaceTile(k, l, 243, true, true, -1, 0);
 												}
 												break;
 											case 6:
-												tile.active(true);
-												tile.type = 25;
-												tile.slope(0);
-												tile.halfBrick(true);
+												tile.HasTile = true;
+												tile.TileType = 25;
+												tile.Slope = 0;
+												tile.IsHalfBlock = true;
 												break;
 											case 7:
-												tile.active(true);
-												tile.type = 25;
-												tile.slope(2);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 25;
+												tile.Slope = (SlopeType)2;
+												tile.IsHalfBlock = false;
 												break;
 											case 8:
-												tile.active(true);
-												tile.type = 25;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 25;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 9:
-												tile.active(true);
-												tile.type = 23;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 23;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 10:
-												tile.active(true);
-												tile.type = 199;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 199;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 11:
-												tile.active(true);
-												tile.type = 203;
-												tile.slope(2);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 203;
+												tile.Slope = (SlopeType)2;
+												tile.IsHalfBlock = false;
 												break;
 											case 12:
-												tile.active(true);
-												tile.type = 203;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 203;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 13:
 												if (confirmPlatforms == 0)
-													tile.active(false);
+													tile.HasTile = false;
 												WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 											case 14:
-												tile.active(true);
-												tile.type = 25;
-												tile.slope(4);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 25;
+												tile.Slope = (SlopeType)4;
+												tile.IsHalfBlock = false;
 												break;
 											case 15:
-												tile.active(true);
-												tile.type = 203;
-												tile.slope(3);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 203;
+												tile.Slope = (SlopeType)3;
+												tile.IsHalfBlock = false;
 												break;
 											case 16:
-												tile.active(true);
-												tile.type = 25;
-												tile.slope(1);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 25;
+												tile.Slope = (SlopeType)1;
+												tile.IsHalfBlock = false;
 												break;
 											case 17:
-												tile.active(true);
-												tile.type = 203;
-												tile.slope(1);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 203;
+												tile.Slope = (SlopeType)1;
+												tile.IsHalfBlock = false;
 												break;
 											case 18:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<CrystalStatue>(), true, true, -1, 0);
 												}
 												break;
 											case 19:
 												if (confirmPlatforms == 1)
 												{
-													tile.active(false);
-													tile.slope(0);
-													tile.halfBrick(false);
-													WorldGen.PlaceTile(k, l, (ushort)mod.TileType("ManaStatue"), true, true, -1, 0);
+													tile.HasTile = false;
+													tile.Slope = 0;
+													tile.IsHalfBlock = false;
+													WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<ManaStatue>(), true, true, -1, 0);
 												}
 												break;
 											case 20:
-												tile.active(true);
-												tile.type = 0;
-												tile.slope(0);
-												tile.halfBrick(false);
+												tile.HasTile = true;
+												tile.TileType = 0;
+												tile.Slope = 0;
+												tile.IsHalfBlock = false;
 												break;
 										}
 									}
@@ -6596,7 +6596,7 @@ namespace SOTS
 				sumRolls = new int[11];
 				sumRolls2 = new int[9];
 				Tile tileCenter = Framing.GetTileSafely(i, j - 3);
-				if (tileCenter.type == ModContent.TileType<PyramidSlabTile>() || item)
+				if (tileCenter.TileType == ModContent.TileType<PyramidSlabTile>() || item)
 				{
 					for (int k2 = 0; k2 < 30; k2++)
 					{
@@ -6616,12 +6616,12 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls[k2] + 1; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 5, j - k3 - 3);
-							if (!WorldGen.genRand.NextBool(40) && (tile.type == ModContent.TileType<PyramidSlabTile>() || (!tile.active() && (tile.wall == ModContent.WallType<UnsafePyramidWallWall>() || tile.wall == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
+							if (!WorldGen.genRand.NextBool(40) && (tile.TileType == ModContent.TileType<PyramidSlabTile>() || (!tile.HasTile && (tile.WallType == ModContent.WallType<UnsafePyramidWallWall>() || tile.WallType == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 5, j - k3 - 3, (ushort)ModContent.TileType<CursedHive>());
-								tile.type = (ushort)ModContent.TileType<CursedHive>();
-								tile.active(true);
+								tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+								tile.HasTile = true;
 							}
 						}
 					}
@@ -6642,12 +6642,12 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls2[k2]; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 4, j + k3 - 2);
-							if (!WorldGen.genRand.NextBool(20) && (tile.type == ModContent.TileType<PyramidSlabTile>() || (!tile.active() && (tile.wall == ModContent.WallType<UnsafePyramidWallWall>() || tile.wall == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
+							if (!WorldGen.genRand.NextBool(20) && (tile.TileType == ModContent.TileType<PyramidSlabTile>() || (!tile.HasTile && (tile.WallType == ModContent.WallType<UnsafePyramidWallWall>() || tile.WallType == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 4, j + k3 - 2, (ushort)ModContent.TileType<CursedHive>());
-								tile.type = (ushort)ModContent.TileType<CursedHive>();
-								tile.active(true);
+								tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+								tile.HasTile = true;
 							}
 						}
 					}
@@ -6655,7 +6655,7 @@ namespace SOTS
 				sumRolls = new int[11];
 				sumRolls2 = new int[9];
 				tileCenter = Framing.GetTileSafely(i, j + 3);
-				if (tileCenter.type == ModContent.TileType<PyramidSlabTile>() || item)
+				if (tileCenter.TileType == ModContent.TileType<PyramidSlabTile>() || item)
 				{
 					for (int k2 = 0; k2 < 30; k2++)
 					{
@@ -6675,12 +6675,12 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls[k2] + 1; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 5, j + k3 + 3);
-							if (!WorldGen.genRand.NextBool(40) && (tile.type == ModContent.TileType<PyramidSlabTile>() || (!tile.active() && (tile.wall == ModContent.WallType<UnsafePyramidWallWall>() || tile.wall == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
+							if (!WorldGen.genRand.NextBool(40) && (tile.TileType == ModContent.TileType<PyramidSlabTile>() || (!tile.HasTile && (tile.WallType == ModContent.WallType<UnsafePyramidWallWall>() || tile.WallType == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 5, j + k3 + 3, (ushort)ModContent.TileType<CursedHive>());
-								tile.type = (ushort)ModContent.TileType<CursedHive>();
-								tile.active(true);
+								tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+								tile.HasTile = true;
 							}
 						}
 					}
@@ -6701,12 +6701,12 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls2[k2]; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 4, j - k3 + 2);
-							if (!WorldGen.genRand.NextBool(20) && (tile.type == ModContent.TileType<PyramidSlabTile>() || (!tile.active() && (tile.wall == ModContent.WallType<UnsafePyramidWallWall>() || tile.wall == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
+							if (!WorldGen.genRand.NextBool(20) && (tile.TileType == ModContent.TileType<PyramidSlabTile>() || (!tile.HasTile && (tile.WallType == ModContent.WallType<UnsafePyramidWallWall>() || tile.WallType == ModContent.WallType<UnsafePyramidBrickWallWall>()))))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 4, j - k3 + 2, (ushort)ModContent.TileType<CursedHive>());
-								tile.type = (ushort)ModContent.TileType<CursedHive>();
-								tile.active(true);
+								tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+								tile.HasTile = true;
 							}
 						}
 					}
@@ -6736,10 +6736,10 @@ namespace SOTS
 				for (int j = -halfLength; j <= halfLength; j++)
 				{
 					Tile tile = Framing.GetTileSafely(spawnX + i, spawnY + j);
-					if (tile.wall != ModContent.WallType<UnsafePyramidWallWall>() && tile.wall != ModContent.WallType<UnsafeCursedTumorWallWall>() && tile.type != ModContent.TileType<CursedTumorTile>() && tile.type != ModContent.TileType<CursedHive>())
+					if (tile.WallType != ModContent.WallType<UnsafePyramidWallWall>() && tile.WallType != ModContent.WallType<UnsafeCursedTumorWallWall>() && tile.TileType != ModContent.TileType<CursedTumorTile>() && tile.TileType != ModContent.TileType<CursedHive>())
 					{
 						if (i != halfLength && i != -halfLength && j != halfLength && j != -halfLength)
-							tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+							tile.WallType = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 						SetTilePyramid(tile);
 					}
 				}
@@ -6778,8 +6778,8 @@ namespace SOTS
 				for (int i = j; i <= -j; i++)
 				{
 					Tile tile = Framing.GetTileSafely(endX + i, endY + j + 4);
-					tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
-					tile.active(true);
+					tile.TileType = (ushort)ModContent.TileType<CursedTumorTile>();
+					tile.HasTile = true;
 				}
 			WorldGen.PlaceTile(endX, endY, ModContent.TileType<RubyKeystoneTile>(), false, true);
 		}
@@ -6798,26 +6798,26 @@ namespace SOTS
 						int yPosition6 = spawnY + (int)(y * scale);
 						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
 						bool capable = true;
-						if (tile.wall == ModContent.WallType<UnsafePyramidWallWall>() && !tile.active())
+						if (tile.WallType == ModContent.WallType<UnsafePyramidWallWall>() && !tile.HasTile)
 							capable = false;
-						bool valid = !extraRestriction || (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>()
-							|| tile.type == ModContent.TileType<CursedHive>() || tile.type == (ushort)ModContent.TileType<AncientGoldSpikeTile>() || tile.type == (ushort)ModContent.TileType<RoyalGoldBrickTile>()
-							|| Main.tileSand[tile.type]);
-						if (Math.Sqrt(x * x + y * y) >= radius - radialMod && tile.wall != ModContent.WallType<UnsafeCursedTumorWallWall>() && capable)
+						bool valid = !extraRestriction || (tile.TileType == ModContent.TileType<PyramidBrickTile>() || tile.TileType == ModContent.TileType<PyramidSlabTile>()
+							|| tile.TileType == ModContent.TileType<CursedHive>() || tile.TileType == (ushort)ModContent.TileType<AncientGoldSpikeTile>() || tile.TileType == (ushort)ModContent.TileType<RoyalGoldBrickTile>()
+							|| Main.tileSand[tile.TileType]);
+						if (Math.Sqrt(x * x + y * y) >= radius - radialMod && tile.WallType != ModContent.WallType<UnsafeCursedTumorWallWall>() && capable)
 						{
 							ConvertNearbyTiles(mod, xPosition6, yPosition6, radiusConversion);
-							if (tile.type == ModContent.TileType<TrueSandstoneTile>() || tile.wall == ModContent.WallType<TrueSandstoneWallWall>() || tile.type == ModContent.TileType<AncientGoldGateTile>())
+							if (tile.TileType == ModContent.TileType<TrueSandstoneTile>() || tile.WallType == ModContent.WallType<TrueSandstoneWallWall>() || tile.TileType == ModContent.TileType<AncientGoldGateTile>())
 								valid = false;
-							if (valid && (tile.active() || (tile.wall != ModContent.WallType<TrueSandstoneWallWall>() && tile.wall != ModContent.WallType<UnsafePyramidWallWall>())) && Main.tileSolid[tile.type])
+							if (valid && (tile.HasTile || (tile.WallType != ModContent.WallType<TrueSandstoneWallWall>() && tile.WallType != ModContent.WallType<UnsafePyramidWallWall>())) && Main.tileSolid[tile.TileType])
 							{
-								tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
-								tile.active(true);
+								tile.TileType = (ushort)ModContent.TileType<CursedTumorTile>();
+								tile.HasTile = true;
 							}
 						}
-						else if (tile.wall != ModContent.WallType<TrueSandstoneWallWall>() && (valid || !tile.active()))
+						else if (tile.WallType != ModContent.WallType<TrueSandstoneWallWall>() && (valid || !tile.HasTile))
 						{
-							tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
-							tile.active(false);
+							tile.WallType = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
+							tile.HasTile = false;
 						}
 					}
 				}
@@ -6834,10 +6834,10 @@ namespace SOTS
 						int xPosition6 = spawnX + x;
 						int yPosition6 = spawnY + y;
 						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-						if (tile.active() && Main.rand.NextBool((int)Math.Sqrt(x * x + y * y) + 2) && (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.type == (ushort)ModContent.TileType<RuinedPyramidBrickTile>()))
+						if (tile.HasTile && Main.rand.NextBool((int)Math.Sqrt(x * x + y * y) + 2) && (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.TileType == (ushort)ModContent.TileType<RuinedPyramidBrickTile>()))
 						{
-							tile.type = (ushort)ModContent.TileType<CursedHive>();
-							tile.active(true);
+							tile.TileType = (ushort)ModContent.TileType<CursedHive>();
+							tile.HasTile = true;
 						}
 					}
 				}
@@ -6862,16 +6862,16 @@ namespace SOTS
 						if (distFromCenter <= radiusMaldite + 0.5f && WorldGen.genRand.Next(100) > 2 + distRand * 2)
 						{
 							Tile tileRad = Framing.GetTileSafely(malditePosX, malditePosY);
-							bool capable = tileRad.type == ModContent.TileType<CursedTumorTile>();
-							if (tileRad.active() && capable)
+							bool capable = tileRad.TileType == ModContent.TileType<CursedTumorTile>();
+							if (tileRad.HasTile && capable)
 							{
-								tileRad.type = (ushort)ModContent.TileType<MalditeTile>();
-								tileRad.wall = (ushort)ModContent.WallType<UnsafeMalditeWallWall>();
-								tileRad.active(true);
+								tileRad.TileType = (ushort)ModContent.TileType<MalditeTile>();
+								tileRad.WallType = (ushort)ModContent.WallType<UnsafeMalditeWallWall>();
+								tileRad.HasTile = true;
 							}
-							else if (tileRad.wall == ModContent.WallType<UnsafeCursedTumorWallWall>())
+							else if (tileRad.WallType == ModContent.WallType<UnsafeCursedTumorWallWall>())
 							{
-								tileRad.wall = (ushort)ModContent.WallType<UnsafeMalditeWallWall>();
+								tileRad.WallType = (ushort)ModContent.WallType<UnsafeMalditeWallWall>();
 							}
 						}
 					}
@@ -6896,23 +6896,23 @@ namespace SOTS
 					if (distFromCenter <= radiusAlt + (size / 20f) + 0.5f && WorldGen.genRand.Next(size + 4) + 2 > distFromCenter * 1f)
 					{
 						Tile tileRad = Framing.GetTileSafely(PosX, PosY);
-						bool capable = tileRad.type == ModContent.TileType<RuinedPyramidBrickTile>();
-						if (rubble && tileRad.active() && capable && WorldGen.genRand.Next(size + 4) > distFromCenter * 1f && !WorldGen.genRand.NextBool(4))
+						bool capable = tileRad.TileType == ModContent.TileType<RuinedPyramidBrickTile>();
+						if (rubble && tileRad.HasTile && capable && WorldGen.genRand.Next(size + 4) > distFromCenter * 1f && !WorldGen.genRand.NextBool(4))
 						{
-							tileRad.type = (ushort)ModContent.TileType<PyramidRubbleTile>();
-							//if (!WorldGen.genRand.NextBool(4) && tileRad.wall == ModContent.WallType<UnsafePyramidWallWall>())
-							//tileRad.wall = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
-							tileRad.active(true);
+							tileRad.TileType = (ushort)ModContent.TileType<PyramidRubbleTile>();
+							//if (!WorldGen.genRand.NextBool(4) && tileRad.WallType == ModContent.WallType<UnsafePyramidWallWall>())
+							//tileRad.WallType = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
+							tileRad.HasTile = true;
 						}
 						else
 						{
-							capable = tileRad.type == ModContent.TileType<PyramidSlabTile>();
-							if (tileRad.active() && capable)
+							capable = tileRad.TileType == ModContent.TileType<PyramidSlabTile>();
+							if (tileRad.HasTile && capable)
 							{
-								tileRad.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>();
-								//if (WorldGen.genRand.NextBool(4) && tileRad.wall == ModContent.WallType<UnsafePyramidWallWall>())
-								//tileRad.wall = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
-								tileRad.active(true);
+								tileRad.TileType = (ushort)ModContent.TileType<RuinedPyramidBrickTile>();
+								//if (WorldGen.genRand.NextBool(4) && tileRad.WallType == ModContent.WallType<UnsafePyramidWallWall>())
+								//tileRad.WallType = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
+								tileRad.HasTile = true;
 							}
 						}
 					}

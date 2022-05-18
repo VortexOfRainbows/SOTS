@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using SOTS.Dusts;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles
 {
@@ -22,6 +23,12 @@ namespace SOTS.Projectiles
 		}
         public float start = 0;
 		Vector2 cen = Vector2.Zero;
+		public override void SetStaticDefaults()
+		{
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Main.projFrames[Projectile.type] = 6;
+		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 26;
@@ -31,7 +38,6 @@ namespace SOTS.Projectiles
 			Projectile.penetrate = 6;      //this is how many enemy this projectile penetrate before disappear
 			Projectile.extraUpdates = 1;
 			Projectile.timeLeft = 100;
-			Main.projFrames[Projectile.type] = 6;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = false;
 			Projectile.usesLocalNPCImmunity = true;
@@ -46,11 +52,6 @@ namespace SOTS.Projectiles
 				Projectile.ai[1] = 25;
 				Projectile.netUpdate = true; //make sure to sync the AI change
 			}
-		}
-		public override void SetStaticDefaults()
-		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 		}
         public override void AI()
 		{
@@ -80,7 +81,7 @@ namespace SOTS.Projectiles
             }
 			Projectile.rotation += MathHelper.ToRadians(Projectile.velocity.X * 1.75f);
 		}
-        public override bool CanDamage()
+        public override bool? CanHitNPC(NPC target)
         {
 			return Projectile.ai[1] != 25;
 		}
@@ -115,7 +116,7 @@ namespace SOTS.Projectiles
 			{
 				trueColor = Color.BlueViolet * (0.05f + 0.95f * (1 - (float)i / Projectile.oldPos.Length) * (1 - Projectile.ai[0] / 100));
 				trueColor.A = 0;
-				spriteBatch.Draw(texture, Projectile.oldPos[i] + drawOrigin - Main.screenPosition, frame, trueColor, Projectile.oldRot[i], drawOrigin, 1 - (float)i / Projectile.oldPos.Length, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.oldPos[i] + drawOrigin - Main.screenPosition, frame, trueColor, Projectile.oldRot[i], drawOrigin, 1 - (float)i / Projectile.oldPos.Length, SpriteEffects.None, 0f);
 			}
 			trueColor = new Color(130, 75, 150, 0) * (0.3f + 0.7f * (1 - Projectile.ai[0] / 100));
 			for (int i = 0; i < 360; i += 45)
@@ -130,7 +131,7 @@ namespace SOTS.Projectiles
             {
 				alphaMult = (1 - 0.33f * (Projectile.ai[0] - 70) / 30);
 			}
-			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, trueColor * alphaMult, Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, trueColor * alphaMult, Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			//spriteBatch.End();
 			//spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.GameViewMatrix.ZoomMatrix);
 			return false;

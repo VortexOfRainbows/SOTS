@@ -39,7 +39,7 @@ namespace SOTS.Items.Fragments
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<DissolvingAetherBlock>();
+			ItemDrop = ModContent.ItemType<DissolvingAetherBlock>();
 			AddMapEntry(new Color(164, 45, 225));
 			MineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
@@ -67,10 +67,10 @@ namespace SOTS.Items.Fragments
 			g *= 0.3f;
 			b *= 0.3f;
 		}
-		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
+		public static void DrawEffects(int i, int j, Mod mod, bool wall = false)
 		{
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/AetherParticle").Value;
-			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/AetherBlockOutline").Value;
+			Texture2D texture = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/AetherParticle").Value;
+			Texture2D textureBlock = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/AetherBlockOutline").Value;
 			Color color;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -107,10 +107,10 @@ namespace SOTS.Items.Fragments
 					color *= 0f;
 				}
 
-				if (Main.tile[i, j].slope() == 3)
+				if (Main.tile[i, j].Slope == (SlopeType)3)
 					location.Y -= k;
 
-				if (Main.tile[i, j].slope() == 4)
+				if (Main.tile[i, j].Slope == (SlopeType)4)
 					location.Y -= 15 - k;
 
 				location.X += k;
@@ -183,13 +183,13 @@ namespace SOTS.Items.Fragments
 						if (!canLeft)
 							x = Math.Abs(x);
 					}
-					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero, new Rectangle(0, 20 * (Main.tile[i, j].IsHalfBlock ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero, new Rectangle(0, 20 * (Main.tile[i, j].IsHalfBlock ? 1 : (int)Main.tile[i, j].Slope > 0 ? (int)Main.tile[i, j].Slope + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
 				}
 			}
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			DrawEffects(i, j, spriteBatch, Mod);
+			DrawEffects(i, j, Mod);
 			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

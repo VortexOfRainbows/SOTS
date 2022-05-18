@@ -1,9 +1,4 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -26,20 +21,19 @@ namespace SOTS.Projectiles
 			for (int k = 0; k < Projectile.oldPos.Length; k++) {
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
         public override void SetDefaults()
-        {
+		{
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.width = 62;
 			Projectile.height = 62;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 3600;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-			Projectile.DamageType = DamageClass.Melee;
 			Projectile.alpha = 140;
 			Projectile.ai[1] = -1;
 		}
@@ -49,7 +43,7 @@ namespace SOTS.Projectiles
 			if(Projectile.ai[1] != -1)
 			{
 				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
-				if(proj.active && proj.type == Mod.Find<ModProjectile>("Zeppelin") .Type&& proj.owner == Projectile.owner)
+				if(proj.active && proj.type == ModContent.ProjectileType<Zeppelin>() && proj.owner == Projectile.owner)
 				{
 					Projectile.position.X = proj.Center.X - Projectile.width/2;
 					Projectile.position.Y = proj.Center.Y - Projectile.height/2;

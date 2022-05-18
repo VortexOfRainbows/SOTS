@@ -62,12 +62,13 @@ namespace SOTS
 		}
 		public override void UpdateAccessory(Item item, Player player, bool hideVisual)
 		{
-			if (extraVoid > 0 && (Item.prefix == Mod.GetPrefix("Awakened").Type || Item.prefix == Mod.GetPrefix("Omniscient").Type))
+			
+			if (extraVoid > 0 && (item.prefix == PrefixType<Awakened>() || item.prefix == PrefixType<Omniscient>()))
 			{
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				voidPlayer.voidMeterMax2 += extraVoid;
 			}
-			if (extraVoidGain > 0 && (Item.prefix == Mod.GetPrefix("Chained").Type || Item.prefix == Mod.GetPrefix("Soulbound").Type))
+			if (extraVoidGain > 0 && (item.prefix == PrefixType<Chained>() || item.prefix == PrefixType<Soulbound>()))
 			{
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				voidPlayer.bonusVoidGain += extraVoidGain;
@@ -75,42 +76,41 @@ namespace SOTS
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
-			if (!Item.social && Item.prefix > 0)
+			if (!item.social && item.prefix > 0)
 			{
 				int voidTooltip = extraVoid;
-				if (extraVoid > 0 && (Item.prefix == Mod.GetPrefix("Awakened").Type || Item.prefix == Mod.GetPrefix("Omniscient").Type))
+				if (extraVoid > 0 && (item.prefix == PrefixType<Awakened>() || item.prefix == PrefixType<Omniscient>()))
 				{
 					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + " max void")
 					{
-						isModifier = true
+						IsModifier = true
 					};
 					tooltips.Add(line);
 				}
-				if (extraVoidGain > 0 && (Item.prefix == Mod.GetPrefix("Chained").Type || Item.prefix == Mod.GetPrefix("Soulbound").Type))
+				if (extraVoidGain > 0 && (item.prefix == PrefixType<Chained>() || item.prefix == PrefixType<Soulbound>()))
 				{
 					voidTooltip = extraVoidGain;
 					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + " void gain")
 					{
-						isModifier = true
+						IsModifier = true
 					};
 					tooltips.Add(line);
 				}
-				if (!Item.summon && Item.modItem as VoidItem != null)
+				if (!item.CountsAsClass(DamageClass.Summon) && item.ModItem is VoidItem vItem)
 				{
-					VoidItem vItem = Item.modItem as VoidItem;
 					int voidAmt = vItem.GetVoid(Main.LocalPlayer);
 					if (voidAmt != 0)
                     {
 						int intMax = (int)(voidCostMultiplier * voidAmt);
 						float mult = intMax / (float)voidAmt;
 						int voidCostTooltip = (int)(100f * (mult - 1f));
-						if (voidCostTooltip != 0 && (Item.prefix == Mod.GetPrefix("Famished").Type || Item.prefix == Mod.GetPrefix("Precarious").Type || Item.prefix == Mod.GetPrefix("Potent").Type || Item.prefix == Mod.GetPrefix("Omnipotent").Type))
+						if (voidCostTooltip != 0 && (item.prefix == PrefixType<Famished>() || item.prefix == PrefixType<Precarious>() || item.prefix == PrefixType<Potent>() || item.prefix == PrefixType<Omnipotent>()))
 						{
 							string sign = (voidCostTooltip > 0 ? "+" : "");
 							Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
 							TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", sign + voidCostTooltip + "% void cost")
 							{
-								overrideColor = baseColor
+								OverrideColor = baseColor
 							};
 							tooltips.Add(line);
 						}
@@ -138,7 +138,7 @@ namespace SOTS
 				{
 					if (line3.mod == "Terraria" && line3.Name == "ItemName")
 					{
-						line3.text = line3.text + (Item.modItem != null ? " [" + Item.modItem.mod.DisplayName + "]" : "");
+						line3.text = line3.text + (item.modItem != null ? " [" + item.modItem.mod.DisplayName + "]" : "");
 					}
 				}
 			}*/
@@ -159,7 +159,7 @@ namespace SOTS
 		}
 		public override void OnCraft(Item item, Recipe recipe)
 		{
-			if (Item.maxStack == 1)
+			if (item.maxStack == 1)
 			{
 				originalOwner = Main.LocalPlayer.name;
 			}
@@ -213,7 +213,7 @@ namespace SOTS
 			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
 			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];
 
-			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitiaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
+			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
 			ItemID.MutantFlinxfin, ItemID.Pengfish, ItemID.Pixiefish, ItemID.Slimefish, ItemID.Spiderfish, ItemID.TropicalBarracuda, ItemID.TundraTrout, ItemID.UnicornFish, ItemID.Wyverntail, ItemID.ZombieFish, ItemID.ArmoredCavefish, ItemID.AtlanticCod, ItemID.Bass, ItemID.BlueJellyfish, ItemID.ChaosFish, ItemID.CrimsonTigerfish,
 			ItemID.Damselfish, ItemID.DoubleCod, ItemID.Ebonkoi, ItemID.FlarefinKoi, ItemID.FrostMinnow, ItemID.GoldenCarp, ItemID.GreenJellyfish, ItemID.Hemopiranha, ItemID.Honeyfin, ItemID.NeonTetra, ItemID.Obsidifish, ItemID.PinkJellyfish, ItemID.PrincessFish, ItemID.Prismite, ItemID.RedSnapper, ItemID.Salmon, ItemID.Shrimp, ItemID.SpecularFish,
@@ -223,7 +223,7 @@ namespace SOTS
         {
 			for(int i = 0; i < unsafeWallItem.Length; i++)
 			{
-				Texture2D texture = Terraria.GameContent.TextureAssets.Item[unsafeWallItem[i].Value];
+				Texture2D texture = Terraria.GameContent.TextureAssets.Item[unsafeWallItem[i]].Value;
 				Texture2D textureOutline;
 				textureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
 				textureOutline.SetData(0, null, SubspaceServant.Greenify(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
@@ -235,10 +235,10 @@ namespace SOTS
 		{
 			if (!hasSetupRed)
 				setUpRedTextures();
-			if (unsafeWallItem.Contains(Item.type))
+			if (unsafeWallItem.Contains(item.type))
 			{
 				List<int> items = unsafeWallItem.ToList();
-				int id = items.IndexOf(Item.type);
+				int id = items.IndexOf(item.type);
 				items = null;
 				Texture2D texture = unsafeWallItemRedTextures[id];
 				for (int i = 0; i < 4; i++)
@@ -253,24 +253,24 @@ namespace SOTS
 		{
 			if (!hasSetupRed)
 				setUpRedTextures();
-			if (unsafeWallItem.Contains(Item.type))
+			if (unsafeWallItem.Contains(item.type))
 			{
 				List<int> items = unsafeWallItem.ToList();
-				int id = items.IndexOf(Item.type);
+				int id = items.IndexOf(item.type);
 				items = null;
 				Texture2D texture = unsafeWallItemRedTextures[id];
 				Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-					spriteBatch.Draw(texture, Item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
 				}
 			}
 			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
-			if (rarities1.Contains(Item.type))
+			if (rarities1.Contains(item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
 				{
@@ -280,7 +280,7 @@ namespace SOTS
 					}
 				}
 			}
-			if (rarities2.Contains(Item.type))
+			if (rarities2.Contains(item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
 				{
@@ -290,7 +290,7 @@ namespace SOTS
 					}
 				}
 			}
-			if (rarities3.Contains(Item.type))
+			if (rarities3.Contains(item.type))
 			{
 				Color overrideColor = new Color(50, 50, 50);
 				foreach (TooltipLine line2 in tooltips)
@@ -303,27 +303,27 @@ namespace SOTS
 			}
 			bool dedicated = false;
 			Color dedicatedColor = Color.White;
-			if(dedicatedOrange.Contains(Item.type))
+			if(dedicatedOrange.Contains(item.type))
 			{
 				dedicatedColor = new Color(255, 115, 0);
 				dedicated = true;
 			}
-			if (dedicatedBlue.Contains(Item.type))
+			if (dedicatedBlue.Contains(item.type))
 			{
 				dedicatedColor = new Color(0, 130, 235, 255);
 				dedicated = true;
 			}
-			if (dedicatedPurpleRed.Contains(Item.type))
+			if (dedicatedPurpleRed.Contains(item.type))
             {
 				dedicatedColor = VoidPlayer.soulLootingColor;
 				dedicated = true;
 			}
-			if (dedicatedRainbow.Contains(Item.type))
+			if (dedicatedRainbow.Contains(item.type))
 			{
 				dedicatedColor = VoidPlayer.pastelRainbow;
 				dedicated = true;
 			}
-			if (dedicatedPastelPink.Contains(Item.type))
+			if (dedicatedPastelPink.Contains(item.type))
 			{
 				Color color = new Color(211, 0, 194);
 				foreach (TooltipLine line2 in tooltips)
@@ -336,22 +336,22 @@ namespace SOTS
 				dedicatedColor = new Color(255, 158, 235);
 				dedicated = true;
 			}
-			if (dedicatedMinez.Contains(Item.type))
+			if (dedicatedMinez.Contains(item.type))
 			{
 				dedicatedColor = new Color(255, 153, 51);
 				dedicated = true;
 			}
-			if (dedicatedBlasfah.Contains(Item.type))
+			if (dedicatedBlasfah.Contains(item.type))
 			{
 				dedicatedColor = new Color(90, 12, 240);
 				dedicated = true;
 			}
-			if (dedicatedHeartPlus.Contains(Item.type))
+			if (dedicatedHeartPlus.Contains(item.type))
 			{
 				dedicatedColor = new Color(255, 123, 123);
 				dedicated = true;
 			}
-			if (dedicatedCoolio.Contains(Item.type))
+			if (dedicatedCoolio.Contains(item.type))
 			{
 				dedicatedColor = new Color(252, 254, 56);
 				dedicated = true;
@@ -363,12 +363,12 @@ namespace SOTS
 				tooltips.Add(line);
 			}
 		}
-		public Tile FindTATile(Player player)
+		public Tile? FindTATile(Player player)
         {
 			int x = (int)player.Center.X / 16;
 			int y = (int)player.Center.Y / 16;
 			Vector2 between = new Vector2(100000, 0);
-			Tile bestTile = (Tile)null;
+			Tile? bestTile = null;
 			for (int i = -9; i < 10; i++)
             {
 				for(int j = -9; j < 10; j++)
@@ -377,7 +377,7 @@ namespace SOTS
 					int type = 0;
 					if (Main.tile[x + i, y + j].TileFrameX >= 18 && Main.tile[x + i, y + j].TileFrameX < 36 && Main.tile[x + i, y + j].TileFrameY % 36 >= 18)
 						type = 1;
-					if (tile.TileType == Mod.Find<ModTile>("TransmutationAltarTile") .Type&& type == 1)
+					if (tile.TileType == ModContent.TileType<TransmutationAltarTile>() && type == 1)
 					{
 						Vector2 newBetween = new Vector2(i * 16, j * 16);
 						if (newBetween.Length() < between.Length())
@@ -404,7 +404,7 @@ namespace SOTS
 					int type = 0;
 					if (Main.tile[x + i, y + j].TileFrameX >= 18 && Main.tile[x + i, y + j].TileFrameX < 36 && Main.tile[x + i, y + j].TileFrameY % 36 >= 18)
 						type = 1;
-					if (tile.TileType == Mod.Find<ModTile>("TransmutationAltarTile") .Type&& type == 1)
+					if (tile.TileType == ModContent.TileType<TransmutationAltarTile>() && type == 1)
 					{
 						Vector2 newBetween = new Vector2(i * 16, j * 16);
 						if (newBetween.Length() < between.Length())
@@ -417,55 +417,58 @@ namespace SOTS
 			}
 			return bestTile;
 		}
-		public override void OnCraft(Item item, Recipe recipe)
-		{
-			Player player = Main.LocalPlayer;
-			if (recipe.requiredTile[0] == TileID.DemonAltar || recipe.requiredTile[0] == Mod.Find<ModTile>("TransmutationAltarTile").Type)
-            {
-				Tile tile = FindTATile(player);
-				if(tile != null)
+        public override void OnCreate(Item item, ItemCreationContext context)
+        {
+			if(context is RecipeCreationContext r)
+			{
+				Recipe recipe = r.recipe;
+				Player player = Main.LocalPlayer;
+				if (recipe.requiredTile[0] == TileID.DemonAltar || recipe.requiredTile[0] == TileType<TransmutationAltarTile>())
 				{
-					Point16 ij = FindTATileIJ(player);
-					int left = ij.X - tile.TileFrameX / 18;
-					int top = ij.Y - tile.TileFrameY / 18;
-					int index = GetInstance<TransmutationAltarStorage>().Find(left, top);
-					if (index == -1)
+					Tile? tile2 = FindTATile(player);
+					if (tile2 != null)
 					{
-						return;
-					}
-					Item item2 = recipe.createItem;
-					TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
-
-
-					Projectile projectile = Main.projectile[Projectile.NewProjectile(player.Center, Vector2.Zero, Mod.Find<ModProjectile>("DataTransferProj").Type, 0, 0, Main.myPlayer, index, 0)];
-					DataTransferProj proj = (DataTransferProj)Projectile.ModProjectile;
-					proj.itemsArray[0] = item2.type;
-					proj.itemAmountsArray[0] = item2.stack;
-					int amountOfUniqueItems = 0;
-					for (int l = 0; l < recipe.requiredItem.Length; l++)
-					{
-						if (recipe.requiredItem[l].type != 0)
+						Tile tile = (Tile)tile2;
+						Point16 ij = FindTATileIJ(player);
+						int left = ij.X - tile.TileFrameX / 18;
+						int top = ij.Y - tile.TileFrameY / 18;
+						int index = GetInstance<TransmutationAltarStorage>().Find(left, top);
+						if (index == -1)
 						{
-							amountOfUniqueItems++;
+							return;
 						}
-						else
-							break;
+						Item item2 = recipe.createItem;
+						TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
+						Projectile projectile = Main.projectile[Projectile.NewProjectile(player.GetSource_TileInteraction(ij.X, ij.Y), player.Center, Vector2.Zero, ProjectileType<DataTransferProj>(), 0, 0, Main.myPlayer, index, 0)];
+						DataTransferProj proj = (DataTransferProj)projectile.ModProjectile;
+						proj.itemsArray[0] = item2.type;
+						proj.itemAmountsArray[0] = item2.stack;
+						int amountOfUniqueItems = 0;
+						for (int l = 0; l < recipe.requiredItem.Count; l++)
+						{
+							if (recipe.requiredItem[l].type != 0)
+							{
+								amountOfUniqueItems++;
+							}
+							else
+								break;
+						}
+						for (int i = 0; i < (amountOfUniqueItems < 20 ? amountOfUniqueItems : 19); i++)
+						{
+							int itemType = recipe.requiredItem[i].type;
+							int itemStack = recipe.requiredItem[i].stack;
+							//int itemFrames = Terraria.GameContent.TextureAssets.Item[itemType].Value.Height / recipe.requiredItem[i].height;
+							proj.itemsArray[i + 1] = itemType;
+							proj.itemAmountsArray[i + 1] = itemStack;
+						}
+						for (int i = amountOfUniqueItems; i < 19; i++)
+						{
+							proj.itemsArray[i + 1] = 0;
+							proj.itemAmountsArray[i + 1] = 0;
+						}
+						projectile.netUpdate = true;
+						//Main.NewText("I am Netmode: " + Main.netMode);
 					}
-					for (int i = 0; i < (amountOfUniqueItems < 20 ? amountOfUniqueItems : 19); i++)
-					{
-						int itemType = recipe.requiredItem[i].type;
-						int itemStack = recipe.requiredItem[i].stack;
-						int itemFrames = Terraria.GameContent.TextureAssets.Item[itemType].Value.Height / recipe.requiredItem[i].height;
-						proj.itemsArray[i + 1] = itemType;
-						proj.itemAmountsArray[i + 1] = itemStack;
-					}
-					for (int i = amountOfUniqueItems; i < 19; i++)
-					{
-						proj.itemsArray[i + 1] = 0;
-						proj.itemAmountsArray[i + 1] = 0;
-					}
-					Projectile.netUpdate = true;
-					//Main.NewText("I am Netmode: " + Main.netMode);
 				}
 			}
 		}
@@ -475,28 +478,28 @@ namespace SOTS
 			if (player.HasAmmo(item, true))
 			{
 				int polarCannons = modPlayer.polarCannons;
-				if ((Item.ranged || Item.melee) && polarCannons > 0 && (!Item.autoReuse || player.ownedProjectileCounts[ProjectileType<MiniPolarisCannon>()] <= 0))
+				if ((item.CountsAsClass(DamageClass.Ranged) || item.CountsAsClass(DamageClass.Melee)) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ProjectileType<MiniPolarisCannon>()] <= 0))
 				{
-					int time = Item.useTime;
-					if (Item.shoot == ProjectileID.None)
-						time = Item.useAnimation;
-					if (Item.autoReuse || Item.channel)
+					int time = item.useTime;
+					if (item.shoot == ProjectileID.None)
+						time = item.useAnimation;
+					if (item.autoReuse || item.channel)
 						time = -2;
 					for (int i = 0; i < polarCannons; i++)
 					{
-						Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<MiniPolarisCannon>(), Item.damage, Item.knockBack, player.whoAmI, time, Item.shoot != ProjectileID.None ? Item.useTime : Item.useAnimation);
+						Projectile.NewProjectile(player.GetSource_Misc("SOTS:SetBonus_FrostArtifact"), player.Center, Vector2.Zero, ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != ProjectileID.None ? item.useTime : item.useAnimation);
 					}
 				}
 			}
-			if (modPlayer.EndothermicAfterburner && Item.melee && !Item.noMelee)
+			if (modPlayer.EndothermicAfterburner && item.CountsAsClass(DamageClass.Melee) && !item.noMelee)
 			{
 				Vector2 offset = new Vector2(24 * -player.direction, 0);
-				float mult = Item.useAnimation / 70f;
+				float mult = item.useAnimation / 70f;
 				if (mult > 1)
 					mult = 1;
 				if(Math.Abs(player.velocity.X) < 9f)
 					player.velocity.X += player.direction * 7f * mult;
-				Projectile.NewProjectile(player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(Item.damage * 0.7f), 3f, player.whoAmI);
+				Projectile.NewProjectile(player.GetSource_Misc("SOTS:Accessory_EndothermicAfterburner"), player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(item.damage * 0.7f), 3f, player.whoAmI);
 			}
 			return base.CanUseItem(item, player);
         }
@@ -508,7 +511,7 @@ namespace SOTS
         {
 			if (context == "bossBag" && (arg == ItemID.EaterOfWorldsBossBag || arg == ItemID.BrainOfCthulhuBossBag))
 			{
-				player.QuickSpawnItem(ItemType<PyramidKey>(), 1);
+				player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<PyramidKey>(), 1);
 			}
         }
     }
@@ -617,7 +620,7 @@ namespace SOTS
 					}
 					Vector2 pos = new Vector2((float)(entity.Position.X * 16 + 24), (float)(entity.Position.Y * 16 + 24));
 					pos.Y -= 80 + dynamicAddition.Y + (totalItems + entity.itemAmountsArray[0]) * 0.5f;
-					Projectile.NewProjectile(pos, Vector2.Zero, ModContent.ProjectileType<UndoParticles>(), 0, 1, Main.myPlayer, entity.Position.X, entity.Position.Y);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<UndoParticles>(), 0, 1, Main.myPlayer, entity.Position.X, entity.Position.Y);
 				}
             }
 		}
@@ -628,14 +631,13 @@ namespace SOTS
 		public int glowOffsetY = 0;
 		public int glowOffsetX = 0;
 		public override bool InstancePerEntity => true;
-		public override bool CloneNewInstances => true;
-        /*public override GlobalItem Clone(Item item, Item itemClone)
+        public override GlobalItem Clone(Item item, Item itemClone)
 		{
 			ItemUseGlow myClone = (ItemUseGlow)base.Clone(item, itemClone);
 			myClone.glowOffsetY = glowOffsetY;
 			myClone.glowOffsetX = glowOffsetX;
 			return myClone;
-        }*/
+        }
     }
 	public class PlayerUseGlow : ModPlayer
 	{
@@ -649,27 +651,27 @@ namespace SOTS
 			if (!drawPlayer.HeldItem.IsAir)
 			{
 				Item item = drawPlayer.HeldItem;
-				Texture2D texture = Item.GetGlobalItem<ItemUseGlow>().glowTexture;
+				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
 				Vector2 zero2 = Vector2.Zero;
-				bool isTwilightPole = Item.type == ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ProjectileType<TwilightBobber>()]> 0;
+				bool isTwilightPole = item.type == ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ProjectileType<TwilightBobber>()]> 0;
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
 					Vector2 location = drawInfo.itemLocation;
-					if (Item.useStyle == ItemUseStyleID.Shoot)
+					if (item.useStyle == ItemUseStyleID.Shoot)
 					{
-						if (Item.staff[Item.type])
+						if (item.staff[item.type])
 						{
 							float rotation = drawPlayer.itemRotation + 0.785f * (float)drawPlayer.direction;
 							int width = 0;
-							Vector2 origin = new Vector2(0f, (float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height);
+							Vector2 origin = new Vector2(0f, (float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Height);
 
 							if (drawPlayer.gravDir == -1f)
 							{
 								if (drawPlayer.direction == -1)
 								{
 									rotation += 1.57f;
-									origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, 0f);
-									width -= Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width;
+									origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, 0f);
+									width -= Terraria.GameContent.TextureAssets.Item[item.type].Value.Width;
 								}
 								else
 								{
@@ -679,66 +681,66 @@ namespace SOTS
 							}
 							else if (drawPlayer.direction == -1)
 							{
-								origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, (float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height);
-								width -= Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width;
+								origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, (float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Height);
+								width -= Terraria.GameContent.TextureAssets.Item[item.type].Value.Width;
 							}
 
-							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), Color.White, rotation, origin, Item.scale, drawInfo.spriteEffects, 0);
+							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Color.White, rotation, origin, item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value);
 						}
 						else
 						{
-							Vector2 vector10 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width / 2), (float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
+							Vector2 vector10 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Width / 2), (float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Height / 2));
 
-							//Vector2 vector11 = this.DrawPlayerItemPos(drawPlayer.gravDir, Item.type);
+							//Vector2 vector11 = this.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
 							Vector2 vector11 = new Vector2(10, texture.Height / 2);
-							if (Item.GetGlobalItem<ItemUseGlow>().glowOffsetX != 0)
+							if (item.GetGlobalItem<ItemUseGlow>().glowOffsetX != 0)
 							{
-								vector11.X = Item.GetGlobalItem<ItemUseGlow>().glowOffsetX;
+								vector11.X = item.GetGlobalItem<ItemUseGlow>().glowOffsetX;
 							}
-							vector11.Y += Item.GetGlobalItem<ItemUseGlow>().glowOffsetY * drawPlayer.gravDir;
+							vector11.Y += item.GetGlobalItem<ItemUseGlow>().glowOffsetY * drawPlayer.gravDir;
 							int num107 = (int)vector11.X;
 							vector10.Y = vector11.Y;
-							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
+							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Height / 2));
 							if (drawPlayer.direction == -1)
 							{
-								origin5 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width + num107), (float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
+								origin5 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Width + num107), (float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Height / 2));
 							}
 
-							//value = new DrawData(Terraria.GameContent.TextureAssets.Item[Item.type].Value, new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), Item.GetAlpha(color37), drawPlayer.itemRotation, origin5, Item.scale, effect, 0);
+							//value = new DrawData(Terraria.GameContent.TextureAssets.Item[item.type].Value, new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), item.GetAlpha(color37), drawPlayer.itemRotation, origin5, item.scale, effect, 0);
 							//Main.playerDrawData.Add(value);
 
 							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 							int recurse = 1;
-							bool rainbow = Item.type == ItemType<PhaseCannon>() && modPlayer.rainbowGlowmasks;
+							bool rainbow = item.type == ItemType<PhaseCannon>() && modPlayer.rainbowGlowmasks;
 							if (rainbow)
 							{
 								recurse = 2;
 							}
 							Vector2 position = location - Main.screenPosition + vector10;
-							if (Item.type == ItemType<SupernovaStorm>())
+							if (item.type == ItemType<SupernovaStorm>())
 							{
 								for (int k = 0; k < 6; k++)
 								{
 									Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 									color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
 									color.A = 0;
-									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), color, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
+									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), color, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
 									Main.playerDrawData.Add(value2);
 								}
-								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 						}
 					}
 					else //for swords and stuff
 					{
-						if(Item.type == ItemType<RealityShatter>())
+						if(item.type == ItemType<RealityShatter>())
 						{
 							for (int k = 0; k < 6; k++)
 							{
@@ -746,21 +748,21 @@ namespace SOTS
 								Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
-								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 							Texture2D tBlack = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterBlack").Value;
-							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
+							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value2);
 							for (int k = 0; k < 6; k++)
 							{
 								Color color = Color.Black * 0.7f;
 								Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 60));
-								DrawData value = new DrawData(tBlack, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(tBlack, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 						}
-						else if (Item.type == ItemType<EtherealScepter>())
+						else if (item.type == ItemType<EtherealScepter>())
 						{
 							Texture2D tEffect= Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterEffect").Value;
 							for (int k = 0; k < 6; k++)
@@ -769,12 +771,12 @@ namespace SOTS
 								Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
-								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
-							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
+							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value2);
-							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
+							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value2);
 						}
 						else
@@ -793,7 +795,7 @@ namespace SOTS
 									modPlayer.rainbowGlowmasks ? color : Color.White,
 									drawPlayer.itemRotation,
 									 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height),
-									Item.scale,
+									item.scale,
 									drawInfo.spriteEffects,
 									0);
 								Main.playerDrawData.Add(value);

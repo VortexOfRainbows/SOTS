@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles
 {    
@@ -15,7 +16,7 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			Projectile.aiStyle = 2;
-			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
 			Projectile.width = 46;
 			Projectile.height = 36;
@@ -36,9 +37,9 @@ namespace SOTS.Projectiles
 			Projectile.alpha = 0;		
 			float minDist = 500;
 			int target2 = -1;
-			float dX = 0f;
-			float dY = 0f;
-			float distance = 0;
+			float dX;
+			float dY;
+			float distance;
 			float speed = 0.4f;
 			if(Projectile.friendly == true && Projectile.hostile == false)
 			{
@@ -79,7 +80,7 @@ namespace SOTS.Projectiles
 		{
 			for(int i = 0; i < 3; i++)
 			{
-				int goreIndex = Gore.NewGore(new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+				int goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
 				Main.gore[goreIndex].scale = 0.65f;
 				Main.gore[goreIndex].velocity.Y *= 0.25f;
 				Main.gore[goreIndex].velocity.X *= 0.25f;

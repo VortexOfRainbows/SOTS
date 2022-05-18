@@ -59,10 +59,10 @@ namespace SOTS.Items.Fragments
 			g *= 0.3f;
 			b *= 0.3f;
 		}
-		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
+		public static void DrawEffects(int i, int j, Mod mod, bool wall = false)
         {
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/UmbraParticle").Value;
-			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/UmbraBlockOutline").Value;
+			Texture2D texture = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/UmbraParticle").Value;
+			Texture2D textureBlock = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/UmbraBlockOutline").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float height = 8;
 			float timer = Main.GlobalTimeWrappedHourly * -90 + (i + j) * 10;
