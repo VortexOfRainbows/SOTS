@@ -21,9 +21,9 @@ namespace SOTS.Projectiles.Pyramid
             Projectile.timeLeft = 3600;
             Projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            drawCacheProjsOverWiresUI.Add(index);
+            overWiresUI.Add(index);
         }
         private List<Vector3> lightSpots = new List<Vector3>();
         private int fadeInTimer = 0;

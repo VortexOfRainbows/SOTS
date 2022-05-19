@@ -4,6 +4,7 @@ using SOTS.NPCs.Boss.Curse;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -41,6 +42,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			TileID.Sets.DrawsWalls[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -59,7 +61,6 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Pyramid Gate");
 			AddMapEntry(new Color(220, 180, 25), name);
-			disableSmartCursor = true;
 			DustType = DustID.GoldCoin;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -105,7 +106,7 @@ namespace SOTS.Items.Pyramid
 			int key = ModContent.ItemType<PyramidKey>();
 			if (NPC.downedBoss2 && player.ConsumeItem(key))
 			{
-				Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(40, 8), Vector2.Zero, ModContent.ProjectileType<PyramidGateProj>(), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(new EntitySource_TileInteraction(player, i, j), new Vector2(left, top) * 16 + new Vector2(40, 8), Vector2.Zero, ModContent.ProjectileType<PyramidGateProj>(), 0, 0, Main.myPlayer);
 			}
 			return true;
         }
@@ -134,9 +135,9 @@ namespace SOTS.Items.Pyramid
 	public class PyramidGateProj : ModProjectile
 	{
 		public override string Texture => "SOTS/Items/Pyramid/PyramidGate";
-		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
 		{
-			drawCacheProjsBehindNPCsAndTiles.Add(index);
+			behindNPCsAndTiles.Add(index);
 		}
 		public override void SetStaticDefaults()
 		{
@@ -168,25 +169,25 @@ namespace SOTS.Items.Pyramid
 			int j = (int)Projectile.Center.Y / 16;
 			WorldGen.KillTile(i, j, false, false, false);
 			if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
-				NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 			Vector2 center = Projectile.Center + new Vector2(0, -16);
-			SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);
+			SoundEngine.PlaySound(SoundID.Item, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);
 			if(Main.netMode != NetmodeID.Server)
 			{
 				for (int k = 0; k < 16; k++)
 				{
-					int goreIndex2 = Gore.NewGore(center - new Vector2(16, 40) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
+					int goreIndex2 = Gore.NewGore(Projectile.GetSource_Death(), center - new Vector2(16, 40) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
 					Main.gore[goreIndex2].scale = 0.9f;
 				}
-				int goreIndex = Gore.NewGore(new Vector2(i * 16, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore1"), 1f);
+				int goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(i * 16, j * 16), Vector2.Zero, ModGores.GoreType("Gores/Tiles/PyramidGateGore1"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 - 16, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore2"), 1f);
+				goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(i * 16 - 16, j * 16), Vector2.Zero, ModGores.GoreType("Gores/Tiles/PyramidGateGore2"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 + 16, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore3"), 1f);
+				goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(i * 16 + 16, j * 16), Vector2.Zero, ModGores.GoreType("Gores/Tiles/PyramidGateGore3"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 + 32, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore4"), 1f);
+				goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(i * 16 + 32, j * 16), Vector2.Zero, ModGores.GoreType("Gores/Tiles/PyramidGateGore4"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
-				goreIndex = Gore.NewGore(new Vector2(i * 16 - 32, j * 16), Vector2.Zero, Mod.GetGoreSlot("Gores/Tiles/PyramidGateGore5"), 1f);
+				goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(i * 16 - 32, j * 16), Vector2.Zero, ModGores.GoreType("Gores/Tiles/PyramidGateGore5"), 1f);
 				Main.gore[goreIndex].velocity *= 0.2f;
 			}
 			for (j = 0; j < 30; j++)

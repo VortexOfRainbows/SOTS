@@ -21,7 +21,7 @@ namespace SOTS.Projectiles
 			if(Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 3; i++)
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), ProjectileID.StyngerShrapnel, Projectile.damage, 0, Projectile.owner);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), ProjectileID.StyngerShrapnel, Projectile.damage, 0, Projectile.owner);
 			}
 		}
 	}

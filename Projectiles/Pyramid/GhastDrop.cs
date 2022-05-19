@@ -45,9 +45,9 @@ namespace SOTS.Projectiles.Pyramid
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color * ((255f - Projectile.alpha) / 255f), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}
-		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindNPCs.Add(index);
+			behindNPCs.Add(index);
         }
 		int counter = 0;
 		bool runOnce = true;

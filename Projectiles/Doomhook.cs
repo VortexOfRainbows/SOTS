@@ -100,7 +100,7 @@ namespace SOTS.Projectiles
 			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Lighting.GetColor((int)Projectile.Center.X / 16, (int)(Projectile.Center.Y / 16)), Projectile.rotation + MathHelper.ToRadians(180), new Vector2(Projectile.width/2, Projectile.height/2), 1.15f, Projectile.spriteDirection != 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
 			return false;
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
 			drawCacheProjsBehindProjectiles.Add(index);
 		}

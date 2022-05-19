@@ -43,7 +43,7 @@ namespace SOTS.Projectiles
         {
             Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-            if (player.dead || (player.ownedProjectileCounts[Mod.Find<ModProjectile>("LuckyPurpleBalloon").Type] > 1 && Projectile.alpha < 30))
+            if (player.dead || (player.ownedProjectileCounts[ModContent.ProjectileType<LuckyPurpleBalloon>()] > 1 && Projectile.alpha < 30))
             {
                 modPlayer.PurpleBalloon = false;
             }

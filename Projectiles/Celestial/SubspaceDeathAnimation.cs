@@ -11,6 +11,7 @@ using Terraria.ID;
 using SOTS.NPCs.Boss;
 using SOTS.Dusts;
 using SOTS.Projectiles.Lightning;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -36,9 +37,9 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 		}
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindNPCs.Add(index);
+			behindNPCs.Add(index);
         }
         public override bool ShouldUpdatePosition()
         {
@@ -48,7 +49,7 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if (runOnce || Projectile.timeLeft > 1196)
 				return false;
-			DrawWorm(spriteBatch, lightColor);
+			DrawWorm(Main.spriteBatch, lightColor);
 			return false;
 		}
 		int counter = 0;
@@ -248,16 +249,16 @@ namespace SOTS.Projectiles.Celestial
 							dust.color = new Color(50, 150, 50);
 						}
 					}
-					int gore = Mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentBodyGore");
+					int gore = ModGores.GoreType("Gores/Subspace/SubspaceSerpentBodyGore");
 					if (segmentsDead == 0)
 					{
-						gore = Mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentHeadGore");
+						gore = ModGores.GoreType("Gores/Subspace/SubspaceSerpentHeadGore");
 					}
 					else if (segmentsDead == segments.Count)
 					{
-						gore = Mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentTailGore");
+						gore = ModGores.GoreType("Gores/Subspace/SubspaceSerpentTailGore");
 					}
-					Gore gore2 = Main.gore[Gore.NewGore(atLoc - new Vector2(18, 18), default(Vector2), gore, 1.0f)];
+					Gore gore2 = Gore.NewGoreDirect(Projectile.GetSource_FromThis(), atLoc - new Vector2(18, 18), default(Vector2), gore, 1.0f);
 					gore2.velocity *= 0.2f;
 					if(segmentsDead % 4 == 0)
 						SoundEngine.PlaySound(SoundID.NPCKilled, (int)atLoc.X, (int)atLoc.Y, 39, 0.95f, -0.3f);
@@ -265,16 +266,16 @@ namespace SOTS.Projectiles.Celestial
 						SoundEngine.PlaySound(2, (int)atLoc.X, (int)atLoc.Y, 62, 1.25f, -0.3f);
 					if (Main.netMode != 1)
                     {
-						Projectile.NewProjectile(atLoc, new Vector2(0, -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), atLoc, new Vector2(0, -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer);
 						Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 						if (segmentsDead % 4 == 0)
-							Projectile.NewProjectile(atLoc, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, Projectile.knockBack, Main.myPlayer, 0, Main.rand.Next(2) * 2 - 1);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), atLoc, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, Projectile.knockBack, Main.myPlayer, 0, Main.rand.Next(2) * 2 - 1);
 						for(int j = 0; j < 2; j++)
 						{
 							if(Main.rand.NextBool(3))
 							{
 								Vector2 perturbedSpeed = (circular.SafeNormalize(Vector2.Zero) * 5.5f * Main.rand.NextFloat(0.75f, 1.25f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(180f) + j * 180));
-								Projectile.NewProjectile(atLoc, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), atLoc, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));
 							}
 						}
 					}

@@ -23,9 +23,9 @@ namespace SOTS.Projectiles.Celestial
             Projectile.timeLeft = 1200;
             Projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            drawCacheProjsOverWiresUI.Add(index);
+            overWiresUI.Add(index);
         }
         private int fadeInTimer = 0;
         bool runOnce = true;
@@ -156,7 +156,7 @@ namespace SOTS.Projectiles.Celestial
             {
                 offset -= Main.screenWidth + 800;
             }
-            spriteBatch.Draw(TheShadow, new Vector2(Projectile.Center.X + Projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
+            Main.spriteBatch.Draw(TheShadow, new Vector2(Projectile.Center.X + Projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
             screenHeightOld = Main.screenHeight;
             return false;
         }

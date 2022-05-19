@@ -107,7 +107,7 @@ namespace SOTS.Projectiles
 			Projectile.friendly = true;
 			latch = true;
 			if(player.whoAmI == Main.myPlayer)
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 2, 0, Projectile.owner, 1, 5);
+			Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<Base.HealProj>().Type, 2, 0, Projectile.owner, 1, 5);
 			enemyIndex = target.whoAmI;
 			if(target.life <= 0)
 			{

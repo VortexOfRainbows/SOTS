@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles 
 {    
@@ -25,7 +26,7 @@ namespace SOTS.Projectiles
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				color.A = 190;
 				float lengthTowards = Vector2.Distance(lastPosition, drawPos) / texture.Height / scale;
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * scale * 0.8f, Projectile.rotation, drawOrigin, new Vector2(1, lengthTowards) * scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * scale * 0.8f, Projectile.rotation, drawOrigin, new Vector2(1, lengthTowards) * scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				lastPosition = drawPos;
 			}
 			return true;

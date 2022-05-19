@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.NPCs.Constructs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -49,9 +50,9 @@ namespace SOTS.Projectiles.Tide
 			}
 		}
 		Vector2[] trailPos = new Vector2[25];
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindNPCs.Add(index);
+			behindNPCs.Add(index);
         }
         public override bool PreDraw(ref Color lightColor)
 		{
@@ -152,7 +153,7 @@ namespace SOTS.Projectiles.Tide
 			if(Projectile.ai[1] != -1 && end == false)
 			{
 				NPC npc = Main.npc[(int)Projectile.ai[1]];
-				if(npc.active && npc.type == Mod.Find<ModProjectile>("TidalConstruct").Type)
+				if(npc.active && npc.type == ModContent.NPCType<TidalConstruct>())
 				{
 					Projectile.active = true;
 					if (Projectile.timeLeft < 30)

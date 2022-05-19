@@ -64,9 +64,9 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.alpha = 125;
 			Projectile.hide = true;
 		}
-		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
 		{
-			drawCacheProjsOverWiresUI.Add(index);
+			overWiresUI.Add(index);
 		}
 		public override bool ShouldUpdatePosition()
         {

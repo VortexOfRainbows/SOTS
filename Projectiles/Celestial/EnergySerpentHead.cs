@@ -34,9 +34,9 @@ namespace SOTS.Projectiles.Celestial
 		List<Vector2> segments = new List<Vector2>();
 		List<float> segmentsRotation = new List<float>();
 		bool runOnce = true;
-		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindNPCs.Add(index);
+			behindNPCs.Add(index);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{

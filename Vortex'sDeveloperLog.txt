@@ -51,6 +51,9 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+5/18/22
+1. 5860 -> 5720
+
 5/16/22 & 5/17/22
 1. 9730 -> 7400 errors
 	1. Fixed/Patched worldgenhelper (normal) and worldgenhelper (phase)

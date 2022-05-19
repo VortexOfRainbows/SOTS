@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,13 +37,13 @@ namespace SOTS.Projectiles.Nature
 			Projectile.netImportant = true;
 			Projectile.hide = true;
 		}
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindProjectiles.Add(index);
+			behindProjectiles.Add(index);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
-			Draw(spriteBatch, Lighting.GetColor((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16));
+        public override bool PreDraw(ref Color lightColor)
+        {
+			Draw(Main.spriteBatch, Lighting.GetColor((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16));
 			return false;
 		}
 		public void Draw(SpriteBatch spriteBatch, Color drawColor)
@@ -217,7 +218,7 @@ namespace SOTS.Projectiles.Nature
 						SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.7f, -0.4f);
 						if (Main.myPlayer == Projectile.owner)
 						{
-							Projectile.NewProjectile(Projectile.Center, rotateVector * 1f, ModContent.ProjectileType<FriendlyFlowerBolt>(), Projectile.damage, 1f, Main.myPlayer);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateVector * 1f, ModContent.ProjectileType<FriendlyFlowerBolt>(), Projectile.damage, 1f, Main.myPlayer);
 							Projectile.netUpdate = true;
 						}
 					}

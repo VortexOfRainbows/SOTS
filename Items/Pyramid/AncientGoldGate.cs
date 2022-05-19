@@ -4,6 +4,7 @@ using SOTS.NPCs.Boss.Curse;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -64,7 +65,7 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Strange Pillar");
 			AddMapEntry(new Color(220, 180, 25), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -196,7 +197,7 @@ namespace SOTS.Items.Pyramid
 			int top = j - (tile.TileFrameY / 18) % 5;
 			if (able)
 			{
-				SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 4, 1.0f, 0.3f);
+				SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 4, 1.0f, 0.3f);
 				for (int x = left; x < left + 2; x++)
 				{
 					for (int y = top; y < top + 5; y++)
@@ -227,7 +228,7 @@ namespace SOTS.Items.Pyramid
 				if (tile.TileFrameX >= 36)
 					direction = -1;
 				for (int h = 1; h <= 2; h++)
-					Projectile.NewProjectile(new Vector2(left, top) * 16, Vector2.Zero, ModContent.ProjectileType<AncientGoldGateGems>(), 0, 0, Main.myPlayer, direction * h);
+					Projectile.NewProjectile(new EntitySource_TileInteraction(player, left, top),new Vector2(left, top) * 16, Vector2.Zero, ModContent.ProjectileType<AncientGoldGateGems>(), 0, 0, Main.myPlayer, direction * h);
 			}
 			return true;
         }
@@ -261,9 +262,9 @@ namespace SOTS.Items.Pyramid
 			Tile tile = Main.tile[i, j];
 			if (frameY < 360)
 			{
-				Item.NewItem(i * 16, j * 16, 32, 80, ModContent.ItemType<TaintedKeystoneShard>(), 3);
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 80, ModContent.ItemType<TaintedKeystoneShard>(), 3);
 			}
-			Item.NewItem(i * 16, j * 16, 32, 80, ModContent.ItemType<AncientGoldGate>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 80, ModContent.ItemType<AncientGoldGate>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
@@ -278,9 +279,9 @@ namespace SOTS.Items.Pyramid
 	}
 	public class AncientGoldGateGems : ModProjectile
 	{
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindNPCsAndTiles.Add(index);
+			behindNPCsAndTiles.Add(index);
 		}
         public override void SetStaticDefaults()
 		{
@@ -290,7 +291,7 @@ namespace SOTS.Items.Pyramid
 		{
 			int i = (int)Projectile.Center.X / 16;
 			int j = (int)Projectile.Center.Y / 16;
-			DrawGems(i, j, spriteBatch);
+			DrawGems(i, j, Main.spriteBatch);
 			return false;
 		}
 		public override void SetDefaults()
@@ -319,7 +320,7 @@ namespace SOTS.Items.Pyramid
 				SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 14, 1.25f, -0.25f);
 				for (int k = 0; k < 12; k++)
 				{
-					int goreIndex = Gore.NewGore(center - new Vector2(32, 32) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
+					int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), center - new Vector2(32, 32) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
 					Main.gore[goreIndex].scale = 0.95f;
 				}
 				for (int k = -1; k <= 1; k += 2)

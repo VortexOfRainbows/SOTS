@@ -35,7 +35,8 @@ namespace SOTS.Projectiles
 			Projectile.height = 28;
 			Projectile.friendly = true;
 			Projectile.aiStyle = -1;
-			Projectile.penetrate = 6;      //this is how many enemy this projectile penetrate before disappear
+			Projectile.penetrate = 6;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.extraUpdates = 1;
 			Projectile.timeLeft = 100;
 			Projectile.tileCollide = false;

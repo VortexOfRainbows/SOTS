@@ -63,9 +63,9 @@ namespace SOTS.Projectiles
 			Projectile.netUpdate = true;
             base.OnHitNPC(target, damage, knockback, crit);
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
-		{
-			drawCacheProjsBehindNPCs.Add(index);
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+			behindNPCs.Add(index);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
@@ -87,10 +87,10 @@ namespace SOTS.Projectiles
 		{
 			if (runOnce)
 				return false;
-			DrawWorm(spriteBatch, lightColor);
+			DrawWorm(lightColor);
 			return false;
 		}
-		public void DrawWorm(SpriteBatch spriteBatch, Color lightColor)
+		public void DrawWorm(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 4);
@@ -111,12 +111,12 @@ namespace SOTS.Projectiles
 				color = Projectile.GetAlpha(Lighting.GetColor((int)segments[i].X / 16, (int)segments[i].Y / 16, Color.White));
 				float rotation = segmentsRotation[i];
 				int spriteDirection = toOther.X > 0f ? 1 : -1;
-				spriteBatch.Draw(texture, segments[i] + Projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
+				Main.spriteBatch.Draw(texture, segments[i] + Projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
 				first = segments[i];
 			}
 			frame = new Rectangle(0, 0, texture.Width, texture.Height / 2);
 			color = Projectile.GetAlpha(lightColor);
-			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, color, Projectile.rotation, origin, 1.00f, Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, color, Projectile.rotation, origin, 1.00f, Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
 		}
 		public void BodyTailMovement(ref Vector2 position, Vector2 prevPosition, ref float segmentsRotation, float segmentsRotation2, int i)
 		{
