@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(Projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeatFriendly>(), Projectile.damage, 0, Main.myPlayer);
-			SoundEngine.PlaySound(2, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
 		}
 	}
 }

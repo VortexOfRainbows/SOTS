@@ -397,7 +397,7 @@ namespace SOTS.NPCs.Boss
                     {
                         Vector2 goTo = prevLocation - NPC.Center;
                         directVelo = goTo.SafeNormalize(Vector2.Zero) * 24f;
-                        SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 0.8f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 0.8f);
                         if (Main.netMode != 1)
                         {
                             for(int i = 0; i < 16; i++)
@@ -959,7 +959,7 @@ namespace SOTS.NPCs.Boss
                 prevdir = new Vector2(0, -1);
                 if((int)rand3 == ModContent.ProjectileType<EnergySerpentHead>())
                 {
-                    SoundEngine.PlaySound(SoundID.Item119, (int)(selectArea + prevLocation).X, (int)(selectArea + prevLocation).Y);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)(selectArea + prevLocation).X, (int)(selectArea + prevLocation).Y);
                     if (Main.netMode != 1)
                     {
                         int damage2 = NPC.damage / 2;
@@ -986,7 +986,7 @@ namespace SOTS.NPCs.Boss
         }
         public void DoDash(int direction = 1, bool push = false)
         {
-            SoundEngine.PlaySound(SoundID.Item119, (int)prevLocation.X, (int)prevLocation.Y);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)prevLocation.X, (int)prevLocation.Y);
             Vector2 velo = prevdir;
             if (push)
                NPC.Center = prevLocation - velo * 2700 * direction;

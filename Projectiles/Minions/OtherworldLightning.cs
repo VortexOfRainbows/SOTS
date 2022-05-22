@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Minions
 			if (runOnce)
 			{
 				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-65, 66);

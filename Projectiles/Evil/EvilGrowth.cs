@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Evil
 						dust.alpha = 40;
 						dust.noGravity = true;
 					}
-					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 116, 2.3f, -0.5f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 116, 2.3f, -0.5f);
 				}
 				if (Projectile.scale < 1)
 				{

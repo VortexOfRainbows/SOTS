@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Chaos
             else
                 scale = Main.rand.NextFloat(1f, 1.4f);
        
-            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, -0.2f);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, -0.2f);
             Color colorMan = VoidPlayer.ChaosPink;
             Vector2 atLoc = Projectile.Center;
             float density = 1.5f;

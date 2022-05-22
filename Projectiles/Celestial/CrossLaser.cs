@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Celestial
 					color = new Color(255, 100, 255, 0);
 					finalRotation = 22.5f;
 				}
-				SoundEngine.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 				runOnce = false;
 				DoLine();
 			}
@@ -194,8 +194,8 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item93, (int)Projectile.Center.X, (int)Projectile.Center.Y);
-			if (Main.netMode != 1)
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				int amt = 4;
 				if ((int)Projectile.ai[0] % 3 == 2)
@@ -206,7 +206,7 @@ namespace SOTS.Projectiles.Celestial
 					if (amt == 8)
 						deg = 45;
 					Vector2 velo = new Vector2(24, 0).RotatedBy(MathHelper.ToRadians(deg * i + finalRotation));
-					Projectile.NewProjectile(Projectile.Center, velo, ModContent.ProjectileType<CelestialLightning>(), Projectile.damage, 0, Main.myPlayer, Projectile.ai[0] % 3);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velo, ModContent.ProjectileType<CelestialLightning>(), Projectile.damage, 0, Main.myPlayer, Projectile.ai[0] % 3);
 				}
 			}
 		}

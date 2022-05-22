@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Earth
 						dust.velocity += Projectile.velocity * 0.5f;
 					}
 					if (Projectile.type != ModContent.ProjectileType<VibrantShard>())
-						SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 27, 0.7f, -0.2f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 27, 0.7f, -0.2f);
 					runOnce = false;
 				}
 				Projectile.friendly = false;

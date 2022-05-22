@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if(runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 1.1f, 0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 1.1f, 0.4f);
 			}
 			float bonus = Projectile.ai[0];
 			if (bonus > 8)
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Chaos
 					{
 						if (Main.myPlayer == Projectile.owner)
 						{
-							Projectile.NewProjectile(presumedTarget.Center, Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), ModContent.ProjectileType<RealityShatter>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] - 1, (int)Projectile.ai[1]);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), presumedTarget.Center, Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), ModContent.ProjectileType<RealityShatter>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] - 1, (int)Projectile.ai[1]);
 						}
 					}
 				}
@@ -120,8 +120,8 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override bool PreDraw(ref Color lightColor)
 		{
-			Draw(spriteBatch, 1);
-			DrawBlack(spriteBatch);
+			Draw(Main.spriteBatch, 1);
+			DrawBlack(Main.spriteBatch);
 			return false;
 		}
         public void DrawBlack(SpriteBatch spriteBatch)

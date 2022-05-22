@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			//Projectile.Center = npc.Center;
 			if((int)Projectile.localAI[0] == 0)
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 12, 0.7f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 12, 0.7f);
 			Projectile.localAI[0] += 1f;
 			if (Projectile.localAI[0] == 2f) {
 				Projectile.damage = 0;

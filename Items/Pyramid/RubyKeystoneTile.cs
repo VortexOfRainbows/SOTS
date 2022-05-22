@@ -344,7 +344,7 @@ namespace SOTS.Items.Pyramid
 						int item = Item.NewItem((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<RubyKeystone>(), 1, false, 0, true);
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 					}
-					SoundEngine.PlaySound(SoundID.Shatter, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.10f, -0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.10f, -0.1f);
 					Projectile.Kill();
 					Projectile.active = false;
 				}

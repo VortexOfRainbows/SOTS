@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Earth
 			if (Projectile.ai[0] != -1)
 				Projectile.ai[0] = 1;
 			Projectile.velocity = oldVelocity;
-			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			return Projectile.ai[0] == -1;
 		}
 	}

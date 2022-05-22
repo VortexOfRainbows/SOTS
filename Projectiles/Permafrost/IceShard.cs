@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
         {
-			SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			for(int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			if(Projectile.ai[1] == 2)
 			{
-				SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				for(int i = 0; i < 360; i += 30)
 				{
 					Vector2 circularLocation = new Vector2(-7, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.ai[1] = 0;
 				return;
 			}
-			SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			for(int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));

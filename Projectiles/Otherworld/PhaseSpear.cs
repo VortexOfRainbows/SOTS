@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
 			if (Main.netMode != 1)
 			{
 				for (int i = 0; i < 4 + (Main.expertMode ? 1 : 0); i++)

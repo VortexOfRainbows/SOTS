@@ -253,7 +253,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					if (canDoDashSounds)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.7f, 0.25f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.7f, 0.25f);
 					}
 					canDoDashSounds = false;
 				}

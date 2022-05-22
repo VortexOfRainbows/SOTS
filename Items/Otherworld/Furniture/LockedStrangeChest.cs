@@ -180,14 +180,14 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 			if (player.sign >= 0)
 			{
-				SoundEngine.PlaySound(SoundID.MenuClose);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
 				player.sign = -1;
 				Main.editSign = false;
 				Main.npcChatText = "";
 			}
 			if (Main.editChest)
 			{
-				SoundEngine.PlaySound(SoundID.MenuTick);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuTick);
 				Main.editChest = false;
 				Main.npcChatText = "";
 			}
@@ -203,7 +203,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				{
 					player.chest = -1;
 					Recipe.FindRecipes();
-					SoundEngine.PlaySound(SoundID.MenuClose);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
 				}
 				else
 				{
@@ -233,7 +233,7 @@ namespace SOTS.Items.Otherworld.Furniture
 						if (chest == player.chest)
 						{
 							player.chest = -1;
-							SoundEngine.PlaySound(SoundID.MenuClose);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
 						}
 						else
 						{
@@ -242,7 +242,7 @@ namespace SOTS.Items.Otherworld.Furniture
 							Main.recBigList = false;
 							player.chestX = left;
 							player.chestY = top;
-							SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
+							Terraria.Audio.SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
 						}
 						Recipe.FindRecipes();
 					}

@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Celestial
 				float disX = player.Center.X - Projectile.oldPos[k].X;
 				float disY = player.Center.Y - Projectile.oldPos[k].Y;
 				float rotation2 = (float)Math.Atan2(disY,disX) + MathHelper.ToRadians(225f);
-				spriteBatch.Draw(texture, drawPos, null, color, rotation2, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, color, rotation2, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/PlasmaCutterChain");  
             Vector2 position = Projectile.Center;
@@ -166,13 +166,13 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("PlasmaCutterTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 16, Projectile.identity);
+				storeData = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("PlasmaCutterTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 16, Projectile.identity);
 				Projectile.ai[1] = storeData;
 				Projectile.netUpdate = true;
 			}
 			if (storeData2 == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("PlasmaCutterTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -16, Projectile.identity);
+				storeData2 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("PlasmaCutterTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -16, Projectile.identity);
 				Projectile.ai[0] = storeData2;
 				Projectile.netUpdate = true;
 			}

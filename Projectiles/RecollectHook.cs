@@ -35,7 +35,7 @@ namespace SOTS.Projectiles
         {
             if(playOnce)
             {
-                SoundEngine.PlaySound(SoundID.Item99, Projectile.Center);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item99, Projectile.Center);
                 playOnce = false;
             }
             if (Projectile.ai[0] == -1)
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles
                     Projectile.velocity = Projectile.velocity.Length() * toHook;
                     if (Projectile.Hitbox.Intersects(hook.Hitbox))
                     {
-                        SoundEngine.PlaySound(SoundID.NPCHit1, hook.Center);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit1, hook.Center);
                         Projectile.velocity *= 0.05f;
                         Projectile.Center = hook.Center;
                         hookId = hook.whoAmI;
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles
                         hook.localAI[1] = 0; // temp2;
                         hook.localAI[0] = owner.whoAmI;
                         hook.netUpdate = true;
-                        SoundEngine.PlaySound(SoundID.NPCHit, (int)hook.Center.X, (int)hook.Center.Y, 1, 1.2f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit, (int)hook.Center.X, (int)hook.Center.Y, 1, 1.2f);
                     }
                     Projectile.Kill();
                 }

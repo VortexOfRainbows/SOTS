@@ -56,8 +56,8 @@ namespace SOTS.Projectiles.Chaos
 				}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(Color lightColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 7; k++)
@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Chaos
 			{
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<ChaosHelixLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0.2f);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<ChaosHelixLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0.2f);
 				}
 				runOnce = false;
 				Projectile.scale = 0;

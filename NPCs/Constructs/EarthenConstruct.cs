@@ -91,7 +91,7 @@ namespace SOTS.NPCs.Constructs
                 if (num1 > 25.0)
                     num1 = 25f;
                 NPC.soundDelay = (int)num1;
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
             }
         }
         public void DoWormAI()
@@ -209,7 +209,7 @@ namespace SOTS.NPCs.Constructs
                     if (num1 > 25.0)
                         num1 = 25f;
                     NPC.soundDelay = (int)num1;
-                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
                 }
                 float absDirX = Math.Abs(dirX);
                 float absDirY = Math.Abs(dirY);
@@ -472,7 +472,7 @@ namespace SOTS.NPCs.Constructs
                     Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<EarthenShot>(), damage, 0, Main.myPlayer, 0, Main.player[NPC.target].Center.Y - 32);
                 }
             }
-            SoundEngine.PlaySound(SoundID.Item92, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, (int)(NPC.Center.X), (int)(NPC.Center.Y));
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {

@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Tide
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			SoundEngine.PlaySound(SoundID.Item93, target.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, target.Center);
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Tide
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			SoundEngine.PlaySound(SoundID.Item93, target.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, target.Center);
 			for (int i = 0; i < 20; i++)
 			{
 				int dust = Dust.NewDust(new Vector2(target.position.X, target.position.Y), target.width, target.height, 221);
@@ -189,7 +189,7 @@ namespace SOTS.Projectiles.Tide
 				if (end)
 				{
 					if (TrailPositions[0].Count > 0)
-						SoundEngine.PlaySound(2, (int)TrailPositions[0][0].X, (int)TrailPositions[0][0].Y, 27, 0.725f);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)TrailPositions[0][0].X, (int)TrailPositions[0][0].Y, 27, 0.725f);
 				}
 			}
 			for (int i = 0; i < TrailPositions.Length; i++)
@@ -218,7 +218,7 @@ namespace SOTS.Projectiles.Tide
 			Lighting.AddLight(Projectile.Center, 0.25f, 0.25f, 0.75f);
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 122, 1.2f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 122, 1.2f);
 				for (int i = 0; i < TrailPositions.Length; i++)
 				{
 					TrailPositions[i] = new List<Vector2>();
@@ -250,7 +250,7 @@ namespace SOTS.Projectiles.Tide
             }
 			if(counter % 30 == 29 && !end)
             {
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f);
             }
 			MoveTrailsTowardProjectile();
 			//Vector2 varyingVelocity = new Vector2(1.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 2));

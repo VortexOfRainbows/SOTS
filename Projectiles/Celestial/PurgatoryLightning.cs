@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Celestial
 					if (Main.myPlayer == Projectile.owner)
 					{
 						Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 5.5f));
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Projectile.type, Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Projectile.type, Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
 					}
 				}
 				Projectile.velocity *= 0f;

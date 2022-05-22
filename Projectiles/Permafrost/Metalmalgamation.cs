@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Permafrost
                     Vector2 rotateArea = new Vector2(5.4f, 0).RotatedBy(MathHelper.ToRadians(counter * 6 + i * 90));
                     Projectile.NewProjectile(Projectile.Center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * .35f), Projectile.knockBack, player.whoAmI, -3);
                 }
-				//SoundEngine.PlaySound(SoundID.Item11, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			}
 		}
     }

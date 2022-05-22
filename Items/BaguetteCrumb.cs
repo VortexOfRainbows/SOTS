@@ -59,7 +59,7 @@ namespace SOTS.Items
 		}
 		public override bool OnPickup(Player player)
 		{
-			SoundEngine.PlaySound(SoundID.Grab, player.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Grab, player.Center);
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.baguetteLength++;
 			player.statLife += 3;

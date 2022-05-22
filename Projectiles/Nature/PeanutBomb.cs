@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 				for (int i = 0; i < 360; i += 15)
 				{
 					Vector2 circularLocation = new Vector2(-Main.rand.NextFloat(8, 14), 0).RotatedBy(MathHelper.ToRadians(i));

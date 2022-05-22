@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Tide
         {
 			if(tileCount <= 2)
 			{
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/DumbFishSound"), 2.0f, -0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/DumbFishSound"), 2.0f, -0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
 				for (int i = 0; i < 30; i++)
 				{
 					Vector2 circular = new Vector2(4, 0).RotatedBy(Projectile.velocity.ToRotation() + MathHelper.ToRadians(i * 12));
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Tide
 		}
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/DumbFishSound"), 2.0f, -0.6f + Main.rand.NextFloat(-0.1f, 0.1f));
+			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/DumbFishSound"), 2.0f, -0.6f + Main.rand.NextFloat(-0.1f, 0.1f));
 			for (int i = 0; i < 30; i++)
 			{
 				Vector2 circular = new Vector2(4, 0).RotatedBy(Projectile.velocity.ToRotation() + MathHelper.ToRadians(i * 12));

@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         public override void AI()
         {
             Vector2 atLoc = Projectile.Center;
-            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.8f, -0.15f);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.8f, -0.15f);
             DustHelper.DrawStar(atLoc, DustID.Fire, 4, 4.5f, 1.5f, 1.85f, 0.75f, 0.75f, true, 10, 0);
             for (int i = 0; i < 360; i += 10)
             {

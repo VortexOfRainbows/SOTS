@@ -147,7 +147,7 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					Projectile.extraUpdates = 3;
 					Projectile.ai[1] = 0;
-					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
 				}
 				originalVelo = Projectile.velocity;
 				for (int i = 0; i < trailPos.Length; i++)

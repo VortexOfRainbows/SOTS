@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Inferno
 			else if(counter >= 30)
 			{
 				if(counter == 30)
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.65f, -0.15f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.65f, -0.15f);
 				int currentCounter = counter - 30;
 				Projectile.friendly = true;
 				int baseRate = 90;

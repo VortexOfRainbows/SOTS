@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Otherworld
 				initialDirection = Projectile.velocity;
 				if(completedLoads == 0)
 					LaserDraw(null);
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
 			}
 			return true;
 		}

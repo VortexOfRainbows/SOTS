@@ -7,6 +7,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using System.Collections.Generic;
+using SOTS.NPCs.Boss;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -38,7 +39,7 @@ namespace SOTS.Projectiles.Celestial
 				int direction = i * 2 - 1;
 				Rectangle frame = new Rectangle(0, (int)(texture.Height * 0.5f * i), texture.Width, texture.Height / 2);
 				Vector2 offset = new Vector2(0, direction * 0.4f * (48 - Projectile.ai[1])).RotatedBy(Projectile.rotation);
-				spriteBatch.Draw(texture, Projectile.Center + offset - Main.screenPosition, frame, lightColor, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center + offset - Main.screenPosition, frame, lightColor, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             }
             return false;
 		}
@@ -154,17 +155,17 @@ namespace SOTS.Projectiles.Celestial
 					}
 				}
 				for (int i = 0; i < 24; i++)
-					Gore.NewGore(Projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
+					Gore.NewGore(Projectile.GetSource_Death(), Projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
 				if (player.ZoneUnderworldHeight)
 				{
-					SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
-					if (!NPC.AnyNPCs(Mod.Find<ModNPC>("SubspaceSerpentHead").Type))
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+					if (!NPC.AnyNPCs(ModContent.NPCType<SubspaceSerpentHead>()))
 					{
-						NPC.SpawnOnPlayer(player.whoAmI, Mod.Find<ModNPC>("SubspaceSerpentHead").Type);
+						NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<SubspaceSerpentHead>());
 						for (int king = 0; king < 200; king++)
 						{
 							NPC npc = Main.npc[king];
-							if (npc.type == Mod.Find<ModNPC>("SubspaceSerpentHead").Type)
+							if (npc.type == ModContent.NPCType<SubspaceSerpentHead>())
 							{
 								npc.position.X = Projectile.Center.X - npc.width / 2;
 								npc.position.Y = Projectile.Center.Y - npc.height / 2;
@@ -174,7 +175,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 				else
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.0f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.0f);
 				}
 			}
 		}
@@ -276,14 +277,14 @@ namespace SOTS.Projectiles.Celestial
 							}
 						}
 						count++;
-						SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.95f, -0.4f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.95f, -0.4f);
 						if (Main.myPlayer == Projectile.owner)
 						{
 							Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 							if (Main.rand.NextBool(3) && player.ZoneUnderworldHeight)
-								Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, Projectile.knockBack, Projectile.owner, 0, Main.rand.Next(2) * 2 - 1);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, Projectile.knockBack, Projectile.owner, 0, Main.rand.Next(2) * 2 - 1);
 							Vector2 perturbedSpeed = (circular.SafeNormalize(Vector2.Zero) * 2f * Main.rand.NextFloat(0.5f, 1.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-							Projectile.NewProjectile(Projectile.Center, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));
 						}
 					}
 				}

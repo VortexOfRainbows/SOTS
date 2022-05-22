@@ -215,7 +215,7 @@ namespace SOTS.Projectiles.Nature
 					frame++;
 					if (frame == 7)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.7f, -0.4f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.7f, -0.4f);
 						if (Main.myPlayer == Projectile.owner)
 						{
 							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateVector * 1f, ModContent.ProjectileType<FriendlyFlowerBolt>(), Projectile.damage, 1f, Main.myPlayer);

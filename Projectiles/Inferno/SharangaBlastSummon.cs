@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Inferno
             }
 			if(expand == -1)
 			{
-				SoundEngine.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				expand = 0;
 				for(int i = 0; i < 360; i += 10)
 				{

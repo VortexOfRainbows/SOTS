@@ -171,7 +171,7 @@ namespace SOTS.NPCs
 					NPC.velocity -= between * 3.4f;
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(NPC.Center + between * 24, between * 2.5f, ProjectileType<ThunderColumnBlue>(), damage2, 2f, Main.myPlayer, 2);
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f, 0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f, 0.1f);
 					for (int k = 0; k < 16; k++)
 					{
 						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Electric, 0, 0, 0, default, 1f);

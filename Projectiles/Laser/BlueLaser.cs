@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.Laser
                 }
                 if (Projectile.soundDelay <= 0)//this is the proper sound delay for this type of weapon
                 {
-                    SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15);    //this is the sound when the weapon is used   cheange 15 for diferent sound
+                    Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15);    //this is the sound when the weapon is used   cheange 15 for diferent sound
                     Projectile.soundDelay = 40;    //this is the proper sound delay for this type of weapon
                 }
             }

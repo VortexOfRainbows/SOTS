@@ -91,7 +91,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				if(NPC.ai[1] == -1)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 53, 1.5f, 0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 53, 1.5f, 0.1f);
 					float dampen = (Math.Abs(lastVelocity.Y) - 0.5f) * 0.8f;
 					if (dampen < 0)
 						dampen = 0;

@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				Projectile.NewProjectile(Projectile.Center, new Vector2(8f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Tide.RippleWaveSummon>(), Projectile.damage, 0f, Projectile.owner, 1, 0);
 			}
-			SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.5f, -0.1f);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.5f, -0.1f);
 			for (int i = 0; i < 360; i += 24)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4.5f, 6f), 0).RotatedBy(MathHelper.ToRadians(i));

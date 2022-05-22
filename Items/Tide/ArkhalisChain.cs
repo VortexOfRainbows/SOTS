@@ -80,13 +80,13 @@ namespace SOTS.Items.Tide
 			int key = ItemID.Arkhalis;
 			if (Main.tile[i, j].TileFrameX < 18 && player.ConsumeItem(key))
 			{
-				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
 				tile.TileFrameX = 18;
 				NetMessage.SendTileSquare(-1, i, j, 2);
 			}
 			else if(Main.tile[i, j].TileFrameX >= 18)
 			{
-				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
 				int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1, false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, player.whoAmI, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				tile.TileFrameX = 0;

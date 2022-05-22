@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(Main.netMode != NetmodeID.MultiplayerClient)
 				Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeat>(), Projectile.damage, 0, Main.myPlayer);
-			SoundEngine.PlaySound(SoundID.Item, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
 		}
 	}
 }

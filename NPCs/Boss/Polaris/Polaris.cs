@@ -180,7 +180,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		public void SpawnShard(int amt = 1)
 		{
 			Player player = Main.player[NPC.target];
-			SoundEngine.PlaySound(SoundID.Item44, (int)NPC.Center.X, (int)NPC.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item44, (int)NPC.Center.X, (int)NPC.Center.Y);
 			if (Main.netMode != 1)
 			{
 				int damage = NPC.damage / 2;
@@ -197,7 +197,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
 		public void SpawnCannons()
 		{
-			SoundEngine.PlaySound(SoundID.Item50, (int)NPC.Center.X, (int)NPC.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)NPC.Center.X, (int)NPC.Center.Y);
 			if (Main.netMode != 1)
 				for (int i = 0; i < 4; i++)
 				{
@@ -207,7 +207,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		public void SpawnDragon()
 		{
 			Player player = Main.player[NPC.target];
-			SoundEngine.PlaySound(SoundID.Item119, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 			if (Main.netMode != 1)
 			{
 				Vector2 vectorToPlayer = player.Center - NPC.Center;
@@ -288,7 +288,7 @@ namespace SOTS.NPCs.Boss.Polaris
 					int index = (int)(transition / 30);
 					if(Main.netMode != 1)
 						NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisSpike>(), 0, index, NPC.whoAmI);
-					SoundEngine.PlaySound(SoundID.Item50, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 				}
 			}
 			else

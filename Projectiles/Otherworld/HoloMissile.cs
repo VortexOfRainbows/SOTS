@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile.velocity += -toPlayer * (0.125f * Projectile.timeLeft/540f) + new Vector2(x, y);
 			}
 			if(Projectile.timeLeft == 30)
-				SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
 			if (Projectile.timeLeft < 30)
             {
 				Projectile.tileCollide = false;

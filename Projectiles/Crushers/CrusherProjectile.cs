@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Crushers
 					VoidConsumption(chargePercentage, ref consumedVoid);
 					if (prev != consumedVoid)
 					{
-						SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
 					}
 					int trueMaxExplosions = maxExplosions + vPlayer.BonusCrushRangeMax;
 					int trueMinExplosions = minExplosions + vPlayer.BonusCrushRangeMin;
@@ -287,7 +287,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public virtual void ExplosionSound()
 		{
-			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.1f);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.1f);
 		}
 		public virtual Texture2D ArmTexture(int handNum, int direction)
         {

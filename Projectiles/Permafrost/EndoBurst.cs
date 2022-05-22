@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				if(counter == 0)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 20, 0.6f, -0.4f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 20, 0.6f, -0.4f);
 					for(int i = 0; i < 30; i++)
 					{
 						Vector2 circular = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 12f));

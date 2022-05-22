@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.BiomeChest
 								dust.alpha = 50;
 								dust.noGravity = true;
 							}
-							//SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 9, 0.8f);
+							//Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 9, 0.8f);
 						}
 						if (Projectile.scale < 1)
                         {
@@ -183,7 +183,7 @@ namespace SOTS.Projectiles.BiomeChest
 						if(!effected[i])
 						{
 							if(Main.myPlayer == Projectile.owner)
-								Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<FlowerStrike>(), Projectile.damage, 0, Projectile.owner, target.whoAmI, Projectile.whoAmI);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, Vector2.Zero, ModContent.ProjectileType<FlowerStrike>(), Projectile.damage, 0, Projectile.owner, target.whoAmI, Projectile.whoAmI);
 							effected[i] = true;
 						}
 					}
@@ -266,8 +266,8 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			if(bloom)
 			{
-				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(120, 160, 140) * (50f / 255f) * (Projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
-				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(100, 140, 120) * 0.5f * (Projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(120, 160, 140) * (50f / 255f) * (Projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(100, 140, 120) * 0.5f * (Projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
 				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/TangleGrowth").Value;
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);

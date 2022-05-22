@@ -549,7 +549,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				}
 				if(dormantCounter > 90)
 				{
-					SoundEngine.PlaySound(SoundID.Roar, (int)(NPC.Center.X), (int)(NPC.Center.Y), 0, 1.25f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, (int)(NPC.Center.X), (int)(NPC.Center.Y), 0, 1.25f);
 					Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
 					dormant = false;
 					NPC.dontTakeDamage = false;
@@ -690,15 +690,15 @@ namespace SOTS.NPCs.Boss.Advisor
 					circularAddition.Y -= (attackTimer1 - 360) * 1f;
 					glow = true;
 					if(attackTimer1 == 390)
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.7f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.7f);
 					if (attackTimer1 == 420)
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1f);
 					if(attackTimer1 == 450)
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.3f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.3f);
 					if (attackTimer1 >= 480)
 					{
 						if (attackTimer1 == 480)
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 1.4f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 1.4f);
 						if (attackTimer1 < 510)
 						{
 							hookDistortion += 8.5f;
@@ -818,7 +818,7 @@ namespace SOTS.NPCs.Boss.Advisor
 									break;
 								}
 							}
-							SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
+							Terraria.Audio.SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
 							if (Main.netMode != 1)
 								Projectile.NewProjectile(locX, locY, 0, 0, Mod.Find<ModProjectile>("OtherworldlyTracer").Type, damage, 0f, Main.myPlayer, (1071) - (attackTimer1 * 2), NPC.whoAmI);
 						}
@@ -829,7 +829,7 @@ namespace SOTS.NPCs.Boss.Advisor
 						attackTimer1 = -150;
 						attackPhase1 = -2;
 						glow = false;
-						SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
 						for (int i = 0; i < Main.projectile.Length; i++)
 						{
 							Projectile proj = Main.projectile[i];
@@ -981,17 +981,17 @@ namespace SOTS.NPCs.Boss.Advisor
 					ai3 += NPC.velocity.X * 1.2f;
 				}
 				if (attackTimer2 == 30)
-					SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
 				if (attackTimer2 == 60)
-					SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.15f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.15f);
 				if (attackTimer2 == 90)
-					SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f);
 				if (attackTimer2 == 810)
-					SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f);
 				if (attackTimer2 == 840)
-					SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.15f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.15f);
 				if (attackTimer2 == 870)
-					SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
 				if(attackTimer2 > 90 && attackTimer2 < 810)
 				{
 					float FasterRate = 1f;
@@ -1009,7 +1009,7 @@ namespace SOTS.NPCs.Boss.Advisor
 							damage2 = (int)(damage2 * 0.8f);
 							Projectile.NewProjectile(NPC.Center.X - 54, NPC.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, Mod.Find<ModProjectile>("HoloMissile").Type, damage2, 0, Main.myPlayer, 0, NPC.target);
 						}
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X - 54, (int)NPC.Center.Y + 20, 61, 1f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X - 54, (int)NPC.Center.Y + 20, 61, 1f);
 						for (int i = 0; i < 15; i++)
 						{
 							int dust = Dust.NewDust(NPC.Center + new Vector2(-54 - 8, 20 - 8), 8, 8, DustID.Electric, 0, 0, 0, default, 1.25f);
@@ -1028,7 +1028,7 @@ namespace SOTS.NPCs.Boss.Advisor
 							}
 							Projectile.NewProjectile(NPC.Center.X + 54, NPC.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, Mod.Find<ModProjectile>("HoloMissile").Type, damage2, 0, Main.myPlayer, 0, NPC.target);
 						}
-						SoundEngine.PlaySound(2, (int)NPC.Center.X + 54, (int)NPC.Center.Y + 20, 61, 1f);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X + 54, (int)NPC.Center.Y + 20, 61, 1f);
 						for (int i = 0; i < 15; i++)
 						{
 							int dust = Dust.NewDust(NPC.Center + new Vector2(54 - 8, 20 - 8), 8, 8, DustID.Electric, 0, 0, 0, default, 1.25f);
@@ -1093,7 +1093,7 @@ namespace SOTS.NPCs.Boss.Advisor
 					}
 					else if(attackTimer2 % 160 < 32)
 					{
-						SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
 					}
 					if (attackTimer2 % 160 == 0)
 					{
@@ -1131,7 +1131,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				eyeReset = 2.5f;
 				if (attackTimer2 >= 180 && attackTimer2 % 90 == 0 && attackTimer2 < 810)
 				{
-					SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 93, 1.3f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 93, 1.3f);
 					Vector2 shift = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(new Vector2(fireToX, fireToY).ToRotation()));
 					Vector2 playerCenter = new Vector2(fireToX, fireToY);
 					Vector2 fromCenter = playerCenter - NPC.Center;

@@ -681,7 +681,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if(!shattered)
                 {
-                    SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 23, 1.0f, -0.3f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 23, 1.0f, -0.3f);
                     for (int i = 0; i < 36; i++)
                     {
                         Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 10));
@@ -696,7 +696,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             else if(shattered)
             {
-                SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                Terraria.Audio.SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
                 for (int i = 0; i < 12; i++)
                 {
                     Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));
@@ -1051,7 +1051,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 int index = npc.FindBuffIndex(BuffType<Infected>());
                 int time = npc.buffTime[index];
                 int damage = time / 60;
-                SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 3; i++)
@@ -1073,7 +1073,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if (shattered)
                 {
-                    SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                    Terraria.Audio.SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
                     for (int i = 0; i < 12; i++)
                     {
                         Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));

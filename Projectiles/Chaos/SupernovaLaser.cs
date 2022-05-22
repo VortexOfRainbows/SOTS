@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 				for (int i = 0; i < 3; i++)
                 {
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 120 + rand));
-					Projectile.NewProjectile(target.Center + circular.SafeNormalize(Vector2.Zero) * 0.5f * target.Size.Length(), circular * 4f, ModContent.ProjectileType<SupernovaScatter>(), (int)(Projectile.damage * 1.4f), Projectile.knockBack, Main.myPlayer, target.whoAmI, rand * 3 + i * 120);
+					Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center + circular.SafeNormalize(Vector2.Zero) * 0.5f * target.Size.Length(), circular * 4f, ModContent.ProjectileType<SupernovaScatter>(), (int)(Projectile.damage * 1.4f), Projectile.knockBack, Main.myPlayer, target.whoAmI, rand * 3 + i * 120);
                 }
             }
         }
@@ -157,7 +157,7 @@ namespace SOTS.Projectiles.Chaos
 					Vector2 sinusoid = new Vector2(0, scale * 18 * (float)Math.Sin(MathHelper.ToRadians(i * 2 + Projectile.ai[1] * 2 + j * 120))).RotatedBy(rotation);
 					Color color = this.color * ((255 - Projectile.alpha) / 255f) * alpha * 0.7f;
 					color.A = 0;
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color, rotation, origin, new Vector2(scale * 3, scale), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color, rotation, origin, new Vector2(scale * 3, scale), SpriteEffects.None, 0f);
 				}
 			}
 			return false;

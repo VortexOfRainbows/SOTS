@@ -128,7 +128,7 @@ namespace SOTS.Projectiles.Permafrost
             {
                 float percent = counter / Projectile.ai[0];
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - textureHeight - (percent + chargeLevel) * fireFromTighten);
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 5, 1.2f, -0.1f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 5, 1.2f, -0.1f);
                 Projectile proj = Projectile.NewProjectileDirect(fireFrom, Projectile.velocity * (0.5f + 0.5f * chargeLevel), (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer);
                 proj.GetGlobalProjectile<SOTSProjectile>().frostFlake = chargeLevel; //this sould sync automatically on the SOTSProjectile end
             }
@@ -150,10 +150,10 @@ namespace SOTS.Projectiles.Permafrost
                 if (chargeLevel < 2 && counter > 0)
                 {
                     if (counter == (int)Projectile.ai[0] / 2)
-                        SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
                     if (counter >= Projectile.ai[0])
                     {
-                        SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.3f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.3f);
                         if(chargeLevel == 0)
                             for (int k = 0; k < 30; k++)
                             {

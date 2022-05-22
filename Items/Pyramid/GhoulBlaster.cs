@@ -52,7 +52,7 @@ namespace SOTS.Items.Pyramid
 			}
 			if(shotNum >= 6)
 			{
-				SoundEngine.PlaySound(SoundID.Item38, (int)(position.X), (int)(position.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38, (int)(position.X), (int)(position.Y));
 				shotNum = 0;
 				Projectile.NewProjectile(position.X, position.Y, speedX * 0.9f, speedY * 0.9f, Mod.Find<ModProjectile>("CurseSingularity").Type, damage, knockBack, player.whoAmI);
 				return false;

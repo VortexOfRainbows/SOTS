@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Laser;
 using SOTS.Void;
+using SOTS.WorldgenHelpers;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -126,7 +127,7 @@ namespace SOTS.Projectiles.Chaos
                 {
                     int num = (int)Projectile.ai[1] / 10;
                     if (Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<HyperlightLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, num);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<HyperlightLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, num);
                 }
                 else if(Projectile.ai[1] >= 33)
                 {

@@ -50,7 +50,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
         public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			SoundEngine.PlaySound(SoundID.Dig, (int)pos.X, (int)pos.Y, 0, 1.05f, -0.6f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, (int)pos.X, (int)pos.Y, 0, 1.05f, -0.6f);
 			return false;
         }
 	}

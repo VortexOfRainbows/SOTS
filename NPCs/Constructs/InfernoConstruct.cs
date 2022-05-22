@@ -324,7 +324,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						if ((int)attackTimer % (int)(infernoDuration / 3) == 0 && attackTimer < infernoDuration)
 						{
-							SoundEngine.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 15, 1.3f, -0.3f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 15, 1.3f, -0.3f);
 						}
 						if(!Main.rand.NextBool(3))
 						{
@@ -381,7 +381,7 @@ namespace SOTS.NPCs.Constructs
 					if (attackTimer % (fireRate * 2) == 0)
 					{
 						NPC.Center -= normal * 1.5f;
-						SoundEngine.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 34, 1f, 0.5f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 34, 1f, 0.5f);
 					}
 					int damage = NPC.damage / 2;
 					if (Main.expertMode)
@@ -464,7 +464,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				targetRotateLength = 112;
 				Vector2 toPlayer = player.Center - NPC.Center;
-				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.1f, 0.3f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.1f, 0.3f);
 				NPC.velocity += 23f * toPlayer.SafeNormalize(Vector2.Zero);
 				NPC.velocity.Y *= 0.5f;
 			}
@@ -530,7 +530,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void Shoot(int damage, float knockBack, float speedMod = 1f)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 62, 0.6f, 1.25f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 62, 0.6f, 1.25f);
 			Vector2 toAim = aimTo - position;
 			Vector2 launchvelo = toAim.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3f, 4.5f);
 			if (Main.netMode != NetmodeID.MultiplayerClient)

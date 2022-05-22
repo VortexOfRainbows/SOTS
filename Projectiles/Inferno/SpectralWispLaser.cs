@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Inferno
 			if(Projectile.ai[0] == -1)
 			{
 				Projectile.ai[0] = 29;
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, 0.25f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, 0.25f);
 				green = true;
             }
             return base.PreAI();
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.rotation += MathHelper.ToRadians(8);
 			if(Projectile.ai[0] == 0)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, 0.25f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, 0.25f);
 			}
 			if(Projectile.ai[0] == 29)
 			{
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Inferno
 				counter++;
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.75f, 0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.75f, 0.4f);
 				Laser();
 				runOnce = false;
 				//Projectile.friendly = true;

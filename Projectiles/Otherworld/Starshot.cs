@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Otherworld
             if (!player.channel) ended = true;
             if (ended && speed <= 0.1f)
             {
-                SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 9, 0.75f);
+                Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 9, 0.75f);
                 Projectile.Kill();
             }
         }

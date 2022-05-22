@@ -32,7 +32,7 @@ namespace SOTS.Projectiles
             Player player = Main.player[Projectile.owner];
             if (target.life <= 0)
             {
-                SoundEngine.PlaySound(SoundID.MaxMana, player.Center);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.MaxMana, player.Center);
                 player.AddBuff(ModContent.BuffType<Frenzy>(), 190);
             }
         }

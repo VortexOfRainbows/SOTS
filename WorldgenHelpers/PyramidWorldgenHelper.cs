@@ -14,7 +14,7 @@ using SOTS.Items.Pyramid.AltPyramidBlocks;
 using SOTS.Items.Secrets;
 using SOTS.Items.Fishing;
 
-namespace SOTS
+namespace SOTS.WorldgenHelpers
 {
 	public class PyramidWorldgenHelper
 	{

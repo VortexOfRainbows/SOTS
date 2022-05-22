@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.3f, -0.2f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)
             {
 				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Chaos
 				for(int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(1, 0).RotatedBy(Projectile.rotation + MathHelper.ToRadians(45 * i));
-					Projectile.NewProjectile(Projectile.Center, circular * 2.5f, ModContent.ProjectileType<ChaosCircle>(), (int)(Projectile.damage * 0.9f), 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular * 2.5f, ModContent.ProjectileType<ChaosCircle>(), (int)(Projectile.damage * 0.9f), 0, Main.myPlayer);
 				}
 			}
         }

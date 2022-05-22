@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item50, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(-Main.rand.NextFloat(5, 12), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);

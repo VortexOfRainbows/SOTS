@@ -403,7 +403,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			
 			if(Projectile.knockBack == 1)
 			{
-				SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
 				Vector2 position = Projectile.Center;
 				for (int k = 0; k < 360; k += 3)
 				{
@@ -432,7 +432,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 			else
 			{
-				SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
 				Vector2 position = Projectile.Center;
 				for (int k = 0; k < 360; k += 3)
 				{

@@ -240,7 +240,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if(Main.rand.NextBool(2))
-				SoundEngine.PlaySound(SoundID.NPCHit, (int)NPC.Center.X, (int)NPC.Center.Y, 4, 0.6f, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit, (int)NPC.Center.X, (int)NPC.Center.Y, 4, 0.6f, 0.2f);
 			if (NPC.life > 0)
 			{
 				int num = 0;

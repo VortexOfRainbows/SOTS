@@ -25,14 +25,14 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			soundType = SoundLoader.customSoundType;
-			soundStyle = Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre1");
+			soundType = SoundLoader.CustomSoundType;
+			soundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre1");
 		}
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(2) + 1;
-			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
@@ -70,13 +70,13 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			soundType = SoundLoader.customSoundType;
-			soundStyle = Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
+			soundType = SoundLoader.CustomSoundType;
+			soundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
 		}
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 	}
@@ -108,8 +108,8 @@ namespace SOTS.Items.Permafrost
 			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidBrick>();
 			AddMapEntry(new Color(96, 111, 215));
-			soundType = SoundLoader.customSoundType;
-			soundStyle = Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
+			soundType = SoundLoader.CustomSoundType;
+			soundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
 		}
 	}
 	public class FrigidBrick : ModItem

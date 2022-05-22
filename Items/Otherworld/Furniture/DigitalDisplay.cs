@@ -137,7 +137,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			Main.mouseRightRelease = true;
 			Player player = Main.LocalPlayer;
 			player.AddBuff(ModContent.BuffType<CyberneticEnhancements>(), 36000, false);
-			SoundEngine.PlaySound(SoundID.Item4, i * 16, j * 16);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item4, i * 16, j * 16);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

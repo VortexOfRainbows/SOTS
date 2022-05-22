@@ -70,8 +70,8 @@ namespace SOTS.Projectiles.Chaos
                     Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), false);
                     otherC.A = 0;
                     Vector2 sinusoid = new Vector2(0, 14 * scale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 8 + i * 3))).RotatedBy(rotation);
-                    spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 1f) * Projectile.scale, SpriteEffects.None, 0f);
-                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.75f) * Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 1f) * Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.75f) * Projectile.scale, SpriteEffects.None, 0f);
                     if (i != drawPositionList.Count - 1)
                         rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 }
@@ -182,7 +182,7 @@ namespace SOTS.Projectiles.Chaos
                     dust2.scale *= 2.2f;
                 }
                 SetupLaser();
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 72, 1.0f, -0.3f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 72, 1.0f, -0.3f);
                 for (int i = 0; i < 10; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

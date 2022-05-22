@@ -79,8 +79,8 @@ namespace SOTS.Projectiles.Laser
 			if (inititate == 0)
 			{
 				inititate++;
-				//SoundEngine.PlaySound(2, Projectile.Center, 60);
-				SoundEngine.PlaySound(2, player.Center, 60);
+				//Terraria.Audio.SoundEngine.PlaySound(2, Projectile.Center, 60);
+				Terraria.Audio.SoundEngine.PlaySound(2, player.Center, 60);
 			}
 			if(!Projectile.velocity.Equals(new Vector2(0, 0)))
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);

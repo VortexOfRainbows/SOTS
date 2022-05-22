@@ -60,14 +60,14 @@ namespace SOTS.Items.Furniture
                 int top = Player.tileTargetY - Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY / 18;
                 if (player.sign > -1)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuClose);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
                     player.sign = -1;
                     Main.editSign = false;
                     Main.npcChatText = string.Empty;
                 }
                 if (Main.editChest)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuTick);
                     Main.editChest = false;
                     Main.npcChatText = string.Empty;
                 }
@@ -82,7 +82,7 @@ namespace SOTS.Items.Furniture
                     {
                         player.chest = -1;
                         Recipe.FindRecipes();
-                        SoundEngine.PlaySound(SoundID.MenuClose);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
                     }
                     else
                     {
@@ -101,14 +101,14 @@ namespace SOTS.Items.Furniture
                         {
                             player.chest = -1;
                             Recipe.FindRecipes();
-                            SoundEngine.PlaySound(SoundID.MenuClose);
+                            Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
                         }
                         else if (num213 != player.chest && player.chest == -1)
                         {
                             player.chest = num213;
                             Main.playerInventory = true;
                             Main.recBigList = false;
-                            SoundEngine.PlaySound(SoundID.MenuOpen);
+                            Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuOpen);
                             player.chestX = left;
                             player.chestY = top;
                         }
@@ -117,7 +117,7 @@ namespace SOTS.Items.Furniture
                             player.chest = num213;
                             Main.playerInventory = true;
                             Main.recBigList = false;
-                            SoundEngine.PlaySound(SoundID.MenuTick);
+                            Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuTick);
                             player.chestX = left;
                             player.chestY = top;
                         }

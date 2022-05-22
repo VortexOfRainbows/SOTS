@@ -22,7 +22,7 @@ using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
 
-namespace SOTS
+namespace SOTS.WorldgenHelpers
 {
 	public class SOTSWorldgenHelper
 	{

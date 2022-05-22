@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             }
             if (Projectile.localAI[0] % 24 == 0 && summonedNum < 9) //prevent spawning more in multiplayer with Main.myPlayer == Projectile.owner
             {
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.15f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.15f);
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<AtenStar>(), (int)(Projectile.damage * 0.7f) + 1, 0, Projectile.owner, summonedNum, Projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)

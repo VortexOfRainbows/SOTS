@@ -208,7 +208,7 @@ namespace SOTS.NPCs.Constructs
 							reticleAlpha = 0;
 							NPC.alpha = 0;
 							NPC.ai[0] = -20;
-							SoundEngine.PlaySound(2, (int)(NPC.Center.X), (int)(NPC.Center.Y), 14, 2.0f - saveData * 0.02f);
+							Terraria.Audio.SoundEngine.PlaySound(2, (int)(NPC.Center.X), (int)(NPC.Center.Y), 14, 2.0f - saveData * 0.02f);
 							for (int i = 0; i < 360; i += 10)
 							{
 								Vector2 circularLocation = new Vector2(16 - NPC.width, 0).RotatedBy(MathHelper.ToRadians(i));

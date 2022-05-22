@@ -62,7 +62,7 @@ namespace SOTS.Items.Pyramid
 			{
 				counter = 0;
 				Main.projectile[index].Kill();
-				SoundEngine.PlaySound(SoundID.Item14, (int)(Main.projectile[index].Center.X), (int)(Main.projectile[index].Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)(Main.projectile[index].Center.X), (int)(Main.projectile[index].Center.Y));
 				for(int i = 0; i < 15; i ++)
 				{
 					int num1 = Dust.NewDust(new Vector2(Main.projectile[index].position.X, Main.projectile[index].position.Y), 20, 34, 32);

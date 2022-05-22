@@ -220,7 +220,7 @@ namespace SOTS.NPCs.Constructs
 						mult = NPC.ai[1] / 200f;
 						NPC.Center = Vector2.Lerp(dashPosition, dashPositionOther, mult);
 						if ((int)NPC.ai[1] % 4 == 0)
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 34, 1f, 0.5f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 34, 1f, 0.5f);
 						if ((int)NPC.ai[1] % 2 == 0)
 						{
 							if (Main.netMode != NetmodeID.MultiplayerClient)

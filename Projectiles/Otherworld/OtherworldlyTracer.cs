@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			//SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+			//Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
 		}
 		bool hasPlayer = false;
 		float[] rotation = { 0, 0, 0 };
@@ -107,11 +107,11 @@ namespace SOTS.Projectiles.Otherworld
 			ai1++;
 			if (ai1 == 30)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.3f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.3f);
 			}
 			if (ai1 == 60)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.4f);
 			}
 			if (ai1 > 61)
 			{
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(doOnce)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.2f);
 				if (Projectile.timeLeft > Projectile.ai[0])
 				{
 					Projectile.timeLeft = (int)Projectile.ai[0];

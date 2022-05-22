@@ -36,6 +36,7 @@ using Terraria.Graphics.Effects;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Chaos;
 using Terraria.IO;
+using SOTS.WorldgenHelpers;
 
 namespace SOTS
 {

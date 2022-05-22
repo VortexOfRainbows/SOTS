@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Inferno
 			if (runOnce)
 			{
 				runOnce = false;
-				//SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 60, 0.8f, -0.1f);
+				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 60, 0.8f, -0.1f);
 			}
 			if(Main.rand.NextBool(120))
             {

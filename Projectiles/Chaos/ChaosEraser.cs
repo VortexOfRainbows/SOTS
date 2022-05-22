@@ -79,9 +79,9 @@ namespace SOTS.Projectiles.Chaos
                 Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), false);
                 otherC.A = 0;
                 Vector2 sinusoid = new Vector2(0, 64 * actualScale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 3 + i * 3))).RotatedBy(rotation);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 3.5f) * Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 3.5f) * Projectile.scale, SpriteEffects.None, 0f);
                 if (!SOTS.Config.lowFidelityMode)
-                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 1.25f) * Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 1.25f) * Projectile.scale, SpriteEffects.None, 0f);
                 if (i != drawPositionList.Count - 1)
                     rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
             }
@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Chaos
                 {
                     Player target = Main.player[playerID];
                     if (target.active)
-                        SoundEngine.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 91, 1.1f, -0.4f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 91, 1.1f, -0.4f);
                 }
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {

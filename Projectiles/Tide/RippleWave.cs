@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Tide
 			Projectile.alpha += 5;
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.4f);
 				runOnce = false;
             }
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Tide
 			Projectile.alpha += 9;
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.5f, -0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.5f, -0.1f);
 				runOnce = false;
 			}
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);

@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void ExplosionSound()
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.55f, 0.4f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.55f, 0.4f);
 			base.ExplosionSound();
 		}
         public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index)

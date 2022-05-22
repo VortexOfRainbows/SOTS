@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             }
             if (Projectile.localAI[0] % 18 == 0 && summonedNum < 8) //prevent spawning more in multiplayer with Main.myPlayer == Projectile.owner
             {
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.15f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.15f);
                 if (Main.myPlayer == Projectile.owner)
                 {
                     for(int i = 0; i <= 1; i++)

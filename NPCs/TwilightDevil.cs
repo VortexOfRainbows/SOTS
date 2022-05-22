@@ -136,7 +136,7 @@ namespace SOTS.NPCs
 			}
 			if(NPC.ai[0] == 510 && NPC.ai[1] == 0) //time of release
 			{
-				SoundEngine.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 			}
 			if(NPC.ai[0] >= 540 && NPC.ai[1] == 0) //teleport out
 			{

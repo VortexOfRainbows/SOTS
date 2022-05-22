@@ -116,7 +116,7 @@ namespace SOTS.Items.Permafrost
 				}
 				return false;
 			}
-			SoundEngine.PlaySound(2, (int)(position.X), (int)(position.Y), 1, 1f);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)(position.X), (int)(position.Y), 1, 1f);
 			return false;
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)

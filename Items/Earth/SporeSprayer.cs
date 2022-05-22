@@ -52,7 +52,7 @@ namespace SOTS.Items.Earth
                     }
                 }
             if(field)
-                SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 34, 0.7f, -0.1f);
+                Terraria.Audio.SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 34, 0.7f, -0.1f);
             return true; 
         }
     }

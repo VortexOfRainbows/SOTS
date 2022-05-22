@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.4f);
 				Direction1 = Projectile.ai[1];
 				Direction2 = Direction1;
 				runOnce = false;
@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Pyramid
 				}
 			}
 			foamParticleList1 = null;
-			//SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.9f, 0.45f);
+			//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.9f, 0.45f);
 		}
         public override void AI()
 		{

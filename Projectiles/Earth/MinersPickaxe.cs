@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Earth
             if(counter < timeToLaunch)
             {
                 if(counter == 1)
-                    SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f, -0.2f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f, -0.2f);
                 if (Projectile.owner == Main.myPlayer)
                 {
                     Projectile.ai[0] = Main.MouseWorld.X;
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Earth
             else
             {
                 if(counter == timeToLaunch)
-                    SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 19, 1.0f, -0.1f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 19, 1.0f, -0.1f);
                 if (player.itemTime > itemUseTime)
                 {
                     player.itemTime = itemUseTime;
@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.Earth
         public override void Kill(int timeLeft)
         {
             HitTiles();
-            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.4f);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.4f);
             for (int i = 0; i < 360; i += 24)
             {
                 Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(i));

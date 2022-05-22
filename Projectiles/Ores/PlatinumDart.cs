@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Ores
 		public override void Kill(int timeLeft)
         {
 			if(timeLeft > 1)
-				SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 			for(int i = 0; i < 18; i++)
 			{
 				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Platinum);

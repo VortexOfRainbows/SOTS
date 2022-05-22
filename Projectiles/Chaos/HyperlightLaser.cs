@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs;
 using SOTS.Void;
+using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,7 +52,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.0f, -0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.0f, -0.1f);
 				DustOut();
 				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0] * 90 + SOTSWorld.GlobalCounter * 3));
 				SetPostitions();

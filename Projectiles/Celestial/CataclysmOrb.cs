@@ -5,6 +5,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using SOTS.Projectiles.Lightning;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -28,8 +29,8 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.timeLeft = 900;
 			Projectile.alpha = 0;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(Color lightColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 drawPos = Projectile.Center - Main.screenPosition;
@@ -40,7 +41,7 @@ namespace SOTS.Projectiles.Celestial
 				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * ((255f - Projectile.alpha) / 255f), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0.0f);
 			}
 			color = Color.White;
-			spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		public override void AI()
 		{
@@ -51,10 +52,10 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
         {
-			SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
+			Terraria.Audio.SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
 			for (int i = 0; i < 10; i++)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.velocity += Projectile.velocity * 0.1f;
 				dust.noGravity = true;
@@ -63,7 +64,7 @@ namespace SOTS.Projectiles.Celestial
 				dust.fadeIn = 0.2f;
 				dust.alpha = Projectile.alpha;
 			}
-			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.55f, 0.1f);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.55f, 0.1f);
 			if (Projectile.owner == Main.myPlayer)
 			{
 				int amt = 1;
@@ -74,7 +75,7 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < amt; i++)
 				{
 					Vector2 circular = -Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CataclysmLightning>(), (int)(Projectile.damage * 0.9f + 0.5f), 0, Projectile.owner, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CataclysmLightning>(), (int)(Projectile.damage * 0.9f + 0.5f), 0, Projectile.owner, 0);
 				}
 			}
 		}

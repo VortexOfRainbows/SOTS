@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Inferno
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
-            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 36, 1.2f, 0.4f);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 36, 1.2f, 0.4f);
             if (Projectile.owner == Main.myPlayer)
             {
                 for (int i = 0; i < 8; i++)

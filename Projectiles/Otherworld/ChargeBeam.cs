@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Otherworld
             {
 				if(Projectile.timeLeft % 20 == 0)
 				{
-					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.7f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.7f);
 					for (int k = 0; k < 360; k += 10)
 					{
 						Vector2 circularLocation = new Vector2(-38 * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Otherworld
             {
 				if(Projectile.timeLeft == 200)
 				{
-					SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
 					if (Main.netMode != 1)
                     {
 						int numberProjectiles = 3;

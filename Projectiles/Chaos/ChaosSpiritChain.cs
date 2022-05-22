@@ -43,8 +43,8 @@ namespace SOTS.Projectiles.Chaos
         {
 			behindNPCs.Add(index);
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(ref Color lightColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if (center != Vector2.Zero)
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.4f, -0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.4f, -0.4f);
 				runOnce = false;
 			}
 			aiCounter2++;

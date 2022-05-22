@@ -206,7 +206,7 @@ namespace SOTS.NPCs
 			{
 				if (!mushForm) // enter second phase
 				{
-					SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.Center);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.Center);
 					mushForm = true;
 					int temp = NPC.lifeMax;
 					NPC.life = (int)(temp * 0.5f);

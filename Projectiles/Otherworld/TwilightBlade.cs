@@ -143,7 +143,7 @@ namespace SOTS.Projectiles.Otherworld
 				aimTo = aimTo.SafeNormalize(new Vector2(0,1));
 				if (Projectile.timeLeft == 721)
 				{
-					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 0.7f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 0.7f);
 					aimTo *= -12;
 					Projectile.velocity = aimTo;
 				}

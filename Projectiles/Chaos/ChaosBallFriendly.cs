@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Chaos
 			Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + Projectile.whoAmI * 18), blendColor);
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			DrawTrail(spriteBatch, lightColor);
+			DrawTrail(Main.spriteBatch, lightColor);
 			for (int k = 0; k < 5; k++)
 			{
 				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + Main.rand.NextVector2Circular(1, 1), null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Chaos
 			counter++;
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
 				DustOut();
 				Projectile.scale = 0.1f;
 				Projectile.alpha = 0;
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 			{
 				for(int i = 0; i < 6; i++)
                 {
-					Projectile.NewProjectile(Projectile.Center, Main.rand.NextVector2CircularEdge(3, 3), ModContent.ProjectileType<FriendlyChaosEraser>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2CircularEdge(3, 3), ModContent.ProjectileType<FriendlyChaosEraser>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 				}
 			}
 		}

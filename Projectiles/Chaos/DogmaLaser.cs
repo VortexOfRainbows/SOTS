@@ -63,8 +63,8 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.velocity = ogVelo.RotatedBy(MathHelper.ToRadians(angle));
 			if(counter == windUpLength + 1)// && Projectile.knockBack == -1)
 			{
-				//SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.1f, 0.1f);
+				//Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.1f, 0.1f);
 			}
 			if (counter > windUpLength)
 			{
@@ -102,8 +102,8 @@ namespace SOTS.Projectiles.Chaos
 			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
 		public const float maxDistance = 3200;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color color)
-		{
+        public override bool PreDraw(ref Color lightColor)
+        {
 			if (runOnce)
 				return false;
 			Player player = Main.player[Projectile.owner];
@@ -138,7 +138,7 @@ namespace SOTS.Projectiles.Chaos
 				if (!SOTS.Config.lowFidelityMode || i % 2 == 0)
 				{
 					float radians = MathHelper.ToRadians((i + VoidPlayer.soulColorCounter) * 2);
-					color = VoidPlayer.pastelAttempt(radians);
+					Color color = VoidPlayer.pastelAttempt(radians);
 					color.A = 0;
 					float mult = 1 - (i / maxLength);
 					float sinusoid = 1;
@@ -153,7 +153,7 @@ namespace SOTS.Projectiles.Chaos
 					}
 					float scale = Projectile.scale * scalingFactor * scaleMult * sinusoid;
 					Vector2 drawPos = position - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, Projectile.velocity.ToRotation(), origin, new Vector2(scalingFactor, scale), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, Projectile.velocity.ToRotation(), origin, new Vector2(scalingFactor, scale), SpriteEffects.None, 0f);
 				}
 				position += unit * length;
 			}

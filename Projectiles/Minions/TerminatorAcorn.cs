@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Minions
 					dust.scale *= 1.4f;
 					dust.alpha = Projectile.alpha;
 				}
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 20, 0.8f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 20, 0.8f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

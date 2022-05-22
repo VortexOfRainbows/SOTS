@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Otherworld
 			float randMod = Projectile.ai[1];
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 71, 0.9f, 1f * randMod);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 71, 0.9f, 1f * randMod);
 				if (Main.myPlayer == Projectile.owner)
 				{
 					cursorArea = Main.MouseWorld;

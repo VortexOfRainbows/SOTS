@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Earth
 		float dist = 24f;
 		public void Explode()
 		{
-			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 28, 0.6f);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 28, 0.6f);
 			for (int i = 0; i < 30; i++)
 			{
 				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());

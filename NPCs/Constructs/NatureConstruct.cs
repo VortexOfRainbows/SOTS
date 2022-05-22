@@ -159,7 +159,7 @@ namespace SOTS.NPCs.Constructs
 						}
 					}
 					NPC.velocity.Y -= 2.0f;
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.1f, -0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.1f, -0.1f);
                 }
 				if(sinPercent <= 0)
                 {

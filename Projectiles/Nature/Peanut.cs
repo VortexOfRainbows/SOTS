@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			for(int i = 0; i < 5; i++)
 			{
-				SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 26, 26, 0);
 				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 26, 26, 7);
 			}

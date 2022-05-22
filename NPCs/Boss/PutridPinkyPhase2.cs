@@ -268,7 +268,7 @@ namespace SOTS.NPCs.Boss
 				{
 					followPlayer = 0;
 					DustCircle(NPC.Center.X, NPC.Center.Y, 10, 128, 2);
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.2f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.2f);
 				}
 				if(attackTimer == 870 || attackTimer == 600 || attackTimer == 330 || attackTimer == 810 || attackTimer == 540 || attackTimer == 270 || attackTimer == 750 || attackTimer == 480 || attackTimer == 210)
 				{
@@ -336,14 +336,14 @@ namespace SOTS.NPCs.Boss
 					rotateDir = Main.rand.Next(2) == 1 ? -1 : 1;
 				}
 				if (attackTimer == 960)
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.0f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.0f);
 				if (attackTimer == 950)
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.15f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.15f);
 				if (attackTimer == 940)
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.3f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.3f);
 				if (rotationDistance == 0 && attackTimer > 0)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 14, 1.3f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 14, 1.3f);
 					NPC.damage = storeDamage;
 					rotationSpeed = 7f * rotateDir;
 					attackTimer = -1;
@@ -492,7 +492,7 @@ namespace SOTS.NPCs.Boss
 							DustCircle(Main.npc[i].Center.X, Main.npc[i].Center.Y, 20, 64, 1);
 						}
 					}
-					SoundEngine.PlaySound(SoundID.Item15, NPC.Center);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, NPC.Center);
 				}
 				if(attackTimer == 900 || attackTimer == 600 || attackTimer == 300)
 				{
@@ -630,7 +630,7 @@ namespace SOTS.NPCs.Boss
 			//NetMessage.SendData(27, -1, -1, null, Probe);
 			eyeReset = -0.8f;
 			NPC.velocity += direction.SafeNormalize(Vector2.Zero) * 2.75f;
-			SoundEngine.PlaySound(SoundID.Item94, (int)(fromArea.X), (int)(fromArea.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)(fromArea.X), (int)(fromArea.Y));
 		}
 		private void InitiateHooks()
 		{

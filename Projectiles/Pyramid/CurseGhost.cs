@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Pyramid
 					dust.scale *= 1.65f;
 				}
 				Projectile.ai[1] = Main.rand.Next(2) * 2 - 1;
-				SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.825f, -0.4f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.825f, -0.4f);
 			}
 			Vector2 circular = new Vector2(0, 15 * scaleVelocity).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 4.5f * Projectile.ai[1]));
 			scaleVelocity *= 0.99f;

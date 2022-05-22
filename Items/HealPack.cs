@@ -85,7 +85,7 @@ namespace SOTS.Items
 		}
 		public override bool OnPickup(Player player)
 		{
-			SoundEngine.PlaySound(7, player.Center);
+			Terraria.Audio.SoundEngine.PlaySound(7, player.Center);
 			player.statLife += 5;
 			player.HealEffect(5);
 			return false;
@@ -176,7 +176,7 @@ namespace SOTS.Items
 		}
 		public override bool OnPickup(Player player)
 		{
-			SoundEngine.PlaySound(7, player.Center);
+			Terraria.Audio.SoundEngine.PlaySound(7, player.Center);
 			player.statMana += 20;
 			player.ManaEffect(20);
 			return false;

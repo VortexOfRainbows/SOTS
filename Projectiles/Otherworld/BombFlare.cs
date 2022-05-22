@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
+            Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
             for (int i = 0; i < 3; i++)
             {
                 int goreIndex = Gore.NewGore(new Vector2(Projectile.Center.X, Projectile.Center.Y), default(Vector2), Main.rand.Next(61, 64), 1f);

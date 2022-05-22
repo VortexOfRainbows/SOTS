@@ -206,7 +206,7 @@ namespace SOTS.Items.Furniture.Nature
 				NetMessage.SendData(MessageID.SyncItem, Main.myPlayer, Main.myPlayer, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				SetPlant(i, j, Main.rand.Next(7));
 				NetMessage.SendTileSquare(Main.myPlayer, i, j, 1, TileChangeType.None);
-				SoundEngine.PlaySound(SoundID.Grass, i * 16, j * 16, 1, 1f, 0f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Grass, i * 16, j * 16, 1, 1f, 0f);
 				for(int a = 0; a < 10; a++)
                 {
 					Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustType);

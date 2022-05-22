@@ -241,7 +241,7 @@ namespace SOTS.NPCs.Constructs
 					NPC.velocity *= 0.96f;
 					if (NPC.ai[1] > 70)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.3f, -0.4f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.3f, -0.4f);
 						int damage2 = NPC.damage / 2;
 						if (Main.expertMode)
 						{
@@ -286,7 +286,7 @@ namespace SOTS.NPCs.Constructs
 					NPC.velocity *= 0.96f;
 					if (NPC.ai[1] > 100)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.3f, -0.4f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.3f, -0.4f);
 						int damage2 = NPC.damage / 2;
 						if (Main.expertMode)
 						{

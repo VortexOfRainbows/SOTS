@@ -184,7 +184,7 @@ namespace SOTS.NPCs.Constructs
 								break;
 							}
 						}
-						SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
 						if (Main.netMode != 1)
 							Projectile.NewProjectile(locX, locY, 0, 0, Mod.Find<ModProjectile>("OtherworldlyTracer").Type, damage, 0f, Main.myPlayer, 571 - NPC.ai[0], NPC.whoAmI);
 					}
@@ -193,7 +193,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					NPC.ai[1] = 0;
 					NPC.ai[0] = -90;
-					SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];

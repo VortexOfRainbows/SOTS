@@ -88,11 +88,11 @@ namespace SOTS.Projectiles.Chaos
                     otherC.A = 0;
                     float sinusoidScaleMult = 1f + 0.2f * (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] + i * 3f + Main.GameUpdateCount * -5f));
                     Vector2 sinusoid = new Vector2(0, 24 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * -6.5f + i * 3f + Projectile.ai[1]))).RotatedBy(rotation);
-                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1.25f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1.25f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
                     Vector2 sinusoid2 = new Vector2(0, 18 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * -2f + i * 4f + Projectile.ai[1]))).RotatedBy(rotation);
-                    spriteBatch.Draw(texture, drawPos + sinusoid2 - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos + sinusoid2 - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
                     Vector2 sinusoid3 = new Vector2(0, 12 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 4f + i * 2f + Projectile.ai[1]))).RotatedBy(rotation);
-                    spriteBatch.Draw(texture, drawPos + sinusoid3 - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 0.75f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos + sinusoid3 - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 0.75f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
                     if (i != drawPositionList.Count - 1)
                         rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 }
@@ -154,7 +154,7 @@ namespace SOTS.Projectiles.Chaos
                 }
                 Player player = Main.LocalPlayer;
                 if(player.Distance(Projectile.Center) < 4800)
-                    SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 94, 0.75f, 0.2f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 94, 0.75f, 0.2f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (!Main.rand.NextBool(3))

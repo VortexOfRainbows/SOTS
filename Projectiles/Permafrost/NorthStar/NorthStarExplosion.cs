@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         public override void AI()
         {
             Vector2 atLoc = Projectile.Center;
-            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.8f, -0.15f);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.8f, -0.15f);
             DrawStar(atLoc, ModContent.DustType<CopyDust4>(), 4, 6f, 1f, 1.0f, 0.5f, 0.5f, true, 15, 0);
             for (int i = 0; i < 360; i += 6)
             {

@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Permafrost
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f);
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				runOnce = false;
 				for (int i = 0; i < 360; i += 10)
 				{

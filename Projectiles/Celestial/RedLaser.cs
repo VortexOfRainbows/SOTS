@@ -282,7 +282,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 				Color alpha = new Color(200, 20, 65) * ((255 - Projectile.alpha) / 255f);
 				//Color alpha = ((255 - Projectile.alpha) / 255f);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, alpha, Distance, new Vector2(2, 2), 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, alpha, Distance, new Vector2(2, 2), 1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}

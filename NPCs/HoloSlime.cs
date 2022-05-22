@@ -198,7 +198,7 @@ namespace SOTS.NPCs
 					{
 						NPC.netUpdate = true;
 					}
-					SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
 				}
 				if(direction == 0)
 				{
@@ -208,7 +208,7 @@ namespace SOTS.NPCs
 					{
 						NPC.netUpdate = true;
 					}
-					SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
 				}
 			}
 			justWarped--;
@@ -220,7 +220,7 @@ namespace SOTS.NPCs
 				{
 					NPC.netUpdate = true;
 				}
-				SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
 			}
 			NPC.velocity.Y *= 0.96f;
 

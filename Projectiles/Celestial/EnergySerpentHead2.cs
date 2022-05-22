@@ -58,8 +58,8 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if (runOnce)
 				return false;
-			DrawWorm(spriteBatch, true);
-			DrawWorm(spriteBatch, false);
+			DrawWorm(Main.spriteBatch, true);
+			DrawWorm(Main.spriteBatch, false);
 			return false;
 		}
 		public void DrawWorm(SpriteBatch spriteBatch, bool outer)
@@ -225,7 +225,7 @@ namespace SOTS.Projectiles.Celestial
 					Vector2 velo = Projectile.velocity.SafeNormalize(new Vector2(1, 0)).RotatedBy(MathHelper.ToRadians(90)) * 5.0f;// * (i * 2 - 1);
 					if (Main.netMode != 1)
 					{
-						Projectile.NewProjectile(Projectile.Center, velo, ModContent.ProjectileType<InfernoPhaseBolt>(), Projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velo, ModContent.ProjectileType<InfernoPhaseBolt>(), Projectile.damage, 0, Main.myPlayer);
 					}
 				}
 			}

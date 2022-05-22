@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Nature
 			if (runOnce)
 			{
 				runOnce = false;
-				SoundEngine.PlaySound(2, player.Center, 60);
+				Terraria.Audio.SoundEngine.PlaySound(2, player.Center, 60);
 				Vector2 toLocation = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 				Vector2 goTo = toLocation - Projectile.Center;
 				goTo = goTo.SafeNormalize(Vector2.Zero);

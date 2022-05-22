@@ -106,7 +106,7 @@ namespace SOTS.Items.Flails
 				soundTimer += 1f + ChargeTime / MaxChargeTime;
 				if (soundTimer >= 30)
 				{
-					SoundEngine.PlaySound(new LegacySoundStyle(SoundID.Item, 19).WithPitchVariance(0.1f).WithVolume(0.5f), Projectile.Center);
+					Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(SoundID.Item, 19).WithPitchVariance(0.1f).WithVolume(0.5f), Projectile.Center);
 					soundTimer -= 30;
 				}
 
@@ -138,7 +138,7 @@ namespace SOTS.Items.Flails
 				if(++Timer == 1 && Owner.whoAmI == Main.myPlayer)
 				{
 					if(Timer > 8)
-						SoundEngine.PlaySound(SoundID.Item19, Projectile.Center);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item19, Projectile.Center);
 					Projectile.Center = Owner.MountedCenter;
 					Projectile.velocity = Owner.DirectionTo(Main.MouseWorld) * launchspeed;
 					OnLaunch(Owner);
@@ -220,7 +220,7 @@ namespace SOTS.Items.Flails
 				strucktile = true;
 				FallingTileCollide(oldVelocity);
 			}
-			SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 			Projectile.velocity = new Vector2((Projectile.velocity.X != Projectile.oldVelocity.X) ?
 				-Projectile.oldVelocity.X / 5 : Projectile.velocity.X,

@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.ID;
 
-namespace SOTS
+namespace SOTS.WorldgenHelpers
 {
     internal sealed class PhaseWorldgenHelper
     {

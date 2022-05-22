@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.Permafrost
 				if (count % 3 == 0) //will activate 12 times
 				{
 					Vector2 stormPos = Projectile.Center - new Vector2(348, 0).RotatedBy(MathHelper.ToRadians((Projectile.whoAmI + count) * 15));
-					SoundEngine.PlaySound(SoundID.Item44, (int)stormPos.X, (int)stormPos.Y);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item44, (int)stormPos.X, (int)stormPos.Y);
 					if(Main.myPlayer == Projectile.owner)
 						Projectile.NewProjectile(stormPos, Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, player.whoAmI, 1, (float)(MathHelper.ToRadians(180) + MathHelper.ToRadians((Projectile.whoAmI + count) * 15)));
 				}
@@ -200,7 +200,7 @@ namespace SOTS.Projectiles.Permafrost
 					int num = 30;
 					if(Projectile.alpha < 245)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 14, 0.7f, 0.1f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 14, 0.7f, 0.1f);
 					}
 					else
                     {

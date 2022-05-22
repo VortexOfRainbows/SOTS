@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			if(Projectile.frame != Projectile.ai[1])
             {
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 4, 0.9f, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 4, 0.9f, 0.2f);
 				for (int i = 0; i < 30; i++)
 				{
 					Vector2 circular = new Vector2(36, 0).RotatedBy(MathHelper.ToRadians(i * 12));

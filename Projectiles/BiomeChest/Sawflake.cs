@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.BiomeChest
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 			Projectile.timeLeft = 89;
 			Projectile.netUpdate = true;
 			Projectile.tileCollide = false;
@@ -207,10 +207,10 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			if (runOnce)
 				return true;
-			Draw(spriteBatch, trailPos);
-			Draw(spriteBatch, trailPos2);
-			Draw(spriteBatch, trailPos3);
-			Draw(spriteBatch, trailPos4);
+			Draw(trailPos);
+			Draw(trailPos2);
+			Draw(trailPos3);
+			Draw(trailPos4);
 			Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
 			return false;
@@ -248,7 +248,7 @@ namespace SOTS.Projectiles.BiomeChest
 			}
 			return (bool?)null;
 		}
-		public void Draw(SpriteBatch spriteBatch, Vector2[] trailArray)
+		public void Draw(Vector2[] trailArray)
 		{
 			if (trailArray[0] == Vector2.Zero)
 			{

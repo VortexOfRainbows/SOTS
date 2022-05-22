@@ -504,7 +504,7 @@ namespace SOTS.Void
             }
 			damage = (int)(damage * Main.rand.NextFloat(0.9f, 1.1f));
 			if (player.whoAmI == Main.LocalPlayer.whoAmI)
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Damage"), 1.1f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Damage"), 1.1f);
 			for (int i = 0; i < (int)(4 + 0.5f * Math.Sqrt(damage)); i++)
 			{
 				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
@@ -547,7 +547,7 @@ namespace SOTS.Void
 						time = 1200;
 					Player.AddBuff(ModContent.BuffType<VoidShock>(), time);
 					if (Player.whoAmI == Main.LocalPlayer.whoAmI)
-						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Player.Center.X, (int)Player.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Shock"), 0.9f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Player.Center.X, (int)Player.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Void/Void_Shock"), 0.9f);
 					//if(time < 120) time = 120;
 				}
 				if(flatVoidRegen > -1 && Player.HasBuff(BuffType<VoidShock>()))
@@ -692,11 +692,11 @@ namespace SOTS.Void
 			}
 			if (this.frozenCounter == this.frozenMinTimer - 30 && Main.myPlayer == Player.whoAmI)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, -0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, -0.1f);
 			}
 			if (this.frozenDuration == 30 && Main.myPlayer == Player.whoAmI)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, 0.3f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, 0.3f);
 			}
 
 			frozenMaxDuration = 0;
@@ -709,7 +709,7 @@ namespace SOTS.Void
 				if(!isFull)
 				{
 					if (Player.whoAmI == Main.LocalPlayer.whoAmI && !frozenVoid)
-						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Player.Center.X, (int)Player.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Full"), 1.4f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Player.Center.X, (int)Player.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Void/Void_Full"), 1.4f);
 					isFull = true;
 				}
 			}

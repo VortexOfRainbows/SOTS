@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Pyramid
 			int top = j - 2;
 			int left = i - 1;
 			bool valid = true;
-			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 4, 1.25f, 0.3f);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 4, 1.25f, 0.3f);
 			for (int x = left; x < left + 2; x++)
 			{
 				for (int y = top; y < top + 5; y++)

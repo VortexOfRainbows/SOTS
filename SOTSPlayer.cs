@@ -1249,7 +1249,7 @@ namespace SOTS
 						if(canTrigger)
 						{
 							cursedIcoCD = 180;
-							SoundEngine.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
 							target.AddBuff(BuffID.CursedInferno, 900, false);
 							int numberProjectiles = 4;
 							int rand = Main.rand.Next(360);

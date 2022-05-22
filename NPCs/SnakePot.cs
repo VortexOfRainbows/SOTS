@@ -74,12 +74,12 @@ namespace SOTS.NPCs
 			{
 				NPC.velocity.X *= 1.05f;
 				NPC.ai[0] = -Main.rand.Next(31);
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/PotSnake"), 1.5f, -0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Enemies/PotSnake"), 1.5f, -0.1f);
 			}
 		}
 		public override void NPCLoot()
 		{
-			SoundEngine.PlaySound(SoundID.Shatter, (int)(NPC.Center.X), (int)(NPC.Center.Y), 0, 0.8f, 0.05f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, (int)(NPC.Center.X), (int)(NPC.Center.Y), 0, 0.8f, 0.05f);
 			int amount2 = 3;
 			if(Main.expertMode)
 			{

@@ -180,7 +180,7 @@ namespace SOTS.Items.Secrets
 									{
 										WorldGen.KillTile(i2, j2, true, true, false);
 										if(Main.rand.NextBool(2))
-											SoundEngine.PlaySound(SoundID.Tink, new Vector2(i2 * 16 + 8, j2 * 16 + 8));
+											Terraria.Audio.SoundEngine.PlaySound(SoundID.Tink, new Vector2(i2 * 16 + 8, j2 * 16 + 8));
 									}
 								}
 							}
@@ -234,7 +234,7 @@ namespace SOTS.Items.Secrets
 				{
 					SOTSWorld.SecretFoundMusicTimer = 720;
 				}
-				SoundEngine.PlaySound(2, Projectile.Center, 14);
+				Terraria.Audio.SoundEngine.PlaySound(2, Projectile.Center, 14);
 				int cc = 0;
 				for (int l = 0; l < 360; l += 3)
 				{

@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			Player owner = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = (SOTSPlayer)owner.GetModPlayer(Mod, "SOTSPlayer");
 			int RandMod = (int)Projectile.ai[0];

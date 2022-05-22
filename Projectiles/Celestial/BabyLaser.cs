@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Celestial
 			for (int i = 0; i < laserDist; i++)
             {
 				center += Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * Projectile.width * 1.5f;
-				spriteBatch.Draw(texture, center - Main.screenPosition, null, new Color(100, 255, 100, 0) * ((255f - Projectile.alpha) / 255f), Projectile.velocity.ToRotation(), origin, 1.5f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, center - Main.screenPosition, null, new Color(100, 255, 100, 0) * ((255f - Projectile.alpha) / 255f), Projectile.velocity.ToRotation(), origin, 1.5f, SpriteEffects.None, 0f);
 				for (int j = 0; j < 2; j++)
 				{
 					float bonusAlphaMult = 1 - 1 * (counter / 28f);

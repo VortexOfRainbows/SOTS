@@ -70,7 +70,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
-            SoundEngine.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
             Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore1"), 1f);
             Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/SkyPotGore2"), 1f);
             int num = 0;

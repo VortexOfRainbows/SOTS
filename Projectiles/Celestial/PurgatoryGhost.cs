@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 		}
 		Vector2[] trailPos = new Vector2[16];
-		public void TrailPreDraw(ref Color lightColor)
+		public void TrailPreDraw()
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/PurgatoryGhostTail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation() - (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), drawOrigin, scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation() - (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), drawOrigin, scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 				previousPosition = currentPos;
 			}
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Celestial
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/PurgatoryGhost").Value;
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw();
 			float rotation = Projectile.rotation;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Celestial
 				if (Main.myPlayer == Projectile.owner)
 				{
 					Vector2 perturbedSpeed = (Projectile.velocity.SafeNormalize(Vector2.Zero) * 3.75f * Main.rand.NextFloat(0.5f, 1.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<PurgatoryLightning>(), Projectile.damage, 1f, Main.myPlayer, Main.rand.Next(2));
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<PurgatoryLightning>(), Projectile.damage, 1f, Main.myPlayer, Main.rand.Next(2));
 				}
 				Projectile.ai[1] = Main.rand.Next(2) * 2 - 1;
 			}

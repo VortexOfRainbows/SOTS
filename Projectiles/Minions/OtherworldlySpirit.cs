@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Minions
 							toLocation = new Vector2(rotationalVelo.X, 0).RotatedBy(toLocation.ToRotation());
 							if (currentAI >= 30)
 							{
-								//SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
+								//Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
 								if (Main.myPlayer == Projectile.owner)
 								{
 									Projectile.NewProjectileDirect(orbLocations[i], new Vector2(1, 0).RotatedBy(toLocation.ToRotation()) * 12, ModContent.ProjectileType<OtherworldLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0);

@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Pyramid
                 }
 				if (runOnce)
 				{
-					SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.3f, 0.3f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.3f, 0.3f);
 					runOnce = false;
 					//Projectile.friendly = true;
 				}

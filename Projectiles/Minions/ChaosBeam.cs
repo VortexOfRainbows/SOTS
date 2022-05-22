@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 91, 0.6f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 91, 0.6f);
 				runOnce = false;
 				ogPos = Projectile.Center;
 				for (int i = 0; i < 2; i++)

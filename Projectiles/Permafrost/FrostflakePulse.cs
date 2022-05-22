@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Permafrost
 				Vector2 manipulateVelo = Projectile.velocity;
 				if (frostFlake == 1)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 50, 1.1f, 0.1f); //mine ice
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 50, 1.1f, 0.1f); //mine ice
 					for (int k = 0; k < 30; k++)
 					{
 						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(4))
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Permafrost
 				}
 				else if(frostFlake == 2)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 1.1f, -0.4f); //starfury
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 1.1f, -0.4f); //starfury
 					for (int i = 0; i < 3; i++)
 					{
 						Vector2 spawnPos = Vector2.Lerp(Projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * 8, Projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * -120f, i * 0.3f);
@@ -173,9 +173,9 @@ namespace SOTS.Projectiles.Permafrost
 				if (counter == 21)
 				{
 					if (frostFlake != -2)
-						SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.6f, -0.2f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.6f, -0.2f);
 					else
-						SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 50, 0.75f, 0.35f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 50, 0.75f, 0.35f);
 					for (int i = 0; i < 30; i++)
 					{
 						Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 12));

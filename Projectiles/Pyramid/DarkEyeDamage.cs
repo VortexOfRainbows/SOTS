@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Pyramid
 			Player player = Main.player[Projectile.owner];
 			if(randseed == -1)
 			{
-				SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
 				randseed = Main.rand.Next(360);
 				for (int i = 0; i < 360; i += 5)
 				{

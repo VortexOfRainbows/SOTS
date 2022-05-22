@@ -69,7 +69,7 @@ namespace SOTS.NPCs.Constructs
 				}
 				Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f), Mod.Find<ModProjectile>("NatureBolt").Type, damage, 0, Main.myPlayer, Main.rand.NextFloat(15f, 25f), NPC.target);
 			}
-			SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.55f, 0.4f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.55f, 0.4f);
 		}
 		public override void AI()
 		{	

@@ -197,7 +197,7 @@ namespace SOTS.NPCs
 				NPC.velocity += rotateVector * 7.8f;
 				NPC.netUpdate = true;
 				aiCounter2 = Main.rand.Next(-90, 30);
-				//SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.6f);
+				//Terraria.Audio.SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.6f);
 			}
 		}
 		public override void HitEffect(int hitDirection, double damage)

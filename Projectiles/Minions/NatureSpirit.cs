@@ -145,7 +145,7 @@ namespace SOTS.Projectiles.Minions
 				int fireRate = 72;
 				if((int)(modPlayer.orbitalCounter + (float)fireRate / total * Projectile.ai[1]) % fireRate == 0 && inRange)
 				{
-					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
 					if (Main.myPlayer == Projectile.owner)
 					{
 						Projectile.NewProjectile(Projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 3, Mod.Find<ModProjectile>("NatureBeam").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);

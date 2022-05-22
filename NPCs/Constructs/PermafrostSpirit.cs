@@ -86,7 +86,7 @@ namespace SOTS.NPCs.Constructs
 					Projectile.NewProjectile(NPC.Center, velocity, ModContent.ProjectileType<PermafrostSpike>(), damage, 0, Main.myPlayer, 180 - NPC.ai[1]);
 				}
 			}
-			//SoundEngine.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
+			//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 		}
 		public override void AI()
 		{
@@ -113,7 +113,7 @@ namespace SOTS.NPCs.Constructs
 					}
 					if (NPC.ai[1] >= 180)
 					{
-						SoundEngine.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 						NPC.ai[1] = 0;
 						NPC.ai[0]++;
 					}

@@ -141,7 +141,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if (runOnce2 && player.itemAnimation <= player.itemAnimationMax / 3)
 			{
-				SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
+				Terraria.Audio.SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
 				runOnce2 = false;
 				if(Projectile.owner == Main.myPlayer)
 					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, Mod.Find<ModProjectile>("HardlightColumn").Type, (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);

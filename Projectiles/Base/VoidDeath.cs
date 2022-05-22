@@ -8,9 +8,7 @@ namespace SOTS.Projectiles.Base
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voiden Collapse");
-			
 		}
-		
         public override void SetDefaults()
         {
 			Projectile.height = 70;
@@ -42,7 +40,7 @@ namespace SOTS.Projectiles.Base
 				if(sound)
 				{
 					if (Projectile.owner  == Main.LocalPlayer.whoAmI)
-						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Death"), 1.05f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Void/Void_Death"), 1.05f);
 					sound = false;
                 }
 				for (int i = 0; i < 3; i++)

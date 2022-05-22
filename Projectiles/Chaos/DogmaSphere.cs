@@ -61,8 +61,8 @@ namespace SOTS.Projectiles.Chaos
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(Color lightColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 7; k++)
@@ -78,7 +78,6 @@ namespace SOTS.Projectiles.Chaos
 					circular *= 0f;
 				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, null, color * 0.8f, 0f, drawOrigin, Projectile.scale * 1.0f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
         public override bool ShouldUpdatePosition()
         {
@@ -107,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					if (counter % 40 == 0)
 					{
-						SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.7f, 0.4f);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.7f, 0.4f);
 						for (int k = 0; k < 360; k += 10)
 						{
 							Vector2 circularLocation = new Vector2(-70 * Projectile.scale - 26, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -129,7 +128,7 @@ namespace SOTS.Projectiles.Chaos
 								for (int i = 0; i < numDarts; i++)
 								{
 									Vector2 circular = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(i * 360f / numDarts));
-									Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<ChaosDart>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, target, Projectile.ai[1] == -1 ? -1 : 0);
+									Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<ChaosDart>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, target, Projectile.ai[1] == -1 ? -1 : 0);
 								}
 							}
 							numDarts += 2;
@@ -140,7 +139,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					if (counter % 240 == 181 && counter < 750)
 					{
-						SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, -0.2f);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, -0.2f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int amt = 8;
@@ -153,19 +152,19 @@ namespace SOTS.Projectiles.Chaos
 							for (int i = 0; i < amt; i++)
 							{
 								Vector2 circular = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i * 360f / amt + Main.rand.NextFloat(-20, 20)));
-								Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-80, 80f), Main.rand.NextFloat(-0.4f, -0.2f));
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-80, 80f), Main.rand.NextFloat(-0.4f, -0.2f));
 							}
 							amt--;
 							for (int i = 0; i < amt; i++)
 							{
 								Vector2 circular = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i * 360f / amt + Main.rand.NextFloat(-13, 13)));
-								Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-60, 60f), Main.rand.NextFloat(-0.2f, 0.2f));
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-60, 60f), Main.rand.NextFloat(-0.2f, 0.2f));
 							}
 							amt--;
 							for (int i = 0; i < amt; i++)
 							{
 								Vector2 circular = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i * 360f / amt + Main.rand.NextFloat(-7, 7)));
-								Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-40, 40f), Main.rand.NextFloat(0.2f, 0.5f));
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-40, 40f), Main.rand.NextFloat(0.2f, 0.5f));
 							}
 						}
 					}

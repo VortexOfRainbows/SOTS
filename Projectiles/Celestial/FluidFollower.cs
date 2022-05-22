@@ -57,8 +57,8 @@ namespace SOTS.Projectiles.Celestial
 
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(Color lightColor)
+        {
 			Player player = Main.player[Projectile.owner];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerOutline").Value;
 			Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerEye").Value;
@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Celestial
 			{
 				between = Vector2.Zero;
 			}
-			DrawSpikes(spriteBatch);
+			DrawSpikes(Main.spriteBatch);
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw(texture3, Projectile.Center - Main.screenPosition + between * 5, null, Projectile.GetAlpha(Color.White), 0f, drawOrigin3, Projectile.scale, SpriteEffects.None, 0f);
 			for (int k = 0; k < 5; k++)

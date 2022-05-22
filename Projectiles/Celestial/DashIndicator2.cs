@@ -77,12 +77,12 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			if(Projectile.timeLeft == 26)
 			{
-				//SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 				if (Main.netMode != 1)
 				{
 					Vector2 center = Projectile.Center - Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 1500 * Projectile.ai[0];
 					Vector2 velo = Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 56 * Projectile.ai[0];
-					Projectile.NewProjectile(center, velo, ModContent.ProjectileType<EnergySerpentHead2>(), Projectile.damage, 0, Main.myPlayer, 51, -2);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), center, velo, ModContent.ProjectileType<EnergySerpentHead2>(), Projectile.damage, 0, Main.myPlayer, 51, -2);
 				}
 			}
 		}

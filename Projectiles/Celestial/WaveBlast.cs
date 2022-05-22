@@ -30,13 +30,13 @@ namespace SOTS.Projectiles.Celestial
 					{
 						Vector2 drawPos = Projectile.oldPos[k] + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 						float trailMult = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-						Draw(spriteBatch, trailMult, drawPos, !SOTS.Config.lowFidelityMode);
+						Draw(trailMult, drawPos, !SOTS.Config.lowFidelityMode);
 					}
 			}
-			Draw(spriteBatch, 1f, Projectile.Center, true);
+			Draw(1f, Projectile.Center, true);
 			return false;
 		}
-		public void Draw(SpriteBatch spriteBatch, float alphaMult, Vector2 pos, bool outLine = true)
+		public void Draw(float alphaMult, Vector2 pos, bool outLine = true)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);

@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Evil
         {
 			if(runOnce)
 			{
-				//SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.4f, -0.1f);
+				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.4f, -0.1f);
 				float randomDirection = Projectile.ai[0];
 				for(int i = 20; i < 340; i += 10)
 				{

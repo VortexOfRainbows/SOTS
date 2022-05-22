@@ -92,7 +92,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			if (NPC.life > 0)
 			{
-				SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
+				Terraria.Audio.SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
 				int num = 0;
 				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
 				{
@@ -686,7 +686,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			if (style == 0)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
 				ParticleExplosion(120, true);
 				if (Main.netMode == 1)
 					return;
@@ -720,7 +720,7 @@ namespace SOTS.NPCs.Boss.Curse
 		public void ParticleExplosion(int amt = 240, bool quiet = false)
 		{
 			if(!quiet)
-				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
 			for (int j = 0; j < amt; j++)
 			{
 				float scale = Main.rand.NextFloat(0.5f, 1.5f);
@@ -921,7 +921,7 @@ namespace SOTS.NPCs.Boss.Curse
 						}
 						if(ai1 == 182)
 						{
-							SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.25f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.25f);
 						}
                     }
 				}
@@ -958,7 +958,7 @@ namespace SOTS.NPCs.Boss.Curse
 						if (currentCounter == 150 || currentCounter == 230 || currentCounter == 10)
 						{
 							eyeOffsetMult = -1f;
-							SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.875f, 0.2f);
+							Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.875f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								Vector2 toPlayer = NPC.Center - player.Center;
@@ -972,7 +972,7 @@ namespace SOTS.NPCs.Boss.Curse
 						}
 						if(currentCounter % 5 == 0 && currentCounter >= 40 && currentCounter <= 60)
 						{
-							SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.75f, 0.75f);
+							Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.75f, 0.75f);
 							eyeOffsetMult = -1f;
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
@@ -1024,7 +1024,7 @@ namespace SOTS.NPCs.Boss.Curse
 						else if (cycleAI % amt == 0)
 						{
 							eyeOffsetMult = -1f;
-							SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.825f, 0.3f);
+							Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 0.825f, 0.3f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								int damage = NPC.damage / 2;
@@ -1089,7 +1089,7 @@ namespace SOTS.NPCs.Boss.Curse
 						{
 							if (cycleAI == 81)
 							{
-								SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 73, 1.75f, 0.3f);
+								Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 73, 1.75f, 0.3f);
 							}
 							MoveTo(storeDashArea, 0.0f, 16f, 4f);
 						}
@@ -1146,7 +1146,7 @@ namespace SOTS.NPCs.Boss.Curse
 							eyeFrame = 2;
 							/*if (ai2 % 60 == 0 && ai2 > 120 && Main.expertMode)
 							{
-								SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.875f, 0.2f);
+								Terraria.Audio.SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.875f, 0.2f);
 								eyeOffsetMult = -1;
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
@@ -1177,14 +1177,14 @@ namespace SOTS.NPCs.Boss.Curse
 							NPC.velocity.Y -= 0.4f * waveY;
 							if (ai3 == 40)
 							{
-								SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
+								Terraria.Audio.SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
 							}
 						}
 						else
 						{
 							if (ai3 == 60)
 							{
-								SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
+								Terraria.Audio.SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
 								NPC.velocity.Y += 4.5f;
 							}
 							NPC.velocity.Y += 0.8f;
@@ -1285,7 +1285,7 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			if (ai2 == 60)
 			{
-				SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 73, 1.75f, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 73, 1.75f, 0.2f);
 				NPC.velocity += new Vector2(-24 * direction * speedMult, 0);
 			}
 			if (ai2 > 60)

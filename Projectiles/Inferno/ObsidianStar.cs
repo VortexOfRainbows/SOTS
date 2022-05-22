@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(runOnce)
             {
-				SoundEngine.PlaySound(SoundID.Item20, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item20, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				runOnce = false;
             }
 			//Projectile.rotation += 1f;

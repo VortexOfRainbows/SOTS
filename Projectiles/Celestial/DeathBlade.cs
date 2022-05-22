@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Celestial
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, Projectile.height / 2);
-			DrawTrail(spriteBatch, lightColor);
+			DrawTrail(Main.spriteBatch, lightColor);
 			Color color;
 			for (int i = 0; i < 360; i += 45)
 			{

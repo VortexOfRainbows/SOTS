@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.Otherworld
 					randStorage[i] = Main.rand.Next(-45, 46);
 					trailPos[i] = Vector2.Zero;
 				}
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 93, 0.7f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 93, 0.7f);
                 if (player.whoAmI == Main.myPlayer)
                 {
                     Vector2 cursorArea = Main.MouseWorld;

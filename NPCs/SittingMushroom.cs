@@ -69,7 +69,7 @@ namespace SOTS.NPCs
 				}
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 					Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, distance.X, distance.Y, Mod.Find<ModProjectile>("SporeCloud").Type, damage2, 2f, Main.myPlayer);
-				SoundEngine.PlaySound(2, NPC.Center, 34);
+				Terraria.Audio.SoundEngine.PlaySound(2, NPC.Center, 34);
 			}
 			if (NPC.ai[1] >= 42)
 			{
@@ -151,7 +151,7 @@ namespace SOTS.NPCs
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, Mod.Find<ModProjectile>("SporeCloud").Type, damage2, 2f, Main.myPlayer);
 				}
-				SoundEngine.PlaySound(2, NPC.Center, 34);
+				Terraria.Audio.SoundEngine.PlaySound(2, NPC.Center, 34);
 				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SittingMushroomGore1"), 1f);
 			}
 		}

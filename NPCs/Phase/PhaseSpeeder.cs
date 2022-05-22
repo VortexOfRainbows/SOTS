@@ -190,7 +190,7 @@ namespace SOTS.NPCs.Phase
 					NPC.velocity = rotatePos * 30f;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 						NPC.netUpdate = true;
-					SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92);
 					return;
 				}
 			}

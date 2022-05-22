@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Lightning
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 		
-			SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			if(Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 3; i++)

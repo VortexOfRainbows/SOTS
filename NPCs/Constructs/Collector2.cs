@@ -265,7 +265,7 @@ namespace SOTS.NPCs.Constructs
 					NPC.ai[3] += 1f;
 					if(NPC.ai[3] % 10 == 0)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 13, 1.2f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 13, 1.2f);
 					}
 					float spiritScale = NPC.ai[3] / timeToChargeOrb;
 					if (spiritScale < 1f)
@@ -299,9 +299,9 @@ namespace SOTS.NPCs.Constructs
 					float sinusoid = 1.5f * (float)Math.Sin(MathHelper.ToRadians(ai3 * 225f / 150f + 0.5f));
 					NPC.velocity = new Vector2(-sinusoid, 0).RotatedBy(MathHelper.ToRadians(-70));
 					if(ai3 % 30 == 0 && ai3 < 100)
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.3f + ai3 * 0.05f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.3f + ai3 * 0.05f);
 					if(ai3 == 95)
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 121, 1.3f, 0);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 121, 1.3f, 0);
 					if (ai3 > 150 && startRunning)
                     {
 						for (int k = 0; k < 300; k++)

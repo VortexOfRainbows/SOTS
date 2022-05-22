@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Minions
 					{
 						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootTo.X, shootTo.Y, Mod.Find<ModProjectile>("PinkBubble").Type, Projectile.damage, 0, Main.myPlayer);
 					}
-					SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 21);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 21);
 				}
 			}
 		}

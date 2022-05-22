@@ -243,7 +243,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile.velocity = newGoTo * speed;
 				if (Projectile.ai[0] > 50)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 20, 1.1f, -0.2f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 20, 1.1f, -0.2f);
 					Projectile.ai[0] = 0;
                 }
 			}

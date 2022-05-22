@@ -79,7 +79,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			SoundEngine.PlaySound(SoundID.Item11, position);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, position);
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-3f + 1.75f * projectileNum)));
 			Projectile.NewProjectile(position, Vector2.Zero, Mod.Find<ModProjectile>("StarcoreRifle").Type, Item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? Item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());

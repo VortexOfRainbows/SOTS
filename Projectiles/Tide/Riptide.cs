@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Tide
                     wasInWaterY = 0.75f;
                 }
                 if(wasInWaterX > 0)
-                    SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 1.1f, -0.33f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 1.1f, -0.33f);
             }
             counter--;
             if (wasInWaterX > 0)

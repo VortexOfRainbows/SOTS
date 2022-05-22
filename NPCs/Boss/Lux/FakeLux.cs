@@ -202,7 +202,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 30 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									Projectile.NewProjectile(NPC.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
@@ -218,7 +218,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 90 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.1f, 0.2f);
+								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									for (int i = -2; i <= 2; i++)
@@ -254,7 +254,7 @@ namespace SOTS.NPCs.Boss.Lux
 						if (fireRateCounter >= 20)
 						{
 							Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								Projectile.NewProjectile(NPC.Center + outward * 48, outward * (6f + 8f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());

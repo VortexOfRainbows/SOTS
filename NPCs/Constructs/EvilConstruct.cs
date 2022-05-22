@@ -290,7 +290,7 @@ namespace SOTS.NPCs.Constructs
 							NPC.ai[0] = 40; //this will be used for the shock attack
 							if (Main.netMode == NetmodeID.Server)
 								NPC.netUpdate = true;
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 93, 1.3f, -0.4f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 93, 1.3f, -0.4f);
 						}
 						else
 						{
@@ -404,7 +404,7 @@ namespace SOTS.NPCs.Constructs
 						else if (counter < 72)
 						{
 							if (counter == 24 || counter == 48)
-								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1f, -0.05f);
+								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1f, -0.05f);
 							float degrees = (counter - 24) * 7.5f;
 							float sin = (float)Math.Sin(degrees * Math.PI / 180f);
 							Vector2 safeToPlayer = toPlayer.SafeNormalize(Vector2.Zero);
@@ -413,7 +413,7 @@ namespace SOTS.NPCs.Constructs
 						}
 						else
 						{
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 1.3f, 0.1f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 1.3f, 0.1f);
 							arm.Launch(player.Center, 25.5f);
 						}
 						targetPosition += proj.Center;
@@ -461,12 +461,12 @@ namespace SOTS.NPCs.Constructs
 						int trueNum = 0;
 						if (num >= 4)
 						{
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.3f, 0.1f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.3f, 0.1f);
 							trueNum = 2;
 						}
 						else
 						{
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 98, 1.1f + 0.1f * num, 0.2f - 0.05f * num);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 98, 1.1f + 0.1f * num, 0.2f - 0.05f * num);
 						}
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
@@ -685,7 +685,7 @@ namespace SOTS.NPCs.Constructs
 						startAnim = true;
 					launch = false;
 					stuck = true;
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 22, 1.4f, -0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 22, 1.4f, -0.1f);
 				}
 				runOnce = false;
 				if (NetmodeID.Server == Main.netMode)

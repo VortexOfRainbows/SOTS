@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if(runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 1.1f, -0.3f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 1.1f, -0.3f);
 			}
 			scaleMult = 3 * Projectile.timeLeft / 90f;
 			Vector2 position;
@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override bool PreDraw(ref Color lightColor)
 		{
-			Draw(spriteBatch, 1);
+			Draw(Main.spriteBatch, 1);
 			return false;
 		}
         public void DrawBlack(SpriteBatch spriteBatch)

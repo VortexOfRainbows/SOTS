@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Inferno
 		float veloScale = 0;
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.9f, -0.5f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.9f, -0.5f);
 			for (int i = 30; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.ai[1]++;
 				if(Projectile.ai[1] > Projectile.ai[0] && totalCharges < 80)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, -0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, -0.1f);
 					if (Main.myPlayer == player.whoAmI)
 					{
 						Item item = player.HeldItem;
@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.localNPCHitCooldown = 5;
 				if (Projectile.ai[0] >= 0)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.9f, -0.4f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.9f, -0.4f);
 					Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * (10 + (float)Math.Sqrt(totalCharges * 1.3f + 1f));
 					Projectile.ai[0] = -1;
 				}

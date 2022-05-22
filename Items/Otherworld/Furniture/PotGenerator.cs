@@ -420,7 +420,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				WorldGen.PlaceTile(i, j, TileType<SkyPots>(), false, false, -1, (int)Projectile.ai[1]);
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 					NetMessage.SendTileSquare(Main.myPlayer, i, j, 3);
-				SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
 				Vector2 position = Projectile.Center;
 				for (int k = 0; k < 360; k += 15)
 				{

@@ -84,7 +84,7 @@ namespace SOTS.Items.Earth
 				Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<VibrantRifle>(), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
 				speedX = perturbedSpeed.X * mult;
 				speedY = perturbedSpeed.Y * mult;
-				//SoundEngine.PlaySound(SoundID.Item11, position);
+				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, position);
 			}
 			return true; 
 		}

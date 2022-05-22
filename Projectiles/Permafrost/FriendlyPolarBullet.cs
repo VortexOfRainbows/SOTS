@@ -136,7 +136,7 @@ namespace SOTS.Projectiles.Permafrost
 					dust.scale += 1.25f;
 					dust.alpha = 100;
 				}
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 11, 0.8f, 0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 11, 0.8f, 0.1f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

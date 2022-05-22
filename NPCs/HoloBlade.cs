@@ -92,7 +92,7 @@ namespace SOTS.NPCs
 					rotatePos.Normalize();
 					NPC.velocity = rotatePos * -23;
 					consistentAcceleration = NPC.velocity;
-					SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
 					drawTrail = true;
 					return;
 				}

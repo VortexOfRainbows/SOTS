@@ -179,7 +179,7 @@ namespace SOTS.Projectiles.Minions
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.8f;
 					}
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 0.55f, -0.3f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 0.55f, -0.3f);
 					if (Main.myPlayer == Projectile.owner)
 					{
 						for(int i = -1; i <= 1; i++)

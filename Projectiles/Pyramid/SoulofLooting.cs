@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Pyramid
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
 			{
-				SoundEngine.PlaySound(7, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.3f);
+				Terraria.Audio.SoundEngine.PlaySound(7, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.3f);
 				voidPlayer.lootingSouls++;
 				voidPlayer.SendClientChanges(voidPlayer);
 				var index = CombatText.NewText(Projectile.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), 1);

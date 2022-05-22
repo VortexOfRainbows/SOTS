@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(runOnce)
 			{
-				SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 91, 0.8f, 0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 91, 0.8f, 0.1f);
 				runOnce = false;
             }
 			if (end == true && Projectile.timeLeft > 40)

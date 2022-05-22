@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(Projectile.hide)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 17, 1.1f, 0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 17, 1.1f, 0.1f);
 				Projectile.hide = false;
 				Projectile.frame = Projectile.whoAmI % 3;
 			}

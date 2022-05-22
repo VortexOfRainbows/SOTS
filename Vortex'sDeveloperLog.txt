@@ -51,6 +51,11 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+5/21/22
+1. More Porting!
+2. 5720 -> 5022
+3. Went through some projectile related folders
+
 5/18/22
 1. 5860 -> 5720
 

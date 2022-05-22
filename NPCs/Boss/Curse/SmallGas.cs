@@ -145,7 +145,7 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 			}
 			if (!quiet)
-				SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
 		}
 		public override void AI()
 		{
@@ -163,14 +163,14 @@ namespace SOTS.NPCs.Boss.Curse
 					NPC.velocity.Y -= 0.4f * waveY;
 					if (NPC.ai[2] == 40)
 					{
-						SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
 					}
 				}
 				else
 				{
 					if (NPC.ai[2] == 60)
 					{
-						SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
+						Terraria.Audio.SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
 						NPC.velocity.Y += 4.5f;
 					}
 					NPC.velocity.Y += 0.8f;
@@ -233,7 +233,7 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			if (NPC.life > 0)
 			{
-				SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
+				Terraria.Audio.SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
 				int num = 0;
 				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
 				{

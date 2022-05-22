@@ -29,12 +29,12 @@ namespace SOTS.Projectiles.Chaos
             Projectile.hide = true;
             Projectile.alpha = 255;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
-            spriteBatch.Draw(texture, drawPos, null, drawColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             Texture2D gTexture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/RoseBowGlow").Value;
             float chargePercent = counter / Projectile.ai[0];
             if (chargePercent < 0)
@@ -43,13 +43,13 @@ namespace SOTS.Projectiles.Chaos
             for (int i = 0; i < 6; i++)
             {
                 Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 120) + SOTSWorld.GlobalCounter);
-                drawColor = VoidPlayer.pastelAttempt(circular.ToRotation(), false);
+                Color drawColor = VoidPlayer.pastelAttempt(circular.ToRotation(), false);
                 drawColor.A = 0;
-                spriteBatch.Draw(gTexture, drawPos + circular, null, drawColor * alphaMult, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(gTexture, drawPos + circular, null, drawColor * alphaMult, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
             Color c = VoidPlayer.ChaosPink;
             c.A = 0;
-            DrawArrows(spriteBatch, c);
+            DrawArrows();
             if (chargeLevel == 2)
             {
                 alphaMult = afterCount1 / 15f;
@@ -78,17 +78,17 @@ namespace SOTS.Projectiles.Chaos
         float afterCount1 = 0;
         float afterCount2 = 0;
         float textureHeight = 10;
-        public void DrawArrows(SpriteBatch spriteBatch, Color drawColor)
+        public void DrawArrows()
         {
             if (Projectile.ai[0] != 0)
             {
-                Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + (chargeLevel + 1).Value);
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + chargeLevel + 1).Value;
                 Texture2D oldTexture = null;
                 textureHeight = texture.Height;
                 int oldHeight = texture.Height;
                 if (chargeLevel >= 1)
                 {
-                    oldTexture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + (chargeLevel).Value);
+                    oldTexture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + chargeLevel).Value;
                     oldHeight = oldTexture.Height;
                 }
                 float chargePercent = counter / Projectile.ai[0];
@@ -129,15 +129,15 @@ namespace SOTS.Projectiles.Chaos
                     {
                         Vector2 circular = new Vector2(1.33f * (1 + chargePercent + chargeLevel), 0).RotatedBy(MathHelper.ToRadians(i * 72 + 180 * j + SOTSWorld.GlobalCounter));
                         Vector2 stretch = new Vector2(1 - 0.25f * (chargePercent + chargeLevel), 1 + 0.25f * (chargePercent + chargeLevel));
-                        drawColor = VoidPlayer.pastelAttempt(circular.ToRotation(), false);
+                        Color drawColor = VoidPlayer.pastelAttempt(circular.ToRotation(), false);
                         drawColor.A = 0;
                         float reverseAlphaMult = 1;
                         if(oldTexture != null)
                         {
                             reverseAlphaMult = alphaMult;
-                            spriteBatch.Draw(oldTexture, circular + fireFrom - Main.screenPosition, null, drawColor * chargeAlpha * 0.3f * (1 - alphaMult), (Projectile.velocity.SafeNormalize(Vector2.Zero) + away).ToRotation() + 1.57f, new Vector2(oldTexture.Width / 2, oldTexture.Height / 2), scale * stretch, SpriteEffects.None, 0f);
+                            Main.spriteBatch.Draw(oldTexture, circular + fireFrom - Main.screenPosition, null, drawColor * chargeAlpha * 0.3f * (1 - alphaMult), (Projectile.velocity.SafeNormalize(Vector2.Zero) + away).ToRotation() + 1.57f, new Vector2(oldTexture.Width / 2, oldTexture.Height / 2), scale * stretch, SpriteEffects.None, 0f);
                         }
-                        spriteBatch.Draw(texture, circular + fireFrom - Main.screenPosition, null, drawColor * chargeAlpha * 0.3f * reverseAlphaMult, (Projectile.velocity.SafeNormalize(Vector2.Zero) + away).ToRotation() + 1.57f, new Vector2(texture.Width / 2, texture.Height / 2), scale * stretch, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, circular + fireFrom - Main.screenPosition, null, drawColor * chargeAlpha * 0.3f * reverseAlphaMult, (Projectile.velocity.SafeNormalize(Vector2.Zero) + away).ToRotation() + 1.57f, new Vector2(texture.Width / 2, texture.Height / 2), scale * stretch, SpriteEffects.None, 0f);
                     }
                 }
             }
@@ -177,11 +177,11 @@ namespace SOTS.Projectiles.Chaos
             {
                 float percent = counter / Projectile.ai[0];
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - (percent + chargeLevel) * fireFromTighten);
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 5, 1.2f, -0.1f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 5, 1.2f, -0.1f);
                 int type = ModContent.ProjectileType<ChaosArrow1>();
                 if (chargeLevel >= 1)
                     type = ModContent.ProjectileType<ChaosArrow2>();
-                Projectile.NewProjectile(fireFrom, Projectile.velocity, type, Projectile.damage, Projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer, chargeLevel == 2 ? 1 : 0);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity, type, Projectile.damage, Projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer, chargeLevel == 2 ? 1 : 0);
             }
             if(chargeLevel >= 1)
             {
@@ -226,7 +226,7 @@ namespace SOTS.Projectiles.Chaos
                     if(Main.myPlayer == Projectile.owner)
                     {
                         float rotation = (float)(afterCount2 / timeForThorn) * 60;
-                        Projectile.NewProjectile(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 4f), ModContent.ProjectileType<ChaosThorn>(), (int)(Projectile.damage * 1.0f), Projectile.knockBack, Main.myPlayer, 60, rotation);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 4f), ModContent.ProjectileType<ChaosThorn>(), (int)(Projectile.damage * 1.0f), Projectile.knockBack, Main.myPlayer, 60, rotation);
                     }
                 }
                 timeForThorn = (int)(Projectile.ai[0] * 0.35f);
@@ -235,17 +235,17 @@ namespace SOTS.Projectiles.Chaos
                     if (Main.myPlayer == Projectile.owner)
                     {
                         float rotation = (float)(afterCount1 / timeForThorn) * 45;
-                        Projectile.NewProjectile(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 4.5f), ModContent.ProjectileType<ChaosThorn>(), (int)(Projectile.damage * 1.0f), Projectile.knockBack, Main.myPlayer, 120, rotation);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 4.5f), ModContent.ProjectileType<ChaosThorn>(), (int)(Projectile.damage * 1.0f), Projectile.knockBack, Main.myPlayer, 120, rotation);
                     }
                 }
                 float percent = counter / Projectile.ai[0];
                 if (chargeLevel < 2 && counter > 0)
                 {
                     if ((int)counter == (int)Projectile.ai[0] / 2)
-                        SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
                     if ((int)counter >= Projectile.ai[0])
                     {
-                        SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.3f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.3f);
                         if(chargeLevel == 0)
                         {
                             Vector2 pos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 24);
@@ -265,7 +265,7 @@ namespace SOTS.Projectiles.Chaos
                         if(Main.myPlayer == player.whoAmI)
                         {
                             Item item = player.HeldItem;
-                            VoidItem vItem = Item.modItem as VoidItem;
+                            VoidItem vItem = item.ModItem as VoidItem;
                             if (vItem != null)
                                 vItem.DrainMana(player);
                         }
@@ -332,7 +332,7 @@ namespace SOTS.Projectiles.Chaos
             }
             if (counter == -1 && Projectile.ai[0] != 0 && runOnce)
             {
-                //SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
+                //Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
                 runOnce = false;
                 counter = -(int)(Projectile.ai[0] * firstDelay);
             }

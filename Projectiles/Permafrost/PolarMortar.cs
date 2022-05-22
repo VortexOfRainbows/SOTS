@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Permafrost
 			if (Projectile.ai[0] == -1)
 			{
 				Vector2 position = Projectile.Center;
-				SoundEngine.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
 				Projectile.ai[0]--;
 				for (int i = 0; i < 15 * dustAmtMult; i++)
 				{

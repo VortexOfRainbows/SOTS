@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -47,7 +48,7 @@ namespace SOTS.Projectiles
 			}
 			return true;
 		}
-        public override bool PreDrawExtras(SpriteBatch spriteBatch)
+        public override bool PreDrawExtras()
         {
             Player player1 = Main.player[Projectile.owner];
             Lighting.AddLight(Projectile.Center, 0.3f, 0.1f, 0.24f);
@@ -171,7 +172,8 @@ namespace SOTS.Projectiles
                         }
                         rotation2 = (float)Math.Atan2((double)projPosY, (double)projPosX) - 1.57f;
                         Color color2 = Lighting.GetColor((int)value.X / 16, (int)(value.Y / 16f), new Color(132, 121, 174));    //fishing line color
-                        Main.spriteBatch.Draw(Main.fishingLineTexture, new Vector2(value.X - Main.screenPosition.X + (float)Main.fishingLineTexture.Width * 0.5f, value.Y - Main.screenPosition.Y + (float)Main.fishingLineTexture.Height * 0.5f), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.fishingLineTexture.Width, (int)num)), color2, rotation2, new Vector2((float)Main.fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
+                        Texture2D fishingLineTexture = (Texture2D)TextureAssets.FishingLine;
+                        Main.spriteBatch.Draw(fishingLineTexture, new Vector2(value.X - Main.screenPosition.X + fishingLineTexture.Width * 0.5f, value.Y - Main.screenPosition.Y + fishingLineTexture.Height * 0.5f), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, fishingLineTexture.Width, (int)num)), color2, rotation2, new Vector2(fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
                     }
                 }
             }

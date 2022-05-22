@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Ores
 					Projectile.velocity.Y = -oldVelocity.Y;
 				}
 				Projectile.timeLeft = Projectile.timeLeft > 705 ? 705 : Projectile.timeLeft;
-				SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			Projectile.tileCollide = false;
 			return false;
 		}

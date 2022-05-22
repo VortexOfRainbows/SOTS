@@ -151,7 +151,7 @@ namespace SOTS.NPCs
 					frame++;
 					if (frame == 7)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage = NPC.damage / 2;

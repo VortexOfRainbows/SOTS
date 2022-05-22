@@ -58,8 +58,8 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if (runOnce)
 				return false;
-			DrawWorm(spriteBatch, true);
-			DrawWorm(spriteBatch, false);
+			DrawWorm(Main.spriteBatch, true);
+			DrawWorm(Main.spriteBatch, false);
 			return false;
 		}
 		public void DrawWorm(SpriteBatch spriteBatch, bool outer)

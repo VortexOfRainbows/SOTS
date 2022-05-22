@@ -29,9 +29,9 @@ namespace SOTS.Projectiles.Base
 		public override void Kill(int timeLeft)
 		{
 			if(Projectile.ai[0] == 1)
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorClose"), 1f, 0.0f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/BlastDoorClose"), 1f, 0.0f);
 			else
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorOpen"), 1f, 0.0f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/BlastDoorOpen"), 1f, 0.0f);
 		}
 	}
 }

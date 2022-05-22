@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Chaos
                     otherC.A = 0;
                     //Vector2 sinusoid = new Vector2(0, 10 * ((255 - Projectile.alpha) / 255f) * actualScale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 8 + i * 5))).RotatedBy(rotation);
                     float sinusoid2 = (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 3 + i * 4));
-                    spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 1.1f, rotation, origin, new Vector2(2f, actualScale * 1.0f * (1 + sinusoid2 * 0.5f) * ((255 - Projectile.alpha) / 255f)) * Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 1.1f, rotation, origin, new Vector2(2f, actualScale * 1.0f * (1 + sinusoid2 * 0.5f) * ((255 - Projectile.alpha) / 255f)) * Projectile.scale, SpriteEffects.None, 0f);
                     //spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 1.1f, rotation, origin, new Vector2(2f, actualScale * 0.5f * (1 + sinusoid2 * 0.3f) * ((255 - Projectile.alpha) / 255f)) * Projectile.scale, SpriteEffects.None, 0f);
                     if (i != drawPositionList.Count - 1)
                         rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Chaos
         {
             if (runOnce)
             {
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.9f, 0.1f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.9f, 0.1f);
                 runOnce = false;
             }
             SetupLaser();
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Chaos
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
                 }
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.6f, -0.4f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.6f, -0.4f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (Main.rand.NextBool(4))

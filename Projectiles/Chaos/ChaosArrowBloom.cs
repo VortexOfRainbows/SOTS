@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Chaos
         public override void Kill(int timeLeft)
         {
             if(Projectile.owner == Main.myPlayer)
-				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(360), Main.rand.NextFloat(360));
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(360), Main.rand.NextFloat(360));
 		}
     }
 }

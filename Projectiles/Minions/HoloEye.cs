@@ -285,7 +285,7 @@ namespace SOTS.Projectiles.Minions
 				Vector2 distanceToMouse = cursor - Projectile.Center;
 				rotateVector = distanceToMouse;
 				rotateVector = new Vector2(4, 0).RotatedBy(rotateVector.ToRotation());
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.75f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.75f);
 				if (Main.myPlayer == Projectile.owner)
 				{
 					Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, Mod.Find<ModProjectile>("DestabilizingBeam").Type, Projectile.damage, 1f, owner.whoAmI, 0, -1);
@@ -299,7 +299,7 @@ namespace SOTS.Projectiles.Minions
 				aiCounter2++;
 				if (aiCounter2 >= 54 && distanceToTarget2 < 1080)
 				{
-					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 0.5f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 0.5f);
 					if (Main.myPlayer == Projectile.owner)
 					{
 						Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, Mod.Find<ModProjectile>("CodeBurst").Type, Projectile.damage, 1f, owner.whoAmI, 0, -1);

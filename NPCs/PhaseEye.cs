@@ -258,7 +258,7 @@ namespace SOTS.NPCs
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(NPC.Center.X + between.X * 24, NPC.Center.Y + between.Y * 24, between.X * 5, between.Y * 5, Mod.Find<ModProjectile>("OtherworldlyBolt").Type, damage2, 1f, Main.myPlayer, 0, 0);
 
-					SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f);
 					NPC.ai[1] = 1;
 				}
 			}

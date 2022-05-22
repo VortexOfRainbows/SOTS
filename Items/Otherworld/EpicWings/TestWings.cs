@@ -189,7 +189,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 					dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
 				}
 			}
-			SoundEngine.PlaySound(12, Player.Center);
+			Terraria.Audio.SoundEngine.PlaySound(12, Player.Center);
 		}
 		public void flightStart()
 		{

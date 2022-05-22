@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Nature
 		public override void Kill(int timeLeft)
         {
 			Vector2 position = Projectile.Center;
-			SoundEngine.PlaySound(SoundID.NPCHit1, (int)position.X, (int)position.Y);  
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit1, (int)position.X, (int)position.Y);  
 			for(int i = 0; i < 20; i++)
 			{
 				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 39);

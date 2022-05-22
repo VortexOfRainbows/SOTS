@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Otherworld
 			if (runOnce)
 			{
 				Projectile.velocity = target.Center - Projectile.Center;
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.5f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.5f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-35, 36);

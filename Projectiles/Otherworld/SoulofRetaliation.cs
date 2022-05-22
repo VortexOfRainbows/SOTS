@@ -133,14 +133,14 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile.alpha -= 2;
 				if(Projectile.timeLeft > 748)
 				{
-					SoundEngine.PlaySound(SoundID.NPCDeath39, player.Center);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCDeath39, player.Center);
 					Projectile.scale = 1f;
 				}
 				Projectile.scale += 0.02f;
 			}
 			if (Projectile.timeLeft < 720) //launch effects
 			{
-				SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
 				aimTo = aimTo.SafeNormalize(new Vector2(0, 1));
 				aimTo *= -12;
 				Projectile.velocity = aimTo;

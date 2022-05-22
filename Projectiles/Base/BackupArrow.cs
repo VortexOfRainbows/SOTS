@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Base
 				Projectile.velocity.X = -oldVelocity.X;
 			if (Projectile.velocity.Y != oldVelocity.Y)
 				Projectile.velocity.Y = -oldVelocity.Y;
-			SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
 			return false;
 		}
 	}

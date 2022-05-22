@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Lightning
 			if (runOnce)
 			{
 				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f, 0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f, 0.2f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-75, 76);

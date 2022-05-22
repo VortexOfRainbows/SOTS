@@ -45,9 +45,9 @@ namespace SOTS.Projectiles.Earth
         {
             DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
             if (chargeLevel != 0)
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.2f, -0.1f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.2f, -0.1f);
             else
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot1"), 1.2f, 0.4f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarShot1"), 1.2f, 0.4f);
             if (Projectile.owner == Main.myPlayer)
             {
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
@@ -72,9 +72,9 @@ namespace SOTS.Projectiles.Earth
                 if (Projectile.ai[1] > chargeTime)
                 {
                     if(chargeLevel != 2)
-                        SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarCharge"), 1.2f, 0.1f * chargeLevel);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarCharge"), 1.2f, 0.1f * chargeLevel);
                     else
-                        SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.2f, 0);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarFull"), 1.2f, 0);
                     chargeLevel++;
                     Projectile.ai[1] = -6 * chargeLevel;
                 }

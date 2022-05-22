@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Permafrost
 		public void Bang(int pos1, int pos2)
 		{
 			Vector2 atLoc = new Vector2(Projectile.Center.X + pos1, Projectile.Center.Y + pos2);
-			SoundEngine.PlaySound(SoundID.Item, (int)atLoc.X, (int)atLoc.Y, 30, 0.9f, -0.2f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)atLoc.X, (int)atLoc.Y, 30, 0.9f, -0.2f);
 			for (int i = 0; i < 360; i += 5)
 			{
 				Vector2 circularLocation = new Vector2(30 * (1 + 0.2f * size), 0).RotatedBy(MathHelper.ToRadians(i));

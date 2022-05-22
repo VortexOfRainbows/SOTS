@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Lightning
         }
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			if (Projectile.owner == Main.myPlayer)
 			{
 				Player player = Main.player[Projectile.owner];

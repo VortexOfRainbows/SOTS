@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Chaos
 			triggerUpdate();
 			return false;
 		}
-		public void TrailPreDraw(SpriteBatch spriteBatch)
+		public void TrailPreDraw()
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/SupernovaLaser");
 			Vector2 drawOrigin = new Vector2(0, texture.Height * 0.5f);
@@ -83,14 +83,14 @@ namespace SOTS.Projectiles.Chaos
 					for (int i = -1; i <= 1; i++)
 					{
 						Vector2 offset = new Vector2(0, 1 * i).RotatedBy(betweenPositions.ToRotation());
-						spriteBatch.Draw(texture, currentPos - Main.screenPosition + offset, null, color * 0.9f, betweenPositions.ToRotation(), drawOrigin, new Vector2(max, scale * scaleMultY), SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, currentPos - Main.screenPosition + offset, null, color * 0.9f, betweenPositions.ToRotation(), drawOrigin, new Vector2(max, scale * scaleMultY), SpriteEffects.None, 0f);
 					}
 				previousPosition = currentPos;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			TrailPreDraw(spriteBatch);
+			TrailPreDraw();
 			if(!hasHit)
 			{
 				Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Chaos
 			Player player = Main.player[Projectile.owner];
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.6f, 0.5f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.6f, 0.5f);
 				if(timeLeftSetter == 900)
 				{
 					if (Projectile.owner == Main.myPlayer)
@@ -243,7 +243,7 @@ namespace SOTS.Projectiles.Chaos
 			if (Projectile.owner == Main.myPlayer)
 			{
 				Projectile.netUpdate = true;
-				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), Projectile.damage, Projectile.knockBack * 0.5f, Main.myPlayer, Main.rand.NextFloat(-390, -30), Main.rand.NextFloat(-390, -30));
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), Projectile.damage, Projectile.knockBack * 0.5f, Main.myPlayer, Main.rand.NextFloat(-390, -30), Main.rand.NextFloat(-390, -30));
 			}
 			Projectile.velocity *= 0;
 		}

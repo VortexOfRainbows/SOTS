@@ -7,6 +7,7 @@ using SOTS.Dusts;
 using SOTS.NPCs;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Void;
+using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -88,8 +89,8 @@ namespace SOTS.Projectiles.Chaos
                 Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), false);
                 otherC.A = 0;
                 Vector2 sinusoid = new Vector2(0, 12 * scale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 6 + i * 6))).RotatedBy(rotation);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.75f) * Projectile.scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.375f) * Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.75f) * Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.375f) * Projectile.scale, SpriteEffects.None, 0f);
                 if (i != drawPositionList.Count - 1)
                     rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 progress++;
@@ -208,7 +209,6 @@ namespace SOTS.Projectiles.Chaos
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             if (runOnce)
             {
                 for (int i = 0; i < 20; i++)
@@ -231,7 +231,7 @@ namespace SOTS.Projectiles.Chaos
                 player.velocity *= 0.1f;
                 player.velocity += Projectile.velocity * 4.6f;
                 player.velocity.Y -= 2;
-                SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 72, 1.2f, 0.1f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 72, 1.2f, 0.1f);
                 for (int i = 0; i < 20; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void ExplosionSound()
 		{
-			SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 13, 1.1f, -0.25f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 13, 1.1f, -0.25f);
 			base.ExplosionSound();
 		}
     }

@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (target.life <= 0)
 			{
-				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
 				if (Projectile.owner == Main.myPlayer)
 				{
 					for (int i = 0; i < 2; i++)

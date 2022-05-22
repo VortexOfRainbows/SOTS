@@ -144,7 +144,7 @@ namespace SOTS.Items.Pyramid
 					Main.npc[npc1].netUpdate = true;
 					Main.npc[npc1].ai[2] = 900;
 				}
-				SoundEngine.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				int x2 = (int)(Projectile.Center.X / 16f);
 				int y2 = (int)(Projectile.Center.Y / 16f);
 				for (int i = x2 - 1; i <= x2 + 1; i++)

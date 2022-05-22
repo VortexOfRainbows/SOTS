@@ -55,9 +55,9 @@ namespace SOTS.Projectiles.Chaos
 			if (runOnce)
 			{
 				if(Projectile.ai[0] != 1)
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.0f, -0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.0f, -0.1f);
 				else
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.0f, -0.1f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.0f, -0.1f);
 				DustOut();
 				color = VoidPlayer.ChaosPink;
 				SetPostitions();
@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Chaos
 				if (Projectile.ai[0] == 1)
 					dmgMult = 15f;
 				Vector2 position = posList[posList.Count - 2];
-				Projectile.NewProjectile(position, Projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), (int)(dmgMult * Projectile.damage), Projectile.knockBack, Main.myPlayer, -Main.rand.NextFloat(360) - 1, Main.rand.NextFloat(360));
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, Projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), (int)(dmgMult * Projectile.damage), Projectile.knockBack, Main.myPlayer, -Main.rand.NextFloat(360) - 1, Main.rand.NextFloat(360));
 				if(Projectile.ai[0] == 1)
                 {
 					int otherDir = Main.rand.Next(2) * 2 - 1;
@@ -145,7 +145,7 @@ namespace SOTS.Projectiles.Chaos
 						for (int i = 0; i < 3; i++)
 						{
 							Vector2 circular = new Vector2(Main.rand.Next(10, 14) * speedMult, 0).RotatedBy(MathHelper.ToRadians(i * 120 + rand));
-							Projectile.NewProjectile(position, circular, ModContent.ProjectileType<ChaosArrowBloom>(), (int)(dmgMult * Projectile.damage), Projectile.knockBack, Main.myPlayer, 2 * speedMult, otherDir * dir * Main.rand.NextFloat(6, 9));
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, circular, ModContent.ProjectileType<ChaosArrowBloom>(), (int)(dmgMult * Projectile.damage), Projectile.knockBack, Main.myPlayer, 2 * speedMult, otherDir * dir * Main.rand.NextFloat(6, 9));
 						}
 						rand += Main.rand.NextFloat(-20, 20);
 					}
@@ -191,10 +191,10 @@ namespace SOTS.Projectiles.Chaos
 					for(int j = 0; j < 3; j++)
 					{
 						Vector2 sinusoid = new Vector2(0, percentDeath * scale * 22 * (float)Math.Sin(MathHelper.ToRadians(i * 3 + counter * 3 + j * 120)) * startingScale).RotatedBy(rotation);
-						spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color * 0.4f * startingScale, rotation, origin, new Vector2(scale * 2, scale * percentDeath * 0.4f * startingScale), SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color * 0.4f * startingScale, rotation, origin, new Vector2(scale * 2, scale * percentDeath * 0.4f * startingScale), SpriteEffects.None, 0f);
 					}
 				}
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * 0.6f * startingScale, rotation, origin, new Vector2(scale * 2, scale * percentDeath * startingScale), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * 0.6f * startingScale, rotation, origin, new Vector2(scale * 2, scale * percentDeath * startingScale), SpriteEffects.None, 0f);
 				if (startingScale < 1f || alpha != 1)
 					startingScale += 0.05f;
 				if(alpha == 1)

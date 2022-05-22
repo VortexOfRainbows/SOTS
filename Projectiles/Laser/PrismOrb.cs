@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Laser
             if (!player.channel && Projectile.ai[0] >= 100 && ai2 >= 5) ended = true;
             if (ended)
             {
-                SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
                 Projectile.Kill();
             }
         }

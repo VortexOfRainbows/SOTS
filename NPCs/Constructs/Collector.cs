@@ -175,7 +175,7 @@ namespace SOTS.NPCs.Constructs
 					NPC.ai[3] += 0.5f;
 					if(NPC.ai[3] % 5 == 0 && spiritScale < 0.8f)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 13, 1.2f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 13, 1.2f);
 					}
 					if (spiritScale < 0.9f)
 					{
@@ -206,9 +206,9 @@ namespace SOTS.NPCs.Constructs
 					Vector2 circularVelo = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(ai3 + 0.5f));
 					NPC.velocity = new Vector2(-circularVelo.X * 0.1f, 0).RotatedBy(MathHelper.ToRadians(-48));
 					if(ai3 % 20 == 0 && ai3 < 125)
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.3f + ai3 * 0.05f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.3f + ai3 * 0.05f);
 					if(ai3 == 125)
-						SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 121, 1.3f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 121, 1.3f);
 					if (ai3 > 180 && runAway)
                     {
 						for (int j = 0; j < 300; j++)

@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Otherworld
             {
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 28;
                 if (counter == (int)Projectile.ai[0] / 3)
-                    SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.1f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.1f);
                 float percent = counter / Projectile.ai[0];
                 for (int k = -1; k <= 1; k += 2)
                 {
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Otherworld
                 }
                 if (counter >= Projectile.ai[0])
                 {
-                    SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.7f, 0.3f);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.7f, 0.3f);
                     for (int k = 0; k < 60; k++)
                     {
                         Dust dust = Dust.NewDustDirect(fireFrom + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(120, 200, 255));

@@ -352,13 +352,13 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			if (tile.TileFrameX >= 108)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-				SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
 				return true;
 			}
 			if (tile.TileFrameX >= 54)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-				SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
 				return true;
 			}
 			return true;

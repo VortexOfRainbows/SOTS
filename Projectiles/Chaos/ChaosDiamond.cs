@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.3f, -0.2f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)
             {
 				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Chaos
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Vector2 circular = new Vector2(1, 0).RotatedBy(Projectile.rotation);
-				Projectile.NewProjectile(Projectile.Center, circular * 2.5f, ModContent.ProjectileType<ChaosDiamondLaser>(), Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular * 2.5f, ModContent.ProjectileType<ChaosDiamondLaser>(), Projectile.damage, 0, Main.myPlayer);
 			}
         }
 		bool runOnce = true;
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Chaos
 			Vector2 actualVelocity = (Projectile.velocity - Projectile.Center).SafeNormalize(Vector2.Zero);
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 77, 1.1f, -0.3f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 77, 1.1f, -0.3f);
 				Projectile.timeLeft = (int)Projectile.ai[0];
 				runOnce = false;
 				for (int i = 0; i < 15; i++)
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Chaos
 						for (int i = 0; i < numDarts; i++)
 						{
 							Vector2 circular = new Vector2(2.0f, 0).RotatedBy(Projectile.rotation + MathHelper.ToRadians(i * 360f / numDarts));
-							Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<ChaosDart>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Main.myPlayer, (int)Projectile.ai[1], -0.8f);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<ChaosDart>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Main.myPlayer, (int)Projectile.ai[1], -0.8f);
 						}
 					}
 					counter3 = -1;
@@ -160,7 +160,6 @@ namespace SOTS.Projectiles.Chaos
             {
 
             }
-
 			Lighting.AddLight(Projectile.Center, new Color(231, 95, 203).ToVector3());
 			Projectile.rotation = actualVelocity.ToRotation();
 			if (Projectile.timeLeft < 100)

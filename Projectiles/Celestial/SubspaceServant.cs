@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Celestial
 			Vector2 idlePosition = player.Center;
 			Item item = player.inventory[49];
 			sItem = item;
-			int type = Item.type;
+			int type = item.type;
 			if(cursorArea != null)
 			{
 				if (Main.myPlayer == player.whoAmI)
@@ -262,7 +262,7 @@ namespace SOTS.Projectiles.Celestial
 							return;
 						}
 						ItemLoader.UseItem(item, player);
-						SoundEngine.PlaySound(Item.UseSound, Projectile.Center);
+						Terraria.Audio.SoundEngine.PlaySound(Item.UseSound, Projectile.Center);
 					}
 					if (UseTime <= FullUseTime && (UseTime % fireRate == 0 || (UseTime == FullUseTime && fireRate > FullUseTime)))
 					{

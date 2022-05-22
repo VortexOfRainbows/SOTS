@@ -296,7 +296,7 @@ namespace SOTS.Projectiles.Minions
 					postChargeCounter++;
 				if(postChargeCounter % 30 == 29)
                 {
-					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.3f);
+					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.3f);
 				}
 
 				direction *= (float)Math.Pow(distance, 1.35) * 0.005f + speed;

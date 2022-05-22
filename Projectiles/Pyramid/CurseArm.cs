@@ -142,7 +142,7 @@ namespace SOTS.Projectiles.Pyramid
 					Projectile.velocity *= 1.1f;
 				if(aiCounter1 == 60)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.25f, -0.2f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.25f, -0.2f);
 				}
 				if(aiCounter1 > 90)
                 {

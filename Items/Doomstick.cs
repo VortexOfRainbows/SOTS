@@ -67,7 +67,7 @@ namespace SOTS.Items
                 }
                 return false;
             }
-            SoundEngine.PlaySound(Item.UseSound, player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(Item.UseSound, player.Center);
             int amt = 4;
             for(int i = 0; i < amt; i++)
             {

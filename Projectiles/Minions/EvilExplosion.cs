@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			if(runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, -0.2f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, -0.2f);
 				for (int i = 0; i < 360; i += 4)
 				{
 					Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4.5f, 18f), 0).RotatedBy(MathHelper.ToRadians(i));

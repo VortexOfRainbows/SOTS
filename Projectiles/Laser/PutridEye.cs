@@ -170,14 +170,14 @@ namespace SOTS.Projectiles.Laser
 				}
 				dist = -10;
 				Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f);
-				SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			}
 			if(dist >= 2.8f && dist <= 3.2f)
-				SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			if (dist >= 8.8f && dist <= 9.2f)
-				SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			if (dist >= 14.8f && dist <= 15.2f)
-				SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 		}
 	}
 }

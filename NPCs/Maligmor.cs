@@ -125,7 +125,7 @@ namespace SOTS.NPCs
 				{
 					if (NPC.ai[2] == -1)
 					{
-						SoundEngine.PlaySound(4, (int)NPC.Center.X, (int)NPC.Center.Y, 1, 0.9f, -0.25f);
+						Terraria.Audio.SoundEngine.PlaySound(4, (int)NPC.Center.X, (int)NPC.Center.Y, 1, 0.9f, -0.25f);
 						if(Main.netMode != 1)
 						{
 							int total = 0;

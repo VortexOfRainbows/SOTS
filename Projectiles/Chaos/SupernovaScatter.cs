@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Chaos
 			triggerUpdate();
 			return false;
 		}
-		public void TrailPreDraw(SpriteBatch spriteBatch)
+		public void TrailPreDraw()
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -76,14 +76,14 @@ namespace SOTS.Projectiles.Chaos
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
 					if (trailPos[k] != Projectile.Center)
-						spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 				}
 				previousPosition = currentPos;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			TrailPreDraw(spriteBatch);
+			TrailPreDraw();
 			return false;
 		}
 		bool hasHit = false;
@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Chaos
 			if (runOnce)
 			{
 				runOnce = false;
-				//SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 60, 0.8f, -0.1f);
+				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 60, 0.8f, -0.1f);
 			}
 			if(Main.rand.NextBool(40) || (hasHit && Main.rand.NextBool(8)))
             {

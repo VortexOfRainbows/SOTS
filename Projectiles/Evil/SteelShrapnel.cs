@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Evil
 		{
 			if(Projectile.scale != 0.8f)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 17, 1.1f, -0.1f);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 17, 1.1f, -0.1f);
 				Projectile.scale = 0.8f;
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;

@@ -117,7 +117,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						if (startEyes % 6 == 0)
 						{
-							SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
 						}
 					}
 					if(startEyes < 120)
@@ -177,7 +177,7 @@ namespace SOTS.NPCs.Constructs
 						{
 							if(NPC.ai[1] > 0)
 							{
-								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 46, 1.1f, -0.15f);
+								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 46, 1.1f, -0.15f);
 							}
 							if(NPC.ai[1] >= 6)
                             {
@@ -213,7 +213,7 @@ namespace SOTS.NPCs.Constructs
 							if (counterR % 150 == 30)
 							{
 								NPC.velocity *= 0.1f;
-								SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 105, 1.2f, -0.25f);
+								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 105, 1.2f, -0.25f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 8;

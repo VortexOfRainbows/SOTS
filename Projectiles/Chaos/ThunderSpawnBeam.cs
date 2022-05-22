@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Chaos
                 otherC.A = 0;
                 Vector2 sinusoid = new Vector2(0, 16 * scale * scale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 6 + i * 2.5f))).RotatedBy(rotation);
                 //spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 1f) * Projectile.scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * 0.5f, rotation, origin, new Vector2(2f, scale * 1f), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * 0.5f, rotation, origin, new Vector2(2f, scale * 1f), SpriteEffects.None, 0f);
                 if (i != drawPositionList.Count - 1)
                     rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 progress++;
@@ -163,8 +163,8 @@ namespace SOTS.Projectiles.Chaos
                 }
                 SetupLaser();
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(Projectile.Center, -Projectile.velocity, ModContent.ProjectileType<ThunderBall>(), Projectile.damage, 0, Main.myPlayer, 0, 0);
-                //SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 92, 0.6f, 0.4f);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, -Projectile.velocity, ModContent.ProjectileType<ThunderBall>(), Projectile.damage, 0, Main.myPlayer, 0, 0);
+                //Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 92, 0.6f, 0.4f);
                 for (int i = 0; i < 4; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

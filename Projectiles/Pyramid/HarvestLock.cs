@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Pyramid
 							{
 								GhostPepper pepper = (GhostPepper)proj.ModProjectile;
 								if (pepper.npcTargetId != npc.whoAmI)
-									SoundEngine.PlaySound(2, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.4f);
+									Terraria.Audio.SoundEngine.PlaySound(2, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.4f);
 								pepper.npcTargetId = npc.whoAmI;
 								pepper.cooldown = 40;
 								proj.netUpdate = true;

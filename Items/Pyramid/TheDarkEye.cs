@@ -563,7 +563,7 @@ namespace SOTS.Items.Pyramid
 				Vector2 velo = Vector2.Zero;
 				effect = true;
 				Vector2 finalPos = TheDarkEye.StaticDrawDetect(Mod, Projectile.Center, (int)Projectile.ai[0], (int)Projectile.ai[1], Projectile.damage, (int)Projectile.knockBack, ref velo, true, player);
-				SoundEngine.PlaySound(SoundID.Item8, Main.player[Projectile.owner].Center);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item8, Main.player[Projectile.owner].Center);
 				player.position = finalPos - new Vector2(player.width / 2, player.height / 2);
 				if(player.velocity.Y > 1)
 				{
