@@ -36,7 +36,7 @@ namespace SOTS.Items.Earth
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine[Type] = 200;
 			Main.tileShine2[Type] = true;
-			Main.tileValue[Type] = 420; //above gold
+			Main.tileOreFinderPriority[Type] = 420; //above gold
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileMerge[Type][ModContent.TileType<EvostoneTile>()] = true;
@@ -51,8 +51,8 @@ namespace SOTS.Items.Earth
 			AddMapEntry(new Color(123, 166, 36), name);
 			MineResist = 1.0f;
 			MinPick = 40; //no copper/tin pickaxe!
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -82,8 +82,8 @@ namespace SOTS.Items.Earth
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Shard");
 			AddMapEntry(new Color(156, 209, 46), name);
-			soundType = SoundID.Item;
-			soundStyle = 27;
+			SoundType = SoundID.Item;
+			SoundStyle = 27;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
         public override bool Drop(int i, int j)

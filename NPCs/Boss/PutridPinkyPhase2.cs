@@ -156,7 +156,7 @@ namespace SOTS.NPCs.Boss
                     {
 						if(Main.rand.Next(5) >= 2)
 						{
-							Gore.NewGore(position, Vector2.Zero, Mod.GetGoreSlot("Gores/PutridVineGore"), 1f);
+							Gore.NewGore(position, Vector2.Zero, ModGores.GoreType("Gores/PutridVineGore"), 1f);
 						}
                     }
 					flag2 = true;
@@ -665,10 +665,10 @@ namespace SOTS.NPCs.Boss
 					dust.scale *= 2.3f;
 					dust.velocity *= 2;
 				}
-				Gore.NewGore(NPC.position + new Vector2(0, 24), NPC.velocity, Mod.GetGoreSlot("Gores/ppGore_1"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/ppGore_2"), 1f);
-				Gore.NewGore(NPC.position + new Vector2(24, 0), NPC.velocity, Mod.GetGoreSlot("Gores/ppGore_3"), 1f);
-				Gore.NewGore(NPC.Center - new Vector2(26, 26), NPC.velocity, Mod.GetGoreSlot("Gores/ppGore_4"), 1f);
+				Gore.NewGore(NPC.position + new Vector2(0, 24), NPC.velocity, ModGores.GoreType("Gores/ppGore_1"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/ppGore_2"), 1f);
+				Gore.NewGore(NPC.position + new Vector2(24, 0), NPC.velocity, ModGores.GoreType("Gores/ppGore_3"), 1f);
+				Gore.NewGore(NPC.Center - new Vector2(26, 26), NPC.velocity, ModGores.GoreType("Gores/ppGore_4"), 1f);
 				if(Main.netMode != NetmodeID.Server)
 				{
 					for (int i = 0; i < Main.npc.Length; i++)

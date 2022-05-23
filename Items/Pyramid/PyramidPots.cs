@@ -74,68 +74,68 @@ namespace SOTS.Items.Pyramid
             if(num == 1) //gold
             {
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore1"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore1"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore2"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore2"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore3"), 1f);
                 else if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore4"), 1f);
                 if (Main.rand.NextBool(5))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore5"), 1f);
                 else if (Main.rand.NextBool(5))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore6"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore6"), 1f);
                 else if (Main.rand.NextBool(5))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore7"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore7"), 1f);
             }
             if (num == 2) //mixed Pots
             {
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore14"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore14"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore15"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore15"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore16"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore16"), 1f);
                 if (Main.rand.NextBool(10))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore3"), 1f);
                 else if (Main.rand.NextBool(10))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore5"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore11"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore11"), 1f);
                 else if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore10"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore10"), 1f);
             }
             if (num == 3) //mostly gold
             {
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore12"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore12"), 1f);
                 else if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore13"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore13"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore14"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore14"), 1f);
                 if (Main.rand.NextBool(8))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore1"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore1"), 1f);
                 else if (Main.rand.NextBool(8))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore2"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore2"), 1f);
                 if (Main.rand.NextBool(5))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore11"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore11"), 1f);
                 if (Main.rand.NextBool(5))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore10"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore10"), 1f);
             }
             if (num == 4) //sandstone
             {
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore8"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore8"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore9"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore9"), 1f);
                 else if (Main.rand.NextBool(3))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore10"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore10"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore11"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore11"), 1f);
                 if (Main.rand.NextBool(6))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore14"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore14"), 1f);
                 else if (Main.rand.NextBool(5))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore16"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore16"), 1f);
             }
 
 

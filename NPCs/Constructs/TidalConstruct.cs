@@ -156,9 +156,9 @@ namespace SOTS.NPCs.Constructs
 						else if(Main.rand.NextBool(2))
 						{
 							if (i == 0)
-								Gore.NewGore(pos, NPC.velocity, Mod.GetGoreSlot("Gores/TidalConstructGore6"), 1f);
+								Gore.NewGore(pos, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore6"), 1f);
 							else if(i != -1)
-								Gore.NewGore(pos, NPC.velocity, Mod.GetGoreSlot("Gores/TidalConstructGore7"), 1f);
+								Gore.NewGore(pos, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore7"), 1f);
 						}
 					}
 					else if(!runOnce)
@@ -194,11 +194,11 @@ namespace SOTS.NPCs.Constructs
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/TidalConstructGore1"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/TidalConstructGore2"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/TidalConstructGore3"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/TidalConstructGore4"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/TidalConstructGore5"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore1"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore2"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore3"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore4"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore5"), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 				if (projectiles[0] != -1 && projectiles[1] != -1 && projectiles[2] != -1 && projectiles[3] != -1 && Main.netMode != NetmodeID.Server)

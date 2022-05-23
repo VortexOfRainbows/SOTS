@@ -43,8 +43,8 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(210, 160, 95));
 			MineResist = 5.0f;
 			MinPick = 250;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)

@@ -53,8 +53,10 @@ Low Priority Objectives:
 
 5/21/22 & 5/22/22
 1. More Porting!
-2. 5720 -> 5022 -> 4780
+2. 5720 -> 5022 -> 4780 -> 4845 (errors increased due to a weird interaction with spawning gore)
+	1. Basically, gore now thinks that there is 4 errors for every thing when there was really 2. I fixed 1 of the 2 for all gores.
 3. Went through some projectile related folders
+4. Started on some item folders and global classes (WIP)
 
 5/18/22
 1. 5860 -> 5720

@@ -71,8 +71,8 @@ namespace SOTS.Items.Otherworld.Blocks
 			//AddMapEntry(new Color(0, 0, 0, 0));
 			MineResist = 1.0f;
 			MinPick = 0;
-			soundType = 3;
-			soundStyle = 53;
+			SoundType = 3;
+			SoundStyle = 53;
 			DustType = DustID.Electric;
 		}
         public override bool KillSound(int i, int j)

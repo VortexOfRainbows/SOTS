@@ -172,7 +172,7 @@ namespace SOTS.NPCs.Constructs
 						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 					}
 					for (int i = 1; i <= 7; i++)
-						Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
+						Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
 					for (int i = 0; i < 9; i++)
 						Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
                 }

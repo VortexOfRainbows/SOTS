@@ -1170,17 +1170,17 @@ namespace SOTS.NPCs.Boss.Advisor
 					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigAetherDust").Type);
 					Main.dust[dust].velocity *= 5f;
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore1"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore2"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore3"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore4"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore5"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore6"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore7"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore1"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore2"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore3"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore4"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore5"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore6"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore7"), 1f);
 				for (int i = 0; i < 24; i++)
                 {
 					Gore.NewGore(NPC.position + new Vector2((float)(NPC.width * Main.rand.Next(100)) / 100f, (float)(NPC.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, NPC.velocity, Main.rand.Next(61, 64), 1f);
-					Gore.NewGore(NPC.position + new Vector2((NPC.width * Main.rand.Next(100)) / 100f, NPC.height) - Vector2.One * 10f, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+					Gore.NewGore(NPC.position + new Vector2((NPC.width * Main.rand.Next(100)) / 100f, NPC.height) - Vector2.One * 10f, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
 				}
 			}
 		}

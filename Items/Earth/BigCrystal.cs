@@ -50,8 +50,8 @@ namespace SOTS.Items.Earth
 			disableSmartCursor = true;
 			MinPick = 250;
 			DustType = ModContent.DustType<VibrantDust>();
-			soundType = SoundID.Item;
-			soundStyle = 27;
+			SoundType = SoundID.Item;
+			SoundStyle = 27;
 			MineResist = 0.1f;
 		}
         public override bool CanExplode(int i, int j)

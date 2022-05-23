@@ -41,8 +41,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 			AddMapEntry(new Color(180, 150, 20));
 			MineResist = 1.0f;
 			MinPick = 0;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.GoldCoin;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}

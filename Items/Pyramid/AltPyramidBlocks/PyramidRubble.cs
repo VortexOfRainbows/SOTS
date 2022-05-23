@@ -44,7 +44,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.15f));
 			MineResist = 1.5f;
 			MinPick = 0;
-			soundType = SoundID.Tink;
+			SoundType = SoundID.Tink;
 			DustType = 32;
 		}
         public override bool KillSound(int i, int j)
@@ -92,8 +92,8 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.08f));
 			MineResist = 2.0f;
 			MinPick = 110;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)

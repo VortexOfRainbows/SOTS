@@ -55,8 +55,8 @@ namespace SOTS.Items.Earth
 			AddMapEntry(new Color(156, 209, 46), name);
 			DustType = ModContent.DustType<VibrantDust>();
 			disableSmartCursor = true;
-			soundType = SoundID.Item;
-			soundStyle = 27;
+			SoundType = SoundID.Item;
+			SoundStyle = 27;
 			MinPick = 40;
 			MineResist = 0.1f;
 		}

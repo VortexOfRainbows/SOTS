@@ -44,8 +44,8 @@ namespace SOTS.Items.Pyramid
 			drop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
-			soundType = 21;
-			soundStyle = 2;
+			SoundType = 21;
+			SoundStyle = 2;
 			DustType = DustID.Grass;
 		}
 		public override void RandomUpdate(int i, int j)
@@ -125,8 +125,8 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			MinPick = 180;
-			soundType = 21;
-			soundStyle = 2;
+			SoundType = 21;
+			SoundStyle = 2;
 			DustType = DustID.Grass;
 		}
         public override void RandomUpdate(int i, int j)
@@ -202,8 +202,8 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
 			AddMapEntry(new Color(50, 115, 29));
-			soundType = SoundID.Grass;
-			soundStyle = 2;
+			SoundType = SoundID.Grass;
+			SoundStyle = 2;
 			DustType = DustID.Grass;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
@@ -229,8 +229,8 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
 			AddMapEntry(new Color(50, 115, 29));
-			soundType = SoundID.Grass;
-			soundStyle = 2;
+			SoundType = SoundID.Grass;
+			SoundStyle = 2;
 			DustType = DustID.Grass;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1); 
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.AlternateTile, TileObjectData.newTile.Width, 0);

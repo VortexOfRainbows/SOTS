@@ -56,13 +56,13 @@ namespace SOTS.NPCs.Constructs
                     Main.dust[dust].velocity *= 5f;
                 }
                 if(Main.rand.NextBool(3))
-                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore3"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore3"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore4"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore4"), 1f);
                 if (Main.rand.NextBool(3))
-                    Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore5"), 1f);
+                    Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore5"), 1f);
                 for (int i = 0; i < 4; i++)
                     Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
             }

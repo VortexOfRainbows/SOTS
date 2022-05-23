@@ -323,7 +323,7 @@ namespace SOTS.NPCs
 					if (k % 2 == 0)
 						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/HoloEyeGore1"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/HoloEyeGore1"), 1f);
 			}
 		}
 	}

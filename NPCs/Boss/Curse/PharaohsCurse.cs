@@ -892,7 +892,7 @@ namespace SOTS.NPCs.Boss.Curse
 					if (ai2 == 90 && Main.netMode != NetmodeID.Server)
 					{
 						for (int k = 0; k < 6; k++)
-							Gore.NewGore(NPC.Center - new Vector2(16, 16), NPC.velocity * 0.1f, Mod.GetGoreSlot("Gores/Curse/PharaohsMask" + (1 + k)), 1f);
+							Gore.NewGore(NPC.Center - new Vector2(16, 16), NPC.velocity * 0.1f, ModGores.GoreType("Gores/Curse/PharaohsMask" + (1 + k)), 1f);
 						ParticleExplosion();
 						for (int i = 0; i < 3; i++)
 						{

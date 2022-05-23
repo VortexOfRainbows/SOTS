@@ -21,8 +21,8 @@ namespace SOTS.Items.Pyramid
             ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Crystal Statue");		
 			AddMapEntry(new Color(175, 0, 0), name);
-            soundType = 21;
-            soundStyle = 2;
+            SoundType = 21;
+            SoundStyle = 2;
 			MineResist = 2.5f;
 			DustType = 12;
         }

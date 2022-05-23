@@ -55,13 +55,13 @@ namespace SOTS.NPCs
 				/*
 				int num1 = Main.rand.Next(4);
 				if(num1 != 0)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore1"), 1f);
+					Gore.NewGore(npc.position, npc.velocity, ModGores.GoreType("Gores/BlueSlimerGore1"), 1f);
 				if(num1 != 1)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore2"), 1f);
+					Gore.NewGore(npc.position, npc.velocity, ModGores.GoreType("Gores/BlueSlimerGore2"), 1f);
 				if(num1 != 2)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore3"), 1f);
+					Gore.NewGore(npc.position, npc.velocity, ModGores.GoreType("Gores/BlueSlimerGore3"), 1f);
 				if(num1 != 3)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore4"), 1f); */
+					Gore.NewGore(npc.position, npc.velocity, ModGores.GoreType("Gores/BlueSlimerGore4"), 1f); */
 			}
 		}
         public override void ModifyNPCLoot(NPCLoot npcLoot)

@@ -17,7 +17,7 @@ namespace SOTS.Items.Permafrost
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine[Type] = 1000;
 			Main.tileShine2[Type] = true;
-			Main.tileValue[Type] = 420; //above gold
+			Main.tileOreFinderPriority[Type] = 420; //above gold
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
@@ -25,8 +25,8 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			soundType = SoundLoader.CustomSoundType;
-			soundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre1");
+			SoundType = SoundLoader.CustomSoundType;
+			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre1");
 		}
 		public override bool KillSound(int i, int j)
 		{
@@ -70,8 +70,8 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			soundType = SoundLoader.CustomSoundType;
-			soundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
+			SoundType = SoundLoader.CustomSoundType;
+			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
 		}
 		public override bool KillSound(int i, int j)
 		{
@@ -108,8 +108,8 @@ namespace SOTS.Items.Permafrost
 			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidBrick>();
 			AddMapEntry(new Color(96, 111, 215));
-			soundType = SoundLoader.CustomSoundType;
-			soundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
+			SoundType = SoundLoader.CustomSoundType;
+			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
 		}
 	}
 	public class FrigidBrick : ModItem

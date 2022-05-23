@@ -90,7 +90,7 @@ namespace SOTS.NPCs.Constructs
 					Main.dust[dust].velocity *= 5f;
 				}
 				for(int i = 1; i < 8; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NatureConstructGore" + i), 1f);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/NatureConstructGore" + i), 1f);
 				for(int i = 0; i < 9; i++)
 					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61,64), 1f);	
 			}

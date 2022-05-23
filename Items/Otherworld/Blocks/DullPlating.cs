@@ -36,8 +36,8 @@ namespace SOTS.Items.Otherworld.Blocks
 			AddMapEntry(new Color(30, 30, 30));
 			MineResist = 2f;
 			MinPick = 60;
-			soundType = 21;
-			soundStyle = 2;
+			SoundType = 21;
+			SoundStyle = 2;
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override bool CanExplode(int i, int j)

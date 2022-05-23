@@ -125,8 +125,8 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Tainted Keystone Shard");
 			AddMapEntry(new Color(24, 24, 24), name);
-			soundType = 2;
-			soundStyle = 27;
+			SoundType = 2;
+			SoundStyle = 27;
 			DustType = 195;
 		}
         public override bool CanExplode(int i, int j)

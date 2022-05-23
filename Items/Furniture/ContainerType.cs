@@ -20,7 +20,7 @@ namespace SOTS.Items.Furniture
             Main.tileSpelunker[Type] = true;
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1200;
-            Main.tileValue[Type] = 500;
+            Main.tileOreFinderPriority[Type] = 500;
         }
         protected virtual int ChestDrop => ItemID.Chest;
         protected virtual int DustType => DustID.Dirt;

@@ -41,8 +41,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 			AddMapEntry(new Color(150, 130, 20));
 			MineResist = 2.0f;
 			MinPick = 0;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.GoldCoin;
         }
         public override bool Dangersense(int i, int j, Player player)

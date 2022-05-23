@@ -184,12 +184,12 @@ namespace SOTS.NPCs.Constructs
 						Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Torch, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
 					}
 					for (int i = 1; i <= 7; i++)
-						Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);
+						Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);
 					for (int i = 0; i < 9; i++)
 						Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 					for (int i = 0; i < probes.Count; i++)
 					{
-						Gore.NewGore(probes[i].position - new Vector2(13, 13), NPC.velocity, Mod.GetGoreSlot("Gores/InfernoConstruct/InfernoChildGore"), 1f);
+						Gore.NewGore(probes[i].position - new Vector2(13, 13), NPC.velocity, ModGores.GoreType("Gores/InfernoConstruct/InfernoChildGore"), 1f);
 						for (int k = 0; k < 6; k++)
 						{
 							Dust dust = Dust.NewDustDirect(probes[i].position, 0, 0, DustID.Torch);

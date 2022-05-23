@@ -55,7 +55,7 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Strange Fruit");
 			AddMapEntry(new Color(185, 20, 40), name);
 			TileObjectData.addTile(Type);
-			soundType = SoundID.Grass;
+			SoundType = SoundID.Grass;
 			MineResist = 0.5f;
 			DustType = DustID.Grass;
 

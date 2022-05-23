@@ -44,14 +44,14 @@ namespace SOTS.Projectiles.Minions
 				int speedX = Main.rand.Next(7);
 				if (Main.rand.Next(5) <= 1)
 				{
-					Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Mod.GetGoreSlot("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
+					Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, ModGores.GoreType("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
 					int goreIndex = Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Main.rand.Next(61, 64), 1f);
 					Main.gore[goreIndex].scale = 0.65f;
 				}
 				if (Main.rand.Next(5) <= 1)
 				{
 					if (i == 0 || i == 2)
-						Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Mod.GetGoreSlot("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
+						Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, ModGores.GoreType("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
 				}
 			}
 			Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.45f);

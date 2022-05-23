@@ -220,7 +220,7 @@ namespace SOTS.NPCs
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
 				for (int i = 1; i <= 3; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/TwilightScouter/TwilightScouterGore" + i), 1f);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/TwilightScouter/TwilightScouterGore" + i), 1f);
 			}
 		}
 	}

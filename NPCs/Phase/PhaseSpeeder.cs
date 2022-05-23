@@ -320,7 +320,7 @@ namespace SOTS.NPCs.Phase
 					}
 				}
 				for (int i = 1; i <= 3; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/PhaseSpeeder/PhaseSpeederGore" + i), 1f);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/PhaseSpeeder/PhaseSpeederGore" + i), 1f);
 			}
 		}
 	}

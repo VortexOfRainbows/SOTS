@@ -70,8 +70,8 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(44, 12, 62));
 			MineResist = 2f;
 			MinPick = 250;
-			soundType = 21;
-			soundStyle = 2;
+			SoundType = 21;
+			SoundStyle = 2;
 			DustType = Mod.Find<ModDust>("AcedianDust").Type;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}

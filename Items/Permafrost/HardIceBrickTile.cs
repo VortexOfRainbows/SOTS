@@ -20,8 +20,8 @@ namespace SOTS.Items.Permafrost
 			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<HardIceBrick>();
 			AddMapEntry(new Color(148, 179, 240));
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 		}
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {

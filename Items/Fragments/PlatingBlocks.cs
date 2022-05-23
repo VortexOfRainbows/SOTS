@@ -28,8 +28,8 @@ namespace SOTS.Items.Fragments
 		{
 			AddMapEntry(new Color(165, 179, 198));
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.Silver;
 		}
 		public virtual bool canGlow(int i, int j)
@@ -95,8 +95,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<NaturePlating>();
 			AddMapEntry(SOTSTile.NaturePlatingColor);
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.Tungsten;
 		}
 		public override bool canGlow(int i, int j)
@@ -154,8 +154,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<EarthenPlating>();
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.Iron;
 		}
 		public override bool canGlow(int i, int j)
@@ -215,8 +215,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<PermafrostPlating>();
 			AddMapEntry(new Color(165, 179, 198));
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.Silver;
 		}
 		public override bool canGlow(int i, int j)
@@ -280,8 +280,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<TidePlating>();
 			AddMapEntry(new Color(35, 37, 52));
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.Lead; //demonite
 		}
 		public override bool canGlow(int i, int j)
@@ -343,8 +343,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<EvilPlating>();
 			AddMapEntry(new Color(98, 47, 126));
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = 14; //demonite
 		}
 		public override bool canGlow(int i, int j)
@@ -404,8 +404,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<ChaosPlating>();
 			AddMapEntry(new Color(82, 85, 123));
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.Platinum;
 		}
 		public override bool canGlow(int i, int j)
@@ -470,8 +470,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<InfernoPlating>();
 			AddMapEntry(new Color(73, 35, 59));
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = DustID.Iron;
 		}
         public override bool CreateDust(int i, int j, ref int type)
@@ -542,8 +542,8 @@ namespace SOTS.Items.Fragments
 			drop = ModContent.ItemType<UltimatePlating>();
 			AddMapEntry(new Color(82, 85, 123));
 			MineResist = 1.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = 146; //Titanium
 		}
 		public override bool CreateDust(int i, int j, ref int type)

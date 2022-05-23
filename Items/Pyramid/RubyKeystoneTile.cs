@@ -35,8 +35,8 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(115, 0, 0), name);
 			disableSmartCursor = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			soundType = SoundID.NPCHit;
-			soundStyle = 1;
+			SoundType = SoundID.NPCHit;
+			SoundStyle = 1;
 		}
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {

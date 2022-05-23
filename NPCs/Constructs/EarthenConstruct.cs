@@ -506,11 +506,11 @@ namespace SOTS.NPCs.Constructs
                 int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<BigEarthDust>());
                 Main.dust[dust].velocity *= 5f;
             }
-            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore2"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore3"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore4"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/EarthenConstructGore5"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore2"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore3"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore4"), 1f);
+            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore5"), 1f);
             for (int i = 0; i < 9; i++)
                 Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
             gennedGore = true;

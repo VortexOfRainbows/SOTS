@@ -321,10 +321,10 @@ namespace SOTS.NPCs
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, 32, (float)(2 * hitDirection), -2f);
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/WallMimicGore1"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/WallMimicGore2"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/WallMimicGore3"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/WallMimicGore4"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore1"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore2"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore3"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore4"), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 			}

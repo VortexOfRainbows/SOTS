@@ -54,25 +54,25 @@ namespace SOTS.Items.Chaos
 		{
 			Main.tileShine[Type] = 200;
 			Main.tileShine2[Type] = true;
-			Main.tileValue[Type] = 1200;
+			Main.tileOreFinderPriority[Type] = 1200;
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = false;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<PhaseOre>();
+			ItemDrop = ModContent.ItemType<PhaseOre>();
 			//AddMapEntry(VoidPlayer.ChaosPink);
 			MineResist = 3f;
 			MinPick = 180; //adamantite/chlorophyte level
-			soundType = 3;
-			soundStyle = 53;
+			SoundType = 3;
+			SoundStyle = 53;
 			DustType = ModContent.DustType<CopyDust4>(); //DustID.PinkFlame
 		}
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Terraria.Audio.SoundEngine.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.25f, 0.6f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit, (int)pos.X, (int)pos.Y, 53, 0.25f, 0.6f);
 			int type = Main.rand.Next(3) + 1;
 			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/VibrantOre" + type), 1.85f, -0.2f + Main.rand.NextFloat(0.1f, 0.2f));
 			return false;

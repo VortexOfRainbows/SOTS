@@ -80,7 +80,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					if(Main.rand.NextBool(2))
 					{
-						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
 					}
 				}
 			}
@@ -107,7 +107,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					if (Main.rand.NextBool(2))
 					{
-						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
 					}
 				}
 			}
@@ -143,11 +143,11 @@ namespace SOTS.NPCs.Constructs
 					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigAetherDust").Type);
 					Main.dust[dust].velocity *= 5f;
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 				if(Main.netMode != 2)

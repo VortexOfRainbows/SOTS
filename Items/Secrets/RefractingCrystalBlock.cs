@@ -35,8 +35,8 @@ namespace SOTS.Items.Secrets
 			AddMapEntry(new Color(120, 90, 90));
 			MineResist = 15.5f;
 			MinPick = 9999;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = 32;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

@@ -5,7 +5,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
-
+using Terraria.DataStructures;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Projectiles.Celestial;
 
 namespace SOTS.Items.Celestial
 {
@@ -30,7 +32,7 @@ namespace SOTS.Items.Celestial
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item22;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("PlasmaCutter").Type; 
+            Item.shoot = ModContent.ProjectileType<PlasmaCutter>(); 
             Item.shootSpeed = 0f;
 			Item.channel = true;
 			Item.axe = 200;
@@ -54,7 +56,7 @@ namespace SOTS.Items.Celestial
 			Item.useAnimation = useTime;
 			return base.UseTimeMultiplier(player);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			bool summon = true;
 			for (int l = 0; l < Main.projectile.Length; l++)
@@ -70,14 +72,14 @@ namespace SOTS.Items.Celestial
 				Item.UseSound = SoundID.Item22;
 				if(summon)
 				{
-					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, (float)Math.Atan2(speedY, speedX) + 90f, 0);
+					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (float)Math.Atan2(velocity.Y, velocity.X) + 90f, 0);
 				}
 			}
 			return false; 
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "SanguiteBar", 10).AddIngredient(null, "ChainedPlasma", 1).AddIngredient(ItemID.ButchersChainsaw, 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<SanguiteBar>(10).AddIngredient<ChainedPlasma>(1).AddIngredient(ItemID.ButchersChainsaw, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

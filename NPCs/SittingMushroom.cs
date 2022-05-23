@@ -152,7 +152,7 @@ namespace SOTS.NPCs
 						Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, Mod.Find<ModProjectile>("SporeCloud").Type, damage2, 2f, Main.myPlayer);
 				}
 				Terraria.Audio.SoundEngine.PlaySound(2, NPC.Center, 34);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SittingMushroomGore1"), 1f);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore1"), 1f);
 			}
 		}
 	}

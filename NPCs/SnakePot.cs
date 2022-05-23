@@ -43,10 +43,10 @@ namespace SOTS.NPCs
 				NPC.ai[0] = 0;
 			if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
 			{
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore1"), NPC.scale);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore5"), NPC.scale);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore12"), NPC.scale);
-				Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/Pots/PyramidPotGore13"), NPC.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore1"), NPC.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore5"), NPC.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore12"), NPC.scale);
+				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore13"), NPC.scale);
 			}
 		}
 		public override void AI()
@@ -155,18 +155,18 @@ namespace SOTS.NPCs
 				int rand = Main.rand.Next(3);
 				if (rand == 0)
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore1"), NPC.scale);
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore2"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore1"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore2"), NPC.scale);
 				}
 				else if(rand == 1)
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore1"), NPC.scale);
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore3"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore1"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore3"), NPC.scale);
 				}
 				else
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore2"), NPC.scale);
-					Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/SnakeGore3"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore2"), NPC.scale);
+					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore3"), NPC.scale);
 				}
 			}
 			else

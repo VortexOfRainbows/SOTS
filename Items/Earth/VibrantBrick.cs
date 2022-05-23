@@ -47,8 +47,8 @@ namespace SOTS.Items.Earth
 			name.SetDefault("Vibrant Brick");
 			AddMapEntry(new Color(181, 220, 97), name);
 			MineResist = 1.0f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
 		public bool canGlow(int i, int j)

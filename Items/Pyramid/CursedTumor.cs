@@ -42,8 +42,8 @@ namespace SOTS.Items.Pyramid
 			drop = ModContent.ItemType<CursedTumor>();
 			AddMapEntry(new Color(105, 75, 146));
 			MineResist = 1.5f;
-			soundType = SoundID.NPCHit;
-			soundStyle = 1;
+			SoundType = SoundID.NPCHit;
+			SoundStyle = 1;
 			DustType = ModContent.DustType<CurseDust3>();
 		}
         public override void WalkDust(ref int DustType, ref bool makeDust, ref Color color)

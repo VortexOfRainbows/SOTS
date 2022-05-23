@@ -21,8 +21,8 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Mana Statue");		
 			AddMapEntry(new Color(0, 0, 155), name);
-            soundType = 21;
-            soundStyle = 2;
+            SoundType = 21;
+            SoundStyle = 2;
             TileObjectData.addTile(Type);
 			MineResist = 2.5f;
 			DustType = 15;

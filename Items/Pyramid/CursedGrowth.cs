@@ -53,8 +53,8 @@ namespace SOTS.Items.Pyramid
 			DustType = DustID.GoldCoin;
 			AnimationFrameHeight = 36;
 			DustType = ModContent.DustType<CurseDust3>();
-			soundType = SoundID.NPCHit;
-			soundStyle = 1;
+			SoundType = SoundID.NPCHit;
+			SoundStyle = 1;
 			MineResist = 0.1f;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)

@@ -42,8 +42,8 @@ namespace SOTS.Items.Pyramid
 			drop = Mod.Find<ModItem>("CursedHiveBlock").Type;
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			//DustType = ModContent.DustType<CurseDust>(); //too much light
 			DustType = 32;
 		}
@@ -75,8 +75,8 @@ namespace SOTS.Items.Pyramid
 			drop = Mod.Find<ModItem>("CursedHiveBlock").Type;
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			SoundType = SoundID.Tink;
+			SoundStyle = 2;
 			//DustType = ModContent.DustType<CurseDust>(); //too much light
 			DustType = 32;
 		}

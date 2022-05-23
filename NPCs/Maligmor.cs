@@ -226,7 +226,7 @@ namespace SOTS.NPCs
 				for(int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45)) - new Vector2(9, 9);
-					Gore.NewGore(NPC.Center + circular, circular * 0.15f, Mod.GetGoreSlot("Gores/Maligmor/MaligmorGore" + i), 1f);
+					Gore.NewGore(NPC.Center + circular, circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);
 				}
 				for (int i = 0; i < 72; i++)
 				{
