@@ -5,6 +5,8 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Chaos;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Chaos
 {
@@ -44,8 +46,8 @@ namespace SOTS.Items.Chaos
 			return new Vector2(-2, 0);
 		}
 		int counter = 0;
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			Item.reuseDelay = 0;
 			counter++;
 			if (counter == 5)
@@ -56,11 +58,11 @@ namespace SOTS.Items.Chaos
 			{
 				counter = 0;
 				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38, (int)position.X, (int)position.Y);
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<ChaosBallFriendly>(), damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ChaosBallFriendly>(), damage, knockback, player.whoAmI);
 			}
 			else
 			{
-				Projectile proj = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+				Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
 				proj.GetGlobalProjectile<SOTSProjectile>().affixID = -3; //this sould sync automatically on the SOTSProjectile end
 			}
 			return false;

@@ -309,7 +309,7 @@ namespace SOTS.NPCs.Inferno
 				int num = 0;
 				while ((double)num < damage / (double)NPC.lifeMax * 20.0)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Fire, (float)(2 * hitDirection), -2f, 0, default, 0.5f);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Torch, (float)(2 * hitDirection), -2f, 0, default, 0.5f);
 					dust.scale *= sans? 1.1f : 1.75f;
 					num++;
 				}
@@ -331,7 +331,7 @@ namespace SOTS.NPCs.Inferno
 				}
 				for (int k = 0; k < 30; k++)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Fire, (float)(2 * hitDirection), -2f, 0, default, 1f);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Torch, (float)(2 * hitDirection), -2f, 0, default, 1f);
 					dust.scale *= sans ? 1.25f : 2.5f;
 				}
 			}

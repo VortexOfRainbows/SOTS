@@ -43,7 +43,7 @@ namespace SOTS.Items.Celestial
 					player.buffImmune[i] = true;
                 }
             }
-			player.allDamage += 0.15f;
+			player.GetDamage(DamageClass.Generic) += 0.15f;
 		}
 	}
 }

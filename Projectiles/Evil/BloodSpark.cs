@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Evil
 				{
 					Vector2 circularLocation = new Vector2(-5, 0).RotatedBy(MathHelper.ToRadians(randomDirection + i));
 					bool blood = Main.rand.NextBool(5);
-					int type = DustID.Fire;
+					int type = DustID.Torch;
 					if (blood)
 					{
 						type = DustID.Blood;
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Evil
 					{
 						Vector2 circularLocation = new Vector2(-6 * j, 0).RotatedBy(MathHelper.ToRadians(randomDirection));
 						bool blood = Main.rand.NextBool(5);
-						int type = DustID.Fire;
+						int type = DustID.Torch;
 						if (blood)
 						{
 							type = DustID.Blood;

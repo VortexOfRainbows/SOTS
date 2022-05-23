@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using SOTS.Void;
 using System;
+using SOTS.Projectiles.Laser;
 
 namespace SOTS.Items.Celestial
 {
@@ -27,7 +28,7 @@ namespace SOTS.Items.Celestial
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = true;            
-			Item.shoot = Mod.Find<ModProjectile>("ContinuumSphere").Type; 
+			Item.shoot = ModContent.ProjectileType<ContinuumSphere>(); 
 			Item.shootSpeed = 1;
 			Item.knockBack = 3;
 			Item.channel = true;
@@ -43,7 +44,7 @@ namespace SOTS.Items.Celestial
 		{
 			return 1f;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			bool summon = true;
 			for (int l = 0; l < Main.projectile.Length; l++)

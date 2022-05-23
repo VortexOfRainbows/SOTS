@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Tide
 			Main.dust[num1].velocity *= 0.1f;
 			if(Main.rand.NextBool(3))
 			{
-				num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, DustID.Fire);
+				num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, DustID.Torch);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.8f;
 				Main.dust[num1].velocity += Projectile.velocity * -0.1f;

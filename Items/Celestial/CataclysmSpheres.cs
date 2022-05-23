@@ -5,6 +5,7 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Projectiles.Celestial;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Celestial
 {
@@ -36,20 +37,20 @@ namespace SOTS.Items.Celestial
 			Item.noUseGraphic = true;
 			Item.UseSound = SoundID.Item1;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			int numberProjectiles = 5;
 			for (int i = -2; i < numberProjectiles - 2; i++)
 			{
 				float mult = 1.0f - Math.Abs(i * 0.05f);
-				Vector2 perturbedSpeed = new Vector2(speedX * mult, speedY * mult).RotatedBy(MathHelper.ToRadians(2.5f * i));
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+				Vector2 perturbedSpeed = new Vector2(velocity.X * mult, velocity.Y * mult).RotatedBy(MathHelper.ToRadians(2.5f * i));
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 			}
 			return false; 
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 10).AddIngredient(ModContent.ItemType<ArclightOrbs>(), 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<SanguiteBar>(10).AddIngredient<ArclightOrbs>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

@@ -62,7 +62,7 @@ namespace SOTS.Items
 			{
 				type = DustID.t_Meteor;
 				if (Main.rand.NextBool(3))
-					type = DustID.Fire;
+					type = DustID.Torch;
 			}
 			if (style == 7)
 			{
@@ -91,7 +91,7 @@ namespace SOTS.Items
 				return false;
             }
 			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, type);
-			if (type == 59 || type == 60 || type == DustID.Fire)
+			if (type == 59 || type == 60 || type == DustID.Torch)
 			{
 				dust.scale *= 1.4f;
 			}			

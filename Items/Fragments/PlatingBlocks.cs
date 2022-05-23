@@ -478,7 +478,7 @@ namespace SOTS.Items.Fragments
 		{
 			type = DustType;
 			if (Main.rand.NextBool(3))
-				type = DustID.Fire;
+				type = DustID.Torch;
 			return true;
         }
         public override bool canGlow(int i, int j)

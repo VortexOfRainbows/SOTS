@@ -7,6 +7,7 @@ using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Chaos;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Chaos
 {
@@ -37,10 +38,10 @@ namespace SOTS.Items.Chaos
 			Item.noUseGraphic = true;
 			Item.crit = 10;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15)));
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15)));
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 			return false; 
 		}
 		public override void UpdateInventory(Player player)

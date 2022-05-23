@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Inferno
 				dust.scale *= 1.4f;
 				dust.alpha = Projectile.alpha; 
 
-				dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Fire);
+				dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale *= 1.1f;
 				dust.velocity *= 1.2f;
@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			else
             {
-				Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Fire);
+				Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 1.3f;
 				dust.velocity *= 0.1f;

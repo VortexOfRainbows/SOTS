@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Celestial;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Celestial
 {
@@ -16,18 +17,18 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(1929); //chaingun
+			Item.CloneDefaults(ItemID.ChainGun); //chaingun
 			Item.damage = 42;
             Item.width = 48;   
             Item.height = 32;   
-			Item.rare = 8;
+			Item.rare = ItemRarityID.Yellow;
 			Item.useTime = 4;
 			Item.useAnimation = 4;
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.shootSpeed = 15.5f;
 		}
-		public override bool ConsumeAmmo(Player p)
-		{
+        public override bool CanConsumeAmmo(Item ammo, Player player)
+        {
 			if(Main.rand.Next(3) >= 1)
 			{
 				return false;
@@ -43,37 +44,37 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "SanguiteBar", 15).AddIngredient(ItemID.ChainGun, 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient(ItemID.ChainGun, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		int num = 0;
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			num++;
 			if (num % 30 == 0)
 			{
-				Vector2 randomized = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-60, 60)));
-				Projectile.NewProjectile(position, randomized * 0.25f, ModContent.ProjectileType<DimensionalFlame>(), damage, knockBack, player.whoAmI);
+				Vector2 randomized = velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-60, 60)));
+				Projectile.NewProjectile(source, position, randomized * 0.25f, ModContent.ProjectileType<DimensionalFlame>(), damage, knockback, player.whoAmI);
 			}
 			if(num % 2 == 0)
 				for (int i = 0; i < Main.maxProjectiles; i++)
 				{
 					Projectile projectile = Main.projectile[i];
-					if (Projectile.active && Projectile.owner == player.whoAmI && Projectile.type == ModContent.ProjectileType<DimensionalFlame>())
+					if (projectile.active && projectile.owner == player.whoAmI && projectile.type == ModContent.ProjectileType<DimensionalFlame>())
 					{
-						Vector2 center = new Vector2(Projectile.Center.X, Projectile.Center.Y);
+						Vector2 center = new Vector2(projectile.Center.X, projectile.Center.Y);
 						Vector2 toCursor = Main.MouseWorld - center;
-						Vector2 toVelo = new Vector2((float)Math.Sqrt(speedX * speedX + speedY * speedY), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-1, 1)) + toCursor.ToRotation());
-						Projectile.NewProjectile(center, toVelo, type, damage, knockBack, player.whoAmI);
+						Vector2 toVelo = new Vector2(velocity.Length(), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-1, 1)) + toCursor.ToRotation());
+						Projectile.NewProjectile(source, center, toVelo, type, damage, knockback, player.whoAmI);
 					}
 				}
 			if (num % 3 == 0)
 			{
-				Projectile.NewProjectile(position.X + (speedY * 0.2f), position.Y - (speedX * 0.2f), speedX, speedY, type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position.X + (velocity.Y * 0.2f), position.Y - (velocity.X * 0.2f), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
 				return false;
 			}
 			if(num % 3 == 1)
 			{
-				Projectile.NewProjectile(position.X - (speedY * 0.2f), position.Y + (speedX * 0.2f), speedX, speedY, type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position.X - (velocity.Y * 0.2f), position.Y + (velocity.X * 0.2f), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
 				return false;
 			}
 			return true; 

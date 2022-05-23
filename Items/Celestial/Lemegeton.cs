@@ -5,6 +5,7 @@ using SOTS.Items.Inferno;
 using SOTS.Projectiles.Inferno;
 using SOTS.Void;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,11 +37,11 @@ namespace SOTS.Items.Celestial
 			Item.buffType = ModContent.BuffType<InfernalDefense>();
 			Item.shoot = ModContent.ProjectileType<LemegetonWispRed>();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispRed>(), damage, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispGreen>(), (int)(damage * 2.00f), knockBack, player.whoAmI);
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispPurple>(), (int)(damage * 0.75f), knockBack, player.whoAmI);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<LemegetonWispRed>(), damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<LemegetonWispGreen>(), (int)(damage * 2.00f), knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<LemegetonWispPurple>(), (int)(damage * 0.75f), knockback, player.whoAmI);
 			player.AddBuff(Item.buffType, 2);
 			return false;
 		}

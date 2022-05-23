@@ -6,6 +6,7 @@ using SOTS.Buffs.MinionBuffs;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -65,11 +66,14 @@ namespace SOTS.Items.Chaos
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterGlow").Value;
 			}
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			player.AddBuff(Item.buffType, 2);
-			position = Main.MouseWorld;
-			return true;
+			if (player.altFunctionUse != 2)
+			{
+				player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
+				player.AddBuff(Item.buffType, 2);
+			}
+			return false;
 		}
 		public override void AddRecipes()
 		{

@@ -181,7 +181,7 @@ namespace SOTS.NPCs.Constructs
 					for (int k = 0; k < 30; k++)
 					{
 						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
-						Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
+						Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Torch, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
 					}
 					for (int i = 1; i <= 7; i++)
 						Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);
@@ -192,7 +192,7 @@ namespace SOTS.NPCs.Constructs
 						Gore.NewGore(probes[i].position - new Vector2(13, 13), NPC.velocity, Mod.GetGoreSlot("Gores/InfernoConstruct/InfernoChildGore"), 1f);
 						for (int k = 0; k < 6; k++)
 						{
-							Dust dust = Dust.NewDustDirect(probes[i].position, 0, 0, DustID.Fire);
+							Dust dust = Dust.NewDustDirect(probes[i].position, 0, 0, DustID.Torch);
 							dust.scale *= 2.1f;
 						}
 					}
@@ -243,7 +243,7 @@ namespace SOTS.NPCs.Constructs
 			targetRotateLength = 72;
 			if (Main.rand.NextBool(7))
             {
-				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Fire);
+				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Torch);
 				dust.scale *= 1.6f;
 				dust.noGravity = true;
 				dust.velocity *= 0.2f;

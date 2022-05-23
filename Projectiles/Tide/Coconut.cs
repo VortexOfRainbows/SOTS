@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Tide
 			for(int i = 0; i < 2; i++)
 			{
 				Vector2 circularPos = new Vector2(7, -7).RotatedBy(Projectile.rotation) * Projectile.scale;
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) + circularPos - new Vector2(5), 0, 0, DustID.Fire);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) + circularPos - new Vector2(5), 0, 0, DustID.Torch);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				Main.dust[num1].scale = Projectile.scale + 0.2f;
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Tide
 			int RandMod = (int)Projectile.ai[0];
 			for (int i = 0; i < 10 + RandMod * 2; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.Fire);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.Torch);
 				Main.dust[num1].velocity *= 1.8f * (0.2f + 0.7f * Projectile.scale);
 				Main.dust[num1].scale = Projectile.scale + 0.6f;
 			}

@@ -382,7 +382,7 @@ namespace SOTS.Items.Furniture.Nature
 			{
 				if (Main.rand.Next(40) == 0)
 				{
-					int dust = Dust.NewDust(new Vector2(i * 16, (float)(j * 16 - 6)), 16, 16, DustID.Fire, 0.0f, 0.0f, 0, new Color(), 1.5f);
+					int dust = Dust.NewDust(new Vector2(i * 16, (float)(j * 16 - 6)), 16, 16, DustID.Torch, 0.0f, 0.0f, 0, new Color(), 1.5f);
 					Main.dust[dust].velocity.Y -= 2f;
 					Main.dust[dust].noGravity = true;
 				}

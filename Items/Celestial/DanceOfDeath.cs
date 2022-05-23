@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Celestial;
+using SOTS.Items.Evil;
+using SOTS.Items.Pyramid;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Celestial
 {
@@ -38,14 +41,14 @@ namespace SOTS.Items.Celestial
         }
         public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "SanguiteBar", 15).AddIngredient(null, "TomeOfTheReaper", 1).AddIngredient(null, "ShiftingSands", 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient<TomeOfTheReaper>(1).AddIngredient<ShiftingSands>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			for(int i = 0; i < 4; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(90 * i)); 
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+				Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(90 * i)); 
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 			}
 			return false; 
 		}

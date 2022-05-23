@@ -57,7 +57,7 @@ namespace SOTS.Items
                         {
                             Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(360f * j / amt));
                             circularLocation.X *= 0.6f;
-                            var index = Dust.NewDust(player.Center + circularLocation - new Vector2(5), 0, 0, DustID.Fire, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 5f - i * 0.8f);
+                            var index = Dust.NewDust(player.Center + circularLocation - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 5f - i * 0.8f);
                             circularLocation = circularLocation.SafeNormalize(Vector2.Zero) * 7.5f;
                             circularLocation.X -= player.velocity.X * (1.5f + (i * 0.4f));
                             if(i == 0)
@@ -108,7 +108,7 @@ namespace SOTS.Items
                     for (int i = 0; i < 8; i++)
                     {
                         position += new Vector2(3 * size, 0).RotatedBy(rotateDiff + MathHelper.ToRadians(90 * j));
-                        Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, DustID.Fire, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.6f * size);
+                        Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.6f * size);
                         dust.velocity *= 0.5f;
                         dust.velocity = velocity;
                         dust.noGravity = true;
@@ -123,7 +123,7 @@ namespace SOTS.Items
                     for (int i = 0; i < 8; i++)
                     {
                         position += new Vector2(4 * size, 0).RotatedBy(rotateDiff + MathHelper.ToRadians(144 * j));
-                        Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, DustID.Fire, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.2f * size);
+                        Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.2f * size);
                         dust.velocity *= 0.5f;
                         dust.velocity = velocity;
                         dust.noGravity = true;
@@ -138,7 +138,7 @@ namespace SOTS.Items
                     for (int i = 0; i < 8; i++)
                     {
                         position += new Vector2(3 * size, 0).RotatedBy(rotateDiff + MathHelper.ToRadians(120 * j));
-                        Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, DustID.Fire, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.5f * size);
+                        Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.5f * size);
                         dust.velocity *= 0.5f;
                         dust.velocity = velocity;
                         dust.noGravity = true;
@@ -151,7 +151,7 @@ namespace SOTS.Items
                 for (int i = 0; i < 24; i++)
                 {
                     Vector2 spawn = position + new Vector2(12 * size, 0).RotatedBy(MathHelper.ToRadians(15 * i));
-                    Dust dust = Dust.NewDustDirect(spawn - new Vector2(5), 0, 0, DustID.Fire, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.5f * size);
+                    Dust dust = Dust.NewDustDirect(spawn - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 3.5f * size);
                     dust.velocity *= 0.5f;
                     dust.velocity = velocity;
                     dust.noGravity = true;
@@ -285,7 +285,7 @@ namespace SOTS.Items
                             length = 2;
                         for(int j = 0; j < length; j++)
                         {
-                            var index = Dust.NewDust(new Vector2(player.Center.X, player.position.Y + (-j + 1) * (height + num3) + Main.rand.Next(j * player.height)) + player.velocity * (1.5f - i) - new Vector2(5), 0, (int)(8 * player.gravDir * (-j + 1)), DustID.Fire, -player.velocity.X * 0.5f, player.velocity.Y * 0.5f, 50, new Color(), 3f);
+                            var index = Dust.NewDust(new Vector2(player.Center.X, player.position.Y + (-j + 1) * (height + num3) + Main.rand.Next(j * player.height)) + player.velocity * (1.5f - i) - new Vector2(5), 0, (int)(8 * player.gravDir * (-j + 1)), DustID.Torch, -player.velocity.X * 0.5f, player.velocity.Y * 0.5f, 50, new Color(), 3f);
                             Main.dust[index].velocity.X *= 0.65f;
                             Main.dust[index].velocity.Y *= 0.65f;
                             Main.dust[index].noGravity = true;

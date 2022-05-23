@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             Vector2 atLoc = Projectile.Center;
             Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.8f, -0.15f);
-            DustHelper.DrawStar(atLoc, DustID.Fire, 4, 4.5f, 1.5f, 1.85f, 0.75f, 0.75f, true, 10, 0);
+            DustHelper.DrawStar(atLoc, DustID.Torch, 4, 4.5f, 1.5f, 1.85f, 0.75f, 0.75f, true, 10, 0);
             for (int i = 0; i < 360; i += 10)
             {
                 Vector2 circularLocation = new Vector2(24, 0).RotatedBy(MathHelper.ToRadians(-i));
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 float mult = circularLocation.Length() / 16f;
                 if (Main.rand.NextBool(3))
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, DustID.Fire);
+                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, DustID.Torch);
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
                     dust.velocity += -ogCL * (4f + 2f * Projectile.ai[0]) * mult;
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                     Vector2 circularLocation = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 90));
                     if (Main.rand.NextBool(4))
                     {
-                        Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, DustID.Fire);
+                        Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, DustID.Torch);
                         dust.noGravity = true;
                         dust.velocity *= 0.5f + i * 0.1f;
                         dust.velocity += circularLocation * (0.5f + i * 0.5f);

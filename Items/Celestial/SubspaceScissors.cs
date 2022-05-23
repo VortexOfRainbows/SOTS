@@ -4,6 +4,7 @@ using Terraria.ID;
 using SOTS.Void;
 using Terraria.ModLoader;
 using SOTS.Projectiles.Crushers;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Celestial
 {
@@ -34,7 +35,7 @@ namespace SOTS.Items.Celestial
             Item.noUseGraphic = true; 
             Item.noMelee = true;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			return player.ownedProjectileCounts[type] <= 0; 
 		}
