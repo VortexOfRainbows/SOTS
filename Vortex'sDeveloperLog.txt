@@ -51,6 +51,11 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+5/23/22
+1. Ported a handful of sounds + a ton of global NPC drop related things
+2. 4845 -> 5243 (Audio rework from Mirsario) -> 4671
+3. A good chunk was also the removal of Subspace Locket from the mod (temp)
+
 5/21/22 & 5/22/22
 1. More Porting!
 2. 5720 -> 5022 -> 4780 -> 4845 (errors increased due to a weird interaction with spawning gore)

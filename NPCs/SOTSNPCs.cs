@@ -33,6 +33,7 @@ using SOTS.Items.GhostTown;
 using SOTS.NPCs.Phase;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.ItemDropRules;
+using System.Linq;
 
 namespace SOTS.NPCs
 {
@@ -232,10 +233,12 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public static List<int> Zombies = null;
         public override void ModifyGlobalLoot(GlobalLoot globalLoot) //global rules, such as fragments, soulds, ectoplasm
         {
 			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<AlmondMilk>(), 100, 1, 1)); //1% chance for almond milke
+			
+			//globalLoot.Add(ItemDropRule.ByCondition(new Conditions.Biome...)) //Waiting for Tmodloader to support biomes!
+			//	);
 		}
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) //modify loot and vanilla loot
 		{
@@ -244,6 +247,7 @@ namespace SOTS.NPCs
 			{
 				player = Main.player[npc.target];
 			}
+			LeadingConditionRule notExpert = new LeadingConditionRule(new Conditions.NotExpert());
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && player.ZoneForest;
 			if (NPCID.Sets.BelongsToInvasionOldOnesArmy[npc.type])
@@ -254,6 +258,126 @@ namespace SOTS.NPCs
             {
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<AlmondMilk>(), 2, 1)); //guaranteed in expert, 50% in normal
 			}
+			if (npc.type == NPCID.WyvernHead)
+			{
+				npcLoot.Add(ItemDropRule.Common(ItemID.GiantHarpyFeather, 5, 1, 1));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfOtherworld>(), 1, 1, 2));
+			}
+			if (npc.type == NPCID.WallofFlesh)
+			{
+				notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<HungryHunter>(), 1, 1, 1));
+				npcLoot.Add(notExpert);
+			}
+			if (npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail)
+			{
+				LeadingConditionRule leadingConditionRule = new(new Conditions.LegacyHack_IsABoss());
+				leadingConditionRule.OnSuccess(notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>())));
+				npcLoot.Add(leadingConditionRule);
+			}
+			if (npc.type == NPCID.BrainofCthulhu)
+			{
+				notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>(), 1, 1, 1));
+				npcLoot.Add(notExpert);
+			}
+			if (npc.type == NPCID.PossessedArmor)
+			{
+				npcLoot.Add(ItemDropRule.OneFromOptions(30, new int[] { ModContent.ItemType<PossessedHelmet>(), ModContent.ItemType<PossessedChainmail>(), ModContent.ItemType<PossessedGreaves>() }));
+			}
+			if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer) //40% in normal, 50% in expert
+			{
+				notExpert.OnSuccess(new CommonDrop(ModContent.ItemType<AncientSteelBar>(), chanceDenominator: 5, chanceNumerator: 2))
+					.OnFailedConditions(new CommonDrop(ModContent.ItemType<AncientSteelBar>(), chanceDenominator: 2));
+				npcLoot.Add(notExpert);
+			}
+			if (npc.type == ModContent.NPCType<NatureSlime>())
+			{
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BotanicalSymbiote>(), 50, 1, 1));
+			}
+			if (npc.type == ModContent.NPCType<TwilightScouter>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>())
+			{
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GravityAnchor>(), 20, 1, 1));
+			}
+			if (npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<PhaseSpeeder>())
+			{
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TwilightBeads>(), 20, 1, 1));
+			}
+			if (npc.type == ModContent.NPCType<TwilightScouter>())
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThundershockShortbow>(), 50, 1, 1));
+			if (npc.type == ModContent.NPCType<TwilightDevil>())
+				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<GravityAnchor>(), 70, 50));
+			if (npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
+			{
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrushingResistor>(), 50));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectromagneticDeterrent>(), 75));
+				if (npc.type != ModContent.NPCType<OtherworldlyConstructHead2>() && npc.type != ModContent.NPCType<OtherworldlyConstructHead>())
+				{
+					if (npc.type == ModContent.NPCType<NatureConstruct>())
+						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MantisGrip>(), 30));
+					if (npc.type == ModContent.NPCType<EarthenConstruct>())
+						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Earthshaker>(), 30));
+					if (npc.type == ModContent.NPCType<PermafrostConstruct>())
+						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EndothermicAfterburner>(), 30));
+					if (npc.type == ModContent.NPCType<TidalConstruct>())
+						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PiscesPuncher>(), 30));
+					if (npc.type == ModContent.NPCType<EvilConstruct>())
+						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeathSpiral>(), 30));
+					if (npc.type == ModContent.NPCType<InfernoConstruct>())
+						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IncineratorGlove>(), 30));
+					if (npc.type == ModContent.NPCType<ChaosConstruct>())
+						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ParticleRelocator>(), 30));
+				}
+				else
+				{
+					int type = ModContent.ItemType<NaturePlating>();
+					if (npc.type == ModContent.NPCType<NatureConstruct>())
+						type = ModContent.ItemType<NaturePlating>();
+					if (npc.type == ModContent.NPCType<EarthenConstruct>())
+						type = ModContent.ItemType<EarthenPlating>();
+					if (npc.type == ModContent.NPCType<PermafrostConstruct>())
+						type = ModContent.ItemType<PermafrostPlating>();
+					if (npc.type == ModContent.NPCType<TidalConstruct>())
+						type = ModContent.ItemType<TidePlating>();
+					if (npc.type == ModContent.NPCType<EvilConstruct>())
+						type = ModContent.ItemType<EvilPlating>();
+					if (npc.type == ModContent.NPCType<ChaosConstruct>())
+						type = ModContent.ItemType<ChaosPlating>();
+					if (npc.type == ModContent.NPCType<InfernoConstruct>())
+						type = ModContent.ItemType<InfernoPlating>();
+					if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+					{
+						type = ModContent.ItemType<DullPlating>();
+						npcLoot.Add(ItemDropRule.Common(type, 1, 5, 10));
+					}
+					else
+						npcLoot.Add(ItemDropRule.Common(type, 1, 20, 40));
+				}
+				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+					npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PhaseCannon>(), 100));
+			}
+			if (npc.type == NPCID.VoodooDemon || npc.type == NPCID.BoneSerpentHead)
+			{
+				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<FragmentOfInferno>(), 2, 1)); //guaranteed in expert, 50% in normal
+			}
+			if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb)
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CookedMushroom>(), 10));
+			if (npc.type == NPCID.PirateCaptain || npc.type == NPCID.PirateCorsair || npc.type == NPCID.PirateCrossbower || npc.type == NPCID.PirateDeadeye || npc.type == NPCID.Parrot)
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Chocolate>(), 10));
+			if (npc.type == NPCID.PinkJellyfish)
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PinkJellyfishStaff>(), 60));
+			if (npc.type == NPCID.BlueJellyfish || npc.type == NPCID.GreenJellyfish)
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BlueJellyfishStaff>(), 50));
+			if (npc.type == NPCID.ElfCopter)
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HelicopterParts>(), 12));
+			if (npc.type == NPCID.UndeadMiner)
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ManicMiner>(), 50));
+			if (npc.type == NPCID.BlueSlime)
+				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<FireSpitter>(), 240, 200));
+			if (npc.type == NPCID.Crab)
+				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CrabClaw>(), 20, 18));
+			if (npc.type == NPCID.GreekSkeleton)
+				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<OlympianAxe>(), 25, 20));
+			if (ArtificialDebuffs.DebuffNPC.Zombies.Contains(npc.type))
+				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ZombieHand>(), 100, 80));
 		}
         public override void NPCLoot(NPC npc)
 		{
@@ -295,66 +419,10 @@ namespace SOTS.NPCs
 				if (player.ZoneDungeon && Main.rand.NextBool(120))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AvocadoSoup>(), 1);
 
-				if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb)
-					if (Main.rand.NextBool(10))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CookedMushroom>(), 1);
 
 				if (modPlayer.PlanetariumBiome)
 					if (Main.rand.NextBool(100))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DigitalCornSyrup>(), 1);
-
-				if (npc.type == NPCID.WallofFlesh)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HungryHunter>(), 1);
-
-				if (npc.type == NPCID.WyvernHead)
-				{
-					if (Main.rand.NextBool(5))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 1);
-				}
-				if(npc.type == NPCID.VoodooDemon || npc.type == NPCID.BoneSerpentHead)
-				{
-					if(Main.rand.NextBool(2) || Main.expertMode)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(2) + 1);
-				}
-
-				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer)
-				{
-					if (Main.rand.Next(5) <= 1 && !Main.expertMode)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AncientSteelBar>(), 1);
-					if (Main.rand.NextBool(2) && Main.expertMode)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AncientSteelBar>(), 1);
-				}
-
-				if (npc.type == NPCID.PirateCaptain || npc.type == NPCID.PirateCorsair || npc.type == NPCID.PirateCrossbower || npc.type == NPCID.PirateDeadeye || npc.type == NPCID.Parrot)
-				{
-					if (Main.rand.NextBool(10))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Chocolate>(), 1);
-				}
-
-				if (npc.type == NPCID.ElfCopter && Main.rand.NextBool(12))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HelicopterParts>(), 1);
-
-				if (npc.type == NPCID.UndeadMiner && Main.rand.NextBool(50))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ManicMiner>(), 1);
-
-				if (npc.type == NPCID.BlueSlime && Main.rand.NextBool(240))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FireSpitter>(), 1);
-
-				if (npc.type == NPCID.Crab && Main.rand.NextBool(18))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrabClaw>(), 1);
-
-				if (npc.type == NPCID.PossessedArmor && Main.rand.NextBool(90))
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PossessedHelmet>(), 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PossessedChainmail>(), 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PossessedGreaves>(), 1);
-				}
-
-				if (npc.type == NPCID.PinkJellyfish && Main.rand.NextBool(60))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PinkJellyfishStaff>(), 1);
-				if ((npc.type == NPCID.BlueJellyfish || npc.type == NPCID.GreenJellyfish) && Main.rand.NextBool(50))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BlueJellyfishStaff>(), 1);
 
 				if(npc.type == NPCID.QueenBee && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalJelly>(), 1);
@@ -362,95 +430,6 @@ namespace SOTS.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PeanutButter>(), 1);
 				if (npc.type == NPCID.SkeletronHead && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Baguette>(), 1);
-				if (npc.type == NPCID.GreekSkeleton && Main.rand.NextBool(20))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<OlympianAxe>(), 1);
-				if(Zombies == null)
-                {
-					Zombies = new List<int>() { NPCID.Zombie, NPCID.ZombieDoctor, NPCID.ZombieElf, NPCID.ZombieElfBeard,
-					NPCID.ZombieElfGirl, NPCID.ZombieEskimo, NPCID.ZombieMushroom, NPCID.ZombieMushroomHat, NPCID.ZombiePixie, NPCID.ZombieRaincoat,
-					NPCID.ZombieSuperman, NPCID.ZombieSweater, NPCID.ZombieXmas, NPCID.ArmedZombie, NPCID.ArmedZombieCenx, NPCID.ArmedZombieEskimo,
-					NPCID.ArmedZombiePincussion, NPCID.ArmedZombieSlimed, NPCID.ArmedZombieSwamp, NPCID.ArmedZombieTwiggy, NPCID.BaldZombie, NPCID.BigBaldZombie, NPCID.BigFemaleZombie,
-					NPCID.BigPincushionZombie, NPCID.BigRainZombie, NPCID.BigSlimedZombie, NPCID.BigSwampZombie, NPCID.BigTwiggyZombie, NPCID.BigZombie,
-					NPCID.FemaleZombie, NPCID.PincushionZombie, NPCID.SlimedZombie, NPCID.SmallBaldZombie, NPCID.SmallFemaleZombie, NPCID.SmallPincushionZombie,
-					NPCID.SmallRainZombie, NPCID.SmallSlimedZombie, NPCID.SmallSwampZombie, NPCID.SmallTwiggyZombie, NPCID.SmallZombie, NPCID.SwampZombie, NPCID.TwiggyZombie};
-				}
-				if(Zombies.Contains(npc.type) && Main.rand.NextBool(80))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ZombieHand>(), 1);
-				if(npc.boss && !Main.expertMode && (npc.type == NPCID.BrainofCthulhu || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail))
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PyramidKey>(), 1);
-				}
-				if(npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
-				{
-					if(Main.rand.NextBool(50))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
-					if (Main.rand.NextBool(75))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ElectromagneticDeterrent>(), 1);
-					if (Main.rand.NextBool(30) && npc.type != ModContent.NPCType<OtherworldlyConstructHead2>() && npc.type != ModContent.NPCType<OtherworldlyConstructHead>())
-					{
-						if(npc.type == ModContent.NPCType<NatureConstruct>())
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MantisGrip>(), 1);
-						if (npc.type == ModContent.NPCType<EarthenConstruct>())
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Earthshaker>(), 1);
-						if (npc.type == ModContent.NPCType<PermafrostConstruct>())
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<EndothermicAfterburner>(), 1);
-						if (npc.type == ModContent.NPCType<TidalConstruct>())
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PiscesPuncher>(), 1);
-						if (npc.type == ModContent.NPCType<EvilConstruct>())
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DeathSpiral>(), 1);
-						if (npc.type == ModContent.NPCType<InfernoConstruct>())
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<IncineratorGlove>(), 1);
-						if (npc.type == ModContent.NPCType<ChaosConstruct>())
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ParticleRelocator>(), 1);
-					}
-					else
-					{
-						int type = ModContent.ItemType<NaturePlating>();
-						int amt = Main.rand.Next(20, 41);
-						if (npc.type == ModContent.NPCType<NatureConstruct>())
-							type = ModContent.ItemType<NaturePlating>();
-						if (npc.type == ModContent.NPCType<EarthenConstruct>())
-							type = ModContent.ItemType<EarthenPlating>();
-						if (npc.type == ModContent.NPCType<PermafrostConstruct>())
-							type = ModContent.ItemType<PermafrostPlating>();
-						if (npc.type == ModContent.NPCType<TidalConstruct>())
-							type = ModContent.ItemType<TidePlating>();
-						if (npc.type == ModContent.NPCType<EvilConstruct>())
-							type = ModContent.ItemType<EvilPlating>();
-						if (npc.type == ModContent.NPCType<ChaosConstruct>())
-							type = ModContent.ItemType<ChaosPlating>();
-						if (npc.type == ModContent.NPCType<InfernoConstruct>())
-							type = ModContent.ItemType<InfernoPlating>();
-						if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
-						{
-							if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
-								amt = Main.rand.Next(5, 11);
-							type = ModContent.ItemType<DullPlating>();
-						}
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, type, amt);
-					}
-					if ((npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>()) && Main.rand.NextBool(100))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseCannon>(), 1);
-				}
-				if(npc.type == ModContent.NPCType<NatureSlime>())
-				{
-					if (Main.rand.NextBool(50))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BotanicalSymbiote>(), 1);
-				}
-				if(npc.type == ModContent.NPCType<TwilightScouter>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>())
-				{
-					if (Main.rand.NextBool(20))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GravityAnchor>(), 1);
-				}
-				if (npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<PhaseSpeeder>())
-				{
-					if (Main.rand.NextBool(20))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TwilightBeads>(), 1);
-				}
-				if (Main.rand.NextBool(70) && npc.type == ModContent.NPCType<TwilightScouter>())
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ThundershockShortbow>(), 1);
-				if (Main.rand.NextBool(70) && npc.type == ModContent.NPCType<TwilightDevil>())
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GravityAnchor>(), 1);
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)

@@ -206,7 +206,7 @@ namespace SOTS
 			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 			dedicatedPastelPink = new int[] { /*ItemType<StrangeFruit>()*/ }; //Tris
 			dedicatedMinez = new int[] { ItemType<DoorPants>(), ItemType<BandOfDoor>() }; //Minez
-			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>(), ItemType<Traingun>()*/ }; //Vortex
+			dedicatedRainbow = new int[] {  /*ItemType<SubspaceLocket>(), ItemType<PhotonGeyser>(), ItemType<Traingun>()*/ }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
 			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
@@ -226,12 +226,25 @@ namespace SOTS
 				Texture2D texture = Terraria.GameContent.TextureAssets.Item[unsafeWallItem[i]].Value;
 				Texture2D textureOutline;
 				textureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
-				textureOutline.SetData(0, null, SubspaceServant.Greenify(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
+				textureOutline.SetData(0, null, ConvertToSingleColor(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
 				unsafeWallItemRedTextures[i] = textureOutline;
 			}
 			hasSetupRed = true;
 		}
-        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		public static Color[] ConvertToSingleColor(Texture2D texture, Color color)
+		{
+			int width = texture.Width;
+			int height = texture.Height;
+			Color[] data = new Color[width * height];
+			texture.GetData(data);
+			for (int i = 0; i < width * height; i++)
+			{
+				if (data[i].A >= 255)
+					data[i] = color;
+			}
+			return data;
+		}
+		public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			if (!hasSetupRed)
 				setUpRedTextures();
@@ -475,7 +488,7 @@ namespace SOTS
         public override bool CanUseItem(Item item, Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if (player.HasAmmo(item, true))
+			if (player.HasAmmo(item))
 			{
 				int polarCannons = modPlayer.polarCannons;
 				if ((item.CountsAsClass(DamageClass.Ranged) || item.CountsAsClass(DamageClass.Melee)) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ProjectileType<MiniPolarisCannon>()] <= 0))
@@ -509,9 +522,12 @@ namespace SOTS
         }
         public override void OpenVanillaBag(string context, Player player, int arg)
         {
-			if (context == "bossBag" && (arg == ItemID.EaterOfWorldsBossBag || arg == ItemID.BrainOfCthulhuBossBag))
+			if (context == "bossBag")
 			{
-				player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<PyramidKey>(), 1);
+				if(arg == ItemID.EaterOfWorldsBossBag || arg == ItemID.BrainOfCthulhuBossBag)
+					player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<PyramidKey>(), 1);
+				else if(arg == ItemID.WallOfFleshBossBag)
+					player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<HungryHunter>(), 1);
 			}
         }
     }

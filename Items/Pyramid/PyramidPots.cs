@@ -7,6 +7,7 @@ using SOTS.Items.Pyramid.AncientGold;
 using SOTS.NPCs;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -47,7 +48,7 @@ namespace SOTS.Items.Pyramid
 		}
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
+            SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i, j) * 16);
             int num = 0;
             bool snakePot = false;
             if (frameY < 36)

@@ -7,10 +7,16 @@ namespace SOTS
 {
 	public static class SOTSUtils
 	{
-		public static SlotId PlaySound(int type, float posX, float posY, int style, float volume, float pitch)
-        {
-			SoundStyle style = new SoundStyle();
-			return Terraria.Audio.SoundEngine.PlaySound(style, Vector2(posX, posY));
+		public static SlotId PlaySound(SoundStyle style, Vector2 position, float volume = 1f, float pitch = 0f, float pitchVariance = 0f)
+		{
+			style.Volume = volume;
+			style.Pitch = pitch;
+			style.PitchVariance = pitchVariance;
+			return SoundEngine.PlaySound(style, position);
+		}
+		public static SlotId PlaySound(SoundStyle style, float posX, float posY, float volume = 1f, float pitch = 0f)
+		{
+			return PlaySound(style, new Vector2(posX, posY), volume, pitch);
         }
 		public static string GetPath<T>()
 		{

@@ -10,6 +10,7 @@ using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Void;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -48,13 +49,13 @@ namespace SOTS.NPCs.Constructs
 			NPC.damage = 100;
 			NPC.lifeMax = 5250;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Vector2 origin = new Vector2(NPC.width / 2, NPC.height / 2);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			DrawWings();
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, drawColor, dir, origin, NPC.scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, Color.White, dir, origin, NPC.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, drawColor, dir, origin, NPC.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, Color.White, dir, origin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		float wingSpeedMult = 1f;
@@ -172,9 +173,9 @@ namespace SOTS.NPCs.Constructs
 						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 					}
 					for (int i = 1; i <= 7; i++)
-						Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
 					for (int i = 0; i < 9; i++)
-						Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
                 }
 			}
 		}
@@ -241,15 +242,11 @@ namespace SOTS.NPCs.Constructs
 					NPC.velocity *= 0.96f;
 					if (NPC.ai[1] > 70)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.3f, -0.4f);
-						int damage2 = NPC.damage / 2;
-						if (Main.expertMode)
-						{
-							damage2 = (int)(damage2 / Main.expertDamage);
-						}
+						SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f, -0.4f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							Projectile.NewProjectile(NPC.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * 4f, ModContent.ProjectileType<ChaosCircle>(), damage2, 0, Main.myPlayer);
+							int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * 4f, ModContent.ProjectileType<ChaosCircle>(), damage2, 0, Main.myPlayer);
 						}
 						NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 9f;
 						NPC.ai[1] = 40;
@@ -286,15 +283,11 @@ namespace SOTS.NPCs.Constructs
 					NPC.velocity *= 0.96f;
 					if (NPC.ai[1] > 100)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.3f, -0.4f);
-						int damage2 = NPC.damage / 2;
-						if (Main.expertMode)
-						{
-							damage2 = (int)(damage2 / Main.expertDamage);
-						}
+						SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f, -0.4f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
-						{ 
-							Projectile.NewProjectile(NPC.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * (11f + 5f * NPC.ai[2]), ModContent.ProjectileType<ChaosSphere>(), (int)(damage2 * 1.2f), 0, Main.myPlayer, 220 - NPC.ai[2] * 80);
+						{
+							int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * (11f + 5f * NPC.ai[2]), ModContent.ProjectileType<ChaosSphere>(), (int)(damage2 * 1.2f), 0, Main.myPlayer, 220 - NPC.ai[2] * 80);
 						}
 						NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 14f;
 						NPC.ai[1] = 20;
@@ -345,18 +338,19 @@ namespace SOTS.NPCs.Constructs
 			NPC.velocity *= 0.3f;
 			NPC.velocity += 0.6f * speed * goTo.SafeNormalize(Vector2.Zero);
 		}
-		public override void NPCLoot()
+        public override void OnKill()
 		{
-			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ChaosRubble>());
+			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ChaosRubble>());
 			Main.npc[n].velocity = NPC.oldVelocity + Main.rand.NextVector2Circular(5, 5);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n, 0, counter2);
+			n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n, 0, counter2);
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].velocity += NPC.oldVelocity * 0.4f;
-			if (Main.netMode != NetmodeID.MultiplayerClient)
-				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfChaos>(), Main.rand.Next(4) + 4);
-		}	
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfChaos>(), 1, 4, 7));
+		}
 	}
 }

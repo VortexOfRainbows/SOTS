@@ -420,7 +420,7 @@ namespace SOTS
 										pet.fireToX = projectile.Center.X;
 										pet.fireToY = projectile.Center.Y;
 										pet.glow = 11.5f + 3.5f * recalc;
-										Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.35f * (0.75f + 0.5f * recalc));
+										SOTSUtils.PlaySound(SoundID.Item8, (int)proj.Center.X, (int)proj.Center.Y, 1.35f * (0.75f + 0.5f * recalc));
 									}
 									effect = false;
 								}

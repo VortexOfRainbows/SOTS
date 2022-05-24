@@ -10,7 +10,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Bag");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}/nCurrently yields no expert exclusive item, as the current one is not yet working in 1.4");
 		}
 		public override void SetDefaults()
 		{
@@ -29,9 +29,9 @@ namespace SOTS.Items.Celestial
 		}
 		public override void OpenBossBag(Player player)
 		{
-			player.TryGettingDevArmor();
-			player.QuickSpawnItem(ModContent.ItemType<SubspaceLocket>());
-			player.QuickSpawnItem(ModContent.ItemType<SanguiteBar>(), Main.rand.Next(16, 30));
+			player.TryGettingDevArmor(player.GetSource_OpenItem(Type));
+			//player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SubspaceLocket>());
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SanguiteBar>(), Main.rand.Next(16, 30));
 		}
 	}
 }
