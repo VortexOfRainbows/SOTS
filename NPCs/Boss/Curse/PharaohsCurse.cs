@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Utilities;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -71,8 +73,8 @@ namespace SOTS.NPCs.Boss.Curse
 			NPC.noTileCollide = true;
 			NPC.HitSound = null;
 			NPC.DeathSound = SoundID.NPCDeath6;
-			music = MusicID.Sandstorm;
-			musicPriority = MusicPriority.BossMedium;
+			Music = MusicID.Sandstorm;
+			SceneEffectPriority = SceneEffectPriority.BossMedium;
 			NPC.buffImmune[24] = true;
 			NPC.buffImmune[39] = true;
 			NPC.buffImmune[44] = true;
@@ -92,7 +94,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			if (NPC.life > 0)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
+				SoundEngine.PlaySound(SoundID.NPCHit54, NPC.Center, 1.2f, -0.25f);
 				int num = 0;
 				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
 				{

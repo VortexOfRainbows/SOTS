@@ -1,9 +1,17 @@
+using ReLogic.Utilities;
 using System;
+using Terraria.Audio;
+using Microsoft.Xna.Framework;
 
 namespace SOTS
 {
 	public static class SOTSUtils
 	{
+		public static SlotId PlaySound(int type, float posX, float posY, int style, float volume, float pitch)
+        {
+			SoundStyle style = new SoundStyle();
+			return Terraria.Audio.SoundEngine.PlaySound(style, Vector2(posX, posY));
+        }
 		public static string GetPath<T>()
 		{
 			return GetPath(typeof(T));
