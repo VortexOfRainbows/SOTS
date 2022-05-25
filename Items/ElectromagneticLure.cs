@@ -95,7 +95,7 @@ namespace SOTS.Items
 		}
 		public override bool CanUseItem(Player player)
 		{
-			if(player.HasBuff(ModContent.BuffType<IntimidatingPresence>())
+			if(player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
             {
 				return false;
             }
