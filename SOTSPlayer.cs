@@ -612,7 +612,12 @@ namespace SOTS
 			StatModifier AndGeneric = player.GetTotalDamage(damageClass);
 			return (int)AndGeneric.ApplyTo(originalDamage);
 		}
-        public override void ResetEffects()
+		public static int ApplyAttackSpeedClassModWithGeneric(Player player, DamageClass damageClass, float startingUseTime)
+		{
+			float AndGeneric = player.GetTotalAttackSpeed(damageClass);
+			return (int)(startingUseTime / (AndGeneric + ModPlayer(player).attackSpeedMod - 1));
+		}
+		public override void ResetEffects()
 		{
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;

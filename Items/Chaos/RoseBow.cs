@@ -6,6 +6,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Void;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -47,9 +48,9 @@ namespace SOTS.Items.Chaos
         {
             return 12;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Chaos.RoseBow>(), damage, knockBack, player.whoAmI, (int)(Item.useTime / (SOTSPlayer.ModPlayer(player).attackSpeedMod + VoidPlayer.ModPlayer(player).voidSpeed - 1f)), type);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Chaos.RoseBow>(), damage, knockback, player.whoAmI, SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, DamageClass.Ranged, Item.useTime), type);
 			return false;
 		}
 		public override void AddRecipes()
