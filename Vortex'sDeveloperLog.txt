@@ -16,9 +16,10 @@ Known Bugs/Issues:
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
 1. Make Mod Loadable in 1.4
-2. Make sure Biome Spawning Works
+2. Make sure Biome NPC Spawning Work
 3. Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
 4. Make sure VM Incubator works (and server fixes)
+5. Make sure Global NPC loot works
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
@@ -50,6 +51,11 @@ Low Priority Objectives:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
+
+5/26/22
+1. Organization and more fixing!
+2. Finished porting GLOBAL npc loot drop pools. I'm still unsure as to whether these work properly. Will have to find out.
+3. 4671 -> 4546
 
 5/23/22
 1. Ported a handful of sounds + a ton of global NPC drop related things

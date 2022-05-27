@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
  
-namespace SOTS.NPCs
+namespace SOTS.Common.GlobalNPCs
 {
     public class SOTSNPCShop : GlobalNPC
     {

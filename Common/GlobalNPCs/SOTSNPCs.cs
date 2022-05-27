@@ -34,8 +34,9 @@ using SOTS.NPCs.Phase;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.ItemDropRules;
 using System.Linq;
+using SOTS.NPCs;
 
-namespace SOTS.NPCs
+namespace SOTS.Common.GlobalNPCs
 {
     public class SOTSNPCs : GlobalNPC
 	{
@@ -235,13 +236,32 @@ namespace SOTS.NPCs
 		}
         public override void ModifyGlobalLoot(GlobalLoot globalLoot) //global rules, such as fragments, soulds, ectoplasm
         {
-			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<AlmondMilk>(), 100, 1, 1)); //1% chance for almond milke
-			
+			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<AlmondMilk>(), 100, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<StrawberryIcecream>(), 100, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.BeachDropCondition(), ModContent.ItemType<CoconutMilk>(), 100, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<AvocadoSoup>(), 120, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PlanetariumDropCondition(), ModContent.ItemType<DigitalCornSyrup>(), 100, 1, 1));
+
+			globalLoot.Add(
+				ItemDropRule.ByCondition(new ItemDropConditions.OtherworldFragmentDropCondition(), ModContent.ItemType<FragmentOfOtherworld>(), 35, 1, 2, 1)
+				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.TideFragmentDropCondition(), ModContent.ItemType<FragmentOfTide>(), 35, 1, 2, 1)
+				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.NatureFragmentDropCondition(), ModContent.ItemType<FragmentOfNature>(), 35, 1, 2, 1)
+				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<FragmentOfPermafrost>(), 35, 1, 2, 1)
+				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.EarthFragmentDropCondition(), ModContent.ItemType<FragmentOfEarth>(), 35, 1, 2, 1)
+				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.InfernoFragmentDropCondition(), ModContent.ItemType<FragmentOfInferno>(), 35, 1, 2, 1)
+				.OnSuccess(ItemDropRule.ByCondition(new ItemDropConditions.DownedSubspaceDropCondition(), ModContent.ItemType<SanguiteBar>(), 1, 4, 5, 1)
+				)))))))
+				.OnFailedRoll(ItemDropRule.ByCondition(new ItemDropConditions.EvilFragmentDropCondition(), ModContent.ItemType<FragmentOfEvil>(), 34, 1, 2, 1)
+				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.ChaosFragmentDropCondition(), ModContent.ItemType<FragmentOfChaos>(), 34, 1, 2, 1)));
 			//globalLoot.Add(ItemDropRule.ByCondition(new Conditions.Biome...)) //Waiting for Tmodloader to support biomes!
 			//	);
 		}
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) //modify loot and vanilla loot
 		{
+			if (NPCID.Sets.BelongsToInvasionOldOnesArmy[npc.type] || npc.SpawnedFromStatue)
+			{
+				return;
+			}
 			Player player = Main.player[Main.myPlayer];
 			if (npc.target <= 255)
 			{
@@ -249,12 +269,7 @@ namespace SOTS.NPCs
 			}
 			LeadingConditionRule notExpert = new LeadingConditionRule(new Conditions.NotExpert());
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && player.ZoneForest;
-			if (NPCID.Sets.BelongsToInvasionOldOnesArmy[npc.type])
-			{
-				return;
-			}
-			if(npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson) //if npc is pigron
+			if (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson) //if npc is pigron
             {
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<AlmondMilk>(), 2, 1)); //guaranteed in expert, 50% in normal
 			}
@@ -376,60 +391,23 @@ namespace SOTS.NPCs
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CrabClaw>(), 20, 18));
 			if (npc.type == NPCID.GreekSkeleton)
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<OlympianAxe>(), 25, 20));
-			if (ArtificialDebuffs.DebuffNPC.Zombies.Contains(npc.type))
+			if (DebuffNPC.Zombies.Contains(npc.type))
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ZombieHand>(), 100, 80));
-		}
-        public override void NPCLoot(NPC npc)
-		{
-			if (npc.lifeMax > 5 && !npc.SpawnedFromStatue)
+			LeadingConditionRule preEoC = new LeadingConditionRule(new ItemDropConditions.PreBoss1DropCondition());
+			if (npc.type == NPCID.QueenBee)
+            {
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 20));
+				npcLoot.Add(preEoC);
+			}
+			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>())
 			{
-				if (Main.rand.NextBool(35))
-				{
-					//priorities: otherworld > tide > nature > permafrost > earth >  inferno
-					//additional: evil & chaos (will not spawn in addition to forest)
-					if (player.ZoneSkyHeight || player.ZoneMeteor)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 1);
-					else if (player.ZoneBeach || player.ZoneDungeon)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfTide>(), Main.rand.Next(2) + 1);
-					else if (ZoneForest || player.ZoneJungle)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfNature>(), Main.rand.Next(2) + 1);
-					else if (player.ZoneSnow)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfPermafrost>(), Main.rand.Next(2) + 1);
-					else if (player.ZoneUndergroundDesert || player.ZoneDesert || player.GetModPlayer<SOTSPlayer>().PyramidBiome || player.ZoneRockLayerHeight)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfEarth>(), Main.rand.Next(2) + 1);
-					else if (player.ZoneUnderworldHeight)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(2) + 1);
-						if(SOTSWorld.downedSubspace)
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<SanguiteBar>(), Main.rand.Next(2) + 4);
-					}
-				}
-				else if (Main.rand.NextBool(34))
-				{
-					if (player.ZoneCorrupt || player.ZoneCrimson)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfEvil>(), Main.rand.Next(2) + 1);
-					if (player.ZoneHallow)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfChaos>(), Main.rand.Next(2) + 1);
-				}
-
-				if (player.ZoneSnow && Main.rand.NextBool(100))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<StrawberryIcecream>(), 1);
-				if (player.ZoneBeach && Main.rand.NextBool(100))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CoconutMilk>(), 1);
-				if (player.ZoneDungeon && Main.rand.NextBool(120))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AvocadoSoup>(), 1);
-
-
-				if (modPlayer.PlanetariumBiome)
-					if (Main.rand.NextBool(100))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DigitalCornSyrup>(), 1);
-
-				if(npc.type == NPCID.QueenBee && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalJelly>(), 1);
-				if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PeanutButter>(), 1);
-				if (npc.type == NPCID.SkeletronHead && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Baguette>(), 1);
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 20));
+				npcLoot.Add(preEoC);
+			}
+			if (npc.type == NPCID.SkeletronHead)
+			{
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 20));
+				npcLoot.Add(preEoC);
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)

@@ -156,7 +156,17 @@ namespace SOTS
 					SyncGlobalCounter();
             }
 		}
-        public static int SecretFoundMusicTimer = 0;
+		public override void PreSaveAndQuit()
+		{
+			PreSaveAndQuit_AwaitThreadedTasks();
+		}
+		private void PreSaveAndQuit_AwaitThreadedTasks()
+		{
+			while (PhaseWorldgenHelper.Generating)
+			{
+			}
+		}
+		public static int SecretFoundMusicTimer = 0;
         public static int planetarium = 0;
 		public static int pyramidBiome = 0;
 		public static int phaseBiome = 0;

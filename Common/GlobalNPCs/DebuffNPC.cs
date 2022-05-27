@@ -20,9 +20,9 @@ using SOTS.Projectiles.Otherworld;
 using SOTS.Items.OreItems;
 using SOTS.Items.Otherworld.FromChests;
 using System.Linq;
-using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Evil;
 using static Terraria.ModLoader.ModContent;
+using SOTS.NPCs;
 using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.NPCs.Boss.Polaris;
@@ -30,8 +30,9 @@ using SOTS.Items.GhostTown;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
 using SOTS.Projectiles.Chaos;
+using SOTS.NPCs.Constructs;
 
-namespace SOTS.NPCs.ArtificialDebuffs
+namespace SOTS.Common.GlobalNPCs
 {
     public class DebuffNPC : GlobalNPC
     {
@@ -44,7 +45,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public static int[] intimidating;
         public static int[] vanillaBoss;
         public static int[] spirits;
-        public static int[] constructs;
+        public static int[] Constructs;
         public static int[] Zombies;
         public static void LoadArrays()
         {
@@ -52,14 +53,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 NPCID.Werewolf, NPCID.Slimer, NPCID.PossessedArmor, NPCID.VampireBat, NPCID.Vampire, NPCID.SwampThing, NPCID.Crimera, NPCID.Reaper, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.DungeonSpirit, NPCID.Ghost, NPCID.MourningWood, NPCID.Splinterling, NPCID.Pumpking, NPCID.Poltergeist,
                 NPCID.Everscream, NPCID.IceQueen, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.CultistBoss, NPCID.CultistDragonHead, NPCID.BloodZombie, NPCID.Drippler
             };
-            constructs = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<InfernoConstruct>(), NPCType<EvilConstruct>(), NPCType<ChaosConstruct>() };
-            spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<Constructs.EvilSpirit>(), NPCType<Constructs.InfernoSpirit>(), NPCType<Constructs.ChaosSpirit>(), NPCType<Lux>(), NPCType<FakeLux>() };
+            Constructs = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<InfernoConstruct>(), NPCType<EvilConstruct>(), NPCType<ChaosConstruct>() };
+            spirits = new int[] { NPCType<NPCs.Constructs.NatureSpirit>(), NPCType<NPCs.Constructs.EarthenSpirit>(), NPCType<NPCs.Constructs.PermafrostSpirit>(), NPCType<NPCs.Constructs.TidalSpirit>(), NPCType<NPCs.Constructs.EvilSpirit>(), NPCType<NPCs.Constructs.InfernoSpirit>(), NPCType<NPCs.Constructs.ChaosSpirit>(), NPCType<Lux>(), NPCType<FakeLux>() };
             intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(), NPCType<ChaosConstruct>(),
-                NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<SubspaceSerpentHead>()};
+                NPCType<PutridPinkyPhase2>(), NPCType<NPCs.Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<SubspaceSerpentHead>()};
             vanillaBoss = new int[] { NPCID.KingSlime, NPCID.EyeofCthulhu, NPCID.EaterofWorldsHead, NPCID.BrainofCthulhu, NPCID.QueenBee, NPCID.SkeletronHead, NPCID.WallofFlesh, NPCID.Spazmatism, NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime, NPCID.Plantera, NPCID.Golem, NPCID.DukeFishron, NPCID.CultistBoss, NPCID.MoonLordCore};
             miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
             nerfBeeNPC = new int[] { NPCType<PutridHook>() };
-            nerfBeeBoss = new int[] { NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>() };
+            nerfBeeBoss = new int[] { NPCType<PutridPinkyPhase2>(), NPCType<NPCs.Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>() };
             nerfBeeProj = new int[] { ProjectileID.Bee, ProjectileID.GiantBee };
             nerfRealityShatter = new int[] { NPCType<SubspaceSerpentBody>(), NPCType<SubspaceSerpentHead>(), NPCType<SubspaceSerpentTail>() };
             Zombies = new int[] { NPCID.Zombie, NPCID.ZombieDoctor, NPCID.ZombieElf, NPCID.ZombieElfBeard,
@@ -85,36 +86,36 @@ namespace SOTS.NPCs.ArtificialDebuffs
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
-            if (spirits.Contains(npc.type) || npc.type == NPCType<Constructs.OtherworldlySpirit>())
+            if (spirits.Contains(npc.type) || npc.type == NPCType<NPCs.Constructs.OtherworldlySpirit>())
             {
                 int vDamage = 0;
                 int debuffTime = 120;
-                if(npc.type == NPCType<Constructs.NatureSpirit>())
+                if(npc.type == NPCType<NPCs.Constructs.NatureSpirit>())
                 {
                     debuffTime = 120;
                     vDamage = 5;
                 }
-                if (npc.type == NPCType<Constructs.EarthenSpirit>())
+                if (npc.type == NPCType<NPCs.Constructs.EarthenSpirit>())
                 {
                     debuffTime = 150;
                     vDamage = 8;
                 }
-                if (npc.type == NPCType<Constructs.PermafrostSpirit>() || npc.type == NPCType<Constructs.OtherworldlySpirit>())
+                if (npc.type == NPCType<NPCs.Constructs.PermafrostSpirit>() || npc.type == NPCType<NPCs.Constructs.OtherworldlySpirit>())
                 {
                     debuffTime = 180;
                     vDamage = 15;
                 }
-                if (npc.type == NPCType<Constructs.TidalSpirit>() || npc.type == NPCType<Constructs.ChaosSpirit>())
+                if (npc.type == NPCType<NPCs.Constructs.TidalSpirit>() || npc.type == NPCType<NPCs.Constructs.ChaosSpirit>())
                 {
                     debuffTime = 210;
                     vDamage = 25;
                 }
-                if (npc.type == NPCType<Constructs.EvilSpirit>())
+                if (npc.type == NPCType<NPCs.Constructs.EvilSpirit>())
                 {
                     debuffTime = 240;
                     vDamage = 30;
                 }
-                if (npc.type == NPCType<Constructs.InfernoSpirit>())
+                if (npc.type == NPCType<NPCs.Constructs.InfernoSpirit>())
                 {
                     debuffTime = 270;
                     vDamage = 40;
@@ -276,13 +277,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 packet.Send();
             }
         }
-        public void DrawTimeFreeze(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        public void DrawTimeFreeze(NPC npc, SpriteBatch spriteBatch)
         {
             float alphaMult = 1 - aiSpeedMultiplier;
             int type = npc.whoAmI % 3 + 1;
-            Texture2D ring1 = GetTexture("SOTS/NPCs/ArtificialDebuffs/FreezeSpiral" + type);
+            Texture2D ring1 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/ArtificialDebuffs/FreezeSpiral" + type);
             Vector2 ringOrigin = new Vector2(ring1.Width / 2, ring1.Height / 2);
-            Vector2 drawPos = new Vector2(npc.Center.X, npc.Center.Y + npc.gfxOffY) + npc.visualOffset - Main.screenPosition;
+            Vector2 drawPos = new Vector2(npc.Center.X, npc.Center.Y + npc.gfxOffY) + /*npc.VisualPosition*/ - Main.screenPosition;
             Color color = new Color(70, 0, 105, 0);
             float secondsHandMult = Main.GameUpdateCount / 90f;
             float drawDimensions = npc.Size.Length();
@@ -299,33 +300,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 scale *= 0.97f;
             }
         }
-        public void DrawClock(NPC npc, SpriteBatch spriteBatch, Color drawColor)
-        {
-            float alphaMult = 1 - aiSpeedMultiplier;
-            float generalScaling = 0.75f;
-            Texture2D ring1 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockRing1");
-            Texture2D ring2 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockRing2");
-            Texture2D ring2F = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockRing2Fill");
-            Vector2 ringOrigin = new Vector2(ring1.Width / 2, ring1.Height / 2);
-            Texture2D hand1 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockHand1");
-            Texture2D hand2 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockHand2");
-            Vector2 drawPos = new Vector2(npc.Center.X, npc.position.Y - 32) - Main.screenPosition;
-            Color color = drawColor;
-            color *= alphaMult;
-            float secondsHandMult = timeFrozen / 60f * alphaMult;
-            float minutesHandMult = timeFrozen / 3600f * alphaMult;
-            float rotation1 = secondsHandMult * MathHelper.TwoPi;
-            float rotation2 = minutesHandMult * MathHelper.TwoPi;
-            Vector2 handOrigin = new Vector2(hand1.Width / 2, hand1.Height + 2);
-
-            spriteBatch.Draw(ring2, drawPos, null, color, rotation1 * 0.5f, ringOrigin, generalScaling, SpriteEffects.None, 0f);
-            spriteBatch.Draw(ring2F, drawPos, null, color * 0.5f, rotation1 * 0.5f, ringOrigin, generalScaling, SpriteEffects.None, 0f);
-            spriteBatch.Draw(hand1, drawPos, null, color, rotation1, handOrigin, generalScaling, SpriteEffects.None, 0f);
-            handOrigin = new Vector2(hand2.Width / 2, hand2.Height + 2);
-            spriteBatch.Draw(hand2, drawPos, null, color, rotation2, handOrigin, generalScaling, SpriteEffects.None, 0f);
-            spriteBatch.Draw(ring1, drawPos, null, color, 0, ringOrigin, generalScaling, SpriteEffects.None, 0f);
-        }
-        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             int height = 18;
             if(PlatinumCurse > 0)
@@ -352,9 +327,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                     }*/
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
@@ -364,9 +339,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                 }*/
-                Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
             if (HarvestCurse > 0)
@@ -393,9 +368,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                     }*/
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
@@ -405,9 +380,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                 }*/
-                Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
             if (DestableCurse > 0)
@@ -434,9 +409,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                     }*/
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
@@ -446,9 +421,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                 }*/
-                Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
             if (BleedingCurse > 0)
@@ -475,9 +450,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                     }*/
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
@@ -487,12 +462,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                 }*/
-                Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
-            base.PostDraw(npc, spriteBatch, drawColor);
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
         {
@@ -501,9 +475,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
             lastHitWasCrit = crit;
-            if (Projectile.type == ProjectileType<HarvestLock>())
+            if (projectile.type == ProjectileType<HarvestLock>())
             {
-                Player player = Main.player[Projectile.owner];
+                Player player = Main.player[projectile.owner];
                 VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
                 int amt = HarvestCost(npc);
                 if (!npc.immortal)
@@ -525,8 +499,8 @@ namespace SOTS.NPCs.ArtificialDebuffs
         bool lastHitWasCrit = false;
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            Player player = Main.player[Projectile.owner];
-            if (npc.HasBuff(BuffType<Shattered>()) && Projectile.melee && Projectile.type != ProjectileType<Projectiles.Evil.AncientSteelHalberd>())
+            Player player = Main.player[projectile.owner];
+            if (npc.HasBuff(BuffType<Shattered>()) && projectile.CountsAsClass(DamageClass.Melee) && projectile.type != ProjectileType<Projectiles.Evil.AncientSteelHalberd>())
             {
                 int ignoreDefense = ((npc.defense + 1) / 2);
                 damage += ignoreDefense;
@@ -544,16 +518,16 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (Projectile.type == ProjectileType<CodeVolley>() || Projectile.type == ProjectileType<CodeBurst>())
+            if (projectile.type == ProjectileType<CodeVolley>() || projectile.type == ProjectileType<CodeBurst>())
             {
-                if(Projectile.type == ProjectileType<CodeVolley>())
+                if(projectile.type == ProjectileType<CodeVolley>())
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.7f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
                     if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
-                if (Projectile.type == ProjectileType<CodeBurst>() && Projectile.ai[1] != -1)
+                if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] != -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.3f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
@@ -561,7 +535,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
 
-                if (Projectile.type == ProjectileType<CodeBurst>() && Projectile.ai[1] == -1)
+                if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] == -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.25f, 1 + DestableCurse * 0.5f) && DestableCurse < 20)
                         DestableCurse++;
@@ -569,10 +543,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
             }
-            if(Projectile.type == ProjectileType<DeathSpiralProj>() || (Projectile.type == ProjectileType<BloodSpark>() && crit))
+            if(projectile.type == ProjectileType<DeathSpiralProj>() || (projectile.type == ProjectileType<BloodSpark>() && crit))
             {
                 bool worm = npc.realLife != -1;
-                float baseChance = Projectile.type == ProjectileType<BloodSpark>() ? 1.1f : 0.2f;
+                float baseChance = projectile.type == ProjectileType<BloodSpark>() ? 1.1f : 0.2f;
                 int baseStacks = 1;
                 if (worm)
                 {
@@ -584,21 +558,21 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if (Projectile.type == ProjectileType<DestabilizingBeam>() && !hitByRay)
+            if (projectile.type == ProjectileType<DestabilizingBeam>() && !hitByRay)
             {
                 hitByRay = true;
                 DestableCurse += 4;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if (nerfBeeProj.Contains(Projectile.type))
+            if (nerfBeeProj.Contains(projectile.type))
             {
                 if (nerfBeeBoss.Contains(npc.type))
                     damage = (int)(damage * 0.8f);
                 if (nerfBeeNPC.Contains(npc.type))
                     damage = (int)(damage * 0.6f);
             }
-            if(Projectile.type == ProjectileType<RealityShatter>())
+            if(projectile.type == ProjectileType<RealityShatter>())
             {
                 if (nerfRealityShatter.Contains(npc.type))
                     damage = (int)(damage * 0.3f);
@@ -615,7 +589,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 return;
             }
-            if (npc.HasBuff(BuffType<Shattered>()) && Item.melee)
+            if (npc.HasBuff(BuffType<Shattered>()) && item.CountsAsClass(DamageClass.Melee))
             {
                 int ignoreDefense = ((npc.defense + 1) / 2);
                 damage += ignoreDefense;
@@ -629,14 +603,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (Item.type == ItemType<PlatinumScythe>() || Item.type == ItemType<SectionChiefsScythe>())
+            if (item.type == ItemType<PlatinumScythe>() || item.type == ItemType<SectionChiefsScythe>())
             {
                 if (PlatinumCurse < 10)
                     PlatinumCurse++;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if ((Item.type == ItemType<AncientSteelSword>() || Item.type == ItemType<AncientSteelGreatPickaxe>() || Item.type == ItemType<AncientSteelGreatHamaxe>()) && crit)
+            if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>() || item.type == ItemType<AncientSteelGreatHamaxe>()) && crit)
             {
                 bool worm = npc.realLife != -1;
                 float baseChance = 1f;
@@ -689,7 +663,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if(!shattered)
                 {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 23, 1.0f, -0.3f);
+                    SOTSUtils.PlaySound(SoundID.Item23, (int)npc.Center.X, (int)npc.Center.Y, 1.0f, -0.3f);
                     for (int i = 0; i < 36; i++)
                     {
                         Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 10));
@@ -704,7 +678,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             else if(shattered)
             {
-                Terraria.Audio.SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                SOTSUtils.PlaySound(SoundID.Tink, (int)npc.Center.X, (int)npc.Center.Y, 1f, -0.6f);
                 for (int i = 0; i < 12; i++)
                 {
                     Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));
@@ -972,7 +946,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             base.UpdateLifeRegen(npc, ref damage);
         }
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             for (int i = 0; i < Main.maxNPCs; i++)
             {
@@ -1013,7 +987,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         float max = betweenPositions.Length() / (texture2.Width * scale);
                         for (int k = 0; k < max; k++)
                         {
-                            drawPos = npc.Center + -betweenPositions * (k / max) - Main.screenPosition;
+                            drawPos = npc.Center + -betweenPositions * (k / max) - screenPos;
                             if (k == 0 && proj.type == ProjectileType<EvilGrowth>())
                             {
                                 Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilHand").Value;
@@ -1045,12 +1019,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     Vector2 bonus = new Vector2(circularLength.X, 0).RotatedBy(MathHelper.ToRadians(k * total * 0.1f));
                     color = new Color(250, 250, 250, 0);
                     circularPos += bonus;
-                    Vector2 drawPos = npc.Center + circularPos - Main.screenPosition;
+                    Vector2 drawPos = npc.Center + circularPos - screenPos;
                     color = npc.GetAlpha(color);
                     Main.spriteBatch.Draw(texture, drawPos, null, color, npc.rotation, drawOrigin, 0.33f, SpriteEffects.None, 0f);
                 }
             }
-            return base.PreDraw(npc, spriteBatch, drawColor);
+            return true;
         }
         public override void HitEffect(NPC npc, int hitDirection, double damageTaken)
         {
@@ -1059,13 +1033,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 int index = npc.FindBuffIndex(BuffType<Infected>());
                 int time = npc.buffTime[index];
                 int damage = time / 60;
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
+                SOTSUtils.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y, 0.6f);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<Pathogen>(), damage, 0, Main.myPlayer, -1);
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<Pathogen>(), damage, 0, Main.myPlayer, -1);
                     }
                 }
             }
@@ -1074,14 +1048,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Vector2 circular = new Vector2(4.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<CurseGhost>(), (int)(npc.lifeMax * 0.1f) + 10, 0, Main.myPlayer, -1);
+                    Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<CurseGhost>(), (int)(npc.lifeMax * 0.1f) + 10, 0, Main.myPlayer, -1);
                 }
             }
             if(npc.life <= 0)
             {
                 if (shattered)
                 {
-                    Terraria.Audio.SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                    SOTSUtils.PlaySound(SoundID.Tink, (int)npc.Center.X, (int)npc.Center.Y, 1f, -0.6f);
                     for (int i = 0; i < 12; i++)
                     {
                         Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));
@@ -1095,7 +1069,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             base.HitEffect(npc, hitDirection, damageTaken);
         }
-        public override void NPCLoot(NPC npc)
+        public override void OnKill(NPC npc)
         {
             if (npc.SpawnedFromStatue || npc.friendly || npc.lifeMax <= 5)
                 return;
@@ -1112,14 +1086,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 for(int i = 0; i < Main.maxItems; i++)
                 {
                     Item item = Main.item[i];
-                    if(Item.type == ItemType<HealPack>() || Item.type == ItemType<ManaPack>())
+                    if(item.type == ItemType<HealPack>() || item.type == ItemType<ManaPack>())
                     {
-                        if(Item.active)
+                        if(item.active)
                             packCount++;
                     }
-                    if (Item.type == ItemType<BaguetteCrumb>())
+                    if (item.type == ItemType<BaguetteCrumb>())
                     {
-                        if (Item.active)
+                        if (item.active)
                             baguetteCount++;
                     }
                 }
@@ -1136,7 +1110,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             for (int j = 0; j < numberProjectiles; j++)
                             {
                                 Vector2 perturbedSpeed = new Vector2(-4.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(180)));
-                                Projectile proj = Projectile.NewProjectileDirect(npc.Center, perturbedSpeed, ModContent.ProjectileType<SoulofLooting>(), 0, 0, Main.myPlayer, player.whoAmI, 0);
+                                Projectile proj = Projectile.NewProjectileDirect(npc.GetSource_Death("SOTS:SoulofLooting"), npc.Center, perturbedSpeed, ModContent.ProjectileType<SoulofLooting>(), 0, 0, Main.myPlayer, player.whoAmI, 0);
                                 proj.netUpdate = true;
                             }
                         }
@@ -1145,11 +1119,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             int rand = Main.rand.Next(4);
                             if (player.statLifeMax2 > player.statLife)
                                 for(int j = 0; j < rand; j++)
-                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<HealPack>(), 1);
+                                    Item.NewItem(npc.GetSource_Death("SOTS:KilledByBoomstick"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<HealPack>(), 1);
                             rand = 3 - rand;
                             if (player.statManaMax2 > player.statMana)
                                 for (int j = 0; j < rand; j++)
-                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<ManaPack>(), 1);
+                                    Item.NewItem(npc.GetSource_Death("SOTS:KilledByBoomstick"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<ManaPack>(), 1);
                         }
                         if (sPlayer.baguetteDrops && baguetteCount < 40)
                         {
@@ -1161,7 +1135,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             if (rand >= 3)
                                 rand += Main.rand.Next(5) / 4;
                             for (int j = 0; j < rand; j++)
-                                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BaguetteCrumb>(), 1);
+                                Item.NewItem(npc.GetSource_Death("SOTS:KilledByBaguette"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BaguetteCrumb>(), 1);
                         }
                         if(sPlayer.HarvestersScythe && Main.rand.NextBool(lastHitWasCrit ? 5 : 10))
                         {
@@ -1172,7 +1146,6 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     }
                 }
             }
-            base.NPCLoot(npc);
         }
     }
 }

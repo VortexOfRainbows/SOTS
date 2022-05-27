@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Furniture;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Nature;
-using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
+using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,10 +21,9 @@ namespace SOTS
 		public static RenderTarget2D TargetProj;
 		public static void Initialize()
 		{
-			On.Terraria.IO.WorldFile.saveWorld_bool_bool += Hooks.AwaitWorldSave;
 			On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
-			On.Terraria.Main.DrawPlayers += Main_DrawPlayers;
+			On.Terraria.Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
 
 			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
@@ -51,10 +51,9 @@ namespace SOTS
 
 		public static void Unload()
 		{
-			On.Terraria.IO.WorldFile.saveWorld_bool_bool -= Hooks.AwaitWorldSave;
 			On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
-			On.Terraria.Main.DrawPlayers -= Main_DrawPlayers;
+			On.Terraria.Main.DrawPlayers_AfterProjectiles -= Main_DrawPlayers_AfterProjectiles;
 
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update -= Player_Update;
@@ -225,7 +224,7 @@ namespace SOTS
 			}
 		}
 
-		private static void Main_DrawPlayers(On.Terraria.Main.orig_DrawPlayers orig, Main self)
+		private static void Main_DrawPlayers_AfterProjectiles(On.Terraria.Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
 		{
 			PreDrawPlayers();
 			orig(self);
@@ -262,7 +261,7 @@ namespace SOTS
 					{
 						DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
 						if (instancedNPC.timeFrozen != 0)
-							instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch, Color.White);
+							instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch);
 					}
 				}
 			}
@@ -302,31 +301,6 @@ namespace SOTS
 				}
 				Main.spriteBatch.End();
 			}
-		}
-	}
-	public static class Hooks
-	{
-		private static void await()
-		{
-			while (PhaseWorldgenHelper.Generating)
-			{
-				Main.statusText = PhaseWorldgenHelper.GetStatus();
-			}
-		}
-		internal static void AwaitWorldSave(On.Terraria.IO.WorldFile.orig_saveWorld_bool_bool orig, bool useCloudSaving, bool resetTime)
-		{
-			if (useCloudSaving && SocialAPI.Cloud == null)
-			{
-				return;
-			}
-			if (WorldGen.saveLock)
-			{
-				return;
-			}
-
-			await();
-
-			orig(useCloudSaving: useCloudSaving, resetTime: resetTime);
 		}
 	}
 }
