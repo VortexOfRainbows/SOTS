@@ -35,6 +35,7 @@ using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.ItemDropRules;
 using System.Linq;
 using SOTS.NPCs;
+using SOTS.Items.Otherworld.FromChests;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -408,6 +409,20 @@ namespace SOTS.Common.GlobalNPCs
 			{
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 20));
 				npcLoot.Add(preEoC);
+			}
+			LeadingConditionRule postAdvisor = new LeadingConditionRule(new ItemDropConditions.DownedAdvisorDropCondition());
+			if (npc.type == ModContent.NPCType<TwilightScouter>() || npc.type == ModContent.NPCType<TwilightDevil>())
+			{
+				postAdvisor.OnSuccess(ItemDropRule.Common(ModContent.ItemType<TwilightShard>(), 3));
+				npcLoot.Add(postAdvisor);
+			}
+			LeadingConditionRule postPharaoh = new LeadingConditionRule(new ItemDropConditions.DownedCurseDropCondition());
+			if (npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Maligmor>() || npc.type == ModContent.NPCType<Ghast>())
+			{
+				IItemDropRule alternative = ItemDropRule.Common(ModContent.ItemType<SoulResidue>(), 1, 1, 2);
+				postPharaoh.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 3, 1, 2).OnFailedRoll(alternative));
+				postPharaoh.OnFailedConditions(alternative);
+				npcLoot.Add(postPharaoh);
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;

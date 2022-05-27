@@ -1,10 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld;
+using SOTS.Items.Otherworld.FromChests;
 using System;
 using System.ComponentModel;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -127,8 +131,8 @@ namespace SOTS.NPCs
 				NPC.rotation = NPC.velocity.ToRotation() - MathHelper.ToRadians(90);
 			}
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeOutline").Value;
 			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeFill").Value;
@@ -139,17 +143,17 @@ namespace SOTS.NPCs
 				{
 					for (int k = 0; k < 5; k++)
 					{
-						Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+						Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
 						color = color * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 						if (k == 0)
-							Main.spriteBatch.Draw(texture4, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) - 4), null, color * 0.9f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
-						Main.spriteBatch.Draw(texture2, drawPos, null, color * 0.9f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+							spriteBatch.Draw(texture4, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) - 4), null, color * 0.9f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(texture2, drawPos, null, color * 0.9f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 					}
 				}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeOutline").Value;
 			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeFill").Value;
 			Color color = new Color(110, 110, 110, 0);
@@ -160,22 +164,18 @@ namespace SOTS.NPCs
 				float y = Main.rand.Next(-10, 11) * 0.1f;
 
 				if (k == 0)
-					Main.spriteBatch.Draw(texture4, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) - 4), null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
-
-				Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y - 4), null, color * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture4, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) - 4), null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y - 4), null, color * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("TwilightShard").Type, 1);
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("TwilightGel").Type, Main.rand.Next(2) + 1);
-
-			if (Main.rand.Next(10) == 0)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("FragmentOfOtherworld").Type, Main.rand.Next(2) + 1);
-
-			if (Main.rand.Next(75) == 0)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("BladeGenerator").Type, 1);
+			LeadingConditionRule postAdvisor = new LeadingConditionRule(new Common.ItemDropConditions.DownedAdvisorDropCondition());
+			postAdvisor.OnSuccess(ItemDropRule.Common(ItemType<TwilightShard>(), 20));
+			npcLoot.Add(postAdvisor);
+			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightGel>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfOtherworld>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ItemType<BladeGenerator>(), 75));
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

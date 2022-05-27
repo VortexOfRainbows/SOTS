@@ -1,14 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.Blocks;
-using SOTS.Items.Otherworld.FromChests;
-using SOTS.Items.Pyramid;
-using System;
-using System.Security.AccessControl;
+using SOTS.Projectiles.Otherworld;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -125,18 +124,14 @@ namespace SOTS.NPCs
 				MoveCursorToPlayer();
 			if (NPC.ai[0] == 30 && NPC.ai[1] == 0)
 			{
-				int damage2 = NPC.damage / 2;
-				if (Main.expertMode)
-				{
-					damage2 = (int)(damage2 / Main.expertDamage);
-				}
+				int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 				for(int i = 0; i < 9; i++)
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, 0, 0, Mod.Find<ModProjectile>("TwilightDart").Type, damage2, 1f, Main.myPlayer, 0, NPC.whoAmI);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, 0, 0, ProjectileType<TwilightDart>(), damage2, 1f, Main.myPlayer, 0, NPC.whoAmI);
 			}
 			if(NPC.ai[0] == 510 && NPC.ai[1] == 0) //time of release
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+				SOTSUtils.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 			}
 			if(NPC.ai[0] >= 540 && NPC.ai[1] == 0) //teleport out
 			{
@@ -239,17 +234,10 @@ namespace SOTS.NPCs
 			}
 			return 0;*/
 		}
-		public override void NPCLoot()
-		{
-			if (Main.rand.NextBool(3) && SOTSWorld.downedAdvisor) Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightShard>(), 1);
-
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
-			if(Main.rand.NextBool(4))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<JarOfSouls>(), 1);
-			else
-			{
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<AvaritianPlating>(), Main.rand.Next(5) + 4);
-			}
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightGel>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<JarOfSouls>(), 4).OnFailedRoll(ItemDropRule.Common(ItemType<AvaritianPlating>(), 1, 4, 8)));
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {
@@ -272,13 +260,13 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			texture = GetTexture("SOTS/NPCs/TwilightDevilGlow");
+			texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/TwilightDevilGlow");
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}

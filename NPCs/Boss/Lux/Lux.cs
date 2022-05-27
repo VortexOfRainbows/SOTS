@@ -4,13 +4,16 @@ using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
 using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Chaos;
 using SOTS.Void;
+using SOTS.WorldgenHelpers;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,6 +24,7 @@ namespace SOTS.NPCs.Boss.Lux
 	{
         public override void SendExtraAI(BinaryWriter writer)
 		{
+			writer.Write(NPC.dontTakeDamage);
 			writer.Write(despawnTimer);
 			writer.Write(NPC.alpha);
 			writer.Write(attackTimer3);
@@ -31,6 +35,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
 		{
+			NPC.dontTakeDamage = reader.ReadBoolean();
 			despawnTimer = reader.ReadSingle();
 			NPC.alpha = reader.ReadInt32();
 			attackTimer3 = reader.ReadSingle();
@@ -74,13 +79,13 @@ namespace SOTS.NPCs.Boss.Lux
 		public bool SecondPhase = false;
 		public bool desperation = false;
 		public float compressWings = 0;
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++)
 			{
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
 				Color color = NPC.GetAlpha(VoidPlayer.pastelRainbow) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				color.A = 0;
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
@@ -89,7 +94,7 @@ namespace SOTS.NPCs.Boss.Lux
 			float bonusWidth = drawNewWingsCounter * 16f + wingOutwardOffset;
 			float bonusDegree = drawNewWingsCounter * -13f;
 			if(!desperation || attackTimer1 < 100)
-				DrawRings(spriteBatch, false);
+				DrawRings(screenPos, spriteBatch, false);
 			if (compressWings >= 2)
 			{
 				return false;
@@ -101,16 +106,16 @@ namespace SOTS.NPCs.Boss.Lux
 				if (overrideGenPercent < -0.05f)
 					overrideGenPercent = -0.05f;
             }
-			DrawWings(1, 1f + bonusScale, bonusWidth, bonusDegree, overrideGenPercent);
+			DrawWings(screenPos, 1, 1f + bonusScale, bonusWidth, bonusDegree, overrideGenPercent);
 			if(drawNewWingsCounter > 0)
             {
-				DrawWings(2, (1f + bonusScale) * 1.25f, bonusWidth + MathHelper.Lerp(12, 8, compressWings), bonusDegree + 36 * (1 - compressWings), drawNewWingsCounter * overrideGenPercent);
-				DrawWings(0, (1f + bonusScale) * 0.75f, bonusWidth - MathHelper.Lerp(18, -12, compressWings), bonusDegree - 36 * (1 - compressWings), drawNewWingsCounter* overrideGenPercent);
+				DrawWings(screenPos, 2, (1f + bonusScale) * 1.25f, bonusWidth + MathHelper.Lerp(12, 8, compressWings), bonusDegree + 36 * (1 - compressWings), drawNewWingsCounter * overrideGenPercent);
+				DrawWings(screenPos, 0, (1f + bonusScale) * 0.75f, bonusWidth - MathHelper.Lerp(18, -12, compressWings), bonusDegree - 36 * (1 - compressWings), drawNewWingsCounter* overrideGenPercent);
 			}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
@@ -124,10 +129,10 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				else
 					circular *= 0f;
-				Main.spriteBatch.Draw(texture, NPC.Center + circular - Main.screenPosition, null, NPC.GetAlpha(color), 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, NPC.Center + circular - screenPos, null, NPC.GetAlpha(color), 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			if (!desperation || attackTimer1 < 100)
-				DrawRings(spriteBatch, true);
+				DrawRings(screenPos, spriteBatch, true);
 		}
 		public void WingStuff()
 		{
@@ -136,7 +141,7 @@ namespace SOTS.NPCs.Boss.Lux
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
 			wingHeight = 19 + dipAndRise * 27 * (1 - compressWings * 0.9f);
 		}
-		public void DrawWings(int ID, float sizeMult = 1f, float widthOffset = 0, float degreeOffset = 0, float genPercent = 1f)
+		public void DrawWings(Vector2 screenPos, int ID, float sizeMult = 1f, float widthOffset = 0, float degreeOffset = 0, float genPercent = 1f)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
@@ -225,7 +230,7 @@ namespace SOTS.NPCs.Boss.Lux
 						circular.X *= width / 2 * j;
 						circular.Y *= height / 2;
 						circular = circular.RotatedBy(positionalRotation);
-						Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, NPC.scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, position - screenPos + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, NPC.scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
 					}
 					else
                     {
@@ -234,13 +239,13 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 			}
 		}
-		public void DrawRings(SpriteBatch spriteBatch, bool front = false)
+		public void DrawRings(Vector2 screenPos, SpriteBatch spriteBatch, bool front = false)
         {
 			if (runOnce)
 				return;
 			for(int i = 0; i < rings.Count; i++)
 			{
-				rings[i].Draw(spriteBatch, 4 - i, (1 - NPC.alpha / 255f), drawNewWingsCounter, 1f, NPC.rotation, front);
+				rings[i].Draw(screenPos, spriteBatch, 4 - i, (1 - NPC.alpha / 255f), drawNewWingsCounter, 1f, NPC.rotation, front);
 				if (compressWings >= 2)
 					break;
 			}
@@ -270,31 +275,30 @@ namespace SOTS.NPCs.Boss.Lux
             NPC.HitSound = SoundID.NPCHit54;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.netAlways = false;
-			music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor");
-			musicPriority = MusicPriority.BossHigh;
+			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Advisor");
+			SceneEffectPriority = SceneEffectPriority.BossHigh;
 			SetupDebuffImmunities();
-			bossBag = ModContent.ItemType<LuxBag>();
 		}
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (Projectile.melee)
+			if (projectile.CountsAsClass(DamageClass.Melee))
 			{
 				damage = (int)(damage * 1.08f);
 			}
-			if (Projectile.magic)
+			if (projectile.CountsAsClass(DamageClass.Magic))
 			{
-				if(Projectile.type == ProjectileID.Blizzard)
+				if(projectile.type == ProjectileID.Blizzard)
 				{
 					damage = (int)(damage * 0.8f);
 				}
 				else
 					damage = (int)(damage * 0.95f);
 			}
-			else if (Projectile.ranged)
+			else if (projectile.CountsAsClass(DamageClass.Ranged))
 			{
 				damage = (int)(damage * 0.88f);
 			}
-			if(Projectile.type == ProjectileID.UFOLaser)
+			if(projectile.type == ProjectileID.UFOLaser)
 			{
 				damage = (int)(damage * 0.9f);
 			}
@@ -323,32 +327,25 @@ namespace SOTS.NPCs.Boss.Lux
 			NPC.buffImmune[BuffID.Ichor] = true;
 			NPC.buffImmune[BuffID.BetsysCurse] = true;
 		}
-        public override void BossLoot(ref string name, ref int potionType)
-        {
-			if(!SOTSWorld.downedLux && SOTSWorld.GlobalCounter > 120) //have to be in world for more than 2 seconds. Objective is to hopefully prevent recipe browser from crashing the game.
-            {
-				if(!Main.gameInactive)
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<LuxBag>()));
+			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PhaseOre>(), 1, 90, 150));
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));
+		}
+        public override void OnKill()
+		{
+			if (!SOTSWorld.downedLux && SOTSWorld.GlobalCounter > 120) //have to be in world for more than 2 seconds. Objective is to hopefully prevent recipe browser from crashing the game.
+			{
+				if (!Main.gameInactive)
 					PhaseWorldgenHelper.Generate();
 				SOTSWorld.downedLux = true;
 			}
+        }
+        public override void BossLoot(ref string name, ref int potionType)
+        {
 			potionType = ItemID.GreaterHealingPotion;
-			if (Main.rand.NextBool(10))
-			{
-				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PutridPinkyTrophy>(), 1);
-			}
-			if (Main.rand.NextBool(7))
-			{
-				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PutridPinkyMask>(), 1);
-			}
-			if (Main.expertMode)
-			{
-				NPC.DropBossBags();
-			}
-			else
-			{
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(90, 151)); //9 to 15 bars
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.SoulofLight, Main.rand.Next(10, 20));
-			}
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -416,11 +413,7 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				}
 			}
-			int damage = NPC.damage / 2;
-			if (Main.expertMode)
-			{
-				damage = (int)(damage / Main.expertDamage);
-			}
+			int damage = SOTSNPCs.GetBaseDamage(NPC) / 2;
 			Player player = Main.player[NPC.target];
 			Vector2 toPlayer = player.Center - NPC.Center;
 			NPC.TargetClosest(false);
@@ -481,7 +474,7 @@ namespace SOTS.NPCs.Boss.Lux
 						NPC.velocity *= 0f;
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							int n = NPC.NewNPC((int)NPC.Center.X + 10, (int)NPC.position.Y + 12, ModContent.NPCType<Collector2>());
+							int n = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 10, (int)NPC.position.Y + 12, ModContent.NPCType<Collector2>());
 							Main.npc[n].netUpdate = true;
 							attackTimer4 = n;
 							NPC.netUpdate = true;
@@ -495,7 +488,7 @@ namespace SOTS.NPCs.Boss.Lux
 						{
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								NPC npc2 = Main.npc[NPC.NewNPC((int)NPC.Center.X + 10, (int)NPC.position.Y + 12, ModContent.NPCType<Collector2>())];
+								NPC npc2 = Main.npc[NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 10, (int)NPC.position.Y + 12, ModContent.NPCType<Collector2>())];
 								npc2.netUpdate = true;
 								attackTimer4 = npc2.whoAmI;
 								NPC.netUpdate = true;
@@ -517,7 +510,7 @@ namespace SOTS.NPCs.Boss.Lux
 								{
 									if (Main.netMode != NetmodeID.MultiplayerClient)
 									{
-										int item = Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingBrilliance>(), 1);
+										int item = Item.NewItem(NPC.GetSource_Loot("SOTS:CollectorDissolvingBrilliance"), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingBrilliance>(), 1);
 										Main.item[item].velocity = new Vector2(0, 5).RotatedBy(MathHelper.ToRadians(50 * ((ai3 - 50) / 25)));
 										NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 									}
@@ -527,7 +520,7 @@ namespace SOTS.NPCs.Boss.Lux
 							{
 								NPC.StrikeNPC(10000, 0, 0);
 								if (Main.netMode == NetmodeID.Server)
-									NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, NPC.whoAmI, 10000, 0, 0, 0, 0, 0);
+									NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, 10000, 0, 0, 0, 0, 0);
 							}
 						}
 					}
@@ -549,11 +542,11 @@ namespace SOTS.NPCs.Boss.Lux
 					attackTimer1++;
 					if (attackTimer1 % 30 == 0 && attackTimer1 < 100 && attackTimer1 > 20)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.25f, 0.1f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f, 0.1f);
 					}
 					if (attackTimer1 == 120)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f, 0.1f);
+						SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f, 0.1f);
 						Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
 					}
 					if (attackTimer1 > 60)
@@ -646,12 +639,12 @@ namespace SOTS.NPCs.Boss.Lux
 						{
 							if (SecondPhase)
 							{
-								Projectile.NewProjectile(otherLaserPosition, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target, -1); //Projectile.ai[1] value of -1 to carry on weaker dogma sphere projectile
-								Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target, -2);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), otherLaserPosition, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target, -1); //Projectile.ai[1] value of -1 to carry on weaker dogma sphere projectile
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target, -2);
 							}
 							else
 							{
-								Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, NPC.target);
 							}
 						}
 					}
@@ -725,14 +718,14 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 6 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+								SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 4 - (int)attackTimer3 % 2;
 									for (int i = 0; i <= amt; i++)
 									{
 										float radians = MathHelper.ToRadians(28f * (i - amt / 2f));
-										Projectile.NewProjectile(NPC.Center + outward * 72, outward.RotatedBy(radians) * 5f, ModContent.ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 72, outward.RotatedBy(radians) * 5f, ModContent.ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
 								NPC.velocity -= outward * 1.5f;
@@ -783,7 +776,7 @@ namespace SOTS.NPCs.Boss.Lux
 						{
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(rings[ring].toLocation, Vector2.Zero, ModContent.ProjectileType<ChaosStar>(), damage, 0, Main.myPlayer, attackTimer3 % 2 * 45);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), rings[ring].toLocation, Vector2.Zero, ModContent.ProjectileType<ChaosStar>(), damage, 0, Main.myPlayer, attackTimer3 % 2 * 45);
 							}
 							attackTimer3++;
 							attackTimer1 = 50;
@@ -793,11 +786,11 @@ namespace SOTS.NPCs.Boss.Lux
 							attackTimer2++;
 							if (attackTimer2 > 70)
 							{
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+								SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-									Projectile.NewProjectile(NPC.Center + outward * 72, outward * 3f, ModContent.ProjectileType<ChaosDart>(), damage, 0, Main.myPlayer, NPC.target);
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 72, outward * 3f, ModContent.ProjectileType<ChaosDart>(), damage, 0, Main.myPlayer, NPC.target);
 								}
 								attackTimer2 = 0;
 							}
@@ -875,7 +868,7 @@ namespace SOTS.NPCs.Boss.Lux
 								if (length > 70)
 									length = 70;
 								Vector2 spawnAt = player.Center + Main.rand.NextVector2Circular(96, 96) + player.velocity * length;
-								Projectile.NewProjectile(spawnAt, spawnPosition, ModContent.ProjectileType<ChaosDiamond>(), (int)(damage * 1.5f), 1, Main.myPlayer, timeUntilEnd, NPC.target);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnAt, spawnPosition, ModContent.ProjectileType<ChaosDiamond>(), (int)(damage * 1.5f), 1, Main.myPlayer, timeUntilEnd, NPC.target);
 								attackTimer2 = spawnAt.X;
 								attackTimer3 = spawnAt.Y;
 								NPC.netUpdate = true;
@@ -932,7 +925,7 @@ namespace SOTS.NPCs.Boss.Lux
 						}
 						else if (attackTimer1 == 95)
 						{
-							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+							SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								if (SecondPhase)
@@ -944,7 +937,7 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = -amt; i <= amt; i++)
 									{
 										float radians = startRadians + MathHelper.ToRadians(i * 30f);
-										Projectile.NewProjectile(NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 2.5f, ModContent.ProjectileType<ChaosDart2>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 2.5f, ModContent.ProjectileType<ChaosDart2>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
 								else
@@ -956,7 +949,7 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = 0; i <= amt; i++)
 									{
 										float radians = startRadians + MathHelper.ToRadians(i * 360f / amt);
-										Projectile.NewProjectile(NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
 							}
@@ -1016,7 +1009,7 @@ namespace SOTS.NPCs.Boss.Lux
 							}
 							if (attackTimer1 % 20 == 0)
 							{
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.6f, 0.1f - 0.1f * attackTimer1 / 20f);
+								SOTSUtils.PlaySound(SoundID.Item15, (int)NPC.Center.X, (int)NPC.Center.Y, 1.6f, 0.1f - 0.1f * attackTimer1 / 20f);
 							}
 						}
 						if (attackTimer1 >= 120)
@@ -1026,7 +1019,7 @@ namespace SOTS.NPCs.Boss.Lux
 								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									Projectile.NewProjectile(NPC.Center, outward * 4, ModContent.ProjectileType<ChaosEraser>(), (int)(damage * 1.4f), 0, Main.myPlayer, NPC.target, 0.023f * attackTimer2 * 30f / numberOfShots);
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, outward * 4, ModContent.ProjectileType<ChaosEraser>(), (int)(damage * 1.4f), 0, Main.myPlayer, NPC.target, 0.023f * attackTimer2 * 30f / numberOfShots);
 								}
 								attackTimer2++;
 								NPC.velocity -= outward * 1f;
@@ -1068,7 +1061,7 @@ namespace SOTS.NPCs.Boss.Lux
 							teleport(player.Center + new Vector2(0, -240), player.Center);
 							attackTimer2 = player.Center.X;
 							attackTimer3 = player.Center.Y - 240;
-							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.2f, 0.4f);
+							SOTSUtils.PlaySound(SoundID.Item62, (int)NPC.Center.X, (int)NPC.Center.Y, 1.2f, 0.4f);
 							for (int i = 0; i < 120; i++)
 							{
 								Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
@@ -1081,7 +1074,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 								for (int i = 0; i < 3; i++)
 								{
-									int npc1 = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<FakeLux>(), 0, NPC.whoAmI, 120 * i, 0, attackPhase == RGBPhase ? 1 : 0); //summons 120, 240, and 360
+									int npc1 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<FakeLux>(), 0, NPC.whoAmI, 120 * i, 0, attackPhase == RGBPhase ? 1 : 0); //summons 120, 240, and 360
 									Main.npc[npc1].netUpdate = true;
 								}
 						}
@@ -1101,7 +1094,7 @@ namespace SOTS.NPCs.Boss.Lux
 									NPC.alpha = 0;
 									SwapPhase(PickRandom(RGBPhase));
 									teleport(new Vector2(player.Center.X, player.Center.Y - 240), player.Center);
-									Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.2f, 0.4f);
+									SOTSUtils.PlaySound(SoundID.Item62, (int)NPC.Center.X, (int)NPC.Center.Y, 1.2f, 0.4f);
 									for (int i = 0; i < 120; i++)
 									{
 										Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
@@ -1116,7 +1109,7 @@ namespace SOTS.NPCs.Boss.Lux
 							}
 							else if (rnTimer >= 200)
 							{
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+								SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 8;
@@ -1125,7 +1118,7 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = 0; i <= amt; i++)
 									{
 										float radians = MathHelper.ToRadians(i * 360f / amt);
-										Projectile.NewProjectile(NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
 									}
 								}
 								attackTimer1 -= 200;
@@ -1207,7 +1200,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 5 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+								SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									float degrees = attackTimer4 * 90f;
@@ -1221,7 +1214,7 @@ namespace SOTS.NPCs.Boss.Lux
 									if (attackTimer3 % 2 == 0)
 										num = 1 - num;
 									Vector2 destination = Vector2.Lerp(destinationTop, destinationBot, num);
-									Projectile.NewProjectile(NPC.Center + outward * 96, direction, ModContent.ProjectileType<ThunderSpawnBeam>(), damage, NPC.target, Main.myPlayer, destination.X, destination.Y);
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 96, direction, ModContent.ProjectileType<ThunderSpawnBeam>(), damage, NPC.target, Main.myPlayer, destination.X, destination.Y);
 								}
 								NPC.velocity -= outward * 2f;
 							}
@@ -1320,14 +1313,18 @@ namespace SOTS.NPCs.Boss.Lux
 			if(attackPhase == DesperationPhase && desperation && attackTimer1 > 180)
             {
 				return true;
-            }
-            return false;
+			}
+			desperation = true;
+			NPC.lifeMax = 1;
+			NPC.life = 1;
+			NPC.dontTakeDamage = true;
+			return false;
         }
         public void teleport(Vector2 destination, Vector2 playerDestination, bool serverOnly = false)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				Projectile.NewProjectile(NPC.Center, playerDestination, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
+				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, playerDestination, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
 			}
 			if(!serverOnly || Main.netMode != NetmodeID.MultiplayerClient)
 				NPC.Center = destination;
@@ -1501,11 +1498,11 @@ namespace SOTS.NPCs.Boss.Lux
 			compression = MathHelper.Lerp(prevCompression, nextCompression, scale);
 		}
 		float spinCounter = 0;
-		public void Draw(SpriteBatch spriteBatch, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
+		public void Draw(Vector2 screenPos, SpriteBatch spriteBatch, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
         {
-			Draw(spriteBatch, Color.White, ID, alphaMult, radiusMult, sizeMult, baseRotation, front);
+			Draw(screenPos, spriteBatch, Color.White, ID, alphaMult, radiusMult, sizeMult, baseRotation, front);
         }
-		public void Draw(SpriteBatch spriteBatch, Color overrideColor, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
+		public void Draw(Vector2 screenPos, SpriteBatch spriteBatch, Color overrideColor, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
 		{
 			baseRotation += MathHelper.PiOver2;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[ModContent.ProjectileType<ChaosSphere>()].Value;
@@ -1552,7 +1549,7 @@ namespace SOTS.NPCs.Boss.Lux
 				Vector2 rotationV = new Vector2(radius * radiusMult, 0).RotatedBy(radians);
 				rotationV.X *= overrideCompression;
 				rotationV = rotationV.RotatedBy(overrideRotation + baseRotation);
-				spriteBatch.Draw(texture, center - Main.screenPosition + rotationV, null, new Color(color.R, color.G, color.B, 0) * alphaMult, baseRotation, drawOrigin, 0.8f * sizeMult, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, center - screenPos + rotationV, null, new Color(color.R, color.G, color.B, 0) * alphaMult, baseRotation, drawOrigin, 0.8f * sizeMult, SpriteEffects.None, 0f);
 			}
 		}
 	}

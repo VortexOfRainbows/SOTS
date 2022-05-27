@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
@@ -9,6 +10,7 @@ using SOTS.Projectiles.Otherworld;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -65,23 +67,23 @@ namespace SOTS.NPCs
 			Banner = NPC.type;
 			BannerItem = ItemType<HoloEyeBanner>();
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeBase").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + 18);
+			Vector2 drawPos = new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + 18);
 			Main.spriteBatch.Draw(texture, drawPos, null, drawColor * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			Color color = new Color(100, 100, 100, 0); 
 			texture = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeBaseGlow").Value;
 			for (int k = 0; k < 5; k++)
 			{
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
-				Main.spriteBatch.Draw(texture, drawPos + offset, null, color * 0.66f, 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos + offset, null, color * 0.66f, 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeReticle").Value;
 			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyePupil").Value;
@@ -105,19 +107,18 @@ namespace SOTS.NPCs
 				}
 
 				if (k == 0)
-					Main.spriteBatch.Draw(texture4, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) - 4), null, color * 0.5f, 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture4, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) - 4), null, color * 0.5f, 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y - 4), null, color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y - 4), null, color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 
 				float scaleFactor = counter / 180f;
 				scaleFactor = scaleFactor > 1 ? 1 : scaleFactor;
 				if (lookAtPos.X != -1 && lookAtPos.Y != -1)
 				{
-					Main.spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y - 4) + between * (6 + -14 * NPC.ai[1]), null, color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin3, 0.5f + NPC.scale - NPC.ai[1], SpriteEffects.None, 0f);
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(tracerPosX - (int)Main.screenPosition.X) + x, (float)(tracerPosY - (int)Main.screenPosition.Y) + y), null, color * scaleFactor, tracerXVelo * 0.04f, drawOrigin2, scaleFactor, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y - 4) + between * (6 + -14 * NPC.ai[1]), null, color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin3, 0.5f + NPC.scale - NPC.ai[1], SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(tracerPosX - (int)screenPos.X) + x, (float)(tracerPosY - (int)screenPos.Y) + y), null, color * scaleFactor, tracerXVelo * 0.04f, drawOrigin2, scaleFactor, SpriteEffects.None, 0f);
 				}
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		float tracerXVelo = 0;
 		public void MoveCursorToPlayer()
@@ -257,21 +258,14 @@ namespace SOTS.NPCs
 			}
 			if (NPC.ai[0] >= 240 && NPC.ai[0] <= 360)
 			{
-				int damage2 = NPC.damage / 2;
-				if (Main.expertMode)
-				{
-					damage2 = (int)(damage2 / Main.expertDamage);
-				}
-					
+				int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 				if(NPC.ai[0] % 11 == 0)
 				{
 					Vector2 between = lookAtPos - NPC.Center;
 					between.Normalize();
-
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						Projectile.NewProjectile(NPC.Center.X + between.X * 24, NPC.Center.Y + between.Y * 24, 0, -1.666f, ModContent.ProjectileType<FallingBolt>(), damage2, 1f, Main.myPlayer, tracerPosX + Main.rand.Next(-14, 15), tracerPosY + Main.rand.Next(-14, 15));
-
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + between.X * 24, NPC.Center.Y + between.Y * 24, 0, -1.666f, ModContent.ProjectileType<FallingBolt>(), damage2, 1f, Main.myPlayer, tracerPosX + Main.rand.Next(-14, 15), tracerPosY + Main.rand.Next(-14, 15));
+					SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y, 0.5f);
 					NPC.ai[1] = 1;
 				}
 			}
@@ -280,15 +274,13 @@ namespace SOTS.NPCs
 				NPC.ai[0] = 0;
 			}
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
-
-			if (Main.rand.NextBool(5))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<FragmentOfOtherworld>(), 1);
-
-			if (Main.rand.NextBool(5) && SOTSWorld.downedAdvisor) 
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightShard>(), 1);
+			LeadingConditionRule postAdvisor = new LeadingConditionRule(new Common.ItemDropConditions.DownedAdvisorDropCondition());
+			postAdvisor.OnSuccess(ItemDropRule.Common(ItemType<TwilightShard>(), 5));
+			npcLoot.Add(postAdvisor);
+			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightGel>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfOtherworld>(), 5));
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -323,7 +315,7 @@ namespace SOTS.NPCs
 					if (k % 2 == 0)
 						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/HoloEyeGore1"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/HoloEyeGore1"), 1f);
 			}
 		}
 	}

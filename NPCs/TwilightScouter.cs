@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
@@ -8,6 +9,7 @@ using SOTS.Items.Otherworld.FromChests;
 using SOTS.Projectiles.Otherworld;
 using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -69,10 +71,10 @@ namespace SOTS.NPCs
 			}
             base.FindFrame(frameHeight);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-			Texture2D texture2 = GetTexture("SOTS/NPCs/TwilightScouterGlow");
+			Texture2D texture2 = (Texture2D)Request<Texture2D>("SOTS/NPCs/TwilightScouterGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 6);
 			float dir = NPC.rotation;
 			bool flip = false;
@@ -81,8 +83,8 @@ namespace SOTS.NPCs
 				flip = true;
 			}
 			float bonusDir = !flip ? MathHelper.ToRadians(180) : 0;
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(texture2, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), NPC.frame, new Color(100, 100, 120, 0), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, new Color(100, 100, 120, 0), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
         }
 		public void MoveCursorToPlayer()
@@ -159,19 +161,15 @@ namespace SOTS.NPCs
 				MoveToPlayer();
 			if (NPC.ai[0] >= 240 && NPC.ai[0] <= 270)
 			{
-				int damage2 = NPC.damage / 2;
-				if (Main.expertMode)
-				{
-					damage2 = (int)(damage2 / Main.expertDamage);
-				}
+				int damage = SOTSNPCs.GetBaseDamage(NPC) / 2;
 				if(NPC.ai[0] % 20 == 0)
 				{
 					Vector2 between = new Vector2(tracerPosX, tracerPosY) - NPC.Center;
 					between = between.SafeNormalize(Vector2.Zero);
 					NPC.velocity -= between * 3.4f;
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						Projectile.NewProjectile(NPC.Center + between * 24, between * 2.5f, ProjectileType<ThunderColumnBlue>(), damage2, 2f, Main.myPlayer, 2);
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f, 0.1f);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + between * 24, between * 2.5f, ProjectileType<ThunderColumnBlue>(), damage, 2f, Main.myPlayer, 2);
+					SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y, 0.5f, 0.1f);
 					for (int k = 0; k < 16; k++)
 					{
 						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Electric, 0, 0, 0, default, 1f);
@@ -193,12 +191,10 @@ namespace SOTS.NPCs
 		{
 			NPC.rotation = (new Vector2(tracerPosX, tracerPosY) - NPC.Center).ToRotation();
 		}
-        public override void NPCLoot()
-		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<FragmentOfOtherworld>(), 1);
-			if (!Main.rand.NextBool(3) && SOTSWorld.downedAdvisor)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightShard>(), 1);
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightGel>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfOtherworld>()));
 		}
         public override void HitEffect(int hitDirection, double damage)
 		{
@@ -220,7 +216,7 @@ namespace SOTS.NPCs
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
 				for (int i = 1; i <= 3; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/TwilightScouter/TwilightScouterGore" + i), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/TwilightScouter/TwilightScouterGore" + i), 1f);
 			}
 		}
 	}

@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
+using SOTS.Items.Pyramid;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent; 
@@ -20,7 +23,7 @@ namespace SOTS.NPCs
             NPC.aiStyle =44;
             NPC.lifeMax = 55;
             NPC.damage = 40; 
-            NPC.defense = 3; 
+            NPC.defense = 3;	
             NPC.knockBackResist = 0.8f;
             NPC.width = 28;
             NPC.height = 40;
@@ -39,7 +42,7 @@ namespace SOTS.NPCs
 		}
 		public override void AI()
 		{
-			int num1 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), 28, 24, Mod.Find<ModDust>("LostSoulDust").Type);
+			int num1 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), 28, 24, ModContent.DustType<LostSoulDust>());
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity.X = NPC.velocity.X;
 			Main.dust[num1].velocity.Y = -3;
@@ -69,23 +72,19 @@ namespace SOTS.NPCs
 		public override void FindFrame(int frameHeight) 
 		{
 			frame = frameHeight;
-			
-				if (ai1 >= 5f) 
+			if (ai1 >= 5f) 
+			{
+				ai1 -= 5f;
+				NPC.frame.Y += frame;
+				if(NPC.frame.Y >= 6 * frame)
 				{
-					ai1 -= 5f;
-					NPC.frame.Y += frame;
-					if(NPC.frame.Y >= 6 * frame)
-					{
-						NPC.frame.Y = 0;
-					}
+					NPC.frame.Y = 0;
 				}
-				
-			
+			}
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if(Main.rand.Next(2) == 0 || Main.expertMode)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  Mod.Find<ModItem>("SoulResidue").Type, Main.rand.Next(2) + 1);	
-		}	
+			npcLoot.Add(ItemDropRule.Common(ItemType<SoulResidue>(), 1, 1, 2));
+		}
 	}
 }

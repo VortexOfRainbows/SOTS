@@ -3,7 +3,9 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
+using SOTS.Items.Pyramid;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -43,10 +45,11 @@ namespace SOTS.NPCs
 				NPC.ai[0] = 0;
 			if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
 			{
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore1"), NPC.scale);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore5"), NPC.scale);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore12"), NPC.scale);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore13"), NPC.scale);
+				SOTSUtils.PlaySound(SoundID.Shatter, (int)NPC.Center.X, (int)NPC.Center.Y, 0.8f, 0.05f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore1"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore5"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore12"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Pots/PyramidPotGore13"), NPC.scale);
 			}
 		}
 		public override void AI()
@@ -74,26 +77,24 @@ namespace SOTS.NPCs
 			{
 				NPC.velocity.X *= 1.05f;
 				NPC.ai[0] = -Main.rand.Next(31);
-				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Enemies/PotSnake"), 1.5f, -0.1f);
+				SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Enemies/PotSnake"), (int)NPC.Center.X, (int)NPC.Center.Y, 1.5f, -0.1f);
 			}
 		}
-		public override void NPCLoot()
+        public override void OnKill()
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, (int)(NPC.Center.X), (int)(NPC.Center.Y), 0, 0.8f, 0.05f);
 			int amount2 = 3;
-			if(Main.expertMode)
+			if (Main.expertMode)
 			{
 				amount2 += Main.rand.Next(3);
-			} 
-			for(int amount = amount2; amount > 0; amount--)
+			}
+			for (int amount = amount2; amount > 0; amount--)
 			{
-				int npcSpawn = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Snake>());	
-				Main.npc[npcSpawn].velocity.X += Main.rand.NextFloat(-1.6f,1.6f);
-				Main.npc[npcSpawn].velocity.Y -= Main.rand.NextFloat(5.25f,7.5f);
+				int npcSpawn = NPC.NewNPC(NPC.GetSource_Death("SOTS:SnakePotSnakes"), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<Snake>());
+				Main.npc[npcSpawn].velocity.X += Main.rand.NextFloat(-1.6f, 1.6f);
+				Main.npc[npcSpawn].velocity.Y -= Main.rand.NextFloat(5.25f, 7.5f);
 				Main.npc[npcSpawn].netUpdate = true;
 			}
-		}	
-	
+		}
 	}
 	public class Snake : ModNPC
 	{
@@ -134,13 +135,13 @@ namespace SOTS.NPCs
 			BannerItem = ItemType<SnakeBanner>();
 			NPC.scale = 0.9f;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
-			Vector2 drawPos = NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY + 2);
+			Vector2 drawPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY + 2);
 			spriteBatch.Draw(texture, drawPos, NPC.frame, drawColor, NPC.rotation, drawOrigin, NPC.scale * randMod, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-			texture = GetTexture("SOTS/NPCs/SnakeEye");
+			texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/SnakeEye");
 			spriteBatch.Draw(texture, drawPos, NPC.frame, Color.White, NPC.rotation, drawOrigin, NPC.scale * randMod, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
 		}
@@ -155,18 +156,18 @@ namespace SOTS.NPCs
 				int rand = Main.rand.Next(3);
 				if (rand == 0)
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore1"), NPC.scale);
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore2"), NPC.scale);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore1"), NPC.scale);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore2"), NPC.scale);
 				}
 				else if(rand == 1)
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore1"), NPC.scale);
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore3"), NPC.scale);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore1"), NPC.scale);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore3"), NPC.scale);
 				}
 				else
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore2"), NPC.scale);
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore3"), NPC.scale);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore2"), NPC.scale);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SnakeGore3"), NPC.scale);
 				}
 			}
 			else
@@ -238,10 +239,9 @@ namespace SOTS.NPCs
 			NPC.position.X += trueVelo.X;
 			NPC.velocity.X = trueVelo.X / speed;
         }
-        public override void NPCLoot()
-		{
-			if(Main.rand.NextBool(4))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("Snakeskin").Type, Main.rand.Next(2) + 1);	
-		}	
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ItemType<Snakeskin>(), 3));
+        }
 	}
 }

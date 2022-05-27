@@ -52,10 +52,12 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
-5/26/22
+5/26/22 & 5/27/22
 1. Organization and more fixing!
 2. Finished porting GLOBAL npc loot drop pools. I'm still unsure as to whether these work properly. Will have to find out.
-3. 4671 -> 4546
+3. 4671 -> 4546 -> 4353 -> 4090
+4. Ported some normal NPCs
+5. Ported some other things in SOTS.cs (not complete)
 
 5/23/22
 1. Ported a handful of sounds + a ton of global NPC drop related things

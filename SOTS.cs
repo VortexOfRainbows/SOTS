@@ -13,7 +13,7 @@ using SOTS.Prim;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld.EpicWings;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.NPCs.Boss;
 using SOTS.Items.Slime;
@@ -44,9 +44,9 @@ namespace SOTS
 		private Vector2 _lastViewSize;
 		public static PrimTrailManager primitives;
 
-		public static ModHotKey BlinkHotKey;
-		public static ModHotKey ArmorSetHotKey;
-		public static ModHotKey MachinaBoosterHotKey;
+		public static ModKeybind BlinkHotKey;
+		public static ModKeybind ArmorSetHotKey;
+		public static ModKeybind MachinaBoosterHotKey;
 		internal static SOTS Instance;
 
 		public static Effect AtenTrail;
@@ -74,9 +74,9 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			BlinkHotKey = RegisterHotKey("Blink", "V");
-			ArmorSetHotKey = RegisterHotKey("Armor Set", "F");
-			MachinaBoosterHotKey = RegisterHotKey("Modify Flight Mode", "C");
+			BlinkHotKey = KeybindLoader.RegisterKeybind(this, "Blink", "V");
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, "Armor Set", "F");
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, "Modify Flight Mode", "C");
 			Instance.AddEquipTexture(null, EquipType.Legs, "CursedRobe_Legs", "SOTS/Items/Pyramid/CursedRobe_Legs");
 			if (!Main.dedServ)
             {
@@ -94,10 +94,10 @@ namespace SOTS
 			{
 				yabhb.Call("hbStart");
 				yabhb.Call("hbSetTexture",
-					GetTexture("UI/PinkyHealthbarLeft"),
-					GetTexture("UI/PinkyHealthbarMid"),
-					GetTexture("UI/PinkyHealthbarEnd"),
-					GetTexture("UI/PinkyHealthbarFill"));
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarLeft"),
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarMid"),
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarEnd"),
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarFill"));
 				yabhb.Call("hbSetMidBarOffset", -36, 12);
 				yabhb.Call("hbSetBossHeadCentre", 16, 30);
 				yabhb.Call("hbSetFillDecoOffset", 10);
@@ -106,10 +106,10 @@ namespace SOTS
 
 				yabhb.Call("hbStart");
 				yabhb.Call("hbSetTexture",
-					GetTexture("UI/SubspaceHBLeft"),
-					GetTexture("UI/SubspaceHBMid"),
-					GetTexture("UI/SubspaceHBEnd"),
-					GetTexture("UI/SubspaceHBFill"));
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBLeft"),
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBMid"),
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBEnd"),
+					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBFill"));
 				yabhb.Call("hbSetMidBarOffset", -28, 8);
 				yabhb.Call("hbSetBossHeadCentre", 32, 26);
 				yabhb.Call("hbSetFillDecoOffset", 10);
@@ -121,14 +121,14 @@ namespace SOTS
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<SubspaceSerpentHead>());
 			}
 			//Music Box Stuff
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor"), ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ModContent.ItemType<SubspaceSerpentMusicBox>(), ModContent.TileType<SubspaceSerpentMusicBoxTile>());
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PyramidBattle"), ModContent.ItemType<PyramidBattleMusicBox>(), ModContent.TileType<PyramidBattleMusicBoxTile>());
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PutridPinky"), ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Advisor"), ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Polaris"), ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/SubspaceSerpent"), ModContent.ItemType<SubspaceSerpentMusicBox>(), ModContent.TileType<SubspaceSerpentMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/CursedPyramid"), ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PyramidBattle"), ModContent.ItemType<PyramidBattleMusicBox>(), ModContent.TileType<PyramidBattleMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Planetarium"), ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
 			SOTSItem.LoadArrays();
 			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
@@ -137,8 +137,8 @@ namespace SOTS
 			DebuffNPC.LoadArrays();
 			if(Main.netMode != NetmodeID.Server)
 			{
-				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
-				Ref<Effect> voidMageShader = new Ref<Effect>(GetEffect("Effects/VMShader"));
+				Ref<Effect> TPrismdyeRef = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/TPrismEffect"));
+				Ref<Effect> voidMageShader = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/VMShader"));
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
 				Filters.Scene["VMFilter"] = new Filter(new ScreenShaderData(voidMageShader, "VMShaderPass"), EffectPriority.VeryHigh);
 				Filters.Scene["VMFilter"].Load();
@@ -367,9 +367,9 @@ namespace SOTS
 						for(int i = 0; i < Main.maxProjectiles; i++)
                         {
 							Projectile projectile = Main.projectile[i];
-							if (Projectile.active && Projectile.identity == projIdentity)
+							if (projectile.active && projectile.identity == projIdentity)
 							{
-								projIdentity = Projectile.whoAmI;
+								projIdentity = projectile.whoAmI;
 								break;
                             }
                         }
@@ -876,11 +876,12 @@ namespace SOTS
 			if (resetFrame)
 			{
 				randomFrame = WorldGen.genRand.Next(3);
-				Main.tile[x, y].frameNumber((byte)randomFrame);
+				Tile t = Main.tile[x, y];
+				t.TileFrameNumber = (byte)randomFrame;
 			}
 			else
 			{
-				randomFrame = Main.tile[x, y].frameNumber();
+				randomFrame = Main.tile[x, y].TileFrameNumber;
 			}
 			mergedDown = (mergedLeft = (mergedRight = (mergedUp = false)));
 			switch (leftSim)

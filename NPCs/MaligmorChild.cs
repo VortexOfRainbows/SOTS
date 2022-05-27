@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -65,13 +66,13 @@ namespace SOTS.NPCs
 			NPC.lifeMax = 60;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 3 * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			spriteBatch.Draw(texture, drawPos, NPC.frame, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
-			texture = GetTexture("SOTS/NPCs/MaligmorChildEye");
+			texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/MaligmorChildEye");
 			spriteBatch.Draw(texture, drawPos, NPC.frame, Color.White, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -95,7 +96,7 @@ namespace SOTS.NPCs
 			aiCounter++;
 			if(!fallen)
 			{
-				if (owner.type != Mod.Find<ModNPC>("Maligmor") .Type|| !owner.active)
+				if (owner.type != ModContent.NPCType<Maligmor>() || !owner.active)
 				{
 					fallen = true;
 					NPC.velocity.X += Main.rand.NextFloat(-4f, 4f);
@@ -117,7 +118,7 @@ namespace SOTS.NPCs
 				{
 					for (int k = 0; k < 20; k++)
 					{
-						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
+						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
 						dust.scale *= 1.2f;
 						dust.velocity *= 0.6f;
 						dust.velocity += NPC.velocity * 1.5f;
@@ -157,8 +158,8 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override bool PreNPCLoot()
-		{
+        public override bool PreKill()
+        {
 			return false;
 		}
 	}

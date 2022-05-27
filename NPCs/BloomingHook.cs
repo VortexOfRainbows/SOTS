@@ -50,8 +50,8 @@ namespace SOTS.NPCs
             NPC.DeathSound = SoundID.NPCDeath1;
 			//Banner = NPC.type;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/BloomingVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			NPC owner = Main.npc[(int)ownerID];
@@ -73,7 +73,7 @@ namespace SOTS.NPCs
 					Vector2 pos = rotationPos += centerOfCircle;
 					Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(18 * i));
 					Vector2 dynamicAddition = new Vector2(0.5f + 2.0f * circular.Y, 0).RotatedBy(MathHelper.ToRadians(i * 36 + aiCounter * 2));
-					Vector2 drawPos = pos - Main.screenPosition;
+					Vector2 drawPos = pos - screenPos;
 					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, NPC.scale * 0.9f, SpriteEffects.None, 0f); 
 				}
 			}
@@ -151,15 +151,11 @@ namespace SOTS.NPCs
 					frame++;
 					if (frame == 7)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
+						SOTSUtils.PlaySound(SoundID.Item30, (int)NPC.Center.X, (int)NPC.Center.Y, 0.7f, -0.4f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							int damage = NPC.damage / 2;
-							if (Main.expertMode)
-							{
-								damage = (int)(damage / Main.expertDamage);
-							}
-							Projectile.NewProjectile(NPC.Center, rotateVector * 0.4f, ModContent.ProjectileType<FlowerBolt>(), damage, 0, Main.myPlayer);
+							int damage = Common.GlobalNPCs.SOTSNPCs.GetBaseDamage(NPC) / 2;
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVector * 0.4f, ModContent.ProjectileType<FlowerBolt>(), damage, 0, Main.myPlayer);
 							NPC.netUpdate = true;
 						}
 					}
@@ -196,7 +192,7 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override bool PreNPCLoot()
+		public override bool PreKill()
 		{
 			return false;
 		}

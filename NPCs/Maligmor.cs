@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -44,22 +46,22 @@ namespace SOTS.NPCs
 			NPC.damage = 70;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			spriteBatch.Draw(texture, drawPos, NPC.frame, drawColor, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			texture = GetTexture("SOTS/NPCs/MaligmorGlow");
+			texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/MaligmorGlow");
 			spriteBatch.Draw(texture, drawPos, NPC.frame, Color.White, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Player player = Main.player[NPC.target];
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/MaligmorEye");
+			Texture2D texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/MaligmorEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			Vector2 aimAt = toPlayer;
 			aimAt = aimAt.SafeNormalize(Vector2.Zero);
 			aimAt *= 2f;
@@ -125,14 +127,14 @@ namespace SOTS.NPCs
 				{
 					if (NPC.ai[2] == -1)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(4, (int)NPC.Center.X, (int)NPC.Center.Y, 1, 0.9f, -0.25f);
-						if(Main.netMode != 1)
+						SOTSUtils.PlaySound(SoundID.NPCDeath1, (int)NPC.Center.X, (int)NPC.Center.Y, 0.9f, -0.25f);
+						if(Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int total = 0;
 							for (int i = 0; i < Main.maxNPCs; i++)
 							{
 								NPC pet = Main.npc[i];
-								if (pet.type == Mod.Find<ModNPC>("MaligmorChild") .Type&& (int)pet.ai[0] == NPC.whoAmI && pet.active)
+								if (pet.type == NPCType<MaligmorChild>() && (int)pet.ai[0] == NPC.whoAmI && pet.active)
 								{
 									total++;
 									pet.ai[3] += 44;
@@ -147,12 +149,12 @@ namespace SOTS.NPCs
 							if(amt > 0)
 								for (int i = 0; i < amt; i++)
 								{
-									int npc1 = NPC.NewNPC((int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height, Mod.Find<ModNPC>("MaligmorChild").Type, 0, NPC.whoAmI, Main.rand.NextFloat(30), i * 120 + Main.rand.Next(120));
+									int npc1 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height, NPCType<MaligmorChild>(), 0, NPC.whoAmI, Main.rand.NextFloat(30), i * 120 + Main.rand.Next(120));
 									Main.npc[npc1].netUpdate = true;
 								}
 							for (int k = 0; k < 54; k++)
 							{
-								Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
+								Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
 								dust.scale *= 1.3f;
 								dust.velocity *= 1.4f;
 								dust.noGravity = true;
@@ -201,14 +203,9 @@ namespace SOTS.NPCs
 			}
 			*/
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if(SOTSWorld.downedCurse && Main.rand.NextBool(3))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<CursedMatter>(), Main.rand.Next(2) + 1);	
-			else
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
-			int type = ItemType<CursedTumor>();
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, type, Main.rand.Next(6) + 5);
+			npcLoot.Add(ItemDropRule.Common(ItemType<CursedTumor>(), 1, 5, 10));
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {
@@ -226,7 +223,7 @@ namespace SOTS.NPCs
 				for(int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45)) - new Vector2(9, 9);
-					Gore.NewGore(NPC.Center + circular, circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular, circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);
 				}
 				for (int i = 0; i < 72; i++)
 				{

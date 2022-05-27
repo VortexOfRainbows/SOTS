@@ -5,6 +5,7 @@ using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -226,12 +227,12 @@ namespace SOTS.NPCs
 
 			NPC.ai[0]++; //speed up jumping speed
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloSlimeOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloSlimeFill").Value;
 			Color color = new Color(110, 110, 110, 0);
@@ -241,13 +242,10 @@ namespace SOTS.NPCs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.075f;
 				float y = Main.rand.Next(-10, 11) * 0.075f;
-
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f) * 0.5f, 0f, drawOrigin2, NPC.scale, SpriteEffects.None, 0f);
-
-				Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f) * 0.5f, 0f, drawOrigin2, NPC.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
@@ -286,11 +284,12 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightShard>(), 1);
-
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
+			LeadingConditionRule postAdvisor = new LeadingConditionRule(new Common.ItemDropConditions.DownedAdvisorDropCondition());
+			postAdvisor.OnSuccess(ItemDropRule.Common(ItemType<TwilightShard>(), 20));
+			npcLoot.Add(postAdvisor);
+			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightGel>(), 1, 1, 2));
 		}
 	}
 }

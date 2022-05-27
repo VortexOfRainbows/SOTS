@@ -63,10 +63,10 @@ namespace SOTS.Items.Chaos
 		}
 		public override void OpenBossBag(Player player)
 		{
-			player.TryGettingDevArmor();
-			player.QuickSpawnItem(ModContent.ItemType<VoidAnomaly>());
-			player.QuickSpawnItem(ModContent.ItemType<PhaseOre>(), Main.rand.Next(120, 181)); //12 to 18 bars
-			player.QuickSpawnItem(ItemID.SoulofLight, Main.rand.Next(10, 20));
+			player.TryGettingDevArmor(player.GetSource_Loot());
+			player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<VoidAnomaly>());
+			player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<PhaseOre>(), Main.rand.Next(120, 181)); //12 to 18 bars
+			player.QuickSpawnItem(player.GetSource_Loot(), ItemID.SoulofLight, Main.rand.Next(10, 20));
 		}
 	}
 }

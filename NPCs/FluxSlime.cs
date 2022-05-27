@@ -1,8 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
+using SOTS.Items.Fragments;
+using SOTS.Items.Slime;
+using SOTS.Items.Void;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -35,10 +39,10 @@ namespace SOTS.NPCs
 			Banner = NPC.type;
 			BannerItem = ItemType<FluxSlimeBanner>();
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PinkyGrappleSpike");
-			Vector2 drawPos = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height - 10) - Main.screenPosition;
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+			Texture2D texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/Boss/PinkyGrappleSpike");
+			Vector2 drawPos = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height - 10) - screenPos;
 			drawColor = NPC.GetAlpha(drawColor);
 			if (initiateSize == -1)
 			{
@@ -131,7 +135,7 @@ namespace SOTS.NPCs
 			for(int i = 0; i < Main.maxNPCs; i++)
 			{
 				NPC pet = Main.npc[i];
-				if (pet.type == Mod.Find<ModNPC>("FluxSlimeBall") .Type&& (int)pet.ai[0] == NPC.whoAmI && pet.active)
+				if (pet.type == NPCType<FluxSlimeBall>() && (int)pet.ai[0] == NPC.whoAmI && pet.active)
 				{
 					total++;
 				}
@@ -141,7 +145,7 @@ namespace SOTS.NPCs
 				counter = 0;
 				if (total < 3)
 				{
-					int npc1 = NPC.NewNPC((int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height, Mod.Find<ModNPC>("FluxSlimeBall").Type, 0, NPC.whoAmI, Main.rand.NextFloat(360), 0, Main.rand.NextFloat(0.8f, 1.2f));
+					NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height, NPCType<FluxSlimeBall>(), 0, NPC.whoAmI, Main.rand.NextFloat(360), 0, Main.rand.NextFloat(0.8f, 1.2f));
 				}
 			}
 		}
@@ -164,16 +168,12 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if (Main.rand.Next(6) == 0)
-			{
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("FoulConcoction").Type, Main.rand.Next(2) + 1);
-			}
-			if(!Main.rand.NextBool(5) || Main.expertMode)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("VialofAcid").Type, Main.rand.Next(2) + 1);
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.PinkGel, Main.rand.Next(4, 7));
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("FragmentOfNature").Type, 1);
+			npcLoot.Add(ItemDropRule.Common(ItemType<FoulConcoction>(), 5, 1, 1));
+			npcLoot.Add(ItemDropRule.Common(ItemType<VialofAcid>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfNature>()));
+			npcLoot.Add(ItemDropRule.Common(ItemID.PinkGel, 1, 4, 6));
 		}
 	}
 }

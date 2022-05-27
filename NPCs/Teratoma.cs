@@ -6,6 +6,7 @@ using SOTS.Items.Pyramid;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -54,12 +55,12 @@ namespace SOTS.NPCs
 			NPC.lifeMax = 240;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-			Texture2D texture2 = GetTexture("SOTS/NPCs/TeratomaEyes");
+			Texture2D texture2 = (Texture2D)Request<Texture2D>("SOTS/NPCs/TeratomaEyes");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 14);
-			Vector2 drawPos = NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY - 4);
+			Vector2 drawPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY - 4);
 			int height = texture.Height / 7;
 			if (mushForm)
 			{
@@ -225,17 +226,9 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override void NPCLoot()
-		{
-			if (SOTSWorld.downedCurse && Main.rand.NextBool(3))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<CursedMatter>(), Main.rand.Next(2) + 1);
-			else
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
-			if(Main.rand.NextBool(2))
-			{
-				int type = ItemType<CursedTumor>();
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, type, Main.rand.Next(3) + 4);
-			}
-		}
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ItemType<CursedTumor>(), 2, 4, 6));
+        }
 	}
 }

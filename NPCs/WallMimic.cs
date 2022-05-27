@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
@@ -7,6 +8,7 @@ using SOTS.Items.Void;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -63,22 +65,22 @@ namespace SOTS.NPCs
 			Banner = NPC.type;
 			BannerItem = ItemType<WallMimicBanner>();
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, 25);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 50, 50), drawColor, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/WallMimicGlow");
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 50, 50), Color.White, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Player player = Main.player[NPC.target];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/WallMimicEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 
 			float shootToX = aimToX - NPC.Center.X;
 			float shootToY = aimToY - NPC.Center.Y;
@@ -150,8 +152,8 @@ namespace SOTS.NPCs
 				if(eyeSpeed >= 9000)
 				{
 					NPC.StrikeNPC(666676, 1, 0);
-					if (Main.netMode != 0)
-						NetMessage.SendData(28, -1, -1, null, NPC.whoAmI, 666676, 1, 0, 0, 0, 0);
+					if (Main.netMode != NetmodeID.SinglePlayer)
+						NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, 666676, 1, 0, 0, 0, 0);
 				}
 			}
 			return !dropSpecial;
@@ -294,15 +296,17 @@ namespace SOTS.NPCs
 		{
 			return 0;
 		}
-		public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEarth>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<SoulResidue>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemType<CursedHiveBlock>(), 1, 3, 9));
+			npcLoot.Add(ItemDropRule.Common(ItemType<CursedCaviar>(), 20, 1, 1));
+		}
+        public override void OnKill()
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<FragmentOfEarth>(), Main.rand.Next(2) + 1);
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<CursedHiveBlock>(), Main.rand.Next(7) + 3);
 			if (dropSpecial || Main.rand.NextBool(200))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TheDarkEye>(), 1);
-			if(Main.rand.Next(20) == 0)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<CursedCaviar>(), 1);
+				Item.NewItem(NPC.GetSource_Loot("SOTS:DarkEyeDrop"), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TheDarkEye>(), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -311,7 +315,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while ((double)num < damage / (double)NPC.lifeMax * 40.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 32, (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Sand, (float)(2 * hitDirection), -2f);
 					num++;
 				}
 			}
@@ -319,14 +323,14 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 60; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 32, (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Sand, (float)(2 * hitDirection), -2f);
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore1"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore2"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore3"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore4"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore1"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore2"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore3"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore4"), 1f);
 				for (int i = 0; i < 9; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 			}
 		}
 	}

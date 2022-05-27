@@ -57,8 +57,8 @@ namespace SOTS.NPCs
 		bool runOnce = true;
 		float[] counterArr = new float[6];
 		float[] randSeed1 = new float[6];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/FluxSlimeVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			NPC owner = Main.npc[(int)ownerID];
@@ -80,10 +80,10 @@ namespace SOTS.NPCs
 					Vector2 drawPosNext = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
 					float rotation = (drawPos2 - drawPosNext).ToRotation();
 					drawColor = Lighting.GetColor((int)drawPos2.X / 16, (int)(drawPos2.Y / 16));
-					spriteBatch.Draw(texture, drawPos2 - Main.screenPosition, null, NPC.GetAlpha(drawColor), rotation - MathHelper.ToRadians(90), drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos2 - screenPos, null, NPC.GetAlpha(drawColor), rotation - MathHelper.ToRadians(90), drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 				}
 			}
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			if (!runOnce)
 			{
 				for (int i = 0; i < 6; i++)
@@ -237,7 +237,7 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override bool PreNPCLoot()
+        public override bool PreKill()
 		{
 			return false;
 		}

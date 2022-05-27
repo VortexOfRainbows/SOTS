@@ -1,9 +1,10 @@
+using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 
 namespace SOTS.Common.ItemDropConditions
 {
-	// Very simple drop condition: drop during daytime
 	public class NatureFragmentDropCondition : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)
@@ -166,28 +167,6 @@ namespace SOTS.Common.ItemDropConditions
 			return "Drops in the evil biome";
 		}
 	}
-	public class DownedSubspaceDropCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation)
-			{
-				if (SOTSWorld.downedSubspace)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-		public bool CanShowItemDropInUI()
-		{
-			return true;
-		}
-		public string GetConditionDescription()
-		{
-			return "Drops if Subspace Serpent has been defeated";
-		}
-	}
 	public class ChaosFragmentDropCondition : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)
@@ -257,28 +236,6 @@ namespace SOTS.Common.ItemDropConditions
 			return "Drops in the dungeon";
 		}
 	}
-	public class PreBoss1DropCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation)
-			{
-				if (!NPC.downedBoss1)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-		public bool CanShowItemDropInUI()
-		{
-			return true;
-		}
-		public string GetConditionDescription()
-		{
-			return "Drops before the Eye of Cthulhu has been defeated";
-		}
-	}
 	public class PlanetariumDropCondition : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)
@@ -302,4 +259,31 @@ namespace SOTS.Common.ItemDropConditions
 			return "Drops in Planetarium biome";
 		}
 	}
+	public class OnFireCondition : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info)
+		{
+			if (!info.IsInSimulation)
+			{
+				if (info.npc.HasBuff(BuffID.OnFire))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		public bool CanShowItemDropInUI()
+		{
+			return true;
+		}
+		public string GetConditionDescription()
+		{
+			return "Drops if on fire";
+		}
+
+        public static implicit operator LeadingConditionRule(OnFireCondition v)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

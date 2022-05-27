@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
+using SOTS.WorldgenHelpers;
 using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -39,13 +42,13 @@ namespace SOTS.NPCs
 			Banner = NPC.type;
 			BannerItem = ItemType<GhastBanner>();
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			texture = GetTexture("SOTS/NPCs/GhastGlow");
+			texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/GhastGlow");
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), Color.White, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -88,11 +91,7 @@ namespace SOTS.NPCs
 				Main.dust[num1].velocity.Y = -2 + i * 1.0f;
 				Main.dust[num1].scale *= 1.25f + i * 0.15f;
 			}
-			int damage2 = NPC.damage / 2;
-			if (Main.expertMode)
-			{
-				damage2 = (int)(damage2 / Main.expertDamage);
-			}
+			int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 
 			ai1++;
 			if (ai1 >= 600)
@@ -115,7 +114,7 @@ namespace SOTS.NPCs
 			if (Main.netMode != 1 && Main.rand.NextBool(75))
 			{
 				Vector2 spawn = (NPC.position + new Vector2(4, 4) + new Vector2(Main.rand.Next(NPC.width - 8), Main.rand.Next(NPC.height - 8)));
-				Projectile.NewProjectile(spawn, NPC.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, -3, -1f);
+				Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, NPC.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, -3, -1f);
 			}
 			if(tileCollide)
 				NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);
@@ -133,14 +132,9 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if(SOTSWorld.downedCurse && Main.rand.NextBool(3))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<CursedMatter>(), Main.rand.Next(2) + 1);	
-			else
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
-			if (Main.rand.NextBool(2))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<CursedTumor>(), Main.rand.Next(3) + 4);
+			npcLoot.Add(ItemDropRule.Common(ItemType<CursedTumor>(), 2, 4, 6));
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {

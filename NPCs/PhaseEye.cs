@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
+using SOTS.Items.Otherworld.Blocks;
+using SOTS.Projectiles.Otherworld;
 using System;
 using System.IO;
 using Terraria;
@@ -58,12 +61,12 @@ namespace SOTS.NPCs
 			//Banner = NPC.type;
 			//BannerItem = ItemType<SittingMushroomBanner>();
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             return false;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/PhaseEyeOutline").Value;
 			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/PhaseEyePupil").Value;
 			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/PhaseEyeFill").Value;
@@ -97,7 +100,6 @@ namespace SOTS.NPCs
 					Main.spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y - 4) + between * NPC.scale * (6 + -14 * NPC.ai[1]), null, color * ((255 - NPC.alpha) / 255f), 0f, drawOrigin3, 1.5f * NPC.scale - NPC.ai[1], SpriteEffects.None, 0f);
 				}
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public void MoveCursorToPlayer()
 		{
@@ -244,21 +246,16 @@ namespace SOTS.NPCs
 			}
 			if (NPC.ai[0] >= 240 && NPC.ai[0] <= 270)
 			{
-				int damage2 = NPC.damage / 2;
-				if (Main.expertMode)
-				{
-					damage2 = (int)(damage2 / Main.expertDamage);
-				}
-					
-				if(NPC.ai[0] % 20 == 0)
+				int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+				if (NPC.ai[0] % 20 == 0)
 				{
 					Vector2 between = lookAtPos - NPC.Center;
 					between.Normalize();
 
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						Projectile.NewProjectile(NPC.Center.X + between.X * 24, NPC.Center.Y + between.Y * 24, between.X * 5, between.Y * 5, Mod.Find<ModProjectile>("OtherworldlyBolt").Type, damage2, 1f, Main.myPlayer, 0, 0);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + between.X * 24, NPC.Center.Y + between.Y * 24, between.X * 5, between.Y * 5, ModContent.ProjectileType<OtherworldlyBolt>(), damage2, 1f, Main.myPlayer, 0, 0);
 
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 0.5f);
+					SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y, 0.5f);
 					NPC.ai[1] = 1;
 				}
 			}
@@ -268,23 +265,6 @@ namespace SOTS.NPCs
 				NPC.netUpdate = true;
 			}
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return 0;
-			//spawnrates manually added in SOTSNPCs.EditSpawnPool in order to avoid conflicts in hardmode
-			Player player = spawnInfo.Player;
-			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			bool correctBlock = spawnInfo.spawnTileType == Mod.Find<ModTile>("DullPlatingTile") .Type|| spawnInfo.spawnTileType == Mod.Find<ModTile>("PortalPlatingTile") .Type|| spawnInfo.spawnTileType == Mod.Find<ModTile>("AvaritianPlatingTile").Type;
-			//correctBlock = true;
-			if (modPlayer.PlanetariumBiome && correctBlock)
-			{
-				return 0.1f;
-			}
-		}
-        public override bool PreNPCLoot()
-        {
-            return false;
-        }
         public override void HitEffect(int hitDirection, double damage)
 		{
 			if (NPC.life > 0)
@@ -310,5 +290,9 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-	}
+        public override bool PreKill()
+        {
+            return false;
+        }
+    }
 }
