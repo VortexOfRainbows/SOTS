@@ -47,9 +47,9 @@ namespace SOTS.NPCs.Boss.Lux
 			NPC.dontTakeDamage = true;
 		}
 		RingManager ring;
-        public override bool PreNPCLoot()
+        public override bool PreKill()
         {
-            return  false;
+			return false;
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -94,11 +94,7 @@ namespace SOTS.NPCs.Boss.Lux
 		float fireRateCounter = 0;
 		public override bool PreAI()
 		{
-			int damage = NPC.damage / 2;
-			if (Main.expertMode)
-			{
-				damage = (int)(damage / Main.expertDamage);
-			}
+			int damage = Common.GlobalNPCs.SOTSNPCs.GetBaseDamage(NPC) / 2;
 			if (runOnce)
 				ring = new RingManager(MathHelper.ToRadians(NPC.ai[1]), 0.6f, 3, 72);
 			WingStuff();
@@ -111,7 +107,7 @@ namespace SOTS.NPCs.Boss.Lux
 				NPC npc2 = Main.npc[parentID];
 				if (npc2.active && npc2.type == NPCType<Lux>())
 				{
-					Lux lux = npc2.modNPC as Lux;
+					Lux lux = npc2.ModNPC as Lux;
 					if (lux != null && lux.desperation)
 						kill = true;
 					else
@@ -202,10 +198,10 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 30 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+								SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									Projectile.NewProjectile(NPC.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
 								}
 							}
 						}
@@ -218,13 +214,13 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 90 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1.1f, 0.2f);
+								SOTSUtils.PlaySound(SoundID.Item62, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									for (int i = -2; i <= 2; i++)
 									{
 										outward = new Vector2(0, 1).RotatedBy(NPC.rotation + MathHelper.ToRadians(i * 22.5f));
-										Projectile.NewProjectile(NPC.Center + outward * 48, outward * (2f + 1.5f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (2f + 1.5f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
 									}
 								}
 							}
@@ -237,7 +233,7 @@ namespace SOTS.NPCs.Boss.Lux
 							Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(NPC.Center + outward * 32, outward * 6f, ProjectileType<ChaosEraser2>(), damage, 0, Main.myPlayer, NPC.whoAmI);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 32, outward * 6f, ProjectileType<ChaosEraser2>(), damage, 0, Main.myPlayer, NPC.whoAmI);
 							}
 						}
 					}
@@ -254,10 +250,10 @@ namespace SOTS.NPCs.Boss.Lux
 						if (fireRateCounter >= 20)
 						{
 							Vector2 outward = new Vector2(0, 1).RotatedBy(NPC.rotation);
-							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 91, 1.1f, 0.2f);
+							SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(NPC.Center + outward * 48, outward * (6f + 8f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (6f + 8f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
 							}
 							fireRateCounter -= 9;
 						}
@@ -289,17 +285,17 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			return counter > 90 && counter < max;
         }
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			return false;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			ChaosSpirit.DrawWings(MathHelper.Lerp(wingHeight, 40, wingHeightLerp), NPC.ai[2], NPC.rotation, NPC.Center, NPC.GetAlpha(illusionColor()));
 			if (!runOnce)
-				DrawRings(spriteBatch, false);
+				DrawRings(spriteBatch, screenPos, false);
 			for (int k = 0; k < 7; k++)
 			{
 				Color color = illusionColor();
@@ -311,10 +307,10 @@ namespace SOTS.NPCs.Boss.Lux
 				else
 					circular *= 0f;
 				color.A = 0;
-				Main.spriteBatch.Draw(texture, NPC.Center + circular - Main.screenPosition, null, NPC.GetAlpha(color), 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, NPC.Center + circular - screenPos, null, NPC.GetAlpha(color), 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			if (!runOnce)
-				DrawRings(spriteBatch, true);
+				DrawRings(spriteBatch, screenPos, true);
 		}
         float wingSpeedMult = 1;
 		float wingHeight = 0;
@@ -325,10 +321,10 @@ namespace SOTS.NPCs.Boss.Lux
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
 			wingHeight = 19 + dipAndRise * 27;
 		}
-		public void DrawRings(SpriteBatch spriteBatch, bool front)
+		public void DrawRings(SpriteBatch spriteBatch, Vector2 screenPos, bool front)
 		{
 			if(!runOnce)
-				ring.Draw(spriteBatch, illusionColor(), 3, (255 - NPC.alpha) / 255f, 1, 1, NPC.rotation, front);
+				ring.Draw(screenPos, spriteBatch, illusionColor(), 3, (255 - NPC.alpha) / 255f, 1, 1, NPC.rotation, front);
 		}
 		public int Type()
 		{

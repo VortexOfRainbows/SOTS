@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
@@ -82,7 +83,7 @@ namespace SOTS.NPCs.Boss.Curse
 					{
 						if (NPC.timeLeft == 2)
 						{
-							PharaohsCurse curse = npc2.modNPC as PharaohsCurse;
+							PharaohsCurse curse = npc2.ModNPC as PharaohsCurse;
 							for (int j = 0; j < 40; j++)
 							{
 								Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
@@ -90,7 +91,7 @@ namespace SOTS.NPCs.Boss.Curse
 							}
 						}
 						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value, NPC.Center, 1.0f * NPC.scale, foamParticleList1, 1, 0, 40, NPC.rotation);
-						PharaohsCurse.SpawnPassiveDust(GetTexture("SOTS/NPCs/Boss/Curse/SmallGasFill"), NPC.Center + new Vector2(0, 10), 1.0f * NPC.scale, foamParticleList1, 1, 0, 100, NPC.rotation);
+						PharaohsCurse.SpawnPassiveDust((Texture2D)Request<Texture2D>("SOTS/NPCs/Boss/Curse/SmallGasFill"), NPC.Center + new Vector2(0, 10), 1.0f * NPC.scale, foamParticleList1, 1, 0, 100, NPC.rotation);
 					}
 				}
 				else
@@ -130,7 +131,7 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					if (Main.netMode != NetmodeID.Server)
 					{
-						PharaohsCurse curse = npc2.modNPC as PharaohsCurse;
+						PharaohsCurse curse = npc2.ModNPC as PharaohsCurse;
 						for (int j = 0; j < amt; j++)
 						{
 							float scale = Main.rand.NextFloat(0.5f, 1.5f);
@@ -145,7 +146,7 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 			}
 			if (!quiet)
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 62, 1f, 0.2f);
+				SOTSUtils.PlaySound(SoundID.Item62, (int)NPC.Center.X, (int)NPC.Center.Y, 1f, 0.2f);
 		}
 		public override void AI()
 		{
@@ -163,14 +164,14 @@ namespace SOTS.NPCs.Boss.Curse
 					NPC.velocity.Y -= 0.4f * waveY;
 					if (NPC.ai[2] == 40)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)player.Center.X, (int)player.Center.Y, 1.33f, -0.05f);
 					}
 				}
 				else
 				{
 					if (NPC.ai[2] == 60)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
+						SOTSUtils.PlaySound(SoundID.Item96, (int)player.Center.X, (int)player.Center.Y, 1f, 0f);
 						NPC.velocity.Y += 4.5f;
 					}
 					NPC.velocity.Y += 0.8f;
@@ -182,15 +183,11 @@ namespace SOTS.NPCs.Boss.Curse
 						ParticleExplosion();
 						if (Main.netMode != 1)
 						{
-							int damage = NPC.damage / 2;
-							if (Main.expertMode)
-							{
-								damage = (int)(damage / Main.expertDamage);
-							}
+							int damage = Common.GlobalNPCs.SOTSNPCs.GetBaseDamage(NPC) / 2;
 							for (int i = 0; i < 6; i++)
 							{
 								Vector2 outWards = new Vector2(-2f, 0).RotatedBy(MathHelper.ToRadians(30 + i / 2 * 40));
-								Projectile.NewProjectile(NPC.Center, outWards, ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, (int)NPC.ai[0], (i % 2 * 2 - 1) * 0.8f);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, outWards, ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, (int)NPC.ai[0], (i % 2 * 2 - 1) * 0.8f);
 							}
 						}
 						NPC.active = false;
@@ -211,11 +208,11 @@ namespace SOTS.NPCs.Boss.Curse
 				NPC.velocity = goToPos * -length;
 			}
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
-			return false;
-		}
-		public override void HitEffect(int hitDirection, double damage)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            return false;
+        }
+        public override void HitEffect(int hitDirection, double damage)
 		{
 			int parentID = (int)NPC.ai[0];
 			if (parentID >= 0 && Main.netMode != NetmodeID.Server)
@@ -223,7 +220,7 @@ namespace SOTS.NPCs.Boss.Curse
 				NPC npc2 = Main.npc[parentID];
 				if (npc2.active && npc2.type == NPCType<PharaohsCurse>())
 				{
-					PharaohsCurse curse = npc2.modNPC as PharaohsCurse;
+					PharaohsCurse curse = npc2.ModNPC as PharaohsCurse;
 					for (int j = 0; j < 40; j++)
 					{
 						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
@@ -233,19 +230,19 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			if (NPC.life > 0)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(3, (int)NPC.Center.X, (int)NPC.Center.Y, 54, 1.2f, -0.25f);
+				SOTSUtils.PlaySound(SoundID.NPCHit54, (int)NPC.Center.X, (int)NPC.Center.Y, 1.2f, -0.25f);
 				int num = 0;
 				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
-					num++;
-				}
-			}
-			else
-			{
-				for (int k = 0; k < 50; k++)
-				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					num++;											  
+				}													  
+			}														  
+			else													  
+			{														  
+				for (int k = 0; k < 50; k++)						  
+				{													  
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 				}
 			}
 		}

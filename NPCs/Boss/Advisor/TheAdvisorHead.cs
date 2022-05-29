@@ -2,9 +2,15 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Otherworld;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Otherworld;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -104,9 +110,9 @@ namespace SOTS.NPCs.Boss.Advisor
             NPC.buffImmune[BuffID.Frostburn] = true;
             NPC.buffImmune[BuffID.CursedInferno] = true;
             NPC.buffImmune[BuffID.ShadowFlame] = true;
-            bossBag = ModContent.ItemType<TheAdvisorBossBag>();
-			music = -1;
-			musicPriority = (MusicPriority)(-1);
+            //bossbag = ModContent.ItemType<TheAdvisorBossBag>();
+			Music = -1;
+			SceneEffectPriority = (SceneEffectPriority)(-1);
 			//bossBag = mod.ItemType("BossBagBloodLord");
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -135,11 +141,11 @@ namespace SOTS.NPCs.Boss.Advisor
             }
             base.FindFrame(frameHeight);
         }
-        public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
+        public void DrawGlow(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Spirit");
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			Color color = new Color(100, 100, 100, 0);
 			if (attackPhase2 == 0)
 			{
@@ -169,13 +175,13 @@ namespace SOTS.NPCs.Boss.Advisor
 					for (int direction = -1; direction <= 1; direction += 2)
 					{
 						Vector2 circularRotation = new Vector2(0, -amt).RotatedBy(MathHelper.ToRadians(deg * direction));
-						Main.spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + 20) + circularRotation, null, lightColor, 0f, drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+						spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + 20) + circularRotation, null, drawColor, 0f, drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 						if (glow)
 							for (int k = 0; k < 7; k++)
 							{
 								float x = Main.rand.Next(-10, 11) * 0.1f;
 								float y = Main.rand.Next(-10, 11) * 0.1f;
-								Main.spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + 20) + circularRotation + new Vector2(x, y), null, color, 0f, drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+								spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + 20) + circularRotation + new Vector2(x, y), null, color, 0f, drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 							}
 					}
 				}
@@ -204,13 +210,13 @@ namespace SOTS.NPCs.Boss.Advisor
 					for (int direction = -1; direction <= 1; direction += 2)
 					{
 						Vector2 circularRotation = new Vector2(0, -amt).RotatedBy(MathHelper.ToRadians(deg + 90 * direction));
-						Main.spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation, null, lightColor, MathHelper.ToRadians(laserDirection), drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+						spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + Math.Abs(shift.X) + 4) + circularRotation, null, drawColor, MathHelper.ToRadians(laserDirection), drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 						if (glow)
 							for (int k = 0; k < 7; k++)
 							{
 								float x = Main.rand.Next(-10, 11) * 0.1f;
 								float y = Main.rand.Next(-10, 11) * 0.1f;
-								Main.spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation + new Vector2(x, y), null, color, MathHelper.ToRadians(laserDirection), drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+								spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + Math.Abs(shift.X) + 4) + circularRotation + new Vector2(x, y), null, color, MathHelper.ToRadians(laserDirection), drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 							}
 					}
 				}
@@ -241,13 +247,13 @@ namespace SOTS.NPCs.Boss.Advisor
                     }
 					Vector2 shift = new Vector2(16, 0).RotatedBy(deg);
 					Vector2 circularRotation = new Vector2(amt, 0).RotatedBy(deg);
-                    Main.spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation, null, lightColor, deg, drawOrigin2, 1f, SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + Math.Abs(shift.X) + 4) + circularRotation, null, drawColor, deg, drawOrigin2, 1f, SpriteEffects.FlipHorizontally, 0f);
 					if (glow)
 						for (int k = 0; k < 7; k++)
 						{
 							float x = Main.rand.Next(-10, 11) * 0.1f;
 							float y = Main.rand.Next(-10, 11) * 0.1f;
-							Main.spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X), (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation + new Vector2(x, y), null, color, deg, drawOrigin2, 1f, SpriteEffects.FlipHorizontally, 0f);
+							spriteBatch.Draw(texture3, new Vector2((float)(NPC.Center.X - (int)screenPos.X), (float)(NPC.Center.Y - (int)screenPos.Y) + Math.Abs(shift.X) + 4) + circularRotation + new Vector2(x, y), null, color, deg, drawOrigin2, 1f, SpriteEffects.FlipHorizontally, 0f);
 						}
 				}
 			}
@@ -256,11 +262,11 @@ namespace SOTS.NPCs.Boss.Advisor
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
 				y += 5;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, 1.125f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y), null, color, 0f, drawOrigin, 1.125f, SpriteEffects.None, 0f);
 			}
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			for(int j = 0; j < 4;)
 			{
 				float scale = NPC.scale;
@@ -305,9 +311,9 @@ namespace SOTS.NPCs.Boss.Advisor
 					Vector2 dist = -pointNpcTo1/(float)(max);
 					Vector2 pos = npcPos + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength * ((float)currentSegMult / totalSeg), 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + ai1));
-					Vector2 drawPos = pos - Main.screenPosition;
+					Vector2 drawPos = pos - screenPos;
 					dynamicAddition += new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)) * hookDistortionShake;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(lightColor), pointNpcTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), pointNpcTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					if (glow)
 						for (int k = 0; k < 7; k++)
 						{
@@ -328,8 +334,8 @@ namespace SOTS.NPCs.Boss.Advisor
 					Vector2 pos = point1 + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength * ((float)currentSegMult / totalSeg), 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + ai1));
 					dynamicAddition += new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)) * hookDistortionShake;
-					Vector2 drawPos = pos + circularLocation - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					Vector2 drawPos = pos + circularLocation - screenPos;
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					if (glow)
 						for (int k = 0; k < 7; k++)
 						{
@@ -349,8 +355,8 @@ namespace SOTS.NPCs.Boss.Advisor
 					Vector2 pos = centerOfCircle + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength * ((float)currentSegMult / totalSeg), 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + ai1));
 					dynamicAddition += new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)) * hookDistortionShake;
-					Vector2 drawPos = pos + circularLocation - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					Vector2 drawPos = pos + circularLocation - screenPos;
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					if (glow)
 						for (int k = 0; k < 7; k++)
 						{
@@ -368,8 +374,8 @@ namespace SOTS.NPCs.Boss.Advisor
 					Vector2 pos = point2 + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength * ((float)currentSegMult / totalSeg), 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + ai1));
 					dynamicAddition += new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)) * hookDistortionShake;
-					Vector2 drawPos = pos - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(lightColor), pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					Vector2 drawPos = pos - screenPos;
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					if (glow)
 						for (int k = 0; k < 7; k++)
 						{
@@ -389,7 +395,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				else if (j == 2)
 					j = 4;
 			}
-			DrawGlow(spriteBatch, lightColor);
+			DrawGlow(spriteBatch, screenPos, drawColor);
 			return true;
         }
 		bool moveLegsDynamic = true;
@@ -466,7 +472,7 @@ namespace SOTS.NPCs.Boss.Advisor
 					if(dormant && ConstructIds[i] != -1)
                     {
 						NPC construct = Main.npc[ConstructIds[i]];
-						if(construct.active && construct.type == Mod.Find<ModNPC>("OtherworldlyConstructHead2").Type)
+						if(construct.active && construct.type == ModContent.NPCType<OtherworldlyConstructHead2>())
 						{
 							Vector2 direction = hookPos[i] + NPC.Center - new Vector2(construct.ai[2], construct.ai[3]);
 							direction = direction.SafeNormalize(Vector2.Zero);
@@ -509,20 +515,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			bool lineOfSight = Collision.CanHitLine(NPC.position, NPC.width, NPC.height, player.position, player.width, player.height);
 			if (dormant)
 			{
-				var bossHPScale = 1f;
-				var num6 = 0.35f;
-				for (var index = 1; index < SOTS.PlayerCount; ++index)
-				{
-					bossHPScale += num6;
-					num6 += (float)((1.0 - (double)num6) / 3.0);
-				}
-				if (bossHPScale > 8.0)
-					bossHPScale = (float)((bossHPScale * 2.0 + 8.0) / 3.0);
-				if (bossHPScale > 1000.0)
-					bossHPScale = 1000f;
-				int trueLife = (int)(NormalModeHP * bossHPScale * ExpertLifeScale * Main.expertLife);
-				NPC.lifeMax = trueLife;
-				NPC.life = trueLife;
+				NPC.ScaleStats(null, Main.GameModeInfo, null);
 				attackPhase1 = -1;
 				attackPhase2 = -1;
 				NPC.velocity.Y = new Vector2(0.08f, 0).RotatedBy(MathHelper.ToRadians(ai1)).Y;
@@ -549,7 +542,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				}
 				if(dormantCounter > 90)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, (int)(NPC.Center.X), (int)(NPC.Center.Y), 0, 1.25f);
+					SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
 					Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
 					dormant = false;
 					NPC.dontTakeDamage = false;
@@ -561,13 +554,13 @@ namespace SOTS.NPCs.Boss.Advisor
 			}
 			return true;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Eye");
 			Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_EyeClosed");
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Highlight");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 
 			float shootToX = fireToX - NPC.Center.X;
 			float shootToY = fireToY - NPC.Center.Y;
@@ -596,13 +589,13 @@ namespace SOTS.NPCs.Boss.Advisor
 					spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 					y += 4;
 					Rectangle frame = new Rectangle(0, texture2.Height / 10 * highlightFrame, texture2.Width, texture2.Height / 10);
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y), frame, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture2, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y), frame, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 				}
 		}
 		public override void AI()
 		{
-			music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor");
-			musicPriority = MusicPriority.BossMedium;
+			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Advisor");
+			SceneEffectPriority = SceneEffectPriority.BossMedium;
 			NPC.TargetClosest(false);
 			NPC.spriteDirection = 1;
 			bool phase2 = NPC.life < NPC.lifeMax * (0.45f + (Main.expertMode ? 0.2f : 0));
@@ -690,15 +683,15 @@ namespace SOTS.NPCs.Boss.Advisor
 					circularAddition.Y -= (attackTimer1 - 360) * 1f;
 					glow = true;
 					if(attackTimer1 == 390)
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.7f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)NPC.Center.X, (int)NPC.Center.Y, 0.7f);
 					if (attackTimer1 == 420)
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)NPC.Center.X, (int)NPC.Center.Y, 1f);
 					if(attackTimer1 == 450)
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 1.3f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f);
 					if (attackTimer1 >= 480)
 					{
 						if (attackTimer1 == 480)
-							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 96, 1.4f);
+							SOTSUtils.PlaySound(SoundID.Item96, (int)NPC.Center.X, (int)NPC.Center.Y, 1.4f);
 						if (attackTimer1 < 510)
 						{
 							hookDistortion += 8.5f;
@@ -727,12 +720,8 @@ namespace SOTS.NPCs.Boss.Advisor
 									if (attackTimer1 == 480 && j == 0)
 										if (Main.netMode != NetmodeID.MultiplayerClient)
 										{
-											int damage2 = NPC.damage / 2;
-											if (Main.expertMode)
-											{
-												damage2 = (int)(damage2 / Main.expertDamage);
-											}
-											Projectile.NewProjectile(hookPos[i].X + NPC.Center.X - downStrike.X, hookPos[i].Y + NPC.Center.Y - downStrike.Y, downStrike.X * 1f, downStrike.Y * 1f, ModContent.ProjectileType<PhaseSpear>(), damage2, 0, Main.myPlayer);
+											int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+											Projectile.NewProjectile(NPC.GetSource_FromAI(), hookPos[i].X + NPC.Center.X - downStrike.X, hookPos[i].Y + NPC.Center.Y - downStrike.Y, downStrike.X * 1f, downStrike.Y * 1f, ModContent.ProjectileType<PhaseSpear>(), damage2, 0, Main.myPlayer);
 										}
 									hookPos[i] += downStrike;
 
@@ -753,12 +742,12 @@ namespace SOTS.NPCs.Boss.Advisor
 					}
 					if(attackTimer1 >= 600)
 					{
-						if (!NPC.AnyNPCs(Mod.Find<ModNPC>("PhaseEye").Type))
+						if (!NPC.AnyNPCs(ModContent.NPCType<PhaseEye>()))
 							for (int i = 0; i < 4; i++)
 							{
 								if (Main.netMode != 1)
 								{
-									int npc1 = NPC.NewNPC((int)(hookPos[i].X + NPC.Center.X), (int)(hookPos[i].Y + NPC.Center.Y - 20), Mod.Find<ModNPC>("PhaseEye").Type);
+									int npc1 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)(hookPos[i].X + NPC.Center.X), (int)(hookPos[i].Y + NPC.Center.Y - 20), Mod.Find<ModNPC>("PhaseEye").Type);
 									Main.npc[npc1].netUpdate = true;
 								}
 								for (int j = 0; j < 20; j++)
@@ -791,11 +780,7 @@ namespace SOTS.NPCs.Boss.Advisor
 					NPC.velocity *= 0.9f;
 					if (attackTimer1 % 45 == 0)
 					{
-						int damage = NPC.damage / 2;
-						if (Main.expertMode)
-						{
-							damage = (int)(damage / Main.expertDamage);
-						}
+						int damage = SOTSNPCs.GetBaseDamage(NPC) / 2;
 						tracerCounter++;
 						if (tracerCounter < 9)
 						{
@@ -818,9 +803,9 @@ namespace SOTS.NPCs.Boss.Advisor
 									break;
 								}
 							}
-							Terraria.Audio.SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
-							if (Main.netMode != 1)
-								Projectile.NewProjectile(locX, locY, 0, 0, Mod.Find<ModProjectile>("OtherworldlyTracer").Type, damage, 0f, Main.myPlayer, (1071) - (attackTimer1 * 2), NPC.whoAmI);
+							SOTSUtils.PlaySound(SoundID.Item30, (int)locX, (int)locY, 0.2f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), locX, locY, 0, 0, ModContent.ProjectileType<OtherworldlyTracer>(), damage, 0f, Main.myPlayer, (1071) - (attackTimer1 * 2), NPC.whoAmI);
 						}
 					}
 					if (tracerCounter >= 9)
@@ -829,21 +814,17 @@ namespace SOTS.NPCs.Boss.Advisor
 						attackTimer1 = -150;
 						attackPhase1 = -2;
 						glow = false;
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
+						SOTSUtils.PlaySound(SoundID.Item92, NPC.Center);
 						for (int i = 0; i < Main.projectile.Length; i++)
 						{
 							Projectile proj = Main.projectile[i];
-							if (proj.active && proj.type == Mod.Find<ModProjectile>("OtherworldlyTracer") .Type&& proj.ai[1] == NPC.whoAmI)
+							if (proj.active && proj.type == ModContent.ProjectileType<OtherworldlyTracer>() && proj.ai[1] == NPC.whoAmI)
 							{
-								int damage = NPC.damage / 2;
-								if (Main.expertMode)
-								{
-									damage = (int)(damage / Main.expertDamage);
-								}
+								int damage = SOTSNPCs.GetBaseDamage(NPC) / 2;
 								Vector2 toProj = proj.Center - NPC.Center;
 								toProj /= 30f;
-								if (Main.netMode != 1)
-									Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, toProj.X, toProj.Y, Mod.Find<ModProjectile>("OtherworldlyBall").Type, damage, 0, Main.myPlayer);
+								if (Main.netMode != NetmodeID.MultiplayerClient)
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, toProj.X, toProj.Y, ModContent.ProjectileType<OtherworldlyBall>(), damage, 0, Main.myPlayer);
 							}
 						}
 						MoveTo(toLocation, -12f, 0, 1);
@@ -873,13 +854,9 @@ namespace SOTS.NPCs.Boss.Advisor
 							eyeReset = -3f;
 							if (Main.netMode != 1)
 							{
-								int damage2 = NPC.damage / 2;
-								if (Main.expertMode)
-								{
-									damage2 = (int)(damage2 / Main.expertDamage);
-								}
+								int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 								damage2 = (int)(damage2 * 1.75f);
-								Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, 0, -10f, Mod.Find<ModProjectile>("ThunderColumnFast").Type, damage2, NPC.target, Main.myPlayer, fireToX, fireToY);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, 0, -10f, ModContent.ProjectileType<ThunderColumnFast>(), damage2, NPC.target, Main.myPlayer, fireToX, fireToY);
 							}
 						}
 					}
@@ -981,17 +958,17 @@ namespace SOTS.NPCs.Boss.Advisor
 					ai3 += NPC.velocity.X * 1.2f;
 				}
 				if (attackTimer2 == 30)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
-				if (attackTimer2 == 60)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.15f);
-				if (attackTimer2 == 90)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f);
-				if (attackTimer2 == 810)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.3f);
-				if (attackTimer2 == 840)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1.15f);
-				if (attackTimer2 == 870)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
+					SOTSUtils.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 1f);
+				if (attackTimer2 == 60)													    
+					SOTSUtils.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 1.15f);
+				if (attackTimer2 == 90)													    
+					SOTSUtils.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f);
+				if (attackTimer2 == 810)												    
+					SOTSUtils.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f);
+				if (attackTimer2 == 840)												    
+					SOTSUtils.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 1.15f);
+				if (attackTimer2 == 870)												    
+					SOTSUtils.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 1f);
 				if(attackTimer2 > 90 && attackTimer2 < 810)
 				{
 					float FasterRate = 1f;
@@ -1001,15 +978,11 @@ namespace SOTS.NPCs.Boss.Advisor
 					{
 						if (Main.netMode != 1)
 						{
-							int damage2 = NPC.damage / 2;
-							if (Main.expertMode)
-							{
-								damage2 = (int)(damage2 / Main.expertDamage);
-							}
+							int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 							damage2 = (int)(damage2 * 0.8f);
-							Projectile.NewProjectile(NPC.Center.X - 54, NPC.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, Mod.Find<ModProjectile>("HoloMissile").Type, damage2, 0, Main.myPlayer, 0, NPC.target);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X - 54, NPC.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, ModContent.ProjectileType<HoloMissile>(), damage2, 0, Main.myPlayer, 0, NPC.target);
 						}
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X - 54, (int)NPC.Center.Y + 20, 61, 1f);
+						SOTSUtils.PlaySound(SoundID.Item61, (int)NPC.Center.X - 54, (int)NPC.Center.Y + 20, 1f);
 						for (int i = 0; i < 15; i++)
 						{
 							int dust = Dust.NewDust(NPC.Center + new Vector2(-54 - 8, 20 - 8), 8, 8, DustID.Electric, 0, 0, 0, default, 1.25f);
@@ -1021,14 +994,10 @@ namespace SOTS.NPCs.Boss.Advisor
 					{
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							int damage2 = NPC.damage / 2;
-							if (Main.expertMode)
-							{
-								damage2 = (int)(damage2 / Main.expertDamage);
-							}
-							Projectile.NewProjectile(NPC.Center.X + 54, NPC.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, Mod.Find<ModProjectile>("HoloMissile").Type, damage2, 0, Main.myPlayer, 0, NPC.target);
+							int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + 54, NPC.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, ModContent.ProjectileType<HoloMissile>(), damage2, 0, Main.myPlayer, 0, NPC.target);
 						}
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X + 54, (int)NPC.Center.Y + 20, 61, 1f);
+						SOTSUtils.PlaySound(SoundID.Item61, (int)NPC.Center.X + 54, (int)NPC.Center.Y + 20, 1f);
 						for (int i = 0; i < 15; i++)
 						{
 							int dust = Dust.NewDust(NPC.Center + new Vector2(54 - 8, 20 - 8), 8, 8, DustID.Electric, 0, 0, 0, default, 1.25f);
@@ -1081,19 +1050,14 @@ namespace SOTS.NPCs.Boss.Advisor
 							Vector2 velo = new Vector2(80 * direction, 0).RotatedBy(MathHelper.ToRadians(laserDirection));
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								int damage2 = NPC.damage / 2;
-								if (Main.expertMode)
-								{
-									damage2 = (int)(damage2 / Main.expertDamage);
-								}
-								damage2 = (int)(damage2 * 2f);
-								Projectile.NewProjectile(NPC.Center.X + velo.X, NPC.Center.Y + Math.Abs(shift.X) + 4 + velo.Y, velo.SafeNormalize(Vector2.Zero).X * 4f, velo.SafeNormalize(Vector2.Zero).Y * 4f, Mod.Find<ModProjectile>("ChargeBeam").Type, damage2, 0, Main.myPlayer);
+								int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + velo.X, NPC.Center.Y + Math.Abs(shift.X) + 4 + velo.Y, velo.SafeNormalize(Vector2.Zero).X * 4f, velo.SafeNormalize(Vector2.Zero).Y * 4f, Mod.Find<ModProjectile>("ChargeBeam").Type, damage2, 0, Main.myPlayer);
 							}
 						}
 					}
 					else if(attackTimer2 % 160 < 32)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 1f);
+						SOTSUtils.PlaySound(SoundID.Mech, (int)NPC.Center.X, (int)NPC.Center.Y, 1f);
 					}
 					if (attackTimer2 % 160 == 0)
 					{
@@ -1131,7 +1095,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				eyeReset = 2.5f;
 				if (attackTimer2 >= 180 && attackTimer2 % 90 == 0 && attackTimer2 < 810)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 93, 1.3f);
+					SOTSUtils.PlaySound(SoundID.Item93, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f);
 					Vector2 shift = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(new Vector2(fireToX, fireToY).ToRotation()));
 					Vector2 playerCenter = new Vector2(fireToX, fireToY);
 					Vector2 fromCenter = playerCenter - NPC.Center;
@@ -1140,13 +1104,9 @@ namespace SOTS.NPCs.Boss.Advisor
 					float velocityA = 3.55f;
 					if (Main.netMode != 1)
 					{
-						int damage2 = NPC.damage / 2;
-						if (Main.expertMode)
-						{
-							damage2 = (int)(damage2 / Main.expertDamage);
-						}
+						int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 						damage2 = (int)(damage2 * 0.8f);
-						Projectile.NewProjectile(NPC.Center.X + fromCenter.X, NPC.Center.Y + Math.Abs(shift.X) + 4 + fromCenter.Y, fromCenter.SafeNormalize(Vector2.Zero).X * velocityA, fromCenter.SafeNormalize(Vector2.Zero).Y * velocityA, Mod.Find<ModProjectile>("ThunderColumnBlue").Type, damage2, 0, Main.myPlayer, 3f);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + fromCenter.X, NPC.Center.Y + Math.Abs(shift.X) + 4 + fromCenter.Y, fromCenter.SafeNormalize(Vector2.Zero).X * velocityA, fromCenter.SafeNormalize(Vector2.Zero).Y * velocityA, Mod.Find<ModProjectile>("ThunderColumnBlue").Type, damage2, 0, Main.myPlayer, 3f);
 					}
 				}
 				if (attackTimer2 > 810)
@@ -1165,104 +1125,41 @@ namespace SOTS.NPCs.Boss.Advisor
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
-				for (int i = 0; i < 50; i++)
-				{
-					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigAetherDust").Type);
-					Main.dust[dust].velocity *= 5f;
-				}
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore1"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore2"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore3"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore4"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore5"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore6"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore7"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore1"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore2"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore3"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore4"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore5"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore6"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore7"), 1f);
 				for (int i = 0; i < 24; i++)
                 {
-					Gore.NewGore(NPC.position + new Vector2((float)(NPC.width * Main.rand.Next(100)) / 100f, (float)(NPC.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, NPC.velocity, Main.rand.Next(61, 64), 1f);
-					Gore.NewGore(NPC.position + new Vector2((NPC.width * Main.rand.Next(100)) / 100f, NPC.height) - Vector2.One * 10f, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2((float)(NPC.width * Main.rand.Next(100)) / 100f, (float)(NPC.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, NPC.velocity, Main.rand.Next(61, 64), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2((NPC.width * Main.rand.Next(100)) / 100f, NPC.height) - Vector2.One * 10f, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
 				}
 			}
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<TheAdvisorBossBag>()));
+			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OtherworldlyAlloy>(), 3, 10, 16))
+				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<MeteoriteKey>(), 1, 1, 1));
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<StarlightAlloy>(), 3, 10, 16))
+				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<SkywareKey>(), 1, 1, 1));
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<HardlightAlloy>(), 3, 10, 16))
+				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<StrangeKey>(), 1, 1, 1));
 		}
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
 			SOTSWorld.downedAdvisor = true;
 			potionType = ItemID.HealingPotion;
-		
-			if(Main.expertMode)
-			{ 
-				NPC.DropBossBags();
-			} 
-			else 
-			{
-				int type = Main.rand.Next(3);
-				if (type  == 0)
-				{
-					if (Main.rand.NextBool(3))
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("OtherworldlyAlloy").Type, Main.rand.Next(10, 17));
-					else
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("MeteoriteKey").Type, 1);
-
-					if (Main.rand.NextBool(3))
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("StarlightAlloy").Type, Main.rand.Next(10, 17));
-					else
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("SkywareKey").Type, 1);
-
-					if (Main.rand.NextBool(3))
-					{
-						if (Main.rand.NextBool(3))
-							Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("HardlightAlloy").Type, Main.rand.Next(10, 17));
-						else
-							Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("StrangeKey").Type, 1);
-					}
-				}
-				if (type == 1)
-				{
-					if (Main.rand.NextBool(3))
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("StarlightAlloy").Type, Main.rand.Next(10, 17));
-					else
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("SkywareKey").Type, 1);
-
-					if (Main.rand.NextBool(3))
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("HardlightAlloy").Type, Main.rand.Next(10, 17));
-					else
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("StrangeKey").Type, 1);
-
-					if (Main.rand.NextBool(3))
-					{
-						if (Main.rand.NextBool(3))
-							Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("OtherworldlyAlloy").Type, Main.rand.Next(10, 17));
-						else
-							Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("MeteoriteKey").Type, 1);
-					}
-				}
-				if (type == 2)
-				{
-					if (Main.rand.NextBool(3))
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("OtherworldlyAlloy").Type, Main.rand.Next(10, 17));
-					else
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("MeteoriteKey").Type, 1);
-
-					if (Main.rand.NextBool(3))
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("HardlightAlloy").Type, Main.rand.Next(10, 17));
-					else
-						Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("StrangeKey").Type, 1);
-
-					if (Main.rand.NextBool(3))
-					{
-						if (Main.rand.NextBool(3))
-							Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("StarlightAlloy").Type, Main.rand.Next(10, 17));
-						else
-							Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("SkywareKey").Type, 1);
-					}
-				}
-			}
 		}
-		public override void NPCLoot()
-		{
-			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, Mod.Find<ModNPC>("OtherworldlySpirit").Type);
+        public override void OnKill()
+        {
+			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OtherworldlySpirit>());
 			Main.npc[n].velocity.Y = -10f;
-			if (Main.netMode != 1)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
 		}
     }

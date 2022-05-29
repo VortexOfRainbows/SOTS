@@ -70,19 +70,21 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void OpenBossBag(Player player)
 		{
-			player.QuickSpawnItem(ModContent.ItemType<TwilightGyroscope>());
+			player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<TwilightGyroscope>());
 			if(Main.rand.NextBool(3))
-				player.QuickSpawnItem(ModContent.ItemType<StarlightAlloy>(), Main.rand.Next(12, 19));
+				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<StarlightAlloy>(), Main.rand.Next(12, 19));
 			else
-				player.QuickSpawnItem(ModContent.ItemType<SkywareKey>());
+				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<SkywareKey>());
+
 			if (Main.rand.NextBool(3))
-				player.QuickSpawnItem(ModContent.ItemType<OtherworldlyAlloy>(), Main.rand.Next(12, 19));
+				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<OtherworldlyAlloy>(), Main.rand.Next(12, 19));
 			else
-				player.QuickSpawnItem(ModContent.ItemType<MeteoriteKey>());
+				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<MeteoriteKey>());
+
 			if (Main.rand.NextBool(3))
-				player.QuickSpawnItem(ModContent.ItemType<HardlightAlloy>(), Main.rand.Next(12, 19));
+				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<HardlightAlloy>(), Main.rand.Next(12, 19));
 			else
-				player.QuickSpawnItem(ModContent.ItemType<StrangeKey>());
+				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<StrangeKey>());
 		}
 	}
 }

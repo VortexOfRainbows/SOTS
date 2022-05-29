@@ -20,6 +20,9 @@ Major Milestones TO REACH (Will be removed when completed)
 3. Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
 4. Make sure VM Incubator works (and server fixes)
 5. Make sure Global NPC loot works
+6. Make sure Advisor Health Scaling in Expert works properly!
+7. Make sure projectile expert mode damage from enemies works properly!
+8. Make sure sound playing system works with pitch and volume
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
@@ -51,6 +54,10 @@ Low Priority Objectives:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
+
+5/29/22
+1. 4090 -> 3820
+2. Ported mainly Adivsor, Pharaoh
 
 5/26/22 & 5/27/22
 1. Organization and more fixing!
