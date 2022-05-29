@@ -55,7 +55,7 @@ namespace SOTS.NPCs.Boss
                 }
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/SubspaceEyeDraw");
             Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/SubspaceEyeFlames");
@@ -65,14 +65,14 @@ namespace SOTS.NPCs.Boss
             {
                 Vector2 circular = new Vector2(Main.rand.NextFloat(2.5f, 5f), 0).RotatedBy(MathHelper.ToRadians(a));
                 Color color = new Color(100, 255, 100, 0);
-                Main.spriteBatch.Draw(texture2, NPC.Center + circular - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), color * ((255f - NPC.alpha) / 255f) * 0.5f, NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(texture2, NPC.Center + circular - screenPos, new Rectangle(0, frame * 120, texture.Width, 120), color * ((255f - NPC.alpha) / 255f) * 0.5f, NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             }
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             Player player = Main.player[Main.myPlayer];
             Vector2 toPlayer = player.Center - NPC.Center;
             Vector2 eyeOffset = new Vector2(8 * eyeRecoil, 0).RotatedBy(toPlayer.ToRotation());
             eyeOffset.Y *= 0.5f;
-            Main.spriteBatch.Draw(texture3, NPC.Center + eyeOffset - Main.screenPosition, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(texture3, NPC.Center + eyeOffset - screenPos, new Rectangle(0, frame * 120, texture.Width, 120), new Color(65, 155, 65) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -92,8 +92,8 @@ namespace SOTS.NPCs.Boss
             }
             if(runOnce)
             {
-                if (Main.netMode != 1)
-                    Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, NPC.whoAmI);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, NPC.whoAmI);
                 runOnce = false;
             }
             if(NPC.ai[3] == -1)

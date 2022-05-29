@@ -28,7 +28,7 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.netAlways = true;
             NPC.buffImmune[44] = true;
 		}
-		public override bool PreNPCLoot()
+        public override bool PreKill()
 		{
 			return false;
 		}
@@ -62,16 +62,11 @@ namespace SOTS.NPCs.Boss.Polaris
 					NPC.ai[2] += 9;
 					if (Main.netMode != 1)
                     {
-						int damage = NPC.damage / 2;
-						damage *= 2;
-						if (Main.expertMode)
-						{
-							damage = (int)(damage / Main.expertDamage);
-						}
+						int damage = NPC.GetBaseDamage();
 						for (int i = 0; i < 4; i++)
 						{
 							Vector2 rotateVelocity = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[2] + 90 * i));
-							Projectile.NewProjectile(NPC.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 						}
 					}
 				}

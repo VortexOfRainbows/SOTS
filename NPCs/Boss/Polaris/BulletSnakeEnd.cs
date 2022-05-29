@@ -85,11 +85,11 @@ namespace SOTS.NPCs.Boss.Polaris
             return false;
         }
         Vector2 velocity = Vector2.Zero;
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, Color.White, NPC.rotation, origin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, null, Color.White, NPC.rotation, origin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -100,17 +100,12 @@ namespace SOTS.NPCs.Boss.Polaris
         {
             if (Main.netMode != 1)
             {
-                int damage = NPC.damage / 2;
-                damage *= 2;
-                if (Main.expertMode)
-                {
-                    damage = (int)(damage / Main.expertDamage);
-                }
+                int damage = NPC.GetBaseDamage();
                 NPC.ai[0]++;
                 if (NPC.ai[0] >= 20)
                 {
                     NPC.ai[0] = 0;
-                    Projectile.NewProjectile(NPC.Center, new Vector2(0, 4).RotatedBy(NPC.rotation), ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(0, 4).RotatedBy(NPC.rotation), ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
                 }
                 /* for (int i = 0; i < 3; i++)
                 {

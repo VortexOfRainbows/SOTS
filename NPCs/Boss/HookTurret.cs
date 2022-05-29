@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -64,16 +65,16 @@ namespace SOTS.NPCs.Boss
 			NPCID.Sets.TrailCacheLength[NPC.type] = 4;  
 			NPCID.Sets.TrailingMode[NPC.type] = 0;  
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin;
-				Color color = NPC.GetAlpha(lightColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin;
+				Color color = NPC.GetAlpha(drawColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.35f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
-			Draw(spriteBatch, lightColor);
+			Draw(spriteBatch, screenPos, drawColor);
 			return false;
 		}	
 		public override void SetDefaults()
@@ -96,12 +97,12 @@ namespace SOTS.NPCs.Boss
             NPC.buffImmune[20] = true;
 			NPC.alpha = 100;
 		}
-		public void Draw(SpriteBatch spriteBatch, Color drawColor)
+		public void Draw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			Player player = Main.player[NPC.target];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridHookEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 
 			texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -159,20 +160,16 @@ namespace SOTS.NPCs.Boss
 					NPC.netUpdate = true;
 					float shootToX = aimToX - NPC.Center.X;
 					float shootToY = aimToY - NPC.Center.Y;
-					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+					float distance = (float)Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
 					distance = (Main.expertMode ? 5.25f : 5f) / distance;
 						  
 					shootToX *= distance;
 					shootToY *= distance;
-					
-					int damage = NPC.damage / 2;
-					if (Main.expertMode) 
-					{
-						damage = (int)(damage / Main.expertDamage);
-					}
+
+					int damage = NPC.GetBaseDamage() / 2;
 					if(Main.netMode != 1)
-						Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, shootToX, shootToY, Mod.Find<ModProjectile>("PinkBullet").Type, damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, shootToX, shootToY, ModContent.ProjectileType<PinkBullet>(), damage, 0, Main.myPlayer);
 				}
 			}
 			
@@ -182,7 +179,7 @@ namespace SOTS.NPCs.Boss
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc1 = Main.npc[i];
-				if(npc1.type == Mod.Find<ModNPC>("PutridPinkyPhase2") .Type&& npc1.active)
+				if(npc1.type == ModContent.NPCType<PutridPinkyPhase2>() && npc1.active)
 				{
 					NPC.active = true;
 					NPC.timeLeft = 1000;

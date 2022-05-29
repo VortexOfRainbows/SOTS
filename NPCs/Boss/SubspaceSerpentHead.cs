@@ -5,8 +5,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Items.Celestial;
 using SOTS.Projectiles.Celestial;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -58,12 +60,11 @@ namespace SOTS.NPCs.Boss
             NPC.npcSlots = 25;
             NPC.netAlways = true;
             NPC.target = -1;
-            music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent");
+            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SubspaceSerpent");
             for (int i = 0; i < Main.maxBuffTypes; i++)
             {
                 NPC.buffImmune[i] = true;
             }
-            bossBag = Mod.Find<ModItem>("SubspaceBag").Type;
             Main.npcFrameCount[NPC.type] = 8;
         }
         bool hasSpawnedProjectile = false;
@@ -72,8 +73,8 @@ namespace SOTS.NPCs.Boss
         {
             if (!hasSpawnedProjectile)
             {
-                if(Main.netMode != 1)
-                    Projectile.NewProjectileDirect(NPC.Center, NPC.velocity * 0.4f, ModContent.ProjectileType<SubspaceDeathAnimation>(), 0, 0, Main.myPlayer, 0, NPC.whoAmI);
+                if(Main.netMode != NetmodeID.MultiplayerClient)
+                    Projectile.NewProjectileDirect(NPC.GetSource_Death("SOTS:SubspaceDeathAnimation"), NPC.Center, NPC.velocity * 0.4f, ModContent.ProjectileType<SubspaceDeathAnimation>(), 0, 0, Main.myPlayer, 0, NPC.whoAmI);
                 NPC.ai[3] = 1f;
                 NPC.damage = 0;
                 NPC.life = NPC.lifeMax;
@@ -82,10 +83,11 @@ namespace SOTS.NPCs.Boss
                 hasSpawnedProjectile = true;
                 return false;
             }
-            return true;
-        }
-        public override bool PreNPCLoot()
-        {
+            if (NPC.target >= 0)
+            {
+                Player player = Main.player[NPC.target];
+                NPC.position = player.position;
+            }
             return true;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -96,23 +98,19 @@ namespace SOTS.NPCs.Boss
         {
             return false;
         }
+        public override void OnKill()
+        {
+            SOTSWorld.downedSubspace = true;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SubspaceBag>()));
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SanguiteBar>(), 1, 16, 24));
+        }
         public override void BossLoot(ref string name, ref int potionType)
         {
-            if(NPC.target >= 0)
-            {
-                Player player = Main.player[NPC.target];
-                NPC.position = player.position;
-            }
-            SOTSWorld.downedSubspace = true;
             potionType = ItemID.GreaterHealingPotion;
-            if (Main.expertMode)
-            {
-                NPC.DropBossBags();
-            }
-            else
-            {
-                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("SanguiteBar").Type, Main.rand.Next(16, 25));
-            }
         }
         public override bool PreAI()
         {
@@ -138,11 +136,11 @@ namespace SOTS.NPCs.Boss
                     int randomWormLength = 50;
                     for (int i = 0; i < randomWormLength; ++i)
                     {
-                        latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, Mod.Find<ModNPC>("SubspaceSerpentBody").Type, NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SubspaceSerpentBody>(), NPC.whoAmI, 0, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
                     }
-                    latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, Mod.Find<ModNPC>("SubspaceSerpentTail").Type, NPC.whoAmI, 0, latestNPC);
+                    latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SubspaceSerpentTail>(), NPC.whoAmI, 0, latestNPC);
                     Main.npc[latestNPC].realLife = NPC.whoAmI;
                     Main.npc[latestNPC].ai[3] = NPC.whoAmI;
 
@@ -230,7 +228,7 @@ namespace SOTS.NPCs.Boss
             if ((directVelo.X > 0.0 && NPC.oldVelocity.X < 0.0 || directVelo.X < 0.0 && NPC.oldVelocity.X > 0.0 || (directVelo.Y > 0.0 && NPC.oldVelocity.Y < 0.0 || directVelo.Y < 0.0 && NPC.oldVelocity.Y > 0.0)) && !NPC.justHit)
                 NPC.netUpdate = true;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHeadFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
@@ -239,19 +237,19 @@ namespace SOTS.NPCs.Boss
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 toTheSide = new Vector2(2, 0).RotatedBy(NPC.rotation + MathHelper.ToRadians(i * -90));
-                    Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + toTheSide, NPC.frame, new Color(0, 255, 0) * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, new Color(0, 255, 0) * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
                 }
             }
             texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
         int counter = 0;
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHeadGlow").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             counter++;
             if (counter > 12)
                 counter = 0;
@@ -260,7 +258,7 @@ namespace SOTS.NPCs.Boss
                 float bonusAlphaMult = 1 - 1 * (counter / 12f);
                 float dir = j * 2 - 1;
                 Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(NPC.rotation);
-                Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + offset, NPC.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(texture, NPC.Center - screenPos + offset, NPC.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             }
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -397,34 +395,26 @@ namespace SOTS.NPCs.Boss
                     {
                         Vector2 goTo = prevLocation - NPC.Center;
                         directVelo = goTo.SafeNormalize(Vector2.Zero) * 24f;
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0, 0.8f);
-                        if (Main.netMode != 1)
+                        SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0.8f);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for(int i = 0; i < 16; i++)
                             {
                                 Vector2 bulletSpread = new Vector2(15, 0).RotatedBy(MathHelper.ToRadians(i * 22.5f));
                                 bulletSpread.Y -= 3.5f;
-                                int damage2 = NPC.damage / 2;
-                                if (Main.expertMode)
-                                {
-                                    damage2 = (int)(damage2 / Main.expertDamage);
-                                }
-                                Projectile.NewProjectile(NPC.Center, bulletSpread, ModContent.ProjectileType<SubspaceLingeringFlame>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
+                                int damage2 = NPC.GetBaseDamage() / 2;
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, bulletSpread, ModContent.ProjectileType<SubspaceLingeringFlame>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
                             }
                         }
                     }
                     if(ai3 <= 190 && ai3 > 160 && ai3 % 3 == 0)
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int damage2 = NPC.damage / 2;
-                            if (Main.expertMode)
-                            {
-                                damage2 = (int)(damage2 / Main.expertDamage);
-                            }
+                            int damage2 = NPC.GetBaseDamage() / 2;
                             Vector2 goTo = player.Center - NPC.Center;
                             Vector2 velocity = goTo.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45.5f, 45.5f)));
-                            Projectile.NewProjectile(NPC.Center + velocity * 32, velocity * 11.5f + new Vector2(0, -4.5f), ModContent.ProjectileType<SubspaceLingeringFlame>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + velocity * 32, velocity * 11.5f + new Vector2(0, -4.5f), ModContent.ProjectileType<SubspaceLingeringFlame>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
                         }
                     }
                     if (ai3 < 160)
@@ -535,14 +525,10 @@ namespace SOTS.NPCs.Boss
                     }
                     //for (int i = 0; i < 2; i++)
                     Vector2 velo = savedir.RotatedBy(MathHelper.ToRadians(90)) * 0.8f;// * (i * 2 - 1);
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int damage2 = NPC.damage / 2;
-                        if (Main.expertMode)
-                        {
-                            damage2 = (int)(damage2 / Main.expertDamage);
-                        }
-                        Projectile.NewProjectile(NPC.Center, velo, ModContent.ProjectileType<CellBlast>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
+                        int damage2 = NPC.GetBaseDamage() / 2;
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velo, ModContent.ProjectileType<CellBlast>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
                     }
                 }
             }
@@ -584,15 +570,15 @@ namespace SOTS.NPCs.Boss
                     if ((int)ai1 == 1980)
                     {
                         if (hasEnteredSecondPhase)
-                            Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, NPC.whoAmI, -1);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, NPC.whoAmI, -1);
                     }
                     ai3 += 100;
                     DoIndicator(-worldSide, ai3, ModContent.ProjectileType<EnergySerpentHead>(), true);
                 }
                 if ((int)ai1 == 1900)
                 {
-                    Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, worldSide);
-                    Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, 1000 * worldSide);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, worldSide);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, 1000 * worldSide);
                 }
                 if(ai1 < 1800 && ai2 % 20 <= 1 && Main.netMode != 1)
                 {
@@ -604,24 +590,24 @@ namespace SOTS.NPCs.Boss
                             if (target.Center.X - 64 > NPC.Center.X && !left)
                             {
                                 target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
-                                Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
                             }
                             if (target.Center.X + 64 < NPC.Center.X && left)
                             {
                                 target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
-                                Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
                             }
                             if (target.Center.X - 2324 > NPC.Center.X && left)
                             {
                                 target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
                                 if (target.Center.X - 2400 > NPC.Center.X)
-                                   Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                                   Projectile.NewProjectile(NPC.GetSource_FromAI(), target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
                             }
                             if (target.Center.X + 2324 < NPC.Center.X && !left)
                             {
                                 target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
                                 if (target.Center.X + 2400 < NPC.Center.X)
-                                    Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
                             }
                         }
                     }
@@ -701,17 +687,13 @@ namespace SOTS.NPCs.Boss
                                 spawnPos.Y += ai4;
                                 if (Main.netMode != 1)
                                 {
-                                    int damage2 = NPC.damage / 2;
-                                    if (Main.expertMode)
-                                    {
-                                        damage2 = (int)(damage2 / Main.expertDamage);
-                                    }
-                                    Projectile.NewProjectile(spawnPos, new Vector2(worldSide * 4, 0), ModContent.ProjectileType<GreaterCellBlast>(), (int)(damage2 * 1.1f), 0, Main.myPlayer, 0, NPC.whoAmI);
+                                    int damage2 = NPC.GetBaseDamage() / 2;
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPos, new Vector2(worldSide * 4, 0), ModContent.ProjectileType<GreaterCellBlast>(), (int)(damage2 * 1.1f), 0, Main.myPlayer, 0, NPC.whoAmI);
                                 }
                             }
                         }
                         if (Main.netMode != 1)
-                            Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, NPC.whoAmI, (250 - ai3 + 700) * 1.5f * worldSide);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, NPC.whoAmI, (250 - ai3 + 700) * 1.5f * worldSide);
                     }
                     if (ai3 <= 380)
                     {
@@ -760,7 +742,7 @@ namespace SOTS.NPCs.Boss
                         NPC.dontTakeDamage = true;
                         if (Main.netMode != 1)
                         {
-                            ai4 = NPC.NewNPC((int)playerCenter.X, (int)playerCenter.Y + (int)player.height, ModContent.NPCType<SubspaceEye>());
+                            ai4 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)playerCenter.X, (int)playerCenter.Y + (int)player.height, ModContent.NPCType<SubspaceEye>());
                             NPC eye = Main.npc[(int)ai4];
                             eye.realLife = NPC.whoAmI;
                             prevLocation = playerCenter;
@@ -800,15 +782,11 @@ namespace SOTS.NPCs.Boss
                                     Vector2 away = new Vector2(900 + randEdit, 0).RotatedBy(MathHelper.ToRadians(i * 60 + ai1 * 0.72f));
                                     Vector2 to = away.SafeNormalize(Vector2.Zero) * -4.5f;
                                     away += eye.Center;
-                                    int damage2 = NPC.damage / 2;
-                                    if (Main.expertMode)
-                                    {
-                                        damage2 = (int)(damage2 / Main.expertDamage);
-                                    }
+                                    int damage2 = NPC.GetBaseDamage() / 2;
                                     int type = 0;   
                                     if (Main.expertMode && Main.rand.NextBool(16))
                                         type = 1;
-                                    Projectile.NewProjectile(away, to, ModContent.ProjectileType<WaveBlast>(), (int)(damage2 * 0.8f), 3, Main.myPlayer, type);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), away, to, ModContent.ProjectileType<WaveBlast>(), (int)(damage2 * 0.8f), 3, Main.myPlayer, type);
                                 }
                             }
                             if (ai1 < 0)
@@ -899,16 +877,12 @@ namespace SOTS.NPCs.Boss
         int slither = 1;
         public void SnakeFromWall(int direction)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Vector2 area = NPC.Center - new Vector2(2000 * direction, Main.rand.NextFloat(-360, 360));
-                int damage2 = NPC.damage / 2;
-                if (Main.expertMode)
-                {
-                    damage2 = (int)(damage2 / Main.expertDamage);
-                }
+                int damage2 = NPC.GetBaseDamage() / 2;
                 Vector2 circular = new Vector2(Main.rand.NextFloat(12f, 16f) * direction, 0);
-                Projectile.NewProjectile(area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.95f), 0, Main.myPlayer, Main.rand.Next(5, 7), -1);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.95f), 0, Main.myPlayer, Main.rand.Next(5, 7), -1);
             }
         }
         public void SlitherWall(int direction, float rotate, float dist = 620, float offset = 20)
@@ -933,23 +907,19 @@ namespace SOTS.NPCs.Boss
                     Vector2 selectArea = new Vector2(dist, 0).RotatedBy(MathHelper.ToRadians(rotate * 1.75f + rand3));
                     Vector2 velo = selectArea.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(rand2 + 90));
                     prevdir = velo.SafeNormalize(Vector2.Zero);
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Projectile.NewProjectile(selectArea + player.Center, velo, ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), selectArea + player.Center, velo, ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
                     }
                     return selectArea + player.Center;
                 }
                 else
                 {
                     Vector2 offset = prevdir * 360f * rand1;
-                    int damage2 = NPC.damage / 2;
-                    if (Main.expertMode)
-                    {
-                        damage2 = (int)(damage2 / Main.expertDamage);
-                    }
+                    int damage2 = NPC.GetBaseDamage() / 2;
                     if (Main.netMode != 1)
                     {
-                        Projectile.NewProjectile(prevLocation + offset, prevdir.RotatedBy(MathHelper.ToRadians(rand2 + 90)), ModContent.ProjectileType<DashIndicator2>(), (int)(damage2 * 0.75f), 0, Main.myPlayer, rand1);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), prevLocation + offset, prevdir.RotatedBy(MathHelper.ToRadians(rand2 + 90)), ModContent.ProjectileType<DashIndicator2>(), (int)(damage2 * 0.75f), 0, Main.myPlayer, rand1);
                     }
                 }
             }
@@ -959,26 +929,22 @@ namespace SOTS.NPCs.Boss
                 prevdir = new Vector2(0, -1);
                 if((int)rand3 == ModContent.ProjectileType<EnergySerpentHead>())
                 {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)(selectArea + prevLocation).X, (int)(selectArea + prevLocation).Y);
+                   SOTSUtils.PlaySound(SoundID.Item119, (int)(selectArea + prevLocation).X, (int)(selectArea + prevLocation).Y);
                     if (Main.netMode != 1)
                     {
-                        int damage2 = NPC.damage / 2;
-                        if (Main.expertMode)
-                        {
-                            damage2 = (int)(damage2 / Main.expertDamage);
-                        }
+                        int damage2 = NPC.GetBaseDamage() / 2;
                         if(hasEnteredSecondPhase)
-                            Projectile.NewProjectile(selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead2>(), damage2 * 2, 0, Main.myPlayer, 32, NPC.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead2>(), damage2 * 2, 0, Main.myPlayer, 32, NPC.whoAmI);
                         else
-                            Projectile.NewProjectile(selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), damage2 * 2, 0, Main.myPlayer, 32, NPC.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), damage2 * 2, 0, Main.myPlayer, 32, NPC.whoAmI);
                     }
                 }
                 else if (Main.netMode != 1)
                 {
                     if (redIndicator)
-                        Projectile.NewProjectile(selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer, 0, -1);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer, 0, -1);
                     else
-                        Projectile.NewProjectile(selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
                 }
                 return selectArea + prevLocation;
             }
@@ -986,7 +952,7 @@ namespace SOTS.NPCs.Boss
         }
         public void DoDash(int direction = 1, bool push = false)
         {
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)prevLocation.X, (int)prevLocation.Y);
+            SOTSUtils.PlaySound(SoundID.Item119, (int)prevLocation.X, (int)prevLocation.Y);
             Vector2 velo = prevdir;
             if (push)
                NPC.Center = prevLocation - velo * 2700 * direction;
@@ -996,15 +962,11 @@ namespace SOTS.NPCs.Boss
         {
             if (Main.netMode != 1)
             {
-                int damage2 = NPC.damage / 2;
-                if (Main.expertMode)
-                {
-                    damage2 = (int)(damage2 / Main.expertDamage);
-                }
+                int damage2 = NPC.GetBaseDamage() / 2;
                 for (int i = 0; i < 180; i += 30)
                 {
                     Vector2 circular = new Vector2(-Main.rand.NextFloat(6f, 12f), 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.Next(-10, 11)));
-                    Projectile.NewProjectile(area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.6f), 0, Main.myPlayer, 6, -1);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.6f), 0, Main.myPlayer, 6, -1);
                 }
             }
         }
@@ -1101,11 +1063,7 @@ namespace SOTS.NPCs.Boss
                         {
                             Moving = 3;
                         }
-                        int damage2 = NPC.damage / 2;
-                        if (Main.expertMode)
-                        {
-                            damage2 = (int)(damage2 / Main.expertDamage);
-                        }
+                        int damage2 = NPC.GetBaseDamage() / 2;
                         int type = Main.rand.Next(10);
                         if (type < 5)
                             type = 0;
@@ -1119,7 +1077,7 @@ namespace SOTS.NPCs.Boss
                             type = 2; 
                             purpled = true;
                         }
-                        Projectile.NewProjectile(spawnLocation + newCenter, velo, ModContent.ProjectileType<CrossLaser>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, type + Moving);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnLocation + newCenter, velo, ModContent.ProjectileType<CrossLaser>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, type + Moving);
                     }
                 }
             }

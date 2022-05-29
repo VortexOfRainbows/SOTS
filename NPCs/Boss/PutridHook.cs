@@ -82,11 +82,11 @@ namespace SOTS.NPCs.Boss
 		bool runOnce = true;
 		float[] counterArr = new float[12];
 		float[] randSeed1 = new float[12];
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture;
 			Vector2 drawOrigin;
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			drawColor = NPC.GetAlpha(drawColor);
 			if (!runOnce)
 			{
@@ -123,16 +123,16 @@ namespace SOTS.NPCs.Boss
 			spriteBatch.Draw(texture, drawPos, null, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Player player = Main.player[NPC.target];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridHookEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition;
+			Vector2 drawPos = NPC.Center - screenPos;
 			
 			float shootToX = aimToX - NPC.Center.X;
 			float shootToY = aimToY - NPC.Center.Y;
-			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+			float distance = (float)Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
 			distance = 1f/ distance;
 				  
@@ -151,11 +151,11 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (Projectile.active && (Projectile.ModProjectile == null || Projectile.ModProjectile.ShouldUpdatePosition()))
+			if (projectile.active && (projectile.ModProjectile == null || projectile.ModProjectile.ShouldUpdatePosition()))
 			{
-				Projectile.velocity.X *= -0.9f;
-				Projectile.velocity.Y *= -0.9f;
-				Projectile.netUpdate = true;
+				projectile.velocity.X *= -0.9f;
+				projectile.velocity.Y *= -0.9f;
+				projectile.netUpdate = true;
 			}
 		}
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -173,11 +173,11 @@ namespace SOTS.NPCs.Boss
 			NPC.lifeMax = (int)(600 * bossLifeScale * 0.75f);
 			NPC.damage = 60;  
         }
-		public override void NPCLoot()
-		{
+        public override void OnKill()
+        {
 			if(Main.netMode != 1)
 			{
-				int num1 = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, Mod.Find<ModNPC>("HookTurret").Type, 0, NPC.ai[0], NPC.ai[1], NPC.ai[2], NPC.ai[3]);	
+				int num1 = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<HookTurret>(), 0, NPC.ai[0], NPC.ai[1], NPC.ai[2], NPC.ai[3]);	
 				NPC newNpc = Main.npc[num1];
 				newNpc.localAI[0] = (int)owner;
 				newNpc.netUpdate = true;
@@ -212,7 +212,7 @@ namespace SOTS.NPCs.Boss
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc1 = Main.npc[i];
-				if(npc1.type == Mod.Find<ModNPC>("PutridPinkyPhase2") .Type&& npc1.active && pIndex == -1 && npc1.whoAmI == (int)owner)
+				if(npc1.type == ModContent.NPCType<PutridPinkyPhase2>() && npc1.active && pIndex == -1 && npc1.whoAmI == (int)owner)
 				{
 					pIndex = i;
 				}

@@ -32,7 +32,7 @@ namespace SOTS.NPCs.Boss
             NPC.value = 100000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath32;
-			music = MusicID.Boss2;
+			//music = MusicID.Boss2;
             for (int i = 0; i < Main.maxBuffTypes; i++)
             {
                 NPC.buffImmune[i] = true;
@@ -139,12 +139,12 @@ namespace SOTS.NPCs.Boss
                 current = previousPosition;
             }
         }
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
             NPC head = Main.npc[NPC.realLife];
-            SubspaceSerpentHead subHead = head.modNPC as SubspaceSerpentHead;
+            SubspaceSerpentHead subHead = head.ModNPC as SubspaceSerpentHead;
             bool phase2 = subHead.hasEnteredSecondPhase;
             if (phase2)
             {
@@ -153,16 +153,16 @@ namespace SOTS.NPCs.Boss
                 {
                     int direction = i * 2 - 1;
                     Vector2 toTheSide = new Vector2(2 * direction, 0).RotatedBy(NPC.rotation);
-                    Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
                 }
             }
-            DrawTrail();
+            DrawTrail(spriteBatch, screenPos);
             texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, lightColor * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailGlow").Value;
             origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             counter++;
             if (counter > 12)
                 counter = 0;
@@ -171,11 +171,11 @@ namespace SOTS.NPCs.Boss
                 float bonusAlphaMult = 1 - 1 * (counter / 12f);
                 float dir = j * 2 - 1;
                 Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(NPC.rotation);
-                Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + offset, NPC.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(texture, NPC.Center - screenPos + offset, NPC.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             }
             return false;
         }
-        public void DrawTrail()
+        public void DrawTrail(SpriteBatch spriteBatch, Vector2 screenPos)
         {
             if (runOnce)
                 return;
@@ -192,7 +192,7 @@ namespace SOTS.NPCs.Boss
                 {
                     return;
                 }
-                Vector2 drawPos = trailPos[k] - Main.screenPosition;
+                Vector2 drawPos = trailPos[k] - screenPos;
                 Vector2 currentPos = trailPos[k];
                 Vector2 betweenPositions = previousPosition - currentPos;
                 if(betweenPositions.Length() > 120)
@@ -203,7 +203,7 @@ namespace SOTS.NPCs.Boss
                 float max = betweenPositions.Length() / (4 * scale);
                 for (int i = 0; i < max; i++)
                 {
-                    drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
+                    drawPos = previousPosition + -betweenPositions * (i / max) - screenPos;
                     for (int j = 0; j < 4; j++)
                     {
                         float x = Main.rand.Next(-10, 11) * 0.1f * scale;
@@ -213,7 +213,7 @@ namespace SOTS.NPCs.Boss
                             x = 0;
                             y = 0;
                         }
-                        Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color * ((255f - NPC.alpha) / 255f), NPC.rotation, drawOrigin2, scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f); ;
+                        spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color * ((255f - NPC.alpha) / 255f), NPC.rotation, drawOrigin2, scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f); ;
                     }
                 }
                 previousPosition = currentPos;

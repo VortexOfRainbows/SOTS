@@ -21,7 +21,7 @@ Major Milestones TO REACH (Will be removed when completed)
 4. Make sure VM Incubator works (and server fixes)
 5. Make sure Global NPC loot works
 6. Make sure Advisor Health Scaling in Expert works properly!
-7. Make sure projectile expert mode damage from enemies works properly!
+7. Make sure projectile expert mode damage from enemies works properly (GetBaseDamage(NPC npc))!
 8. Make sure sound playing system works with pitch and volume
 
 Big Objectives:
@@ -56,8 +56,9 @@ Low Priority Objectives:
 6. Nerf VM Incubator and Rose Bow
 
 5/29/22
-1. 4090 -> 3820
+1. 4090 -> 3820 -> 3565
 2. Ported mainly Adivsor, Pharaoh
+3. Finished remaining boss folders
 
 5/26/22 & 5/27/22
 1. Organization and more fixing!

@@ -12,7 +12,6 @@ namespace SOTS.NPCs.Boss.Polaris
 		int despawn = 0;
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Bullet Snake");
 		}
         public override void SetDefaults()
@@ -39,7 +38,7 @@ namespace SOTS.NPCs.Boss.Polaris
         {
             return Color.White;
         }
-        public override bool PreNPCLoot()
+        public override bool PreKill()
         {
             return false;
         }
@@ -127,15 +126,15 @@ namespace SOTS.NPCs.Boss.Polaris
                     NPC.realLife = NPC.whoAmI;
                     int latestNPC = NPC.whoAmI;
  
-                    latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeWing>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
+                    latestNPC = NPC.NewNPC(NPC.GetSource_FromThis("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeWing>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
                     Main.npc[latestNPC].realLife = NPC.whoAmI;
                     NPC.ai[1] = latestNPC;
                     for (int i = 0; i < 6; ++i)
                     {
-                        latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeBody>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_FromThis("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeBody>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                     }
-                    latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeEnd>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
+                    latestNPC = NPC.NewNPC(NPC.GetSource_FromThis("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BulletSnakeEnd>(), NPC.whoAmI, 0, latestNPC, 0, NPC.whoAmI);
                     Main.npc[latestNPC].realLife = NPC.whoAmI;
                     NPC.ai[0] = 1;
                     NPC.netUpdate = true;
@@ -156,11 +155,11 @@ namespace SOTS.NPCs.Boss.Polaris
             }
             return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, Color.White, NPC.rotation, origin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, null, Color.White, NPC.rotation, origin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)

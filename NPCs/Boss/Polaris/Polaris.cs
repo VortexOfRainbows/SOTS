@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Chaos;
 using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Permafrost;
+using SOTS.WorldgenHelpers;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -57,45 +60,44 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris");
+            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Polaris");
 			NPC.netAlways = true;
             NPC.buffImmune[BuffID.Frostburn] = true;
 			NPC.buffImmune[BuffID.Ichor] = true;
 			NPC.buffImmune[BuffID.OnFire] = true;
-			bossBag = ModContent.ItemType<PolarisBossBag>();
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleListRed.Count; i++)
 			{
 				Color color = new Color(250, 100, 100, 0);
-				Vector2 drawPos = particleListRed[i].position - Main.screenPosition;
+				Vector2 drawPos = particleListRed[i].position - screenPos;
 				color = color * (0.3f + 0.7f * particleListRed[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
 					float y = Main.rand.NextFloat(-2f, 2f);
-					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleListRed[i].rotation, drawOrigin, particleListRed[i].scale * 1.0f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleListRed[i].rotation, drawOrigin, particleListRed[i].scale * 1.0f, SpriteEffects.None, 0f);
 				}
 			}
 			for (int i = 0; i < particleListBlue.Count; i++)
 			{
 				Color color = new Color(200, 250, 250, 0);
-				Vector2 drawPos = particleListBlue[i].position - Main.screenPosition;
+				Vector2 drawPos = particleListBlue[i].position - screenPos;
 				color = color * (0.3f + 0.7f * particleListBlue[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
 					float y = Main.rand.NextFloat(-2f, 2f);
-					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleListBlue[i].rotation, drawOrigin, particleListBlue[i].scale * 1.0f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleListBlue[i].rotation, drawOrigin, particleListBlue[i].scale * 1.0f, SpriteEffects.None, 0f);
 				}
 			}
-			return base.PreDraw(spriteBatch, drawColor);
+			return true;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/Polaris/PolarisThruster").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			for (int i = 0; i < 4; i++)
@@ -109,10 +111,9 @@ namespace SOTS.NPCs.Boss.Polaris
 				Vector2 rotationOrigin = new Vector2(-3f * -direction, 6f) - NPC.velocity * 2.4f;
 				float overrideRotation = rotationOrigin.ToRotation() - MathHelper.ToRadians(90);
 				Vector2 fromBody = NPC.Center + new Vector2(direction * 32, 32 * yDir).RotatedBy(NPC.rotation);
-				Vector2 drawPos = fromBody - Main.screenPosition + new Vector2(0, 2);
+				Vector2 drawPos = fromBody - screenPos + new Vector2(0, 2);
 				spriteBatch.Draw(texture, drawPos, null, Color.White, NPC.rotation + overrideRotation, drawOrigin, 0.9f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		List<FireParticle> particleListRed = new List<FireParticle>();
 		List<FireParticle> particleListBlue = new List<FireParticle>();
@@ -165,55 +166,54 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.lifeMax = (int)(NPC.lifeMax * 0.63889f * bossLifeScale);  //boss life scale in expertmode
             NPC.damage = (int)(NPC.damage * 0.75f);  //boss damage increase in expermode
         }
-		public override void BossLoot(ref string name, ref int potionType)
-		{ 
+        public override void OnKill()
+		{
 			SOTSWorld.downedAmalgamation = true;
+		}
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<PolarisBossBag>()));
+			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AbsoluteBar>(), 1, 26, 34));
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.FrostCore, 1, 1, 2));
+		}
+        public override void BossLoot(ref string name, ref int potionType)
+		{ 
 			potionType = ItemID.GreaterHealingPotion;
-			if(Main.expertMode)
-				NPC.DropBossBags();
-			else 
-			{
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("AbsoluteBar").Type, Main.rand.Next(26, 35)); 
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.FrostCore, Main.rand.Next(2) + 1); 
-			}
 		}
 		public void SpawnShard(int amt = 1)
 		{
 			Player player = Main.player[NPC.target];
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item44, (int)NPC.Center.X, (int)NPC.Center.Y);
-			if (Main.netMode != 1)
+			SOTSUtils.PlaySound(SoundID.Item44, (int)NPC.Center.X, (int)NPC.Center.Y);
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				int damage = NPC.damage / 2;
-				if (Main.expertMode)
-				{
-					damage = (int)(damage / Main.expertDamage);
-				}
+				int damage = NPC.GetBaseDamage() / 2;
 				for (int i = 0; i < amt; i++)
 				{
 					float max = 250 + 100 * i;
-					Projectile.NewProjectile(NPC.Center + new Vector2(Main.rand.NextFloat(max), 0).RotatedBy(Main.rand.NextFloat(2f * (float)Math.PI)), Vector2.Zero, ModContent.ProjectileType<PolarMortar>(), (int)(damage * 0.8f), 0, Main.myPlayer, player.Center.X + Main.rand.NextFloat(-100, 100), player.Center.Y - Main.rand.NextFloat(100));
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(Main.rand.NextFloat(max), 0).RotatedBy(Main.rand.NextFloat(2f * (float)Math.PI)), Vector2.Zero, ModContent.ProjectileType<PolarMortar>(), (int)(damage * 0.8f), 0, Main.myPlayer, player.Center.X + Main.rand.NextFloat(-100, 100), player.Center.Y - Main.rand.NextFloat(100));
 				}
 			}
 		}
 		public void SpawnCannons()
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)NPC.Center.X, (int)NPC.Center.Y);
-			if (Main.netMode != 1)
+			SOTSUtils.PlaySound(SoundID.Item50, (int)NPC.Center.X, (int)NPC.Center.Y);
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 				for (int i = 0; i < 4; i++)
 				{
-					NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisCannon>(), 0, i, NPC.whoAmI);
+					NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisCannon>(), 0, i, NPC.whoAmI);
 				}
 		}
 		public void SpawnDragon()
 		{
 			Player player = Main.player[NPC.target];
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+			SOTSUtils.PlaySound(SoundID.Item119, (int)NPC.Center.X, (int)NPC.Center.Y);
 			if (Main.netMode != 1)
 			{
 				Vector2 vectorToPlayer = player.Center - NPC.Center;
 				vectorToPlayer = vectorToPlayer.SafeNormalize(Vector2.Zero) * -1200;
 				vectorToPlayer += NPC.Center;
-				NPC.NewNPC((int)vectorToPlayer.X, (int)vectorToPlayer.Y, ModContent.NPCType<BulletSnakeHead>());
+				NPC.NewNPC(NPC.GetSource_FromAI(), (int)vectorToPlayer.X, (int)vectorToPlayer.Y, ModContent.NPCType<BulletSnakeHead>());
 			}
 		}
 		float variance = 0;
@@ -287,8 +287,8 @@ namespace SOTS.NPCs.Boss.Polaris
 				{
 					int index = (int)(transition / 30);
 					if(Main.netMode != 1)
-						NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisSpike>(), 0, index, NPC.whoAmI);
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+						NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisSpike>(), 0, index, NPC.whoAmI);
+					SOTSUtils.PlaySound(SoundID.Item50, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 				}
 			}
 			else
@@ -353,7 +353,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			if(AICycle2 == 900)
 			{
 				if (Main.netMode != 1)
-					NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisLaser>(), 0, 0, NPC.whoAmI);
+					NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisLaser>(), 0, 0, NPC.whoAmI);
 			}
 			if(AICycle2 == 1200)
 			{

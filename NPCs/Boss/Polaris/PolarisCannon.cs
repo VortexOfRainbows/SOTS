@@ -34,23 +34,23 @@ namespace SOTS.NPCs.Boss.Polaris
 			NPC.buffImmune[BuffID.OnFire] = true;
 			NPC.gfxOffY = 0;
 		}
-		public override bool PreNPCLoot()
+		public override bool PreKill()
 		{
 			return false;
 		}
 		float WidthOffset = 0;
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, Color.White * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, NPC.Center - screenPos, null, Color.White * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/Polaris/PolarisCannonPump").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f + WidthOffset * NPC.spriteDirection, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, Color.White * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, NPC.Center - screenPos, null, Color.White * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -68,12 +68,7 @@ namespace SOTS.NPCs.Boss.Polaris
 				runOnce = false;
 			}
 			NPC.ai[0]++;
-			int damage = NPC.damage / 2;
-			damage *= 2;
-			if (Main.expertMode)
-			{
-				damage = (int)(damage / Main.expertDamage);
-			}
+			int damage = NPC.GetBaseDamage();
 			Vector2 rotateVelocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[3]));
 			if(NPC.scale >= 0.9f)
 			{
@@ -81,10 +76,10 @@ namespace SOTS.NPCs.Boss.Polaris
 				{
 					if (Main.netMode != 1)
 					{
-						Projectile.NewProjectile(NPC.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 						if (Main.expertMode && NPC.ai[0] % 70 == 0)
 							for (int i = -1; i < 2; i += 2)
-								Projectile.NewProjectile(NPC.Center, rotateVelocity.RotatedBy(MathHelper.ToRadians(20f * i)), ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVelocity.RotatedBy(MathHelper.ToRadians(20f * i)), ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 					}
 					WidthOffset = 13;
 				}
@@ -98,7 +93,7 @@ namespace SOTS.NPCs.Boss.Polaris
 							float speed = 0.5f;
 							if (NPC.ai[0] >= 380)
 								speed = 1.25f;
-							Projectile.NewProjectile(NPC.Center, rotateVelocity * speed, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVelocity * speed, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 						}
 						WidthOffset = 13;
 					}

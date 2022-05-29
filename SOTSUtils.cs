@@ -2,6 +2,8 @@ using ReLogic.Utilities;
 using System;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
+using Terraria;
+using SOTS.Common.GlobalNPCs;
 
 namespace SOTS
 {
@@ -17,6 +19,10 @@ namespace SOTS
 		public static SlotId PlaySound(SoundStyle style, float posX, float posY, float volume = 1f, float pitch = 0f)
 		{
 			return PlaySound(style, new Vector2(posX, posY), volume, pitch);
+        }
+		public static int GetBaseDamage(this NPC npc)
+        {
+			return SOTSNPCs.GetBaseDamage(npc);
         }
 		public static string GetPath<T>()
 		{
