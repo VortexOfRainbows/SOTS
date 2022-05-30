@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Permafrost;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -62,29 +63,10 @@ namespace SOTS.NPCs.Constructs
 		int counter = 0;
 		public void SpellLaunch(Vector2 velocity)
 		{
-			if(NPC.ai[3] <= 0)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				if (Main.netMode != NetmodeID.MultiplayerClient)
-				{
-					int damage = NPC.damage / 2;
-					if (Main.expertMode)
-					{
-						damage = (int)(damage / Main.expertDamage);
-					}
-					Projectile.NewProjectile(NPC.Center, velocity, ModContent.ProjectileType<PermafrostSpike>(), damage, 0, Main.myPlayer, 180 - NPC.ai[1]);
-				}
-			}
-			else
-			{
-				if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-					int damage = (int)NPC.ai[3] / 2;
-					if (Main.expertMode)
-					{
-						damage = (int)(damage / Main.expertDamage);
-					}
-					Projectile.NewProjectile(NPC.Center, velocity, ModContent.ProjectileType<PermafrostSpike>(), damage, 0, Main.myPlayer, 180 - NPC.ai[1]);
-				}
+				int damage = NPC.GetBaseDamage() / 2;
+				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PermafrostSpike>(), damage, 0, Main.myPlayer, 180 - NPC.ai[1]);
 			}
 			//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 		}
@@ -113,7 +95,7 @@ namespace SOTS.NPCs.Constructs
 					}
 					if (NPC.ai[1] >= 180)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item46, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+						SOTSUtils.PlaySound(SoundID.Item46, (int)NPC.Center.X, (int)NPC.Center.Y);
 						NPC.ai[1] = 0;
 						NPC.ai[0]++;
 					}
@@ -172,13 +154,13 @@ namespace SOTS.NPCs.Constructs
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
-				Color color = NPC.GetAlpha(lightColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = NPC.GetAlpha(drawColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
@@ -205,8 +187,8 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
@@ -214,15 +196,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f;
 				float y = Main.rand.Next(-10, 11) * 0.45f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y),
+				spriteBatch.Draw(texture,
+				new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y),
 				null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  ModContent.ItemType<DissolvingAurora>(), 1);	
-		}	
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DissolvingAurora>()));
+		}
 	}
 }

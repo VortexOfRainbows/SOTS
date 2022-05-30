@@ -30,7 +30,7 @@ namespace SOTS.NPCs.Constructs
 			baseVelo += NPC.velocity.SafeNormalize(Vector2.Zero) * (float)Math.Sqrt(NPC.velocity.Length());
 		}
 		Vector2 lastCenter = Vector2.Zero;
-		public void DrawChains(bool doDust = false)
+		public void DrawChains(SpriteBatch spriteBatch, Vector2 screenPos, bool doDust = false)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosSpiritChain");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -59,7 +59,7 @@ namespace SOTS.NPCs.Constructs
 						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f;
 						color.A = 0;
 						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
-						Main.spriteBatch.Draw(texture, drawPos2 - Main.screenPosition + circular, null, color, rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(texture, drawPos2 - screenPos + circular, null, color, rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 					}
 				}
 				else
@@ -76,7 +76,7 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public static void DrawWings(float wingHeight, float dipAndRiseCounter, float baseRotation, Vector2 center, Color overrideColor, float scale = 1f)
+		public static void DrawWings(Vector2 screenPos, float wingHeight, float dipAndRiseCounter, float baseRotation, Vector2 center, Color overrideColor, float scale = 1f)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
@@ -153,7 +153,7 @@ namespace SOTS.NPCs.Constructs
 					circular.X *= width / 2 * j;
 					circular.Y *= height / 2;
 					circular = circular.RotatedBy(positionalRotation);
-					Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, position - screenPos + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
 				}
 			}
 		}
@@ -227,7 +227,7 @@ namespace SOTS.NPCs.Constructs
 				NPC.velocity.X *= 1.095f;
 				if(Main.netMode != NetmodeID.Server && rubble != -2 && rubbleActive)
 				{
-					DrawChains(true);
+					DrawChains(null, Main.screenPosition, true);
 					rubbleActive = false;
 					NPC.ai[0] = -2;
 				}
@@ -268,19 +268,19 @@ namespace SOTS.NPCs.Constructs
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
 				Color color = VoidPlayer.pastelRainbow * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				color.A = 0;
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			if((int)NPC.ai[0] != -2 && lastCenter != Vector2.Zero)
-				DrawChains();
-			DrawWings(wingHeight, NPC.ai[2], NPC.rotation, NPC.Center, Color.White);
+				DrawChains(spriteBatch, screenPos);
+			DrawWings(screenPos, wingHeight, NPC.ai[2], NPC.rotation, NPC.Center, Color.White);
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
@@ -298,12 +298,12 @@ namespace SOTS.NPCs.Constructs
 						dust.scale *= 2.2f;
 						dust.velocity *= 4f;
 					}
-					DrawChains(true);
+					DrawChains(null, Main.screenPosition, true);
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
@@ -317,13 +317,12 @@ namespace SOTS.NPCs.Constructs
 				}
 				else
 					circular *= 0f;
-				Main.spriteBatch.Draw(texture, NPC.Center + circular - Main.screenPosition, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, NPC.Center + circular - screenPos, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override void NPCLoot()
-		{
-			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Lux>(), 0, NPC.ai[2]);
+        public override void OnKill()
+        {
+			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Lux>(), 0, NPC.ai[2]);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
 		}

@@ -5,6 +5,7 @@ using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Earth;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -208,7 +209,7 @@ namespace SOTS.NPCs.Constructs
 							reticleAlpha = 0;
 							NPC.alpha = 0;
 							NPC.ai[0] = -20;
-							Terraria.Audio.SoundEngine.PlaySound(2, (int)(NPC.Center.X), (int)(NPC.Center.Y), 14, 2.0f - saveData * 0.02f);
+							SOTSUtils.PlaySound(SoundID.Item14, (int)NPC.Center.X, (int)NPC.Center.Y, 2.0f - saveData * 0.02f);
 							for (int i = 0; i < 360; i += 10)
 							{
 								Vector2 circularLocation = new Vector2(16 - NPC.width, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -231,7 +232,7 @@ namespace SOTS.NPCs.Constructs
 									float degrees = i * 45;
 									Vector2 rotate = new Vector2(2.75f, 0).RotatedBy(MathHelper.ToRadians(degrees));
 									if (Main.netMode != NetmodeID.MultiplayerClient)
-										Projectile.NewProjectile(NPC.Center, rotate, ModContent.ProjectileType<EarthenBolt>(), 20, 0, Main.myPlayer);
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotate, ModContent.ProjectileType<EarthenBolt>(), 20, 0, Main.myPlayer);
 								}
 							}
 						}
@@ -303,13 +304,13 @@ namespace SOTS.NPCs.Constructs
 			dust.scale *= 2f;
 			dust.alpha = NPC.alpha;
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + new Vector2(NPC.width/2, NPC.height/2);
-				Color color = lightColor * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + new Vector2(NPC.width/2, NPC.height/2);
+				Color color = drawColor * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
@@ -336,8 +337,8 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        { 
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenReticle").Value;
 			Color color = new Color(100, 100, 100, 0);
@@ -346,18 +347,16 @@ namespace SOTS.NPCs.Constructs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f;
 				float y = Main.rand.Next(-10, 11) * 0.45f;
-				Main.spriteBatch.Draw(texture,new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y),null, color * ((255 - NPC.alpha)/255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
-
+				spriteBatch.Draw(texture,new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y),null, color * ((255 - NPC.alpha)/255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 				x = Main.rand.Next(-10, 11) * 0.125f;
 				y = Main.rand.Next(-10, 11) * 0.125f;
 				if (reticlePos.X != -1 && reticlePos.Y != -1)
-					Main.spriteBatch.Draw(texture2,new Vector2((float)(reticlePos.X - (int)Main.screenPosition.X) + x, (float)(reticlePos.Y - (int)Main.screenPosition.Y) + y),null, color * reticleAlpha, MathHelper.ToRadians(NPC.ai[0] * 6f), drawOrigin, NPC.scale * reticleAlpha, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture2,new Vector2((float)(reticlePos.X - (int)screenPos.X) + x, (float)(reticlePos.Y - (int)screenPos.Y) + y),null, color * reticleAlpha, MathHelper.ToRadians(NPC.ai[0] * 6f), drawOrigin, NPC.scale * reticleAlpha, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingEarth>(), 1);	
-		}	
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DissolvingEarth>()));
+		}
 	}
 }

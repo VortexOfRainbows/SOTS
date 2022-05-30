@@ -3,9 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Earth;
+using SOTS.WorldgenHelpers;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -56,14 +58,14 @@ namespace SOTS.NPCs.Constructs
             {
                 for (int j = minTilePosY; j < maxTilePosY; ++j)
                 {
-                    if (Main.tile[i, j] != null && (Main.tile[i, j].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
+                    if (Main.tile[i, j] != null && (Main.tile[i, j].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].LiquidAmount > 64))
                     {
                         Vector2 vector2;
                         vector2.X = (float)(i * 16);
                         vector2.Y = (float)(j * 16);
                         if (NPC.position.X + NPC.width > vector2.X && NPC.position.X < vector2.X + 16.0 && (NPC.position.Y + NPC.height > (double)vector2.Y && NPC.position.Y < vector2.Y + 16.0))
                         {
-                            if (Main.rand.Next(100) == 0 && Main.tile[i, j].HasUnactuatedTile)
+                            if (Main.rand.NextBool(100)&& Main.tile[i, j].HasUnactuatedTile)
                                 WorldGen.KillTile(i, j, true, true, false);
                         }
                     }
@@ -91,7 +93,7 @@ namespace SOTS.NPCs.Constructs
                 if (num1 > 25.0)
                     num1 = 25f;
                 NPC.soundDelay = (int)num1;
-                Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Enemies/EarthenElementalDig"), (int)NPC.Center.X, (int)NPC.Center.Y, 1.0f, 0f);
             }
         }
         public void DoWormAI()
@@ -107,7 +109,7 @@ namespace SOTS.NPCs.Constructs
             if (minTilePosY < 0)
                 minTilePosY = 0;
             if (maxTilePosY > Main.maxTilesY)
-                maxTilePosY = Main.maxTilesY;
+                maxTilePosY = Main.maxTilesY; 
 
             bool collision = false;
             // This is the initial check for collision with tiles.
@@ -115,7 +117,7 @@ namespace SOTS.NPCs.Constructs
             {
                 for (int j = minTilePosY; j < maxTilePosY; ++j)
                 {
-                    if (Main.tile[i, j] != null && (Main.tile[i, j].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
+                    if (Main.tile[i, j] != null && (Main.tile[i, j].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].LiquidAmount > 64))
                     {
                         Vector2 vector2;
                         vector2.X = (float)(i * 16);
@@ -209,7 +211,7 @@ namespace SOTS.NPCs.Constructs
                     if (num1 > 25.0)
                         num1 = 25f;
                     NPC.soundDelay = (int)num1;
-                    Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)NPC.Center.X, (int)NPC.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                    SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Enemies/EarthenElementalDig"), (int)NPC.Center.X, (int)NPC.Center.Y, 1.0f, 0f);
                 }
                 float absDirX = Math.Abs(dirX);
                 float absDirY = Math.Abs(dirY);
@@ -308,7 +310,7 @@ namespace SOTS.NPCs.Constructs
                     int WormLength = 4;
                     for (int i = 0; i < WormLength; i++)
                     {
-                        latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EarthenConstructTail>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EarthenConstructTail>(), NPC.whoAmI, 0, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
                         Main.npc[latestNPC].ai[2] = i + 1;
@@ -456,11 +458,7 @@ namespace SOTS.NPCs.Constructs
         {
             if (Main.netMode != NetmodeID.MultiplayerClient && !Main.player[NPC.target].dead)
             {
-                int damage = NPC.damage / 2;
-                if (Main.expertMode)
-                {
-                    damage = (int)(damage / Main.expertDamage);
-                }
+                int damage = NPC.GetBaseDamage() / 2;
                 int count = 3;
                 if (Main.expertMode)
                 {
@@ -469,24 +467,24 @@ namespace SOTS.NPCs.Constructs
                 for(int i = 0; i < count; i++)
                 {
                     Vector2 circularLocation = new Vector2(0, -4).RotatedByRandom(MathHelper.ToRadians(17 + count));
-                    Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<EarthenShot>(), damage, 0, Main.myPlayer, 0, Main.player[NPC.target].Center.Y - 32);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<EarthenShot>(), damage, 0, Main.myPlayer, 0, Main.player[NPC.target].Center.Y - 32);
                 }
             }
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, (int)(NPC.Center.X), (int)(NPC.Center.Y));
+            SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstructHead").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstruct").Value;
             Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstructHeadGlow").Value;
             Vector2 origin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-            Main.spriteBatch.Draw(texture2, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation - MathHelper.ToRadians(NPC.localAI[1]), origin2, NPC.scale + 0.04f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-            Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            spriteBatch.Draw(texture2, NPC.Center - screenPos, null, drawColor, NPC.rotation - MathHelper.ToRadians(NPC.localAI[1]), origin2, NPC.scale + 0.04f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, null, drawColor, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             int i = (int)NPC.Center.X / 16;
             int j = (int)NPC.Center.Y / 16;
             if (!SOTSWorldgenHelper.Full(i - 1, j - 1, 3, 3))
-                Main.spriteBatch.Draw(texture3, NPC.Center - Main.screenPosition, null, Color.White, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                spriteBatch.Draw(texture3, NPC.Center - screenPos, null, Color.White, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -501,18 +499,13 @@ namespace SOTS.NPCs.Constructs
             {
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
             }
-            for (int i = 0; i < 30; i++)
-            {
-                int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<BigEarthDust>());
-                Main.dust[dust].velocity *= 5f;
-            }
-            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore2"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore3"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore4"), 1f);
-            Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore5"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore2"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore3"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore4"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore5"), 1f);
             for (int i = 0; i < 9; i++)
-                Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
             gennedGore = true;
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -522,34 +515,37 @@ namespace SOTS.NPCs.Constructs
                 if (!gennedGore) genGore(hitDirection);
             }
         }
-        public override void NPCLoot()
+        public override void OnKill()
         {
             if (!gennedGore && Main.netMode != NetmodeID.Server) genGore(0);
 
             if(Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int type = ModContent.NPCType<EarthenSpirit>();
-                int j = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 0);
+                int j = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 0);
                 Main.npc[j].velocity.Y = -10f;
                 Main.npc[j].netUpdate = true;
 
-                int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 1, j);
+                int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 1, j);
                 Main.npc[n].velocity = new Vector2(1, -9f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 2, j);
+                n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 2, j);
                 Main.npc[n].velocity = new Vector2(-1, -9f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 3, j);
+                n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 3, j);
                 Main.npc[n].velocity = new Vector2(2, -8f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 4, j);
+                n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 4, j);
                 Main.npc[n].velocity = new Vector2(-2, -8f);
                 Main.npc[n].netUpdate = true;
             }
-            Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfEarth>(), Main.rand.Next(4) + 4);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 4, 7));
         }
         public void doAIExtras()
         {

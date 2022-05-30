@@ -9,6 +9,7 @@ using SOTS.Projectiles.Evil;
 using SOTS.Projectiles.Tide;
 using SOTS.Void;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -68,7 +69,7 @@ namespace SOTS.NPCs.Constructs
 		public int startEyes = 0;
 		public const int range = 96;
 		float lastDistMult = 1f;
-		public void UpdateEyes(bool draw = false, int ring = -2, float distMult = 1f)
+		public void UpdateEyes(Vector2 screenPos, bool draw = false, int ring = -2, float distMult = 1f)
 		{
 			Player player = Main.player[NPC.target];
 			lastDistMult = distMult;
@@ -80,7 +81,7 @@ namespace SOTS.NPCs.Constructs
 				float rotation = (NPC.rotation + MathHelper.ToRadians(counter2 * direction)) * mult;
 				if (draw)
 				{
-					eye.Draw(NPC.Center, rotation, distMult);
+					eye.Draw(NPC.Center, screenPos, rotation, distMult);
 				}
 				else
 				{
@@ -89,7 +90,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						eye.Fire(player.Center);
                     }
-					eye.Update(NPC.Center, rotation, distMult);
+					eye.Update(NPC, NPC.Center, rotation, distMult);
 				}
             }
         }
@@ -98,17 +99,13 @@ namespace SOTS.NPCs.Constructs
 			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);
 			Player player = Main.player[NPC.target];
 			float mult = (100 + NPC.ai[2]) / 100f;
-			UpdateEyes(false, -2, mult);
+			UpdateEyes(Vector2.Zero, false, -2, mult);
 			counter2++;
 			if (phase == 3)
 			{
 				NPC.aiStyle =-1;
 				NPC.dontTakeDamage = false;
-				int damage = NPC.damage / 2;
-				if (Main.expertMode)
-				{
-					damage = (int)(damage / Main.expertDamage);
-				}
+				int damage = NPC.GetBaseDamage() / 2;
 				if (NPC.ai[0] >= 0 && NPC.ai[2] >= 0)
 				{
 					NPC.velocity *= 0.95f;
@@ -117,7 +114,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						if (startEyes % 6 == 0)
 						{
-							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 30, 0.7f, -0.4f);
+							SOTSUtils.PlaySound(SoundID.Item30, (int)NPC.Center.X, (int)NPC.Center.Y, 0.7f, -0.4f);
 						}
 					}
 					if(startEyes < 120)
@@ -170,14 +167,14 @@ namespace SOTS.NPCs.Constructs
 							if (NPC.ai[1] > 0)
                             {
 								int ring = (int)NPC.ai[1];
-								UpdateEyes(false, ring);
+								UpdateEyes(Vector2.Zero, false, ring);
                             }
 						}
 						if (counterR % 180 == 40)
 						{
 							if(NPC.ai[1] > 0)
 							{
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 46, 1.1f, -0.15f);
+								SOTSUtils.PlaySound(SoundID.Item46, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, -0.15f);
 							}
 							if(NPC.ai[1] >= 6)
                             {
@@ -213,7 +210,7 @@ namespace SOTS.NPCs.Constructs
 							if (counterR % 150 == 30)
 							{
 								NPC.velocity *= 0.1f;
-								Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 105, 1.2f, -0.25f);
+								SOTSUtils.PlaySound(SoundID.Item105, (int)NPC.Center.X, (int)NPC.Center.Y, 1.2f, -0.25f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 8;
@@ -221,11 +218,11 @@ namespace SOTS.NPCs.Constructs
 									{
 										Vector2 toPosition = player.Center - NPC.Center;
 										Vector2 velo = toPosition.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(i * 360f / amt));
-										Projectile.NewProjectile(NPC.Center + velo * 24, velo * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.065f + Main.rand.NextFloat(0.02f));
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + velo * 24, velo * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.065f + Main.rand.NextFloat(0.02f));
 										if (Main.rand.NextBool(3))
 										{
 											Vector2 secondVelo = velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45)));
-											Projectile.NewProjectile(NPC.Center + secondVelo * 24, secondVelo * -0.2f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.1f + Main.rand.NextFloat(0.05f));
+											Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + secondVelo * 24, secondVelo * -0.2f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.1f + Main.rand.NextFloat(0.05f));
 										}
 									}
 								}
@@ -250,7 +247,7 @@ namespace SOTS.NPCs.Constructs
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									Vector2 toPosition = player.Center - NPC.Center;
-									Projectile.NewProjectile(NPC.Center, toPosition.SafeNormalize(Vector2.Zero) * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.05f);
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, toPosition.SafeNormalize(Vector2.Zero) * 0.1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.05f);
 								}
 							}
 							else
@@ -311,12 +308,12 @@ namespace SOTS.NPCs.Constructs
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
 				Color color = NPC.GetAlpha(Color.Black) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
@@ -349,29 +346,28 @@ namespace SOTS.NPCs.Constructs
 						float mult = 256f / (eye.offset.Length() + 24);
 						int direction = (((int)(eye.offset.Length() + 0.5f) % (2 * range)) / range) % 2 == 0 ? -1 : 1;
 						float rotation = (NPC.rotation + MathHelper.ToRadians(counter2 * direction)) * mult;
-						eye.Update(NPC.Center, rotation, lastDistMult, true);
+						eye.Update(NPC, NPC.Center, rotation, lastDistMult, true);
 					}
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = VoidPlayer.EvilColor * 1.3f;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
-				Main.spriteBatch.Draw(texture, NPC.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, NPC.Center + Main.rand.NextVector2Circular(4f, 4f) - screenPos, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			float mult = (100 + NPC.ai[2]) / 100f;
 			if (Main.netMode != NetmodeID.Server) //pretty sure drawcode doesn't run in multiplayer anyways but may as well
-				UpdateEyes(true, -2, mult);
-			base.PostDraw(spriteBatch, drawColor);
+				UpdateEyes(screenPos, true, -2, mult);
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingUmbra>(), 1);	
-		}	
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DissolvingUmbra>()));
+		}
 	}
 	public class EvilEye
     {
@@ -403,7 +399,7 @@ namespace SOTS.NPCs.Constructs
 			firing = true;
 			this.target = target;
 		}
-		public void Update(Vector2 center, float rotation, float distMult, bool dust2 = false)
+		public void Update(NPC owner, Vector2 center, float rotation, float distMult, bool dust2 = false)
         {
 			Vector2 trueOffset = offset.RotatedBy(rotation) * distMult;
 			if(!dust2)
@@ -425,7 +421,7 @@ namespace SOTS.NPCs.Constructs
 								type = ModContent.ProjectileType<Projectiles.Minions.EvilSpear>();
 							}
 							Vector2 toPosition = fireTo - trueOffset - center;
-							Projectile.NewProjectile(center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
+							Projectile.NewProjectile(owner.GetSource_FromAI(), center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
 						}
 						firing = false;
 					}
@@ -461,11 +457,11 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
         }
-		public void Draw(Vector2 center, float rotation, float distMult, float alphaMult = 1f)
+		public void Draw(Vector2 center, Vector2 screenPos, float rotation, float distMult, float alphaMult = 1f)
 		{
 			Color color = VoidPlayer.EvilColor;
 			color.A = 50;
-			Vector2 drawPosition = center + offset.RotatedBy(rotation) * distMult - Main.screenPosition;
+			Vector2 drawPosition = center + offset.RotatedBy(rotation) * distMult - screenPos;
 			Vector2 origin = texture.Size() / 2;
 			float mult = 1.10f + 0.5f * shootCounter / warmUp;
 			float alpha2 = shootCounter / warmUp * 2f;

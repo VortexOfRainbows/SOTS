@@ -11,8 +11,8 @@ namespace SOTS.NPCs.Constructs
 {
 	public class ChaosRubble : ModNPC
 	{
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        { 
 			Vector2 origin = new Vector2(NPC.width / 2, NPC.height / 2);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			for(int i = 0; i < 8; i++)
@@ -20,10 +20,10 @@ namespace SOTS.NPCs.Constructs
 				Vector2 circular = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
 				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 45 + SOTSWorld.GlobalCounter));
 				color.A = 0;
-				Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY) + circular, null, color * 0.4f, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY) + circular, null, color * 0.4f, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), null, Color.White, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, Color.White, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void SetStaticDefaults()
@@ -50,7 +50,7 @@ namespace SOTS.NPCs.Constructs
             NPC.netAlways = true;
 			NPC.dontTakeDamage = true;
 		}
-        public override bool PreNPCLoot()
+        public override bool PreKill()
         {
             return false;
         }
@@ -65,7 +65,7 @@ namespace SOTS.NPCs.Constructs
 						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 1.3f);
 					}
 					for (int i = 0; i < 10; i++)
-						Gore.NewGore(NPC.position + new Vector2(Main.rand.NextFloat(50), Main.rand.NextFloat(50)), NPC.velocity, Main.rand.Next(61, 64), 1f);
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.NextFloat(50), Main.rand.NextFloat(50)), NPC.velocity, Main.rand.Next(61, 64), 1f);
 				}
 			}
 		}
@@ -91,7 +91,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				if(NPC.ai[1] == -1)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 53, 1.5f, 0.1f);
+					SOTSUtils.PlaySound(SoundID.Item53, (int)NPC.Center.X, (int)NPC.Center.Y, 1.5f, 0.1f);
 					float dampen = (Math.Abs(lastVelocity.Y) - 0.5f) * 0.8f;
 					if (dampen < 0)
 						dampen = 0;

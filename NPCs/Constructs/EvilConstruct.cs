@@ -64,7 +64,7 @@ namespace SOTS.NPCs.Constructs
 					if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == NPC.whoAmI)
 					{
 						Vector2 toNPC = NPC.Center - proj.Center;
-						Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16);
+						Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16, screenPos);
 					}
 				}
 			}
@@ -76,7 +76,7 @@ namespace SOTS.NPCs.Constructs
 			Main.spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), drawColor * ((255 - NPC.alpha) / 255f), rotation, drawOrigin, NPC.scale * 0.95f, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
-		public void Draw(Vector2 to, bool gore = false)
+		public void Draw(Vector2 to, Vector2 screenPos, bool gore = false)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilDrillArm");
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilDrill");
@@ -121,7 +121,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						Color color2 = Lighting.GetColor((int)position.X / 16, (int)(position.Y / 16.0));
 						color2 = NPC.GetAlpha(color2);
-						Vector2 positionTrue = position - Main.screenPosition;
+						Vector2 positionTrue = position - screenPos;
 						if (first)
 						{
 							Main.spriteBatch.Draw(texture2, positionTrue, null, color2, rotation, texture2.Size() / 2, 1.1f, SpriteEffects.None, 0.0f);
@@ -205,7 +205,7 @@ namespace SOTS.NPCs.Constructs
 					if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == NPC.whoAmI)
 					{
 						Vector2 toNPC = NPC.Center - proj.Center;
-						Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16, true);
+						Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16, Main.screenPosition, true);
 					}
 				}
 			}

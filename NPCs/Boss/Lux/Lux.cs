@@ -129,7 +129,7 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				else
 					circular *= 0f;
-				Main.spriteBatch.Draw(texture, NPC.Center + circular - screenPos, null, NPC.GetAlpha(color), 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, NPC.Center + circular - screenPos, null, NPC.GetAlpha(color), 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			if (!desperation || attackTimer1 < 100)
 				DrawRings(screenPos, spriteBatch, true);

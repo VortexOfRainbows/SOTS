@@ -91,4 +91,26 @@ namespace SOTS.Common.ItemDropConditions
 			return "Drops before the Eye of Cthulhu has been defeated";
 		}
 	}
+	public class OtherworldSpiritAlternateCondition : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info)
+		{
+			if (!info.IsInSimulation)
+			{
+				if (info.npc.localAI[1] == -1)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		public bool CanShowItemDropInUI()
+		{
+			return true;
+		}
+		public string GetConditionDescription()
+		{
+			return "Drops when killed fully";
+		}
+	}
 }

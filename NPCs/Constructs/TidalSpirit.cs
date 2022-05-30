@@ -2,8 +2,10 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
 using SOTS.Projectiles.Tide;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -69,11 +71,10 @@ namespace SOTS.NPCs.Constructs
 			if(phase == 3)
 			{
 				NPC.dontTakeDamage = false;
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.netUpdate = true;
 				}
-
 				if(NPC.ai[3] % 2 == 0)
 				{
 					if (NPC.ai[1] < 360)
@@ -87,12 +88,8 @@ namespace SOTS.NPCs.Constructs
 								toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0));
 								if (projectileVelo == Vector2.Zero)
 									projectileVelo = toPlayer;
-								int damage2 = NPC.damage / 2;
-								if (Main.expertMode)
-								{
-									damage2 = (int)(damage2 / Main.expertDamage);
-								}
-								Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 21, 0.8f);
+								int damage2 = NPC.GetBaseDamage() / 2;
+								SOTSUtils.PlaySound(SoundID.Item21, (int)NPC.Center.X, (int)NPC.Center.Y, 0.8f);
 								int last = -1;
 								for (int i = 0; i < 2; i++)
 								{
@@ -102,7 +99,7 @@ namespace SOTS.NPCs.Constructs
 									float speed = 7f;
 									if (Main.netMode != 1)
 									{
-										int temp = Projectile.NewProjectile(NPC.Center, velo * speed, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
+										int temp = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velo * speed, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
 										last = temp;
 									}
 								}
@@ -156,12 +153,8 @@ namespace SOTS.NPCs.Constructs
 							Vector2 toPlayer = player.Center - NPC.Center;
 							toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-25f, 25f)));
 							projectileVelo = toPlayer;
-							int damage2 = NPC.damage / 2;
-							if (Main.expertMode)
-							{
-								damage2 = (int)(damage2 / Main.expertDamage);
-							}
-							Terraria.Audio.SoundEngine.PlaySound(2, (int)NPC.Center.X, (int)NPC.Center.Y, 21, 0.8f);
+							int damage2 = NPC.GetBaseDamage() / 2;
+							SOTSUtils.PlaySound(SoundID.Item21, (int)NPC.Center.X, (int)NPC.Center.Y, 0.8f);
 							int last = -1;
 							for (int i = 0; i < 2; i++)
 							{
@@ -169,7 +162,7 @@ namespace SOTS.NPCs.Constructs
 								float speed2 = 5.7f;
 								if (Main.netMode != 1)
 								{
-									int temp = Projectile.NewProjectile(NPC.Center, velo * speed2, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
+									int temp = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velo * speed2, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
 									last = temp;
 								}
 							}
@@ -240,13 +233,13 @@ namespace SOTS.NPCs.Constructs
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
-				Color color = NPC.GetAlpha(lightColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = NPC.GetAlpha(drawColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
@@ -272,8 +265,8 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
@@ -281,15 +274,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f;
 				float y = Main.rand.Next(-10, 11) * 0.45f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y),
+				spriteBatch.Draw(texture,
+				new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y),
 				null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  Mod.Find<ModItem>("DissolvingDeluge").Type, 1);	
-		}	
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DissolvingDeluge>()));
+		}
 	}
 }

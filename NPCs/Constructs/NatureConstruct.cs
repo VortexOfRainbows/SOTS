@@ -2,8 +2,10 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
 using SOTS.Projectiles.Nature;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -54,13 +56,13 @@ namespace SOTS.NPCs.Constructs
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.rarity = 5;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Player player = Main.player[NPC.target];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/NatureConstructHead");
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/NatureConstructHeadGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY);
+			Vector2 drawPos = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY);
 			if(NPC.frame.Y == 70) //frame 2
 				drawPos.Y -= 4;
 			if(NPC.frame.Y == 140) //frame 3
@@ -84,15 +86,10 @@ namespace SOTS.NPCs.Constructs
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
-				for(int i = 0; i < 30; i ++)
-				{
-					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigNatureDust").Type);
-					Main.dust[dust].velocity *= 5f;
-				}
 				for(int i = 1; i < 8; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/NatureConstructGore" + i), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/NatureConstructGore" + i), 1f);
 				for(int i = 0; i < 9; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61,64), 1f);	
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61,64), 1f);	
 			}
 		}
 		public override void FindFrame(int frameHeight) 
@@ -147,19 +144,15 @@ namespace SOTS.NPCs.Constructs
 					}
 					if (Main.netMode != 1)
 					{
-						int damage = NPC.damage / 2;
-						if (Main.expertMode)
-						{
-							damage = (int)(damage / Main.expertDamage);
-						}
+						int damage = NPC.GetBaseDamage() / 2;
 						for (int i = 0; i < 5; i++)
 						{
 							Vector2 circular = new Vector2(12, 0).RotatedBy(dir + MathHelper.ToRadians((i - 2) * 12.5f));
-							Projectile.NewProjectile(NPC.Center + circular2, circular, ModContent.ProjectileType<NatureBolt>(), damage, 0, Main.myPlayer, Main.rand.NextFloat(30f + i * 15f, 40f + i * 20f), NPC.target);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + circular2, circular, ModContent.ProjectileType<NatureBolt>(), damage, 0, Main.myPlayer, Main.rand.NextFloat(30f + i * 15f, 40f + i * 20f), NPC.target);
 						}
 					}
 					NPC.velocity.Y -= 2.0f;
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92, 1.1f, -0.1f);
+					SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, -0.1f);
                 }
 				if(sinPercent <= 0)
                 {
@@ -212,12 +205,15 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void NPCLoot()
+        public override void OnKill()
 		{
-			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, Mod.Find<ModNPC>("NatureSpirit").Type);	
+			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<NatureSpirit>());
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].netUpdate = true;
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height,  Mod.Find<ModItem>("FragmentOfNature").Type, Main.rand.Next(4) + 4);	
-		}	
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfNature>(), 1, 4, 7));
+		}
 	}
 }

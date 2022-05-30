@@ -5,6 +5,7 @@ using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Permafrost;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -41,12 +42,12 @@ namespace SOTS.NPCs.Constructs
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.rarity = 5;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/PermafrostConstructHeadGlow");
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/PermafrostConstructHead");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY);
+			Vector2 drawPos = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY);
 			Texture2D texture2 = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Color color = new Color(100, 100, 100, 0);
@@ -74,15 +75,10 @@ namespace SOTS.NPCs.Constructs
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
-				for (int i = 0; i < 30; i++)
-				{
-					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<BigPermafrostDust>());
-					Main.dust[dust].velocity *= 5f;
-				}
 				for (int i = 1; i <= 7; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/PermafrostConstruct/PermafrostConstructGore" + i), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/PermafrostConstruct/PermafrostConstructGore" + i), 1f);
 				for (int i = 0; i < 9; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 			}
 		}
 		public override void PostAI()
@@ -125,16 +121,12 @@ namespace SOTS.NPCs.Constructs
 					NPC.aiStyle =26;
 					ai1 = 0;
 					NPC.alpha = 255;
-					int damage = NPC.damage / 2;
-					if (Main.expertMode)
-					{
-						damage = (int)(damage / Main.expertDamage);
-					}
+					int damage = NPC.GetBaseDamage() / 2;
 					for (int i = 0; i < 8; i++)
 					{
 						Vector2 velocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(45 * i) + NPC.rotation);
-						if (Main.netMode != 1)
-							Projectile.NewProjectile(NPC.Center, velocity, ModContent.ProjectileType<HostileJavelin>(), damage, 0, Main.myPlayer, NPC.Center.X, NPC.Center.Y);
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<HostileJavelin>(), damage, 0, Main.myPlayer, NPC.Center.X, NPC.Center.Y);
 					}
 				}
 			}
@@ -148,11 +140,15 @@ namespace SOTS.NPCs.Constructs
 			}
 			return true;
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PermafrostSpirit>());	
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfPermafrost>(), 1, 4, 7));
+		}
+		public override void OnKill()
+		{
+			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PermafrostSpirit>());
 			Main.npc[n].velocity.Y = -10f;
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfPermafrost>(), Main.rand.Next(4) + 4);	
-		}	
+			Main.npc[n].netUpdate = true;
+		}
 	}
 }

@@ -46,7 +46,7 @@ using SOTS.Items.GhostTown;
 using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Audio;
 
@@ -1254,7 +1254,7 @@ namespace SOTS
 						if(canTrigger)
 						{
 							cursedIcoCD = 180;
-							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
+							SOTSUtils.PlaySound(SoundID.Item93, (int)target.Center.X, (int)target.Center.Y, 0.9f);
 							target.AddBuff(BuffID.CursedInferno, 900, false);
 							int numberProjectiles = 4;
 							int rand = Main.rand.Next(360);

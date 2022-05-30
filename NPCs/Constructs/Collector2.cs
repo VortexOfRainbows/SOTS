@@ -46,14 +46,14 @@ namespace SOTS.NPCs.Constructs
 			NPC.dontTakeDamage = true;
 			NPC.alpha = 255;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			if (runOnce)
 				return false;
-			DrawLightning(spriteBatch, drawColor, 0);
-			DrawLightning(spriteBatch, drawColor, 1);
-			DrawLightning(spriteBatch, drawColor, 2);
-			DrawLightning(spriteBatch, drawColor, 3);
+			DrawLightning(spriteBatch, screenPos, drawColor, 0);
+			DrawLightning(spriteBatch, screenPos, drawColor, 1);
+			DrawLightning(spriteBatch, screenPos, drawColor, 2);
+			DrawLightning(spriteBatch, screenPos, drawColor, 3);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Texture2D textureDrill = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Drill").Value;
 			Texture2D textureSpirit = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Spirit").Value;
@@ -64,7 +64,7 @@ namespace SOTS.NPCs.Constructs
 				int direction = i * 2 - 1;
 				float overrideRotation = MathHelper.ToRadians(55 * -direction);
 				Vector2 fromBody = NPC.Center + new Vector2(direction * 28, 10 + NPC.ai[1] * 0.5f - NPC.ai[2] * 0.5f).RotatedBy(NPC.rotation);
-				Vector2 drawPos = fromBody - Main.screenPosition + new Vector2(0f, NPC.gfxOffY);
+				Vector2 drawPos = fromBody - screenPos + new Vector2(0f, NPC.gfxOffY);
 				spriteBatch.Draw(textureDrill, drawPos, null, drawColor * (1f - (NPC.alpha / 255f)), NPC.rotation + overrideRotation, drawOrigin, (NPC.ai[1] - NPC.ai[2]) * 0.015f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 			float spiritScale = NPC.ai[3] / timeToChargeOrb;
@@ -84,13 +84,13 @@ namespace SOTS.NPCs.Constructs
 				}
 				else
 					circular *= 0f;
-				Vector2 drawPos = NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY + 4 * (1 - spiritScale) + 2);
+				Vector2 drawPos = NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + 4 * (1 - spiritScale) + 2);
 				Main.spriteBatch.Draw(textureSpirit, drawPos + circular, null, color * (1f - (NPC.alpha / 255f)), NPC.rotation, drawOrigin2, spiritScale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			if (runOnce)
 				return;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Booster").Value;
@@ -103,7 +103,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					float overrideRotation = engineRotation(i, j).ToRotation();
 					Vector2 fromBody = NPC.Center + new Vector2(i * (72 - j * 24), -18 - j * 30).RotatedBy(NPC.rotation) * engineExtendMult(j);
-					Vector2 drawPos = fromBody - Main.screenPosition;
+					Vector2 drawPos = fromBody - screenPos;
 					spriteBatch.Draw(texture2, drawPos, null, drawColor * (1f - (NPC.alpha / 255f)), NPC.rotation + overrideRotation + MathHelper.ToRadians(i == -1 ? 180 : 0), drawOrigin, 1f, i == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 					for (int k = 0; k < 7; k++)
 					{
@@ -111,7 +111,6 @@ namespace SOTS.NPCs.Constructs
 					}
 				}
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		Vector2 lerpVelo = Vector2.Zero;
 		public Vector2 engineRotation(int i, int j)
@@ -122,7 +121,7 @@ namespace SOTS.NPCs.Constructs
         {
 			return 1.5f;
         }
-		public void DrawLightning(SpriteBatch spriteBatch, Color lightColor, int id)
+		public void DrawLightning(SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor, int id)
 		{
 			if (runOnce)
 				return;
@@ -142,14 +141,14 @@ namespace SOTS.NPCs.Constructs
 				{
 					return;
 				}
-				Vector2 drawPos = trailPos[k] - Main.screenPosition;
+				Vector2 drawPos = trailPos[k] - screenPos;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
 				Color color = new Color(100, 100, 100, 0) * (0.2f + ((trailPos.Length - k) / (float)trailPos.Length) * 0.4f);
 				float max = betweenPositions.Length() / (4 * scale);
 				for (int i = 0; i < max; i++)
 				{
-					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
+					drawPos = previousPosition + -betweenPositions * (i / max) - screenPos;
 					for (int j = 0; j < 4; j++)
 					{
 						spriteBatch.Draw(texture, drawPos + Main.rand.NextVector2Circular(j, j), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
@@ -265,7 +264,7 @@ namespace SOTS.NPCs.Constructs
 					NPC.ai[3] += 1f;
 					if(NPC.ai[3] % 10 == 0)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 13, 1.2f);
+						SOTSUtils.PlaySound(SoundID.Item13, (int)NPC.Center.X, (int)NPC.Center.Y, 1.2f);
 					}
 					float spiritScale = NPC.ai[3] / timeToChargeOrb;
 					if (spiritScale < 1f)
@@ -299,9 +298,9 @@ namespace SOTS.NPCs.Constructs
 					float sinusoid = 1.5f * (float)Math.Sin(MathHelper.ToRadians(ai3 * 225f / 150f + 0.5f));
 					NPC.velocity = new Vector2(-sinusoid, 0).RotatedBy(MathHelper.ToRadians(-70));
 					if(ai3 % 30 == 0 && ai3 < 100)
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 15, 0.3f + ai3 * 0.05f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)NPC.Center.X, (int)NPC.Center.Y, 0.3f + ai3 * 0.05f);
 					if(ai3 == 95)
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 121, 1.3f, 0);
+						SOTSUtils.PlaySound(SoundID.Item121, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f, 0);
 					if (ai3 > 150 && startRunning)
                     {
 						for (int k = 0; k < 300; k++)

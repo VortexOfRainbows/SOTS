@@ -10,6 +10,7 @@ using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Tide;
 using SOTS.Void;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -99,11 +100,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				NPC.aiStyle =-1;
 				NPC.dontTakeDamage = false;
-				int damage = NPC.damage / 2;
-				if (Main.expertMode)
-				{
-					damage = (int)(damage / Main.expertDamage);
-				}
+				int damage = NPC.GetBaseDamage() / 2;
 				NPC.ai[1]++;
 				if ((int)NPC.ai[2] % 3 == 0)
 				{
@@ -175,7 +172,7 @@ namespace SOTS.NPCs.Constructs
 								int i = (int)NPC.ai[3] % ProbeCount;
 								MiniSpirit spirit = miniSpirits[i];
 								Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(spirit.rotation));
-								Projectile.NewProjectile(spirit.getCenter(NPC.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), spirit.getCenter(NPC.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0);
 							}
 							NPC.ai[3]++;
 						}
@@ -220,12 +217,12 @@ namespace SOTS.NPCs.Constructs
 						mult = NPC.ai[1] / 200f;
 						NPC.Center = Vector2.Lerp(dashPosition, dashPositionOther, mult);
 						if ((int)NPC.ai[1] % 4 == 0)
-							Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 34, 1f, 0.5f);
+							SOTSUtils.PlaySound(SoundID.Item34, (int)NPC.Center.X, (int)NPC.Center.Y, 1f, 0.5f);
 						if ((int)NPC.ai[1] % 2 == 0)
 						{
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(NPC.Center, new Vector2(Direction() * -0.5f, 4.5f), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3.5f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Direction() * -0.5f, 4.5f), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3.5f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
 							}
 						}
 						if (NPC.ai[1] > 200f)
@@ -300,7 +297,7 @@ namespace SOTS.NPCs.Constructs
 									for (int j = 0; j < 4; j++)
 									{
 										Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * j + fortyfive));
-										Projectile.NewProjectile(spirit.getCenter(NPC.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, 0, j == 0 ? -2 : -1);
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), spirit.getCenter(NPC.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, 0, j == 0 ? -2 : -1);
 									}
 								}
 						}
@@ -384,12 +381,12 @@ namespace SOTS.NPCs.Constructs
 		{
 			return (int)NPC.ai[2] % 2 * 2 - 1;
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
 				Color color = new Color(150, 80, 70, 0) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
@@ -398,7 +395,7 @@ namespace SOTS.NPCs.Constructs
 				for (int k = 0; k < ProbeCount; k++)
 				{
 					MiniSpirit spirit = miniSpirits[k];
-					spirit.Draw(spirit.getCenter(NPC.Center, verticalCompress));
+					spirit.Draw(spriteBatch, spirit.getCenter(NPC.Center, verticalCompress), screenPos);
 				}
 			}
 			return false;
@@ -439,21 +436,20 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
-				Main.spriteBatch.Draw(texture, NPC.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, NPC.Center + Main.rand.NextVector2Circular(4f, 4f) - screenPos, null, color, 0f, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingNether>(), 1);	
-		}	
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DissolvingNether>()));
+		}
 	}
 	public class MiniSpirit
     {
@@ -470,14 +466,14 @@ namespace SOTS.NPCs.Constructs
 			vectorOffset.Y *= yCompress;
 			return npcCenter + vectorOffset;
 		}
-		public void Draw(Vector2 drawLocation)
+		public void Draw(SpriteBatch spriteBatch, Vector2 drawLocation, Vector2 screenPos)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/InfernoSpiritMini");
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
-				Main.spriteBatch.Draw(texture, drawLocation + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawLocation + Main.rand.NextVector2Circular(4f, 4f) - screenPos, null, color, 0f, drawOrigin, 1.1f, SpriteEffects.None, 0f);
 			}
 		}
     }

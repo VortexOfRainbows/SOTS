@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.FromChests;
+using SOTS.Projectiles.Otherworld;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -37,16 +39,16 @@ namespace SOTS.NPCs.Constructs
 			NPC.HitSound = SoundID.NPCHit4;
 			NPC.DeathSound = SoundID.NPCDeath14;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			dir = (float)Math.Atan2(aimTo.Y - NPC.Center.Y, aimTo.X - NPC.Center.X);
 			NPC.rotation = dir + (NPC.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
 			if (hookTile.X < 0 || hookTile.Y < 0)
 				return true;
-			Draw(true, drawColor);
+			Draw(spriteBatch, screenPos, true, drawColor);
 			return true;
 		}
-		public void Draw(bool drawTexture, Color drawColor)
+		public void Draw(SpriteBatch spriteBatch, Vector2 screenPos, bool drawTexture, Color drawColor)
 		{
 			float npcRadians = NPC.rotation + (NPC.spriteDirection + 1) * 0.5f * MathHelper.ToRadians(180);
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/OtherworldVine");
@@ -71,16 +73,16 @@ namespace SOTS.NPCs.Constructs
 				rotationPos = rotationPos.RotatedBy(startingRadians);
 				Vector2 pos = rotationPos + centerOfCircle;
 				Vector2 dynamicAddition = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(i * 180 / max + ai1));
-				Vector2 drawPos = pos - Main.screenPosition;
+				Vector2 drawPos = pos - screenPos;
 				if (drawTexture)
 				{
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 				}
 				else
 				{
 					if(Main.rand.NextBool(2))
 					{
-						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
+						Gore.NewGore(NPC.GetSource_Death(), pos - Vector2.One * texture.Width / 2, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
 					}
 				}
 			}
@@ -98,23 +100,23 @@ namespace SOTS.NPCs.Constructs
 				rotationPos = rotationPos.RotatedBy(startingRadians);
 				Vector2 pos = rotationPos + centerOfCircle;
 				Vector2 dynamicAddition = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(i * 180 / max + ai1 + 180));
-				Vector2 drawPos = pos - Main.screenPosition;
+				Vector2 drawPos = pos - screenPos;
 				if (drawTexture)
 				{
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, NPC.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 				}
 				else
 				{
 					if (Main.rand.NextBool(2))
 					{
-						Gore.NewGore(pos - Vector2.One * texture.Width / 2, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
+						Gore.NewGore(NPC.GetSource_Death(), pos - Vector2.One * texture.Width / 2, NPC.velocity, ModGores.GoreType("Gores/OtherworldVineGore"), 1f);
 					}
 				}
 			}
 		}
 		bool glow = false;
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/OtherworldlyConstructHead2Glow").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -123,7 +125,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y + 2), new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), color * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 		}
 		public override bool CheckActive()
@@ -143,16 +145,16 @@ namespace SOTS.NPCs.Constructs
 					int dust = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigAetherDust").Type);
 					Main.dust[dust].velocity *= 5f;
 				}
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
-				Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
 				for (int i = 0; i < 9; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
-				if(Main.netMode != 2)
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
+				if(Main.netMode != NetmodeID.Server)
                 {
-					Draw(false, Color.White);
+					Draw(null, Main.screenPosition, false, Color.White);
 				}
 			}
 		}
@@ -316,11 +318,7 @@ namespace SOTS.NPCs.Constructs
 				NPC.velocity *= 0.25f;
 				if (NPC.ai[0] % 90 == 0)
 				{
-					int damage = NPC.damage / 2;
-					if (Main.expertMode)
-					{
-						damage = (int)(damage / Main.expertDamage);
-					}
+					int damage = NPC.GetBaseDamage() / 2;
 					NPC.ai[1]++;
 					if (NPC.ai[1] < 6)
 					{
@@ -343,9 +341,9 @@ namespace SOTS.NPCs.Constructs
 								break;
 							}
 						}
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
-						if (Main.netMode != 1)
-							Projectile.NewProjectile(locX, locY, 0, 0, Mod.Find<ModProjectile>("OtherworldlyTracer").Type, damage, 0f, Main.myPlayer, 751 - NPC.ai[0], NPC.whoAmI);
+						SOTSUtils.PlaySound(SoundID.Item30, (int)locX, (int)locY, 0.2f);
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), locX, locY, 0, 0, ModContent.ProjectileType<OtherworldlyTracer>(), damage, 0f, Main.myPlayer, 751 - NPC.ai[0], NPC.whoAmI);
 					}
 				}
 				if (NPC.ai[1] >= 6)
@@ -356,17 +354,13 @@ namespace SOTS.NPCs.Constructs
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
-						if (proj.active && proj.type == Mod.Find<ModProjectile>("OtherworldlyTracer") .Type&& proj.ai[1] == NPC.whoAmI)
+						if (proj.active && proj.type == ModContent.ProjectileType<OtherworldlyTracer>() && proj.ai[1] == NPC.whoAmI)
 						{
-							int damage = NPC.damage / 2;
-							if (Main.expertMode)
-							{
-								damage = (int)(damage / Main.expertDamage);
-							}
+							int damage = NPC.GetBaseDamage() / 2;
 							Vector2 toProj = proj.Center - NPC.Center;
 							toProj /= 30f;
-							if (Main.netMode != 1)
-								Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, toProj.X, toProj.Y, Mod.Find<ModProjectile>("OtherworldlyBall").Type, damage, 0, Main.myPlayer);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, toProj.X, toProj.Y, ModContent.ProjectileType<OtherworldlyBall>(), damage, 0, Main.myPlayer);
 						}
 					}
 					NPC.velocity = -12 * toPlayer.SafeNormalize(new Vector2(0, 1));
@@ -375,15 +369,18 @@ namespace SOTS.NPCs.Constructs
 			else
 				glow = false;
 		}
-		public override void NPCLoot()
+		public override void OnKill()
 		{
-			int n = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OtherworldlySpirit>());	
+			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OtherworldlySpirit>());
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].localAI[1] = -1;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 3);
-			if ((Main.expertMode || Main.rand.Next(2) == 0) && SOTSWorld.downedAdvisor) Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<TwilightShard>(), 1);
-		}	
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfOtherworld>(), 1, 3, 4));
+			npcLoot.Add(ItemDropRule.ByCondition(new Common.ItemDropConditions.DownedAdvisorDropCondition(), ModContent.ItemType<TwilightShard>(), 2));
+		}
 	}
 }

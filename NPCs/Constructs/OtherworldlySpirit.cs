@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -72,9 +73,9 @@ namespace SOTS.NPCs.Constructs
                 {
 					NPC.velocity *= 0f;
 					NPC collector = Main.npc[collectorId];
-					if(collector.type != Mod.Find<ModNPC>("Collector").Type)
+					if(collector.type != ModContent.NPCType<Collector>())
 					{
-						int n = NPC.NewNPC((int)NPC.Center.X + 6, (int)NPC.position.Y, Mod.Find<ModNPC>("Collector").Type);
+						int n = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 6, (int)NPC.position.Y, ModContent.NPCType<Collector>());
 						Main.npc[n].netUpdate = true;
 						collectorId = n;
 						NPC.netUpdate = true;
@@ -94,9 +95,9 @@ namespace SOTS.NPCs.Constructs
 							dust4.scale *= 2.5f;
 							if (ai3 % 30 == 0)
 							{
-								if (Main.netMode != 1)
+								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									int item = Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, Mod.Find<ModItem>("DissolvingAether").Type, 1);
+									int item = Item.NewItem(NPC.GetSource_Loot("SOTS:CollectorDissolvingAether"), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingAether>(), 1);
 									Main.item[item].velocity = new Vector2(-5, 0).RotatedBy(MathHelper.ToRadians(-10 - ai3 * 4 / 3f));
 									NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 								}
@@ -117,7 +118,7 @@ namespace SOTS.NPCs.Constructs
 				NPC.velocity *= 0f;
 				if (Main.netMode != 1)
 				{
-					int n = NPC.NewNPC((int)NPC.Center.X + 6, (int)NPC.position.Y, Mod.Find<ModNPC>("Collector").Type);
+					int n = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 6, (int)NPC.position.Y, ModContent.NPCType<Collector>());
 					Main.npc[n].netUpdate = true;
 					collectorId = n;
 					NPC.netUpdate = true;
@@ -160,13 +161,13 @@ namespace SOTS.NPCs.Constructs
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/OtherworldlySpiritOld").Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
-				Vector2 drawPos = NPC.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, NPC.gfxOffY);
-				Color color = NPC.GetAlpha(lightColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
+				Color color = NPC.GetAlpha(drawColor) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
 			return false;
@@ -193,8 +194,8 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Color color = new Color(167, 45, 225, 0);
 			Color color2 = new Color(64, 178, 172, 0);
@@ -204,16 +205,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f * NPC.scale;
 				float y = Main.rand.Next(-10, 11) * 0.45f * NPC.scale;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(NPC.Center.X - (int)Main.screenPosition.X) + x, (float)(NPC.Center.Y - (int)Main.screenPosition.Y) + y),
+				spriteBatch.Draw(texture,
+				new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y),
 				null, color, 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if (NPC.localAI[1] == -1)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<DissolvingAether>(), 1);	
-		}	
+			npcLoot.Add(ItemDropRule.ByCondition(new Common.ItemDropConditions.OtherworldSpiritAlternateCondition(), ModContent.ItemType<DissolvingAether>()));
+		}
 	}
 }

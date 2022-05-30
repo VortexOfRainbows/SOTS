@@ -55,8 +55,8 @@ namespace SOTS.NPCs.Constructs
 			Vector2 origin = new Vector2(NPC.width / 2, NPC.height / 2);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			DrawWings();
-			Main.spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, drawColor, dir, origin, NPC.scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, Color.White, dir, origin, NPC.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, drawColor, dir, origin, NPC.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, Color.White, dir, origin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		float wingSpeedMult = 1f;
