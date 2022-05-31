@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -75,9 +76,9 @@ namespace SOTS.NPCs.Inferno
 			}
 			return true;
         }
-        public override bool PreDraw(ref Color lightColor)
-		{
-			Texture2D texture = GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+			Texture2D texture = (Texture2D)Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -85,26 +86,26 @@ namespace SOTS.NPCs.Inferno
 				color = new Color(255, 69, 0, 0);
 				if(sans)
 					color = new Color(60, 90, 115, 0);
-				Vector2 drawPos = particleList[i].position - Main.screenPosition;
+				Vector2 drawPos = particleList[i].position - screenPos;
 				color = NPC.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
 					float y = Main.rand.NextFloat(-2f, 2f);
-					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.1f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = sans ? GetTexture("SOTS/NPCs/Inferno/SansWispOutline") : GetTexture("SOTS/NPCs/Inferno/LesserWispOutline");
+			texture = sans ? (Texture2D)Request<Texture2D>("SOTS/NPCs/Inferno/SansWispOutline") : (Texture2D)Request<Texture2D>("SOTS/NPCs/Inferno/LesserWispOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = sans ? new Color(50, 50, 90, 0) : new Color(80, 80, 80, 0);
 			for (int k = 0; k < 12; k++)
 			{
-				Vector2 drawPos = NPC.Center - Main.screenPosition;
+				Vector2 drawPos = NPC.Center - screenPos;
 				Vector2 circular = new Vector2(Main.rand.NextFloat(0, 3), 0).RotatedBy(Math.PI / 6 * k);
-				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * 0.9f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos + circular, null, color * 0.9f, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			}
-			texture = sans ? GetTexture("SOTS/NPCs/Inferno/SansWisp") : Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, sans ? Color.White : new Color(180, 180, 180), NPC.rotation, drawOrigin, NPC.scale * 0.9f, SpriteEffects.None, 0f);
+			texture = sans ? (Texture2D)Request<Texture2D>("SOTS/NPCs/Inferno/SansWisp") : Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+			spriteBatch.Draw(texture, NPC.Center - screenPos, null, sans ? Color.White : new Color(180, 180, 180), NPC.rotation, drawOrigin, NPC.scale * 0.9f, SpriteEffects.None, 0f);
 			return false;
 		}
         public override bool PreAI()
@@ -121,7 +122,7 @@ namespace SOTS.NPCs.Inferno
 					}
 					else
 						for (int i = 0; i < Main.rand.Next(2, 4); i++)
-							NPC.NewNPC((int)NPC.Center.X, (int)NPC.position.Y + NPC.height, this.NPC.type, 0, -1, -Main.rand.Next(120) - 240);
+							NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.position.Y + NPC.height, this.NPC.type, 0, -1, -Main.rand.Next(120) - 240);
 					NPC.netUpdate = true;
 				}
 				NPC.ai[0] = -1;
@@ -234,16 +235,12 @@ namespace SOTS.NPCs.Inferno
 					{
 						toPlayer = player.Center - NPC.Center;
 						toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
-						int Damage = NPC.damage / 2;
-						if (Main.expertMode)
-						{
-							Damage = (int)(Damage / Main.expertDamage);
-						}
+						int Damage = NPC.GetBaseDamage() / 2;
 						if(sans)
 							Damage = (int)(Damage * 1.5f);
 						if(!sans)
 						{
-							Projectile.NewProjectile(NPC.Center + toPlayer * 40, toPlayer * 5, ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, 0);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + toPlayer * 40, toPlayer * 5, ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, 0);
 						}
 						else
 						{
@@ -259,7 +256,7 @@ namespace SOTS.NPCs.Inferno
                             {
 								for(int i = -1; i < 2; i++)
 								{
-									Projectile.NewProjectile(spawnPos, velo.RotatedBy(MathHelper.ToRadians(22.5f * i)), ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, -1);
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPos, velo.RotatedBy(MathHelper.ToRadians(22.5f * i)), ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, -1);
 									if (randMod1 == 0)
 										velo = velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-25, 25)));
 								}
@@ -268,13 +265,13 @@ namespace SOTS.NPCs.Inferno
 							{
 								for (int i = 0; i < 8; i++)
 								{
-									Projectile.NewProjectile(spawnPos, velo.RotatedBy(MathHelper.ToRadians(45 * i)), ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, -1);
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPos, velo.RotatedBy(MathHelper.ToRadians(45 * i)), ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, -1);
 									if (randMod1 == 0)
 										velo = velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-25, 25)));
 								}
 							}
 							else
-								Projectile.NewProjectile(spawnPos, velo, ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, -1);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPos, velo, ProjectileType<LesserWispLaser>(), Damage, 1f, Main.myPlayer, 0, -1);
 						}
 					}
                 }
@@ -289,18 +286,18 @@ namespace SOTS.NPCs.Inferno
 				}
             }
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void OnKill()
+        {
+            base.OnKill();
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			base.PostDraw(spriteBatch, drawColor);
-		}
-		public override void NPCLoot()
-		{ 
-			if(sans)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<BookOfVirtues>(), 1);
-			if (Main.rand.NextBool(15))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, sans ? ItemID.LivingUltrabrightFireBlock : ItemID.LivingFireBlock, Main.rand.Next(10, 21));
-			else if (Main.rand.NextBool(25))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, sans ? ItemType<FragmentOfChaos>() : ItemType<FragmentOfInferno>(), 1);
+			LeadingConditionRule isSans = new LeadingConditionRule(new Common.ItemDropConditions.IsSansWisp());
+			isSans.OnSuccess(ItemDropRule.Common(ItemType<BookOfVirtues>()));
+			isSans.OnSuccess(ItemDropRule.Common(ItemID.LivingUltrabrightFireBlock, 2, 10, 20)
+				.OnFailedRoll(ItemDropRule.Common(ItemType<FragmentOfChaos>(), 1, 1, 1)));
+			isSans.OnFailedConditions(ItemDropRule.Common(ItemID.LivingFireBlock, 15, 10, 20)
+				.OnFailedRoll(ItemDropRule.Common(ItemType<FragmentOfInferno>(), 25, 1, 1)));
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

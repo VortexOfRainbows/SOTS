@@ -7,6 +7,8 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Fragments;
 using SOTS.Items.Inferno;
 using SOTS.Items.Tools;
+using Terraria.ModLoader;
+using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -58,9 +60,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
-        public override void AdditionalLoot()
+		public override void ModifyAdditionalLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<MinersPickaxe>(), 3 + Main.rand.Next(3));
+			npcLoot.Add(ItemDropRule.Common(ItemType<MinersPickaxe>(), 1, 3, 5));
 		}
     }
 }

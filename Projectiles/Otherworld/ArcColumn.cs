@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.Otherworld
 						if (Projectile.owner == Main.myPlayer)
 						{
 							Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 45f));
-							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<ArcColumn>(), Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<ArcColumn>(), Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
 						}
 					}
 				}

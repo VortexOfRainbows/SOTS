@@ -8,6 +8,8 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Inferno;
 using SOTS.Items.Tools;
 using SOTS.Items.Void;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -69,17 +71,10 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
-        public override void AdditionalLoot()
+		public override void ModifyAdditionalLoot(NPCLoot npcLoot)
 		{
-			int type = Main.rand.Next(4);
-			if(type == 0)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.WaterCandle, 1);
-			if (type == 1)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.GoldenKey, 1);
-			if (type == 2)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.LockBox, 1);
-			if (type == 3)
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.Book, 5 + Main.rand.Next(6)); //5 to 10
+			npcLoot.Add(ItemDropRule.OneFromOptions(1, new int[] { ItemID.WaterCandle, ItemID.GoldenKey, ItemID.LockBox }));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Book, 3, 5, 10));
 		}
     }
 }

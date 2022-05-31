@@ -10,6 +10,8 @@ using SOTS.Items.Pyramid;
 using SOTS.Items;
 using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Flails;
+using Terraria.ModLoader;
+using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -69,13 +71,11 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
-        public override void AdditionalLoot()
+		public override void ModifyAdditionalLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<JuryRiggedDrill>(), 4 + Main.rand.Next(5));
-			if (Main.rand.NextBool(2))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<Snakeskin>(), 5 + Main.rand.Next(6));
-			else
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<SoulResidue>(), 5 + Main.rand.Next(6));
+			npcLoot.Add(ItemDropRule.Common(ItemType<JuryRiggedDrill>(), 1, 4, 8));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Snakeskin>(), 2, 5, 10)
+				.OnFailedRoll(ItemDropRule.Common(ItemType<SoulResidue>(), 1, 5, 10)));
 		}
     }
 }

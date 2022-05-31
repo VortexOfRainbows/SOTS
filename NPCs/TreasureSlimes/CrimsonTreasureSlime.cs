@@ -10,6 +10,8 @@ using SOTS.Items.Tools;
 using SOTS.Items.GhostTown;
 using SOTS.Items.Void;
 using SOTS.Items;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -62,9 +64,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
-        public override void AdditionalLoot()
+		public override void ModifyAdditionalLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<ExplosiveKnife>(), 10 + Main.rand.Next(11));
+			npcLoot.Add(ItemDropRule.Common(ItemType<ExplosiveKnife>(), 1, 10, 20));
 		}
-    }
+	}
 }

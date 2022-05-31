@@ -55,11 +55,12 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
-5/29/22 & 5/30/22
-1. 4090 -> 3820 -> 3565 -> 3164
+5/29/22 & 5/30/22 & 5/31/22
+1. 4090 -> 3820 -> 3565 -> 3164 -> 2980
 2. Ported mainly Adivsor, Pharaoh
 3. Finished remaining boss folders
 4. Finished Constructs folder
+5. Finished all the NPC folders!
 
 5/26/22 & 5/27/22
 1. Organization and more fixing!

@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile.netUpdate = true;
 			}
 		}
-		public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
+		public void DrawGlow()
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetSpirit");
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Otherworld
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
 			{
-				spriteBatch.Draw(texture, drawPos + Main.rand.NextVector2Circular(1, 1), null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos + Main.rand.NextVector2Circular(1, 1), null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
@@ -186,12 +186,12 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 pos = projectilePos + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
 					Vector2 drawPos = pos - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					for (int k = 0; k < glow / 2; k++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.1f;
 						float y = Main.rand.Next(-10, 11) * 0.1f;
-						spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 					currentSeg++;
 					currentSegMult++;
@@ -206,12 +206,12 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 pos = point1 + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
 					Vector2 drawPos = pos + circularLocation - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					for (int k = 0; k < glow / 2; k++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.1f;
 						float y = Main.rand.Next(-10, 11) * 0.1f;
-						spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 					currentSeg++;
 					currentSegMult++;
@@ -225,12 +225,12 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 pos = centerOfCircle + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
 					Vector2 drawPos = pos + circularLocation - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					for (int k = 0; k < glow / 2; k++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.1f;
 						float y = Main.rand.Next(-10, 11) * 0.1f;
-						spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 					currentSeg++;
 					currentSegMult--;
@@ -242,12 +242,12 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 pos = point2 + dist * i;
 					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
 					Vector2 drawPos = pos - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					for (int k = 0; k < glow / 2; k++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.1f;
 						float y = Main.rand.Next(-10, 11) * 0.1f;
-						spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 					currentSeg++;
 					currentSegMult--;
@@ -261,11 +261,11 @@ namespace SOTS.Projectiles.Otherworld
 				else if (j == 2)
 					j = 4;
 			}
-			DrawGlow(spriteBatch, lightColor);
+			DrawGlow();
 			return true;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
+        public override void PostDraw(Color lightColor)
+        {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetEye");
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetHighlight");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
@@ -284,12 +284,12 @@ namespace SOTS.Projectiles.Otherworld
 			drawPos.X += shootToX;
 			drawPos.Y += shootToY;
 			Color color = new Color(100, 100, 100, 0);
-			spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(drawColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			for(int k = 0; k < glow / 2; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
-				spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 				Main.spriteBatch.Draw(texture2, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 		}

@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using System.Diagnostics;
+using SOTS.Projectiles.Laser;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -130,8 +131,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public void LaunchLaser(Vector2 area)
 		{
-			Player player  = Main.player[Projectile.owner];
-			int laser = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("BrightRedLaser").Type, Projectile.damage, 0, Projectile.owner, area.X, area.Y);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<BrightRedLaser>(), Projectile.damage, 0, Projectile.owner, area.X, area.Y);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Minions
 			for (int k = 0; k < Projectile.oldPos.Length; k++) {
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}

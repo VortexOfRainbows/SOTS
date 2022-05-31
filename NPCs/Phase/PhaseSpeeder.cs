@@ -11,6 +11,7 @@ using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -67,12 +68,12 @@ namespace SOTS.NPCs.Phase
 			NPC.buffImmune[BuffID.Ichor] = true;
 			NPC.buffImmune[BuffID.BetsysCurse] = true;
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-			TrailPreDraw(spriteBatch);
+			TrailPreDraw(spriteBatch, screenPos);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			//Texture2D texture2 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederGlow");
-			Texture2D texture3 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederPink");
+			Texture2D texture3 = (Texture2D)Request<Texture2D>("SOTS/NPCs/Phase/PhaseSpeederPink");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 2);
 			float dir = NPC.rotation;
 			bool flip = false;
@@ -84,14 +85,14 @@ namespace SOTS.NPCs.Phase
 			for(int i = 0; i < 4; i++)
             {
 				Vector2 circular = new Vector2(2, 0).RotatedBy(NPC.rotation + i * MathHelper.PiOver2);
-				Main.spriteBatch.Draw(texture3, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY) + circular, NPC.frame, new Color(100, 100, 100, 0) * (0.1f + 0.9f * ((255 - NPC.alpha) / 255f)), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture3, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY) + circular, NPC.frame, new Color(100, 100, 100, 0) * (0.1f + 0.9f * ((255 - NPC.alpha) / 255f)), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), NPC.frame, Color.White * ((255 - NPC.alpha) / 255f), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, Color.White * ((255 - NPC.alpha) / 255f), dir - bonusDir, drawOrigin, NPC.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
-		public void TrailPreDraw(SpriteBatch spriteBatch)
+		public void TrailPreDraw(SpriteBatch spriteBatch, Vector2 screenPos)
 		{
-			Texture2D texture = GetTexture("SOTS/NPCs/Phase/PhaseSpeederTrail");
+			Texture2D texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/Phase/PhaseSpeederTrail");
 			Vector2 drawOrigin = new Vector2(0, texture.Height * 0.5f);
 			Vector2 previousPosition = NPC.Center + new Vector2(-24, 0).RotatedBy(NPC.rotation);
 			for (int k = 0; k < trailPos.Length; k++)
@@ -103,7 +104,7 @@ namespace SOTS.NPCs.Phase
 				Color color = VoidPlayer.ChaosPink * (0.1f + 0.9f * ((255 - NPC.alpha) / 255f));
 				color.A = 0;
 				color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
-				Vector2 drawPos = trailPos[k] - Main.screenPosition;
+				Vector2 drawPos = trailPos[k] - screenPos;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
 				float lengthTowards = betweenPositions.Length() / texture.Height;
@@ -190,7 +191,7 @@ namespace SOTS.NPCs.Phase
 					NPC.velocity = rotatePos * 30f;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 						NPC.netUpdate = true;
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)NPC.Center.X, (int)NPC.Center.Y, 92);
+					SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y);
 					return;
 				}
 			}
@@ -237,15 +238,11 @@ namespace SOTS.NPCs.Phase
 				spinny = MathHelper.Lerp(0, 1440, (NPC.ai[1] / 110f) * (NPC.ai[1] / 110f));
 				if(Math.Abs(NPC.ai[1]) % 10 == 0 && NPC.ai[1] < -70 && Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					int damage = NPC.damage / 2;
-					if (Main.expertMode)
-					{
-						damage = (int)(damage / Main.expertDamage);
-					}
+					int damage = NPC.GetBaseDamage() / 2;
 					for (int i = -2; i <= 2; i++)
                     {
 						Vector2 spread = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(i * 30) + NPC.rotation);
-						Projectile.NewProjectile(NPC.Center + spread.SafeNormalize(Vector2.Zero) * 20, spread, ProjectileType<PhaseDart>(), damage, 0, Main.myPlayer, 0);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + spread.SafeNormalize(Vector2.Zero) * 20, spread, ProjectileType<PhaseDart>(), damage, 0, Main.myPlayer, 0);
 					}
                 }
 			}
@@ -264,19 +261,12 @@ namespace SOTS.NPCs.Phase
 		}
 		public Vector2 tracerPos => new Vector2(tracerPosX, tracerPosY);
 		public Vector2 toTracer => tracerPos - NPC.Center;
-		public override void NPCLoot()
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			if (Main.rand.NextBool(5))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<PhaseOre>(), Main.rand.Next(3) + 4); //drops 4 to 6 ore at a time, since you need quite a lot
-			if (Main.rand.NextBool(8))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<FragmentOfChaos>(), 1);
-			if (Main.rand.NextBool(12))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TwilightShard>(), 1);
-			if (Main.rand.NextBool(20))
-				Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<FragmentOfOtherworld>(), 1);
-			//if (Main.rand.NextBool(40))
-				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<PhaseBar>(), 1);
-
+			npcLoot.Add(ItemDropRule.Common(ItemType<PhaseOre>(), 5, 4, 6));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfChaos>(), 8, 1, 1));
+			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightShard>(), 12, 1, 1));
+			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfOtherworld>(), 20, 1, 1));
 		}
         public override void HitEffect(int hitDirection, double damage)
 		{
@@ -320,7 +310,7 @@ namespace SOTS.NPCs.Phase
 					}
 				}
 				for (int i = 1; i <= 3; i++)
-					Gore.NewGore(NPC.position, NPC.velocity, ModGores.GoreType("Gores/PhaseSpeeder/PhaseSpeederGore" + i), 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/PhaseSpeeder/PhaseSpeederGore" + i), 1f);
 			}
 		}
 	}

@@ -8,6 +8,8 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Inferno;
 using SOTS.Items.Tools;
 using SOTS.Void;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -78,10 +80,10 @@ namespace SOTS.NPCs.TreasureSlimes
         {
 			NPC.lifeMax = 1500;
 			NPC.damage = 140;
-        }
-        public override void AdditionalLoot()
+		}
+		public override void ModifyAdditionalLoot(NPCLoot npcLoot)
 		{
-			Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.CrystalShard, 10 + Main.rand.Next(6));
+			npcLoot.Add(ItemDropRule.Common(ItemID.CrystalShard, 1, 10, 15));
 		}
     }
 }
