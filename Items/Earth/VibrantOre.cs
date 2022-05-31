@@ -131,7 +131,7 @@ namespace SOTS.Items.Earth
 			if (tile.TileFrameY == 54) //left is active
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
-			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
+			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.TileColor));
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5 + tile.TileFrameX + (i % 7 * 3) + (j % 7 * -2);

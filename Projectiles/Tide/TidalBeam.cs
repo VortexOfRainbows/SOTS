@@ -228,7 +228,7 @@ namespace SOTS.Projectiles.Tide
 					NPC npc = Main.npc[(int)Projectile.ai[1]];
 					if (npc.active && npc.type == ModContent.NPCType<TidalConstruct>())
 					{
-						TidalConstruct tidalConstruct = (TidalConstruct)npc.modNPC;
+						TidalConstruct tidalConstruct = (TidalConstruct)npc.ModNPC;
 						for (int i = 0; i < tidalConstruct.projectiles.Length; i++)
 						{
 							Projectile tidalTrail = Main.projectile[tidalConstruct.projectiles[i]];

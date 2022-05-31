@@ -24,10 +24,10 @@ namespace SOTS.Items.Furniture.Goopwood
     }
     public class GoopwoodWorkBenchTile : Workbench<GoopwoodWorkBench>
     {
-		protected override void SetDefaults(TileObjectData t)
+		protected override void SetStaticDefaults(TileObjectData t)
 		{
 			Main.tileLighted[Type] = true;
-			base.SetDefaults(t);
+			base.SetStaticDefaults(t);
 		}
     }
 }

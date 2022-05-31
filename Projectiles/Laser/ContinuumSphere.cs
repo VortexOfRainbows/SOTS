@@ -179,7 +179,7 @@ namespace SOTS.Projectiles.Laser
 				if (ai1 % 20 == 0 && Main.myPlayer == player.whoAmI)
 				{
 					Item item = player.HeldItem;
-					VoidItem vItem = Item.modItem as VoidItem;
+					VoidItem vItem = Item.ModItem as VoidItem;
 					if (vItem != null)
 						vItem.DrainMana(player);
 				}

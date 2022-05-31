@@ -68,9 +68,9 @@ namespace SOTS.Items.Potions
 			int type1 = -1;
 			int type2 = -1;
 			int buff1 = BuffID.Ironskin;
-			int buff2 = mod.BuffType("SoulAccess");
+			int buff2 = Mod.Find<ModBuff>("SoulAccess").Type;
 			int buff3 = BuffID.Endurance;
-			int buff4 = mod.BuffType("Roughskin");
+			int buff4 = Mod.Find<ModBuff>("Roughskin").Type;
 			List<int> capableEffects = new List<int>();
 
 			if (!player.HasBuff(buff1))

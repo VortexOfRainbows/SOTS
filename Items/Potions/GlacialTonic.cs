@@ -70,7 +70,7 @@ namespace SOTS.Items.Potions
 			int type1 = -1;
 			int type2 = -1;
 			int buff1 = BuffID.Warmth;
-			int buff2 = mod.BuffType("Brittle");
+			int buff2 = Mod.Find<ModBuff>("Brittle").Type;
 			int buff3 = BuffID.Titan;
 			int buff4 = BuffID.ManaRegeneration;
 			List<int> capableEffects = new List<int>();

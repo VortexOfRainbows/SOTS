@@ -15,7 +15,7 @@ namespace SOTS.Buffs
  
         public override void Update(Player player, ref int buffIndex)
         {
-            player.mount.SetMount(Mod.Find<ModMountData>("IceShield").Type, player);
+            player.mount.SetMount(Mod.Find<ModMount>("IceShield").Type, player);
             player.buffTime[buffIndex] = 10;
         }
     }

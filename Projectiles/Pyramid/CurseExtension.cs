@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Pyramid
 					if (Main.rand.NextBool(6))
 					{
 						float scaleMult = 0.25f + 0.85f * ((maxLength - i) / (float)maxLength) * (0.7f + 0.3f * scale);
-						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
+						PharaohsCurse curse = npc.ModNPC as PharaohsCurse;
 						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.75f + 1.75f * scaleMult)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 						curse.foamParticleList1.Add(new CurseFoam(current, rotational, 0.4f + 0.6f * scaleMult, true));
 					}
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Pyramid
 					if (Main.netMode != NetmodeID.Server)
 					{
 						Vector2 distanceToOwner = Projectile.Center - npc.Center;
-						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
+						PharaohsCurse curse = npc.ModNPC as PharaohsCurse;
 						for (int j = 0; j < 40; j++)
 						{
 							Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));

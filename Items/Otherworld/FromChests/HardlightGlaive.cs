@@ -47,7 +47,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "CursedImpale", 1).AddIngredient(null, "ImperialPike", 1).AddIngredient(null, "GoldGlaive", 1).AddIngredient(null, "HardlightAlloy", 12).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
+			CreateRecipe(1).AddIngredient(null, "CursedImpale", 1).AddIngredient(null, "ImperialPike", 1).AddIngredient(null, "GoldGlaive", 1).AddIngredient(null, "HardlightAlloy", 12).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

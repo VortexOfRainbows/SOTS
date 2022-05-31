@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Inferno
 					if (Main.myPlayer == player.whoAmI)
 					{
 						Item item = player.HeldItem;
-						VoidItem vItem = Item.modItem as VoidItem;
+						VoidItem vItem = Item.ModItem as VoidItem;
 						if(vItem != null)
 							vItem.DrainMana(player);
 					}

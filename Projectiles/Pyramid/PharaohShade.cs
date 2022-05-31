@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Pyramid
             NPC master = Main.npc[(int)Projectile.ai[0]];
             if (master.active && (master.type == ModContent.NPCType<PharaohsCurse>()))
             {
-                PharaohsCurse curse = master.modNPC as PharaohsCurse;
+                PharaohsCurse curse = master.ModNPC as PharaohsCurse;
                 if(curse.enteredSecondPhase)
                 {
                     if ((int)Projectile.ai[1] != -1)
@@ -183,7 +183,7 @@ namespace SOTS.Projectiles.Pyramid
                 NPC npc = Main.npc[parentID];
                 if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
                 {
-                    PharaohsCurse pharaoh = npc.modNPC as PharaohsCurse;
+                    PharaohsCurse pharaoh = npc.ModNPC as PharaohsCurse;
                     pharaoh.TruePreDraw(spriteBatch, Lighting.GetColor((int)npc.Center.X / 16, (int)npc.Center.Y / 16), fadeInTimer);
                 }
             }

@@ -32,10 +32,10 @@ namespace SOTS.Items.Furniture.Nature
         {
             return false;
         }
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileLighted[Type] = true;
-            base.SetDefaults(t);
+            base.SetStaticDefaults(t);
             AdjTiles = new int[] { TileID.WorkBenches, TileID.Anvils };
         }
 

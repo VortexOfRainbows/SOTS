@@ -12,7 +12,7 @@ namespace SOTS.Items.Furniture
     {
         protected override int ItemType => ModContent.ItemType<TDrop>();
 
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileLavaDeath[Type] = true;
             Main.tileWaterDeath[Type] = false;
@@ -40,7 +40,7 @@ namespace SOTS.Items.Furniture
         {
             return true;
         }
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
             Tile tile = Main.tile[i, j];

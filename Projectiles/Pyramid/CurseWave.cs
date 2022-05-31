@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Pyramid
 					{
 						if (Projectile.timeLeft == 2)
 						{
-							PharaohsCurse curse = npc.modNPC as PharaohsCurse;
+							PharaohsCurse curse = npc.ModNPC as PharaohsCurse;
 							for (int j = 0; j < 40; j++)
 							{
 								Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));

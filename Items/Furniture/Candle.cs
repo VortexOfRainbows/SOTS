@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture
         protected override int ItemType => ModContent.ItemType<TDrop>();
         protected override bool Multi => false;
         protected virtual Vector3 LightClr => new Vector3(1f, 1f, 1f);
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -47,7 +47,7 @@ namespace SOTS.Items.Furniture
             localplayer.cursorItemIconEnabled = true;
             localplayer.cursorItemIconID = ModContent.ItemType<TDrop>();
         }
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
         {
             WorldGen.KillTile(i, j);
             if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)

@@ -9,7 +9,7 @@ namespace SOTS.Items.Furniture
     public abstract class Sofa<TDrop> : FurnTile where TDrop : ModItem
     {
         protected override int ItemType => ModContent.ItemType<TDrop>();
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileLighted[Type] = true;

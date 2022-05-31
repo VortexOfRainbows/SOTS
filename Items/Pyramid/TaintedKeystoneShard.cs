@@ -171,7 +171,7 @@ namespace SOTS.Items.Pyramid
 			if (tile.TileFrameY == 54) //left is active
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
-			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
+			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.TileColor));
 			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);

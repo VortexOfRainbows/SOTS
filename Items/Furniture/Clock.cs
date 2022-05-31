@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture
     public abstract class Clock<TDrop> : FurnTile where TDrop : ModItem
     {
         protected override int ItemType => ModContent.ItemType<TDrop>();
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -32,7 +32,7 @@ namespace SOTS.Items.Furniture
             localplayer.cursorItemIconEnabled = true;
             localplayer.cursorItemIconID = ModContent.ItemType<TDrop>();
         }
-        public override bool NewRightClick(int x, int y)
+        public override bool RightClick(int x, int y)
         {
             string text = "AM";
             double time = Main.time;

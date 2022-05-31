@@ -74,7 +74,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			int xLength = 32;
 			int xOff = 0;
 			Rectangle frame = new Rectangle(tile.WallFrameX() + xOff, tile.WallFrameY(), xLength, 32);
-			Color color = WorldGen.paintColor(tile.wallColor()) * (100f / 255f);
+			Color color = WorldGen.paintColor(tile.WallColor) * (100f / 255f);
 			Color forBorder = color;
 			forBorder.A = 0;
 			color.A = 0;

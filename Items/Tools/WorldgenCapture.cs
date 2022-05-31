@@ -86,11 +86,11 @@ namespace SOTS.Items.Tools
 									specialType += (int)tiles[w]; //solo out the decimal places: W.YXXX - W = .YXXX
 									tile.HasTile;
 									tile.IsHalfBlock;
-									tile.slope(0);
+									tile.Slope = 0;
 									int specialDigit1 = (int)(specialType * 10 + 0.5); //Y in Y.XXX	stores liquid style
 									int specialDigits2 = (int)(specialType * 10000 + 0.5) - (specialDigit1 * 1000);  //X in XXX
 									tile.liquid = (byte)specialDigits2;
-									tile.liquidType(specialDigit1);
+									tile.LiquidType = specialDigit1;
 									//Main.NewText("Liquid AMT: " + specialDigits2, 150, 255, 255);
 									//Main.NewText("Liquid TYP: " + specialDigit1, 150, 255, 255);
 									WorldGen.SquareTileFrame(k, l, false);
@@ -109,13 +109,13 @@ namespace SOTS.Items.Tools
 								{
 									tile.HasTile;
 									WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3);
-									tile.slope(0);
+									tile.Slope = 0;
 									tile.IsHalfBlock;
 
 									//tile.TileType = (ushort)(tiles[w]);
 									if (specialDigit2 > 0)
 									{
-										tile.slope((byte)specialDigit2);
+										tile.Slope = (byte)specialDigit2;
 									}
 									else if (specialDigit1 > 0)
 									{
@@ -140,11 +140,11 @@ namespace SOTS.Items.Tools
 										if(tile.TileType != (int)(tiles[w]))
 											tile.HasTile;
 										WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3);
-										tile.slope(0);
+										tile.Slope = 0;
 										tile.IsHalfBlock;
 										if (specialDigit2 > 0)
 										{
-											tile.slope((byte)specialDigit2);
+											tile.Slope = (byte)specialDigit2;
 										}
 										else if (specialDigit1 > 0)
 										{
@@ -313,10 +313,10 @@ namespace SOTS.Items.Tools
 
 						specialType += style * 0.01 * 0.0001; //this allows tile styles to be stored as Z in WWWW.XYZZZZ;
 															  //Main.NewText("Style Special: " + specialType, 0, 255, 0);
-						if (!tile.active())
+						if (!tile.HasTile)
 						{
 							specialType = -1; //turns non-active blocks to air
-							specialType -= (tile.liquid * 0.0001) + (tile.liquidType() * 0.1); //store liquid amount as X in W.YXXX, liquid type as Y in W.YXXX
+							specialType -= (tile.liquid * 0.0001) + (tile.LiquidType * 0.1); //store liquid amount as X in W.YXXX, liquid type as Y in W.YXXX
 						}
 
 						if (tiles.IndexOf(specialType) < 0)
@@ -325,7 +325,7 @@ namespace SOTS.Items.Tools
 						}
 						_structure[i, j] = tiles.IndexOf(specialType);
 
-						if ((!Main.tileSolid[tile.TileType] || tileData != null) && tile.active())
+						if ((!Main.tileSolid[tile.TileType] || tileData != null) && tile.HasTile)
 						{
 							FindOrigin(tile, i, j);
 						}
@@ -454,8 +454,8 @@ namespace SOTS.Items.Tools
             #endregion 
             #region reset and export
             Main.NewText("Complete", 0, 255, 0);
-			mod.Logger.Info("The following is the structure array and its necessary parts\n" + finalExport);
-			mod.Logger.InfoFormat("Array Log from SOTS: {0}", mod.Name);
+			Mod.Logger.Info("The following is the structure array and its necessary parts\n" + finalExport);
+			Mod.Logger.InfoFormat("Array Log from SOTS: {0}", Mod.Name);
 			complete = true;
             #endregion
             return true;

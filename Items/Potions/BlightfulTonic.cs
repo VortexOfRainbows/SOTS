@@ -71,7 +71,7 @@ namespace SOTS.Items.Potions
 			int type1 = -1;
 			int type2 = -1;
 			int buff1 = BuffID.Ironskin;
-			int buff2 = mod.BuffType("GoodVibes");
+			int buff2 = Mod.Find<ModBuff>("GoodVibes").Type;
 			int buff3 = BuffID.Swiftness;
 			int buff4 = BuffID.Regeneration;
 			List<int> capableEffects = new List<int>();

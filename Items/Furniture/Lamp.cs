@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture
     {
         protected virtual Vector3 LightClr { get; }
         protected override int ItemType => ModContent.ItemType<TDrop>();
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;

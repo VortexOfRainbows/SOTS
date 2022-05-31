@@ -10,7 +10,7 @@ namespace SOTS.Items.Furniture
     {
         protected virtual Color MapColor => new Color(191, 142, 111, 255);
         protected override int ItemType => ModContent.ItemType<TDrop>();
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileLighted[Type] = true;

@@ -68,7 +68,7 @@ namespace SOTS.Items.Tools
 						{
 							if(!NPC.AnyNPCs(ModContent.NPCType<TheAdvisorHead>()))
 							{
-								spawnAdvisor = AvaritianGatewayTile.SpawnAdvisor(scanX, scanY, mod);
+								spawnAdvisor = AvaritianGatewayTile.SpawnAdvisor(scanX, scanY, Mod);
 							}
 							GreedGateway = true;
 						}

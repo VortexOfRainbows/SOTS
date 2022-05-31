@@ -531,9 +531,9 @@ namespace SOTS.Void
 			for(int i = 0; i < Player.inventory.Length; i++)
             {
 				Item item = Player.inventory[i];
-				if(Item.modItem as VoidConsumable != null)
+				if(Item.ModItem as VoidConsumable != null)
                 {
-					VoidConsumable vCon = Item.modItem as VoidConsumable;
+					VoidConsumable vCon = Item.ModItem as VoidConsumable;
 					vCon.SealedUpdateInventory(Player);
 				}
 			}
@@ -748,7 +748,7 @@ namespace SOTS.Void
 			{
 				standard = time / 2f;
 			}
-			if (Item.modItem is VoidItem isVoid)
+			if (Item.ModItem is VoidItem isVoid)
 				if (Item.channel == false)
 					return standard;
 			return base.UseTimeMultiplier(item);

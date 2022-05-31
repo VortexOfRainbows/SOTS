@@ -42,7 +42,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.Diamond, 5).AddIngredient(null, "StarlightAlloy", 15).AddTile(mod.TileType("HardlightFabricatorTile")).Register();
+			CreateRecipe(1).AddIngredient(ItemID.Diamond, 5).AddIngredient(null, "StarlightAlloy", 15).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
 		}
 	}
 }

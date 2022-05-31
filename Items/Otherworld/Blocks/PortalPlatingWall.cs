@@ -47,7 +47,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			}*/
 			Rectangle frame = new Rectangle(tile.WallFrameX() + xOff, tile.WallFrameY(), xLength, 32);
 			Color color;
-			color = WorldGen.paintColor((int)tile.wallColor()) * (100f / 255f);
+			color = WorldGen.paintColor((int)tile.WallColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);

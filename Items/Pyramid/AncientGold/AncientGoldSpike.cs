@@ -45,7 +45,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			SoundStyle = 2;
 			DustType = DustID.GoldCoin;
         }
-        public override bool Dangersense(int i, int j, Player player)
+        public override bool IsTileDangerous(int i, int j, Player player)
         {
             return true;
         }
@@ -72,7 +72,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             {
                 for (var j = num3; j < num4; ++j)
                 {
-                    if (Main.tile[i, j] != null && Main.tile[i, j].slope() == (byte)0 && !Main.tile[i, j].IsActuated && Main.tile[i, j].HasTile && Main.tile[i, j ].TileType == ModContent.TileType<AncientGoldSpikeTile>())
+                    if (Main.tile[i, j] != null && Main.tile[i, j].Slope == (byte)0 && !Main.tile[i, j].IsActuated && Main.tile[i, j].HasTile && Main.tile[i, j ].TileType == ModContent.TileType<AncientGoldSpikeTile>())
                     {
                         Vector2 vector2_2;
                         vector2_2.X = (float)(i * 16);

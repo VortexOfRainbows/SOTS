@@ -116,7 +116,7 @@ namespace SOTS.Items.Earth
 			else   //pointing right
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16);
-			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
+			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.TileColor));
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			spriteBatch.Draw(texture, location + drawOffSet + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			if(i != left && j != top)

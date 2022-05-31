@@ -298,7 +298,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		{
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[tile.TileType].Value;
-			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
+			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.TileColor));
 			Vector2 drawOffSet = Vector2.Zero;
 			drawOffSet.Y += 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;

@@ -262,7 +262,7 @@ namespace SOTS.Projectiles.Pyramid
 					{
 						OwnerPos = npc.Center;
 						Vector2 distanceToOwner = Projectile.Center - OwnerPos;
-						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
+						PharaohsCurse curse = npc.ModNPC as PharaohsCurse;
 						DrawLimbs(curse.foamParticleList1, new Rectangle(0, 0, 0, 0));
 						PharaohsCurse.SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/CurseHookMask"), Projectile.Center, 0.75f, curse.foamParticleList1, 0.2f, 3, 25, distanceToOwner.ToRotation() + MathHelper.ToRadians(90), draggingType ? 2.5f : 1);
 					}

@@ -63,7 +63,7 @@ namespace SOTS.Items.Potions
 		public override bool? UseItem(Player player)
 		{
 			int minute = 3600;
-			int buff1 = mod.BuffType("Assassination");
+			int buff1 = Mod.Find<ModBuff>("Assassination").Type;
 			int buff2 = BuffID.MagicPower;
 			int buff3 = BuffID.Heartreach;
 			int buff4 = BuffID.ManaRegeneration;

@@ -219,12 +219,12 @@ namespace SOTS.Items.Tools
 				for (int i = 0; i < differenceX; i++)
 				{
 					Tile tile = Main.tile[i + (int)point1.X, j + (int)point1.Y];
-					if (gemspark.Contains<int>(tile.wall) && anchor.X == 0 && anchor.Y == 0) //sets the anchor to a gemspark block if currently unset
+					if (gemspark.Contains<int>(tile.WallType) && anchor.X == 0 && anchor.Y == 0) //sets the anchor to a gemspark block if currently unset
 					{
 						anchor.X = i;
 						anchor.Y = j;
 					}
-					double specialType = tile.wall;
+					double specialType = tile.WallType;
 
 					/*
 					TileObjectData tileData = TileObjectData.GetTileData(tile);
@@ -303,8 +303,8 @@ namespace SOTS.Items.Tools
             #endregion 
             #region reset and export
             Main.NewText("Complete", 0, 255, 0);
-			mod.Logger.Info("The following is the structure array and its necessary parts\n" + finalExport);
-			mod.Logger.InfoFormat("Array Log from SOTS: {0}", mod.Name);
+			Mod.Logger.Info("The following is the structure array and its necessary parts\n" + finalExport);
+			Mod.Logger.InfoFormat("Array Log from SOTS: {0}", Mod.Name);
 			complete = true;
             #endregion
             return true;

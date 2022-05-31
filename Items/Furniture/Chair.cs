@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture
         protected override int ItemType => ModContent.ItemType<TDrop>();
         protected virtual bool BreaksInLava => true;
 
-        protected override void SetDefaults(TileObjectData t)
+        protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;

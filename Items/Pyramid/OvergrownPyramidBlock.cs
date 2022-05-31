@@ -54,7 +54,7 @@ namespace SOTS.Items.Pyramid
 				if (!Main.tile[i, j - 1].HasTile)
 				{
 					WorldGen.PlaceTile(i, j - 1, Mod.Find<ModTile>("CursedGrass").Type, true, false, -1, Main.rand.Next(12));
-					Main.tile[i, j - 1].color(Main.tile[i, j].TileColor);
+					Main.tile[i, j - 1].TileColor = Main.tile[i, j].TileColor;
 					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
 				}
 				else if (Main.rand.NextBool(8))
@@ -63,17 +63,17 @@ namespace SOTS.Items.Pyramid
 		}
 		public static void GrowCurseVine(int i, int j)
 		{
-			if (!Main.tile[i, j + 1].HasTile && !Main.tile[i, j + 1].lava())
+			if (!Main.tile[i, j + 1].HasTile && !Main.tile[i, j + 1].LiquidType)
 			{
 				var flag9 = false;
 				for (var VineY = j; VineY > j - 10; VineY--)
 				{
-					if (Main.tile[i, VineY].bottomSlope())
+					if (Main.tile[i, VineY].BottomSlope)
 					{
 						flag9 = false;
 						break;
 					}
-					if (Main.tile[i, VineY].HasTile && !Main.tile[i, VineY].bottomSlope())
+					if (Main.tile[i, VineY].HasTile && !Main.tile[i, VineY].BottomSlope)
 					{
 						flag9 = true;
 						break;
@@ -88,7 +88,7 @@ namespace SOTS.Items.Pyramid
 					{
 						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
 						Main.tile[num47, num48].HasTile;
-						Main.tile[num47, num48].color(Main.tile[i, j].TileColor);
+						Main.tile[num47, num48].TileColor = Main.tile[i, j].TileColor;
 						WorldGen.SquareTileFrame(num47, num48, true);
 						if (Main.netMode == NetmodeID.Server)
 						{
@@ -135,7 +135,7 @@ namespace SOTS.Items.Pyramid
 				if (!Main.tile[i, j - 1].HasTile)
 				{
 					WorldGen.PlaceTile(i, j - 1, Mod.Find<ModTile>("CursedGrass").Type, true, false, -1, Main.rand.Next(12));
-					Main.tile[i, j - 1].color(Main.tile[i, j].TileColor);
+					Main.tile[i, j - 1].TileColor = Main.tile[i, j].TileColor;
 					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
 				}
 			else if (Main.rand.NextBool(8))
@@ -144,17 +144,17 @@ namespace SOTS.Items.Pyramid
         }
 		public static void GrowCurseVine(int i, int j)
 		{
-			if (!Main.tile[i, j + 1].HasTile && !Main.tile[i, j + 1].lava())
+			if (!Main.tile[i, j + 1].HasTile && !Main.tile[i, j + 1].LiquidType)
 			{
 				var flag9 = false;
 				for (var VineY = j; VineY > j - 10; VineY--)
 				{
-					if (Main.tile[i, VineY].bottomSlope())
+					if (Main.tile[i, VineY].BottomSlope)
 					{
 						flag9 = false;
 						break;
 					}
-					if (Main.tile[i, VineY].HasTile && !Main.tile[i, VineY].bottomSlope())
+					if (Main.tile[i, VineY].HasTile && !Main.tile[i, VineY].BottomSlope)
 					{
 						flag9 = true;
 						break;
@@ -169,7 +169,7 @@ namespace SOTS.Items.Pyramid
 					{
 						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
 						Main.tile[num47, num48].HasTile;
-						Main.tile[num47, num48].color(Main.tile[i, j].TileColor);
+						Main.tile[num47, num48].TileColor = Main.tile[i, j].TileColor;
 						WorldGen.SquareTileFrame(num47, num48, true);
 						if (Main.netMode == 2)
 						{

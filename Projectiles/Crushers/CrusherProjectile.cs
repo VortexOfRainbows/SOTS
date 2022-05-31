@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Crushers
 			Player player = Main.player[Projectile.owner];
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			Item item = player.HeldItem;
-			VoidItem vItem = Item.modItem as VoidItem;
+			VoidItem vItem = Item.ModItem as VoidItem;
 			if(vItem != null)
 			{
 				if (charge >= 0.25f && consumedAmt == 0)
