@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Earth
 {
@@ -36,23 +37,23 @@ namespace SOTS.Items.Earth
         {
             return new Vector2(-1, 0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            speedX += Main.rand.NextFloat(-1f, 1f);
-            speedY += Main.rand.NextFloat(-1f, 1f);
+            velocity.X += Main.rand.NextFloat(-1f, 1f);
+            velocity.Y += Main.rand.NextFloat(-1f, 1f);
             bool field = false;
             for (int j = -1; j <= 1; j += 2)
                 for (int i = 0; i < 3; i++)
                 {
                     if(!Main.rand.NextBool(3))
                     {
-                        Vector2 burstDirection = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((7f + 35 * i) * j));
-                        Projectile.NewProjectile(position, burstDirection, ModContent.ProjectileType<SporeCloudFriendly>(), (int)(damage * 0.66f), knockBack, player.whoAmI);
+                        Vector2 burstDirection = velocity.RotatedBy(MathHelper.ToRadians((7f + 35 * i) * j));
+                        Projectile.NewProjectile(source, position, burstDirection, ModContent.ProjectileType<SporeCloudFriendly>(), (int)(damage * 0.66f), knockback, player.whoAmI);
                         field = true;
                     }
                 }
             if(field)
-                Terraria.Audio.SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 34, 0.7f, -0.1f);
+                SOTSUtils.PlaySound(SoundID.Item34, (int)position.X, (int)position.Y, 0.7f, -0.1f);
             return true; 
         }
     }

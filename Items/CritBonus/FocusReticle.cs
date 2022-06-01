@@ -105,7 +105,7 @@ namespace SOTS.Items.CritBonus
 			player.GetCritChance(DamageClass.Ranged) += 5;
 			player.GetCritChance(DamageClass.Magic) += 5;
 			player.GetCritChance(DamageClass.Throwing) += 5;
-			modPlayer.CritLifesteal += 1 + (Main.rand.Next(3) == 0 ? 1 : 0);
+			modPlayer.CritLifesteal += 1 + (Main.rand.NextBool(3)? 1 : 0);
 			modPlayer.CritVoidsteal += 1.25f;
 			modPlayer.CritManasteal += 5 + Main.rand.Next(4);
 			modPlayer.CritCurseFire = true;

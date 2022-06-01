@@ -5,6 +5,7 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Projectiles.Earth;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Earth
 {
@@ -33,10 +34,10 @@ namespace SOTS.Items.Earth
             Item.shootSpeed = 5.5f; //arbitrary
 			Item.noMelee = true;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			Vector2 cursorPos = Main.MouseWorld;
-			Projectile.NewProjectile(cursorPos.X, cursorPos.Y, 0, 0, type, damage, knockBack, player.whoAmI, -1);
+			Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, 0, 0, type, damage, knockback, player.whoAmI, -1);
 			return false;
 		}
 		public override int GetVoid(Player player)

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Crushers
@@ -74,7 +75,7 @@ namespace SOTS.Projectiles.Crushers
 			Player player = Main.player[Projectile.owner];
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			Item item = player.HeldItem;
-			VoidItem vItem = Item.ModItem as VoidItem;
+			VoidItem vItem = item.ModItem as VoidItem;
 			if(vItem != null)
 			{
 				if (charge >= 0.25f && consumedAmt == 0)
@@ -138,7 +139,7 @@ namespace SOTS.Projectiles.Crushers
 			{
 				if(CanCharge())
 				{
-					float chargeSpeedMult = (1f / player.meleeSpeed + vPlayer.voidSpeed - 1 + SOTSPlayer.ModPlayer(player).attackSpeedMod - 1) * vPlayer.CrushTransformer;
+					float chargeSpeedMult = (1f / player.GetAttackSpeed(DamageClass.Melee) + vPlayer.voidSpeed - 1 + SOTSPlayer.ModPlayer(player).attackSpeedMod - 1) * vPlayer.CrushTransformer;
 					currentCharge += 1 * chargeSpeedMult;
 					float chargePercentage = currentCharge / chargeTime;
 					chargePercentage = (float)Math.Pow(chargePercentage, exponentReduction);
@@ -151,7 +152,7 @@ namespace SOTS.Projectiles.Crushers
 					VoidConsumption(chargePercentage, ref consumedVoid);
 					if (prev != consumedVoid)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f + 0.1f * consumedVoid);
 					}
 					int trueMaxExplosions = maxExplosions + vPlayer.BonusCrushRangeMax;
 					int trueMinExplosions = minExplosions + vPlayer.BonusCrushRangeMin;
@@ -273,7 +274,7 @@ namespace SOTS.Projectiles.Crushers
 									if (charge2 > 1)
 										charge2 = 1f;
 									if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2, i))
-										Projectile.NewProjectile(positionX, positionY, Projectile.velocity.X, Projectile.velocity.Y, ExplosionType(), Projectile.damage, Projectile.knockBack, Main.myPlayer, initialDamage, 0f);
+										Projectile.NewProjectile(Projectile.GetSource_FromThis(), positionX, positionY, Projectile.velocity.X, Projectile.velocity.Y, ExplosionType(), Projectile.damage, Projectile.knockBack, Main.myPlayer, initialDamage, 0f);
 								}
 							}
 						}
@@ -287,7 +288,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public virtual void ExplosionSound()
 		{
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.1f);
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f);
 		}
 		public virtual Texture2D ArmTexture(int handNum, int direction)
         {
@@ -342,14 +343,14 @@ namespace SOTS.Projectiles.Crushers
 					{
 						Color color = Projectile.GetAlpha(lightColor) * ((float)j / trailLength) * 0.4f;
 						Vector2 pos2 = trail[j];
-						spriteBatch.Draw(texture, pos2 - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+						Main.spriteBatch.Draw(texture, pos2 - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
-					spriteBatch.Draw(texture, player.Center + pos - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Projectile.GetAlpha(lightColor), rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+					Main.spriteBatch.Draw(texture, player.Center + pos - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Projectile.GetAlpha(lightColor), rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				}
 			}
 			Texture2D headTexture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin2 = new Vector2(headTexture.Width / 2, headTexture.Height / 2);
-			spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, Projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			Main.spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, Projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
         }
     }

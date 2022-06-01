@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.BiomeChest;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.ChestItems
 {
@@ -37,9 +39,9 @@ namespace SOTS.Items.ChestItems
                 Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = (int)((Vector2)HoldoutOffset()).Y;
             }
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Vector2 speed = new Vector2(speedX, speedY);
+            Vector2 speed = velocity;
             position += speed.SafeNormalize(Vector2.Zero) * 48;
             int amt = 2;
             if (Main.rand.NextBool(5))
@@ -48,11 +50,11 @@ namespace SOTS.Items.ChestItems
                 amt++;
             for (int i = 0; i < amt; i++)
             {
-                speed = new Vector2(speedX, speedY);
+                speed = velocity;
                 speed = speed.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-amt * 2, amt)));
                 speed.X += Main.rand.NextFloat(-amt, amt) * 0.33f;
                 speed.Y += Main.rand.NextFloat(-amt, amt) * 0.33f;
-                Projectile.NewProjectile(position, speed, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, position, speed, type, damage, knockback, player.whoAmI);
             }
             return false;
         }

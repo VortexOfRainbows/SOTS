@@ -86,7 +86,7 @@ namespace SOTS.Items.GhostTown
 				case 1: //electro
 					player.maxMinions++;
 					player.maxTurrets++;
-					player.allDamage += 0.1f;
+					player.GetDamage(DamageClass.Generic) += 0.1f;
 					break;
 				case 2: //anemo
 					modPlayer.attackSpeedMod += 0.12f;
@@ -123,7 +123,7 @@ namespace SOTS.Items.GhostTown
 				case 2: //mondstadt
 					player.jumpSpeedBoost += 2f;
 					player.moveSpeed += 0.1f;
-					player.meleeSpeed += 0.1f;
+					player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
 					break;
 			}
         }

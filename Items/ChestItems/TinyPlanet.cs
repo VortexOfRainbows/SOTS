@@ -33,7 +33,7 @@ namespace SOTS.Items.ChestItems
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Main.myPlayer == player.whoAmI)
 			{
-				int damage = (int)(Item.damage * (1f + (player.allDamage - 1f)));
+				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Default, Item.damage);
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 			}

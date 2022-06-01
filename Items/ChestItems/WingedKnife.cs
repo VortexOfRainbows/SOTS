@@ -22,7 +22,7 @@ namespace SOTS.Items.ChestItems
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.autoReuse = true;            
-			Item.shoot = Mod.Find<ModProjectile>("WingedKnife").Type; 
+			Item.shoot = ModContent.ItemType<WingedKnife>(); 
             Item.shootSpeed = 12f;
 			Item.consumable = false;
 			Item.knockBack = 1.5f;

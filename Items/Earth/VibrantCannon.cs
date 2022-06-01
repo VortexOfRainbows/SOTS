@@ -40,10 +40,6 @@ namespace SOTS.Items.Earth
 		{
 			return new Vector2(-0.25f, -0.25f);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			return true; 
-		}
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantBar>(), 10).AddTile(TileID.Anvils).Register();

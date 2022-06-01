@@ -22,7 +22,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.meleeSpeed += 0.08f;
+			player.GetAttackSpeed(DamageClass.Melee) += 0.08f;
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			vPlayer.CrushTransformer += 0.12f;
 		}

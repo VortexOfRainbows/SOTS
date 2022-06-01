@@ -45,14 +45,14 @@ namespace SOTS.Items.Earth
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<VibrantOre>();
+			ItemDrop = ModContent.ItemType<VibrantOre>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Ore");
 			AddMapEntry(new Color(123, 166, 36), name);
 			MineResist = 1.0f;
 			MinPick = 40; //no copper/tin pickaxe!
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
+			//SoundStyle = 2;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -64,7 +64,7 @@ namespace SOTS.Items.Earth
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(3) + 1;
-			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/VibrantOre" + type), 1.8f, Main.rand.NextFloat(0.3f, 0.4f));
+			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/VibrantOre" + type), (int)pos.X, (int)pos.Y, 1.8f, Main.rand.NextFloat(0.3f, 0.4f));
 			return false;
 		}
 	}
@@ -82,8 +82,7 @@ namespace SOTS.Items.Earth
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Shard");
 			AddMapEntry(new Color(156, 209, 46), name);
-			SoundType = SoundID.Item;
-			SoundStyle = 27;
+			HitSound = SoundID.Item27;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
         public override bool Drop(int i, int j)

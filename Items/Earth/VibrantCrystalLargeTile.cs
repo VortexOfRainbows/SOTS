@@ -54,9 +54,8 @@ namespace SOTS.Items.Earth
 			name.SetDefault("Large Vibrant Shard");
 			AddMapEntry(new Color(156, 209, 46), name);
 			DustType = ModContent.DustType<VibrantDust>();
-			disableSmartCursor = true;
-			SoundType = SoundID.Item;
-			SoundStyle = 27;
+			//disableSmartCursor = true;
+			HitSound = SoundID.Item27;
 			MinPick = 40;
 			MineResist = 0.1f;
 		}
@@ -66,7 +65,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<VibrantOre>(), 1 + Main.rand.Next(3));
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<VibrantOre>(), 1 + Main.rand.Next(3));
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

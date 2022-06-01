@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.ChestItems
 {
@@ -30,12 +31,12 @@ namespace SOTS.Items.ChestItems
 			Item.shoot = ModContent.ProjectileType<SpikeTrap>(); 
             Item.shootSpeed = 3.5f;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			for(int i = 0; i < player.spikedBoots; i++)
 			{
 				float speedMult = 1.25f + i * 0.25f;
-				Projectile.NewProjectile(position.X, position.Y, speedX * speedMult, speedY * speedMult, type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position, velocity * speedMult, type, damage, knockback, player.whoAmI);
 			}
 			return true; 
 		}

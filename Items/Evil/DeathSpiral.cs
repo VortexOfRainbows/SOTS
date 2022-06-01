@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Evil;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,21 +36,21 @@ namespace SOTS.Items.Evil
 			Item.channel = true;
 			Item.autoReuse = true;
 			Item.DamageType = DamageClass.Melee;
-		}	
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+		}
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			for(int direction = -1; direction <= 1; direction += 2)
 				for (int i = 0; i < 4; i++)
 				{
-					Vector2 velocity = new Vector2(speedX, speedY) * (0.9f - 0.125f * i);
-					Vector2 velocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(40 * i + 35) * direction) * 1.25f;
-					velocity = velocity + velocity2;
-					velocity *= 0.5f;
-					Projectile.NewProjectileDirect(player.RotatedRelativePoint(player.MountedCenter), velocity, type, damage, knockBack, player.whoAmI, -1f, MathHelper.ToRadians(25 + 15 * i) * -direction);
+					Vector2 velocity2 = velocity * (0.9f - 0.125f * i);
+					Vector2 velocity3 = velocity.RotatedBy(MathHelper.ToRadians(40 * i + 35) * direction) * 1.25f;
+					velocity2 = velocity2 + velocity3;
+					velocity2 *= 0.5f;
+					Projectile.NewProjectileDirect(source, player.RotatedRelativePoint(player.MountedCenter), velocity2, type, damage, knockback, player.whoAmI, -1f, MathHelper.ToRadians(25 + 15 * i) * -direction);
 				}
-			speedX *= 1.0f;
-			speedY *= 1.0f;
-			Projectile.NewProjectileDirect(player.RotatedRelativePoint(player.MountedCenter), new Vector2(speedX, speedY) * 1.1f, type, damage, knockBack, player.whoAmI, -0, 0);
+			//speedX *= 1.0f;
+			//speedY *= 1.0f;
+			Projectile.NewProjectileDirect(source, player.RotatedRelativePoint(player.MountedCenter), velocity * 1.1f, type, damage, knockback, player.whoAmI, -0, 0);
 			return false;
 		}
 	}

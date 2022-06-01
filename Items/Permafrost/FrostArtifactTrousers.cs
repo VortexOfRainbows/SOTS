@@ -27,7 +27,7 @@ namespace SOTS.Items.Permafrost
 		public override void UpdateEquip(Player player)
 		{
 			player.moveSpeed += 0.1f;
-			player.meleeSpeed += 0.1f;
+			player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
 		}
 		public override void AddRecipes()
 		{

@@ -72,10 +72,10 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override bool PreDraw(ref Color lightColor)
 		{
-			Draw(spriteBatch, lightColor);
+			Draw(Main.spriteBatch);
 			return false;
 		}
-		public void Draw(SpriteBatch spriteBatch, Color lightColor)
+		public void Draw(SpriteBatch spriteBatch)
         {
 			Player player = Main.player[Projectile.owner];
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
@@ -121,13 +121,13 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				if (storeData == -1 && Projectile.owner == Main.myPlayer)
 				{
-					storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("DigitalTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 1, Projectile.identity);
+					storeData = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<DigitalTrail>(), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 1, Projectile.identity);
 					Projectile.localAI[1] = storeData;
 					Projectile.netUpdate = true;
 				}
 				if (storeData2 == -1 && Projectile.owner == Main.myPlayer)
 				{
-					storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("DigitalTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -1, Projectile.identity);
+					storeData2 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<DigitalTrail>(), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -1, Projectile.identity);
 					Projectile.localAI[0] = storeData2;
 					Projectile.netUpdate = true;
 				}
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Otherworld
 			float randMod = Projectile.ai[1];
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 71, 0.9f, 1f * randMod);
+				SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.9f, 1f * randMod);
 				if (Main.myPlayer == Projectile.owner)
 				{
 					cursorArea = Main.MouseWorld;
@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Otherworld
 					if (distance > 320)
 						distance = 320;
 					toCursor = cursorArea - player.Center;
-					spinSpeed = (1.0f + (4.4f / (float)Math.Pow(distance / 100f, 1.9f))) * randMod * 5f * (SOTSPlayer.ModPlayer(player).attackSpeedMod) / player.meleeSpeed;
+					spinSpeed = (1.0f + (4.4f / (float)Math.Pow(distance / 100f, 1.9f))) * randMod * 5f * (SOTSPlayer.ModPlayer(player).attackSpeedMod) / player.GetAttackSpeed(DamageClass.Melee);
 				}
 				counterOffset = 205 + 45f / randMod;
 				float slashOffset = counterOffset * Projectile.ai[0];

@@ -51,12 +51,12 @@ namespace SOTS.Projectiles.Tide
                     wasInWaterY = 0.75f;
                 }
                 if(wasInWaterX > 0)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 1.1f, -0.33f);
+                    SOTSUtils.PlaySound(SoundID.Item71, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.33f);
             }
             counter--;
             if (wasInWaterX > 0)
             {
-                if (counter > -10 * player.meleeSpeed)
+                if (counter > -10 * player.GetAttackSpeed(DamageClass.Melee))
                 {
                     player.immune = true;
                     player.immuneTime = 2;

@@ -1,3 +1,4 @@
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shield of Desecar");
-			Tooltip.SetDefault("'Less is More'\nGrants 1 defense for every 4 empty inventory slots");
+			Tooltip.SetDefault("'Less is more'\nGrants 1 defense for every 4 empty inventory slots");
 		}
 		public override void SetDefaults()
 		{
@@ -27,7 +28,7 @@ namespace SOTS.Items.ChestItems
 			for(int i = 0; i < 50; i++)
 			{
 				Item inventoryItem = player.inventory[i];
-				if(inventoryItem.type == 0)
+				if(inventoryItem.type == ItemID.None)
 				{
 					shield += 0.25f;
 				}
@@ -36,7 +37,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "DissolvingEarth", 1).AddIngredient(ItemID.GoldBar, 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<DissolvingEarth>(1).AddIngredient(ItemID.GoldBar, 20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

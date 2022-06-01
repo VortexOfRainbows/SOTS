@@ -47,11 +47,9 @@ namespace SOTS.Items.Earth
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Giant Crystal");
 			AddMapEntry(new Color(237, 255, 193), name);
-			disableSmartCursor = true;
 			MinPick = 250;
 			DustType = ModContent.DustType<VibrantDust>();
-			SoundType = SoundID.Item;
-			SoundStyle = 27;
+			HitSound = SoundID.Item27;
 			MineResist = 0.1f;
 		}
         public override bool CanExplode(int i, int j)
@@ -70,11 +68,11 @@ namespace SOTS.Items.Earth
 		{
 			int width = 6 * 16;
 			int height = 7 * 16;
-			Item.NewItem(i * 16 + width, j * 16 + height, 16, 16, ModContent.ItemType<BigCrystal>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16 + width, j * 16 + height, 16, 16, ModContent.ItemType<BigCrystal>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			Tile tile = Main.tile[i, j];
+			/*Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
 			if (tile.TileFrameX % 36 != 0)
@@ -84,7 +82,7 @@ namespace SOTS.Items.Earth
 			if (tile.TileFrameY % 36 != 0)
 			{
 				top--;
-			}
+			}*/
 			r = 0.27f;
 			g = 0.33f;
 			b = 0.15f;

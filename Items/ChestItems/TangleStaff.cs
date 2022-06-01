@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.BiomeChest;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -37,10 +38,9 @@ namespace SOTS.Items.ChestItems
         {
             return new Vector2(-1, 1);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-			position += new Vector2(speedX, speedY) * 3f;
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+			position += velocity * 3f;
         }
     }
 }

@@ -42,13 +42,12 @@ namespace SOTS.Items.Earth
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<VibrantBrick>();
+			ItemDrop = ModContent.ItemType<VibrantBrick>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Brick");
 			AddMapEntry(new Color(181, 220, 97), name);
 			MineResist = 1.0f;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
 		public bool canGlow(int i, int j)
@@ -85,7 +84,7 @@ namespace SOTS.Items.Earth
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(3) + 1;
-			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/VibrantOre" + type), 1.8f, Main.rand.NextFloat(0.3f, 0.4f));
+			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/VibrantOre" + type), (int)pos.X, (int)pos.Y, 1.8f, Main.rand.NextFloat(0.3f, 0.4f));
 			return false;
 		}
 	}

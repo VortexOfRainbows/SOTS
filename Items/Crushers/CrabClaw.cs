@@ -39,9 +39,9 @@ namespace SOTS.Items.Crushers
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Topaz, 15).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool CanShoot(Player player)
 		{
-			return player.ownedProjectileCounts[type] <= 0;
+			return player.ownedProjectileCounts[Item.shoot] <= 0;
 		}
 		public override int GetVoid(Player player)
 		{

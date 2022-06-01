@@ -1,3 +1,4 @@
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shield of Stekpla");
-			Tooltip.SetDefault("'More is More'\nGrants 1% bonus crit chance for every 4 full inventory slots");
+			Tooltip.SetDefault("'More is more'\nGrants 1% bonus crit chance for every 4 full inventory slots");
 		}
 		public override void SetDefaults()
 		{
@@ -38,7 +39,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "DissolvingAurora", 1).AddIngredient(ItemID.PlatinumBar, 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<DissolvingAurora>(1).AddIngredient(ItemID.PlatinumBar, 20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

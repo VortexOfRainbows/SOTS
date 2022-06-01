@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Earth;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Earth
 {
@@ -59,11 +60,6 @@ namespace SOTS.Items.Earth
 				Item.noUseGraphic = false;
 			}
 		}
-		public override void GetWeaponKnockback(Player player, ref float knockback)
-		{
-			triggerItemUpdates(player);
-			base.GetWeaponKnockback(player, ref knockback);
-		}
 		public override bool BeforeUseItem(Player player)
 		{
 			triggerItemUpdates(player);
@@ -73,22 +69,28 @@ namespace SOTS.Items.Earth
 		{
 			return 1;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			triggerItemUpdates(player);
 			if (modPlayer.VibrantArmor)
 			{
 				float mult = 1.33f;
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4.5f));
-				Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<VibrantRifle>(), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
-				speedX = perturbedSpeed.X * mult;
-				speedY = perturbedSpeed.Y * mult;
+				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(4.5f));
+				Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<VibrantRifle>(), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - velocity.ToRotation());
+				velocity.X = perturbedSpeed.X * mult;
+				velocity.Y = perturbedSpeed.Y * mult;
+				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, position);
+				return false;
 			}
 			return true; 
 		}
-		public override void AddRecipes()
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            base.ModifyShootStats(player, ref position, ref velocity, ref type, ref damage, ref knockback);
+        }
+        public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<VibrantBar>(), 4).AddTile(TileID.Anvils).Register();
 		}
