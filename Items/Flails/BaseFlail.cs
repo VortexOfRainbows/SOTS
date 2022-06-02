@@ -106,7 +106,7 @@ namespace SOTS.Items.Flails
 				soundTimer += 1f + ChargeTime / MaxChargeTime;
 				if (soundTimer >= 30)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(SoundID.Item, 19).WithPitchVariance(0.1f).WithVolume(0.5f), Projectile.Center);
+					SOTSUtils.PlaySound(SoundID.Item19, Projectile.Center, 0.5f, 0.1f);
 					soundTimer -= 30;
 				}
 
@@ -231,9 +231,9 @@ namespace SOTS.Items.Flails
 			return false;
 		}
 
-		public override bool PreDrawExtras(SpriteBatch spriteBatch)
-		{
-			Texture2D ChainTexture = Mod.Assets.Request<Texture2D>(Texture.Remove(0, Mod.Name.Length + 1).Value + "_chain");
+        public override bool PreDrawExtras()
+        {
+			Texture2D ChainTexture = Mod.Assets.Request<Texture2D>(Texture.Remove(0, Mod.Name.Length + 1) + "_chain").Value;
 			Player Owner = Main.player[Projectile.owner];
 			int timestodrawchain = Math.Max((int)(Projectile.Distance(Owner.MountedCenter) / ChainTexture.Width), 1);
 			for (int i = 0; i < timestodrawchain; i++)
@@ -242,7 +242,7 @@ namespace SOTS.Items.Flails
 				float scaleratio = Projectile.Distance(Owner.MountedCenter) / ChainTexture.Width / timestodrawchain;
 				Vector2 chainscale = new Vector2(scaleratio, 1);
 				Color lightColor = Lighting.GetColor((int)chaindrawpos.X / 16, (int)chaindrawpos.Y / 16);
-				spriteBatch.Draw(ChainTexture, chaindrawpos - Main.screenPosition, null, lightColor, Projectile.AngleFrom(Owner.MountedCenter), new Vector2(0, ChainTexture.Height / 2), chainscale, SpriteEffects.None, 0);
+				Main.spriteBatch.Draw(ChainTexture, chaindrawpos - Main.screenPosition, null, lightColor, Projectile.AngleFrom(Owner.MountedCenter), new Vector2(0, ChainTexture.Height / 2), chainscale, SpriteEffects.None, 0);
 			}
 			return true;
 		}
