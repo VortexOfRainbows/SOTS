@@ -44,15 +44,15 @@ namespace SOTS.Items.Furniture
         {
             Player localPlayer = Main.LocalPlayer;
             localPlayer.noThrow = 2;
-            localplayer.cursorItemIconEnabled = true;
-            localplayer.cursorItemIconID = ModContent.ItemType<TDrop>();
+            localPlayer.cursorItemIconEnabled = true;
+            localPlayer.cursorItemIconID = ModContent.ItemType<TDrop>();
         }
         public override bool RightClick(int i, int j)
         {
             WorldGen.KillTile(i, j);
             if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
             {
-                NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, i, j);
+                NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
             }
             return true;
         }

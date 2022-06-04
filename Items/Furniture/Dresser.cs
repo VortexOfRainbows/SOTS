@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -28,8 +29,8 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.Origin = new Point16(1, 1);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
-            TileObjectData.newTile.HookCheck = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
+            TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
             TileObjectData.newTile.AnchorInvalidTiles = new[] { 127 };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
@@ -37,16 +38,19 @@ namespace SOTS.Items.Furniture
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
-            disableSmartCursor = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.Dressers };
-            dresser = DresserName;
-            dresserDrop = DresserDrop;
+            ContainerName.SetDefault(DresserName);
+            base.DresserDrop = DresserDrop;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = 0;
         }
-        public override bool HasSmartInteract() => true;
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+        {
+            return true;
+        }
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -92,7 +96,8 @@ namespace SOTS.Items.Furniture
                 }
                 else
                 {
-                    player.flyingPigChest = -1;
+                    player.piggyBankProjTracker.Clear();
+                    player.voidLensChest.Clear();
                     int num213 = Chest.FindChest(left, top);
                     if (num213 != -1)
                     {
@@ -130,8 +135,8 @@ namespace SOTS.Items.Furniture
                 Main.playerInventory = false;
                 player.chest = -1;
                 Recipe.FindRecipes();
-                Main.dresserX = Player.tileTargetX;
-                Main.dresserY = Player.tileTargetY;
+                Main.interactedDresserTopLeftX = Player.tileTargetX;
+                Main.interactedDresserTopLeftY = Player.tileTargetY;
                 Main.OpenClothesWindow();
             }
             return true;
@@ -219,7 +224,7 @@ namespace SOTS.Items.Furniture
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 48, 32, DresserDrop);
+            Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 48, 32, DresserDrop);
             Chest.DestroyChest(i, j);
         }
     }

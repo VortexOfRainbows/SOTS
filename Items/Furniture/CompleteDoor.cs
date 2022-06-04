@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -61,21 +62,21 @@ namespace SOTS.Items.Furniture
                 TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
                 TileID.Sets.HasOutlines[Type] = true;
                 AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
-                disableSmartCursor = true;
+                TileID.Sets.DisableSmartCursor[Type] = true;
                 AdjTiles = new int[] { TileID.OpenDoor };
-                closeDoorID = ModContent.TileType<TClosed>();
+                CloseDoorID = ModContent.TileType<TClosed>();
             }
             public override void NumDust(int i, int j, bool fail, ref int num)
             {
                 num = 0;
             }
-            public override bool HasSmartInteract()
+            public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
             {
                 return true;
             }
             public override void KillMultiTile(int i, int j, int frameX, int frameY)
             {
-                Item.NewItem(i * 16, j * 16, 32, 48, ModContent.ItemType<TDrop>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<TDrop>());
             }
             public override void MouseOver(int i, int j)
             {
@@ -114,11 +115,11 @@ namespace SOTS.Items.Furniture
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
             AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
-            disableSmartCursor = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.ClosedDoor };
-            openDoorID = ModContent.TileType<TOpen>();
+            OpenDoorID = ModContent.TileType<TOpen>();
         }
-        public override bool HasSmartInteract()
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
             return true;
         }
@@ -128,7 +129,7 @@ namespace SOTS.Items.Furniture
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
         }
         public override void MouseOver(int i, int j)
         {

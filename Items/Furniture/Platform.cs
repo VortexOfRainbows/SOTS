@@ -30,7 +30,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
             AddMapEntry(MapColor);
-            disableSmartCursor = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.Platforms };
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

@@ -29,8 +29,8 @@ namespace SOTS.Items.Furniture
         {
             Player localPlayer = Main.LocalPlayer;
             localPlayer.noThrow = 2;
-            localplayer.cursorItemIconEnabled = true;
-            localplayer.cursorItemIconID = ModContent.ItemType<TDrop>();
+            localPlayer.cursorItemIconEnabled = true;
+            localPlayer.cursorItemIconID = ModContent.ItemType<TDrop>();
         }
         public override bool RightClick(int x, int y)
         {
@@ -74,12 +74,12 @@ namespace SOTS.Items.Furniture
         {
             if (closer)
             {
-                Main.clock = true;
+                Main.SceneMetrics.HasClock = true;
             }
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 80, ModContent.ItemType<TDrop>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 80, ModContent.ItemType<TDrop>());
         }
     }
 }

@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,12 +27,12 @@ namespace SOTS.Items.Furniture
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
             TileObjectData.addAlternate(1);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-            disableSmartCursor = true;
+            TileID.Sets.DisableSmartCursor[Type] = true; //I don't know why chair needs this but alright
             AdjTiles = new int[] { TileID.Chairs };
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 32, ItemType);
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ItemType);
         }
     }
 }

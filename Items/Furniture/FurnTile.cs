@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -14,13 +15,13 @@ namespace SOTS.Items.Furniture
         public sealed override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
-            SetDefaults(TileObjectData.newTile);
+            SetStaticDefaults(TileObjectData.newTile);
             TileObjectData.addTile(Type);
             int item = ItemType;
             AddMapEntry(MapColor, LocalizedText.Empty, (s, i, j) => (string)Lang.GetItemName(item));
             if (!Multi)
             {
-                drop = item;
+                ItemDrop = item;
             }
         }
         protected abstract void SetStaticDefaults(TileObjectData t);
@@ -32,7 +33,7 @@ namespace SOTS.Items.Furniture
         {
             if (Multi)
             {
-                Item.NewItem(i * 16, j * 16, 64, 32, ItemType);
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ItemType);
             }
         }
     }

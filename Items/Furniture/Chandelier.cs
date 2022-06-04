@@ -30,11 +30,11 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, 1, 1);
             TileObjectData.newTile.LavaDeath = true;
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch); AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            disableSmartCursor = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 48, 48, ItemType);
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ItemType);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -55,10 +55,10 @@ namespace SOTS.Items.Furniture
             {
                 for (int n = y; n < y + 3; n++)
                 {
-                    if (Main.tile[m, n] == null)
+                    /*if (Main.tile[m, n] == null)
                     {
                         Main.tile[m, n] = new Tile();
-                    }
+                    }*/
                     if (Main.tile[m, n].HasTile && Main.tile[m, n].TileType == Type)
                     {
                         if (Main.tile[m, n].TileFrameX < 54)

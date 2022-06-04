@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ namespace SOTS.Items.Furniture
             t.Height = 2;
             t.CoordinateHeights = new int[] { 16, 18 };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            disableSmartCursor = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -29,7 +30,7 @@ namespace SOTS.Items.Furniture
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<TDrop>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<TDrop>());
         }
         public override void HitWire(int i, int j)
         {

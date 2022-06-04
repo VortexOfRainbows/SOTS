@@ -5,6 +5,7 @@ using SOTS.Projectiles.Base;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -52,7 +53,7 @@ namespace SOTS.Items.Furniture
 			name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
 			DustType = -1;
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.ClosedDoor };
 			SafeSetDefaults();
 		}
@@ -85,19 +86,19 @@ namespace SOTS.Items.Furniture
 				{
 					Tile targetTile = Main.tile[i, top + k];
 					targetTile.TileType = (ushort)ModContent.TileType<TOpen>();
-					targettile.TileFrameX *= 3;
+					targetTile.TileFrameX *= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
-				Projectile.NewProjectile(new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 0);
+				Projectile.NewProjectile(new EntitySource_Misc("SOTS:BlastDoor"), new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 0);
 			}
 		}
-        public override bool HasSmartInteract()
-		{
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+        {
 			return true;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
 		}
 		public override void MouseOver(int i, int j)
 		{
@@ -145,11 +146,11 @@ namespace SOTS.Items.Furniture
 			name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
 			DustType = -1;
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HousingWalls[Type] = true;
-			closeDoorID = ModContent.TileType<TClosed>();
+			CloseDoorID = ModContent.TileType<TClosed>();
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
@@ -181,19 +182,19 @@ namespace SOTS.Items.Furniture
 				{
 					Tile targetTile = Main.tile[i, top + k];
 					targetTile.TileType = (ushort)ModContent.TileType<TClosed>();
-					targettile.TileFrameX /= 3;
+					targetTile.TileFrameX /= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
-				Projectile.NewProjectile(new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 1);
+				Projectile.NewProjectile(new EntitySource_Misc("SOTS:BlastDoor"), new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 1);
 			}
 		}
-		public override bool HasSmartInteract()
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
 			return true;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
 		}
 		public override void MouseOver(int i, int j)
 		{
