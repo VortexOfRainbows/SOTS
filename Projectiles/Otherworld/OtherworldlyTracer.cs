@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.NPCs.Boss.Advisor;
+using SOTS.NPCs.Constructs;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -56,7 +58,6 @@ namespace SOTS.Projectiles.Otherworld
 					Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), rotation[i], drawOrigin, sizes[i], SpriteEffects.None, 0f);
 				}
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void Kill(int timeLeft)
 		{
@@ -88,11 +89,11 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				Lighting.AddLight(Projectile.Center, 0.95f * ((255 - Projectile.alpha)/255), 0.45f * ((255 - Projectile.alpha) / 255), 0.95f * ((255 - Projectile.alpha)/255));
 				NPC owner = Main.npc[(int)Projectile.ai[1]];
-				if (!owner.active || !(owner.type == Mod.Find<ModNPC>("OtherworldlyConstructHead2") .Type|| owner.type == Mod.Find<ModNPC>("OtherworldlyConstructHead") .Type|| owner.type == Mod.Find<ModNPC>("TheAdvisorHead").Type))
+				if (!owner.active || !(owner.type == ModContent.NPCType<OtherworldlyConstructHead2>() || owner.type == ModContent.NPCType<OtherworldlyConstructHead>() || owner.type == ModContent.NPCType<TheAdvisorHead>()))
 				{
 					Projectile.Kill();
 				}
-				if (owner.type == Mod.Find<ModNPC>("TheAdvisorHead").Type)
+				if (owner.type == ModContent.NPCType<TheAdvisorHead>())
 					Projectile.extraUpdates = 1;
 			}
 			if(Projectile.ai[1] == -3)
@@ -107,11 +108,11 @@ namespace SOTS.Projectiles.Otherworld
 			ai1++;
 			if (ai1 == 30)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.3f);
+				SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.3f);
 			}
 			if (ai1 == 60)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.4f);
+				SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
 			}
 			if (ai1 > 61)
 			{
@@ -119,7 +120,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(doOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.2f);
+				SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.2f);
 				if (Projectile.timeLeft > Projectile.ai[0])
 				{
 					Projectile.timeLeft = (int)Projectile.ai[0];

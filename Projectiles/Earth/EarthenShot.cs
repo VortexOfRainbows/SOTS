@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X * 2, Projectile.velocity.Y * 2, ModContent.ProjectileType<EarthenBeam>(), Projectile.damage, 0, Main.myPlayer, 0, Projectile.ai[1]);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X * 2, Projectile.velocity.Y * 2, ModContent.ProjectileType<EarthenBeam>(), Projectile.damage, 0, Main.myPlayer, 0, Projectile.ai[1]);
 			}
 			Projectile.Kill();
 		}

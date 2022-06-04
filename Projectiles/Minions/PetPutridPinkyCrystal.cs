@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 				GameShaders.Armor.GetSecondaryShader(shader, player).Apply(null);
 			}
-			return base.PreDraw(spriteBatch, lightColor);
+			return true;
         }
         public override void AI()
 		{
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Minions
 				for(int i = 0; i < hooks.Length; i++)
                 {
 					if(Main.myPlayer == Projectile.owner)
-						hooks[i] = Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.identity, i * 60);
+						hooks[i] = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.identity, i * 60);
                 }
             }
 			bool hasHooked = false;
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Minions
 					}
 					if(!hook.active || hook.type != ModContent.ProjectileType<FluxSlimeBall>())
 					{
-						hooks[i] = Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, i * 60);
+						hooks[i] = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, i * 60);
 					}
 				}
 				if(decidedHook != -1)
@@ -214,7 +214,7 @@ namespace SOTS.Projectiles.Minions
 			float shootToY = fireToY - Projectile.Center.Y;
 			Vector2 shootTo = new Vector2(shootToX, shootToY).SafeNormalize(Vector2.Zero);
 			drawPos += shootTo * 2;
-			spriteBatch.Draw(texture, drawPos, null, drawColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 
 			Player player = Main.player[Projectile.owner];
 			if (shader != 0)

@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Chaos
                         drawPos += new Vector2(texture.Height * scale, 0).RotatedBy(angle.ToRotation());
                         int k = (int)drawPos.X / 16;
                         int j = (int)drawPos.Y / 16;
-                        spriteBatch.Draw(texture, drawPos - Main.screenPosition + dynamicAddition, null, color, rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + dynamicAddition, null, color, rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
                         if (SOTSWorldgenHelper.TrueTileSolid(k, j))
                         {
                             break;
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Chaos
                 Vector2 dynamicAddition = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * i) + counter);
                 float angle = Projectile.rotation + MathHelper.ToRadians(Projectile.ai[0] * 5);
                 drawPos += new Vector2(distance, 0).RotatedBy(angle + MathHelper.ToRadians(45* i));
-                spriteBatch.Draw(texture2, drawPos - Main.screenPosition + dynamicAddition, null, color, Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2, drawPos - Main.screenPosition + dynamicAddition, null, color, Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
             }
             // Vector2 drawOrigin = new Vector2(texture2.Width / 2, texture2.Height / 2);
             // drawPos = Projectile.Center - Main.screenPosition;

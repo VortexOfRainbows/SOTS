@@ -57,14 +57,13 @@ namespace SOTS.Projectiles.Otherworld
 				float y = Main.rand.Next(-10, 11) * 0.1f;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 			if (Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("AvaritianExplosion").Type, Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<AvaritianExplosion>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override void AI()

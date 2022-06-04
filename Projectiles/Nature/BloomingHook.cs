@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Nature
 					Vector2 pos = rotationPos += centerOfCircle;
 					Vector2 dynamicAddition = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(i * 36 + aiCounter * 2));
 					Vector2 drawPos = pos - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(drawColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, Projectile.scale, SpriteEffects.None, 0f); 
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, Projectile.scale, SpriteEffects.None, 0f); 
 				}
 			}
 			return true;
@@ -178,10 +178,10 @@ namespace SOTS.Projectiles.Nature
 					frame++;
 					if (frame == 7)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.7f, -0.4f);
+						SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, -0.4f);
 						if (Main.myPlayer == Projectile.owner)
 						{
-							Projectile.NewProjectile(Projectile.Center, rotateVector * 1f, ModContent.ProjectileType<FriendlyFlowerBolt>(), Projectile.damage, 1f, owner.whoAmI);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateVector * 1f, ModContent.ProjectileType<FriendlyFlowerBolt>(), Projectile.damage, 1f, owner.whoAmI);
 							Projectile.netUpdate = true;
 						}
 					}

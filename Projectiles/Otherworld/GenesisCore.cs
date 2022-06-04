@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (num < 24)
 				{
 					Vector2 velo = Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 6;
-					Projectile.NewProjectile(Projectile.Center, velo, ModContent.ProjectileType<GenesisArc>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velo, ModContent.ProjectileType<GenesisArc>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 0);
 				}
 				num++;
 			}
@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.5f);
+			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.5f);
 			Vector2 circularLocation = new Vector2(10, 0);
 			for(int j = 1; j < 3; j++)
 			{
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Otherworld
 						NPC npc = Main.npc[npcIndex];
 						if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 						{
-							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("OriginLightningZap").Type, (int)(Projectile.damage * 1f), 0, Projectile.owner, npc.whoAmI);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<OriginLightningZap>(), (int)(Projectile.damage * 1f), 0, Projectile.owner, npc.whoAmI);
 						}
 					}
 				}

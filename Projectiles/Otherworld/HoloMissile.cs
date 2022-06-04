@@ -61,7 +61,6 @@ namespace SOTS.Projectiles.Otherworld
 				float y = Main.rand.Next(-10, 11) * 0.75f * approaching;
 				Main.spriteBatch.Draw(texture2, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		bool active = false;
 		public override void AI()
@@ -84,7 +83,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile.velocity += -toPlayer * (0.125f * Projectile.timeLeft/540f) + new Vector2(x, y);
 			}
 			if(Projectile.timeLeft == 30)
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
+				SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
 			if (Projectile.timeLeft < 30)
             {
 				Projectile.tileCollide = false;

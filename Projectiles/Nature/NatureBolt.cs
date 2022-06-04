@@ -119,8 +119,8 @@ namespace SOTS.Projectiles.Nature
         public override void Kill(int timeLeft)
 		{
 			if(Main.netMode != NetmodeID.MultiplayerClient)
-				Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeat>(), Projectile.damage, 0, Main.myPlayer);
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeat>(), Projectile.damage, 0, Main.myPlayer);
+			SOTSUtils.PlaySound(SoundID.Item93, (int)trueTarget.X, (int)trueTarget.Y, 0.35f);
 		}
 	}
 }

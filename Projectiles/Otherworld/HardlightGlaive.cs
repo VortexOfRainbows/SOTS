@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Otherworld
@@ -47,13 +48,13 @@ namespace SOTS.Projectiles.Otherworld
 				Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 				for (int k = 0; k < 3; k++)
 				{
-					spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 			}
 			else
 			{
 				Color color = Color.White;
-				spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 		}
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -141,10 +142,10 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if (runOnce2 && player.itemAnimation <= player.itemAnimationMax / 3)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
+				SOTSUtils.PlaySound(SoundID.NPCHit53, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.625f);
 				runOnce2 = false;
 				if(Projectile.owner == Main.myPlayer)
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, Mod.Find<ModProjectile>("HardlightColumn").Type, (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, ModContent.ProjectileType<HardlightColumn>(), (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
 			}
 		}
 		int storeData = -1;
@@ -152,7 +153,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("HardlightTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
+				storeData = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<HardlightTrail>(), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
 				Projectile.ai[1] = storeData;
 				Projectile.netUpdate = true;
 			}

@@ -34,9 +34,9 @@ namespace SOTS.Projectiles.Otherworld
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Color color = Color.White;
-            spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, drawColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            DrawBall(spriteBatch);
+            Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            DrawBall(Main.spriteBatch);
             return false;
         }
         public void DrawBall(SpriteBatch spriteBatch)
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Otherworld
                     Main.spriteBatch.End();
                     Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     for (int i = 0; i < 2; i++)
-                        spriteBatch.Draw(texture, fireFrom - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, 0f, new Vector2(texture.Width / 2, texture.Height / 2), percent * 0.3f, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, fireFrom - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, 0f, new Vector2(texture.Width / 2, texture.Height / 2), percent * 0.3f, SpriteEffects.None, 0f);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Otherworld
             {
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 28;
                 if (counter == (int)Projectile.ai[0] / 3)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.1f);
+                    SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, 0.1f);
                 float percent = counter / Projectile.ai[0];
                 for (int k = -1; k <= 1; k += 2)
                 {
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Otherworld
                 }
                 if (counter >= Projectile.ai[0])
                 {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.7f, 0.3f);
+                    SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.3f);
                     for (int k = 0; k < 60; k++)
                     {
                         Dust dust = Dust.NewDustDirect(fireFrom + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(120, 200, 255));
@@ -144,8 +144,8 @@ namespace SOTS.Projectiles.Otherworld
                     counter = -(int)(Projectile.ai[0] * 0.5f);
                     if (Main.myPlayer == Projectile.owner)
                     {
-                        Projectile.NewProjectile(fireFrom, Projectile.velocity, ModContent.ProjectileType<ArcLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                        Projectile.NewProjectile(fireFrom, Projectile.velocity, ModContent.ProjectileType<ArcLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 1);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity, ModContent.ProjectileType<ArcLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity, ModContent.ProjectileType<ArcLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 1);
                     }
                 }
             }

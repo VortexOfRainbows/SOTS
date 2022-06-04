@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Earth
             for (int i = 0; i < 4; i++)
             {
                 Vector2 addition = Main.rand.NextVector2Circular(1, 1);
-                spriteBatch.Draw(texture, drawPos + addition, null, new Color(110, 105, 100, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos + addition, null, new Color(110, 105, 100, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
         }
         public override void SetDefaults()

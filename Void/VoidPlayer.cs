@@ -54,19 +54,16 @@ namespace SOTS.Void
 		public float CrushTransformer = 1f;
 		public int BonusCrushRangeMin = 0;
 		public int BonusCrushRangeMax = 0;
-		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
-
-			return new TagCompound {
-
-				{"voidMeterMax", voidMeterMax},
-				{"voidMeterMax2", voidMeterMax2},
-				{"voidAnkh", voidAnkh},
-				{"voidStar", voidStar},
-				{"voidMeter", voidMeter},
-				{"lootingSouls", lootingSouls},
-				{"voidBarOffsetX", voidBarOffset.X},
-				{"voidBarOffsetY", voidBarOffset.Y},
-				};
+		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
+		{
+			tag["voidMeterMax"] = voidMeterMax;
+			tag["voidMeterMax2"] = voidMeterMax2;
+			tag["voidAnkh"] = voidAnkh;
+			tag["voidStar"] = voidStar;
+			tag["voidMeter"] = voidMeter;
+			tag["lootingSouls"] = lootingSouls;
+			tag["voidBarOffsetX"] = voidBarOffset.X;
+			tag["voidBarOffsetY"] = voidBarOffset.Y;
 		}
 		public override void LoadData(TagCompound tag)
 		{
@@ -74,13 +71,13 @@ namespace SOTS.Void
 			voidMeterMax2 = tag.GetInt("voidMeterMax2");
 			voidAnkh = tag.GetInt("voidAnkh");
 			voidStar = tag.GetInt("voidStar");
-			if (tag.ContainsKey("voidMeter"))
-				voidMeter = tag.GetFloat("voidMeter");
+			//if (tag.ContainsKey("voidMeter"))
+			voidMeter = tag.GetFloat("voidMeter");
 			lootingSouls = tag.GetInt("lootingSouls");
-			if (tag.ContainsKey("voidBarOffsetX"))
-				voidBarOffset.X = tag.GetFloat("voidBarOffsetX");
-			if (tag.ContainsKey("voidBarOffsetY"))
-				voidBarOffset.Y = tag.GetFloat("voidBarOffsetY");
+			//if (tag.ContainsKey("voidBarOffsetX"))
+			voidBarOffset.X = tag.GetFloat("voidBarOffsetX");
+			//if (tag.ContainsKey("voidBarOffsetY"))
+			voidBarOffset.Y = tag.GetFloat("voidBarOffsetY");
 		}
 		public bool netUpdate = false;
 		public override void SendClientChanges(ModPlayer clientPlayer)
@@ -152,7 +149,7 @@ namespace SOTS.Void
 						vPlayer.resolveVoidAmount += amt;
 					}
 				}
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidHealEffect>(), 0, 0, player.whoAmI, damageOverTime ? -1 : 0, voidAmount);
+				Projectile.NewProjectile(player.GetSource_Misc("SOTS:VoidHeal"), player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidHealEffect>(), 0, 0, player.whoAmI, damageOverTime ? -1 : 0, voidAmount);
 				//NetMessage.SendData(43, -1, -1, "", player.whoAmI, (float)voidAmount, 0f, 0f, 0);
 			}
 		}
@@ -179,14 +176,14 @@ namespace SOTS.Void
 			{
 				genGore = false; //apparently, genGore false doesn't remove almost anygore what-so-ever
 				damageSource = PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[0]);
-				Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
+				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
 				return true;
 			}
 			if (damage == 10.0 && voidRecovery)
 			{
 				genGore = false;
 				damageSource = PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]);
-				Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
+				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
 				return true;
 			}
 			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
@@ -264,7 +261,7 @@ namespace SOTS.Void
 			if (Main.mouseRight && Main.mouseRightRelease && Player.ownedProjectileCounts[ProjectileType<HarvestingStrike>()] < 1)
 			{
 				if (Main.myPlayer == Player.whoAmI)
-					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, ProjectileType<HarvestingStrike>(), 1, 0, Player.whoAmI);
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:RightClickWithSoulsOfLooting"), Main.MouseWorld, Vector2.Zero, ProjectileType<HarvestingStrike>(), 1, 0, Player.whoAmI);
 			}
 		}
 		public void ColorUpdate()
@@ -353,10 +350,10 @@ namespace SOTS.Void
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile projectile = Main.projectile[i];
-				if (Projectile.owner == Player.whoAmI && Projectile.active && isVoidMinion(projectile))
+				if (projectile.owner == Player.whoAmI && projectile.active && isVoidMinion(projectile))
 				{
 					VoidMinions.Add(voidMinion(projectile));
-					whoAmI.Add(Projectile.whoAmI);
+					whoAmI.Add(projectile.whoAmI);
 				}
 			}
 			int total = 0;
@@ -372,13 +369,13 @@ namespace SOTS.Void
 				{
 					int type = VoidMinions[i];
 					Projectile projectile = Main.projectile[whoAmI[i]];
-					if (Projectile.owner == Player.whoAmI)
+					if (projectile.owner == Player.whoAmI)
 					{
-						Projectile.active = false;
-						Projectile.Kill();
+						projectile.active = false;
+						projectile.Kill();
 					}
 					total -= minionVoidCost(type);
-					if (Projectile.owner == Player.whoAmI)
+					if (projectile.owner == Player.whoAmI)
 						VoidMinions.RemoveAt(i);
 					flag = true;
 				}
@@ -443,7 +440,7 @@ namespace SOTS.Void
         }
 		public static int voidMinion(Projectile projectile)
         {
-			return voidMinion(Projectile.type);
+			return voidMinion(projectile.type);
 		}
 		public static bool isVoidMinion(int type)
 		{
@@ -504,7 +501,7 @@ namespace SOTS.Void
             }
 			damage = (int)(damage * Main.rand.NextFloat(0.9f, 1.1f));
 			if (player.whoAmI == Main.LocalPlayer.whoAmI)
-				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Damage"), 1.1f);
+				SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Damage"), (int)player.Center.X, (int)player.Center.Y, 1.1f);
 			for (int i = 0; i < (int)(4 + 0.5f * Math.Sqrt(damage)); i++)
 			{
 				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
@@ -531,9 +528,9 @@ namespace SOTS.Void
 			for(int i = 0; i < Player.inventory.Length; i++)
             {
 				Item item = Player.inventory[i];
-				if(Item.ModItem as VoidConsumable != null)
+				if(item.ModItem as VoidConsumable != null)
                 {
-					VoidConsumable vCon = Item.ModItem as VoidConsumable;
+					VoidConsumable vCon = item.ModItem as VoidConsumable;
 					vCon.SealedUpdateInventory(Player);
 				}
 			}
@@ -547,7 +544,7 @@ namespace SOTS.Void
 						time = 1200;
 					Player.AddBuff(ModContent.BuffType<VoidShock>(), time);
 					if (Player.whoAmI == Main.LocalPlayer.whoAmI)
-						Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Player.Center.X, (int)Player.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Void/Void_Shock"), 0.9f);
+						SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Shock"), (int)Player.Center.X, (int)Player.Center.Y, 0.9f);
 					//if(time < 120) time = 120;
 				}
 				if(flatVoidRegen > -1 && Player.HasBuff(BuffType<VoidShock>()))
@@ -692,11 +689,11 @@ namespace SOTS.Void
 			}
 			if (this.frozenCounter == this.frozenMinTimer - 30 && Main.myPlayer == Player.whoAmI)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, -0.1f);
+				SOTSUtils.PlaySound(SoundID.Item29, (int)Player.Center.X, (int)Player.Center.Y, 1.1f, -0.1f);
 			}
 			if (this.frozenDuration == 30 && Main.myPlayer == Player.whoAmI)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Player.Center.X, (int)Player.Center.Y, 29, 1.1f, 0.3f);
+				SOTSUtils.PlaySound(SoundID.Item29, (int)Player.Center.X, (int)Player.Center.Y, 1.1f, 0.3f);
 			}
 
 			frozenMaxDuration = 0;
@@ -709,7 +706,7 @@ namespace SOTS.Void
 				if(!isFull)
 				{
 					if (Player.whoAmI == Main.LocalPlayer.whoAmI && !frozenVoid)
-						Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Player.Center.X, (int)Player.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Void/Void_Full"), 1.4f);
+						SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Full"), (int)Player.Center.X, (int)Player.Center.Y, 1.4f);
 					isFull = true;
 				}
 			}
@@ -741,16 +738,16 @@ namespace SOTS.Void
 		public override float UseTimeMultiplier(Item item)
 		{
 			float standard = voidSpeed;
-			int time = Item.useAnimation;
+			int time = item.useAnimation;
 			int cannotPass = 2;
 			float current = time / standard;
 			if (current < cannotPass)
 			{
 				standard = time / 2f;
 			}
-			if (Item.ModItem is VoidItem isVoid)
-				if (Item.channel == false)
-					return standard;
+			if (item.ModItem is VoidItem)
+				if (!item.channel)
+					return 1 / standard;
 			return base.UseTimeMultiplier(item);
 		}
 		public float resolveVoidCounter = 0;

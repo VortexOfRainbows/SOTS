@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.WorldgenHelpers;
 
 namespace SOTS.Projectiles.Earth
 {    
@@ -33,8 +34,8 @@ namespace SOTS.Projectiles.Earth
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
-            DrawOutline(spriteBatch, lightColor);
-            spriteBatch.Draw(texture, drawPos + new Vector2(0, player.gfxOffY), null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            DrawOutline(Main.spriteBatch, lightColor);
+            Main.spriteBatch.Draw(texture, drawPos + new Vector2(0, player.gfxOffY), null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             return false;
         }
         public void DrawOutline(SpriteBatch spriteBatch, Color drawColor)
@@ -63,7 +64,7 @@ namespace SOTS.Projectiles.Earth
             for (int i = 0; i < 4; i++)
             {
                 Vector2 addition = Main.rand.NextVector2Circular(1, 1);
-                spriteBatch.Draw(texture, drawPos + addition + new Vector2(0, player.gfxOffY), null, new Color(100, 100, 100, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos + addition + new Vector2(0, player.gfxOffY), null, new Color(100, 100, 100, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
         }
         public override bool ShouldUpdatePosition()
@@ -82,7 +83,7 @@ namespace SOTS.Projectiles.Earth
             if(counter < timeToLaunch)
             {
                 if(counter == 1)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f, -0.2f);
+                    SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.2f);
                 if (Projectile.owner == Main.myPlayer)
                 {
                     Projectile.ai[0] = Main.MouseWorld.X;
@@ -106,7 +107,7 @@ namespace SOTS.Projectiles.Earth
             else
             {
                 if(counter == timeToLaunch)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 19, 1.0f, -0.1f);
+                    SOTSUtils.PlaySound(SoundID.Item19, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.1f);
                 if (player.itemTime > itemUseTime)
                 {
                     player.itemTime = itemUseTime;
@@ -150,7 +151,7 @@ namespace SOTS.Projectiles.Earth
                     {
                         WorldGen.KillTile(i, j, false, false, false);
                         if (Main.netMode != NetmodeID.SinglePlayer)
-                            NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
+                            NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
                     }
                     else if (Main.myPlayer == Projectile.owner && NPC.downedBoss2)
                         player.PickTile(i, j, 70);
@@ -160,7 +161,7 @@ namespace SOTS.Projectiles.Earth
         public override void Kill(int timeLeft)
         {
             HitTiles();
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.4f);
+            SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.4f);
             for (int i = 0; i < 360; i += 24)
             {
                 Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(i));

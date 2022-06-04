@@ -39,7 +39,6 @@ namespace SOTS.Projectiles.Laser
             {
                 drawPos = Projectile.Center;
                 color = Color.White;
-                
                 switch (i)
                 {
                     case 0:
@@ -75,7 +74,7 @@ namespace SOTS.Projectiles.Laser
                     drawPos += new Vector2(texture.Height * scale, 0).RotatedBy(angle.ToRotation());
                     int k = (int)drawPos.X / 16;
                     int j = (int)drawPos.Y / 16;
-                    spriteBatch.Draw(texture, drawPos - Main.screenPosition + dynamicAddition, null, color, rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + dynamicAddition, null, color, rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
                     if (!WorldGen.InWorld(k, j, 20) || Main.tile[k, j].HasTile && Main.tileSolidTop[Main.tile[k, j].TileType] == false && Main.tileSolid[Main.tile[k, j].TileType] == true)
                     {
                         break;
@@ -119,7 +118,7 @@ namespace SOTS.Projectiles.Laser
                 drawPos += new Vector2(distance, 0).RotatedBy(angle + MathHelper.ToRadians(360f / 7f * i));
                 float x = Main.rand.Next(-10, 11) * 0.5f * (1 - compression);
                 float y = Main.rand.Next(-10, 11) * 0.5f * (1 - compression);
-                spriteBatch.Draw(texture2, drawPos - Main.screenPosition + new Vector2(x, y) + dynamicAddition, null, color, Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2, drawPos - Main.screenPosition + new Vector2(x, y) + dynamicAddition, null, color, Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
             }
             // Vector2 drawOrigin = new Vector2(texture2.Width / 2, texture2.Height / 2);
             // drawPos = Projectile.Center - Main.screenPosition;
@@ -161,7 +160,7 @@ namespace SOTS.Projectiles.Laser
             if (!player.channel && Projectile.ai[0] >= 100 && ai2 >= 5) ended = true;
             if (ended)
             {
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+                SOTSUtils.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
                 Projectile.Kill();
             }
         }
@@ -170,7 +169,7 @@ namespace SOTS.Projectiles.Laser
             if (Main.myPlayer == Projectile.owner)
                 for (int i = 0; i < 7; i++)
                 {
-                    Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PrismLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, i);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PrismLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, i);
                 }   
             base.Kill(timeLeft);
         }

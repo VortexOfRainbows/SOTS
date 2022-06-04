@@ -41,8 +41,8 @@ namespace SOTS.Projectiles.Otherworld
         {
             if (storeData1 == -1 && Projectile.owner == Main.myPlayer)
             {
-                storeData1 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("InfernoTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, -1, Projectile.whoAmI);
-                storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("InfernoTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, 1, Projectile.whoAmI);
+                storeData1 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<InfernoTrail>(), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, -1, Projectile.whoAmI);
+                storeData2 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<InfernoTrail>(), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack, Projectile.owner, 1, Projectile.whoAmI);
                 Projectile.netUpdate = true;
             }
             if(Projectile.velocity.Length() > 1)
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Otherworld
                     vector2_1.Normalize();
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
-                    Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
+                    Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
                     color2 = Projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }

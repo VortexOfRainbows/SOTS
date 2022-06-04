@@ -54,7 +54,6 @@ namespace SOTS.Projectiles.Otherworld
 				float y = Main.rand.Next(-10, 11) * 0.1f;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		Vector2 aimTo = new Vector2(0, 0);
 		int ofTotal2 = 0;
@@ -143,7 +142,7 @@ namespace SOTS.Projectiles.Otherworld
 				aimTo = aimTo.SafeNormalize(new Vector2(0,1));
 				if (Projectile.timeLeft == 721)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 0.7f);
+					SOTSUtils.PlaySound(SoundID.Item71, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f);
 					aimTo *= -12;
 					Projectile.velocity = aimTo;
 				}

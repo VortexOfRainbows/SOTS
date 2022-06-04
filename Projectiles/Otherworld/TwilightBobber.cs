@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.FromChests;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,10 +27,10 @@ namespace SOTS.Projectiles.Otherworld
             if(modPlayer.rainbowGlowmasks)
                 for (int k = 0; k < 2; k++)
                 {
-                    spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
                 }
             else
-                spriteBatch.Draw(texture, drawPos, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         public override bool PreDrawExtras()      //this draws the fishing line correctly
         {
@@ -42,7 +44,7 @@ namespace SOTS.Projectiles.Otherworld
                 int type = Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].type;
                 float gravDir = Main.player[Projectile.owner].gravDir;
 
-                if (type == Mod.Find<ModItem>("TwilightFishingPole").Type)
+                if (type == ModContent.ItemType<TwilightFishingPole>())
                 {
                     pPosX += (float)(43 * Main.player[Projectile.owner].direction);
                     if (Main.player[Projectile.owner].direction < 0)
@@ -149,8 +151,8 @@ namespace SOTS.Projectiles.Otherworld
                         Color color2 = new Color(205, 200, 255);    //fishing line color
                         if (SOTSPlayer.ModPlayer(player).rainbowGlowmasks)
                             color2 = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB);
-
-                        Main.spriteBatch.Draw(Main.fishingLineTexture, new Vector2(value.X - Main.screenPosition.X + (float)Main.fishingLineTexture.Width * 0.5f, value.Y - Main.screenPosition.Y + (float)Main.fishingLineTexture.Height * 0.5f), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Main.fishingLineTexture.Width, (int)num)), color2, rotation2, new Vector2((float)Main.fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
+                        Texture2D fishingLineTexture = (Texture2D)TextureAssets.FishingLine;
+                        Main.spriteBatch.Draw(fishingLineTexture, new Vector2(value.X - Main.screenPosition.X + (float)fishingLineTexture.Width * 0.5f, value.Y - Main.screenPosition.Y + (float)fishingLineTexture.Height * 0.5f), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, fishingLineTexture.Width, (int)num)), color2, rotation2, new Vector2((float)fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
                     }
                 }
             }

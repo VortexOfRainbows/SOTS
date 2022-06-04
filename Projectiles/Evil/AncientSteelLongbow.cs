@@ -4,6 +4,7 @@ using SOTS.Dusts;
 using SOTS.Projectiles.Otherworld;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,8 +34,8 @@ namespace SOTS.Projectiles.Evil
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
-            spriteBatch.Draw(texture, drawPos, null, drawColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            DrawArrows(spriteBatch, drawColor);
+            Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            DrawArrows(Main.spriteBatch, lightColor);
             return false;
         }
         const int fireFromDist = 30;
@@ -45,7 +46,7 @@ namespace SOTS.Projectiles.Evil
             if (Projectile.ai[0] != 0 && counter < Projectile.ai[0])
             {
                 int arrowType = (int)Projectile.ai[1];
-                if(!Main.projectileLoaded[arrowType])
+                if(!TextureAssets.Projectile[arrowType].IsLoaded)
                 {
                     Main.instance.LoadProjectile(arrowType);
                 }
@@ -116,8 +117,8 @@ namespace SOTS.Projectiles.Evil
                 if (Projectile.owner == Main.myPlayer)
                 {
                     Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - textureHeight);
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 5, 1.2f, -0.1f);
-                    Projectile proj = Projectile.NewProjectileDirect(fireFrom, Projectile.velocity * 4f, (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    SOTSUtils.PlaySound(SoundID.Item5,(int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, -0.1f);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity * 4f, (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
                     proj.GetGlobalProjectile<SOTSProjectile>().affixID = -1; //this sould sync automatically on the SOTSProjectile end
                 }
             }

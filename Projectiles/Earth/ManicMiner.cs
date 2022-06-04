@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Earth
 				for (int j = 0; j < 4; j++)
 				{
 					Vector2 offset = new Vector2(2, 0).RotatedBy(j * MathHelper.PiOver2);
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition + offset, null, color * scale * 0.8f, Projectile.rotation + MathHelper.PiOver2, drawOrigin, new Vector2(0.5f, lengthTowards) * scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + offset, null, color * scale * 0.8f, Projectile.rotation + MathHelper.PiOver2, drawOrigin, new Vector2(0.5f, lengthTowards) * scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 				lastPosition = drawPos;
 			}
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Earth
 			{
 				if (runOnce)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/StarLaser"), 0.6f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
+					SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarLaser"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
 					for (int i = 0; i < 13; i++)
 					{
 						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());

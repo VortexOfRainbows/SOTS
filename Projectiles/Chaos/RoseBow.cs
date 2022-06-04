@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.Chaos
             {
                 float percent = counter / Projectile.ai[0];
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - (percent + chargeLevel) * fireFromTighten);
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 5, 1.2f, -0.1f);
+                SOTSUtils.PlaySound(SoundID.Item5, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, -0.1f);
                 int type = ModContent.ProjectileType<ChaosArrow1>();
                 if (chargeLevel >= 1)
                     type = ModContent.ProjectileType<ChaosArrow2>();
@@ -242,10 +242,10 @@ namespace SOTS.Projectiles.Chaos
                 if (chargeLevel < 2 && counter > 0)
                 {
                     if ((int)counter == (int)Projectile.ai[0] / 2)
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
+                        SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, 0.6f);
                     if ((int)counter >= Projectile.ai[0])
                     {
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.3f);
+                        SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.3f);
                         if(chargeLevel == 0)
                         {
                             Vector2 pos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 24);

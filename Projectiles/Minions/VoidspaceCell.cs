@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			Player player = Main.player[Projectile.owner];
 			float mult = counter / 45f;
-			sphereRadius = 105f + (300f * (player.GetDamage(DamageClass.Summon) + (player.allDamage - 1f))) * mult;
+			sphereRadius = 105f + (SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 300)); //increase range based on damage boosts
 			if(counter < 45)
 				counter++;
 			cataloguePos();
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Minions
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if(chains)
-				DrawChain((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, spriteBatch);
+				DrawChain((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, Main.spriteBatch);
 			for (int i = 0; i < particleList.Count; i++)
 			{
 				Color color = new Color(75, 255, 30, 0);
@@ -183,7 +183,7 @@ namespace SOTS.Projectiles.Minions
 					{
 						if (Main.myPlayer == Projectile.owner)
 						{
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<VoidspaceExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<VoidspaceExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 						}
 					}
 				}

@@ -4,6 +4,7 @@ using SOTS.Dusts;
 using SOTS.Projectiles.Otherworld;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,8 +34,8 @@ namespace SOTS.Projectiles.Permafrost
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
-            spriteBatch.Draw(texture, drawPos, null, drawColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            DrawArrows(spriteBatch, drawColor);
+            Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            DrawArrows(Main.spriteBatch, lightColor);
             if (chargeLevel == 2)
             {
                 float alphaMult = afterCount / 15f;
@@ -59,11 +60,11 @@ namespace SOTS.Projectiles.Permafrost
             if (Projectile.ai[0] != 0)
             {
                 int arrowType = (int)Projectile.ai[1];
-                if(!Main.projectileLoaded[arrowType])
+                if (!TextureAssets.Projectile[arrowType].IsLoaded)
                 {
                     Main.instance.LoadProjectile(arrowType);
                 }
-                Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[arrowType].Value;
+                Texture2D texture = TextureAssets.Projectile[arrowType].Value;
                 if (arrowType == ModContent.ProjectileType<HardlightArrow>() || arrowType == ModContent.ProjectileType<ChargedHardlightArrow>())
                 {
                     texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowShaft").Value;
@@ -128,8 +129,8 @@ namespace SOTS.Projectiles.Permafrost
             {
                 float percent = counter / Projectile.ai[0];
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - textureHeight - (percent + chargeLevel) * fireFromTighten);
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 5, 1.2f, -0.1f);
-                Projectile proj = Projectile.NewProjectileDirect(fireFrom, Projectile.velocity * (0.5f + 0.5f * chargeLevel), (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer);
+                SOTSUtils.PlaySound(SoundID.Item5, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, -0.1f);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity * (0.5f + 0.5f * chargeLevel), (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer);
                 proj.GetGlobalProjectile<SOTSProjectile>().frostFlake = chargeLevel; //this sould sync automatically on the SOTSProjectile end
             }
         }
@@ -150,10 +151,10 @@ namespace SOTS.Projectiles.Permafrost
                 if (chargeLevel < 2 && counter > 0)
                 {
                     if (counter == (int)Projectile.ai[0] / 2)
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f, 0.6f);
-                    if (counter >= Projectile.ai[0])
-                    {
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.3f);
+                        SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, 0.6f);
+                    if (counter >= Projectile.ai[0])                                                            
+                    {                                                                                           
+                        SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.3f);
                         if(chargeLevel == 0)
                             for (int k = 0; k < 30; k++)
                             {

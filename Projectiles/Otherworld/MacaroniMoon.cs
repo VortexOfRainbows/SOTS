@@ -120,10 +120,10 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile.ai[1]++;
 				if (Projectile.ai[1] >= 10)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 9, 0.75f);
+					SOTSUtils.PlaySound(SoundID.Item9, (int)Projectile.Center.X, (int)Projectile.Center.Y,0.75f);
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(Projectile.Center, new Vector2(4, 0).RotatedBy(Projectile.rotation), Mod.Find<ModProjectile>("MacaroniBeam").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(4, 0).RotatedBy(Projectile.rotation), Mod.Find<ModProjectile>("MacaroniBeam").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
 					}
 					Projectile.Kill();
 				}

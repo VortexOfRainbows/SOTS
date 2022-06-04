@@ -58,7 +58,6 @@ namespace SOTS.Projectiles.Earth
 				if (Projectile.ai[0] != 1)
 					Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		int inititate = 0;
 		public override void AI()
@@ -67,7 +66,7 @@ namespace SOTS.Projectiles.Earth
 			if (inititate == 0)
 			{
 				inititate++;
-				Terraria.Audio.SoundEngine.PlaySound(2, Projectile.Center, 60);
+				SOTSUtils.PlaySound(SoundID.Item60, Projectile.Center);
 			}
 			if(!Projectile.velocity.Equals(new Vector2(0, 0)))
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
@@ -100,7 +99,7 @@ namespace SOTS.Projectiles.Earth
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Projectile.netUpdate = true;
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("EarthenRing").Type, Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<EarthenRing>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 	}

@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Otherworld
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Color color = Color.White;
-            spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Otherworld
             if (!player.channel) ended = true;
             if (ended && speed <= 0.1f)
             {
-                Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 9, 0.75f);
+                SOTSUtils.PlaySound(SoundID.Item9, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f);
                 Projectile.Kill();
             }
         }
@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Otherworld
                     drawPos += new Vector2(texture.Height, 0).RotatedBy(angle.ToRotation());
                     int i = (int)drawPos.X / 16;
                     int j = (int)drawPos.Y / 16;
-                    spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color, rotation + MathHelper.ToRadians(90), new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color, rotation + MathHelper.ToRadians(90), new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
                     if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
                     {
                         break;
@@ -114,7 +114,7 @@ namespace SOTS.Projectiles.Otherworld
                 {
                     float x = Main.rand.Next(-10, 11) * 0.5f * (1 - compression);
                     float y = Main.rand.Next(-10, 11) * 0.5f * (1 - compression);
-                    spriteBatch.Draw(texture2, drawPos - Main.screenPosition + new Vector2(x, y), null, color, Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture2, drawPos - Main.screenPosition + new Vector2(x, y), null, color, Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
                 }
             }
             return true;
@@ -128,12 +128,12 @@ namespace SOTS.Projectiles.Otherworld
             {
                 Vector2 angle = Projectile.velocity.RotatedBy(MathHelper.ToRadians(i * 72 * compression));
                 if (Projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, angle.X, angle.Y, (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, angle, (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
             }
 
             for (int i = 0; i < 30; i++)
             {
-                int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+                int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num1];
                 dust.velocity *= 0.2f;
                 dust.noGravity = true;

@@ -46,6 +46,7 @@ Update Objectives:
 	1. Pistol Shrimp but accessory
 	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
 	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope 
+9. Config to disable starter house
 
 Low Priority Objectives:
 1. Archaelogist NPC
@@ -57,7 +58,8 @@ Low Priority Objectives:
 
 6/3/22
 1. Ported the furniture templates
-2. 2740 -> 2562
+2. 2740 -> 2562 -> 2127
+3. Did a lot of projectile drawcode porting (and other projectile related things)
 
 5/29/22 & 5/30/22 & 5/31/22 & 6/1/22
 1. 4090 -> 3820 -> 3565 -> 3164 -> 2980 -> 2860 -> 2740

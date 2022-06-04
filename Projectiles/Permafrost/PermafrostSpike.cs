@@ -62,7 +62,6 @@ namespace SOTS.Projectiles.Permafrost
 				new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y),
 				null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override bool ShouldUpdatePosition()
 		{
@@ -72,7 +71,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<PermafrostLinger>(), Projectile.damage, 0, Projectile.owner, Projectile.rotation);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<PermafrostLinger>(), Projectile.damage, 0, Projectile.owner, Projectile.rotation);
 			}
 		}
 	}

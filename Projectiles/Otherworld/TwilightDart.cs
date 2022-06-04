@@ -40,7 +40,6 @@ namespace SOTS.Projectiles.Otherworld
 				float y = Main.rand.Next(-10, 11) * (0.2f - distMult);
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		float soundIterater = 0;
 		float distMult = 0.1f;
@@ -57,7 +56,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Lighting.AddLight(Projectile.Center, 0.55f, 0.55f, 0.75f);
 			NPC owner = Main.npc[(int)Projectile.ai[1]];
-			if (owner.type != Mod.Find<ModNPC>("TwilightDevil") .Type|| !owner.active)
+			if (owner.type != ModContent.NPCType<TwilightDevil>() || !owner.active)
 			{
 				if (Projectile.timeLeft > 480)
 					Projectile.Kill();
@@ -115,7 +114,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (ofTotal == 0 && soundIterater >= 75)
 				{
 					soundIterater = 0;
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 15, 1 - Projectile.alpha / 255f);
+					SOTSUtils.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 1 - Projectile.alpha / 255f);
 				}
 				Vector2 playerPos = new Vector2(owner.ai[2], owner.ai[3]);
 				Vector2 towardsPlayer = Projectile.Center - playerPos;

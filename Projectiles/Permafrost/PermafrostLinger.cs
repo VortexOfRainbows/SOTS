@@ -44,7 +44,6 @@ namespace SOTS.Projectiles.Permafrost
 				new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y),
 				new Rectangle(0, 40 * Projectile.frame, 40, 42), color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override bool PreAI()
 		{
@@ -64,7 +63,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			SOTSUtils.PlaySound(SoundID.Item50, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(-Main.rand.NextFloat(5, 12), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);

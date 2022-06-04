@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Tide
 			{
 				for(int i = 0; i < ParticlePos.Count; i++)
 				{
-					spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;
@@ -133,7 +133,6 @@ namespace SOTS.Projectiles.Tide
 				new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y),
 				null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 	}
 }

@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Otherworld
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Color color = Color.White;
-            spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         public override void SetDefaults()
         {
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Otherworld
         {
             if (storeData == -1 && Projectile.owner == Main.myPlayer)
             {
-                storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("RainbowTrail").Type, (int)(Projectile.damage * 0.6f) + 1, 0, Projectile.owner, 0, Projectile.whoAmI);
+                storeData = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RainbowTrail>(), (int)(Projectile.damage * 0.6f) + 1, 0, Projectile.owner, 0, Projectile.whoAmI);
             }
         }
     }

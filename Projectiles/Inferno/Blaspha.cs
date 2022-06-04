@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Inferno
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Color color = Color.White;
-            spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             if (Main.myPlayer == Projectile.owner)
             {
                 texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/BlasphaChargeReticle");
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Inferno
                 {
                     Vector2 circular = new Vector2(0, -GetLength() * (1 - chargePercent)).RotatedBy(MathHelper.ToRadians(45 * i + 180 * chargePercent + 90 * windupPercent));
                     drawPos = Main.MouseWorld - Main.screenPosition + circular;
-                    spriteBatch.Draw(texture, drawPos, null, new Color(200, 200, 200, 0) * windupPercent, MathHelper.ToRadians(45 * i + 180 * chargePercent + 90 * windupPercent), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, drawPos, null, new Color(200, 200, 200, 0) * windupPercent, MathHelper.ToRadians(45 * i + 180 * chargePercent + 90 * windupPercent), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Inferno
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 36, 1.2f, 0.4f);
+            SOTSUtils.PlaySound(SoundID.Item36, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.4f);
             if (Projectile.owner == Main.myPlayer)
             {
                 for (int i = 0; i < 8; i++)
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Inferno
                     Vector2 circular = new Vector2(0, -GetLength() * (1 - chargePercent)).RotatedBy(MathHelper.ToRadians(45 * i + 360 * chargePercent));
                     Vector2 fireTo = Main.MouseWorld + circular - player.Center + Main.rand.NextVector2Circular(1.5f, 1.5f) * (1 - chargePercent);
                     float velocityMult = Projectile.velocity.Length() * (0.6f + chargePercent * 1.4f) * Main.rand.NextFloat(0.7f + 0.2f * chargePercent, 1.3f - 0.2f * chargePercent);
-                    Projectile proj = Projectile.NewProjectileDirect(fireFrom(), fireTo.SafeNormalize(Vector2.Zero) * velocityMult, (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), fireFrom(), fireTo.SafeNormalize(Vector2.Zero) * velocityMult, (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
                     proj.GetGlobalProjectile<SOTSProjectile>().affixID = -2; //this sould sync automatically on the SOTSProjectile end
                 }
             }

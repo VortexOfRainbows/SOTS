@@ -66,7 +66,6 @@ namespace SOTS.Projectiles.Otherworld
 				float y = Main.rand.Next(-10, 11) * 0.1f;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
         public override bool ShouldUpdatePosition()
         {
@@ -86,7 +85,7 @@ namespace SOTS.Projectiles.Otherworld
             {
 				if(Projectile.timeLeft % 20 == 0)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.7f);
+					SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f);
 					for (int k = 0; k < 360; k += 10)
 					{
 						Vector2 circularLocation = new Vector2(-38 * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -104,14 +103,14 @@ namespace SOTS.Projectiles.Otherworld
             {
 				if(Projectile.timeLeft == 200)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
+					SOTSUtils.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
 					if (Main.netMode != 1)
                     {
 						int numberProjectiles = 3;
 						for (int i = 0; i < numberProjectiles; i++)
 						{
 							Vector2 perturbedSpeed = new Vector2(Projectile.velocity.X, Projectile.velocity.Y).RotatedBy(MathHelper.ToRadians((i - 1f) * 3f));
-							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Mod.Find<ModProjectile>("SpiralDeathBeam").Type, Projectile.damage, 1f, Main.myPlayer, (i * 360f / numberProjectiles));
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<SpiralDeathBeam>(), Projectile.damage, 1f, Main.myPlayer, (i * 360f / numberProjectiles));
 						}
 					}
                 }

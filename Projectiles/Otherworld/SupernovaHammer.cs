@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Otherworld
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Color color = Color.White;
-            spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         public override void SetDefaults()
         {
@@ -50,13 +50,13 @@ namespace SOTS.Projectiles.Otherworld
             if ((double)Projectile.ai[0] >= 36f) Projectile.localAI[1] = 1.0f;
             if (crit)
             {
-                Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+                SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
                 if (Projectile.owner == Main.myPlayer)
                 {
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("Seeker").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Seeker>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
                     }
                 }
             }
@@ -66,13 +66,13 @@ namespace SOTS.Projectiles.Otherworld
         {
             if (target.life <= 0)
             {
-                Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+                SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
                 if (Projectile.owner == Main.myPlayer)
                 {
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("Seeker").Type, (int)(0.7f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Seeker>(), (int)(0.7f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
                     }
                 }
             }
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Otherworld
             var num5 = 32f;
             var f = Projectile.rotation - 0.7853982f * (float)Math.Sign(Projectile.velocity.X);
             DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-            Utils.PlotTileLine(Projectile.Center + f.ToRotationVector2() * -num5, Projectile.Center + f.ToRotationVector2() * num5, (float)Projectile.width * Projectile.scale, new Utils.PerLinePoint(DelegateMethods.CutTiles));
+            Utils.PlotTileLine(Projectile.Center + f.ToRotationVector2() * -num5, Projectile.Center + f.ToRotationVector2() * num5, (float)Projectile.width * Projectile.scale, new Utils.TileActionAttempt(DelegateMethods.CutTiles));
             return false;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Otherworld
                             num3;
                 var vec = Projectile.Center + (num7 + (num5 == -1 ? 3.141593f : 0.0f)).ToRotationVector2() * 42f;
 
-                var dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, Mod.Find<ModDust>("CopyDust4").Type, player.velocity.X, player.velocity.Y, 200, new Color(), 1f);
+                var dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, ModContent.DustType<Dusts.CopyDust4>(), player.velocity.X, player.velocity.Y, 200, new Color(), 1f);
                 dust.velocity = Projectile.DirectionTo(dust.position) * 0.1f + dust.velocity * 0.1f;
                 dust.color = new Color(250, 250, 250, 120);
                 dust.noGravity = true;
@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.Otherworld
 
                 if (num6 >= 0.75)
                 {
-                    dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, Mod.Find<ModDust>("CopyDust4").Type, player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
+                    dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, ModContent.DustType<Dusts.CopyDust4>(), player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
                     dust.velocity = Projectile.DirectionTo(dust.position) * 0.1f + dust.velocity * 0.1f;
                     dust.noGravity = true;
                     dust.color = new Color(0, 200, 220, 100);
@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Otherworld
                 {
                     for (var index = 0; index < 5; ++index)
                     {
-                        dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, Mod.Find<ModDust>("CopyDust4").Type, player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
+                        dust = Dust.NewDustDirect(vec - new Vector2(5f), 10, 10, ModContent.DustType<Dusts.CopyDust4>(), player.velocity.X, player.velocity.Y, 50, new Color(), 1f);
                         dust.velocity *= 1f;
                         dust.noGravity = true;
                         dust.scale += 0.1f;
@@ -189,13 +189,12 @@ namespace SOTS.Projectiles.Otherworld
                         Point result;
                         if (!WorldUtils.Find(vec.ToTileCoordinates(), Searches.Chain((GenSearch)new Searches.Down(4), (GenCondition)new Conditions.IsSolid()), out result))
                         {
-                            Main.PlayTrackedSound((SoundStyle)SoundID.DD2_MonkStaffGroundMiss, Projectile.Center);
+                            SOTSUtils.PlaySound(SoundID.DD2_MonkStaffGroundMiss, Projectile.Center);
                             return;
                         }
                     }
-
-                    Projectile.NewProjectile(vec + new Vector2((float)(num5 * 20), -60f), Vector2.Zero, Mod.Find<ModProjectile>("SupernovaSmash").Type, (int)Damage, 0.0f, Projectile.owner, 0.0f, 0.0f);
-                    Main.PlayTrackedSound((SoundStyle)SoundID.DD2_MonkStaffGroundImpact, Projectile.Center);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), vec + new Vector2((float)(num5 * 20), -60f), Vector2.Zero, ModContent.ProjectileType<SupernovaSmash>(), (int)Damage, 0.0f, Projectile.owner, 0.0f, 0.0f);
+                    SOTSUtils.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.Center);
                 }
                 Projectile.position = vector2_1 - Projectile.Size / 2f;
                 Projectile.position = Projectile.position + vector2_2;

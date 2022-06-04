@@ -65,7 +65,6 @@ namespace SOTS.Projectiles.Otherworld
 				float y = Main.rand.Next(-10, 11) * 0.1f;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public void resetVector2(ref Vector2 loc, int i)
 		{
@@ -76,18 +75,18 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.75f);
+			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f);
 			if (Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(i * 45));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("FriendlyOtherworldlyBolt").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<FriendlyOtherworldlyBolt>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 				}
 				for (int i = 0; i < 3; i++)
 				{
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.Next(120) + 120 * i));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("PhaseColumn").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 2, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<PhaseColumn>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 2, 0);
 				}
 			}
 			for (int i = 0; i < 35; i++)

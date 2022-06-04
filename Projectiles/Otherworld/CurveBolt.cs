@@ -57,7 +57,6 @@ namespace SOTS.Projectiles.Otherworld
 				float y = Main.rand.Next(-10, 11) * 0.1f;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		int counter = 0;
 		Vector2 spawnLoc = new Vector2(0, 0);
@@ -85,7 +84,6 @@ namespace SOTS.Projectiles.Otherworld
 			ring = ring.RotatedBy(startRot);
 			Projectile.position = ring - new Vector2(Projectile.width / 2, Projectile.height / 2) + center;
 			Projectile.velocity = new Vector2(0, 1f); //give a nudge for tile collide
-			
 		}
 	}
 }

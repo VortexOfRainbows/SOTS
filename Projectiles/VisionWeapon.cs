@@ -73,7 +73,7 @@ namespace SOTS.Projectiles
 			{
 				Player player = Main.player[Projectile.owner];
 				Item item = player.HeldItem;
-				Color color = Item.GetAlpha(drawColor);
+				Color color = item.GetAlpha(lightColor);
 				Texture2D texture = Terraria.GameContent.TextureAssets.Item[itemType].Value;
 				Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / frameCount / 2);
 				Rectangle rectangleFrame = new Rectangle(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount);
@@ -198,9 +198,9 @@ namespace SOTS.Projectiles
 			Item item = player.HeldItem;
 			FindPosition();
 			catalogueParticles();
-			if (!Item.IsAir && Item.active && Item.createTile == -1 && Item.createWall == -1 && Item.useStyle != 0)
+			if (!item.IsAir && item.active && item.createTile == -1 && item.createWall == -1 && item.useStyle != 0)
 			{
-				DrawAnimation anim = Main.itemAnimations[Item.type];
+				DrawAnimation anim = Main.itemAnimations[item.type];
 				if(anim != null)
                 {
 					frameCount = anim.FrameCount;
@@ -210,23 +210,23 @@ namespace SOTS.Projectiles
 				{
 					frameCount = 1;
 				}
-				if(Item.useStyle == ItemUseStyleID.Swing || Item.staff[Item.type] || Item.type == ModContent.ItemType<DigitalDaito>())
+				if(item.useStyle == ItemUseStyleID.Swing || Item.staff[item.type] || item.type == ModContent.ItemType<DigitalDaito>())
                 {
 					Projectile.rotation += MathHelper.ToRadians(150) * Projectile.spriteDirection;
                 }
-				else if(Item.useStyle == ItemUseStyleID.Shoot)
+				else if(item.useStyle == ItemUseStyleID.Shoot)
                 {
-					if(Item.height > Item.width) //bow type?
+					if(item.height > item.width) //bow type?
 					{
 						Projectile.spriteDirection *= -1;
 						Projectile.rotation += MathHelper.ToRadians(15) * Projectile.spriteDirection;
 					}
-					else if(Item.width >= Item.height) //gun type?
+					else if(item.width >= item.height) //gun type?
 					{
 						Projectile.rotation += MathHelper.ToRadians(105) * Projectile.spriteDirection;
 					}
                 }
-				itemType = Item.type;
+				itemType = item.type;
 			}
 			else
 			{
@@ -258,7 +258,7 @@ namespace SOTS.Projectiles
 				}
 				if (player.itemAnimation > 0)
 				{
-					itemAlpha = -0.24f - (!Item.autoReuse ? 0.24f : 0);
+					itemAlpha = -0.24f - (!item.autoReuse ? 0.24f : 0);
 				}
 				else if (itemAlpha < 2)
 				{

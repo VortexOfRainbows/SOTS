@@ -46,7 +46,6 @@ namespace SOTS.Projectiles.Nature
 				new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y),
 				new Rectangle(0, 40 * Projectile.frame, 40, 40), color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void AI()
         {

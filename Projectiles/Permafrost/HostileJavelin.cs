@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Permafrost
 			for (int k = 0; k < Projectile.oldPos.Length; k++) {
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -89,7 +89,6 @@ namespace SOTS.Projectiles.Permafrost
 				new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y),
 				null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void AI()
 		{
@@ -103,7 +102,7 @@ namespace SOTS.Projectiles.Permafrost
 					Projectile.extraUpdates = 20;
 					counter = -1;
 					Projectile.netUpdate = true;
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item71, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+					SOTSUtils.PlaySound(SoundID.Item71, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 					return;
 				}
 				Projectile.tileCollide = true;

@@ -34,16 +34,16 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 drawPos = Projectile.Center - Main.screenPosition;
 			Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 			for (int k = 0; k < 2; k++)
-                spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/StarcoreRifleEffect2");
             for (int k = 0; k < 2; k++)
-                spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/StarcoreRifleEffect3");
             for (int k = 0; k < 2; k++)
-                spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             color = Color.White;
             texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/StarcoreRifleGlow");
-            spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
 		public override bool PreAI()
         {

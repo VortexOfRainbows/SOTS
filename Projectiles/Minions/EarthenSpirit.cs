@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Minions
 		bool readyToFight = false;
 		public void dustSound()
 		{
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
 			for (int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i));

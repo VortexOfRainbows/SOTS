@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System;
 using System.IO;
@@ -94,7 +95,6 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -135,9 +135,8 @@ namespace SOTS.Projectiles.Minions
 					for (int k = 0; k < 5; k++)
 					{
 						if (k == 0)
-							spriteBatch.Draw(texture, drawPos + dynamicAddition, null, color * 0.5f * (1f - (Projectile.alpha / 255f)), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0f);
-
-						spriteBatch.Draw(texture1, drawPos + dynamicAddition, null, color * (1f - (Projectile.alpha / 255f)), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, color * 0.5f * (1f - (Projectile.alpha / 255f)), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture1, drawPos + dynamicAddition, null, color * (1f - (Projectile.alpha / 255f)), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -285,10 +284,10 @@ namespace SOTS.Projectiles.Minions
 				Vector2 distanceToMouse = cursor - Projectile.Center;
 				rotateVector = distanceToMouse;
 				rotateVector = new Vector2(4, 0).RotatedBy(rotateVector.ToRotation());
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.75f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f);
 				if (Main.myPlayer == Projectile.owner)
 				{
-					Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, Mod.Find<ModProjectile>("DestabilizingBeam").Type, Projectile.damage, 1f, owner.whoAmI, 0, -1);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateVector * 5.75f, ModContent.ProjectileType<DestabilizingBeam>(), Projectile.damage, 1f, owner.whoAmI, 0, -1);
 				}
 				eyeReset = -0.9f;
 				aiCounter2 = -60;
@@ -299,10 +298,10 @@ namespace SOTS.Projectiles.Minions
 				aiCounter2++;
 				if (aiCounter2 >= 54 && distanceToTarget2 < 1080)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 0.5f);
+					SOTSUtils.PlaySound(SoundID.Item96, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f);
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(Projectile.Center, rotateVector * 5.75f, Mod.Find<ModProjectile>("CodeBurst").Type, Projectile.damage, 1f, owner.whoAmI, 0, -1);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateVector * 5.75f, ModContent.ProjectileType<CodeBurst>(), Projectile.damage, 1f, owner.whoAmI, 0, -1);
 					}
 					eyeReset = -0.8f;
 					aiCounter2 = 0;

@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Earth
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Color color = Color.White;
-            spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         bool ended = false;
         int chargeLevel = 0;
@@ -45,21 +45,21 @@ namespace SOTS.Projectiles.Earth
         {
             DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
             if (chargeLevel != 0)
-                Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.2f, -0.1f);
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/PerfectStarShot" + chargeLevel), (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, -0.1f);
             else
-                Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarShot1"), 1.2f, 0.4f);
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/PerfectStarShot1"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.4f);
             if (Projectile.owner == Main.myPlayer)
             {
                 Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
                 if(chargeLevel == 0)
                 {
                     int size = 10;
-                    Projectile.NewProjectileDirect(fireFrom, Projectile.velocity * 0.5f, ModContent.ProjectileType<PerfectStarLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, size);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity * 0.5f, ModContent.ProjectileType<PerfectStarLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, size);
                 }
                 else
                 {
                     int size = 28 + chargeLevel * 24;
-                    Projectile.NewProjectileDirect(fireFrom, Projectile.velocity * 0.3f, ModContent.ProjectileType<PerfectStarLaser2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, size, -chargeLevel);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity * 0.3f, ModContent.ProjectileType<PerfectStarLaser2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, size, -chargeLevel);
                 }
             }
         }
@@ -72,9 +72,9 @@ namespace SOTS.Projectiles.Earth
                 if (Projectile.ai[1] > chargeTime)
                 {
                     if(chargeLevel != 2)
-                        Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarCharge"), 1.2f, 0.1f * chargeLevel);
+                        SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/PerfectStarCharge"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.1f * chargeLevel);
                     else
-                        Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/PerfectStarFull"), 1.2f, 0);
+                        SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/PerfectStarFull"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0);
                     chargeLevel++;
                     Projectile.ai[1] = -6 * chargeLevel;
                 }

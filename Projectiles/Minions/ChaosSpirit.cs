@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Minions
 					rotation = rotation.RotatedBy(rotations[j] + Projectile.rotation);
 					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
 				}
-			base.PreDraw(spriteBatch, lightColor);
+			base.PreDraw(ref lightColor); //draw the thing normally
 			for (int j = 0; j < 2; j++)
 				for (int i = 0; i < 180; i += 6)
 				{
@@ -296,7 +296,7 @@ namespace SOTS.Projectiles.Minions
 					postChargeCounter++;
 				if(postChargeCounter % 30 == 29)
                 {
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.3f);
+					SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f);
 				}
 
 				direction *= (float)Math.Pow(distance, 1.35) * 0.005f + speed;
@@ -309,7 +309,7 @@ namespace SOTS.Projectiles.Minions
 					Projectile.ai[0] -= 5;
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectileDirect(Projectile.Center + new Vector2(0, 1).RotatedBy(Projectile.rotation) * 45, new Vector2(0, 1).RotatedBy(Projectile.rotation) * 3, ModContent.ProjectileType<ChaosBeam>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, targetID, 0);
+						Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(0, 1).RotatedBy(Projectile.rotation) * 45, new Vector2(0, 1).RotatedBy(Projectile.rotation) * 3, ModContent.ProjectileType<ChaosBeam>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, targetID, 0);
 					}
 					Projectile.velocity -= new Vector2(0, 1).RotatedBy(Projectile.rotation) * 3.25f;
 				}
