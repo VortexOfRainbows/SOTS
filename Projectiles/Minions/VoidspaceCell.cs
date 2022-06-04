@@ -147,7 +147,7 @@ namespace SOTS.Projectiles.Minions
 				previous = pos;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) 
+		public override bool PreDraw(ref Color lightColor) 
 		{
 			//SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(0, 20, 0, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);

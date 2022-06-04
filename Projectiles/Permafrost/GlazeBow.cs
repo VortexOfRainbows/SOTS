@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Permafrost
             Projectile.hide = true;
             Projectile.alpha = 255;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);

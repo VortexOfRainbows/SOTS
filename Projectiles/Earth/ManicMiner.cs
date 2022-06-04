@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Earth
 			}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			if (Projectile.timeLeft < 40)
             {

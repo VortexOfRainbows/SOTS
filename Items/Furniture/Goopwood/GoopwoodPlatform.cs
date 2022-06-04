@@ -45,7 +45,7 @@ namespace SOTS.Items.Furniture.Goopwood
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(new Color(140, 70, 20));
 			DustType = 7;
-			drop = ModContent.ItemType<GoopwoodPlatform>();
+			ItemDrop = ModContent.ItemType<GoopwoodPlatform>();
 			AdjTiles = new int[]{ TileID.Platforms };
 			TileID.Sets.Platforms[Type] = true;
 		}

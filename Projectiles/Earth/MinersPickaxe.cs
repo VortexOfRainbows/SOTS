@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Earth
                 spriteBatch.Draw(texture, drawPos + addition + new Vector2(0, player.gfxOffY), null, Color.White * (1 - scale) * (1 - scale), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/MinersPickaxeGlow");

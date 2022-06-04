@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.timeLeft = 110;
 		}
 		bool reachDestination = false;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];
 			if (reachDestination)

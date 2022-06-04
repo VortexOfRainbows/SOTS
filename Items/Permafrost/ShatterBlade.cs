@@ -75,7 +75,7 @@ namespace SOTS.Items.Permafrost
 				Item.noUseGraphic = false;
 			}
 		}
-		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
 		{ 
 			counterResetter++;
 			if (counterResetter > 180 && counter > 0)

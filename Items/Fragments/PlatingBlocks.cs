@@ -21,7 +21,7 @@ namespace SOTS.Items.Fragments
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<PermafrostPlating>();
+			ItemDrop = ModContent.ItemType<PermafrostPlating>();
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
@@ -92,7 +92,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/NaturePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<NaturePlating>();
+			ItemDrop = ModContent.ItemType<NaturePlating>();
 			AddMapEntry(SOTSTile.NaturePlatingColor);
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;
@@ -151,7 +151,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/EarthenPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<EarthenPlating>();
+			ItemDrop = ModContent.ItemType<EarthenPlating>();
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;
@@ -212,7 +212,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/PermafrostPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<PermafrostPlating>();
+			ItemDrop = ModContent.ItemType<PermafrostPlating>();
 			AddMapEntry(new Color(165, 179, 198));
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;
@@ -277,7 +277,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/TidePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<TidePlating>();
+			ItemDrop = ModContent.ItemType<TidePlating>();
 			AddMapEntry(new Color(35, 37, 52));
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;
@@ -340,7 +340,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/EvilPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<EvilPlating>();
+			ItemDrop = ModContent.ItemType<EvilPlating>();
 			AddMapEntry(new Color(98, 47, 126));
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;
@@ -401,7 +401,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/ChaosPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<ChaosPlating>();
+			ItemDrop = ModContent.ItemType<ChaosPlating>();
 			AddMapEntry(new Color(82, 85, 123));
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;
@@ -467,7 +467,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/InfernoPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<InfernoPlating>();
+			ItemDrop = ModContent.ItemType<InfernoPlating>();
 			AddMapEntry(new Color(73, 35, 59));
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;
@@ -539,7 +539,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/UltimatePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			drop = ModContent.ItemType<UltimatePlating>();
+			ItemDrop = ModContent.ItemType<UltimatePlating>();
 			AddMapEntry(new Color(82, 85, 123));
 			MineResist = 1.5f;
 			SoundType = SoundID.Tink;

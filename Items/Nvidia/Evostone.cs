@@ -14,7 +14,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 37; //obsidian
-			drop = ModContent.ItemType<Evostone>();
+			ItemDrop = ModContent.ItemType<Evostone>();
 			AddMapEntry(new Color(31, 39, 57));
 			SoundType = SoundID.Tink;
 			SoundStyle = 2;
@@ -47,7 +47,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 37; //obsidian
-			drop = ModContent.ItemType<EvostoneBrick>();
+			ItemDrop = ModContent.ItemType<EvostoneBrick>();
 			AddMapEntry(new Color(46, 63, 77));
 			SoundType = SoundID.Tink;
 			SoundStyle = 2;
@@ -77,7 +77,7 @@ namespace SOTS.Items.Nvidia
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 37;
-			drop = ModContent.ItemType<EvostoneBrickWall>();
+			ItemDrop = ModContent.ItemType<EvostoneBrickWall>();
 			AddMapEntry(new Color(25, 38, 49));
 			SoundType = SoundID.Tink;
 			SoundStyle = 2;
@@ -112,7 +112,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 37; //obsidian
-			drop = ModContent.ItemType<DarkShingles>();
+			ItemDrop = ModContent.ItemType<DarkShingles>();
 			AddMapEntry(new Color(82, 56, 103));
 			SoundType = SoundID.Tink;
 			SoundStyle = 2;

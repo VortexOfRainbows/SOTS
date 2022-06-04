@@ -44,7 +44,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			drop = ModContent.ItemType<CursedTumorWall>();
+			ItemDrop = ModContent.ItemType<CursedTumorWall>();
 			SoundType = SoundID.NPCHit;
 			SoundStyle = 1;
 			AddMapEntry(new Color(49, 33, 75));
@@ -61,7 +61,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<CurseDust3>();
-			drop = ModContent.ItemType<CursedTumorWall>();
+			ItemDrop = ModContent.ItemType<CursedTumorWall>();
 			SoundType = SoundID.NPCHit;
 			SoundStyle = 1;
 			AddMapEntry(new Color(49, 33, 75));

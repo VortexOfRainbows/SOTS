@@ -34,10 +34,10 @@ namespace SOTS.Items.GhostTown
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 		}
-        public override void GetWeaponCrit(Player player, ref int crit)
+        public override void ModifyWeaponCrit(Player player, ref float crit)
         {
 			crit = 0;
-            base.GetWeaponCrit(player, ref crit);
+            base.ModifyWeaponCrit(player, ref crit);
         }
         public override bool CanUseItem(Player player)
         {

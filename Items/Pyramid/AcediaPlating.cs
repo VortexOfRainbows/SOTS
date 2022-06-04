@@ -66,7 +66,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = Mod.Find<ModItem>("AcediaPlating").Type;
+			ItemDrop = Mod.Find<ModItem>("AcediaPlating").Type;
 			AddMapEntry(new Color(44, 12, 62));
 			MineResist = 2f;
 			MinPick = 250;

@@ -85,7 +85,7 @@ namespace SOTS.Items.Furniture.Earthen
 			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
 			disableSmartCursor = true;
 			DustType = DustID.GoldCoin;
-			drop = ModContent.ItemType<EarthenPlatingTorch>();
+			ItemDrop = ModContent.ItemType<EarthenPlatingTorch>();
 			disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Torches };
 			torch = true;

@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<RoyalGoldBrick>();
+			ItemDrop = ModContent.ItemType<RoyalGoldBrick>();
 			AddMapEntry(new Color(180, 150, 20));
 			MineResist = 1.0f;
 			MinPick = 0;

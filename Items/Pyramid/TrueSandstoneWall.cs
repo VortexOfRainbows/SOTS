@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.wallHouse[Type] = false;
 			DustType = 32;
-			drop = Mod.Find<ModItem>("TrueSandstoneWall").Type;
+			ItemDrop = Mod.Find<ModItem>("TrueSandstoneWall").Type;
 			AddMapEntry(new Color(155, 110, 55));
 		}
 		public override bool CanExplode(int i, int j)

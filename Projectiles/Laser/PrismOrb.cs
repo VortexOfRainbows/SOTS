@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Laser
             Projectile.tileCollide = false;
             Projectile.light = 0.8f;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PrismLaser").Value;
             Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;

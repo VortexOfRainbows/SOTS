@@ -351,7 +351,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			writer.Write(style);
 		}
 
-		public override TagCompound Save()
+		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
 			return new TagCompound
 			{
@@ -360,13 +360,13 @@ namespace SOTS.Items.Otherworld.Furniture
 			};
 		}
 
-		public override void Load(TagCompound tag)
+		public override void LoadData(TagCompound tag)
 		{
 			timer = tag.Get<int>("timer");
 			style = tag.Get<int>("style");
 		}
 
-		public override bool ValidTile(int i, int j)
+		public override bool IsTileValidForEntity(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			return tile.HasTile && tile.TileType == (ushort)ModContent.TileType<PotGeneratorTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;

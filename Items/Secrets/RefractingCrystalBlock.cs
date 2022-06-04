@@ -31,7 +31,7 @@ namespace SOTS.Items.Secrets
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<RefractingCrystal>();
+			ItemDrop = ModContent.ItemType<RefractingCrystal>();
 			AddMapEntry(new Color(120, 90, 90));
 			MineResist = 15.5f;
 			MinPick = 9999;

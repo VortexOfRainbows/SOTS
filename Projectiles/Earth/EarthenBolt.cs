@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Earth
 			}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(100, 100, 100, 0);

@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -63,7 +64,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             dresser = "Ancient Gold Dresser";
             dresserDrop = Mod.Find<ModItem>("AncientGoldDresser").Type;
         }
-        public override bool HasSmartInteract()
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
             return false;
         }
@@ -150,8 +151,8 @@ namespace SOTS.Items.Pyramid.AncientGold
                 Main.playerInventory = false;
                 player.chest = -1;
                 Recipe.FindRecipes();
-                Main.dresserX = Player.tileTargetX;
-                Main.dresserY = Player.tileTargetY;
+                Main.interactedDresserTopLeftX = Player.tileTargetX;
+                Main.interactedDresserTopLeftY = Player.tileTargetY;
                 Main.OpenClothesWindow();
             }
         }

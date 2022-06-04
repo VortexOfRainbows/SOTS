@@ -49,7 +49,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			name.SetDefault("Sky Chain");
 			AddMapEntry(new Color(255, 255, 255), name);
 			disableSmartCursor = true;
-			drop = ModContent.ItemType<SkyChain>();
+			ItemDrop = ModContent.ItemType<SkyChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

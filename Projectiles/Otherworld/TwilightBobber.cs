@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Otherworld
         {
             Projectile.CloneDefaults(ProjectileID.BobberGolden);
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/TwilightBobberGlow");
             Vector2 drawOrigin = new Vector2(texture.Width/2, Projectile.height/2);
@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Otherworld
             else
                 spriteBatch.Draw(texture, drawPos, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
-        public override bool PreDrawExtras(SpriteBatch spriteBatch)      //this draws the fishing line correctly
+        public override bool PreDrawExtras()      //this draws the fishing line correctly
         {
             Lighting.AddLight(Projectile.Center, 0.7f, 0.9f, 1.2f);
             Player player = Main.player[Projectile.owner];

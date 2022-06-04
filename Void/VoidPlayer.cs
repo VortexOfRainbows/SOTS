@@ -54,7 +54,7 @@ namespace SOTS.Void
 		public float CrushTransformer = 1f;
 		public int BonusCrushRangeMin = 0;
 		public int BonusCrushRangeMax = 0;
-		public override TagCompound Save() {
+		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
 
 			return new TagCompound {
 
@@ -68,7 +68,7 @@ namespace SOTS.Void
 				{"voidBarOffsetY", voidBarOffset.Y},
 				};
 		}
-		public override void Load(TagCompound tag)
+		public override void LoadData(TagCompound tag)
 		{
 			voidMeterMax = tag.GetInt("voidMeterMax");
 			voidMeterMax2 = tag.GetInt("voidMeterMax2");

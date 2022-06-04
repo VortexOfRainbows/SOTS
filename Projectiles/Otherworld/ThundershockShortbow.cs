@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.alpha = 255;
             Projectile.extraUpdates = 1;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/ThundershockShortbowGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);

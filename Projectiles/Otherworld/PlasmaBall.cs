@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.DamageType = DamageClass.Melee;
             Projectile.alpha = 0;
         }
-        public override bool PreDrawExtras(SpriteBatch spriteBatch)
+        public override bool PreDrawExtras()
         {
             return false;
         }

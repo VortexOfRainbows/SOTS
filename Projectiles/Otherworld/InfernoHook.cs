@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Otherworld
         {
             speed = 30f;
         }
-        public override bool PreDrawExtras(SpriteBatch spriteBatch)
+        public override bool PreDrawExtras()
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/InfernoHookChain");    //this where the chain of grappling hook is drawn
                                                                                                           //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one

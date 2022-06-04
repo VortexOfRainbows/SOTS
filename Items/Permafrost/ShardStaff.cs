@@ -36,7 +36,7 @@ namespace SOTS.Items.Permafrost
 		{
 			CreateRecipe(1).AddIngredient(null, "FrigidBar", 12).AddTile(TileID.Anvils).Register();
 		}
-		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if(modPlayer.shardSpellExtra != 0)

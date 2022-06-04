@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			VoidPlayer.VoidBurn(Mod, target, 10, 180);
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(80, 80, 80, 0);

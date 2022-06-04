@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Earth
             Projectile.DamageType = DamageClass.Melee; 
 			Projectile.alpha = 0;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/EarthshakerPickaxeGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);

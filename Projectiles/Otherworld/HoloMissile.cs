@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			return true;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HoloMissileFill").Value;
 			Color color = new Color(110, 110, 110, 0);

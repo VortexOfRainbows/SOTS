@@ -27,7 +27,7 @@ namespace SOTS.Items.Slime
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 7;
-			drop = ModContent.ItemType<GoopwoodWall>();
+			ItemDrop = ModContent.ItemType<GoopwoodWall>();
 			AddMapEntry(new Color(120, 54, 16));
 		}
 	}

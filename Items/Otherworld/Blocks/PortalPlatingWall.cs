@@ -72,7 +72,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
-			drop = ModContent.ItemType<PortalPlatingWall>();
+			ItemDrop = ModContent.ItemType<PortalPlatingWall>();
 			AddMapEntry(new Color(0, 130, 215));
 		}
 	}
@@ -87,7 +87,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<AvaritianDust>();
-			drop = ModContent.ItemType<PortalPlatingWall>();
+			ItemDrop = ModContent.ItemType<PortalPlatingWall>();
 			AddMapEntry(new Color(0, 130, 215));
 		}
 		public override bool CanExplode(int i, int j)

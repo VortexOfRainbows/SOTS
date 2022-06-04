@@ -39,7 +39,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<AvaritianPlating>();
+			ItemDrop = ModContent.ItemType<AvaritianPlating>();
 			AddMapEntry(new Color(0, 75, 140));
 			MineResist = 2f;
 			MinPick = 60;

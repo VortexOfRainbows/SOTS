@@ -56,7 +56,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(new Color(220, 180, 25));
 			DustType = DustID.GoldCoin;
-			drop = ModContent.ItemType<AncientGoldPlatform>();
+			ItemDrop = ModContent.ItemType<AncientGoldPlatform>();
 			AdjTiles = new int[]{ TileID.Platforms };
 			TileID.Sets.Platforms[Type] = true;
 		}

@@ -41,7 +41,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
+			ItemDrop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			SoundType = 21;
@@ -121,7 +121,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
+			ItemDrop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			MinPick = 180;

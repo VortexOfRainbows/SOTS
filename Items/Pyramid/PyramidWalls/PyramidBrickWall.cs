@@ -43,7 +43,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 32;
-			drop = ModContent.ItemType<PyramidBrickWall>();
+			ItemDrop = ModContent.ItemType<PyramidBrickWall>();
 			AddMapEntry(new Color(75, 69, 27));
 		}
 	}
@@ -58,7 +58,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = false;
 			DustType = 32;
-			drop = ModContent.ItemType<PyramidBrickWall>();
+			ItemDrop = ModContent.ItemType<PyramidBrickWall>();
 			AddMapEntry(new Color(75, 69, 27));
 		}
 	}

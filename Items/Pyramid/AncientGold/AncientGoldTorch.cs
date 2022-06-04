@@ -86,7 +86,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			AddMapEntry(new Color(255, 220, 100), name);
 			disableSmartCursor = true;
 			DustType = DustID.GoldCoin;
-			drop = ItemType<AncientGoldTorch>();
+			ItemDrop = ItemType<AncientGoldTorch>();
 			disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Torches };
 			torch = true;

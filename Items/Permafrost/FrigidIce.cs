@@ -21,7 +21,7 @@ namespace SOTS.Items.Permafrost
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
-			drop = ModContent.ItemType<FrigidIce>();
+			ItemDrop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
@@ -66,7 +66,7 @@ namespace SOTS.Items.Permafrost
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
-			drop = ModContent.ItemType<FrigidIce>();
+			ItemDrop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
@@ -106,7 +106,7 @@ namespace SOTS.Items.Permafrost
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = ModContent.DustType<ModIceDust>();
-			drop = ModContent.ItemType<FrigidBrick>();
+			ItemDrop = ModContent.ItemType<FrigidBrick>();
 			AddMapEntry(new Color(96, 111, 215));
 			SoundType = SoundLoader.CustomSoundType;
 			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
@@ -131,7 +131,7 @@ namespace SOTS.Items.Permafrost
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 122;
-			drop = ModContent.ItemType<FrigidBrickWall>();
+			ItemDrop = ModContent.ItemType<FrigidBrickWall>();
 			AddMapEntry(new Color(74, 85, 160));
 		}
 	}

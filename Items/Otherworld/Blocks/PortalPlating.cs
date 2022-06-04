@@ -60,7 +60,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<PortalPlating>();
+			ItemDrop = ModContent.ItemType<PortalPlating>();
 			AddMapEntry(new Color(122, 243, 255));
 			MineResist = 2f;
 			MinPick = 250;

@@ -27,7 +27,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Tungsten;
-			drop = ModContent.ItemType<NaturePlatingWall>();
+			ItemDrop = ModContent.ItemType<NaturePlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.2f));
 		}
 	}
@@ -53,7 +53,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Tungsten;
-			drop = ModContent.ItemType<NaturePlatingPanelWall>();
+			ItemDrop = ModContent.ItemType<NaturePlatingPanelWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.3f));
 		}
 	}
@@ -79,7 +79,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
-			drop = ModContent.ItemType<EarthenPlatingWall>();
+			ItemDrop = ModContent.ItemType<EarthenPlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.2f));
 		}
 	}
@@ -105,7 +105,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
-			drop = ModContent.ItemType<EarthenPlatingPanelWall>();
+			ItemDrop = ModContent.ItemType<EarthenPlatingPanelWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.3f));
 		}
 	}
@@ -131,7 +131,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
-			drop = ModContent.ItemType<EarthenPlatingBeam>();
+			ItemDrop = ModContent.ItemType<EarthenPlatingBeam>();
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
 		}
 	}

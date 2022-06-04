@@ -36,7 +36,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.noUseGraphic = true;
 			Item.channel = true;
 		}
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
 		{
 			Item.useTime = 10;
 			Item.useAnimation = 10;

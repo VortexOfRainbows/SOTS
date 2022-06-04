@@ -67,7 +67,7 @@ namespace SOTS.Projectiles
 				}
 			}
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(Color lightColor)
 		{
 			if(itemType > 0)
 			{
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles
 				}
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Dusts/CopyDust4");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 6);

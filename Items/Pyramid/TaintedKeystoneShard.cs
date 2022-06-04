@@ -121,7 +121,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			drop = ModContent.ItemType<TaintedKeystoneShard>();
+			ItemDrop = ModContent.ItemType<TaintedKeystoneShard>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Tainted Keystone Shard");
 			AddMapEntry(new Color(24, 24, 24), name);

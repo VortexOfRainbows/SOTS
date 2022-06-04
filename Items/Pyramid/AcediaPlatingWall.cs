@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
 			DustType = Mod.Find<ModDust>("AcedianDust").Type;
-			drop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
+			ItemDrop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}
@@ -50,7 +50,7 @@ namespace SOTS.Items.Pyramid
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
 			DustType = Mod.Find<ModDust>("AcedianDust").Type;
-			drop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
+			ItemDrop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}

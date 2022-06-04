@@ -32,7 +32,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<DullPlating>();
+			ItemDrop = ModContent.ItemType<DullPlating>();
 			AddMapEntry(new Color(30, 30, 30));
 			MineResist = 2f;
 			MinPick = 60;

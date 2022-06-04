@@ -60,7 +60,7 @@ namespace SOTS.Items.Furniture.Nature
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(SOTSTile.NaturePlatingColor);
 			DustType = DustID.Tungsten;
-			drop = ModContent.ItemType<NaturePlatingPlatform>();
+			ItemDrop = ModContent.ItemType<NaturePlatingPlatform>();
 			AdjTiles = new int[]{ TileID.Platforms };
 			TileID.Sets.Platforms[Type] = true;
 		}

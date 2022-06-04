@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.netImportant = true;
 		}
 		private int shader = 0;
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/RubyMonolithGlow").Value;
@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Player owner = Main.player[Projectile.owner];
 			if (shader != 0)

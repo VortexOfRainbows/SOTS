@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<CursedTumor>();
+			ItemDrop = ModContent.ItemType<CursedTumor>();
 			AddMapEntry(new Color(105, 75, 146));
 			MineResist = 1.5f;
 			SoundType = SoundID.NPCHit;

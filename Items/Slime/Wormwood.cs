@@ -40,7 +40,7 @@ namespace SOTS.Items.Slime
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = Mod.Find<ModItem>("Wormwood").Type;
+			ItemDrop = Mod.Find<ModItem>("Wormwood").Type;
 			AddMapEntry(new Color(140, 70, 20));
 			DustType = 7; //dynasty wood dust
 		}

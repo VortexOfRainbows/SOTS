@@ -34,7 +34,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<NatureWall>();
+			ItemDrop = ModContent.ItemType<NatureWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -70,7 +70,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<EarthWall>();
+			ItemDrop = ModContent.ItemType<EarthWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -106,7 +106,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<DelugeWall>();
+			ItemDrop = ModContent.ItemType<DelugeWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -142,7 +142,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<AetherWall>();
+			ItemDrop = ModContent.ItemType<AetherWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -178,7 +178,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<AuroraWall>();
+			ItemDrop = ModContent.ItemType<AuroraWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -202,7 +202,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<UmbraWall>();
+			ItemDrop = ModContent.ItemType<UmbraWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -238,7 +238,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<UmbraWall>();
+			ItemDrop = ModContent.ItemType<UmbraWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -286,7 +286,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			drop = ModContent.ItemType<BrillianceWall>();
+			ItemDrop = ModContent.ItemType<BrillianceWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)

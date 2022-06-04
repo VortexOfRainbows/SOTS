@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<PyramidSlab>();
+			ItemDrop = ModContent.ItemType<PyramidSlab>();
 			AddMapEntry(new Color(181, 164, 88));
 			MineResist = 3.5f;
 			MinPick = 110;

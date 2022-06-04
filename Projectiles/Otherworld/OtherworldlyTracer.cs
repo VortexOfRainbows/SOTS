@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			if (Projectile.ai[1] == -1 || hasPlayer)

@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = Mod.Find<ModItem>("CursedHiveBlock").Type;
+			ItemDrop = Mod.Find<ModItem>("CursedHiveBlock").Type;
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
 			SoundType = SoundID.Tink;
@@ -72,7 +72,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = Mod.Find<ModItem>("CursedHiveBlock").Type;
+			ItemDrop = Mod.Find<ModItem>("CursedHiveBlock").Type;
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
 			SoundType = SoundID.Tink;

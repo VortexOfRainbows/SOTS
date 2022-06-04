@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.timeLeft = 300;
 			Projectile.netImportant = true;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Nature/BloomingVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);

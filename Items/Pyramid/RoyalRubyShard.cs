@@ -126,7 +126,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			drop = Mod.Find<ModItem>("RoyalRubyShard").Type;
+			ItemDrop = Mod.Find<ModItem>("RoyalRubyShard").Type;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Keystone Shard");
 			AddMapEntry(new Color(211, 69, 74), name);

@@ -15,7 +15,7 @@ namespace SOTS.Items.GhostTown
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 122; //boreal wood
-			drop = ModContent.ItemType<CharredWood>();
+			ItemDrop = ModContent.ItemType<CharredWood>();
 			AddMapEntry(new Color(105, 82, 61));
 		}
 	}
@@ -40,7 +40,7 @@ namespace SOTS.Items.GhostTown
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 122;
-			drop = ModContent.ItemType<CharredWoodWall>();
+			ItemDrop = ModContent.ItemType<CharredWoodWall>();
 			AddMapEntry(new Color(67, 49, 34));
 		}
 	}

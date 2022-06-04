@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			return false;
 		}
-		public override bool PreDrawExtras(SpriteBatch spriteBatch)
+		public override bool PreDrawExtras()
 		{
 			return false;
 		}

@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Otherworld
 			crit = false;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(255, 70, 70, 0);

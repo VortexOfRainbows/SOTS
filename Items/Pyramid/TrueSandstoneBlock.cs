@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<TrueSandstoneBlock>();
+			ItemDrop = ModContent.ItemType<TrueSandstoneBlock>();
 			AddMapEntry(new Color(210, 160, 95));
 			MineResist = 5.0f;
 			MinPick = 250;

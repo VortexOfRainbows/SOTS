@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			return true;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TidalSpiritReticle").Value;

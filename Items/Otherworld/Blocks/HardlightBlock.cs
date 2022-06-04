@@ -67,7 +67,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<HardlightBlock>();
+			ItemDrop = ModContent.ItemType<HardlightBlock>();
 			//AddMapEntry(new Color(0, 0, 0, 0));
 			MineResist = 1.0f;
 			MinPick = 0;

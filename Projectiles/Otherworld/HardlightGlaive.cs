@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

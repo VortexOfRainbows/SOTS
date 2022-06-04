@@ -127,7 +127,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.wallHouse[Type] = true;
 			Main.wallLight[Type] = true;
 			DustType = DustID.Electric;
-			drop = ModContent.ItemType<HologlassWall>();
+			ItemDrop = ModContent.ItemType<HologlassWall>();
 			AddMapEntry(new Color(25, 120, 170));
 		}
 		public override bool KillSound(int i, int j)

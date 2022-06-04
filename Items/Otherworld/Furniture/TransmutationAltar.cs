@@ -178,7 +178,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			g = 0.1f;
 			b = 0.1f;
 		}
-		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref Color drawColor, ref int nextSpecialDrawIndex)
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
 		{
 			int type = 0;
 			if (Main.tile[i, j].TileFrameX >= 18 && Main.tile[i, j].TileFrameX < 36 && Main.tile[i, j].TileFrameY % 36 >= 18)
@@ -521,7 +521,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				//Main.NewText("I sent info");
 		}
 
-		public override TagCompound Save()
+		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
 			return new TagCompound
 			{
@@ -532,7 +532,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			};
 		}
 
-		public override void Load(TagCompound tag)
+		public override void LoadData(TagCompound tag)
 		{
 			timer = tag.Get<int>("timer");
 			style = tag.Get<int>("style");
@@ -540,7 +540,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			itemAmountsArray = tag.Get<int[]>("itemAmountsArray");
 		}
 
-		public override bool ValidTile(int i, int j)
+		public override bool IsTileValidForEntity(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			return tile.HasTile && tile.TileType == (ushort)TileType<TransmutationAltarTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;

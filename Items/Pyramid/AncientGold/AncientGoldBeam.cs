@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			drop = Mod.Find<ModItem>("AncientGoldBeam").Type;
+			ItemDrop = Mod.Find<ModItem>("AncientGoldBeam").Type;
 			AddMapEntry(new Color(170, 144, 18));
 		}
 	}
@@ -75,7 +75,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			drop = Mod.Find<ModItem>("AncientGoldBrickWall").Type;
+			ItemDrop = Mod.Find<ModItem>("AncientGoldBrickWall").Type;
 			AddMapEntry(new Color(150, 130, 15));
 		}
 	}

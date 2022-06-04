@@ -15,7 +15,7 @@ namespace SOTS.Items.GhostTown
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 38; //mud
-			drop = ModContent.ItemType<SootBlock>();
+			ItemDrop = ModContent.ItemType<SootBlock>();
 			AddMapEntry(new Color(57, 50, 44));
 		}
 	}
@@ -33,7 +33,7 @@ namespace SOTS.Items.GhostTown
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 38;
-			drop = ModContent.ItemType<SootWall>();
+			ItemDrop = ModContent.ItemType<SootWall>();
 			AddMapEntry(new Color(34, 29, 24));
 		}
 	}

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace SOTS.Items.Pyramid
 		{
 			CreateRecipe(1).AddIngredient(null, "CursedMatter", 4).AddIngredient(ItemID.Sapphire, 1).AddTile(TileID.Anvils).Register();
 		}
-        public override void UseStyle(Player player)
+        public override void UseStyle(Player player, Rectangle heldItemFrame)
         {
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
             {

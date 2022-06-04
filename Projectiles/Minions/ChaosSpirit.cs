@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Minions
 				}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;

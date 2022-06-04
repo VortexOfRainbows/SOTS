@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Otherworld
             // YoyosTopSpeed is top speed of the yoyo Projectile.
             // Vanilla values range from 9f(Wood) to 17.5f(Terrarian), and defaults to 10f
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/PoyoyoGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);

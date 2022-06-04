@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs.Boss.Lux;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
@@ -50,7 +51,7 @@ namespace Catalyst.Backgrounds
 		{
 			if (maxDepth >= 0 && minDepth < 0)
 			{
-				spriteBatch.Draw(Main.blackTileTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), new Color(240, 240, 240) * intensity);
+				spriteBatch.Draw(TextureAssets.BlackTile.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), new Color(240, 240, 240) * intensity);
 			}
 		}
 

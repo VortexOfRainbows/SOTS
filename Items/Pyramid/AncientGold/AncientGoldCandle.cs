@@ -53,7 +53,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             DustType = DustID.GoldCoin;
             disableSmartCursor = true;
             AdjTiles = new int[] { TileID.Torches };
-            drop = ModContent.ItemType<AncientGoldCandle>();
+            ItemDrop = ModContent.ItemType<AncientGoldCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
         }
         public override void HitWire(int i, int j)

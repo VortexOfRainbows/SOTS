@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		private int shader = 0;
 		float eyeReset = 1f;
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/HoloEye").Value;
 			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyePupil").Value;
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Player owner = Main.player[Projectile.owner];
 			if (shader != 0)

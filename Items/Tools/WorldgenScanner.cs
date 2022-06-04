@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
@@ -136,7 +137,7 @@ namespace SOTS.Items.Tools
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
 			if (Main.netMode == NetmodeID.Server)
-				NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
+				ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
 			else
 				Main.NewText(text, color);
 		}
