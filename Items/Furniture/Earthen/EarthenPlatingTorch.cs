@@ -83,16 +83,15 @@ namespace SOTS.Items.Furniture.Earthen
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Earthen Plating Torch");
 			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
-			disableSmartCursor = true;
 			DustType = DustID.GoldCoin;
 			ItemDrop = ModContent.ItemType<EarthenPlatingTorch>();
-			disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Torches };
-			torch = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.Torch[Type] = true;
 		}
         public override bool CanPlace(int i, int j)
         {
-			return Main.tile[i, j].liquid == 0;
+			return Main.tile[i, j].LiquidAmount == 0;
         }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

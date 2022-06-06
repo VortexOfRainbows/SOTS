@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture
     public abstract class Candelabra<TDrop> : FurnTile where TDrop : ModItem
     {
         protected override int ItemType => ModContent.ItemType<TDrop>();
-        protected virtual Vector3 LightClr => new Vector3(1f, 1f, 1f);
+        public virtual Vector3 LightClr => new Vector3(1f, 1f, 1f);
         protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileFrameImportant[Type] = true;

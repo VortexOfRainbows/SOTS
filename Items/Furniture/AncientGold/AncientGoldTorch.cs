@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Pyramid;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace SOTS.Items.Pyramid.AncientGold
+namespace SOTS.Items.Furniture.AncientGold
 {
 	public class AncientGoldTorch : ModItem
 	{
@@ -32,7 +33,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void HoldItem(Player player)
 		{
-			if (Main.rand.Next(player.itemAnimation > 0 ? 40 : 80) == 0)
+			if (Main.rand.NextBool(player.itemAnimation > 0 ? 40 : 80))
 			{
 				Dust.NewDust(new Vector2(player.itemLocation.X + 16f * player.direction, player.itemLocation.Y - 14f * player.gravDir), 4, 4, DustID.Torch);
 			}
@@ -84,16 +85,15 @@ namespace SOTS.Items.Pyramid.AncientGold
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Ancient Gold Torch");
 			AddMapEntry(new Color(255, 220, 100), name);
-			disableSmartCursor = true;
 			DustType = DustID.GoldCoin;
 			ItemDrop = ItemType<AncientGoldTorch>();
-			disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Torches };
-			torch = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.Torch[Type] = true;
 		}
         public override bool CanPlace(int i, int j)
         {
-			return Main.tile[i, j].liquid == 0;
+			return Main.tile[i, j].LiquidAmount == 0;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{

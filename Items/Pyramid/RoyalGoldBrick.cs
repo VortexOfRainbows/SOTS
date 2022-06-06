@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace SOTS.Items.Pyramid.AncientGold
+namespace SOTS.Items.Pyramid
 {
 	public class RoyalGoldBrick : ModItem
 	{
@@ -24,7 +24,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("RoyalGoldBrickTile").Type;
+			Item.createTile = ModContent.TileType<RoyalGoldBrickTile>();
 		}
 	}
 	public class RoyalGoldBrickTile : ModTile
@@ -41,8 +41,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 			AddMapEntry(new Color(180, 150, 20));
 			MineResist = 1.0f;
 			MinPick = 0;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
+			//SoundStyle = 2;
 			DustType = DustID.GoldCoin;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}

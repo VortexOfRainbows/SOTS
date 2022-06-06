@@ -56,6 +56,10 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+6/5/22
+1. Ported/Reorganized ancient gold furniture
+2. 2127 -> 2063
+
 6/3/22
 1. Ported the furniture templates
 2. 2740 -> 2562 -> 2127

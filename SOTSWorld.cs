@@ -29,7 +29,7 @@ using SOTS.Items.Tools;
 using SOTS.Items.GhostTown;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.Furniture;
-using SOTS.Items.Pyramid.AncientGold;
+using SOTS.Items.Pyramid;
 using SOTS.Items.Earth;
 using static SOTS.SOTS;
 using Terraria.Graphics.Effects;

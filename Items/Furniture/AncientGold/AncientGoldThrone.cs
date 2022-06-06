@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Pyramid;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Pyramid.AncientGold
+namespace SOTS.Items.Furniture.AncientGold
 {
     public class AncientGoldThrone : ModItem
     {
@@ -18,18 +19,10 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void SetDefaults()
         {
-            Item.width = 26;
-            Item.height = 28;
-            Item.maxStack = 99;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.rare = ItemRarityID.LightRed;
-            Item.consumable = true;
-            Item.value = 0;
-            Item.createTile = Mod.Find<ModTile>("AncientGoldThroneTile").Type;
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.Size = new Vector2(26, 28);
+            Item.rare = ItemRarityID.Blue;
+            Item.createTile = ModContent.TileType<AncientGoldThroneTile>();
         }
         public override void AddRecipes()
         {
@@ -46,7 +39,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
             TileObjectData.newTile.Origin = new Point16(1, 3);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
-            TileObjectData.newTile.HookCheck = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
+            //TileObjectData.newTile.HookCheck = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
             TileObjectData.newTile.AnchorInvalidTiles = new int[] { 127 };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
@@ -65,7 +58,7 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 48, 64, Mod.Find<ModItem>("AncientGoldThrone").Type);
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 64, ModContent.ItemType<AncientGoldThrone>());
         }
     }
 }

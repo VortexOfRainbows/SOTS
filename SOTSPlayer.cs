@@ -25,7 +25,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
-using SOTS.Items.Pyramid.AncientGold;
+using SOTS.Items.Pyramid;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Minions;

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Potions;
 using SOTS.Items.Pyramid;
-using SOTS.Items.Pyramid.AncientGold;
+using SOTS.Items.Pyramid;
 using SOTS.NPCs;
 using System;
 using Terraria;

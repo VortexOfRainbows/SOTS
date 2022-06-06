@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace SOTS.Items.Pyramid.AncientGold
+namespace SOTS.Items.Pyramid
 {
 	public class AncientGoldSpike : ModItem
 	{
@@ -23,7 +23,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("AncientGoldSpikeTile").Type;
+			Item.createTile = ModContent.TileType<AncientGoldSpikeTile>();
 		}
 	}
 	public class AncientGoldSpikeTile : ModTile
@@ -41,8 +41,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 			AddMapEntry(new Color(150, 130, 20));
 			MineResist = 2.0f;
 			MinPick = 0;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
+			//SoundStyle = 2;
 			DustType = DustID.GoldCoin;
         }
         public override bool IsTileDangerous(int i, int j, Player player)

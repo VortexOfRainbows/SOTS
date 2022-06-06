@@ -1,11 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Pyramid;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Pyramid.AncientGold
+namespace SOTS.Items.Furniture.AncientGold
 {
 	public class AncientGoldCampfire : ModItem
 	{
@@ -23,7 +25,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Blue;
 			Item.value = 0;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<AncientGoldCampfireTile>();
@@ -57,7 +59,7 @@ namespace SOTS.Items.Pyramid.AncientGold
         {
 			if (closer)
 			{
-				Main.LocalPlayer.AddBuff(BuffID.Campfire, 6, true);
+				Main.SceneMetrics.HasCampfire = true;
 			}
             base.NearbyEffects(i, j, closer);
 		}
@@ -96,7 +98,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = Mod.Find<ModItem>("AncientGoldCampfire").Type;
-			Item.NewItem(i * 16, j * 16, 48, 32, drop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, drop);
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

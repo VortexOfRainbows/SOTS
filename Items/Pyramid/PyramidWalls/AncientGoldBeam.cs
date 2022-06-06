@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Pyramid.AncientGold
+namespace SOTS.Items.Pyramid.PyramidWalls
 {
 	public class AncientGoldBeam : ModItem
 	{
@@ -22,9 +22,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useAnimation = 15;
 			Item.useTime = 7;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = 5;
+			Item.rare = ItemRarityID.Blue;
 			Item.consumable = true;
-			Item.createWall = Mod.Find<ModWall>("AncientGoldBeamWall").Type;
+			Item.createWall = ModContent.WallType<AncientGoldBeamWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			ItemDrop = Mod.Find<ModItem>("AncientGoldBeam").Type;
+			ItemDrop = ModContent.ItemType<AncientGoldBeam>();
 			AddMapEntry(new Color(170, 144, 18));
 		}
 	}
@@ -61,7 +61,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
-			Item.createWall = Mod.Find<ModWall>("AncientGoldBrickWallTile").Type;
+			Item.createWall = ModContent.WallType<AncientGoldBrickWallTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -75,7 +75,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			ItemDrop = Mod.Find<ModItem>("AncientGoldBrickWall").Type;
+			ItemDrop = ModContent.ItemType<AncientGoldBrickWall>();
 			AddMapEntry(new Color(150, 130, 15));
 		}
 	}

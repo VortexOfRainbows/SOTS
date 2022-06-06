@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Pyramid;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Pyramid.AncientGold
+namespace SOTS.Items.Furniture.AncientGold
 {
 	public class AncientGoldPlatform : ModItem
 	{
@@ -26,7 +27,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("AncientGoldPlatformTile").Type;
+			Item.createTile = ModContent.TileType<AncientGoldPlatformTile>();
 		}
 		public override void AddRecipes()
 		{
