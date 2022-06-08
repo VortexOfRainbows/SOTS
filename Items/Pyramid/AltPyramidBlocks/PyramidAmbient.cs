@@ -344,7 +344,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			if (frameX == 108)
 				Item.NewItem(i * 16, j * 16, 48, 32, ModContent.ItemType<RoyalRubyShard>(), 4);
 		}
-        public override bool KillSound(int i, int j)
+        public override bool KillSound(int i, int j, bool fail)
 		{
 			Tile tile = Main.tile[i, j];
 			int SoundType = 2;

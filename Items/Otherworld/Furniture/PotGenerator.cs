@@ -136,7 +136,7 @@ namespace SOTS.Items.Otherworld.Furniture
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = ItemType<PotGenerator>();
-			Item.NewItem(i * 16, j * 16, 32, 16, drop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, drop);
 			GetInstance<PotTimer>().Kill(i, j);
 		}
 		public override void MouseOver(int i, int j)
@@ -304,7 +304,7 @@ namespace SOTS.Items.Otherworld.Furniture
 						{
 							if (Main.rand.NextBool(amt * 2))
 							{
-								Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 1, style);
+								Projectile.NewProjectile(new EntitySource_Misc("SOTS:PotGenerator"), position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 1, style);
 							}
 						}
 						// Sending 86 aka, TileEntitySharing, triggers NetSend. Think of it like manually calling sync.;
@@ -318,7 +318,7 @@ namespace SOTS.Items.Otherworld.Furniture
 					{
 						timer = -2;
 						//WorldGen.PlaceTile(whereX, whereY, mod.TileType("SkyPots"), false, false, -1, style);
-						Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 0, style);
+						Projectile.NewProjectile(new EntitySource_Misc("SOTS:PotGenerator"), position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 0, style);
 						netUpdate = true;
 					}
 					if (timer == -2 && !Main.tile[whereX, whereY].HasTile && !Main.tile[whereX + 1, whereY].HasTile && !Main.tile[whereX, whereY - 1].HasTile && !Main.tile[whereX + 1, whereY - 1].HasTile)
@@ -339,25 +339,22 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 		}
 
-		public override void NetReceive(BinaryReader reader, bool lightReceive)
+        public override void NetReceive(BinaryReader reader)
 		{
 			timer = reader.ReadInt32();
 			style = reader.ReadInt32();
 		}
 
-		public override void NetSend(BinaryWriter writer, bool lightSend)
-		{
+        public override void NetSend(BinaryWriter writer)
+        {
 			writer.Write(timer);
 			writer.Write(style);
 		}
 
 		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
-			return new TagCompound
-			{
-				{"timer", timer},
-				{"style", style},
-			};
+			tag["timer"] = timer;
+			tag["style"] = style;
 		}
 
 		public override void LoadData(TagCompound tag)
@@ -372,8 +369,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			return tile.HasTile && tile.TileType == (ushort)ModContent.TileType<PotGeneratorTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
 		}
 
-		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)
-		{
+        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+        {
 			//Main.NewText("i " + i + " j " + j + " t " + type + " s " + style + " d " + direction);
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{

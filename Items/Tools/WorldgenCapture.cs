@@ -89,7 +89,7 @@ namespace SOTS.Items.Tools
 									tile.Slope = 0;
 									int specialDigit1 = (int)(specialType * 10 + 0.5); //Y in Y.XXX	stores liquid style
 									int specialDigits2 = (int)(specialType * 10000 + 0.5) - (specialDigit1 * 1000);  //X in XXX
-									tile.liquid = (byte)specialDigits2;
+									tile.LiquidAmount = (byte)specialDigits2;
 									tile.LiquidType = specialDigit1;
 									//Main.NewText("Liquid AMT: " + specialDigits2, 150, 255, 255);
 									//Main.NewText("Liquid TYP: " + specialDigit1, 150, 255, 255);
@@ -316,7 +316,7 @@ namespace SOTS.Items.Tools
 						if (!tile.HasTile)
 						{
 							specialType = -1; //turns non-active blocks to air
-							specialType -= (tile.liquid * 0.0001) + (tile.LiquidType * 0.1); //store liquid amount as X in W.YXXX, liquid type as Y in W.YXXX
+							specialType -= (tile.LiquidAmount * 0.0001) + (tile.LiquidType * 0.1); //store liquid amount as X in W.YXXX, liquid type as Y in W.YXXX
 						}
 
 						if (tiles.IndexOf(specialType) < 0)

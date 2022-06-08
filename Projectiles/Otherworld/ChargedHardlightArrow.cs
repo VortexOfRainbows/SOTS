@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.ignoreWater = true;
 			Projectile.alpha = 0;
 		}
-        public override bool CanDamage()
+        public override bool? CanDamage()/* Suggestion: Return null instead of false */
         {
 			return false;
         }

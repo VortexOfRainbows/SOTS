@@ -28,7 +28,7 @@ namespace SOTS.Items.Pyramid
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.accessory = true;
 		}
-		public override void UpdateVanity(Player player, EquipType type)
+		public override void EquipFrameEffects(Player player, EquipType type)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.petPepper = true;

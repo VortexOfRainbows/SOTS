@@ -12,7 +12,7 @@ namespace SOTS.Dusts
         }
         public override void SetStaticDefaults()
         {
-            updateType = 267;
+            UpdateType = 267;
         }
         public override Color? GetAlpha(Dust dust, Color lightColor)
         {

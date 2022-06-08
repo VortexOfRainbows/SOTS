@@ -130,7 +130,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			ItemDrop = ModContent.ItemType<HologlassWall>();
 			AddMapEntry(new Color(25, 120, 170));
 		}
-		public override bool KillSound(int i, int j)
+		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			Terraria.Audio.SoundEngine.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);

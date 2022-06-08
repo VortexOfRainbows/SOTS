@@ -56,7 +56,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			modPlayer.BlinkDamage += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f)));
 			player.noFallDmg = true;
 		}
-        public override void UpdateVanity(Player player, EquipType type)
+        public override void EquipFrameEffects(Player player, EquipType type)
         {
 			if(player.velocity.Length() > 1 && !player.mount.Active)
 			{

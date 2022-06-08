@@ -47,7 +47,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			SoundType = SoundID.Tink;
 			DustType = 32;
 		}
-        public override bool KillSound(int i, int j)
+        public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, (int)pos.X, (int)pos.Y, 0, 1.05f, -0.6f);

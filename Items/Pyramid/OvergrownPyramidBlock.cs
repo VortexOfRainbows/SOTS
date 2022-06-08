@@ -84,7 +84,7 @@ namespace SOTS.Items.Pyramid
 				{
 					var num47 = i;
 					var num48 = j + 1;
-					if(Main.tile[num47, num48].liquid == 0)
+					if(Main.tile[num47, num48].LiquidAmount == 0)
 					{
 						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
 						Main.tile[num47, num48].HasTile;
@@ -165,7 +165,7 @@ namespace SOTS.Items.Pyramid
 				{
 					var num47 = i;
 					var num48 = j + 1;
-					if (Main.tile[num47, num48].liquid == 0)
+					if (Main.tile[num47, num48].LiquidAmount == 0)
 					{
 						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
 						Main.tile[num47, num48].HasTile;

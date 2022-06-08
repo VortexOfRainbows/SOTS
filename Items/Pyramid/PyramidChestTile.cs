@@ -42,7 +42,7 @@ namespace SOTS.Items.Pyramid
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Containers };
 			chest = "Pyramid Chest";
-			chestDrop = Mod.Find<ModItem>("PyramidChest").Type;
+			ChestDrop = Mod.Find<ModItem>("PyramidChest").Type;
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
@@ -80,7 +80,7 @@ namespace SOTS.Items.Pyramid
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
+			Item.NewItem(i * 16, j * 16, 32, 32, ChestDrop);
 			Chest.DestroyChest(i, j);
 		}
 		public override void RightClick(int i, int j)

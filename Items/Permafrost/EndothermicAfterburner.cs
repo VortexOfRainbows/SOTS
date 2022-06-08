@@ -29,7 +29,7 @@ namespace SOTS.Items.Permafrost
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.EndothermicAfterburner = true;
 		}
-        public override void UpdateVanity(Player player, EquipType type)
+        public override void EquipFrameEffects(Player player, EquipType type)
         {
 			if(player.velocity.Length() > 1 && !player.mount.Active)
 			{

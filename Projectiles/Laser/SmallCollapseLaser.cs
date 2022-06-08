@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.alpha = 255;
 			Projectile.extraUpdates = 2;
 		}
-        public override bool CanDamage()
+        public override bool? CanDamage()/* Suggestion: Return null instead of false */
         {
 			return false;
         }

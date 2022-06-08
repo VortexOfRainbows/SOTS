@@ -25,7 +25,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			CreateRecipe(1).AddIngredient(null, "PrecariousCluster", 1).AddIngredient(null, "HardlightAlloy", 10).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
 		}
-        public override void UpdateVanity(Player player, EquipType type)
+        public override void EquipFrameEffects(Player player, EquipType type)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.petAdvisor = true;

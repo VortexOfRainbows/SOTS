@@ -28,7 +28,7 @@ namespace SOTS.Items.Permafrost
 			SoundType = SoundLoader.CustomSoundType;
 			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre1");
 		}
-		public override bool KillSound(int i, int j)
+		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(2) + 1;
@@ -73,7 +73,7 @@ namespace SOTS.Items.Permafrost
 			SoundType = SoundLoader.CustomSoundType;
 			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
 		}
-		public override bool KillSound(int i, int j)
+		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));

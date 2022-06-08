@@ -59,8 +59,11 @@ Low Priority Objectives:
 
 6/5/22 & 6/7/22
 1. Ported/Reorganized ancient gold furniture
-2. 2127 -> 2063 -> 1883
+2. 2127 -> 2063 -> 1883 -> 1858
 3. A handful of item and tile ports
+4. More TMODPorter update
+5. Ported planetarium pots and oter furnitures
+6. Chairs get highlights now (sitting)
 
 6/3/22
 1. Ported the furniture templates

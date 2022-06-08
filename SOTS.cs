@@ -600,7 +600,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:AlchSeeds", group);
 		}
-		public override void UpdateMusic(ref int music, ref MusicPriority priority)
+		public override void UpdateMusic(ref int music, ref SceneEffectPriority priority)
         {
 			/*
             if (Main.myPlayer != -1 && !Main.gameMenu)

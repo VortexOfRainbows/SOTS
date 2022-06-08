@@ -71,57 +71,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<AvaritianPlating>(), 4).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}	
-	public class HardlightChairTile : ModTile
+	public class HardlightChairTile : Items.Furniture.Chair<HardlightChair>
 	{
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
-		{
-			if (Main.tile[i, j].TileFrameY % 36 < 18) //make it only draw if correct frame to prevent extra iterations
-				return;
-			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
-			Tile tile = Main.tile[i, j];
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightChairTileGlow").Value;
-			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
-			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
-			color.A = 0;
-			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
-			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
-			if (Main.drawToScreen)
-			{
-				zero = Vector2.Zero;
-			}
-			for (int k = 0; k < 5; k++)
-			{
-				Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
-				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.10f * k;
-				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-			}
-		}
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileNoAttach[Type] = true;
-			Main.tileLavaDeath[Type] = true;
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
-			TileObjectData.newTile.CoordinateHeights = new[]{16, 16};
-			TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
-			TileObjectData.newTile.StyleWrapLimit = 2;
-			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
-			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight; 
-			TileObjectData.addAlternate(1); 
-			TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-			AddMapEntry(new Color(55, 55, 55));
-			TileID.Sets.DisableSmartCursor[Type] = true;
-			DustType = ModContent.DustType<AvaritianDust>();
-			AdjTiles = new int[] { TileID.Chairs };
-		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<HardlightChair>());
-		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			if (Main.tile[i, j].TileFrameY < 18)
@@ -150,6 +101,53 @@ namespace SOTS.Items.Otherworld.Furniture
 				Main.spriteBatch.Draw(texture, pos, null, color, 0f, new Vector2(10, 17), 0.85f, spriteEffects, 0f);
 			}
 			return true;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			if (Main.tile[i, j].TileFrameY % 36 < 18) //make it only draw if correct frame to prevent extra iterations
+				return;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
+			Tile tile = Main.tile[i, j];
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightChairTileGlow").Value;
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
+			Color color;
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
+			color.A = 0;
+			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			for (int k = 0; k < 5; k++)
+			{
+				Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.10f * k;
+				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
+		}
+		protected override void SetStaticDefaults(TileObjectData t)
+		{
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileLavaDeath[Type] = BreaksInLava;
+			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.CanBeSatOnForNPCs[Type] = true; // Facilitates calling ModifySittingTargetInfo for NPCs
+			TileID.Sets.CanBeSatOnForPlayers[Type] = true; // Facilitates calling ModifySittingTargetInfo for Players
+			TileID.Sets.DisableSmartCursor[Type] = true;
+
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 }; //this is the only difference from base class
+			TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
+			TileObjectData.newTile.StyleWrapLimit = 2;
+			TileObjectData.newTile.StyleMultiplier = 2;
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
+			TileObjectData.addAlternate(1);
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+			AdjTiles = new int[] { TileID.Chairs };
+			AddMapEntry(new Color(55, 55, 55));
 		}
 	}
 }

@@ -60,7 +60,7 @@ namespace SOTS.Items.Earth
 			SOTS.MergeWithFrame(i, j, Type, TileID.Marble, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
 			return false;
 		}
-		public override bool KillSound(int i, int j)
+		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(3) + 1;

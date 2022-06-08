@@ -18,7 +18,7 @@ namespace SOTS.Dusts
 	{
 		public override void OnSpawn(Dust dust)
 		{
-			updateType = 67;
+			UpdateType = 67;
 			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 10, 8, 8);
 			dust.velocity.Y = Main.rand.Next(-10, 11) * 0.15f;
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.15f;

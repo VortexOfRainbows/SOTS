@@ -92,7 +92,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
         public override bool CanPlace(int i, int j)
         {
-			return Main.tile[i, j].liquid == 0;
+			return Main.tile[i, j].LiquidAmount == 0;
         }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

@@ -68,7 +68,7 @@ namespace SOTS.Items.Chaos
 			HitSound = SoundID.NPCHit53;
 			DustType = ModContent.DustType<CopyDust4>(); //DustID.PinkFlame
 		}
-		public override bool KillSound(int i, int j)
+		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)pos.X, (int)pos.Y, 0.25f, 0.6f);
