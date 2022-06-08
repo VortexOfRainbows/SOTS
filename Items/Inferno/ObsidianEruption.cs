@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -34,7 +35,7 @@ namespace SOTS.Items.Inferno
 		{
 			CreateRecipe(1).AddIngredient(ItemID.MeteoriteBar, 12).AddIngredient(ItemID.Obsidian, 36).AddIngredient(null, "FragmentOfInferno", 3).AddIngredient(null, "FragmentOfOtherworld", 2).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int numberProjectiles = 1;  //This defines how many projectiles to shot
             for (int index = 0; index < numberProjectiles; ++index)
@@ -52,7 +53,7 @@ namespace SOTS.Items.Inferno
                 float num17 = num13 * num15;
                 float SpeedX = num16 + (float)Main.rand.Next(-40, 41) * 0.01f;  //this defines the projectile X position speed and randomnes
                 float SpeedY = num17 + (float)Main.rand.Next(-40, 41) * 0.01f;  //this defines the projectile Y position speed and randomnes
-                Projectile.NewProjectile(vector2_1.X, vector2_1.Y, SpeedX, -SpeedY, type, damage, knockBack, Main.myPlayer, 0.0f, Main.MouseWorld.Y);
+                Projectile.NewProjectile(source, vector2_1.X, vector2_1.Y, SpeedX, -SpeedY, type, damage, knockback, Main.myPlayer, 0.0f, Main.MouseWorld.Y);
             }
             return false;
 		}

@@ -4,6 +4,7 @@ using SOTS.Dusts;
 using SOTS.Items.Otherworld.Blocks;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -112,14 +113,14 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AddMapEntry(new Color(55, 55, 55));
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 			AdjTiles = new int[] { TileID.Chairs };
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<HardlightChair>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<HardlightChair>());
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{

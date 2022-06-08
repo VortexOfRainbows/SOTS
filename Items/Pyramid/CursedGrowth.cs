@@ -49,12 +49,11 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Cursed Growth");
 			AddMapEntry(new Color(78, 55, 108), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;
 			AnimationFrameHeight = 36;
 			DustType = ModContent.DustType<CurseDust3>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			MineResist = 0.1f;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)

@@ -39,90 +39,41 @@ namespace SOTS.Items.Otherworld.Furniture
 			CreateRecipe(1).AddIngredient(ItemType<PrecariousCluster>(), 1).AddIngredient(ItemType<TwilightShard>(), 20).AddIngredient(ItemType<OtherworldlyAlloy>(), 20).AddIngredient(ItemType<HardlightAlloy>(), 10).AddIngredient(ItemType<StarlightAlloy>(), 10).AddTile(TileType<HardlightFabricatorTile>()).Register();
 		}
 		public static void AddTransmutationRecipes(Mod mod) //called in SOTS
-        {
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.TinBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.CopperBar, 1);
-			recipe.AddRecipe();
+		{
+			AddDirectExchangeRecipe(mod, ItemID.CopperBar, ItemID.TinBar);
+			AddDirectExchangeRecipe(mod, ItemID.IronBar, ItemID.LeadBar);
+			AddDirectExchangeRecipe(mod, ItemID.SilverBar, ItemID.TungstenBar);
+			AddDirectExchangeRecipe(mod, ItemID.GoldBar, ItemID.PlatinumBar);
 
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.CopperBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.TinBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.IronBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.LeadBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.LeadBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.IronBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.SilverBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.TungstenBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.TungstenBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.SilverBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.GoldBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.PlatinumBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
-			recipe.AddIngredient(ItemID.PlatinumBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.GoldBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new Recipe(mod);
+			Recipe recipe = mod.CreateRecipe(ItemID.IronOre, 1);
 			recipe.AddIngredient(ItemID.CopperOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.IronOre, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 
-			recipe = new Recipe(mod);
+			recipe = mod.CreateRecipe(ItemID.SilverOre, 1);
 			recipe.AddIngredient(ItemID.IronOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.SilverOre, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 
-			recipe = new Recipe(mod);
+			recipe = mod.CreateRecipe(ItemID.GoldOre, 1);
 			recipe.AddIngredient(ItemID.SilverOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.GoldOre, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 
-			recipe = new Recipe(mod);
+			recipe = mod.CreateRecipe(ItemID.LeadOre, 1);
 			recipe.AddIngredient(ItemID.TinOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.LeadOre, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 
-			recipe = new Recipe(mod);
+			recipe = mod.CreateRecipe(ItemID.TungstenOre, 1);
 			recipe.AddIngredient(ItemID.LeadOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.TungstenOre, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 
-			recipe = new Recipe(mod);
+			recipe = mod.CreateRecipe(ItemID.PlatinumOre, 1);
 			recipe.AddIngredient(ItemID.TungstenOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.PlatinumOre, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 
 			AddDirectExchangeRecipe(mod, ItemID.DemoniteBar, ItemID.CrimtaneBar);
 			AddDirectExchangeRecipe(mod, ItemID.CobaltBar, ItemID.PalladiumBar);
@@ -132,16 +83,14 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public static void AddDirectExchangeRecipe(Mod mod, int item1, int item2)
 		{
-			Recipe recipe = new Recipe(mod);
+			Recipe recipe = mod.CreateRecipe(item2, 1);
 			recipe.AddIngredient(item1, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(item2, 1);
-			recipe.AddRecipe(); 
-			recipe = new Recipe(mod);
+			recipe.Register();
+			recipe = mod.CreateRecipe(item1, 1);
 			recipe.AddIngredient(item2, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(item1, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 		}
 	}
 	public class TransmutationAltarTile : ModTile
@@ -159,14 +108,14 @@ namespace SOTS.Items.Otherworld.Furniture
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Transmutation Altar");
 			AddMapEntry(new Color(125, 55, 55), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustType<AvaritianDust>();
 			AdjTiles = new int[] { TileID.DemonAltar };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = ItemType<TransmutationAltar>();
-			Item.NewItem(i * 16, j * 16, 48, 32, drop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, drop);
 			ModContent.GetInstance<TransmutationAltarStorage>().Kill(i, j);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -186,9 +135,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			Tile t = Main.tile[i, j];
 			if (type == 1) // t.frameX % 54 == 0
 			{
-				Main.specX[nextSpecialDrawIndex] = i;
-				Main.specY[nextSpecialDrawIndex] = j;
-				nextSpecialDrawIndex++;
+				Main.instance.TilesRenderer.AddSpecialLegacyPoint(new Point(i, j));
 			}
 		}
 		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
@@ -243,9 +190,9 @@ namespace SOTS.Items.Otherworld.Furniture
 			for (int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
-				if (Item.type == middleItemType)
+				if (item.type == middleItemType)
 				{
-					amountHas += Item.stack;
+					amountHas += item.stack;
 				}
 			}
 			if (amountHas >= amountNeeded && entity.itemsArray[0] != 0)
@@ -259,7 +206,7 @@ namespace SOTS.Items.Otherworld.Furniture
 					{
 						if (Main.myPlayer == player.whoAmI && (middleItemType != ItemType<RoyalRubyShard>() || (entity.itemsArray[l] != ModContent.ItemType<PrecariousCluster>())))
 						{
-							int item = Item.NewItem((int)pos.X, (int)pos.Y, 0, 0, entity.itemsArray[l], entity.itemAmountsArray[l]);
+							int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), (int)pos.X, (int)pos.Y, 0, 0, entity.itemsArray[l], entity.itemAmountsArray[l]);
 							Main.item[item].velocity += new Vector2(-3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
 							NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 						}
@@ -267,7 +214,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				}
 				if (Main.myPlayer == player.whoAmI)
 				{
-					Projectile.NewProjectile(pos, Vector2.Zero, ModContent.ProjectileType<UndoParticles>(), 0, 0, Main.myPlayer, i, j);
+					Projectile.NewProjectile(new EntitySource_TileInteraction(player, i, j), pos, Vector2.Zero, ModContent.ProjectileType<UndoParticles>(), 0, 0, Main.myPlayer, i, j);
 				}
 			}
 
@@ -313,7 +260,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			int currentItem = 0;
 			for (int l = 1; l < amountOfUniqueItems; l++)
 			{
-				texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[l].Value];
+				texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[l]].Value;
 				for (int g = 0; g < entity.itemAmountsArray[l]; g++)
 				{
 					DrawAnimation anim = Main.itemAnimations[entity.itemsArray[l]];
@@ -332,7 +279,7 @@ namespace SOTS.Items.Otherworld.Furniture
 					DrawItem(texture, pos, frameCount, ticksPerFrame, color);
 				}
 			}
-			texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[0].Value];
+			texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[0]].Value;
 			for (int g = 0; g < entity.itemAmountsArray[0]; g++)
 			{
 				DrawAnimation anim = Main.itemAnimations[entity.itemsArray[0]];
@@ -487,8 +434,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 		}
 
-		public override void NetReceive(BinaryReader reader, bool lightReceive)
-		{
+        public override void NetReceive(BinaryReader reader)
+        {
 			netUpdate = reader.ReadBoolean();
 			timer = reader.ReadInt32();
 			style = reader.ReadInt32();
@@ -504,8 +451,8 @@ namespace SOTS.Items.Otherworld.Furniture
 				//Main.NewText("I received info");
 		}
 
-		public override void NetSend(BinaryWriter writer, bool lightSend)
-		{
+        public override void NetSend(BinaryWriter writer)
+        {
 			writer.Write(netUpdate);
 			writer.Write(timer);
 			writer.Write(style);
@@ -523,13 +470,10 @@ namespace SOTS.Items.Otherworld.Furniture
 
 		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
-			return new TagCompound
-			{
-				{"timer", timer},
-				{"style", style},
-				{"itemsArray", itemsArray},
-				{"itemAmountsArray", itemAmountsArray},
-			};
+			tag["timer"] = timer;
+			tag["style"] = style;
+			tag["itemsArray"] = itemsArray;
+			tag["itemAmountsArray"] = itemAmountsArray;
 		}
 
 		public override void LoadData(TagCompound tag)
@@ -546,12 +490,12 @@ namespace SOTS.Items.Otherworld.Furniture
 			return tile.HasTile && tile.TileType == (ushort)TileType<TransmutationAltarTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
 		}
 
-		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)
-		{
+        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+        {
 			//Main.NewText("i " + i + " j " + j + " t " + type + " s " + style + " d " + direction);
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
-				NetMessage.SendTileRange(Main.myPlayer, i, j, 3, 2);
+				NetMessage.SendTileSquare(Main.myPlayer, i, j, 3, 2);
 				NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
 				return -1;
 			}

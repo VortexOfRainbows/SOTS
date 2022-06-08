@@ -36,8 +36,8 @@ namespace SOTS.Items.GhostTown
             if(player.whoAmI == Main.myPlayer)
             {
                 float ToPlayer = (player.Center - target.Center).ToRotation();
-                Vector2 position = target.Hitbox.TopLeft() + EdgeOfRect(target.Hitbox, ToPlayer);                
-                Projectile.NewProjectile(position, new Vector2(player.direction, 0), ModContent.ProjectileType<BloodSpark>(), (int)(damage * 0.8f), knockBack, Main.myPlayer, (ToPlayer + MathHelper.PiOver2) * 180f / MathHelper.Pi, crit ? -1 : 0);
+                Vector2 position = target.Hitbox.TopLeft() + EdgeOfRect(target.Hitbox, ToPlayer);
+                Projectile.NewProjectile(player.GetSource_OnHit(target), position, new Vector2(player.direction, 0), ModContent.ProjectileType<BloodSpark>(), (int)(damage * 0.8f), knockBack, Main.myPlayer, (ToPlayer + MathHelper.PiOver2) * 180f / MathHelper.Pi, crit ? -1 : 0) ;
             }
         }
         public override void AddRecipes()

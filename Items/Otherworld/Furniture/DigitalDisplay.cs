@@ -103,7 +103,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Digital Display");
 			AddMapEntry(new Color(255, 255, 255), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -112,8 +112,7 @@ namespace SOTS.Items.Otherworld.Furniture
         }
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = ModContent.ItemType<DigitalDisplay>();
-			Item.NewItem(i * 16, j * 16, 32, 16, drop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 16, ModContent.ItemType<DigitalDisplay>());
 		}
 		public override void MouseOver(int i, int j)
 		{
@@ -133,12 +132,13 @@ namespace SOTS.Items.Otherworld.Furniture
 				player.cursorItemIconID = 0;
 			}
 		}
-		public override void RightClick(int i, int j)
-		{
+        public override bool RightClick(int i, int j)
+        {
 			Main.mouseRightRelease = true;
 			Player player = Main.LocalPlayer;
 			player.AddBuff(ModContent.BuffType<CyberneticEnhancements>(), 36000, false);
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item4, i * 16, j * 16);
+			SOTSUtils.PlaySound(SoundID.Item4, i * 16, j* 16);
+            return true;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

@@ -33,7 +33,7 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Strange Keystone");
 			AddMapEntry(new Color(115, 0, 0), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
 			SoundType = SoundID.NPCHit;
 			SoundStyle = 1;

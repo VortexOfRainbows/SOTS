@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Pyramid Chest");
 			AddMapEntry(new Color(194,138,138), name, MapChestName);
 			DustType = 7;
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Containers };
 			chest = "Pyramid Chest";
 			chestDrop = Mod.Find<ModItem>("PyramidChest").Type;

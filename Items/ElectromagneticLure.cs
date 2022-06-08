@@ -114,7 +114,7 @@ namespace SOTS.Items
 			if (type == -1)
 				return false;
 			NPC.SpawnOnPlayer(player.whoAmI, type);
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 122, 0.8f, 0.1f);
+			SOTSUtils.PlaySound(SoundID.Item122, (int)player.position.X, (int)player.position.Y, 0.8f, 0.1f);
 			return true;
 		}
 	}

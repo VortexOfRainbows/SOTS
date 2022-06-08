@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Projectiles.Inferno;
 using SOTS.Items.Fragments;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Inferno
 {
@@ -40,10 +41,10 @@ namespace SOTS.Items.Inferno
         {
             return new Vector2(-1, 0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            position += new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero) * 24;
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<PlasmaphobiaBolt>(), damage, knockBack, player.whoAmI);
+            position += velocity.SafeNormalize(Vector2.Zero) * 24;
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PlasmaphobiaBolt>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 		public override void AddRecipes()

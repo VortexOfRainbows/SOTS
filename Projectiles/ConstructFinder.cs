@@ -1,15 +1,8 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using SOTS.Dusts;
-using SOTS.NPCs.ArtificialDebuffs;
 using System.Linq;
 
 namespace SOTS.Projectiles
@@ -73,7 +66,7 @@ namespace SOTS.Projectiles
 				for (int i = 0; i < 200; i++)
 				{
 					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy() && DebuffNPC.constructs.Contains(npc.type) && npc.Distance(Projectile.Center) > 64)
+					if (npc.CanBeChasedBy() && Common.GlobalNPCs.DebuffNPC.Constructs.Contains(npc.type) && npc.Distance(Projectile.Center) > 64)
 					{
 						npcId = i;
 						break;

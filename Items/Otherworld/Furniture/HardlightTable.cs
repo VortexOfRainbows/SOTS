@@ -118,14 +118,13 @@ namespace SOTS.Items.Otherworld.Furniture
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Hardlight Table");
 			AddMapEntry(new Color(55, 55, 55));
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 			AdjTiles = new int[] { TileID.Tables };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = ModContent.ItemType<HardlightTable>();
-			Item.NewItem(i * 16, j * 16, 32, 16, drop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<HardlightTable>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

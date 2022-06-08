@@ -37,12 +37,11 @@ namespace SOTS.Items.Inferno
         {
             return new Vector2(-1, 0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<SharangaBolt>(), damage, knockBack, player.whoAmI);
-			return false;
-		}
-		public override void AddRecipes()
+            type = ModContent.ProjectileType<SharangaBolt>();
+        }
+        public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ItemID.HellwingBow, 1).AddIngredient(ItemID.MoltenFury, 1).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 4).AddTile(TileID.Anvils).Register();
 		}

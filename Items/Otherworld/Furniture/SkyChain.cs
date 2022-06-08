@@ -48,7 +48,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Sky Chain");
 			AddMapEntry(new Color(255, 255, 255), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			ItemDrop = ModContent.ItemType<SkyChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}

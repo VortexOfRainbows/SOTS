@@ -53,7 +53,7 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Strange Gateway");
 			AddMapEntry(new Color(44, 12, 62), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = Mod.Find<ModDust>("AcedianDust").Type;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

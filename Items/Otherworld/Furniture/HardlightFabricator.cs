@@ -4,6 +4,7 @@ using SOTS.Dusts;
 using SOTS.Items.Otherworld.Blocks;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -89,14 +90,13 @@ namespace SOTS.Items.Otherworld.Furniture
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Hardlight Fabricator");
 			AddMapEntry(new Color(55, 55, 55), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 			AdjTiles = new int[] { TileID.WorkBenches };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = ModContent.ItemType<HardlightFabricator>();
-			Item.NewItem(i * 16, j * 16, 32, 16, drop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<HardlightFabricator>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

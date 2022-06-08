@@ -54,7 +54,7 @@ namespace SOTS.Items.Earth
 			name.SetDefault("Large Vibrant Shard");
 			AddMapEntry(new Color(156, 209, 46), name);
 			DustType = ModContent.DustType<VibrantDust>();
-			//disableSmartCursor = true;
+			//TileID.Sets.DisableSmartCursor[Type] = true;
 			HitSound = SoundID.Item27;
 			MinPick = 40;
 			MineResist = 0.1f;

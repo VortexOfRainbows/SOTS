@@ -126,7 +126,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Pot Generator");
 			AddMapEntry(new Color(180, 245, 240), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustType<AvaritianDust>();
 		}
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)

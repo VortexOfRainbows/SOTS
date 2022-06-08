@@ -37,11 +37,11 @@ namespace SOTS.Items.Inferno
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Vector2 normal = new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero);
-			Projectile.NewProjectile(position, normal * 5, type, damage, knockBack, player.whoAmI, Item.useTime);
-			Projectile.NewProjectile(position, normal * 48, ModContent.ProjectileType<PlasmaSphere>(), damage, knockBack, player.whoAmI, Item.useTime);
+			Vector2 normal = velocity.SafeNormalize(Vector2.Zero);
+			Projectile.NewProjectile(source, position, normal * 5, type, damage, knockback, player.whoAmI, Item.useTime);
+			Projectile.NewProjectile(source, position, normal * 48, ModContent.ProjectileType<PlasmaSphere>(), damage, knockback, player.whoAmI, Item.useTime);
 			return false;
         }
 		public override int GetVoid(Player player)

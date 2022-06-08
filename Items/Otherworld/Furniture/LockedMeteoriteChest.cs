@@ -29,8 +29,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
-			TileObjectData.newTile.HookCheck = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
-			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
+			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
+			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
 			TileObjectData.newTile.AnchorInvalidTiles = new[] { 127 };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
@@ -43,10 +43,10 @@ namespace SOTS.Items.Otherworld.Furniture
 			name.SetDefault("Locked Meteorite Chest");
 			AddMapEntry(new Color(174, 129, 92), name, MapChestName);
 			DustType = -1; //regular meteor chest doesn't make dust for some reason
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Containers };
-			chest = "Meteorite Chest";
-			chestDrop = ItemID.MeteoriteChest;
+			ContainerName.SetDefault("Meteorite Chest");
+			ChestDrop = ItemID.MeteoriteChest;
 		}
 		public override ushort GetMapOption(int i, int j)
 		{
@@ -94,7 +94,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
 			Chest.DestroyChest(i, j);
 		}
 		public override bool RightClick(int i, int j)

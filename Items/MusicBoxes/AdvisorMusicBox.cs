@@ -24,7 +24,7 @@ namespace SOTS.Items.MusicBoxes
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("AdvisorMusicBoxTile").Type;
+			Item.createTile = ModContent.TileType<AdvisorMusicBoxTile>();
 			Item.width = 24;
 			Item.height = 24;
 			Item.rare = ItemRarityID.LightRed;
@@ -52,21 +52,21 @@ namespace SOTS.Items.MusicBoxes
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Music Box");
 			AddMapEntry(new Color(191, 142, 111), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, Mod.Find<ModItem>("AdvisorMusicBox").Type);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<AdvisorMusicBox>());
 		}
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = Mod.Find<ModItem>("AdvisorMusicBox").Type;
+			player.cursorItemIconID = ModContent.ItemType<AdvisorMusicBox>();
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

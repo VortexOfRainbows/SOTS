@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CrystalSerpentHead>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    player.SpawnMinionOnCursor(Projectile.GetSource_FromThis(), player.whoAmI, ModContent.ProjectileType<CrystalSerpentHead>(), Projectile.originalDamage, Projectile.knockBack);
                 }
             }
             Projectile.Center = player.Center;

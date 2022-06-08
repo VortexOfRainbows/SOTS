@@ -51,7 +51,7 @@ namespace SOTS.Items.MusicBoxes
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Music Box");
 			AddMapEntry(new Color(191, 142, 111), name);

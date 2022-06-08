@@ -39,8 +39,8 @@ namespace SOTS.Items.GhostTown
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
-			TileObjectData.newTile.HookCheck = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
-			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
+			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
+			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
 			TileObjectData.newTile.AnchorInvalidTiles = new[] { 127 };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
@@ -53,10 +53,10 @@ namespace SOTS.Items.GhostTown
 			name.SetDefault("Locked Ruined Chest");
 			AddMapEntry(new Color(180, 130, 100), name, MapChestName);
 			DustType = 122; //boreal wood
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Containers };
-			chest = "Ruined Chest";
-			chestDrop = ModContent.ItemType<RuinedChest>();
+			ContainerName.SetDefault("Ruined Chest");
+			ChestDrop = ModContent.ItemType<RuinedChest>();
 		}
 		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
@@ -99,7 +99,7 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
 			Chest.DestroyChest(i, j);
 		}
 		public override bool RightClick(int i, int j)
@@ -214,7 +214,7 @@ namespace SOTS.Items.GhostTown
 				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Ruined Chest";
 				if (player.cursorItemIconText == "Ruined Chest")
 				{
-					player.cursorItemIconID = chestDrop;
+					player.cursorItemIconID = ChestDrop;
 					if (Main.tile[left, top].TileFrameX / 36 == 1)
 						player.cursorItemIconID = ModContent.ItemType<OldKey>();
 					player.cursorItemIconText = "";
