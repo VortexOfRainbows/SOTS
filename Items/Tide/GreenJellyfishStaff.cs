@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Projectiles.Lightning;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Tide
 {
@@ -45,13 +46,13 @@ namespace SOTS.Items.Tide
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<PurpleJellyfishStaff>(), 1).AddIngredient(ItemID.SoulofLight, 15).AddIngredient(ItemID.SoulofSight, 15).AddTile(TileID.MythrilAnvil).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(180)); 
-            Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+            Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(180)); 
+            Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 			
             Vector2 perturbedSpeed2 = perturbedSpeed.RotatedBy(MathHelper.ToRadians(180)); 
-            Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, type, damage, knockback, player.whoAmI);
             return false;
 		}
 	}

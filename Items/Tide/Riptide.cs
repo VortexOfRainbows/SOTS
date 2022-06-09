@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -26,7 +27,7 @@ namespace SOTS.Items.Tide
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;
-			Item.shoot = Mod.Find<ModProjectile>("Riptide").Type;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Tide.Riptide>();
 			Item.shootSpeed = 3.0f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -40,16 +41,15 @@ namespace SOTS.Items.Tide
 		{
 			return true;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			float mult = 1f;
 			if(player.altFunctionUse == 2)
             {
 				mult = 1.2f;
-				speedX *= 0.55f;
-				speedY *= 0.55f;
+				velocity *= 0.55f;
 			}
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, (int)(damage * mult), (int)(knockBack * mult), player.whoAmI, player.altFunctionUse == 2 ? 1 : 0);
+			Projectile.NewProjectile(source, position, velocity, type, (int)(damage * mult), (int)(knockback * mult), player.whoAmI, player.altFunctionUse == 2 ? 1 : 0);
 			return false;
 		}
 		public override float UseTimeMultiplier(Player player)

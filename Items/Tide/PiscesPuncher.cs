@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Projectiles.Tide;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Tide
 {
@@ -37,12 +38,12 @@ namespace SOTS.Items.Tide
 		{
 			return new Vector2(-12, 0);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			for(int i = -1; i <= 1; i++)
 			{
-				Vector2 velocity = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(10 * i)) + Main.rand.NextVector2Circular(2, 2);
-				Projectile.NewProjectile(position + velocity.SafeNormalize(Vector2.Zero) * 28, velocity, type, damage, knockBack, player.whoAmI, ChooseItem(), i);
+				velocity = velocity.RotatedBy(MathHelper.ToRadians(10 * i)) + Main.rand.NextVector2Circular(2, 2);
+				Projectile.NewProjectile(source, position + velocity.SafeNormalize(Vector2.Zero) * 28, velocity, type, damage, knockback, player.whoAmI, ChooseItem(), i);
 			}
 			return false;
 		}

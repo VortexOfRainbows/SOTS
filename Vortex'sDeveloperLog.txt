@@ -62,6 +62,7 @@ Low Priority Objectives:
 2. Did not change any player layers yet, as I have yet to learn how to.
 3. 1629 -> 1433 -> 1407
 4. Relocated some stuff that was in SOTS.cs
+5. Tide Folder
 
 6/5/22 & 6/7/22
 1. Ported/Reorganized ancient gold furniture

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Lightning;
 using SOTS.Items.Fragments;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Tide
 {
@@ -38,14 +39,14 @@ namespace SOTS.Items.Tide
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Amethyst, 15).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			for (int i = 0; i < 2; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX * .66f, speedY * .66f).RotatedByRandom(MathHelper.ToRadians(25));
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 2.5f);
+				Vector2 perturbedSpeed = (velocity * 0.66f).RotatedByRandom(MathHelper.ToRadians(25));
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI, 2.5f);
 			}
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 2.5f);
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 2.5f);
             return false;
 		}
 	}

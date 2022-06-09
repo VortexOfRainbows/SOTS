@@ -29,7 +29,7 @@ namespace SOTS.Items.Tide
 				modPlayer.rippleEffect = true;
 			player.statLifeMax2 += 20;
 			modPlayer.rippleTimer++;
-			player.armorPenetration += 8;
+			player.GetArmorPenetration(DamageClass.Generic) += 8;
 		}
 		public override void AddRecipes()
 		{
