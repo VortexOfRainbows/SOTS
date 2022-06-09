@@ -14,7 +14,13 @@ namespace SOTS.Items.Pyramid
 	[AutoloadEquip(EquipType.Body)]
 	public class CursedRobe : ModItem
 	{
-		public override void SetDefaults()
+        public override void Load()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Legs}", EquipType.Legs, this, "CursedRobe_Legs");
+		}
+        public override void SetDefaults()
 		{
 			Item.width = 34;
 			Item.height = 36;
@@ -34,7 +40,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
 		{
 			robes = true;
-			equipSlot = Mod.GetEquipSlot("CursedRobe_Legs", EquipType.Legs);
+			equipSlot = EquipLoader.GetEquipSlot(Mod, "CursedRobe_Legs", EquipType.Legs);
 		}
 
 		public override void UpdateEquip(Player player)

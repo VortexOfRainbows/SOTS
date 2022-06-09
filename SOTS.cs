@@ -40,8 +40,6 @@ namespace SOTS
 {
 	public class SOTS : Mod
 	{
-		private Vector2 _lastScreenSize;
-		private Vector2 _lastViewSize;
 		public static PrimTrailManager primitives;
 
 		public static ModKeybind BlinkHotKey;
@@ -60,15 +58,13 @@ namespace SOTS
         }
 		public SOTS()
 		{
-			Properties = new ModProperties()
+			/*Properties = new ModProperties() //This seems largely unused now
 			{
 				Autoload = true,
 				AutoloadGores = true,
 				AutoloadSounds = true
-			};
+			};*/
 		}
-		private UserInterface _VoidUserInterface;
-		internal VoidUI VoidUI;
 		public static int PlayerCount = 0;
 		public override void Load()
 		{
@@ -77,18 +73,7 @@ namespace SOTS
 			BlinkHotKey = KeybindLoader.RegisterKeybind(this, "Blink", "V");
 			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, "Armor Set", "F");
 			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, "Modify Flight Mode", "C");
-			Instance.AddEquipTexture(null, EquipType.Legs, "CursedRobe_Legs", "SOTS/Items/Pyramid/CursedRobe_Legs");
-			if (!Main.dedServ)
-            {
-                VoidUI = new VoidUI();
-                VoidUI.Activate();
-                _VoidUserInterface = new UserInterface();
-                _VoidUserInterface.SetState(VoidUI);
-
-				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
-				_lastViewSize = Main.ViewSize;
-				//SkyManager.Instance["SOTS:LuxFight"] = new LuxSky();
-			}
+			SOTSWorld.LoadUI();
 			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
 			{
@@ -171,59 +156,6 @@ namespace SOTS
 			MachinaBoosterHotKey = null;
 			SOTSDetours.Unload();
 		}
-		public override void PreUpdateEntities()
-		{
-			if (!Main.dedServ)
-			{
-				if (_lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
-				{
-					if (primitives != null)
-						primitives.LoadContent(Main.graphics.GraphicsDevice);
-					if (SOTSDetours.TargetProj != null)
-						SOTSDetours.ResizeTargets();
-				}
-
-				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
-				_lastViewSize = Main.ViewSize;
-			}
-			bool frozen = SOTSWorld.UpdateWhileFrozen();
-			if(!frozen)
-            {
-				SOTSWorld.Update();
-				PlayerCount = 0;
-				if (Main.netMode != NetmodeID.SinglePlayer) //updating this on Dedicated Server just in case I accidentally forgot to make dust not spawn in multiplayer somewhere
-				{
-					for (int i = 0; i < Main.player.Length; i++)
-					{
-						Player player = Main.player[i];
-						if (player.active)
-						{
-							PlayerCount++;
-							SOTSPlayer.ModPlayer(player).FoamStuff();
-						}
-					}
-				}
-				else
-				{
-					PlayerCount = 1;
-					SOTSPlayer.ModPlayer(Main.LocalPlayer).FoamStuff();
-				}
-            }
-		}
-		public override void MidUpdateProjectileItem()
-		{
-			if (Main.netMode != NetmodeID.Server)
-			{
-				primitives.UpdateTrails();
-			}
-		}
-		public override void UpdateUI(GameTime gameTime) 
-		{
-			if (_VoidUserInterface != null)
-			{
-				_VoidUserInterface.Update(gameTime);
-			}
-		}
 		public static Vector2 CalculateBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
 		{
 			float u = 1 - t;
@@ -236,22 +168,6 @@ namespace SOTS
 			p += 3 * u * tt * p2; //third term
 			p += ttt * p3; //fourth term
 			return p;
-		}
-		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
-        {
-			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-			if (mouseTextIndex != -1) {
-				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
-					"SOTS: Void Meter",
-					delegate {
-						if (VoidUI.visible) {
-							_VoidUserInterface.Draw(Main.spriteBatch, new GameTime());
-						}
-						return true;
-					},
-					InterfaceScaleType.UI)
-				);
-			}
 		}
 		internal enum SOTSMessageType : int
 		{
@@ -628,29 +544,29 @@ namespace SOTS
 				Player player = Main.player[Main.myPlayer];
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 				{
-					music = GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid");
-					priority = MusicPriority.BiomeHigh;
+					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/CursedPyramid");
+					priority = SceneEffectPriority.BiomeHigh;
                 }
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 				{
-					music = GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium");
-					priority = MusicPriority.Event;
+					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/Planetarium");
+					priority = SceneEffectPriority.Event;
 				}
 				if (SOTSWorld.SecretFoundMusicTimer > 0)
 				{
 					SOTSWorld.SecretFoundMusicTimer--;
-					music = GetSoundSlot(SoundType.Music, "Sounds/Music/SecretFound");
-					priority = MusicPriority.BossHigh + 1;
+					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/SecretFound");
+					priority = SceneEffectPriority.BossHigh + 1;
 				}
 				if (NPC.AnyNPCs(ModContent.NPCType<NPCs.knuckles>()) && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<NPCs.knuckles>())].Distance(player.Center) <= 7000f)
 				{
-					music = GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
-					priority = MusicPriority.BossHigh;
+					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/KnucklesTheme");
+					priority = SceneEffectPriority.BossHigh;
 				}
 				if(SOTSPlayer.pyramidBattle) //variable only applies to local player
 				{
-					music = GetSoundSlot(SoundType.Music, "Sounds/Music/PyramidBattle");
-					priority = MusicPriority.Environment;
+					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/PyramidBattle");
+					priority = SceneEffectPriority.Environment;
 				}
 			}
 		}
@@ -769,46 +685,10 @@ namespace SOTS
 
 			 }
         }
-		public static float lightingChange = 1f;
-        public override void ModifyLightingBrightness(ref float scale)
-        {
-			scale *= lightingChange;
-			lightingChange = 1;
-		}
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;
 		public static float LuxLightingFadeIn = 0;
 		public static float PlanetariumLightingFadeIn = 0;
-		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
-		{
-			if (Main.gameMenu)
-			{
-				return;
-			}
-			var player = Main.LocalPlayer;
-			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
-			if (sPlayer.zoneLux)
-			{
-
-			}
-			else if (LuxLightingFadeIn > 0)
-			{
-				LuxLightingFadeIn -= 0.01f;
-			}
-			backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
-			tileColor = Color.Lerp(tileColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
-			if (sPlayer.PlanetariumBiome)
-			{
-				if (PlanetariumLightingFadeIn < 1)
-					PlanetariumLightingFadeIn += 0.01f;
-			}
-			else if (PlanetariumLightingFadeIn > 0)
-			{
-				PlanetariumLightingFadeIn -= 0.01f;
-			}
-			backgroundColor = Color.Lerp(backgroundColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
-			tileColor = Color.Lerp(tileColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
-		}
 		public enum Similarity
 		{
 			None,

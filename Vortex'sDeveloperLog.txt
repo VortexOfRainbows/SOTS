@@ -60,7 +60,8 @@ Low Priority Objectives:
 6/8/22 & 6/9/22
 1. Items again. Mostly Otherworld FromChest Folder.
 2. Did not change any player layers yet, as I have yet to learn how to.
-3. 1629 -> 1433
+3. 1629 -> 1433 -> 1407
+4. Relocated some stuff that was in SOTS.cs
 
 6/5/22 & 6/7/22
 1. Ported/Reorganized ancient gold furniture

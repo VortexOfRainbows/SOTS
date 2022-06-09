@@ -37,6 +37,9 @@ using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Chaos;
 using Terraria.IO;
 using SOTS.WorldgenHelpers;
+using SOTS.Items.Furniture.AncientGold;
+using Terraria.UI;
+using SOTS.Void;
 
 namespace SOTS
 {
@@ -1212,6 +1215,106 @@ namespace SOTS
 					}
 				}
 			}
-		}	
+		}
+
+		/***
+		/ This is where the old Mod. stuff was moved to. Basically, it has to belong in a ModSystem Now. I don't know which one to put it in yet, so it stays here for now.
+		/ A lot of old parameters were also made into Static parameters. This shouldn't break anything, but is noted in case it does.
+		/
+		/
+		/
+		/
+		*/
+		public static void LoadUI()
+		{
+			if (!Main.dedServ)
+			{
+				VoidUI = new VoidUI();
+				VoidUI.Activate();
+				_VoidUserInterface = new UserInterface();
+				_VoidUserInterface.SetState(VoidUI);
+
+				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+				_lastViewSize = Main.ViewSize;
+			}
+		}
+		private static UserInterface _VoidUserInterface;
+		internal static VoidUI VoidUI;
+		public static float lightingChange = 1f;
+		private static Vector2 _lastScreenSize;
+		private static Vector2 _lastViewSize;
+		public override void PreUpdateEntities()
+		{
+			if (!Main.dedServ)
+			{
+				if (_lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+				{
+					if (primitives != null)
+						primitives.LoadContent(Main.graphics.GraphicsDevice);
+					if (SOTSDetours.TargetProj != null)
+						SOTSDetours.ResizeTargets();
+				}
+				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+				_lastViewSize = Main.ViewSize;
+			}
+			bool frozen = SOTSWorld.UpdateWhileFrozen();
+			if (!frozen)
+			{
+				SOTSWorld.Update();
+				PlayerCount = 0;
+				if (Main.netMode != NetmodeID.SinglePlayer) //updating this on Dedicated Server just in case I accidentally forgot to make dust not spawn in multiplayer somewhere
+				{
+					for (int i = 0; i < Main.player.Length; i++)
+					{
+						Player player = Main.player[i];
+						if (player.active)
+						{
+							PlayerCount++;
+							SOTSPlayer.ModPlayer(player).FoamStuff();
+						}
+					}
+				}
+				else
+				{
+					PlayerCount = 1;
+					SOTSPlayer.ModPlayer(Main.LocalPlayer).FoamStuff();
+				}
+			}
+		}
+        public override void PostUpdateProjectiles()
+        {
+			if (Main.netMode != NetmodeID.Server)
+			{
+				primitives.UpdateTrails();
+			}
+		}
+		public override void UpdateUI(GameTime gameTime)
+        {
+			if (_VoidUserInterface != null)
+			{
+				_VoidUserInterface.Update(gameTime);
+			}
+		}
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+			if (mouseTextIndex != -1) {
+				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
+					"SOTS: Void Meter",
+					delegate {
+						if (VoidUI.visible) {
+							_VoidUserInterface.Draw(Main.spriteBatch, new GameTime());
+						}
+						return true;
+					},
+					InterfaceScaleType.UI)
+				);
+			}
+		}
+		public override void ModifyLightingBrightness(ref float scale)
+		{
+			scale *= lightingChange;
+			lightingChange = 1;
+		}
 	}
 }
