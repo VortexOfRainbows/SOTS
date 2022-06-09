@@ -45,10 +45,6 @@ namespace SOTS.Items.OreItems
 				dust.scale *= 1.5f;
 			}
 		}
-		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
-		{
-			//Now modified in DebuffNPC
-		}
 		public override int GetVoid(Player player)
 		{
 			return 10;

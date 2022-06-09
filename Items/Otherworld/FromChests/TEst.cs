@@ -13,6 +13,7 @@ using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using SOTS.Projectiles.Chaos;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -35,8 +36,8 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.shootSpeed = 3.0f;
 			Item.consumable = true;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 24;

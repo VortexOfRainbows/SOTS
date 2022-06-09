@@ -64,8 +64,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			AddMapEntry(new Color(122, 243, 255));
 			MineResist = 2f;
 			MinPick = 250;
-			SoundType = 21;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = ModContent.DustType<AvaritianDust>();
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}

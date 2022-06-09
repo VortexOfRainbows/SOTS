@@ -73,7 +73,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Texture2D textureFix = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/HologlassWallWallInline");
 			int xLength = 32;
 			int xOff = 0;
-			Rectangle frame = new Rectangle(tile.WallFrameX() + xOff, tile.WallFrameY(), xLength, 32);
+			Rectangle frame = new Rectangle(tile.WallFrameX + xOff, tile.WallFrameY, xLength, 32);
 			Color color = WorldGen.paintColor(tile.WallColor) * (100f / 255f);
 			Color forBorder = color;
 			forBorder.A = 0;
@@ -133,7 +133,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Terraria.Audio.SoundEngine.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
+			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)pos.X, (int)pos.Y, 0.5f, 0.5f);
 			return false;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)

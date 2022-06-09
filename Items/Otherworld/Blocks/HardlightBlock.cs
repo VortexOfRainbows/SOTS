@@ -71,14 +71,13 @@ namespace SOTS.Items.Otherworld.Blocks
 			//AddMapEntry(new Color(0, 0, 0, 0));
 			MineResist = 1.0f;
 			MinPick = 0;
-			SoundType = 3;
-			SoundStyle = 53;
+			HitSound = SoundID.NPCHit53;
 			DustType = DustID.Electric;
 		}
         public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Terraria.Audio.SoundEngine.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
+			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)pos.X, (int)pos.Y, 0.5f, 0.5f);
 			return false;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

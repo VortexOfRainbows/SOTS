@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework;
 using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using SOTS.Projectiles.Otherworld;
+using SOTS.Items.Earth;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -30,7 +33,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.Item11;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("StarcoreBullet").Type; 
+            Item.shoot = ModContent.ProjectileType<StarcoreBullet>(); 
             Item.shootSpeed = 4f;
 			Item.reuseDelay = 10;
 			Item.noUseGraphic = true;
@@ -77,24 +80,24 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			return  6;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, position);
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-3f + 1.75f * projectileNum)));
-			Projectile.NewProjectile(position, Vector2.Zero, Mod.Find<ModProjectile>("StarcoreRifle").Type, Item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? Item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
-			speedX = perturbedSpeed.X;
-			speedY = perturbedSpeed.Y;
-			position += new Vector2(speedX, speedY) * 6;
+			Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians((velocity.X < 0 ? -1 : 1) * (-3f + 1.75f * projectileNum)));
+			Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<StarcoreRifle>(), Item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? Item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - velocity.ToRotation());
+			velocity = perturbedSpeed;
+			position += velocity * 6;
 
 			projectileNum++;
 			if(highestProjectileNum < projectileNum)
 				highestProjectileNum = projectileNum;
-			return true;
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+			return false;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "VibrantPistol", 1).AddIngredient(null, "VibrancyModule", 1).AddIngredient(null, "StarlightAlloy", 12).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<VibrantPistol>(1).AddIngredient<VibrancyModule>(1).AddIngredient<StarlightAlloy>(12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

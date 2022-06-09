@@ -6,6 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Projectiles.Otherworld;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -45,18 +47,18 @@ namespace SOTS.Items.Otherworld.FromChests
 			//The Bobber projectile
 			Item.shoot = ModContent.ProjectileType<TwilightBobber>();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			for (int i = 0; i < 2; i++)
 			{
-				Vector2 rotation = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(5 * (i * 2 - 1)));
-				Projectile.NewProjectile(position.X, position.Y, rotation.X, rotation.Y, type, 0, 0f, player.whoAmI);
+				Vector2 rotation = velocity.RotatedBy(MathHelper.ToRadians(5 * (i * 2 - 1)));
+				Projectile.NewProjectile(source, position.X, position.Y, rotation.X, rotation.Y, type, 0, 0f, player.whoAmI);
 			}
 			return false;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.ReinforcedFishingPole, 1).AddIngredient(null, "DissolvingAether", 1).AddIngredient(null, "HardlightAlloy", 8).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient(ItemID.ReinforcedFishingPole, 1).AddIngredient<DissolvingAether>(1).AddIngredient<HardlightAlloy>(8).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
 		}
 	}
 }

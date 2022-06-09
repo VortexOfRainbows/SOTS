@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Furniture;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,22 +38,22 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.UseSound = SoundID.Item5;
 			Item.autoReuse = false;
 			Item.channel = true;
-			Item.shoot = Mod.Find<ModProjectile>("Starshot").Type;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.Starshot>();
 			Item.shootSpeed = 24f;
 			Item.useAmmo = AmmoID.Arrow;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.crit = 4;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, Mod.Find<ModProjectile>("StarshotCrossbow").Type, 0, 0, player.whoAmI, 0, type);
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, Mod.Find<ModProjectile>("Starshot").Type, damage, knockBack, player.whoAmI, 0, type);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<Projectiles.Otherworld.StarshotCrossbow>(), 0, 0, player.whoAmI, 0, type);
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Otherworld.Starshot>(), damage, knockback, player.whoAmI, 0, type);
 			return false;
         }
         public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "StarlightAlloy", 12).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<StarlightAlloy>(12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

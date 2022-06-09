@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Otherworld;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,7 +31,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.Item96;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("CodeBurst").Type; 
+            Item.shoot = ModContent.ProjectileType<CodeBurst>(); 
             Item.shootSpeed = 16.5f;
 			Item.reuseDelay = 8;
 			Item.mana = 14;
@@ -50,16 +52,16 @@ namespace SOTS.Items.Otherworld.FromChests
         {
             return new Vector2(-1, 0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			position.X += speedX * 3f;
-			position.Y += speedY * 3f;
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY) * 0.75f, Mod.Find<ModProjectile>("CodeVolley").Type, damage, knockBack, player.whoAmI) ;
-			return true;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			position += velocity * 3;
+			Projectile.NewProjectile(source, position, velocity * 0.75f, ModContent.ProjectileType<CodeVolley>(), damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+			return false;
 		}
-		public override void AddRecipes()
+        public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "HardlightAlloy", 16).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<HardlightAlloy>(16).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
 		}
 	}
 }

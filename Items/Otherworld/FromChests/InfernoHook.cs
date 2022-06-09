@@ -1,3 +1,5 @@
+using SOTS.Items.Fragments;
+using SOTS.Items.Slime;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,12 +23,12 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.height = 40;   
             Item.value = Item.sellPrice(0, 3, 80, 0);
             Item.rare = ItemRarityID.LightPurple;
-			Item.shoot = Mod.Find<ModProjectile>("InfernoHook").Type; 
+			Item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.InfernoHook>(); 
             Item.shootSpeed = 26f;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "WormWoodHook", 1).AddIngredient(null, "FragmentOfInferno", 2).AddIngredient(null, "OtherworldlyAlloy", 10).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<WormWoodHook>(1).AddIngredient<FragmentOfInferno>(2).AddIngredient<OtherworldlyAlloy>(10).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
 		}
 	}
 }

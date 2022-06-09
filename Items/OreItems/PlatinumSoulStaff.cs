@@ -5,6 +5,7 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Projectiles.Ores;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.OreItems
 {
@@ -36,7 +37,7 @@ namespace SOTS.Items.OreItems
 			Item.staff[Item.type] = true; //this makes the useStyle animate as a staff
 			Item.crit = 6;
 		}
-		public void RegisterPhantoms(Player player)
+		public void RegisterPhantoms(EntitySource_ItemUse_WithAmmo source, Player player)
 		{
 			int npcIndex = -1;
 			int npcIndex1 = -1;
@@ -80,35 +81,32 @@ namespace SOTS.Items.OreItems
 				if(npcIndex != -1)
 				{
 					NPC npc = Main.npc[npcIndex];
-					
-					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
+					if(npc.CanBeChasedBy())
 					{
-						int newIndex = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
+						Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
 					}
 				}
 				if(npcIndex1 != -1)
 				{
 					NPC npc = Main.npc[npcIndex1];
-					
-					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
+					if(npc.CanBeChasedBy())
 					{
-						int newIndex1 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
+						Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
 					}
 				}
 				if(npcIndex2!= -1)
 				{
 					NPC npc = Main.npc[npcIndex2];
-					
-					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
+					if(npc.CanBeChasedBy())
 					{
-						int newIndex2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
+						Projectile.NewProjectile(source, player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
 					}
 				}
 			}
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			RegisterPhantoms(player);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			RegisterPhantoms(source, player);
 			return false; 
 		}
 		public override int GetVoid(Player player)

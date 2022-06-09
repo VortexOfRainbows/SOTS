@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Nature;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -27,29 +31,29 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.height = 30;
 			Item.maxStack = 1;
 			Item.autoReuse = true;            
-			Item.shoot = Mod.Find<ModProjectile>("ArclightBomb").Type; 
+			Item.shoot = ModContent.ProjectileType<ArclightBomb>(); 
             Item.shootSpeed = 17.75f;
 			Item.consumable = false;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.UseSound = SoundID.Item1;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			int numberProjectiles = 3;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(6)); // This defines the projectiles random spread . 30 degree spread.
+				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(6)); // This defines the projectiles random spread . 30 degree spread.
 				perturbedSpeed *= 1f - (0.05f * i);
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 				if(Main.rand.Next(15) < 5) //33%
-					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 0.75f, perturbedSpeed.Y * 0.75f, type, damage, knockBack, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X * 0.75f, perturbedSpeed.Y * 0.75f, type, damage, knockback, player.whoAmI);
 			}
 			return false; 
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "SporeBombs", 1).AddIngredient(null, "HardlightAlloy", 12).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<SporeBombs>(1).AddIngredient<HardlightAlloy>(12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

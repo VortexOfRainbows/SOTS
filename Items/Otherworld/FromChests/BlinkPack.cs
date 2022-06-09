@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.Furniture;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -53,7 +55,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.BlinkType = 1;
-			modPlayer.BlinkDamage += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f)));
+			modPlayer.BlinkDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
 			player.noFallDmg = true;
 		}
         public override void EquipFrameEffects(Player player, EquipType type)
@@ -69,7 +71,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
         public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "FragmentOfChaos", 5).AddIngredient(null, "OtherworldlyAlloy", 12).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<FragmentOfChaos>(5).AddIngredient<OtherworldlyAlloy>(12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

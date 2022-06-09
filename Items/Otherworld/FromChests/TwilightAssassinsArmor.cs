@@ -14,7 +14,13 @@ namespace SOTS.Items.Otherworld.FromChests
 {
 	[AutoloadEquip(EquipType.Head)]
 	public class TwilightAssassinsCirclet : ModItem
-	{	
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Twilight Assassin Circlet");
+			Tooltip.SetDefault("temp");
+			ArmorIDs.Head.Sets.DrawFullHair[Type] = true;
+		}
 		public override void SetDefaults()
 		{
 			Item.width = 30;
@@ -22,15 +28,6 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.value = Item.sellPrice(0, 4, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.defense = 8;
-		}
-		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-		{
-			drawHair = true;
-		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Twilight Assassin Circlet");
-			Tooltip.SetDefault("temp");
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
@@ -114,7 +111,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			voidPlayer.voidMeterMax2 += 50;
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			if(!modPlayer.HoloEye)
-				modPlayer.HoloEyeDamage += (int)(33 * (1f + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f)));
+				modPlayer.HoloEyeDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 33);
 			modPlayer.HoloEye = true;
 		}
 		public override void AddRecipes()
@@ -126,6 +123,12 @@ namespace SOTS.Items.Otherworld.FromChests
 	[AutoloadEquip(EquipType.Body)]
 	public class TwilightAssassinsChestplate : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Twilight Assassin Chestplate");
+			Tooltip.SetDefault("Increased your max number of minions by 1\nIncreased melee and void critical strike chance by 10%\nIncreased life regeneration by 2 and void regeneration speed by 10%");
+			ArmorIDs.Body.Sets.HidesHands[Type] = false;
+		}
 		public override void SetDefaults()
 		{
 			Item.width = 30;
@@ -133,16 +136,6 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.value = Item.sellPrice(0, 4, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.defense = 10;
-		}
-		public override void DrawHands(ref bool drawHands, ref bool drawArms)
-		{
-			drawHands = true;
-			drawArms = false;
-		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Twilight Assassin Chestplate");
-			Tooltip.SetDefault("Increased your max number of minions by 1\nIncreased melee and void critical strike chance by 10%\nIncreased life regeneration by 2 and void regeneration speed by 10%");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
@@ -248,7 +241,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			if(glowNum > 0)
             {
-				float alpha = 1 - Player.shadow;
+				float alpha = 1 - Player.stealth;
 				Lighting.AddLight(Player.Center, alpha * glowNum * new Vector3(200, 220, 255) / 255f);
 			}
 			glowNum = 0;

@@ -1,7 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
-
+using SOTS.Projectiles.Otherworld;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,41 +37,37 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.noUseGraphic = true;
 			Item.channel = true;
 		}
-        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        /*public override void ModifyWeaponDamage(Player player, ref StatModifier damage) //This is somewhat unneeded?
 		{
 			Item.useTime = 10;
 			Item.useAnimation = 10;
 			base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
-        }
+        }*/
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-4, 0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			int ai = 2;
 			if (type == ProjectileID.BlueFlare)
 			{
 				ai = 1;
-				speedX *= 0.65f;
-				speedY *= 0.65f;
+				velocity *= 0.65f;
 			}
 			if (type == ProjectileID.Flare)
 			{
 				ai = 0;
-				speedX *= 1.7f;
-				speedY *= 1.7f;
-
+				velocity *= 1.7f;
 			}
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), Mod.Find<ModProjectile>("BombFlare").Type, damage, knockBack, player.whoAmI, ai);
-			speedX *= 0f;
-			speedY *= 0f;
-			type = Mod.Find<ModProjectile>("FlareDetonatorHold").Type;
-			return true;
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<BombFlare>(), damage, knockback, player.whoAmI, ai);
+			type = ModContent.ProjectileType<FlareDetonatorHold>();
+			Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, ai);
+			return false;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.FlareGun, 1).AddIngredient(null, "OtherworldlyAlloy", 12).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient(ItemID.FlareGun, 1).AddIngredient<OtherworldlyAlloy>(12).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
 		}
 	}
 }

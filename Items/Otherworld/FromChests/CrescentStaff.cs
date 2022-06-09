@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using SOTS.Items.OreItems;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -30,7 +32,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.Item8;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("MacaroniMoon").Type;
+            Item.shoot = ModContent.ProjectileType<MacaroniMoon>();
             Item.shootSpeed = 4.25f;
 			if (!Main.dedServ)
 			{
@@ -57,21 +59,18 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			return  8;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-20f + 20f * projectileNum)));
-			speedX = perturbedSpeed.X;
-			speedY = perturbedSpeed.Y;
-			position += new Vector2(speedX, speedY) * 6;
-
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+			Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians((velocity.X < 0 ? -1 : 1) * (-20f + 20f * projectileNum)));
+			velocity = perturbedSpeed;
+			position += velocity * 6;
 			projectileNum++;
 			if(highestProjectileNum < projectileNum)
 				highestProjectileNum = projectileNum;
-			return true;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "PlatinumSoulStaff", 1).AddIngredient(null, "StarlightAlloy", 8).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<PlatinumSoulStaff>(1).AddIngredient<StarlightAlloy>(8).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
 		}
 	}
 }

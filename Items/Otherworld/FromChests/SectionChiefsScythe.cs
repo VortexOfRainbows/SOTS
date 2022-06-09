@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.OreItems;
+using SOTS.Projectiles.Otherworld;
+using SOTS.Dusts;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -35,7 +37,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/HardlightScytheGlow").Value;
 			}
-			Item.shoot = Mod.Find<ModProjectile>("ScytheSlash").Type;
+			Item.shoot = ModContent.ProjectileType<ScytheSlash>();
 			Item.shootSpeed = 15f;
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
@@ -49,7 +51,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			if (Main.rand.NextBool(10))
 			{
-				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, Mod.Find<ModDust>("CopyDust4").Type, 0, -2, 200, new Color(), 1f);
+				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, ModContent.DustType<CopyDust4>(), 0, -2, 200, new Color(), 1f);
 				dust.velocity *= 0.4f;
 				dust.color = new Color(100, 100, 255, 120);
 				dust.noGravity = true;
@@ -57,10 +59,9 @@ namespace SOTS.Items.Otherworld.FromChests
 				dust.scale *= 1.5f;
 			}
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-			knockBack *= 3f;
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+			knockback *= 3;
         }
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
@@ -69,7 +70,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
 				if (crit && Main.myPlayer == player.whoAmI)
 				{
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Mod.Find<ModProjectile>("SoulofRetaliation").Type, damage + modPlayer.soulDamage, 1f, player.whoAmI);
+					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), damage + modPlayer.soulDamage, 1f, player.whoAmI);
 				}
 			}
 		}

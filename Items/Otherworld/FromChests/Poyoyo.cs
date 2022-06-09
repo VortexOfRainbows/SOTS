@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;                    
-using Terraria.DataStructures;
+using SOTS.Items.Otherworld.Furniture;
+using Terraria;                
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -37,14 +35,14 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
             Item.autoReuse = false; 
-            Item.shoot = Mod.Find<ModProjectile>("Poyoyo").Type; 
+            Item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.Poyoyo>(); 
             Item.noUseGraphic = true; 
             Item.noMelee = true;
             Item.UseSound = SoundID.Item1;
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(null, "StarlightAlloy", 8).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+            CreateRecipe(1).AddIngredient<StarlightAlloy>(8).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
         }
     }
 }

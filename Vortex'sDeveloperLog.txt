@@ -57,9 +57,14 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+6/8/22 & 6/9/22
+1. Items again. Mostly Otherworld FromChest Folder.
+2. Did not change any player layers yet, as I have yet to learn how to.
+3. 1629 -> 1433
+
 6/5/22 & 6/7/22
 1. Ported/Reorganized ancient gold furniture
-2. 2127 -> 2063 -> 1883 -> 1858
+2. 2127 -> 2063 -> 1883 -> 1858 -> 1629
 3. A handful of item and tile ports
 4. More TMODPorter update
 5. Ported planetarium pots and oter furnitures

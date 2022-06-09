@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using SOTS.Dusts;
+using Terraria.GameContent;
 
 namespace SOTS.Items.Otherworld.Blocks
 {
@@ -45,7 +46,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			{
 				xLength -= 8;
 			}*/
-			Rectangle frame = new Rectangle(tile.WallFrameX() + xOff, tile.WallFrameY(), xLength, 32);
+			Rectangle frame = new Rectangle(tile.WallFrameX + xOff, tile.WallFrameY, xLength, 32);
 			Color color;
 			color = WorldGen.paintColor((int)tile.WallColor) * (100f / 255f);
 			color.A = 0;
@@ -56,7 +57,7 @@ namespace SOTS.Items.Otherworld.Blocks
 				zero = Vector2.Zero;
 			}
 			Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
-			Main.spriteBatch.Draw(Main.wallTexture[wallType], pos + new Vector2(-8 + xOff, -8), frame, Lighting.GetColor(i, j, Color.White), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(TextureAssets.Wall[wallType].Value, pos + new Vector2(-8 + xOff, -8), frame, Lighting.GetColor(i, j, Color.White), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			for (int k = 0; k < 3; k++)
 			{
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.2f * k;

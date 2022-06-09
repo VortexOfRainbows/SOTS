@@ -28,7 +28,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.reuseDelay = 18;
             Item.useStyle = ItemUseStyleID.HoldUp;   
             Item.autoReuse = true; 
-            Item.knockBack = 3f;
+            Item.knockBack = 9f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
 			if (!Main.dedServ)
@@ -60,12 +60,11 @@ namespace SOTS.Items.Otherworld.FromChests
 				dust.scale *= 1.5f;
 			}
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        /*public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-			knockBack *= 3f;
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-        }
-		public override void AddRecipes()
+			knockback *= 3;
+        }*/
+        public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 16).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}

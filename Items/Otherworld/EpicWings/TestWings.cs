@@ -95,7 +95,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(Mod, "TestWingsPlayer");
+			TestWingsPlayer testWingsPlayer = player.GetModPlayer<TestWingsPlayer>();
 			testWingsPlayer.canCreativeFlight = true;
 			player.wingTimeMax = 150;
 			player.noFallDmg = true;
@@ -104,8 +104,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override bool WingUpdate(Player player, bool inUse)
 		{
-			TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(Mod, "TestWingsPlayer");
-			if(testWingsPlayer.creativeFlight)
+			TestWingsPlayer testWingsPlayer = player.GetModPlayer<TestWingsPlayer>();
+			if (testWingsPlayer.creativeFlight)
 			{
 				player.wingFrame = 2;
 			}
@@ -189,7 +189,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 					dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
 				}
 			}
-			Terraria.Audio.SoundEngine.PlaySound(12, Player.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuTick, Player.Center);
 		}
 		public void flightStart()
 		{

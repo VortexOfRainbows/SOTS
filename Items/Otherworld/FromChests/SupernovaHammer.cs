@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Furniture;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,14 +36,14 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.DD2_MonkStaffSwing;
 			Item.autoReuse = true;
-			Item.shoot = Mod.Find<ModProjectile>("SupernovaHammer").Type;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.SupernovaHammer>();
 			Item.shootSpeed = 24f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.Diamond, 5).AddIngredient(null, "StarlightAlloy", 15).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient(ItemID.Diamond, 5).AddIngredient<StarlightAlloy>(15).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

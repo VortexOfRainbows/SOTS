@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +24,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "PrecariousCluster", 1).AddIngredient(null, "HardlightAlloy", 10).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<PrecariousCluster>(1).AddIngredient<HardlightAlloy>(10).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
 		}
         public override void EquipFrameEffects(Player player, EquipType type)
 		{

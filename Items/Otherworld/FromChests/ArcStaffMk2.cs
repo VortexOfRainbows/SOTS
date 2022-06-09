@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Projectiles.Otherworld;
+using SOTS.Items.OreItems;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -37,7 +39,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "GoldArkStaff", 1).AddIngredient(null, "OtherworldlyAlloy", 16).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<GoldArkStaff>(1).AddIngredient<OtherworldlyAlloy>(16).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

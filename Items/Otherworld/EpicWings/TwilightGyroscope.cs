@@ -24,7 +24,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(Mod, "TestWingsPlayer");
+			TestWingsPlayer testWingsPlayer = player.GetModPlayer<TestWingsPlayer>();
 			testWingsPlayer.gyro = true;
 			player.jumpSpeedBoost += 3f;
 			player.noFallDmg = true;

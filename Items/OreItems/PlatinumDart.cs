@@ -20,7 +20,6 @@ namespace SOTS.Items.OreItems
 			Item.useTime = 15;
 			Item.useAnimation = 15;
 			Item.DamageType = DamageClass.Ranged;
-			// Item.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Item.value = Item.sellPrice(0, 0, 35, 0);
 			Item.rare = ItemRarityID.Green;
 			Item.width = 22;

@@ -4,7 +4,6 @@ using Mono.Cecil.Cil;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Projectiles.Minions;
-using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -103,21 +102,21 @@ namespace SOTS.Items.Otherworld.FromChests
 				{
 					if (platforms1[i] == -1)
 					{
-						platforms1[i] = Projectile.NewProjectile(Player.Center.X - 160 - (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, -1);
+						platforms1[i] = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center.X - 160 - (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, -1);
 					}
 					if (!Main.projectile[platforms1[i]].active || Main.projectile[platforms1[i]].type != type || Main.projectile[platforms1[i]].ai[0] != i || Main.projectile[platforms1[i]].ai[1] != -1)
 					{
-						platforms1[i] = Projectile.NewProjectile(Player.Center.X - 160 - (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, -1);
+						platforms1[i] = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center.X - 160 - (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, -1);
 					}
 					Main.projectile[platforms1[i]].timeLeft = 6;
 
 					if (platforms2[i] == -1)
 					{
-						platforms2[i] = Projectile.NewProjectile(Player.Center.X + 160 + (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, 1);
+						platforms2[i] = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center.X + 160 + (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, 1);
 					}
 					if (!Main.projectile[platforms2[i]].active || Main.projectile[platforms2[i]].type != type || Main.projectile[platforms2[i]].ai[0] != i || Main.projectile[platforms2[i]].ai[1] != 1)
 					{
-						platforms2[i] = Projectile.NewProjectile(Player.Center.X + 160 + (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, 1);
+						platforms2[i] = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center.X + 160 + (80 * (i + 1)), Player.position.Y, 0, 0, type, 0, 0, Player.whoAmI, i, 1);
 					}
 					Main.projectile[platforms2[i]].timeLeft = 6;
 				}

@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Projectiles.Ores;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.OreItems
 {
@@ -40,13 +41,13 @@ namespace SOTS.Items.OreItems
 		{
 			CreateRecipe(1).AddIngredient(ItemID.GoldBar, 15).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			int numberProjectiles = 3;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-			    Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(160 + (i * 20)));
-			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, Mod.Find<ModProjectile>("GoldBolt").Type, (int)(damage * 0.75f) + 1, knockBack, player.whoAmI);
+			    Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(160 + (i * 20)));
+			    Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<GoldBolt>(), (int)(damage * 0.75f) + 1, knockback, player.whoAmI);
 			}
 			return true; 
 		}

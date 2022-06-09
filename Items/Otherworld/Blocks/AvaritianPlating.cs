@@ -43,8 +43,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			AddMapEntry(new Color(0, 75, 140));
 			MineResist = 2f;
 			MinPick = 60;
-			SoundType = 21;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

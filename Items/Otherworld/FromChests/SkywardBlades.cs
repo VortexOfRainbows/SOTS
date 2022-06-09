@@ -5,6 +5,9 @@ using SOTS.Void;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Otherworld;
 using System.IO;
+using Terraria.DataStructures;
+using SOTS.Items.OreItems;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -30,7 +33,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item44;
 			Item.crit = 2;
-			Item.shoot = Mod.Find<ModProjectile>("SkywardBladeBeam").Type;
+			Item.shoot = ModContent.ProjectileType<SkywardBladeBeam>();
 			Item.shootSpeed = 5.5f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -52,7 +55,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			}
 			return true;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (modPlayer.skywardBlades <= 0)
@@ -62,12 +65,12 @@ namespace SOTS.Items.Otherworld.FromChests
             }
 			else if(modPlayer.skywardBlades > 0)
 			{
-				position += new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero) * 64;
+				position += velocity.SafeNormalize(Vector2.Zero) * 64;
 				modPlayer.skywardBlades--;
 				modPlayer.SendClientChanges(modPlayer);
-				return true;
+				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+				return false;
 			}
-			knockBack *= 3f;
 			return false;
         }
         public override bool BeforeDrainMana(Player player)
@@ -81,7 +84,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "PlatinumDart", 1).AddIngredient(null, "HardlightAlloy", 12).AddTile(Mod.Find<ModTile>("HardlightFabricatorTile").Type).Register();
+			CreateRecipe(1).AddIngredient<PlatinumDart>(1).AddIngredient<HardlightAlloy>(12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }
