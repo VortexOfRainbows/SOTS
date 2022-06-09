@@ -5,8 +5,10 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
+using SOTS.Common.GlobalNPCs;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Chaos
 {
@@ -76,14 +78,14 @@ namespace SOTS.Items.Chaos
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
 			int amt = 3;
-			Projectile.NewProjectile(target.Center, new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), Item.shoot, (int)(damage * 0.5f), knockBack, player.whoAmI, amt, target.whoAmI);
+			Projectile.NewProjectile(player.GetSource_OnHit(target), target.Center, new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), Item.shoot, (int)(damage * 0.5f), knockBack, player.whoAmI, amt, target.whoAmI);
 		}
         public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox)
 		{
 			player.itemLocation = player.Center + player.direction * Item.scale * (new Vector2(8, 0) * 0.5f).RotatedBy(player.itemRotation);
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			return false; 
 		}
 		public override void AddRecipes()	

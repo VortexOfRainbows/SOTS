@@ -5,6 +5,8 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Items.ChestItems;
 using SOTS.Projectiles.Chaos;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Chaos
 {
@@ -44,16 +46,14 @@ namespace SOTS.Items.Chaos
 		{
 			return new Vector2(-32, 2);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			Vector2 speed = new Vector2(speedX, speedY);
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			Vector2 speed = velocity;
 			position += speed.SafeNormalize(Vector2.Zero) * 48;
 			speed = speed.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-5, 5)));
-			speedX = speed.X;
-			speedY = speed.Y;
-            return true; 
+			velocity = speed;
 		}
-		public override void AddRecipes()
+        public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<PhaseBar>(), 24).AddIngredient(ModContent.ItemType<PerfectStar>(), 1).AddIngredient(ItemID.LaserMachinegun, 1).AddIngredient(ItemID.Razorpine, 1).AddTile(TileID.MythrilAnvil).Register();
 		}

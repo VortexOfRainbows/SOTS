@@ -10,24 +10,21 @@ namespace SOTS.Items.Nature
 	[AutoloadEquip(EquipType.Head)]
 	public class NatureWreath : ModItem
 	{
-		int[] Probes = new int[] {-1, -1, -1 };
-		public override void SetDefaults()
-		{
-			Item.width = 28;
-			Item.height = 18;
-            Item.value = Item.sellPrice(0, 0, 50, 0);
-			Item.rare = ItemRarityID.Blue;
-			Item.defense = 1;
-		}
-		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-		{
-			drawHair = true;
-		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Wreath");
 			Tooltip.SetDefault("Increased max minions");
+			ArmorIDs.Head.Sets.DrawFullHair[Type] = true;
 		}
+		public override void SetDefaults()
+		{
+			Item.width = 28;
+			Item.height = 18;
+			Item.value = Item.sellPrice(0, 0, 50, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.defense = 1;
+		}
+		int[] Probes = new int[] {-1, -1, -1 };
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return body.type == ModContent.ItemType<NatureShirt>() && legs.type == ModContent.ItemType<NatureLeggings>();
@@ -38,7 +35,7 @@ namespace SOTS.Items.Nature
 			if (Main.myPlayer == player.whoAmI)
 			{
 				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
-				int damage = (int)(11 * (1f + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f)));
+				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 11);
 				for(int i = 0; i < 3; i++)
 					sPlayer.runPets(ref Probes[i], ModContent.ProjectileType<BloomingHook>(), damage, 1f, false);
 			}
@@ -85,6 +82,12 @@ namespace SOTS.Items.Nature
 	[AutoloadEquip(EquipType.Body)]
 	public class NatureShirt : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Wormwood Shirt");
+			Tooltip.SetDefault("Increased defense for every active minion");
+			ArmorIDs.Body.Sets.HidesHands[Type] = false;
+		}
 		public override void SetDefaults()
 		{
 			Item.width = 34;
@@ -93,16 +96,11 @@ namespace SOTS.Items.Nature
 			Item.rare = ItemRarityID.Blue;
 			Item.defense = 3;
 		}
-		public override void DrawHands(ref bool drawHands, ref bool drawArms)
+		/*public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{
 			drawHands = true;
 			drawArms = false;
-		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Wormwood Shirt");
-			Tooltip.SetDefault("Increased defense for every active minion");
-		}
+		}*/
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
 			return head.type == ModContent.ItemType<NatureWreath>() && legs.type == ModContent.ItemType<NatureLeggings>();

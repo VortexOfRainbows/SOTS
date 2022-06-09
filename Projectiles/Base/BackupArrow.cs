@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Base
 				Projectile.velocity.X = -oldVelocity.X;
 			if (Projectile.velocity.Y != oldVelocity.Y)
 				Projectile.velocity.Y = -oldVelocity.Y;
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
 			return false;
 		}
 	}

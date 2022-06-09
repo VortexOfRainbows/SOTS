@@ -27,7 +27,7 @@ namespace SOTS.Items.Nature
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			int damage = (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f)));
+			int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, Item.damage);
 			modPlayer.CactusSpineDamage += damage;
 		}
 		public override void AddRecipes()

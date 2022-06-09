@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles;
 using SOTS.Items.Fragments;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Nature
 {
@@ -36,9 +37,9 @@ namespace SOTS.Items.Nature
 		{
 			CreateRecipe(1).AddRecipeGroup(RecipeGroupID.Wood, 20).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4).AddIngredient(ItemID.YellowMarigold, 1).AddTile(TileID.WorkBenches).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0, 5);
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, 5);
 			return false; 
 		}
 	}

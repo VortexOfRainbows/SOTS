@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Nature;
 using SOTS.Items.Fragments;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Nature
 {
@@ -32,16 +33,16 @@ namespace SOTS.Items.Nature
             Item.shootSpeed = 15.75f;
 			Item.consumable = false;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			int numberProjectiles = 2;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(6)); 
+				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(6)); 
 				perturbedSpeed *= 1f - (0.05f * i);
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 				if(Main.rand.Next(14) < 4)
-					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 0.8f, perturbedSpeed.Y * 0.8f, type, damage, knockBack, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X * 0.8f, perturbedSpeed.Y * 0.8f, type, damage, knockback, player.whoAmI);
 			}
 			return false; 
 		}

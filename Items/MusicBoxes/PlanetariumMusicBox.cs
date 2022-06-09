@@ -7,6 +7,7 @@ using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Otherworld;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Blocks;
 
 namespace SOTS.Items.MusicBoxes
 {
@@ -25,7 +26,7 @@ namespace SOTS.Items.MusicBoxes
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("PlanetariumMusicBoxTile").Type;
+			Item.createTile = ModContent.TileType<PlanetariumMusicBoxTile>();
 			Item.width = 24;
 			Item.height = 24;
 			Item.rare = ItemRarityID.LightRed;
@@ -35,7 +36,7 @@ namespace SOTS.Items.MusicBoxes
 		
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "AvaritianPlating", 10).AddIngredient(null, "DullPlating", 10).AddIngredient(null, "TwilightGel", 10).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
+			CreateRecipe(1).AddIngredient<AvaritianPlating>(10).AddIngredient<DullPlating>(10).AddIngredient<TwilightGel>(10).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class PlanetariumMusicBoxTile : ModTile
@@ -60,7 +61,7 @@ namespace SOTS.Items.MusicBoxes
 		}
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, Mod.Find<ModItem>("PlanetariumMusicBox").Type);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<PlanetariumMusicBox>());
 		}
 
 		public override void MouseOver(int i, int j)
@@ -68,7 +69,7 @@ namespace SOTS.Items.MusicBoxes
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = Mod.Find<ModItem>("PlanetariumMusicBox").Type;
+			player.cursorItemIconID = ModContent.ItemType<PlanetariumMusicBox>();
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

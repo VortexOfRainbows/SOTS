@@ -5,6 +5,7 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Nature;
 using SOTS.Items.Fragments;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Nature
 {
@@ -22,7 +23,6 @@ namespace SOTS.Items.Nature
 			Item.useTime = 23;
 			Item.useAnimation = 23;
 			Item.DamageType = DamageClass.Ranged;
-			// Item.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Item.value = Item.sellPrice(0, 0, 20, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.width = 36;
@@ -33,16 +33,16 @@ namespace SOTS.Items.Nature
             Item.shootSpeed = 15.5f;
 			Item.consumable = false;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			int numberProjectiles = 2;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5)); // This defines the projectiles random spread . 30 degree spread.
+				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(5)); // This defines the projectiles random spread . 30 degree spread.
 				perturbedSpeed *= 1f - (0.05f * i);
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
 				if(Main.rand.Next(7) <= 1)
-					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 0.8f, perturbedSpeed.Y * 0.8f, type, damage, knockBack, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X * 0.8f, perturbedSpeed.Y * 0.8f, type, damage, knockback, player.whoAmI);
 			}
 			return false; 
 		}

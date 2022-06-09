@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;

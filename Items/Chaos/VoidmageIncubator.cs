@@ -86,7 +86,7 @@ namespace SOTS.Items.Chaos
 					player.endurance += 0.05f;
 					break;
 				case 1: //electro, evil
-					player.allDamage += 0.08f;
+					player.GetDamage(DamageClass.Generic) += 0.08f;
 					break;
 				case 2: //anemo, otherworld
 					player.moveSpeed += 0.1f;

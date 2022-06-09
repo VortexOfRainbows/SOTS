@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Nature
 {
@@ -38,12 +39,12 @@ namespace SOTS.Items.Nature
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<NatureSpell>(), 1).AddIngredient(ItemID.CrimtaneBar, 8).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6).AddTile(TileID.Anvils).Register();
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<NatureSpell>(), 1).AddIngredient(ItemID.DemoniteBar, 8).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			int amt = 3;
 			for (int i = 0; i < amt; i++)
 			{
-				Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(3.5f * i, 3.5f * i))) + Main.rand.NextVector2Circular(1, 1), type, damage, knockBack, player.whoAmI, 0, 1.25f);
+				Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(3.5f * i, 3.5f * i))) + Main.rand.NextVector2Circular(1, 1), type, damage, knockback, player.whoAmI, 0, 1.25f);
 			}
 			return false; 
 		}

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Dusts;
 using SOTS.NPCs;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;

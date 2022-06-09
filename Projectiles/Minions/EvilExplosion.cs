@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Void;
 using System.Linq;
 using Terraria;

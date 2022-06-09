@@ -9,7 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
-using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Common.GlobalNPCs;
 
 namespace SOTS.Projectiles.Pyramid
 {    

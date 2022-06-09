@@ -8,6 +8,7 @@ using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Chaos;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Chaos
 {
@@ -65,7 +66,7 @@ namespace SOTS.Items.Chaos
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<PhaseBar>(), 18).AddIngredient(ModContent.ItemType<ShardstormSpell>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			Vector2 cursorPos = Main.MouseWorld;
 			Vector2 skyPosition = new Vector2(MathHelper.Lerp(position.X, cursorPos.X, 0.44f), position.Y - 960);
@@ -74,8 +75,8 @@ namespace SOTS.Items.Chaos
             {
 				Vector2 rotateArea = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 				skyPosition += rotateArea;
-				Vector2 speed = (cursorPos - skyPosition).SafeNormalize(Vector2.Zero) * new Vector2(speedX, speedY).Length();
-                Projectile.NewProjectile(skyPosition, speed, type, damage, knockBack, player.whoAmI);
+				Vector2 speed = (cursorPos - skyPosition).SafeNormalize(Vector2.Zero) * velocity.Length();
+                Projectile.NewProjectile(source, skyPosition, speed, type, damage, knockback, player.whoAmI);
             }
             return false;
 		}

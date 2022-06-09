@@ -59,7 +59,7 @@ namespace SOTS.Items.MusicBoxes
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<PutridPinkyMusicBox>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<PutridPinkyMusicBox>());
 		}
 
 		public override void MouseOver(int i, int j)
