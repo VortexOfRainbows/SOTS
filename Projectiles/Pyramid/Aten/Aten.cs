@@ -52,10 +52,10 @@ namespace SOTS.Projectiles.Pyramid.Aten
             }
             if (Projectile.localAI[0] % 24 == 0 && summonedNum < 9) //prevent spawning more in multiplayer with Main.myPlayer == Projectile.owner
             {
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.15f);
+                SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.15f);
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<AtenStar>(), (int)(Projectile.damage * 0.7f) + 1, 0, Projectile.owner, summonedNum, Projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<AtenStar>(), (int)(Projectile.damage * 0.7f) + 1, 0, Projectile.owner, summonedNum, Projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
                 }
                 summonedNum++;
             }
@@ -71,9 +71,9 @@ namespace SOTS.Projectiles.Pyramid.Aten
             Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY);
             Color color = new Color(255, 230, 138, 0);
             Texture2D tex = Mod.Assets.Request<Texture2D>("Assets/FlailBloom").Value;
-            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.50f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.50f, SpriteEffects.None, 0f);
             tex = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-            spriteBatch.Draw(tex, drawPos, null, lightColor, Projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
+            Main.spriteBatch.Draw(tex, drawPos, null, lightColor, Projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
             return false;
         }
     }
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), (int)(Projectile.damage * 2), 0, Projectile.owner, Projectile.scale);
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), (int)(Projectile.damage * 2), 0, Projectile.owner, Projectile.scale);
             }
             if (Projectile.timeLeft > 30)
                 Projectile.timeLeft = 30;
@@ -235,7 +235,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         public override bool PreDraw(ref Color lightColor)
         {
             if (!inFront)
-                Draw(spriteBatch, Color.White);
+                Draw(Main.spriteBatch, Color.White);
             return false;
         }
         public void Draw(SpriteBatch spriteBatch, Color lightColor)

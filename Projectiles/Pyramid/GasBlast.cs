@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.4f);
+				SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.4f);
 				Direction1 = Projectile.ai[1];
 				Direction2 = Direction1;
 				runOnce = false;

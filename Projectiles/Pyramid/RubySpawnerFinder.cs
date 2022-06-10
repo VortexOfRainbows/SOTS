@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -131,7 +132,7 @@ namespace SOTS.Projectiles.Pyramid
         public override void Kill(int timeLeft)
 		{
 			if(Main.netMode != 1)
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RubySpawner>(), (int)(Projectile.damage * 1f), 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RubySpawner>(), (int)(Projectile.damage * 1f), 0, Main.myPlayer);
         }
         public override bool PreDraw(ref Color lightColor)
 		{
@@ -139,7 +140,7 @@ namespace SOTS.Projectiles.Pyramid
 			if (runOnce)
 				return false;
 			Vector2 current = circularLocation;
-			Draw(spriteBatch, trailPos, current);
+			Draw(Main.spriteBatch, trailPos, current);
 			return false;
 		}
 		public void Draw(SpriteBatch spriteBatch, Vector2[] trailArray, Vector2 current)

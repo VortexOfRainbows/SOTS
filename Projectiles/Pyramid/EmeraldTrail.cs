@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Pyramid
 			if(Projectile.ai[1] != -1 && end == false)
 			{
 				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
-				if(proj.active && proj.type == Mod.Find<ModProjectile>("PyramidSpear") .Type&& proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
+				if(proj.active && proj.type == ModContent.ProjectileType<PyramidSpear>() && proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
 				{
 					Vector2 center = proj.Center - new Vector2(12, 0).RotatedBy(proj.velocity.ToRotation());
 					Projectile.position.X = center.X - Projectile.width/2;

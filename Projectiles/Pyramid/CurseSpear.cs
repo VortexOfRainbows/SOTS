@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Pyramid
             if(counter == 10)
             {
                 if(Main.myPlayer == Projectile.owner)
-                   Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<RubyBurst>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                   Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<RubyBurst>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }
     }

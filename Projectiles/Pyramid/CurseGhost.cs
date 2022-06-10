@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Pyramid
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation() - (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), drawOrigin, scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation() - (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), drawOrigin, scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 				previousPosition = currentPos;
 			}
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Pyramid
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/CurseGhost").Value;
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw(ref lightColor);
 			float rotation = Projectile.rotation;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Pyramid
 					dust.scale *= 1.65f;
 				}
 				Projectile.ai[1] = Main.rand.Next(2) * 2 - 1;
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.825f, -0.4f);
+				SOTSUtils.PlaySound(SoundID.NPCDeath39, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.825f, -0.4f);
 			}
 			Vector2 circular = new Vector2(0, 15 * scaleVelocity).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 4.5f * Projectile.ai[1]));
 			scaleVelocity *= 0.99f;

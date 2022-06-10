@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Pyramid
 			Player owner = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<DarkLight>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(1000));
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<DarkLight>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(1000));
 			}
 		}
 		int counter = 0;

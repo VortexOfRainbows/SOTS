@@ -72,8 +72,7 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					if(runOnce2 && Projectile.timeLeft < 32)
 					{
-						DebuffNPC debuffNPC = (DebuffNPC)Mod.GetGlobalNPC("DebuffNPC");
-						debuffNPC = (DebuffNPC)debuffNPC.Instance(npc);
+						DebuffNPC debuffNPC = npc.GetGlobalNPC<DebuffNPC>();
 						if (debuffNPC.HarvestCurse < 99 && Main.myPlayer == Projectile.owner)
 						{
 							debuffNPC.OnHitByProjectile(npc, Projectile, 0, 0, false);
@@ -102,7 +101,7 @@ namespace SOTS.Projectiles.Pyramid
 							{
 								GhostPepper pepper = (GhostPepper)proj.ModProjectile;
 								if (pepper.npcTargetId != npc.whoAmI)
-									Terraria.Audio.SoundEngine.PlaySound(2, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.4f);
+									SOTSUtils.PlaySound(SoundID.Item8, (int)proj.Center.X, (int)proj.Center.Y, 1.4f);
 								pepper.npcTargetId = npc.whoAmI;
 								pepper.cooldown = 40;
 								proj.netUpdate = true;
@@ -160,16 +159,16 @@ namespace SOTS.Projectiles.Pyramid
 			if (runOnce)
 				return false;
 			Vector2 current = circularLocation;
-			Draw(spriteBatch, trailPos, current);
+			Draw(trailPos, current);
 			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 90)) + Projectile.Center;
-			Draw(spriteBatch, trailPos2, current);
+			Draw(trailPos2, current);
 			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 180)) + Projectile.Center;
-			Draw(spriteBatch, trailPos3, current);
+			Draw(trailPos3, current);
 			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 270)) + Projectile.Center;
-			Draw(spriteBatch, trailPos4, current);
+			Draw(trailPos4, current);
 			return false;
 		}
-		public void Draw(SpriteBatch spriteBatch, Vector2[] trailArray, Vector2 current)
+		public void Draw(Vector2[] trailArray, Vector2 current)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperTail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);

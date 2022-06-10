@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Dusts;
+using SOTS.NPCs.Boss.Curse;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -44,7 +46,7 @@ namespace SOTS.Projectiles.Pyramid
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc1 = Main.npc[i];
-				if(npc1.type == Mod.Find<ModNPC>("PharaohsCurse") .Type&& npc1.active)
+				if(npc1.type == ModContent.NPCType<PharaohsCurse>() && npc1.active)
 				{
 					pIndex = i;
 					break;

@@ -132,7 +132,6 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			//Main.spriteBatch.Draw(texture3, drawPos2 + new Vector2(0, Projectile.gfxOffY), null, lightColor, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			Main.spriteBatch.Draw(texture4, drawPos2 + new Vector2(0, Projectile.gfxOffY), null, Color.White, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-			base.PostDraw(spriteBatch, lightColor);
         }
         public override bool? CanCutTiles()
 		{

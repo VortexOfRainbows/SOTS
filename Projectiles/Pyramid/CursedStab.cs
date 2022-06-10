@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Pyramid
 					}
 				}
 			}
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.9f, 0.4f);
+			SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, 0.4f);
 		}
 	}
 }

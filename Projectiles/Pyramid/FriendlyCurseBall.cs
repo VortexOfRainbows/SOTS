@@ -1,5 +1,6 @@
 using System.IO;
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,7 +37,6 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if(Main.myPlayer == Projectile.owner)
 				Projectile.netUpdate = true;
-
 			if (Projectile.velocity.Length() > 1)
 				Projectile.tileCollide = true;
 			else

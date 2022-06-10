@@ -41,9 +41,8 @@ namespace SOTS.Projectiles.Pyramid
 					if (voidPlayer.lootingSouls >= amt && !npc.immortal && !npc.friendly)
 						if (npc.active && npc.Hitbox.Intersects(Projectile.Hitbox) && (npc.realLife == npc.whoAmI || npc.realLife <= 0) && !npc.dontTakeDamage)
 						{
-							Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<HarvestLock>(), 0, 0, player.whoAmI, npc.whoAmI);
-							DebuffNPC debuffNPC = (DebuffNPC)Mod.GetGlobalNPC("DebuffNPC");
-							debuffNPC = (DebuffNPC)debuffNPC.Instance(npc);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<HarvestLock>(), 0, 0, player.whoAmI, npc.whoAmI);
+							DebuffNPC debuffNPC = npc.GetGlobalNPC<DebuffNPC>();
 							if (debuffNPC.HarvestCurse >= 99)
 							{
 								hasHitEnemy = true;

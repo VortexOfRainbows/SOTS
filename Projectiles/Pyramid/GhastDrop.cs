@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = type == -1 ? GetTexture("SOTS/Projectiles/Pyramid/GhastDropFire") : type == -3 ? Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value :  GetTexture("SOTS/Projectiles/Pyramid/GhastDropIchor"); 
+			Texture2D texture = type == -1 ? (Texture2D)Request<Texture2D>("SOTS/Projectiles/Pyramid/GhastDropFire") : type == -3 ? Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value : (Texture2D)Request<Texture2D>("SOTS/Projectiles/Pyramid/GhastDropIchor"); 
 			Vector2 origin = new Vector2(texture.Width / 2, Projectile.height / 2);
 			Color color = Color.Black;
 			for (int i = 0; i < 360; i += 45)

@@ -23,7 +23,6 @@ namespace SOTS.Projectiles.Pyramid
         {
 			Projectile.height = 60;
 			Projectile.width = 60;
-			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.friendly = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 480;
@@ -155,7 +154,7 @@ namespace SOTS.Projectiles.Pyramid
 						dust.velocity.X *= 2.25f;
 						dust.velocity.Y *= 1.55f;
 					}
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 						SpawnEnemy();
 				}
 			}

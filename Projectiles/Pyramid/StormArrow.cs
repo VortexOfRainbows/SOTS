@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Pyramid
 				for(int i = 0; i < 200; i++) //find first enemy
 				{
 					NPC npc = Main.npc[i];
-					if(!npc.friendly && npc.lifeMax > 5 && npc.active && npc.CanBeChasedBy())
+					if(npc.CanBeChasedBy())
 					{
 						if(npcIndex != i && npcIndex1 != i && npcIndex2 != i && npcIndex3 != i)
 						{
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				if(!npc.friendly && npc.lifeMax > 5 && npc.active && Main.myPlayer == Projectile.owner)
 				{
-					int newIndex = Projectile.NewProjectile(spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
 				}
 			}
 			if(npcIndex1 != -1)
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				if(!npc.friendly && npc.lifeMax > 5 && npc.active && Main.myPlayer == Projectile.owner)
 				{
-					int newIndex1 = Projectile.NewProjectile(spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
 				}
 			}
 			if(npcIndex2 != -1)
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				if(!npc.friendly && npc.lifeMax > 5 && npc.active && Main.myPlayer == Projectile.owner)
 				{
-					int newIndex2 = Projectile.NewProjectile(spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
 				}
 			}
 			if(npcIndex3 != -1)
@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				if(!npc.friendly && npc.lifeMax > 5 && npc.active && Main.myPlayer == Projectile.owner)
 				{
-					int newIndex2 = Projectile.NewProjectile(spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPosX, spawnPosY, npc.velocity.X * 0.8f, 15 + npc.velocity.Y * 0.8f, (int)(Projectile.ai[1]), Projectile.damage, Projectile.knockBack, player.whoAmI);
 				}
 			}
 		}

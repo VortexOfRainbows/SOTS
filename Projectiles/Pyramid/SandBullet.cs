@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Pyramid
 			Player owner = Main.player[Projectile.owner];
 			if (owner.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<GoldLight>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(1000));
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<GoldLight>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(1000));
 			}
 			UpdateEnd();
 			target.immune[Projectile.owner] = 0;
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Pyramid
 			Player owner = Main.player[Projectile.owner];
 			if (owner.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<GoldLight>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(1000));
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<GoldLight>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(1000));
 			}
 			UpdateEnd();
 			return false;

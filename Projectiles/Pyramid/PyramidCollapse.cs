@@ -53,14 +53,14 @@ namespace SOTS.Projectiles.Pyramid
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
 			Projectile.tileCollide = false;
-				if (Projectile.velocity.X != oldVelocity.X)
-				{
-					Projectile.velocity.X = -oldVelocity.X * 0.1f;
-				}
-				if (Projectile.velocity.Y != oldVelocity.Y)
-				{
-					Projectile.velocity.Y = -oldVelocity.Y * 0.1f;
-				}
+			if (Projectile.velocity.X != oldVelocity.X)
+			{
+				Projectile.velocity.X = -oldVelocity.X * 0.1f;
+			}
+			if (Projectile.velocity.Y != oldVelocity.Y)
+			{
+				Projectile.velocity.Y = -oldVelocity.Y * 0.1f;
+			}
 			return false;
 		}
 	}

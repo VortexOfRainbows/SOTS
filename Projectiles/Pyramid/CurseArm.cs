@@ -105,7 +105,7 @@ namespace SOTS.Projectiles.Pyramid
 								float degrees = 90;
 								if (Main.expertMode)
 									degrees = Main.rand.NextFloat(80f, 100f);
-								Projectile.NewProjectile(finalPosition, toARM.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(degrees * side)), ModContent.ProjectileType<CurseExtension>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, parentID);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), finalPosition, toARM.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(degrees * side)), ModContent.ProjectileType<CurseExtension>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, parentID);
                             }
 							return false;
                         }
@@ -142,7 +142,7 @@ namespace SOTS.Projectiles.Pyramid
 					Projectile.velocity *= 1.1f;
 				if(aiCounter1 == 60)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.25f, -0.2f);
+					SOTSUtils.PlaySound(SoundID.Item96, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.25f, -0.2f);
 				}
 				if(aiCounter1 > 90)
                 {

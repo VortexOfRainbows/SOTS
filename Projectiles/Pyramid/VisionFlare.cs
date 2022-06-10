@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Pyramid
         {
 			if(runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 117, 1.0f, 0.2f);
+				SOTSUtils.PlaySound(SoundID.Item117, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, 0.2f);
 				for (int i = 0; i < 30; i++)
 				{
 					float mult = 0.2f + 0.8f * i / 30f;

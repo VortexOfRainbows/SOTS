@@ -47,7 +47,6 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.timeLeft = 1800;
 			Projectile.tileCollide = false;
 			Projectile.DamageType = DamageClass.Melee;
-			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.extraUpdates = 3;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

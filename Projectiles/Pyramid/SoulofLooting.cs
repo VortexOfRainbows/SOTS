@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -32,7 +33,6 @@ namespace SOTS.Projectiles.Pyramid
 			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f * 0.125f);
 			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
 			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 22 * Projectile.frame, 22, 22), Projectile.GetAlpha(VoidPlayer.soulLootingColor), Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-			base.PostDraw(spriteBatch, lightColor);
         }
 		int owner = 0;
 		public override void AI()
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Pyramid
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(7, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.3f);
+				SOTSUtils.PlaySound(SoundID.Grab, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f);
 				voidPlayer.lootingSouls++;
 				voidPlayer.SendClientChanges(voidPlayer);
 				var index = CombatText.NewText(Projectile.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), 1);
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Pyramid
 			for (int i = 0; i < 360; i += particlesR)
 			{
 				Vector2 rotationalPos = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 22, 22, Mod.Find<ModDust>("CopyDust4").Type);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 22, 22, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num1];
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
