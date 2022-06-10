@@ -33,7 +33,7 @@ namespace SOTS.Items.Slime
             Item.shootSpeed = 19f;
 			Item.useAmmo = ModContent.ItemType<Peanut>();
 		}
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Item ammo, Player player)
         {
             return !Main.rand.NextBool(5);
         }
@@ -41,10 +41,6 @@ namespace SOTS.Items.Slime
         {
             return new Vector2(-10f, -3f);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			return true;
-		}
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingNature>(), 1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 20).AddIngredient(ModContent.ItemType<Wormwood>(), 20).AddIngredient(ModContent.ItemType<Peanut>(), 40).AddTile(TileID.Anvils).Register();

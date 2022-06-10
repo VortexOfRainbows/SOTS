@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Secrets
 {
@@ -63,11 +64,11 @@ namespace SOTS.Items.Secrets
         {
 			if(frameX == 0)
 			{
-			   Item.NewItem(i * 16, j * 16, 48, 64, ModContent.ItemType<StrangeKeystone>());
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 64, ModContent.ItemType<StrangeKeystone>());
 			}
 			if(frameX >= 32)
 			{
-				Item.NewItem(i * 16, j * 16, 48, 64, ModContent.ItemType<StrangeKeystoneBroken>());
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 64, ModContent.ItemType<StrangeKeystoneBroken>());
 			}
         }
 	    public override bool CanExplode(int i, int j)

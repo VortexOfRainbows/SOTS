@@ -30,27 +30,27 @@ namespace SOTS.Items.Slime
 		}
 		public override void OpenBossBag(Player player)
 		{
-			player.QuickSpawnItem(ModContent.ItemType<PutridEye>());
-			player.QuickSpawnItem(ModContent.ItemType<VialofAcid>(), Main.rand.Next(20, 30));
-			player.QuickSpawnItem(ItemID.PinkGel,Main.rand.Next(40, 60));
-			player.QuickSpawnItem(ModContent.ItemType<Wormwood>(), Main.rand.Next(20, 30));
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<PutridEye>());
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<VialofAcid>(), Main.rand.Next(20, 30));
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.PinkGel,Main.rand.Next(40, 60));
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Wormwood>(), Main.rand.Next(20, 30));
 			int rand = Main.rand.Next(10);
 			if(rand == 0)
-				player.QuickSpawnItem(ModContent.ItemType<GelWings>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<GelWings>());
 			if(rand == 1)
-				player.QuickSpawnItem(ModContent.ItemType<WormWoodParasite>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodParasite>());
 			if(rand == 2)
-				player.QuickSpawnItem(ModContent.ItemType<WormWoodHelix>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodHelix>());
 			if(rand == 3)
-				player.QuickSpawnItem(ModContent.ItemType<WormWoodHook>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodHook>());
 			if(rand == 4)
-				player.QuickSpawnItem(ModContent.ItemType<WormWoodCollapse>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodCollapse>());
 			if(rand == 5)
-				player.QuickSpawnItem(ModContent.ItemType<WormWoodScepter>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodScepter>());
 			if(rand == 6)
-				player.QuickSpawnItem(ModContent.ItemType<WormWoodStaff>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodStaff>());
 			if(rand == 7)
-				player.QuickSpawnItem(ModContent.ItemType<WormWoodSpike>());
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodSpike>());
 		}
 	}
 }

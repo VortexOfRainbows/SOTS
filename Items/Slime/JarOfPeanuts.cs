@@ -38,11 +38,11 @@ namespace SOTS.Items.Slime
 		public override bool? UseItem(Player player)
 		{
 			NPC.SpawnOnPlayer(player.whoAmI, Mod.Find<ModNPC>("PutridPinky1").Type);
-			Terraria.Audio.SoundEngine.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);
-			if(!NPC.AnyNPCs(Mod.Find<ModNPC>("PutridPinky1").Type) && !NPC.AnyNPCs(Mod.Find<ModNPC>("PutridPinkyPhase2").Type))
-			{
+			//SOTSUtils.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);
+			//if(!NPC.AnyNPCs(Mod.Find<ModNPC>("PutridPinky1").Type) && !NPC.AnyNPCs(Mod.Find<ModNPC>("PutridPinkyPhase2").Type))
+			//{
 			//		 NPC.NewNPC((int)player.Center.X, (int)player.Center.Y - 600, mod.NPCType("PutridPinky1"));	
-			}
+			//}
 			return true;
 		}
 	}

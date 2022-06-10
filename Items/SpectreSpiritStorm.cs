@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Fragments;
+using Terraria.DataStructures;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Items
 {
@@ -42,9 +44,9 @@ namespace SOTS.Items
 		{
 			return new Vector2(-1, 0);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, Mod.Find<ModProjectile>("StormArrow").Type, damage, knockBack, player.whoAmI, 0, type);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<StormArrow>(), damage, knockback, player.whoAmI, 0, type);
 			return false; 
 		}
 		public override void AddRecipes()	

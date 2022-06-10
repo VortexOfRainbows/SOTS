@@ -67,7 +67,7 @@ namespace SOTS.Items
                 }
                 return false;
             }
-            Terraria.Audio.SoundEngine.PlaySound(Item.UseSound, player.Center);
+            SoundEngine.PlaySound((SoundStyle)Item.UseSound, player.Center);
             int amt = 4;
             for(int i = 0; i < amt; i++)
             {
@@ -90,7 +90,7 @@ namespace SOTS.Items
             }
             return player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1;
         }
-        public override bool CanConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Item ammo, Player player)
         {
             return player.altFunctionUse != 2;
         }

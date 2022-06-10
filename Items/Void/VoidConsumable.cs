@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using SOTS.Void;
 using System.Collections.Generic;
 using SOTS.Buffs;
+using SOTS.Projectiles.Permafrost;
 
 namespace SOTS.Items.Void
 {
@@ -322,7 +323,7 @@ namespace SOTS.Items.Void
 				Vector2 circularSpeed = new Vector2(0, -12);
 				int calc = 10 + modPlayer.bonusShardDamage;
 				if (calc <= 0) calc = 1;
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, Mod.Find<ModProjectile>("ShatterShard").Type, calc, 3f, player.whoAmI);
+				Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), calc, 3f, player.whoAmI);
 
 			}
 			else
@@ -333,7 +334,7 @@ namespace SOTS.Items.Void
 					Vector2 circularSpeed = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 180));
 					int calc = 10 + modPlayer.bonusShardDamage;
 					if (calc <= 0) calc = 1;
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, Mod.Find<ModProjectile>("ShatterShard").Type, calc, 3f, player.whoAmI);
+					Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), calc, 3f, player.whoAmI);
 				}
 			}
 		}

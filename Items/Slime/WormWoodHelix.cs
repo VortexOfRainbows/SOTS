@@ -25,7 +25,7 @@ namespace SOTS.Items.Slime
             Item.noMelee = true; 
             Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 1, 80, 0);
-            Item.rare = 4;
+            Item.rare = ItemRarityID.LightRed;
             Item.UseSound = SoundID.Item11;
             Item.autoReuse = true;
             Item.shoot = 10; 

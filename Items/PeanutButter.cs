@@ -26,7 +26,7 @@ namespace SOTS.Items
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 1;
-			modPlayer.petPinky += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f)));
+			modPlayer.petPinky += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
 		}
 	}
 }

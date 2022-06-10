@@ -49,10 +49,9 @@ namespace SOTS.Items.Tools
 		{
 			return 5;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			position += new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero) * 28;
-			return true; 
-		}
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			position += velocity.SafeNormalize(Vector2.Zero) * 28;
+        }
 	}
 }

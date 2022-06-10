@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Dusts;
 using SOTS.Items.Pyramid;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Secrets
 {
@@ -35,14 +36,13 @@ namespace SOTS.Items.Secrets
 			AddMapEntry(new Color(120, 90, 90));
 			MineResist = 15.5f;
 			MinPick = 9999;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = 32;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient && fail && Main.rand.NextBool(15))
-				Projectile.NewProjectile(new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RefractingCrystalProj>(), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(new EntitySource_Misc("SOTS:RefractingCrystalBlock"), new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RefractingCrystalProj>(), 0, 0, Main.myPlayer);
 			if (!fail && Main.netMode != NetmodeID.Server)
 			{
 				SOTSWorld.SecretFoundMusicTimer = 720;

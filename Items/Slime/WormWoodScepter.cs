@@ -2,7 +2,9 @@ using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
- 
+using Terraria.DataStructures;
+using SOTS.Projectiles.Minions;
+
 namespace SOTS.Items.Slime    
 {
     public class WormWoodScepter : ModItem
@@ -27,19 +29,26 @@ namespace SOTS.Items.Slime
             Item.rare = 4;  
             Item.UseSound = SoundID.Item44; 
             Item.autoReuse = true;   
-            Item.shoot = Mod.Find<ModProjectile>("PinkyTurret").Type;  
+            Item.shoot = ModContent.ProjectileType<PinkyTurret>();  
             Item.DamageType = DamageClass.Summon; 
             Item.sentry = true;
         } 
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 32).AddIngredient(null, "Wormwood", 28).AddTile(TileID.Anvils).Register();
-		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Vector2 cursorPos = Main.MouseWorld;
-			position = cursorPos;
-			return player.altFunctionUse != 2;
-		}
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 32).AddIngredient<Wormwood>(28).AddTile(TileID.Anvils).Register();
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            position = Main.MouseWorld;
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (player.altFunctionUse != 2)
+            {
+                int index = Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
+                Main.projectile[index].originalDamage = Item.damage;
+            }
+            return false;
+        }
     }
 }

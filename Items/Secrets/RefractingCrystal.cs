@@ -162,8 +162,8 @@ namespace SOTS.Items.Secrets
 											Vector2 middlePos = new Vector2(i2 * 16 + 8, j2 * 16 + 8);
 											if (Main.netMode != 1)
 											{
-												Projectile.NewProjectile(middlePos, Vector2.Zero, ModContent.ProjectileType<StrangeKeystoneExplosion>(), 0, 0, Main.myPlayer);
-												int item = Item.NewItem((int)middlePos.X, (int)middlePos.Y, 0, 0, ModContent.ItemType<PhotonGeyser>(), 1);
+												Projectile.NewProjectile(Item.GetSource_Misc("SOTS:StrangeKeystoneRefractingCrystalInteraction"), middlePos, Vector2.Zero, ModContent.ProjectileType<StrangeKeystoneExplosion>(), 0, 0, Main.myPlayer);
+												int item = Item.NewItem(Item.GetSource_Misc("SOTS:StrangeKeystoneRefractingCrystalInteraction"), (int)middlePos.X, (int)middlePos.Y, 0, 0, ModContent.ItemType<PhotonGeyser>(), 1);
 												NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 											}
 										}
@@ -234,7 +234,7 @@ namespace SOTS.Items.Secrets
 				{
 					SOTSWorld.SecretFoundMusicTimer = 720;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(2, Projectile.Center, 14);
+				SOTSUtils.PlaySound(SoundID.Item14, Projectile.Center);
 				int cc = 0;
 				for (int l = 0; l < 360; l += 3)
 				{

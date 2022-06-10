@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Laser;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -108,9 +109,9 @@ namespace SOTS.Items.Secrets
 			Item.noUseGraphic = true;
 			Item.mana = 50;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<PrismOrb>(), damage, knockBack, player.whoAmI, 0, ModContent.ProjectileType<PrismLaser>());
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PrismOrb>(), damage, knockback, player.whoAmI, 0, ModContent.ProjectileType<PrismLaser>());
 			return true;
 		}
 	}

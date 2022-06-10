@@ -29,7 +29,7 @@ namespace SOTS.Items.Void
 		}
 		public override bool? UseItem(Player player)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 39);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCDeath39, player.Center);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if(voidPlayer.voidStar < 1)
 			{

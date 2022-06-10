@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -44,11 +45,13 @@ namespace SOTS.Items
         {
             return true;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             damage = (int)(damage * 0.6f);
-            speedX *= (SOTSPlayer.ModPlayer(player).attackSpeedMod);
-            speedY *= (SOTSPlayer.ModPlayer(player).attackSpeedMod);
+            velocity *= (SOTSPlayer.ModPlayer(player).attackSpeedMod);
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
             return player.ownedProjectileCounts[Item.shoot] <= (player.HasBuff(ModContent.BuffType<Frenzy>()) ? 1 : 0) && player.altFunctionUse == 2;
         }
         public override float UseTimeMultiplier(Player player)

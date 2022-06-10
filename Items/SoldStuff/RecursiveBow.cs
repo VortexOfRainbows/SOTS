@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,19 +37,19 @@ namespace SOTS.Items.SoldStuff
         {
             return new Vector2(-0.5f, 0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int totalNumber = 0;
             while(Main.rand.NextBool(2))
             {
                 totalNumber++;
-                float speed = (float)Math.Sqrt(speedX * speedX + speedY * speedY);
+                //float speed = velocity.Length();
                 float originalSpeedMult = 1f - 0.05f * totalNumber;
                 if (originalSpeedMult < 0.5f)
                     originalSpeedMult = 0.5f;
                 float topRadius = (float)Math.Sqrt(2f * totalNumber);
                 Vector2 randomSpread = Main.rand.NextVector2Circular(topRadius, topRadius);
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY) * originalSpeedMult + randomSpread, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity * originalSpeedMult + randomSpread, type, damage, knockback, player.whoAmI);
             }
             if(totalNumber >= 1)
             {
