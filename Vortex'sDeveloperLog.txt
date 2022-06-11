@@ -57,9 +57,9 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
-6/10/22
+6/10/22 & 6/11/22
 1. Pyramid item folder
-2. 1173 -> 953 -> 911-> 785
+2. 1173 -> 953 -> 911-> 785 -> 660
 3. Inferno projectile folder, Earth, Permafrost
 
 6/8/22 & 6/9/22
@@ -68,7 +68,7 @@ Low Priority Objectives:
 3. 1629 -> 1433 -> 1407 -> 1282 -> 1173
 4. Relocated some stuff that was in SOTS.cs
 5. Tide Folder, Slime folder, etc.
-6. Pyramid Projetile Foler
+6. Pyramid Projetile Foler, Otherworld Projectile Folder
 
 6/5/22 & 6/7/22
 1. Ported/Reorganized ancient gold furniture

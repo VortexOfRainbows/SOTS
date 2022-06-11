@@ -134,9 +134,9 @@ namespace SOTS.Projectiles.Otherworld
 				for (int s = 0; s < 7; s++)
 				{
 					Vector2 rotateVector2 = new Vector2(0, Main.rand.Next(-10, 11) * 0.3f).RotatedBy(laserVelo.ToRotation());
-					spriteBatch.Draw(texture, drawPos + rotateVector2 + (Projectile.velocity.SafeNormalize(Vector2.Zero)), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), size, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + rotateVector2 + (Projectile.velocity.SafeNormalize(Vector2.Zero)), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), size, SpriteEffects.None, 0f);
 				}
-				if(dust || Main.rand.Next(250) == 0)
+				if(dust || Main.rand.NextBool(250))
 				{
 					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CodeDust2").Type);
 					Main.dust[num1].velocity *= 1.75f;

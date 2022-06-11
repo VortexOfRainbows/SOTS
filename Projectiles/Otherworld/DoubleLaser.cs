@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Otherworld
 						if(npc.immune[Projectile.owner] <= 0)
 						{
 							if (Projectile.owner == Main.myPlayer)
-								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, Mod.Find<ModProjectile>("DoubleLaserExplosion").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<DoubleLaserExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 						}
 					}
 					previousDistance = Distance;
@@ -132,11 +132,11 @@ namespace SOTS.Projectiles.Otherworld
 					float x = Main.rand.Next(-10, 11) * 0.125f;
 					float y = Main.rand.Next(-10, 11) * 0.125f;
 					if(Distance == 119)
-						spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
 					else
-						spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
 				}
-				if(dust || Main.rand.Next(40) == 0)
+				if(dust || Main.rand.NextBool(40))
 				{
 					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, 91);
 					Main.dust[num1].noGravity = true;

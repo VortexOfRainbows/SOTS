@@ -140,12 +140,12 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if (Projectile.timeLeft < 720) //launch effects
 			{
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
+				SOTSUtils.PlaySound(SoundID.Item94, Projectile.Center);
 				aimTo = aimTo.SafeNormalize(new Vector2(0, 1));
 				aimTo *= -12;
 				Projectile.velocity = aimTo;
 				if(Main.myPlayer == Projectile.owner)
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("DoubleLaser").Type, Projectile.damage, 1f, player.whoAmI, modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total));
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<DoubleLaser>(), Projectile.damage, 1f, player.whoAmI, modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total));
 				Projectile.Kill();
 			}
 		}

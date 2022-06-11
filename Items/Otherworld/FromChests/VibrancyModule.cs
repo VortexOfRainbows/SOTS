@@ -4,7 +4,6 @@ using Mono.Cecil.Cil;
 using SOTS.Items.Earth;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Void;
-using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

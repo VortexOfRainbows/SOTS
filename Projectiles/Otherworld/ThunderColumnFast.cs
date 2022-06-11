@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Otherworld
 				originalPos = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 				Projectile.ai[0] = 0;
 				Projectile.ai[1] = 0;
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
 			}
 			checkPos();
 			Vector2 toPlayer = player.Center - Projectile.Center;
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(counter2 > 600)
 			{
 				Projectile.extraUpdates = 9;
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, Projectile.Center);
 				counter2 = -100000;
 				Projectile.scale *= 4.5f;
 				Projectile.position = originalPos - new Vector2(Projectile.width / 2, Projectile.height / 2);

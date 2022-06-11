@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Otherworld
 				initialDirection = Projectile.velocity;
 				if(completedLoads == 0)
 					LaserDraw(null);
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 			}
 			return true;
 		}
@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Otherworld
 					if(Projectile.owner == Main.myPlayer)
 					{
 						SOTSProjectile instance = Projectile.GetGlobalProjectile<SOTSProjectile>();
-						Projectile.NewProjectile(drawpos, Projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), drawpos, Projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
 					}
 					posX = target.Center.X;
 					posY = target.Center.Y;
@@ -248,7 +248,7 @@ namespace SOTS.Projectiles.Otherworld
 					if (Projectile.owner == Main.myPlayer && completedLoads == 0)
 					{
 						SOTSProjectile instance = Projectile.GetGlobalProjectile<SOTSProjectile>();
-						Projectile.NewProjectile(drawPos, Projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), drawPos, Projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
 					}
 					distance = counter;
 					break;
@@ -270,7 +270,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if(completedLoads > 0)
 			{
-				LaserDraw(spriteBatch);
+				LaserDraw(Main.spriteBatch);
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Otherworld
@@ -111,10 +112,10 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
         {
-            Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
+            SOTSUtils.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 0.4f);
             for (int i = 0; i < 3; i++)
             {
-                int goreIndex = Gore.NewGore(new Vector2(Projectile.Center.X, Projectile.Center.Y), default(Vector2), Main.rand.Next(61, 64), 1f);
+                int goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.Center.X, Projectile.Center.Y), default(Vector2), Main.rand.Next(61, 64), 1f);
                 Main.gore[goreIndex].scale = 1f;
                 Main.gore[goreIndex].velocity.Y *= 0.45f;
                 Main.gore[goreIndex].position -= new Vector2(20, 20);
@@ -126,7 +127,7 @@ namespace SOTS.Projectiles.Otherworld
                 for(int i = -1; i < 2; i++)
                 {
                     Vector2 circular = lastVelo.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(18 * i)) * (Projectile.frame == 2 ? 5 : Projectile.frame == 1 ? 3.5f : 6.5f) * 1.075f;
-                    Projectile.NewProjectile(Projectile.Center, circular, Mod.Find<ModProjectile>("TravelingFlareFlame").Type, Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.frame);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<TravelingFlareFlame>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.frame);
                 }
             }
             base.Kill(timeLeft);

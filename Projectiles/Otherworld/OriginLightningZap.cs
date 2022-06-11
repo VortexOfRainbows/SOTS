@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly)
 				{
 					if (Projectile.owner == Main.myPlayer && Projectile.friendly)
-						Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("OriginLightningDamage").Type, Projectile.damage, 3f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<OriginLightningDamage>(), Projectile.damage, 3f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
 					if(Projectile.friendly)
                     {
 						hit = true;

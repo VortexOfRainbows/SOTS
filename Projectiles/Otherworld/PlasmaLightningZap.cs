@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Otherworld
@@ -87,7 +88,7 @@ namespace SOTS.Projectiles.Otherworld
 			if (runOnce)
 			{
 				Projectile.velocity = target.Center - Projectile.Center;
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.5f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-35, 36);
@@ -121,7 +122,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly)
 				{
 					if (Projectile.owner == Main.myPlayer && Projectile.friendly)
-						Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("PlasmaLightningDamage").Type, Projectile.damage, 3f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<PlasmaLightningDamage>(), Projectile.damage, 3f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
 					if(Projectile.friendly)
                     {
 						hit = true;

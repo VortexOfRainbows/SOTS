@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Otherworld
 			triggerStop();
 		}
 		Vector2[] trailPos = new Vector2[12];
-		public void TrailPreDraw(ref Color lightColor)
+		public void TrailPreDraw()
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowSmallShaft").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Otherworld
 							y = 0;
 						}
 						if (trailPos[k] != Projectile.Center)
-							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Otherworld
 					float y = Main.rand.Next(-10, 11) * 0.15f;
 					Main.spriteBatch.Draw(texture2, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 				}
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw();
 			return endHow == 0;
 		}
 		bool runOnce = true;

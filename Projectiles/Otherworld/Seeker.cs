@@ -40,13 +40,13 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (target.life <= 0)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+				SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 				if (Projectile.owner == Main.myPlayer)
 				{
 					for (int i = 0; i < 2; i++)
 					{
 						Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, Mod.Find<ModProjectile>("Seeker").Type, (int)(0.75f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Seeker>(), (int)(0.75f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
 					}
 				}
 			}

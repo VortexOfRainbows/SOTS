@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(Projectile.ai[1] != -1 && end == false)
 			{
 				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
-				if(proj.active && proj.type == Mod.Find<ModProjectile>("LightningLash") .Type&& proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
+				if(proj.active && proj.type == ModContent.ProjectileType<LightningLash>() && proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
 				{
 					Vector2 center = proj.Center;
 					Projectile.position.X = center.X - Projectile.width/2;

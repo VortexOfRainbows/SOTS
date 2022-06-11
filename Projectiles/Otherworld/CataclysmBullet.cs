@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("CataclysmLightningZap").Type, (int)(Projectile.damage * 0.2f), 0, Projectile.owner, npc.whoAmI);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<CataclysmLightningZap>(), (int)(Projectile.damage * 0.2f), 0, Projectile.owner, npc.whoAmI);
 					}
 				}
 			}

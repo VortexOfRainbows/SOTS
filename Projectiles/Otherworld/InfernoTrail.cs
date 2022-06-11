@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(Projectile.ai[1] != -1 && end == false)
 			{
 				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
-				if(proj.active && proj.type == Mod.Find<ModProjectile>("InfernoHook") .Type&& proj.owner == Projectile.owner && (((InfernoHook)proj.ModProjectile).storeData1 == Projectile.whoAmI || ((InfernoHook)proj.ModProjectile).storeData2 == Projectile.whoAmI))
+				if(proj.active && proj.type == ModContent.ProjectileType<InfernoHook>() && proj.owner == Projectile.owner && (((InfernoHook)proj.ModProjectile).storeData1 == Projectile.whoAmI || ((InfernoHook)proj.ModProjectile).storeData2 == Projectile.whoAmI))
 				{
 					Vector2 center = proj.Center - new Vector2(13, 0).RotatedBy(proj.velocity.ToRotation() + MathHelper.ToRadians(90 * Projectile.ai[0]));
 					Projectile.position.X = center.X - Projectile.width/2;

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Pyramid;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -76,63 +77,63 @@ namespace SOTS.Items.Otherworld
 				if (NPC.downedBoss2 && Main.rand.Next(3) != 0 && typeAmt[0] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(Mod.Find<ModItem>("SoulResidue").Type, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SoulResidue>(), rand);
 					drops += rand;
 					typeAmt[0] += rand;
 				}
 				if(SOTSWorld.downedCurse && Main.rand.Next(3) != 0 && typeAmt[1] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ModContent.ItemType<CursedMatter>(), rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CursedMatter>(), rand);
 					drops += rand;
 					typeAmt[1] += rand;
 				}
 				if (Main.hardMode && Main.rand.Next(3) != 0 && typeAmt[2] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ItemID.SoulofFlight, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.SoulofFlight, rand);
 					drops += rand;
 					typeAmt[2] += rand;
 				}
 				if (Main.hardMode && Main.rand.Next(3) != 0 && typeAmt[3] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ItemID.SoulofLight, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.SoulofLight, rand);
 					drops += rand;
 					typeAmt[3] += rand;
 				}
 				if (Main.hardMode && Main.rand.Next(3) != 0 && typeAmt[4] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ItemID.SoulofNight, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.SoulofNight, rand);
 					drops += rand;
 					typeAmt[4] += rand;
 				}
 				if (NPC.downedMechBoss1 && Main.rand.Next(3) != 0 && typeAmt[5] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ItemID.SoulofMight, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.SoulofMight, rand);
 					drops += rand;
 					typeAmt[5] += rand;
 				}
 				if (NPC.downedMechBoss2 && Main.rand.Next(3) != 0 && typeAmt[6] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ItemID.SoulofSight, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.SoulofSight, rand);
 					drops += rand;
 					typeAmt[6] += rand;
 				}
 				if (NPC.downedMechBoss3 && Main.rand.Next(3) != 0 && typeAmt[7] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ItemID.SoulofFright, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.SoulofFright, rand);
 					drops += rand;
 					typeAmt[7] += rand;
 				}
 				if (NPC.downedPlantBoss && Main.rand.Next(3) != 0 && typeAmt[8] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(ItemID.Ectoplasm, rand);
+					player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.Ectoplasm, rand);
 					drops += rand;
 					typeAmt[8] += rand;
 				}
@@ -142,9 +143,9 @@ namespace SOTS.Items.Otherworld
 				}
 				iterations++;
 			}
-			player.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(2) + 1);
-			player.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(99) + 1);
-			player.QuickSpawnItem(ItemID.CopperCoin, Main.rand.Next(99) + 1);
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.GoldCoin, Main.rand.Next(2) + 1);
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.SilverCoin, Main.rand.Next(99) + 1);
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.CopperCoin, Main.rand.Next(99) + 1);
 		}
 	}
 }

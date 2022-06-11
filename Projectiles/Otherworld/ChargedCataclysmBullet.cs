@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Otherworld
 			if (runOnce)
 			{
 				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-55, 56);
@@ -136,7 +136,7 @@ namespace SOTS.Projectiles.Otherworld
 					{
 						if (Projectile.owner == Main.myPlayer && Projectile.friendly)
 						{
-							Projectile proj = Main.projectile[Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<CataclysmBulletDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1f, 5f)];
+							Projectile proj = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromThis(), addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<CataclysmBulletDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1f, 5f)];
 							SOTSProjectile instance = proj.GetGlobalProjectile<SOTSProjectile>();
 							instance.affixID = Projectile.GetGlobalProjectile<SOTSProjectile>().affixID;
 						}

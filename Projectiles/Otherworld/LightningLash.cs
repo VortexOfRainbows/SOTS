@@ -2,6 +2,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Otherworld
@@ -169,7 +170,7 @@ namespace SOTS.Projectiles.Otherworld
 					randStorage[i] = Main.rand.Next(-45, 46);
 					trailPos[i] = Vector2.Zero;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 93, 0.7f);
+				SOTSUtils.PlaySound(SoundID.Item93, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f);
                 if (player.whoAmI == Main.myPlayer)
                 {
                     Vector2 cursorArea = Main.MouseWorld;
@@ -211,7 +212,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("LightningLashTrail").Type, (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
+				storeData = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<LightningLashTrail>(), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
 				Projectile.ai[1] = storeData;
 				Projectile.netUpdate = true;
 			}

@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindProjectiles.Add(index);
+			behindProjectiles.Add(index);
         }
 		public override bool PreAI()
 		{
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Otherworld
 		Vector2 toOwner = Vector2.Zero;
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Draw(spriteBatch, lightColor);
+			Draw(Main.spriteBatch, lightColor);
 			return true;
 		}
 

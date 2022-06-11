@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Otherworld
 				float damageMult = 2;
 				if (frostFlake == 2)
 					damageMult = 6;
-				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<FrostflakePulse>(), (int)(Projectile.damage * damageMult), Projectile.knockBack, Main.myPlayer, frostFlake, 0);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<FrostflakePulse>(), (int)(Projectile.damage * damageMult), Projectile.knockBack, Main.myPlayer, frostFlake, 0);
 			}
 			for (int h = 0; h < 20; h++)
 			{

@@ -146,9 +146,9 @@ namespace SOTS.Projectiles.Otherworld
 					float x = Main.rand.Next(-10, 11) * 0.125f;
 					float y = Main.rand.Next(-10, 11) * 0.125f;
 					if(Distance == maxDist - 1)
-						spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
 					else
-						spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), 0.2f + size, SpriteEffects.None, 0f);
 				}
 				if(dust || Main.rand.Next(120) == 0)
 				{

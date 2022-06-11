@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Projectiles.Base;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -92,10 +93,11 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Player player = Main.player[Projectile.owner];
 			int heal = 2;
-			if (Main.rand.Next(6) == 0) heal = 3;
+			if (Main.rand.NextBool(6))
+				heal = 3;
 			if (player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(ogPos.X, ogPos.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, heal, 8);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), ogPos.X, ogPos.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 0, 0, player.whoAmI, heal, 8);
 			}
 			base.OnHitNPC(target, damage, knockback, crit);
         }

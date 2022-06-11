@@ -171,7 +171,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(Projectile.ai[1] != -1 && end == false)
 			{
 				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
-				if(proj.active && proj.type == Mod.Find<ModProjectile>("Poyoyo") .Type&& proj.owner == Projectile.owner)
+				if(proj.active && proj.type == ModContent.ProjectileType<Poyoyo>() && proj.owner == Projectile.owner)
 				{
 					Projectile.position.X = proj.Center.X - Projectile.width/2;
 					Projectile.position.Y = proj.Center.Y - Projectile.height/2;

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,9 +32,9 @@ namespace SOTS.Projectiles.Otherworld
             }
 			for (int i = 0; i < 30; i++)
 			{
-				int type = Mod.Find<ModDust>("CodeDust").Type;
+				int type = ModContent.DustType<CodeDust>();
 				if (Projectile.ai[1] == -1)
-					type = Mod.Find<ModDust>("CodeDust2").Type;
+					type = ModContent.DustType<CodeDust2>();
 				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, type);
 				Dust dust = Main.dust[num];
 				dust.velocity *= 1.3f;
@@ -54,9 +55,9 @@ namespace SOTS.Projectiles.Otherworld
         }
 		public override void AI() //The projectile's AI/ what the projectile does
 		{
-			int type = Mod.Find<ModDust>("CodeDust").Type;
+			int type = ModContent.DustType<CodeDust>();
 			if (Projectile.ai[1] == -1)
-				type = Mod.Find<ModDust>("CodeDust2").Type;
+				type = ModContent.DustType<CodeDust2>();
 			for (int i = 0; i < Main.rand.Next(2) + 1; i++)
 			{
 				int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, type);

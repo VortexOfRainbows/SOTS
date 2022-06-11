@@ -147,7 +147,7 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					Projectile.extraUpdates = 3;
 					Projectile.ai[1] = 0;
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+					SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 				}
 				originalVelo = Projectile.velocity;
 				for (int i = 0; i < trailPos.Length; i++)
@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Otherworld
 						if (Projectile.owner == Main.myPlayer)
 						{
 							Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 12.5f));
-							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Mod.Find<ModProjectile>("HardlightColumn").Type, Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<HardlightColumn>(), Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
 						}
 					}
 				}

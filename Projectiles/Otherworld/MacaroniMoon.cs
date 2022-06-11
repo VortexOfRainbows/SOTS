@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Otherworld
 					SOTSUtils.PlaySound(SoundID.Item9, (int)Projectile.Center.X, (int)Projectile.Center.Y,0.75f);
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(4, 0).RotatedBy(Projectile.rotation), Mod.Find<ModProjectile>("MacaroniBeam").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(4, 0).RotatedBy(Projectile.rotation), ModContent.ProjectileType<MacaroniBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 					}
 					Projectile.Kill();
 				}

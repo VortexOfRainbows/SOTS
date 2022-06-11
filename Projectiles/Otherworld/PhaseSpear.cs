@@ -61,13 +61,13 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 			if (Main.netMode != 1)
 			{
 				for (int i = 0; i < 4 + (Main.expertMode ? 1 : 0); i++)
 				{
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<ThunderColumn>(), Projectile.damage, 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<ThunderColumn>(), Projectile.damage, 0, Main.myPlayer);
 				}
 			}
 			for (int i = 0; i < 40; i++)

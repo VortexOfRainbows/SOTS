@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Otherworld
 			counter += 0.5f;
 			for (int i = 0; i < 2 + counter; i++)
 			{
-				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CodeDust").Type);
+				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CodeDust>());
 				Dust dust = Main.dust[num];
 				dust.velocity *= 0.5f;
 				dust.velocity += Projectile.velocity * 0.3f;
