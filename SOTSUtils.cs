@@ -23,7 +23,11 @@ namespace SOTS
 		public static int GetBaseDamage(this NPC npc)
         {
 			return SOTSNPCs.GetBaseDamage(npc);
-        }
+		}
+		public static void SetDamageBasedOnOriginalDamage(this Projectile projectile, Player player)
+		{
+			projectile.damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, projectile.DamageType, projectile.originalDamage);
+		}
 		public static string GetPath<T>()
 		{
 			return GetPath(typeof(T));
