@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Permafrost
 				Vector2 manipulateVelo = Projectile.velocity;
 				if (frostFlake == 1)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 50, 1.1f, 0.1f); //mine ice
+					SOTSUtils.PlaySound(SoundID.Item50, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, 0.1f); //mine ice
 					for (int k = 0; k < 30; k++)
 					{
 						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(4))
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Permafrost
 				}
 				else if(frostFlake == 2)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 1.1f, -0.4f); //starfury
+					SOTSUtils.PlaySound(SoundID.Item105, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.4f); //starfury
 					for (int i = 0; i < 3; i++)
 					{
 						Vector2 spawnPos = Vector2.Lerp(Projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * 8, Projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * -120f, i * 0.3f);
@@ -173,9 +173,9 @@ namespace SOTS.Projectiles.Permafrost
 				if (counter == 21)
 				{
 					if (frostFlake != -2)
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.6f, -0.2f);
+						SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f, -0.2f);
 					else
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 50, 0.75f, 0.35f);
+						SOTSUtils.PlaySound(SoundID.Item50, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f, 0.35f);
 					for (int i = 0; i < 30; i++)
 					{
 						Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 12));
@@ -209,7 +209,7 @@ namespace SOTS.Projectiles.Permafrost
 							for(int i = -4; i <= 4; i++)
 							{
 								Vector2 velocity = new Vector2(i, 9 - Math.Abs(i) * 0.4f) * 0.3f;
-								Projectile.NewProjectile(Projectile.Center, velocity, ModContent.ProjectileType<FrostflakePulse>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1, 0);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity, ModContent.ProjectileType<FrostflakePulse>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1, 0);
 							}
                         }
 					}
@@ -330,7 +330,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				hasHit = true;
 				if (Main.myPlayer == Projectile.owner && (int)Projectile.ai[0] == -1)
-					Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FrostflakePulse>(), Projectile.damage, 0, Main.myPlayer, -2, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FrostflakePulse>(), Projectile.damage, 0, Main.myPlayer, -2, 0);
 				Projectile.netUpdate = true;
 			}
 			return false;
@@ -342,7 +342,7 @@ namespace SOTS.Projectiles.Permafrost
 				hasHit = true;
 				target.AddBuff(BuffID.Frostburn, 120, false);
 				if (Main.myPlayer == Projectile.owner && (int)Projectile.ai[0] == -1)
-					Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FrostflakePulse>(), Projectile.damage, 0, Main.myPlayer, -2, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FrostflakePulse>(), Projectile.damage, 0, Main.myPlayer, -2, 0);
 				Projectile.netUpdate = true;
 			}
 		}

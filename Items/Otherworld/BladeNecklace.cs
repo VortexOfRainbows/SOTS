@@ -80,7 +80,7 @@ namespace SOTS.Items.Otherworld
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			BeadPlayer beadPlayer = player.GetModPlayer<BeadPlayer>();
 			BladePlayer bladePlayer = player.GetModPlayer<BladePlayer>();
-			int damage = (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f) + (voidPlayer.voidDamage - 1f)));
+			int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
 
 			voidPlayer.bonusVoidGain += 1f;
 			bladePlayer.maxBlades += 9;

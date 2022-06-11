@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Earth
                 int rand = Main.rand.Next(2) + 2;
                 for(int i = 0; i < rand; i++)
                 { 
-                    Projectile.NewProjectile(Projectile.Center, new Vector2(4 + Main.rand.NextFloat(2), 0).RotatedBy(MathHelper.ToRadians(rand2 + Main.rand.NextFloat(-10, 10f) + i * 360f / rand)), ModContent.ProjectileType<ShattershinePulse>(), (int)(Projectile.damage * 0.6f), Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(6.28f), Main.rand.Next(11) + 10);
+                    Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, new Vector2(4 + Main.rand.NextFloat(2), 0).RotatedBy(MathHelper.ToRadians(rand2 + Main.rand.NextFloat(-10, 10f) + i * 360f / rand)), ModContent.ProjectileType<ShattershinePulse>(), (int)(Projectile.damage * 0.6f), Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(6.28f), Main.rand.Next(11) + 10);
                 }
             }
             target.immune[Projectile.owner] = 0;
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Earth
         {
             Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY);
             Texture2D tex = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-            spriteBatch.Draw(tex, drawPos, null, Color.White, Projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.0f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
+            Main.spriteBatch.Draw(tex, drawPos, null, Color.White, Projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.0f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
             return false;
         }
     }

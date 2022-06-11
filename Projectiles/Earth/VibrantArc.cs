@@ -101,7 +101,6 @@ namespace SOTS.Projectiles.Earth
 							dY = toHit.Center.Y - Projectile.Center.Y;
 							distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 							speed /= distance;
-
 							Projectile.velocity += new Vector2(dX * speed, dY * speed);
 							Projectile.velocity = new Vector2(currentVelo, 0).RotatedBy(Projectile.velocity.ToRotation());
 							counter++;

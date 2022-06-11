@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using System.IO;
 using SOTS.Dusts;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Earth 
 {    
@@ -92,7 +93,7 @@ namespace SOTS.Projectiles.Earth
 		float dist = 24f;
 		public void Explode()
 		{
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 28, 0.6f);
+			SOTSUtils.PlaySound(SoundID.Item28, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 			for (int i = 0; i < 30; i++)
 			{
 				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
@@ -113,7 +114,7 @@ namespace SOTS.Projectiles.Earth
 					for (int i = 2; i < 7; i++)
 					{
 						Vector2 toReach = new Vector2(i * 48, (j - 1) * 24).RotatedBy(Projectile.velocity.ToRotation());
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, toReach.X / 20f, toReach.Y / 20f, ModContent.ProjectileType<VibrantBolt>(), Projectile.damage, 0, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, toReach.X / 20f, toReach.Y / 20f, ModContent.ProjectileType<VibrantBolt>(), Projectile.damage, 0, Projectile.owner);
 					}
 				}
 			}

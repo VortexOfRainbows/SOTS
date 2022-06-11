@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.ai[0] = -1;
 			
 		}
-		public void TrailPreDraw(ref Color lightColor)
+		public void TrailPreDraw(Color lightColor)
 		{
 			if (Projectile.ai[0] == 0)
 				return;
@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Permafrost
 							y = 0;
 						}
 						if (trailPos[k] != Projectile.Center)
-							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -154,7 +154,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw(lightColor);
 			return endHow == 0;
 		}
 		bool runOnce = true;
@@ -177,9 +177,9 @@ namespace SOTS.Projectiles.Permafrost
 				if (count % 3 == 0) //will activate 12 times
 				{
 					Vector2 stormPos = Projectile.Center - new Vector2(348, 0).RotatedBy(MathHelper.ToRadians((Projectile.whoAmI + count) * 15));
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item44, (int)stormPos.X, (int)stormPos.Y);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item44, stormPos);
 					if(Main.myPlayer == Projectile.owner)
-						Projectile.NewProjectile(stormPos, Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, player.whoAmI, 1, (float)(MathHelper.ToRadians(180) + MathHelper.ToRadians((Projectile.whoAmI + count) * 15)));
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), stormPos, Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, player.whoAmI, 1, (float)(MathHelper.ToRadians(180) + MathHelper.ToRadians((Projectile.whoAmI + count) * 15)));
 				}
 			}
 			else
@@ -200,7 +200,7 @@ namespace SOTS.Projectiles.Permafrost
 					int num = 30;
 					if(Projectile.alpha < 245)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 14, 0.7f, 0.1f);
+						SOTSUtils.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y, 0.7f, 0.1f);
 					}
 					else
                     {
@@ -209,7 +209,7 @@ namespace SOTS.Projectiles.Permafrost
 					}
 					for (int i = 0; i < num; i++)
 					{
-						int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+						int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 						Dust dust = Main.dust[num1];
 						dust.velocity *= 2.75f * veloM;
 						dust.velocity += Projectile.velocity * 0.15f * veloM;

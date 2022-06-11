@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Permafrost
 					Projectile.extraUpdates = 20;
 					counter = -1;
 					Projectile.netUpdate = true;
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item71, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item71, Projectile.Center);
 					return;
 				}
 				Projectile.tileCollide = true;

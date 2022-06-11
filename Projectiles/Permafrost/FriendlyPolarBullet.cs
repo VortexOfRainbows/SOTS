@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Permafrost
@@ -73,7 +74,7 @@ namespace SOTS.Projectiles.Permafrost
 							y = 0;
 						}
 						if (trailPos[k] != Projectile.Center)
-							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -91,7 +92,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw(ref lightColor);
 			return endHow == 0;
 		}
 		bool runOnce = true;
@@ -136,7 +137,7 @@ namespace SOTS.Projectiles.Permafrost
 					dust.scale += 1.25f;
 					dust.alpha = 100;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 11, 0.8f, 0.1f);
+				SOTSUtils.PlaySound(SoundID.Item11, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, 0.1f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

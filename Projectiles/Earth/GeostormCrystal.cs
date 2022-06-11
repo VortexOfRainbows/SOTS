@@ -108,9 +108,9 @@ namespace SOTS.Projectiles.Earth
 				{
 					float radians = MathHelper.ToRadians((spawnedNum - 2) * 21 * spawnDirection);
 					Vector2 stormPos = Projectile.Center - new Vector2(0, 88).RotatedBy(radians); 
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)stormPos.X, (int)stormPos.Y, 30, 0.75f, -0.2f);
+					SOTSUtils.PlaySound(SoundID.Item30, (int)stormPos.X, (int)stormPos.Y, 0.75f, -0.2f);
 					if (Main.myPlayer == Projectile.owner)
-						Projectile.NewProjectile(stormPos, Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, player.whoAmI, Main.rand.Next(8), radians);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), stormPos, Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, player.whoAmI, Main.rand.Next(8), radians);
 					spawnedNum++;
 				}
 			}
@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Earth
 					reverseMult = MathHelper.Clamp(reverseMult, 0, 1);
 					if(count == 170)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 72, 0.75f, -0.3f);
+						SOTSUtils.PlaySound(SoundID.Item72, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f, -0.3f);
 						DoDust(velocity * -0.3f);
 					}
 					Projectile.velocity *= (float)Math.Sqrt(count / 180f) * reverseMult;

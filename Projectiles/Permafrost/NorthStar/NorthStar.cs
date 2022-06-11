@@ -54,12 +54,12 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             }
             if (Projectile.localAI[0] % 18 == 0 && summonedNum < 8) //prevent spawning more in multiplayer with Main.myPlayer == Projectile.owner
             {
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.15f);
+                SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.15f);
                 if (Main.myPlayer == Projectile.owner)
                 {
                     for(int i = 0; i <= 1; i++)
                     {
-                        Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<NorthStarStar>(), (int)(Projectile.damage * 0.7f) + 1, 0, Projectile.owner, summonedNum + i * 8, Projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
+                        Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<NorthStarStar>(), (int)(Projectile.damage * 0.7f) + 1, 0, Projectile.owner, summonedNum + i * 8, Projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
                     }
                 }
                 summonedNum++;
@@ -76,9 +76,9 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY);
             Color color = new Color(150, 180, 240, 0) * 0.5f;
             Texture2D tex = Mod.Assets.Request<Texture2D>("Assets/FlailBloom").Value;
-            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 2.0f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 2.0f, SpriteEffects.None, 0f);
             tex = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-            spriteBatch.Draw(tex, drawPos, null, Color.White, Projectile.rotation, new Vector2(tex.Width / 2, tex.Height / 2), Projectile.scale * 0.9f, SpriteEffects.FlipVertically, 0f); //putting origin on center of ball instead of on spike + ball
+            Main.spriteBatch.Draw(tex, drawPos, null, Color.White, Projectile.rotation, new Vector2(tex.Width / 2, tex.Height / 2), Projectile.scale * 0.9f, SpriteEffects.FlipVertically, 0f); //putting origin on center of ball instead of on spike + ball
             return false;
         }
     }
@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<NorthStarExplosion>(), Projectile.damage * 3, 0, Projectile.owner, Projectile.scale);
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<NorthStarExplosion>(), Projectile.damage * 3, 0, Projectile.owner, Projectile.scale);
 
             }
             if (Projectile.timeLeft > 36)
@@ -256,7 +256,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         public override bool PreDraw(ref Color lightColor)
         {
             if (!inFront)
-                Draw(spriteBatch, Color.White);
+                Draw(Main.spriteBatch, Color.White);
             return false;
         }
         public void Draw(SpriteBatch spriteBatch, Color lightColor)
@@ -279,7 +279,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
                 float lerpPercent = (float)Math.Sin(MathHelper.ToRadians((float)k / Projectile.oldPos.Length * 300f + VoidPlayer.soulColorCounter * 1.5f));
                 Color colorMan = Color.Lerp(new Color(150, 180, 240), new Color(190, 10, 75), lerpPercent);
                 Color color = colorMan * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * scale;
-                spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
             }
             if(orbitalDistance != -1)
             {
@@ -287,7 +287,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
                 {
                     Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 60));
                     Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY) + Main.rand.NextVector2Circular(0.5f, 0.5f) + Vector2.UnitX.RotatedBy(MathHelper.ToRadians(i * 60)) * 2;
-                    spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, new Color(color.R, color.G, color.B, 0) * 0.3f, Projectile.rotation, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Size() / 2, Projectile.scale * 0.75f, SpriteEffects.None, 0);
+                    Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, new Color(color.R, color.G, color.B, 0) * 0.3f, Projectile.rotation, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Size() / 2, Projectile.scale * 0.75f, SpriteEffects.None, 0);
                 }
             }
         }

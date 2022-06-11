@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			Texture2D texture = alt ? Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/IcePulseAlt").Value : Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
-			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		bool alt = false;
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Permafrost
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f);
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				SOTSUtils.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				runOnce = false;
 				for (int i = 0; i < 360; i += 10)
 				{

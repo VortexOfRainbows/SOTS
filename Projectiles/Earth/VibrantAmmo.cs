@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Earth
 				Vector2 drawPos = Projectile.oldPos[k] + new Vector2(Projectile.width / 2, Projectile.height / 2);
 				Color color = new Color(100, 100, 100, 0) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				float lengthTowards = Vector2.Distance(lastPosition, drawPos) / texture.Height / scale;
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * scale, Projectile.rotation, drawOrigin, new Vector2(trailScale(), lengthTowards) * scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * scale, Projectile.rotation, drawOrigin, new Vector2(trailScale(), lengthTowards) * scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				lastPosition = drawPos;
 			}
 			return true;
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Earth
 					for (int i = -1; i <= 1; i++)
 					{
 						Vector2 circular = new Vector2(0, 7).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(2f, 10f) * i)) * (1 + Main.rand.NextFloat(-0.1f, 0.1f) * i);
-						Projectile.NewProjectile(target.Center + new Vector2(0, target.height / 2 + 8), circular, ModContent.ProjectileType<VibrantShard>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center + new Vector2(0, target.height / 2 + 8), circular, ModContent.ProjectileType<VibrantShard>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
 					}
 				}
 			}
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Earth
 					for (int i = -1; i <= 1; i++)
 					{
 						Vector2 circular = new Vector2(0, 7).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(2f, 10f) * i)) * (1 + Main.rand.NextFloat(-0.1f, 0.1f) * i);
-						Projectile.NewProjectile(Projectile.Center + new Vector2(0, 12), circular, ModContent.ProjectileType<VibrantShard>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis("SOTS:VibrantArrowTileCollide"), Projectile.Center + new Vector2(0, 12), circular, ModContent.ProjectileType<VibrantShard>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
 					}
 				}
 			}
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Earth
 						dust.velocity += Projectile.velocity * 0.5f;
 					}
 					if (Projectile.type != ModContent.ProjectileType<VibrantShard>())
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 27, 0.7f, -0.2f);
+						SOTSUtils.PlaySound(SoundID.Item27, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, -0.2f);
 					runOnce = false;
 				}
 				Projectile.friendly = false;
@@ -212,7 +212,7 @@ namespace SOTS.Projectiles.Earth
 					for(int i = -1; i <= 1; i++)
                     {
 						Vector2 circular = Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(3f, 13f) * i)) * (1 + Main.rand.NextFloat(-0.3f, -0.1f) * Math.Abs(i));
-						Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<VibrantShard>(), (int)(Projectile.damage * (1 - (float)Math.Abs(i) * 0.75f)), Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<VibrantShard>(), (int)(Projectile.damage * (1 - (float)Math.Abs(i) * 0.75f)), Projectile.knockBack, Projectile.owner);
                     }
                 }
             }

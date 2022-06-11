@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, 18 * Projectile.frame, 24, 18), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, 18 * Projectile.frame, 24, 18), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
         {
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, Projectile.Center);
 			for(int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			if(Projectile.ai[1] == 2)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, Projectile.Center);
 				for(int i = 0; i < 360; i += 30)
 				{
 					Vector2 circularLocation = new Vector2(-7, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.ai[1] = 0;
 				return;
 			}
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, Projectile.Center);
 			for(int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));

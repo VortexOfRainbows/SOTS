@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Earth
         {
             if(runOnce)
             {
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 27, 0.85f, -0.1f);
+                SOTSUtils.PlaySound(SoundID.Item27, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.85f, -0.1f);
                 Projectile.rotation = Projectile.ai[0];
                 if(Projectile.ai[1] > Projectile.timeLeft)
                     Projectile.timeLeft = (int)Projectile.ai[1];
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void Kill(int timeLeft)
         {
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.7f, -0.2f);
+            SOTSUtils.PlaySound(SoundID.Item105, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, -0.2f);
             StarDust();
         }
     }

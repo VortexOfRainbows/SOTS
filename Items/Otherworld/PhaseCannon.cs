@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Otherworld;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,7 +31,7 @@ namespace SOTS.Items.Otherworld
             Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item92;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("FriendlyOtherworldlyBall").Type;
+            Item.shoot = ModContent.ProjectileType<FriendlyOtherworldlyBall>();
 			Item.shootSpeed = 10; //not important
 			if (!Main.dedServ)
 			{
@@ -66,7 +67,7 @@ namespace SOTS.Items.Otherworld
 				Vector2 mouse = Main.MouseWorld;
 				if (player.whoAmI == Main.myPlayer)
 				{
-					index = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<OtherworldlyTracer>(), Item.damage, Item.knockBack, player.whoAmI, 1000, -1);
+					index = Projectile.NewProjectile(player.GetSource_Misc("SOTS:HoldPhaseCannon"), player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<OtherworldlyTracer>(), Item.damage, Item.knockBack, player.whoAmI, 1000, -1);
 				}
 			}
 			else if (index < -1)
@@ -74,8 +75,8 @@ namespace SOTS.Items.Otherworld
 				index++;
 			}
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			ref int index = ref modPlayer.phaseCannonIndex;
 			if (index < 0)
@@ -88,7 +89,7 @@ namespace SOTS.Items.Otherworld
 			Vector2 mouse = Main.MouseWorld;
 			Vector2 distTo = mouse - position;
 			distTo /= 30f;
-			Projectile.NewProjectile(position.X, position.Y, distTo.X, distTo.Y, type, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, distTo.X, distTo.Y, type, damage, knockback, player.whoAmI);
 			return false;
 		}
 	}

@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override bool PreAI()
 		{
 			if (rotation == 0)
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				SOTSUtils.PlaySound(SoundID.Item50, Projectile.Center);
 
 			rotation++;
 			return true;
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, Projectile.Center);
 			for (int i = 0; i < 10; i++)
 			{
 				int num1 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<CopyIceDust>());

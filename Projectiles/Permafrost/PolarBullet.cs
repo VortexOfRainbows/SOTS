@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Permafrost
@@ -32,7 +33,7 @@ namespace SOTS.Projectiles.Permafrost
         {
             return false;
         }
-        public void TrailPreDraw(ref Color lightColor)
+        public void TrailPreDraw(Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarisTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -66,7 +67,7 @@ namespace SOTS.Projectiles.Permafrost
 							y = 0;
 						}
 						if (trailPos[k] != Projectile.Center)
-							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -84,7 +85,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw(lightColor);
 			return endHow == 0;
 		}
 		bool runOnce = true;
@@ -99,7 +100,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.ai[0]--;
 				for (int i = 0; i < 5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
 					dust.velocity += Projectile.velocity * 0.225f;
@@ -118,7 +119,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.position += Projectile.velocity * 2;
 				for (int i = 0; i < 1.5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.1f;
 					dust.velocity += Projectile.velocity * 0.5f;
@@ -129,7 +130,7 @@ namespace SOTS.Projectiles.Permafrost
 					dust.scale *= 1.4f;
 					dust.alpha = Projectile.alpha;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 11, 1.25f);
+				SOTSUtils.PlaySound(SoundID.Item11, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.25f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

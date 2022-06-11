@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil.Cil;
 using SOTS.Projectiles.Otherworld;
-using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 namespace SOTS.Items.Otherworld
 {
@@ -77,7 +74,7 @@ namespace SOTS.Items.Otherworld
 		{
 			BladePlayer modPlayer = player.GetModPlayer<BladePlayer>();
 			modPlayer.maxBlades += 9;
-			modPlayer.bladeDamage += (int)(Item.damage * (1f + (player.GetDamage(DamageClass.Melee) - 1f) + (player.allDamage - 1f)));
+			modPlayer.bladeDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
 			modPlayer.bladeGeneration++;
 		}
 	}
@@ -86,7 +83,7 @@ namespace SOTS.Items.Otherworld
 		public override bool CanUseItem(Item item, Player player)
 		{
 			BladePlayer modPlayer = player.GetModPlayer<BladePlayer>();
-			if (Item.melee == true)
+			if (item.CountsAsClass(DamageClass.Melee))
 				modPlayer.attackNum++;
 			return base.CanUseItem(item, player);
 		}
@@ -116,7 +113,7 @@ namespace SOTS.Items.Otherworld
 			{
 				bladeGeneration -= bladeGenSpeed;
 				if(maxBlades > 0 && currentBlades < maxBlades && attackNum < 10 && Player.whoAmI == Main.myPlayer)
-					Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<TwilightBlade>(), bladeDamage, 1f, Player.whoAmI);
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:BladeGenerator"),Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<TwilightBlade>(), bladeDamage, 1f, Player.whoAmI);
 			}
 			if(attackNum >= 10)
 			{

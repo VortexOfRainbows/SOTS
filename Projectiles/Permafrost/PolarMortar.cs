@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Permafrost
 			return endHow == 0;
 		}
 		Vector2[] trailPos = new Vector2[12];
-		public void TrailPreDraw(ref Color lightColor)
+		public void TrailPreDraw(Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarMortarTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Permafrost
 							y = 0;
 						}
 						if (trailPos[k] != Projectile.Center)
-							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw(lightColor);
 			return endHow == 0;
 		}
 		public override bool PreAI()
@@ -117,11 +117,11 @@ namespace SOTS.Projectiles.Permafrost
 			if (Projectile.ai[0] == -1)
 			{
 				Vector2 position = Projectile.Center;
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, position);
 				Projectile.ai[0]--;
 				for (int i = 0; i < 15 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 2.75f;
 					dust.velocity += Projectile.velocity * 0.2f;
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				for (int i = 0; i < 8.5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 1.5f;
 					dust.noGravity = true;

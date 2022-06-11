@@ -42,10 +42,9 @@ namespace SOTS.Items.Otherworld
 			Item.noUseGraphic = true;
 			Item.crit = 4;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
-			return false;
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+			velocity = Vector2.Zero;
         }
 	}
 }

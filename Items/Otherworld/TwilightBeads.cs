@@ -1,15 +1,9 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil.Cil;
-using SOTS.Projectiles;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
-using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 namespace SOTS.Items.Otherworld
 {
@@ -35,7 +29,7 @@ namespace SOTS.Items.Otherworld
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			voidPlayer.bonusVoidGain += 1f;
 			BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
-			modPlayer.soulDamage += (int)(Item.damage * (1f + (voidPlayer.voidDamage - 1f)));
+			modPlayer.soulDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
 			modPlayer.RetaliationSouls = true;
 		}
 	}
@@ -83,7 +77,7 @@ namespace SOTS.Items.Otherworld
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					Projectile.NewProjectile(Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, Player.whoAmI);
+					Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, Player.whoAmI);
 				}
 			}
 		}

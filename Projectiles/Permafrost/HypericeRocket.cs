@@ -24,10 +24,10 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			for (int i = 0; i < 2; i++)
 			{
-				int goreIndex = Gore.NewGore(new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+				int goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
 				Main.gore[goreIndex].scale = 0.55f;
 			}
 			if(Main.myPlayer == Projectile.owner)
@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Permafrost
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 perturbedSpeed = new Vector2(Projectile.velocity.X, Projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(15 - (10 * i)));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Mod.Find<ModProjectile>("IceCluster").Type, Projectile.damage, 0, Projectile.owner);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<IceCluster>(), Projectile.damage, 0, Projectile.owner);
 				}
 			}
 		}
