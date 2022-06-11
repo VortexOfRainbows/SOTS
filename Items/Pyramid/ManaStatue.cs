@@ -21,8 +21,7 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Mana Statue");		
 			AddMapEntry(new Color(0, 0, 155), name);
-            SoundType = 21;
-            SoundStyle = 2;
+            HitSound = SoundID.Tink;
             TileObjectData.addTile(Type);
 			MineResist = 2.5f;
 			DustType = 15;
@@ -46,7 +45,7 @@ namespace SOTS.Items.Pyramid
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 32, ItemID.ManaCrystal);//this defines what to drop when this tile is destroyed
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.ManaCrystal);//this defines what to drop when this tile is destroyed
         }
     }
 }

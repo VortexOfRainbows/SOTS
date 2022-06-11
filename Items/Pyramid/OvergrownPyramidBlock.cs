@@ -26,9 +26,9 @@ namespace SOTS.Items.Pyramid
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = 5;
+			Item.rare = ItemRarityID.Orange;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("OvergrownPyramidTileSafe").Type;
+			Item.createTile = ModContent.TileType<OvergrownPyramidTileSafe>();
 		}
 	}
 	public class OvergrownPyramidTileSafe : ModTile
@@ -41,11 +41,10 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
+			ItemDrop = ModContent.ItemType<OvergrownPyramidBlock>();
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
-			SoundType = 21;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = DustID.Grass;
 		}
 		public override void RandomUpdate(int i, int j)
@@ -53,8 +52,9 @@ namespace SOTS.Items.Pyramid
 			if (!Main.rand.NextBool(8))
 				if (!Main.tile[i, j - 1].HasTile)
 				{
-					WorldGen.PlaceTile(i, j - 1, Mod.Find<ModTile>("CursedGrass").Type, true, false, -1, Main.rand.Next(12));
-					Main.tile[i, j - 1].TileColor = Main.tile[i, j].TileColor;
+					Tile tile = Main.tile[i, j - 1];
+					WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CursedGrass>(), true, false, -1, Main.rand.Next(12));
+					tile.TileColor = Main.tile[i, j].TileColor;
 					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
 				}
 				else if (Main.rand.NextBool(8))
@@ -63,7 +63,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public static void GrowCurseVine(int i, int j)
 		{
-			if (!Main.tile[i, j + 1].HasTile && !Main.tile[i, j + 1].LiquidType)
+			if (!Main.tile[i, j + 1].HasTile && Main.tile[i, j+1].LiquidAmount == 0)
 			{
 				var flag9 = false;
 				for (var VineY = j; VineY > j - 10; VineY--)
@@ -86,9 +86,10 @@ namespace SOTS.Items.Pyramid
 					var num48 = j + 1;
 					if(Main.tile[num47, num48].LiquidAmount == 0)
 					{
-						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
-						Main.tile[num47, num48].HasTile;
-						Main.tile[num47, num48].TileColor = Main.tile[i, j].TileColor;
+						Tile tile = Main.tile[num47, num48];
+						tile.TileType = (ushort)ModContent.TileType<CursedVine>();
+						tile.HasTile = true;
+						tile.TileColor = Main.tile[i, j].TileColor;
 						WorldGen.SquareTileFrame(num47, num48, true);
 						if (Main.netMode == NetmodeID.Server)
 						{
@@ -125,8 +126,7 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			MinPick = 180;
-			SoundType = 21;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = DustID.Grass;
 		}
         public override void RandomUpdate(int i, int j)
@@ -134,8 +134,9 @@ namespace SOTS.Items.Pyramid
 			if (!Main.rand.NextBool(8))
 				if (!Main.tile[i, j - 1].HasTile)
 				{
-					WorldGen.PlaceTile(i, j - 1, Mod.Find<ModTile>("CursedGrass").Type, true, false, -1, Main.rand.Next(12));
-					Main.tile[i, j - 1].TileColor = Main.tile[i, j].TileColor;
+					Tile tile = Main.tile[i, j - 1];
+					WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CursedGrass>(), true, false, -1, Main.rand.Next(12));
+					tile.TileColor = Main.tile[i, j].TileColor;
 					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
 				}
 			else if (Main.rand.NextBool(8))
@@ -144,7 +145,7 @@ namespace SOTS.Items.Pyramid
         }
 		public static void GrowCurseVine(int i, int j)
 		{
-			if (!Main.tile[i, j + 1].HasTile && !Main.tile[i, j + 1].LiquidType)
+			if (!Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidAmount == 0)
 			{
 				var flag9 = false;
 				for (var VineY = j; VineY > j - 10; VineY--)
@@ -167,9 +168,10 @@ namespace SOTS.Items.Pyramid
 					var num48 = j + 1;
 					if (Main.tile[num47, num48].LiquidAmount == 0)
 					{
-						Main.tile[num47, num48].TileType = (ushort)ModContent.TileType<CursedVine>();
-						Main.tile[num47, num48].HasTile;
-						Main.tile[num47, num48].TileColor = Main.tile[i, j].TileColor;
+						Tile tile = Main.tile[num47, num48];
+						tile.TileType = (ushort)ModContent.TileType<CursedVine>();
+						tile.HasTile = true;
+						tile.TileColor = Main.tile[i, j].TileColor;
 						WorldGen.SquareTileFrame(num47, num48, true);
 						if (Main.netMode == 2)
 						{
@@ -202,8 +204,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
 			AddMapEntry(new Color(50, 115, 29));
-			SoundType = SoundID.Grass;
-			SoundStyle = 2;
+			HitSound = SoundID.Grass;
 			DustType = DustID.Grass;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
@@ -229,8 +230,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
 			AddMapEntry(new Color(50, 115, 29));
-			SoundType = SoundID.Grass;
-			SoundStyle = 2;
+			HitSound = SoundID.Grass;
 			DustType = DustID.Grass;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1); 
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.AlternateTile, TileObjectData.newTile.Width, 0);
@@ -252,7 +252,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-			if (!Main.tile[i, j - 1].HasTile || !(Main.tile[i, j - 1].TileType == Mod.Find<ModTile>("CursedVine") .Type|| Main.tile[i, j - 1].TileType == Mod.Find<ModTile>("OvergrownPyramidTile") .Type|| Main.tile[i, j - 1].TileType == Mod.Find<ModTile>("OvergrownPyramidTileSafe").Type))
+			if (!Main.tile[i, j - 1].HasTile || !(Main.tile[i, j - 1].TileType == ModContent.TileType<CursedVine>() || Main.tile[i, j - 1].TileType == ModContent.TileType<OvergrownPyramidTile>() || Main.tile[i, j - 1].TileType == ModContent.TileType<OvergrownPyramidTileSafe>()))
 				WorldGen.KillTile(i, j, false, false, false);
             return base.TileFrame(i, j, ref resetFrame, ref noBreak);
         }

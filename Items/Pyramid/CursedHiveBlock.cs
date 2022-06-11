@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs.Boss.Curse;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Pyramid
 {
@@ -23,9 +24,9 @@ namespace SOTS.Items.Pyramid
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = 5;
+			Item.rare = ItemRarityID.Blue;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("CursedHiveSafe").Type;
+			Item.createTile = ModContent.TileType<CursedHiveSafe>();
 		}
 	}
 	public class CursedHiveSafe : ModTile
@@ -39,28 +40,12 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = Mod.Find<ModItem>("CursedHiveBlock").Type;
+			ItemDrop = ModContent.ItemType<CursedHiveBlock>();
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			//DustType = ModContent.DustType<CurseDust>(); //too much light
 			DustType = 32;
-		}
-		public override bool CanExplode(int i, int j)
-		{
-			if (Main.tile[i, j ].TileType == Mod.Find<ModTile>("CursedHive").Type)
-			{
-				return true;
-			}
-			return false;
-		}
-		public override bool Slope(int i, int j)
-		{
-			if (SOTSWorld.downedCurse)
-				return true;
-
-			return false;
 		}
 	}
 	public class CursedHive : ModTile
@@ -72,37 +57,28 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = Mod.Find<ModItem>("CursedHiveBlock").Type;
+			ItemDrop = ModContent.ItemType<CursedHiveBlock>();
 			AddMapEntry(new Color(135, 120, 158));
 			MineResist = 0.5f;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			//DustType = ModContent.DustType<CurseDust>(); //too much light
 			DustType = 32;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
-			if (Main.netMode != NetmodeID.MultiplayerClient && !noItem && Main.rand.Next(24) == 0 && !fail && !effectOnly)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !noItem && Main.rand.NextBool(24) && !fail && !effectOnly)
 			{
-				Projectile.NewProjectile(new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, ModContent.ProjectileType<ReleaseWallMimic>(), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, ModContent.ProjectileType<ReleaseWallMimic>(), 0, 0, Main.myPlayer);
 				noItem = true;
 			}
-			base.KillTile(i, j, ref fail, ref effectOnly, ref noItem);
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j ].TileType == Mod.Find<ModTile>("CursedHive").Type)
-			{
-				return true;
-			}
-			return false;
+			return true;
 		}
 		public override bool Slope(int i, int j)
 		{
-			if (SOTSWorld.downedCurse)
-				return true;
-
-			return false;
+			return SOTSWorld.downedCurse;
 		}
 	}
 	public class ReleaseWallMimic : ModProjectile
@@ -129,22 +105,24 @@ namespace SOTS.Items.Pyramid
 		{
 			if(Projectile.ai[0] == -1)
 			{
-				if (!NPC.AnyNPCs(Mod.Find<ModNPC>("PharaohsCurse").Type))
-					if (Main.netMode != 1)
+				if (!NPC.AnyNPCs(ModContent.NPCType<PharaohsCurse>()))
+				{
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						int npc1 = NPC.NewNPC((int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, ModContent.NPCType<PharaohsCurse>());
+						int npc1 = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, ModContent.NPCType<PharaohsCurse>());
 						Main.npc[npc1].netUpdate = true;
 					}
+				}
 			}
 			else
             {
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					int npc1 = NPC.NewNPC((int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, Mod.Find<ModNPC>("WallMimic").Type);
+					int npc1 = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, ModContent.NPCType<NPCs.WallMimic>());
 					Main.npc[npc1].netUpdate = true;
 					Main.npc[npc1].ai[2] = 900;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				SOTSUtils.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				int x2 = (int)(Projectile.Center.X / 16f);
 				int y2 = (int)(Projectile.Center.Y / 16f);
 				for (int i = x2 - 1; i <= x2 + 1; i++)

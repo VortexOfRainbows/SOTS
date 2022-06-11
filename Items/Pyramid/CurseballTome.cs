@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Pyramid;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Pyramid
 {
@@ -34,17 +35,17 @@ namespace SOTS.Items.Pyramid
 			Item.reuseDelay = 22;
 		}
 		int counter = 0;
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			counter++;
 			int modN = counter % 5 - 2;
 			float scaleOff = 0.25f * modN;
-			Projectile.NewProjectile(position.X, position.Y, speedX + Main.rand.NextFloat(-1f, 1f), speedY + Main.rand.NextFloat(-1f, 1f), type, damage, knockBack, player.whoAmI, 0, scaleOff + Main.rand.NextFloat(-0.15f, 0.15f));
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X + Main.rand.NextFloat(-1f, 1f), velocity.Y + Main.rand.NextFloat(-1f, 1f), type, damage, knockback, player.whoAmI, 0, scaleOff + Main.rand.NextFloat(-0.15f, 0.15f));
 			return false;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "CursedMatter", 6).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<CursedMatter>(6).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
 		}
 		/*
 		int index1 = -1;

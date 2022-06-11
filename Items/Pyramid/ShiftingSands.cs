@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
+using SOTS.Projectiles;
 
 namespace SOTS.Items.Pyramid
 {
@@ -28,17 +30,17 @@ namespace SOTS.Items.Pyramid
             Item.noMelee = true; 
             Item.autoReuse = true;
             Item.shootSpeed = 2f; 
-			Item.shoot = Mod.Find<ModProjectile>("SandPuff").Type;
+			Item.shoot = ModContent.ProjectileType<SandPuff>();
 			Item.mana = 16;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float numberProjectiles = 12; 
             float rotation = MathHelper.ToRadians(30);
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(rotation * i);
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+                Vector2 perturbedSpeed = velocity.RotatedBy(rotation * i);
+                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
             }
             return false;
 		}

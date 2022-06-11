@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -25,7 +26,7 @@ namespace SOTS.Items.Pyramid
             Item.noMelee = true;
             Item.knockBack = 1;
             Item.value = Item.sellPrice(0, 2, 25, 0);
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item44;
             Item.shoot = ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
 			Item.buffType = ModContent.BuffType<Buffs.MinionBuffs.CursedBlade>();
@@ -34,11 +35,11 @@ namespace SOTS.Items.Pyramid
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 8).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			player.AddBuff(Item.buffType, 2);
-			position = Main.MouseWorld;
-			return true;
+            player.SpawnMinionOnCursor(source, player.whoAmI, type, damage, knockback);
+			return false;
 		}
 	}
 }

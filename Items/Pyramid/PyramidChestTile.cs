@@ -28,8 +28,8 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-			TileObjectData.newTile.HookCheck = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
-			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
+			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
+			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
 			TileObjectData.newTile.AnchorInvalidTiles = new int[] { 127 };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
@@ -41,8 +41,8 @@ namespace SOTS.Items.Pyramid
 			DustType = 7;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Containers };
-			chest = "Pyramid Chest";
-			ChestDrop = Mod.Find<ModItem>("PyramidChest").Type;
+			ContainerName.SetDefault("Pyramid Chest");
+			ChestDrop = ModContent.ItemType<PyramidChest>();
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
@@ -80,11 +80,11 @@ namespace SOTS.Items.Pyramid
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, ChestDrop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
 			Chest.DestroyChest(i, j);
 		}
-		public override void RightClick(int i, int j)
-		{
+        public override bool RightClick(int i, int j)
+        {
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
 			Main.mouseRightRelease = false;
@@ -153,12 +153,8 @@ namespace SOTS.Items.Pyramid
 					Recipe.FindRecipes();
 				}
 			}
-				
-				
-			
-			
+			return true;
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;

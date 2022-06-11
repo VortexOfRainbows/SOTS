@@ -126,12 +126,11 @@ namespace SOTS.Items.Pyramid
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			ItemDrop = Mod.Find<ModItem>("RoyalRubyShard").Type;
+			ItemDrop = ModContent.ItemType<RoyalRubyShard>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Keystone Shard");
 			AddMapEntry(new Color(211, 69, 74), name);
-			SoundType = 2;
-			SoundStyle = 27;
+			HitSound = SoundID.Item27;
 			DustType = 12;
 		}
         public override bool CanExplode(int i, int j)
@@ -217,7 +216,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public static bool TileIsCapable(Tile tile)
 		{
-			return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.TileType && !tile.IsActuated;
+			return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.IsHalfBlock && !tile.IsActuated;
 		}
 		public static bool TileIsCapable(int i, int j)
         {

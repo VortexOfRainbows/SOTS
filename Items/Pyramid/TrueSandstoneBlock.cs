@@ -24,7 +24,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Yellow;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("TrueSandstoneTile").Type;
+			Item.createTile = ModContent.TileType<TrueSandstoneTile>();
 			Item.expert = true;
 		}
 	}
@@ -43,8 +43,7 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(210, 160, 95));
 			MineResist = 5.0f;
 			MinPick = 250;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)

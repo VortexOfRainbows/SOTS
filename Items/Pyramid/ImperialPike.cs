@@ -1,8 +1,7 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Items.Pyramid
 {
@@ -27,7 +26,7 @@ namespace SOTS.Items.Pyramid
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
-			Item.shoot = Mod.Find<ModProjectile>("PyramidSpear").Type;
+			Item.shoot = ModContent.ProjectileType<PyramidSpear>();
 			Item.shootSpeed = 5.5f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;

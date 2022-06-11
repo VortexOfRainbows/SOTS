@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS;
+using SOTS.Dusts;
+using SOTS.Projectiles.Pyramid;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -347,14 +349,14 @@ namespace SOTS.Items.Pyramid
 			}
 			else if (type == -1 && alpha1 > 0 && Main.myPlayer == whoAmI)
 			{
-				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
+				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, ModContent.DustType<ShortlivedCurseDust>());
 				Main.dust[num].velocity *= 0.1f;
 				Main.dust[num].alpha = 255 - (alpha1 < 45 ? alpha1 : 45);
 				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 			}
 			else if (type == 1 && alpha2 > 0 && Main.myPlayer == whoAmI)
 			{
-				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
+				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, ModContent.DustType<ShortlivedCurseDust>());
 				Main.dust[num].velocity *= 0.1f;
 				Main.dust[num].alpha = 255 - (alpha2 < 45 ? alpha2 : 45);
 				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
@@ -379,7 +381,7 @@ namespace SOTS.Items.Pyramid
 			player.immuneTime = 30;
 			voidPlayer.voidMeter -= value / damageMult - 5;
 			if (Main.myPlayer == player.whoAmI)
-				Projectile.NewProjectile(npc.Center, Vector2.Zero, Mod.Find<ModProjectile>("DarkEyeDamage").Type, (int)(1.25f * value * voidPlayer.voidDamage), 0, Main.myPlayer);
+				Projectile.NewProjectile(player.GetSource_OnHit(npc), npc.Center, Vector2.Zero, ModContent.ProjectileType<DarkEyeDamage>(), (int)(1.25f * value * voidPlayer.voidDamage), 0, Main.myPlayer);
 		}
 		public void teleportEffect(Player player)
 		{
@@ -463,7 +465,7 @@ namespace SOTS.Items.Pyramid
 						{
 							teleportEffect(player);
 							if (Main.myPlayer == player.whoAmI)
-								Projectile.NewProjectile(player.Center, Vector2.Zero, Mod.Find<ModProjectile>("multiplayerDarkEye").Type, alpha2, rotation, Main.myPlayer, 1, alpha1);
+								Projectile.NewProjectile(player.GetSource_Misc("SOTS:DarkEyeMultiplayerProjectile"), player.Center, Vector2.Zero, ModContent.ProjectileType<multiplayerDarkEye>(), alpha2, rotation, Main.myPlayer, 1, alpha1);
 							if (npcPosStore2 != player.Center)
 							{
 								for (int k = 0; k < Main.npc.Length; k++)
@@ -504,7 +506,7 @@ namespace SOTS.Items.Pyramid
 						{
 							teleportEffect(player);
 							if (Main.myPlayer == player.whoAmI)
-								Projectile.NewProjectile(player.Center, Vector2.Zero, Mod.Find<ModProjectile>("multiplayerDarkEye").Type, alpha2, rotation, Main.myPlayer, -1, alpha1);
+								Projectile.NewProjectile(player.GetSource_Misc("SOTS:DarkEyeMultiplayerProjectile"), player.Center, Vector2.Zero, ModContent.ProjectileType<multiplayerDarkEye>(), alpha2, rotation, Main.myPlayer, -1, alpha1);
 							if (npcPosStore1 != player.Center)
 							{
 								for (int k = 0; k < Main.npc.Length; k++)
@@ -592,8 +594,7 @@ namespace SOTS.Items.Pyramid
 			for (int i = 3; i < 8 + Player.extraAccessorySlots; i++)
 			{
 				Item item = Player.armor[i];
-
-				if (Item.type == ItemType<TheDarkEye>())
+				if (item.type == ItemType<TheDarkEye>())
 				{ 
 					dashAccessoryEquipped = true;
 				}

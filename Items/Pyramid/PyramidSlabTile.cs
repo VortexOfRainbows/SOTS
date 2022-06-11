@@ -21,8 +21,7 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(181, 164, 88));
 			MineResist = 3.5f;
 			MinPick = 110;
-            SoundType = SoundID.Tink;
-            SoundStyle = 2;
+            HitSound = SoundID.Tink;
 			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)
@@ -31,9 +30,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool Slope(int i, int j)
 		{
-			if(SOTSWorld.downedCurse)
-				return true;
-			return false;
+			return SOTSWorld.downedCurse;
 		}
 	}
 }

@@ -1,6 +1,8 @@
 using Terraria;
 using Terraria.ID;
 using SOTS.Void;
+using Terraria.ModLoader;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Items.Pyramid
 {
@@ -26,7 +28,7 @@ namespace SOTS.Items.Pyramid
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;            
 			Item.noMelee = false;
-			Item.shoot = Mod.Find<ModProjectile>("Bloodaxe").Type;  
+			Item.shoot = ModContent.ProjectileType<Bloodaxe>();  
             Item.shootSpeed = 13.5f;
 		}
 		public override int GetVoid(Player player)

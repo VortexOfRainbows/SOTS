@@ -35,8 +35,7 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(115, 0, 0), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 		}
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -146,9 +145,9 @@ namespace SOTS.Items.Pyramid
 							active = true;
 						}
 					}
-					Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
+					Projectile.NewProjectile(new EntitySource_Misc("SOTS:RubyKeystoneWaves"), new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
 					if (!active)
-						Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
+						Projectile.NewProjectile(new EntitySource_Misc("SOTS:RubyKeystoneWaves"), new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
 				}
 			}
 		}
@@ -167,7 +166,7 @@ namespace SOTS.Items.Pyramid
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = ModContent.ItemType<RubyKeystone>();
-			Item.NewItem(i * 16, j * 16, 80, 80, drop);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 80, 80, drop);
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
@@ -316,7 +315,7 @@ namespace SOTS.Items.Pyramid
 					runOnce2 = false;
 					for(int amt = totalSpawns; amt >= 0; amt--)
 					{
-						Projectile.NewProjectile(new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), 0, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), 0, 0, Main.myPlayer);
 					}
 				}
 			Projectile.timeLeft = 7200;
@@ -341,10 +340,10 @@ namespace SOTS.Items.Pyramid
 
 							}
 						}
-						int item = Item.NewItem((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<RubyKeystone>(), 1, false, 0, true);
+						int item = Item.NewItem(Projectile.GetSource_FromThis(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<RubyKeystone>(), 1, false, 0, true);
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 					}
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.10f, -0.1f);
+					SOTSUtils.PlaySound(SoundID.Shatter, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.10f, -0.1f);
 					Projectile.Kill();
 					Projectile.active = false;
 				}

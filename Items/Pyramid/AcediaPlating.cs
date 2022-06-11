@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Cyan;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("AcediaPlatingTile").Type;
+			Item.createTile = ModContent.TileType<AcediaPlatingTile>();
 		}
 	}
 	public class AcediaPlatingTile : ModTile
@@ -66,13 +67,12 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = Mod.Find<ModItem>("AcediaPlating").Type;
+			ItemDrop = ModContent.ItemType<AcediaPlating>();
 			AddMapEntry(new Color(44, 12, 62));
 			MineResist = 2f;
 			MinPick = 250;
-			SoundType = 21;
-			SoundStyle = 2;
-			DustType = Mod.Find<ModDust>("AcedianDust").Type;
+			HitSound = SoundID.Tink;
+			DustType = ModContent.DustType<AcedianDust>();
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override bool CanExplode(int i, int j)

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Furniture.AncientGold;
 using SOTS.Items.Potions;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Pyramid;

@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.DataStructures;
@@ -19,7 +15,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-
 			Item.width = 26;
 			Item.height = 30;
             Item.value = Item.sellPrice(0, 0, 7, 50);

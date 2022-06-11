@@ -3,7 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
-
+using Terraria.DataStructures;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Items.Pyramid
 {
@@ -26,7 +27,7 @@ namespace SOTS.Items.Pyramid
             Item.noMelee = true;
             Item.knockBack = 3f;
             Item.value = Item.sellPrice(0, 5, 25, 0);
-            Item.rare = 6;
+            Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item41;
             Item.autoReuse = false;
             Item.shoot = 10; //not really important 
@@ -35,14 +36,14 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.PhoenixBlaster, 1).AddIngredient(null, "RoyalMagnum", 1).AddIngredient(null, "CursedMatter", 4).AddIngredient(null, "SoulResidue", 12).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ItemID.PhoenixBlaster, 1).AddIngredient<RoyalMagnum>(1).AddIngredient<CursedMatter>(4).AddIngredient<SoulResidue>(12).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override Vector2? HoldoutOffset()
 		{
 			return new Vector2(-0.25f, 0);
 		}
 		int shotNum = 0;
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			Item.reuseDelay = 0;
 			shotNum++;
@@ -52,9 +53,9 @@ namespace SOTS.Items.Pyramid
 			}
 			if(shotNum >= 6)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38, (int)(position.X), (int)(position.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38, position);
 				shotNum = 0;
-				Projectile.NewProjectile(position.X, position.Y, speedX * 0.9f, speedY * 0.9f, Mod.Find<ModProjectile>("CurseSingularity").Type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position, velocity * 0.9f, ModContent.ProjectileType<CurseSingularity>(), damage, knockback, player.whoAmI);
 				return false;
 			}
 			return true; 

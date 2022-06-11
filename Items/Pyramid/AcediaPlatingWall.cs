@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 
 namespace SOTS.Items.Pyramid
 {
@@ -29,7 +30,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(4).AddIngredient(null, "AcediaPlating", 1).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(4).AddIngredient<AcediaPlating>(1).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class AcediaPlatingWallWall : ModWall
@@ -38,8 +39,8 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
-			DustType = Mod.Find<ModDust>("AcedianDust").Type;
-			ItemDrop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
+			DustType = ModContent.DustType<AcedianDust>(); 
+			ItemDrop = ModContent.ItemType<AcediaPlatingWall>();
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}
@@ -49,8 +50,8 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
-			DustType = Mod.Find<ModDust>("AcedianDust").Type;
-			ItemDrop = Mod.Find<ModItem>("AcediaPlatingWall").Type;
+			DustType = ModContent.DustType<AcedianDust>();
+			ItemDrop = ModContent.ItemType<AcediaPlatingWall>();
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}

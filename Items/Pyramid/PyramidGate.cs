@@ -30,7 +30,7 @@ namespace SOTS.Items.Pyramid
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Orange;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<PyramidGateTile>();
@@ -171,7 +171,7 @@ namespace SOTS.Items.Pyramid
 			if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
 				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 			Vector2 center = Projectile.Center + new Vector2(0, -16);
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);
+			SOTSUtils.PlaySound(SoundID.Item62, (int)center.X, (int)center.Y, 1.25f, -0.5f);
 			if(Main.netMode != NetmodeID.Server)
 			{
 				for (int k = 0; k < 16; k++)

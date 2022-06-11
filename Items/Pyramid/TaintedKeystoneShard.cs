@@ -125,8 +125,7 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Tainted Keystone Shard");
 			AddMapEntry(new Color(24, 24, 24), name);
-			SoundType = 2;
-			SoundStyle = 27;
+			HitSound = SoundID.Item27;
 			DustType = 195;
 		}
         public override bool CanExplode(int i, int j)
@@ -211,7 +210,7 @@ namespace SOTS.Items.Pyramid
 		}
 		private bool TileIsCapable(Tile tile)
         {
-			return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.TileType && !tile.IsActuated;
+			return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.IsHalfBlock && !tile.IsActuated;
 		}
 		private bool TileIsCapable(int i, int j)
         {

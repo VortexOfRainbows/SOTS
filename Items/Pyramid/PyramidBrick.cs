@@ -26,7 +26,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("PyramidBrickTile").Type;
+			Item.createTile = ModContent.TileType<PyramidBrickTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -50,8 +50,7 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(203, 191, 112));
 			MineResist = 1.0f;
 			MinPick = 0;
-			SoundType = SoundID.Tink;
-			SoundStyle = 2;
+			HitSound = SoundID.Tink;
 			DustType = 32;
 		}
 	}

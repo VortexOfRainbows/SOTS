@@ -23,9 +23,9 @@ namespace SOTS.Items.Pyramid
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Orange;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("CursedTumorTile").Type;
+			Item.createTile = ModContent.TileType<CursedTumorTile>();
 		}
 	}
 	public class CursedTumorTile : ModTile
@@ -42,8 +42,7 @@ namespace SOTS.Items.Pyramid
 			ItemDrop = ModContent.ItemType<CursedTumor>();
 			AddMapEntry(new Color(105, 75, 146));
 			MineResist = 1.5f;
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			DustType = ModContent.DustType<CurseDust3>();
 		}
         public override void WalkDust(ref int DustType, ref bool makeDust, ref Color color)

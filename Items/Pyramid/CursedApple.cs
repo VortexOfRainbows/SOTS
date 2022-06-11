@@ -55,14 +55,14 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Strange Fruit");
 			AddMapEntry(new Color(185, 20, 40), name);
 			TileObjectData.addTile(Type);
-			SoundType = SoundID.Grass;
+			HitSound = SoundID.Grass;
 			MineResist = 0.5f;
 			DustType = DustID.Grass;
 
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, Mod.Find<ModItem>("CursedApple").Type);//this defines what to drop when this tile is destroyed
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<CursedApple>());//this defines what to drop when this tile is destroyed
 		}
 	}
 }

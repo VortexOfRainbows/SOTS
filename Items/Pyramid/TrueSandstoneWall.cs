@@ -22,9 +22,9 @@ namespace SOTS.Items.Pyramid
 			Item.useAnimation = 15;
 			Item.useTime = 7;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = 5;
+			Item.rare = ItemRarityID.Orange;
 			Item.consumable = true;
-			Item.createWall = Mod.Find<ModWall>("TrueSandstoneWallWall").Type;
+			Item.createWall = ModContent.WallType<TrueSandstoneWallWall>();
 			Item.expert = true;
 		}
 	}
@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.wallHouse[Type] = false;
 			DustType = 32;
-			ItemDrop = Mod.Find<ModItem>("TrueSandstoneWall").Type;
+			ItemDrop = ModContent.ItemType<TrueSandstoneWall>();
 			AddMapEntry(new Color(155, 110, 55));
 		}
 		public override bool CanExplode(int i, int j)

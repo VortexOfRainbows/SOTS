@@ -42,7 +42,6 @@ namespace SOTS.Items.Pyramid
 			MineResist = 1.0f;
 			MinPick = 0;
 			HitSound = SoundID.Tink;
-			//SoundStyle = 2;
 			DustType = DustID.GoldCoin;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}

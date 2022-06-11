@@ -1,3 +1,4 @@
+using SOTS.Projectiles.Pyramid;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,25 +14,22 @@ namespace SOTS.Items.Pyramid
 			Item.width = 28;
 			Item.height = 14;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
-			Item.rare = 4;
+			Item.rare = ItemRarityID.Orange;
 			Item.defense = 3;
 		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Patch Leather Hat");
 			Tooltip.SetDefault("Increases max minions by 1");
+			ArmorIDs.Head.Sets.DrawHatHair[Type] = true;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == Mod.Find<ModItem>("PatchLeatherTunic") .Type&& legs.type == Mod.Find<ModItem>("PatchLeatherPants").Type;
+            return body.type == ModContent.ItemType<PatchLeatherTunic>() && legs.type == ModContent.ItemType<PatchLeatherPants>();
         }
 		int Probe = -1;
 		int Probe2 = -1;
 		int Probe3 = -1;
-		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-		{
-			drawAltHair = true;
-		}
 		public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = "Summons a flock of flying snakes to assist in combat";
@@ -39,7 +37,7 @@ namespace SOTS.Items.Pyramid
 			for(int i = 0; i < 1000; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if(Main.player[proj.owner] == player && proj.type == Mod.Find<ModProjectile>("FlyingSnake") .Type&& proj.active)
+				if(Main.player[proj.owner] == player && proj.type == ModContent.ProjectileType<FlyingSnake>() && proj.active)
 				{
 					counter++;
 				}
@@ -52,35 +50,36 @@ namespace SOTS.Items.Pyramid
 					Probe2 = -1;
 					Probe3 = -1;
 				}
+				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 14);
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 1);
+					Probe = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 1);
 				}
-				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != Mod.Find<ModProjectile>("FlyingSnake").Type)
+				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != ModContent.ProjectileType<FlyingSnake>())
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 1);
+					Probe = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 1);
 				}
 
 				Main.projectile[Probe].timeLeft = 6;
 
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 2);
+					Probe2 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 2);
 				}
-				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != Mod.Find<ModProjectile>("FlyingSnake").Type)
+				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != ModContent.ProjectileType<FlyingSnake>())
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 2);
+					Probe2 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 2);
 				}
 
 				Main.projectile[Probe2].timeLeft = 6;
 
 				if (Probe3 == -1)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 3);
+					Probe3 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 3);
 				}
-				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != Mod.Find<ModProjectile>("FlyingSnake").Type)
+				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != ModContent.ProjectileType<FlyingSnake>())
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, Mod.Find<ModProjectile>("FlyingSnake").Type, (int)(14 * (1 + (player.GetDamage(DamageClass.Summon) - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, 3);
+					Probe3 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 3);
 				}
 				Main.projectile[Probe3].timeLeft = 6;
 			}

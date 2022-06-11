@@ -18,7 +18,7 @@ namespace SOTS.Items.Pyramid
             Item.width = 38;     
             Item.height = 48;   
             Item.value = Item.sellPrice(0, 5, 0, 0);
-			Item.rare = ItemRarityID.LightPurple;
+			Item.rare = ItemRarityID.LightRed;
 			Item.accessory = true;
 			Item.expert = true;
 		}

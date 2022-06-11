@@ -45,25 +45,19 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
 			ItemDrop = ModContent.ItemType<CursedTumorWall>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			AddMapEntry(new Color(49, 33, 75));
 		}
 	}
 	public class UnsafeCursedTumorWallWall : ModWall
 	{
-        public override bool Autoload(ref string name, ref string texture)
-        {
-			texture = "SOTS/Items/Pyramid/PyramidWalls/CursedTumorWallWall";
-			return base.Autoload(ref name, ref texture);
-        }
+        public override string Texture => "SOTS/Items/Pyramid/PyramidWalls/CursedTumorWallWall"; 
         public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<CurseDust3>();
 			ItemDrop = ModContent.ItemType<CursedTumorWall>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			AddMapEntry(new Color(49, 33, 75));
 		}
 	}

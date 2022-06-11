@@ -57,6 +57,10 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+6/10/22
+1. Pyramid item folder
+2. 1173 -> 953
+
 6/8/22 & 6/9/22
 1. Items again. Mostly Otherworld FromChest Folder.
 2. Did not change any player layers yet, as I have yet to learn how to.

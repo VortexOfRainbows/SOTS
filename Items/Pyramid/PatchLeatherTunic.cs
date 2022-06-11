@@ -12,21 +12,19 @@ namespace SOTS.Items.Pyramid
 			Item.width = 28;
 			Item.height = 18;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
-			Item.rare = 4;
+			Item.rare = ItemRarityID.Orange;
 			Item.defense = 4;
 		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Patch Leather Tunic");
 			Tooltip.SetDefault("Increases minion damage by 10%\nGrants immunity to venom and poison debuffs");
+			ArmorIDs.Body.Sets.HidesHands[Type] = true;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return head.type == Mod.Find<ModItem>("PatchLeatherHat") .Type&& legs.type == Mod.Find<ModItem>("PatchLeatherPants").Type;
+            return head.type == ModContent.ItemType<PatchLeatherHat>() && legs.type == ModContent.ItemType<PatchLeatherPants>();
         }
-		public override void DrawHands(ref bool drawHands, ref bool drawArms) {
-			drawHands = true;
-		}
 		public override void UpdateEquip(Player player)
 		{
 			player.GetDamage(DamageClass.Summon) += 0.10f;

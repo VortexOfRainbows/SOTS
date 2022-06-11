@@ -12,7 +12,7 @@ namespace SOTS.Items.Pyramid
 			Item.width = 22;
 			Item.height = 18;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
-			Item.rare = 4;
+			Item.rare = ItemRarityID.Orange;
 			Item.defense = 3;
 		}
 		public override void SetStaticDefaults()
@@ -22,7 +22,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == Mod.Find<ModItem>("PatchLeatherTunic") .Type&& head.type == Mod.Find<ModItem>("PatchLeatherHat").Type;
+            return body.type == ModContent.ItemType<PatchLeatherTunic>() && head.type == ModContent.ItemType<PatchLeatherHat>();
         }
 		public override void UpdateEquip(Player player)
 		{

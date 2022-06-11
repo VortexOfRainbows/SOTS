@@ -53,11 +53,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	}
 	public class UnsafeOvergrownPyramidWallWall : ModWall
 	{
-		public override bool Autoload(ref string name, ref string texture)
-		{
-			texture = "SOTS/Items/Pyramid/PyramidWalls/OvergrownPyramidWallWall";
-			return base.Autoload(ref name, ref texture);
-		}
+        public override string Texture => "SOTS/Items/Pyramid/PyramidWalls/OvergrownPyramidWallWall";
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;

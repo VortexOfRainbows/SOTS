@@ -24,7 +24,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 2.5f;
 			Item.value = Item.sellPrice(0, 0, 75, 0);
-			Item.rare = 6;
+			Item.rare = ItemRarityID.Orange;
 			Item.noMelee = true;
 			Item.UseSound = SoundID.Item5;
 			Item.autoReuse = false;            
@@ -38,12 +38,11 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "Snakeskin", 18).AddIngredient(ItemID.Leather, 4).AddIngredient(ItemID.WoodenBow, 1).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<Snakeskin>(18).AddIngredient(ItemID.Leather, 4).AddIngredient(ItemID.WoodenBow, 1).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, Mod.Find<ModProjectile>("Snake").Type, damage, knockBack, player.whoAmI);
-			return false; 
-		}
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+			type = ModContent.ProjectileType<Projectiles.Pyramid.Snake>();
+        }
 	}
 }

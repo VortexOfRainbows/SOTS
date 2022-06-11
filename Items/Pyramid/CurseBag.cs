@@ -30,8 +30,8 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void OpenBossBag(Player player)
 		{
-			player.QuickSpawnItem(ModContent.ItemType<HeartInAJar>());
-			player.QuickSpawnItem(ModContent.ItemType<CursedMatter>(),Main.rand.Next(14, 25));
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<HeartInAJar>());
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), Main.rand.Next(14, 25));
 		}
 	}
 }

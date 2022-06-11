@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -87,8 +88,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(new Color(156, 137, 78));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = 32;
-			SoundType = SoundID.Dig;
-			SoundStyle = 0;
+			HitSound = SoundID.Dig;
 			MineResist = 0.1f;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -117,8 +117,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(new Color(78, 55, 108));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -147,8 +146,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(new Color(156, 137, 78));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = 32;
-			SoundType = SoundID.Dig;
-			SoundStyle = 0;
+			HitSound = SoundID.Dig;
 			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -177,8 +175,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(new Color(78, 55, 108));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -206,8 +203,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(new Color(78, 55, 108));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -235,8 +231,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(new Color(156, 137, 78));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = 32;
-			SoundType = SoundID.Dig;
-			SoundStyle = 0;
+			HitSound = SoundID.Dig;
 			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -329,8 +324,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			AddMapEntry(new Color(78, 55, 108));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			SoundType = SoundID.NPCHit;
-			SoundStyle = 1;
+			HitSound = SoundID.NPCHit1;
 			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -340,25 +334,23 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			if(frameX == 54)
-				Item.NewItem(i * 16, j * 16, 48, 32, ModContent.ItemType<RoyalRubyShard>(), 3);
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<RoyalRubyShard>(), 3);
 			if (frameX == 108)
-				Item.NewItem(i * 16, j * 16, 48, 32, ModContent.ItemType<RoyalRubyShard>(), 4);
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<RoyalRubyShard>(), 4);
 		}
         public override bool KillSound(int i, int j, bool fail)
 		{
 			Tile tile = Main.tile[i, j];
-			int SoundType = 2;
-			int SoundStyle = 27;
 			if (tile.TileFrameX >= 108)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-				Terraria.Audio.SoundEngine.PlaySound(SoundType, (int)pos.X, (int)pos.Y, SoundStyle, 0.9f, 0.1f);
+				SOTSUtils.PlaySound(SoundID.Item27, (int)pos.X, (int)pos.Y, 0.9f, 0.1f);
 				return true;
 			}
 			if (tile.TileFrameX >= 54)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-				Terraria.Audio.SoundEngine.PlaySound(SoundType, (int)pos.X, (int)pos.Y, SoundStyle, 0.9f, 0.1f);
+				SOTSUtils.PlaySound(SoundID.Item27, (int)pos.X, (int)pos.Y, 0.9f, 0.1f);
 				return true;
 			}
 			return true;
