@@ -59,7 +59,8 @@ Low Priority Objectives:
 
 6/10/22
 1. Pyramid item folder
-2. 1173 -> 953
+2. 1173 -> 953 -> 911
+3. Inferno projectile folder
 
 6/8/22 & 6/9/22
 1. Items again. Mostly Otherworld FromChest Folder.

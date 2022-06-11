@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Inferno
             if (Projectile.timeLeft > trailLength)
             {
                 if (Projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 Projectile.timeLeft = trailLength;
                 Projectile.netUpdate = true;
                 for(int i = 0; i < 20; i++)
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Inferno
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (Projectile.penetrate > 2)
-                Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), Projectile.damage, 0, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), Projectile.damage, 0, Projectile.owner);
             else
                 Collide();
         }
@@ -132,7 +132,7 @@ namespace SOTS.Projectiles.Inferno
                 return false;
             Color color = Color.White;
             color.A = 0;
-            DrawTrail(spriteBatch);
+            DrawTrail();
             if(Projectile.timeLeft > trailLength)
             {
                 Main.spriteBatch.End();
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Inferno
             }
             return false;
         }
-        public void DrawTrail(SpriteBatch spriteBatch)
+        public void DrawTrail()
         {
             Color color = new Color(157, 93, 213, 40) * 0.8f;
             Vector2 drawOrigin = new Vector2(50, 50);
@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Inferno
                     float scale = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
                     Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + Projectile.Size / 2 + new Vector2(0f, Projectile.gfxOffY);
                     float direction = (original - Projectile.oldPos[k]).ToRotation();
-                    spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, drawPos, null, color * scale, direction, drawOrigin, (0.1f + 0.3f * scale) * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, drawPos, null, color * scale, direction, drawOrigin, (0.1f + 0.3f * scale) * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
                     original = Projectile.oldPos[k];
                 }
             }
@@ -237,7 +237,7 @@ namespace SOTS.Projectiles.Inferno
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             for(int i = 0; i < 2; i++)
-              spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, Projectile.rotation, new Vector2(texture.Width/2, texture.Height/2), Projectile.scale / 2f * sin, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, Projectile.rotation, new Vector2(texture.Width/2, texture.Height/2), Projectile.scale / 2f * sin, SpriteEffects.None, 0f);
             return false;
         }
     }

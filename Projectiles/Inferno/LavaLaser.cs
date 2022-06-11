@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			TrailPreDraw(spriteBatch);
+			TrailPreDraw(Main.spriteBatch);
 			return false;
 		}
 		bool hasHit = false;

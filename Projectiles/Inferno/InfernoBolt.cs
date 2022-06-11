@@ -47,9 +47,9 @@ namespace SOTS.Projectiles.Inferno
             if (runOnce)
             {
                 if(!other)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 34, 0.9f, 0.5f);
+                    SOTSUtils.PlaySound(SoundID.Item34, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, 0.5f);
                 else if(Projectile.ai[1] == -2)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, 0.2f);
+                    SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.2f);
                 if (Main.netMode != NetmodeID.Server)
                     SOTS.primitives.CreateTrail(new StarTrail(Projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
                 runOnce = false;

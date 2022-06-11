@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Inferno
 			for (int k = 0; k < Projectile.oldPos.Length; k++) {
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color * 0.8f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color * 0.8f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Inferno
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("SharangaBlast").Type, Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlast>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Inferno
 			target.AddBuff(BuffID.OnFire, 60, false);
 			if(Projectile.owner == Main.myPlayer && Projectile.penetrate != 1)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("SharangaBlast").Type, Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlast>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) 

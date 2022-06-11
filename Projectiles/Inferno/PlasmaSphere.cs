@@ -64,10 +64,10 @@ namespace SOTS.Projectiles.Inferno
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix); 
 			color = VoidPlayer.Inferno1 * 1.1f;
 			color.A = 0;
-			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
 			color = VoidPlayer.Inferno2 * 1.1f;
 			color.A = 0;
-			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool ShouldUpdatePosition() 
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Inferno
 		float veloScale = 0;
         public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.9f, -0.5f);
+			SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, -0.5f);
 			for (int i = 30; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
@@ -131,11 +131,11 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.ai[1]++;
 				if(Projectile.ai[1] > Projectile.ai[0] && totalCharges < 80)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, -0.1f);
+					SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1f, -0.1f);
 					if (Main.myPlayer == player.whoAmI)
 					{
 						Item item = player.HeldItem;
-						VoidItem vItem = Item.ModItem as VoidItem;
+						VoidItem vItem = item.ModItem as VoidItem;
 						if(vItem != null)
 							vItem.DrainMana(player);
 					}
@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.localNPCHitCooldown = 5;
 				if (Projectile.ai[0] >= 0)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.9f, -0.4f);
+					SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, -0.4f);
 					Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * (10 + (float)Math.Sqrt(totalCharges * 1.3f + 1f));
 					Projectile.ai[0] = -1;
 				}

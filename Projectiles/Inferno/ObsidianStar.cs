@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(runOnce)
             {
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item20, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				SOTSUtils.PlaySound(SoundID.Item20, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				runOnce = false;
             }
 			//Projectile.rotation += 1f;
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HellfuryCrush").Type, Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<HellfuryCrush>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 	}

@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Projectiles.Celestial;
 using SOTS.Dusts;
+using SOTS.WorldgenHelpers;
 
 namespace SOTS.Projectiles.Inferno
 {    
@@ -103,7 +104,7 @@ namespace SOTS.Projectiles.Inferno
 			else if(counter >= 30)
 			{
 				if(counter == 30)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.65f, -0.15f);
+					SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.65f, -0.15f);
 				int currentCounter = counter - 30;
 				Projectile.friendly = true;
 				int baseRate = 90;

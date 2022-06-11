@@ -11,6 +11,7 @@ using Terraria.ID;
 using SOTS.NPCs;
 using SOTS.Void;
 using SOTS.Dusts;
+using SOTS.Common.GlobalNPCs;
 
 namespace SOTS.Projectiles.Inferno
 {    
