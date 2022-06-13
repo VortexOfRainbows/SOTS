@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Buffs;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -89,8 +90,8 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.8f);
-			if (Main.netMode != 1)
+			SOTSUtils.PlaySound(Terraria.ID.SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f);
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<BabyLaser>(), Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
 			}

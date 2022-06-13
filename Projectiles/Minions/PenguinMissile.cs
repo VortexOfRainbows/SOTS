@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Projectiles.Inferno;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -44,24 +45,24 @@ namespace SOTS.Projectiles.Minions
 				int speedX = Main.rand.Next(7);
 				if (Main.rand.Next(5) <= 1)
 				{
-					Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, ModGores.GoreType("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
-					int goreIndex = Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Main.rand.Next(61, 64), 1f);
+					Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, ModGores.GoreType("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
+					int goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, Main.rand.Next(61, 64), 1f);
 					Main.gore[goreIndex].scale = 0.65f;
 				}
 				if (Main.rand.Next(5) <= 1)
 				{
 					if (i == 0 || i == 2)
-						Gore.NewGore(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, ModGores.GoreType("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
+						Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + Projectile.velocity * 0.12f, ModGores.GoreType("Gores/PenguinMissileGore" + (i + 1)), Projectile.scale);
 				}
 			}
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.45f);
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.45f);
 		}
 		public override void Kill(int timeLeft)
 		{
 			genGore();
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("SharangaBlastSummon").Type, Projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override void AI()

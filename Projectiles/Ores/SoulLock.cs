@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Projectiles.Base;
 
 namespace SOTS.Projectiles.Ores
 {    
@@ -71,13 +72,13 @@ namespace SOTS.Projectiles.Ores
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 0;
 			int heal = 1;
-			if(Main.rand.Next(4) == 0) heal = 2;
+			if(Main.rand.NextBool(4)) heal = 2;
 			
-			if(Main.rand.Next(16) == 0) heal = 3;
+			if(Main.rand.NextBool(16)) heal = 3;
 			
 			if(player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, heal, 0);	
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 0, 0, player.whoAmI, heal, 0);	
 			}
         }
 		public override void Kill(int timeLeft)

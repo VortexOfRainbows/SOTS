@@ -10,6 +10,10 @@ namespace SOTS.Projectiles.Minions
 {
 	public abstract class SpiritMinion : ModProjectile
 	{
+		public void UpdateMinionDamage(int ownerID)
+        {
+			Projectile.SetDamageBasedOnOriginalDamage(ownerID);
+		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit");
@@ -61,7 +65,16 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - Projectile.alpha) / 255f), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
-		int ofTotal2 = 0;
+        public sealed override bool PreAI()
+        {
+			UpdateMinionDamage(Projectile.owner);
+            return SafePreAI();
+        }
+		public virtual bool SafePreAI()
+        {
+			return true;
+        }
+        int ofTotal2 = 0;
 		public void MoveAwayFromOthers(bool andTiles = false, float movespeed = 0.09f, float widthMult = 1.5f)
 		{
 			float overlapVelocity = movespeed;

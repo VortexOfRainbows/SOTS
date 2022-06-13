@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
  
 namespace SOTS.Projectiles.Minions
@@ -66,9 +67,9 @@ namespace SOTS.Projectiles.Minions
 					Vector2 shootTo = new Vector2(dX * speed, dY * speed);
 					if (Projectile.owner == Main.myPlayer)
 					{
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootTo.X, shootTo.Y, Mod.Find<ModProjectile>("PinkBubble").Type, Projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, shootTo.X, shootTo.Y, ModContent.ProjectileType<PinkBubble>(), Projectile.damage, 0, Main.myPlayer);
 					}
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 21);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item21, Projectile.Center);
 				}
 			}
 		}

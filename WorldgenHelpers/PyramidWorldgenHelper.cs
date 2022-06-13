@@ -13,6 +13,7 @@ using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Pyramid.AltPyramidBlocks;
 using SOTS.Items.Secrets;
 using SOTS.Items.Fishing;
+using SOTS.Items.Furniture.AncientGold;
 
 namespace SOTS.WorldgenHelpers
 {

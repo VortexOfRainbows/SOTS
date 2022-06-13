@@ -36,7 +36,12 @@ namespace SOTS.Projectiles.Minions
 		{
 			return false;
 		}
-		public override void AI()
+        public override bool PreAI()
+        {
+			//Projectile.SetDamageBasedOnOriginalDamage(Projectile.owner); //only necessary for void minions!
+			return true;
+        }
+        public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
 
@@ -193,7 +198,7 @@ namespace SOTS.Projectiles.Minions
 						direction2 = direction;
 						if (Projectile.owner == Main.myPlayer)
 						{
-							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + offset, projVelo, Mod.Find<ModProjectile>("PenguinMissile").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + offset, projVelo, ModContent.ProjectileType<PenguinMissile>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 							Projectile.netUpdate = true;
 						}
 					}

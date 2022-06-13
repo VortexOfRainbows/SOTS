@@ -109,7 +109,7 @@ namespace SOTS.Projectiles
 						Projectile.ai[0] = 15;
 					else
 						Projectile.ai[0] = 30;
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 22, 0.75f, 0.1f);
+					SOTSUtils.PlaySound(SoundID.Item22, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f, 0.1f);
 				}
 				Projectile.velocity *= 0.04f;
 				runOnce = false;

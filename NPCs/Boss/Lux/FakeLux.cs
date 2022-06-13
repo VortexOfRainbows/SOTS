@@ -293,7 +293,7 @@ namespace SOTS.NPCs.Boss.Lux
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
-			ChaosSpirit.DrawWings(MathHelper.Lerp(wingHeight, 40, wingHeightLerp), NPC.ai[2], NPC.rotation, NPC.Center, NPC.GetAlpha(illusionColor()));
+			ChaosSpirit.DrawWings(screenPos, MathHelper.Lerp(wingHeight, 40, wingHeightLerp), NPC.ai[2], NPC.rotation, NPC.Center, NPC.GetAlpha(illusionColor()));
 			if (!runOnce)
 				DrawRings(spriteBatch, screenPos, false);
 			for (int k = 0; k < 7; k++)

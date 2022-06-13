@@ -5,6 +5,7 @@ using SOTS.Void;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Minions
@@ -55,7 +56,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 91, 0.6f);
+				SOTSUtils.PlaySound(SoundID.Item91, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
 				runOnce = false;
 				ogPos = Projectile.Center;
 				for (int i = 0; i < 2; i++)
@@ -163,7 +164,7 @@ namespace SOTS.Projectiles.Minions
                 {
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 					Vector2 modi = new Vector2(3f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSPlayer.ModPlayer(player).orbitalCounter + i));
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0) * 0.2f * ((255 - Projectile.alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0) * 0.2f * ((255 - Projectile.alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 				}
 			}
 			rotation = Projectile.velocity.ToRotation();
@@ -179,7 +180,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 					Vector2 modi = new Vector2(3f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSPlayer.ModPlayer(player).orbitalCounter + i));
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0) * 0.2f * ((255 - Projectile.alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0) * 0.2f * ((255 - Projectile.alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 				}
 			}
 		}

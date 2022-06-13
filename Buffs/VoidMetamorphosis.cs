@@ -13,7 +13,7 @@ namespace SOTS.Buffs
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;
-            longerExpertDebuff = false;
+            BuffID.Sets.LongerExpertDebuff[Type] = false;
         }
     }
 }

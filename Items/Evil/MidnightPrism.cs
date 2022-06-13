@@ -30,7 +30,7 @@ namespace SOTS.Items.Evil
 			if (!hideVisual)
 				modPlayer.rippleEffect = true;
 			player.statLifeMax2 += 40;
-			player.armorPenetration += 8;
+			player.GetArmorPenetration(DamageClass.Generic) += 8;
 			modPlayer.CritNightmare = true;
 			player.GetCritChance(DamageClass.Magic) += 5;
 			player.GetCritChance(DamageClass.Melee) += 5;

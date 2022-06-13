@@ -85,7 +85,7 @@ namespace SOTS.Projectiles
 				Main.gore[goreIndex].velocity.Y *= 0.25f;
 				Main.gore[goreIndex].velocity.X *= 0.25f;
 			}
-            Terraria.Audio.SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
+            SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.4f);
 		}
 	}
 }

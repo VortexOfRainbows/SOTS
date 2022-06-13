@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Otherworld
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			int projID = -1;
+			//int projID = -1;
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];

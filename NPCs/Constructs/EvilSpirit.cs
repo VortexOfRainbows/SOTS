@@ -399,7 +399,7 @@ namespace SOTS.NPCs.Constructs
 			firing = true;
 			this.target = target;
 		}
-		public void Update(NPC owner, Vector2 center, float rotation, float distMult, bool dust2 = false)
+		public void Update(Entity owner, Vector2 center, float rotation, float distMult, bool dust2 = false)
         {
 			Vector2 trueOffset = offset.RotatedBy(rotation) * distMult;
 			if(!dust2)
@@ -421,7 +421,10 @@ namespace SOTS.NPCs.Constructs
 								type = ModContent.ProjectileType<Projectiles.Minions.EvilSpear>();
 							}
 							Vector2 toPosition = fireTo - trueOffset - center;
-							Projectile.NewProjectile(owner.GetSource_FromAI(), center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
+							if(owner is NPC)
+								Projectile.NewProjectile(owner.GetSource_FromAI(), center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
+							if(owner is Projectile)
+								Projectile.NewProjectile(owner.GetSource_FromThis(), center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
 						}
 						firing = false;
 					}

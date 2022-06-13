@@ -46,8 +46,8 @@ namespace SOTS.Projectiles.Evil
             {
                 Item item = player.HeldItem;
                 firingSpeed = Projectile.velocity.Length();
-                firingAnimation = Item.useAnimation;
-                firingTime = Item.useTime;
+                firingAnimation = item.useAnimation;
+                firingTime = item.useTime;
                 lightningCounter = Main.rand.Next(360);
             }
             else
@@ -152,9 +152,9 @@ namespace SOTS.Projectiles.Evil
             Vector2 yOffset = new Vector2(0, player.gfxOffY);
             float rotation = MathHelper.ToRadians(135) + Projectile.rotation;
             if (Projectile.ai[0] != -1)
-                spriteBatch.Draw(texture, startPosition - Main.screenPosition + yOffset, null, color, rotation, texture.Size() / 2f, Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, startPosition - Main.screenPosition + yOffset, null, color, rotation, texture.Size() / 2f, Projectile.scale, SpriteEffects.None, 0f);
             Vector2 chainEnd = Projectile.Center + Projectile.velocity;
-            spriteBatch.Draw(texture1, chainEnd - Main.screenPosition + yOffset, null, Lighting.GetColor((int)chainEnd.X / 16, (int)chainEnd.Y / 16), rotation, texture1.Size() / 2f, Projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture1, chainEnd - Main.screenPosition + yOffset, null, Lighting.GetColor((int)chainEnd.X / 16, (int)chainEnd.Y / 16), rotation, texture1.Size() / 2f, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
         public void DrawLightning()

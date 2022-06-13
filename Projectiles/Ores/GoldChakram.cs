@@ -70,22 +70,22 @@ namespace SOTS.Projectiles.Ores
 			for (int k = 0; k < Projectile.oldPos.Length; k++) {
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-				if (Projectile.velocity.X != oldVelocity.X)
-				{
-					Projectile.velocity.X = -oldVelocity.X;
-				}
-				if (Projectile.velocity.Y != oldVelocity.Y)
-				{
-					Projectile.velocity.Y = -oldVelocity.Y;
-				}
-				Projectile.timeLeft = Projectile.timeLeft > 705 ? 705 : Projectile.timeLeft;
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+			if (Projectile.velocity.X != oldVelocity.X)
+			{
+				Projectile.velocity.X = -oldVelocity.X;
+			}
+			if (Projectile.velocity.Y != oldVelocity.Y)
+			{
+				Projectile.velocity.Y = -oldVelocity.Y;
+			}
+			Projectile.timeLeft = Projectile.timeLeft > 705 ? 705 : Projectile.timeLeft;
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
 			Projectile.tileCollide = false;
 			return false;
 		}

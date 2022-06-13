@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
         {
-			Terraria.Audio.SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
+			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.625f);
 			for (int i = 0; i < 10; i++)
 			{
 				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Celestial
 				dust.fadeIn = 0.2f;
 				dust.alpha = Projectile.alpha;
 			}
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.55f, 0.1f);
+			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.55f, 0.1f);
 			if (Projectile.owner == Main.myPlayer)
 			{
 				int amt = 1;

@@ -9,6 +9,7 @@ using System;
 using SOTS.Items;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Pyramid.PyramidWalls;
+using SOTS.Items.Furniture.AncientGold;
 using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Secrets;

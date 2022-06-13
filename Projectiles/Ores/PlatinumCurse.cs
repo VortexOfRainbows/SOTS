@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Projectiles.Laser;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,7 +30,6 @@ namespace SOTS.Projectiles.Ores
 		{
 			Projectile.ai[1]++;
 			int count = 0;
-			Player player  = Main.player[Projectile.owner];
 			if((int)Projectile.ai[0] != -1)
 			{
 				NPC npc = Main.npc[(int)Projectile.ai[0]];
@@ -73,9 +73,9 @@ namespace SOTS.Projectiles.Ores
 		}
 		public void LaunchLaser(Vector2 area)
 		{
-			Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, Mod.Find<ModProjectile>("BrightRedLaser").Type, (int)(Projectile.damage * 1f), 0, Projectile.owner, area.X, area.Y);
+			Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BrightRedLaser>(), (int)(Projectile.damage * 1f), 0, Projectile.owner, area.X, area.Y);
 			proj.DamageType = DamageClass.Melee;
-			proj.minion = false;
+			//proj.minion = false;
 		}
 	}
 }

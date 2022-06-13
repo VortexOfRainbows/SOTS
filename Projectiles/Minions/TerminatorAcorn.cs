@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Minions
 			triggerStop();
 		}
 		Vector2[] trailPos = new Vector2[7];
-		public void TrailPreDraw(ref Color lightColor)
+		public void TrailPreDraw()
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorAcornTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Minions
 							y = 0;
 						}
 						if (trailPos[k] != Projectile.Center)
-							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Minions
 					float y = Main.rand.Next(-10, 11) * 0.15f;
 					Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 				}
-			TrailPreDraw(spriteBatch, lightColor);
+			TrailPreDraw();
 			return endHow == 0;
 		}
 		bool runOnce = true;
@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Minions
 					dust.scale *= 1.4f;
 					dust.alpha = Projectile.alpha;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 20, 0.8f);
+				SOTSUtils.PlaySound(SoundID.Item20, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

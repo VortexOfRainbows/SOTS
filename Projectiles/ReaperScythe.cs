@@ -69,7 +69,7 @@ namespace SOTS.Projectiles
 			if (Projectile.ai[0] > 20 && Projectile.ai[0] < 50)
             {
 				if(Projectile.ai[0] == 28)
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 0.55f, 0.2f);
+					SOTSUtils.PlaySound(SoundID.Item71, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.55f, 0.2f);
 				Projectile.velocity += cen * 1.8f;
             }
             else if (Projectile.ai[0] < 20)

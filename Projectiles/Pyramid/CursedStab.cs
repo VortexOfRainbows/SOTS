@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Pyramid
 						modPlayer.foamParticleList1.Add(new CurseFoam(spawnLoc + velocity * 0.1f * i, new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-0.1f, 0.1f)) + velocity * i, 0.75f * scaleMult, true));
 					}
 				}
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 0.7f, 1.1f);
+				SOTSUtils.PlaySound(SoundID.Item71, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 1.1f);
 			}
 			else
             {

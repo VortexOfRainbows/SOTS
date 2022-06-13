@@ -49,7 +49,7 @@ namespace SOTS.Projectiles
             if (hookId == -1)
             {
                 NPC hook = Main.npc[(int)Projectile.ai[1]];
-                if (hook.type == Mod.Find<ModNPC>("HookTurret") .Type&& hook.active && (int)hook.localAI[0] == owner.whoAmI)
+                if (hook.type == ModContent.NPCType<HookTurret>() && hook.active && (int)hook.localAI[0] == owner.whoAmI)
                 {
                     Vector2 toHook = hook.Center - Projectile.Center;
                     toHook = toHook.SafeNormalize(Vector2.Zero);
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles
             else
             {
                 NPC hook = Main.npc[hookId];
-                if (hook.type == Mod.Find<ModNPC>("HookTurret") .Type&& hook.active && (int)hook.localAI[0] == owner.whoAmI)
+                if (hook.type == ModContent.NPCType<HookTurret>() && hook.active && (int)hook.localAI[0] == owner.whoAmI)
                 {
                     hook.Center = Projectile.Center;
                 }
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles
                 Vector2 toOwner = owner.Center - Projectile.Center;
                 if (toOwner.Length() < rotationDist)
                 {
-                    if (hook.type == Mod.Find<ModNPC>("HookTurret") .Type&& hook.active && (int)hook.localAI[0] == owner.whoAmI)
+                    if (hook.type == ModContent.NPCType<HookTurret>() && hook.active && (int)hook.localAI[0] == owner.whoAmI)
                     {
                         float healthMult = (float)owner.life / (float)owner.lifeMax;
                         if (healthMult > 1) 
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles
                         hook.localAI[1] = 0; // temp2;
                         hook.localAI[0] = owner.whoAmI;
                         hook.netUpdate = true;
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit, (int)hook.Center.X, (int)hook.Center.Y, 1, 1.2f);
+                        SOTSUtils.PlaySound(SoundID.NPCHit1, (int)hook.Center.X, (int)hook.Center.Y, 1.2f);
                     }
                     Projectile.Kill();
                 }

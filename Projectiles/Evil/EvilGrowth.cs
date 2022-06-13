@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Evil
 						dust.alpha = 40;
 						dust.noGravity = true;
 					}
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 116, 2.3f, -0.5f);
+					SOTSUtils.PlaySound(Terraria.ID.SoundID.Item116, (int)Projectile.Center.X, (int)Projectile.Center.Y, 2.3f, -0.5f);
 				}
 				if (Projectile.scale < 1)
 				{
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Evil
 					if (!effected[i])
 					{
 						if (Main.myPlayer == Projectile.owner)
-							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<EvilStrike>(), Projectile.damage, 0, Projectile.owner, target.whoAmI, Projectile.whoAmI);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilStrike>(), Projectile.damage, 0, Projectile.owner, target.whoAmI, Projectile.whoAmI);
 						effected[i] = true;
 					}
 				}
@@ -157,8 +157,8 @@ namespace SOTS.Projectiles.Evil
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D flower = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilGrowth").Value;
-			spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(200, 50, 0) * 0.2f * (Projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
-			spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(150, 30, 0) * 0.5f * (Projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(200, 50, 0) * 0.2f * (Projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(150, 30, 0) * 0.5f * (Projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
 			Vector2 drawOrigin = new Vector2(flower.Width * 0.5f, flower.Height * 0.5f);
 			Main.spriteBatch.Draw(flower, Projectile.Center - Main.screenPosition, null, new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B), Projectile.rotation, drawOrigin, Projectile.scale * 1.0f * (Projectile.timeLeft / (float)MaxTimeLeft) + 0.3f, SpriteEffects.None, 0f);
 			return false;

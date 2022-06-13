@@ -41,8 +41,8 @@ namespace SOTS.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			for(int i = 0; i < 4; i++)
-				Gore.NewGore(new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 0.45f);	
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.3f);
+				Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 0.45f);	
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.3f);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	

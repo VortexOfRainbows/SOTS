@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles
@@ -102,7 +100,7 @@ namespace SOTS.Projectiles
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindProjectiles.Add(index);
+			behindProjectiles.Add(index);
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

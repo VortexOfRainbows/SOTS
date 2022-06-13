@@ -57,10 +57,8 @@ namespace SOTS.Projectiles.Ores
 				runOnce = false;
 				Projectile.ai[1] = -1;
             }
-			Player player = Main.player[Projectile.owner];
 			Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + MathHelper.ToRadians(45);
 			Projectile.spriteDirection = 1;
-			
 			if(latch && (int)Projectile.ai[1] != -1 && Projectile.owner == Main.myPlayer)
 			{
 				NPC target = Main.npc[(int)Projectile.ai[1]];

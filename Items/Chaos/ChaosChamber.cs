@@ -57,7 +57,7 @@ namespace SOTS.Items.Chaos
 			if (counter >= 6)
 			{
 				counter = 0;
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38, (int)position.X, (int)position.Y);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38, position);
 				Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ChaosBallFriendly>(), damage, knockback, player.whoAmI);
 			}
 			else

@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Celestial
 					color = new Color(255, 100, 255, 0);
 					finalRotation = 22.5f;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
 				runOnce = false;
 				DoLine();
 			}
@@ -194,7 +194,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, Projectile.Center);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				int amt = 4;

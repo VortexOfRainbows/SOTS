@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Minions
 				float lengthTowards = towards.Length() / textureTrail.Height / scale;
 				for(int j = 0; j < 2; j++)
 				{
-					spriteBatch.Draw(textureTrail, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Projectile.GetAlpha(color) * scale * (1 - j * 0.5f), towards.ToRotation() - MathHelper.PiOver2, drawOrigin2, new Vector2(1, lengthTowards) * scale * (1 + j * 0.05f), Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(textureTrail, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Projectile.GetAlpha(color) * scale * (1 - j * 0.5f), towards.ToRotation() - MathHelper.PiOver2, drawOrigin2, new Vector2(1, lengthTowards) * scale * (1 + j * 0.05f), Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 				lastPosition = drawPos;
 			}
@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Minions
 			Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 2));
 			color2.A = 0;
 			for(int i = 0; i < 3; i++)
-				spriteBatch.Draw(texture, drawPos2 + Main.rand.NextVector2CircularEdge(1, 1), null, Projectile.GetAlpha(color2), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos2 + Main.rand.NextVector2CircularEdge(1, 1), null, Projectile.GetAlpha(color2), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public void DrawFlames()
@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.ai[0] = 1;
 			Projectile.netUpdate = true;
 			if(Main.myPlayer == Projectile.owner)
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<SmallStellarHitbox>(), Projectile.damage, 0, Main.myPlayer, target.whoAmI);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<SmallStellarHitbox>(), Projectile.damage, 0, Main.myPlayer, target.whoAmI);
 		}
 		bool atNewLocation = true;
 		Vector2 toLocation = new Vector2(0, 0);
@@ -118,6 +118,7 @@ namespace SOTS.Projectiles.Minions
 		bool runOnce = true;
 		public override bool PreAI()
 		{
+			//Projectile.SetDamageBasedOnOriginalDamage(Projectile.owner); //only for void minions
 			if(runOnce)
 			{
 				for (int i = 0; i < trailPos.Length; i++)

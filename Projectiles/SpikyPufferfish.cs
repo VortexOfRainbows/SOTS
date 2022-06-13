@@ -27,7 +27,7 @@ namespace SOTS.Projectiles
 		bool runOnce = true;
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.85f);
+			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.65f);
 			for (int i = 0; i < 5; i++)
 			{
 				int goreIndex = Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61, 64), 1f);	

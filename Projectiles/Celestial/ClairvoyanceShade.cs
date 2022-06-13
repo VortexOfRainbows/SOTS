@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Celestial
             }
             Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
             TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
-            spriteBatch.Draw(TheShadow, Vector2.Zero, null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, Vector2.Zero, scale, SpriteEffects.None, .2f);
+            Main.spriteBatch.Draw(TheShadow, Vector2.Zero, null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, Vector2.Zero, scale, SpriteEffects.None, .2f);
             screenWidthOld = Main.screenWidth;
             screenHeightOld = Main.screenHeight;
             return false;

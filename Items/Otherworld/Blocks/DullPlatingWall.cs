@@ -21,11 +21,7 @@ namespace SOTS.Items.Otherworld.Blocks
 	}
 	public class SafeDullPlatingWallWall : ModWall
 	{
-		public override bool Autoload(ref string name, ref string texture)
-		{
-			texture = "SOTS/Items/Otherworld/Blocks/DullPlatingWallWall";
-			return base.Autoload(ref name, ref texture);
-		}
+        public override string Texture => "SOTS/Items/Otherworld/Blocks/DullPlatingWallWall";
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;

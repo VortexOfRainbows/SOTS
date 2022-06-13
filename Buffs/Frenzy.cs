@@ -16,7 +16,7 @@ namespace SOTS.Buffs
         }
 		public override void Update(Player player, ref int buffIndex)
 		{
-            if (player.HeldItem.melee)
+            if (player.HeldItem.CountsAsClass(DamageClass.Melee))
                 SOTSPlayer.ModPlayer(player).attackSpeedMod += 1;
 		}
     }

@@ -1,6 +1,7 @@
 using Terraria;
 using SOTS.Void;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Items.Celestial
 {

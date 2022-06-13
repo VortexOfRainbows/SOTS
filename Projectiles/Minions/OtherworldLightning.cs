@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Dusts;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -84,7 +85,7 @@ namespace SOTS.Projectiles.Minions
 			if (runOnce)
 			{
 				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-65, 66);
@@ -131,7 +132,7 @@ namespace SOTS.Projectiles.Minions
 						Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero);
 						if (Projectile.owner == Main.myPlayer && Projectile.friendly)
 						{
-							Projectile.NewProjectile(addPos.X + velo.X * 28, addPos.Y + velo.Y * 28, velo.X * 0.1f, velo.Y * 0.1f, ModContent.ProjectileType<ThunderRing>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), addPos.X + velo.X * 28, addPos.Y + velo.Y * 28, velo.X * 0.1f, velo.Y * 0.1f, ModContent.ProjectileType<ThunderRing>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 						}
 						if (Projectile.friendly)
 							collided = true;

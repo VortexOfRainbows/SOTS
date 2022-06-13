@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using SOTS.Projectiles.Celestial;
 using System.Collections.Generic;
 using System;
+using SOTS.Buffs;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -194,7 +195,7 @@ namespace SOTS.Projectiles.Minions
                 Player target = Main.player[i];
 				if((Projectile.Center - target.Center).Length() <= sphereRadius + 4f && target.active)
 				{
-					target.AddBuff(Mod.Find<ModBuff>("AuraBoost").Type, 330, false);
+					target.AddBuff(ModContent.BuffType<AuraBoost>(), 330, false);
 				}
             }
         }

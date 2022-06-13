@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -33,7 +34,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, Mod.Find<ModDust>("BigPinkDust").Type);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<BigPinkDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 0.75f;
 				Main.dust[num1].velocity = circularLocation * 0.45f;
@@ -47,7 +48,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void AI()
 		{
-			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("BigPinkDust").Type);
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<BigPinkDust>());
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].scale = 0.75f;
 			Main.dust[num1].velocity *= 0.7f;

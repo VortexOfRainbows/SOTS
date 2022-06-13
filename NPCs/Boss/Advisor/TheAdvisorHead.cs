@@ -713,8 +713,7 @@ namespace SOTS.NPCs.Boss.Advisor
 								Vector2 worldPos = hookPos[i] + NPC.Center;
 								int i2 = (int)(worldPos.X / 16);
 								int j2 = (int)(worldPos.Y / 16);
-								if (Main.tile[i2, j2].HasTile && !Main.tile[i2, j2].IsActuated && Main.tileSolid[Main.tile[i2, j2].TileType] || Main.tileSolidTop[Main.tile[i2, j2].TileType]) ;
-								else
+								if (!(Main.tile[i2, j2].HasTile && !Main.tile[i2, j2].IsActuated && Main.tileSolid[Main.tile[i2, j2].TileType] || Main.tileSolidTop[Main.tile[i2, j2].TileType]))
 								{
 									Vector2 downStrike = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(extraDeg));
 									if (attackTimer1 == 480 && j == 0)

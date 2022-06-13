@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(color2) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Minions
 								//Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
 								if (Main.myPlayer == Projectile.owner)
 								{
-									Projectile.NewProjectileDirect(orbLocations[i], new Vector2(1, 0).RotatedBy(toLocation.ToRotation()) * 12, ModContent.ProjectileType<OtherworldLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0);
+									Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), orbLocations[i], new Vector2(1, 0).RotatedBy(toLocation.ToRotation()) * 12, ModContent.ProjectileType<OtherworldLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0);
 								}
 								orbCounter[i] = -60;
 								orbLocations[i] = Projectile.Center;

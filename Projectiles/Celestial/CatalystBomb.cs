@@ -194,7 +194,6 @@ namespace SOTS.Projectiles.Celestial
 		float rotation = 3600; 
 		int count = 0;
 		float dist = 0;
-		int direction = 0;
 		public void cataloguePos()
 		{
 			for (int i = 0; i < particleList.Count; i++)

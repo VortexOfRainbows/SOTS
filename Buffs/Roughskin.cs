@@ -17,7 +17,7 @@ namespace SOTS.Buffs
         }
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.allDamage += 0.04f;
+			player.GetDamage(DamageClass.Generic) += 0.04f;
 			player.statDefense += 4;
 		}
     }

@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.8f);
+			SOTSUtils.PlaySound(Terraria.ID.SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f);
 			if (Main.netMode != 1)
 			{
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<BossBabyLaser>(), Projectile.damage, 0, Main.myPlayer, 0);

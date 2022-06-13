@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.alpha = (int)(255 * (1 - Projectile.timeLeft / 40f));
 			Projectile.ai[1] ++;
 		}
-		bool collided = false;
+		//bool collided = false;
         public void SetPostitions()
         {
 			Vector2 direction = new Vector2(length * scale, 0).RotatedBy(Projectile.velocity.ToRotation());

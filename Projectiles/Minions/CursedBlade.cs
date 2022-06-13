@@ -253,7 +253,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					if (canDoDashSounds)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.7f, 0.25f);
+						SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.25f);
 					}
 					canDoDashSounds = false;
 				}
@@ -344,6 +344,11 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 		}
-	}
+        public override bool PreAI()
+        {
+			Projectile.SetDamageBasedOnOriginalDamage(Main.player[Projectile.owner]);
+            return true;
+        }
+    }
 }
 		

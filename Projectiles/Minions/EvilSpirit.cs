@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Minions
 				float rotation = Projectile.rotation + MathHelper.ToRadians(orbitalCounter * direction);
 				if (draw)
 				{
-					eye.Draw(Projectile.Center, rotation, rangeMult, eyeAlphaMult);
+					eye.Draw(Projectile.Center, Main.screenPosition, rotation, rangeMult, eyeAlphaMult);
 				}
 				else
 				{
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Minions
 						eye.Fire(Projectile.Center, npcID);
 					}
 					else
-						eye.Update(Projectile.Center, rotation, rangeMult);
+						eye.Update(Projectile, Projectile.Center, rotation, rangeMult);
 				}
 			}
 		}
@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 					Color color = Projectile.GetAlpha(color2) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-					spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 				}
 				color2 = VoidPlayer.EvilColor * 1f;
 			}
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (Main.myPlayer == Projectile.owner)
 			{
-				Projectile.NewProjectile(Projectile.Center, new Vector2(8f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<EvilExplosion>(), Projectile.damage, 0f, Projectile.owner, 1, 0);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(8f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<EvilExplosion>(), Projectile.damage, 0f, Projectile.owner, 1, 0);
 			}
 		}
 		bool runOnce = true;
@@ -136,7 +136,7 @@ namespace SOTS.Projectiles.Minions
         {
 			return totalShots * delayBetweenShots + delayBetweenShots - 1;
         }
-		public override bool PreAI()
+		public override bool SafePreAI()
 		{
 			if(runOnce)
 			{

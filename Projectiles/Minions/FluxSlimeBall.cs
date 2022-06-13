@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Minions
 				Vector2 drawPosNext = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
 				float rotation = (drawPos2 - drawPosNext).ToRotation();
 				lightColor = Lighting.GetColor((int)drawPos2.X / 16, (int)(drawPos2.Y / 16));
-				spriteBatch.Draw(texture, drawPos2 - Main.screenPosition, null, Projectile.GetAlpha(lightColor), rotation - MathHelper.ToRadians(90), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos2 - Main.screenPosition, null, Projectile.GetAlpha(lightColor), rotation - MathHelper.ToRadians(90), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			if (!runOnce)
 			{
@@ -126,12 +126,12 @@ namespace SOTS.Projectiles.Minions
 						randSeed1[i] = Main.rand.NextFloat(0.8f, 1.2f);
 					}
 					Rectangle FrameSize = new Rectangle(0, texture.Height / 4 * frame, texture.Width, texture.Height / 4);
-					spriteBatch.Draw(texture, drawPos + circular, FrameSize, Projectile.GetAlpha(lightColor), circular.ToRotation() - MathHelper.ToRadians(90), new Vector2(texture.Width / 2, 3.5f), Projectile.scale * 0.8f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + circular, FrameSize, Projectile.GetAlpha(lightColor), circular.ToRotation() - MathHelper.ToRadians(90), new Vector2(texture.Width / 2, 3.5f), Projectile.scale * 0.8f, SpriteEffects.None, 0f);
 				}
 			}
 			texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			return false;
         }
         public override void PostDraw(Color lightColor)
@@ -142,11 +142,10 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
 			}
-			base.PostDraw(spriteBatch, lightColor);
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			drawCacheProjsBehindProjectiles.Add(index);
+			behindProjectiles.Add(index);
 		}
 		bool instant = false;
 		Vector2 baseVelo = Vector2.Zero;

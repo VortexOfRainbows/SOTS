@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.Projectiles.Laser;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -109,10 +110,9 @@ namespace SOTS.Projectiles.Ores
 		}
 		public void LaunchLaser(Vector2 area)
 		{
-			Player player  = Main.player[Projectile.owner];
-			int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("BrightRedLaser").Type, (int)(Projectile.damage * 1.5f) + 1, 0, Projectile.owner, area.X, area.Y);
+			int Probe = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<BrightRedLaser>(), (int)(Projectile.damage * 1.5f) + 1, 0, Projectile.owner, area.X, area.Y);
 			Main.projectile[Probe].DamageType = DamageClass.Magic;
-			Main.projectile[Probe].minion = false;
+			//Main.projectile[Probe].minion = false;
 		}
 	}
 }

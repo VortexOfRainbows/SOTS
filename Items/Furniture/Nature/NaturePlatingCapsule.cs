@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -43,7 +44,7 @@ namespace SOTS.Items.Furniture.Nature
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
             base.KillMultiTile(i, j, frameX, frameY);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

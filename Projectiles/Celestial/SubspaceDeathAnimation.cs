@@ -261,9 +261,9 @@ namespace SOTS.Projectiles.Celestial
 					Gore gore2 = Gore.NewGoreDirect(Projectile.GetSource_FromThis(), atLoc - new Vector2(18, 18), default(Vector2), gore, 1.0f);
 					gore2.velocity *= 0.2f;
 					if(segmentsDead % 4 == 0)
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)atLoc.X, (int)atLoc.Y, 39, 0.95f, -0.3f);
+						SOTSUtils.PlaySound(SoundID.NPCDeath39, (int)atLoc.X, (int)atLoc.Y, 0.95f, -0.3f);
 					else
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)atLoc.X, (int)atLoc.Y, 62, 1.25f, -0.3f);
+						SOTSUtils.PlaySound(SoundID.Item62, (int)atLoc.X, (int)atLoc.Y, 1.25f, -0.3f);
 					if (Main.netMode != 1)
                     {
 						Projectile.NewProjectile(Projectile.GetSource_FromThis(), atLoc, new Vector2(0, -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer);

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles;
 using SOTS.Items.Fragments;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Evil
 {
@@ -38,12 +39,12 @@ namespace SOTS.Items.Evil
 		{
 			CreateRecipe(1).AddIngredient(ItemID.DemonScythe, 1).AddIngredient(ItemID.SoulofFright, 10).AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			for(int i = -1; i<= 1; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(-speedX, -speedY).RotatedBy(MathHelper.ToRadians(15) * i) * (i != 0 ? 0.9f : 1);
-				Projectile.NewProjectile(position, perturbedSpeed, type, damage, knockBack, player.whoAmI);
+				Vector2 perturbedSpeed = new Vector2(-velocity.X, -velocity.Y).RotatedBy(MathHelper.ToRadians(15) * i) * (i != 0 ? 0.9f : 1);
+				Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
 			}
 			return false; 
 		}

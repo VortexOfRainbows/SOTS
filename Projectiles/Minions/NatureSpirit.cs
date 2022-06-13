@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Projectiles.Nature;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -145,10 +146,10 @@ namespace SOTS.Projectiles.Minions
 				int fireRate = 72;
 				if((int)(modPlayer.orbitalCounter + (float)fireRate / total * Projectile.ai[1]) % fireRate == 0 && inRange)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
+					SOTSUtils.PlaySound(SoundID.Item43, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
 					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(Projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 3, Mod.Find<ModProjectile>("NatureBeam").Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 3, ModContent.ProjectileType<NatureBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 					}
 					Projectile.ai[0] = 32;
 				}

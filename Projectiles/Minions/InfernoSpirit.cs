@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(color2) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Minions
 					if (toHit.active)
 					{
 						Vector2 normal = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(arm * 360f / 7 + modPlayer.orbitalCounter));
-							Projectile.NewProjectile(Projectile.Center + normal * 24, normal * speed + Main.rand.NextVector2Circular(0.2f, 0.2f), ModContent.ProjectileType<InfernoLaser>(), Projectile.damage, 0, Main.myPlayer, target, Main.rand.NextFloat(360));
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + normal * 24, normal * speed + Main.rand.NextVector2Circular(0.2f, 0.2f), ModContent.ProjectileType<InfernoLaser>(), Projectile.damage, 0, Main.myPlayer, target, Main.rand.NextFloat(360));
 						return true;
 					}
 				}
@@ -243,7 +243,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile.velocity = newGoTo * speed;
 				if (Projectile.ai[0] > 50)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 20, 1.1f, -0.2f);
+					SOTSUtils.PlaySound(SoundID.Item20, (int)Projectile.position.X, (int)Projectile.position.Y, 1.1f, -0.2f);
 					Projectile.ai[0] = 0;
                 }
 			}

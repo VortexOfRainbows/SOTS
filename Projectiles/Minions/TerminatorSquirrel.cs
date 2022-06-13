@@ -27,6 +27,7 @@ namespace SOTS.Projectiles.Minions
 		float glow = 14f;
 		public override bool PreAI()
 		{
+			//Projectile.SetDamageBasedOnOriginalDamage(Projectile.owner);
 			if (glow > 0)
 				glow -= 0.5f;
 			if (runOnce)
@@ -149,7 +150,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			return false;
 		}
-		public override void AI()
+        public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

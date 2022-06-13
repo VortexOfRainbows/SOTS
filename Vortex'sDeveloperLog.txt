@@ -58,8 +58,9 @@ Low Priority Objectives:
 6. Nerf VM Incubator and Rose Bow
 
 6/13/22
-1. Chaos Projectiles... Cleaning out the rest of the folders...
-2. 660 -> 584 -> 225
+1. Chaos Projectiles... Cleaning out the rest of the folders... Minions folder...
+2. 660 -> 584 -> 225 -> 133 -> 100 -> 93 -> 78
+3. Remaining: Player Layers, Biomes/Scenes!
 
 6/10/22 & 6/11/22
 1. Pyramid item folder

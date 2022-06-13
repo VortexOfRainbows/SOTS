@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Minions
 			hitbox = new Rectangle((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width/2, width, width);
             base.ModifyDamageHitbox(ref hitbox);
 		}
-		public void DrawTrail(SpriteBatch spriteBatch, Color lightColor)
+		public void DrawTrail()
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Minions
 					float scale = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 					Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 					Color color = Projectile.GetAlpha(color2) * scale;
-					spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale * scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale * scale, SpriteEffects.None, 0f);
 				}
 				color2 = VoidPlayer.EvilColor * 1f;
 			}
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Minions
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = VoidPlayer.EvilColor;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			DrawTrail(spriteBatch, lightColor);
+			DrawTrail();
 			for (int k = 0; k < 5; k++)
 			{
 				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + Main.rand.NextVector2Circular(1, 1), null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+				SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarLaser"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
 				DustOut();
 				Projectile.scale = 0.1f;
 				Projectile.alpha = 0;
