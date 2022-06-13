@@ -97,7 +97,7 @@ namespace SOTS.Items.Earth
 				WorldGen.KillTile(i, j);
 				if (Main.netMode != NetmodeID.SinglePlayer)
 				{
-					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
+					NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j, 0f, 0, 0, 0);
 				}
 			}
 			return false;

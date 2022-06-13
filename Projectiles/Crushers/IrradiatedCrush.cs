@@ -1,10 +1,3 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -39,7 +32,7 @@ namespace SOTS.Projectiles.Crushers
 				runOnce = false;
 				for (int i = 0; i < 2; i++)
 				{
-					Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SporeCloud, (int)(Projectile.damage * 0.50f) + 1, 0, Projectile.owner);
+					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SporeCloud, (int)(Projectile.damage * 0.50f) + 1, 0, Projectile.owner);
 					proj.timeLeft = Main.rand.Next(16, 35);
 				}
 			}

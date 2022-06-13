@@ -147,7 +147,7 @@ namespace SOTS.Projectiles.Nature
 					Vector2 drawPos2 = drawPoints[i + 2];
 					rotation = (drawPos - drawPos2).ToRotation();
 				}
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 			}
 			rotation = Projectile.velocity.ToRotation();
 			scale = 0.1f;
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Nature
 					Vector2 drawPos2 = drawPoints[i + 2];
 					rotation = (drawPos - drawPos2).ToRotation();
 				}
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Nature
 			hasHit = true;
 			if (player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(ogPos.X, ogPos.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, heal, 9);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), ogPos.X, ogPos.Y, 0, 0, ModContent.ProjectileType<Base.HealProj>(), 0, 0, player.whoAmI, heal, 9);
 			}
 			base.OnHitNPC(target, damage, knockback, crit);
         }

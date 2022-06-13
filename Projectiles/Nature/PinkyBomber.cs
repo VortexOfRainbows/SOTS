@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(new Color(120, 110, 110, 0)) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * 0.6f, Projectile.rotation, drawOrigin, Projectile.scale * 0.33f + 0.67f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * 0.6f, Projectile.rotation, drawOrigin, Projectile.scale * 0.33f + 0.67f * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length), Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Nature
 			if (runOnce)
 			{
 				runOnce = false;
-				Terraria.Audio.SoundEngine.PlaySound(2, player.Center, 60);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item60, player.Center);
 				Vector2 toLocation = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 				Vector2 goTo = toLocation - Projectile.Center;
 				goTo = goTo.SafeNormalize(Vector2.Zero);
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Nature
 				if(Main.myPlayer == Projectile.owner)
                 {
 					for (int i = 1; i < 3 + Main.rand.Next(2); i++)
-						Projectile.NewProjectile(Projectile.Center + new Vector2(0, 16), new Vector2(Main.rand.NextFloat(-1.5f, 1.5f) * i, -1 + i * 1.25f), ModContent.ProjectileType<PeanutBomb>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.Center.Y + 480);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(0, 16), new Vector2(Main.rand.NextFloat(-1.5f, 1.5f) * i, -1 + i * 1.25f), ModContent.ProjectileType<PeanutBomb>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.Center.Y + 480);
                 }
 			}
 			counter++;

@@ -26,10 +26,10 @@ namespace SOTS.Items.Permafrost
 		public override bool CanRightClick() { return true; }
 		public override void OpenBossBag(Player player)
 		{
-			player.TryGettingDevArmor();
-			player.QuickSpawnItem(ModContent.ItemType<FrigidHourglass>());
-			player.QuickSpawnItem(ModContent.ItemType <AbsoluteBar>(), Main.rand.Next(26, 43));
-			player.QuickSpawnItem(ItemID.FrostCore, Main.rand.Next(2) + 1);
+			player.TryGettingDevArmor(player.GetSource_OpenItem(Type));
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<FrigidHourglass>());
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType <AbsoluteBar>(), Main.rand.Next(26, 43));
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.FrostCore, Main.rand.Next(2) + 1);
 		}
 	}
 }

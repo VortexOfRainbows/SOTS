@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Projectiles.Base;
 
 namespace SOTS.Projectiles.Crushers
 {    
@@ -56,10 +57,9 @@ namespace SOTS.Projectiles.Crushers
 			if(Projectile.owner == Main.myPlayer)
 			{
 				int heal = 0;
-				if(Main.rand.Next(5) == 0) heal = 1;
-				
-				if(Main.rand.Next(20) == 0) heal = 2;
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, (int)Projectile.ai[0] + heal, 1);
+				if(Main.rand.NextBool(5)) heal = 1;
+				if(Main.rand.NextBool(20)) heal = 2;
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 0, 0, player.whoAmI, (int)Projectile.ai[0] + heal, 1);
 			}
 			for(int i = 5; i > 0; i --)
 			{

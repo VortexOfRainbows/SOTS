@@ -154,7 +154,7 @@ namespace SOTS.Projectiles.Chaos
                 }
                 Player player = Main.LocalPlayer;
                 if(player.Distance(Projectile.Center) < 4800)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 94, 0.75f, 0.2f);
+                    SOTSUtils.PlaySound(SoundID.Item94, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.2f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (!Main.rand.NextBool(3))

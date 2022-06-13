@@ -18,7 +18,6 @@ namespace SOTS.Projectiles.Laser
 		{
 			DisplayName.SetDefault("Artifact Laser");
 		}
-
 		public override void SetDefaults() 
 		{
 			Projectile.width = 10;
@@ -27,7 +26,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.penetrate = -1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.minion = true;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 		}
@@ -35,7 +34,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			//Projectile.Center = npc.Center;
 			if((int)Projectile.localAI[0] == 0)
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 12, 0.7f);
+				SOTSUtils.PlaySound(SoundID.Item12, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f);
 			Projectile.localAI[0] += 1f;
 			if (Projectile.localAI[0] == 2f) {
 				Projectile.damage = 0;
@@ -49,8 +48,8 @@ namespace SOTS.Projectiles.Laser
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[Projectile.owner] = 3;
-			if(Projectile.melee) target.immune[Projectile.owner] = 0;
-			
+			if(Projectile.CountsAsClass(DamageClass.Melee)) 
+				target.immune[Projectile.owner] = 0;
 			Projectile.damage--;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
@@ -99,7 +98,7 @@ namespace SOTS.Projectiles.Laser
 				}
 				Color alpha = new Color(255, 0, 0) * ((255 - Projectile.alpha) / 255f);
 				//Color alpha = ((255 - Projectile.alpha) / 255f);
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, alpha, Distance, new Vector2(5, 5), (0.01f * (float)Main.rand.Next(50,151)), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, alpha, Distance, new Vector2(5, 5), (0.01f * (float)Main.rand.Next(50,151)), SpriteEffects.None, 0f);
 			}
 			return false;
 		}

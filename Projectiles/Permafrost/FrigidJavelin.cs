@@ -105,7 +105,7 @@ namespace SOTS.Projectiles.Permafrost
 			if(counter != -1)
 				counter += 3;
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			//SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Projectile.timeLeft <= 7170)
 			{
 				if(counter != -1)
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Permafrost
 					Projectile.extraUpdates = 20;
 					counter = -1;
 					Projectile.netUpdate = true;
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item71, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item71, Projectile.Center);
 					return;
 				}
 				Projectile.tileCollide = true;

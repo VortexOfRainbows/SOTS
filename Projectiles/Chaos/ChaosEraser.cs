@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Chaos
                 {
                     Player target = Main.player[playerID];
                     if (target.active)
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 91, 1.1f, -0.4f);
+                        SOTSUtils.PlaySound(SoundID.Item91, (int)target.Center.X, (int)target.Center.Y, 1.1f, -0.4f);
                 }
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {

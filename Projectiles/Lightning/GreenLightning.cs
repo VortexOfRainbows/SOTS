@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Lightning
 			if (runOnce)
 			{
 				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-75, 76);
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Lightning
 					if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly && !npc.dontTakeDamage)
 					{
 						if (Projectile.owner == Main.myPlayer && Projectile.friendly)
-							Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("GreenExplosion").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, -1f, Projectile.ai[1]);
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<GreenExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1f, Projectile.ai[1]);
 						if (Projectile.friendly)
 							collided = true;
 						for (int k = i + 1; k < trailPos.Length; k++)

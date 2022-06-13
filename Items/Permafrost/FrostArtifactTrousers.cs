@@ -22,7 +22,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == Mod.Find<ModItem>("FrostArtifactChestplate") .Type&& head.type == Mod.Find<ModItem>("FrostArtifactHelmet").Type;
+            return body.type == ModContent.ItemType<FrostArtifactChestplate>() && head.type == ModContent.ItemType<FrostArtifactHelmet>();
         }
 		public override void UpdateEquip(Player player)
 		{
@@ -31,7 +31,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.FrostLeggings, 1).AddIngredient(null, "AbsoluteBar", 20).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ItemID.FrostLeggings, 1).AddIngredient<AbsoluteBar>(20).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

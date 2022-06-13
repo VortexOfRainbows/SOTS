@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -62,7 +61,7 @@ namespace SOTS.Projectiles.Base
                         if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)player.position.X - 12, (int)player.position.Y - 12, player.width + 12, player.height + 12)) && !npc.friendly && !npc.dontTakeDamage && npc.immune[player.whoAmI] <= 0)
                         {
                             if (Projectile.owner == Main.myPlayer && Projectile.friendly)
-                                Projectile.NewProjectile(npc.Center.X, npc.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, Mod.Find<ModProjectile>("BlinkDamage1").Type, SOTSPlayer.ModPlayer(player).BlinkDamage, Projectile.knockBack, Main.myPlayer);
+                                Projectile.NewProjectile(Projectile.GetSource_FromThis(), npc.Center.X, npc.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<BlinkDamage1>(), SOTSPlayer.ModPlayer(player).BlinkDamage, Projectile.knockBack, Main.myPlayer);
                             npc.immune[player.whoAmI] = 1;
                             hit = true;
                             break;

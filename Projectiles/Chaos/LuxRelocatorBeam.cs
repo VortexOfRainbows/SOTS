@@ -182,7 +182,7 @@ namespace SOTS.Projectiles.Chaos
                     dust2.scale *= 2.2f;
                 }
                 SetupLaser();
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 72, 1.0f, -0.3f);
+                SOTSUtils.PlaySound(SoundID.Item72, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.3f);
                 for (int i = 0; i < 10; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

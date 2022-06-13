@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Projectiles.Permafrost;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Permafrost
 {
@@ -37,10 +38,10 @@ namespace SOTS.Items.Permafrost
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 10).AddIngredient(ModContent.ItemType<ShardStaff>(), 1).AddIngredient(ModContent.ItemType<StormSpell>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			Vector2 cursorPos = Main.MouseWorld;
-			Projectile.NewProjectile(cursorPos.X,  cursorPos.Y, 0, 0, type, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, cursorPos.X,  cursorPos.Y, 0, 0, type, damage, knockback, player.whoAmI);
             return false;
 		}
 	}

@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 17, 0.8f, 0.1f);
+				SOTSUtils.PlaySound(SoundID.Item17, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, 0.1f);
 				runOnce = false;
             }
 			Projectile.alpha = (int)(255 * (1 - Projectile.timeLeft / 50f));

@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using SOTS.Projectiles.Permafrost;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Permafrost
 {
@@ -96,27 +97,25 @@ namespace SOTS.Items.Permafrost
 				Item.noUseGraphic = false;
 			}
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			if (broken == 1)
 			{
 				position += new Vector2(10 * player.direction, -10);
-				speedX = 0;
-				speedY = 0;
 				counterResetter = 0;
 				counter++;
 				if (counter >= 10)
 				{
 					broken = 0;
 				}
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, counter);
+				Projectile.NewProjectile(source, position.X, position.Y, 0, 0, type, damage, knockback, player.whoAmI, counter);
 				if (counter >= 10)
 				{
 					counter = 0;
 				}
 				return false;
 			}
-			Terraria.Audio.SoundEngine.PlaySound(2, (int)(position.X), (int)(position.Y), 1, 1f);
+			SOTSUtils.PlaySound(SoundID.Item1, position);
 			return false;
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
@@ -129,7 +128,7 @@ namespace SOTS.Items.Permafrost
 					Vector2 circularSpeed = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(i * 90));
 					int calc = damage + modPlayer.bonusShardDamage;		
 					if (calc <= 0) calc = 1;
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), calc, 3f, player.whoAmI);
+					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), calc, 3f, player.whoAmI);
 				}
 				broken = 1;
 			}

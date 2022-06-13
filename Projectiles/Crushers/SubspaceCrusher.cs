@@ -39,11 +39,11 @@ namespace SOTS.Projectiles.Crushers
 			for(int i = 1; i < storage.Count; i++)
 			{
 				Vector2 location = storage[i];
-				int whoAmI = Projectile.NewProjectile(location, Vector2.Zero, ModContent.ProjectileType<PlasmaCrush>(), Projectile.damage, Projectile.knockBack, Projectile.owner, first);
+				int whoAmI = Projectile.NewProjectile(Projectile.GetSource_FromThis(), location, Vector2.Zero, ModContent.ProjectileType<PlasmaCrush>(), Projectile.damage, Projectile.knockBack, Projectile.owner, first);
 				if(i % 5 == 1)
 				{
 					Vector2 circular = new Vector2(Main.rand.NextFloat(3f, 7f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					Projectile.NewProjectile(location, circular, ModContent.ProjectileType<PurgatoryGhost>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), location, circular, ModContent.ProjectileType<PurgatoryGhost>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 				}
 				first = whoAmI;
 			}
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Crushers
         }
         public override void ExplosionSound()
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 1.25f, -0.5f);
+			SOTSUtils.PlaySound(SoundID.NPCDeath39, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.25f, -0.5f);
 		}
         public override void SendExtraAI(BinaryWriter writer)
         {

@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Crushers
 				for (float i = 0; i < Projectile.damage; i += ogDamage * 2.0f)
 				{
 					Vector2 direction = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f)) + Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f, 2f);
-					int proj = Projectile.NewProjectile((Projectile.Center.X), Projectile.Center.Y, direction.X, direction.Y, Mod.Find<ModProjectile>("EclipseBubble").Type, (int)(Projectile.damage * 0.1f), 0, Projectile.owner);
+					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, direction.X, direction.Y, ModContent.ProjectileType<EclipseBubble>(), (int)(Projectile.damage * 0.1f), 0, Projectile.owner);
 					Main.projectile[proj].timeLeft = Main.rand.Next(52, 156);
 					Main.projectile[proj].netUpdate = true;
 				}

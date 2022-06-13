@@ -8347,7 +8347,7 @@ namespace SOTS.WorldgenHelpers
 		{
 			Tile tile = Main.tile[spawnX, spawnY];
 			tile.HasTile = false;
-			NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, spawnX, spawnY, 0f, 0, 0, 0);
+			NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, spawnX, spawnY, 0f, 0, 0, 0);
 		}
 	}
 }

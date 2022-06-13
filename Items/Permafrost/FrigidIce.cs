@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
+using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Permafrost;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,14 +27,13 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			SoundType = SoundLoader.CustomSoundType;
-			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre1");
+			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
 		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(2) + 1;
-			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre" + type), (int)pos.X, (int)pos.Y, 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
@@ -44,7 +45,7 @@ namespace SOTS.Items.Permafrost
 					int amt = 2 + Main.rand.Next(3);
 					for (int a = 0; a < amt; a++)
 					{
-						Projectile.NewProjectile(new Vector2(i * 16 + 8, j * 16 + 8), new Vector2(0, -0.25f) + Main.rand.NextVector2Circular(1.5f, 1.5f), ModContent.ProjectileType<FrigidIceShard>(), 20, 3, Main.myPlayer); //40 damage normal mode, 80 expert
+						Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), new Vector2(0, -0.25f) + Main.rand.NextVector2Circular(1.5f, 1.5f), ModContent.ProjectileType<FrigidIceShard>(), 20, 3, Main.myPlayer); //40 damage normal mode, 80 expert
 						noItem = true;
 					}
 				}
@@ -53,11 +54,7 @@ namespace SOTS.Items.Permafrost
     }
 	public class FrigidIceTileSafe : ModTile
 	{
-        public override bool Autoload(ref string name, ref string texture)
-		{
-			texture = "SOTS/Items/Permafrost/FrigidIceTile";
-			return base.Autoload(ref name, ref texture);
-        }
+        public override string Texture => "SOTS/Items/Permafrost/FrigidIceTile";
         public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
@@ -70,13 +67,13 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			SoundType = SoundLoader.CustomSoundType;
-			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
+			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
 		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)pos.X, (int)pos.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			int type = Main.rand.Next(2) + 1;
+			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre" + type), (int)pos.X, (int)pos.Y, 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 	}
@@ -108,8 +105,14 @@ namespace SOTS.Items.Permafrost
 			DustType = ModContent.DustType<ModIceDust>();
 			ItemDrop = ModContent.ItemType<FrigidBrick>();
 			AddMapEntry(new Color(96, 111, 215));
-			SoundType = SoundLoader.CustomSoundType;
-			SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Items/FrigidOre");
+			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
+		}
+		public override bool KillSound(int i, int j, bool fail)
+		{
+			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
+			int type = Main.rand.Next(2) + 1;
+			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre" + type), (int)pos.X, (int)pos.Y, 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			return false;
 		}
 	}
 	public class FrigidBrick : ModItem

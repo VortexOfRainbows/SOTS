@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					if (counter % 40 == 0)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.7f, 0.4f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.4f);
 						for (int k = 0; k < 360; k += 10)
 						{
 							Vector2 circularLocation = new Vector2(-70 * Projectile.scale - 26, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					if (counter % 240 == 181 && counter < 750)
 					{
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, -0.2f);
+						SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1f, -0.2f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int amt = 8;

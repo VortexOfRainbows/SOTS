@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Chaos
         {
             if (runOnce)
             {
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.9f, 0.1f);
+                SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, 0.1f);
                 runOnce = false;
             }
             SetupLaser();
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Chaos
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
                 }
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.6f, -0.4f);
+                SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.6f, -0.4f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (Main.rand.NextBool(4))

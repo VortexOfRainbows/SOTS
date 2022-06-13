@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Permafrost
 				WorldGen.KillTile(i, j, false, false, false);
 				if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
 				{
-					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
+					NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 				}
 			}
 		}

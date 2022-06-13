@@ -17,9 +17,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.height = 16;
 			Projectile.width = 16;
 			Projectile.penetrate = 4;
-			// Projectile.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.DamageType = DamageClass.Melee;
-			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.tileCollide = true;
 			Projectile.alpha = 100;
 			Projectile.timeLeft = 100;
@@ -30,9 +28,8 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if(Main.rand.Next(7) == 0)
-			target.AddBuff(BuffID.Confused, 90, false);
-			
+			if(Main.rand.NextBool(7))
+				target.AddBuff(BuffID.Confused, 90, false);
 			Projectile.damage = (int)(Projectile.damage * 0.75f);
 			Projectile.friendly = Projectile.penetrate > 2;
 		}

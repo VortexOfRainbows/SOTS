@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if(runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 1.1f, 0.4f);
+				SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, 0.4f);
 			}
 			float bonus = Projectile.ai[0];
 			if (bonus > 8)

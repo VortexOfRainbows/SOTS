@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Nature
 					if(Projectile.owner == Main.myPlayer)
 					{
 						
-						int Probe = Projectile.NewProjectile(Projectile.Center.X + direction.X, Projectile.Center.Y + direction.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0] + 1, Projectile.ai[1]);
+						int Probe = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X + direction.X, Projectile.Center.Y + direction.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0] + 1, Projectile.ai[1]);
 							Main.projectile[Probe].rotation = Projectile.rotation - Projectile.ai[1];
 						
 						if(Main.projectile[Probe].ai[0] != 10)

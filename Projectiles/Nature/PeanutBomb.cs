@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if (Main.myPlayer == Projectile.owner)
 			{
-				Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PeanutExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PeanutExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 			}
 			float RandMod = Main.rand.NextFloat(4);
 			for (int i = 0; i < 10 + RandMod * 2; i++)
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
 				for (int i = 0; i < 360; i += 15)
 				{
 					Vector2 circularLocation = new Vector2(-Main.rand.NextFloat(8, 14), 0).RotatedBy(MathHelper.ToRadians(i));

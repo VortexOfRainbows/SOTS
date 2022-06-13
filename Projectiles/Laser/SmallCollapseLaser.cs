@@ -159,7 +159,7 @@ namespace SOTS.Projectiles.Laser
 				if(distance < 24 && Projectile.friendly)
 				{
 					if(Projectile.owner == Main.myPlayer)
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, Mod.Find<ModProjectile>("ContinuumExplosion").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, Projectile.ai[0]);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<ContinuumExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, Projectile.ai[0]);
 					currentNPC = -1;
 					posListX.Add(npc.Center.X);
 					posListY.Add(npc.Center.Y);
@@ -316,7 +316,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			if(completedLoads > 0)
 			{
-				LaserDraw(spriteBatch);
+				LaserDraw(Main.spriteBatch);
 			}
 		}
 	}

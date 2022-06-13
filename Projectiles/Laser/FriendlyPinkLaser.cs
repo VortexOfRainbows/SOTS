@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Laser
 				}
 				if(Distance >= 40)
 				{
-					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f), size, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f), size, SpriteEffects.None, 0f);
 					if(dust)
 					{
 						int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, 72);

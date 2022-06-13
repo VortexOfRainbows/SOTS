@@ -67,13 +67,13 @@ namespace SOTS.Projectiles.Pyramid
 					else
 						valid = false;
 					if (!Main.tile[x, y].HasTile && Main.netMode != NetmodeID.SinglePlayer)
-						NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
+						NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
 				}
 			}
 			if(valid)
 			{
 				bool placed = WorldGen.PlaceTile(i, j + 2, ModContent.TileType<AncientGoldGateTile>(), false, true, -1, 4); //place pillar tile
-				NetMessage.SendData(MessageID.TileChange, -1, -1, null, 1, i, j + 2, ModContent.TileType<AncientGoldGateTile>(), 4, 0, 0);
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, i, j + 2, ModContent.TileType<AncientGoldGateTile>(), 4, 0, 0);
 				for (int x = left; x < left + 2; x++)
 				{
 					for (int y = top; y < top + 5; y++)

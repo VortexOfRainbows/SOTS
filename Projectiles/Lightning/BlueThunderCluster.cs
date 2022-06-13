@@ -44,13 +44,13 @@ namespace SOTS.Projectiles.Lightning
 		public override void Kill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, Projectile.Center);
 			if(Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 8; i++)
                 {
 					Vector2 circularVelocity = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 45));
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circularVelocity.X, circularVelocity.Y, Mod.Find<ModProjectile>("BlueLightning").Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, circularVelocity.X, circularVelocity.Y, ModContent.ProjectileType<BlueLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
 				}
 			}
 		}

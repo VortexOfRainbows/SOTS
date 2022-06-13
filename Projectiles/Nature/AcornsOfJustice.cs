@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				for (int i = -2; i <= 2; i++)
 				{
-					int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
+					int Probe = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
 					Main.projectile[Probe].rotation = oldVelocity.ToRotation() + MathHelper.ToRadians(90 - i * 8f);
 					Main.projectile[Probe].spriteDirection = 1;
 					Main.projectile[Probe].frame = 3;
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				for (int i = -2; i <= 2; i++)
 				{
-					int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
+					int Probe = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
 					Main.projectile[Probe].rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90 - i * 8f);
 					Main.projectile[Probe].spriteDirection = 1;
 					Main.projectile[Probe].frame = 3;

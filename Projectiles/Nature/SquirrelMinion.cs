@@ -82,9 +82,9 @@ namespace SOTS.Projectiles.Nature
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(Mod.Find<ModBuff>("SquirrelBuff").Type);
+				player.ClearBuff(ModContent.BuffType<Buffs.MinionBuffs.SquirrelBuff>());
 			}
-			if (player.HasBuff(Mod.Find<ModBuff>("SquirrelBuff").Type))
+			if (player.HasBuff(ModContent.BuffType<Buffs.MinionBuffs.SquirrelBuff>()))
 			{
 				Projectile.timeLeft = 2;
 			}

@@ -23,7 +23,7 @@ Major Milestones TO REACH (Will be removed when completed)
 6. Make sure Advisor Health Scaling in Expert works properly!
 7. Make sure projectile expert mode damage from enemies works properly (GetBaseDamage(NPC npc))!
 8. Make sure sound playing system works with pitch and volume
-9. Make sure void minion damage scales live (without resummon) and properly
+9. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
@@ -56,6 +56,10 @@ Low Priority Objectives:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
+
+6/13/22
+1. Chaos Projectiles... Cleaning out the rest of the folders...
+2. 660 -> 584 -> 225
 
 6/10/22 & 6/11/22
 1. Pyramid item folder

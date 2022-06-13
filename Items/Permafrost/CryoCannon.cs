@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Permafrost;
+using Terraria.DataStructures;
 
 namespace SOTS.Items.Permafrost
 {
@@ -41,9 +42,9 @@ namespace SOTS.Items.Permafrost
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<FrigidBar>(), 8).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<IceCluster>(), damage, knockBack, player.whoAmI, -1);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<IceCluster>(), damage, knockback, player.whoAmI, -1);
 			return false; 
 		}
 	}

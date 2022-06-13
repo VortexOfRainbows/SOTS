@@ -55,7 +55,7 @@ namespace SOTS.Items.Tools
 			player.rulerGrid = true;
 			if (!point1.Equals(new Vector2(-1, 0)))
 			{
-				Projectile.NewProjectile(point1.X * 16 + 8, point1.Y * 16 + 8, 0, 0, ModContent.ProjectileType<WorldgenCapture_Highlight>(), 0, 0, 0, point2.X, point2.Y); //yet again, I store it as a projectile because of laziness, player value is 0 to prevent multiplayer spawns
+				Projectile.NewProjectile(player.GetSource_ItemUse(this.Item), point1.X * 16 + 8, point1.Y * 16 + 8, 0, 0, ModContent.ProjectileType<WorldgenCapture_Highlight>(), 0, 0, 0, point2.X, point2.Y); //yet again, I store it as a projectile because of laziness, player value is 0 to prevent multiplayer spawns
 			}
 		}
 		public void PasteStructure(int[,] structure)

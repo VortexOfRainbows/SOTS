@@ -56,7 +56,7 @@ namespace SOTS.Items.Tools
 			player.rulerGrid = true;
 			if (!point1.Equals(new Vector2(-1, 0)))
 			{
-				Projectile.NewProjectile(point1.X * 16 + 8, point1.Y * 16 + 8, 0, 0, ModContent.ProjectileType<WorldgenCapture_Highlight>(), 0, 0, 0, point2.X, point2.Y); //yet again, I store it as a projectile because of laziness, player value is 0 to prevent multiplayer spawns
+				Projectile.NewProjectile(player.GetSource_ItemUse(this.Item), point1.X * 16 + 8, point1.Y * 16 + 8, 0, 0, ModContent.ProjectileType<WorldgenCapture_Highlight>(), 0, 0, 0, point2.X, point2.Y); //yet again, I store it as a projectile because of laziness, player value is 0 to prevent multiplayer spawns
 			}
 		}
 		public void PasteStructure(int[,] structure)
@@ -84,8 +84,8 @@ namespace SOTS.Items.Tools
 								{
 									double specialType = -tiles[w]; //W.YXXX
 									specialType += (int)tiles[w]; //solo out the decimal places: W.YXXX - W = .YXXX
-									tile.HasTile;
-									tile.IsHalfBlock;
+									tile.HasTile = false;
+									tile.IsHalfBlock = false;
 									tile.Slope = 0;
 									int specialDigit1 = (int)(specialType * 10 + 0.5); //Y in Y.XXX	stores liquid style
 									int specialDigits2 = (int)(specialType * 10000 + 0.5) - (specialDigit1 * 1000);  //X in XXX
@@ -107,19 +107,19 @@ namespace SOTS.Items.Tools
 								TileObjectData tileData = TileObjectData.GetTileData((int)tiles[w], specialDigits3);
 								if(tileData == null || (tileData.Width == 1 && tileData.Height == 1))
 								{
-									tile.HasTile;
+									tile.HasTile = false;
 									WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3);
 									tile.Slope = 0;
-									tile.IsHalfBlock;
+									tile.IsHalfBlock = false;
 
 									//tile.TileType = (ushort)(tiles[w]);
 									if (specialDigit2 > 0)
 									{
-										tile.Slope = (byte)specialDigit2;
+										tile.Slope = (SlopeType)specialDigit2;
 									}
 									else if (specialDigit1 > 0)
 									{
-										tile.IsHalfBlock;
+										tile.IsHalfBlock = true;
 									}
 								}
 								else if(confirmPlatforms == 1)
@@ -127,28 +127,36 @@ namespace SOTS.Items.Tools
 									if ((int)tiles[w] == TileID.ClosedDoor)
 									{
 										if (Main.tile[i, j - 1].TileType != (int)(tiles[w]))
-											Main.tile[i, j - 1].HasTile;
+                                        {
+											Tile tile2 = Main.tile[i, j - 1];
+											tile2.HasTile = false;
+										}
 										if (Main.tile[i, j - 2].TileType != (int)(tiles[w]))
-											Main.tile[i, j - 2].HasTile;
+										{
+											Tile tile2 = Main.tile[i, j - 2];
+											tile2.HasTile = false;
+										}
 										if (tile.TileType != (int)(tiles[w]))
-											tile.HasTile;
+										{
+											tile.HasTile = false;
+										}
 										//Main.NewText("Special3: " + specialDigits3, 150, 255, 255);
 										WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3 % 36);
 									}
 									else
 									{
 										if(tile.TileType != (int)(tiles[w]))
-											tile.HasTile;
+											tile.HasTile = false;
 										WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3);
 										tile.Slope = 0;
-										tile.IsHalfBlock;
+										tile.IsHalfBlock = false;
 										if (specialDigit2 > 0)
 										{
-											tile.Slope = (byte)specialDigit2;
+											tile.Slope = (SlopeType)specialDigit2;
 										}
 										else if (specialDigit1 > 0)
 										{
-											tile.IsHalfBlock;
+											tile.IsHalfBlock = true;
 										}
 									}
 								}
@@ -188,7 +196,7 @@ namespace SOTS.Items.Tools
 					for (int i = pointX; i < distX; i++)
 					{
 						Tile checkingTile = Main.tile[i + (int)point1.X, j + (int)point1.Y];
-						double specialType = tile.TileType + (tile.Slope * 0.01) + (tile.TileType ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
+						double specialType = tile.TileType + ((int)tile.Slope * 0.01) + (tile.IsHalfBlock ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
 
 						specialType += style * 0.01 * 0.0001; //this allows tile styles to be stored as Z in WWWW.XYZZZZ;
 						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.TileType != tile.TileType)
@@ -300,7 +308,7 @@ namespace SOTS.Items.Tools
 							anchor.X = i;
 							anchor.Y = j;
 						}
-						double specialType = tile.TileType + (tile.Slope * 0.01) + (tile.TileType ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, halfblock to be stored as X in WWWW.XYZZZZ, and slope as Y in WWWW.XYZZZZ;
+						double specialType = tile.TileType + ((int)tile.Slope * 0.01) + (tile.IsHalfBlock ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, halfblock to be stored as X in WWWW.XYZZZZ, and slope as Y in WWWW.XYZZZZ;
 
 						TileObjectData tileData = TileObjectData.GetTileData(tile);
 						int style = 0;
@@ -373,15 +381,15 @@ namespace SOTS.Items.Tools
 					finalExport += "						{\n";
 					double specialType = -tiles[i]; //W.YXXX
 					specialType += (int)tiles[i]; //solo out the decimal places: W.YXXX - W = .YXXX
-					finalExport += "							tile.active(false);\n";
-					finalExport += "							tile.halfBrick(false);\n";
-					finalExport += "							tile.slope(0);\n";
+					finalExport += "							tile.HasTile = false;\n";
+					finalExport += "							tile.IsHalfBlock = false;\n";
+					finalExport += "							tile.Slope = 0;\n";
 					int specialDigit1 = (int)(specialType * 10 + 0.5); //Y in Y.XXX	stores liquid style
 					int specialDigits2 = (int)(specialType * 10000 + 0.5) - (specialDigit1 * 1000);  //X in XXX
 					if(specialDigits2 > 0)
 					{
-						finalExport += "							tile.liquid = " + (byte)specialDigits2 + ";\n";
-						finalExport += "							tile.liquidType(" + specialDigit1 + ");\n";
+						finalExport += "							tile.LiquidAmount = " + (byte)specialDigits2 + ";\n";
+						finalExport += "							tile.LiquidType(" + specialDigit1 + ");\n";
 					}
 					finalExport += "						}\n";
 				}
@@ -398,41 +406,41 @@ namespace SOTS.Items.Tools
 					{
 						if(tileData == null)
 						{
-							finalExport += "						tile.active(true);\n";
+							finalExport += "						tile.HasTile = true;\n";
 							finalExport += "						tile.TileType = " + (ushort)(tiles[i]) + ";\n";
 						}
 						else if (tileData.Width == 1 && tileData.Height == 1)
 						{
 							finalExport += "						if(confirmPlatforms == 0)\n";
-							finalExport += "							tile.active(false);\n";
+							finalExport += "							tile.HasTile = false;\n";
 							finalExport += "						WorldGen.PlaceTile(k, l," + (int)(tiles[i]) + ", true, true, -1," + specialDigits3 + ");\n";
 						}
 						//WorldGen.PlaceTile(k, l, (int)(tiles[i]), true, true, -1, specialDigits3);
 
 						if (specialDigit2 > 0)
 						{
-							finalExport += "						tile.slope(" + (byte)specialDigit2 + ");\n";
+							finalExport += "						tile.Slope = (SlopeType)" + (byte)specialDigit2 + ";\n";
 						}
 						else
 						{
-							finalExport += "						tile.slope(0);\n";
+							finalExport += "						tile.Slope = 0;\n";
 						}
 						if (specialDigit1 > 0)
 						{
-							finalExport += "						tile.halfBrick(true);\n";
+							finalExport += "						tile.IsHalfBlock = true;\n";
 						}
 						else
 						{
-							finalExport += "						tile.halfBrick(false);\n";
+							finalExport += "						tile.IsHalfBlock = false;\n";
 						}
 					}
 					else 
 					{
 						finalExport += "						if (confirmPlatforms == 1)\n";
 						finalExport += "						{\n";
-						finalExport += "							tile.active(false);\n";
-						finalExport += "							tile.slope(0);\n";
-						finalExport += "							tile.halfBrick(false);\n";
+						finalExport += "							tile.HasTile = false;\n";
+						finalExport += "							tile.Slope = 0;\n";
+						finalExport += "							tile.IsHalfBlock = false;\n";
 						if ((int)tiles[i] == TileID.ClosedDoor)
 						{
 							finalExport += "							WorldGen.PlaceTile(k, l," + (int)(tiles[i]) + ", true, true, -1," + specialDigits3 % 36 + ");\n";

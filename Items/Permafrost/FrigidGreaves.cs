@@ -30,7 +30,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "FrigidBar", 12).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<FrigidBar>(12).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

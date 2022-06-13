@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Permafrost;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -37,10 +38,10 @@ namespace SOTS.Items.Permafrost
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Diamond, 1).AddIngredient(ModContent.ItemType<FrigidBar>(), 8).AddTile(TileID.Anvils).Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			Vector2 toPos = Main.MouseWorld;
-			Projectile.NewProjectile(toPos.X, toPos.Y, 0, 0, type, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, toPos.X, toPos.Y, 0, 0, type, damage, knockback, player.whoAmI);
 			return false;
 		}
     }

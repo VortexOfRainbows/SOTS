@@ -147,7 +147,7 @@ namespace SOTS.Projectiles.Tide
                 }
                 Vector2 drawPos = Projectile.Center;
                 drawPos += new Vector2(i * segmentDist, 0).RotatedBy(Projectile.rotation);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, lightColor, Projectile.rotation + MathHelper.ToRadians(player.direction != 1 ? -45 : 45), new Vector2(texture.Width / 2, Projectile.height / 2), 1f, player.direction != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0.0f);
+                Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, lightColor, Projectile.rotation + MathHelper.ToRadians(player.direction != 1 ? -45 : 45), new Vector2(texture.Width / 2, Projectile.height / 2), 1f, player.direction != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0.0f);
             }
             return false;
         }

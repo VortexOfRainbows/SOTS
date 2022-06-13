@@ -57,7 +57,6 @@ namespace SOTS.Projectiles.Laser
 				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
-
 				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].HasUnactuatedTile)
 				{
 					break;
@@ -101,7 +100,7 @@ namespace SOTS.Projectiles.Laser
 				}
 				if(Distance >= 40)
 				{
-					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f), size, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f), size, SpriteEffects.None, 0f);
 					Lighting.AddLight(position, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.3f / 255f);
 					if(dust)
 					{

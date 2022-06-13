@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Base
 				if(sound)
 				{
 					if (Projectile.owner  == Main.LocalPlayer.whoAmI)
-						Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, SoundLoader.GetSoundSlot(Mod, "Sounds/Void/Void_Death"), 1.05f);
+						SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Death"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.05f);
 					sound = false;
                 }
 				for (int i = 0; i < 3; i++)

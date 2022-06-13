@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using SOTS.Dusts;
 using SOTS.NPCs;
 using SOTS.Void;
+using SOTS.Common.GlobalNPCs;
 
 namespace SOTS.Projectiles.Chaos
 {

@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.4f, -0.4f);
+				SOTSUtils.PlaySound(SoundID.Item96, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.4f, -0.4f);
 				runOnce = false;
 			}
 			aiCounter2++;

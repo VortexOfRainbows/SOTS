@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.0f, -0.1f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.1f);
 				DustOut();
 				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0] * 90 + SOTSWorld.GlobalCounter * 3));
 				SetPostitions();
@@ -197,7 +197,7 @@ namespace SOTS.Projectiles.Chaos
 				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter), this.color);
 				color.A = 0;
 				Vector2 dynamicAddition = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * i) + SOTSWorld.GlobalCounter * 2);
-				spriteBatch.Draw(texture, drawPos + dynamicAddition, null, color * 0.5f * percentDeath, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, color * 0.5f * percentDeath, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/DogmaLaser");
 			origin = new Vector2(texture.Width / 2, texture.Height / 2);
@@ -220,9 +220,9 @@ namespace SOTS.Projectiles.Chaos
 				for (int j = 0; j < 2; j++)
 				{
 					Vector2 sinusoid = new Vector2(0, scale * 24 * (float)Math.Sin(MathHelper.ToRadians(i * 2 - SOTSWorld.GlobalCounter * 3 + j * 180)) * startingScale * otherScale).RotatedBy(rotation);
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color, rotation, origin, new Vector2(scale * 2, scale * 0.4f), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color, rotation, origin, new Vector2(scale * 2, scale * 0.4f), SpriteEffects.None, 0f);
 				}
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color, rotation, origin, new Vector2(scale * 2, scale), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color, rotation, origin, new Vector2(scale * 2, scale), SpriteEffects.None, 0f);
 				if (startingScale < 1f || alpha != 1)
 					startingScale += 0.05f;
 				startingScale = MathHelper.Clamp(startingScale, 0, 1);

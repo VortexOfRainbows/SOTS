@@ -43,20 +43,20 @@ namespace SOTS.Items.Tools
 						drawPos = (Projectile.position + (new Vector2(i, j) * 16)) - Main.screenPosition;
 						if (j == 0 || i == 0 || j == differenceY - 1 || i == differenceX - 1)
 						{
-							spriteBatch.Draw(texture1, drawPos, null, new Color(100, 100, 100, 100), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-							spriteBatch.Draw(texture2, drawPos, null, new Color(100, 100, 100, 50), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture1, drawPos, null, new Color(100, 100, 100, 100), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture2, drawPos, null, new Color(100, 100, 100, 50), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 						}
 						else
 						{
-							spriteBatch.Draw(texture3, drawPos, null, new Color(100, 100, 100, 50), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture3, drawPos, null, new Color(100, 100, 100, 50), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 						}
 					}
 				}
 			}
 			else
 			{
-				spriteBatch.Draw(texture1, drawPos, null, new Color(100, 100, 100, 100), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-				spriteBatch.Draw(texture2, drawPos, null, new Color(100, 100, 100, 50), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture1, drawPos, null, new Color(100, 100, 100, 100), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, drawPos, null, new Color(100, 100, 100, 50), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}

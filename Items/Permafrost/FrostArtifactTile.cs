@@ -3,6 +3,7 @@ using SOTS.Buffs;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.Void;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -52,7 +53,7 @@ namespace SOTS.Items.Permafrost
 		{
 			if(frameX == 0)
 			{
-			   Item.NewItem(i * 16, j * 16, 48, 48, ModContent.ItemType<FrostArtifact>());
+			   Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<FrostArtifact>());
 			}
 		}
 		public override bool CanExplode(int i, int j)
@@ -63,7 +64,7 @@ namespace SOTS.Items.Permafrost
 		{
 			return SOTSWorld.downedAmalgamation;
 		}
-		public override void RightClick(int i, int j)
+        public override bool RightClick(int i, int j)
         {
 			int xlocation = i * 16 - 8;
 			int ylocation = j * 16 + 8;
@@ -73,13 +74,14 @@ namespace SOTS.Items.Permafrost
 			for(int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
-				if(Item.type == ModContent.ItemType<FrostedKey>() && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()))
+				if(item.type == ModContent.ItemType<FrostedKey>() && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()))
 				{
 					//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
 					player.AddBuff(ModContent.BuffType<SpawnBossIce>(), ylocation, false);
 					break;
 				}
 			}
+			return true;
 		}  
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{

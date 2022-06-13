@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Nature
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)
 			{
-				int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
+				int Probe = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
 				Main.projectile[Probe].rotation = (float)Math.Atan2((double)oldVelocity.Y, (double)oldVelocity.X) + MathHelper.ToRadians(90);
 				Main.projectile[Probe].spriteDirection = 1;
 				Main.projectile[Probe].frame = 3;
@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Nature
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)
 			{
-				int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
+				int Probe = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
 				Main.projectile[Probe].rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + MathHelper.ToRadians(90);
 				Main.projectile[Probe].spriteDirection = 1;
 				Main.projectile[Probe].frame = 3;

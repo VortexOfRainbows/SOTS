@@ -3,7 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
-
+using Terraria.DataStructures;
+using SOTS.Projectiles.Permafrost;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items.Permafrost
 {
@@ -29,7 +31,7 @@ namespace SOTS.Items.Permafrost
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item61;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("HypericeRocket").Type; 
+            Item.shoot = ModContent.ProjectileType<HypericeRocket>(); 
             Item.shootSpeed = 19f;
 		}
 		public override int GetVoid(Player player)
@@ -41,23 +43,23 @@ namespace SOTS.Items.Permafrost
 			return new Vector2(-2, -1);
 		}
 		int shot = 0;
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			shot++;
 			if(shot % 3 == 0)
 			{
 				for(int i = 0; i < 2; i ++)
 				{
-				Vector2 angle = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(2.5f - (5 * i)));
-				Projectile.NewProjectile(position.X, position.Y, angle.X, angle.Y, Mod.Find<ModProjectile>("HypericeRocket").Type, damage, knockBack, player.whoAmI);
+					Vector2 angle = velocity.RotatedBy(MathHelper.ToRadians(2.5f - (5 * i)));
+					Projectile.NewProjectile(source, position.X, position.Y, angle.X, angle.Y, ModContent.ProjectileType<HypericeRocket>(), damage, knockback, player.whoAmI);
 				}
 			}
-			Projectile.NewProjectile(position.X, position.Y, speedX * 1.6f, speedY * 1.6f, Mod.Find<ModProjectile>("IceImpale").Type, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X * 1.6f, velocity.Y * 1.6f, ModContent.ProjectileType<IceImpale>(), damage, knockback, player.whoAmI);
 			return false; 
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "HypericeClusterCannon", 1).AddIngredient(ModContent.ItemType<HelicopterParts>(), 1).AddIngredient(null, "DissolvingAurora", 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<HypericeClusterCannon>(1).AddIngredient(ModContent.ItemType<HelicopterParts>(), 1).AddIngredient<DissolvingAurora>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Crushers
 				for(int i = 0; i < 4; i++)
 				{
 					Vector2 circularLocation = new Vector2(0, 4).RotatedBy(MathHelper.ToRadians(45 + i * 90));
-					Projectile.NewProjectile(target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, Mod.Find<ModProjectile>("HealLock").Type, 0, 0, player.whoAmI, 3);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<HealLock>(), 0, 0, player.whoAmI, 3);
 				}
 			}
         }

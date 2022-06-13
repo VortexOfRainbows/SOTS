@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Crushers
         public override void Kill(int timeLeft)
         {
             if(Main.myPlayer == Projectile.owner)
-                Projectile.NewProjectileDirect(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Webbing>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Webbing>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner);
             base.Kill(timeLeft);
         }
     }

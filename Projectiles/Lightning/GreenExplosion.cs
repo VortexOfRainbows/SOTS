@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Lightning
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("GreenLightningZap").Type, (int)(Projectile.damage * 0.9f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[1]);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GreenLightningZap>(), (int)(Projectile.damage * 0.9f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[1]);
 					}
 				}
 			}

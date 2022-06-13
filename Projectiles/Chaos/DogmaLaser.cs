@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Chaos
 			if(counter == windUpLength + 1)// && Projectile.knockBack == -1)
 			{
 				//Terraria.Audio.SoundEngine.PlaySound(SoundLoader.CustomSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.1f, 0.1f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, 0.1f);
 			}
 			if (counter > windUpLength)
 			{

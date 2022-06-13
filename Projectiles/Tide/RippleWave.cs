@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Tide
 			Projectile.alpha += 5;
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.4f);
+				SOTSUtils.PlaySound(SoundID.Item21, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
 				runOnce = false;
             }
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Tide
 			{
 				for(int i = 0; i < ParticlePos.Count; i++)
 				{
-					spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;
@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Tide
 			Projectile.alpha += 9;
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.5f, -0.1f);
+				SOTSUtils.PlaySound(SoundID.Item21, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f, -0.1f);
 				runOnce = false;
 			}
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
@@ -194,7 +194,7 @@ namespace SOTS.Projectiles.Tide
 			{
 				for (int i = 0; i < ParticlePos.Count; i++)
 				{
-					spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;

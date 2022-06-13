@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Permafrost;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -30,11 +31,11 @@ namespace SOTS.Items.Permafrost
             Item.rare = ItemRarityID.Green;
             Item.UseSound = SoundID.Item43;
             Item.mana = 12;
-			Item.shoot = Mod.Find<ModProjectile>("IceShard").Type;
+			Item.shoot = ModContent.ProjectileType<IceShard>();
         }
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "FrigidBar", 12).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<FrigidBar>(12).AddTile(TileID.Anvils).Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
 		{
@@ -47,23 +48,22 @@ namespace SOTS.Items.Permafrost
 			{
 				Item.useTime = 20;
 			}
-			base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			Vector2 toPos = Main.MouseWorld;
 			for(int i = 0; i < 1; i++)
 			{
 				Vector2 newPos = position + new Vector2(Main.rand.Next(-48, 49), Main.rand.Next(-48, 19));
-				float speed = new Vector2(speedX, speedY).Length();
+				float speed = velocity.Length();
 				Vector2 speed2 = new Vector2(speed, 0).RotatedBy(Math.Atan2(toPos.Y - newPos.Y, toPos.X - newPos.X));
 				if(Item.crit + player.GetCritChance(DamageClass.Magic) + 4 >= Main.rand.Next(100) + 1)
 				{
-					Projectile.NewProjectile(newPos.X, newPos.Y, speed2.X, speed2.Y, type, damage, knockBack, player.whoAmI, 5, 2);
+					Projectile.NewProjectile(source, newPos.X, newPos.Y, speed2.X, speed2.Y, type, damage, knockback, player.whoAmI, 5, 2);
 				}
 				else
 				{
-					Projectile.NewProjectile(newPos.X, newPos.Y, speed2.X, speed2.Y, type, damage, knockBack, player.whoAmI, Main.rand.Next(5), 2);
+					Projectile.NewProjectile(source, newPos.X, newPos.Y, speed2.X, speed2.Y, type, damage, knockback, player.whoAmI, Main.rand.Next(5), 2);
 				}
 			}
 			return false;

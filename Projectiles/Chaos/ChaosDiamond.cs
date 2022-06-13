@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.3f, -0.2f);
+			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)
             {
 				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Chaos
 			Vector2 actualVelocity = (Projectile.velocity - Projectile.Center).SafeNormalize(Vector2.Zero);
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 77, 1.1f, -0.3f);
+				SOTSUtils.PlaySound(SoundID.Item77, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.3f);
 				Projectile.timeLeft = (int)Projectile.ai[0];
 				runOnce = false;
 				for (int i = 0; i < 15; i++)

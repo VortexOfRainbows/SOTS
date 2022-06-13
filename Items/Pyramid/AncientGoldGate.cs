@@ -205,7 +205,7 @@ namespace SOTS.Items.Pyramid
 						if (Main.tile[x, y].TileFrameY < 270)
 						{
 							Main.tile[x, y].TileFrameY += 90;
-							//NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
+							//NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
 							NetMessage.SendTileSquare(-1, x, y, 2);
 						}
 					}
@@ -315,7 +315,7 @@ namespace SOTS.Items.Pyramid
 				int j = (int)Projectile.Center.Y / 16;
 				WorldGen.KillTile(i, j, false, false, false);
 				if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
-					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
+					NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 				Vector2 center = Projectile.Center + new Vector2(16, 40);
 				SOTSUtils.PlaySound(SoundID.Item14, (int)center.X, (int)center.Y, 1.25f, -0.25f);
 				for (int k = 0; k < 12; k++)

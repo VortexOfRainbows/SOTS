@@ -19,14 +19,11 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Shatter Shard Chestplate");
 			Tooltip.SetDefault("Getting hit surrounds you with ice shards");
+			ArmorIDs.Body.Sets.HidesHands[Type] = false;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return head.type == Mod.Find<ModItem>("FrigidCrown") .Type&& legs.type == Mod.Find<ModItem>("FrigidGreaves").Type;
-		}
-        public override void DrawHands(ref bool drawHands, ref bool drawArms)
-        {
-			drawHands = true;
+            return head.type == ModContent.ItemType<FrigidCrown>() && legs.type == ModContent.ItemType<FrigidGreaves>();
 		}
         public override void UpdateArmorSet(Player player)
 		{
@@ -51,7 +48,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "FrigidBar", 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<FrigidBar>(20).AddTile(TileID.Anvils).Register();
 		}
 
 	}

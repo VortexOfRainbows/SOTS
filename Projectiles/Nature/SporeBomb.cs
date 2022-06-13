@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Nature
 		public override void Kill(int timeLeft)
         {
 			Vector2 position = Projectile.Center;
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit1, (int)position.X, (int)position.Y);  
+			SOTSUtils.PlaySound(SoundID.NPCHit1, (int)position.X, (int)position.Y);  
 			for(int i = 0; i < 20; i++)
 			{
 				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 39);
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				for(int i = 0; i < Main.rand.Next(2) + 2; i++)
 				{ 
-					Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Main.rand.NextVector2Circular(2, 2), ProjectileID.SporeCloud, (int)(Projectile.damage * 0.50f) + 1, 0, Projectile.owner);
+					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2Circular(2, 2), ProjectileID.SporeCloud, (int)(Projectile.damage * 0.50f) + 1, 0, Projectile.owner);
 					proj.timeLeft = Main.rand.Next(16, 35);
 				}
 			}

@@ -83,9 +83,9 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
 			Player owner = Main.player[Projectile.owner];
-            SOTSPlayer modPlayer = (SOTSPlayer)owner.GetModPlayer(Mod, "SOTSPlayer");
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(owner);
 			int RandMod = (int)Projectile.ai[0];
 			for (int i = 0; i < 10 + RandMod * 2; i++)
 			{
@@ -112,24 +112,24 @@ namespace SOTS.Projectiles.Tide
 				randVelo.Y -= 1.4f;
 				if (Projectile.ai[0] > 0 || Main.rand.NextBool(20 - RandMod))
 				{
-					Projectile.NewProjectile(Projectile.Center, randVelo, Projectile.type, Projectile.damage, Projectile.knockBack * 0.8f, Projectile.owner, Projectile.ai[0] - 1f);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, randVelo, Projectile.type, Projectile.damage, Projectile.knockBack * 0.8f, Projectile.owner, Projectile.ai[0] - 1f);
 					bool triple = false;
 					if ((Projectile.ai[0] > 2) || Main.rand.NextBool(40 - RandMod))
 					{
 						triple = true;
-						Projectile.NewProjectile(Projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + 240)) * Main.rand.NextFloat(0.8f, 1.2f), Projectile.type, Projectile.damage, Projectile.knockBack * 0.6f, Projectile.owner, Projectile.ai[0] - 1f);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + 240)) * Main.rand.NextFloat(0.8f, 1.2f), Projectile.type, Projectile.damage, Projectile.knockBack * 0.6f, Projectile.owner, Projectile.ai[0] - 1f);
 					}
 					if ((Projectile.ai[0] > 1 && Main.rand.NextBool(3)) || Main.rand.NextBool(30 - RandMod))
 					{
 						float num = 180;
 						if (!triple)
 							num = 120;
-						Projectile.NewProjectile(Projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + num)) * Main.rand.NextFloat(0.8f, 1.2f), Projectile.type, Projectile.damage, Projectile.knockBack * 0.7f, Projectile.owner, Projectile.ai[0] - 1);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + num)) * Main.rand.NextFloat(0.8f, 1.2f), Projectile.type, Projectile.damage, Projectile.knockBack * 0.7f, Projectile.owner, Projectile.ai[0] - 1);
 					}
 				}
 				for(int i = 0; i < Main.rand.Next(1, 4); i++)
 				{
-					Projectile.NewProjectile(Projectile.Center, new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) * Main.rand.NextFloat(0.8f, 1.2f) + new Vector2(0, -3), ModContent.ProjectileType<CoconutShrapnel>(), Projectile.damage, Projectile.knockBack * 0.7f, Projectile.owner);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) * Main.rand.NextFloat(0.8f, 1.2f) + new Vector2(0, -3), ModContent.ProjectileType<CoconutShrapnel>(), Projectile.damage, Projectile.knockBack * 0.7f, Projectile.owner);
 				}
 			}		
         }

@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 				for (int i = 0; i < 3; i++)
                 {
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 120 + rand));
-					Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center + circular.SafeNormalize(Vector2.Zero) * 0.5f * target.Size.Length(), circular * 4f, ModContent.ProjectileType<SupernovaScatter>(), (int)(Projectile.damage * 1.4f), Projectile.knockBack, Main.myPlayer, target.whoAmI, rand * 3 + i * 120);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center + circular.SafeNormalize(Vector2.Zero) * 0.5f * target.Size.Length(), circular * 4f, ModContent.ProjectileType<SupernovaScatter>(), (int)(Projectile.damage * 1.4f), Projectile.knockBack, Main.myPlayer, target.whoAmI, rand * 3 + i * 120);
                 }
             }
         }

@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 			if (Projectile.timeLeft > 30)
 			{
 				if (Projectile.timeLeft == 100)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f, 0.1f);
+					SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, 0.1f);
 				Projectile.scale += 0.005f;
 			}
 			else

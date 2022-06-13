@@ -44,15 +44,15 @@ namespace SOTS.Projectiles.Laser
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			if(orbs.Length == 1)
 			{
-				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-				spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 255 - Projectile.alpha), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 255 - Projectile.alpha), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			else if(ai1 >= 9)
 			{
 				for(int i = 0; i < orbs.Length; i++)
 				{
-					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, orbs[i] - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale * (0.75f + (0.25f * (ai2/85f))), SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, orbs[i] - Main.screenPosition, null, new Color(255, 255, 255, 255 - Projectile.alpha), Projectile.rotation, drawOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, orbs[i] - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale * (0.75f + (0.25f * (ai2/85f))), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, orbs[i] - Main.screenPosition, null, new Color(255, 255, 255, 255 - Projectile.alpha), Projectile.rotation, drawOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0f);
 				}
 			}
 		}
@@ -161,17 +161,17 @@ namespace SOTS.Projectiles.Laser
 						{
 							float shootToX2 = orbsTo[i].X - player.Center.X;
 							float shootToY2 = orbsTo[i].Y - player.Center.Y;
-							float distance2 = (float)System.Math.Sqrt((double)(shootToX2 * shootToX2 + shootToY2 * shootToY2));
+							float distance2 = (float)Math.Sqrt((double)(shootToX2 * shootToX2 + shootToY2 * shootToY2));
 							distance2 = 3.9f / distance2;
 							shootToX2 *= distance2 * 5f;
 							shootToY2 *= distance2 * 5f;
 							if (orbs.Length != 1)
 							{
-								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, Mod.Find<ModProjectile>("SmallCollapseLaser").Type, (int)(Projectile.damage), 1f, Projectile.owner, Projectile.ai[1], ai2); //second ai slot is scale
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, ModContent.ProjectileType<SmallCollapseLaser>(), (int)(Projectile.damage), 1f, Projectile.owner, Projectile.ai[1], ai2); //second ai slot is scale
 							}
 							else
 							{
-								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, Mod.Find<ModProjectile>("CollapseLaser").Type, Projectile.damage * 3, 1f, Projectile.owner, Projectile.ai[1], 0f);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, ModContent.ProjectileType<CollapseLaser>(), Projectile.damage * 3, 1f, Projectile.owner, Projectile.ai[1], 0f);
 							}
 						}
 					}
@@ -179,7 +179,7 @@ namespace SOTS.Projectiles.Laser
 				if (ai1 % 20 == 0 && Main.myPlayer == player.whoAmI)
 				{
 					Item item = player.HeldItem;
-					VoidItem vItem = Item.ModItem as VoidItem;
+					VoidItem vItem = item.ModItem as VoidItem;
 					if (vItem != null)
 						vItem.DrainMana(player);
 				}

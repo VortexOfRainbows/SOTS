@@ -4,6 +4,7 @@ using SOTS.Dusts;
 using SOTS.Void;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Nature

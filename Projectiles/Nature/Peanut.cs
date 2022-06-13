@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				Vector2 location = new Vector2(Projectile.Center.X, Projectile.Center.Y - 480);
 				Vector2 fromLocation = location + new Vector2(1920 * (Main.rand.Next(2) * 2 - 1), Main.rand.NextFloat(-128, 128));
-				Projectile.NewProjectile(fromLocation, Vector2.Zero, ModContent.ProjectileType<PinkyBomber>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, location.X, location.Y);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), fromLocation, Vector2.Zero, ModContent.ProjectileType<PinkyBomber>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, location.X, location.Y);
 			}
 		}
 	}

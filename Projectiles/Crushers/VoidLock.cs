@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Crushers
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 2, 0, player.whoAmI, (int)Projectile.ai[0], 2);	
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<Base.HealProj>(), 2, 0, player.whoAmI, (int)Projectile.ai[0], 2);	
 			}
 			for(int i = 5; i > 0; i --)
 			{

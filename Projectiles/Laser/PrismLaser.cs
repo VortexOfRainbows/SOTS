@@ -275,7 +275,7 @@ namespace SOTS.Projectiles.Laser
                 {
 					alpha += 2;
                 }
-				spriteBatch.Draw(i == 0 ? texture2 : texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotations[i], i == 0 ? origin2 : origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(i == 0 ? texture2 : texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotations[i], i == 0 ? origin2 : origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}

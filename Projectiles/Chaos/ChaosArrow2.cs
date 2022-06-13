@@ -55,9 +55,9 @@ namespace SOTS.Projectiles.Chaos
 			if (runOnce)
 			{
 				if(Projectile.ai[0] != 1)
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.0f, -0.1f);
+					SOTSUtils.PlaySound(SoundID.Item96, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.1f);
 				else
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.0f, -0.1f);
+					SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.1f);
 				DustOut();
 				color = VoidPlayer.ChaosPink;
 				SetPostitions();

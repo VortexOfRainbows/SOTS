@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.Crushers
 				int ogDamage = (int)Projectile.ai[0];
 				for (float i = 0; i < Projectile.damage; i += ogDamage * 2.5f)
 				{ 
-					int proj = Projectile.NewProjectile((Projectile.Center.X), Projectile.Center.Y, Main.rand.Next(-100, 101) * 0.015f, Main.rand.Next(-100, 101) * 0.015f, 85, (int)(Projectile.damage * 0.1f), 0, Projectile.owner);
+					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Main.rand.Next(-100, 101) * 0.015f, Main.rand.Next(-100, 101) * 0.015f, ProjectileID.Flames, (int)(Projectile.damage * 0.1f), 0, Projectile.owner);
 					Main.projectile[proj].DamageType = DamageClass.Melee;
 					Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);
 				}
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Crushers
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[Projectile.owner] = 10;
-			if(Main.rand.Next(3) == 0)
+			if(Main.rand.NextBool(3))
 				target.AddBuff(BuffID.OnFire, 360, false);
         }
 	}

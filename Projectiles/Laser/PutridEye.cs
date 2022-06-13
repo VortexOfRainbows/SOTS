@@ -53,10 +53,10 @@ namespace SOTS.Projectiles.Laser
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/PutridEye");
 			Vector2 drawOrigin = new Vector2(texture2.Width / 2, texture2.Height / 2);
 			Vector2 drawOrigin2 = new Vector2(texture.Width / 2, texture.Height / 2);
-			spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, lightColor, (float)direction + MathHelper.ToRadians(225), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, lightColor, (float)direction + MathHelper.ToRadians(225), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			float dist2 = dist > 16 ? 16 : dist;
 			dist2 = dist2 <= 2 ? dist2 * ((12 + dist2)/14f) : dist2;
-			spriteBatch.Draw(texture, Projectile.Center - new Vector2(dist2, 0).RotatedBy(direction) - Main.screenPosition, null, lightColor, (float)direction, drawOrigin2, 1.1f - (dist2/14f * 0.18f), SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - new Vector2(dist2, 0).RotatedBy(direction) - Main.screenPosition, null, lightColor, (float)direction, drawOrigin2, 1.1f - (dist2/14f * 0.18f), SpriteEffects.None, 0f);
 			if (dist >= 2)
 			{
 				DrawCircle(true, 6 + dist, 60, 1);
@@ -162,22 +162,22 @@ namespace SOTS.Projectiles.Laser
 				DrawCircle(false, -6 + dist, 180, 1);
 				if (Main.myPlayer == Projectile.owner)
 				{
-					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<FriendlyPinkLaser>(), Projectile.damage, 1f, Projectile.owner, Projectile.Center.X + shootToX * 60, Projectile.Center.Y + shootToY * 60);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<FriendlyPinkLaser>(), Projectile.damage, 1f, Projectile.owner, Projectile.Center.X + shootToX * 60, Projectile.Center.Y + shootToY * 60);
 					Item item = player.HeldItem;
-					VoidItem vItem = Item.ModItem as VoidItem;
+					VoidItem vItem = item.ModItem as VoidItem;
 					if (vItem != null)
 						vItem.DrainMana(player);
 				}
 				dist = -10;
 				Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f);
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, Projectile.Center);
 			}
 			if(dist >= 2.8f && dist <= 3.2f)
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, Projectile.Center);
 			if (dist >= 8.8f && dist <= 9.2f)
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, Projectile.Center);
 			if (dist >= 14.8f && dist <= 15.2f)
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item15, Projectile.Center);
 		}
 	}
 }

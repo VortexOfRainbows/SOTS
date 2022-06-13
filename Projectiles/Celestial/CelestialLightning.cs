@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Dusts;
 using SOTS.Buffs;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -122,7 +123,7 @@ namespace SOTS.Projectiles.Celestial
 				if (type == 2)
 					color = new Color(255, 100, 255, 0);
 				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-45, 46);

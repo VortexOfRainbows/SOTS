@@ -63,8 +63,6 @@ namespace SOTS.Projectiles.Laser
 		int counter = -2;
 		public override void AI() 
 		{
-			Player player = Main.player[Projectile.owner];
-			//Projectile.Center = npc.Center;
 			Projectile.ai[0]++;
 			if(completedLoads > 0)
 			{

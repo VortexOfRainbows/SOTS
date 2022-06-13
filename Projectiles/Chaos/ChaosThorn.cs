@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.NPCs;
 using SOTS.Void;
@@ -117,7 +118,7 @@ namespace SOTS.Projectiles.Chaos
 			Player player = Main.player[Projectile.owner];
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.6f, 0.5f);
+				SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f, 0.5f);
 				if(timeLeftSetter == 900)
 				{
 					if (Projectile.owner == Main.myPlayer)

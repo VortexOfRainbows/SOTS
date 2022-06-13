@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Lightning
         }
 		public override void Kill(int timeLeft)
 		{
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94, Projectile.Center);
 			if (Projectile.owner == Main.myPlayer)
 			{
 				Player player = Main.player[Projectile.owner];
@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Lightning
 				distance = 6.25f / distance;
 				shootToX *= distance * 5;
 				shootToY *= distance * 5;
-				Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, ModContent.ProjectileType<GreenLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 5f);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, ModContent.ProjectileType<GreenLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 5f);
 			}
 		}
 	}

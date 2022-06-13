@@ -148,7 +148,6 @@ namespace SOTS.Projectiles.Chaos
         }
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
             if (runOnce)
             {
                 for (int i = 0; i < 4; i++)

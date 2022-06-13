@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Crushers
 				int ogDamage = (int)Projectile.ai[0];
 				for (float i = Main.rand.NextFloat(-1, 0); i < Projectile.damage; i += ogDamage * 1.5f)
 				{
-					int proj = Projectile.NewProjectile((Projectile.Center.X), Projectile.Center.Y, Main.rand.NextFloat(-4f, 4f), Main.rand.NextFloat(-4f, 4f), ProjectileID.Bubble, 0, 0, 0);
+					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Main.rand.NextFloat(-4f, 4f), Main.rand.NextFloat(-4f, 4f), ProjectileID.Bubble, 0, 0, 0);
 					Main.projectile[proj].friendly = false;
 					Main.projectile[proj].hostile = false;
 					Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);

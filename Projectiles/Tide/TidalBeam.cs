@@ -189,7 +189,7 @@ namespace SOTS.Projectiles.Tide
 				if (end)
 				{
 					if (TrailPositions[0].Count > 0)
-						Terraria.Audio.SoundEngine.PlaySound(2, (int)TrailPositions[0][0].X, (int)TrailPositions[0][0].Y, 27, 0.725f);
+						SOTSUtils.PlaySound(SoundID.Item27, (int)TrailPositions[0][0].X, (int)TrailPositions[0][0].Y, 0.725f);
 				}
 			}
 			for (int i = 0; i < TrailPositions.Length; i++)
@@ -218,7 +218,7 @@ namespace SOTS.Projectiles.Tide
 			Lighting.AddLight(Projectile.Center, 0.25f, 0.25f, 0.75f);
 			if (runOnce)
 			{
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 122, 1.2f);
+				SOTSUtils.PlaySound(SoundID.Item122, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f);
 				for (int i = 0; i < TrailPositions.Length; i++)
 				{
 					TrailPositions[i] = new List<Vector2>();
@@ -250,7 +250,7 @@ namespace SOTS.Projectiles.Tide
             }
 			if(counter % 30 == 29 && !end)
             {
-				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f);
+				SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f);
             }
 			MoveTrailsTowardProjectile();
 			//Vector2 varyingVelocity = new Vector2(1.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 2));

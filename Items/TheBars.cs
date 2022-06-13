@@ -12,6 +12,7 @@ using Terraria.ObjectData;
 using SOTS.Items.Earth;
 using SOTS.Items.GhostTown;
 using SOTS.Items.Chaos;
+using Terraria.DataStructures;
 
 namespace SOTS.Items
 {
@@ -185,41 +186,42 @@ namespace SOTS.Items
 		{
 			Tile tile = Main.tile[i, j];
 			int style = tile.TileFrameX / 18;
+			EntitySource_TileBreak source = new EntitySource_TileBreak(i, j);
 			if (style == 0) 
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
 			}
 			if (style == 1 || style == 2) 
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<HardlightAlloy>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<HardlightAlloy>());
 			}
 			if (style == 3 || style == 4) 
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<StarlightAlloy>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<StarlightAlloy>());
 			}
 			if (style == 5 || style == 6)
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<OtherworldlyAlloy>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<OtherworldlyAlloy>());
 			}
 			if (style == 7)
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<AbsoluteBar>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<AbsoluteBar>());
 			}
 			if (style == 8)
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<FrigidBar>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<FrigidBar>());
 			}
 			if (style == 9)
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<VibrantBar>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<VibrantBar>());
 			}
 			if (style == 10)
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<PhaseBar>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<PhaseBar>());
 			}
 			if (style == 11)
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
+				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
 			}
 			return base.Drop(i, j);
 		}

@@ -45,10 +45,10 @@ namespace SOTS.Projectiles.Crushers
 				for(int i = 0; i < 2; i++)
 				{
 					Vector2 circularLocation = new Vector2(0, 4).RotatedBy(MathHelper.ToRadians(i * 180));
-					Projectile.NewProjectile(target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, Mod.Find<ModProjectile>("ManaLock").Type, 0, 0, player.whoAmI, 20);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<ManaLock>(), 0, 0, player.whoAmI, 20);
 					
 					circularLocation = new Vector2(0, 4).RotatedBy(MathHelper.ToRadians(90 + (i * 180)));
-					Projectile.NewProjectile(target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, Mod.Find<ModProjectile>("VoidLock").Type, 0, 0, player.whoAmI, 4);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<VoidLock>(), 0, 0, player.whoAmI, 4);
 				}
 			}
         }

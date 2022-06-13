@@ -158,7 +158,7 @@ namespace SOTS.Projectiles.Celestial
 					Gore.NewGore(Projectile.GetSource_Death(), Projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
 				if (player.ZoneUnderworldHeight)
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, Projectile.Center);
 					if (!NPC.AnyNPCs(ModContent.NPCType<SubspaceSerpentHead>()))
 					{
 						NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<SubspaceSerpentHead>());
@@ -175,7 +175,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 				else
 				{
-					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.0f);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
 				}
 			}
 		}
@@ -277,7 +277,7 @@ namespace SOTS.Projectiles.Celestial
 							}
 						}
 						count++;
-						Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.95f, -0.4f);
+						SOTSUtils.PlaySound(SoundID.NPCDeath39, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.95f, -0.4f);
 						if (Main.myPlayer == Projectile.owner)
 						{
 							Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));

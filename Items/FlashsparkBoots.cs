@@ -47,8 +47,8 @@ namespace SOTS.Items
             {
                 if(hasActivate == -1)
                 {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 45, 1.3f, -0.4f);
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 14, 1.0f, -0.3f);
+                    SOTSUtils.PlaySound(SoundID.Item45, (int)player.Center.X, (int)player.Center.Y, 1.3f, -0.4f);
+                    SOTSUtils.PlaySound(SoundID.Item14, (int)player.Center.X, (int)player.Center.Y, 1.0f, -0.3f);
                     hasActivate = 180;
                     for(int i = 0; i < 3; i++)
                     {
@@ -187,7 +187,7 @@ namespace SOTS.Items
                     player.accRunSpeed = doubleAcc;
                     speedMod = 1f;
                 }
-                if (player.velocity.Y == 0.0 || player.wingsLogic > 0 || player.mount.CanFly)
+                if (player.velocity.Y == 0.0 || player.wingsLogic > 0 || player.mount.CanFly())
                 {
                     player.velocity.X -= doubleRun * 0.2f * speedMod;
                     if (player.wingsLogic > 0)
@@ -211,7 +211,7 @@ namespace SOTS.Items
                     player.accRunSpeed = doubleAcc;
                     speedMod = 1f;
                 }
-                if (player.velocity.Y == 0.0 || player.wingsLogic > 0 || player.mount.CanFly)
+                if (player.velocity.Y == 0.0 || player.wingsLogic > 0 || player.mount.CanFly())
                 {
                     player.velocity.X += doubleRun * 0.2f * speedMod;
                     if (player.wingsLogic > 0)
@@ -258,12 +258,12 @@ namespace SOTS.Items
                 {
                     if(!doDust)
                     {
-                        Terraria.Audio.SoundEngine.PlaySound(player.hermesStepSound.SoundType, (int)player.Center.X, (int)player.Center.Y, player.hermesStepSound.SoundStyle, 1f, -0.075f);
+                        SOTSUtils.PlaySound((Terraria.Audio.SoundStyle)player.hermesStepSound.Style, (int)player.Center.X, (int)player.Center.Y, 1f, -0.075f);
                         player.runSoundDelay = (int)(player.hermesStepSound.IntendedCooldown / 1.25f);
                     }    
                     else
                     {
-                        Terraria.Audio.SoundEngine.PlaySound(player.hermesStepSound.SoundType, (int)player.Center.X, (int)player.Center.Y, player.hermesStepSound.SoundStyle, 1f, 0.125f);
+                        SOTSUtils.PlaySound((Terraria.Audio.SoundStyle)player.hermesStepSound.Style, (int)player.Center.X, (int)player.Center.Y, 1f, 0.125f);
                         player.runSoundDelay = (int)(player.hermesStepSound.IntendedCooldown / 1.6f);
                     }
                 }

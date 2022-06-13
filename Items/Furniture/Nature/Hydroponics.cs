@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
+using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,7 +60,7 @@ namespace SOTS.Items.Furniture.Nature
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Hydroponics");		
 			AddMapEntry(SOTSTile.NaturePlatingColor, name);
-			disableSmartCursor = false;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
@@ -105,7 +107,7 @@ namespace SOTS.Items.Furniture.Nature
 						if (x >= 1 && x <= 4 && y % 2 == 0)
 							DropPlant(i + x, j + y);
 						WorldGen.KillTile(i + x, j + y, false, false, true);
-						NetMessage.SendData(MessageID.TileChange, Main.myPlayer, Main.myPlayer, null, 0, i + x, j + y, 0f, 0, 0, 0);
+						NetMessage.SendData(MessageID.TileManipulation, Main.myPlayer, Main.myPlayer, null, 0, i + x, j + y, 0f, 0, 0, 0);
 					}
 				}
 			}
@@ -203,11 +205,11 @@ namespace SOTS.Items.Furniture.Nature
 				}
 				if (type == -1)
 					return false;
-				int item = Item.NewItem(i * 16, j * 16, 16, 16, type, 1, false, 0, false, false);
+				int item = Item.NewItem(new EntitySource_TileInteraction(Main.LocalPlayer, i, j), i * 16, j * 16, 16, 16, type, 1, false, 0, false, false);
 				NetMessage.SendData(MessageID.SyncItem, Main.myPlayer, Main.myPlayer, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				SetPlant(i, j, Main.rand.Next(7));
 				NetMessage.SendTileSquare(Main.myPlayer, i, j, 1, TileChangeType.None);
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Grass, i * 16, j * 16, 1, 1f, 0f);
+				SOTSUtils.PlaySound(SoundID.Grass, i * 16, j * 16, 1f, 0f);
 				for(int a = 0; a < 10; a++)
                 {
 					Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustType);
@@ -256,7 +258,7 @@ namespace SOTS.Items.Furniture.Nature
 					Tile growTile = Main.tile[i + x, j + y];
 					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
 					{
-						if (growtile.TileFrameY > 72)
+						if (growTile.TileFrameY > 72)
 							SetPlant(i + x, j + y, Main.rand.Next(7));
 						DropPlant(i + x, j + y);
 					}
@@ -277,7 +279,7 @@ namespace SOTS.Items.Furniture.Nature
 			if (topLeft) //check for it being the top left tile
 			{
 				//int highlightCapable = -1;
-				Texture2D texture = Terraria.GameContent.TextureAssets.Item[Type].Value;
+				Texture2D texture = SOTSTile.GetTileDrawTexture(i, j); //hopefully should get paint properly
 				Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Furniture/Nature/HydroponicsGlow");
 				for (int layer = 0; layer < 2; layer ++)
 				{
@@ -296,12 +298,7 @@ namespace SOTS.Items.Furniture.Nature
 							Rectangle frame = new Rectangle(18 * x, 18 * y, 16, frameHeight);
 							if (layer == 0)
 							{
-								if(Main.canDrawColorTile(i + x, j + y))
-                                {
-									spriteBatch.Draw(Main.tileAltTexture[Type, Main.tile[i + x, j + y].TileColor], drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
-								}
-								else
-									spriteBatch.Draw(texture, drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(texture, drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
 								spriteBatch.Draw(textureGlow, drawPosition, frame, Color.White, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
 							}
 							else if (layer == 1)
@@ -311,11 +308,11 @@ namespace SOTS.Items.Furniture.Nature
 								if (x >= 1 && x <= 4 && y % 2 == 0)
 								{
 									Tile growTile = Main.tile[i + x, j + y];
-									int growthStage = growtile.TileFrameY / 18 - 1;
+									int growthStage = growTile.TileFrameY / 18 - 1;
 									if (growthStage > 0)
 									{
-										int type = growtile.TileFrameX / 18 - 1;
-										if (!Main.tileSetsLoaded[81 + growthStage])
+										int type = growTile.TileFrameX / 18 - 1;
+										if (!TextureAssets.Tile[81 + growthStage].IsLoaded)
 											Main.instance.LoadTiles(81 + growthStage);
 										Texture2D texture2 = Terraria.GameContent.TextureAssets.Item[81 + growthStage].Value;
 										int direction = ((i + x) % 2 * 2 - 1);
@@ -430,9 +427,9 @@ namespace SOTS.Items.Furniture.Nature
 			int y = j - top;
 			if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
 			{
-				if (growtile.TileFrameY == 72)
+				if (growTile.TileFrameY == 72)
 				{
-					switch (growtile.TileFrameX / 18 - 1)
+					switch (growTile.TileFrameX / 18 - 1)
 					{
 						case 2:
 							var num18 = (270 - Main.mouseTextColor) / 800f;
@@ -474,13 +471,13 @@ namespace SOTS.Items.Furniture.Nature
 							if (y > 0 && x > 0)
 							{
 								WorldGen.KillTile(i + x, j + y, false, false, true);
-								NetMessage.SendData(MessageID.TileChange, Main.myPlayer, Main.myPlayer, null, 0, i + x, j + y, 0f, 0, 0, 0);
+								NetMessage.SendData(MessageID.TileManipulation, Main.myPlayer, Main.myPlayer, null, 0, i + x, j + y, 0f, 0, 0, 0);
 							}
 						}
 					}
 				}
 				else
-					Item.NewItem(i * 16, j * 16, 96, 96, ModContent.ItemType<NatureHydroponics>());
+					Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 96, 96, ModContent.ItemType<NatureHydroponics>());
 				noItem = true;
 			}
 		}

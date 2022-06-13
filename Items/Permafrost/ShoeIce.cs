@@ -1,3 +1,4 @@
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.ShoeSpikes, 1).AddIngredient(null, "FragmentOfPermafrost", 4).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ItemID.ShoeSpikes, 1).AddIngredient<FragmentOfPermafrost>(4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }
