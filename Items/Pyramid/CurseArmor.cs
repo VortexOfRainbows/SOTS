@@ -104,43 +104,4 @@ namespace SOTS.Items.Pyramid
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 8).AddIngredient(ModContent.ItemType<RoyalRubyShard>(), 20).AddTile(TileID.Anvils).Register();
 		}
 	}
-	public class CurseHoodPlayer : ModPlayer
-	{
-		public override void ModifyDrawLayers(List<PlayerLayer> layers)
-		{
-			int bodyLayer = layers.FindIndex(l => l == PlayerLayer.Head);
-			if (bodyLayer > -1)
-			{
-				layers.Insert(bodyLayer + 1, CurseHoodGlow);
-			}
-		}
-		public static readonly PlayerLayer CurseHoodGlow = new PlayerLayer("SOTS", "CurseHoodGlow", PlayerLayer.Head, delegate (PlayerDrawInfo drawInfo) {
-
-			// We don't want the glowmask to draw if the player is cloaked or dead
-			if (drawInfo.drawPlayer.dead)
-			{
-				return;
-			}
-			float alpha = 1 - drawInfo.shadow;
-			Player drawPlayer = drawInfo.drawPlayer;
-			Mod mod = ModLoader.GetMod("SOTS");
-			if (drawPlayer.head != mod.GetEquipSlot("CursedHood", EquipType.Head))
-			{
-				return;
-			}
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/CursedHood_HeadGlow").Value;
-			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
-			Vector2 origin = drawInfo.bodyOrigin;
-			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
-			Color color = TestWingsPlayer.changeColorBasedOnStealth(Color.White, drawPlayer);
-			Rectangle frame = drawPlayer.bodyFrame;
-			float rotation = drawPlayer.bodyRotation;
-			SpriteEffects spriteEffects = drawInfo.spriteEffects;
-			DrawData drawData = new DrawData(texture, position, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
-			drawData.shader = drawInfo.headArmorShader;
-			Main.playerDrawData.Add(drawData);
-		});
-	}
 }
