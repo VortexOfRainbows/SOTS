@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -12,6 +13,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Explosive Knife");
 			Tooltip.SetDefault("'Quite a deadly combination'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
 		}
 		public override void SetDefaults()
 		{

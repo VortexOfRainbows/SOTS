@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -45,6 +46,7 @@ namespace SOTS.Items.Banners
 	}
 	public abstract class ModTrophy : ModItem
 	{
+		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		public override void SetDefaults()
 		{
 			Item.width = 30;
@@ -66,7 +68,7 @@ namespace SOTS.Items.Banners
 			Item.placeStyle = 0;
 		}
 	}
-	public class PutridPinkyTrophy : ModBanner
+	public class PutridPinkyTrophy : ModTrophy
 	{
 		public override void SafeSetDefaults()
 		{

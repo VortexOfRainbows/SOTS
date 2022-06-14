@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Tide;
 using SOTS.Void;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,6 +16,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Crusty Baguette");
 			Tooltip.SetDefault("Killing enemies will drop baguette crumbs\nPickup baguette crumbs to increase the range and damage of your baguette, and heal lost life\n'Surrender is not an option'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

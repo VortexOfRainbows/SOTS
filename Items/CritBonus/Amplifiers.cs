@@ -2,6 +2,7 @@ using SOTS.Items.Celestial;
 using SOTS.Items.Fragments;
 using SOTS.Items.GhostTown;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,6 +14,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Otherworldly Amplifier");
 			Tooltip.SetDefault("Critical strikes deal 12 more damage");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -38,6 +40,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Bloodstained Coin");
 			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 30 more damage\nReceiving damage has a 50% chance to bleed you");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -70,6 +73,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Putrid Coin");
 			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 30 more damage\nReceiving damage has a 50% chance to poison you");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -102,6 +106,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Polished Coin");
 			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 40 more damage\n3% increased crit chance\nImmunity to bleeding and poisoned");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -138,6 +143,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Focus Crystal");
 			Tooltip.SetDefault("Critical strikes deal 50 more damage\n5% increased crit chance\nImmunity to bleeding and poisoned debuffs");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

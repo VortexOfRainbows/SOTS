@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,7 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Coconut Gun");
 			Tooltip.SetDefault("Launches coconut cluster bombs with homing coconut milk shrapnel\n'It fires in spurts'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SafeSetDefaults()
 		{

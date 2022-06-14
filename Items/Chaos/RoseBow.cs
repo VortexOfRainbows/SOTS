@@ -7,6 +7,7 @@ using SOTS.Items.Otherworld.FromChests;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,6 +19,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Rose Bow");
 			Tooltip.SetDefault("Transforms arrows into spears of light that can travel through walls\nWhen briefly charged, arrows explode for 600% damage\nWhen fully charged, arrows bloom for 1500% damage\nCharging will also conjure thorns, which are launched for 2x100% damage each\nOnly consumes void when charged");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SafeSetDefaults()
 		{

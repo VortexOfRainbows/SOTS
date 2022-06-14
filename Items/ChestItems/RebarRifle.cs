@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -12,6 +13,7 @@ namespace SOTS.Items.ChestItems
         {
             DisplayName.SetDefault("Rebar Rifle");
             Tooltip.SetDefault("Shoots a powerful, high velocity rebar that applies a stacking, permanent bleed to hit enemies for 5 damage per second");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
         {

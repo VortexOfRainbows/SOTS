@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +12,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Sandwich");
 			Tooltip.SetDefault("Increases healing recieved from potions by 40\nKilling enemies will drop baguette crumbs\nSummons a pet Putrid Pinky to assist in combat\nLatches onto enemies, slowing them down and draining life\nIncreases life regeneration by 1");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

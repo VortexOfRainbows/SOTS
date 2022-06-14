@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Items.Fragments;
@@ -38,6 +39,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Phase Bar");
 			Tooltip.SetDefault("'It borders on the edge of reality'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
 		}
 		public override void SetDefaults()
 		{

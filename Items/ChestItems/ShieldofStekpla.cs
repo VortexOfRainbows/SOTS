@@ -1,5 +1,6 @@
 using SOTS.Items.Fragments;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,6 +13,7 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Shield of Stekpla");
 			Tooltip.SetDefault("'More is more'\nGrants 1% bonus crit chance for every 4 full inventory slots");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

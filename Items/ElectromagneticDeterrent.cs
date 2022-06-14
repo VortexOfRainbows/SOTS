@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,6 +17,7 @@ namespace SOTS.Items
 			DisplayName.SetDefault("Disruptive Electromagnetic Field Emitter");
 			Tooltip.SetDefault("Prevents constructs from spawning while favorited in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 15));
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

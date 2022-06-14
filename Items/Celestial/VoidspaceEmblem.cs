@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
@@ -14,6 +15,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Voidspace Emblem");
 			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nIncreases void crit by 10%\nCritical strikes heal small amounts of void\nReduces void cost by 8%\nIncreases void gain by 4 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

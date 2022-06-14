@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -10,7 +11,8 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Sawflake");
 			Tooltip.SetDefault("Throw a Sawflake that exudes a spiral of razor ice mist in every direction");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults()
         {
             Item.damage = 70;

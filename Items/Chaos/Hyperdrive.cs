@@ -4,6 +4,7 @@ using SOTS.Items.Crushers;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Void;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -37,6 +38,7 @@ namespace SOTS.Items.Chaos
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("The second charge of a Crusher has a 33% chance to not consume void\nThe fourth charge of Crushers no longer consumes void\nExtends the range of Crushers by 1\nIncreases attack speed by 25% and melee damage by 5%\nReduces void cost by 10%");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

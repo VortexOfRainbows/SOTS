@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Spectre Spirit Storm");
 			Tooltip.SetDefault("Fires phantom arrows\nCan hit up to 4 enemies at a time");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SafeSetDefaults()
 		{

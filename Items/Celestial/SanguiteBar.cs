@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,6 +11,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Sanguite Scales");
 			Tooltip.SetDefault("'It smells of sulfur and blood'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
 		}
 		public override void SetDefaults()
 		{

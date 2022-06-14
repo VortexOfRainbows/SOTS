@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using SOTS.Void;
 using Terraria.ModLoader;
@@ -11,7 +12,8 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Hungry Hunter");
 			Tooltip.SetDefault("Latches onto enemies and regenerates void upon hit");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SafeSetDefaults()
         {
             Item.damage = 21;

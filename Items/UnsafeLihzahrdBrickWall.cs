@@ -1,3 +1,4 @@
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,6 +10,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Unsafe Lihzahrd Brick Wall");
 			Tooltip.SetDefault("Allows Lihzahrd Temple mobs to spawn");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

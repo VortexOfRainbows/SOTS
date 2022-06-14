@@ -1,5 +1,6 @@
 using SOTS.NPCs.Boss;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +12,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}/nCurrently yields no expert exclusive item, as the current one is not yet working in 1.4");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 		}
 		public override void SetDefaults()
 		{

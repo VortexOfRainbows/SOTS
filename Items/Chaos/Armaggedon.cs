@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
@@ -17,6 +18,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Armaggedon");
 			Tooltip.SetDefault("Unleash a flurry punches\nProvides a small light source\n'Power from the heavens'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SafeSetDefaults()
 		{

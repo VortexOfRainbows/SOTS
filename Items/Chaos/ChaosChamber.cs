@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
@@ -16,6 +17,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Chaos Chamber");
 			Tooltip.SetDefault("Unloads almost as fast as the trigger is pulled\nBullets gain homing capabilities\nTransforms bullets into laser balls every 6th shot");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

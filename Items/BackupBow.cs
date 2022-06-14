@@ -1,6 +1,7 @@
 using Terraria;
-using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Items
 {
@@ -10,6 +11,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Backup Bow");
 			Tooltip.SetDefault("Fires a homing arrow behind you when using ranged weapons\nThe arrow does 45% damage and freezes enemies for 1 second\nTest item");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

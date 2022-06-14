@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
@@ -15,6 +16,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Cataclysm Spheres");
 			Tooltip.SetDefault("Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 90% damage");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

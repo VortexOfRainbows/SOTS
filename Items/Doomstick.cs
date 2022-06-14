@@ -5,6 +5,7 @@ using SOTS.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,6 +17,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Doomstick");
             Tooltip.SetDefault("Fires two shotgun blasts in quick succession\nRight click to launch a 250% damage hook that pulls in enemies\nPulls you toward bosses instead\nKilled enemies drop packs of health and mana");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults()
 		{

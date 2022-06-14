@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,6 +11,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Royal Jelly");
 			Tooltip.SetDefault("Increases healing recieved from potions by 40\n'I could make a very, very bad joke right now...'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

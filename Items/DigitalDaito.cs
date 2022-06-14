@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
@@ -19,6 +20,7 @@ namespace SOTS.Items
 			DisplayName.SetDefault("Digital Daito");
 			Tooltip.SetDefault("");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 15));
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using SOTS.Void;
 using Terraria.ModLoader;
@@ -14,6 +15,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Spirit Scissors");
 			Tooltip.SetDefault("'Assistance from purgatory'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SafeSetDefaults()
 		{

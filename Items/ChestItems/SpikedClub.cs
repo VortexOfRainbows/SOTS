@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -13,6 +14,7 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Spiked Club");
 			Tooltip.SetDefault("Lays down spike traps\nLays down more traps when wearing climbing related accessories");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

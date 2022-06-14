@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -15,7 +16,8 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Dance of Death");
 			Tooltip.SetDefault("Cast many demon scythes around you");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults()
 		{
             Item.damage = 110; 

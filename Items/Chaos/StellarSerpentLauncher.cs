@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
@@ -17,6 +18,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Stellar Serpent Launcher");
 			Tooltip.SetDefault("Launches a Starlight Serpent which homes on enemys and attacks them repeatedly");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
 		{

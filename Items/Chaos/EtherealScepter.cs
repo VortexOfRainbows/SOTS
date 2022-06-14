@@ -7,6 +7,7 @@ using SOTS.Projectiles.Minions;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -42,6 +43,7 @@ namespace SOTS.Items.Chaos
 			Tooltip.SetDefault("Summons an Ethereal Flame to fight for you\nEthereal Flames attack enemies by rapidly dashing through them");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() 
