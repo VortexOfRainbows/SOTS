@@ -24,8 +24,6 @@ using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static SOTS.SOTS;
-using SOTS.Items.Pyramid;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Minions;
@@ -49,6 +47,7 @@ using SOTS.Items.Tools;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Audio;
+using static SOTS.SOTS;
 
 namespace SOTS
 {
