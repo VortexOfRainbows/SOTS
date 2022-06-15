@@ -8,6 +8,7 @@ namespace SOTS.Items.GhostTown
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("'It's starting to show signs of rusting'");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{

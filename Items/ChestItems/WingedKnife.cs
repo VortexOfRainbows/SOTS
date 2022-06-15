@@ -1,4 +1,3 @@
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,8 +8,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Winged Knife");
-			Tooltip.SetDefault("");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+			this.SetResearchCost(99);
 		}
 		public override void SetDefaults()
 		{

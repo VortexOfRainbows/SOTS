@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
@@ -39,7 +38,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Supernova Storm");
 			Tooltip.SetDefault("Calls down a Supernova Beam from the sky\nCauses enemies to rupture into homing bolts for 3x140% damage");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

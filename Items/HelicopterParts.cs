@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,8 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Helicopter Parts");
-			Tooltip.SetDefault("");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{

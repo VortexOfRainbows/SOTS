@@ -16,6 +16,7 @@ namespace SOTS.Items.Evil
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Summons Shadow Blades from the sky to your cursor");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

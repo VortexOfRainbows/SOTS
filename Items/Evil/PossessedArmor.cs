@@ -22,6 +22,7 @@ namespace SOTS.Items.Evil
 		{
 			DisplayName.SetDefault("Possessed Helmet");
 			Tooltip.SetDefault("Increases max void by 100\n10% increased ranged crit chance");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
@@ -65,6 +66,7 @@ namespace SOTS.Items.Evil
 		{
 			DisplayName.SetDefault("Possessed Greaves");
 			Tooltip.SetDefault("Decreased void usage by 15%");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
@@ -95,6 +97,7 @@ namespace SOTS.Items.Evil
 		{
 			DisplayName.SetDefault("Possessed Chainmail");
 			Tooltip.SetDefault("Increases void damage by 15% and ranged damage by 10%");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{

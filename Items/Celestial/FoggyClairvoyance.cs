@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Foggy Clairvoyance");
 			Tooltip.SetDefault("Increases damage by 15% and grants immunity to almost every debuff, but at a cost\n'Cursed'");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

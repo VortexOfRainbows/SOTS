@@ -1,6 +1,5 @@
 using Terraria;
 using SOTS.Void;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,7 +11,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Servant Knife");
 			Tooltip.SetDefault("Jebaited");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

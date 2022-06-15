@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent.Creative;
 using SOTS.Items.Fishing;
 
 namespace SOTS.Items.ChestItems
@@ -14,7 +13,7 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Tiny Planet");
 			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

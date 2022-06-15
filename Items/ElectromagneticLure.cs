@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
@@ -19,7 +18,7 @@ namespace SOTS.Items
 			DisplayName.SetDefault("Electromagnetic Lure");
 			Tooltip.SetDefault("Attracts a single biome construct");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

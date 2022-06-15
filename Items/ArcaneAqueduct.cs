@@ -1,7 +1,6 @@
 using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,7 +13,7 @@ namespace SOTS.Items
 			DisplayName.SetDefault("Arcane Aqueduct");
 			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -6,7 +6,6 @@ using SOTS.Projectiles.Laser;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -51,7 +50,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Hyperlight Geyser");
 			Tooltip.SetDefault("Launches 4 beams of light which each home at up to 10 enemies");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
         public override void SetDefaults()
 		{

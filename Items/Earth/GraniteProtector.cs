@@ -11,6 +11,7 @@ namespace SOTS.Items.Earth
 		{
 			DisplayName.SetDefault("Granite Protector");
 			Tooltip.SetDefault("Reduces damage taken by 6%");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

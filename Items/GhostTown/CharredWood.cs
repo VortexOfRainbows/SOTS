@@ -25,6 +25,7 @@ namespace SOTS.Items.GhostTown
 		{
 			DisplayName.SetDefault("Charred Wood");
 			Tooltip.SetDefault("'Too burnt to be used'");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{
@@ -49,7 +50,7 @@ namespace SOTS.Items.GhostTown
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Charred Wood Wall");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()
 		{

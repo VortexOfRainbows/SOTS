@@ -10,6 +10,7 @@ namespace SOTS.Items.Fishing
 		{
 			DisplayName.SetDefault("Curgeon");
 			Tooltip.SetDefault("Has valuable eggs that can only be harvested by disection");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

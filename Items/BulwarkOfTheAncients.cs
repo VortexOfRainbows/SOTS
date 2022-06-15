@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
@@ -15,7 +14,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Bulwark of the Ancients");
 			Tooltip.SetDefault("Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nIncreases void gain by 2, life regen by 1, reduces damage taken by 5%, and increases crit chance by 4%\nSurrounds you with 4 orbital projectiles\nProjectiles disabled when hidden");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

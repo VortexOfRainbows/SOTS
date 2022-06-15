@@ -15,6 +15,7 @@ namespace SOTS.Items.Earth
 		{
 			DisplayName.SetDefault("Vibrant Pistol");
 			Tooltip.SetDefault("Fires almost as fast as you can pull the trigger");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

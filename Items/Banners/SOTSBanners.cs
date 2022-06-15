@@ -7,7 +7,6 @@ using SOTS.NPCs.TreasureSlimes;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -163,7 +162,7 @@ namespace SOTS.Items.Banners
 	}
 	public abstract class ModBanner : ModItem
 	{
-		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.width = 10;

@@ -16,6 +16,7 @@ namespace SOTS.Items.Furniture.AncientGold
         {
             DisplayName.SetDefault("Ancient Gold Throne");
             Tooltip.SetDefault("'A throne fit for a very old king'");
+            this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

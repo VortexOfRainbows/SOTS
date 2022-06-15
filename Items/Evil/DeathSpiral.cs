@@ -16,6 +16,7 @@ namespace SOTS.Items.Evil
 		{
 			DisplayName.SetDefault("Death Spiral");
 			Tooltip.SetDefault("Surrounds you with lightning tentacles\nHas a chance to apply a stacking, permanent bleed to hit enemies for 5 damage per second");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

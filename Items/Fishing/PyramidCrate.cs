@@ -214,6 +214,7 @@ namespace SOTS.Items.Fishing
 		{
 			DisplayName.SetDefault("Pyramid Crate");
 			Tooltip.SetDefault("Right click to open");
+			this.SetResearchCost(10);
 		}
 	}
 	public class PyramidCrateTile : ModTile

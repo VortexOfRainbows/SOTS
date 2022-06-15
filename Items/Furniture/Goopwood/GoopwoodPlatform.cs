@@ -9,6 +9,7 @@ namespace SOTS.Items.Furniture.Goopwood
 {
 	public class GoopwoodPlatform : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(200);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

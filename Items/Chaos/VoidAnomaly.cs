@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,7 +18,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Void Anomaly");
 			Tooltip.SetDefault("Increases void gain by 10 and void regeneration speed by 10%\nGetting hit will convert void into life for a duration\nIncreases the potency of Void Shock and Void Recovery");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -16,7 +15,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Apocalypse");
             Tooltip.SetDefault("Release green thunder towards your cursor\nGreen thunder chains off enemies for 90% damage\nProvides a light source while in the inventory\n'Power straight from the underworld'");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
         public override void SafeSetDefaults()
 		{

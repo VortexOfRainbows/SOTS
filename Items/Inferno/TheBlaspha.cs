@@ -16,6 +16,7 @@ namespace SOTS.Items.Inferno
 		{
 			DisplayName.SetDefault("Blaspha");
             Tooltip.SetDefault("Launch a scatter of inferno-infused bullets which release homings embers for 50% damage");
+            this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

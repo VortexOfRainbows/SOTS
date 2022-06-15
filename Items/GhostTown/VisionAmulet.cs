@@ -35,6 +35,7 @@ namespace SOTS.Items.GhostTown
 		{
 			DisplayName.SetDefault("Elemental Amulet");
 			Tooltip.SetDefault("Epic Gamer\n'Resonates with your ambitions'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

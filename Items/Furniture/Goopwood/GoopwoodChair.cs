@@ -8,6 +8,7 @@ using Terraria.ObjectData;
 
 namespace SOTS.Items.Furniture.Goopwood
 {
+	public override void SetStaticDefaults() => this.SetResearchCost(1);
 	public class GoopwoodChair : ModItem
 	{
 		public override void SetDefaults()

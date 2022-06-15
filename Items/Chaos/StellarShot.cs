@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
@@ -17,7 +16,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Stellar Shot");
 			Tooltip.SetDefault("Rapidly fires piercing lasers");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

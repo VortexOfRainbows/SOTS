@@ -12,7 +12,7 @@ namespace SOTS.Items.Dyes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tainted Prism Dye");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -17,7 +17,7 @@ namespace SOTS.Items.Earth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Shard");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

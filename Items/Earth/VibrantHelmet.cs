@@ -20,6 +20,7 @@ namespace SOTS.Items.Earth
 		{
 			DisplayName.SetDefault("Vibrant Helmet");
 			Tooltip.SetDefault("Increases max void by 50\n5% increased ranged crit chance");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

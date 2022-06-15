@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
@@ -15,7 +14,7 @@ namespace SOTS.Items.ChestItems
         {
             DisplayName.SetDefault("Pathogen Regurgitator");
             Tooltip.SetDefault("Fire pathogen balls\nHits may infect enemies for 12 damage per second\nWhen an infected enemy is killed, it releases more pathogen balls");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

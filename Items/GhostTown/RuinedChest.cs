@@ -13,6 +13,7 @@ namespace SOTS.Items.GhostTown
 {
 	public class RuinedChest : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.Chest);

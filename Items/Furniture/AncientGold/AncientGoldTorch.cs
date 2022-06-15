@@ -13,6 +13,7 @@ namespace SOTS.Items.Furniture.AncientGold
 {
 	public class AncientGoldTorch : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.width = 14;

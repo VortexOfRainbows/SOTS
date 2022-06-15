@@ -15,6 +15,7 @@ namespace SOTS.Items.GhostTown
 		{
 			DisplayName.SetDefault("Ancient Steel Halberd");
 			Tooltip.SetDefault("Shatters enemies, making the next melee attack ignore defense and a guaranteed critical strike\nThough the Halberd cannot make use of the shattered effect");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

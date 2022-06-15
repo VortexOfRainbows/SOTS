@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using SOTS.Projectiles.BiomeChest;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,7 +13,7 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Tangle Staff");
 			Tooltip.SetDefault("Fire a flower that ensnares enemies\nEnsnared enemies are slowed and have their life drained\nIncreases life regeneration for each ensnared enemy");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

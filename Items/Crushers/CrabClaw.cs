@@ -14,6 +14,7 @@ namespace SOTS.Items.Crushers
 		{
 			DisplayName.SetDefault("Crab Claw");
 			Tooltip.SetDefault("Charge to increase damage up to 800%\nTakes 4 seconds to reach max charge");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

@@ -13,6 +13,7 @@ namespace SOTS.Items.Furniture.Nature
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Also functions as an anvil");
+            public override void SetStaticDefaults() => this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

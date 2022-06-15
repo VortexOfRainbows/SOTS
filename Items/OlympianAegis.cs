@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
@@ -15,7 +14,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Olympian Aegis");
 			Tooltip.SetDefault("Increases void gain by 2 and life regen by 1\nReduces damage taken by 7% and increases crit chance by 4%");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

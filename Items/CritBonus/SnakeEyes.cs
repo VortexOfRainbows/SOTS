@@ -1,7 +1,6 @@
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,7 +12,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Snake Eyes");
 			Tooltip.SetDefault("Increases crit chance by 8%");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

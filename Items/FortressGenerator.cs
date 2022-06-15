@@ -1,7 +1,6 @@
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.FromChests;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,7 +13,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Fortress Generator");
 			Tooltip.SetDefault("Increases max minions and max sentries by 1\nIncreases damage by 10% and life regeneration by 2\nGenerates 4 platforms to the left and right of you\nYou can right click to drag the platforms, but they will always remain symmetrical\nSentries can be summoned on top of the platforms\nAbsorbs 25% of damage done to players on your team when above 25% life and grants immunity to knockback");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

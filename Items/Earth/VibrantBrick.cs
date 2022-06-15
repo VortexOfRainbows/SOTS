@@ -17,7 +17,7 @@ namespace SOTS.Items.Earth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Brick");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

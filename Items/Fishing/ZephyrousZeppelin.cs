@@ -11,7 +11,8 @@ namespace SOTS.Items.Fishing
 		{
 			DisplayName.SetDefault("Zephyrous Zeppelin");
 			Tooltip.SetDefault("Surrounded by a ring of razorwater that deals 75% damage");
-		}
+            this.SetResearchCost(1);
+        }
         public override void SetDefaults()
         {
             Item.damage = 22;

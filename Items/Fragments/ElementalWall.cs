@@ -7,6 +7,7 @@ namespace SOTS.Items.Fragments
 {
 	public abstract class ElementalWall : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public sealed override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);

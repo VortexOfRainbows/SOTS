@@ -1,7 +1,6 @@
 using SOTS.Items.ChestItems;
 using SOTS.Items.Earth;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,7 +12,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Chiseled Barrier");
 			Tooltip.SetDefault("Surrounds you with 4 orbital projectiles\nLaunches attackers away from you with javelins\nProjectiles disabled when hidden");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

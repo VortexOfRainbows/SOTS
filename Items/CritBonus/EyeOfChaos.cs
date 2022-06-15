@@ -1,6 +1,5 @@
 using SOTS.Items.Fragments;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,7 +11,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Eye of Chaos");
 			Tooltip.SetDefault("Increases crit chance by 20%");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

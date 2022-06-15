@@ -14,6 +14,7 @@ namespace SOTS.Items.Crushers
 		{
 			DisplayName.SetDefault("Hellbreaker");
 			Tooltip.SetDefault("Charge to increase damage up to 600%\nTakes 4.5 seconds to reach max charge");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

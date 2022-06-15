@@ -5,7 +5,6 @@ using SOTS.Items.Otherworld.Furniture;
 using SOTS.Void;
 using System;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -38,7 +37,7 @@ namespace SOTS.Items.Chaos
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, Color.White * 0.65f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
-		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

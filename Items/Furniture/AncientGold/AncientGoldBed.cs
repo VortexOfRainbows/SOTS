@@ -14,6 +14,7 @@ namespace SOTS.Items.Furniture.AncientGold
 		{
 			DisplayName.SetDefault("Ancient Gold Bed");
 			Tooltip.SetDefault("'For naps fit for a king'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

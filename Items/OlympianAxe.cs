@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using SOTS.Buffs;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,7 +13,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Olympian Waraxe");
             Tooltip.SetDefault("Enter a 3 second Frenzy after killing an enemy, massively increasing melee attack speed\nRight click to toss the axe for 60% damage\nCan toss two axes when under Frenzy");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

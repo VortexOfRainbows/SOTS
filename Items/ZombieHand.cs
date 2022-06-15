@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,7 +10,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Zombie Hand");
 			Tooltip.SetDefault("Allows melee swings to harm Town NPCs\n'Finally, I can kill the painter!'");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

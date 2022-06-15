@@ -14,6 +14,7 @@ namespace SOTS.Items.Crushers
 		{
 			DisplayName.SetDefault("Cardiac Collapse");
 			Tooltip.SetDefault("Charge to increase damage up to 800%\nTakes 3.5 seconds to reach max charge\nKilled enemies regenerate health");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

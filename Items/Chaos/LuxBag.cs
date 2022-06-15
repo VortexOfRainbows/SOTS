@@ -5,7 +5,6 @@ using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Void;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -46,7 +45,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

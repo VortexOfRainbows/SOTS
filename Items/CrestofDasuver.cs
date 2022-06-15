@@ -1,6 +1,5 @@
 using SOTS.Items.ChestItems;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,7 +11,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Crest of Dasuver");
 			Tooltip.SetDefault("Increases crit chance by 6%");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

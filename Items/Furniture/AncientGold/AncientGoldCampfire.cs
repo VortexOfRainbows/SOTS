@@ -14,6 +14,7 @@ namespace SOTS.Items.Furniture.AncientGold
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Eternal Fireplace");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

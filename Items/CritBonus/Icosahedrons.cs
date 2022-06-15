@@ -1,7 +1,6 @@
 using SOTS.Items.Fragments;
 using SOTS.Items.Permafrost;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,7 +12,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Borealis Icosahedron");
 			Tooltip.SetDefault("Critical strikes may cause a frostburn explosion, dealing 100% critical damage\n3% increased crit chance");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
@@ -43,7 +42,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Cursed Icosahedron");
 			Tooltip.SetDefault("Critical strikes may cause a release of cursed thunder, dealing 50% critical damage\nCritical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage\n3% increased crit chance");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
@@ -73,7 +72,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Hellfire Icosahedron");
 			Tooltip.SetDefault("Critical strikes may cause a flaming explosion, dealing 50% critical damage\n3% increased crit chance");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

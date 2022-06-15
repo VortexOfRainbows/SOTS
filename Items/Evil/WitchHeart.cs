@@ -14,6 +14,7 @@ namespace SOTS.Items.Evil
 			DisplayName.SetDefault("Witch's Heart");
 			Tooltip.SetDefault("Increases critical strike chance by 5%\nCritical strikes unleash Nightmare Arms that do 10% damage and pull enemies together\nHas a 6 second cooldown\nIncreases max life by 20");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
