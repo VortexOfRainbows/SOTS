@@ -12,7 +12,7 @@ namespace SOTS.Prim.Trails
 		public NorthStarTrail(Projectile projectile)
 		{
 			Entity = projectile;
-			EntityType = Projectile.type;
+			EntityType = projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
 			Color = new Color(150, 180, 240);
 			Width = 20;

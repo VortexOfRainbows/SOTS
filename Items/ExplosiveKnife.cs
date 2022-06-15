@@ -26,10 +26,6 @@ namespace SOTS.Items
             Item.shootSpeed = 12f;
 			Item.consumable = true;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			return true; 
-		}
 		public override void AddRecipes()
 		{
 			CreateRecipe(15).AddIngredient(ItemID.ThrowingKnife, 15).AddIngredient(ItemID.Grenade, 15).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 1).AddTile(TileID.Anvils).Register();

@@ -336,61 +336,6 @@ namespace SOTS
 			}
 		}
 		public int bladeAlpha = 0;
-		public static readonly PlayerLayer BladeEffectBack = new PlayerLayer("SOTS", "BladeEffectBack", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo) 
-		{
-			Mod mod = ModLoader.GetMod("SOTS");	
-			Player drawPlayer = drawInfo.drawPlayer;
-			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
-			if (drawInfo.shadow != 0)
-				return;
-			if (modPlayer.skywardBlades > 0 && !drawPlayer.dead)
-			{
-				float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-				float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
-				int amt = modPlayer.skywardBlades;
-				float total = amt * 8;
-				Color color2 = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16));
-				drawX -= Main.screenPosition.X;
-				drawY -= Main.screenPosition.Y;
-				for (int i = 0; i < amt; i++)
-				{
-					Color color = color2;
-					float number = 0;
-					if(i == 0)
-						number = 0;
-					if (i == 1)
-						number = -7.5f;
-					if (i == 2)
-						number = 7.5f;
-					if (i == 3)
-						number = -15;
-					if (i == 4)
-						number = 15;
-					Vector2 moveDraw = new Vector2(64, 0).RotatedBy(modPlayer.cursorRadians + MathHelper.ToRadians(number));
-					Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/SkywardBladeBeam").Value;
-					DrawData data = new DrawData(texture, new Vector2(drawX, drawY) + moveDraw, null, color * ((255 - modPlayer.bladeAlpha)/255f), modPlayer.cursorRadians - 0.5f * MathHelper.ToRadians(number) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-					Main.playerDrawData.Add(data);
-
-					int recurse = 1;
-					if (modPlayer.rainbowGlowmasks)
-					{
-						color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
-						recurse = 2;
-					}
-					for (int j = 0; j < recurse; j++)
-					{
-						texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/SkywardBladeGlowmask").Value;
-						data = new DrawData(texture, new Vector2(drawX, drawY) + moveDraw, null, color * ((255 - modPlayer.bladeAlpha) / 255f), modPlayer.cursorRadians - 0.5f * MathHelper.ToRadians(number) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-						Main.playerDrawData.Add(data);
-					}
-				}
-			}
-		});
-		public override void ModifyDrawLayers(List<PlayerLayer> layers)
-		{
-			BladeEffectBack.visible = true;
-			layers.Insert(0, BladeEffectBack);
-		}
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (SOTS.BlinkHotKey.JustPressed)

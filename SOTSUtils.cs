@@ -59,6 +59,24 @@ namespace SOTS
 		{
 			return GetPath(t) + extra;
 		}
+		/// <summary>
+		/// Sets the cost to duplicate the item in journey mode
+		/// <para> 1 - Weapons, tools, armor, accessories, furniture, one-time consumables (Cat Liscense) </para>
+		/// <para> 2 - Quest fish, tombstones, herb bag, can of worms </para>
+		/// <para> 3 - Treasure bags, boss-summons, dyes, fish, gold critters </para>
+		/// <para> 5 - critters, mechanisms, fruits, rare crafting materials (unicorn horn) </para>
+		/// <para> 10 - crates, life/mana crystal, life fruit, food/drink </para>
+		/// <para> 15 - gems </para>
+		/// <para> 20 - potions </para>
+		/// <para> 25 - bars, herbs, seeds, crafting materials </para>
+		/// <para> 30 - mana/healing potions </para>
+		/// <para> 50 - acorns, fallen stars, beams </para>
+		/// <para> 99 - ammo, explosives </para>
+		/// <para> 100 - ores, blocks, torches, ropes, empty bullets, coins </para>
+		/// <para> 200 - platforms, silt/slush etc. </para>
+		/// <para> 400 - Background walls </para>
+		/// <para> N/A - Etherian Mana and unobtainable items </para>
+		/// </summary>
 		public static void SetResearchCost(this ModItem modItem, int amt)
 		{
 			SetResearchCost(modItem.Type, amt);

@@ -24,6 +24,8 @@ Major Milestones TO REACH (Will be removed when completed)
 7. Make sure projectile expert mode damage from enemies works properly (GetBaseDamage(NPC npc))!
 8. Make sure sound playing system works with pitch and volume
 9. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
+10. Figure out twilight assassin armor ARM glowmask...
+11. VOID DAMAGE CLASSES!!
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
@@ -56,6 +58,11 @@ Low Priority Objectives:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
+
+6/15/22
+1. Ported some more Player layers...
+2. Twilight Assassin might be especially broken though, as the arm drawing is different now...
+3. 
 
 6/14/22
 1. Ported player layers for Curse Armor and Machina Booster... starbelt... 

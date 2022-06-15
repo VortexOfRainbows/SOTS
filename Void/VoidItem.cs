@@ -124,7 +124,7 @@ namespace SOTS.Void
 			}
 			return false;
 		}
-        public sealed override bool CanConsumeAmmo(Player player)
+        public sealed override bool CanConsumeAmmo(Item ammo, Player player)
         {
 			if(Item.useAmmo != 0 && BeforeDrainMana(player))
 				DrainMana(player);
