@@ -259,17 +259,7 @@ namespace SOTS.Common.GlobalNPCs
 		}
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) //modify loot and vanilla loot
 		{
-			if (NPCID.Sets.BelongsToInvasionOldOnesArmy[npc.type] || npc.SpawnedFromStatue)
-			{
-				return;
-			}
-			Player player = Main.player[Main.myPlayer];
-			if (npc.target <= 255)
-			{
-				player = Main.player[npc.target];
-			}
 			LeadingConditionRule notExpert = new LeadingConditionRule(new Conditions.NotExpert());
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson) //if npc is pigron
             {
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<AlmondMilk>(), 2, 1)); //guaranteed in expert, 50% in normal

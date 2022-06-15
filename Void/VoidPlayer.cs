@@ -80,6 +80,10 @@ namespace SOTS.Void
 			voidBarOffset.Y = tag.GetFloat("voidBarOffsetY");
 		}
 		public bool netUpdate = false;
+		public override void clientClone(ModPlayer clientClone)
+		{
+			//will need to fix this later...
+		}
 		public override void SendClientChanges(ModPlayer clientPlayer)
 		{
 			// Here we would sync something like an RPG stat whenever the player changes it.

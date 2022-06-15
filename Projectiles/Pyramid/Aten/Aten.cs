@@ -13,7 +13,6 @@ namespace SOTS.Projectiles.Pyramid.Aten
 {
     public class AtenProj : BaseFlailProj
     {
-        public AtenProj() : base(new Vector2(0.5f, 1.5f), new Vector2(1f, 1f), 1.5f, 60, 10) { }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
             int width = 48;
@@ -32,6 +31,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         public override void SetStaticDefaults() => DisplayName.SetDefault("Aten");
         public override void SetDefaults()
         {
+            SetFlailStats(new Vector2(0.5f, 1.5f), new Vector2(1f, 1f), 1.5f, 60, 10);
             Projectile.Size = new Vector2(34, 34);
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;

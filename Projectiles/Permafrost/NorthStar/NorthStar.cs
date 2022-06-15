@@ -15,7 +15,6 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
 {
     public class NorthStar : BaseFlailProj
     {
-        public NorthStar() : base(new Vector2(0.2f, 2.1f), new Vector2(1f, 1f), 2f, 80, 12) { }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
             int width = 64;
@@ -34,6 +33,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         public override void SetStaticDefaults() => DisplayName.SetDefault("North Star");
         public override void SetDefaults()
         {
+            SetFlailStats(new Vector2(0.2f, 2.1f), new Vector2(1f, 1f), 2f, 80, 12);
             Projectile.Size = new Vector2(50, 68);
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;

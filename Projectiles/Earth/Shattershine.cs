@@ -15,7 +15,6 @@ namespace SOTS.Projectiles.Earth
 {
     public class Shattershine : BaseFlailProj
     {
-        public Shattershine() : base(new Vector2(0.5f, 1.5f), new Vector2(1f, 1f), 2f, 50, 11) { }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
             int width = 40;
@@ -34,6 +33,7 @@ namespace SOTS.Projectiles.Earth
         public override void SetStaticDefaults() => DisplayName.SetDefault("Shattershine");
         public override void SetDefaults()
         {
+            SetFlailStats(new Vector2(0.5f, 1.5f), new Vector2(1f, 1f), 2f, 50, 11);
             Projectile.Size = new Vector2(46, 46);
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;

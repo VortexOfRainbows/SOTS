@@ -21,7 +21,14 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Patch Leather Hat");
 			Tooltip.SetDefault("Increases max minions by 1");
-			ArmorIDs.Head.Sets.DrawHatHair[Type] = true;
+			SetupDrawing();
+		}
+		private void SetupDrawing()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
+			ArmorIDs.Head.Sets.DrawHatHair[equipSlotHead] = false;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

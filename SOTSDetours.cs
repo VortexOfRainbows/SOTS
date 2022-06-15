@@ -46,7 +46,10 @@ namespace SOTS
 
 		public static void ResizeTargets()
 		{
-			TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
+			Main.QueueMainThreadAction(() =>
+			{
+				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
+			});
 		}
 
 		public static void Unload()
