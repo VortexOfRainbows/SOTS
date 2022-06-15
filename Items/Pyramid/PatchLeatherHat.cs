@@ -28,7 +28,7 @@ namespace SOTS.Items.Pyramid
 			if (Main.netMode == NetmodeID.Server)
 				return;
 			int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
-			ArmorIDs.Head.Sets.DrawHatHair[equipSlotHead] = false;
+			ArmorIDs.Head.Sets.DrawHatHair[equipSlotHead] = true;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

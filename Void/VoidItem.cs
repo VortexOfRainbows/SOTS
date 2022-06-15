@@ -21,12 +21,8 @@ namespace SOTS.Void
 		}
 		public sealed override void SetDefaults() {
 			Item.shoot = 10; 
-			// Item.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-			// Item.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-			// Item.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ; 
 			SafeSetDefaults();
 			Item.mana = 1;
-			// Item.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 		}
 		/*public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{

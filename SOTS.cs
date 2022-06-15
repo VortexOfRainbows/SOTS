@@ -56,15 +56,15 @@ namespace SOTS
         {
 			get => ModContent.GetInstance<SOTSConfig>();
         }
-		public SOTS()
+		/*public SOTS()
 		{
-			/*Properties = new ModProperties() //This seems largely unused now
+			Properties = new ModProperties() //This seems largely unused now
 			{
 				Autoload = true,
 				AutoloadGores = true,
 				AutoloadSounds = true
-			};*/
-		}
+			};
+		}*/
 		public static int PlayerCount = 0;
 		public override void Load()
 		{

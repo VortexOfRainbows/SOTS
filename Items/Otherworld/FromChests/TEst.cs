@@ -44,7 +44,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			//Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
 			return false; 
 		}
-		public void DrawTexture()
+		/*public void DrawTexture()
         {
 			Texture2D texture = new Texture2D(Main.spriteBatch.GraphicsDevice, 800, 800, false, SurfaceFormat.Color);
 			System.Collections.Generic.List<Color> list = new System.Collections.Generic.List<Color>();
@@ -68,6 +68,6 @@ namespace SOTS.Items.Otherworld.FromChests
 			}
 			texture.SetData(list.ToArray());
 			texture.SaveAsPng(new FileStream(Main.SavePath + Path.DirectorySeparatorChar + "TestEffect.png", FileMode.Create), texture.Width, texture.Height);
-		}
+		}*/
 	}
 }
