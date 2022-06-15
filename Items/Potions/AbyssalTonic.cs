@@ -16,6 +16,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Abyssal Tonic");
 			Tooltip.SetDefault("Randomly receive 2 of the following:\nGills for 15 minutes\nFlipper for 13 minutes\nRipple for 11 minutes\nCalm for 9 minutes");
+			this.SetResearchCost(20);
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

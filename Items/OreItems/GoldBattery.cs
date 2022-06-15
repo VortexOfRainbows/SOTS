@@ -12,6 +12,7 @@ namespace SOTS.Items.OreItems
 		{
 			DisplayName.SetDefault("Gold Battery");
 			Tooltip.SetDefault("Increases void gain by 1 and max void by 20\nRegenerate void when hit, but also have a 10% chance to recieve ichor when near max void");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

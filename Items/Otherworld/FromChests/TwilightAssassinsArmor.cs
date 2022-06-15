@@ -18,7 +18,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Assassin Circlet");
-			Tooltip.SetDefault("temp");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()

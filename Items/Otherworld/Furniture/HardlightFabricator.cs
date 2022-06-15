@@ -18,6 +18,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			DisplayName.SetDefault("Hardlight Fabricator");
 			Tooltip.SetDefault("Used to craft otherworldly objects and gear");
+			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

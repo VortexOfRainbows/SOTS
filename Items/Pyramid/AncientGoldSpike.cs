@@ -7,11 +7,8 @@ namespace SOTS.Items.Pyramid
 {
 	public class AncientGoldSpike : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Ancient Gold Spike");
-		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
+        public override void SetDefaults()
 		{
 			Item.width = 16;
 			Item.height = 16;

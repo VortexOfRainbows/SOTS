@@ -11,6 +11,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Spirit Glove");
 			Tooltip.SetDefault("Increases void regeneration speed by 5% and melee crit chance by 8%");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

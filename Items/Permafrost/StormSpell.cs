@@ -14,7 +14,8 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Storm Spell");
 			Tooltip.SetDefault("Create an arctic storm targeted on your cursor");
-		}
+            this.SetResearchCost(1);
+        }
         public override void SetDefaults()
         {
             Item.damage = 14;

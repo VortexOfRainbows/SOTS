@@ -11,6 +11,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Ancient Gold Brick");
 			Tooltip.SetDefault("'You can feel the regalness'");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

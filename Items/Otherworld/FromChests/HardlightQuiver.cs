@@ -13,6 +13,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Hardlight Quiver");
 			Tooltip.SetDefault("Grants access to infinite hardlight arrows\nHardlight arrows travel faster and are not affected by gravity\nWhen favorited, arrows will be supercharged at the cost of some void\nSupercharged arrows travel instantly, and gain slight homing at longer ranges");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

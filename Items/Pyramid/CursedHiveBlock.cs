@@ -12,7 +12,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Infected Pyramid Brick");
-			Tooltip.SetDefault("");// A living clump of matter residing in a broken down brick\n'It has the consistency of a tumor'");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

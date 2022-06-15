@@ -15,6 +15,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Jury Rigged Drill");
 			Tooltip.SetDefault("Can break the walls of the pyramid\n'Might only withstand a few hits'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

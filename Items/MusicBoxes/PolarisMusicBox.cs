@@ -15,6 +15,7 @@ namespace SOTS.Items.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Polaris)");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

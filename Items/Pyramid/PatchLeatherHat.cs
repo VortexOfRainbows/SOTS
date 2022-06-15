@@ -21,6 +21,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Patch Leather Hat");
 			Tooltip.SetDefault("Increases max minions by 1");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()

@@ -13,7 +13,8 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Cursed Blade");
 			Tooltip.SetDefault("Summons a Cursed Blade to assist in combat\nHit enemies receive a storm of sword strikes, dealing 50% damage each, and ending in an explosion\nThe explosion deals 100% damage and always critical strikes");
-		}
+            this.SetResearchCost(1);
+        }
         public override void SafeSetDefaults()
         {
             Item.damage = 24;

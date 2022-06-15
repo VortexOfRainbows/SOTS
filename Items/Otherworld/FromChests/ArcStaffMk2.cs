@@ -14,6 +14,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Arc Staff Mk2");
 			Tooltip.SetDefault("Launch a massive sphere of lightning\nDetonates at the end of its lifespan, doing 250% damage to low health, non-boss enemies, but only 100% to bosses");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

@@ -12,6 +12,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Vibe Potion");
 			Tooltip.SetDefault("Increases attack speed by 20% while not moving and by 5% while moving\nIncreases life regeneration by 4 while not moving");
+			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()
 		{

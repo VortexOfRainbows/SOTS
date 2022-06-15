@@ -20,6 +20,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Frigid Greaves");
 			Tooltip.SetDefault("Grants Ice Skates effect\n10% increased movement and void attack speed");
+			this.SetResearchCost(1);
 		}
 		public override void UpdateEquip(Player player)
 		{

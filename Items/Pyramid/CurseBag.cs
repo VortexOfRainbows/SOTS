@@ -12,6 +12,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

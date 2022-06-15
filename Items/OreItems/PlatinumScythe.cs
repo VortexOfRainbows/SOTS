@@ -15,6 +15,7 @@ namespace SOTS.Items.OreItems
 		{
 			DisplayName.SetDefault("Platinum Scythe");
 			Tooltip.SetDefault("Attacks permanently curse enemies for 4 damage per second, stacking up to 10 times");
+			this.SetResearchCost(1);
 		}
         public override void SafeSetDefaults()
 		{

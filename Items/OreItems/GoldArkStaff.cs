@@ -12,6 +12,7 @@ namespace SOTS.Items.OreItems
 		{
 			DisplayName.SetDefault("Gold Arc Staff");
 			Tooltip.SetDefault("Deal 150% damage to up to 2 enemies surrounding the initially hit enemy");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

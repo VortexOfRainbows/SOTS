@@ -19,6 +19,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Patch Leather Boots");
 			Tooltip.SetDefault("Increases minion damage by 10%");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

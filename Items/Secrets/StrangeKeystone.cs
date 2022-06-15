@@ -13,6 +13,7 @@ namespace SOTS.Items.Secrets
 		{
 			DisplayName.SetDefault("Strange Obelisk");
 			Tooltip.SetDefault("It suffers from small cracks under intense sunlight\n'Feels hollow'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
@@ -32,7 +33,7 @@ namespace SOTS.Items.Secrets
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Broken Obelisk");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

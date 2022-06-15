@@ -20,6 +20,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Allows the ability to perform an instant dash to the left or right at the cost of 5 void\nAlso allows the ability to dash through walls\nDashing into enemies will strike them, but consumes more void");
+			this.SetResearchCost(1);
 		}
 		Vector2 toPos = new Vector2(3.75f, 0);
 		Vector2 CurrentPos = new Vector2(0, 0);

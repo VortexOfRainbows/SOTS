@@ -13,6 +13,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Cryo Cannon");
 			Tooltip.SetDefault("Uses snowballs as ammo");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

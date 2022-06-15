@@ -13,6 +13,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Cursed Impale");
 			Tooltip.SetDefault("Releases a short ranged burst of energy");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

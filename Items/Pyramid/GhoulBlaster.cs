@@ -14,6 +14,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Ghoul Blaster");
 			Tooltip.SetDefault("Unloads almost as fast as the trigger is pulled\nTransforms bullets into cursed singularities every 6th shot");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

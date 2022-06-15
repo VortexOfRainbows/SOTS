@@ -11,6 +11,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("True Sandstone Wall");
 			Tooltip.SetDefault("'Only the gods could've forged a wall with such power'");
+			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()
 		{

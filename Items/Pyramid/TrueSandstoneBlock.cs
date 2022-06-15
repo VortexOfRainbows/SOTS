@@ -11,6 +11,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("True Sandstone Block");
 			Tooltip.SetDefault("The ultimate sandstone");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

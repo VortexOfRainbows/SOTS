@@ -9,8 +9,8 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Pyramid Slab");
 			Tooltip.SetDefault("A slab from an ancient burial site, it may be hard to break");
+			this.SetResearchCost(1);
 		}
-
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

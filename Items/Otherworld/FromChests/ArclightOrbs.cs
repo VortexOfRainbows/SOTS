@@ -16,6 +16,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Arclight Orbs");
 			Tooltip.SetDefault("Throw a cluster of thunder orbs that explode into chain lightning for 80% damage");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

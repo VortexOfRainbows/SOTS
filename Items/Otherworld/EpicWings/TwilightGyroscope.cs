@@ -11,6 +11,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		{
 			DisplayName.SetDefault("Twilight Gyroscope");
 			Tooltip.SetDefault("Increases jump height and flight speed\nIncreases movement speed by 20%\nHold down to fall quickly to the floor\nProvides immunity to fall damage");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

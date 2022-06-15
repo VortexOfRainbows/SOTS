@@ -9,11 +9,7 @@ namespace SOTS.Items.Secrets
 {
 	public class RefractingCrystal : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Refracting Crystal");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Secrets/RefractingCrystal").Value;

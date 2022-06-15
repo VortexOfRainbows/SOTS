@@ -13,6 +13,7 @@ namespace SOTS.Items.Otherworld
 		{
 			DisplayName.SetDefault("Twilight Beads");
 			Tooltip.SetDefault("Increases void gain by 1\nGetting hit summons 5 Souls of Retaliation into the air, assuming you have less than 5 Souls active already\nEvery 10th void attack will release the souls in the form of a powerful laser");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

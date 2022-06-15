@@ -11,6 +11,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Shatter Heart Shield");
 			Tooltip.SetDefault("Getting hit surrounds you with ice shards\nIncreases max life by 20");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

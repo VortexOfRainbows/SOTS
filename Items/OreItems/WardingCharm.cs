@@ -10,7 +10,7 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Warding Charm");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

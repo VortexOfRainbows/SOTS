@@ -12,6 +12,7 @@ namespace SOTS.Items.Permafrost
 		{
 			Tooltip.SetDefault("Frost Artifact");
 			Tooltip.SetDefault("Has a slot for a key");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

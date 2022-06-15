@@ -8,11 +8,7 @@ namespace SOTS.Items.Permafrost
 {
 	public class HardIceBrick : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Hard Ice Brick");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

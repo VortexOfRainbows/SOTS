@@ -8,6 +8,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 {
 	public class CursedTumorWall : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
@@ -28,6 +29,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
         public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Changes the biome to pyramid when in front of\nAlso envokes the Pharaoh's Curse");
+			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()
 		{

@@ -13,6 +13,7 @@ namespace SOTS.Items.Otherworld
 		{
 			DisplayName.SetDefault("Jar of Souls");
 			Tooltip.SetDefault("Right click to open");
+			this.SetResearchCost(3);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

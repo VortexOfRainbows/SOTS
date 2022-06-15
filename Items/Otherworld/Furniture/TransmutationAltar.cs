@@ -24,6 +24,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			DisplayName.SetDefault("Transmutation Altar");
 			Tooltip.SetDefault("Used for crafting\nAllows the conversion of material and equipment to equivalent but different forms\nAlso counts as a demon altar for crafting\nCrafting using the altar can be undone");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -20,6 +20,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			DisplayName.SetDefault("Digital Display");
 			Tooltip.SetDefault("Right click to increase void damage by 10%");
+			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

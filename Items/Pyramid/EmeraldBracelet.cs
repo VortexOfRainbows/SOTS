@@ -11,6 +11,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Emerald Bracelet");
 			Tooltip.SetDefault("Increases void gain by 2");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

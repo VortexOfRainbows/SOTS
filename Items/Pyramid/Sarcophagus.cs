@@ -7,12 +7,7 @@ namespace SOTS.Items.Pyramid
 {
 	public class Sarcophagus : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			Tooltip.SetDefault("Sarcophagus");
-			Tooltip.SetDefault("");
-		}
-
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.width = 32;

@@ -14,6 +14,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Flower Spell");
 			Tooltip.SetDefault("Launches a seed that latches onto enemies\nWhen the seed blooms, it does 500% damage");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

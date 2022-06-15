@@ -14,11 +14,7 @@ namespace SOTS.Items.Otherworld.Furniture
 {
 	public class HardlightTable : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Hardlight Table");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableBase").Value;

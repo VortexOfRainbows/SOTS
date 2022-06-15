@@ -11,6 +11,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Shoe Ice");
 			Tooltip.SetDefault("Allows the ability to slide down walls\nImproved ability if combined with Climbing Claws or Shoe Spikes\n40% increased movement speed\n'Ice physics, everyone's favorite!'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

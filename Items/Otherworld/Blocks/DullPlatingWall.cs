@@ -8,6 +8,7 @@ namespace SOTS.Items.Otherworld.Blocks
 {
 	public class DullPlatingWall : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);

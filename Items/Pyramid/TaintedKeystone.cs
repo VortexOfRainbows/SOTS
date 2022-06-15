@@ -12,6 +12,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Tainted Keystone");
 			Tooltip.SetDefault("'What a regal crystallization of void energy!'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -13,6 +13,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Biomass Bloom");
 			Tooltip.SetDefault("Launches a cluster of acorns");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

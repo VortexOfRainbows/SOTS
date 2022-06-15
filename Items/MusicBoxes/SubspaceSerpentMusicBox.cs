@@ -14,6 +14,7 @@ namespace SOTS.Items.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Subspace Serpent)");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

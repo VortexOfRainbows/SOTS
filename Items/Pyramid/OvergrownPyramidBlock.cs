@@ -14,7 +14,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Overgrown Pyramid Brick");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

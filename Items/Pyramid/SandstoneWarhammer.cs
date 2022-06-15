@@ -12,6 +12,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Sandstone Warhammer");
 			Tooltip.SetDefault("Launches homing hammers");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

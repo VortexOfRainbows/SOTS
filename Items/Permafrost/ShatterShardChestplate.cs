@@ -19,6 +19,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Shatter Shard Chestplate");
 			Tooltip.SetDefault("Getting hit surrounds you with ice shards");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()

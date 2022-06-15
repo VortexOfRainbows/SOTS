@@ -17,6 +17,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Vibrancy Module");
 			Tooltip.SetDefault("Increases void attack speed by 10%\nReduces void cost by 10%");
+			this.SetResearchCost(1);
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

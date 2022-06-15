@@ -14,9 +14,8 @@ namespace SOTS.Items.Otherworld.Blocks
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Avaritia Plating Wall");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(400);
 		}
-
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
