@@ -14,6 +14,7 @@ namespace SOTS.Items.Slime
 		{
 			DisplayName.SetDefault("Putrid Eye");
 			Tooltip.SetDefault("'You want deathray? We have deathray'");
+			this.SetResearchCost(1);
 		}
 		Vector2 toPos = new Vector2(7.5f, 0);
 		Vector2 CurrentPos = new Vector2(0, 0);

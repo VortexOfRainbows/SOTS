@@ -9,7 +9,7 @@ namespace SOTS.Items.SoldStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Suprem");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

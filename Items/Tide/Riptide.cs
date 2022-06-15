@@ -12,6 +12,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Riptide");
 			Tooltip.SetDefault("Right click while in water or rain to launch yourself forward, doing 120% damage\nImmunity to fall damage while held");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -11,7 +11,8 @@ namespace SOTS.Items.Tools
 		{
 			DisplayName.SetDefault("Miner's Pickaxe");
 			Tooltip.SetDefault("'Finally, throwing pickaxe'");
-		}
+            this.SetResearchCost(99);
+        }
 		public override void SetDefaults()
 		{
             Item.damage = 12; 

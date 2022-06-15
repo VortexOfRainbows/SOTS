@@ -17,6 +17,7 @@ namespace SOTS.Items.SpiritStaves
 			Tooltip.SetDefault("Summons an Earthen Spirit to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults() 
 		{

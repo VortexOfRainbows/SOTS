@@ -18,6 +18,7 @@ namespace SOTS.Items.SpiritStaves
 			Tooltip.SetDefault("Summons an Permafrost Spirit to fight for you\nLaunches 3 permafrost spears downwards at enemies");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults() 
 		{

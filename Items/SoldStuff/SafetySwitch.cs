@@ -11,6 +11,7 @@ namespace SOTS.Items.SoldStuff
 		{
 			DisplayName.SetDefault("Safety Switch");
 			Tooltip.SetDefault("Prevents you from using void weapons if doing so would drop your void below zero");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

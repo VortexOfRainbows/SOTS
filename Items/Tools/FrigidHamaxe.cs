@@ -9,11 +9,7 @@ namespace SOTS.Items.Tools
 {
 	public class FrigidHamaxe : ModItem
 	{	
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Frigid Hamaxe");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
             Item.damage = 18;

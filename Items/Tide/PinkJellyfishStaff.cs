@@ -14,6 +14,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Pink Jellyfish Staff");
 			Tooltip.SetDefault("Fires pink lightning which chains off enemies for 60% damage");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -11,6 +11,7 @@ namespace SOTS.Items.Slime
         {
             DisplayName.SetDefault("Fire Spitter");
             Tooltip.SetDefault("Uses gel for ammo");
+            this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

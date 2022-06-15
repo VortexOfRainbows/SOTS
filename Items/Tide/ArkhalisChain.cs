@@ -18,6 +18,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Lost Chain");
 			Tooltip.SetDefault("'It probably didn't come from here'");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

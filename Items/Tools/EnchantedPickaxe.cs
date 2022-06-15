@@ -8,11 +8,7 @@ namespace SOTS.Items.Tools
 {
 	public class EnchantedPickaxe : ModItem
 	{	
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Enchanted Pickaxe");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
             Item.damage = 14;

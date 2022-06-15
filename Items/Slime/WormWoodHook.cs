@@ -11,6 +11,7 @@ namespace SOTS.Items.Slime
 		{
 			DisplayName.SetDefault("Goopwood Hook");
 			Tooltip.SetDefault("Retracts upon hitting an enemy");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

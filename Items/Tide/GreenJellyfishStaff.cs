@@ -14,6 +14,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Green Jellyfish Staff");
 			Tooltip.SetDefault("Fires 2 green orbs that, upon detonation, release green thunder towards your cursor\nGreen thunder chains off enemies for 90% damage\nProvides a light source while in the inventory");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

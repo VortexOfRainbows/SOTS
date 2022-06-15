@@ -16,11 +16,10 @@ namespace SOTS.Items.Void
 		{
 			TooltipLine line = new TooltipLine(Mod, "VoidConsumable", "Automatically consumed when void drops below zero");
 			tooltips.Add(line);
-			//line = new TooltipLine(mod, "VoidDelay", GetSatiateDuration() + " second cooldown");
-			//tooltips.Add(line);
 			base.ModifyTooltips(tooltips);
-        }
-        public sealed override void SetDefaults()
+		}
+		public override void SetStaticDefaults() => this.SetResearchCost(20);
+		public sealed override void SetDefaults()
 		{
 			Item.width = 32;
 			Item.height = 32;
@@ -64,8 +63,6 @@ namespace SOTS.Items.Void
 		}
 		public void Activate(Player player)
 		{
-			//int time = 60 * GetSatiateDuration();
-			//player.AddBuff(ModContent.BuffType<Satiated>(), time + 10);
 			OnActivation(player);
 			if (ConsumeStack())
 			{
