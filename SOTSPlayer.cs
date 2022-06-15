@@ -24,8 +24,6 @@ using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static SOTS.SOTS;
-using SOTS.Items.Pyramid;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Minions;
@@ -49,6 +47,7 @@ using SOTS.Items.Tools;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Audio;
+using static SOTS.SOTS;
 
 namespace SOTS
 {
@@ -199,9 +198,9 @@ namespace SOTS
 
 		public bool TurtleTem = false;
 
-		public bool PlanetariumBiome = false;
-		public bool PhaseBiome = false;
-		public bool PyramidBiome = false;
+		public bool PlanetariumBiome => Player.InModBiome<Biomes.PlanetariumBiome>();
+		public bool PhaseBiome => Player.InModBiome<Biomes.PhaseBiome>();
+		public bool PyramidBiome => Player.InModBiome<Biomes.PyramidBiome>();
 		public bool backUpBow = false;
 		public int doubledActive = 0;
 		public int doubledAmount = 0;
@@ -259,8 +258,12 @@ namespace SOTS
 			packet.Write(voidPlayer.lootingSouls);
 			packet.Send(toWho, fromWho);
 		}
-		public override void SendClientChanges(ModPlayer clientPlayer)
-		{
+        public override void clientClone(ModPlayer clientClone)
+        {
+			//will need to fix this later...
+        }
+        public override void SendClientChanges(ModPlayer clientPlayer)
+        {
 			// Here we would sync something like an RPG stat whenever the player changes it.
 			SOTSPlayer clone = clientPlayer as SOTSPlayer;
 			if(netUpdate)
@@ -336,61 +339,6 @@ namespace SOTS
 			}
 		}
 		public int bladeAlpha = 0;
-		public static readonly PlayerLayer BladeEffectBack = new PlayerLayer("SOTS", "BladeEffectBack", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo) 
-		{
-			Mod mod = ModLoader.GetMod("SOTS");	
-			Player drawPlayer = drawInfo.drawPlayer;
-			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
-			if (drawInfo.shadow != 0)
-				return;
-			if (modPlayer.skywardBlades > 0 && !drawPlayer.dead)
-			{
-				float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-				float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
-				int amt = modPlayer.skywardBlades;
-				float total = amt * 8;
-				Color color2 = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16));
-				drawX -= Main.screenPosition.X;
-				drawY -= Main.screenPosition.Y;
-				for (int i = 0; i < amt; i++)
-				{
-					Color color = color2;
-					float number = 0;
-					if(i == 0)
-						number = 0;
-					if (i == 1)
-						number = -7.5f;
-					if (i == 2)
-						number = 7.5f;
-					if (i == 3)
-						number = -15;
-					if (i == 4)
-						number = 15;
-					Vector2 moveDraw = new Vector2(64, 0).RotatedBy(modPlayer.cursorRadians + MathHelper.ToRadians(number));
-					Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/SkywardBladeBeam").Value;
-					DrawData data = new DrawData(texture, new Vector2(drawX, drawY) + moveDraw, null, color * ((255 - modPlayer.bladeAlpha)/255f), modPlayer.cursorRadians - 0.5f * MathHelper.ToRadians(number) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-					Main.playerDrawData.Add(data);
-
-					int recurse = 1;
-					if (modPlayer.rainbowGlowmasks)
-					{
-						color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
-						recurse = 2;
-					}
-					for (int j = 0; j < recurse; j++)
-					{
-						texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/SkywardBladeGlowmask").Value;
-						data = new DrawData(texture, new Vector2(drawX, drawY) + moveDraw, null, color * ((255 - modPlayer.bladeAlpha) / 255f), modPlayer.cursorRadians - 0.5f * MathHelper.ToRadians(number) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-						Main.playerDrawData.Add(data);
-					}
-				}
-			}
-		});
-		public override void ModifyDrawLayers(List<PlayerLayer> layers)
-		{
-			BladeEffectBack.visible = true;
-			layers.Insert(0, BladeEffectBack);
-		}
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (SOTS.BlinkHotKey.JustPressed)
@@ -997,51 +945,6 @@ namespace SOTS
 				rate = minRate;
 			}
 			return Main.rand.NextBool(rate);
-		}
-		public override void UpdateBiomes()
-		{
-			PlanetariumBiome = (SOTSWorld.planetarium > 100) && Player.Center.Y < Main.worldSurface * 16 * 0.5f; //planetarium if block count is greater than 100
-			PhaseBiome = (SOTSWorld.phaseBiome > 50) && Player.Center.Y < Main.worldSurface * 16 * 0.35f; //phase biome if nearby ore is greater than 50
-
-			//checking for background walls
-			int tileBehindX = (int)(Player.Center.X / 16);
-			int tileBehindY = (int)(Player.Center.Y / 16);
-			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
-			if (SOTSWall.unsafePyramidWall.Contains(tile.WallType) || tile.WallType == (ushort)ModContent.WallType<TrueSandstoneWallWall>())
-			{
-				PyramidBiome = true;
-			}
-			else
-			{
-				PyramidBiome = SOTSWorld.pyramidBiome > 0; //if there is a sarcophagus or zepline block on screen
-			}
-		}
-		public override bool CustomBiomesMatch(Player other)
-		{
-			var modOther = other.GetModPlayer<SOTSPlayer>();
-			return PyramidBiome == modOther.PyramidBiome && PlanetariumBiome == modOther.PlanetariumBiome && PhaseBiome == modOther.PhaseBiome;
-		}
-		public override void CopyCustomBiomesTo(Player other)
-		{
-			var modOther = other.GetModPlayer<SOTSPlayer>();
-			modOther.PyramidBiome = PyramidBiome;
-			modOther.PlanetariumBiome = PlanetariumBiome;
-			modOther.PhaseBiome = PhaseBiome;
-		}
-		public override void SendCustomBiomes(BinaryWriter writer)
-		{
-			BitsByte flags = new BitsByte();
-			flags[0] = PyramidBiome;
-			flags[1] = PlanetariumBiome;
-			flags[2] = PhaseBiome;
-			writer.Write(flags);
-		}
-		public override void ReceiveCustomBiomes(BinaryReader reader)
-		{
-			BitsByte flags = reader.ReadByte();
-			PyramidBiome = flags[0];
-			PlanetariumBiome = flags[1];
-			PhaseBiome = flags[2];
 		}
 		public override void OnHitByNPC(NPC npc, int damage, bool crit)
 		{

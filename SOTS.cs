@@ -74,7 +74,7 @@ namespace SOTS
 			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, "Armor Set", "F");
 			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, "Modify Flight Mode", "C");
 			SOTSWorld.LoadUI();
-			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
+			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
 			{
 				yabhb.Call("hbStart");
@@ -104,7 +104,7 @@ namespace SOTS
 					new Color(1f, 1f, 0f), 
 					new Color(1f, 0f, 0f));
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<SubspaceSerpentHead>());
-			}
+			}*/
 			//Music Box Stuff
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PutridPinky"), ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Advisor"), ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
@@ -132,8 +132,10 @@ namespace SOTS
 				FireballShader = Instance.Assets.Request<Effect>("Effects/FireballShader").Value;
 				GodrayShader = Instance.Assets.Request<Effect>("Effects/GodrayShader").Value;
 				VisionShader = Instance.Assets.Request<Effect>("Effects/VisionShader").Value;
-				primitives = new PrimTrailManager();
-				primitives.LoadContent(Main.graphics.GraphicsDevice);
+				Main.QueueMainThreadAction(() => {
+					primitives = new PrimTrailManager();
+					primitives.LoadContent(Main.graphics.GraphicsDevice);
+				});
 			}
 			SOTSDetours.Initialize();
 		}
@@ -516,64 +518,11 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:AlchSeeds", group);
 		}
-		public override void UpdateMusic(ref int music, ref SceneEffectPriority priority)
-        {
-			/*
-            if (Main.myPlayer != -1 && !Main.gameMenu)
-            {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().PlanetariumBiome) //this makes the music play only in Custom Biome
-                {
-                    music = this.GetSoundSlot(SoundType.Music, "Sounds/Music/JourneyFromJar");  //add where is the custom music is located
-					priority = MusicPriority.BossLow;
-				
-                } 
-            }
-			
-			if (Main.myPlayer != -1 && !Main.gameMenu)
-            {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().GeodeBiome) 
-                {
-                    music = this.GetSoundSlot(SoundType.Music, "Sounds/Music/GeodeMusic");  //add where is the custom music is located
-					priority = MusicPriority.BossLow;
-				
-                } 
-            }
-			*/
-			if (Main.myPlayer != -1 && !Main.gameMenu)
-			{
-				Player player = Main.player[Main.myPlayer];
-				if (player.active && player.GetModPlayer<SOTSPlayer>().PyramidBiome)
-				{
-					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/CursedPyramid");
-					priority = SceneEffectPriority.BiomeHigh;
-                }
-				if (player.active && player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
-				{
-					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/Planetarium");
-					priority = SceneEffectPriority.Event;
-				}
-				if (SOTSWorld.SecretFoundMusicTimer > 0)
-				{
-					SOTSWorld.SecretFoundMusicTimer--;
-					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/SecretFound");
-					priority = SceneEffectPriority.BossHigh + 1;
-				}
-				if (NPC.AnyNPCs(ModContent.NPCType<NPCs.knuckles>()) && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<NPCs.knuckles>())].Distance(player.Center) <= 7000f)
-				{
-					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/KnucklesTheme");
-					priority = SceneEffectPriority.BossHigh;
-				}
-				if(SOTSPlayer.pyramidBattle) //variable only applies to local player
-				{
-					music = MusicLoader.GetMusicSlot(this, "Sounds/Music/PyramidBattle");
-					priority = SceneEffectPriority.Environment;
-				}
-			}
-		}
 		public override void PostSetupContent()
         {
-            Mod bossChecklist = ModLoader.GetMod("BossChecklist");
-            if(bossChecklist != null)
+            Mod bossChecklist;
+			bool available = ModLoader.TryGetMod("BossChecklist", out bossChecklist);
+			if (available)
             {
 				// AddBoss, bossname, order or value in terms of vanilla bosses, inline method for retrieving downed value.
 				//bossChecklist.Call(....
@@ -582,22 +531,26 @@ namespace SOTS
 				//bossChecklist.Call("AddBossWithInfo", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky), "Use [i:" + ItemType("JarOfPeanuts") + "]");	
 				//bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
 
-				bossChecklist.Call(
+				///The following is a PUTRID PINKY template that should work for boss checklist!
+				bossChecklist.Call( 
 					"AddBoss",
-					4.25f,
-					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() },
 					this,
 					"Putrid Pinky",
+					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() },
+					4.25f,
 					(Func<bool>)(() => SOTSWorld.downedPinky),
-					ModContent.ItemType<JarOfPeanuts>(),
+					() => true,
 					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
-					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel },
+					ModContent.ItemType<JarOfPeanuts>(),
 					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
 					"Putrid Pinky has robbed everyone of their peanuts!",
-					"SOTS/NPCs/Boss/PutridPinky1_Display",
-					"SOTS/NPCs/Boss/PutridPinky1_Head_Boss",
-					(Func<bool>)(() => true));
-				bossChecklist.Call(
+					(SpriteBatch sb, Rectangle rect, Color color) => {
+						Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinky1_Display").Value;
+						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+						sb.Draw(texture, centered, color);
+					}
+					);
+				/*bossChecklist.Call(
 					"AddBoss",
 					4.5f,
 					new List<int>() { ModContent.NPCType<PharaohsCurse>() },
@@ -671,7 +624,7 @@ namespace SOTS
 					"",
 					"SOTS/BossCL/SubspaceSerpentPortrait",
 					"",
-					(Func<bool>)(() => true));
+					(Func<bool>)(() => true));*/
 
 
 				//bossChecklist.Call("AddBossWithInfo", "The Advisor", 5.9f, (Func<bool>)(() => SOTSWorld.downedAdvisor), "Destroy the 4 tethered Otherworldly Constructs on the Planetarium");
@@ -684,6 +637,10 @@ namespace SOTS
                // bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
 
 			 }
+			/*for(int i = Main.maxItems; i < ItemLoader.ItemCount; i++)
+            {
+				SOTSUtils.SetResearchCost(i, 1);
+            }*/
         }
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;

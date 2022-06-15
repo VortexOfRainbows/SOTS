@@ -50,7 +50,7 @@ namespace SOTS.Items.Flails
 		public float spinningdistance;
 		public float degreespertick;
 
-		public BaseFlailProj(Vector2 SpeedMult, Vector2 DamageMult, float MaxChargeTime = 2, float spinningdistance = 50, float degreespertick = 10)
+		public void SetFlailStats(Vector2 SpeedMult, Vector2 DamageMult, float MaxChargeTime = 2, float spinningdistance = 50, float degreespertick = 10)
 		{
 			this.SpeedMult = SpeedMult;
 			this.DamageMult = DamageMult;

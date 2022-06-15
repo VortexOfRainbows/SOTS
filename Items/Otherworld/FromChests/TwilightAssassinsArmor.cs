@@ -19,7 +19,14 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Twilight Assassin Circlet");
 			Tooltip.SetDefault("temp");
-			ArmorIDs.Head.Sets.DrawFullHair[Type] = true;
+			SetupDrawing();
+		}
+		private void SetupDrawing()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
+			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = false;
 		}
 		public override void SetDefaults()
 		{
@@ -127,7 +134,14 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Twilight Assassin Chestplate");
 			Tooltip.SetDefault("Increased your max number of minions by 1\nIncreased melee and void critical strike chance by 10%\nIncreased life regeneration by 2 and void regeneration speed by 10%");
-			ArmorIDs.Body.Sets.HidesHands[Type] = false;
+			SetupDrawing();
+		}
+		private void SetupDrawing()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
+			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = false;
 		}
 		public override void SetDefaults()
 		{
@@ -245,172 +259,6 @@ namespace SOTS.Items.Otherworld.FromChests
 				Lighting.AddLight(Player.Center, alpha * glowNum * new Vector3(200, 220, 255) / 255f);
 			}
 			glowNum = 0;
-            base.ResetEffects();
         }
-        public static readonly PlayerLayer TwilightGlowmaskChest = new PlayerLayer("SOTS", "TwilightGlowmaskChest", PlayerLayer.Body, delegate (PlayerDrawInfo drawInfo) {
-
-			// We don't want the glowmask to draw if the player is cloaked or dead
-			if (drawInfo.drawPlayer.dead)
-			{
-				return;
-			}
-			float alpha = 1 - drawInfo.shadow;
-
-			Player drawPlayer = drawInfo.drawPlayer;
-			Mod mod = ModLoader.GetMod("SOTS");
-
-			if (drawPlayer.body != mod.GetEquipSlot("TwilightAssassinsChestplate", EquipType.Body))
-			{
-				return;
-			}
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsChestplate_BodyGlow").Value;
-			if(!drawPlayer.Male)
-				texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsChestplate_FemaleBodyGlow").Value;
-			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
-			Vector2 origin = drawInfo.bodyOrigin;
-			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
-			Color color = new Color(60, 70, 80, 0) * 0.4f;
-			color = TestWingsPlayer.changeColorBasedOnStealth(color, drawPlayer);
-			Rectangle frame = drawPlayer.bodyFrame;
-			float rotation = drawPlayer.bodyRotation;
-			SpriteEffects spriteEffects = drawInfo.spriteEffects;
-			for(int i = 0; i < 360; i += 30)
-            {
-				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
-				DrawData drawData = new DrawData(texture, position + addition, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.bodyArmorShader;
-				Main.playerDrawData.Add(drawData);
-			}
-		});
-		public static readonly PlayerLayer TwilightGlowmaskArms = new PlayerLayer("SOTS", "TwilightGlowmaskArms", PlayerLayer.Body, delegate (PlayerDrawInfo drawInfo) {
-
-			// We don't want the glowmask to draw if the player is cloaked or dead
-			if (drawInfo.drawPlayer.dead)
-			{
-				return;
-			}
-			float alpha = 1 - drawInfo.shadow;
-
-			Player drawPlayer = drawInfo.drawPlayer;
-			Mod mod = ModLoader.GetMod("SOTS");
-
-			if (drawPlayer.body != mod.GetEquipSlot("TwilightAssassinsChestplate", EquipType.Body))
-			{
-				return;
-			}
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsChestplate_ArmsGlow").Value;
-			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
-			Vector2 origin = drawInfo.bodyOrigin;
-			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
-			Color color = new Color(60, 70, 80, 0) * 0.4f;
-			color = TestWingsPlayer.changeColorBasedOnStealth(color, drawPlayer);
-			Rectangle frame = drawPlayer.bodyFrame;
-			float rotation = drawPlayer.bodyRotation;
-			SpriteEffects spriteEffects = drawInfo.spriteEffects;
-			for (int i = 0; i < 360; i += 30)
-			{
-				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
-				DrawData drawData = new DrawData(texture, position + addition, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.bodyArmorShader;
-				Main.playerDrawData.Add(drawData);
-			}
-		});
-		public static readonly PlayerLayer TwilightGlowmaskHead = new PlayerLayer("SOTS", "TwilightGlowmaskHead", PlayerLayer.Head, delegate (PlayerDrawInfo drawInfo) {
-
-			// We don't want the glowmask to draw if the player is cloaked or dead
-			if (drawInfo.drawPlayer.dead)
-			{
-				return;
-			}
-			float alpha = 1 - drawInfo.shadow;
-
-			Player drawPlayer = drawInfo.drawPlayer;
-			Mod mod = ModLoader.GetMod("SOTS");
-
-			if (drawPlayer.head != mod.GetEquipSlot("TwilightAssassinsCirclet", EquipType.Head))
-			{
-				return;
-			}
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsCirclet_HeadGlow").Value;
-			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
-			Vector2 origin = drawInfo.bodyOrigin;
-			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
-			Color color = new Color(60, 70, 80, 0) * 0.4f;
-			color = TestWingsPlayer.changeColorBasedOnStealth(color, drawPlayer);
-			Rectangle frame = drawPlayer.bodyFrame;
-			float rotation = drawPlayer.bodyRotation;
-			SpriteEffects spriteEffects = drawInfo.spriteEffects;
-			for (int i = 0; i < 360; i += 30)
-			{
-				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
-				DrawData drawData = new DrawData(texture, position + addition, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.headArmorShader;
-				Main.playerDrawData.Add(drawData);
-			}
-		});
-		public static readonly PlayerLayer TwilightGlowmaskLegs = new PlayerLayer("SOTS", "TwilightGlowmaskLegs", PlayerLayer.Legs, delegate (PlayerDrawInfo drawInfo) {
-
-			// We don't want the glowmask to draw if the player is cloaked or dead
-			if (drawInfo.drawPlayer.dead)
-			{
-				return;
-			}
-			float alpha = 1 - drawInfo.shadow;
-
-			Player drawPlayer = drawInfo.drawPlayer;
-			Mod mod = ModLoader.GetMod("SOTS");
-
-			if (drawPlayer.legs != mod.GetEquipSlot("TwilightAssassinsLeggings", EquipType.Legs))
-			{
-				return;
-			}
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsLeggings_LegsGlow").Value;
-			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.legFrame.Height / 2 + 4f;
-			Vector2 origin = drawInfo.bodyOrigin;
-			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
-			Color color = new Color(60, 70, 80, 0) * 0.4f;
-			color = TestWingsPlayer.changeColorBasedOnStealth(color, drawPlayer);
-			Rectangle frame = drawPlayer.legFrame;
-			float rotation = drawPlayer.bodyRotation;
-			SpriteEffects spriteEffects = drawInfo.spriteEffects;
-			for (int i = 0; i < 360; i += 30)
-			{
-				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
-				DrawData drawData = new DrawData(texture, position + addition, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.legArmorShader;
-				Main.playerDrawData.Add(drawData);
-			}
-		});
-		public override void ModifyDrawLayers(List<PlayerLayer> layers)
-		{
-			int bodyLayer = layers.FindIndex(l => l == PlayerLayer.Body);
-			if (bodyLayer > -1)
-			{
-				layers.Insert(bodyLayer + 1, TwilightGlowmaskChest);
-			}
-			bodyLayer = layers.FindIndex(l => l == PlayerLayer.Arms);
-			if (bodyLayer > -1)
-			{
-				layers.Insert(bodyLayer + 1, TwilightGlowmaskArms);
-			}
-			bodyLayer = layers.FindIndex(l => l == PlayerLayer.Head);
-			if (bodyLayer > -1)
-			{
-				layers.Insert(bodyLayer + 1, TwilightGlowmaskHead);
-			}
-			bodyLayer = layers.FindIndex(l => l == PlayerLayer.Legs);
-			if (bodyLayer > -1)
-			{
-				layers.Insert(bodyLayer + 1, TwilightGlowmaskLegs);
-			}
-		}
 	}
 }

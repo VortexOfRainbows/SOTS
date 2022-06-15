@@ -14,7 +14,14 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Wormwood Wreath");
 			Tooltip.SetDefault("Increased max minions");
-			ArmorIDs.Head.Sets.DrawFullHair[Type] = true;
+			SetupDrawing();
+		}
+		private void SetupDrawing()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
+			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = false;
 		}
 		public override void SetDefaults()
 		{
@@ -86,7 +93,14 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Wormwood Shirt");
 			Tooltip.SetDefault("Increased defense for every active minion");
-			ArmorIDs.Body.Sets.HidesHands[Type] = false;
+			SetupDrawing();
+		}
+		private void SetupDrawing()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
+			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = false;
 		}
 		public override void SetDefaults()
 		{

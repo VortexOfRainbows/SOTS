@@ -88,7 +88,7 @@ namespace SOTS.Items.Furniture.Nature
 			ItemDrop = ModContent.ItemType<NaturePlatingTorch>();
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Torches };
-			torch = true;
+			TileID.Sets.Torch[Type] = true;
 		}
         public override bool CanPlace(int i, int j)
         {

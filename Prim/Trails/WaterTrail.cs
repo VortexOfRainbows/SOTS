@@ -12,7 +12,7 @@ namespace SOTS.Prim.Trails
 		public WaterTrail(Projectile projectile, int width = 12)
 		{
 			Entity = projectile;
-			EntityType = Projectile.type;
+			EntityType = projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
 			Color = new Color(46, 104, 234);
 			Width = width;

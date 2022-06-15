@@ -19,7 +19,14 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Patch Leather Tunic");
 			Tooltip.SetDefault("Increases minion damage by 10%\nGrants immunity to venom and poison debuffs");
-			ArmorIDs.Body.Sets.HidesHands[Type] = true;
+			SetupDrawing();
+		}
+		private void SetupDrawing()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
+			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = false;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

@@ -7,13 +7,13 @@ using Terraria.ModLoader;
 
 namespace SOTS.Common.PlayerDrawing
 {
-	public class StarbeltGlowmask : PlayerDrawLayer
+	public class PutridPinkyMask : PlayerDrawLayer
 	{
-		private Asset<Texture2D> starbeltGlowmaskTexture;
-		//public override bool IsHeadLayer => true;
+		private Asset<Texture2D> maskTexture;
+		public override bool IsHeadLayer => true;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
 		{
-			return drawInfo.drawPlayer.waist == EquipLoader.GetEquipSlot(Mod, "Starbelt", EquipType.Waist);
+			return drawInfo.drawPlayer.head == EquipLoader.GetEquipSlot(Mod, "PutridPinkyMask", EquipType.Head);
 		}
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
 		protected override void Draw(ref PlayerDrawSet drawInfo)
@@ -22,8 +22,10 @@ namespace SOTS.Common.PlayerDrawing
 			{
 				return;
 			}
-			if (starbeltGlowmaskTexture == null)
-				starbeltGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/Starbelt_WaistGlow");
+			if (maskTexture == null)
+			{
+				maskTexture = ModContent.Request<Texture2D>("SOTS/Items/Slime/PutridPinkyMaskEye_Head");
+			}
 			float alpha = 1 - drawInfo.shadow;
 			Player drawPlayer = drawInfo.drawPlayer;
 			float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
@@ -31,13 +33,21 @@ namespace SOTS.Common.PlayerDrawing
 			Vector2 origin = drawInfo.bodyVect;
 			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
 			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
-			Color color = Color.White;
+			Color color = Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16, Color.White);
 			color = MachinaBooster.changeColorBasedOnStealth(color, drawInfo);
 			Rectangle frame = drawPlayer.bodyFrame;
 			float rotation = drawPlayer.bodyRotation;
 			SpriteEffects spriteEffects = drawInfo.playerEffect;
-			DrawData drawData = new DrawData(starbeltGlowmaskTexture.Value, position, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
-			drawData.shader = drawInfo.cWaist;
+			Vector2 addition = new Vector2(2, 0).RotatedBy((Main.MouseWorld - drawPlayer.Center).ToRotation());
+			addition.Y *= 0.5f;
+			if (addition.X * drawPlayer.direction < 0)
+				addition.X *= 0.25f;
+			if (Main.myPlayer != drawPlayer.whoAmI)
+			{
+				addition = new Vector2(2, 0) * drawPlayer.direction;
+			}
+			DrawData drawData = new DrawData(maskTexture.Value, position + addition, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
+			drawData.shader = drawInfo.cHead;
 			drawInfo.DrawDataCache.Add(drawData);
 		}
 	}

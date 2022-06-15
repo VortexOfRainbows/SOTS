@@ -2,6 +2,8 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Void;
+using Terraria.ID;
+
 namespace SOTS.Buffs
 {
     public class VoidMetamorphosis : ModBuff

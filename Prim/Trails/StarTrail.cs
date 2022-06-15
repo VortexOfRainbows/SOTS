@@ -13,7 +13,7 @@ namespace SOTS.Prim.Trails
 		public StarTrail(Projectile projectile, Color colorStart, Color colorEnd, int width = 12, int length = 18)
 		{
 			Entity = projectile;
-			EntityType = Projectile.type;
+			EntityType = projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
 			Color = colorStart;
 			color2 = colorEnd;

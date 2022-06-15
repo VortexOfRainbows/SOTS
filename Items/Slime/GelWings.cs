@@ -22,7 +22,7 @@ namespace SOTS.Items.Slime
 			Item.width = 38;
 			Item.height = 40;
             Item.value = Item.sellPrice(0, 1, 50, 0);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Blue;
 			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -82,42 +82,6 @@ namespace SOTS.Items.Slime
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 8).AddIngredient<Wormwood>(24).AddIngredient(ItemID.Feather, 10).AddTile(TileID.Anvils).Register();
-		}
-	}
-	public class GelWingsPlayer : ModPlayer
-	{
-		public static readonly PlayerLayer GelWings = new PlayerLayer("SOTS", "GelWings", PlayerLayer.Wings, delegate (PlayerDrawInfo drawInfo) {
-
-			if (drawInfo.drawPlayer.dead)
-			{
-				return;
-			}
-			float alpha = 1 - drawInfo.shadow;
-			Player drawPlayer = drawInfo.drawPlayer;
-			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
-			Mod mod = ModLoader.GetMod("SOTS");
-			if (drawPlayer.wings == mod.GetEquipSlot("GelWings", EquipType.Wings))
-			{
-				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Slime/GelWings_Wings2").Value;
-				int drawX = (int)(drawPlayer.position.X - Main.screenPosition.X);
-				int drawY = (int)(drawPlayer.position.Y - Main.screenPosition.Y);
-				Vector2 Position = drawInfo.position;
-				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 12);
-				Vector2 pos = new Vector2((float)((int)(Position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction))), (float)(Position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) - 5f * drawPlayer.gravDir));
-				Color lightColor = Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16, Color.White);
-				Color color = TestWingsPlayer.changeColorBasedOnStealth(lightColor, drawPlayer) * (175f / 255f) * alpha;
-				DrawData data = new DrawData(texture, pos, new Rectangle(0, texture.Height / 6 * drawPlayer.wingFrame, texture.Width, texture.Height / 6), color, 0f, origin, 1f, drawInfo.spriteEffects, 0);
-				data.shader = drawInfo.wingShader;
-				Main.playerDrawData.Add(data);
-			}
-		});
-		public override void ModifyDrawLayers(List<PlayerLayer> layers)
-		{
-			int wings = layers.FindIndex(l => l == PlayerLayer.Wings);
-			if (wings > -1)
-			{
-				layers.Insert(wings + 1, GelWings);
-			}
 		}
 	}
 }
