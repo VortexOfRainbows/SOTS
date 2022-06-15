@@ -13,8 +13,8 @@ namespace SOTS
 	{
 		public static SlotId PlaySound(SoundStyle style, Vector2 position, float volume = 1f, float pitch = 0f, float pitchVariance = 0f)
 		{
-			style.Volume = volume;
-			style.Pitch = pitch;
+			style = style.WithVolumeScale(volume);
+			style = style.WithPitchOffset(pitch);
 			style.PitchVariance = pitchVariance;
 			return SoundEngine.PlaySound(style, position);
 		}
