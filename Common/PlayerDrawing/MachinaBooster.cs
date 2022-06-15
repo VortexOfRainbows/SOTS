@@ -13,7 +13,7 @@ namespace SOTS.Common.PlayerDrawing
 	public class MachinaBooster : PlayerDrawLayer
 	{
 		public Texture2D[] wingAssets;
-		public override bool IsHeadLayer => true;
+		//public override bool IsHeadLayer => true;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
 		{
 			return drawInfo.drawPlayer.wings == EquipLoader.GetEquipSlot(Mod, "TestWings", EquipType.Wings);
@@ -103,9 +103,9 @@ namespace SOTS.Common.PlayerDrawing
 			Texture2D boosterPieceGlow = wingAssets[9];
 			Texture2D wingPieceGlow = wingAssets[10];
 
-			float drawX = (int)drawPlayer.position.X + drawPlayer.width / 2;
+			float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
 			//drawX -= 9 * drawPlayer.direction;
-			float drawY = (int)drawPlayer.position.Y + drawPlayer.height / 2;
+			float drawY = (int)drawInfo.Position.Y + drawPlayer.height / 2;
 			//drawY += 2 * drawPlayer.gravDir;
 
 

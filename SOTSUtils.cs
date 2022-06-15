@@ -4,6 +4,8 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Terraria;
 using SOTS.Common.GlobalNPCs;
+using Terraria.GameContent.Creative;
+using Terraria.ModLoader;
 
 namespace SOTS
 {
@@ -57,5 +59,20 @@ namespace SOTS
 		{
 			return GetPath(t) + extra;
 		}
+		public static void SetResearchCost(this ModItem modItem, int amt)
+		{
+			SetResearchCost(modItem.Type, amt);
+		}
+		public static void SetResearchCost(int type, int amt)
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[type] = amt;
+		}
+		/*public static void SetResearchCostAutomatically(this ModItem modItem)
+		{
+			Item item = modItem.Item;
+			item.SetDefaults(modItem.Type);
+			int amt = 1;
+			SetResearchCost(modItem.Type, amt);
+		}*/
 	}
 }

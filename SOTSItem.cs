@@ -38,7 +38,7 @@ namespace SOTS
 {
 	public class PrefixItem : GlobalItem
 	{
-		public override bool InstancePerEntity => true;
+        public override bool InstancePerEntity => true;
 		public int extraVoid;
 		public int extraVoidGain;
 		public float voidCostMultiplier;

@@ -10,7 +10,7 @@ namespace SOTS.Common.PlayerDrawing
 	public class StarbeltGlowmask : PlayerDrawLayer
 	{
 		private Asset<Texture2D> starbeltGlowmaskTexture;
-		public override bool IsHeadLayer => true;
+		//public override bool IsHeadLayer => true;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
 		{
 			return drawInfo.drawPlayer.waist == EquipLoader.GetEquipSlot(Mod, "Starbelt", EquipType.Waist);
@@ -26,8 +26,8 @@ namespace SOTS.Common.PlayerDrawing
 				starbeltGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/Starbelt_WaistGlow");
 			float alpha = 1 - drawInfo.shadow;
 			Player drawPlayer = drawInfo.drawPlayer;
-			float drawX = (int)drawPlayer.position.X + drawPlayer.width / 2;
-			float drawY = (int)drawPlayer.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
+			float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
+			float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
 			Vector2 origin = drawInfo.bodyVect;
 			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
 			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
