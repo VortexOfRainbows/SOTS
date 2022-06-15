@@ -22,7 +22,7 @@ namespace SOTS.Items.Nature
 			if (Main.netMode == NetmodeID.Server)
 				return;
 			int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
-			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = false;
+			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = true;
 		}
 		public override void SetDefaults()
 		{

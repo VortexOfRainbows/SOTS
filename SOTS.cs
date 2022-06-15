@@ -56,15 +56,15 @@ namespace SOTS
         {
 			get => ModContent.GetInstance<SOTSConfig>();
         }
-		public SOTS()
+		/*public SOTS()
 		{
-			/*Properties = new ModProperties() //This seems largely unused now
+			Properties = new ModProperties() //This seems largely unused now
 			{
 				Autoload = true,
 				AutoloadGores = true,
 				AutoloadSounds = true
-			};*/
-		}
+			};
+		}*/
 		public static int PlayerCount = 0;
 		public override void Load()
 		{
@@ -357,6 +357,8 @@ namespace SOTS
 					playernumber2 = reader.ReadInt32();
 					SOTSWorld.GlobalTimeFreeze = reader.ReadInt32();
 					SOTSWorld.GlobalFrozen = reader.ReadBoolean();
+					SOTSWorld.GlobalFreezeCounter = reader.Read();
+					SOTSWorld.GlobalSpeedMultiplier = reader.Read();
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -364,6 +366,8 @@ namespace SOTS
 						packet.Write(playernumber2);
 						packet.Write(SOTSWorld.GlobalTimeFreeze);
 						packet.Write(SOTSWorld.GlobalFrozen);
+						packet.Write(SOTSWorld.GlobalFreezeCounter);
+						packet.Write(SOTSWorld.GlobalSpeedMultiplier);
 						packet.Send(-1, playernumber2);
 					}
 					break;

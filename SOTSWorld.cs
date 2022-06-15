@@ -60,6 +60,8 @@ namespace SOTS
 			packet.Write(playerWhoAmI);
 			packet.Write(GlobalTimeFreeze);
 			packet.Write(GlobalFrozen);
+			packet.Write(GlobalFreezeCounter);
+			packet.Write(GlobalSpeedMultiplier);
 			packet.Send();
 		}
 		public static void SyncGlobalCounter()

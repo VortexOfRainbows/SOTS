@@ -15,7 +15,7 @@ Known Bugs/Issues:
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
-1. Make Mod Loadable in 1.4
+1. (DONE) Make Mod Loadable in 1.4
 2. Make sure Biome NPC Spawning Work
 3. Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
 4. Make sure VM Incubator works (and server fixes)
@@ -59,10 +59,16 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+
+
+
+--- 0.22.0 Development begins!! --- (there are a lot of bugs to crush...)
+
+
 6/15/22
 1. Ported some more Player layers...
 2. Twilight Assassin might be especially broken though, as the arm drawing is different now...
-3. 
+3. IT WORKS!!!!!!!!
 
 6/14/22
 1. Ported player layers for Curse Armor and Machina Booster... starbelt... 
