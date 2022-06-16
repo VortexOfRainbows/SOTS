@@ -176,6 +176,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AbsoluteBar>(), 1, 26, 34));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.FrostCore, 1, 1, 2));
+			npcLoot.Add(notExpertRule);
 		}
         public override void BossLoot(ref string name, ref int potionType)
 		{ 

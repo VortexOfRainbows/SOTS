@@ -87,6 +87,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			return !dormant;
 		}
 		public const int NormalModeHP = 12500;
+		public const int NormalModeDamage = 54;
 		public const float ExpertLifeScale = 0.64002f;
 		public override void SetDefaults()
         {
@@ -515,7 +516,6 @@ namespace SOTS.NPCs.Boss.Advisor
 			bool lineOfSight = Collision.CanHitLine(NPC.position, NPC.width, NPC.height, player.position, player.width, player.height);
 			if (dormant)
 			{
-				NPC.ScaleStats(null, Main.GameModeInfo, null);
 				attackPhase1 = -1;
 				attackPhase2 = -1;
 				NPC.velocity.Y = new Vector2(0.08f, 0).RotatedBy(MathHelper.ToRadians(ai1)).Y;
@@ -542,6 +542,8 @@ namespace SOTS.NPCs.Boss.Advisor
 				}
 				if(dormantCounter > 90)
 				{
+					NPC.damage = NormalModeDamage;
+					NPC.ScaleStats(null, Main.GameModeInfo, null);
 					SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
 					Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
 					dormant = false;
@@ -549,7 +551,8 @@ namespace SOTS.NPCs.Boss.Advisor
 					NPC.dontCountMe = false;
 					NPC.boss = true;
 				}
-				NPC.netUpdate = true;
+				if(Main.netMode == NetmodeID.Server)
+					NPC.netUpdate = true;
 				return false;
 			}
 			return true;
@@ -1148,6 +1151,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<SkywareKey>(), 1, 1, 1));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<HardlightAlloy>(), 3, 10, 16))
 				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<StrangeKey>(), 1, 1, 1));
+			npcLoot.Add(notExpertRule);
 		}
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 

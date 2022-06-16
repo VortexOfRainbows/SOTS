@@ -243,19 +243,31 @@ namespace SOTS.Common.GlobalNPCs
 			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<AvocadoSoup>(), 120, 1, 1));
 			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PlanetariumDropCondition(), ModContent.ItemType<DigitalCornSyrup>(), 100, 1, 1));
 
-			globalLoot.Add(
-				ItemDropRule.ByCondition(new ItemDropConditions.OtherworldFragmentDropCondition(), ModContent.ItemType<FragmentOfOtherworld>(), 35, 1, 2, 1)
-				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.TideFragmentDropCondition(), ModContent.ItemType<FragmentOfTide>(), 35, 1, 2, 1)
-				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.NatureFragmentDropCondition(), ModContent.ItemType<FragmentOfNature>(), 35, 1, 2, 1)
-				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<FragmentOfPermafrost>(), 35, 1, 2, 1)
-				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.EarthFragmentDropCondition(), ModContent.ItemType<FragmentOfEarth>(), 35, 1, 2, 1)
-				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.InfernoFragmentDropCondition(), ModContent.ItemType<FragmentOfInferno>(), 35, 1, 2, 1)
-				.OnSuccess(ItemDropRule.ByCondition(new ItemDropConditions.DownedSubspaceDropCondition(), ModContent.ItemType<SanguiteBar>(), 1, 4, 5, 1)
-				)))))))
-				.OnFailedRoll(ItemDropRule.ByCondition(new ItemDropConditions.EvilFragmentDropCondition(), ModContent.ItemType<FragmentOfEvil>(), 34, 1, 2, 1)
-				.OnFailedConditions(ItemDropRule.ByCondition(new ItemDropConditions.ChaosFragmentDropCondition(), ModContent.ItemType<FragmentOfChaos>(), 34, 1, 2, 1)));
-			//globalLoot.Add(ItemDropRule.ByCondition(new Conditions.Biome...)) //Waiting for Tmodloader to support biomes!
-			//	);
+			LeadingConditionRule otherworld = new LeadingConditionRule(new ItemDropConditions.OtherworldFragmentDropCondition());
+			LeadingConditionRule tide = new LeadingConditionRule(new ItemDropConditions.TideFragmentDropCondition());
+			LeadingConditionRule nature = new LeadingConditionRule(new ItemDropConditions.NatureFragmentDropCondition());
+			LeadingConditionRule permafrost = new LeadingConditionRule(new ItemDropConditions.PermafrostFragmentDropCondition());
+			LeadingConditionRule earth = new LeadingConditionRule(new ItemDropConditions.EarthFragmentDropCondition());
+			LeadingConditionRule inferno = new LeadingConditionRule(new ItemDropConditions.InfernoFragmentDropCondition());
+			LeadingConditionRule evil = new LeadingConditionRule(new ItemDropConditions.EvilFragmentDropCondition());
+			LeadingConditionRule chaos = new LeadingConditionRule(new ItemDropConditions.ChaosFragmentDropCondition());
+
+			otherworld.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfOtherworld>(), 35, 1, 2)).OnFailedConditions(
+				tide.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfTide>(), 35, 1, 2)).OnFailedConditions(
+					nature.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfNature>(), 35, 1, 2)).OnFailedConditions(
+						permafrost.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfPermafrost>(), 35, 1, 2)).OnFailedConditions(
+							earth.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 35, 1, 2)).OnFailedConditions(
+								inferno.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfInferno>(), 35, 1, 2)))))));
+			evil.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 35, 1, 2)).OnFailedConditions(chaos.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfChaos>(), 35, 1, 2)));
+			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.DownedSubspaceDropCondition(), ModContent.ItemType<SanguiteBar>(), 35, 4, 5, 1));
+			globalLoot.Add(otherworld);
+			globalLoot.Add(tide);
+			globalLoot.Add(nature);
+			globalLoot.Add(permafrost);
+			globalLoot.Add(earth);
+			globalLoot.Add(inferno);
+			globalLoot.Add(evil);
+			globalLoot.Add(chaos);
 		}
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) //modify loot and vanilla loot
 		{

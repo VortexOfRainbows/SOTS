@@ -16,16 +16,19 @@ Known Bugs/Issues:
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
 1. (DONE) Make Mod Loadable in 1.4
-2. Make sure Biome NPC Spawning Work
+2. (Working, Needs more testing) Make sure Biome NPC Spawning Work
 3. Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
 4. Make sure VM Incubator works (and server fixes)
-5. Make sure Global NPC loot works
-6. Make sure Advisor Health Scaling in Expert works properly!
-7. Make sure projectile expert mode damage from enemies works properly (GetBaseDamage(NPC npc))!
-8. Make sure sound playing system works with pitch and volume
+5. (Confirmed Working) Make sure Global NPC loot works
+	1. Advisor and PP not working (RELATED TO GORES NOT WORKING AT ALL)
+	2. (more testing needed) Make sure individual npc loot is working
+6. (NOT WORKING, seems to double dip into health multipliers) Make sure Advisor Health Scaling in Expert works properly!
+7. (Confirmed Working) Make sure projectile expert mode damage from enemies works properly (GetBaseDamage(NPC npc))!
+8. (Confirmed Working) Make sure sound playing system works with pitch and volume
 9. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
 10. Figure out twilight assassin armor ARM glowmask...
 11. VOID DAMAGE CLASSES!!
+12. Treasure slimes need to load item assets before using them...
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
