@@ -298,7 +298,7 @@ namespace SOTS.NPCs.Inferno
 			isSans.OnSuccess(ItemDropRule.Common(ItemID.LivingUltrabrightFireBlock, 2, 10, 20));
 			isSans.OnSuccess(ItemDropRule.Common(ItemType<FragmentOfChaos>(), 1, 1, 1));
 			notSans.OnSuccess(ItemDropRule.Common(ItemID.LivingFireBlock, 20, 10, 20));
-			notSans.OnSuccess(ItemDropRule.Common(ItemType<FragmentOfInferno>(), 25, 1, 1)));
+			notSans.OnSuccess(ItemDropRule.Common(ItemType<FragmentOfInferno>(), 25, 1, 1));
 			npcLoot.Add(notSans);
 			npcLoot.Add(isSans);
 		}

@@ -17,7 +17,7 @@ Known Bugs/Issues:
 Major Milestones TO REACH (Will be removed when completed)
 1. (DONE) Make Mod Loadable in 1.4
 2. (Working, Needs more testing) Make sure Biome NPC Spawning Work
-3. Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
+3. (delayed) Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
 4. Make sure VM Incubator works (and server fixes)
 5. (Confirmed Working) Make sure Global NPC loot works
 	1. Advisor and PP not working (RELATED TO GORES NOT WORKING AT ALL)
@@ -62,7 +62,10 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
-
+6/16/22
+1. Bug fixes and checks
+2. Mainly relating to NPC stats and drops
+3. Lesser wisp drops
 
 
 --- 0.22.0 Development begins!! --- (there are a lot of bugs to crush...)
