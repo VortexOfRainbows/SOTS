@@ -12,6 +12,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Double Vision Potion");
 			Tooltip.SetDefault("Adds additional lines to your fishing rod, stacks with itself\nMaxes out at 6 additional lines");
+			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()
 		{

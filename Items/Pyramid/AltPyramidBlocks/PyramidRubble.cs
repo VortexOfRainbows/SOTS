@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-// If you are using c# 6, you can use: "using static Terraria.Localization.GameCulture;" which would mean you could just write "DisplayName.AddTranslation(German, "");"
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 
@@ -13,6 +12,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		{
 			DisplayName.SetDefault("Pyramid Rubble");
 			Tooltip.SetDefault("'It's much less a brick than just a collection of rocks'");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{
@@ -57,11 +57,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 
 	public class RuinedPyramidBrick : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Ruined Pyramid Brick");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.width = 16;

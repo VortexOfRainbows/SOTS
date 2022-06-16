@@ -11,6 +11,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Imperial Pike");
 			Tooltip.SetDefault("Leaves behind a trail that continues to damage enemies");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

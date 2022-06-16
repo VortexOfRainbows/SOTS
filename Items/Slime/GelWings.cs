@@ -16,6 +16,7 @@ namespace SOTS.Items.Slime
 		{	
 			DisplayName.SetDefault("Gel Wings");
 			Tooltip.SetDefault("Allows flight and slow fall\n'It really shouldn't hold up well'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -15,8 +15,8 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Cursed Apple");
 			Tooltip.SetDefault("Summons a pet Ghost Pepper to assist after combat\nPlunder 2 Souls of Looting from every killed enemy, and store them inside your void meter\nRight click on an enemy to mark it for harvesting, consuming 10 souls\nMarked enemies drop extra loot\nEnemies can be marked multiple times\nRequires 100 souls to mark a boss\nSome rare enemies will also require more souls to mark");
+			this.SetResearchCost(1);
 		}
-
 		public override void SetDefaults()
 		{
 			Item.width = 26;

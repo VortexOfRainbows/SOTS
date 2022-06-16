@@ -14,6 +14,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Seismic Tonic");
 			Tooltip.SetDefault("Randomly receive 2 of the following:\nIronskin for 15 minutes\nSoul Access for 13 minutes\nEndurance for 11 minutes\nRoughskin for 9 minutes");
+			this.SetResearchCost(20);
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

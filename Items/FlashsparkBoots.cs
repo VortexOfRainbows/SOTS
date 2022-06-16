@@ -16,6 +16,7 @@ namespace SOTS.Items
 			DisplayName.SetDefault("Flashspark Boots");
 			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava\n'Recipro Burst!'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
+            this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

@@ -15,6 +15,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Skyware Battery");
 			Tooltip.SetDefault("Increases void gain by 2 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

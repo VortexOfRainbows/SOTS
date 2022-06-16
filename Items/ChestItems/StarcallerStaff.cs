@@ -21,6 +21,7 @@ namespace SOTS.Items.ChestItems
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

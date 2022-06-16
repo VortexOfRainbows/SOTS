@@ -12,6 +12,7 @@ namespace SOTS.Items.ChestItems
         {
             DisplayName.SetDefault("Rebar Rifle");
             Tooltip.SetDefault("Shoots a powerful, high velocity rebar that applies a stacking, permanent bleed to hit enemies for 5 damage per second");
+            this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

@@ -11,6 +11,7 @@ namespace SOTS.Items.Earth
 		{
 			DisplayName.SetDefault("Vibrant Bullet");
 			Tooltip.SetDefault("Splits into 3 shards\nOne shard flies straight for 100% damage\nThe other shards deal 25% damage");
+			this.SetResearchCost(99);
 		}
 		public override void SetDefaults()
 		{
@@ -39,6 +40,7 @@ namespace SOTS.Items.Earth
 		{
 			DisplayName.SetDefault("Vibrant Arrow");
 			Tooltip.SetDefault("Scatters 3 shards below the area of impact for 120% damage");
+			this.SetResearchCost(99);
 		}
 		public override void SetDefaults()
 		{

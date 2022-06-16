@@ -54,10 +54,7 @@ namespace SOTS.Items.Permafrost
     }
 	public class HardIceBrickWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Hard Ice Brick Wall");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);

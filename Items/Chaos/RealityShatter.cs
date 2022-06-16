@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Common.GlobalNPCs;
-using SOTS.Common.GlobalNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 
@@ -50,6 +49,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Reality Shatter");
 			Tooltip.SetDefault("Enemies recieve an additional flurry of slashes that do 4x50% damage");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

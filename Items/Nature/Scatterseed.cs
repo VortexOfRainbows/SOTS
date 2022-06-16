@@ -14,6 +14,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Scatterseed");
 			Tooltip.SetDefault("Scatters seeds that latch onto enemies\nWhen the seeds bloom, they do 125% damage");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

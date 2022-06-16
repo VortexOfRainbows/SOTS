@@ -14,6 +14,7 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Perfect Star");
 			Tooltip.SetDefault("'The perfect weapon'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

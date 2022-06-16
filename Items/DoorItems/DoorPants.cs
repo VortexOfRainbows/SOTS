@@ -19,6 +19,7 @@ namespace SOTS.Items.DoorItems
 		{
 			DisplayName.SetDefault("Door Pants");
 			Tooltip.SetDefault("Accelerates horizontal movement when going through doors\nBuilds up speed while standing in doors");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
@@ -55,6 +56,7 @@ namespace SOTS.Items.DoorItems
 		{
 			DisplayName.SetDefault("Band of Door");
 			Tooltip.SetDefault("'Open the door to the ultimate form of travel'");
+			this.SetResearchCost(1);
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

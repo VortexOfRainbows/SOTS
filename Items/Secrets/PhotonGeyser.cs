@@ -14,6 +14,7 @@ namespace SOTS.Items.Secrets
 		{
 			DisplayName.SetDefault("Photon Geyser");
 			Tooltip.SetDefault("Unleash a helix of homing rainbow light");
+			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

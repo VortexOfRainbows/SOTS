@@ -10,7 +10,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ancient Gold Beam (Wall)");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()
 		{

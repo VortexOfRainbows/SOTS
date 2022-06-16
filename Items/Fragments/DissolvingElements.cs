@@ -17,6 +17,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Nature");
 			Tooltip.SetDefault("Reduces damage dealt by 10% while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
+			this.SetResearchCost(3);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -101,6 +102,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Earth");
 			Tooltip.SetDefault("Reduces endurance by 10% while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
+			this.SetResearchCost(3);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -185,6 +187,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Aurora");
 			Tooltip.SetDefault("Reduces movespeed by 20% while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 5));
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{
@@ -270,6 +273,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Deluge");
 			Tooltip.SetDefault("Decreases max life and mana by 10 while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 12));
+			this.SetResearchCost(3);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -354,6 +358,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Aether");
 			Tooltip.SetDefault("Reduces gravity while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{
@@ -428,6 +433,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Umbra");
 			Tooltip.SetDefault("Reduces max void by 20 while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 10));
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{
@@ -509,6 +515,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Nether");
 			Tooltip.SetDefault("Decreases life regeneration by 2 while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 8));
+			this.SetResearchCost(3);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -584,6 +591,7 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Dissolving Brilliance");
 			Tooltip.SetDefault("Increases void drain by 0.5 while in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 8));
+			this.SetResearchCost(3);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

@@ -7,6 +7,7 @@ namespace SOTS.Items.Fragments
 {
 	public class NaturePlatingWall : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
@@ -33,6 +34,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class NaturePlatingPanelWall : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
@@ -59,6 +61,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class EarthenPlatingWall : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
@@ -85,6 +88,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class EarthenPlatingPanelWall : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
@@ -111,6 +115,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class EarthenPlatingBeam : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);

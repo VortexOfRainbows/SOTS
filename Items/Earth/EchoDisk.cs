@@ -9,6 +9,7 @@ namespace SOTS.Items.Earth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Echo Disc");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -12,8 +12,8 @@ namespace SOTS.Items.SoldStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Train Gun");
-			Tooltip.SetDefault("");
-		}
+            this.SetResearchCost(1);
+        }
         public override void SetDefaults()
         {
             Item.damage = 75;

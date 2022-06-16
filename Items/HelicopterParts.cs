@@ -9,7 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Helicopter Parts");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{

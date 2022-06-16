@@ -12,7 +12,8 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Royal Magnum");
             Tooltip.SetDefault("Releases golden light upon hitting the ground or an enemy");
-		}
+            this.SetResearchCost(1);
+        }
 		public override void SetDefaults()
 		{
             Item.damage = 14;

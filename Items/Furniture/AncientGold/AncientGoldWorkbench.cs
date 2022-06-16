@@ -12,7 +12,7 @@ namespace SOTS.Items.Furniture.AncientGold
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ancient Gold Work Bench");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

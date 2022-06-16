@@ -14,6 +14,7 @@ namespace SOTS.Items.Tools
 		{
 			DisplayName.SetDefault("Ancient Steel Great Pickaxe");
 			Tooltip.SetDefault("Able to mine Meteorite\nCritical strikes deal 50% more damage and may also apply a stacking, permanent bleed for 5 damage per second");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -12,6 +12,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Aurora Block");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

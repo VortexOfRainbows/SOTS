@@ -13,6 +13,7 @@ namespace SOTS.Items.Otherworld
 		{
 			DisplayName.SetDefault("Blade Generator");
 			Tooltip.SetDefault("Periodically accumulate up to 9 swords that rotate around you\nEvery 10th melee attack will launch forth the swords");
+			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

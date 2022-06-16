@@ -13,6 +13,7 @@ namespace SOTS.Items
 			DisplayName.SetDefault("Arcane Aqueduct");
 			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

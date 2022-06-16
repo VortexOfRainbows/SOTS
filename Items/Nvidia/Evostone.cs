@@ -26,10 +26,7 @@ namespace SOTS.Items.Nvidia
 	}
 	public class Evostone : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Evostone");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
@@ -53,11 +50,7 @@ namespace SOTS.Items.Nvidia
 	}
 	public class EvostoneBrick : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Evostone Brick");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
@@ -82,10 +75,7 @@ namespace SOTS.Items.Nvidia
 	}
 	public class EvostoneBrickWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Evostone Brick Wall");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
@@ -116,10 +106,7 @@ namespace SOTS.Items.Nvidia
 	}
 	public class DarkShingles : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dark Shingles");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

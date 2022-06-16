@@ -9,6 +9,7 @@ namespace SOTS.Items.Fishing
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Planet Fish");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

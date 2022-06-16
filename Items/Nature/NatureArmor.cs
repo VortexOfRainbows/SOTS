@@ -14,6 +14,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Wormwood Wreath");
 			Tooltip.SetDefault("Increased max minions");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()
@@ -71,6 +72,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Wormwood Leggings");
 			Tooltip.SetDefault("5% increased minion damage and movement speed");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
@@ -93,6 +95,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Wormwood Shirt");
 			Tooltip.SetDefault("Increased defense for every active minion");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()

@@ -21,6 +21,7 @@ namespace SOTS.Items.Otherworld
 		{
 			DisplayName.SetDefault("Avaritia Gateway");
 			Tooltip.SetDefault("'A strange portal that leads nowhere'\nServes as the spawning location for the Advisor");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

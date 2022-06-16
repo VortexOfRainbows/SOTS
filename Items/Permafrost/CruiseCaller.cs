@@ -18,8 +18,8 @@ namespace SOTS.Items.Permafrost
 			Tooltip.SetDefault("Summons a fleet of Penguin Copters to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			this.SetResearchCost(1);
 		}
-
 		public override void SetDefaults() 
 		{
 			Item.damage = 47;

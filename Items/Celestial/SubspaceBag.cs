@@ -11,6 +11,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}/nCurrently yields no expert exclusive item, as the current one is not yet working in 1.4");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

@@ -19,6 +19,7 @@ namespace SOTS.Items.Celestial
 			Tooltip.SetDefault("Summons a horde of Wisps to defend you from nearby enemies\nRed wisps will attack closer enemies and steal life for 100% damage\nGreen wisps will fire short-ranged blasts for 200% damage\nPurple wisps launch a cluster of homing bolts for 75% damage each");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

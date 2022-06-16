@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,6 +16,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Plasma Cutter on a Chain");
 			Tooltip.SetDefault("'This is utmost wonderful idea'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

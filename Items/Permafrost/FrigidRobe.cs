@@ -20,6 +20,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Frigid Robe");
 			Tooltip.SetDefault("Frigid Javelin gains better bouncing capabilities");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()

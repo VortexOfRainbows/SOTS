@@ -12,6 +12,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Explosive Knife");
 			Tooltip.SetDefault("'Quite a deadly combination'");
+			this.SetResearchCost(99);
 		}
 		public override void SetDefaults()
 		{

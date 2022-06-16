@@ -17,6 +17,7 @@ namespace SOTS.Items.CritBonus
 			DisplayName.SetDefault("Focus Reticle");
 			Tooltip.SetDefault("20% increased crit chance\nCritical strikes deal 50 more damage\nImmunity to bleeding and poisoned debuffs");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 16));
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -11,6 +11,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Crest of Dasuver");
 			Tooltip.SetDefault("Increases crit chance by 6%");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -32,6 +32,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Cursed Robe");
 			Tooltip.SetDefault("Increased maximum mana and void by 80\nReduces mana and void usage by 15%\nSummons a Ruby Monolith to your side\nThe Ruby Monolith increases your void regeneration speed by 10%");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
@@ -73,6 +74,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Cursed Hood");
 			Tooltip.SetDefault("Increases magic damage and void damage by 8%\nAlso increases magic crit chance and void crit chance by 5%\nThe closest enemy to you is afflicted with a curse\nUpon taking damage, cursed enemies will Flare, dealing 140% additional damage to it and other nearby enemies\nThis effect has a 2 second cooldown");
+			this.SetResearchCost(1);
 		}
 		public override void UpdateEquip(Player player)
 		{

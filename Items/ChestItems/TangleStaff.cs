@@ -13,6 +13,7 @@ namespace SOTS.Items.ChestItems
 		{
 			DisplayName.SetDefault("Tangle Staff");
 			Tooltip.SetDefault("Fire a flower that ensnares enemies\nEnsnared enemies are slowed and have their life drained\nIncreases life regeneration for each ensnared enemy");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

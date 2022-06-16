@@ -10,6 +10,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Pharaoh's Cane");
 			Tooltip.SetDefault("Terrible for combat, but makes enemies drop more gold\n'Who would ever want such a thing?'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

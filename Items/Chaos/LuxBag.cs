@@ -45,6 +45,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

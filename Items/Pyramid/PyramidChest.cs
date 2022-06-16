@@ -5,6 +5,7 @@ namespace SOTS.Items.Pyramid
 {
 	public class PyramidChest : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.width = 32;

@@ -9,6 +9,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Unsafe Lihzahrd Brick Wall");
 			Tooltip.SetDefault("Allows Lihzahrd Temple mobs to spawn");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

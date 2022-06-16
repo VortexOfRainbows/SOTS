@@ -37,7 +37,8 @@ namespace SOTS.Items.Chaos
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, Color.White * 0.65f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
-        public override void SetDefaults()
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
+		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.width = 18;

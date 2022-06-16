@@ -14,6 +14,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Nightmare Potion");
 			Tooltip.SetDefault("Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together\nHas a 6 second cooldown");
+			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()
 		{

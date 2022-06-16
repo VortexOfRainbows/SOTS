@@ -8,6 +8,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Opens one locked Meteorite Chest");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

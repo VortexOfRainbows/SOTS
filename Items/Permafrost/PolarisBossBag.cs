@@ -11,6 +11,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

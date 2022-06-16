@@ -15,6 +15,7 @@ namespace SOTS.Items.Fragments
 		{
 			DisplayName.SetDefault("Primordial Cluster");
 			Tooltip.SetDefault("Reduces damage dealt by 10%, endurance by 10%, movespeed by 20%, and gravity while in the inventory\n'A great gift for your friend's inventory!'");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{
@@ -127,6 +128,7 @@ namespace SOTS.Items.Fragments
 		{
 			DisplayName.SetDefault("Terminal Cluster");
 			Tooltip.SetDefault("Reduces max void by 20 while in the inventory, max life by 10, mana by 10, and life regeneration by 2 while in the inventory\nIncreases void drain by 0.5 while in the inventory");
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{

@@ -18,6 +18,7 @@ namespace SOTS.Items.Nature
 			Tooltip.SetDefault("Summons a squirrel to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults() 
 		{

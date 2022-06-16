@@ -14,6 +14,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pyramid Ambient");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

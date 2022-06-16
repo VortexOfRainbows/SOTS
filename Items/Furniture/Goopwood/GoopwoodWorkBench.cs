@@ -10,6 +10,7 @@ namespace SOTS.Items.Furniture.Goopwood
 {
 	public class GoopwoodWorkBench : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

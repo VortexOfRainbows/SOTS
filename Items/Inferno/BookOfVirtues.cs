@@ -17,6 +17,7 @@ namespace SOTS.Items.Inferno
 			Tooltip.SetDefault("Summons a Spectral Wisp that defends you from nearby enemies\nThe wisp does 75% damage on contact with enemies, and 100% with its laser");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults() 
 		{

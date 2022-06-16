@@ -10,7 +10,8 @@ namespace SOTS.Items.Slime
 		{
 			DisplayName.SetDefault("Goopwood Spike");
 			Tooltip.SetDefault("Enemies get stuck on it");
-		}
+            this.SetResearchCost(1);
+        }
         public override void SetDefaults()
         {
             Item.damage = 32;

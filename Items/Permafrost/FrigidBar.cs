@@ -8,10 +8,7 @@ namespace SOTS.Items.Permafrost
 {
 	public class FrigidBar : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Frigid Bar");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(25);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.IronBar);

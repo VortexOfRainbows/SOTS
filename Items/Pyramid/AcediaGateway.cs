@@ -16,6 +16,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Acedia Gateway");
 			Tooltip.SetDefault("'A strange portal that leads nowhere'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

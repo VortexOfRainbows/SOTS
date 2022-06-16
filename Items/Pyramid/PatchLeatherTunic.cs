@@ -19,6 +19,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Patch Leather Tunic");
 			Tooltip.SetDefault("Increases minion damage by 10%\nGrants immunity to venom and poison debuffs");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()

@@ -15,7 +15,8 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Dance of Death");
 			Tooltip.SetDefault("Cast many demon scythes around you");
-		}
+            this.SetResearchCost(1);
+        }
 		public override void SetDefaults()
 		{
             Item.damage = 110; 

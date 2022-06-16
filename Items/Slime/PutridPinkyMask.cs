@@ -7,6 +7,7 @@ namespace SOTS.Items.Slime
 	[AutoloadEquip(EquipType.Head)]
 	public class PutridPinkyMask : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.width = 26;

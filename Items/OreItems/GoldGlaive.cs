@@ -14,6 +14,7 @@ namespace SOTS.Items.OreItems
 		{
 			DisplayName.SetDefault("Gold Glaive");
 			Tooltip.SetDefault("Fires 3 bolts at your cursor, each dealing 75% damage");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

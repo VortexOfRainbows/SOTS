@@ -14,6 +14,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Shard Staff");
 			Tooltip.SetDefault("Summons shards around the player");
+			this.SetResearchCost(1);
 		}
         public override void SetDefaults()
         {

@@ -14,6 +14,7 @@ namespace SOTS.Items.Crushers
 		{
 			DisplayName.SetDefault("Bone Clapper");
 			Tooltip.SetDefault("Charge to increase damage up to 450%\nTakes 2 seconds to reach max charge");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

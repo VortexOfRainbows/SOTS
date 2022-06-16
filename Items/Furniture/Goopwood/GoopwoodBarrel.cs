@@ -14,7 +14,8 @@ namespace SOTS.Items.Furniture.Goopwood
 {
 	public class GoopwoodBarrel : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults() => this.SetResearchCost(1);
+        public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.Size = new Vector2(24, 26);

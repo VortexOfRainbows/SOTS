@@ -14,6 +14,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Olympian Aegis");
 			Tooltip.SetDefault("Increases void gain by 2 and life regen by 1\nReduces damage taken by 7% and increases crit chance by 4%");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

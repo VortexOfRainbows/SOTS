@@ -12,6 +12,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Inferno Hook");
 			Tooltip.SetDefault("A very fast hook that strikes enemies as it travels");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

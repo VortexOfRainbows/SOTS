@@ -19,6 +19,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Frost Artifact Helmet");
 			Tooltip.SetDefault("14% increased melee and ranged damage");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

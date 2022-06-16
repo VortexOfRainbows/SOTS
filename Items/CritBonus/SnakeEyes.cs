@@ -12,6 +12,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Snake Eyes");
 			Tooltip.SetDefault("Increases crit chance by 8%");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

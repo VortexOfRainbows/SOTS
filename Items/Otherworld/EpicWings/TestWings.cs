@@ -21,7 +21,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public override void SetStaticDefaults()
 		{	
 			DisplayName.SetDefault("Machina Booster");
-			Tooltip.SetDefault("temp");
+			this.SetResearchCost(1);
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{

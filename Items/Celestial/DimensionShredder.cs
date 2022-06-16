@@ -14,6 +14,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Dimension Shredder");
 			Tooltip.SetDefault("Summons dimensional wisps around you that fire towards your cursor\n66% chance to not consume ammo\n'Tear a rift through your enemies'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

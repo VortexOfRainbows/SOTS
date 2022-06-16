@@ -12,6 +12,7 @@ namespace SOTS.Items.Tide
 			DisplayName.SetDefault("Prismarine Necklace");
 			Tooltip.SetDefault("Increases armor penetration by 8 and max life by 20\nRelease waves of damage periodically\nRelease more waves at lower health\nWaves ignore up to 16 defense total\nWaves disabled when hidden");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 20));
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -16,8 +16,8 @@ namespace SOTS.Items.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Planetarium)");
+			this.SetResearchCost(1);
 		}
-
 		public override void SetDefaults()
 		{
 			Item.useStyle = ItemUseStyleID.Swing;

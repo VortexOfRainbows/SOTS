@@ -17,6 +17,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Starcore Assault Rifle");
 			Tooltip.SetDefault("Fires a stream of bouncy, colorful projectiles");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

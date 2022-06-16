@@ -10,6 +10,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Zombie Hand");
 			Tooltip.SetDefault("Allows melee swings to harm Town NPCs\n'Finally, I can kill the painter!'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

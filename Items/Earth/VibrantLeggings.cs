@@ -20,6 +20,7 @@ namespace SOTS.Items.Earth
 		{
 			DisplayName.SetDefault("Vibrant Leggings");
 			Tooltip.SetDefault("Decreased void usage by 10%");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

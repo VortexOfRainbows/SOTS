@@ -20,6 +20,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Frigid Crown");
 			Tooltip.SetDefault("Adds an additional burst to the Shard Staff and Storm Spell");
+			this.SetResearchCost(1);
 		}
 		public override void UpdateEquip(Player player)
 		{

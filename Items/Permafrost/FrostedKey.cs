@@ -11,6 +11,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Frost Key");
 			Tooltip.SetDefault("'Cold to the touch'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

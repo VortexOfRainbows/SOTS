@@ -14,7 +14,8 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Biomass Blast");
 			Tooltip.SetDefault("Launches an acorn that rapidly accelerates its growth upon hitting an enemy or tile");
-		}
+            this.SetResearchCost(1);
+        }
 		public override void SetDefaults()
 		{
             Item.damage = 13; 

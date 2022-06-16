@@ -17,7 +17,8 @@ namespace SOTS.Items.Inferno
 		{
 			DisplayName.SetDefault("Plasma Accelerator");
 			Tooltip.SetDefault("Fires supercharged plasma arrows");
-		}
+            this.SetResearchCost(1);
+        }
 		public override void SetDefaults()
 		{
             Item.damage = 44; 

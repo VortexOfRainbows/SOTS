@@ -17,8 +17,8 @@ namespace SOTS.Items.MusicBoxes
 		{
 			DisplayName.SetDefault("Music Box (Knuckles)");
 			Tooltip.SetDefault("'Can I put my...'");
+			this.SetResearchCost(1);
 		}
-
 		public override void SetDefaults()
 		{
 			Item.useStyle = ItemUseStyleID.Swing;

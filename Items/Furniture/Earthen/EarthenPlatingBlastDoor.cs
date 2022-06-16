@@ -12,6 +12,7 @@ namespace SOTS.Items.Furniture.Earthen
 		{
 			DisplayName.SetDefault("Earthen Plating Blast Door");
 			Tooltip.SetDefault("Cannot be opened by NPCs");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

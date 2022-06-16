@@ -23,6 +23,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			DisplayName.SetDefault("Pot Generator");
 			Tooltip.SetDefault("Generates pots on top of its surface\nCan be stacked to increase production of the topmost generator\n'No, not that type of pot'");
+			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

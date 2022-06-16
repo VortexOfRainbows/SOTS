@@ -10,7 +10,7 @@ namespace SOTS.Items.Earth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Blade");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

@@ -17,8 +17,8 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Digital Daito");
-			Tooltip.SetDefault("");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 15));
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

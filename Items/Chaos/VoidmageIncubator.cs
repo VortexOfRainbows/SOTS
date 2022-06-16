@@ -37,6 +37,7 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Voidmage Incubator");
 			Tooltip.SetDefault("Epic Gamer\nIncreases void gain by 10 and void regeneration speed by 10%\nGetting hit will freeze time, converting void into life for the duration\nIncreases the potency of Void Shock and Void Recovery");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

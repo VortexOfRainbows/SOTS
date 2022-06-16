@@ -18,6 +18,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			DisplayName.SetDefault("Sky Chain");
 			Tooltip.SetDefault("'It anchors onto... somewhere'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

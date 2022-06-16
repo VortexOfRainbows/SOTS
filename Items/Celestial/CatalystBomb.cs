@@ -11,6 +11,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Catalyst Bomb");
 			Tooltip.SetDefault("'It's almost strong enough to tear a hole between dimensions, if only it were used in the right place'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

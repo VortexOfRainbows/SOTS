@@ -9,9 +9,8 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Matter");
-			Tooltip.SetDefault("");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{

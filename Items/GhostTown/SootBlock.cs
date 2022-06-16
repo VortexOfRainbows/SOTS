@@ -21,6 +21,7 @@ namespace SOTS.Items.GhostTown
 	}
 	public class SootBlock : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
@@ -39,11 +40,7 @@ namespace SOTS.Items.GhostTown
 	}
 	public class SootWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Soot Wall");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);

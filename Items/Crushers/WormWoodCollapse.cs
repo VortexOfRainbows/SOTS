@@ -14,6 +14,7 @@ namespace SOTS.Items.Crushers
 		{
 			DisplayName.SetDefault("Goopwood Collapse");
 			Tooltip.SetDefault("Charge to increase damage up to 500%\nTakes 3 seconds to reach max charge");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

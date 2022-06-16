@@ -11,6 +11,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Voiden Bracelet");
 			Tooltip.SetDefault("Increases void damage and magic damage by 8%\nReduces void cost by 8%");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

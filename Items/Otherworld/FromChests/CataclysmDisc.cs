@@ -13,6 +13,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Cataclysm Disc");
 			Tooltip.SetDefault("Deals more damage at the peak of its trajectory and explodes for 300% damage");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

@@ -12,6 +12,7 @@ namespace SOTS.Items.Furniture.Nature
 {
 	public class NaturePlatingTorch : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.Torch);

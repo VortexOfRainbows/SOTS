@@ -8,12 +8,7 @@ namespace SOTS.Items.Pyramid
 {
 	public class AcediaPlatingWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Acedia Plating Wall");
-			Tooltip.SetDefault("");
-		}
-
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.width = 16;

@@ -16,6 +16,7 @@ namespace SOTS.Items.Secrets
 		{
 			DisplayName.SetDefault("Weird Crystal Block");
 			Tooltip.SetDefault("'You shouldn't have this'");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

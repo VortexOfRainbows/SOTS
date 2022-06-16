@@ -7,7 +7,8 @@ namespace SOTS.Items.Pyramid
 {
 	public class SoulResidue : ModItem
 	{
-        public override void SetDefaults()
+		public override void SetStaticDefaults() => this.SetResearchCost(25);
+		public override void SetDefaults()
 		{
 			Item.width = 18;
 			Item.height = 28;

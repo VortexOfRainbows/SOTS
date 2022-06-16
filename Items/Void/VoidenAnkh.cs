@@ -12,6 +12,7 @@ namespace SOTS.Items.Void
 		{
 			DisplayName.SetDefault("Voiden Ankh");
 			Tooltip.SetDefault("Increases max void by 20 and void regeneration speed by 2%\nCaps out at 5");
+			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()
 		{

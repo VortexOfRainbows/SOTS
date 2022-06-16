@@ -14,6 +14,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Ethereal Tonic");
 			Tooltip.SetDefault("Receive the following:\nHarmony for 15 minutes\nLifeforce for 13 minutes\nRegeneration for 11 minutes\nMagic Power for 9 minutes");
+			this.SetResearchCost(20);
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

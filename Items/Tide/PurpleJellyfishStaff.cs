@@ -17,6 +17,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Purple Jellyfish Staff");
 			Tooltip.SetDefault("Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor\nPurple thunder chains off enemies for 70% damage\nProvides a light source while in the inventory");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

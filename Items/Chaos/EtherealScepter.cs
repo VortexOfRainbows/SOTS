@@ -42,6 +42,7 @@ namespace SOTS.Items.Chaos
 			Tooltip.SetDefault("Summons an Ethereal Flame to fight for you\nEthereal Flames attack enemies by rapidly dashing through them");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			this.SetResearchCost(1);
 		}
 
 		public override void SetDefaults() 

@@ -12,6 +12,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Blue Jellyfish Staff");
 			Tooltip.SetDefault("Fires an energy ball that detonates into blue lighting after traveling forward");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

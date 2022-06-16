@@ -11,7 +11,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Nature");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{
@@ -27,7 +27,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Earth");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{
@@ -43,7 +43,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Permafrost");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{
@@ -59,7 +59,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Tide");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{
@@ -75,7 +75,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Otherworld");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{
@@ -91,7 +91,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Evil");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{
@@ -119,7 +119,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Chaos");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{
@@ -135,7 +135,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fragment of Inferno");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{

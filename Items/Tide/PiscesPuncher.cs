@@ -14,6 +14,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Pisces Puncher");
 			Tooltip.SetDefault("'fish'\n'noun'\n'a limbless cold-blooded vertebrate animal with gills and fins and living wholly in water'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

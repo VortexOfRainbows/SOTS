@@ -7,11 +7,7 @@ namespace SOTS.Items.SoldStuff
 {
 	public class BlackFlare : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Black Flare");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(99);
 		public override void SetDefaults()
 		{
 			Item.damage = 1;

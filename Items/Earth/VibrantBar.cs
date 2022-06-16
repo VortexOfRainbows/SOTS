@@ -10,7 +10,7 @@ namespace SOTS.Items.Earth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Alloy");
-			//Tooltip.SetDefault("'This is not something you should eat'");
+			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
 		{

@@ -82,6 +82,7 @@ namespace SOTS.Items.Permafrost
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Ore");
+			this.SetResearchCost(100);
 		}
         public override void SetDefaults()
 		{
@@ -117,6 +118,7 @@ namespace SOTS.Items.Permafrost
 	}
 	public class FrigidBrick : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
@@ -140,11 +142,7 @@ namespace SOTS.Items.Permafrost
 	}
 	public class FrigidBrickWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Frigid Brick Wall");
-			Tooltip.SetDefault("");
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);

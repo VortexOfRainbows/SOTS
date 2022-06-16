@@ -13,6 +13,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Acedia Portal Plating");
 			Tooltip.SetDefault("'It bares striking resemblance to luminite'");
+			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
 		{

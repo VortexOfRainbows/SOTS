@@ -18,8 +18,9 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thundershock Shortbow"); //This in the second of the pre-0.18 legendary weapons to be added back!
+			DisplayName.SetDefault("Thundershock Shortbow");
 			Tooltip.SetDefault("Fires powerful bolts of lightning instead of arrows");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

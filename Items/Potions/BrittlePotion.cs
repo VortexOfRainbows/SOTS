@@ -10,6 +10,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Brittle Potion");
 			Tooltip.SetDefault("Getting hit surrounds you with ice shards");
+			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()
 		{

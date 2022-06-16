@@ -11,7 +11,8 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Hungry Hunter");
 			Tooltip.SetDefault("Latches onto enemies and regenerates void upon hit");
-		}
+            this.SetResearchCost(1);
+        }
         public override void SafeSetDefaults()
         {
             Item.damage = 21;

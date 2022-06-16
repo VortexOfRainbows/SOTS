@@ -11,6 +11,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Permafrost Medallion");
 			Tooltip.SetDefault("Surrounds you with a blizzard of artifact probes");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

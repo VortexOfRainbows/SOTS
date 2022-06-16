@@ -13,7 +13,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Gel");
-			Tooltip.SetDefault("");
+			this.SetResearchCost(25);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

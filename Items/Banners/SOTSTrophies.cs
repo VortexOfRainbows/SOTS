@@ -45,6 +45,7 @@ namespace SOTS.Items.Banners
 	}
 	public abstract class ModTrophy : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.width = 30;
@@ -66,7 +67,7 @@ namespace SOTS.Items.Banners
 			Item.placeStyle = 0;
 		}
 	}
-	public class PutridPinkyTrophy : ModBanner
+	public class PutridPinkyTrophy : ModTrophy
 	{
 		public override void SafeSetDefaults()
 		{

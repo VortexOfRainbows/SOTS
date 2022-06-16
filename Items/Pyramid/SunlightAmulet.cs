@@ -10,6 +10,7 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Sunlight Amulet");
 			Tooltip.SetDefault("Grants permanent hunter and dangersense effects");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -14,6 +14,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Spirit Scissors");
 			Tooltip.SetDefault("'Assistance from purgatory'");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

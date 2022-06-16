@@ -11,6 +11,7 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Servant Knife");
 			Tooltip.SetDefault("Jebaited");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

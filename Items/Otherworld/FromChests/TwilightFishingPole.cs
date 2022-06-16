@@ -17,8 +17,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Twilight Fishing Pole");
 			Tooltip.SetDefault("Casts two lines at once");
-			//Allows the pole to fish in lava
 			ItemID.Sets.CanFishInLava[Item.type] = false;
+			this.SetResearchCost(1);
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{

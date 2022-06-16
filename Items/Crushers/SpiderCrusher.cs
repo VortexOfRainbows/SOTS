@@ -13,6 +13,7 @@ namespace SOTS.Items.Crushers
 		{
 			DisplayName.SetDefault("Fly Catcher");
 			Tooltip.SetDefault("Charge to increase damage up to 180%\nReleases spider webs that slow hit enemies\nReleases more when charged\nTakes 2.5 seconds to reach max charge\n'That's really clever actually'");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

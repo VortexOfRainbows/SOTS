@@ -15,6 +15,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Crusty Baguette");
 			Tooltip.SetDefault("Killing enemies will drop baguette crumbs\nPickup baguette crumbs to increase the range and damage of your baguette, and heal lost life\n'Surrender is not an option'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

@@ -11,6 +11,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Chaos Badge");
 			Tooltip.SetDefault("Increases crit chance by 10%");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

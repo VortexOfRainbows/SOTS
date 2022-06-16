@@ -13,7 +13,8 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Voidspace Aura Staff");
 			Tooltip.SetDefault("Summons a voidspace cell on your cursor that releases flames at nearby enemies\nGrants stat boosts while in the radius of the cell\nVoid regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%\nDamages all enemies within range\nRange scales with summon damage");
-		}
+            this.SetResearchCost(1);
+        }
         public override void SetDefaults()
         {
             Item.damage = 90;  

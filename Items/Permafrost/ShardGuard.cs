@@ -14,6 +14,7 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Shard Guard");
 			Tooltip.SetDefault("Puts a shell around the owner when below 50% life that reduces damage by 25%\nSurrounds you with a blizzard of artifact probes\nGetting hit surrounds you with ice shards\nIncreases max life by 20");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

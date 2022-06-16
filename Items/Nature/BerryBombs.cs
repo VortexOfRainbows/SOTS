@@ -15,6 +15,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Berry Bombs");
 			Tooltip.SetDefault("Throw a cluster of explosive berries");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

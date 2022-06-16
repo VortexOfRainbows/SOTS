@@ -14,6 +14,7 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Spore Bombs");
 			Tooltip.SetDefault("Throw a cluster of explosive spore sacks\nReleased spores deal 50% damage\n'The toxic grenades look almost edible'");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
@@ -22,7 +23,6 @@ namespace SOTS.Items.Nature
 			Item.useTime = 29;
 			Item.useAnimation = 29;
 			Item.DamageType = DamageClass.Ranged;
-			// Item.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.width = 28;

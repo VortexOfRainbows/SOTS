@@ -20,6 +20,7 @@ namespace SOTS.Items.Tools
 		{
 			DisplayName.SetDefault("Manic Miner");
 			Tooltip.SetDefault("Converts void into short-ranged mining lasers");
+			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{

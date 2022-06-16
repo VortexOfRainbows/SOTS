@@ -19,6 +19,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Miner's Sword");
             Tooltip.SetDefault("Critically strikes while falling");
+            this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

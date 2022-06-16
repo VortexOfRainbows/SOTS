@@ -13,7 +13,8 @@ namespace SOTS.Items.Slime
 		{
 			DisplayName.SetDefault("Peanut Repeater");
 			Tooltip.SetDefault("Launches tasty peanuts that attract Pinky Air Raids\n20% chance to not consume ammo");
-		}
+            this.SetResearchCost(1);
+        }
 		public override void SetDefaults()
 		{
             Item.damage = 27;  
