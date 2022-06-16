@@ -1,3 +1,18 @@
+
+
+
+Known Bugs/Issues:
+1. Player freezing completely, locking out menu (conditions unknown)
+	1. Seems to be actually a modder's toolkit error
+2. Game crashes with Recipe Browser enabled
+3. In Multiplayer, when some players run frame skip subtle and others do not, Time may be frozen forever by VM incubator
+	1. Make sure to better sync or correct time freeze (sync other freeze related variables).
+
+
+
+
+
+
 Should be fixed:
 1. Lag generates in multiplayer after a while of playing. (Maybe fixed?)
 	1. Seem to generate client-side not server side..?

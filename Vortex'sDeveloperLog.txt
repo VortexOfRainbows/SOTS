@@ -1,67 +1,28 @@
 The following is my development plans :D
 
-1. Ghost Town to Evil Biome
-2. AI Companion related accessories
-	1. Matsumoto Minion (Vivy reference)
-	2. Calculator + Subspace Locket + Some digital related item
-3. Starward Sword (Upgrade to Digital Daito)
-
-Known Bugs/Issues:
-1. Player freezing completely, locking out menu (conditions unknown)
-	1. Seems to be actually a modder's toolkit error
-2. Game crashes with Recipe Browser enabled
-3. In Multiplayer, when some players run frame skip subtle and others do not, Time may be frozen forever by VM incubator
-	1. Make sure to better sync or correct time freeze (sync other freeze related variables).
+Complete:
+1. Mod Loadable in 1.4
+2. Projectile damage from enemies works properly (GetBaseDamage(NPC npc))!
+3. Sound playing works!
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
-1. (DONE) Make Mod Loadable in 1.4
-2. (Working, Needs more testing) Make sure Biome NPC Spawning Work
-3. (delayed) Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
-4. Make sure VM Incubator works (and server fixes)
-5. (Confirmed Working) Make sure Global NPC loot works
+1. (Working, Needs more testing) Make sure Biome NPC Spawning Work
+2. Make sure VM Incubator works (and server fixes)
+3. (Confirmed Working) Make sure Global NPC loot works
 	1. Advisor and PP not working (RELATED TO GORES NOT WORKING AT ALL)
 	2. (more testing needed) Make sure individual npc loot is working
-6. (NOT WORKING, seems to double dip into health multipliers) Make sure Advisor Health Scaling in Expert works properly!
-7. (Confirmed Working) Make sure projectile expert mode damage from enemies works properly (GetBaseDamage(NPC npc))!
-8. (Confirmed Working) Make sure sound playing system works with pitch and volume
-9. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
-10. Figure out twilight assassin armor ARM glowmask...
-11. VOID DAMAGE CLASSES!!
-12. Treasure slimes need to load item assets before using them...
+4. (NOT WORKING, seems to double dip into health multipliers) Make sure Advisor Health Scaling in Expert works properly!
+5. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
+6. Figure out twilight assassin armor ARM glowmask...
+7. VOID DAMAGE CLASSES!!
+8. (needs testing) Treasure slimes need to load item assets before using them...
+	1. and transmutation table...
+9. Shaders are not being loaded in... consult migrationg guide.
+10. Update Armor Sprites
+11. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
 
-Big Objectives:
-1. Starmap and Digital Daito Obtaining
-2. Reorganize Folders... Planetarium, Pyramid, Furniture folders remaining.
-3. Lux Balancing
-
-Update Objectives:
-1. Add upgrade to Flashspark boots with dashing activation (Tabi)
-	1. Subspace Treads
-2. Pulverizer (Upgrade to Bone Clapper)
-	1. 4 arms, 2 normal and 2 laser cannon
-3. Worldly Polarizer (grants some stats and inverses the effects of Dissolving Nature, Earth, Tide, up to certain point)
-	1. Thermal Polarizer (grants some stats and inverses the effects of Dissolving Permafrost, Inferno, up to a certain point)
-	2. Exotic Polarizer (grants some stats and inverses the effects of Dissolving Brilliance, Evil, Otherworld, up to a certain point)
-5. Blazing Quiver (Dissolving Inferno + Molten Quiver)
-6. Pistol Shrimp
-	1. It's a shrimp and a pistol
-	2. magic weapon that fires homing bubbles, can be obtained fishing in ocean or something
-7. Chthonic Reforge
-8. Plasma Shrimp
-	1. Pistol Shrimp but accessory
-	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
-	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope 
-9. Config to disable starter house
-
-Low Priority Objectives:
-1. Archaelogist NPC
-2. Accessory Pets to use own dye slots.
-3. Void Bar strike the player during void shock
-4. Fix Planetarium sky island spawning in tandum
-5. Stars in Planetarium Sky
-6. Nerf VM Incubator and Rose Bow
-
+Daily Log:
 6/16/22
 1. Bug fixes and checks
 2. Mainly relating to NPC stats and drops

@@ -261,36 +261,44 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
         public sealed override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+			bool canDrawItems = true;
 			if (runOnce)
-				return false;
-			int itemMax = possibleItems.Count - 1;
-			int otherId = (int)treasure - 1;
-			if(otherId < 0)
-            {
-				otherId = itemMax;
-            }
-			TreasureSlimeItem item = possibleItems[(int)treasure];
-			TreasureSlimeItem item2 = possibleItems[otherId];
-			float firstAlpha = 1;
-			float secondAlpha = 0;
-			if (treasureCounter % treasureSpeed <= 7)
-            {
-				secondAlpha = 1 - ((treasureCounter % treasureSpeed) + 1) / 8f;
-				firstAlpha -= secondAlpha;
+				canDrawItems = false;
+			if(canDrawItems)
+			{
+				int itemMax = possibleItems.Count - 1;
+				int otherId = (int)treasure - 1;
+				if (otherId < 0)
+				{
+					otherId = itemMax;
+				}
+				TreasureSlimeItem item = possibleItems[(int)treasure];
+				TreasureSlimeItem item2 = possibleItems[otherId];
+				float firstAlpha = 1;
+				float secondAlpha = 0;
+				if (treasureCounter % treasureSpeed <= 7)
+				{
+					secondAlpha = 1 - ((treasureCounter % treasureSpeed) + 1) / 8f;
+					firstAlpha -= secondAlpha;
+				}
+				Vector2 drawPos = NPC.oldPos[3] + new Vector2(0, -20 + (float)(Math.Cos((float)treasureCounter / treasureSpeed) * 2) + NPC.gfxOffY) + (NPC.Size / 2) - screenPos;
+				if(!Terraria.GameContent.TextureAssets.Item[item.Type].IsLoaded)
+				{
+					Main.instance.LoadItem(item.Type);
+				}
+				Texture2D texture = Terraria.GameContent.TextureAssets.Item[item.Type].Value;
+				float scale = 1.2f * NPC.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * NPC.width;
+				scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
+				//Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/TreasureSlimeBloom");
+				Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
+				//spriteBatch.Draw(textureGlow, new Vector2(npc.Center.X, npc.position.Y + npc.gfxOffY + 12) - screenPos, null, new Color(glowColor.R, glowColor.G, glowColor.B, 0), 0, new Vector2(textureGlow.Width/2, textureGlow.Height), 2f / (float)Math.Sqrt(textureGlow.Width * textureGlow.Width + textureGlow.Height * textureGlow.Height) * npc.width, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, frame, drawColor * firstAlpha, MathHelper.ToRadians(NPC.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
+				texture = Terraria.GameContent.TextureAssets.Item[item2.Type].Value;
+				frame = new Rectangle(0, 0, texture.Width, texture.Height);
+				scale = 1.2f * NPC.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * NPC.width;
+				scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
+				spriteBatch.Draw(texture, drawPos, frame, drawColor * secondAlpha, MathHelper.ToRadians(NPC.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
 			}
-			Vector2 drawPos = NPC.oldPos[3] + new Vector2(0, -20 + (float)(Math.Cos((float)treasureCounter / treasureSpeed) * 2) + NPC.gfxOffY) + (NPC.Size / 2) - screenPos;
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[item.Type].Value;
-			float scale = 1.2f * NPC.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * NPC.width;
-			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
-			//Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/TreasureSlimeBloom");
-			Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
-			//spriteBatch.Draw(textureGlow, new Vector2(npc.Center.X, npc.position.Y + npc.gfxOffY + 12) - screenPos, null, new Color(glowColor.R, glowColor.G, glowColor.B, 0), 0, new Vector2(textureGlow.Width/2, textureGlow.Height), 2f / (float)Math.Sqrt(textureGlow.Width * textureGlow.Width + textureGlow.Height * textureGlow.Height) * npc.width, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture, drawPos, frame, drawColor * firstAlpha, MathHelper.ToRadians(NPC.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
-			texture = Terraria.GameContent.TextureAssets.Item[item2.Type].Value;
-			frame = new Rectangle(0, 0, texture.Width, texture.Height);
-			scale = 1.2f * NPC.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * NPC.width;
-			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
-			spriteBatch.Draw(texture, drawPos, frame, drawColor * secondAlpha, MathHelper.ToRadians(NPC.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
 			DrawSlime(spriteBatch, screenPos, drawColor);
 			return false;
 		}
