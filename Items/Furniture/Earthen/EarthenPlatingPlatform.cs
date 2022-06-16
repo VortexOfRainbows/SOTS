@@ -11,11 +11,6 @@ namespace SOTS.Items.Furniture.Earthen
 	public class EarthenPlatingPlatform : ModItem
 	{
 		public override void SetStaticDefaults() => this.SetResearchCost(200);
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Earthen Plating Platform");
-		}
-
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
