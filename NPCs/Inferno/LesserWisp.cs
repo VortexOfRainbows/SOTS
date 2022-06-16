@@ -293,11 +293,14 @@ namespace SOTS.NPCs.Inferno
         public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			LeadingConditionRule isSans = new LeadingConditionRule(new Common.ItemDropConditions.IsSansWisp());
+			LeadingConditionRule notSans = new LeadingConditionRule(new Common.ItemDropConditions.NotSansWisp());
 			isSans.OnSuccess(ItemDropRule.Common(ItemType<BookOfVirtues>()));
-			isSans.OnSuccess(ItemDropRule.Common(ItemID.LivingUltrabrightFireBlock, 2, 10, 20)
-				.OnFailedRoll(ItemDropRule.Common(ItemType<FragmentOfChaos>(), 1, 1, 1)));
-			isSans.OnFailedConditions(ItemDropRule.Common(ItemID.LivingFireBlock, 15, 10, 20)
-				.OnFailedRoll(ItemDropRule.Common(ItemType<FragmentOfInferno>(), 25, 1, 1)));
+			isSans.OnSuccess(ItemDropRule.Common(ItemID.LivingUltrabrightFireBlock, 2, 10, 20));
+			isSans.OnSuccess(ItemDropRule.Common(ItemType<FragmentOfChaos>(), 1, 1, 1));
+			notSans.OnSuccess(ItemDropRule.Common(ItemID.LivingFireBlock, 20, 10, 20));
+			notSans.OnSuccess(ItemDropRule.Common(ItemType<FragmentOfInferno>(), 25, 1, 1));
+			npcLoot.Add(notSans);
+			npcLoot.Add(isSans);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

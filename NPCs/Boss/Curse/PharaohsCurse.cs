@@ -143,6 +143,7 @@ namespace SOTS.NPCs.Boss.Curse
 			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<CurseBag>()));
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 1, 12, 24));
+			npcLoot.Add(notExpertRule);
 		}
         public override void BossLoot(ref string name, ref int potionType)
 		{

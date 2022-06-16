@@ -333,6 +333,7 @@ namespace SOTS.NPCs.Boss.Lux
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PhaseOre>(), 1, 90, 150));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));
+			npcLoot.Add(notExpertRule);
 		}
         public override void OnKill()
 		{

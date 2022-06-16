@@ -261,6 +261,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			int currentItem = 0;
 			for (int l = 1; l < amountOfUniqueItems; l++)
 			{
+				if (!Terraria.GameContent.TextureAssets.Item[entity.itemsArray[l]].IsLoaded)
+					Main.instance.LoadItem(entity.itemsArray[l]);
 				texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[l]].Value;
 				for (int g = 0; g < entity.itemAmountsArray[l]; g++)
 				{
@@ -280,6 +282,8 @@ namespace SOTS.Items.Otherworld.Furniture
 					DrawItem(texture, pos, frameCount, ticksPerFrame, color);
 				}
 			}
+			if (!Terraria.GameContent.TextureAssets.Item[entity.itemsArray[0]].IsLoaded)
+				Main.instance.LoadItem(entity.itemsArray[0]);
 			texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[0]].Value;
 			for (int g = 0; g < entity.itemAmountsArray[0]; g++)
 			{

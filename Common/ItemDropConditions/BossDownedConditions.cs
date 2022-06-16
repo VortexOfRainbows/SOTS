@@ -11,7 +11,8 @@ namespace SOTS.Common.ItemDropConditions
 		{
 			if (!info.IsInSimulation)
 			{
-				if (SOTSWorld.downedSubspace)
+				Player player = info.player;
+				if (SOTSWorld.downedSubspace && player.ZoneUnderworldHeight)
 				{
 					return true;
 				}
@@ -135,7 +136,30 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return "Sans undertale";
+			return "Sans Undertale";
+		}
+	}
+	public class NotSansWisp : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info)
+		{
+			if (!info.IsInSimulation)
+			{
+				if (info.npc.ModNPC is LesserWisp wisp)
+				{
+					if (!wisp.sans)
+						return true;
+				}
+			}
+			return false;
+		}
+		public bool CanShowItemDropInUI()
+		{
+			return true;
+		}
+		public string GetConditionDescription()
+		{
+			return "Orange Lesser Wisps";
 		}
 	}
 }

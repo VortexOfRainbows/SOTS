@@ -280,10 +280,5 @@ namespace SOTS.Common.ItemDropConditions
 		{
 			return "Drops if on fire";
 		}
-
-        public static implicit operator LeadingConditionRule(OnFireCondition v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

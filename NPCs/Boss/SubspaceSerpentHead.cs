@@ -107,6 +107,7 @@ namespace SOTS.NPCs.Boss
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SubspaceBag>()));
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SanguiteBar>(), 1, 16, 24));
+            npcLoot.Add(notExpertRule);
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
