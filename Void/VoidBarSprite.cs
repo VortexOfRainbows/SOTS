@@ -11,13 +11,11 @@ namespace SOTS.Void
         public Color backgroundColor = Color.White;
         internal static Texture2D _backgroundTexture;
 
-        public VoidBarSprite()
+        public VoidBarSprite(Texture2D texture)
         {
-            if (_backgroundTexture == null)
-                _backgroundTexture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
-			
+            _backgroundTexture = texture;
         }
-		protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             CalculatedStyle dimensions = GetDimensions();
             Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);

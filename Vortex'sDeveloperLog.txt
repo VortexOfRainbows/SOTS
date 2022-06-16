@@ -4,6 +4,7 @@ Complete:
 1. Mod Loadable in 1.4
 2. Projectile damage from enemies works properly (GetBaseDamage(NPC npc))!
 3. Sound playing works!
+4. Fixed void bar visuals!
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)

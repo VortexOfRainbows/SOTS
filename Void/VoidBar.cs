@@ -46,7 +46,7 @@ namespace SOTS.Void
 			barDivider.Width.Set(2, 0f);
 			barDivider.Height.Set(20, 0f);
 
-			barAmount = new VoidBarSprite(); 
+			barAmount = new VoidBarSprite(ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite").Value); 
 			barAmount.SetPadding(0);
 			barAmount.Left.Set(5.01f, 0f);
 			barAmount.Top.Set(6f, 0f);
@@ -213,7 +213,7 @@ namespace SOTS.Void
 				barDivider.Width.Set(0, 0);
 			}
 			Recalculate();
-			if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter)
+			if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter) //this draws the red part of the sprite
 			{
 				float quotientLerp = voidPlayer.lerpingVoidMeter / voidPlayer.voidMeterMax2;
 				fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
@@ -229,10 +229,11 @@ namespace SOTS.Void
 				else
 					spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)lerpLength, height), new Color(255, 10, 10, 0) * 0.6f);
 			}
+			spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarDark"), new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)length, height), new Color(255, 255, 255));
 			base.Draw(spriteBatch);
 			Color color2 = new Color(100, 100, 100, 0);
 			fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
-			if(SOTS.Config.voidBarBlur)
+			if (SOTS.Config.voidBarBlur)
 			{
 				color2 = new Color(15, 15, 15, 0);
 				for (int l = 0; l < 8; l++)
