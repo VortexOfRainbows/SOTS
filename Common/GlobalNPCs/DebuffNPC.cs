@@ -281,7 +281,7 @@ namespace SOTS.Common.GlobalNPCs
         {
             float alphaMult = 1 - aiSpeedMultiplier;
             int type = npc.whoAmI % 3 + 1;
-            Texture2D ring1 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/ArtificialDebuffs/FreezeSpiral" + type);
+            Texture2D ring1 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Common/GlobalNPCs/FreezeSpiral" + type);
             Vector2 ringOrigin = new Vector2(ring1.Width / 2, ring1.Height / 2);
             Vector2 drawPos = new Vector2(npc.Center.X, npc.Center.Y + npc.gfxOffY) + /*npc.VisualPosition*/ - Main.screenPosition;
             Color color = new Color(70, 0, 105, 0);
@@ -307,7 +307,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 drawColor = Color.White;
                 Color color = new Color(100, 100, 255, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/PlatinumCurse").Value;
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/PlatinumCurse").Value;
                 int size = 0;
                 for(int plat = PlatinumCurse; plat > 0; plat /= 10)
                 {
@@ -348,7 +348,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 drawColor = Color.White;
                 Color color = new Color(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/Harvesting").Value;
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value;
                 int size = 0;
                 for (int plat = HarvestCurse; plat > 0; plat /= 10)
                 {
@@ -389,7 +389,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 drawColor = Color.White;
                 Color color = new Color(VoidPlayer.destabilizeColor.R, VoidPlayer.destabilizeColor.G, VoidPlayer.destabilizeColor.B, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/Destabilized").Value;
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value;
                 int size = 0;
                 for (int plat = DestableCurse; plat > 0; plat /= 10)
                 {
@@ -430,7 +430,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 drawColor = new Color(255, 0, 0);
                 Color color = new Color(255, 50, 50, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/Bleeding").Value;
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value;
                 int size = 0;
                 for (int plat = BleedingCurse; plat > 0; plat /= 10)
                 {
