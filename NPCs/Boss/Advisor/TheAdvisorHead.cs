@@ -51,6 +51,15 @@ namespace SOTS.NPCs.Boss.Advisor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("The Advisor");
+			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				CustomTexturePath = "SOTS/BossCL/AdvisorPortrait",
+				PortraitScale = 0.5f, // Portrait refers to the full picture when clicking on the icon in the bestiary
+				Scale = 0.5f,
+				PortraitPositionYOverride = 10f,
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -98,7 +107,6 @@ namespace SOTS.NPCs.Boss.Advisor
             NPC.knockBackResist = 0f;
             NPC.width = 78;
             NPC.height = 98;
-            Main.npcFrameCount[NPC.type] = 2;
             NPC.value = 150000;
             NPC.npcSlots = 15f;
             NPC.boss = false;
@@ -516,6 +524,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			bool lineOfSight = Collision.CanHitLine(NPC.position, NPC.width, NPC.height, player.position, player.width, player.height);
 			if (dormant)
 			{
+				ScaleExpertStats();
 				attackPhase1 = -1;
 				attackPhase2 = -1;
 				NPC.velocity.Y = new Vector2(0.08f, 0).RotatedBy(MathHelper.ToRadians(ai1)).Y;
@@ -542,8 +551,6 @@ namespace SOTS.NPCs.Boss.Advisor
 				}
 				if(dormantCounter > 90)
 				{
-					NPC.damage = NormalModeDamage;
-					NPC.ScaleStats(null, Main.GameModeInfo, null);
 					SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
 					Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
 					dormant = false;
@@ -556,6 +563,13 @@ namespace SOTS.NPCs.Boss.Advisor
 				return false;
 			}
 			return true;
+		}
+		public void ScaleExpertStats()
+		{
+			NPC.life = NormalModeHP;
+			NPC.lifeMax = NormalModeHP;
+			NPC.damage = NormalModeDamage;
+			NPC.ScaleStats(null, Main.GameModeInfo, null);
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

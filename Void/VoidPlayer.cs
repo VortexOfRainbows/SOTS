@@ -739,6 +739,10 @@ namespace SOTS.Void
 			BonusCrushRangeMax = 0;
 			BonusCrushRangeMin = 0;
 		}
+        public override float UseAnimationMultiplier(Item item)
+        {
+			return UseTimeMultiplier(item);
+		}
 		public override float UseTimeMultiplier(Item item)
 		{
 			float standard = voidSpeed;

@@ -8,6 +8,9 @@ namespace SOTS
     {
         public static int GoreType(string name)
         {
+            int index = name.LastIndexOf("/"); //this is somewhat a bandaid fix, but also means that finding gores from code is easier too!
+            if(index != -1)
+                name = name.Substring(index + 1);
             return SOTS.Instance.Find<ModGore>(name).Type;
         }
         /// <summary>

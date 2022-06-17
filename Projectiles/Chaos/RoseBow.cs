@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Chaos
         {
             if (Projectile.ai[0] != 0)
             {
-                Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + chargeLevel + 1).Value;
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + (chargeLevel + 1)).Value;
                 Texture2D oldTexture = null;
                 textureHeight = texture.Height;
                 int oldHeight = texture.Height;

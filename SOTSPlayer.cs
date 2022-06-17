@@ -1074,7 +1074,11 @@ namespace SOTS
 			}
 			return true;
 		}
-        public override float UseTimeMultiplier(Item item)
+		public override float UseAnimationMultiplier(Item item)
+		{
+			return UseTimeMultiplier(item);
+		}
+		public override float UseTimeMultiplier(Item item)
 		{
 			float standard = attackSpeedMod;
 			int time = item.useAnimation;

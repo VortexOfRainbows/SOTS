@@ -23,6 +23,7 @@ namespace SOTS.Projectiles.Minions
 		
         public override void SetDefaults()
         {
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 26;
 			Projectile.height = 26;
             Main.projFrames[Projectile.type] = 1;
@@ -31,7 +32,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.timeLeft = 300;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.minion = true;
+			//Projectile.minion = true;
 			Projectile.alpha = 0;
             Projectile.netImportant = true;
 		}

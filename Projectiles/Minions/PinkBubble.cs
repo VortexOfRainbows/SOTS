@@ -13,13 +13,14 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void SetDefaults()
         {
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.height = 4;
 			Projectile.width = 4;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 120;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.minion = true;
+			//Projectile.minion = true;
 			Projectile.alpha = 255;
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 2;

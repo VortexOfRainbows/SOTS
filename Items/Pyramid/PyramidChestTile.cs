@@ -49,7 +49,7 @@ namespace SOTS.Items.Pyramid
 			return true;
 		}
 
-		public string MapChestName(string name, int i, int j)
+		public static string MapChestName(string name, int i, int j)
 		{
 			int left = i;
 			int top = j;
@@ -63,7 +63,11 @@ namespace SOTS.Items.Pyramid
 				top--;
 			}
 			int chest = Chest.FindChest(left, top);
-			if (Main.chest[chest].name == "")
+			if (chest < 0)
+			{
+				return Language.GetTextValue("LegacyChestType.0");
+			}
+			else if(Main.chest[chest].name == "")
 			{
 				return name;
 			}

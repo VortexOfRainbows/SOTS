@@ -28,7 +28,7 @@ Art: Mochi, MrPetkins
 (Contributors and Other Credits)
 Art: HugeKraken, Arcri, Pokerface
 Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
-Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
+Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Moonseer
 Minor Art: Naka, DeJuiceTD, Nomis
 
 (Past Developers)

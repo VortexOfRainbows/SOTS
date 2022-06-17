@@ -12,6 +12,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Riptide");
 			Tooltip.SetDefault("Right click while in water or rain to launch yourself forward, doing 120% damage\nImmunity to fall damage while held");
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -46,16 +47,20 @@ namespace SOTS.Items.Tide
         {
 			float mult = 1f;
 			if(player.altFunctionUse == 2)
-            {
+			{
 				mult = 1.2f;
 				velocity *= 0.55f;
 			}
 			Projectile.NewProjectile(source, position, velocity, type, (int)(damage * mult), (int)(knockback * mult), player.whoAmI, player.altFunctionUse == 2 ? 1 : 0);
 			return false;
 		}
-		public override float UseTimeMultiplier(Player player)
+        public override float UseAnimationMultiplier(Player player)
+        {
+            return UseTimeMultiplier(player);
+        }
+        public override float UseTimeMultiplier(Player player)
 		{
-			return player.altFunctionUse == 2 ? 0.45f : 1;
+			return 1f / (player.altFunctionUse == 2 ? 0.45f : 1);
 		}
 		public override void AddRecipes()
 		{

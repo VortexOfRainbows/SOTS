@@ -67,7 +67,7 @@ namespace SOTS.Items.GhostTown
 			DustType = 1;
 			return true;
 		}
-		public string MapChestName(string name, int i, int j)
+		public static string MapChestName(string name, int i, int j)
 		{
 			int left = i;
 			int top = j;

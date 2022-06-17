@@ -13,6 +13,7 @@ using SOTS.Projectiles.Chaos;
 using SOTS.Void;
 using SOTS.WorldgenHelpers;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,7 +23,43 @@ namespace SOTS.NPCs.Boss.Lux
 	[AutoloadBossHead]
 	public class Lux : ModNPC
 	{
-        public override void SendExtraAI(BinaryWriter writer)
+		public override void SetStaticDefaults()
+		{
+			Main.npcFrameCount[NPC.type] = 1;
+			DisplayName.SetDefault("Lux");
+			NPCID.Sets.TrailCacheLength[NPC.type] = 10;
+			NPCID.Sets.TrailingMode[NPC.type] = 0;
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				CustomTexturePath = "SOTS/BossCL/LuxBossLog",
+				PortraitScale = 0.9f, // Portrait refers to the full picture when clicking on the icon in the bestiary
+				PortraitPositionYOverride = -20f,
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+		}
+		public override void SetDefaults()
+		{
+			NPC.aiStyle = -1;
+			NPC.lifeMax = 60000;
+			NPC.damage = 100;
+			NPC.defense = 54;
+			NPC.knockBackResist = 0f;
+			NPC.width = 70;
+			NPC.height = 70;
+			NPC.value = Item.buyPrice(0, 20, 0, 0);
+			NPC.npcSlots = 10f;
+			NPC.boss = true;
+			NPC.lavaImmune = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.HitSound = SoundID.NPCHit54;
+			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.netAlways = false;
+			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Advisor");
+			SceneEffectPriority = SceneEffectPriority.BossHigh;
+			SetupDebuffImmunities();
+		}
+		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(NPC.dontTakeDamage);
 			writer.Write(despawnTimer);
@@ -250,35 +287,6 @@ namespace SOTS.NPCs.Boss.Lux
 					break;
 			}
         }
-		public override void SetStaticDefaults()
-		{
-			Main.npcFrameCount[NPC.type] = 1;
-			DisplayName.SetDefault("Lux");
-			NPCID.Sets.TrailCacheLength[NPC.type] = 10;  
-			NPCID.Sets.TrailingMode[NPC.type] = 0;
-		}
-		public override void SetDefaults()
-		{
-			NPC.aiStyle =-1;
-            NPC.lifeMax = 60000; 
-            NPC.damage = 100; 
-            NPC.defense = 54;   
-            NPC.knockBackResist = 0f;
-            NPC.width = 70;
-            NPC.height = 70;
-            NPC.value = Item.buyPrice(0, 20, 0, 0);
-            NPC.npcSlots = 10f;
-            NPC.boss = true;
-            NPC.lavaImmune = true;
-            NPC.noGravity = true;
-            NPC.noTileCollide = true;
-            NPC.HitSound = SoundID.NPCHit54;
-            NPC.DeathSound = SoundID.NPCDeath6;
-            NPC.netAlways = false;
-			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Advisor");
-			SceneEffectPriority = SceneEffectPriority.BossHigh;
-			SetupDebuffImmunities();
-		}
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			if (projectile.CountsAsClass(DamageClass.Melee))
