@@ -4,6 +4,7 @@ float progress;
 float4 ColorOne;
 float4 ColorTwo;
 matrix WorldViewProjection;
+float4 uShaderSpecificData;
 
 struct VertexShaderInput
 {

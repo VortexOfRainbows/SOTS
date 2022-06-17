@@ -19,6 +19,7 @@ float2 uImageOffset;
 float uSaturation;
 float4 uSourceRect;
 float2 uZoom;
+float4 uShaderSpecificData;
 
 float dist(float2 colorvector)
 {

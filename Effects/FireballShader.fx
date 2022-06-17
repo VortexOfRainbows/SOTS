@@ -2,7 +2,7 @@ sampler uImage0 : register(s0);
 sampler uImage1 : register(s1);
 float4 colorMod;
 float opacity2;
-
+float4 uShaderSpecificData;
 float counter;
 texture noise;
 sampler tent = sampler_state

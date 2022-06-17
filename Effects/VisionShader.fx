@@ -5,6 +5,7 @@ float4 lightColor;
 float progress;
 float2 uImageSize0;
 float4 uSourceRect;
+float4 uShaderSpecificData;
 
 float dist(float2 colorvector)
 {

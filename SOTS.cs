@@ -35,6 +35,7 @@ using SOTS.NPCs.Boss.Lux;
 using SOTS.Items;
 using SOTS.Items.Chaos;
 using SOTS.Items.Otherworld.Blocks;
+using ReLogic.Content;
 
 namespace SOTS
 {
@@ -122,16 +123,16 @@ namespace SOTS
 			DebuffNPC.LoadArrays();
 			if(Main.netMode != NetmodeID.Server)
 			{
-				Ref<Effect> TPrismdyeRef = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/TPrismEffect"));
-				Ref<Effect> voidMageShader = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/VMShader"));
+				Ref<Effect> TPrismdyeRef = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/TPrismEffect", AssetRequestMode.ImmediateLoad));
+				Ref<Effect> voidMageShader = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/VMShader", AssetRequestMode.ImmediateLoad));
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
 				Filters.Scene["VMFilter"] = new Filter(new ScreenShaderData(voidMageShader, "VMShaderPass"), EffectPriority.VeryHigh);
 				Filters.Scene["VMFilter"].Load();
-				AtenTrail = Instance.Assets.Request<Effect>("Effects/AtenTrail").Value;
-				WaterTrail = Instance.Assets.Request<Effect>("Effects/WaterTrail").Value;
-				FireballShader = Instance.Assets.Request<Effect>("Effects/FireballShader").Value;
-				GodrayShader = Instance.Assets.Request<Effect>("Effects/GodrayShader").Value;
-				VisionShader = Instance.Assets.Request<Effect>("Effects/VisionShader").Value;
+				AtenTrail = Instance.Assets.Request<Effect>("Effects/AtenTrail", AssetRequestMode.ImmediateLoad).Value;
+				WaterTrail = Instance.Assets.Request<Effect>("Effects/WaterTrail", AssetRequestMode.ImmediateLoad).Value;
+				FireballShader = Instance.Assets.Request<Effect>("Effects/FireballShader", AssetRequestMode.ImmediateLoad).Value;
+				GodrayShader = Instance.Assets.Request<Effect>("Effects/GodrayShader", AssetRequestMode.ImmediateLoad).Value;
+				VisionShader = Instance.Assets.Request<Effect>("Effects/VisionShader", AssetRequestMode.ImmediateLoad).Value;
 				Main.QueueMainThreadAction(() => {
 					primitives = new PrimTrailManager();
 					primitives.LoadContent(Main.graphics.GraphicsDevice);

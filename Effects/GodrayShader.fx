@@ -4,6 +4,7 @@ float4 colorMod;
 float distance;
 float rotation;
 float opacity2;
+float4 uShaderSpecificData;
 
 texture noise;
 sampler tent = sampler_state

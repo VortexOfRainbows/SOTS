@@ -8,19 +8,19 @@ Complete:
 5. Global NPC Loot and Gores work! 
 6. Advisor HP scales properly
 7. Treasure Slime/Transmutation table assets load correctly.
+8. NPC spawning should be working correctly...
+9. Shaders work!
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
-1. (Working, Needs more testing) Make sure Biome NPC Spawning Work
-2. Make sure VM Incubator works (and server fixes)
-3. (needs testing) Loot for some npcs may be bugged still.
-4. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
-5. Figure out twilight assassin armor ARM glowmask...
-6. VOID DAMAGE CLASSES!!
-7. Shaders are not being loaded in... consult migrationg guide.
-8. Update Armor Sprites
-9. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
-10. Chests don't work at all!
+1. Make sure VM Incubator works (and server fixes)
+2. (needs testing) Loot/Spawns for some npcs may be bugged still.
+3. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
+4. Figure out twilight assassin armor ARM glowmask...
+5. VOID DAMAGE CLASSES!!
+6. Update Armor Sprites
+7. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
+8. Chests don't work at all!
 
 Daily Log:
 
@@ -30,6 +30,7 @@ Daily Log:
 3. Gores fixed!
 4. Fix some usetime multipliers (olypian axe + riptide)
 5. Fixed right clicks for Olympian Axe and Riptide
+6. Fixed a handful of summon damage issues.
 
 6/16/22
 1. Bug fixes and checks

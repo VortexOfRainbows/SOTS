@@ -3,6 +3,7 @@ sampler uImage1 : register(s1);
 float progress;
 float4 ColorOne;
 matrix WorldViewProjection;
+float4 uShaderSpecificData;
 
 struct VertexShaderInput
 {
