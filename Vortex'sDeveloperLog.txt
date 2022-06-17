@@ -10,6 +10,7 @@ Complete:
 7. Treasure Slime/Transmutation table assets load correctly.
 8. NPC spawning should be working correctly...
 9. Shaders work!
+10. Chests, Chairs, Dressers fixed!
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
@@ -20,9 +21,14 @@ Major Milestones TO REACH (Will be removed when completed)
 5. VOID DAMAGE CLASSES!!
 6. Update Armor Sprites
 7. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
-8. Chests don't work at all!
+8. Holoblades attack the wrong direction
+9. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
 
 Daily Log:
+
+6/17/22
+1. You can now sit on Chairs + Chests are working!
+2. Dressers are working too!
 
 6/16/22
 1. Set some bosses to use portraits in Beastiary to avoid drawing weird things
@@ -31,6 +37,7 @@ Daily Log:
 4. Fix some usetime multipliers (olypian axe + riptide)
 5. Fixed right clicks for Olympian Axe and Riptide
 6. Fixed a handful of summon damage issues.
+7. Shaders fixed!
 
 6/16/22
 1. Bug fixes and checks

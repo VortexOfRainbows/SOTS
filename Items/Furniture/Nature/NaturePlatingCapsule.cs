@@ -39,15 +39,6 @@ namespace SOTS.Items.Furniture.Nature
             name.SetDefault(ChestName);
             AddMapEntry(color, name, MapChestName);
         }
-        protected override int ShowHoverItem(Player player, int i, int j, int x, int y)
-        {
-            return ChestDrop;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
-            base.KillMultiTile(i, j, frameX, frameY);
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             try

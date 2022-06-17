@@ -37,6 +37,7 @@ namespace SOTS.Items.Furniture.Earthen
             return false;
         }
         protected override string ChestName => "Earthen Plating Storage";
+        protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<EarthenPlatingStorage>();
         protected override int DustType => DustID.Iron;
         protected override void AddMapEntires()
@@ -45,32 +46,10 @@ namespace SOTS.Items.Furniture.Earthen
             ModTranslation name = CreateMapEntryName();
             name.SetDefault(ChestName);
             AddMapEntry(color, name, MapChestName);
+
             name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
             name.SetDefault("Locked " + ChestName);
             AddMapEntry(color, name, MapChestName);
-        }
-        public override ushort GetMapOption(int i, int j)
-        {
-            if (Main.tile[i, j].TileFrameX < 36)
-                return 0;
-            return 1;
-        }
-        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX / 36 == 1;
-        protected override bool ManageLockedChest(Player player, int i, int j, int x, int y)
-        {
-            int key = ModContent.ItemType<OldKey>();
-            return player.ConsumeItem(key);
-        }
-        protected override int ShowHoverItem(Player player, int i, int j, int x, int y)
-        {
-            if(IsLockedChest(x, y))
-                return ModContent.ItemType<OldKey>();
-            return ChestDrop;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
-            base.KillMultiTile(i, j, frameX, frameY);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -99,11 +78,6 @@ namespace SOTS.Items.Furniture.Earthen
             {
 
             }
-        }
-        public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int DustType, ref bool manual)
-        {
-            DustType = DustType;
-            return true;
         }
     }
 }

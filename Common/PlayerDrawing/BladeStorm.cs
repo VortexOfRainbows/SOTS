@@ -18,7 +18,9 @@ namespace SOTS.Common.PlayerDrawing
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
-			if (drawInfo.drawPlayer.dead)
+			if (Main.dresserInterfaceDummy == drawInfo.drawPlayer)
+				return;
+			if (drawInfo.drawPlayer.dead || !drawInfo.drawPlayer.active)
 			{
 				return;
 			}
@@ -29,8 +31,9 @@ namespace SOTS.Common.PlayerDrawing
 			if (bladeGlowTexture == null)
 				bladeGlowTexture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/SkywardBladeGlowmask").Value;
 			Player drawPlayer = drawInfo.drawPlayer;
-			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
-			if (modPlayer.skywardBlades > 0 && !drawPlayer.dead)
+			SOTSPlayer modPlayer; 
+			bool flag = drawPlayer.TryGetModPlayer<SOTSPlayer>(out modPlayer);
+			if (flag && modPlayer.skywardBlades > 0 && !drawPlayer.dead)
 			{
 				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
 				float drawY = (int)drawInfo.Position.Y + drawPlayer.height / 2;

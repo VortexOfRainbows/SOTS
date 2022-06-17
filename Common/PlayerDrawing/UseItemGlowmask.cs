@@ -22,6 +22,8 @@ namespace SOTS.Common.PlayerDrawing
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.HeldItem);
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
+			if (Main.dresserInterfaceDummy == drawInfo.drawPlayer)
+				return;
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			if (drawInfo.shadow != 0)

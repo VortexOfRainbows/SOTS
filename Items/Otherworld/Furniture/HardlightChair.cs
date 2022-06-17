@@ -74,6 +74,7 @@ namespace SOTS.Items.Otherworld.Furniture
 	}	
 	public class HardlightChairTile : Items.Furniture.Chair<HardlightChair>
 	{
+		protected override Color MapColor => new Color(55, 55, 55);
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			if (Main.tile[i, j].TileFrameY < 18)
@@ -137,18 +138,20 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileID.Sets.CanBeSatOnForPlayers[Type] = true; // Facilitates calling ModifySittingTargetInfo for Players
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+			AdjTiles = new int[] { TileID.Chairs };
+
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 }; //this is the only difference from base class
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+			//TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, 2);
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
 			TileObjectData.newTile.StyleWrapLimit = 2;
-			TileObjectData.newTile.StyleMultiplier = 2;
+			//TileObjectData.newTile.StyleMultiplier = 2;
 			TileObjectData.newTile.StyleHorizontal = true;
+
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-			AdjTiles = new int[] { TileID.Chairs };
-			AddMapEntry(new Color(55, 55, 55));
 		}
 	}
 }

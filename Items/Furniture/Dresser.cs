@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -19,6 +20,7 @@ namespace SOTS.Items.Furniture
         protected virtual string DresserName => "Dresser";
         public override void SetStaticDefaults()
         {
+            // Properties
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -26,21 +28,31 @@ namespace SOTS.Items.Furniture
             Main.tileContainer[Type] = true;
             Main.tileLavaDeath[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.BasicDresser[Type] = true;
+            TileID.Sets.AvoidedByNPCs[Type] = true;
+            TileID.Sets.IsAContainer[Type] = true;
+            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+
+            ContainerName.SetDefault(DresserName);
+
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.Origin = new Point16(1, 1);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
-            TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
-            TileObjectData.newTile.AnchorInvalidTiles = new[] { 127 };
+            TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
+            TileObjectData.newTile.AnchorInvalidTiles = new int[] { TileID.MagicalIceBlock };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
+
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-            AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
-            TileID.Sets.DisableSmartCursor[Type] = true;
+
+            //ModTranslation name = CreateMapEntryName();
+            //name.SetDefault(DresserName)s;
+            AddMapEntry(MapColor, LocalizedText.Empty, (s, i, j) => DresserName);
             AdjTiles = new int[] { TileID.Dressers };
-            ContainerName.SetDefault(DresserName);
             base.DresserDrop = DresserDrop;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -51,90 +63,81 @@ namespace SOTS.Items.Furniture
         {
             return true;
         }
+        public void ChestSideInteraction(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            Main.CancelClothesWindow(true);
+            Main.mouseRightRelease = false;
+            int left = Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameX / 18;
+            left %= 3;
+            left = Player.tileTargetX - left;
+            int top = Player.tileTargetY - Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY / 18;
+
+            player.CloseSign();
+            player.SetTalkNPC(-1);
+            Main.npcChatCornerItem = 0;
+            Main.npcChatText = "";
+            if (Main.editChest)
+            {
+                SoundEngine.PlaySound(SoundID.MenuTick);
+                Main.editChest = false;
+                Main.npcChatText = string.Empty;
+            }
+            if (player.editedChestName)
+            {
+                NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f);
+                player.editedChestName = false;
+            }
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                if (left == player.chestX && top == player.chestY && player.chest >= 0)
+                {
+                    player.chest = -1;
+                    Recipe.FindRecipes();
+                    SoundEngine.PlaySound(SoundID.MenuClose);
+                }
+                else
+                {
+                    NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, top);
+                    Main.stackSplit = 600;
+                }
+            }
+            else
+            {
+                int chest = Chest.FindChest(left, top);
+                if (chest >= 0)
+                {
+                    Main.stackSplit = 600;
+                    if (chest == player.chest)
+                    {
+                        player.chest = -1;
+                        SoundEngine.PlaySound(SoundID.MenuClose);
+                    }
+                    else
+                    {
+                        SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
+                        player.OpenChest(left, top, chest);
+                    }
+
+                    Recipe.FindRecipes();
+                }
+            }
+        }
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
             if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0)
             {
-                Main.CancelClothesWindow(true);
-                Main.mouseRightRelease = false;
-                int left = Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameX / 18;
-                left %= 3;
-                left = Player.tileTargetX - left;
-                int top = Player.tileTargetY - Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY / 18;
-                if (player.sign > -1)
-                {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
-                    player.sign = -1;
-                    Main.editSign = false;
-                    Main.npcChatText = string.Empty;
-                }
-                if (Main.editChest)
-                {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuTick);
-                    Main.editChest = false;
-                    Main.npcChatText = string.Empty;
-                }
-                if (player.editedChestName)
-                {
-                    NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
-                    player.editedChestName = false;
-                }
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                {
-                    if (left == player.chestX && top == player.chestY && player.chest != -1)
-                    {
-                        player.chest = -1;
-                        Recipe.FindRecipes();
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
-                    }
-                    else
-                    {
-                        NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, top, 0f, 0f, 0, 0, 0);
-                        Main.stackSplit = 600;
-                    }
-                }
-                else
-                {
-                    player.piggyBankProjTracker.Clear();
-                    player.voidLensChest.Clear();
-                    int num213 = Chest.FindChest(left, top);
-                    if (num213 != -1)
-                    {
-                        Main.stackSplit = 600;
-                        if (num213 == player.chest)
-                        {
-                            player.chest = -1;
-                            Recipe.FindRecipes();
-                            Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
-                        }
-                        else if (num213 != player.chest && player.chest == -1)
-                        {
-                            player.chest = num213;
-                            Main.playerInventory = true;
-                            Main.recBigList = false;
-                            Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuOpen);
-                            player.chestX = left;
-                            player.chestY = top;
-                        }
-                        else
-                        {
-                            player.chest = num213;
-                            Main.playerInventory = true;
-                            Main.recBigList = false;
-                            Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuTick);
-                            player.chestX = left;
-                            player.chestY = top;
-                        }
-                        Recipe.FindRecipes();
-                    }
-                }
+                ChestSideInteraction(i, j);
             }
             else
             {
                 Main.playerInventory = false;
                 player.chest = -1;
                 Recipe.FindRecipes();
+                player.SetTalkNPC(-1);
+                Main.npcChatCornerItem = 0;
+                Main.npcChatText = string.Empty;
                 Main.interactedDresserTopLeftX = Player.tileTargetX;
                 Main.interactedDresserTopLeftY = Player.tileTargetY;
                 Main.OpenClothesWindow();

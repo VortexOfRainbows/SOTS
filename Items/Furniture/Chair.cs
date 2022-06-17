@@ -13,7 +13,10 @@ namespace SOTS.Items.Furniture
     {
         protected override int ItemType => ModContent.ItemType<TDrop>();
         protected virtual bool BreaksInLava => true;
-
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
         protected override void SetStaticDefaults(TileObjectData t)
         {
             Main.tileFrameImportant[Type] = true;
@@ -24,17 +27,20 @@ namespace SOTS.Items.Furniture
             TileID.Sets.CanBeSatOnForPlayers[Type] = true; // Facilitates calling ModifySittingTargetInfo for Players
             TileID.Sets.DisableSmartCursor[Type] = true;
 
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            AdjTiles = new int[] { TileID.Chairs };
+
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+            //TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, 2);
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.StyleWrapLimit = 2;
-            TileObjectData.newTile.StyleMultiplier = 2;
+            //TileObjectData.newTile.StyleMultiplier = 2;
             TileObjectData.newTile.StyleHorizontal = true;
+
             TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
             TileObjectData.addAlternate(1);
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-            AdjTiles = new int[] { TileID.Chairs };
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
@@ -63,7 +69,36 @@ namespace SOTS.Items.Furniture
             info.AnchorTilePosition.X = i; // Our chair is only 1 wide, so nothing special required
             info.AnchorTilePosition.Y = j;
 
-            info.AnchorTilePosition.Y++; // Here, since our chair is only 2 tiles high, we can just check if the tile is the top-most one, then move it 1 down
+            if (tile.TileFrameY == 0)
+                info.AnchorTilePosition.Y++; // Here, since our chair is only 2 tiles high, we can just check if the tile is the top-most one, then move it 1 down
+        }
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            if (player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance))
+            {
+                // Avoid being able to trigger it from long range
+                player.GamepadEnableGrappleCooldown();
+                player.sitting.SitDown(player, i, j);
+            }
+            return true;
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            if (!player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance))
+            { 
+                // Match condition in RightClick. Interaction should only show if clicking it does something
+                return;
+            }
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ItemType;
+            if (Main.tile[i, j].TileFrameX / 18 < 1)
+            {
+                player.cursorItemIconReversed = true;
+            }
         }
     }
 }

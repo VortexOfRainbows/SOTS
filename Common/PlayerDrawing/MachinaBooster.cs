@@ -69,6 +69,8 @@ namespace SOTS.Common.PlayerDrawing
 		}
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
+			if (Main.dresserInterfaceDummy == drawInfo.drawPlayer)
+				return;
 			if (drawInfo.drawPlayer.dead || drawInfo.drawPlayer.mount.Active)
 			{
 				return;
