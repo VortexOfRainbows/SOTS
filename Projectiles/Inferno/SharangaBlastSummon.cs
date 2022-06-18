@@ -10,16 +10,14 @@ namespace SOTS.Projectiles.Inferno
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sharanga Crush");
-			
 		}
-		
         public override void SetDefaults()
         {
 			Projectile.height = 40;
 			Projectile.width = 40;
             Main.projFrames[Projectile.type] = 4;
 			Projectile.penetrate = -1;
-			Projectile.minion = true;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 16;
 			Projectile.tileCollide = false;

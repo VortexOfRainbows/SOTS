@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.NPCs;
-using SOTS.Void;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Chaos
@@ -15,8 +14,8 @@ namespace SOTS.Projectiles.Chaos
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Supernova Laser");
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
-
 		public override void SetDefaults() 
 		{
 			Projectile.width = 32;

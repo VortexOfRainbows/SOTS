@@ -69,6 +69,8 @@ namespace SOTS.Projectiles.Tide
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[ItemID.Salmon].Value;
 			if (type > 0 )
 			{
+				if (!Terraria.GameContent.TextureAssets.Item[type].IsLoaded)
+					Main.instance.LoadItem(type);
 				texture = Terraria.GameContent.TextureAssets.Item[type].Value;
 			}
 			else

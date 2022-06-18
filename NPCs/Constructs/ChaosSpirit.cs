@@ -193,6 +193,8 @@ namespace SOTS.NPCs.Constructs
 		{
 			NPC.damage = 150;
 			NPC.lifeMax = 4000;
+			//if (Main.masterMode) //this was added after the screenshots
+			//	NPC.lifeMax = 6000;
 		}
         public override bool PreAI()
 		{
