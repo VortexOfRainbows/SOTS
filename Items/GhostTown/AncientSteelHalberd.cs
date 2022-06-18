@@ -35,6 +35,7 @@ namespace SOTS.Items.GhostTown
             Item.shootSpeed = 6.2f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
+			//Item.channel = true;
 		}
         public override void ModifyWeaponCrit(Player player, ref float crit)
         {
@@ -50,7 +51,7 @@ namespace SOTS.Items.GhostTown
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Item.DamageType, Item.useTime));
 			return false; 
 		}
     }

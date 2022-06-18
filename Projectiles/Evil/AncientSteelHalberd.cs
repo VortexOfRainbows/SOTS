@@ -15,7 +15,6 @@ namespace SOTS.Projectiles.Evil
 		{
 			DisplayName.SetDefault("Ancient Steel Halberd");
 		}
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 24;
@@ -31,6 +30,7 @@ namespace SOTS.Projectiles.Evil
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 60;
+			Projectile.timeLeft = 300;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -54,7 +54,6 @@ namespace SOTS.Projectiles.Evil
 		Vector2 originalVelo = Vector2.Zero;
 		bool runOnce = true;
 		float counter = 0;
-		bool runOnce2 = true;
 		public override void AI()
 		{
 			if(runOnce)
@@ -75,8 +74,8 @@ namespace SOTS.Projectiles.Evil
 
 			Projectile.direction = player.direction;
 			player.heldProj = Projectile.whoAmI;
-			player.itemTime = 2;
-			player.itemAnimation = 2;
+			player.itemTime = 3;
+			player.itemAnimation = 3;
 			Projectile.position.X = ownerMountedCenter.X - (float)(Projectile.width / 2);
 			Projectile.position.Y = ownerMountedCenter.Y - (float)(Projectile.height / 2);
 			if (!player.frozen)

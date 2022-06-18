@@ -20,5 +20,5 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.ownerHitCheck = true;
 			Projectile.DamageType = DamageClass.Melee;
 		}
-	}
+    }
 }

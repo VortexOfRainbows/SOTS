@@ -188,7 +188,6 @@ namespace SOTS
 		public int polarCannons = 0;
 
 		public Vector2 starCen;
-		private const int saveVersion = 0;
 
 		public int mourningStarFire = 0;
 
@@ -493,7 +492,7 @@ namespace SOTS
 				int damage3 = Main.DamageVar(50);
 				Player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, false, 0);
 			}
-        }
+		}
 		int fireIcoCD = 0;
 		int iceIcoCD = 0;
 		int cursedIcoCD = 0;
@@ -548,12 +547,12 @@ namespace SOTS
         {
 			UniqueVisionNumber = Main.rand.Next(24);
         }
-        public override void PreUpdate()
+		public override void PreUpdate()
 		{
 			if (UniqueVisionNumber == -1)
 				ResetVisionID();
 			base.PreUpdate();
-        }
+		}
 		public static int ApplyDamageClassModWithGeneric(Player player, DamageClass damageClass, int startingDamage)
         {
 			int originalDamage = startingDamage;

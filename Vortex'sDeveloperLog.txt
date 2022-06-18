@@ -25,7 +25,6 @@ Major Milestones TO REACH (Will be removed when completed)
 9. Void bar does not stay in the same spot on relog + should have hover text
 10. SOTS beds do not work at all
 11. Cannot move horizontally with wings
-12. Ancient Steel halberd not working
 
 Daily Log:
 
@@ -39,6 +38,7 @@ Daily Log:
 7. Otherworld and Evil construct die properly
 8. Lux lasers visuals fix + other projectiles (Not all yet)
 9. Pisces Puncher fix
+10. Fix Ancient Steel halberd and jury rigged drill
 
 6/16/22
 1. Set some bosses to use portraits in Beastiary to avoid drawing weird things
