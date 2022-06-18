@@ -293,7 +293,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[tile.TileType].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Tile[tile.TileType].Value;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.TileColor));
 			Vector2 drawOffSet = Vector2.Zero;
 			drawOffSet.Y += 2;

@@ -155,7 +155,7 @@ namespace SOTS.Items.Pyramid
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[tile.TileType].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Tile[tile.TileType].Value;
 			Vector2 drawOffSet = Vector2.Zero;
 			if(tile.TileFrameY == 0) //below is active
 				drawOffSet.Y += 2;
