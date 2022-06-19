@@ -191,10 +191,8 @@ namespace SOTS.NPCs.Constructs
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 150;
-			NPC.lifeMax = 4000;
-			//if (Main.masterMode) //this was added after the screenshots
-			//	NPC.lifeMax = 6000;
+			NPC.damage = (int)(NPC.damage * 0.75f);
+			NPC.lifeMax = (int)(NPC.lifeMax / 3 * 2);
 		}
         public override bool PreAI()
 		{

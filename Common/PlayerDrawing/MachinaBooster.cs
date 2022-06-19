@@ -12,7 +12,7 @@ namespace SOTS.Common.PlayerDrawing
 {
 	public class MachinaBooster : PlayerDrawLayer
 	{
-		public Texture2D[] wingAssets;
+		public Texture2D[] wingAssets = null;
 		//public override bool IsHeadLayer => true;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
 		{
@@ -78,17 +78,17 @@ namespace SOTS.Common.PlayerDrawing
 			if(wingAssets == null)
             {
 				wingAssets = new Texture2D[11];
-				wingAssets[0] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart1").Value;
-				wingAssets[1] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base").Value;
-				wingAssets[2] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base2").Value;
-				wingAssets[3] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5").Value;
-				wingAssets[4] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5_2").Value;
-				wingAssets[5] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2").Value;
-				wingAssets[6] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectFill").Value;
-				wingAssets[7] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectOutline").Value;
-				wingAssets[8] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Effect").Value;
-				wingAssets[9] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Glow").Value;
-				wingAssets[10] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Glow").Value;
+				wingAssets[0] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[1] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[2] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[3] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[4] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5_2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[5] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[6] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[7] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[8] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Effect", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[9] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[10] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			}
 			Player drawPlayer = drawInfo.drawPlayer;
 			TestWingsPlayer testWingsPlayer = drawPlayer.GetModPlayer<TestWingsPlayer>();

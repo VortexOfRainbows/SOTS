@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Chaos
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Supernova Laser");
-			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 4800;
 		}
 		public override void SetDefaults() 
 		{

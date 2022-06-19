@@ -1,7 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Otherworld.EpicWings;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -16,6 +12,7 @@ namespace SOTS.Items.Slime
 		{	
 			DisplayName.SetDefault("Gel Wings");
 			Tooltip.SetDefault("Allows flight and slow fall\n'It really shouldn't hold up well'");
+			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(30, 8f, 1.01f);
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -75,11 +72,6 @@ namespace SOTS.Items.Slime
 			}
 			return true;
         }
-        public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
-		{
-			speed = 8f;
-			acceleration *= 1.01f;
-		}
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<CorrosiveGel>(), 8).AddIngredient<Wormwood>(24).AddIngredient(ItemID.Feather, 10).AddTile(TileID.Anvils).Register();

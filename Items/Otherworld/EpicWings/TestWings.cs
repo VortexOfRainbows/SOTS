@@ -21,7 +21,9 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public override void SetStaticDefaults()
 		{	
 			DisplayName.SetDefault("Machina Booster");
+			Tooltip.SetDefault("Allows flight and slow fall");
 			this.SetResearchCost(1);
+			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(150, 8.2f, 1.4f);
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
@@ -131,11 +133,6 @@ namespace SOTS.Items.Otherworld.EpicWings
 			maxCanAscendMultiplier = num4;
 			maxAscentMultiplier = num3;
 			constantAscend = num1;
-		}
-		public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
-		{
-			speed = 7f;
-			acceleration *= 1.5f;
 		}
 	}
 	public class TestWingsPlayer : ModPlayer
