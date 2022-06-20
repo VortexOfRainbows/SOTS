@@ -17,8 +17,8 @@ Major Milestones TO REACH (Will be removed when completed)
 Daily Log:
 
 6/19/22
-1. Nature armor set resprite + Hooks do damage
-2. 
+1. Nature armor set resprite + Hooks do damage properly
+2. Patchleather armor set resheet + Snakes do damage properly
 
 6/18/22
 1. Beds work

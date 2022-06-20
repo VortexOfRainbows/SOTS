@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.timeLeft = 960;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
-			Projectile.minion = true;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.alpha = 0;
             Projectile.minionSlots = 0f;
 			Projectile.usesLocalNPCImmunity = true;
