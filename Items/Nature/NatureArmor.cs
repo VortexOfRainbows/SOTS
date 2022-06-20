@@ -26,8 +26,8 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 28;
-			Item.height = 18;
+			Item.width = 24;
+			Item.height = 12;
 			Item.value = Item.sellPrice(0, 0, 50, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.defense = 1;
@@ -62,7 +62,7 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetDefaults()
 		{
-			Item.width = 30;
+			Item.width = 26;
 			Item.height = 18;
 			Item.value = Item.sellPrice(0, 0, 40, 0);
 			Item.rare = ItemRarityID.Blue;
@@ -107,7 +107,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 34;
+			Item.width = 32;
 			Item.height = 22;
 			Item.value = Item.sellPrice(0, 0, 60, 0);
 			Item.rare = ItemRarityID.Blue;

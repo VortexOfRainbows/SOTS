@@ -15,7 +15,8 @@ namespace SOTS.Projectiles.Nature
 			DisplayName.SetDefault("Flower Bolt");
 		}
         public override void SetDefaults()
-        {
+		{
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.height = 8;
 			Projectile.width = 8;
 			Projectile.penetrate = -1;
