@@ -13,20 +13,21 @@ Major Milestones TO REACH (Will be removed when completed)
 9. Void bar does not stay in the same spot on relog + should have hover text
 10. Many NPC's need Master mode explicit scaling
 	1. Solution: use factors and divisors instead of explicit HP setting
-11. Aten/Polar Star projectiles not drawing properly.
 
 Daily Log:
 
 6/20/22 & 6/21/22
 1. Nature armor set resprite + Hooks do damage properly
 2. Patchleather armor set resheet + Snakes do damage properly
-3. Remaining: Twilight, Frost Artifact
+3. Remaining: Twilight
 4. Flashspark boots recipe change + tooltip change
 5. Vibrant armor resheet
 6. Torch flame fixes.
 7. Both frigid chestplate resheeted!
 8. No more possessed armor
 9. Cursed Armor resheeted!
+10. Fix Aten/North Star
+11. Resheet Frost Artifact Armor!
 
 6/18/22
 1. Beds work

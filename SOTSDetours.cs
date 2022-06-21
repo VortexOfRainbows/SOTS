@@ -293,10 +293,10 @@ namespace SOTS
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					/*if (proj.active && proj.ModProjectile is IOrbitingProj modProj && modProj.inFront)
+					if (proj.active && proj.ModProjectile is IOrbitingProj modProj && modProj.inFront)
 					{
 						modProj.Draw(Main.spriteBatch, Color.White);
-					}*/
+					}
 					if (proj.active && proj.ModProjectile is IncineratorGloveProjectile modProj2)
 					{
 						modProj2.Draw(Main.spriteBatch, Color.White); 
