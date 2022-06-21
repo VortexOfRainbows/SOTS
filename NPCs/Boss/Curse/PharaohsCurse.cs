@@ -60,7 +60,8 @@ namespace SOTS.NPCs.Boss.Curse
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				CustomTexturePath = "SOTS/BossCL/PharaohPortrait",
-				PortraitScale = 1f, // Portrait refers to the full picture when clicking on the icon in the bestiary
+				PortraitScale = 0.5f, // Portrait refers to the full picture when clicking on the icon in the bestiary
+				Scale = 0.5f,
 				PortraitPositionYOverride = 0f,
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);

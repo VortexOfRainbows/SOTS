@@ -397,19 +397,26 @@ namespace SOTS.Common.GlobalNPCs
 			if (DebuffNPC.Zombies.Contains(npc.type))
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ZombieHand>(), 100, 80));
 			LeadingConditionRule preEoC = new LeadingConditionRule(new ItemDropConditions.PreBoss1DropCondition());
+			LeadingConditionRule postEoC = new LeadingConditionRule(new ItemDropConditions.PostBoss1DropCondition());
 			if (npc.type == NPCID.QueenBee)
             {
-				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 20));
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 20));
+				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>())
 			{
-				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 20));
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 20));
+				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			if (npc.type == NPCID.SkeletronHead)
 			{
-				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 20));
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 20));
+				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			LeadingConditionRule postAdvisor = new LeadingConditionRule(new ItemDropConditions.DownedAdvisorDropCondition());
@@ -418,13 +425,15 @@ namespace SOTS.Common.GlobalNPCs
 				postAdvisor.OnSuccess(ItemDropRule.Common(ModContent.ItemType<TwilightShard>(), 3));
 				npcLoot.Add(postAdvisor);
 			}
+			LeadingConditionRule prePharaoh = new LeadingConditionRule(new ItemDropConditions.PreCurseDropCondition());
 			LeadingConditionRule postPharaoh = new LeadingConditionRule(new ItemDropConditions.DownedCurseDropCondition());
 			if (npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Maligmor>() || npc.type == ModContent.NPCType<Ghast>())
 			{
 				IItemDropRule alternative = ItemDropRule.Common(ModContent.ItemType<SoulResidue>(), 1, 1, 2);
-				postPharaoh.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 3, 1, 2).OnFailedRoll(alternative));
-				postPharaoh.OnFailedConditions(alternative);
+				postPharaoh.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 3, 1, 2)).OnFailedRoll(alternative);
+				prePharaoh.OnSuccess(alternative);
 				npcLoot.Add(postPharaoh);
+				npcLoot.Add(prePharaoh);
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)

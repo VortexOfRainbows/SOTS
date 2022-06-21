@@ -20,6 +20,7 @@ Complete:
 8. NPC spawning should be working correctly...
 9. Shaders work!
 10. Chests, Chairs, Dressers fixed!
+11. NPC loot and spawns seem to work for 1.4!
 
 
 

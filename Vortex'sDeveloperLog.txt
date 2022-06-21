@@ -3,16 +3,19 @@ The following is my development plans :D
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
 1. Make sure VM Incubator works (and server fixes)
-2. (needs testing) Loot/Spawns for some npcs may be bugged still.
-3. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
-4. Figure out twilight assassin armor ARM glowmask...
-5. VOID DAMAGE CLASSES!!
-6. Update Armor Sprites
-7. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
-8. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
-9. Void bar does not stay in the same spot on relog + should have hover text
-10. Many NPC's need Master mode explicit scaling
+2. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
+3. Figure out twilight assassin armor ARM glowmask...
+4. VOID DAMAGE CLASSES!!
+5. Update Armor Sprites
+6. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
+7. Void bar does not stay in the same spot on relog + should have hover text
+8. Many NPC's need Master mode explicit scaling
 	1. Solution: use factors and divisors instead of explicit HP setting
+9. Fix Planetarium (and Lux fight) background lighting!
+
+Other:
+1. Beastiary backgrounds and descriptions for all enemies + remove unneeded enemies (Chaos Spirit, Blooming Hook, Flux ball, Maligmor Child etc.)
+2. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
 
 Daily Log:
 
@@ -27,7 +30,9 @@ Daily Log:
 8. No more possessed armor
 9. Cursed Armor resheeted!
 10. Fix Aten/North Star
-11. Resheet Frost Artifact Armor!
+11. Resheeted Frost Artifact Armor!
+12. Fixed drop rates for the PreEOC Boss drops and Post-Pharaoh pyramid enemies.
+	1. There may still be more broken drops...but I believe this is it.
 
 6/18/22
 1. Beds work
