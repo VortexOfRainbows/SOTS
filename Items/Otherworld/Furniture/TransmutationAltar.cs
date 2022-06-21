@@ -46,32 +46,32 @@ namespace SOTS.Items.Otherworld.Furniture
 			AddDirectExchangeRecipe(mod, ItemID.SilverBar, ItemID.TungstenBar);
 			AddDirectExchangeRecipe(mod, ItemID.GoldBar, ItemID.PlatinumBar);
 
-			Recipe recipe = mod.CreateRecipe(ItemID.IronOre, 1);
+			Recipe recipe = Recipe.Create(ItemID.IronOre, 1);
 			recipe.AddIngredient(ItemID.CopperOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();
 
-			recipe = mod.CreateRecipe(ItemID.SilverOre, 1);
+			recipe = Recipe.Create(ItemID.SilverOre, 1);
 			recipe.AddIngredient(ItemID.IronOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();
 
-			recipe = mod.CreateRecipe(ItemID.GoldOre, 1);
+			recipe = Recipe.Create(ItemID.GoldOre, 1);
 			recipe.AddIngredient(ItemID.SilverOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();
 
-			recipe = mod.CreateRecipe(ItemID.LeadOre, 1);
+			recipe = Recipe.Create(ItemID.LeadOre, 1);
 			recipe.AddIngredient(ItemID.TinOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();
 
-			recipe = mod.CreateRecipe(ItemID.TungstenOre, 1);
+			recipe = Recipe.Create(ItemID.TungstenOre, 1);
 			recipe.AddIngredient(ItemID.LeadOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();
 
-			recipe = mod.CreateRecipe(ItemID.PlatinumOre, 1);
+			recipe = Recipe.Create(ItemID.PlatinumOre, 1);
 			recipe.AddIngredient(ItemID.TungstenOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();
@@ -84,11 +84,11 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public static void AddDirectExchangeRecipe(Mod mod, int item1, int item2)
 		{
-			Recipe recipe = mod.CreateRecipe(item2, 1);
+			Recipe recipe = Recipe.Create(item2, 1);
 			recipe.AddIngredient(item1, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();
-			recipe = mod.CreateRecipe(item1, 1);
+			recipe = Recipe.Create(item1, 1);
 			recipe.AddIngredient(item2, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.Register();

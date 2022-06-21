@@ -16,9 +16,11 @@ Major Milestones TO REACH (Will be removed when completed)
 
 Daily Log:
 
-6/19/22
+6/20/22
 1. Nature armor set resprite + Hooks do damage properly
 2. Patchleather armor set resheet + Snakes do damage properly
+3. Remaining: Vibrant, Frigid, Cursed, Possessed, Twilight, Frost Artifact
+4. Flashspark boots recipe change + tooltip change
 
 6/18/22
 1. Beds work

@@ -96,15 +96,15 @@ namespace SOTS.Items.Nature
 			DisplayName.SetDefault("Wormwood Shirt");
 			Tooltip.SetDefault("Increased defense for every active minion");
 			this.SetResearchCost(1);
-			SetupDrawing();
+			//SetupDrawing();
 		}
-		private void SetupDrawing()
+		/*private void SetupDrawing()
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
 			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
 			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = false;
-		}
+		}*/
 		public override void SetDefaults()
 		{
 			Item.width = 32;
