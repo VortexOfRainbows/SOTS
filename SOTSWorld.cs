@@ -240,12 +240,12 @@ namespace SOTS
         {
             int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
 			int genIndexGeodes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
-			int genIndexGems = tasks.FindIndex(genpass => genpass.Name.Equals("Random Gems"));
+			int genIndexTraps = tasks.FindIndex(genpass => genpass.Name.Equals("Traps"));
             int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
 
 			tasks.Insert(genIndexOres, new PassLegacy("SOTSOres", GenSOTSOres));
 			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTSOres", GenSOTSGeodes));
-			tasks.Insert(genIndexGems + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexTraps + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Surface Structures";
 				SOTSWorldgenHelper.GenerateStarterHouseFull(Mod, Main.rand.Next(12));
