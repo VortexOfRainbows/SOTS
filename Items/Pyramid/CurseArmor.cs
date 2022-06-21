@@ -33,17 +33,27 @@ namespace SOTS.Items.Pyramid
 			DisplayName.SetDefault("Cursed Robe");
 			Tooltip.SetDefault("Increased maximum mana and void by 80\nReduces mana and void usage by 15%\nSummons a Ruby Monolith to your side\nThe Ruby Monolith increases your void regeneration speed by 10%");
 			this.SetResearchCost(1);
+			SetupDrawing();
 		}
-		public override bool IsArmorSet(Item head, Item body, Item legs)
+		private void SetupDrawing()
 		{
-			return head.type == ModContent.ItemType<CursedHood>();
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
+			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = true;
+			ArmorIDs.Body.Sets.shouldersAreAlwaysInTheBack[equipSlotBody] = false;
+			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = true;
+			ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
 		}
 		public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
 		{
 			robes = true;
 			equipSlot = EquipLoader.GetEquipSlot(Mod, "CursedRobe_Legs", EquipType.Legs);
 		}
-
+		public override bool IsArmorSet(Item head, Item body, Item legs)
+		{
+			return head.type == ModContent.ItemType<CursedHood>();
+		}
 		public override void UpdateEquip(Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

@@ -10,7 +10,7 @@ namespace SOTS.Common.PlayerDrawing
 	public class TwilightAssassinHeadGlowmask : PlayerDrawLayer
 	{
 		private Asset<Texture2D> circletGlowmaskTexture;
-		public override bool IsHeadLayer => true;
+		//public override bool IsHeadLayer => true;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
 		{
 			return drawInfo.drawPlayer.head == EquipLoader.GetEquipSlot(Mod, "TwilightAssassinsCirclet", EquipType.Head);
