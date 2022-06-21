@@ -297,10 +297,10 @@ namespace SOTS.Common.GlobalNPCs
 				notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>(), 1, 1, 1));
 				npcLoot.Add(notExpert);
 			}
-			if (npc.type == NPCID.PossessedArmor)
+			/*if (npc.type == NPCID.PossessedArmor)
 			{
 				npcLoot.Add(ItemDropRule.OneFromOptions(30, new int[] { ModContent.ItemType<PossessedHelmet>(), ModContent.ItemType<PossessedChainmail>(), ModContent.ItemType<PossessedGreaves>() }));
-			}
+			}*/
 			if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer) //40% in normal, 50% in expert
 			{
 				notExpert.OnSuccess(new CommonDrop(ModContent.ItemType<AncientSteelBar>(), chanceDenominator: 5, chanceNumerator: 2))

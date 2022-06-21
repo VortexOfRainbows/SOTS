@@ -20,12 +20,12 @@ Daily Log:
 6/20/22
 1. Nature armor set resprite + Hooks do damage properly
 2. Patchleather armor set resheet + Snakes do damage properly
-3. Remaining: Cursed, Possessed, Twilight, Frost Artifact
+3. Remaining: Cursed, Twilight, Frost Artifact
 4. Flashspark boots recipe change + tooltip change
 5. Vibrant armor resheet
 6. Torch flame fixes.
 7. Both frigid chestplate resheeted!
-8. 
+8. No more possessed armor
 
 6/18/22
 1. Beds work
