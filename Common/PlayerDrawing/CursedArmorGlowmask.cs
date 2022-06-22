@@ -10,12 +10,12 @@ namespace SOTS.Common.PlayerDrawing
 	public class CursedArmorGlowmask : PlayerDrawLayer
 	{
 		private Asset<Texture2D> cursedArmorGlowmaskTexture;
-		//public override bool IsHeadLayer => true;
+		public override bool IsHeadLayer => false;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
 		{
 			return drawInfo.drawPlayer.head == EquipLoader.GetEquipSlot(Mod, "CursedHood", EquipType.Head);
 		}
-		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
+		public override Position GetDefaultPosition() => new BeforeParent(PlayerDrawLayers.FinchNest); // this is because head layer forces a draw onto the map
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
 			if (drawInfo.drawPlayer.dead)

@@ -3,23 +3,25 @@ The following is my development plans :D
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
 1. Make sure VM Incubator works (and server fixes)
+	1. Info: NPCs are not frozen properly
 2. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
 3. VOID DAMAGE CLASSES!!
 4. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
 5. Void bar does not stay in the same spot on relog + should have hover text
 6. Many NPC's need Master mode explicit scaling
 	1. Solution: use factors and divisors instead of explicit HP setting
-7. Fix Planetarium (and Lux fight) background lighting!
 
 Other:
 1. Beastiary backgrounds and descriptions for all enemies + remove unneeded enemies (Chaos Spirit, Blooming Hook, Flux ball, Maligmor Child etc.)
 2. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
+3. Smart cursor doesn't work with dressers.
 
 Daily Log:
 
 6/22/22
 1. Twilight assassin armor resheeted!
 2. Twilight assassin glowmask fixed! THIS WAS REALLY HARD BUT NOW I KNOW HOW TO DO IT FOR THE FUTURE!
+3. Add back sun light changing (Planetarium and Lux)
 
 6/20/22 & 6/21/22
 1. Nature armor set resprite + Hooks do damage properly

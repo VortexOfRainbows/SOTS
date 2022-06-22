@@ -1219,7 +1219,7 @@ namespace SOTS
 			}
 		}
 
-		/***
+        /***
 		/ This is where the old Mod. stuff was moved to. Basically, it has to belong in a ModSystem Now. I don't know which one to put it in yet, so it stays here for now.
 		/ A lot of old parameters were also made into Static parameters. This shouldn't break anything, but is noted in case it does.
 		/
@@ -1227,7 +1227,7 @@ namespace SOTS
 		/
 		/
 		*/
-		public static void LoadUI()
+        public static void LoadUI()
 		{
 			if (!Main.dedServ)
 			{
@@ -1317,6 +1317,38 @@ namespace SOTS
 		{
 			scale *= lightingChange;
 			lightingChange = 1;
+		}
+		public static float LuxLightingFadeIn = 0;
+		public static float PlanetariumLightingFadeIn = 0;
+		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+		{
+			if (Main.gameMenu)
+			{
+				return;
+			}
+			var player = Main.LocalPlayer;
+			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+			if (sPlayer.zoneLux)
+			{
+
+			}
+			else if (LuxLightingFadeIn > 0)
+			{
+				LuxLightingFadeIn -= 0.01f;
+			}
+			backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+			tileColor = Color.Lerp(tileColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+			if (sPlayer.PlanetariumBiome)
+			{
+				if (PlanetariumLightingFadeIn < 1)
+					PlanetariumLightingFadeIn += 0.01f;
+			}
+			else if (PlanetariumLightingFadeIn > 0)
+			{
+				PlanetariumLightingFadeIn -= 0.01f;
+			}
+			backgroundColor = Color.Lerp(backgroundColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
+			tileColor = Color.Lerp(tileColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
 		}
 	}
 }
