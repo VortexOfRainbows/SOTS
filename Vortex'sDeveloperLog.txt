@@ -1,5 +1,9 @@
 The following is my development plans :D
 
+Tmodloader Bugs:
+1. ModifySunLightColor() doesn't modify background color. This breaks the Planetarium and Lux.
+
+
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
 1. Make sure VM Incubator works (and server fixes)

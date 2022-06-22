@@ -1338,6 +1338,7 @@ namespace SOTS
 			}
 			backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
 			tileColor = Color.Lerp(tileColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+			//Lighting.GlobalBrightness *= MathHelper.Lerp(1, 0, 0.96f * LuxLightingFadeIn);
 			if (sPlayer.PlanetariumBiome)
 			{
 				if (PlanetariumLightingFadeIn < 1)
@@ -1349,6 +1350,7 @@ namespace SOTS
 			}
 			backgroundColor = Color.Lerp(backgroundColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
 			tileColor = Color.Lerp(tileColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
+			//Lighting.GlobalBrightness *= MathHelper.Lerp(1, 0, 0.9f * PlanetariumLightingFadeIn);
 		}
 	}
 }

@@ -649,8 +649,6 @@ namespace SOTS
         }
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;
-		public static float LuxLightingFadeIn = 0;
-		public static float PlanetariumLightingFadeIn = 0;
 		public enum Similarity
 		{
 			None,
