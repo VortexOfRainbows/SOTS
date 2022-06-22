@@ -4,14 +4,12 @@ The following is my development plans :D
 Major Milestones TO REACH (Will be removed when completed)
 1. Make sure VM Incubator works (and server fixes)
 2. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
-3. Figure out twilight assassin armor ARM glowmask...
-4. VOID DAMAGE CLASSES!!
-5. Update Armor Sprites
-6. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
-7. Void bar does not stay in the same spot on relog + should have hover text
-8. Many NPC's need Master mode explicit scaling
+3. VOID DAMAGE CLASSES!!
+4. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
+5. Void bar does not stay in the same spot on relog + should have hover text
+6. Many NPC's need Master mode explicit scaling
 	1. Solution: use factors and divisors instead of explicit HP setting
-9. Fix Planetarium (and Lux fight) background lighting!
+7. Fix Planetarium (and Lux fight) background lighting!
 
 Other:
 1. Beastiary backgrounds and descriptions for all enemies + remove unneeded enemies (Chaos Spirit, Blooming Hook, Flux ball, Maligmor Child etc.)
@@ -19,10 +17,14 @@ Other:
 
 Daily Log:
 
+6/22/22
+1. Twilight assassin armor resheeted!
+2. Twilight assassin glowmask fixed! THIS WAS REALLY HARD BUT NOW I KNOW HOW TO DO IT FOR THE FUTURE!
+
 6/20/22 & 6/21/22
 1. Nature armor set resprite + Hooks do damage properly
 2. Patchleather armor set resheet + Snakes do damage properly
-3. Remaining: Twilight
+3. Remaining: None!
 4. Flashspark boots recipe change + tooltip change
 5. Vibrant armor resheet
 6. Torch flame fixes.
@@ -33,6 +35,7 @@ Daily Log:
 11. Resheeted Frost Artifact Armor!
 12. Fixed drop rates for the PreEOC Boss drops and Post-Pharaoh pyramid enemies.
 	1. There may still be more broken drops...but I believe this is it.
+13. Pyramid liquid fix
 
 6/18/22
 1. Beds work

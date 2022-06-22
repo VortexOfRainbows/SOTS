@@ -26,7 +26,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			if (Main.netMode == NetmodeID.Server)
 				return;
 			int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
-			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = false;
+			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = true;
 		}
 		public override void SetDefaults()
 		{
@@ -142,6 +142,8 @@ namespace SOTS.Items.Otherworld.FromChests
 				return;
 			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
 			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = false;
+			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = true;
+			ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
 		}
 		public override void SetDefaults()
 		{

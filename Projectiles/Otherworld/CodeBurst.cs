@@ -28,8 +28,8 @@ namespace SOTS.Projectiles.Otherworld
 			if (Projectile.ai[1] == -1)
             {
 				Projectile.extraUpdates = 3;
-				// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-            }
+				Projectile.DamageType = DamageClass.Summon;
+			}
 			for (int i = 0; i < 30; i++)
 			{
 				int type = ModContent.DustType<CodeDust>();
