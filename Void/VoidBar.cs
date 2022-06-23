@@ -167,21 +167,8 @@ namespace SOTS.Void
 				if (length + prevRight >= 188)
 					length = 188 - prevRight;
 				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)(length + 1), height), color);
-				if (SOTS.Config.voidBarBlur)
-				{
-					color *= 0.15f;
-					color.A = 0;
-					for (int l = 0; l < 8; l++)
-					{
-						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * l));
-						spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight) + (int)circular.X, (int)(VoidPlayer.voidBarOffset.Y + padding.Y) + (int)circular.Y, (int)(length + 1), height), color);
-					}
-				}
-				else
-				{
-					color.A = 0;
-					spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)(length + 1), height), color);
-				}
+				color.A = 0;
+				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)(length + 1), height), color);
 				/*if(i == 0)
 				{
 					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
@@ -218,35 +205,13 @@ namespace SOTS.Void
 				float quotientLerp = voidPlayer.lerpingVoidMeter / voidPlayer.voidMeterMax2;
 				fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
 				float lerpLength = (int)(quotientLerp * 188);
-				if (SOTS.Config.voidBarBlur)
-				{
-					for (int l = 0; l < 8; l++)
-					{
-						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * l));
-						spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight + circular.X), (int)(VoidPlayer.voidBarOffset.Y + padding.Y + circular.Y), (int)lerpLength, height), new Color(255, 10, 10, 0) * 0.1f);
-					}
-				}
-				else
-					spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)lerpLength, height), new Color(255, 10, 10, 0) * 0.6f);
+				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)lerpLength, height), new Color(255, 10, 10, 0) * 0.6f);
 			}
-			spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarDark"), new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)length, height), new Color(255, 255, 255));
+			//spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarDark"), new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)length, height), new Color(255, 255, 255));
 			base.Draw(spriteBatch);
-			Color color2 = new Color(100, 100, 100, 0);
 			fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
-			if (SOTS.Config.voidBarBlur)
-			{
-				color2 = new Color(15, 15, 15, 0);
-				for (int l = 0; l < 8; l++)
-				{
-					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * l));
-					spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight) + (int)circular.X, (int)(VoidPlayer.voidBarOffset.Y + padding.Y) + (int)circular.Y, (int)length, height), color2);
-				}
-			}
-			else
-			{
-				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)length, height), color2);
-			}
-			if(!SOTS.Config.simpleVoidFill)
+			spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)length, height), Color.White);
+			if (!SOTS.Config.simpleVoidFill)
 			{
 				for (int i = 0; i < rectangles.Count; i++)
 				{

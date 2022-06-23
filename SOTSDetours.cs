@@ -28,7 +28,7 @@ namespace SOTS
 			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update += Player_Update;
-			On.Terraria.NPC.UpdateNPC += NPC_UpdateNPC;
+			On.Terraria.NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update += Gore_Update;
             On.Terraria.Projectile.Update += Projectile_Update;
 			On.Terraria.Item.UpdateItem += Item_UpdateItem;
@@ -60,7 +60,7 @@ namespace SOTS
 
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update -= Player_Update;
-			On.Terraria.NPC.UpdateNPC -= NPC_UpdateNPC;
+			On.Terraria.NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update -= Gore_Update;
 			On.Terraria.Projectile.Update -= Projectile_Update;
 			On.Terraria.Item.UpdateItem -= Item_UpdateItem;
@@ -113,7 +113,7 @@ namespace SOTS
 			}
 			orig(self);
 		}*/
-		private static void NPC_UpdateNPC(On.Terraria.NPC.orig_UpdateNPC orig, NPC self, int i)
+		private static void NPC_UpdateNPC_Inner(On.Terraria.NPC.orig_UpdateNPC_Inner orig, NPC self, int i)
 		{
 			if (self.active)
 			{

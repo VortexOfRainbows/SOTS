@@ -46,12 +46,6 @@ namespace SOTS
 		[DefaultValue(false)]
 		public bool simpleVoidText { get; set; }
 
-		[Label("Void Bar Blur")]
-		[Tooltip("Slightly blurs the inner fill of the Void Bar\nIs somewhat more intensive to run")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]
-		public bool voidBarBlur { get; set; }
-
 		[Label("Simple Void Bar Fill")]
 		[Tooltip("Removes the division lines between inner fill Void Bar elements")]
 		[BackgroundColor(110, 80, 150, 192)]
