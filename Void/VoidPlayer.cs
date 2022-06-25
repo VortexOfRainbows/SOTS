@@ -108,7 +108,6 @@ namespace SOTS.Void
 		}
 		public float voidMeter = 100;
 		public float voidCost = 1f;
-		public float voidSpeed = 1f;
 		public int voidMeterMax2 = 0;
 		public bool hasEnteredVoidShock = false;
 		public int voidShockAnimationCounter = 0;
@@ -118,9 +117,6 @@ namespace SOTS.Void
 		public static VoidPlayer ModPlayer(Player player) {
 			return player.GetModPlayer<VoidPlayer>();
 		}
-		public float voidDamage = 1f;
-		public float voidKnockback;
-		public int voidCrit;
 		public override void ResetEffects()
 		{
 			ResetVariables();
@@ -642,12 +638,10 @@ namespace SOTS.Void
 				voidShockAnimationCounter = -1;
 				hasEnteredVoidShock = false;
 			}
-			voidDamage = 1f;
 			soulsOnKill = 0;
 			//percent damage grows as health lowers
 			//voidDamage += 1f - (float)((float)player.statLife / (float)player.statLifeMax2);
 
-			voidSpeed = 1f; 
 			voidCost = 1f;
 			if(Main.myPlayer == Player.whoAmI)
 			{
@@ -724,8 +718,6 @@ namespace SOTS.Void
 			}
 			UpdateVoidRegen();
 			voidMeterMax2 = voidMeterMax;
-			voidKnockback = 0f;
-			voidCrit = 0;
 			//maxStandingTimer = 2;
 			if (voidMeter != 0)
 			{
@@ -738,25 +730,6 @@ namespace SOTS.Void
 			CrushTransformer = 1f;
 			BonusCrushRangeMax = 0;
 			BonusCrushRangeMin = 0;
-		}
-        public override float UseAnimationMultiplier(Item item)
-        {
-			return UseTimeMultiplier(item);
-		}
-		public override float UseTimeMultiplier(Item item)
-		{
-			float standard = voidSpeed;
-			int time = item.useAnimation;
-			int cannotPass = 2;
-			float current = time / standard;
-			if (current < cannotPass)
-			{
-				standard = time / 2f;
-			}
-			if (item.ModItem is VoidItem)
-				if (!item.channel)
-					return 1 / standard;
-			return base.UseTimeMultiplier(item);
 		}
 		public float resolveVoidCounter = 0;
 		public float resolveVoidAmount = 0;

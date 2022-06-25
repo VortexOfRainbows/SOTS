@@ -89,11 +89,10 @@ namespace SOTS.Items.Pyramid
 		public override void UpdateEquip(Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			modPlayer.CurseVision = true;
-			vPlayer.voidDamage += 0.08f;
+			player.GetDamage<VoidGeneric>() += 0.08f;
 			player.GetDamage(DamageClass.Magic) += 0.08f;
-			vPlayer.voidCrit += 5;
+			player.GetCritChance<VoidGeneric>() += 5;
 			player.GetCritChance(DamageClass.Magic) += 5;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)

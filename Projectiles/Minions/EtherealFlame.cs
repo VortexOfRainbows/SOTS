@@ -32,6 +32,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.minionSlots = 1f;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.netImportant = true;

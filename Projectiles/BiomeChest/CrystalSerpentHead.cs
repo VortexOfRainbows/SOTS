@@ -85,7 +85,8 @@ namespace SOTS.Projectiles.BiomeChest
             Projectile.hide = true;
             Projectile.netImportant = true;
             Projectile.minionSlots = 0f;
-		}
+            Projectile.DamageType = DamageClass.Summon;
+        }
         public sealed override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;

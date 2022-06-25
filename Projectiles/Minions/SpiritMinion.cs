@@ -10,10 +10,6 @@ namespace SOTS.Projectiles.Minions
 {
 	public abstract class SpiritMinion : ModProjectile
 	{
-		public void UpdateMinionDamage(int ownerID)
-        {
-			Projectile.SetDamageBasedOnOriginalDamage(ownerID);
-		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit");
@@ -31,16 +27,20 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetDefaults()
 		{
+			SetSpiritMinionDefaults();
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
-			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.netImportant = true;
+		}
+		public void SetSpiritMinionDefaults()
+		{
+			Projectile.ContinuouslyUpdateDamage = true;
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public sealed override bool PreAI()
         {
-			UpdateMinionDamage(Projectile.owner);
+			//UpdateMinionDamage(Projectile.owner);
             return SafePreAI();
         }
 		public virtual bool SafePreAI()

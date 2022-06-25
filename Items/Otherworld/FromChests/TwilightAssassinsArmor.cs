@@ -18,6 +18,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Assassin Circlet");
+			Tooltip.SetDefault("Gamer");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -166,7 +167,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			player.lifeRegen += 2;
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			voidPlayer.voidRegenSpeed += 0.1f;
-			voidPlayer.voidCrit += 10;
+			player.GetCritChance<VoidGeneric>() += 10;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

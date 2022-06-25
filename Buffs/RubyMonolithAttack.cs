@@ -18,7 +18,7 @@ namespace SOTS.Buffs
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.flatVoidRegen -= 6.0f;
-            voidPlayer.voidDamage += 0.1f;
+            player.GetDamage<VoidGeneric>() += 0.1f;
 		}
     }
 }

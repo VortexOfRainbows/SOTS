@@ -5,10 +5,8 @@ Tmodloader Bugs:
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
-1. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
-2. VOID DAMAGE CLASSES!!
-3. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
-4. Many NPC's need Master mode explicit scaling
+1. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
+2. Many NPC's need Master mode explicit scaling
 	1. Solution: use factors and divisors instead of explicit HP setting
 
 Other:
@@ -20,6 +18,10 @@ Other:
 	2. Try reflecting rectangles via helper method.
 
 Daily Log:
+
+6/24/22
+1. Added Void Damage classes!
+2. Void minions (and other minions) should damage scale properly!
 
 6/22/22
 1. Twilight assassin armor resheeted!

@@ -32,7 +32,7 @@ namespace SOTS.Items.Slime
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 -= 20;
 			voidPlayer.bonusVoidGain += 2;
-			voidPlayer.voidCrit += 8;
+			player.GetCritChance<VoidGeneric>() += 8;
 		}
 	}
 }

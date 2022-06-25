@@ -24,8 +24,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void UpdateEquip(Player player)
 		{
-			VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
-			modPlayer.voidSpeed += 0.1f;
+			player.GetAttackSpeed<VoidGeneric>()+= 0.1f;
 			player.iceSkate = true;
 			player.moveSpeed += 0.1f;
 		}

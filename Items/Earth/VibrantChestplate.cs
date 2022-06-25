@@ -29,7 +29,7 @@ namespace SOTS.Items.Earth
 		public override void UpdateEquip(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidDamage += 0.10f;
+			player.GetDamage<VoidGeneric>() += 0.10f;
 			player.GetDamage(DamageClass.Ranged) += 0.05f;
 		}
 		public override void AddRecipes()

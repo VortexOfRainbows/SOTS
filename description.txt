@@ -23,12 +23,12 @@ Credits:
 Code, Direction, Art: Vortex#6230
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Art: Mochi, MrPetkins 
+Art: Mochi, MrPetkins, HugeKraken 
 
 (Contributors and Other Credits)
-Art: HugeKraken, Arcri, Pokerface
+Art: Arcri, Pokerface
 Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
-Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Moonseer
+Code: Moonseer, Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
 Minor Art: Naka, DeJuiceTD, Nomis
 
 (Past Developers)

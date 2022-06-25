@@ -91,7 +91,9 @@ namespace SOTS.Projectiles.Inferno
             Projectile.netImportant = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
-			Projectile.ignoreWater = true;	
+			Projectile.ignoreWater = true;
+			Projectile.ContinuouslyUpdateDamage = true;
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()

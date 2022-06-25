@@ -20,8 +20,6 @@ namespace SOTS.Projectiles.Minions
 			Projectile.alpha = 0;
 			Projectile.penetrate = 1;
 			Projectile.DamageType = DamageClass.Summon;
-			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-			//Projectile.minion = true;
 			Projectile.width = 24;
 			Projectile.height = 44;
 			Projectile.tileCollide = true;

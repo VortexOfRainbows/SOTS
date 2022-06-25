@@ -30,8 +30,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.height = 38;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
-			Projectile.minion = true;
-			Projectile.minionSlots = 0f;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 300;
 			Projectile.netImportant = true;

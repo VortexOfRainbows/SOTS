@@ -115,6 +115,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.minion = true;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.ignoreWater = true;
 			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
