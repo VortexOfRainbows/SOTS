@@ -16,6 +16,7 @@ namespace SOTS.Items.Inferno
 			DisplayName.SetDefault("Incinerator Glove");
 			Tooltip.SetDefault("Charge up a short-ranged ball of hot plasma\nGains 40% additional damage each charge\nMaxes out at 80 charges\nOnly does half damage prior to firing");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 4));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

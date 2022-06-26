@@ -18,6 +18,7 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Digital Daito");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 15));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -25,7 +26,7 @@ namespace SOTS.Items
             Item.damage = 50;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 62;
-            Item.height = 64;  
+            Item.height = 66;  
             Item.useTime = 20; 
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Shoot;		

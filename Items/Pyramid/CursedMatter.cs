@@ -10,6 +10,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

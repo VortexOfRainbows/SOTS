@@ -16,12 +16,13 @@ namespace SOTS.Items
 			DisplayName.SetDefault("Disruptive Electromagnetic Field Emitter");
 			Tooltip.SetDefault("Prevents constructs from spawning while favorited in the inventory");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 15));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
             Item.width = 54;     
-            Item.height = 30;   
+            Item.height = 32;   
             Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Orange;
 		}
@@ -31,7 +32,7 @@ namespace SOTS.Items
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/ElectromagneticDeterrentGlow");
-			Main.spriteBatch.Draw(texture, position, new Rectangle(0, 30 * this.frame, 54, 30), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, position, new Rectangle(0, 32 * this.frame, 54, 32), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			for (int k = 0; k < 3; k++)
 			{
 				Main.spriteBatch.Draw(texture2, position + Main.rand.NextVector2Circular(1.0f, 1.0f), new Rectangle(0, 30 * this.frame, 54, 30), color * 1.1f * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
@@ -45,7 +46,7 @@ namespace SOTS.Items
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/ElectromagneticDeterrentGlow");
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, new Rectangle(0, 30 * this.frame, 54, 30), lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, new Rectangle(0, 32 * this.frame, 54, 32), lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			for (int k = 0; k < 3; k++)
 			{
 				Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition + Main.rand.NextVector2Circular(1.0f, 1.0f), new Rectangle(0, 30 * this.frame, 54, 30), color * 1.1f * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);

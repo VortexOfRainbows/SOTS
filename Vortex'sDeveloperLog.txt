@@ -1,12 +1,8 @@
 The following is my development plans :D
 
-Tmodloader Bugs:
-1. ModifySunLightColor() doesn't modify background color. This breaks the Planetarium and Lux.
-
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
-1. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
-2. Many NPC's need Master mode explicit scaling
+1. Many NPC's need Master mode explicit scaling
 	1. Solution: use factors and divisors instead of explicit HP setting
 
 Other:
@@ -19,9 +15,10 @@ Other:
 
 Daily Log:
 
-6/24/22
+6/24/22 & 6/25/22
 1. Added Void Damage classes!
 2. Void minions (and other minions) should damage scale properly!
+3. Fixed Item Animations! I think I got all of them.
 
 6/22/22
 1. Twilight assassin armor resheeted!
