@@ -13,7 +13,12 @@ namespace SOTS.NPCs.Boss.Polaris
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bullet Snake");
-		}
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+        }
         public override void SetDefaults()
         {
             NPC.width = 38;

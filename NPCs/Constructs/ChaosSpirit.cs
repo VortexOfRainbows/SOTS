@@ -9,6 +9,7 @@ using SOTS.NPCs.Boss.Lux;
 using SOTS.Projectiles.Chaos;
 using SOTS.Void;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -157,12 +158,16 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void SetStaticDefaults()
+        public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 1;
 			DisplayName.SetDefault("Chaos Spirit");
-			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
-			NPCID.Sets.TrailingMode[NPC.type] = 0;
+			NPCID.Sets.TrailCacheLength[NPC.type] = 5; 
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Hide = true
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{
