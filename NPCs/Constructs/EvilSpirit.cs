@@ -63,6 +63,7 @@ namespace SOTS.NPCs.Constructs
 		List<EvilEye> eyes = new List<EvilEye>();
 		private int InitiateHealth = 10000;
 		private float ExpertHealthMult = 1.45f; //14500
+		private float MasterHealthMult = 2.0f; //20000
 		int phase = 1;
 		int counter = 0;
 		int counter2 = 0;
@@ -335,8 +336,8 @@ namespace SOTS.NPCs.Constructs
 				if(phase == 1)
 				{
 					phase = 2;
-					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = NPC.lifeMax;
 				}
 				if(Main.netMode != NetmodeID.Server)
                 {

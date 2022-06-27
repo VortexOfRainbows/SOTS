@@ -56,6 +56,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		private int InitiateHealth = 6000;
 		private float ExpertHealthMult = 1.5f;
+		private float MasterHealthMult = 2f;
 		
 		int phase = 1;
 		int counter = 0;
@@ -189,8 +190,8 @@ namespace SOTS.NPCs.Constructs
 				if(phase == 1 && NPC.localAI[1] != -1)
 				{
 					phase = 2;
-					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = NPC.lifeMax;
 				}
 			}
 		}

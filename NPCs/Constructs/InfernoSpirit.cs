@@ -75,6 +75,7 @@ namespace SOTS.NPCs.Constructs
 		public float rotation = 0;
 		private int InitiateHealth = 12000;
 		private float ExpertHealthMult = 1.5f; //18000
+		private float MasterHealthMult = 2.4f; //28800
 		public const int ProbeCount = 7;
 		public const int timeToFire = 2;
 		public const int timeToDash = 45;
@@ -431,8 +432,8 @@ namespace SOTS.NPCs.Constructs
 				if(phase == 1)
 				{
 					phase = 2;
-					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = NPC.lifeMax;
 				}
 			}
 		}

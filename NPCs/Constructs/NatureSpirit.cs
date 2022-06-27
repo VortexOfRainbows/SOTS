@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
+using SOTS.Projectiles.Nature;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -57,7 +58,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		private int InitiateHealth = 1000;
 		private float ExpertHealthMult = 1.5f;
-		
+		private float MasterHealthMult = 2f;
+
 		int phase = 1;
 		int counter = 0;
 		public void SpellLaunch()
@@ -65,7 +67,7 @@ namespace SOTS.NPCs.Constructs
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				int damage = NPC.GetBaseDamage() / 2;
-				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f), Mod.Find<ModProjectile>("NatureBolt").Type, damage, 0, Main.myPlayer, Main.rand.NextFloat(15f, 25f), NPC.target);
+				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f), ModContent.ProjectileType<NatureBolt>(), damage, 0, Main.myPlayer, Main.rand.NextFloat(15f, 25f), NPC.target);
 			}
 			SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y, 0.55f, 0.4f);
 		}
@@ -174,8 +176,8 @@ namespace SOTS.NPCs.Constructs
 				if (phase == 1)
 				{
 					phase = 2;
-					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = NPC.lifeMax;
 				}
 			}
 		}

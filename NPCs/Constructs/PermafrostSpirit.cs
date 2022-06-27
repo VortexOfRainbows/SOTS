@@ -58,7 +58,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		private int InitiateHealth = 2000;
 		private float ExpertHealthMult = 1.5f;
-		
+		private float MasterHealthMult = 2f;
 		int phase = 1;
 		int counter = 0;
 		public void SpellLaunch(Vector2 velocity)
@@ -182,8 +182,8 @@ namespace SOTS.NPCs.Constructs
 				if (phase == 1)
 				{
 					phase = 2;
-					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = NPC.lifeMax;
 				}
 			}
 		}
