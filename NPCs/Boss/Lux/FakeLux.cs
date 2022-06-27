@@ -53,8 +53,7 @@ namespace SOTS.NPCs.Boss.Lux
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.lifeMax = 20000;
-			NPC.damage = 140;
+			NPC.damage = (int)(NPC.damage * 7 / 8);
 		}
 		bool runOnce = true;
 		float rotationCounter = 0;

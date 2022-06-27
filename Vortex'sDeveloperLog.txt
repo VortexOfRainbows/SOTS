@@ -2,8 +2,7 @@ The following is my development plans :D
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
-1. Many NPC's need Master mode explicit scaling
-	1. Solution: use factors and divisors instead of explicit HP setting
+1. Master mode health for phase 2 spirits
 
 Other:
 1. Beastiary backgrounds and descriptions for all enemies + remove unneeded enemies (Chaos Spirit, Blooming Hook, Flux ball, Maligmor Child etc.)
@@ -14,6 +13,11 @@ Other:
 	2. Try reflecting rectangles via helper method.
 
 Daily Log:
+
+6/26/22
+1. Convert NPC life/damage explicit scaling into multipliers and divisors.
+	1. Helps for Journey and Master mode
+2. 
 
 6/24/22 & 6/25/22
 1. Added Void Damage classes!

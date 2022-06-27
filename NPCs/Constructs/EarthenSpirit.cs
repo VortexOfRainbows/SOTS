@@ -43,8 +43,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 70;
-			NPC.lifeMax = 750;
+			NPC.damage = (int)(NPC.damage * 7 / 10);
+			NPC.lifeMax = (int)(NPC.lifeMax * 5 / 6);
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

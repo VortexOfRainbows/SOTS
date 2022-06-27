@@ -180,7 +180,6 @@ namespace SOTS.NPCs.Boss
         {
             NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
             DPSregenRate += 0.15f * numPlayers;
-            base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool CheckActive()
         {

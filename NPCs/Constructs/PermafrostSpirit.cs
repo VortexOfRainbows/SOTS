@@ -53,8 +53,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 80;
-			NPC.lifeMax = 1200;
+			NPC.damage = NPC.damage * 2 / 3;
+			NPC.lifeMax = NPC.lifeMax * 6 / 7;
 		}
 		private int InitiateHealth = 2000;
 		private float ExpertHealthMult = 1.5f;

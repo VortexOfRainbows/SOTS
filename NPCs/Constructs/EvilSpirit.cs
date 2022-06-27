@@ -57,8 +57,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 145;
-			NPC.lifeMax = 5000;
+			NPC.damage = (int)(NPC.damage * 29 / 32);
+			NPC.lifeMax = (int)(NPC.lifeMax * 5 / 6);
 		}
 		List<EvilEye> eyes = new List<EvilEye>();
 		private int InitiateHealth = 10000;

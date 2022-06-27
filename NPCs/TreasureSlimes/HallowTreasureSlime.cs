@@ -78,8 +78,8 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			NPC.lifeMax = 1500;
-			NPC.damage = 140;
+			NPC.lifeMax = NPC.lifeMax * 5 / 6;
+			NPC.damage = (int)(NPC.damage * 7 / 8);
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)
 		{

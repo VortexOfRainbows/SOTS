@@ -63,8 +63,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 135;
-			NPC.lifeMax = 6000;
+			NPC.damage = NPC.damage * 27 / 40;
+			NPC.lifeMax = NPC.lifeMax * 3 / 4;
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

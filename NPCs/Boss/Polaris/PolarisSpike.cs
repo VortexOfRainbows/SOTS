@@ -58,7 +58,6 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.lifeMax = 1000;
 			NPC.damage = (int)(NPC.damage * 0.75f);
 		}
 		bool runOnce = true;
