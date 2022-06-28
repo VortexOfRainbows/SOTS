@@ -163,6 +163,7 @@ namespace SOTS
 		}
 		public override void PreSaveAndQuit()
 		{
+			SOTSConfig.voidBarNeedsLoading = 0;
 			PreSaveAndQuit_AwaitThreadedTasks();
 		}
 		private void PreSaveAndQuit_AwaitThreadedTasks()

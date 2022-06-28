@@ -13,8 +13,8 @@ namespace SOTS.Void
 			voidUI = new DragableUIPanel();
 			voidUI.Height.Set(30f, 0f);
 			voidUI.Width.Set(200f, 0f);
-			voidUI.Left.Set(VoidPlayer.voidBarOffset.X, 0f);
-			voidUI.Top.Set(VoidPlayer.voidBarOffset.Y, 0f);
+			voidUI.Left.Set(SOTS.Config.voidBarPointX, 0f);
+			voidUI.Top.Set(SOTS.Config.voidBarPointY, 0f);
 			voidUI.type = 0;
 			voidUI.BackgroundColor = new Color(0, 0, 0, 0);
 			voidUI.BorderColor = new Color(0, 0, 0, 0);
@@ -32,16 +32,11 @@ namespace SOTS.Void
 		{
 			Recalculate();
 		}
-		public override void Update(GameTime gameTime)
-		{
-			voidUI.Left.Set(VoidPlayer.voidBarOffset.X, 0f);
-			voidUI.Top.Set(VoidPlayer.voidBarOffset.Y, 0f);
-			base.Update(gameTime);
-		}
-        public override void OnDeactivate()
+        /*public override void OnDeactivate()
         {
-			VoidPlayer.voidBarOffset = new Vector2(voidUI.Left.Pixels, voidUI.Top.Pixels);
-            base.OnDeactivate();
-        }
+			SOTS.Config.voidBarPointX = (int)voidUI.Left.Pixels;
+			SOTS.Config.voidBarPointY = (int)voidUI.Top.Pixels;
+			base.OnDeactivate();
+        }*/
     }
 }

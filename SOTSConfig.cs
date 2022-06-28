@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Void;
 using System.ComponentModel;
 using Terraria;
 using Terraria.ModLoader.Config;
@@ -9,7 +10,12 @@ namespace SOTS
 	[BackgroundColor(45, 50, 65, 192)]
 	public class SOTSConfig : ModConfig
 	{
-		public override ConfigScope Mode => ConfigScope.ClientSide;
+		public static int voidBarNeedsLoading = 0;
+        public override void OnChanged()
+        {
+			voidBarNeedsLoading++;
+        }
+        public override ConfigScope Mode => ConfigScope.ClientSide;
 
 		[Header("UI")]
 		[Label("Void Bar X")]

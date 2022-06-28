@@ -3,7 +3,7 @@ The following is my development plans :D
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
 1. Bestiary backgrounds and descriptions for all enemies
-2. Void bar does not stay in the same spot on relog + should have hover text
+2. Void bar should have hover text
 	1. Also, alternate void bar roll direction for bar graphic setting
 	2. Try reflecting rectangles via helper method.
 
@@ -15,6 +15,7 @@ Daily Log:
 
 6/28/22
 1. Experimenting and foundations for the bestiary.
+2. Void Bar SHOULD now stay in place after save and quit. Might be bugged idk.
 
 6/26/22 & 6/27/22
 1. Convert NPC life/damage explicit scaling into multipliers and divisors.
