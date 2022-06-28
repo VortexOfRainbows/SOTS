@@ -17,10 +17,11 @@ namespace SOTS.Biomes
 		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CursedPyramid");
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
-        // Populate the Bestiary Filter
-        public override string BestiaryIcon => base.BestiaryIcon; //default icon
-		public override string BackgroundPath => base.BackgroundPath; //default background
+		// Populate the Bestiary Filter
+		//public override string BestiaryIcon => base.BestiaryIcon; //default icon
+		public override string BackgroundPath => "SOTS/Biomes/PyramidBestiary"; //default background
 		public override Color? BackgroundColor => base.BackgroundColor; //default background color
+		public override string MapBackground => BackgroundPath;
 
 		public override void SetStaticDefaults()
 		{

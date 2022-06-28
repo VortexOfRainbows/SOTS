@@ -36,6 +36,8 @@ using Terraria.GameContent.ItemDropRules;
 using System.Linq;
 using SOTS.NPCs;
 using SOTS.Items.Otherworld.FromChests;
+using Terraria.GameContent.Bestiary;
+using SOTS.Biomes;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -697,5 +699,22 @@ namespace SOTS.Common.GlobalNPCs
 					pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
 			}
 		}
-	}
+        public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
+			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
+			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an average slime. Its source of energy is unknown.");
+				if(npc.type == ModContent.NPCType<HoloBlade>())
+					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of a sword. Its source of energy is unknown.");
+				if (npc.type == ModContent.NPCType<HoloEye>())
+					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an eyeball. Its source of energy is unknown.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Planetarium,
+					flavorText
+				});
+			}
+		}
+    }
 }
