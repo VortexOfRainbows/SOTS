@@ -164,9 +164,11 @@ namespace SOTS.Void
 				return false;
 			}
 			OnUseEffects(player);
-			Item.mana = 0;
+			//Item.mana = 0;
 			if(Item.useAmmo == 0 && BeforeDrainMana(player) && !Item.CountsAsClass(DamageClass.Summon))
 				DrainMana(player);
+			if (Item.mana > 0)
+				player.statMana += Item.mana;
 			return true;
 		}
 		//<summary>

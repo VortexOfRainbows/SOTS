@@ -6,7 +6,6 @@ Major Milestones TO REACH (Will be removed when completed)
 2. Void bar does not stay in the same spot on relog + should have hover text
 	1. Also, alternate void bar roll direction for bar graphic setting
 	2. Try reflecting rectangles via helper method.
-3. Fix void weapons void cost disappearing from tooltip for some reason...?
 
 Other:
 1. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
@@ -19,6 +18,7 @@ Daily Log:
 	1. Helps for Journey and Master mode
 2. Spirit Phase 2 health scaling for master mode!
 3. Removed some unnecessary enemies from the bestiary
+4. Void tooltip appears properly
 
 6/24/22 & 6/25/22
 1. Added Void Damage classes!
