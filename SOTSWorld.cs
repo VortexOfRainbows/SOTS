@@ -185,7 +185,8 @@ namespace SOTS
 		public static bool downedSubspace = false;
 		public static bool downedAdvisor = false;
         public override void OnWorldLoad()
-        {
+		{
+			SOTSConfig.voidBarNeedsLoading = 1;
 			GlobalCounter = 0;
 			GlobalTimeFreeze = 0;
 			GlobalFrozen = false;
