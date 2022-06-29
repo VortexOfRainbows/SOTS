@@ -63,7 +63,7 @@ namespace SOTS.Void
 			text = new UIText("0|0"); 
 			text.Width.Set(width, 0f);
 			text.Height.Set(height, 0f);
-			text.Top.Set(height - 42 - text.MinHeight.Pixels / 2, 0f); 
+			text.Top.Set(height - 42 - text.MinHeight.Pixels / 2, 0f);
 
 			barBackground.Append(barAmount);
 			barBackground.Append(barAmount3);
@@ -92,36 +92,49 @@ namespace SOTS.Void
 			barAmount3.backgroundColor = VoidPlayer.soulLootingColor;
 			if (text != null)
 			{
-				if(SOTS.Config.voidBarTextOn)
+				if (player.dead)
+					voidManaText = "0 ";
+				string textStart = "Void: ";
+				string textThing = "";
+				if (voidMax - voidPlayer.lootingSouls <= 0)
 				{
-					if (player.dead)
-						voidManaText = "0 ";
-					string textThing = "Void: ";
-					if (voidMax - voidPlayer.lootingSouls <= 0)
-					{
-						textThing += "0 ";
-					}
-					else
-					{
-						voidManaMaxText = (voidMax - voidPlayer.lootingSouls).ToString();
-						textThing += voidManaText + " / " + voidManaMaxText;
-					}
-					if (!player.dead && (voidPlayer.lootingSouls > 0 || (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)))
-					{
-						textThing += " ("; 
-						if (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)
-							textThing += voidPlayer.VoidMinionConsumption.ToString();
-						if (voidPlayer.lootingSouls > 0 && voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)
-							textThing += " + ";
-						if (voidPlayer.lootingSouls > 0)
-							textThing += voidSoulsText;
-						textThing += ")";
-					}
-					text.SetText(textThing);
+					textThing += "0 ";
+				}
+				else
+				{
+					voidManaMaxText = (voidMax - voidPlayer.lootingSouls).ToString();
+					textThing += voidManaText + "/" + voidManaMaxText;
+				}
+				if (!player.dead && (voidPlayer.lootingSouls > 0 || (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)))
+				{
+					textThing += " (";
+					if (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)
+						textThing += voidPlayer.VoidMinionConsumption.ToString();
+					if (voidPlayer.lootingSouls > 0 && voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)
+						textThing += " + ";
+					if (voidPlayer.lootingSouls > 0)
+						textThing += voidSoulsText;
+					textThing += ")";
+				}
+				if (SOTS.Config.voidBarTextOn)
+                {
+					text.SetText(textStart + textThing);
 				}
 				else
 				{
 					text.SetText("");
+				}
+				if (SOTS.Config.voidBarHoverTextOn && this.ContainsPoint(Main.MouseScreen))
+                {
+					if(!Main.LocalPlayer.cursorItemIconEnabled)
+					{
+						Main.mouseText = true;
+
+						/*string[] twoString = textThing.Split(" / ");
+						textThing = twoString[0] + "/" + twoString[1]; //remove spaces for consistency with vanilla bars*/
+
+						Main.hoverItemName = textThing;
+					}
 				}
 			}
 			//Calculate quotient

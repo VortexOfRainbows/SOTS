@@ -40,11 +40,17 @@ namespace SOTS
 		[DefaultValue(false)]
 		public bool lockVoidBar { get; set; }
 
-		[Label("Void Bar Text")]
+		[Label("Void Bar Top Text")]
 		[Tooltip("Enable/disable the text above the Void Bar")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool voidBarTextOn { get; set; }
+
+		[Label("Void Bar Hover Text")]
+		[Tooltip("Enable/disable the text that appears when you hover over the Void Bar")]
+		[BackgroundColor(110, 80, 150, 192)]
+		[DefaultValue(true)]
+		public bool voidBarHoverTextOn { get; set; }
 
 		[Label("Simple Void Bar Text")]
 		[Tooltip("Removes Void Minion quantity indicators from the Void Bar text")]
