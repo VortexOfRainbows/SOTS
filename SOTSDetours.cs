@@ -24,7 +24,6 @@ namespace SOTS
 			On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
-
 			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update += Player_Update;
@@ -38,6 +37,9 @@ namespace SOTS
 
 			//The following is to allow Plating Doors to function as tiles for housing (in conjuction with Tmodloader stuff)
 			On.Terraria.WorldGen.CloseDoor += Worldgen_CloseDoor;
+
+			//1.4 worldgen fix
+			On.Terraria.WorldGen.FillWallHolesInSpot += Worldgen_FillWallHolesInSpot;
 
 			Main.OnPreDraw += Main_OnPreDraw;
 			if (!Main.dedServ)
@@ -68,18 +70,27 @@ namespace SOTS
 			On.Terraria.Main.UpdateTime -= Main_UpdateTime;
 
 			On.Terraria.WorldGen.CloseDoor -= Worldgen_CloseDoor;
+			On.Terraria.WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
 
 			Main.OnPreDraw -= Main_OnPreDraw;
 		}
 		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{
-			if(Framing.GetTileSafely(i, j).HasTile)
-            {
+			if (Framing.GetTileSafely(i, j).HasTile)
+			{
 				Tile tile = Framing.GetTileSafely(i, j);
-				if(tile.TileType == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.TileType == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
+				if (tile.TileType == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.TileType == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
 					return true;
-            }
+			}
 			return orig(i, j, forced);
+		}
+		private static bool Worldgen_FillWallHolesInSpot(On.Terraria.WorldGen.orig_FillWallHolesInSpot orig, int originX, int originY, int maxWallsThreshold)
+		{
+			if(Main.wallHouse[Main.tile[originX - 1, originY].WallType] || Main.wallHouse[Main.tile[originX + 1, originY].WallType] || Main.wallHouse[Main.tile[originX, originY - 1].WallType] || Main.wallHouse[Main.tile[originX, originY + 1].WallType])
+			{
+				return false;
+			}
+			return orig(originX, originY, maxWallsThreshold);
 		}
 		private static void Player_Update(On.Terraria.Player.orig_Update orig, Player self, int i)
         {

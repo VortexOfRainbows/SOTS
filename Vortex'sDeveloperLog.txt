@@ -18,6 +18,8 @@ Daily Log:
 1. Fix hydroponics
 2. Void bar hover text!
 3. Reorganized starter house generation and spawning
+4. Phase enemy bestiary
+5. Two new starter houses: Bloodmoon and Bandit
 
 6/28/22
 1. Experimenting and foundations for the bestiary.
