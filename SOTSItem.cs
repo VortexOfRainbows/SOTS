@@ -436,8 +436,9 @@ namespace SOTS
 			{
 				Recipe recipe = r.recipe;
 				Player player = Main.LocalPlayer;
-				if (recipe.requiredTile[0] == TileID.DemonAltar || recipe.requiredTile[0] == TileType<TransmutationAltarTile>())
+				if (recipe.requiredTile.Contains(TileID.DemonAltar)|| recipe.requiredTile.Contains(TileType<TransmutationAltarTile>()))
 				{
+					//Main.NewText("Passed 1");
 					Tile? tile2 = FindTATile(player);
 					if (tile2 != null)
 					{
@@ -451,7 +452,7 @@ namespace SOTS
 							return;
 						}
 						Item item2 = recipe.createItem;
-						TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
+						//TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
 						Projectile projectile = Main.projectile[Projectile.NewProjectile(player.GetSource_TileInteraction(ij.X, ij.Y), player.Center, Vector2.Zero, ProjectileType<DataTransferProj>(), 0, 0, Main.myPlayer, index, 0)];
 						DataTransferProj proj = (DataTransferProj)projectile.ModProjectile;
 						proj.itemsArray[0] = item2.type;
@@ -459,7 +460,7 @@ namespace SOTS
 						int amountOfUniqueItems = 0;
 						for (int l = 0; l < recipe.requiredItem.Count; l++)
 						{
-							if (recipe.requiredItem[l].type != 0)
+							if (recipe.requiredItem[l].type > 0)
 							{
 								amountOfUniqueItems++;
 							}
@@ -468,6 +469,7 @@ namespace SOTS
 						}
 						for (int i = 0; i < (amountOfUniqueItems < 20 ? amountOfUniqueItems : 19); i++)
 						{
+							//Main.NewText("Passed 2: " + i);
 							int itemType = recipe.requiredItem[i].type;
 							int itemStack = recipe.requiredItem[i].stack;
 							//int itemFrames = Terraria.GameContent.TextureAssets.Item[itemType].Value.Height / recipe.requiredItem[i].height;
