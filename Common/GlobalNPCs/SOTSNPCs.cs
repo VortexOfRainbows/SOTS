@@ -704,25 +704,48 @@ namespace SOTS.Common.GlobalNPCs
 			SpawnConditionBestiaryInfoElement sky = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky;
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
-			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>())
+			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an average slime. Its source of energy is unknown.");
+
 				if(npc.type == ModContent.NPCType<HoloBlade>())
 					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of a sword. Its source of energy is unknown.");
 				if (npc.type == ModContent.NPCType<HoloEye>())
 					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an eyeball. Its source of energy is unknown.");
+
+				if (npc.type == ModContent.NPCType<TwilightDevil>())
+					flavorText = new FlavorTextBestiaryInfoElement("A mindless drone that protects the Planetarium. It seems to be controlled centrally, as nothing hides behind its cloak.");
+				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+					flavorText = new FlavorTextBestiaryInfoElement("Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.");
+
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Planetarium,
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<PhaseSpeeder>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>())
+			if (npc.type == ModContent.NPCType<PhaseSpeeder>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>() || npc.type == ModContent.NPCType<TwilightScouter>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("It's fast. It's deadly. It's origin is unknown, but it certainly wants you dead. Uses the fabric of existence as its shield.");
+				if (npc.type == ModContent.NPCType<TwilightScouter>())
+					flavorText = new FlavorTextBestiaryInfoElement("A mindless drone that collects data for the Planetarium. Its internal circuitry is not particularly complex.");
 				if (npc.type == ModContent.NPCType<PhaseAssaulterHead>())
 					flavorText = new FlavorTextBestiaryInfoElement("Phase Assaulters make up the defensive core of Phase Ore nodes. They can be observed acting as shields for Phase Speeders, while also possessing a potent hyperlight laser.");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					sky,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || npc.type == ModContent.NPCType<WallMimic>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A trapped soul that resides in the Pyramid. It has not come to rest, as it still seems to be searching for something.");
+				if (npc.type == ModContent.NPCType<Snake>())
+					flavorText = new FlavorTextBestiaryInfoElement("A long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. This particular one has a venomous bite, and it calls the Pyramid home.");
+				if (npc.type == ModContent.NPCType<SnakePot>())
+					flavorText = new FlavorTextBestiaryInfoElement("A group of snakes that uses a pot for defense. When the pot breaks, the snakes inside are forced to scatter.");
+				if (npc.type == ModContent.NPCType<WallMimic>())
+					flavorText = new FlavorTextBestiaryInfoElement("The curse housed within the Pyramid is a potent corrupting mechanism. Under its influence, even the walls of the Pyramid turn into monsters.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Pyramid,
 					flavorText
 				});
 			}
