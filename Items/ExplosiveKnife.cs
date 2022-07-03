@@ -20,7 +20,7 @@ namespace SOTS.Items
 			Item.damage = 15;
 			Item.useTime = 17;
 			Item.useAnimation = 17;
-			Item.DamageType = DamageClass.Throwing;
+			Item.DamageType = DamageClass.Ranged;
 			Item.rare = ItemRarityID.Green;
 			Item.autoReuse = true;            
 			Item.shoot = ModContent.ProjectileType<Projectiles.ExplosiveKnife>(); 

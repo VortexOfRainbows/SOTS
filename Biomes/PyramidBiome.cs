@@ -29,7 +29,7 @@ namespace SOTS.Biomes
 		}
 		public override bool IsBiomeActive(Player player)
 		{
-			bool pyramidBiome;
+			bool pyramidBiome = false;
 			int tileBehindX = (int)(player.Center.X / 16);
 			int tileBehindY = (int)(player.Center.Y / 16);
 			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
@@ -39,7 +39,8 @@ namespace SOTS.Biomes
 			}
 			else
 			{
-				pyramidBiome = SOTSWorld.pyramidBiome > 0; //if there is a sarcophagus, acedia portal, or zepline block on screen
+				//Disabled due to being unnecessary
+				///pyramidBiome = SOTSWorld.pyramidBiome > 0; //if there is a sarcophagus, acedia portal, or zepline block on screen
 			}
 			return pyramidBiome;
 		}

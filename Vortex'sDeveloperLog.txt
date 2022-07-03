@@ -10,9 +10,12 @@ Other:
 3. Master Mode trophies for all the bosses.
 4. Alternate void bar roll direction for bar graphic setting
 	1. Try reflecting rectangles via helper method.
-5. Marble doesn't' blend with evostone properly.
+5. Final 2 starter houses
 
 Daily Log:
+
+7/2/22
+1. Fixes and Marble/Evostone merge
 
 6/30/22 & 7/1/22
 1. Some more bestiary entries
