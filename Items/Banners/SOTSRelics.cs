@@ -142,7 +142,7 @@ namespace SOTS.Items.Banners
 	public abstract class ModRelic : ModItem
 	{
 		public override void SetStaticDefaults() => this.SetResearchCost(1);
-		public override void SetDefaults()
+		public sealed override void SetDefaults()
 		{
 			Item.width = 30;
 			Item.height = 40;
@@ -150,37 +150,76 @@ namespace SOTS.Items.Banners
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 			Item.value = Item.buyPrice(gold: 5);
+			SafeSetDefaults();
 		}
+		public virtual void SafeSetDefaults()
+        {
+
+        }
 	}
 
 	public class PutridPinkyRelic : ModRelic
 	{
-		public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 0);
+		public override void SafeSetDefaults()
+		{
+			Item.width = 30;
+			Item.height = 46;
+			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 0);
+		}
 	}
 
 	public class PharaohsCurseRelic : ModRelic
 	{
-		public override void SetStaticDefaults() => DisplayName.SetDefault("Pharaoh's Curse Relic");
-		public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 1);
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Pharaoh's Curse Relic");
+			this.SetResearchCost(1);
+		}
+		public override void SafeSetDefaults()
+		{
+			Item.width = 38;
+			Item.height = 40;
+			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 1);
+		}
 	}
 
 	public class AdvisorRelic : ModRelic
 	{
-		public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 2);
+		public override void SafeSetDefaults()
+		{
+			Item.width = 30;
+			Item.height = 42;
+			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 2);
+		}
 	}
 
 	public class PolarisRelic : ModRelic
 	{
-		public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 3);
+		public override void SafeSetDefaults()
+		{
+			Item.width = 38;
+			Item.height = 52;
+			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 3);
+		}
 	}
 
 	public class LuxRelic : ModRelic
 	{
-		public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 4);
+		public override void SafeSetDefaults()
+		{
+			Item.width = 38;
+			Item.height = 38;
+			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 4);
+		}
 	}
 
 	public class SubspaceSerpentRelic : ModRelic
 	{
-		public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 5);
+		public override void SafeSetDefaults()
+		{
+			Item.width = 30;
+			Item.height = 52;
+			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 5);
+		}
 	}
 }

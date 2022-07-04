@@ -18,6 +18,7 @@ namespace SOTS.NPCs.Boss
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            //NPCID.Sets.DebuffImmunitySets
         }
         public override void SetDefaults()
         {
