@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
+using SOTS.Items.Banners;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.NPCs.Constructs;
@@ -1166,6 +1167,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<HardlightAlloy>(), 3, 10, 16))
 				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<StrangeKey>(), 1, 1, 1));
 			npcLoot.Add(notExpertRule);
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<AdvisorRelic>()));
 		}
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 

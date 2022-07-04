@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
 using SOTS.NPCs.Constructs;
@@ -342,6 +343,7 @@ namespace SOTS.NPCs.Boss.Lux
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PhaseOre>(), 1, 90, 150));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));
 			npcLoot.Add(notExpertRule);
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<LuxRelic>()));
 		}
         public override void OnKill()
 		{

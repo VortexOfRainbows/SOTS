@@ -35,6 +35,10 @@ namespace SOTS.Items.Slime
 			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<VialofAcid>(), Main.rand.Next(20, 30));
 			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.PinkGel,Main.rand.Next(40, 60));
 			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Wormwood>(), Main.rand.Next(20, 30));
+			if (Main.rand.NextBool(7))
+			{
+				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<PutridPinkyMask>());
+			}
 			int rand = Main.rand.Next(10);
 			if(rand == 0)
 				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<GelWings>());

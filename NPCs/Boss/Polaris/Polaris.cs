@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
 using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Celestial;
@@ -177,6 +178,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AbsoluteBar>(), 1, 26, 34));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.FrostCore, 1, 1, 2));
 			npcLoot.Add(notExpertRule);
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PolarisRelic>()));
 		}
         public override void BossLoot(ref string name, ref int potionType)
 		{ 

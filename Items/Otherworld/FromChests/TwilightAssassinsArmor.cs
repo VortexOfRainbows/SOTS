@@ -134,6 +134,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Twilight Assassin Chestplate");
 			Tooltip.SetDefault("Increased your max number of minions by 1\nIncreased melee and void critical strike chance by 10%\nIncreased life regeneration by 2 and void regeneration speed by 10%");
+			this.SetResearchCost(1);
 			SetupDrawing();
 		}
 		private void SetupDrawing()
@@ -208,6 +209,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			DisplayName.SetDefault("Twilight Assassin Leggings");
 			Tooltip.SetDefault("Increased movement speed by 15%\nBlink Pack decreased cooldown by 20%\nSlightly increased jump speed");
+			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{

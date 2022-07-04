@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Items.Banners;
 using SOTS.Items.Celestial;
 using SOTS.Projectiles.Celestial;
 using Terraria;
@@ -108,6 +109,7 @@ namespace SOTS.NPCs.Boss
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SanguiteBar>(), 1, 16, 24));
             npcLoot.Add(notExpertRule);
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SubspaceSerpentRelic>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
