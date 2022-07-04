@@ -188,7 +188,7 @@ namespace SOTS.NPCs.Phase
 					spinny = 1080;
 					NPC.ai[1] = -110;
 					rotatePos = rotatePos.SafeNormalize(Vector2.Zero);
-					NPC.velocity = rotatePos * 30f;
+					NPC.velocity = rotatePos * -30f;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 						NPC.netUpdate = true;
 					SOTSUtils.PlaySound(SoundID.Item92, (int)NPC.Center.X, (int)NPC.Center.Y);

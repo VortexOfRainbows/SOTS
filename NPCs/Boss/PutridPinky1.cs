@@ -15,6 +15,11 @@ namespace SOTS.NPCs.Boss
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Pinky");
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Hide = true
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{

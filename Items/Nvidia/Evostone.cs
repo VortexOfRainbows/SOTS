@@ -13,6 +13,8 @@ namespace SOTS.Items.Nvidia
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
+			Main.tileMerge[Type][TileID.Marble] = true;
+			Main.tileMerge[TileID.Marble][Type] = true;
 			DustType = 37; //obsidian
 			ItemDrop = ModContent.ItemType<Evostone>();
 			AddMapEntry(new Color(31, 39, 57));

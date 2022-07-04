@@ -13,6 +13,11 @@ namespace SOTS.NPCs.Boss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Subspace Serpent");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override void SetDefaults()
         {
@@ -180,7 +185,6 @@ namespace SOTS.NPCs.Boss
         {
             NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
             DPSregenRate += 0.15f * numPlayers;
-            base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool CheckActive()
         {

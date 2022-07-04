@@ -31,16 +31,17 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
-		public sealed override void SetDefaults()
+		public override void SetDefaults()
 		{
+			SetSpiritMinionDefaults();
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.tileCollide = false;
-			Projectile.friendly = false;
+			Projectile.friendly = true;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.ignoreWater = true;
 			Projectile.localNPCHitCooldown = 10;
+			Projectile.netImportant = true;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -296,7 +297,7 @@ namespace SOTS.Projectiles.Minions
 					postChargeCounter++;
 				if(postChargeCounter % 30 == 29)
                 {
-					SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.1f);
+					SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 				}
 
 				direction *= (float)Math.Pow(distance, 1.35) * 0.005f + speed;

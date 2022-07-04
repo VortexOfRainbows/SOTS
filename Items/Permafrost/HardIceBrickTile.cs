@@ -39,7 +39,7 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.wallHouse[Type] = false;
+			Main.wallHouse[Type] = true;
 			AddMapEntry(new Color(80, 35, 180));
 			DustType = ModContent.DustType<ModIceDust>();
 			ItemDrop = ModContent.ItemType<HardIceBrickWall>();

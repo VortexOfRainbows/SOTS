@@ -26,7 +26,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			NPC.aiStyle =0;
+			NPC.aiStyle = 0;
 			NPC.lifeMax = 3000;  
 			NPC.damage = 60; 
 			NPC.defense = 30;  
@@ -47,8 +47,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 100;
-			NPC.lifeMax = 5250;
+			NPC.damage = (int)(NPC.damage * 5 / 6);
+			NPC.lifeMax = (int)(NPC.lifeMax * 7 / 8);
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

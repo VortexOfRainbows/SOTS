@@ -36,6 +36,8 @@ using Terraria.GameContent.ItemDropRules;
 using System.Linq;
 using SOTS.NPCs;
 using SOTS.Items.Otherworld.FromChests;
+using Terraria.GameContent.Bestiary;
+using SOTS.Biomes;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -297,10 +299,10 @@ namespace SOTS.Common.GlobalNPCs
 				notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>(), 1, 1, 1));
 				npcLoot.Add(notExpert);
 			}
-			if (npc.type == NPCID.PossessedArmor)
+			/*if (npc.type == NPCID.PossessedArmor)
 			{
 				npcLoot.Add(ItemDropRule.OneFromOptions(30, new int[] { ModContent.ItemType<PossessedHelmet>(), ModContent.ItemType<PossessedChainmail>(), ModContent.ItemType<PossessedGreaves>() }));
-			}
+			}*/
 			if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer) //40% in normal, 50% in expert
 			{
 				notExpert.OnSuccess(new CommonDrop(ModContent.ItemType<AncientSteelBar>(), chanceDenominator: 5, chanceNumerator: 2))
@@ -397,19 +399,26 @@ namespace SOTS.Common.GlobalNPCs
 			if (DebuffNPC.Zombies.Contains(npc.type))
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ZombieHand>(), 100, 80));
 			LeadingConditionRule preEoC = new LeadingConditionRule(new ItemDropConditions.PreBoss1DropCondition());
+			LeadingConditionRule postEoC = new LeadingConditionRule(new ItemDropConditions.PostBoss1DropCondition());
 			if (npc.type == NPCID.QueenBee)
             {
-				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 20));
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 20));
+				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>())
 			{
-				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 20));
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 20));
+				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			if (npc.type == NPCID.SkeletronHead)
 			{
-				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 1)).OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 20));
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 20));
+				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			LeadingConditionRule postAdvisor = new LeadingConditionRule(new ItemDropConditions.DownedAdvisorDropCondition());
@@ -418,13 +427,15 @@ namespace SOTS.Common.GlobalNPCs
 				postAdvisor.OnSuccess(ItemDropRule.Common(ModContent.ItemType<TwilightShard>(), 3));
 				npcLoot.Add(postAdvisor);
 			}
+			LeadingConditionRule prePharaoh = new LeadingConditionRule(new ItemDropConditions.PreCurseDropCondition());
 			LeadingConditionRule postPharaoh = new LeadingConditionRule(new ItemDropConditions.DownedCurseDropCondition());
 			if (npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Maligmor>() || npc.type == ModContent.NPCType<Ghast>())
 			{
 				IItemDropRule alternative = ItemDropRule.Common(ModContent.ItemType<SoulResidue>(), 1, 1, 2);
-				postPharaoh.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 3, 1, 2).OnFailedRoll(alternative));
-				postPharaoh.OnFailedConditions(alternative);
+				postPharaoh.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 3, 1, 2)).OnFailedRoll(alternative);
+				prePharaoh.OnSuccess(alternative);
 				npcLoot.Add(postPharaoh);
+				npcLoot.Add(prePharaoh);
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
@@ -688,5 +699,56 @@ namespace SOTS.Common.GlobalNPCs
 					pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
 			}
 		}
-	}
+        public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			SpawnConditionBestiaryInfoElement sky = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky;
+			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
+			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
+			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an average slime. Its source of energy is unknown.");
+
+				if(npc.type == ModContent.NPCType<HoloBlade>())
+					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of a sword. Its source of energy is unknown.");
+				if (npc.type == ModContent.NPCType<HoloEye>())
+					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an eyeball. Its source of energy is unknown.");
+
+				if (npc.type == ModContent.NPCType<TwilightDevil>())
+					flavorText = new FlavorTextBestiaryInfoElement("A mindless drone that protects the Planetarium. It seems to be controlled centrally, as nothing hides behind its cloak.");
+				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+					flavorText = new FlavorTextBestiaryInfoElement("Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.");
+
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Planetarium,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<PhaseSpeeder>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>() || npc.type == ModContent.NPCType<TwilightScouter>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("It's fast. It's deadly. It's origin is unknown, but it certainly wants you dead. Uses the fabric of existence as its shield.");
+				if (npc.type == ModContent.NPCType<TwilightScouter>())
+					flavorText = new FlavorTextBestiaryInfoElement("A mindless drone that collects data for the Planetarium. Its internal circuitry is not particularly complex.");
+				if (npc.type == ModContent.NPCType<PhaseAssaulterHead>())
+					flavorText = new FlavorTextBestiaryInfoElement("Phase Assaulters make up the defensive core of Phase Ore nodes. They can be observed acting as shields for Phase Speeders, while also possessing a potent hyperlight laser.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					sky,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || npc.type == ModContent.NPCType<WallMimic>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A trapped soul that resides in the Pyramid. It has not come to rest, as it still seems to be searching for something.");
+				if (npc.type == ModContent.NPCType<Snake>())
+					flavorText = new FlavorTextBestiaryInfoElement("A long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. This particular one has a venomous bite, and it calls the Pyramid home.");
+				if (npc.type == ModContent.NPCType<SnakePot>())
+					flavorText = new FlavorTextBestiaryInfoElement("A group of snakes that uses a pot for defense. When the pot breaks, the snakes inside are forced to scatter.");
+				if (npc.type == ModContent.NPCType<WallMimic>())
+					flavorText = new FlavorTextBestiaryInfoElement("The curse housed within the Pyramid is a potent corrupting mechanism. Under its influence, even the walls of the Pyramid turn into monsters.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Pyramid,
+					flavorText
+				});
+			}
+		}
+    }
 }

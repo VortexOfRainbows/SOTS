@@ -24,11 +24,10 @@ namespace SOTS
 			On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
-
 			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update += Player_Update;
-			On.Terraria.NPC.UpdateNPC += NPC_UpdateNPC;
+			On.Terraria.NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update += Gore_Update;
             On.Terraria.Projectile.Update += Projectile_Update;
 			On.Terraria.Item.UpdateItem += Item_UpdateItem;
@@ -38,6 +37,9 @@ namespace SOTS
 
 			//The following is to allow Plating Doors to function as tiles for housing (in conjuction with Tmodloader stuff)
 			On.Terraria.WorldGen.CloseDoor += Worldgen_CloseDoor;
+
+			//1.4 worldgen fix
+			On.Terraria.WorldGen.FillWallHolesInSpot += Worldgen_FillWallHolesInSpot;
 
 			Main.OnPreDraw += Main_OnPreDraw;
 			if (!Main.dedServ)
@@ -60,7 +62,7 @@ namespace SOTS
 
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update -= Player_Update;
-			On.Terraria.NPC.UpdateNPC -= NPC_UpdateNPC;
+			On.Terraria.NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update -= Gore_Update;
 			On.Terraria.Projectile.Update -= Projectile_Update;
 			On.Terraria.Item.UpdateItem -= Item_UpdateItem;
@@ -68,18 +70,27 @@ namespace SOTS
 			On.Terraria.Main.UpdateTime -= Main_UpdateTime;
 
 			On.Terraria.WorldGen.CloseDoor -= Worldgen_CloseDoor;
+			On.Terraria.WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
 
 			Main.OnPreDraw -= Main_OnPreDraw;
 		}
 		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{
-			if(Framing.GetTileSafely(i, j).HasTile)
-            {
+			if (Framing.GetTileSafely(i, j).HasTile)
+			{
 				Tile tile = Framing.GetTileSafely(i, j);
-				if(tile.TileType == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.TileType == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
+				if (tile.TileType == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.TileType == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
 					return true;
-            }
+			}
 			return orig(i, j, forced);
+		}
+		private static bool Worldgen_FillWallHolesInSpot(On.Terraria.WorldGen.orig_FillWallHolesInSpot orig, int originX, int originY, int maxWallsThreshold)
+		{
+			if(Main.wallHouse[Main.tile[originX - 1, originY].WallType] || Main.wallHouse[Main.tile[originX + 1, originY].WallType] || Main.wallHouse[Main.tile[originX, originY - 1].WallType] || Main.wallHouse[Main.tile[originX, originY + 1].WallType])
+			{
+				return false;
+			}
+			return orig(originX, originY, maxWallsThreshold);
 		}
 		private static void Player_Update(On.Terraria.Player.orig_Update orig, Player self, int i)
         {
@@ -113,7 +124,7 @@ namespace SOTS
 			}
 			orig(self);
 		}*/
-		private static void NPC_UpdateNPC(On.Terraria.NPC.orig_UpdateNPC orig, NPC self, int i)
+		private static void NPC_UpdateNPC_Inner(On.Terraria.NPC.orig_UpdateNPC_Inner orig, NPC self, int i)
 		{
 			if (self.active)
 			{
@@ -293,10 +304,10 @@ namespace SOTS
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					/*if (proj.active && proj.ModProjectile is IOrbitingProj modProj && modProj.inFront)
+					if (proj.active && proj.ModProjectile is IOrbitingProj modProj && modProj.inFront)
 					{
 						modProj.Draw(Main.spriteBatch, Color.White);
-					}*/
+					}
 					if (proj.active && proj.ModProjectile is IncineratorGloveProjectile modProj2)
 					{
 						modProj2.Draw(Main.spriteBatch, Color.White); 

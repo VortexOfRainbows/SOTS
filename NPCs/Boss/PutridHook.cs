@@ -61,7 +61,7 @@ namespace SOTS.NPCs.Boss
 		public override void SetDefaults()
 		{
             NPC.aiStyle =-1; 
-            NPC.lifeMax = 225;   
+            NPC.lifeMax = 400;   
             NPC.damage = 40; 
             NPC.defense = 8;  
             NPC.knockBackResist = 0f;
@@ -170,8 +170,8 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			NPC.lifeMax = (int)(600 * bossLifeScale * 0.75f);
-			NPC.damage = 60;  
+			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);
+			NPC.damage = NPC.damage * 3 / 4;  
         }
         public override void OnKill()
         {

@@ -8,6 +8,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace SOTS.Void
@@ -22,12 +23,22 @@ namespace SOTS.Void
 		public sealed override void SetDefaults() {
 			Item.shoot = 10; 
 			SafeSetDefaults();
+			if (Item.DamageType == DamageClass.Melee)
+				Item.DamageType = ModContent.GetInstance<VoidMelee>();
+			else if(Item.DamageType == DamageClass.Ranged)
+				Item.DamageType = ModContent.GetInstance<VoidRanged>();
+			else if(Item.DamageType == DamageClass.Magic)
+				Item.DamageType = ModContent.GetInstance<VoidMagic>();
+			else if(Item.DamageType == DamageClass.Summon)
+				Item.DamageType = ModContent.GetInstance<VoidSummon>();
+			else
+				Item.DamageType = ModContent.GetInstance<VoidGeneric>();
 			Item.mana = 1;
 		}
 		/*public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			float realDamageBoost = voidPlayer.voidDamage;
+			float realDamageBoost = player.GetDamage<VoidGeneric>();
 			int baseVoidCost = VoidCost(player);
 			Item.mana = 1;
 			add += realDamageBoost - 1;
@@ -42,7 +53,7 @@ namespace SOTS.Void
 			int baseCost = GetVoid(player);
 			int finalCost;
 			float voidCostMult = 1f;
-			if (!Item.CountsAsClass(DamageClass.Summon))
+			if (!Item.CountsAsClass<VoidSummon>())
 			{
 				if (Item.prefix == ModContent.PrefixType<Famished>() || Item.prefix == ModContent.PrefixType<Precarious>() || Item.prefix == ModContent.PrefixType<Potent>() || Item.prefix == ModContent.PrefixType<Omnipotent>())
 				{
@@ -63,7 +74,7 @@ namespace SOTS.Void
 		public virtual int GetVoid(Player player)
 		{
 			int cost = 1;
-			if(Item.CountsAsClass(DamageClass.Summon))
+			if(Item.CountsAsClass<VoidSummon>())
             {
 				cost = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(Item.shoot));
 				if (Item.type == ModContent.ItemType<Lemegeton>())
@@ -79,7 +90,7 @@ namespace SOTS.Void
 			{
 				string[] splitText = tt.Text.Split(' ');
 				string damageValue = splitText.First();
-				string damageWord = splitText.Last();
+				string damageWord = "damage";
 				
 				tt.Text = damageValue + " void " + damageWord;
 				
@@ -95,7 +106,6 @@ namespace SOTS.Void
 				if (Item.CountsAsClass(DamageClass.Summon))
 					tt.Text = damageValue + " void + summon " + damageWord;
 			}
-				
 			string voidCostText = VoidCost(Main.LocalPlayer).ToString();
 			TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.Mod == "Terraria");
 			if (tt2 != null) 
@@ -154,9 +164,11 @@ namespace SOTS.Void
 				return false;
 			}
 			OnUseEffects(player);
-			Item.mana = 0;
+			//Item.mana = 0;
 			if(Item.useAmmo == 0 && BeforeDrainMana(player) && !Item.CountsAsClass(DamageClass.Summon))
 				DrainMana(player);
+			if (Item.mana > 0)
+				player.statMana += Item.mana;
 			return true;
 		}
 		//<summary>

@@ -17,29 +17,23 @@ namespace SOTS.Items.Furniture
 
         protected override void SetStaticDefaults(TileObjectData t)
         {
-            // Properties
-            Main.tileFrameImportant[Type] = true;
-            Main.tileLavaDeath[Type] = true;
-            TileID.Sets.HasOutlines[Type] = true;
-            TileID.Sets.CanBeSleptIn[Type] = true; // Facilitates calling ModifySleepingTargetInfo
-            TileID.Sets.InteractibleByNPCs[Type] = true; // Town NPCs will palm their hand at this tile
-            TileID.Sets.IsValidSpawnPoint[Type] = true;
-            TileID.Sets.DisableSmartCursor[Type] = true;
+			// Properties
+			Main.tileFrameImportant[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.CanBeSleptIn[Type] = true; // Facilitates calling ModifySleepingTargetInfo
+			TileID.Sets.InteractibleByNPCs[Type] = true; // Town NPCs will palm their hand at this tile
+			TileID.Sets.IsValidSpawnPoint[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair); // Beds count as chairs for the purpose of suitable room creation
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair); // Beds count as chairs for the purpose of suitable room creation
 
-            AdjTiles = new int[] { TileID.Beds };
+			AdjTiles = new int[] { TileID.Beds };
 
-            // Placement
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2); // this style already takes care of direction for us
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
-            TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
-            TileObjectData.addTile(Type);
-
-            // Etc
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Example Bed");
-            AddMapEntry(new Color(200, 200, 200), name);
+			// Placement
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2); // this style already takes care of direction for us
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+			TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
         }
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{

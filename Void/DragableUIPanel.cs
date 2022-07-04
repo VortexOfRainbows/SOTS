@@ -10,6 +10,7 @@ namespace SOTS.Void
     {
 		public Vector2 offset;
 		public bool dragging;
+		public int aliveFor = 0;
 		public int type = -1;
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -54,8 +55,8 @@ namespace SOTS.Void
 			if (ContainsPoint(Main.MouseScreen)) {
 				Main.LocalPlayer.mouseInterface = true;
 			}
-
-			if (dragging) {
+			if (dragging)
+			{
 				float xPos = Main.mouseX - offset.X;
 				float yPos = Main.mouseY - offset.Y;
 				if (type == 0)
@@ -67,24 +68,39 @@ namespace SOTS.Void
 				Top.Set(yPos, 0f);
 				if(type == 0)
 				{
-					VoidPlayer.voidBarOffset = new Vector2((int)Left.Pixels, (int)Top.Pixels);
-					SOTS.Config.voidBarPointX = (int)Left.Pixels;
-					SOTS.Config.voidBarPointY = (int)Top.Pixels;
+					//VoidPlayer.voidBarOffset = new Vector2((int)Left.Pixels, (int)Top.Pixels);
+					VoidPlayer.voidBarOffset.X = (int)Left.Pixels;
+					VoidPlayer.voidBarOffset.Y = (int)Top.Pixels;
 				}
 				Recalculate();
 			}
 			else if(type == 0)
 			{
 				float scale = Main.UIScale;
-				SOTS.Config.voidBarPointX = (int)MathHelper.Clamp(SOTS.Config.voidBarPointX, 0, Main.screenWidth - 200);
-				SOTS.Config.voidBarPointY = (int)MathHelper.Clamp(SOTS.Config.voidBarPointY, 0, Main.screenHeight - 30);
-				VoidPlayer.voidBarOffset = new Point(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY).ToVector2();
+				Left.Set(SOTS.Config.voidBarPointX, 0f);
+				Top.Set(SOTS.Config.voidBarPointY, 0f);
+				//VoidPlayer.voidBarOffset = new Point(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY).ToVector2();
 			}
-
-			// Here we check if the DragableUIPanel is outside the Parent UIElement rectangle. 
-			// (In our example, the parent would be ExampleUI, a UIState. This means that we are checking that the DragableUIPanel is outside the whole screen)
-			// By doing this and some simple math, we can snap the panel back on screen if the user resizes his window or otherwise changes resolution.
-			var parentSpace = Parent.GetDimensions().ToRectangle();
+			if(type == 0)
+			{
+				if (SOTSConfig.voidBarNeedsLoading >= 2)
+				{
+					//Main.NewText("Alive For: " + SOTSConfig.voidBarNeedsLoading);
+					//Main.NewText("voidBarPointX: " + SOTS.Config.voidBarPointX);
+					//Main.NewText("voidBarOffsetX: " + VoidPlayer.voidBarOffset.X);
+					SOTSConfig.voidBarNeedsLoading--;
+				}
+				else
+				{
+					SOTS.Config.voidBarPointX = (int)MathHelper.Clamp(VoidPlayer.voidBarOffset.X, 0, Main.screenWidth - 200);
+					SOTS.Config.voidBarPointY = (int)MathHelper.Clamp(VoidPlayer.voidBarOffset.Y, 0, Main.screenHeight - 30);
+				}
+				VoidPlayer.voidBarOffset = new Vector2(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY);
+			}
+		   // Here we check if the DragableUIPanel is outside the Parent UIElement rectangle. 
+		   // (In our example, the parent would be ExampleUI, a UIState. This means that we are checking that the DragableUIPanel is outside the whole screen)
+		   // By doing this and some simple math, we can snap the panel back on screen if the user resizes his window or otherwise changes resolution.
+		   var parentSpace = Parent.GetDimensions().ToRectangle();
 			if (!GetDimensions().ToRectangle().Intersects(parentSpace)) {
 				Left.Pixels = Utils.Clamp(Left.Pixels, 0, parentSpace.Right - Width.Pixels);
 				Top.Pixels = Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);

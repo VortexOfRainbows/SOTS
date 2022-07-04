@@ -28,7 +28,8 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.penetrate = -1;
             Projectile.timeLeft = 120;
 			Projectile.minion = true;
-			Projectile.friendly = false;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.friendly = false;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;

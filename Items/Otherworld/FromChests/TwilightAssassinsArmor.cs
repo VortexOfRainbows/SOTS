@@ -18,6 +18,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Assassin Circlet");
+			Tooltip.SetDefault("Gamer");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -26,7 +27,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			if (Main.netMode == NetmodeID.Server)
 				return;
 			int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
-			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = false;
+			ArmorIDs.Head.Sets.DrawFullHair[equipSlotHead] = true;
 		}
 		public override void SetDefaults()
 		{
@@ -143,6 +144,8 @@ namespace SOTS.Items.Otherworld.FromChests
 				return;
 			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
 			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = false;
+			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = true;
+			ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
 		}
 		public override void SetDefaults()
 		{
@@ -165,7 +168,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			player.lifeRegen += 2;
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			voidPlayer.voidRegenSpeed += 0.1f;
-			voidPlayer.voidCrit += 10;
+			player.GetCritChance<VoidGeneric>() += 10;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

@@ -25,8 +25,8 @@ namespace SOTS.Projectiles.Minions
 			Projectile.height = 22;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
-			//Projectile.minion = true;
-			//Projectile.minionSlots = 0f;
+			Projectile.minion = true;
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.ignoreWater = true;
@@ -344,11 +344,6 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 		}
-        public override bool PreAI()
-        {
-			Projectile.SetDamageBasedOnOriginalDamage(Main.player[Projectile.owner]);
-            return true;
-        }
     }
 }
 		

@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.width = 40;
             Main.projFrames[Projectile.type] = 4;
 			Projectile.penetrate = -1;
-			Projectile.minion = true;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 16;
 			Projectile.tileCollide = false;

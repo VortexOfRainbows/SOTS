@@ -17,10 +17,11 @@ namespace SOTS.Projectiles.Minions
 			DisplayName.SetDefault("Permafrost Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;  
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;   
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 		public sealed override void SetDefaults()
 		{
+			SetSpiritMinionDefaults();
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.tileCollide = false;

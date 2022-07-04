@@ -382,7 +382,7 @@ namespace SOTS.Items.Pyramid
 			player.immuneTime = 30;
 			voidPlayer.voidMeter -= value / damageMult - 5;
 			if (Main.myPlayer == player.whoAmI)
-				Projectile.NewProjectile(player.GetSource_OnHit(npc), npc.Center, Vector2.Zero, ModContent.ProjectileType<DarkEyeDamage>(), (int)(1.25f * value * voidPlayer.voidDamage), 0, Main.myPlayer);
+				Projectile.NewProjectile(player.GetSource_OnHit(npc), npc.Center, Vector2.Zero, ModContent.ProjectileType<DarkEyeDamage>(), (int)(1.25f * SOTSPlayer.ApplyDamageClassModWithGeneric(player, GetInstance<VoidGeneric>(), (int)value)), 0, Main.myPlayer);
 		}
 		public void teleportEffect(Player player)
 		{

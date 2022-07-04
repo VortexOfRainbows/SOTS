@@ -42,9 +42,8 @@ namespace SOTS.NPCs
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			NPC.lifeMax = 360;
-			NPC.damage = 70;
-            base.ScaleExpertStats(numPlayers, bossLifeScale);
+			NPC.lifeMax = NPC.lifeMax * 9 / 10;
+			NPC.damage = NPC.damage * 7 / 8;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -220,7 +219,7 @@ namespace SOTS.NPCs
 			}
             else
 			{
-				for(int i = 0; i < 8; i++)
+				for(int i = 1; i <= 8; i++)
 				{
 					Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45)) - new Vector2(9, 9);
 					Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular, circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);

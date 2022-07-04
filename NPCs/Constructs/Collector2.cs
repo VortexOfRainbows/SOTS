@@ -26,6 +26,11 @@ namespace SOTS.NPCs.Constructs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Collector"); //mr steal yo kill is back!
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Hide = true
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{

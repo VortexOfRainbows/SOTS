@@ -26,15 +26,6 @@ namespace SOTS
         {
 			return SOTSNPCs.GetBaseDamage(npc);
 		}
-		public static void SetDamageBasedOnOriginalDamage(this Projectile projectile, Player player)
-		{
-			projectile.damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, projectile.DamageType, projectile.originalDamage);
-		}
-		public static void SetDamageBasedOnOriginalDamage(this Projectile projectile, int ownerID)
-		{
-			if(ownerID >= 0 && ownerID <= 255)
-				projectile.damage = SOTSPlayer.ApplyDamageClassModWithGeneric(Main.player[ownerID], projectile.DamageType, projectile.originalDamage);
-		}
 		public static string GetPath<T>()
 		{
 			return GetPath(typeof(T));

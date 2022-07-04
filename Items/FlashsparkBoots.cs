@@ -14,14 +14,16 @@ namespace SOTS.Items
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Flashspark Boots");
-			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava\n'Recipro Burst!'");
+			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava" +
+                "\nRunning causes you to blast forward, granting higher speed and acceleration\nThis blast cannot be controlled\n'Recipro Burst!'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{
             Item.width = 42;     
-            Item.height = 36;   
+            Item.height = 38;   
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Yellow;
 			Item.accessory = true;
@@ -29,7 +31,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.FrostsparkBoots, 1).AddIngredient(ItemID.LavaWaders, 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12).AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1).AddIngredient(ItemID.TerrasparkBoots, 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12).AddTile(TileID.TinkerersWorkbench).Register();
 		}
         bool activateParticle = false;
         int hasActivate = -1;

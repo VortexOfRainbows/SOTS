@@ -18,9 +18,8 @@ namespace SOTS.Projectiles.Minions
 			Projectile.CloneDefaults(ProjectileID.RocketSnowmanI);
             AIType = ProjectileID.RocketSnowmanI;
 			Projectile.alpha = 0;
-			Projectile.penetrate = 1; 
-			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-			Projectile.minion = true;
+			Projectile.penetrate = 1;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 24;
 			Projectile.height = 44;
 			Projectile.tileCollide = true;

@@ -53,12 +53,12 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 80;
-			NPC.lifeMax = 1200;
+			NPC.damage = NPC.damage * 2 / 3;
+			NPC.lifeMax = NPC.lifeMax * 6 / 7;
 		}
 		private int InitiateHealth = 2000;
 		private float ExpertHealthMult = 1.5f;
-		
+		private float MasterHealthMult = 2f;
 		int phase = 1;
 		int counter = 0;
 		public void SpellLaunch(Vector2 velocity)
@@ -182,8 +182,8 @@ namespace SOTS.NPCs.Constructs
 				if (phase == 1)
 				{
 					phase = 2;
-					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = NPC.lifeMax;
 				}
 			}
 		}

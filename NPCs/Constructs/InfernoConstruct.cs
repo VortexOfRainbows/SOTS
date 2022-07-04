@@ -44,7 +44,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			NPC.aiStyle =0;
+			NPC.aiStyle = 0;
 			NPC.lifeMax = 5000;  
 			NPC.damage = 70; 
 			NPC.defense = 26;  
@@ -65,8 +65,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 120;
-			NPC.lifeMax = 7500;
+			NPC.damage = NPC.damage * 6 / 7;
+			NPC.lifeMax = NPC.lifeMax * 3 / 4;
 		}
 		List<InfernoProbe> probes = new List<InfernoProbe>();
 		List<FireParticle> particleList = new List<FireParticle>();

@@ -43,8 +43,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 70;
-			NPC.lifeMax = 750;
+			NPC.damage = (int)(NPC.damage * 7 / 10);
+			NPC.lifeMax = (int)(NPC.lifeMax * 5 / 6);
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -80,6 +80,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		private int InitiateHealth = 900;
 		private float ExpertHealthMult = 1.5f;
+		private float MasterHealthMult = 2f;
 		private Vector2 reticlePos = new Vector2(-1, -1);
 		private float reticleAlpha = 0;
 		int phase = 1;
@@ -332,8 +333,8 @@ namespace SOTS.NPCs.Constructs
 				if(phase == 1)
 				{
 					phase = 2;
-					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					NPC.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1));
+					NPC.life = NPC.lifeMax;
 				}
 			}
 		}

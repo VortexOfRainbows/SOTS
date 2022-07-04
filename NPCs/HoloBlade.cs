@@ -17,11 +17,7 @@ namespace SOTS.NPCs
 {
 	public class HoloBlade : ModNPC
 	{
-		private float direction
-		{
-			get => NPC.ai[3];
-			set => NPC.ai[3] = value;
-		}
+		private float direction => NPC.whoAmI % 2 * 2 - 1;
 		bool drawTrail = false;
 		public override void SetStaticDefaults()
 		{
@@ -57,10 +53,10 @@ namespace SOTS.NPCs
 		public override void AI()
 		{
 			Player player = Main.player[NPC.target];
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			//SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			Vector2 toPlayer = NPC.Center - player.Center;
 			NPC.ai[1]++;
-			float bonus = 0;
+			float bonus;
 			if(NPC.ai[1] >= 120)
 			{
 				if(savePos.X == 0 && savePos.Y == 0)
@@ -73,7 +69,7 @@ namespace SOTS.NPCs
 				}
 				Vector2 vector_1 = new Vector2(90, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[1] + NPC.ai[2] - 120) * 2);
 				bonus = vector_1.Y;
-				Vector2 rotatePos = new Vector2(bonus, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * (NPC.whoAmI % 2 * 2 - 1)));
+				Vector2 rotatePos = new Vector2(bonus, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * direction));
 				Vector2 toPos = rotatePos + savePos;
 				Vector2 goToPos = NPC.Center - toPos;
 				float length = goToPos.Length() + 0.1f;
@@ -94,7 +90,7 @@ namespace SOTS.NPCs
 					savePos *= 0f;
 					NPC.ai[1] = -22;
 					rotatePos.Normalize();
-					NPC.velocity = rotatePos * -23;
+					NPC.velocity = rotatePos * 23;
 					consistentAcceleration = NPC.velocity;
 					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
 					drawTrail = true;
@@ -109,7 +105,7 @@ namespace SOTS.NPCs
 					NPC.ai[0] = Main.rand.Next(360);
 				}
 				NPC.ai[0]++;
-				Vector2 rotatePos = new Vector2(200, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * (NPC.whoAmI % 2 * 2 - 1)));
+				Vector2 rotatePos = new Vector2(200, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * direction));
 				Vector2 toPos = rotatePos + player.Center;
 				Vector2 goToPos = NPC.Center - toPos;
 				float length = goToPos.Length() + 0.1f;

@@ -18,6 +18,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public sealed override void SetDefaults()
 		{
+			Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
 			Projectile.width = 30;
 			Projectile.height = 30;
 			Projectile.penetrate = -1;
@@ -139,7 +140,7 @@ namespace SOTS.Projectiles.Crushers
 			{
 				if(CanCharge())
 				{
-					float chargeSpeedMult = (1f / player.GetAttackSpeed(DamageClass.Melee) + vPlayer.voidSpeed - 1 + SOTSPlayer.ModPlayer(player).attackSpeedMod - 1) * vPlayer.CrushTransformer;
+					float chargeSpeedMult = (1f / player.GetTotalAttackSpeed<VoidMelee>() - 1 + SOTSPlayer.ModPlayer(player).attackSpeedMod - 1) * vPlayer.CrushTransformer;
 					currentCharge += 1 * chargeSpeedMult;
 					float chargePercentage = currentCharge / chargeTime;
 					chargePercentage = (float)Math.Pow(chargePercentage, exponentReduction);

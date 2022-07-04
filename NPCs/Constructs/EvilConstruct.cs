@@ -51,8 +51,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			NPC.damage = 100;
-			NPC.lifeMax = 6000;
+			NPC.damage = (int)(NPC.damage * 5 / 6);
+			NPC.lifeMax = (int)(NPC.lifeMax * 6 / 7);
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -196,7 +196,7 @@ namespace SOTS.NPCs.Constructs
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				for(int i = 1; i <= 5; i++) 
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("SOTS/Gores/EvilConstruct/EvilConstructGore").Type, 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("SOTS/Gores/EvilConstruct/EvilConstructGore" + i), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 				for (int i = 0; i < Main.projectile.Length; i++)
@@ -223,9 +223,7 @@ namespace SOTS.NPCs.Constructs
             }
 			Player player = Main.player[NPC.target];
 			Vector2 toPlayer = player.Center - NPC.Center;
-			int dmg2 = NPC.damage / 2;
-			if (Main.expertMode)
-				dmg2 /= 2;
+			int dmg2 = NPC.GetBaseDamage() / 2;
 			int amt = 8;
 			if (runOnce)
 			{

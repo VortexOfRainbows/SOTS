@@ -21,7 +21,8 @@ namespace SOTS.Projectiles.Chaos
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Relocator Beam");
-		}
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 20;

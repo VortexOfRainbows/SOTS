@@ -272,7 +272,7 @@ namespace SOTS.NPCs.Boss
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
-            NPC.damage = 160;
+            NPC.damage = NPC.damage * 4 / 5;
         }
         public bool hasEnteredSecondPhase = false;
         bool runOnce = true;

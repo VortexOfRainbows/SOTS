@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,12 +9,17 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Knuckles");
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Hide = true
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{
             NPC.aiStyle =14;  
             NPC.lifeMax = 69696969;
-            NPC.damage = 4200;
+            NPC.damage = 420;
             NPC.defense = 420;
             NPC.knockBackResist = 0f;
             NPC.width = 156;
@@ -35,12 +36,6 @@ namespace SOTS.NPCs
 			//music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
 			//musicPriority = MusicPriority.BossHigh;
 		}
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-        {
-			NPC.lifeMax = 420420420;
-			NPC.damage = 6969;
-            base.ScaleExpertStats(numPlayers, bossLifeScale);
-        }
         public override void AI()
 		{	
 			NPC.position.Y += Main.rand.Next(-5, 6);

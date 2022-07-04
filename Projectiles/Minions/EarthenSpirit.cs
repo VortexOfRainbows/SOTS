@@ -17,19 +17,19 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
-
-		public sealed override void SetDefaults()
+		
+		public override void SetDefaults()
 		{
+			SetSpiritMinionDefaults();
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
-			//Projectile.minion = true;
-			//Projectile.minionSlots = 0f;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.ignoreWater = true;
 			Projectile.localNPCHitCooldown = 10;
+			Projectile.netImportant = true;
+			Projectile.ignoreWater = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

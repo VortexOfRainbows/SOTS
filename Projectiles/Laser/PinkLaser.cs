@@ -1,14 +1,9 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using SOTS.Void;
 
 namespace SOTS.Projectiles.Laser
 {
@@ -17,6 +12,7 @@ namespace SOTS.Projectiles.Laser
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Pinky Laser");
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
 
 		public override void SetDefaults() 

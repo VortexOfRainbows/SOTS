@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.height = 36;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
-			Projectile.minion = true;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.minionSlots = 0f;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 300;

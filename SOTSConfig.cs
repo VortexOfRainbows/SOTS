@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Void;
 using System.ComponentModel;
 using Terraria;
 using Terraria.ModLoader.Config;
@@ -9,7 +10,12 @@ namespace SOTS
 	[BackgroundColor(45, 50, 65, 192)]
 	public class SOTSConfig : ModConfig
 	{
-		public override ConfigScope Mode => ConfigScope.ClientSide;
+		public static int voidBarNeedsLoading = 0;
+        public override void OnChanged()
+        {
+			voidBarNeedsLoading++;
+        }
+        public override ConfigScope Mode => ConfigScope.ClientSide;
 
 		[Header("UI")]
 		[Label("Void Bar X")]
@@ -34,23 +40,23 @@ namespace SOTS
 		[DefaultValue(false)]
 		public bool lockVoidBar { get; set; }
 
-		[Label("Void Bar Text")]
+		[Label("Void Bar Top Text")]
 		[Tooltip("Enable/disable the text above the Void Bar")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool voidBarTextOn { get; set; }
+
+		[Label("Void Bar Hover Text")]
+		[Tooltip("Enable/disable the text that appears when you hover over the Void Bar")]
+		[BackgroundColor(110, 80, 150, 192)]
+		[DefaultValue(true)]
+		public bool voidBarHoverTextOn { get; set; }
 
 		[Label("Simple Void Bar Text")]
 		[Tooltip("Removes Void Minion quantity indicators from the Void Bar text")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool simpleVoidText { get; set; }
-
-		[Label("Void Bar Blur")]
-		[Tooltip("Slightly blurs the inner fill of the Void Bar\nIs somewhat more intensive to run")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]
-		public bool voidBarBlur { get; set; }
 
 		[Label("Simple Void Bar Fill")]
 		[Tooltip("Removes the division lines between inner fill Void Bar elements")]

@@ -28,6 +28,9 @@ namespace SOTS.Items.Permafrost
 				return;
 			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
 			ArmorIDs.Body.Sets.HidesHands[equipSlotBody] = false;
+			ArmorIDs.Body.Sets.shouldersAreAlwaysInTheBack[equipSlotBody] = true;
+			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = true;
+			ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

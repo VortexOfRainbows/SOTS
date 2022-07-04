@@ -17,7 +17,7 @@ namespace SOTS.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-            voidPlayer.voidDamage -= 0.1f;
+            player.GetDamage<VoidGeneric>() -= 0.1f;
 		}
     }
 }

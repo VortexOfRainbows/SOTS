@@ -315,7 +315,7 @@ namespace SOTS.Items.Furniture.Nature
 										int type = growTile.TileFrameX / 18 - 1;
 										if (!TextureAssets.Tile[81 + growthStage].IsLoaded)
 											Main.instance.LoadTiles(81 + growthStage);
-										Texture2D texture2 = Terraria.GameContent.TextureAssets.Item[81 + growthStage].Value;
+										Texture2D texture2 = Terraria.GameContent.TextureAssets.Tile[81 + growthStage].Value;
 										int direction = ((i + x) % 2 * 2 - 1);
 										drawPosition.Y -= 6;
 										if (type == 1)

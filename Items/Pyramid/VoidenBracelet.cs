@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidDamage += 0.08f;
+			player.GetDamage<VoidGeneric>() += 0.08f;
 			voidPlayer.voidCost -= 0.08f;
 			player.GetDamage(DamageClass.Magic) += 0.08f;
 		}

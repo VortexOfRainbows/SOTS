@@ -1602,12 +1602,12 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 9:
 									tile.LiquidType = 0;
-									tile.LiquidType = 255;
+									tile.LiquidAmount = 255;
 									tile.HasTile = false;
 									WorldGen.SquareTileFrame(k, l, false);
 
 									tile2.LiquidType = 0;
-									tile2.LiquidType = 255;
+									tile2.LiquidAmount = 255;
 									tile2.HasTile = false;
 									WorldGen.SquareTileFrame(k2, l, false);
 									break;
@@ -1728,7 +1728,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.IsHalfBlock = false;
 										tile.Slope = 0;
-										tile.LiquidType = 255;
+										tile.LiquidAmount = 255;
 										tile.LiquidType = 0;
 									}
 									break;
@@ -1775,7 +1775,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.IsHalfBlock = false;
 										tile.Slope = 0;
-										tile.LiquidType = 254;
+										tile.LiquidAmount = 254;
 										tile.LiquidType = 0;
 									}
 									break;
@@ -1959,7 +1959,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2049,7 +2049,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2141,7 +2141,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2231,7 +2231,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2321,7 +2321,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2413,7 +2413,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2504,7 +2504,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2595,7 +2595,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2685,7 +2685,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -2775,7 +2775,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3131,7 +3131,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3221,7 +3221,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3311,7 +3311,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3402,7 +3402,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3493,7 +3493,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3583,7 +3583,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3674,7 +3674,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3765,7 +3765,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3856,7 +3856,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -3947,7 +3947,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4320,7 +4320,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4411,7 +4411,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4501,7 +4501,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4593,7 +4593,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4685,7 +4685,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4776,7 +4776,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4868,7 +4868,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -4959,7 +4959,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -5050,7 +5050,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -5142,7 +5142,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -5445,7 +5445,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 0;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -5708,7 +5708,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -5800,7 +5800,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -5891,7 +5891,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -5982,7 +5982,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -6073,7 +6073,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -6164,7 +6164,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;
@@ -6256,7 +6256,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 8:
 												tile.LiquidType = 1;
-												tile.LiquidType = 255;
+												tile.LiquidAmount = 255;
 
 												if (confirmPlatforms == 0)
 													tile.HasTile = false;

@@ -112,7 +112,7 @@ namespace SOTS.Items.Furniture.AncientGold
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AncientGold/AncientGoldCampfireTile_Flame").Value;
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Furniture/AncientGold/AncientGoldCampfireTile_Flame").Value;
 			int k = Main.tileFrame[Type] % 8;
 			int animate = k * 36;
 			for (k = 0; k < 7; k++)

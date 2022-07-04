@@ -9,7 +9,18 @@ Known Bugs/Issues:
 	1. Make sure to better sync or correct time freeze (sync other freeze related variables).
 
 
-
+Complete:
+1. Mod Loadable in 1.4
+2. Projectile damage from enemies works properly (GetBaseDamage(NPC npc))!
+3. Sound playing works!
+4. Fixed void bar visuals!
+5. Global NPC Loot and Gores work! 
+6. Advisor HP scales properly
+7. Treasure Slime/Transmutation table assets load correctly.
+8. NPC spawning should be working correctly...
+9. Shaders work!
+10. Chests, Chairs, Dressers fixed!
+11. NPC loot and spawns seem to work for 1.4!
 
 
 

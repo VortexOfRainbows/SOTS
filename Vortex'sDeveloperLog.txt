@@ -1,34 +1,89 @@
 The following is my development plans :D
 
-Complete:
-1. Mod Loadable in 1.4
-2. Projectile damage from enemies works properly (GetBaseDamage(NPC npc))!
-3. Sound playing works!
-4. Fixed void bar visuals!
-5. Global NPC Loot and Gores work! 
-6. Advisor HP scales properly
-7. Treasure Slime/Transmutation table assets load correctly.
-8. NPC spawning should be working correctly...
-9. Shaders work!
-10. Chests, Chairs, Dressers fixed!
-
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 Major Milestones TO REACH (Will be removed when completed)
-1. Make sure VM Incubator works (and server fixes)
-2. (needs testing) Loot/Spawns for some npcs may be bugged still.
-3. Make sure void minion damage scales live (without resummon) and properly... and make other void projectiles use proper damage class
-4. Figure out twilight assassin armor ARM glowmask...
-5. VOID DAMAGE CLASSES!!
-6. Update Armor Sprites
-7. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
-8. Holoblades attack the wrong direction
-9. Items on the floor don't animate properly (and in general need minor resheeting [blank space changes], minus manually drawcoded items)
+1. Bestiary backgrounds and descriptions for all enemies
+
+Other:
+1. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
+2. Smart cursor doesn't work with dressers.
+3. Master Mode trophies for all the bosses.
+4. Alternate void bar roll direction for bar graphic setting
+	1. Try reflecting rectangles via helper method.
+5. Final 2 starter houses
 
 Daily Log:
+
+7/2/22
+1. Fixes and Marble/Evostone merge
+
+6/30/22 & 7/1/22
+1. Some more bestiary entries
+2. New starter houses
+3. Fix weird recipe bug..?
+
+6/29/22
+1. Fix hydroponics
+2. Void bar hover text!
+3. Reorganized starter house generation and spawning
+4. Phase enemy bestiary
+5. Two new starter houses: Bloodmoon and Bandit
+
+6/28/22
+1. Experimenting and foundations for the bestiary.
+2. Void Bar SHOULD now stay in place after save and quit. Might be bugged idk.
+
+6/26/22 & 6/27/22
+1. Convert NPC life/damage explicit scaling into multipliers and divisors.
+	1. Helps for Journey and Master mode
+2. Spirit Phase 2 health scaling for master mode!
+3. Removed some unnecessary enemies from the bestiary
+4. Void tooltip appears properly
+
+6/24/22 & 6/25/22
+1. Added Void Damage classes!
+2. Void minions (and other minions) should damage scale properly!
+3. Fixed Item Animations! I think I got all of them.
+
+6/22/22
+1. Twilight assassin armor resheeted!
+2. Twilight assassin glowmask fixed! THIS WAS REALLY HARD BUT NOW I KNOW HOW TO DO IT FOR THE FUTURE!
+3. Add back sun light changing (Planetarium and Lux)
+4. Fix VM Incubator
+5. Remove Void Bar Blur option!
+
+6/20/22 & 6/21/22
+1. Nature armor set resprite + Hooks do damage properly
+2. Patchleather armor set resheet + Snakes do damage properly
+3. Remaining: None!
+4. Flashspark boots recipe change + tooltip change
+5. Vibrant armor resheet
+6. Torch flame fixes.
+7. Both frigid chestplate resheeted!
+8. No more possessed armor
+9. Cursed Armor resheeted!
+10. Fix Aten/North Star
+11. Resheeted Frost Artifact Armor!
+12. Fixed drop rates for the PreEOC Boss drops and Post-Pharaoh pyramid enemies.
+	1. There may still be more broken drops...but I believe this is it.
+13. Pyramid liquid fix
+
+6/18/22
+1. Beds work
+2. Chaos spirit hp scaling
+3. Fix wings and wing tooltip (Machina Booster)
 
 6/17/22
 1. You can now sit on Chairs + Chests are working!
 2. Dressers are working too!
+3. Fixed crystal tiles
+4. Phase Assaulter and Holoblade attack in the right direction
+5. Penguin missiles do damage
+6. Fix evil construct damage scaling
+7. Otherworld and Evil construct die properly
+8. Lux lasers visuals fix + other projectiles (Not all yet)
+9. Pisces Puncher fix
+10. Fix Ancient Steel halberd and jury rigged drill
 
 6/16/22
 1. Set some bosses to use portraits in Beastiary to avoid drawing weird things

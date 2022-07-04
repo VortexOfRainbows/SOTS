@@ -60,7 +60,7 @@ namespace SOTS.NPCs.Phase
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = 15000;
+            NPC.lifeMax = NPC.lifeMax * 15 / 19;
         }
         public void SetupDebuffImmunities()
         {
@@ -270,6 +270,11 @@ namespace SOTS.NPCs.Phase
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phase Assaulter");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -401,6 +406,11 @@ namespace SOTS.NPCs.Phase
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phase Assaulter");
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public void TrailPreDraw(SpriteBatch spriteBatch, Vector2 screenPos)
         {

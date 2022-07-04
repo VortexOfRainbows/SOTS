@@ -22,6 +22,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public sealed override void SetDefaults()
 		{
+			SetSpiritMinionDefaults();
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.tileCollide = false;

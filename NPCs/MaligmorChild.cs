@@ -39,6 +39,11 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Maligmor");
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Hide = true
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{
@@ -63,8 +68,7 @@ namespace SOTS.NPCs
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			NPC.lifeMax = 60;
-            base.ScaleExpertStats(numPlayers, bossLifeScale);
+			NPC.lifeMax = NPC.lifeMax * 3 / 4;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

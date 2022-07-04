@@ -36,8 +36,12 @@ namespace SOTS.NPCs
 		private Vector2 lookAtPos = new Vector2(-1, -1);
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Phase Eye");
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Hide = true
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{

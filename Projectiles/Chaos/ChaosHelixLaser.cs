@@ -15,6 +15,7 @@ namespace SOTS.Projectiles.Chaos
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chaos Helix Laser");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
         {

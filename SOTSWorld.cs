@@ -163,6 +163,7 @@ namespace SOTS
 		}
 		public override void PreSaveAndQuit()
 		{
+			SOTSConfig.voidBarNeedsLoading = 0;
 			PreSaveAndQuit_AwaitThreadedTasks();
 		}
 		private void PreSaveAndQuit_AwaitThreadedTasks()
@@ -184,7 +185,8 @@ namespace SOTS
 		public static bool downedSubspace = false;
 		public static bool downedAdvisor = false;
         public override void OnWorldLoad()
-        {
+		{
+			SOTSConfig.voidBarNeedsLoading = 1;
 			GlobalCounter = 0;
 			GlobalTimeFreeze = 0;
 			GlobalFrozen = false;
@@ -240,16 +242,15 @@ namespace SOTS
         {
             int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
 			int genIndexGeodes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
-			int genIndexGems = tasks.FindIndex(genpass => genpass.Name.Equals("Random Gems"));
+			int genIndexTraps = tasks.FindIndex(genpass => genpass.Name.Equals("Traps"));
             int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
 
 			tasks.Insert(genIndexOres, new PassLegacy("SOTSOres", GenSOTSOres));
 			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTSOres", GenSOTSGeodes));
-			tasks.Insert(genIndexGems + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexTraps + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Surface Structures";
-				SOTSWorldgenHelper.GenerateStarterHouseFull(Mod, Main.rand.Next(12));
-
+				StarterHouseWorldgenHelper.GenerateStarterHouseFull();
 				int iceY = -1;
 				int iceX = -1;
 				int totalChecks = 0;
@@ -1219,7 +1220,7 @@ namespace SOTS
 			}
 		}
 
-		/***
+        /***
 		/ This is where the old Mod. stuff was moved to. Basically, it has to belong in a ModSystem Now. I don't know which one to put it in yet, so it stays here for now.
 		/ A lot of old parameters were also made into Static parameters. This shouldn't break anything, but is noted in case it does.
 		/
@@ -1227,7 +1228,7 @@ namespace SOTS
 		/
 		/
 		*/
-		public static void LoadUI()
+        public static void LoadUI()
 		{
 			if (!Main.dedServ)
 			{
@@ -1317,6 +1318,40 @@ namespace SOTS
 		{
 			scale *= lightingChange;
 			lightingChange = 1;
+		}
+		public static float LuxLightingFadeIn = 0;
+		public static float PlanetariumLightingFadeIn = 0;
+		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+		{
+			if (Main.gameMenu)
+			{
+				return;
+			}
+			var player = Main.LocalPlayer;
+			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+			if (sPlayer.zoneLux)
+			{
+
+			}
+			else if (LuxLightingFadeIn > 0)
+			{
+				LuxLightingFadeIn -= 0.01f;
+			}
+			backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+			tileColor = Color.Lerp(tileColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+			//Lighting.GlobalBrightness *= MathHelper.Lerp(1, 0, 0.96f * LuxLightingFadeIn);
+			if (sPlayer.PlanetariumBiome)
+			{
+				if (PlanetariumLightingFadeIn < 1)
+					PlanetariumLightingFadeIn += 0.01f;
+			}
+			else if (PlanetariumLightingFadeIn > 0)
+			{
+				PlanetariumLightingFadeIn -= 0.01f;
+			}
+			backgroundColor = Color.Lerp(backgroundColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
+			tileColor = Color.Lerp(tileColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
+			//Lighting.GlobalBrightness *= MathHelper.Lerp(1, 0, 0.9f * PlanetariumLightingFadeIn);
 		}
 	}
 }

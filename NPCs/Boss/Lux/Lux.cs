@@ -548,7 +548,7 @@ namespace SOTS.NPCs.Boss.Lux
 				{
 					float lightMult = attackTimer1 / 120f;
 					lightMult = MathHelper.Clamp(lightMult, 0, 1);
-					SOTS.LuxLightingFadeIn = lightMult;
+					SOTSWorld.LuxLightingFadeIn = lightMult;
 					NPC.velocity *= 0.95f;
 					attackTimer1++;
 					if (attackTimer1 % 30 == 0 && attackTimer1 < 100 && attackTimer1 > 20)
@@ -589,7 +589,7 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				else
 				{
-					SOTS.LuxLightingFadeIn = 1f;
+					SOTSWorld.LuxLightingFadeIn = 1f;
 					IdleTimer++;
 					NPC.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)));
 				}

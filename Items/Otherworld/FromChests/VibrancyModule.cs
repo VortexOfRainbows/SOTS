@@ -54,7 +54,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidSpeed += 0.1f;
+			player.GetAttackSpeed<VoidGeneric>() += 0.1f;
 			voidPlayer.voidCost -= 0.1f;
 		}
 		public override void AddRecipes()

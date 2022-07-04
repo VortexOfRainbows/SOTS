@@ -32,12 +32,12 @@ namespace SOTS.Items.Celestial
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidDamage += 0.1f;
+			player.GetDamage<VoidGeneric>() += 0.1f;
 			voidPlayer.voidCost -= 0.08f;
 			player.GetDamage(DamageClass.Magic) += 0.1f;
 			voidPlayer.bonusVoidGain += 4;
 			voidPlayer.voidMeterMax2 += 50;
-			voidPlayer.voidCrit += 10;
+			player.GetCritChance<VoidGeneric>() += 10;
 
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			if(modPlayer.onhit == 1)

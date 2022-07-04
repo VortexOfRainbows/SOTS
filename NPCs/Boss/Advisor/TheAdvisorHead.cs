@@ -53,6 +53,7 @@ namespace SOTS.NPCs.Boss.Advisor
 		{
 			DisplayName.SetDefault("The Advisor");
 			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.ShouldBeCountedAsBoss[NPC.type] = true;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				CustomTexturePath = "SOTS/BossCL/AdvisorPortrait",
