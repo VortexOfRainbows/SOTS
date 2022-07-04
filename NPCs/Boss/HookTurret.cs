@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -69,6 +70,13 @@ namespace SOTS.NPCs.Boss
 				Hide = true
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned
+				}
+			});
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -99,7 +107,6 @@ namespace SOTS.NPCs.Boss
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath5;
             NPC.netAlways = true;
-            NPC.buffImmune[20] = true;
 			NPC.alpha = 100;
 		}
 		public void Draw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

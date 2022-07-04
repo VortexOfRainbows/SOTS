@@ -25,11 +25,22 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Holo Slime");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned,
+					BuffID.Frostburn,
+					BuffID.Ichor,
+					BuffID.Venom,
+					BuffID.OnFire
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
-			NPC.aiStyle =1;
+			NPC.aiStyle = 1;
             NPC.lifeMax = 50;  
             NPC.damage = 22; 
             NPC.defense = 10;  
@@ -45,8 +56,6 @@ namespace SOTS.NPCs
 			NPC.alpha = 40;
 			NPC.HitSound = SoundID.NPCHit53;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
 			//npc.DeathSound = SoundID.NPCDeath14;
 			Banner = NPC.type;
 			BannerItem = ItemType<HoloSlimeBanner>();

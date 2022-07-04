@@ -13,7 +13,17 @@ namespace SOTS.NPCs.Boss.Polaris
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bullet Snake");
-		}
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[]
+                {
+                    BuffID.Poisoned,
+                    BuffID.Frostburn,
+                    BuffID.Ichor,
+                    BuffID.OnFire
+                }
+            });
+        }
         public override void SetDefaults()
         {
             NPC.aiStyle =0;
@@ -29,9 +39,6 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.value = 0;
             NPC.npcSlots = 0;
             NPC.netAlways = true;
-            NPC.buffImmune[BuffID.Frostburn] = true;
-            NPC.buffImmune[BuffID.Ichor] = true;
-            NPC.buffImmune[BuffID.OnFire] = true;
             NPC.ai[1] = -1;
         }
         public override Color? GetAlpha(Color drawColor)

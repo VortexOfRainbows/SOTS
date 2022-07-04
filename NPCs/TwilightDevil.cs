@@ -50,6 +50,16 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Devil");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Frostburn,
+					BuffID.OnFire,
+					BuffID.Poisoned,
+					BuffID.Venom
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -70,7 +80,6 @@ namespace SOTS.NPCs
             NPC.HitSound = SoundID.NPCHit54;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.netAlways = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
 			Banner = NPC.type;
 			BannerItem = ItemType<TwilightDevilBanner>();
 		}

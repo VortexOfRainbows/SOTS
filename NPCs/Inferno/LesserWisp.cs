@@ -23,6 +23,15 @@ namespace SOTS.NPCs.Inferno
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Lesser Wisp");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Frostburn,
+					BuffID.Ichor,
+					BuffID.OnFire
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -40,9 +49,6 @@ namespace SOTS.NPCs.Inferno
             NPC.DeathSound = SoundID.NPCDeath6;
 			NPC.lavaImmune = true;
 			NPC.netAlways = true;
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
-			NPC.buffImmune[BuffID.Ichor] = true;
 			NPC.noTileCollide = true;
 			NPC.noGravity = true;
 			NPC.ai[0] = 0;

@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override bool? CanHitNPC(NPC target)
         {
-            return counter < 20 && (!isAlternate || counter > 2);
+            return (counter < 20 && (!isAlternate || counter > 2)) ? null : false;
         }
         float expandVelocity = 4;
         float expandAmt = 0;

@@ -18,7 +18,7 @@ namespace SOTS.NPCs.Boss
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-            //NPCID.Sets.DebuffImmunitySets
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
         }
         public override void SetDefaults()
         {
@@ -35,11 +35,6 @@ namespace SOTS.NPCs.Boss
             NPC.value = 10000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath32;
-            //Music = MusicID.Boss2;
-            for (int i = 0; i < Main.maxBuffTypes; i++)
-            {
-                NPC.buffImmune[i] = true;
-            }
             Main.npcFrameCount[NPC.type] = 8;
         }
         float currentDPS = -1;

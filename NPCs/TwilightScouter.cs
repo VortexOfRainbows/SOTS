@@ -32,6 +32,16 @@ namespace SOTS.NPCs
 		{
 			DisplayName.SetDefault("Twilight Scouter");
 			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Frostburn,
+					BuffID.OnFire,
+					BuffID.Poisoned,
+					BuffID.Venom
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -50,8 +60,6 @@ namespace SOTS.NPCs
 			NPC.netAlways = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
 			Banner = NPC.type;
 			BannerItem = ItemType<TwilightScouterBanner>();
 		}

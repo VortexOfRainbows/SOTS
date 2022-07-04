@@ -42,6 +42,16 @@ namespace SOTS.NPCs
 				Hide = true
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Frostburn,
+					BuffID.OnFire,
+					BuffID.Poisoned,
+					BuffID.Venom
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -60,10 +70,6 @@ namespace SOTS.NPCs
 			NPC.lavaImmune = true;
 			NPC.netAlways = true;
 			NPC.noGravity = true;
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
-			//Banner = NPC.type;
-			//BannerItem = ItemType<SittingMushroomBanner>();
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

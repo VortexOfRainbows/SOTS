@@ -11,15 +11,11 @@ Other:
 	1. Try reflecting rectangles via helper method.
 4. Final 2 starter houses
 
-Bugs:
-1. Rose bow damages TOWN NPC?????
-2. Subspace Serpent isn't immune to debuffs...??
-	1. All debuff immunities must be set differently now
-
 Daily Log:
 
 7/3/22
 1. Master Mode Relics work! Thanks Moonseer!
+2. Fixed buff immunities not working.
 
 7/2/22
 1. Fixes and Marble/Evostone merge

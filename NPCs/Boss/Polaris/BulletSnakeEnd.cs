@@ -18,6 +18,16 @@ namespace SOTS.NPCs.Boss.Polaris
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[]
+                {
+                    BuffID.Poisoned,
+                    BuffID.Frostburn,
+                    BuffID.Ichor,
+                    BuffID.OnFire
+                }
+            });
         }
         public override void SetDefaults()
         {
@@ -32,9 +42,6 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.noGravity = true;
             NPC.dontCountMe = true;
             NPC.value = 0;
-            NPC.buffImmune[BuffID.Frostburn] = true;
-            NPC.buffImmune[BuffID.Ichor] = true;
-            NPC.buffImmune[BuffID.OnFire] = true;
         }
         public override Color? GetAlpha(Color drawColor)
         {

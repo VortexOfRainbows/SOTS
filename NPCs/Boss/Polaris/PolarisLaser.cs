@@ -11,6 +11,15 @@ namespace SOTS.NPCs.Boss.Polaris
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Polar Quad-Cannon");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Frostburn,
+					BuffID.OnFire,
+					BuffID.Ichor
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -26,7 +35,6 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.netAlways = true;
-            NPC.buffImmune[44] = true;
 		}
         public override bool PreKill()
 		{

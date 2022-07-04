@@ -41,6 +41,7 @@ namespace SOTS.NPCs.Boss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Subspace Serpent");
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true } );
         }
         public override void SetDefaults()
         {
@@ -62,10 +63,6 @@ namespace SOTS.NPCs.Boss
             NPC.netAlways = true;
             NPC.target = -1;
             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SubspaceSerpent");
-            for (int i = 0; i < Main.maxBuffTypes; i++)
-            {
-                NPC.buffImmune[i] = true;
-            }
             Main.npcFrameCount[NPC.type] = 8;
         }
         bool hasSpawnedProjectile = false;

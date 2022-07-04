@@ -35,7 +35,6 @@ namespace SOTS.NPCs.Boss
             NPC.HitSound = SoundID.NPCHit3;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.netAlways = true;
-            NPC.buffImmune[44] = true;
             NPC.hide = true;
             NPC.dontCountMe = true;
             NPC.alpha = 255;

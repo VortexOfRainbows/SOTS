@@ -43,8 +43,6 @@ namespace SOTS.NPCs.Boss.Curse
 			NPC.DeathSound = null;
 			NPC.lavaImmune = true;
 			NPC.netAlways = true;
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
 			NPC.noTileCollide = true;
 			NPC.noGravity = true;
 			NPC.dontTakeDamage = true;

@@ -57,6 +57,13 @@ namespace SOTS.NPCs.Boss
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Hook");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -75,7 +82,6 @@ namespace SOTS.NPCs.Boss
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath5;
             NPC.netAlways = true;
-            NPC.buffImmune[20] = true;
 		}
 		float counter2 = 0;
 		float randMult = 1f;

@@ -37,6 +37,19 @@ namespace SOTS.NPCs.Boss.Lux
 				PortraitPositionYOverride = -20f,
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned,
+					BuffID.Frostburn,
+					BuffID.Ichor,
+					BuffID.Venom,
+					BuffID.OnFire,
+					BuffID.BetsysCurse
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -58,7 +71,6 @@ namespace SOTS.NPCs.Boss.Lux
 			NPC.netAlways = false;
 			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Advisor");
 			SceneEffectPriority = SceneEffectPriority.BossHigh;
-			SetupDebuffImmunities();
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

@@ -45,6 +45,15 @@ namespace SOTS.NPCs.Boss.Polaris
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Polaris");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Frostburn,
+					BuffID.OnFire,
+					BuffID.Ichor
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -63,9 +72,6 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.noTileCollide = true;
             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Polaris");
 			NPC.netAlways = true;
-            NPC.buffImmune[BuffID.Frostburn] = true;
-			NPC.buffImmune[BuffID.Ichor] = true;
-			NPC.buffImmune[BuffID.OnFire] = true;
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

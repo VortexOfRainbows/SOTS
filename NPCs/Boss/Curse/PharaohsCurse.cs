@@ -10,6 +10,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,10 +67,23 @@ namespace SOTS.NPCs.Boss.Curse
 				PortraitPositionYOverride = 0f,
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned,
+					BuffID.Frostburn,
+					BuffID.Venom,
+					BuffID.OnFire,
+					BuffID.ShadowFlame,
+					BuffID.CursedInferno
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
-			NPC.aiStyle =0;
+			NPC.aiStyle = 0;
 			NPC.lifeMax = 4000;
 			NPC.damage = 45;
 			NPC.defense = 13;
@@ -86,12 +100,6 @@ namespace SOTS.NPCs.Boss.Curse
 			NPC.DeathSound = SoundID.NPCDeath6;
 			Music = MusicID.Sandstorm;
 			SceneEffectPriority = SceneEffectPriority.BossMedium;
-			NPC.buffImmune[24] = true;
-			NPC.buffImmune[39] = true;
-			NPC.buffImmune[44] = true;
-			NPC.buffImmune[69] = true;
-			NPC.buffImmune[70] = true;
-			NPC.buffImmune[153] = true;
 			NPC.netAlways = true;
 			NPC.alpha = 255;
 			NPC.dontTakeDamage = true;

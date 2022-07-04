@@ -113,6 +113,7 @@ namespace SOTS.Common.GlobalNPCs
 				if(npc.DeathSound != SoundID.NPCDeath14)
 					npc.DeathSound = SoundID.NPCDeath14;
 			}
+			SetDebuffImmunities(npc);
 			return base.PreAI(npc);
         }
         public override void HitEffect(NPC npc, int hitDirection, double damage)
@@ -196,7 +197,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
             base.HitEffect(npc, hitDirection, damage);
         }
-        public override void SetDefaults(NPC npc)
+        public void SetDebuffImmunities(NPC npc)
         {
 			if(npc.type == NPCID.BlackRecluse || npc.type == NPCID.WallCreeper || npc.type == NPCID.WallCreeperWall || npc.type == NPCID.BlackRecluseWall || npc.type == NPCID.JungleCreeperWall || npc.type == NPCID.JungleCreeper)
             {

@@ -17,6 +17,7 @@ namespace SOTS.NPCs.Boss
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
@@ -37,11 +38,6 @@ namespace SOTS.NPCs.Boss
             NPC.value = 100000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath32;
-			//music = MusicID.Boss2;
-            for (int i = 0; i < Main.maxBuffTypes; i++)
-            {
-                NPC.buffImmune[i] = true;
-            }
             Main.npcFrameCount[NPC.type] = 8;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

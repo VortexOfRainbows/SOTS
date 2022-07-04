@@ -11,6 +11,7 @@ using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,6 +38,18 @@ namespace SOTS.NPCs.Phase
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Phase Speeder");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned,
+					BuffID.Frostburn,
+					BuffID.Ichor,
+					BuffID.Venom,
+					BuffID.OnFire,
+					BuffID.BetsysCurse
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -57,16 +70,6 @@ namespace SOTS.NPCs.Phase
 			NPC.noTileCollide = true;
 			Banner = NPC.type;
 			BannerItem = ItemType<PhaseSpeederBanner>();
-			SetupDebuffImmunities();
-		}
-		public void SetupDebuffImmunities()
-		{
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Poisoned] = true;
-			NPC.buffImmune[BuffID.Venom] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
-			NPC.buffImmune[BuffID.Ichor] = true;
-			NPC.buffImmune[BuffID.BetsysCurse] = true;
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

@@ -24,6 +24,17 @@ namespace SOTS.NPCs
 			DisplayName.SetDefault("Holo Blade");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 8;
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned,
+					BuffID.Frostburn,
+					BuffID.Ichor,
+					BuffID.Venom,
+					BuffID.OnFire
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -41,8 +52,6 @@ namespace SOTS.NPCs
             NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.lavaImmune = true;
 			NPC.netAlways = true;
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
 			NPC.noTileCollide = true;
 			NPC.noGravity = true;
 			Banner = NPC.type;

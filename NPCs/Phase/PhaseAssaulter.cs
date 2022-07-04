@@ -21,6 +21,18 @@ namespace SOTS.NPCs.Phase
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phase Assaulter");
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[]
+                {
+                    BuffID.Poisoned,
+                    BuffID.Frostburn,
+                    BuffID.Ichor,
+                    BuffID.Venom,
+                    BuffID.OnFire,
+                    BuffID.BetsysCurse
+                }
+            });
         }
         Vector2 directVelo;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -56,20 +68,10 @@ namespace SOTS.NPCs.Phase
             NPC.netAlways = true;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
-            SetupDebuffImmunities();
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = NPC.lifeMax * 15 / 19;
-        }
-        public void SetupDebuffImmunities()
-        {
-            NPC.buffImmune[BuffID.OnFire] = true;
-            NPC.buffImmune[BuffID.Poisoned] = true;
-            NPC.buffImmune[BuffID.Venom] = true;
-            NPC.buffImmune[BuffID.Frostburn] = true;
-            NPC.buffImmune[BuffID.Ichor] = true;
-            NPC.buffImmune[BuffID.BetsysCurse] = true;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -275,6 +277,18 @@ namespace SOTS.NPCs.Phase
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[]
+                {
+                    BuffID.Poisoned,
+                    BuffID.Frostburn,
+                    BuffID.Ichor,
+                    BuffID.Venom,
+                    BuffID.OnFire,
+                    BuffID.BetsysCurse
+                }
+            });
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -308,16 +322,6 @@ namespace SOTS.NPCs.Phase
             NPC.DeathSound = SoundID.NPCDeath14;
             Banner = ModContent.NPCType<PhaseAssaulterHead>();
             BannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
-            SetupDebuffImmunities();
-        }
-        public void SetupDebuffImmunities()
-        {
-            NPC.buffImmune[BuffID.OnFire] = true;
-            NPC.buffImmune[BuffID.Poisoned] = true;
-            NPC.buffImmune[BuffID.Venom] = true;
-            NPC.buffImmune[BuffID.Frostburn] = true;
-            NPC.buffImmune[BuffID.Ichor] = true;
-            NPC.buffImmune[BuffID.BetsysCurse] = true;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -411,6 +415,18 @@ namespace SOTS.NPCs.Phase
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[]
+                {
+                    BuffID.Poisoned,
+                    BuffID.Frostburn,
+                    BuffID.Ichor,
+                    BuffID.Venom,
+                    BuffID.OnFire,
+                    BuffID.BetsysCurse
+                }
+            });
         }
         public void TrailPreDraw(SpriteBatch spriteBatch, Vector2 screenPos)
         {
@@ -466,16 +482,6 @@ namespace SOTS.NPCs.Phase
             NPC.DeathSound = SoundID.NPCDeath14;
             Banner = ModContent.NPCType<PhaseAssaulterHead>();
             BannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
-            SetupDebuffImmunities();
-        }
-        public void SetupDebuffImmunities()
-        {
-            NPC.buffImmune[BuffID.OnFire] = true;
-            NPC.buffImmune[BuffID.Poisoned] = true;
-            NPC.buffImmune[BuffID.Venom] = true;
-            NPC.buffImmune[BuffID.Frostburn] = true;
-            NPC.buffImmune[BuffID.Ichor] = true;
-            NPC.buffImmune[BuffID.BetsysCurse] = true;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

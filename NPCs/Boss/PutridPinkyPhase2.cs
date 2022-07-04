@@ -64,6 +64,13 @@ namespace SOTS.NPCs.Boss
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Pinky");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -83,7 +90,6 @@ namespace SOTS.NPCs.Boss
             NPC.noTileCollide = true;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath5;
-            NPC.buffImmune[20] = true;
 			NPC.alpha = 60;
             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PutridPinky");
 		}

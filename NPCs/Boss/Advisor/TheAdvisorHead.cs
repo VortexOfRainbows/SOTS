@@ -62,6 +62,16 @@ namespace SOTS.NPCs.Boss.Advisor
 				PortraitPositionYOverride = 10f,
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+			{ 
+				SpecificallyImmuneTo= new int[]
+				{
+					BuffID.OnFire,
+					BuffID.Frostburn,
+					BuffID.ShadowFlame,
+					BuffID.CursedInferno
+				}
+			});
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -117,14 +127,8 @@ namespace SOTS.NPCs.Boss.Advisor
             NPC.noTileCollide = true;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
-            NPC.buffImmune[BuffID.OnFire] = true;
-            NPC.buffImmune[BuffID.Frostburn] = true;
-            NPC.buffImmune[BuffID.CursedInferno] = true;
-            NPC.buffImmune[BuffID.ShadowFlame] = true;
-            //bossbag = ModContent.ItemType<TheAdvisorBossBag>();
 			Music = -1;
 			SceneEffectPriority = (SceneEffectPriority)(-1);
-			//bossBag = mod.ItemType("BossBagBloodLord");
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{

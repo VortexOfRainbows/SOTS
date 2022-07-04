@@ -45,6 +45,17 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Holo Eye");
+			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Poisoned,
+					BuffID.Frostburn,
+					BuffID.Ichor,
+					BuffID.Venom,
+					BuffID.OnFire
+				}
+			});
 		}
 		public override void SetDefaults()
 		{
@@ -62,8 +73,6 @@ namespace SOTS.NPCs
             NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.lavaImmune = true;
 			NPC.netAlways = true;
-			NPC.buffImmune[BuffID.OnFire] = true;
-			NPC.buffImmune[BuffID.Frostburn] = true;
 			Banner = NPC.type;
 			BannerItem = ItemType<HoloEyeBanner>();
 		}
