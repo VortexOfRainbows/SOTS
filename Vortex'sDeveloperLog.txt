@@ -1,15 +1,31 @@
 The following is my development plans :D
 
-!!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
-Major Milestones TO REACH (Will be removed when completed)
-1. Bestiary backgrounds and descriptions for all enemies
+Update Objectives:
+1. Add upgrade to Flashspark boots with dashing activation (Tabi)
+	1. Subspace Treads
+2. Pulverizer (Upgrade to Bone Clapper)
+	1. 4 arms, 2 normal and 2 laser cannon
+3. Worldly Polarizer (grants some stats and inverses the effects of Dissolving Nature, Earth, Tide, up to certain point)
+	1. Thermal Polarizer (grants some stats and inverses the effects of Dissolving Permafrost, Inferno, up to a certain point)
+	2. Exotic Polarizer (grants some stats and inverses the effects of Dissolving Brilliance, Evil, Otherworld, up to a certain point)
+5. Blazing Quiver (Dissolving Inferno + Molten Quiver)
+6. Pistol Shrimp
+	1. It's a shrimp and a pistol
+	2. magic weapon that fires homing bubbles, can be obtained fishing in ocean or something
+7. Chthonic Reforge
+8. Plasma Shrimp
+	1. Pistol Shrimp but accessory
+	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
+	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope 
+9. Config to disable starter house
 
-Other:
+Other 1.4 related objectives:
 1. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
 2. Smart cursor doesn't work with dressers.
 3. Alternate void bar roll direction for bar graphic setting
 	1. Try reflecting rectangles via helper method.
 4. Final 2 starter houses
+5. Bestiary for all enemies
 
 Daily Log:
 
