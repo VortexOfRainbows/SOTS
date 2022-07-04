@@ -26,6 +26,7 @@ namespace SOTS.Items.Otherworld.FromChests
 	}
 	public class StarlightAlloy : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/StarlightAlloyGlow").Value;
@@ -54,6 +55,7 @@ namespace SOTS.Items.Otherworld.FromChests
 	}
 	public class HardlightAlloy : ModItem
 	{
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.IronBar);
@@ -78,6 +80,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Alloy");
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{

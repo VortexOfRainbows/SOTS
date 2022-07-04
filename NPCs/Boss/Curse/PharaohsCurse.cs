@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using SOTS.Dusts;
+using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using Terraria;
@@ -152,6 +153,7 @@ namespace SOTS.NPCs.Boss.Curse
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 1, 12, 24));
 			npcLoot.Add(notExpertRule);
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PharaohsCurseRelic>()));
 		}
         public override void BossLoot(ref string name, ref int potionType)
 		{
