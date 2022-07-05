@@ -41,6 +41,9 @@ namespace SOTS
 			//1.4 worldgen fix
 			On.Terraria.WorldGen.FillWallHolesInSpot += Worldgen_FillWallHolesInSpot;
 
+			//1.4 ZombieHand
+			On.Terraria.Player.ItemCheck_MeleeHitNPCs += Player_ItemCheck_MeleeHitNPCs;
+
 			Main.OnPreDraw += Main_OnPreDraw;
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -71,6 +74,9 @@ namespace SOTS
 
 			On.Terraria.WorldGen.CloseDoor -= Worldgen_CloseDoor;
 			On.Terraria.WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
+
+			//1.4 ZombieHand
+			On.Terraria.Player.ItemCheck_MeleeHitNPCs -= Player_ItemCheck_MeleeHitNPCs;
 
 			Main.OnPreDraw -= Main_OnPreDraw;
 		}
@@ -112,6 +118,30 @@ namespace SOTS
 				}
 			}
 			orig(self, i);
+		}
+		private static void Player_ItemCheck_MeleeHitNPCs(On.Terraria.Player.orig_ItemCheck_MeleeHitNPCs orig, Player self, Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack)
+		{
+			bool zombieHand = SOTSPlayer.ModPlayer(self).CanKillNPC;
+			bool[] saveFriendly = new bool[200];
+			for (int i = 0; i < 200; i++)
+			{
+				NPC npc = Main.npc[i];
+				if (npc.active)
+                {
+					saveFriendly[i] = npc.friendly;
+					if(zombieHand && npc.townNPC && npc.friendly)
+						npc.friendly = false;
+                }
+            }
+			orig(self, sItem, itemRectangle, originalDamage, knockBack);
+			for (int i = 0; i < 200; i++)
+			{
+				NPC npc = Main.npc[i];
+				if (npc.active)
+				{
+					npc.friendly = saveFriendly[i];
+				}
+			}
 		}
 		/*private static void NPC_UpdateCollision(On.Terraria.NPC.orig_UpdateCollision orig, NPC self)
 		{

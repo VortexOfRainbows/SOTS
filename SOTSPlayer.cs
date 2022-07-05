@@ -538,8 +538,8 @@ namespace SOTS
         public override bool? CanHitNPC(Item item, NPC target)
         {
 			if(CanKillNPC && item.DamageType == DamageClass.Melee && target.townNPC)
-            {
-				return true;
+			{
+				return null;
             }
             return base.CanHitNPC(item, target);
         }

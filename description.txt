@@ -5,7 +5,7 @@ This mod's main plan is to add structures and other unique generation to the wor
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
 Bosses -> Currently 6, all with original AI!
-Items -> Nearly 600, designed to unique!
+Items -> Nearly 600, designed to be unique!
 Ores -> 3
 
 New Subclass: Void

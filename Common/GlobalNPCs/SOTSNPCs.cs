@@ -746,7 +746,7 @@ namespace SOTS.Common.GlobalNPCs
 				if (npc.type == ModContent.NPCType<SnakePot>())
 					flavorText = new FlavorTextBestiaryInfoElement("A group of snakes that uses a pot for defense. When the pot breaks, the snakes inside are forced to scatter.");
 				if (npc.type == ModContent.NPCType<WallMimic>())
-					flavorText = new FlavorTextBestiaryInfoElement("The curse housed within the Pyramid is a potent corrupting mechanism. Under its influence, even the walls of the Pyramid turn into monsters.");
+					flavorText = new FlavorTextBestiaryInfoElement("The curse housed within the Pyramid is more capable of corruption than the world evils. Under its influence, even the walls of the Pyramid turn into monsters!");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Pyramid,
 					flavorText
