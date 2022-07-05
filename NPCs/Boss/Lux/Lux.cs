@@ -362,10 +362,18 @@ namespace SOTS.NPCs.Boss.Lux
 			if (!SOTSWorld.downedLux && SOTSWorld.GlobalCounter > 120) //have to be in world for more than 2 seconds. Objective is to hopefully prevent recipe browser from crashing the game.
 			{
 				if (!Main.gameInactive)
+				{
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("Gaming 1");
 					PhaseWorldgenHelper.Generate();
+				}
 				SOTSWorld.downedLux = true;
+				if (Main.netMode != NetmodeID.Server)
+					Main.NewText("Gaming 2");
 			}
-        }
+			if (Main.netMode != NetmodeID.Server)
+				Main.NewText("Gaming 3");
+		}
         public override void BossLoot(ref string name, ref int potionType)
         {
 			potionType = ItemID.GreaterHealingPotion;
@@ -570,7 +578,8 @@ namespace SOTS.NPCs.Boss.Lux
 					if (attackTimer1 == 120)
 					{
 						SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f, 0.1f);
-						Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
+						if(Main.netMode != NetmodeID.Server)
+							Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
 					}
 					if (attackTimer1 > 60)
 					{

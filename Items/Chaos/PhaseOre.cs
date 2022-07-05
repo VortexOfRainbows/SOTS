@@ -37,7 +37,11 @@ namespace SOTS.Items.Chaos
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, Color.White * 0.65f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
-		public override void SetStaticDefaults() => this.SetResearchCost(100);
+		public override void SetStaticDefaults()
+		{
+			ItemID.Sets.ItemNoGravity[Type] = true;
+			this.SetResearchCost(100);
+		}
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

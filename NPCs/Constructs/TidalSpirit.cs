@@ -249,15 +249,16 @@ namespace SOTS.NPCs.Constructs
 		{
 			if (NPC.life <= 0)
 			{
-				for(int i = 0; i < 50; i ++)
-				{
-					Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
-					dust.color = new Color(64, 72, 178);
-					dust.noGravity = true;
-					dust.fadeIn = 0.1f;
-					dust.scale *= 2f;
-					dust.velocity *= 5f;
-				}
+				if (Main.netMode != NetmodeID.Server)
+					for (int i = 0; i < 50; i ++)
+					{
+						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
+						dust.color = new Color(64, 72, 178);
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 2f;
+						dust.velocity *= 5f;
+					}
 				if(phase == 1)
 				{
 					phase = 2;

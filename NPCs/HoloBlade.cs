@@ -184,6 +184,8 @@ namespace SOTS.NPCs
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			if (NPC.life > 0)
 			{
 				int num = 0;

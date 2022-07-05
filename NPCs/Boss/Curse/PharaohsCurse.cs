@@ -110,6 +110,8 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			if (NPC.life > 0)
 			{
 				SOTSUtils.PlaySound(SoundID.NPCHit54, NPC.Center, 1.2f, -0.25f);
@@ -761,7 +763,8 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					if (ai2 == timeToStart)
 					{
-						Main.NewText("Pharaoh's Curse has awoken!", 175, 75, byte.MaxValue);
+						if (Main.netMode != NetmodeID.Server)
+							Main.NewText("Pharaoh's Curse has awoken!", 175, 75, byte.MaxValue);
 						ParticleExplosion();
 					}
 					if (startParticles < 1)

@@ -79,6 +79,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			ai2 = 0;
 			if (NPC.life <= 0)
 			{

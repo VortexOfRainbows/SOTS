@@ -217,6 +217,8 @@ namespace SOTS.NPCs.Boss.Curse
         }
         public override void HitEffect(int hitDirection, double damage)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			int parentID = (int)NPC.ai[0];
 			if (parentID >= 0 && Main.netMode != NetmodeID.Server)
 			{

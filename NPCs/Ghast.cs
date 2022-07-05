@@ -137,8 +137,10 @@ namespace SOTS.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemType<CursedTumor>(), 2, 4, 6));
 		}
 		public override void HitEffect(int hitDirection, double damage)
-        {
-            if (NPC.life > 0)
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			if (NPC.life > 0)
 			{
 				int num = 0;
 				while (num < damage / NPC.lifeMax * 50.0)

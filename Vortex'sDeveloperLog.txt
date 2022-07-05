@@ -12,12 +12,11 @@ Update Objectives:
 6. Pistol Shrimp
 	1. It's a shrimp and a pistol
 	2. magic weapon that fires homing bubbles, can be obtained fishing in ocean or something
-7. Chthonic Reforge
-8. Plasma Shrimp
+7. Plasma Shrimp
 	1. Pistol Shrimp but accessory
 	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
 	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope 
-9. Config to disable starter house
+8. Config to disable starter house
 
 Other 1.4 related objectives:
 1. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
@@ -28,6 +27,10 @@ Other 1.4 related objectives:
 5. Bestiary for all enemies
 
 Daily Log:
+
+7/4/22
+1. Multiplayer Fixes
+2. Chthonic Reforge
 
 7/3/22
 1. Master Mode Relics work! Thanks Moonseer!

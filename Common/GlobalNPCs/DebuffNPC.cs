@@ -1033,7 +1033,8 @@ namespace SOTS.Common.GlobalNPCs
                 int index = npc.FindBuffIndex(BuffType<Infected>());
                 int time = npc.buffTime[index];
                 int damage = time / 60;
-                SOTSUtils.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y, 0.6f);
+                if (Main.netMode != NetmodeID.Server)
+                    SOTSUtils.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y, 0.6f);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 3; i++)
@@ -1053,6 +1054,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(npc.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
                 if (shattered)
                 {
                     SOTSUtils.PlaySound(SoundID.Tink, (int)npc.Center.X, (int)npc.Center.Y, 1f, -0.6f);

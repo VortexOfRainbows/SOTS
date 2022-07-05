@@ -240,7 +240,9 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if(Main.rand.NextBool(2))
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			if (Main.rand.NextBool(2))
 				SOTSUtils.PlaySound(SoundID.NPCHit4, (int)NPC.Center.X, (int)NPC.Center.Y, 0.6f, 0.2f);
 			if (NPC.life > 0)
 			{

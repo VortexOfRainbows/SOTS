@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS
@@ -8,6 +9,8 @@ namespace SOTS
     {
         public static int GoreType(string name)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return -1;
             int index = name.LastIndexOf("/"); //this is somewhat a bandaid fix, but also means that finding gores from code is easier too!
             if(index != -1)
                 name = name.Substring(index + 1);

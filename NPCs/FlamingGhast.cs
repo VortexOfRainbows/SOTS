@@ -124,8 +124,10 @@ namespace SOTS.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemType<CursedCaviar>(), 10, 1, 1));
 		}
 		public override void HitEffect(int hitDirection, double damage)
-        {
-            if (NPC.life > 0)
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			if (NPC.life > 0)
 			{
 				int num = 0;
 				while (num < damage / NPC.lifeMax * 50.0)
