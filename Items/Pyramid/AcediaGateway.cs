@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.NPCs.Boss;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -31,7 +30,7 @@ namespace SOTS.Items.Pyramid
 			Item.rare = ItemRarityID.Purple;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("AcediaGatewayTile").Type;
+			Item.createTile = ModContent.TileType<AcediaGatewayTile>();
 		}
 	}	
 	public class AcediaGatewayTile : ModTile
@@ -54,8 +53,8 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Strange Gateway");
 			AddMapEntry(new Color(44, 12, 62), name);
-			TileID.Sets.DisableSmartCursor[Type] = true;
-			DustType = Mod.Find<ModDust>("AcedianDust").Type;
+			//TileID.Sets.DisableSmartCursor[Type] = true;
+			DustType = ModContent.DustType<Dusts.AcedianDust>();
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

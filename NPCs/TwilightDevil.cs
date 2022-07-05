@@ -249,8 +249,10 @@ namespace SOTS.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemType<JarOfSouls>(), 4).OnFailedRoll(ItemDropRule.Common(ItemType<AvaritianPlating>(), 1, 4, 8)));
 		}
 		public override void HitEffect(int hitDirection, double damage)
-        {
-            if (NPC.life > 0)
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+			if (NPC.life > 0)
 			{
 				int num = 0;
 				while ((double)num < damage / (double)NPC.lifeMax * 50.0)

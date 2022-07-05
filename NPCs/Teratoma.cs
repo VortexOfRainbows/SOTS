@@ -197,11 +197,12 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while (num < damage / NPC.lifeMax * 40.0)
-				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2f, 0, default, 1.6f);
-					num++;
-				}
+				if (Main.netMode != NetmodeID.Server)
+					while (num < damage / NPC.lifeMax * 40.0)
+					{
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2f, 0, default, 1.6f);
+						num++;
+					}
 			}
 			else
 			{
@@ -212,17 +213,19 @@ namespace SOTS.NPCs
 					int temp = NPC.lifeMax;
 					NPC.life = (int)(temp * 0.5f);
 					NPC.netUpdate = true;
-					for (int k = 0; k < 45; k++)
-					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(3f * hitDirection), -2.4f, 0, default, 1.6f);
-					}
+					if (Main.netMode != NetmodeID.Server)
+						for (int k = 0; k < 45; k++)
+						{
+							Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(3f * hitDirection), -2.4f, 0, default, 1.6f);
+						}
 				}
 				else
 				{
-					for (int k = 0; k < 45; k++)
-					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2.1f, 0, default, 1.6f);
-					}
+					if (Main.netMode != NetmodeID.Server)
+						for (int k = 0; k < 45; k++)
+						{
+							Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2.1f, 0, default, 1.6f);
+						}
 				}
 			}
 		}

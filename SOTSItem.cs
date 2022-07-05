@@ -104,7 +104,7 @@ namespace SOTS
 						int intMax = (int)(voidCostMultiplier * voidAmt);
 						float mult = intMax / (float)voidAmt;
 						int voidCostTooltip = (int)(100f * (mult - 1f));
-						if (voidCostTooltip != 0 && (item.prefix == PrefixType<Famished>() || item.prefix == PrefixType<Precarious>() || item.prefix == PrefixType<Potent>() || item.prefix == PrefixType<Omnipotent>()))
+						if (voidCostTooltip != 0 && (item.prefix == PrefixType<Famished>() || item.prefix == PrefixType<Precarious>() || item.prefix == PrefixType<Potent>() || item.prefix == PrefixType<Omnipotent>() || item.prefix == PrefixType<Chthonic>()))
 						{
 							string sign = (voidCostTooltip > 0 ? "+" : "");
 							Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));

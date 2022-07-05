@@ -103,18 +103,24 @@ namespace SOTS.Items.Tools
 						FlowerBoots++;
 				}
 				if (!LihzahrdAltar)
-					Main.NewText("Lihzahrd Altar: Not Found", 255, 0, 0);
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("Lihzahrd Altar: Not Found", 255, 0, 0);
 				if (!IceMonument)
-					Main.NewText("Frost Artifact: Not Found", 255, 0, 0);
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("Frost Artifact: Not Found", 255, 0, 0);
 				if (!Sarcophagus)
-					Main.NewText("Sarcophagus: Not Found", 255, 0, 0);
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("Sarcophagus: Not Found", 255, 0, 0);
 				if(!GreedGateway)
-					Main.NewText("Avaritia Gateway: Not Found", 255, 0, 0);
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("Avaritia Gateway: Not Found", 255, 0, 0);
 				if (!SlothGateway)
-					Main.NewText("Acedia Gateway: Not Found", 255, 0, 0);
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("Acedia Gateway: Not Found", 255, 0, 0);
 				if(LihzahrdAltar && IceMonument && Sarcophagus && GreedGateway && SlothGateway)
 				{
-					Main.NewText("World has generated without major issues", 0, 255, 0);
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("World has generated without major issues", 0, 255, 0);
 				}
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 

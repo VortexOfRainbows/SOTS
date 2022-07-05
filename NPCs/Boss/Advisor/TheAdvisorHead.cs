@@ -558,7 +558,8 @@ namespace SOTS.NPCs.Boss.Advisor
 				if(dormantCounter > 90)
 				{
 					SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
-					Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
 					dormant = false;
 					NPC.dontTakeDamage = false;
 					NPC.dontCountMe = false;
@@ -1141,6 +1142,8 @@ namespace SOTS.NPCs.Boss.Advisor
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			if (NPC.life <= 0)
 			{
 				for (int k = 0; k < 50; k++)

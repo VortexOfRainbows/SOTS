@@ -168,4 +168,30 @@ namespace SOTS.Void
 			valueMult *= multiplier;
 		}
 	}
+	public class Chthonic : ModPrefix
+	{
+		public override float RollChance(Item item)
+			=> 0.8f;
+		public override bool CanRoll(Item item)
+		{
+			return item.ModItem as VoidItem != null;
+		}
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
+		public override void Apply(Item item)
+		{
+			item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 1.1f;
+		}
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
+		{
+			damageMult += 0.24f;
+			useTimeMult += 0.06f; //this is bad
+			knockbackMult -= 0.06f;
+			base.SetStats(ref damageMult, ref knockbackMult, ref useTimeMult, ref scaleMult, ref shootSpeedMult, ref manaMult, ref critBonus);
+		}
+		public override void ModifyValue(ref float valueMult)
+		{
+			float multiplier = 1.06f;
+			valueMult *= multiplier;
+		}
+	}
 }

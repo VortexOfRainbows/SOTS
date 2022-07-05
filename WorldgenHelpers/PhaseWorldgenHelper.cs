@@ -40,6 +40,10 @@ namespace SOTS.WorldgenHelpers
         }
         private static void DoGen(object state)
         {
+            /*if (Main.netMode == NetmodeID.Server)
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 2"), VoidPlayer.ChaosPink);
+            else
+                Main.NewText("Gen Start 2", VoidPlayer.ChaosPink);*/
             Generating = true;
             if (ClearPrevious)
                 ClearPreviousGen();
@@ -67,7 +71,8 @@ namespace SOTS.WorldgenHelpers
                     worldPercent = spread * i;
                     float randomMinMax = 20 * randomMult;
                     int xPos = (int)(MathHelper.Lerp(40 + randomMinMax, Main.maxTilesX - 40 - randomMinMax, worldPercent) + WorldGen.genRand.NextFloat(-randomMinMax, randomMinMax));
-                    int yPos = WorldGen.genRand.Next(80, (int)(Main.worldSurface * 0.25f));
+                    int max = (int)(Main.worldSurface * 0.25f);
+                    int yPos = WorldGen.genRand.Next(80 < max ? 80 : max - 10, max);
                     if (SOTSWorldgenHelper.Empty(xPos - clearRadius * 2, yPos - clearRadius * 2, clearRadius * 4, clearRadius * 4, 1))
                     {
                         SOTSWorldgenHelper.GeneratePhaseOre(xPos, yPos, 20, 2); //generate primary branches
@@ -84,7 +89,8 @@ namespace SOTS.WorldgenHelpers
             {
                 float randomMinMax = 20 * (randomMult + 1);
                 int newX = (int)(MathHelper.Lerp(50, Main.maxTilesX - 50, j / (float)scattered) + WorldGen.genRand.NextFloat(-randomMinMax, randomMinMax));
-                int yPos = WorldGen.genRand.Next(80, (int)(Main.worldSurface * 0.3f));
+                int max = (int)(Main.worldSurface * 0.3f);
+                int yPos = WorldGen.genRand.Next(80 < max ? 80 : max - 10, max);
                 if (SOTSWorldgenHelper.Empty(newX - clearRadius, yPos - clearRadius, clearRadius * 2, clearRadius * 2, 1))
                 {
                     int size = 3 + WorldGen.genRand.Next(2);
@@ -106,7 +112,15 @@ namespace SOTS.WorldgenHelpers
         }
         public static void Generate()
         {
+            /*if (Main.netMode == NetmodeID.Server)
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 1"), VoidPlayer.ChaosPink);
+            else
+                Main.NewText("Gen Start 1", VoidPlayer.ChaosPink);*/
             ThreadPool.QueueUserWorkItem(DoGen, null);
+            /*if (Main.netMode == NetmodeID.Server)
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen End"), VoidPlayer.ChaosPink);
+            else
+                Main.NewText("Gen End", VoidPlayer.ChaosPink);*/
         }
     }
 }

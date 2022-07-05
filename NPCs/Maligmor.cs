@@ -211,47 +211,51 @@ namespace SOTS.NPCs
             if (NPC.life > 0)
 			{
 				int num = 0;
-				while (num < damage / NPC.lifeMax * 50.0)
-				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
-					num++;
-				}
+				if (Main.netMode != NetmodeID.Server)
+					while (num < damage / NPC.lifeMax * 50.0)
+					{
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
+						num++;
+					}
 			}
             else
 			{
-				for(int i = 1; i <= 8; i++)
+				if (Main.netMode != NetmodeID.Server)
 				{
-					Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45)) - new Vector2(9, 9);
-					Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular, circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);
-				}
-				for (int i = 0; i < 72; i++)
-				{
-					Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 5));
-					Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
-					dust.velocity *= 0.5f;
-					dust.velocity += circular * 0.75f;
-					dust.scale = 2.5f;
-					dust.noGravity = true;
-					dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
-					dust.velocity *= 0.5f;
-					dust.velocity += circular * 0.25f;
-					dust.scale = 1.25f;
-					dust.noGravity = true;
-					if(i == 36 || i == 0)
+					for (int i = 1; i <= 8; i++)
 					{
-						for(int l = 0; l < 10; l++)
+						Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45)) - new Vector2(9, 9);
+						Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular, circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);
+					}
+					for (int i = 0; i < 72; i++)
+					{
+						Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 5));
+						Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
+						dust.velocity *= 0.5f;
+						dust.velocity += circular * 0.75f;
+						dust.scale = 2.5f;
+						dust.noGravity = true;
+						dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
+						dust.velocity *= 0.5f;
+						dust.velocity += circular * 0.25f;
+						dust.scale = 1.25f;
+						dust.noGravity = true;
+						if (i == 36 || i == 0)
 						{
-							dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
-							dust.velocity *= 0.5f;
-							dust.velocity += circular * (0.25f + l * 0.05f);
-							dust.scale = 1.25f + (1.25f * l * 0.1f);
-							dust.noGravity = true;
+							for (int l = 0; l < 10; l++)
+							{
+								dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
+								dust.velocity *= 0.5f;
+								dust.velocity += circular * (0.25f + l * 0.05f);
+								dust.scale = 1.25f + (1.25f * l * 0.1f);
+								dust.noGravity = true;
+							}
 						}
 					}
-				}
-				for (int k = 0; k < 50; k++)
-				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
+					for (int k = 0; k < 50; k++)
+					{
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
+					}
 				}
 			}		
 		}

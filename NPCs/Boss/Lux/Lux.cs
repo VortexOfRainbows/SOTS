@@ -17,6 +17,7 @@ using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace SOTS.NPCs.Boss.Lux
@@ -359,13 +360,18 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void OnKill()
 		{
+			//if (Main.netMode == NetmodeID.Server)
+				//Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start -1"), VoidPlayer.ChaosPink);
 			if (!SOTSWorld.downedLux && SOTSWorld.GlobalCounter > 120) //have to be in world for more than 2 seconds. Objective is to hopefully prevent recipe browser from crashing the game.
 			{
-				if (!Main.gameInactive)
-					PhaseWorldgenHelper.Generate();
+				//if (Main.netMode == NetmodeID.Server)
+					//Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 0"), VoidPlayer.ChaosPink);
+				PhaseWorldgenHelper.Generate();
+				//if (Main.netMode == NetmodeID.Server)
+					//Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen End 2"), VoidPlayer.ChaosPink);
 				SOTSWorld.downedLux = true;
 			}
-        }
+		}
         public override void BossLoot(ref string name, ref int potionType)
         {
 			potionType = ItemID.GreaterHealingPotion;
@@ -570,7 +576,8 @@ namespace SOTS.NPCs.Boss.Lux
 					if (attackTimer1 == 120)
 					{
 						SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f, 0.1f);
-						Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
+						if(Main.netMode != NetmodeID.Server)
+							Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
 					}
 					if (attackTimer1 > 60)
 					{

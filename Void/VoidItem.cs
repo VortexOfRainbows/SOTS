@@ -55,7 +55,7 @@ namespace SOTS.Void
 			float voidCostMult = 1f;
 			if (!Item.CountsAsClass<VoidSummon>())
 			{
-				if (Item.prefix == ModContent.PrefixType<Famished>() || Item.prefix == ModContent.PrefixType<Precarious>() || Item.prefix == ModContent.PrefixType<Potent>() || Item.prefix == ModContent.PrefixType<Omnipotent>())
+				if (Item.prefix == ModContent.PrefixType<Famished>() || Item.prefix == ModContent.PrefixType<Precarious>() || Item.prefix == ModContent.PrefixType<Potent>() || Item.prefix == ModContent.PrefixType<Omnipotent>() || Item.prefix == ModContent.PrefixType<Chthonic>())
 				{
 					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}

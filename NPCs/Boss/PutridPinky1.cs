@@ -74,7 +74,8 @@ namespace SOTS.NPCs.Boss
 		public void Explode()
 		{
 			NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + NPC.width/2, (int)NPC.Center.Y, ModContent.NPCType<PutridPinkyPhase2>());
-			SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
+			if (Main.netMode != NetmodeID.Server)
+				SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
 			for (int i = 0; i < 12; i++)
 			{
 				Vector2 rotation = new Vector2(50, 0).RotatedBy(MathHelper.ToRadians(i * 30));

@@ -44,14 +44,18 @@ namespace SOTS.NPCs
 
 			NPC.ai[0]++;
 			if (NPC.ai[0] == 60)
-				Main.NewText("WHY ARE YOU RUNNING????", 0, 255, 0);
+				if (Main.netMode != NetmodeID.Server)
+					Main.NewText("WHY ARE YOU RUNNING????", 0, 255, 0);
 			if(NPC.ai[0] == 120)
-				Main.NewText("DO YOU KNOW DA WAE???", 0, 255, 0);
+				if (Main.netMode != NetmodeID.Server)
+					Main.NewText("DO YOU KNOW DA WAE???", 0, 255, 0);
 			if(NPC.ai[0] == 180)
-				Main.NewText("YOU DO NOT KNOW DA WAE!", 0, 255, 0);
+				if (Main.netMode != NetmodeID.Server)
+					Main.NewText("YOU DO NOT KNOW DA WAE!", 0, 255, 0);
 			if(NPC.ai[0] >= 240)
 			{
-				Main.NewText("LET US SHOW YOU DA WAE!!!!!!!!!!!!!!!!!!!!!!", 0, 255, 0);
+				if (Main.netMode != NetmodeID.Server)
+					Main.NewText("LET US SHOW YOU DA WAE!!!!!!!!!!!!!!!!!!!!!!", 0, 255, 0);
 				NPC.SpawnOnPlayer(0, NPC.type);
 				NPC.ai[0] = 0;
 			}

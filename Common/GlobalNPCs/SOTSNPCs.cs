@@ -118,6 +118,8 @@ namespace SOTS.Common.GlobalNPCs
         }
         public override void HitEffect(NPC npc, int hitDirection, double damage)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			if (isPolarisNPC(npc.type))
 			{
 				if (npc.life <= 0)
