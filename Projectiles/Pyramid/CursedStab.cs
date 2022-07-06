@@ -30,6 +30,8 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.hide = true;
 			Projectile.localNPCHitCooldown = 3;
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.minion = false;
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
