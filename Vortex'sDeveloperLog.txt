@@ -25,11 +25,11 @@ Other 1.4 related objectives:
 4. Final 2 starter houses
 5. Bestiary for all enemies
 
-Bugs:
-1. Crushers softlock and crash the game
-
-
 Daily Log:
+
+7/5/22
+1. Fix zombie hand
+2. Fix crusher dividing by zero (crusher softlock)
 
 7/4/22
 1. Multiplayer Fixes

@@ -140,7 +140,7 @@ namespace SOTS.Projectiles.Crushers
 			{
 				if(CanCharge())
 				{
-					float chargeSpeedMult = (1f / player.GetTotalAttackSpeed<VoidMelee>() - 1 + SOTSPlayer.ModPlayer(player).attackSpeedMod - 1) * vPlayer.CrushTransformer;
+					float chargeSpeedMult = (1f / (player.GetTotalAttackSpeed<VoidMelee>() + SOTSPlayer.ModPlayer(player).attackSpeedMod - 1)) * vPlayer.CrushTransformer;
 					currentCharge += 1 * chargeSpeedMult;
 					float chargePercentage = currentCharge / chargeTime;
 					chargePercentage = (float)Math.Pow(chargePercentage, exponentReduction);
