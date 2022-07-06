@@ -310,6 +310,10 @@ namespace SOTS.Void
 		{
 			return Color.Lerp(Inferno1, Inferno2, lerp);
 		}
+		public static Color ShrimpColorAttempt(float lerp)
+		{
+			return Color.Lerp(new Color(165, 68, 68), TideColor, lerp);
+		}
 		public static Color InfernoColorAttemptDegrees(float degrees)
 		{
 			return InfernoColorAttempt(0.5f * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 3f + degrees)));

@@ -874,7 +874,8 @@ namespace SOTS
 			int liquidType = attempt.inHoney ? 2 : attempt.inLava ? 1 : 0;
 			if (ScaleCatch2(power, 0, 100, 9, 29) && (Player.ZoneSkyHeight || Player.Center.Y < Main.worldSurface * 16 * 0.5f))
 				itemDrop = ModContent.ItemType<TinyPlanetFish>();
-
+			if(Player.ZoneBeach && liquidType == 0 && ScaleCatch2(power, 0, 100, 100, 200))
+				itemDrop = ModContent.ItemType<PistolShrimp>();
 			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
 			//caughtType = mod.ItemType("ZephyriousZepline"); }
 			//if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {

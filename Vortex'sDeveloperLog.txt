@@ -9,10 +9,7 @@ Update Objectives:
 	1. Thermal Polarizer (grants some stats and inverses the effects of Dissolving Permafrost, Inferno, up to a certain point)
 	2. Exotic Polarizer (grants some stats and inverses the effects of Dissolving Brilliance, Evil, Otherworld, up to a certain point)
 4. Blazing Quiver (Dissolving Inferno + Molten Quiver)
-5. Pistol Shrimp
-	1. It's a shrimp and a pistol
-	2. magic weapon that fires homing bubbles, can be obtained fishing in ocean or something
-6. Plasma Shrimp
+5. Plasma Shrimp
 	1. Pistol Shrimp but accessory
 	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
 	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope 
@@ -30,6 +27,7 @@ Daily Log:
 7/5/22
 1. Fix zombie hand
 2. Fix crusher dividing by zero (crusher softlock)
+3. Pistol Shrimp
 
 7/4/22
 1. Multiplayer Fixes
