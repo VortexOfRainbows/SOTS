@@ -528,8 +528,8 @@ namespace SOTS
 			{
 				if(arg == ItemID.EaterOfWorldsBossBag || arg == ItemID.BrainOfCthulhuBossBag)
 					player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<PyramidKey>(), 1);
-				else if(arg == ItemID.WallOfFleshBossBag)
-					player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<HungryHunter>(), 1);
+				//else if(arg == ItemID.WallOfFleshBossBag)
+					//player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<HungryHunter>(), 1);
 			}
         }
     }

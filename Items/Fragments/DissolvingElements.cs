@@ -8,690 +8,343 @@ using SOTS.Void;
 
 namespace SOTS.Items.Fragments
 {
-	public class DissolvingNature : ModItem
+	public abstract class DissolvingElement : ModItem
 	{
-		int frameCounter;
-		int frame;
-		public override void SetStaticDefaults()
+		public int FrameCounter;
+		public int Frame;
+		public virtual int FrameX => Item.width;
+		public virtual int FrameY => Item.height;
+		public virtual int FrameSpeed => 5;
+		public virtual int TotalFrames => 6;
+		public virtual Color glowColor => new Color(100, 100, 100, 0);
+		public sealed override void SetStaticDefaults()
+		{
+			SafeSetStaticDefaults();
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(FrameSpeed, TotalFrames));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
+			this.SetResearchCost(3);
+		}
+		public virtual void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Nature");
 			Tooltip.SetDefault("Reduces damage dealt by 10% while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
+        public sealed override void SetDefaults()
+		{
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.maxStack = 999;
+			SafeSetDefaults();
+		}
+		public virtual void SafeSetDefaults()
+		{
+
+		}
+        public sealed override void UpdateInventory(Player player)
+		{
+			UpdateElement(DissolvingElementsPlayer.ModPlayer(player));
+			UpdateFrames();
+		}
+		public void UpdateFrames()
+		{
+			FrameCounter++;
+			if (FrameCounter >= FrameSpeed)
+			{
+				FrameCounter = 0;
+				Frame++;
+			}
+			if (Frame >= TotalFrames)
+			{
+				Frame = 0;
+			}
+		}
+		public virtual void UpdateElement(DissolvingElementsPlayer DEP)
+        {
+			DEP.DissolvingNature += Item.stack;
+		}
+		public virtual bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature;
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (PolarizeElement)
+			{
+				spriteEffects = SpriteEffects.FlipVertically;
+			}
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
+			Color color = glowColor;
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2(position.X + x, position.Y + y),
-				new Rectangle(0, 42 * this.frame, 26, 42), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, position + new Vector2(x, y), new Rectangle(0, FrameY * this.Frame, FrameX, FrameY), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, spriteEffects, 0f);
 			}
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			frameCounter++;
-			if (frameCounter >= 5)
+			UpdateFrames();
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (PolarizeElement)
 			{
-				frameCounter = 0;
-				frame++;
+				spriteEffects = SpriteEffects.FlipVertically;
 			}
-			if (frame >= 6)
-			{
-				frame = 0;
-			}
-
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Color color = glowColor;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, FrameY * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
-				new Rectangle(0, 42 * frame, 26, 42), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(x, y), new Rectangle(0, FrameY * this.Frame, FrameX, FrameY), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, spriteEffects, 0f);
 			}
 			return false;
 		}
-		public override void SetDefaults()
+	}
+	public class DissolvingNature : DissolvingElement
+	{
+		public override void SafeSetStaticDefaults()
+		{
+			DisplayName.SetDefault("Dissolving Nature");
+			Tooltip.SetDefault("Reduces damage dealt by 10% while in the inventory");
+		}
+        public override int FrameSpeed => 5;
+        public override int TotalFrames => 6;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature;
+		public override void SafeSetDefaults()
 		{
 			Item.width = 26;
 			Item.height = 42;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
-		public override void UpdateInventory(Player player)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			frameCounter++;
-			if (frameCounter >= 5)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 6)
-			{
-				frame = 0;
-			}
-			for (int i = 0; i < Item.stack; i++)
-			{
-				if (player.GetDamage(DamageClass.Generic).Additive > 0f)
-				{
-					player.GetDamage(DamageClass.Generic) -= 0.1f;
-				}
-				else
-				{
-					player.GetDamage(DamageClass.Generic) -= player.GetDamage(DamageClass.Generic).Additive;
-				}
-			}
+			DEP.DissolvingNature += Item.stack;
 		}
 	}
-	public class DissolvingEarth : ModItem
+	public class DissolvingEarth : DissolvingElement
 	{
-		int frameCounter;
-		int frame;
-		public override void SetStaticDefaults()
+		public override void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Earth");
 			Tooltip.SetDefault("Reduces endurance by 10% while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2(position.X + x, position.Y + y),
-				new Rectangle(0, 42 * this.frame, 28, 42), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			frameCounter++;
-			if (frameCounter >= 6)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
-				new Rectangle(0, 42 * frame, 28, 42), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override void SetDefaults()
+		public override int FrameSpeed => 6;
+		public override int TotalFrames => 8;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth;
+		public override void SafeSetDefaults()
 		{
 			Item.width = 28;
 			Item.height = 42;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
-		public override void UpdateInventory(Player player)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			frameCounter++;
-			if (frameCounter >= 6)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-			for (int i = 0; i < Item.stack; i++)
-			{
-				if (player.endurance > -1f)
-				{
-					player.endurance -= 0.1f;
-				}
-				else
-				{
-					player.endurance = -1;
-				}
-			}
+			DEP.DissolvingEarth += Item.stack;
 		}
 	}
-	public class DissolvingAurora : ModItem
+	public class DissolvingAurora : DissolvingElement
 	{
-		int frameCounter = 0;
-		int frame = 0;
-		public override void SetStaticDefaults()
+		public override void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Aurora");
 			Tooltip.SetDefault("Reduces movespeed by 20% while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 5));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
-		public override void SetDefaults()
+		public override int FrameSpeed => 8;
+		public override int TotalFrames => 5;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora;
+		public override void SafeSetDefaults()
 		{
 			Item.width = 34;
 			Item.height = 38;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2(position.X + x, position.Y + y),
-				new Rectangle(0, 38 * this.frame, 34, 38), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			frameCounter++;
-			if (frameCounter >= 8)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 5)
-			{
-				frame = 0;
-			}
-
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
-				new Rectangle(0, 38 * frame, 34, 38), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override void UpdateInventory(Player player)
-		{
-			frameCounter++;
-			if (frameCounter >= 8)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 5)
-			{
-				frame = 0;
-			}
-
-			for (int i = 0; i < Item.stack; i++)
-			{
-				if (player.moveSpeed > 0f)
-				{
-					player.moveSpeed -= 0.2f;
-				}
-				else
-				{
-					player.moveSpeed = 0;
-				}
-			}
+			DEP.DissolvingAurora += Item.stack;
 		}
 	}
-	public class DissolvingDeluge : ModItem
+	public class DissolvingDeluge : DissolvingElement
 	{
-		int frameCounter;
-		int frame;
-		public override void SetStaticDefaults()
+		public override void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Deluge");
 			Tooltip.SetDefault("Decreases max life and mana by 10 while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 12));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2(position.X + x, position.Y + y),
-				new Rectangle(0, Item.height * this.frame, Item.width, Item.height), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			frameCounter++;
-			if (frameCounter >= 6)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 12)
-			{
-				frame = 0;
-			}
-
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
-				new Rectangle(0, Item.height * frame, Item.width, Item.height), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override void SetDefaults()
+		public override int FrameSpeed => 6;
+		public override int TotalFrames => 12;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge;
+		public override void SafeSetDefaults()
 		{
 			Item.width = 32;
 			Item.height = 38;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
-		public override void UpdateInventory(Player player)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			frameCounter++;
-			if (frameCounter >= 6)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 12)
-			{
-				frame = 0;
-			}
-			for (int i = 0; i < Item.stack; i++)
-			{
-				if (player.statLifeMax2 > 100)
-				{
-					player.statLifeMax2 -= 10;
-				}
-				if (player.statManaMax2 > 40)
-				{
-					player.statManaMax2 -= 10;
-				}
-			}
+			DEP.DissolvingDeluge += Item.stack;
 		}
 	}
-	public class DissolvingAether : ModItem
+	public class DissolvingAether : DissolvingElement
 	{
-		int frameCounter = 0;
-		int frame = 0;
-		public override void SetStaticDefaults()
+		public override void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Aether");
 			Tooltip.SetDefault("Reduces gravity while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
-		public override void SetDefaults()
+		public override int FrameSpeed => 6;
+		public override int TotalFrames => 8;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether;
+        public override Color glowColor => VoidPlayer.OtherworldColor;
+        public override void SafeSetDefaults()
 		{
 			Item.width = 34;
-			Item.height = 46;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
+			Item.height = 48;
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = VoidPlayer.OtherworldColor;
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2(position.X + x, position.Y + y),
-				new Rectangle(0, 48 * this.frame, 34, 46), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			frameCounter++;
-			if (frameCounter >= 6)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = VoidPlayer.OtherworldColor;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
-				new Rectangle(0, 48 * frame, 34, 46), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override void UpdateInventory(Player player)
-		{
-			frameCounter++;
-			if (frameCounter >= 6)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
-			aetherPlayer.aetherNum += Item.stack;
+			DEP.DissolvingAether += Item.stack;
 		}
 	}
-	public class DissolvingUmbra : ModItem
+	public class DissolvingUmbra : DissolvingElement
 	{
-		int frameCounter = 0;
-		int frame = 0;
-		public override void SetStaticDefaults()
+		public override Color glowColor => VoidPlayer.EvilColor * 1.2f;
+		public override void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Umbra");
 			Tooltip.SetDefault("Reduces max void by 20 while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 10));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
-		public override void SetDefaults()
+		public override int FrameSpeed => 5;
+		public override int TotalFrames => 10;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra;
+		public override void SafeSetDefaults()
 		{
 			Item.width = 38;
 			Item.height = 48;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = VoidPlayer.EvilColor;
-			for (int k = 0; k < 7; k++)
-			{
-				Main.spriteBatch.Draw(texture,
-				position + Main.rand.NextVector2Circular(1.5f, 1.5f),
-				new Rectangle(0, Item.height * this.frame, Item.width, Item.height), color * 1.2f * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			frameCounter++;
-			if (frameCounter >= 5)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 10)
-			{
-				frame = 0;
-			}
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = VoidPlayer.EvilColor;
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
-			{
-				Main.spriteBatch.Draw(texture,
-				Item.Center - Main.screenPosition + Main.rand.NextVector2Circular(1.5f, 1.5f),
-				new Rectangle(0, Item.height * frame, Item.width, Item.height), color * 1.2f * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override void UpdateInventory(Player player)
-		{
-			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			frameCounter++;
-			if (frameCounter >= 5)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 10)
-			{
-				frame = 0;
-			}
-			for (int i = 0; i < Item.stack; i++)
-			{
-				if (vPlayer.voidMeterMax2 > 20)
-				{
-					vPlayer.voidMeterMax2 -= 20;
-				}
-				if(vPlayer.voidMeterMax2 < 20)
-                {
-					vPlayer.voidMeterMax2 = 20;
-					break;
-				}
-			}
+			DEP.DissolvingUmbra += Item.stack;
 		}
 	}
-	public class DissolvingNether : ModItem
+	public class DissolvingNether : DissolvingElement
 	{
-		int frameCounter;
-		int frame;
-		public override void SetStaticDefaults()
+		public override void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Nether");
 			Tooltip.SetDefault("Decreases life regeneration by 2 while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 8));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2(position.X + x, position.Y + y),
-				new Rectangle(0, 40 * this.frame, 42, 40), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			frameCounter++;
-			if (frameCounter >= 5)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
-				new Rectangle(0, 40 * frame, 42, 40), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override void SetDefaults()
+		public override int FrameSpeed => 5;
+		public override int TotalFrames => 8;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether;
+		public override void SafeSetDefaults()
 		{
 			Item.width = 42;
 			Item.height = 40;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
-		public override void UpdateInventory(Player player)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			frameCounter++;
-			if (frameCounter >= 5)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
-			aetherPlayer.infernoNum++;
+			DEP.DissolvingNether += Item.stack;
 		}
 	}
-	public class DissolvingBrilliance : ModItem
+	public class DissolvingBrilliance : DissolvingElement
 	{
-		int frameCounter;
-		int frame;
-		public override void SetStaticDefaults()
+		public override void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Brilliance");
 			Tooltip.SetDefault("Increases void drain by 0.5 while in the inventory");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 8));
-			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-			this.SetResearchCost(3);
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2(position.X + x, position.Y + y),
-				new Rectangle(0, 66 * this.frame, 66, 66), color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			frameCounter++;
-			if (frameCounter >= 5)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.15f;
-				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
-				new Rectangle(0, 66 * frame, 66, 66), color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-		public override void SetDefaults()
+		public override int FrameSpeed => 5;
+		public override int TotalFrames => 8;
+		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance;
+		public override void SafeSetDefaults()
 		{
 			Item.width = 66;
 			Item.height = 66;
-			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
-		public override void UpdateInventory(Player player)
+		public override void UpdateElement(DissolvingElementsPlayer DEP)
 		{
-			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			frameCounter++;
-			if (frameCounter >= 5)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 8)
-			{
-				frame = 0;
-			}
-			vPlayer.flatVoidRegen -= 0.5f * Item.stack;
+			DEP.DissolvingBrilliance += Item.stack;
 		}
 	}
-	public class AetherPlayer : ModPlayer
+	public class DissolvingElementsPlayer : ModPlayer
 	{
-		public static AetherPlayer ModPlayer(Player player)
+		public bool PolarizeNature = false;
+		public bool PolarizeEarth = false;
+		public bool PolarizeAurora = false;
+		public bool PolarizeAether = false;
+		public bool PolarizeDeluge = false;
+		public bool PolarizeUmbra = false;
+		public bool PolarizeNether = false;
+		public bool PolarizeBrilliance = false;
+		public static DissolvingElementsPlayer ModPlayer(Player player)
 		{
-			return player.GetModPlayer<AetherPlayer>();
+			return player.GetModPlayer<DissolvingElementsPlayer>();
 		}
-		public int aetherNum = 0;
-		public int infernoNum = 0;
+		public int DissolvingNature = 0;
+		public int DissolvingEarth = 0;
+		public int DissolvingAurora = 0;
+		public int DissolvingAether = 0;
+		public int DissolvingDeluge = 0;
+		public int DissolvingUmbra = 0;
+		public int DissolvingNether = 0;
+		public int DissolvingBrilliance = 0;
         public override void UpdateBadLifeRegen()
         {
-			if (infernoNum > 10)
-				infernoNum = 10;
-			Player.lifeRegen -= infernoNum * 2;
-			infernoNum = 0;
+			NetherEffects();
 		}
         public override void ResetEffects()
 		{
-			if (aetherNum == 0)
-			{
-				return;
-			}
+			if (DissolvingAether != 0)
+				AetherEffects(); 
+			PolarizeNature = false;
+			PolarizeEarth = false;
+			PolarizeAurora = false;
+			PolarizeAether = false;
+			PolarizeDeluge = false;
+			PolarizeUmbra = false;
+			PolarizeNether = false;
+			PolarizeBrilliance = false;
+		}
+		public override void PostUpdateEquips()
+        {
+			NatureEffects();
+			EarthEffects();
+			AuroraEffects();
+			if (DissolvingDeluge != 0)
+				DelugeEffects();
+			if (DissolvingUmbra != 0)
+				UmbraEffects();
+			BrillianceEffects();
+        }
+		public void NatureEffects()
+		{
+			Player.GetDamage(DamageClass.Generic) -= 0.1f * MathHelper.Clamp(DissolvingNature, 0, 10);
+			DissolvingNature = 0;
+		}
+		public void EarthEffects()
+		{
+			Player.endurance -= 0.1f * MathHelper.Clamp(DissolvingEarth, 0, 20);
+			DissolvingEarth = 0;
+		}
+		public void AuroraEffects()
+		{
+			Player.moveSpeed -= 0.2f * MathHelper.Clamp(DissolvingAurora, 0, 5);
+			DissolvingAurora = 0;
+		}
+		public void DelugeEffects()
+		{
+			Player.statLifeMax2 = (int)MathHelper.Clamp(Player.statLifeMax2 - DissolvingDeluge * 10, 100, Player.statLifeMax2);
+			Player.statManaMax2 = (int)MathHelper.Clamp(Player.statManaMax2 - DissolvingDeluge * 10, 20, Player.statManaMax2);
+			DissolvingDeluge = 0;
+		}
+        public void AetherEffects()
+		{
 			float projectedGravity = Player.gravity;
 			float projectedFallSpeed = Player.maxFallSpeed;
 			float projectedJumpSpeedBoost = Player.jumpSpeedBoost;
-			float mult = 1f - 1f / (0.3f * aetherNum + 1); //around 0.3f at 1
-			float mult2 = 1f - 1f / (0.3f * aetherNum + 1); //around 0.3f at 1
+			float mult = 1f - 1f / (0.3f * DissolvingAether + 1); //around 0.3f at 1
+			float mult2 = 1f - 1f / (0.3f * DissolvingAether + 1); //around 0.3f at 1
 			projectedGravity -= 1f * mult;
 			projectedFallSpeed -= 10f * mult2;
 			projectedJumpSpeedBoost += 5f * mult;
@@ -715,11 +368,34 @@ namespace SOTS.Items.Fragments
 
 			if (Player.jumpSpeedBoost < projectedJumpSpeedBoost)
 				Player.jumpSpeedBoost = projectedJumpSpeedBoost;
-			if (aetherNum >= 4)
+			if (DissolvingAether >= 4)
 			{
 				Player.noFallDmg = true;
 			}
-			aetherNum = 0;
+			DissolvingAether = 0;
+		}
+		public void UmbraEffects()
+		{
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(Player);
+			vPlayer.voidMeterMax2 -= 20 * DissolvingUmbra;
+			if (vPlayer.voidMeterMax2 < 20)
+			{
+				vPlayer.voidMeterMax2 = 20;
+			}
+			DissolvingUmbra = 0;
+		}
+		public void NetherEffects()
+		{
+			if (DissolvingNether > 10)
+				DissolvingNether = 10;
+			Player.lifeRegen -= DissolvingNether * 2;
+			DissolvingNether = 0;
+		}
+		public void BrillianceEffects()
+		{
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(Player);
+			vPlayer.flatVoidRegen -= 0.5f * DissolvingBrilliance;
+			DissolvingBrilliance = 0;
 		}
 	}
 }

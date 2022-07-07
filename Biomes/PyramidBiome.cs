@@ -39,8 +39,7 @@ namespace SOTS.Biomes
 			}
 			else
 			{
-				//Disabled due to being unnecessary
-				///pyramidBiome = SOTSWorld.pyramidBiome > 0; //if there is a sarcophagus, acedia portal, or zepline block on screen
+				pyramidBiome = SOTSWorld.pyramidBiome > 0; //if there is a sarcophagus, acedia portal, or zepline block on screen
 			}
 			return pyramidBiome;
 		}

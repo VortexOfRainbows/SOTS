@@ -28,7 +28,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(null, "DissolvingAether", 1).AddIngredient(null, "DissolvingEarth", 1).AddIngredient(null, "DissolvingAurora", 1).AddIngredient(null, "DissolvingNature", 1).AddTile(TileID.DemonAltar).Register();
+			CreateRecipe(1).AddIngredient<DissolvingAether>(1).AddIngredient<DissolvingEarth>(1).AddIngredient<DissolvingAurora>(1).AddIngredient<DissolvingNature>(1).AddTile(TileID.DemonAltar).Register();
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -43,20 +43,38 @@ namespace SOTS.Items.Fragments
 				int frameNum = (i + bonus) % 4;
 				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
 				Vector2 rotationAround = new Vector2((11 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
+				SpriteEffects spriteEffects = SpriteEffects.None;
+				if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether)
+					spriteEffects = SpriteEffects.FlipVertically;
 				for (int k = 0; k < 7; k++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 				}
 			}
 			for (int k = 0; k < 7; k++)
 			{
 				int frameNum = (3 + bonus) % 4;
 				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
+				SpriteEffects spriteEffects = SpriteEffects.None;
+				if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether)
+					spriteEffects = SpriteEffects.FlipVertically;
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 			}
 			return false;
 		}
@@ -67,59 +85,55 @@ namespace SOTS.Items.Fragments
 			float counter = Main.GlobalTimeWrappedHourly * 160;
 			int bonus = (int)(counter / 360f);
 			float mult = new Vector2(-11f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			int frameNum;
 			for (int i = 0; i < 3; i++)
 			{
-				int frameNum = (i + bonus) % 4;
+				frameNum = (i + bonus) % 4;
 				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
+				spriteEffects = SpriteEffects.None;
+				if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether)
+					spriteEffects = SpriteEffects.FlipVertically;
 				Vector2 rotationAround = new Vector2((11 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
 				for (int k = 0; k < 7; k++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 				}
 			}
+			frameNum = (3 + bonus) % 4;
+			Rectangle frame2 = new Rectangle(0, 22 * frameNum, 22, 22);
+			spriteEffects = SpriteEffects.None;
+			if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether)
+				spriteEffects = SpriteEffects.FlipVertically;
 			for (int k = 0; k < 7; k++)
 			{
-				int frameNum = (3 + bonus) % 4;
-				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y), frame2, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 			}
 			return false;
 		}
 		public override void UpdateInventory(Player player)
 		{
-			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
-			aetherPlayer.aetherNum += Item.stack;
-			for (int i = 0; i < Item.stack; i++)
-			{
-				if (player.GetDamage(DamageClass.Generic).Additive > 0f)
-				{
-					player.GetDamage(DamageClass.Generic) -= 0.1f;
-				}
-				else
-				{
-					player.GetDamage(DamageClass.Generic) -= player.GetDamage(DamageClass.Generic).Additive;
-				}
-				if (player.moveSpeed > 0f)
-				{
-					player.moveSpeed -= 0.2f;
-				}
-				else
-				{
-					player.moveSpeed = 0;
-				}
-				if (player.endurance > -1f)
-				{
-					player.endurance -= 0.1f;
-				}
-				else
-				{
-					player.endurance = -1;
-				}
-			}
+			DissolvingElementsPlayer DEP = DissolvingElementsPlayer.ModPlayer(player);
+			DEP.DissolvingAether += Item.stack;
+			DEP.DissolvingEarth += Item.stack;
+			DEP.DissolvingAurora += Item.stack;
+			DEP.DissolvingNature += Item.stack;
 		}
 	}
 	public class TerminalCluster : ModItem
@@ -152,25 +166,44 @@ namespace SOTS.Items.Fragments
 			int bonus = (int)(counter / 360f);
 			float mult = -12f * (float)Math.Cos(MathHelper.ToRadians(counter));
 			int frameNum = 0;
+			SpriteEffects spriteEffects = SpriteEffects.None;
 			for (int i = 0; i < 3; i++)
 			{
 				frameNum = (i + bonus) % 4;
+				spriteEffects = SpriteEffects.None;
+				if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra)
+					spriteEffects = SpriteEffects.FlipVertically;
 				Rectangle frame2 = new Rectangle(0, 28 * frameNum, 28, 28);
 				Vector2 rotationAround = new Vector2((12 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
 				for (int k = 0; k < 7; k++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 				}
 			}
 			frameNum = (3 + bonus) % 4;
 			Rectangle frame = new Rectangle(0, 28 * frameNum, 28, 28);
+			spriteEffects = SpriteEffects.None;
+			if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra)
+				spriteEffects = SpriteEffects.FlipVertically;
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 			}
 			return false;
 		}
@@ -182,53 +215,54 @@ namespace SOTS.Items.Fragments
 			int bonus = (int)(counter / 360f);
 			float mult = -18f * (float)Math.Cos(MathHelper.ToRadians(counter));
 			int frameNum;
+			SpriteEffects spriteEffects = SpriteEffects.None;
 			for (int i = 0; i < 3; i++)
 			{
 				frameNum = (i + bonus) % 4;
 				Rectangle frame2 = new Rectangle(0, 28 * frameNum, 28, 28);
+				spriteEffects = SpriteEffects.None;
+				if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge)
+					spriteEffects = SpriteEffects.FlipVertically;
+				if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra)
+					spriteEffects = SpriteEffects.FlipVertically;
 				Vector2 rotationAround = new Vector2((18 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
 				for (int k = 0; k < 7; k++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 				}
 			}
 			frameNum = (3 + bonus) % 4;
 			Rectangle frame = new Rectangle(0, 28 * frameNum, 28, 28);
+			spriteEffects = SpriteEffects.None;
+			if (frameNum == 0 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 1 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 2 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge)
+				spriteEffects = SpriteEffects.FlipVertically;
+			if (frameNum == 3 && DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra)
+				spriteEffects = SpriteEffects.FlipVertically;
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, spriteEffects, 0f);
 			}
 			return false;
 		}
 		public override void UpdateInventory(Player player)
 		{
-			AetherPlayer aetherPlayer = AetherPlayer.ModPlayer(player);
-			aetherPlayer.infernoNum += Item.stack;
-			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			for (int i = 0; i < Item.stack; i++)
-			{
-				if (player.statLifeMax2 > 100)
-				{
-					player.statLifeMax2 -= 10;
-				}
-				if (player.statManaMax2 > 40)
-				{
-					player.statManaMax2 -= 10;
-				}
-				if (vPlayer.voidMeterMax2 > 20)
-				{
-					vPlayer.voidMeterMax2 -= 20;
-				}
-				else if (vPlayer.voidMeterMax2 < 20)
-				{
-					vPlayer.voidMeterMax2 = 20;
-				}
-				vPlayer.flatVoidRegen -= 0.5f;
-			}
+			DissolvingElementsPlayer DEP = DissolvingElementsPlayer.ModPlayer(player);
+			DEP.DissolvingNether += Item.stack;
+			DEP.DissolvingUmbra += Item.stack;
+			DEP.DissolvingDeluge += Item.stack;
+			DEP.DissolvingBrilliance += Item.stack;
 		}
 	}
 }

@@ -12,7 +12,7 @@ Update Objectives:
 5. Plasma Shrimp
 	1. Pistol Shrimp but accessory
 	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
-	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope 
+	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope
 
 Other 1.4 related objectives:
 1. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
@@ -23,6 +23,10 @@ Other 1.4 related objectives:
 5. Bestiary for all enemies
 
 Daily Log:
+
+7/6/22
+1. Removed old flails
+2. Add polarizers. They have yet to become functional
 
 7/5/22
 1. Fix zombie hand

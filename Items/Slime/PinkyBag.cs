@@ -54,8 +54,8 @@ namespace SOTS.Items.Slime
 				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodScepter>());
 			if(rand == 6)
 				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodStaff>());
-			if(rand == 7)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodSpike>());
+			//if(rand == 7)
+				//player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodSpike>());
 		}
 	}
 }

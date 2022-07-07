@@ -286,11 +286,11 @@ namespace SOTS.Common.GlobalNPCs
 				npcLoot.Add(ItemDropRule.Common(ItemID.GiantHarpyFeather, 5, 1, 1));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfOtherworld>(), 1, 1, 2));
 			}
-			if (npc.type == NPCID.WallofFlesh)
+			/*if (npc.type == NPCID.WallofFlesh)
 			{
 				notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<HungryHunter>(), 1, 1, 1));
 				npcLoot.Add(notExpert);
-			}
+			}*/
 			if (npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail)
 			{
 				LeadingConditionRule leadingConditionRule = new(new Conditions.LegacyHack_IsABoss());

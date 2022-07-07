@@ -9,7 +9,6 @@ namespace SOTS.Projectiles.Otherworld
 {
     public class PlasmaBall : ModProjectile
     {	
-    	int counter = 50;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Plasma Ball");
@@ -17,14 +16,18 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void SetDefaults()
         {
-            Projectile.aiStyle = 15;
             Projectile.width = 30;
 			Projectile.height = 30;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 3000;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = true;
             Projectile.alpha = 0;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
         }
         public override bool PreDrawExtras()
         {
