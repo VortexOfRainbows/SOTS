@@ -19,7 +19,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<OvergrownPyramidBlock>(), 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<OvergrownPyramidBlock>());
+			Recipe.Create(ModContent.ItemType<OvergrownPyramidBlock>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class UnsafeOvergrownPyramidWall : ModItem

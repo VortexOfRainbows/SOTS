@@ -32,7 +32,7 @@ namespace SOTS.Items.Furniture.AncientGold
 		public override void AddRecipes()
 		{
 			CreateRecipe(2).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 2).ReplaceResult(ModContent.ItemType<RoyalGoldBrick>());
+			Recipe.Create(ModContent.ItemType<RoyalGoldBrick>()).AddIngredient(this, 2).Register();
 		}
 	}
 	public class AncientGoldPlatformTile : ModTile

@@ -26,15 +26,15 @@ namespace SOTS.Items.OreItems
 		{
 			CreateRecipe(1).AddIngredient(ItemID.CopperBar, 20).AddTile(TileID.Anvils).Register();
 			CreateRecipe(1).AddIngredient(ItemID.TinBar, 20).AddTile(TileID.Anvils).Register();
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfNature>(10).AddTile(TileID.Anvils).ReplaceResult(ItemID.Bezoar);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfEvil>(10).AddIngredient(ItemID.CrimtaneBar, 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.AdhesiveBandage);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfEvil>(10).AddIngredient(ItemID.DemoniteBar, 10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.Vitamins);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfTide>(10).AddTile(TileID.Anvils).ReplaceResult(ItemID.Nazar);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfChaos>(10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.Megaphone);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfOtherworld>(10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.FastClock);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfInferno>(10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.ArmorPolish);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfPermafrost>(10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.Blindfold);
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient<FragmentOfEarth>(10).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.TrifoldMap);
+			Recipe.Create(ItemID.Bezoar).AddIngredient(this, 1).AddIngredient<FragmentOfNature>(10).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.AdhesiveBandage).AddIngredient(this, 1).AddIngredient<FragmentOfEvil>(10).AddIngredient(ItemID.CrimtaneBar, 10).AddTile(TileID.MythrilAnvil).Register();
+			Recipe.Create(ItemID.Vitamins).AddIngredient(this, 1).AddIngredient<FragmentOfEvil>(10).AddIngredient(ItemID.DemoniteBar, 10).AddTile(TileID.MythrilAnvil).Register();
+			Recipe.Create(ItemID.Nazar).AddIngredient(this, 1).AddIngredient<FragmentOfTide>(10).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.Megaphone).AddIngredient(this, 1).AddIngredient<FragmentOfChaos>(10).AddTile(TileID.MythrilAnvil).Register();
+			Recipe.Create(ItemID.FastClock).AddIngredient(this, 1).AddIngredient<FragmentOfOtherworld>(10).AddTile(TileID.MythrilAnvil).Register();
+			Recipe.Create(ItemID.ArmorPolish).AddIngredient(this, 1).AddIngredient<FragmentOfInferno>(10).AddTile(TileID.MythrilAnvil).Register();
+			Recipe.Create(ItemID.Blindfold).AddIngredient(this, 1).AddIngredient<FragmentOfPermafrost>(10).AddTile(TileID.MythrilAnvil).Register();
+			Recipe.Create(ItemID.TrifoldMap).AddIngredient(this, 1).AddIngredient<FragmentOfEarth>(10).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

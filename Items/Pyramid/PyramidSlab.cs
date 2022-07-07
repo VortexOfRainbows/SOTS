@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,7 +23,7 @@ namespace SOTS.Items.Pyramid
 		{
 			CreateRecipe(1).AddIngredient(ItemID.SandstoneSlab, 2).AddTile(TileID.Autohammer).Register();
 			CreateRecipe(1).AddIngredient(ItemID.SandstoneSlab, 2).AddTile(TileID.LunarCraftingStation).Register();
-			CreateRecipe(2).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ItemID.SandstoneSlab);
+			Recipe.Create(ItemID.SandstoneSlab).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 }

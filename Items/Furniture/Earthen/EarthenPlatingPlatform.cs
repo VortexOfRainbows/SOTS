@@ -22,7 +22,7 @@ namespace SOTS.Items.Furniture.Earthen
 		public override void AddRecipes()
 		{
 			CreateRecipe(2).AddIngredient(ModContent.ItemType<EarthenPlating>()).Register();
-			CreateRecipe(1).AddIngredient(this, 2).ReplaceResult(ModContent.ItemType<EarthenPlating>());
+			Recipe.Create(ModContent.ItemType<EarthenPlating>()).AddIngredient(this, 2).Register();
 		}
 	}
 	public class EarthenPlatingPlatformTile : ModTile

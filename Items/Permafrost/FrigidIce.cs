@@ -154,7 +154,7 @@ namespace SOTS.Items.Permafrost
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<FrigidBrick>(), 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<FrigidBrick>());
+			Recipe.Create(ModContent.ItemType<FrigidBrick>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 }

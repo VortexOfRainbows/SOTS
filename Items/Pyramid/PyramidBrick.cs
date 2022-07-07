@@ -32,7 +32,7 @@ namespace SOTS.Items.Pyramid
 		{
 			CreateRecipe(1).AddIngredient(ItemID.SandstoneBrick, 1).AddTile(TileID.Autohammer).Register();
 			CreateRecipe(1).AddIngredient(ItemID.SandstoneBrick, 1).AddTile(TileID.LunarCraftingStation).Register();
-			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ItemID.SandstoneBrick);
+			Recipe.Create(ItemID.SandstoneBrick).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class PyramidBrickTile : ModTile

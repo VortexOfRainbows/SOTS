@@ -19,7 +19,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<NaturePlating>(), 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<NaturePlating>());
+			Recipe.Create(ModContent.ItemType<NaturePlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class NaturePlatingWallWall : ModWall
@@ -46,7 +46,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<NaturePlating>(), 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<NaturePlating>());
+			Recipe.Create(ModContent.ItemType<NaturePlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class NaturePlatingPanelWallWall : ModWall
@@ -73,7 +73,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<EarthenPlating>());
+			Recipe.Create(ModContent.ItemType<EarthenPlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class EarthenPlatingWallWall : ModWall
@@ -100,7 +100,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<EarthenPlating>());
+			Recipe.Create(ModContent.ItemType<EarthenPlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class EarthenPlatingPanelWallWall : ModWall
@@ -127,7 +127,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<EarthenPlating>());
+			Recipe.Create(ModContent.ItemType<EarthenPlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class EarthenPlatingBeamWall : ModWall

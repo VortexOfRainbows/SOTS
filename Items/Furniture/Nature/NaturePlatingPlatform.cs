@@ -26,7 +26,7 @@ namespace SOTS.Items.Furniture.Nature
 		public override void AddRecipes()
 		{
 			CreateRecipe(2).AddIngredient(ModContent.ItemType<NaturePlating>()).Register();
-			CreateRecipe(1).AddIngredient(this, 2).ReplaceResult(ModContent.ItemType<NaturePlating>());
+			Recipe.Create(ModContent.ItemType<NaturePlating>()).AddIngredient(this, 2).Register();
 		}
 	}
 	public class NaturePlatingPlatformTile : ModTile

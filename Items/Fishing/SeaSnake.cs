@@ -23,10 +23,10 @@ namespace SOTS.Items.Fishing
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.CookingPots).ReplaceResult(ItemID.CookedFish);
-			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ItemID.Sashimi);
-			CreateRecipe(4).AddIngredient(this, 1).AddTile(TileID.WorkBenches).ReplaceResult(ModContent.ItemType<Snakeskin>());
-			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(this, 1).AddIngredient(ModContent.ItemType<SoulResidue>(), 1).AddIngredient(ItemID.Daybloom, 1).AddTile(TileID.Bottles).ReplaceResult(ItemID.SummoningPotion);
+			Recipe.Create(ItemID.CookedFish).AddIngredient(this, 1).AddTile(TileID.CookingPots).Register();
+			Recipe.Create(ItemID.Sashimi).AddIngredient(this, 1).AddTile(TileID.WorkBenches).Register();
+			Recipe.Create(ModContent.ItemType<Snakeskin>(), 4).AddIngredient(this, 1).AddTile(TileID.WorkBenches).Register();
+			Recipe.Create(ItemID.SummoningPotion).AddIngredient(ItemID.BottledWater, 1).AddIngredient(this, 1).AddIngredient(ModContent.ItemType<SoulResidue>(), 1).AddIngredient(ItemID.Daybloom, 1).AddTile(TileID.Bottles).Register();
 		}
 	}
 }

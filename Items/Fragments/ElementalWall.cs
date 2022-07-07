@@ -26,7 +26,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingNatureBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingNatureBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingNatureBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class NatureWallWall : ModWall
@@ -62,7 +62,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingEarthBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingEarthBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingEarthBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class EarthWallWall : ModWall
@@ -98,7 +98,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingDelugeBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingDelugeBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingDelugeBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class DelugeWallWall : ModWall
@@ -134,7 +134,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingAetherBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingAetherBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingAetherBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class AetherWallWall : ModWall
@@ -170,7 +170,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingAuroraBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingAuroraBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingAuroraBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class AuroraWallWall : ModWall
@@ -230,7 +230,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingUmbraBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingUmbraBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingUmbraBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class NetherWallWall : ModWall
@@ -266,7 +266,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingNetherBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingNetherBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingNetherBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class BrillianceWall : ElementalWall
@@ -278,7 +278,7 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<DissolvingBrillianceBlock>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 4).ReplaceResult(ModContent.ItemType<DissolvingBrillianceBlock>());
+			Recipe.Create(ModContent.ItemType<DissolvingBrillianceBlock>()).AddIngredient(this, 4).Register();
 		}
 	}
 	public class BrillianceWallWall : ModWall

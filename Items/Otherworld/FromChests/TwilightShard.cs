@@ -49,8 +49,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			CreateRecipe(1).AddIngredient(ItemID.FallenStar, 1).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 1).AddIngredient(ModContent.ItemType<TwilightShard>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<TwilightGel>(), 20).AddTile(ModContent.TileType<TransmutationAltarTile>()).ReplaceResult(ItemID.FallenStar);
-			CreateRecipe(1).AddIngredient(ItemID.MeteoriteBar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).ReplaceResult(ItemID.FallenStar);
+			Recipe.Create(ItemID.FallenStar).AddIngredient(ModContent.ItemType<TwilightGel>(), 20).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
+			Recipe.Create(ItemID.FallenStar).AddIngredient(ItemID.MeteoriteBar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
 		}
 	}
 	public class HardlightAlloy : ModItem
@@ -71,8 +71,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<TwilightGel>(), 20).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 1).AddIngredient(ModContent.ItemType<TwilightShard>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
-			CreateRecipe(20).AddIngredient(ItemID.FallenStar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).ReplaceResult(ModContent.ItemType<TwilightGel>());
-			CreateRecipe(20).AddIngredient(ItemID.MeteoriteBar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).ReplaceResult(ModContent.ItemType<TwilightGel>());
+			Recipe.Create(ModContent.ItemType<TwilightGel>(), 20).AddIngredient(ItemID.FallenStar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
+			Recipe.Create(ModContent.ItemType<TwilightGel>(), 20).AddIngredient(ItemID.MeteoriteBar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
 		}
 	}
 	public class OtherworldlyAlloy : ModItem
@@ -97,8 +97,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			CreateRecipe(1).AddIngredient(ItemID.MeteoriteBar, 1).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 1).AddIngredient(ModContent.ItemType<TwilightShard>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<StarlightAlloy>(), 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<TwilightGel>(), 20).AddTile(ModContent.TileType<TransmutationAltarTile>()).ReplaceResult(ItemID.MeteoriteBar);
-			CreateRecipe(1).AddIngredient(ItemID.FallenStar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).ReplaceResult(ItemID.MeteoriteBar);
+			Recipe.Create(ItemID.MeteoriteBar).AddIngredient(ModContent.ItemType<TwilightGel>(), 20).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
+			Recipe.Create(ItemID.MeteoriteBar).AddIngredient(ItemID.FallenStar, 1).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
 		}
 	}
 }

@@ -109,13 +109,13 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(this, 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Ruby);
-			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfNature>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Emerald);
-			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Topaz);
-			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfPermafrost>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Diamond);
-			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Amethyst);
-			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Sapphire);
-			CreateRecipe(3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfInferno>(), 1).AddTile(TileID.Anvils).ReplaceResult(ItemID.Amber);
+			Recipe.Create(ItemID.Ruby, 1).AddIngredient(this, 1).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.Emerald, 3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfNature>(), 1).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.Topaz, 3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.Diamond, 3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfPermafrost>(), 1).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.Amethyst, 3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 1).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.Sapphire, 3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 1).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.Amber, 3).AddIngredient(this, 3).AddIngredient(ModContent.ItemType<Fragments.FragmentOfInferno>(), 1).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class RoyalRubyShardTile : ModTile

@@ -21,7 +21,7 @@ namespace SOTS.Items.Furniture.Goopwood
 		public override void AddRecipes()
 		{
 			CreateRecipe(2).AddIngredient(ModContent.ItemType<Wormwood>(), 1).Register();
-			CreateRecipe(1).AddIngredient(this, 2).ReplaceResult(ModContent.ItemType<Wormwood>());
+			Recipe.Create(ModContent.ItemType<Wormwood>()).AddIngredient(this, 2).Register();
 		}
 	}
 	public class GoopwoodPlatformTile : ModTile

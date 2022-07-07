@@ -21,7 +21,7 @@ namespace SOTS.Items.Furniture.Goopwood
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<Wormwood>(), 4).AddIngredient(ItemID.PinkTorch, 1).AddTile(TileID.WorkBenches).Register();
-			CreateRecipe(5).AddIngredient(ModContent.ItemType<Wormwood>(), 1).AddIngredient(ItemID.PinkGel, 1).ReplaceResult(ItemID.PinkTorch);
+			Recipe.Create(ItemID.PinkTorch, 5).AddIngredient(ModContent.ItemType<Wormwood>(), 1).AddIngredient(ItemID.PinkGel, 1).Register();
 		}
 	}	
 	public class GoopwoodCandleTile : Candle<GoopwoodCandle>

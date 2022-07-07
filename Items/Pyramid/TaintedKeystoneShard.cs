@@ -106,7 +106,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(this, 1).AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1).AddTile(TileID.DemonAltar).ReplaceResult(ModContent.ItemType<RoyalRubyShard>());
+			Recipe.Create(ModContent.ItemType<RoyalRubyShard>()).AddIngredient(this, 1).AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1).AddTile(TileID.DemonAltar).Register();
 		}
 	}
 	public class TaintedKeystoneShardTile : ModTile
