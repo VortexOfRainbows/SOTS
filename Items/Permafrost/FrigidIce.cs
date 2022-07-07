@@ -13,6 +13,7 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
@@ -26,7 +27,7 @@ namespace SOTS.Items.Permafrost
 			ItemDrop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
-			AddMapEntry(new Color(96, 111, 215), name);
+			AddMapEntry(new Color(100, 173, 232), name);
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
 		public override bool KillSound(int i, int j, bool fail)
