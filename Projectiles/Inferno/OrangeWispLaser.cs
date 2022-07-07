@@ -28,6 +28,8 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.extraUpdates = 1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
+			Projectile.minion = false;
+			Projectile.DamageType = DamageClass.Summon;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

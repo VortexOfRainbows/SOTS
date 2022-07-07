@@ -25,6 +25,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 		}
 		public override bool ShouldUpdatePosition()
 		{

@@ -1,13 +1,22 @@
 The following is my development plans :D
 
+TMODLOADER Bugs:
+1. projectile.ContinuouslyUpdateDamage carries over to projectiles of the same index, even after they die. (THIS CAUSES MANY ISSUES WITH VOID SUMMONS)
+
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
 	1. Subspace Treads
 2. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
-3. Worldly Polarizer (grants some stats and inverses the effects of Dissolving Nature, Earth, Tide, up to certain point)
-	1. Thermal Polarizer (grants some stats and inverses the effects of Dissolving Permafrost, Inferno, up to a certain point)
-	2. Exotic Polarizer (grants some stats and inverses the effects of Dissolving Brilliance, Evil, Otherworld, up to a certain point)
+3. Worldly Polarizer, Thermal Polarizer, Exotic Polarizer, Ultimate Polarizer
+	1. Nature:
+	2. Earth:
+	3. Aurora:
+	4. Aether:
+	5. Deluge:
+	6. Umbra:
+	7. Nether:
+	8. Brilliance:
 4. Blazing Quiver (Dissolving Inferno + Molten Quiver)
 5. Plasma Shrimp
 	1. Pistol Shrimp but accessory

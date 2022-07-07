@@ -26,6 +26,8 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.alpha = 0;
+			Projectile.minion = false;
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 		}
 		List<Vector2> posList = new List<Vector2>();
 		List<FireParticle> particleList = new List<FireParticle>();
