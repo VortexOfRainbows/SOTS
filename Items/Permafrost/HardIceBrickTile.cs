@@ -11,6 +11,7 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -19,7 +20,7 @@ namespace SOTS.Items.Permafrost
 			MineResist = 2.0f;
 			DustType = ModContent.DustType<ModIceDust>();
 			ItemDrop = ModContent.ItemType<HardIceBrick>();
-			AddMapEntry(new Color(148, 179, 240));
+			AddMapEntry(new Color(67, 139, 228));
 			HitSound = SoundID.Tink;
 		}
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
