@@ -224,7 +224,7 @@ namespace SOTS.Projectiles.Base
 				
 				Vector2 toPlayer = player.Center - Projectile.Center;
 				float distance = toPlayer.Length();
-				if(distance < getMinDist())
+				if(distance < getMinDist() && amount > 0)
 				{
 					if(healType == 0)
 					{

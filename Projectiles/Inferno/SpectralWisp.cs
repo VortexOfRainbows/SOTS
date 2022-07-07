@@ -92,6 +92,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
 			Projectile.ignoreWater = true;
+			Projectile.minion = false;
 			Projectile.ContinuouslyUpdateDamage = true;
 			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 			SafeSetDefaults();

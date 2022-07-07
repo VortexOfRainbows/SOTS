@@ -80,6 +80,11 @@ namespace SOTS
 			if (projectile.arrow || projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
 				FrostFlakeUnit(projectile, frostFlake - 2);
 			AffixUnit(projectile);
+			/*if(projectile.ContinuouslyUpdateDamage)
+            {
+   				Main.NewText("Projectile Type: " + projectile.type);
+				Main.NewText("Projectile Index: " + projectile.whoAmI);
+			}*/
 		}
 		public int timeFrozen = 0;
 		public bool netUpdateTime = false;
