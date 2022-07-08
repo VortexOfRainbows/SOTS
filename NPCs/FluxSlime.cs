@@ -22,7 +22,7 @@ namespace SOTS.NPCs
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
-			NPC.aiStyle =1;
+			NPC.aiStyle = 1;
             NPC.lifeMax = 100;  
             NPC.damage = 24; 
             NPC.defense = 10;  
@@ -112,7 +112,7 @@ namespace SOTS.NPCs
 				}
 				NPC.Center = NPC.position;
 				initiateSize = -1;
-				NPC.scale = 1.25f;
+				NPC.scale = 1.2f;
 				NPC.width = (int)(NPC.width * NPC.scale);
 				NPC.height = (int)(NPC.height * NPC.scale);
 				NPC.position = NPC.Center;
