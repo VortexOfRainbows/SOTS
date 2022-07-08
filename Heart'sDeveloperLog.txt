@@ -12,19 +12,49 @@ Celestal Serpent: https://www.youtube.com/watch?v=jxo_K7JLZxQ
 Lux: 
 Subspace Serpent: Done
 
-Sprites To Do:
+Sprites/Resprites To Do:
 
-Current:
-1. Flare Detonator
-2. Curgeon (fish)
-3. Prime Crusher
-4. Vibrant Armor and Weapons (1.4)
-5. Miners Pickaxe 
-6. Subspace Weapons
+SOTS Resprite to do:
+1.Prime Crusher
+2.Ultimate Polarizer
+3.Crack the Sky
+4.Frigid Ore (Done)
+5.Vibrant Ore, not a resprite but fixing the 3D look
+6.Evostone, Same story as Vibrant Ore
+7.Soot Block, to match the new Ash I am making
+Eye Of Chaos
+Chaos Badge
+Curgeon (fish)
+Harass Blasfah for spirit staffs
+Subspace Items/Drops
+Vibrant Armor and Weapons (1.4)
+Frigid Armor and Weapons (1.4)
+Miners Pickaxe 
+Cruise Caller
+Clover Charm
+Sharanga
+
+SOTS Texture Pack To Do:
+Copper Ore
+Ash Block (holding up Soot Block resprite)
+Tungsten Ore
+Trophy Background (holding up SOTS boss trophies)
+Tinkerers Workshop
+Tin Ore
+Sign
+Living wood wand
+Iron Chain
+Platnum Ore
+Bar Stool
+Glass Wall
+Boreal Trees
+Boreal Wood
+
+
 
 Others:
 1. Portal (Gateway) Item Sprites
-2. Trophes For Advisor, Pharaoh, Polaris, Lux, and Subspace
+2. Trophes For Advisor, Pharaoh, Polaris, Lux, and Subspace (awating new trophy background from texture pack)
 3. Heartsheild Spritesheet
 4. Sarcophagus Item Resprite
 5. Advisor Baby resprite
