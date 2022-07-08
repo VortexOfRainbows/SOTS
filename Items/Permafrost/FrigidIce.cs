@@ -20,8 +20,6 @@ namespace SOTS.Items.Permafrost
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine[Type] = 1000;
 			Main.tileShine2[Type] = true;
-			Main.tileMerge[Type][ModContent.TileType<HardIceBrickTile>()] = true;
-			Main.tileMerge[ModContent.TileType<HardIceBrickTile>()][Type] = true;
 			Main.tileOreFinderPriority[Type] = 420; //above gold
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
@@ -68,8 +66,7 @@ namespace SOTS.Items.Permafrost
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			Main.tileMerge[Type][ModContent.TileType<HardIceBrickTile>()] = true;
-			Main.tileMerge[ModContent.TileType<HardIceBrickTile>()][Type] = true;
+			Main.tileBrick[Type] = true;
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();

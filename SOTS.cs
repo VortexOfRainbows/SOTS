@@ -661,7 +661,7 @@ namespace SOTS
 			{
 				return Similarity.None;
 			}
-			if (check.TileType == myType || Main.tileMerge[myType][check.TileType])
+			if (check.TileType == myType || Main.tileMerge[myType][check.TileType] || (Main.tileBrick[check.TileType] && check.TileType != mergeType))
 			{
 				return Similarity.Same;
 			}

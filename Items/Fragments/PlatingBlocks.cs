@@ -20,7 +20,9 @@ namespace SOTS.Items.Fragments
 			Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
-			Main.tileLighted[Type] = true;
+			Main.tileLighted[Type] = true; 
+			Main.tileMerge[Type][TileID.Dirt] = true;
+			Main.tileMerge[TileID.Dirt][Type] = true;
 			ItemDrop = ModContent.ItemType<PermafrostPlating>();
 			SafeSetDefaults();
 		}
