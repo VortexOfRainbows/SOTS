@@ -8,17 +8,8 @@ Update Objectives:
 	1. Subspace Treads
 2. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
-3. Worldly Polarizer, Thermal Polarizer, Exotic Polarizer, Ultimate Polarizer
-	1. Nature:
-	2. Earth:
-	3. Aurora:
-	4. Aether:
-	5. Deluge:
-	6. Umbra:
-	7. Nether:
-	8. Brilliance:
-4. Blazing Quiver (Dissolving Inferno + Molten Quiver)
-5. Plasma Shrimp
+3. Blazing Quiver (Dissolving Inferno + Molten Quiver)
+4. Plasma Shrimp
 	1. Pistol Shrimp but accessory
 	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
 	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope
@@ -32,6 +23,10 @@ Other 1.4 related objectives:
 5. Bestiary for all enemies
 
 Daily Log:
+
+7/7/22
+1. Polarizers finished!!
+	1. They may be a little powerful :D
 
 7/6/22
 1. Removed old flails

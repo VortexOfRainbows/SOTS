@@ -5,11 +5,27 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Fragments
 {
 	public abstract class DissolvingElement : ModItem
 	{
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			foreach (TooltipLine line in tooltips) //goes through each tooltip line
+			{
+				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
+				{
+					if(!PolarizeElement)
+						line.Text = NormalToolTip;
+					else
+						line.Text = PolarizeToolTip;
+				}
+			}
+		}
+		public virtual string NormalToolTip => "";
+		public virtual string PolarizeToolTip => "";
 		public int FrameCounter;
 		public int Frame;
 		public virtual int FrameX => Item.width;
@@ -20,15 +36,16 @@ namespace SOTS.Items.Fragments
 		public sealed override void SetStaticDefaults()
 		{
 			SafeSetStaticDefaults();
+			//Tooltip.SetDefault("WILL BE FILLED IN GAME");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(FrameSpeed, TotalFrames));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
+			Tooltip.SetDefault("Temporary Tooltip");
 			this.SetResearchCost(3);
 		}
 		public virtual void SafeSetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Nature");
-			Tooltip.SetDefault("Reduces damage dealt by 10% while in the inventory");
 		}
         public sealed override void SetDefaults()
 		{
@@ -103,11 +120,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNature : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Nature");
-			Tooltip.SetDefault("Reduces damage dealt by 10% while in the inventory");
-		}
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nature");
+		public override string NormalToolTip => "Reduces damage dealt by 10% while in the inventory";
+		public override string PolarizeToolTip => "Increases life regeneration by 1 while in the inventory, up to 4 total";
         public override int FrameSpeed => 5;
         public override int TotalFrames => 6;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature;
@@ -123,11 +138,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingEarth : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Earth");
-			Tooltip.SetDefault("Reduces endurance by 10% while in the inventory");
-		}
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Earth");
+		public override string NormalToolTip => "Reduces endurance by 10% while in the inventory";
+		public override string PolarizeToolTip => "Increases defense by 2 while in the inventory, up to 8 total";
 		public override int FrameSpeed => 6;
 		public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth;
@@ -143,11 +156,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAurora : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Aurora");
-			Tooltip.SetDefault("Reduces movespeed by 20% while in the inventory");
-		}
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aurora");
+		public override string NormalToolTip => "Reduces movement speed by 20% while in the inventory";
+		public override string PolarizeToolTip => "Increases movement speed by 5% while in the inventory, up to 20% total";
 		public override int FrameSpeed => 8;
 		public override int TotalFrames => 5;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora;
@@ -163,11 +174,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingDeluge : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Deluge");
-			Tooltip.SetDefault("Decreases max life and mana by 10 while in the inventory");
-		}
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Deluge");
+		public override string NormalToolTip => "Decreases max life and mana by 10 while in the inventory";
+		public override string PolarizeToolTip => "Increases ranged damage by 3% while in the inventory, up to 12% total";
 		public override int FrameSpeed => 6;
 		public override int TotalFrames => 12;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge;
@@ -184,13 +193,11 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAether : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Aether");
-			Tooltip.SetDefault("Reduces gravity while in the inventory");
-		}
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aether");
+		public override string NormalToolTip => "Reduces gravity while in the inventory";
+		public override string PolarizeToolTip => "Increases magic damage by 3% while in the inventory, up to 12% total";
 		public override int FrameSpeed => 6;
-		public override int TotalFrames => 8;
+        public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether;
         public override Color glowColor => VoidPlayer.OtherworldColor;
         public override void SafeSetDefaults()
@@ -205,12 +212,10 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingUmbra : DissolvingElement
 	{
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Umbra");
+		public override string NormalToolTip => "Reduces max void by 20 while in the inventory";
+		public override string PolarizeToolTip => "Increases void damage by 3% while in the inventory, up to 12% total";
 		public override Color glowColor => VoidPlayer.EvilColor * 1.2f;
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Umbra");
-			Tooltip.SetDefault("Reduces max void by 20 while in the inventory");
-		}
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 10;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra;
@@ -227,11 +232,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNether : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Nether");
-			Tooltip.SetDefault("Decreases life regeneration by 2 while in the inventory");
-		}
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nether");
+		public override string NormalToolTip => "Decreases life regeneration by 2 while in the inventory";
+		public override string PolarizeToolTip => "Increases melee damage by 3% while in the inventory, up to 12% total";
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether;
@@ -248,11 +251,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingBrilliance : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Brilliance");
-			Tooltip.SetDefault("Increases void drain by 0.5 while in the inventory");
-		}
+		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Brilliance");
+		public override string NormalToolTip => "Increases void drain by 0.5 while in the inventory";
+		public override string PolarizeToolTip => "Increases summon damage by 3% while in the inventory, up to 12% total";
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance;
@@ -292,22 +293,12 @@ namespace SOTS.Items.Fragments
         public override void UpdateBadLifeRegen()
         {
 			NetherEffects();
+			DissolvingNether = 0;
 		}
         public override void ResetEffects()
 		{
 			if (DissolvingAether != 0)
-				AetherEffects(); 
-			PolarizeNature = false;
-			PolarizeEarth = false;
-			PolarizeAurora = false;
-			PolarizeAether = false;
-			PolarizeDeluge = false;
-			PolarizeUmbra = false;
-			PolarizeNether = false;
-			PolarizeBrilliance = false;
-		}
-		public override void PostUpdateEquips()
-        {
+				AetherEffects();
 			NatureEffects();
 			EarthEffects();
 			AuroraEffects();
@@ -316,30 +307,76 @@ namespace SOTS.Items.Fragments
 			if (DissolvingUmbra != 0)
 				UmbraEffects();
 			BrillianceEffects();
-        }
+			PolarizeNature = false;
+			PolarizeEarth = false;
+			PolarizeAurora = false;
+			PolarizeAether = false;
+			PolarizeDeluge = false;
+			PolarizeUmbra = false;
+			PolarizeNether = false;
+			PolarizeBrilliance = false;
+			DissolvingNature = 0;
+			DissolvingEarth = 0;
+			DissolvingAurora = 0;
+			DissolvingDeluge = 0;
+			DissolvingAether = 0;
+			DissolvingBrilliance = 0;
+			DissolvingUmbra = 0;
+		}
 		public void NatureEffects()
 		{
+			if(PolarizeNature)
+            {
+				if (DissolvingNature > 4)
+					DissolvingNature = 4;
+				Player.lifeRegen += DissolvingNature;
+				return;
+            }
 			Player.GetDamage(DamageClass.Generic) -= 0.1f * MathHelper.Clamp(DissolvingNature, 0, 10);
-			DissolvingNature = 0;
 		}
 		public void EarthEffects()
 		{
+			if (PolarizeEarth)
+			{
+				if (DissolvingEarth > 4)
+					DissolvingEarth = 4;
+				Player.statDefense += DissolvingEarth * 2;
+				return;
+			}
 			Player.endurance -= 0.1f * MathHelper.Clamp(DissolvingEarth, 0, 20);
-			DissolvingEarth = 0;
 		}
 		public void AuroraEffects()
 		{
+			if (PolarizeAurora)
+			{
+				if (DissolvingAurora > 4)
+					DissolvingAurora = 4;
+				Player.moveSpeed += DissolvingAurora * 0.05f;
+				return;
+			}
 			Player.moveSpeed -= 0.2f * MathHelper.Clamp(DissolvingAurora, 0, 5);
-			DissolvingAurora = 0;
 		}
 		public void DelugeEffects()
 		{
+			if (PolarizeDeluge)
+			{
+				if (DissolvingDeluge > 4)
+					DissolvingDeluge = 4;
+				Player.GetDamage(DamageClass.Ranged) += DissolvingDeluge * 0.03f;
+				return;
+			}
 			Player.statLifeMax2 = (int)MathHelper.Clamp(Player.statLifeMax2 - DissolvingDeluge * 10, 100, Player.statLifeMax2);
 			Player.statManaMax2 = (int)MathHelper.Clamp(Player.statManaMax2 - DissolvingDeluge * 10, 20, Player.statManaMax2);
-			DissolvingDeluge = 0;
 		}
         public void AetherEffects()
 		{
+			if (PolarizeAether)
+			{
+				if (DissolvingAether > 4)
+					DissolvingAether = 4;
+				Player.GetDamage(DamageClass.Magic) += DissolvingAether * 0.03f;
+				return;
+			}
 			float projectedGravity = Player.gravity;
 			float projectedFallSpeed = Player.maxFallSpeed;
 			float projectedJumpSpeedBoost = Player.jumpSpeedBoost;
@@ -372,30 +409,47 @@ namespace SOTS.Items.Fragments
 			{
 				Player.noFallDmg = true;
 			}
-			DissolvingAether = 0;
 		}
 		public void UmbraEffects()
 		{
+			if (PolarizeUmbra)
+			{
+				if (DissolvingUmbra > 4)
+					DissolvingUmbra = 4;
+				Player.GetDamage(ModContent.GetInstance<VoidGeneric>()) += DissolvingUmbra * 0.03f;
+				return;
+			}
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(Player);
 			vPlayer.voidMeterMax2 -= 20 * DissolvingUmbra;
 			if (vPlayer.voidMeterMax2 < 20)
 			{
 				vPlayer.voidMeterMax2 = 20;
 			}
-			DissolvingUmbra = 0;
 		}
 		public void NetherEffects()
 		{
+			if (PolarizeNether)
+			{
+				if (DissolvingNether > 4)
+					DissolvingNether = 4;
+				Player.GetDamage(DamageClass.Melee) += DissolvingNether * 0.03f;
+				return;
+			}
 			if (DissolvingNether > 10)
 				DissolvingNether = 10;
 			Player.lifeRegen -= DissolvingNether * 2;
-			DissolvingNether = 0;
 		}
 		public void BrillianceEffects()
 		{
+			if (PolarizeBrilliance)
+			{
+				if (DissolvingBrilliance > 4)
+					DissolvingBrilliance = 4;
+				Player.GetDamage(DamageClass.Summon) += DissolvingBrilliance * 0.03f;
+				return;
+			}
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(Player);
 			vPlayer.flatVoidRegen -= 0.5f * DissolvingBrilliance;
-			DissolvingBrilliance = 0;
 		}
 	}
 }

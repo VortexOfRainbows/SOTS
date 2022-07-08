@@ -6,15 +6,50 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using System;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Fragments
 {
 	public class PrecariousCluster : ModItem
 	{
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			foreach (TooltipLine line in tooltips) //goes through each tooltip line
+			{
+				if (line.Mod == "Terraria" && line.Name == "Tooltip1")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature)
+						line.Text = "Reduces damage dealt by 10%";
+					else
+						line.Text = "Increases life regeneration by 1, up to 4 total";
+				}
+				if (line.Mod == "Terraria" && line.Name == "Tooltip2")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth)
+						line.Text = "Reduces endurance by 10%";
+					else
+						line.Text = "Increases defense by 2, up to 8 total";
+				}
+				if (line.Mod == "Terraria" && line.Name == "Tooltip3")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora)
+						line.Text = "Reduces movespeed by 20%";
+					else
+						line.Text = "Increases movement speed by 5%, up to 20% total";
+				}
+				if (line.Mod == "Terraria" && line.Name == "Tooltip4")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether)
+						line.Text = "Reduces gravity";
+					else
+						line.Text = "Increases magic damage by 3%, up to 12% total";
+				}
+			}
+		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Primordial Cluster");
-			Tooltip.SetDefault("Reduces damage dealt by 10%, endurance by 10%, movespeed by 20%, and gravity while in the inventory\n'A great gift for your friend's inventory!'");
+			Tooltip.SetDefault("Does the following while in your inventory:\nNature\nEarth\nAurora\nAether\n'A great gift for your friend's inventory!'");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -138,10 +173,44 @@ namespace SOTS.Items.Fragments
 	}
 	public class TerminalCluster : ModItem
 	{
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			foreach (TooltipLine line in tooltips) //goes through each tooltip line
+			{
+				if (line.Mod == "Terraria" && line.Name == "Tooltip1")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge)
+						line.Text = "Reduces max life and mana by 10";
+					else
+						line.Text = "Increases ranged damage by 3%, up to 12% total";
+				}
+				if (line.Mod == "Terraria" && line.Name == "Tooltip2")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra)
+						line.Text = "Reduces max void by 20 while in the inventory";
+					else
+						line.Text = "Increases void damage by 3%, up to 12% total";
+				}
+				if (line.Mod == "Terraria" && line.Name == "Tooltip3")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether)
+						line.Text = "Reduces life regeneration by 2";
+					else
+						line.Text = "Increases melee damage by 3%, up to 12% total";
+				}
+				if (line.Mod == "Terraria" && line.Name == "Tooltip4")
+				{
+					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance)
+						line.Text = "Increases void drain by 0.5 while in the inventory";
+					else
+						line.Text = "Increases summon damage by 3%, up to 12% total";
+				}
+			}
+		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Terminal Cluster");
-			Tooltip.SetDefault("Reduces max void by 20 while in the inventory, max life by 10, mana by 10, and life regeneration by 2 while in the inventory\nIncreases void drain by 0.5 while in the inventory");
+			Tooltip.SetDefault("Does the following while in your inventory:\nDeluge\nUmbra\nNether\nBrilliance");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
