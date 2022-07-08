@@ -38,6 +38,7 @@ namespace SOTS.Items.Pyramid
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<PyramidSlabTile>();
 			Main.tileSolid[Type] = true;
+			Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
