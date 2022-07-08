@@ -77,6 +77,11 @@ namespace SOTS.Items.Permafrost
 			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre" + type), (int)pos.X, (int)pos.Y, 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			SOTS.MergeWithFrame(i, j, Type, TileID.SnowBlock, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
+			return false;
+		}
 	}
 	public class FrigidIce : ModItem
 	{
@@ -114,6 +119,11 @@ namespace SOTS.Items.Permafrost
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(2) + 1;
 			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre" + type), (int)pos.X, (int)pos.Y, 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			return false;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			SOTS.MergeWithFrame(i, j, Type, TileID.SnowBlock, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
 			return false;
 		}
 	}

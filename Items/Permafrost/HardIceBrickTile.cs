@@ -35,6 +35,11 @@ namespace SOTS.Items.Permafrost
 		{
 			return SOTSWorld.downedAmalgamation;
 		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			SOTS.MergeWithFrame(i, j, Type, TileID.SnowBlock, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
+			return false;
+		}
 	}
 	public class HardIceBrickWallWall : ModWall
 	{
