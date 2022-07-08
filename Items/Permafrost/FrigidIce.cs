@@ -20,6 +20,8 @@ namespace SOTS.Items.Permafrost
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine[Type] = 1000;
 			Main.tileShine2[Type] = true;
+			Main.tileMerge[Type][ModContent.TileType<HardIceBrickTile>()] = true;
+			Main.tileMerge[ModContent.TileType<HardIceBrickTile>()][Type] = true;
 			Main.tileOreFinderPriority[Type] = 420; //above gold
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
@@ -51,8 +53,13 @@ namespace SOTS.Items.Permafrost
 					}
 				}
 			}
-        }
-    }
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			SOTS.MergeWithFrame(i, j, Type, TileID.SnowBlock, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
+			return false;
+		}
+	}
 	public class FrigidIceTileSafe : ModTile
 	{
         public override string Texture => "SOTS/Items/Permafrost/FrigidIceTile";
@@ -61,6 +68,8 @@ namespace SOTS.Items.Permafrost
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
+			Main.tileMerge[Type][ModContent.TileType<HardIceBrickTile>()] = true;
+			Main.tileMerge[ModContent.TileType<HardIceBrickTile>()][Type] = true;
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
@@ -119,11 +128,6 @@ namespace SOTS.Items.Permafrost
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(2) + 1;
 			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre" + type), (int)pos.X, (int)pos.Y, 2f, Main.rand.NextFloat(0.9f, 1.1f));
-			return false;
-		}
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
-		{
-			SOTS.MergeWithFrame(i, j, Type, TileID.SnowBlock, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
 			return false;
 		}
 	}
