@@ -35,6 +35,8 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;
+			Main.tileMerge[ModContent.TileType<OvergrownPyramidTile>()][Type] = true;
+			Main.tileMerge[ModContent.TileType<OvergrownPyramidTileSafe>()][Type] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -79,6 +81,8 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;
+			Main.tileMerge[ModContent.TileType<OvergrownPyramidTile>()][Type] = true;
+			Main.tileMerge[ModContent.TileType<OvergrownPyramidTileSafe>()][Type] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
