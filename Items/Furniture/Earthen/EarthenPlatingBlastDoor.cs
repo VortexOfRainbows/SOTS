@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture.Earthen
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Earthen Plating Blast Door");
-			Tooltip.SetDefault("Cannot be opened by NPCs");
+			//Tooltip.SetDefault("Cannot be opened by NPCs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -27,8 +27,10 @@ namespace SOTS.Items.Furniture.Earthen
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<EarthenPlating>(), 6).AddTile(TileID.Anvils).Register();
 		}
 	}
-	public class EarthenPlatingBlastDoorTileClosed : BlastDoorClosed<EarthenPlatingBlastDoor, EarthenPlatingBlastDoorTileOpen>
+	public class EarthenPlatingBlastDoorTileClosed : BlastDoorClosed
 	{
+		public override int DoorItemID => ModContent.ItemType<Earthen.EarthenPlatingBlastDoor>();
+		public override int OpenDoorTile => ModContent.TileType<Earthen.EarthenPlatingBlastDoorTileOpen>();
 		public override string GetName()
 		{
 			return "Earthen Plating Blast Door";
@@ -39,8 +41,10 @@ namespace SOTS.Items.Furniture.Earthen
 			SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
 		}
 	}
-	public class EarthenPlatingBlastDoorTileOpen : BlastDoorOpen<EarthenPlatingBlastDoor, EarthenPlatingBlastDoorTileClosed>
+	public class EarthenPlatingBlastDoorTileOpen : BlastDoorOpen
 	{
+		public override int DoorItemID => ModContent.ItemType<Earthen.EarthenPlatingBlastDoor>();
+		public override int ClosedDoorTile => ModContent.TileType<Earthen.EarthenPlatingBlastDoorTileClosed>();
 		public override string GetName()
 		{
 			return "Earthen Plating Blast Door";

@@ -134,8 +134,9 @@ namespace SOTS.Projectiles.Earth
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            bool die = counter > timeToLaunch + 2;
             Projectile.velocity = oldVelocity;
-            return counter > timeToLaunch + 2;
+            return die;
         }
         public void HitTiles()
         {
@@ -149,7 +150,8 @@ namespace SOTS.Projectiles.Earth
                     int j = (int)center.Y / 16 + h;
                     if (SOTSWorldgenHelper.CanExplodeTile(i, j))
                     {
-                        WorldGen.KillTile(i, j, false, false, false);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            WorldGen.KillTile(i, j, false, false, false);
                         if (Main.netMode != NetmodeID.SinglePlayer)
                             NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
                     }

@@ -24,6 +24,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+7/8/22
+1. Fix blast door (but also opens auto for player and NPC)
+
 7/7/22
 1. Polarizers finished!!
 	1. They may be a little powerful :D

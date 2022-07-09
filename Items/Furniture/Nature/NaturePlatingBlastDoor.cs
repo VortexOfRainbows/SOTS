@@ -11,7 +11,7 @@ namespace SOTS.Items.Furniture.Nature
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Nature Plating Blast Door");
-			Tooltip.SetDefault("Cannot be opened by NPCs");
+			//Tooltip.SetDefault("Cannot be opened by NPCs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -27,9 +27,11 @@ namespace SOTS.Items.Furniture.Nature
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<NaturePlating>(), 6).AddTile(TileID.Anvils).Register();
 		}
 	}
-	public class NaturePlatingBlastDoorTileClosed : BlastDoorClosed<NaturePlatingBlastDoor, NaturePlatingBlastDoorTileOpen>
+	public class NaturePlatingBlastDoorTileClosed : BlastDoorClosed
 	{
-        public override string GetName()
+		public override int DoorItemID => ModContent.ItemType<Nature.NaturePlatingBlastDoor>();
+		public override int OpenDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileOpen>();
+		public override string GetName()
         {
 			return "Nature Plating Blast Door";
         }
@@ -39,8 +41,10 @@ namespace SOTS.Items.Furniture.Nature
 			SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
 		}
 	}
-	public class NaturePlatingBlastDoorTileOpen : BlastDoorOpen<NaturePlatingBlastDoor, NaturePlatingBlastDoorTileClosed>
+	public class NaturePlatingBlastDoorTileOpen : BlastDoorOpen
 	{
+		public override int DoorItemID => ModContent.ItemType<Nature.NaturePlatingBlastDoor>();
+		public override int ClosedDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileClosed>();
 		public override string GetName()
 		{
 			return "Nature Plating Blast Door";

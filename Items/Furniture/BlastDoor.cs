@@ -12,8 +12,10 @@ using Terraria.ObjectData;
 
 namespace SOTS.Items.Furniture
 {
-	public abstract class BlastDoorClosed<TDrop, TOpen> : ModTile where TDrop : ModItem where TOpen : ModTile
+	public abstract class BlastDoorClosed : ModTile //<TDrop, TOpen> : ModTile where TDrop : ModItem where TOpen : ModTile
 	{
+		public virtual int DoorItemID => ModContent.ItemType<Nature.NaturePlatingBlastDoor>();
+		public virtual int OpenDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileOpen>();
 		public virtual string GetName()
 		{
 			return "Blast Door";
@@ -53,6 +55,7 @@ namespace SOTS.Items.Furniture
 			name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
 			DustType = -1;
+			OpenDoorID = OpenDoorTile;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.ClosedDoor };
 			SafeSetDefaults();
@@ -61,34 +64,19 @@ namespace SOTS.Items.Furniture
 		{
 
 		}
-		public override bool RightClick(int i, int j)
-		{
-			UpdateDoor(i, j, true);
-			return true;
-        }
-        public override void HitWire(int i, int j)
+		public void UpdateDoor(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			int top = j - tile.TileFrameY / 18;
-			Wiring.SkipWire(i, top);
-			Wiring.SkipWire(i, top + 1);
-			Wiring.SkipWire(i, top + 2);
-			UpdateDoor(i, j, false);
-			base.HitWire(i, j);
-        }
-		public void UpdateDoor(int i, int j, bool client)
-		{
-			Tile tile = Main.tile[i, j];
-			int top = j - tile.TileFrameY / 18;
-			if (Collision.EmptyTile(i, top, true) && Collision.EmptyTile(i, top + 1, true) && Collision.EmptyTile(i, top + 2, true))
+			if (Collision.EmptyTile(i, top, true) && Collision.EmptyTile(i, top + 1, true) && Collision.EmptyTile(i, top + 2, true)) //make sure no NPC or Player is in the tile
 			{
 				for (int k = 0; k < 3; k++)
 				{
 					Tile targetTile = Main.tile[i, top + k];
-					targetTile.TileType = (ushort)ModContent.TileType<TOpen>();
+					targetTile.TileType = (ushort)OpenDoorTile;
 					targetTile.TileFrameX *= 3;
 				}
-				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
+				NetMessage.SendTileSquare(-1, i, top + 1, 3, TileChangeType.None);
 				Projectile.NewProjectile(new EntitySource_Misc("SOTS:BlastDoor"), new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 0);
 			}
 		}
@@ -98,18 +86,20 @@ namespace SOTS.Items.Furniture
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, DoorItemID);
 		}
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<TDrop>();
+			player.cursorItemIconID = DoorItemID;
 		}
 	}
-	public abstract class BlastDoorOpen<TDrop, TClosed> : ModTile where TDrop : ModItem where TClosed : ModTile
+	public abstract class BlastDoorOpen : ModTile //<TDrop, TClosed> : ModTile where TDrop : ModItem where TClosed : ModTile
 	{
+		public virtual int DoorItemID => ModContent.ItemType<Nature.NaturePlatingBlastDoor>();
+		public virtual int ClosedDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileClosed>();
 		public virtual string GetName()
 		{
 			return "Blast Door";
@@ -150,41 +140,26 @@ namespace SOTS.Items.Furniture
 			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HousingWalls[Type] = true;
-			CloseDoorID = ModContent.TileType<TClosed>();
+			CloseDoorID = ClosedDoorTile;
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
         {
 
         }
-		public override bool RightClick(int i, int j)
-		{
-			UpdateDoor(i, j, true);
-			return true;
-		}
-		public override void HitWire(int i, int j)
+		public void UpdateDoor(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			int top = j - tile.TileFrameY / 18;
-			Wiring.SkipWire(i, top);
-			Wiring.SkipWire(i, top + 1);
-			Wiring.SkipWire(i, top + 2);
-			UpdateDoor(i, j, false);
-			base.HitWire(i, j);
-		}
-		public void UpdateDoor(int i, int j, bool client)
-		{
-			Tile tile = Main.tile[i, j];
-			int top = j - tile.TileFrameY / 18;
-			if (Collision.EmptyTile(i, top, true) && Collision.EmptyTile(i, top + 1, true) && Collision.EmptyTile(i, top + 2, true))
+			if (Collision.EmptyTile(i, top, true) && Collision.EmptyTile(i, top + 1, true) && Collision.EmptyTile(i, top + 2, true)) //make sure no NPC or Player is in the tile
 			{
 				for (int k = 0; k < 3; k++)
 				{
 					Tile targetTile = Main.tile[i, top + k];
-					targetTile.TileType = (ushort)ModContent.TileType<TClosed>();
-					targetTile.TileFrameX /= 3;
+					targetTile.TileType = (ushort)ClosedDoorTile;
+					targetTile.TileFrameX = (short)(targetTile.TileFrameX / 3);
 				}
-				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
+				NetMessage.SendTileSquare(-1, i, top + 1, 3, TileChangeType.None);
 				Projectile.NewProjectile(new EntitySource_Misc("SOTS:BlastDoor"), new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 1);
 			}
 		}
@@ -194,14 +169,14 @@ namespace SOTS.Items.Furniture
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<TDrop>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, DoorItemID);
 		}
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<TDrop>();
+			player.cursorItemIconID = DoorItemID;
 		}
 	}
 }

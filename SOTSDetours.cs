@@ -37,6 +37,7 @@ namespace SOTS
 
 			//The following is to allow Plating Doors to function as tiles for housing (in conjuction with Tmodloader stuff)
 			On.Terraria.WorldGen.CloseDoor += Worldgen_CloseDoor;
+			On.Terraria.WorldGen.OpenDoor += Worldgen_OpenDoor;
 
 			//1.4 worldgen fix
 			On.Terraria.WorldGen.FillWallHolesInSpot += Worldgen_FillWallHolesInSpot;
@@ -73,6 +74,7 @@ namespace SOTS
 			On.Terraria.Main.UpdateTime -= Main_UpdateTime;
 
 			On.Terraria.WorldGen.CloseDoor -= Worldgen_CloseDoor;
+			On.Terraria.WorldGen.OpenDoor -= Worldgen_OpenDoor;
 			On.Terraria.WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
 
 			//1.4 ZombieHand
@@ -85,10 +87,26 @@ namespace SOTS
 			if (Framing.GetTileSafely(i, j).HasTile)
 			{
 				Tile tile = Framing.GetTileSafely(i, j);
-				if (tile.TileType == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.TileType == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
+				if (TileLoader.GetTile(tile.TileType) is BlastDoorOpen BDO)
+				{
+					BDO.UpdateDoor(i, j);
 					return true;
+				}
 			}
 			return orig(i, j, forced);
+		}
+		private static bool Worldgen_OpenDoor(On.Terraria.WorldGen.orig_OpenDoor orig, int i, int j, int direction)
+		{
+			if (Framing.GetTileSafely(i, j).HasTile)
+			{
+				Tile tile = Framing.GetTileSafely(i, j);
+				if (TileLoader.GetTile(tile.TileType) is BlastDoorClosed BDC)
+				{
+					BDC.UpdateDoor(i, j);
+					return true;
+				}
+			}
+			return orig(i, j, direction);
 		}
 		private static bool Worldgen_FillWallHolesInSpot(On.Terraria.WorldGen.orig_FillWallHolesInSpot orig, int originX, int originY, int maxWallsThreshold)
 		{
