@@ -15,7 +15,7 @@ Subspace Serpent: Done
 Sprites/Resprites To Do:
 
 SOTS Resprite to do:
-1.Prime Crusher
+1.Prime Crusher (Done)
 2.Ultimate Polarizer
 3.Crack the Sky
 4.Frigid Ore (Done)
