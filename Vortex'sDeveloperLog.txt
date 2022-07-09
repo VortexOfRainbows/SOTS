@@ -26,6 +26,7 @@ Daily Log:
 
 7/8/22
 1. Fix blast door (but also opens auto for player and NPC)
+2. WIP Pulverizer
 
 7/7/22
 1. Polarizers finished!!
