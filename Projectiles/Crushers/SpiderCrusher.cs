@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Crushers
 			minTimeBeforeRelease = 8;
 			initialExplosiveRange = 56;
 		}
-        public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index)
+        public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index, int armNumber)
         {
 			for(int i = 0; i < 1 + (int)(1 * chargePercent + 0.3f); i++)
 			{

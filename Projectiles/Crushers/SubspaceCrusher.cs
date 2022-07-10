@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Crushers
 			minDamage = 1f;
 			minTimeBeforeRelease = 10;
 		}
-        public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index)
+        public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index, int armNumber)
         {
 			if (index != 0)
 				return true;

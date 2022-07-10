@@ -189,7 +189,7 @@ namespace SOTS.Projectiles.Crushers
         {
 			return ModContent.ProjectileType<PinkCrush>();
         }
-		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int indexNumber)
+		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int indexNumber, int armNumber)
         {
 			return false;
         }
@@ -252,8 +252,8 @@ namespace SOTS.Projectiles.Crushers
 			if (released)
 			{
 				accelerateAmount += accSpeed;
-				int amt = setsActive.Length;
-				for(int j = 0; j < amt; j++)
+				int SetCount = setsActive.Length;
+				for(int j = 0; j < SetCount; j++)
 				{
 					float charge = rotationTimer;
 					charge -= j * armDist;
@@ -265,21 +265,36 @@ namespace SOTS.Projectiles.Crushers
 							int shotGun = explosiveShotgun - 1;
 							for(int k = -shotGun; k <= shotGun; k++)
 							{
-								double rad1 = direction + MathHelper.ToRadians(spreadDeg * k);
-								for (int i = 0; i < explosive; i++)
+								int explosionCount = explosive;
+								float usedExplosiveRange = explosiveRange;
+								if(Projectile.type == ModContent.ProjectileType<PulverizerCrusher>() && j == 0) //laser arm
 								{
-									double distance = (explosiveRange * i) + initialExplosiveRange;
+									k = 0;
+									shotGun = -1;
+									explosionCount = minExplosions + VoidPlayer.ModPlayer(player).BonusCrushRangeMin;
+									usedExplosiveRange = 0;
+								}
+								double rad1 = direction + MathHelper.ToRadians(spreadDeg * k);
+								for (int i = 0; i < explosionCount; i++)
+								{
+									double distance = (usedExplosiveRange * i) + initialExplosiveRange;
 									float positionX = player.Center.X - (int)(Math.Cos(rad1) * distance);
 									float positionY = player.Center.Y - (int)(Math.Sin(rad1) * distance);
 									float charge2 = currentCharge / finalDist;
 									if (charge2 > 1)
 										charge2 = 1f;
-									if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2, i))
+									if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2, i, j))
 										Projectile.NewProjectile(Projectile.GetSource_FromThis(), positionX, positionY, Projectile.velocity.X, Projectile.velocity.Y, ExplosionType(), Projectile.damage, Projectile.knockBack, Main.myPlayer, initialDamage, 0f);
 								}
 							}
 						}
-						ExplosionSound();
+						if (Projectile.type == ModContent.ProjectileType<PulverizerCrusher>())
+                        {
+							if(j != 0)
+								ExplosionSound();
+						}
+						else
+							ExplosionSound();
 					}
 				}
 				if (!setsActive[0])
@@ -295,6 +310,10 @@ namespace SOTS.Projectiles.Crushers
         {
 			return Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 		}
+		public virtual Texture2D ArmGlowTexture(int handNum, int direction)
+		{
+			return null;
+		}
 		public void cataloguePos(int arm, Vector2 next)
 		{
 			List<Vector2> trail = stored[arm];
@@ -308,7 +327,9 @@ namespace SOTS.Projectiles.Crushers
 			if (runOnce)
 				return false;
 			if (Projectile.type == ModContent.ProjectileType<HellbreakerCrusher>() || Projectile.type == ModContent.ProjectileType<SubspaceCrusher>())
+            {
 				lightColor = Color.White;
+			}
 			Player player = Main.player[Projectile.owner];
 			//VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
 			Vector2 cursorArea = new Vector2(Projectile.ai[0], Projectile.ai[1]);
@@ -320,6 +341,7 @@ namespace SOTS.Projectiles.Crushers
 			{
 				Vector2 pos = arms[i];
 				Texture2D texture = ArmTexture(i, Projectile.direction);
+				Texture2D glowTexture = ArmGlowTexture(i, Projectile.direction);
 				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
 				float rotation;
@@ -347,11 +369,18 @@ namespace SOTS.Projectiles.Crushers
 						Main.spriteBatch.Draw(texture, pos2 - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 					Main.spriteBatch.Draw(texture, player.Center + pos - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Projectile.GetAlpha(lightColor), rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+					if (glowTexture != null)
+						Main.spriteBatch.Draw(glowTexture, player.Center + pos - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				}
 			}
 			Texture2D headTexture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin2 = new Vector2(headTexture.Width / 2, headTexture.Height / 2);
 			Main.spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, Projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			if (Projectile.type == ModContent.ProjectileType<PulverizerCrusher>())
+            {
+				headTexture = Mod.Assets.Request<Texture2D>("Projectiles/Crushers/PulverizerCrusherGlow").Value;
+				Main.spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), Color.White, Projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
 			return false;
         }
     }

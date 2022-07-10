@@ -6,10 +6,8 @@ TMODLOADER Bugs:
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
 	1. Subspace Treads
-2. Pulverizer (Upgrade to Bone Clapper)
-	1. 4 arms, 2 normal and 2 laser cannon
-3. Blazing Quiver (Dissolving Inferno + Molten Quiver)
-4. Plasma Shrimp
+2. Blazing Quiver (Dissolving Inferno + Molten Quiver)
+3. Plasma Shrimp
 	1. Pistol Shrimp but accessory
 	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
 	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope
@@ -23,6 +21,10 @@ Other 1.4 related objectives:
 5. Bestiary for all enemies
 
 Daily Log:
+
+7/9/22
+1. Added Pulverizer
+2. Next: Balance Pulverizer
 
 7/8/22
 1. Fix blast door (but also opens auto for player and NPC)

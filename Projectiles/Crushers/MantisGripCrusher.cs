@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Crushers
 			SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.55f, 0.4f);
 			base.ExplosionSound();
 		}
-        public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index)
+        public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index, int armNumber)
 		{
 			float randRot = Main.rand.NextFloat(90f);
 			for (int i = 0; i < 4; i++)
