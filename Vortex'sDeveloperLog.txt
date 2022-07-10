@@ -1,8 +1,5 @@
 The following is my development plans :D
 
-TMODLOADER Bugs:
-1. projectile.ContinuouslyUpdateDamage carries over to projectiles of the same index, even after they die. (THIS CAUSES MANY ISSUES WITH VOID SUMMONS)
-
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
 	1. Subspace Treads
@@ -24,7 +21,6 @@ Daily Log:
 
 7/9/22
 1. Added Pulverizer
-2. Next: Balance Pulverizer
 
 7/8/22
 1. Fix blast door (but also opens auto for player and NPC)

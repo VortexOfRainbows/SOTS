@@ -23,8 +23,8 @@ namespace SOTS.Projectiles.Crushers
 			armDist = 38f;
 			finalDist = 152;
 			exponentReduction = 0.6f;
-			minDamage = 0.2f;
-			maxDamage = 6f;
+			minDamage = 0.3f;
+			maxDamage = 5f;
 			trailLength = 5;
 			releaseTime = 120f;
 			minTimeBeforeRelease = 7;
