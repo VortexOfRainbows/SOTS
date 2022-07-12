@@ -113,6 +113,11 @@ namespace SOTS.Common.GlobalNPCs
 				if(npc.DeathSound != SoundID.NPCDeath14)
 					npc.DeathSound = SoundID.NPCDeath14;
 			}
+			if(npc.aiStyle == -420)
+            {
+				npc.velocity *= 0.986f;
+				return false;
+            }
 			SetDebuffImmunities(npc);
 			return base.PreAI(npc);
         }

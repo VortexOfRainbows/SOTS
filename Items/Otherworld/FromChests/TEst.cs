@@ -21,8 +21,8 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("test");
-			Tooltip.SetDefault("hi there");
+			DisplayName.SetDefault("Developer Test Item");
+			Tooltip.SetDefault("Makes all NPC have zero epicness");
 		}
 		public override void SetDefaults()
 		{
@@ -38,6 +38,11 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+			for(int i = 0; i < 200; i ++)
+            {
+				if(Main.npc[i].active)
+					Main.npc[i].aiStyle = -420;
+            }
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 24;
