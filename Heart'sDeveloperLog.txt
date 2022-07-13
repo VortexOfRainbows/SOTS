@@ -1,10 +1,10 @@
 Music To Do:
 Title Screen: No Progress
-Construct Theme: No Progress
+Construct Theme: 20% Progress
 Pinky Theme: Done
 Pyramid Theme: Done
 Pyramid Battle Theme: Done
-Pharaohs Curse Theme: No Progress
+Pharaohs Curse Theme: 5% Progress
 Planetarium Theme: Done
 Advisor's Theme: Done
 Polaris Theme: Done
@@ -15,13 +15,11 @@ Subspace Serpent: Done
 Sprites/Resprites To Do:
 
 SOTS Resprite to do:
-1.Prime Crusher (Done)
-2.Ultimate Polarizer
-3.Crack the Sky
-4.Frigid Ore (Done)
-5.Vibrant Ore, not a resprite but fixing the 3D look
-6.Evostone, Same story as Vibrant Ore
-7.Soot Block, to match the new Ash I am making
+1.Ultimate Polarizer
+2.Crack the Sky
+3.Vibrant Ore, not a resprite but fixing the 3D look
+4.Evostone, Same story as Vibrant Ore
+5.Soot Block, to match the new Ash I am making
 Eye Of Chaos
 Chaos Badge
 Curgeon (fish)
@@ -35,14 +33,11 @@ Clover Charm
 Sharanga
 
 SOTS Texture Pack To Do:
-Copper Ore
 Ash Block (holding up Soot Block resprite)
 Tungsten Ore
 Trophy Background (holding up SOTS boss trophies)
 Tinkerers Workshop
-Tin Ore
 Sign
-Living wood wand
 Iron Chain
 Platnum Ore
 Bar Stool
