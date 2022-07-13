@@ -710,6 +710,7 @@ namespace SOTS.Common.GlobalNPCs
         public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			SpawnConditionBestiaryInfoElement sky = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky;
+			SpawnConditionBestiaryInfoElement surfaceSnow = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow;
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
 			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
@@ -754,6 +755,16 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText = new FlavorTextBestiaryInfoElement("The curse housed within the Pyramid is more capable of corruption than the world evils. Under its influence, even the walls of the Pyramid turn into monsters!");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Pyramid,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("An exiled goblin who has been left to freeze in the unforgiving tundra.");
+				if (npc.type == ModContent.NPCType<Polaris>())
+					flavorText = new FlavorTextBestiaryInfoElement("A forgotten war machine. Made long after the original mechanical trio, Polaris was not built with the purpose of reviving Cthulhu but rather to be the best possible weapon of mass destruction possible.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					surfaceSnow,
 					flavorText
 				});
 			}
