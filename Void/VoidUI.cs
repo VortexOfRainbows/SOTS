@@ -20,7 +20,7 @@ namespace SOTS.Void
 			voidUI.BorderColor = new Color(0, 0, 0, 0);
 			voidUI.SetPadding(0);
 
-			VoidBar voidAmount = new VoidBar(VoidBarMode.voidAmount, 280, 25);
+			VoidBar voidAmount = new VoidBar();
 			voidAmount.Height.Set(30f, 0f);
 			voidAmount.Width.Set(200f, 0f);
 			voidAmount.Left.Set(0f, 0f);

@@ -40,6 +40,18 @@ namespace SOTS
 		[DefaultValue(false)]
 		public bool lockVoidBar { get; set; }
 
+		[Label("Alternative Void Bar Direction")]
+		[Tooltip("Changes the Void Bar's roll down direction")]
+		[BackgroundColor(194, 111, 234, 192)]
+		[DefaultValue(false)]
+		public bool alternateVoidBarDirection { get; set; }
+
+		[Label("Alternative Void Bar Style")]
+		[Tooltip("Modifies the Void Bar's visuals slightly")]
+		[BackgroundColor(194, 111, 234, 192)]
+		[DefaultValue(false)]
+		public bool alternateVoidBarStyle { get; set; }
+
 		[Label("Void Bar Top Text")]
 		[Tooltip("Enable/disable the text above the Void Bar")]
 		[BackgroundColor(110, 80, 150, 192)]

@@ -76,6 +76,20 @@ namespace SOTS
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[type] = amt;
 		}
+		/// <summary>
+		/// Flips the void bar rectangles horizontally. Only runs if alternative void bar style is on
+		/// </summary>
+		public static Rectangle FlipHorizontal(this Rectangle rect, Vector2 flipPos)
+		{
+			if(SOTS.Config.alternateVoidBarDirection)
+			{
+				int XAxis = (int)flipPos.X;
+				int relativeToXAxis = rect.X - XAxis;
+				int overXAxis = relativeToXAxis + rect.Width;
+				rect.Location = new Point((int)XAxis - overXAxis, rect.Location.Y);
+			}
+			return rect;
+		}
 		/*public static void SetResearchCostAutomatically(this ModItem modItem)
 		{
 			Item item = modItem.Item;
