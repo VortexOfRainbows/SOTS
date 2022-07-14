@@ -42,10 +42,6 @@ Iron Chain
 Platnum Ore
 Bar Stool
 Glass Wall
-Boreal Trees
-Boreal Wood
-
-
 
 Others:
 1. Portal (Gateway) Item Sprites
