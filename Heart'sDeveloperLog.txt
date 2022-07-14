@@ -1,6 +1,7 @@
 Music To Do:
 Title Screen: No Progress
 Construct Theme: 20% Progress
+Glowmoth Theme: No Progress (Asked Rockwizard5 for permission to use parts of his theme in my own.)
 Pinky Theme: Done
 Pyramid Theme: Done
 Pyramid Battle Theme: Done
@@ -15,11 +16,9 @@ Subspace Serpent: Done
 Sprites/Resprites To Do:
 
 SOTS Resprite to do:
-1.Ultimate Polarizer
-2.Crack the Sky
-3.Vibrant Ore, not a resprite but fixing the 3D look
-4.Evostone, Same story as Vibrant Ore
-5.Soot Block, to match the new Ash I am making
+1.Soot Block, to match the new Ash I am making
+2.Ultimate Polarizer
+3.Crack the Sky
 Eye Of Chaos
 Chaos Badge
 Curgeon (fish)
