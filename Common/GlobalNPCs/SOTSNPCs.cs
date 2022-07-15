@@ -709,8 +709,11 @@ namespace SOTS.Common.GlobalNPCs
 		}
         public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
-			SpawnConditionBestiaryInfoElement sky = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky;
-			SpawnConditionBestiaryInfoElement surfaceSnow = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow;
+			SpawnConditionBestiaryInfoElement Surface = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface;
+			SpawnConditionBestiaryInfoElement Crimson = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson;
+			SpawnConditionBestiaryInfoElement Corruption = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption;
+			SpawnConditionBestiaryInfoElement Sky = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky;
+			SpawnConditionBestiaryInfoElement SurfaceSnow = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow;
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
 			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
@@ -740,11 +743,11 @@ namespace SOTS.Common.GlobalNPCs
 				if (npc.type == ModContent.NPCType<PhaseAssaulterHead>())
 					flavorText = new FlavorTextBestiaryInfoElement("Phase Assaulters make up the defensive core of Phase Ore nodes. They can be observed acting as shields for Phase Speeders, while also possessing a potent hyperlight laser.");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-					sky,
+					Sky,
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || npc.type == ModContent.NPCType<WallMimic>())
+			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || npc.type == ModContent.NPCType<WallMimic>() || npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Ghast>() || npc.type == ModContent.NPCType<Maligmor>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A trapped soul that resides in the Pyramid. It has not come to rest, as it still seems to be searching for something.");
 				if (npc.type == ModContent.NPCType<Snake>())
@@ -752,7 +755,13 @@ namespace SOTS.Common.GlobalNPCs
 				if (npc.type == ModContent.NPCType<SnakePot>())
 					flavorText = new FlavorTextBestiaryInfoElement("A group of snakes that uses a pot for defense. When the pot breaks, the snakes inside are forced to scatter.");
 				if (npc.type == ModContent.NPCType<WallMimic>())
-					flavorText = new FlavorTextBestiaryInfoElement("The curse housed within the Pyramid is more capable of corruption than the world evils. Under its influence, even the walls of the Pyramid turn into monsters!");
+					flavorText = new FlavorTextBestiaryInfoElement("The Curse housed within the Pyramid is more capable of corruption than the world evils. Under its influence, even the walls of the Pyramid turn into monsters!");
+				if (npc.type == ModContent.NPCType<Teratoma>())
+					flavorText = new FlavorTextBestiaryInfoElement("A cancerous protrusion of The Curse. Its cells are capable of rapid regrowth, and it will heal itself if not killed quickly.");
+				if (npc.type == ModContent.NPCType<Ghast>())
+					flavorText = new FlavorTextBestiaryInfoElement("As Lost Souls corrupted by The Curse, Ghasts are forced to guard keystones for the rest of the afterlife.");
+				if (npc.type == ModContent.NPCType<Maligmor>())
+					flavorText = new FlavorTextBestiaryInfoElement("Born from The Curse's will to consume all, Maligmors are protrusions of The Curse that are gifted with crystals as power sources. The crystals provide enhanced vision, helping Maligmors defend the Keystone from being reached by invaders.");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Pyramid,
 					flavorText
@@ -762,9 +771,29 @@ namespace SOTS.Common.GlobalNPCs
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("An exiled goblin who has been left to freeze in the unforgiving tundra.");
 				if (npc.type == ModContent.NPCType<Polaris>())
-					flavorText = new FlavorTextBestiaryInfoElement("A forgotten war machine. Made long after the original mechanical trio, Polaris was not built with the purpose of reviving Cthulhu but rather to be the best possible weapon of mass destruction possible.");
+					flavorText = new FlavorTextBestiaryInfoElement("A forgotten war machine. Made long after the original mechanical trio, Polaris was not built with the purpose of reviving Cthulhu, but rather to be the best possible weapon of mass destruction possible.");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-					surfaceSnow,
+					SurfaceSnow,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<FluxSlime>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Created before Putrid Pinky, these gel menaces orginate from early pink slime experiments.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Surface,
+					Corruption,
+					Crimson,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("An abomination with an endless hunger for peanuts. Putrid Pinky was created in a failed experiment using pink slime.");
+				if(npc.type == ModContent.NPCType<BlueSlimer>())
+					flavorText = new FlavorTextBestiaryInfoElement("A Blue Slime which became airborne by evolving crude wings. Its wings are easily knocked off with force, depriving it of its flight.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Surface,
 					flavorText
 				});
 			}

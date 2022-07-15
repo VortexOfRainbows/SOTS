@@ -73,11 +73,8 @@ namespace SOTS.NPCs
 		}
         public override void OnKill()
 		{
-			if (Main.expertMode)
-			{
-				NPC npc = NPC.NewNPCDirect(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.BlueSlime); //this should sync it in multiplayer
-				npc.netUpdate = true;
-			}
-        }
+			NPC npc = NPC.NewNPCDirect(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.BlueSlime); //this should sync it in multiplayer
+			npc.netUpdate = true;
+		}
     }
 }
