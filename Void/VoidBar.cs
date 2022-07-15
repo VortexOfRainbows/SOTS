@@ -30,22 +30,22 @@ namespace SOTS.Void
         {
             base.Update(gameTime); //do not remove
 			string activeSet = Main.ResourceSetsManager.ActiveSetKeyName;
-			Main.NewText(activeSet);
+			//Main.NewText(activeSet);
 			if(activeSet.Contains("Bar"))
 			{
-				Main.NewText("Active");
+				//Main.NewText("Active");
 				if (SOTSConfig.PreviousBarMode < 4)
 				{
 					SOTSConfig.PreviousBarMode++;
 					if(!SOTS.Config.lockVoidBar)
 					{
-						SOTS.Config.voidBarPointX = (int)((Main.screenWidth - 254));
+						SOTS.Config.voidBarPointX = Main.screenWidth - 254;
 						SOTS.Config.voidBarPointY = 64;
 						SOTS.Config.alternateVoidBarDirection = true;
 						SOTS.Config.alternateVoidBarStyle = true;
 						SOTS.Config.voidBarTextOn = false;
 						SOTS.Config.voidBarHoverTextOn = true;
-						VoidPlayer.voidBarOffset = new Vector2(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY);
+						VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset = new Vector2(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY);
 					}
 				}
 			}

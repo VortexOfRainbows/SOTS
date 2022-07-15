@@ -20,7 +20,7 @@ namespace SOTS.Void
 {
 	public class VoidPlayer : ModPlayer
 	{
-		public static Vector2 voidBarOffset = new Vector2(810, 30);
+		public Vector2 voidBarOffset = new Vector2(810, 30);
 
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);
@@ -63,8 +63,8 @@ namespace SOTS.Void
 			tag["voidStar"] = voidStar;
 			tag["voidMeter"] = voidMeter;
 			tag["lootingSouls"] = lootingSouls;
-			tag["voidBarPosX"] = voidBarOffset.X;
-			tag["voidBarPosY"] = voidBarOffset.Y;
+			tag["voidBarPosX3"] = voidBarOffset.X;
+			tag["voidBarPosY3"] = voidBarOffset.Y;
 		}
 		public override void LoadData(TagCompound tag)
 		{
@@ -75,13 +75,13 @@ namespace SOTS.Void
 			//if (tag.ContainsKey("voidMeter"))
 			voidMeter = tag.GetFloat("voidMeter");
 			lootingSouls = tag.GetInt("lootingSouls");
-			if (tag.ContainsKey("voidBarPosX"))
-				voidBarOffset.X = tag.GetFloat("voidBarPosX");
-			if (tag.ContainsKey("voidBarPosY"))
-				voidBarOffset.Y = tag.GetFloat("voidBarPosY");
+			if (tag.ContainsKey("voidBarPosX3"))
+				voidBarOffset.X = tag.GetFloat("voidBarPosX3");
+			if (tag.ContainsKey("voidBarPosY3"))
+				voidBarOffset.Y = tag.GetFloat("voidBarPosY3");
 		}
-		public bool netUpdate = false;
-		public override void clientClone(ModPlayer clientClone)
+        public bool netUpdate = false;
+        public override void clientClone(ModPlayer clientClone)
 		{
 			//will need to fix this later...
 		}

@@ -68,9 +68,10 @@ namespace SOTS.Void
 				Top.Set(yPos, 0f);
 				if(type == 0)
 				{
-					//VoidPlayer.voidBarOffset = new Vector2((int)Left.Pixels, (int)Top.Pixels);
-					VoidPlayer.voidBarOffset.X = (int)Left.Pixels;
-					VoidPlayer.voidBarOffset.Y = (int)Top.Pixels;
+					//Main.NewText("Set new offset: " + SOTSConfig.voidBarNeedsLoading);
+					//VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset = new Vector2((int)Left.Pixels, (int)Top.Pixels);
+					VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset.X = (int)Left.Pixels;
+					VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset.Y = (int)Top.Pixels;
 				}
 				Recalculate();
 			}
@@ -79,23 +80,23 @@ namespace SOTS.Void
 				float scale = Main.UIScale;
 				Left.Set(SOTS.Config.voidBarPointX, 0f);
 				Top.Set(SOTS.Config.voidBarPointY, 0f);
-				//VoidPlayer.voidBarOffset = new Point(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY).ToVector2();
+				//VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset = new Point(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY).ToVector2();
 			}
 			if(type == 0)
 			{
 				if (SOTSConfig.voidBarNeedsLoading >= 2)
 				{
-					//Main.NewText("Alive For: " + SOTSConfig.voidBarNeedsLoading);
-					//Main.NewText("voidBarPointX: " + SOTS.Config.voidBarPointX);
-					//Main.NewText("voidBarOffsetX: " + VoidPlayer.voidBarOffset.X);
+					Main.NewText("Alive For: " + SOTSConfig.voidBarNeedsLoading);
+					Main.NewText("voidBarPointX: " + SOTS.Config.voidBarPointX);
+					Main.NewText("voidBarOffsetX: " + VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset.X);
 					SOTSConfig.voidBarNeedsLoading--;
 				}
 				else
 				{
-					SOTS.Config.voidBarPointX = (int)MathHelper.Clamp(VoidPlayer.voidBarOffset.X, 0, Main.screenWidth - 200);
-					SOTS.Config.voidBarPointY = (int)MathHelper.Clamp(VoidPlayer.voidBarOffset.Y, 0, Main.screenHeight - 30);
+					SOTS.Config.voidBarPointX = (int)MathHelper.Clamp(VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset.X, 0, Main.screenWidth - 200);
+					SOTS.Config.voidBarPointY = (int)MathHelper.Clamp(VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset.Y, 0, Main.screenHeight - 30);
 				}
-				VoidPlayer.voidBarOffset = new Vector2(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY);
+				VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset = new Vector2(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY);
 			}
 		   // Here we check if the DragableUIPanel is outside the Parent UIElement rectangle. 
 		   // (In our example, the parent would be ExampleUI, a UIState. This means that we are checking that the DragableUIPanel is outside the whole screen)
