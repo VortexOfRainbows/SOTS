@@ -26,6 +26,34 @@ namespace SOTS.Void
 		private BarDivider barDivider;
 		private VoidBarBorder2 barBackground;
 		private UIText text;
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime); //do not remove
+			string activeSet = Main.ResourceSetsManager.ActiveSetKeyName;
+			Main.NewText(activeSet);
+			if(activeSet.Contains("Bar"))
+			{
+				Main.NewText("Active");
+				if (SOTSConfig.PreviousBarMode < 4)
+				{
+					SOTSConfig.PreviousBarMode++;
+					if(!SOTS.Config.lockVoidBar)
+					{
+						SOTS.Config.voidBarPointX = (int)((Main.screenWidth - 254));
+						SOTS.Config.voidBarPointY = 64;
+						SOTS.Config.alternateVoidBarDirection = true;
+						SOTS.Config.alternateVoidBarStyle = true;
+						SOTS.Config.voidBarTextOn = false;
+						SOTS.Config.voidBarHoverTextOn = true;
+						VoidPlayer.voidBarOffset = new Vector2(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY);
+					}
+				}
+			}
+			else
+			{
+				SOTSConfig.PreviousBarMode = 0;
+			}
+        }
         public override void OnInitialize()
 		{
 			Height.Set(height, 0f); //Set Height of element
@@ -169,107 +197,106 @@ namespace SOTS.Void
 					textureBot = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarAltBottomFlipped");
 				spriteBatch.Draw(textureBot, new Rectangle(SOTS.Config.voidBarPointX - 6,  SOTS.Config.voidBarPointY, 206, 32).FlipHorizontal(flipOrigin), Color.White);
 			}
-			if (player.dead)
+			if (!player.dead)
             {
-				return;
-			}
-			List<Rectangle> rectangles = new List<Rectangle>();
-			//List<Color> colors = new List<Color>();
-			int minionCount = voidPlayer.VoidMinions.Count;
-			for (int i = 0; i < minionCount; i++)
-            {
-				int type = voidPlayer.VoidMinions[i];
-				int nextType = -1;
-				if (i < voidPlayer.VoidMinions.Count - 1)
-					nextType = voidPlayer.VoidMinions[i + 1];
-				int cost = VoidPlayer.minionVoidCost(type);
-				length = cost / (float)voidPlayer.voidMeterMax2 * 188f;
-				Color color = Color.White;
-				color = VoidPlayer.minionVoidColor(type);
-				if (length + prevRight >= 188)
-					length = 188 - prevRight;
-				spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)(length + 1), height).FlipHorizontal(flipOrigin), color);
-				color.A = 0;
-				spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)(length + 1), height).FlipHorizontal(flipOrigin), color);
-				/*if(i == 0)
+				List<Rectangle> rectangles = new List<Rectangle>();
+				//List<Color> colors = new List<Color>();
+				int minionCount = voidPlayer.VoidMinions.Count;
+				for (int i = 0; i < minionCount; i++)
 				{
-					rectangles.Add(new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y - 2), 6, 22));
-					colors.Add(color);
-				}*/
-				prevRight += length;
-				if (!SOTS.Config.simpleVoidFill)
-					if (nextType == -1 || nextType != type)
+					int type = voidPlayer.VoidMinions[i];
+					int nextType = -1;
+					if (i < voidPlayer.VoidMinions.Count - 1)
+						nextType = voidPlayer.VoidMinions[i + 1];
+					int cost = VoidPlayer.minionVoidCost(type);
+					length = cost / (float)voidPlayer.voidMeterMax2 * 188f;
+					Color color = Color.White;
+					color = VoidPlayer.minionVoidColor(type);
+					if (length + prevRight >= 188)
+						length = 188 - prevRight;
+					spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)(length + 1), height).FlipHorizontal(flipOrigin), color);
+					color.A = 0;
+					spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)(length + 1), height).FlipHorizontal(flipOrigin), color);
+					/*if(i == 0)
 					{
-						rectangles.Add(new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight - 1), (int)(SOTS.Config.voidBarPointY + padding.Y - 2), 2, 20));
-						//colors.Add(color);
-					}
-			}
-			barAmount.Left.Set(6f + prevRight, 0f);
-			length = (int)(quotient * 188);
-			if (length + prevRight > 188)
-				length = 188 - prevRight;
-			barAmount.Width.Set(length, 0f);
-			if(voidPlayer.lootingSouls > 0)
-			{
-				barAmount3.Width.Set(quotient2 * 188, 0f);
-				barAmount3.Left.Set(200f - quotient2 * 188 - 6, 0f);
-				barDivider.Width.Set(2, 0);
-				barDivider.Left.Set(200f - quotient2 * 188 - 8, 0f);
-			}
-			else
-            {
-				barAmount3.Width.Set(0, 0);
-				barDivider.Width.Set(0, 0);
-			}
-			Recalculate();
-			if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter) //this draws the red part of the sprite
-			{
-				float quotientLerp = voidPlayer.lerpingVoidMeter / voidPlayer.voidMeterMax2;
-				fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
-				float lerpLength = (int)(quotientLerp * 188);
-				spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)lerpLength, height).FlipHorizontal(flipOrigin), new Color(255, 10, 10, 0) * 0.6f);
-			}
-			//spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarDark"), new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)length, height), new Color(255, 255, 255));
-			base.Draw(spriteBatch);
-			fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
-			spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)length, height).FlipHorizontal(flipOrigin), Color.White);
-			if (!SOTS.Config.simpleVoidFill)
-			{
-				for (int i = 0; i < rectangles.Count; i++)
-				{
-					spriteBatch.Draw(divider, rectangles[i].FlipHorizontal(flipOrigin), Color.White);
+						rectangles.Add(new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y - 2), 6, 22));
+						colors.Add(color);
+					}*/
+					prevRight += length;
+					if (!SOTS.Config.simpleVoidFill)
+						if (nextType == -1 || nextType != type)
+						{
+							rectangles.Add(new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight - 1), (int)(SOTS.Config.voidBarPointY + padding.Y - 2), 2, 20));
+							//colors.Add(color);
+						}
 				}
-			}
-			fill2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarBorder2");
-			spriteBatch.Draw(fill2, new Rectangle((int)SOTS.Config.voidBarPointX, (int)SOTS.Config.voidBarPointY, 200, 30).FlipHorizontal(flipOrigin), Color.White);
-			DrawGreenBar(spriteBatch);
-			if (voidPlayer.resolveVoidCounter > 0) //resolve visuals
-			{
-				float resolveAmount = 188f * voidPlayer.resolveVoidAmount / voidPlayer.voidMeterMax2;
-				if (voidPlayer.voidRecovery)
-					resolveAmount = length;
+				barAmount.Left.Set(6f + prevRight, 0f);
+				length = (int)(quotient * 188);
+				if (length + prevRight > 188)
+					length = 188 - prevRight;
+				barAmount.Width.Set(length, 0f);
+				if(voidPlayer.lootingSouls > 0)
+				{
+					barAmount3.Width.Set(quotient2 * 188, 0f);
+					barAmount3.Left.Set(200f - quotient2 * 188 - 6, 0f);
+					barDivider.Width.Set(2, 0);
+					barDivider.Left.Set(200f - quotient2 * 188 - 8, 0f);
+				}
 				else
 				{
-					if (resolveAmount > length)
+					barAmount3.Width.Set(0, 0);
+					barDivider.Width.Set(0, 0);
+				}
+				Recalculate();
+				if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter) //this draws the red part of the sprite
+				{
+					float quotientLerp = voidPlayer.lerpingVoidMeter / voidPlayer.voidMeterMax2;
+					fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
+					float lerpLength = (int)(quotientLerp * 188);
+					spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)lerpLength, height).FlipHorizontal(flipOrigin), new Color(255, 10, 10, 0) * 0.6f);
+				}
+				//spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarDark"), new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)length, height), new Color(255, 255, 255));
+				base.Draw(spriteBatch);
+				fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
+				spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y), (int)length, height).FlipHorizontal(flipOrigin), Color.White);
+				if (!SOTS.Config.simpleVoidFill)
+				{
+					for (int i = 0; i < rectangles.Count; i++)
 					{
-						resolveAmount = length;
+						spriteBatch.Draw(divider, rectangles[i].FlipHorizontal(flipOrigin), Color.White);
 					}
 				}
-				prevRight += length - resolveAmount;
-				float mult = voidPlayer.resolveVoidCounter / 15f;
-				for (int i = -1; i <= 1; i += 2)
+				fill2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarBorder2");
+				spriteBatch.Draw(fill2, new Rectangle((int)SOTS.Config.voidBarPointX, (int)SOTS.Config.voidBarPointY, 200, 30).FlipHorizontal(flipOrigin), Color.White);
+				DrawGreenBar(spriteBatch);
+				if (voidPlayer.resolveVoidCounter > 0) //resolve visuals
 				{
-					float sinY = i * 4 * (0.5f * (float)Math.Sin(mult * MathHelper.Pi) + mult * 0.5f);
-					spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y + sinY), (int)(resolveAmount + 1), height).FlipHorizontal(flipOrigin), new Color(110, 80, 110, 0) * mult);
+					float resolveAmount = 188f * voidPlayer.resolveVoidAmount / voidPlayer.voidMeterMax2;
+					if (voidPlayer.voidRecovery)
+						resolveAmount = length;
+					else
+					{
+						if (resolveAmount > length)
+						{
+							resolveAmount = length;
+						}
+					}
+					prevRight += length - resolveAmount;
+					float mult = voidPlayer.resolveVoidCounter / 15f;
+					for (int i = -1; i <= 1; i += 2)
+					{
+						float sinY = i * 4 * (0.5f * (float)Math.Sin(mult * MathHelper.Pi) + mult * 0.5f);
+						spriteBatch.Draw(fill, new Rectangle((int)(SOTS.Config.voidBarPointX + padding.X + (int)prevRight), (int)(SOTS.Config.voidBarPointY + padding.Y + sinY), (int)(resolveAmount + 1), height).FlipHorizontal(flipOrigin), new Color(110, 80, 110, 0) * mult);
+					}
+					voidPlayer.resolveVoidCounter--;
+					if (voidPlayer.resolveVoidCounter <= 0)
+						voidPlayer.resolveVoidAmount = 0;
 				}
-				voidPlayer.resolveVoidCounter--;
-				if (voidPlayer.resolveVoidCounter <= 0)
-					voidPlayer.resolveVoidAmount = 0;
+				if (voidPlayer.safetySwitchVisual)
+					DrawLock(spriteBatch);
+				DrawIce(spriteBatch, false);
+				DrawShock(spriteBatch);
 			}
-			if (voidPlayer.safetySwitchVisual)
-				DrawLock(spriteBatch);
-			DrawIce(spriteBatch, false);
-			DrawShock(spriteBatch);
 			if (SOTS.Config.alternateVoidBarStyle)
 				DrawCrescent(spriteBatch);
 		}

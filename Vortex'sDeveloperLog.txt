@@ -17,9 +17,10 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-7/12/22 & 7/13/22
+7/12/22 & 7/13/22 & 7/14/22
 1. Some more bestiary
 2. Alternative void bar direction and style. Should work for all accessories and void minions so far.
+3. Void bar now defaults into position when using Bars setting for Health and Mana Style interface setting.
 
 7/9/22
 1. Added Pulverizer

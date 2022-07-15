@@ -11,7 +11,8 @@ namespace SOTS
 	public class SOTSConfig : ModConfig
 	{
 		public static int voidBarNeedsLoading = 0;
-        public override void OnChanged()
+		public static int PreviousBarMode = 0;
+		public override void OnChanged()
         {
 			voidBarNeedsLoading++;
         }
@@ -35,7 +36,7 @@ namespace SOTS
 		public int voidBarPointY;
 
 		[Label("Lock Void Bar")]
-		[Tooltip("Prevents the Void Bar from being moved by your cursor")]
+		[Tooltip("Prevents the Void Bar from being moved by your cursor\nAlso prevents the Void Bar from automatically switching positions when using the 'Bars' Health and Mana Style interface setting")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool lockVoidBar { get; set; }

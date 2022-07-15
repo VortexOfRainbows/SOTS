@@ -164,6 +164,7 @@ namespace SOTS
 		public override void PreSaveAndQuit()
 		{
 			SOTSConfig.voidBarNeedsLoading = 0;
+			SOTSConfig.PreviousBarMode = 0;
 			PreSaveAndQuit_AwaitThreadedTasks();
 		}
 		private void PreSaveAndQuit_AwaitThreadedTasks()
@@ -187,6 +188,7 @@ namespace SOTS
         public override void OnWorldLoad()
 		{
 			SOTSConfig.voidBarNeedsLoading = 1;
+			SOTSConfig.PreviousBarMode = 0;
 			GlobalCounter = 0;
 			GlobalTimeFreeze = 0;
 			GlobalFrozen = false;
