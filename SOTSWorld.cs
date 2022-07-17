@@ -26,7 +26,7 @@ using Terraria.WorldBuilding;
 using SOTS.Items.Flails;
 using SOTS.Items.Secrets;
 using SOTS.Items.Tools;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Pyramid;
@@ -314,7 +314,7 @@ namespace SOTS
 			{
 
 				progress.Message = "Generating Abandoned Towns";
-				GhostTownWorldgenHelper.PlaceGhostTown();
+				AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
 			}));
 			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{

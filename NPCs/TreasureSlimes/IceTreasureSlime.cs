@@ -8,7 +8,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Void;
 using SOTS.Items.Slime;
 using SOTS.Items.Permafrost;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 
@@ -67,7 +67,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<FragmentOfPermafrost>(), 3, 6, 1f),
 				new TreasureSlimeItem(ItemType<StrawberryIcecream>(), 5, 5, 0.25f),
 
-				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
+				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)

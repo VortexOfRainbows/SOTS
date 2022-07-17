@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Void;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

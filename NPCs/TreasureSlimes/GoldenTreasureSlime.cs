@@ -69,7 +69,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<ShieldofStekpla>(), 1, 1, 0.2f),
 				new TreasureSlimeItem(ItemType<FragmentOfEarth>(), 3, 6, 1f),
 
-				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
+				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)

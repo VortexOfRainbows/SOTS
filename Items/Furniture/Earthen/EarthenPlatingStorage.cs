@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Otherworld;
 using Terraria;
 using Terraria.DataStructures;

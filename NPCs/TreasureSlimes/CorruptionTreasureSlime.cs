@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Fragments;
 using SOTS.Items.Inferno;
 using SOTS.Items.Tools;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Void;
 using SOTS.Items;
 using Terraria.ModLoader;

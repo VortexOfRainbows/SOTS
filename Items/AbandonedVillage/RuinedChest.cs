@@ -9,7 +9,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.GhostTown
+namespace SOTS.Items.AbandonedVillage
 {
 	public class RuinedChest : ModItem
 	{

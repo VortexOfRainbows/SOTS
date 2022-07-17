@@ -10,7 +10,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using SOTS.Items.Earth;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Chaos;
 using Terraria.DataStructures;
 

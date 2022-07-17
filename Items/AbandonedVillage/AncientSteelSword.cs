@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.GhostTown
+namespace SOTS.Items.AbandonedVillage
 {
 	public class AncientSteelSword : ModItem
 	{

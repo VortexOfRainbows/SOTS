@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Fragments;
 using SOTS.Items.Inferno;
 using SOTS.Items.Tools;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Void;
 using SOTS.Items;
 using SOTS.Items.Potions;
@@ -71,7 +71,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<FragmentOfNature>(), 3, 6, 0.3f),
 				new TreasureSlimeItem(ItemType<AlmondMilk>(), 5, 5, 0.3f),
 
-				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
+				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)

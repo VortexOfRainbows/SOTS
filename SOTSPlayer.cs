@@ -40,7 +40,7 @@ using SOTS.Projectiles.Tide;
 using SOTS.Items.Fishing;
 using SOTS.Items.Tide;
 using Terraria.ModLoader.IO;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;

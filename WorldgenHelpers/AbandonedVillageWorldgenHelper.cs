@@ -13,7 +13,7 @@ using SOTS.Items.Furniture.AncientGold;
 using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Secrets;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Earth;
@@ -26,7 +26,7 @@ using System.Linq;
 
 namespace SOTS.WorldgenHelpers
 {
-	public class GhostTownWorldgenHelper
+	public class AbandonedVillageWorldgenHelper
 	{
 		public static bool IsLineSolid(int x, int y, int totalY = 9, int neededY = 7)
         {
@@ -41,7 +41,7 @@ namespace SOTS.WorldgenHelpers
             }
 			return foundSolid >= neededY;
         }
-		public static void GenerateGhostTownWell(int xPos, int yPos)
+		public static void GenerateAbandonedVillageWell(int xPos, int yPos)
         {
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -340,7 +340,7 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 		}
-		public static void PlaceGhostTown()
+		public static void PlaceAbandonedVillage()
 		{
 			int center = Main.maxTilesX / 2;
 			int leftTiles = 0;
@@ -412,10 +412,10 @@ namespace SOTS.WorldgenHelpers
             }
 			if(rightTiles > leftTiles)
             {
-				GenerateGhostTownWell(leftSide.X, leftSide.Y);
+				GenerateAbandonedVillageWell(leftSide.X, leftSide.Y);
             }
 			else
-				GenerateGhostTownWell(rightSide.X, rightSide.Y);
+				GenerateAbandonedVillageWell(rightSide.X, rightSide.Y);
 		}
 	}
 }

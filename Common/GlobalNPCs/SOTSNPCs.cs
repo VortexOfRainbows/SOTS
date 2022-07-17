@@ -29,7 +29,7 @@ using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Inferno;
 using SOTS.Items.Chaos;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.Phase;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.ItemDropRules;

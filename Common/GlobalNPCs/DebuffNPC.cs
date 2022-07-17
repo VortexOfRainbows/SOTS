@@ -26,7 +26,7 @@ using SOTS.NPCs;
 using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.NPCs.Boss.Polaris;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
 using SOTS.Projectiles.Chaos;

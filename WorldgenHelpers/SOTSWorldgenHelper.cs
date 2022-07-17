@@ -13,7 +13,7 @@ using SOTS.Items.Furniture.AncientGold;
 using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Secrets;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Earth;

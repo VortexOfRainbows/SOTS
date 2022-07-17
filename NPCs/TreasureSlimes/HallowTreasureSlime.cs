@@ -73,7 +73,7 @@ namespace SOTS.NPCs.TreasureSlimes
 
 				new TreasureSlimeItem(ItemType<FragmentOfChaos>(), 3, 6, 0.2f),
 
-				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
+				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)

@@ -1,5 +1,5 @@
 using SOTS.Items.Fragments;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

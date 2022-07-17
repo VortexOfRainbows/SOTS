@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using System;
 using SOTS.Items;	
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Tile_Entities;
@@ -140,7 +140,7 @@ namespace SOTS.WorldgenHelpers
 					new StarterHouse(StarterHouseID.Legacy0, 0.05),
 					new StarterHouse(StarterHouseID.Legacy1, 0.05),
 					new StarterHouse(StarterHouseID.Legacy2, 0.05),
-					new StarterHouse(StarterHouseID.Legacy3, 0.02),
+					new StarterHouse(StarterHouseID.Legacy3, 0.02), //really big + legacy
 					new StarterHouse(StarterHouseID.Legacy4, 0.05),
 					new StarterHouse(StarterHouseID.Legacy5, 0.05),
 					new StarterHouse(StarterHouseID.Legacy6, 0.5), //contains the enchanted sword

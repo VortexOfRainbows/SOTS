@@ -5,7 +5,7 @@ using SOTS.Void;
 using SOTS.Items.Earth;
 using SOTS.Items.Pyramid;
 using SOTS.Items.ChestItems;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS.Items.Fragments
 {

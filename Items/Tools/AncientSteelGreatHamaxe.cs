@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
-using SOTS.Items.GhostTown;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Permafrost;
 using Terraria;
 using Terraria.ID;
