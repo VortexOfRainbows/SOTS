@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Otherworld
         {
 			Projectile.netImportant = true;
             Projectile.width = 42;
-            Projectile.height = 48; 
+            Projectile.height = 50; 
             Projectile.timeLeft = 20000;
             Projectile.penetrate = -1; 
             Projectile.friendly = true; 
