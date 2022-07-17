@@ -143,7 +143,7 @@ namespace SOTS.WorldgenHelpers
 					new StarterHouse(StarterHouseID.Legacy3, 0.02),
 					new StarterHouse(StarterHouseID.Legacy4, 0.05),
 					new StarterHouse(StarterHouseID.Legacy5, 0.05),
-					new StarterHouse(StarterHouseID.Legacy6, 1),
+					new StarterHouse(StarterHouseID.Legacy6, 0.5), //contains the enchanted sword
 					new StarterHouse(StarterHouseID.Legacy7, 0.05),
 					new StarterHouse(StarterHouseID.Legacy8, 0.05),
 					new StarterHouse(StarterHouseID.Legacy9, 0.05),

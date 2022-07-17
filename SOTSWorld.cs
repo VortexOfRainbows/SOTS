@@ -245,7 +245,8 @@ namespace SOTS
             int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
 			int genIndexGeodes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
 			int genIndexTraps = tasks.FindIndex(genpass => genpass.Name.Equals("Traps"));
-            int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+			int genIndexSunflowers = tasks.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
+			int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
 
 			tasks.Insert(genIndexOres, new PassLegacy("SOTSOres", GenSOTSOres));
 			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTSOres", GenSOTSGeodes));
@@ -308,9 +309,14 @@ namespace SOTS
 						}
 					}
 				}
-
 			}));
-			tasks.Insert(genIndexEnd + 4, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("Ghost Town", delegate (GenerationProgress progress, GameConfiguration configuration)
+			{
+
+				progress.Message = "Generating Abandoned Towns";
+				GhostTownWorldgenHelper.PlaceGhostTown();
+			}));
+			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Sky Artifacts";
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
@@ -456,7 +462,7 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexEnd + 6, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating A Pyramid";
 				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
@@ -794,7 +800,7 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(5) + 6; // 6 to 10
 						slot++;
 					}
-					else
+					else if(tile.TileFrameX < 36) //If the chest is not locked
                     {
 						chest.item[slot].SetDefaults(ModContent.ItemType<WorldgenScanner>());
 						slot++;
@@ -811,6 +817,36 @@ namespace SOTS
 						chest.item[slot].stack = 10;
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.CopperHammer);
+						slot++;
+					}
+					else if(tile2.TileType == TileID.GrayBrick && tile.WallType == WallID.StoneSlab)
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<AncientSteelBar>());
+						chest.item[slot].stack = WorldGen.genRand.Next(6) + 7; //7-12
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.EmptyBucket);
+						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.CanOfWorms);
+						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GillsPotion);
+						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<NightmarePotion>());
+						chest.item[slot].stack = 1;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.RestorationPotion);
+						chest.item[slot].stack = WorldGen.genRand.Next(4) + 4; //4-7
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<FragmentOfTide>());
+						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<FragmentOfEvil>());
+						chest.item[slot].stack = WorldGen.genRand.Next(3) + 3; //3-5
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.SilverCoin);
+						chest.item[slot].stack = WorldGen.genRand.Next(40, 91); //40-90
 						slot++;
 					}
 				}
