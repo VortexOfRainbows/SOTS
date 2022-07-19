@@ -26,6 +26,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.hostile = false;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.DamageType = ModContent.GetInstance<VoidMagic>();
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{

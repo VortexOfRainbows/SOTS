@@ -24,8 +24,8 @@ namespace SOTS.Items.SpiritStaves
 		{
 			Item.damage = 17;
 			Item.knockBack = 4f;
-			Item.width = 46;
-			Item.height = 46;
+			Item.width = 48;
+			Item.height = 48;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;

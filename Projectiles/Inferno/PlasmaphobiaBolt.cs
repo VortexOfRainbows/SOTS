@@ -170,6 +170,13 @@ namespace SOTS.Projectiles.Inferno
     }
     public class PlasmaStar : ModProjectile
     {
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if(Projectile.ai[0] == -1)
+            {
+                damage += target.defense / 2;
+            }
+        }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plasma Star");
@@ -193,12 +200,18 @@ namespace SOTS.Projectiles.Inferno
         }
         public void GenDust(float mult = 1f)
         {
-            for (int i = 0; i < 10; i++)
+            int amt = Projectile.ai[0] == -1 ? 50 : 10;
+            for (int i = 0; i < amt; i++)
             {
                 Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
                 dust.velocity *= mult;
                 dust.noGravity = true;
                 dust.color = new Color(157, 93, 213, 40);
+                if (Projectile.ai[0] == -1)
+                {
+                    dust.color = Void.VoidPlayer.InfernoColorAttemptDegrees(Projectile.ai[1]);
+                    dust.color.A = 40;
+                }
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.35f;
                 dust.alpha = 100;
@@ -211,19 +224,48 @@ namespace SOTS.Projectiles.Inferno
         bool runOnce = true;
         public override void AI()
         {
-            if(runOnce)
+            if (runOnce)
             {
-                GenDust(2f);
                 runOnce = false;
+                if (Projectile.ai[0] == -1)
+                {
+                    SOTSUtils.PlaySound(SoundID.Item14, Projectile.Center, 0.6f, 0.2f, 0.1f);
+                    Projectile.timeLeft = 30;
+                    GenDust(4f);
+                }
+                else
+                    GenDust(2f);
+            }
+            if(Projectile.ai[0] == -1)
+            {
+                if(Projectile.timeLeft > 24)
+                {
+                    Projectile.scale += 0.09f;
+                }
+                else
+                {
+                    Projectile.scale -= 0.02f;
+                }
             }
             Projectile.rotation += 0.03f;
+            Projectile.ai[1]++;
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
             float sin = (float)Math.Sin(MathHelper.ToRadians(180 - Projectile.timeLeft * 3));
+            if (Projectile.ai[0] == -1)
+            { 
+                sin = (float)Math.Sin(MathHelper.ToRadians(180 - Projectile.timeLeft * 6));
+            }
             sin = (float)Math.Pow(sin, 0.9);
+            float scale = Projectile.scale * sin;
             Color color = new Color(157, 93, 213);
+            if(Projectile.ai[0] == -1)
+            {
+                color = Void.VoidPlayer.InfernoColorAttemptDegrees(Projectile.ai[1]);
+                Color.Lerp(color, Color.Red, 0.4f);
+            }
             color.A = 0; 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
@@ -233,11 +275,11 @@ namespace SOTS.Projectiles.Inferno
             SOTS.GodrayShader.Parameters["rotation"].SetValue(Projectile.rotation + Projectile.whoAmI * 1.1f);
             SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * sin);
             SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
-            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale * sin, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             for(int i = 0; i < 2; i++)
-                Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, Projectile.rotation, new Vector2(texture.Width/2, texture.Height/2), Projectile.scale / 2f * sin, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, Projectile.rotation, new Vector2(texture.Width/2, texture.Height/2), scale * 0.5f, SpriteEffects.None, 0f);
             return false;
         }
     }

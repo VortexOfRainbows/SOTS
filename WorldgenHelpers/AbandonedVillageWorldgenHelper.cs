@@ -44,6 +44,7 @@ namespace SOTS.WorldgenHelpers
 						if (Math.Sqrt(x * x + (int)y * (int)y) <= radius + 0.5)
 						{
 							WorldGen.KillTile(xPosition6, spawnY + (int)(y * scale + 0.5f), false, false, false);
+							WorldGen.KillWall(xPosition6, spawnY + (int)(y * scale + 0.5f));
 						}
 					}
 				}
@@ -417,7 +418,7 @@ namespace SOTS.WorldgenHelpers
 			};
 			int PosX = xPos - _structure.GetLength(1) / 2;  //spawnX and spawnY is where you want the anchor to be when this generates
 			int PosY = yPos - 3;
-			GenHalfCircle(xPos, yPos, 0, _structure.GetLength(1) / 2, 12);
+			GenHalfCircle(xPos, yPos - 2, 0, _structure.GetLength(1) / 2, 15);
 			GenHalfCircle(xPos, yPos + 3, 1, _structure.GetLength(1) / 2, 30);
 
 			//i = vertical, j = horizontal
@@ -476,7 +477,7 @@ namespace SOTS.WorldgenHelpers
 				{11,11,11,11,11,9,9,14,14,13,0,13,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,7,0,0,4,4,2,2,9},
 				{11,11,11,11,11,9,9,14,14,13,14,13,0,14,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,4,2,9},
 				{11,11,11,11,11,9,14,14,14,13,14,13,0,14,14,14,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,4,2,9},
-				{11,11,11,11,11,9,9,14,14,13,13,13,13,13,14,14,14,2,16,0,0,0,6,0,0,0,0,15,0,0,0,0,0,4,2,4},
+				{11,11,11,11,11,9,9,14,14,13,13,13,13,13,14,14,14,2,16,0,0,0,6,0,0,0,0,0,0,0,0,0,0,4,2,4},
 				{11,11,11,11,11,11,11,9,9,9,9,13,14,14,14,14,2,2,2,2,2,2,4,4,5,5,5,5,5,5,5,5,5,4,3,2},
 				{11,11,11,11,11,11,11,9,9,9,9,9,9,2,2,3,2,2,2,3,3,3,3,2,4,0,0,0,0,0,0,0,0,2,2,0},
 				{11,11,11,11,11,11,11,11,11,11,11,9,9,9,3,3,3,3,2,2,2,3,4,4,4,4,0,0,0,0,0,0,0,3,0,0},
@@ -594,7 +595,7 @@ namespace SOTS.WorldgenHelpers
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 									break;
-								case 15:
+								/*case 15: //Signs do not generate properly
 									if (confirmPlatforms == 1)
 									{
 										tile.HasTile = false;
@@ -602,7 +603,7 @@ namespace SOTS.WorldgenHelpers
 										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, TileID.TatteredWoodSign, true, true, -1, 0);
 									}
-									break;
+									break;*/
 								case 16:
 									tile.HasTile = true;
 									tile.TileType = 38;
@@ -701,9 +702,9 @@ namespace SOTS.WorldgenHelpers
 			int[] ValidEvilTiles = new int[]
 			{
 				TileID.CrimsonGrass,
-				TileID.CorruptGrass
-				//TileID.Ebonstone,
-				//TileID.Crimstone
+				TileID.CorruptGrass,
+				TileID.Ebonstone,
+				TileID.Crimstone
 			};
 			int[] InvalidTiles = new int[]
 			{

@@ -854,43 +854,43 @@ namespace SOTS
 						chest.item[slot].SetDefaults(ModContent.ItemType<AncientSteelBar>());
 						chest.item[slot].stack = WorldGen.genRand.Next(7) + 8; //8-14
 						slot++;
-						chest.item[slot].SetDefaults(Main.rand.NextBool(3) ? ItemID.Glowstick : ItemID.Torch);
+						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ItemID.Glowstick : ItemID.Torch);
 						chest.item[slot].stack = WorldGen.genRand.Next(41) + 40; //40-80
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.MiningPotion);
 						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
 						slot++;
-						chest.item[slot].SetDefaults(Main.rand.NextBool(3) ? ItemID.StickyBomb : ItemID.Bomb);
+						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ItemID.StickyBomb : ItemID.Bomb);
 						chest.item[slot].stack = WorldGen.genRand.Next(6) + 6; //6-11
 						slot++;
-						chest.item[slot].SetDefaults(Main.rand.NextBool(3) ? ItemID.StickyDynamite : ItemID.Dynamite);
+						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ItemID.StickyDynamite : ItemID.Dynamite);
 						chest.item[slot].stack = WorldGen.genRand.Next(3) + 3; //3-5
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.RestorationPotion);
 						chest.item[slot].stack = WorldGen.genRand.Next(2) + 2; //2-3
 						slot++;
-						chest.item[slot].SetDefaults(Main.rand.NextBool(3) ? ModContent.ItemType<FragmentOfEarth>() : ModContent.ItemType<FragmentOfEvil>());
+						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ModContent.ItemType<FragmentOfEarth>() : ModContent.ItemType<FragmentOfEvil>());
 						chest.item[slot].stack = WorldGen.genRand.Next(3) + 4; //4-6
 						slot++;
-						if (Main.rand.NextBool(3))
+						if (WorldGen.genRand.NextBool(3))
 						{
-							chest.item[slot].SetDefaults(!Main.rand.NextBool(3) ? ModContent.ItemType<AncientSteelGreatPickaxe>() : ItemID.GoldPickaxe);
+							chest.item[slot].SetDefaults(!WorldGen.genRand.NextBool(3) ? ModContent.ItemType<AncientSteelGreatPickaxe>() : ItemID.GoldPickaxe);
 							chest.item[slot].stack = 1;
 							slot++;
 						}
-						if (Main.rand.NextBool(6))
+						if (WorldGen.genRand.NextBool(6))
 						{
 							chest.item[slot].SetDefaults(ItemID.MiningHelmet);
 							chest.item[slot].stack = 1;
 							slot++;
 						}
-						if (Main.rand.NextBool(6))
+						if (WorldGen.genRand.NextBool(6))
 						{
 							chest.item[slot].SetDefaults(ItemID.MiningShirt);
 							chest.item[slot].stack = 1;
 							slot++;
 						}
-						if (Main.rand.NextBool(6))
+						if (WorldGen.genRand.NextBool(6))
 						{
 							chest.item[slot].SetDefaults(ItemID.MiningPants);
 							chest.item[slot].stack = 1;

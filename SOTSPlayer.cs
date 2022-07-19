@@ -246,6 +246,7 @@ namespace SOTS
 		public bool ParticleRelocator = false;
 		public int CactusSpineDamage = 0;
 		public bool netUpdate = false;
+		public bool BlazingQuiver = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -566,6 +567,7 @@ namespace SOTS
 		}
 		public override void ResetEffects()
 		{
+			BlazingQuiver = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
 			if(VMincubator)
@@ -1074,7 +1076,18 @@ namespace SOTS
 			}
 			return true;
 		}
-		public override float UseAnimationMultiplier(Item item)
+        public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+			if(item.useAmmo == AmmoID.Arrow && BlazingQuiver)
+            {
+				if(type == ProjectileID.WoodenArrowFriendly)
+                {
+					type = ModContent.ProjectileType<BlazingArrow>();
+					damage += 2;
+                }
+            }
+        }
+        public override float UseAnimationMultiplier(Item item)
 		{
 			return UseTimeMultiplier(item);
 		}
