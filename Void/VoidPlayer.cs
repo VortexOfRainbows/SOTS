@@ -133,6 +133,10 @@ namespace SOTS.Void
 		}
         public static void VoidEffect(Player player, int voidAmount, bool damageOverTime = false, bool resolve = true)
 		{
+			if (Main.gameMenu || Main.gameInactive) //hopefully prevent projectile entity issues
+			{
+				return;
+            }
 			//CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(100, 80, 115, 255), string.Concat(voidAmount), false, false);
 			if (player.whoAmI == Main.myPlayer)
 			{

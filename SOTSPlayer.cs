@@ -68,7 +68,7 @@ namespace SOTS
 			locketBlacklist = new int[] { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
 				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
-			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>() };
+			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), ModContent.ProjectileType<BlazingArrow>() };
 			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>() };
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
 			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };
@@ -565,7 +565,42 @@ namespace SOTS
 			float AndGeneric = player.GetTotalAttackSpeed(damageClass);
 			return (int)(startingUseTime / (AndGeneric + ModPlayer(player).attackSpeedMod - 1));
 		}
-		public override void ResetEffects()
+        public override void PostUpdateEquips()
+		{
+			TrailStuff();
+			doCurseAura();
+			if (petAdvisor)
+				runPets(ref probes[0], ModContent.ProjectileType<AdvisorPet>());
+			if (petPepper)
+				runPets(ref probes[1], ModContent.ProjectileType<GhostPepper>());
+			if (HoloEye)
+				runPets(ref probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
+			if (petPinky >= 0)
+				runPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky + 1);
+			if (RubyMonolith)
+				runPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
+			if (petFreeWisp >= 0)
+				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
+			if (VisionVanity)
+				runPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
+			doPlanetAqueduct();
+			if (rippleEffect)
+			{
+				float healthPercent = (float)Player.statLife / (float)Player.statLifeMax2;
+				int timerMax = (int)(70 * healthPercent) + 20;
+				if (rippleTimer > timerMax)
+				{
+					if (Main.myPlayer == Player.whoAmI)
+						Projectile.NewProjectile(Player.GetSource_Misc("Ripple buffs or accessory"), Player.Center, new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Projectiles.Tide.RippleWave>(), 20 + rippleBonusDamage, 0f, Player.whoAmI, 1, 0);
+					rippleTimer -= timerMax;
+				}
+			}
+			else
+			{
+				rippleTimer = 0;
+			}
+		}
+        public override void ResetEffects()
 		{
 			BlazingQuiver = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
@@ -601,8 +636,6 @@ namespace SOTS
 				Player.gravity = Player.defaultGravity;
             }
 			normalizedGravity = false; 
-			TrailStuff();
-			doCurseAura(); 
 			noMoreConstructs = false;
 			CanKillNPC = false;
 			baguetteDrops = false;
@@ -665,37 +698,7 @@ namespace SOTS
 			blinkPackMult = 1f;
 			BlinkDamage = 0;
 			BlinkType = 0;
-			if (petAdvisor)
-				runPets(ref probes[0], ModContent.ProjectileType<AdvisorPet>());
-			if (petPepper)
-				runPets(ref probes[1], ModContent.ProjectileType<GhostPepper>());
-			if (HoloEye)
-				runPets(ref probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
-			if (petPinky >= 0)
-				runPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky + 1);
-			if (RubyMonolith)
-				runPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
-			if (petFreeWisp >= 0)
-				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
-			if (VisionVanity)
-				runPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
-			doPlanetAqueduct();
 			VisionVanity = false;
-			if (rippleEffect)
-			{
-				float healthPercent = (float)Player.statLife / (float)Player.statLifeMax2;
-				int timerMax = (int)(70 * healthPercent) + 20;
-				if(rippleTimer > timerMax)
-				{
-					if (Main.myPlayer == Player.whoAmI)
-						Projectile.NewProjectile(Player.GetSource_Misc("Ripple buffs or accessory"), Player.Center, new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Projectiles.Tide.RippleWave>(), 20 + rippleBonusDamage, 0f, Player.whoAmI, 1, 0);
-					rippleTimer -= timerMax;
-                }
-			}
-			else
-            {
-				rippleTimer = 0;
-            }
 			rippleEffect = false;
 			rippleBonusDamage = 0;
 			symbioteDamage = -1;

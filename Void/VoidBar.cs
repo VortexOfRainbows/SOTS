@@ -248,7 +248,7 @@ namespace SOTS.Void
 					barDivider.Width.Set(0, 0);
 				}
 				Recalculate();
-				if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter) //this draws the red part of the sprite
+				if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter && voidPlayer.lerpingVoidMeter < voidPlayer.voidMeterMax2) //this draws the red part of the sprite
 				{
 					float quotientLerp = voidPlayer.lerpingVoidMeter / voidPlayer.voidMeterMax2;
 					fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");

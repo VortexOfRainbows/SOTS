@@ -1,4 +1,5 @@
 The following is my development plans :D
+1. Change in player class reseteffects order might break some things... Have to keep an eye on it.
 
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
@@ -13,7 +14,7 @@ Update Objectives:
 	3. Smart spawning houses and rubble
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance, houses, and different directions for the cave entrance!
-	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves.
+	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 
 Other 1.4 related objectives:
 1. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
@@ -22,6 +23,9 @@ Other 1.4 related objectives:
 4. Bestiary for all enemies
 
 Daily Log:
+
+7/19/22
+1. Player class bug fixes with Entity Source Proj.
 
 7/16/22 & 7/17/22 & 7/18/22
 1. Started on Ghost Town worldgen (selecting and concept)
