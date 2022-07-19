@@ -29,6 +29,7 @@ namespace SOTS.Items.Secrets
 	{
 		public override void SetStaticDefaults()
 		{
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
