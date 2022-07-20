@@ -13,7 +13,7 @@ Update Objectives:
 	2. Cave that integrates into evil biome
 	3. Smart spawning houses and rubble
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
-	5. Variants for the cave entrance, houses, and different directions for the cave entrance!
+	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 
 Other 1.4 related objectives:
@@ -23,6 +23,9 @@ Other 1.4 related objectives:
 4. Bestiary for all enemies
 
 Daily Log:
+
+7/20/22
+1. Bug fixes + extractable SOOT
 
 7/19/22
 1. Player class bug fixes with Entity Source Proj.

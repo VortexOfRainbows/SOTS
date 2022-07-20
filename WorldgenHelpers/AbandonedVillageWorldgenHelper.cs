@@ -63,7 +63,7 @@ namespace SOTS.WorldgenHelpers
 							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
 							if (!tile.HasTile)
 							{
-								tile.TileType = TileID.Dirt;
+								tile.TileType = TileID.Dirt;//WorldGen.crimson ? TileID.Crimstone : TileID.Ebonstone;
 								tile.HasTile = true;
 							}
 							if (!tile2.HasTile && tile.TileType == TileID.Dirt)
@@ -419,7 +419,7 @@ namespace SOTS.WorldgenHelpers
 			int PosX = xPos - _structure.GetLength(1) / 2;  //spawnX and spawnY is where you want the anchor to be when this generates
 			int PosY = yPos - 3;
 			GenHalfCircle(xPos, yPos - 2, 0, _structure.GetLength(1) / 2, 15);
-			GenHalfCircle(xPos, yPos + 3, 1, _structure.GetLength(1) / 2, 30);
+			GenHalfCircle(xPos, yPos + 3, 1, _structure.GetLength(1) / 2 - 1, 30);
 
 			//i = vertical, j = horizontal
 			for (int i = 0; i < _structure.GetLength(0); i++)
@@ -688,12 +688,12 @@ namespace SOTS.WorldgenHelpers
             }
 			if (rightTiles > leftTiles)
 			{
-				GenerateAbandonedVillageWell(leftSide.X, leftSide.Y);
+				GenerateMineEntrance(leftSide.X, leftSide.Y);
 				ContinueGeneration(leftSide.X, -1);
 			}
 			else
 			{
-				GenerateAbandonedVillageWell(rightSide.X, rightSide.Y);
+				GenerateMineEntrance(rightSide.X, rightSide.Y);
 				ContinueGeneration(rightSide.X, 1);
 			}
 		}
@@ -727,8 +727,8 @@ namespace SOTS.WorldgenHelpers
 						{
 							tileFoundCounter++;
 							if(tileFoundCounter == 40) //40 solid tiles from well
-                            {
-								GenerateMineEntrance(X, y);
+							{
+								GenerateAbandonedVillageWell(X, y);
 								generating = false;
                             }
 						}

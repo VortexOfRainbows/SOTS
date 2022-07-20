@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Tools;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,13 +23,69 @@ namespace SOTS.Items.AbandonedVillage
 	}
 	public class SootBlock : ModItem
 	{
-		public override void SetStaticDefaults() => this.SetResearchCost(100);
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Contains remnants of burned material inside\nCan be used in an Extractinator"); 
+			ItemID.Sets.ExtractinatorMode[Type] = Type;
+			this.SetResearchCost(10);
+		}
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.createTile = ModContent.TileType<SootBlockTile>();
 		}
-	}
+        public override void ExtractinatorUse(ref int resultType, ref int resultStack)
+        {
+			if(resultType == ItemID.CopperCoin || resultType == ItemID.SilverCoin || resultType == ItemID.GoldCoin || resultType == ItemID.PlatinumCoin
+				|| resultType == ItemID.CopperOre || resultType == ItemID.TinOre || resultType == ItemID.IronOre || resultType == ItemID.LeadOre || resultType == ItemID.SilverOre || resultType == ItemID.TungstenOre || resultType == ItemID.AmberMosquito)
+			{
+				return;
+            }
+			else
+            {
+				resultStack = 1;
+				if (Main.rand.NextBool(7))
+				{
+					resultType = ModContent.ItemType<OldKey>();
+				}
+				else if(Main.rand.NextBool(6))
+				{
+					resultType = ModContent.ItemType<MinersPickaxe>();
+					resultStack = Main.rand.Next(3) + 1;
+				}
+				else if(Main.rand.NextBool(5))
+				{
+					resultType = ItemID.MusketBall;
+					resultStack = 10 + Main.rand.Next(15) + Main.rand.Next(15) + Main.rand.Next(15) + Main.rand.Next(15) + Main.rand.Next(15);
+				}
+				else if(Main.rand.NextBool(4))
+				{
+					resultType = ItemID.Vertebrae;
+					if (Main.rand.NextBool(2))
+						resultType = ItemID.RottenChunk;
+					resultStack = 1 + Main.rand.Next(2);
+					if(Main.rand.NextBool(4))
+                    {
+						resultStack += 2 + Main.rand.Next(2);
+                    }
+				}
+				else
+				{
+					resultType = ModContent.ItemType<CharredWood>();
+					resultStack = 5 + Main.rand.Next(11);
+					if (Main.rand.NextBool(6))
+					{
+						resultStack += 2 + Main.rand.Next(8);
+					}
+					if (Main.rand.NextBool(2))
+					{
+						resultType = ItemID.Book;
+						resultStack = resultStack / 4 + 1;
+					}
+				}
+            }
+		}
+    }
 	public class SootWallTile : ModWall
 	{
 		public override void SetStaticDefaults()
