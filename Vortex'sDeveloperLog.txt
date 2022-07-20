@@ -21,6 +21,7 @@ Other 1.4 related objectives:
 2. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 3. Final 2 starter houses
 4. Bestiary for all enemies
+5. Animated Pyramid Life Crystal
 
 Daily Log:
 
