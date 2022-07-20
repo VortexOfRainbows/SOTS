@@ -972,7 +972,7 @@ namespace SOTS
 		{
 			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit, false);
 		}
-		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
 		{
 			if (Main.myPlayer == Player.whoAmI && OnHitCD <= 0)
 			{
@@ -983,7 +983,7 @@ namespace SOTS
 						for (int i = 0; i < shardOnHit; i++)
 						{
 							Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f / shardOnHit)));
-							Projectile.NewProjectile(Player.GetSource_Misc("{PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, Player.whoAmI);
+							Projectile.NewProjectile(Player.GetSource_Misc("PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, Player.whoAmI);
 						}
 					}
 					if (CactusSpineDamage > 0)
@@ -992,7 +992,7 @@ namespace SOTS
 						for (int i = 0; i < 18; i++)
 						{
 							Vector2 circularSpeed = new Vector2(0, -Main.rand.NextFloat(1.6f, 2.8f)).RotatedBy(MathHelper.ToRadians(i * (360f / amt)) + Main.rand.NextFloat(-5, 5));
-							Projectile.NewProjectile(Player.GetSource_Misc("{PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<CactusSpine>(), CactusSpineDamage, 1.5f, Player.whoAmI);
+							Projectile.NewProjectile(Player.GetSource_Misc("PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<CactusSpine>(), CactusSpineDamage, 1.5f, Player.whoAmI);
 						}
 					}
 				}
@@ -1048,7 +1048,7 @@ namespace SOTS
 					}
 				}
 			}
-			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
+			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
 		}
 		int shotCounter = 0;
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
