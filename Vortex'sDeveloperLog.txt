@@ -22,7 +22,7 @@ Other 1.4 related objectives:
 3. Final 2 starter houses
 4. Bestiary for all enemies
 5. Animated Pyramid Life Crystal
-6. Fix BOSS BAGS and CRATES for the new loot system!
+6. TEST BOSS BAGS and CRATES for the new loot system (THEY'RE PROGRAMMED BUT WAITING FOR HERO's and CHEAT SHEAT)!
 
 Daily Log:
 

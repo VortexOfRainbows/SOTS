@@ -6,6 +6,7 @@ using Terraria.ID;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Otherworld.EpicWings;
+using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS.Items.Otherworld
 {
@@ -15,6 +16,8 @@ namespace SOTS.Items.Otherworld
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -69,23 +72,15 @@ namespace SOTS.Items.Otherworld
 		{
 			return true;
 		}
-		public override void OpenBossBag(Player player)
+		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-			player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<TwilightGyroscope>());
-			if(Main.rand.NextBool(3))
-				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<StarlightAlloy>(), Main.rand.Next(12, 19));
-			else
-				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<SkywareKey>());
-
-			if (Main.rand.NextBool(3))
-				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<OtherworldlyAlloy>(), Main.rand.Next(12, 19));
-			else
-				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<MeteoriteKey>());
-
-			if (Main.rand.NextBool(3))
-				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<HardlightAlloy>(), Main.rand.Next(12, 19));
-			else
-				player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<StrangeKey>());
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TwilightGyroscope>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OtherworldlyAlloy>(), 3, 12, 18))
+				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<MeteoriteKey>(), 1, 1, 1));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<StarlightAlloy>(), 3, 12, 18))
+				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<SkywareKey>(), 1, 1, 1));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardlightAlloy>(), 3, 12, 18))
+				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<StrangeKey>(), 1, 1, 1));
 		}
 	}
 }

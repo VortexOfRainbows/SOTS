@@ -1,5 +1,6 @@
 using SOTS.NPCs.Boss.Polaris;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +12,8 @@ namespace SOTS.Items.Permafrost
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = false;
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -25,12 +28,11 @@ namespace SOTS.Items.Permafrost
 		}
 		public override int BossBagNPC => ModContent.NPCType<Polaris>();
 		public override bool CanRightClick() { return true; }
-		public override void OpenBossBag(Player player)
+		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-			player.TryGettingDevArmor(player.GetSource_OpenItem(Type));
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<FrigidHourglass>());
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType <AbsoluteBar>(), Main.rand.Next(26, 43));
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.FrostCore, Main.rand.Next(2) + 1);
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FrigidHourglass>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<AbsoluteBar>(), 1, 26, 42));
+			itemLoot.Add(ItemDropRule.Common(ItemID.FrostCore, 1, 1, 2));
 		}
 	}
 }

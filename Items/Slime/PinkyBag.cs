@@ -1,6 +1,7 @@
 using SOTS.Items.Crushers;
 using SOTS.NPCs.Boss;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,6 +13,8 @@ namespace SOTS.Items.Slime
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -29,33 +32,23 @@ namespace SOTS.Items.Slime
 		{
 			return true;
 		}
-		public override void OpenBossBag(Player player)
+		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<PutridEye>());
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<VialofAcid>(), Main.rand.Next(20, 30));
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.PinkGel,Main.rand.Next(40, 60));
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Wormwood>(), Main.rand.Next(20, 30));
-			if (Main.rand.NextBool(7))
-			{
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<PutridPinkyMask>());
-			}
-			int rand = Main.rand.Next(10);
-			if(rand == 0)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<GelWings>());
-			if(rand == 1)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodParasite>());
-			if(rand == 2)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodHelix>());
-			if(rand == 3)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodHook>());
-			if(rand == 4)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodCollapse>());
-			if(rand == 5)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodScepter>());
-			if(rand == 6)
-				player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodStaff>());
-			//if(rand == 7)
-				//player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<WormWoodSpike>());
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PutridEye>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VialofAcid>(), 1, 20, 30));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Wormwood>(), 1, 20, 30));
+			itemLoot.Add(ItemDropRule.Common(ItemID.PinkGel, 1, 40, 60));
+			itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PutridPinkyMask>(), 7));
+			IItemDropRule[] oreTypes = new IItemDropRule[] {
+				ItemDropRule.Common(ModContent.ItemType<GelWings>()),
+				ItemDropRule.Common(ModContent.ItemType<WormWoodParasite>()),
+				ItemDropRule.Common(ModContent.ItemType<WormWoodHelix>()),
+				ItemDropRule.Common(ModContent.ItemType<WormWoodHook>()),
+				ItemDropRule.Common(ModContent.ItemType<WormWoodCollapse>()),
+				ItemDropRule.Common(ModContent.ItemType<WormWoodScepter>()),
+				ItemDropRule.Common(ModContent.ItemType<WormWoodStaff>())
+			};
+			itemLoot.Add(new OneFromRulesRule(1, oreTypes));
 		}
 	}
 }

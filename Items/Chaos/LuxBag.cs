@@ -5,6 +5,7 @@ using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Void;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -45,6 +46,8 @@ namespace SOTS.Items.Chaos
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = false;
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -62,12 +65,11 @@ namespace SOTS.Items.Chaos
 		{
 			return true;
 		}
-		public override void OpenBossBag(Player player)
+		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-			player.TryGettingDevArmor(player.GetSource_Loot());
-			player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<VoidAnomaly>());
-			player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<PhaseOre>(), Main.rand.Next(120, 181)); //12 to 18 bars
-			player.QuickSpawnItem(player.GetSource_Loot(), ItemID.SoulofLight, Main.rand.Next(10, 20));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VoidAnomaly>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PhaseOre>(), 1, 120, 180));
+			itemLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));
 		}
 	}
 }

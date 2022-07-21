@@ -1297,7 +1297,7 @@ namespace SOTS
 						chest.item[slot].SetDefaults(ModContent.ItemType<WingedKnife>());
 						slot++;
 					}
-					if(WorldGen.genRand.NextBool(2) && (chest.item[0].type == ItemID.Starfury || chest.item[0].type == ItemID.ShinyRedBalloon || chest.item[0].type == ItemID.LuckyHorseshoe))
+					if(WorldGen.genRand.NextBool(2) && (chest.item[0].type == ItemID.Starfury || chest.item[0].type == ItemID.ShinyRedBalloon || chest.item[0].type == ItemID.CreativeWings)) //this should be fledgling wings now
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<TinyPlanet>());
 						slot++;
