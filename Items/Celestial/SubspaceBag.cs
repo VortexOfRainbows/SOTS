@@ -1,5 +1,6 @@
 using SOTS.NPCs.Boss;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,7 +11,9 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Bag");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}/nCurrently yields no expert exclusive item, as the current one is not yet working in 1.4");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}/nCurrently yields no expert exclusive item, as the current one is not yet working in 1.4"); 
+			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = false;
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -28,11 +31,10 @@ namespace SOTS.Items.Celestial
 		{
 			return true;
 		}
-		public override void OpenBossBag(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-			player.TryGettingDevArmor(player.GetSource_OpenItem(Type));
-			//player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SubspaceLocket>());
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SanguiteBar>(), Main.rand.Next(16, 30));
+			//itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SubspaceLocket>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SanguiteBar>(), 1, 16, 29));
 		}
 	}
 }
