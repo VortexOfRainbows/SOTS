@@ -1,0 +1,122 @@
+Update 0.22.0
+-Ported to 1.4!
+-Some internal optimizations
+
+Update 0.21.1
+-Attempted a fix for Recipe Browser crash
+-Modified Lux's survivablity
+-Other balance related changes
+
+Update 0.21.0 "The Construct Update"
+-New worldgen structure in the Dungeon and Jungle
+-New Polaris summon shrine + 3 new ores
+-Added the 3 remaining Constructs, all Hardmode
+-Replaced Celestial Serpent with a new boss, Lux
+-Reworked and added more items. New enemies
+-Void Reworks, such as enemies being able to deal void damage, and different void regen mechanics
+-Various balance changes
+-Added a config option to lower the intesity of visuals and help with performance. Mainly affects certain boss related visuals, lasers, trails, etc.
+-Many resprites and visual improvements
+-Internal Optimizations and many Bug fixes
+
+Update 0.20.2
+-A new item, Plasma Accelerator, and reworked Bore Bullets
+-A few bug fixes and internal optimizations that should hopefully make the mod less laggy
+
+Update 0.20.1
+-Reworked Treasure Slimes
+-Added Permafrost and Tidal Spirit Staves
+-Added two new starter house variants (courtesy of Astrobit and Mushnib~)
+-A few resprites, bug fixes, and balance changes
+
+Update 0.20.0 "The Pyramid Update"
+-The Pyramid worldgen overhauled/improved. Added new enemies and a wave event and music.
+-The Planetarium now features a vastly improved set of visuals.
+-Other places have also recieved visual improvements, such as buff icons, bosses, enemies, armor, and weapons.
+-Pharaoh's Curse has been completely reworked
+-Several items have recieved visual and functional reworks
+-A handful of new items have been added
+-Many balance changes, bug fixes, and QoL additions
+-Many internal code optimizations and fixes
+
+Update 0.19.3
+-New Expert drops for Icy Amalgamation, Subspace Serpent, and Pharaoh's
+-A TON of various resprites
+-A handful a balance changes
+-Bug Fixes
+
+Update 0.19.2
+-More Items, such as the introduction of Void+Summon items
+-New Worldgen structures in the Ocean, Sky, and Planetarium
+-Putrid Pinky Reworks, both visual and functional
+-Subspace Serpent has been completely reworked
+-Many item reworks, both visual and functional
+
+Update 0.19.1
+-Just a quick hotfix in attempt to fix some bugs such as...
+-Fixed game crash on attempting to load world
+-Fixed enemies from other mods spawning too frequently in planetarium
+-New Mod icon
+
+Update 0.19.0
+-Big thanks to qwerty3.14 for extensive feedback in many areas of the mod (and glowmask code)!
+-Balancing changes, overhauls, and visual improvements in many areas (including various items)
+-New Boss and Biome with lots of new items
+-Various bug fixes
+
+Update 0.18.4
+-Pyramid prioritizes finding a non-underground desert
+-Pyramid is now smaller, has new rooms, now generates with clogged hallways.
+-Visual improvements in various places, added banners.
+-Expanded content, Remade some old content.
+-Buffed default void regen speed, modified void costs in various areas
+-Bug fixes (Thanks Creeper da Snek and the people in the Discord server)
+
+Update 0.18.3.2
+-Some small tweaks
+-Homepage added!
+
+Update 0.18.3
+-Pyramid worldgen improved
+-Visual improvements in various places
+-Permafrost Fragment item pool expansion
+-More Items, Enemies, and an Armor set
+-Remade some items and added old ones back.
+-Item balancing, especially with summon items
+-Bug fixes
+
+Update 0.18.2
+-Fixed undownloadable error
+-Icon added
+
+Update 0.18.1 
+-More pyramid stuff and resprites
+
+Update 0.18 The Purge
+-Reworked or Removed almost every old item, some will be rebalanced and added back later (400+ items removed)
+--Most secret or nigh unobtainable items have been changed or removed
+-CHALLENGES REMOVED, different variations might be added back later
+-Added pyramid biome
+-Replaced certain bosses
+-Void rebalanced, it should now be more forgiving
+-Fixed bugs and crafting recipe issues
+-More to come in future updates!
+
+Update 0.17
+-More void stuff
+-Armor reworks
+-updated to tmodloader version v0.11...
+-Balancing Changes
+-Bux fixes
+-Creepers removed, New Treasure Slime Types!
+-Putrid Pinky reworked
+-Item reworks
+
+Update 0.16.1 "Challenge" Update
+-Bug fixing and balance changes
+	-Legedaries reworked
+-Fixed bug with boss checklist
+-2 new worldgen
+-Challenges added, capable of enhancing gameplay at the start of the game
+
+Previous logs redacted
