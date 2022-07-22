@@ -33,6 +33,7 @@ using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Fishing;
 using SOTS.Items.Chaos;
 using SOTS.Projectiles.Otherworld;
+using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS
 {
@@ -522,16 +523,11 @@ namespace SOTS
 		{
 			return base.UseItem(item, player);
         }
-        public override void OpenVanillaBag(string context, Player player, int arg)
-        {
-			if (context == "bossBag")
-			{
-				if(arg == ItemID.EaterOfWorldsBossBag || arg == ItemID.BrainOfCthulhuBossBag)
-					player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<PyramidKey>(), 1);
-				//else if(arg == ItemID.WallOfFleshBossBag)
-					//player.QuickSpawnItem(player.GetSource_OpenItem(arg), ItemType<HungryHunter>(), 1);
-			}
-        }
+        public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
+		{
+			if (item.type == ItemID.EaterOfWorldsBossBag || item.type == ItemID.BrainOfCthulhuBossBag)
+				itemLoot.Add(ItemDropRule.Common(ItemType<PyramidKey>()));
+		}
     }
 	public class DataTransferProj : ModProjectile
 	{

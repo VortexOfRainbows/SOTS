@@ -8,6 +8,7 @@ using SOTS.Items.Potions;
 using SOTS.Items.Flails;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
+using SOTS.NPCs.Boss;
 
 namespace SOTS.Items.Fishing
 {
@@ -22,10 +23,13 @@ namespace SOTS.Items.Fishing
 		}
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.Size = new Vector2(34, 34);
-			Item.autoReuse = true;
-			Item.createTile = ModContent.TileType<PyramidCrateTile>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<PyramidCrateTile>());
+			Item.width = 12; //The hitbox dimensions are intentionally smaller so that it looks nicer when fished up on a bobber
+			Item.height = 12;
+			Item.maxStack = 999;
+			Item.rare = ItemRarityID.Orange;
+			Item.value = Item.sellPrice(0, 1);
+			Item.consumable = true;
 		}
 		public override bool CanRightClick()
 		{
@@ -93,9 +97,9 @@ namespace SOTS.Items.Fishing
 
 			itemLoot.Add(ItemDropRule.Common(ItemID.GoldCoin, 4, 5, 12));
 		}
-        public override void RightClick(Player player)
+        /*public override void RightClick(Player player)
 		{
-			/*else
+			else
 			{
 				int rand = Main.rand.Next(15);
 				if(rand == 0) //ores
@@ -159,8 +163,8 @@ namespace SOTS.Items.Fishing
 					if(rand2 == 1)
 						player.QuickSpawnItem(player.GetSource_OpenItem(Item.type), ItemID.ManaPotion, Main.rand.Next(10) + 5);
 				}
-			}*/
-		}
+			}	
+		}*/
 	}
 	public class PyramidCrateTile : ModTile
 	{
