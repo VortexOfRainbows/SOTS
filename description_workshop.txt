@@ -1,4 +1,4 @@
-If you find any issues with SOTS, the Discord server is the best place to find help.
+[b]If you find any issues with SOTS, the Discord server is the best place to find help.[/b]
 
 A mod which probably has something to do with Secrets and Shadows.
 This mod's main plan is to add structures and other unique generation to the world, which can act as dungeons or help spice up exploration.
