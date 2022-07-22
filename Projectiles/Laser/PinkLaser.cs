@@ -30,17 +30,13 @@ namespace SOTS.Projectiles.Laser
 		{
 			//Projectile.Center = npc.Center;
 			Projectile.alpha += 3;
-			if (Projectile.alpha > 180) {
+			if (Projectile.alpha > 160) {
 				Projectile.damage = 0;
 			}
 			if (Projectile.alpha > 250) {
 				Projectile.Kill();
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[Projectile.owner] = 7;
-        }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;
@@ -79,14 +75,14 @@ namespace SOTS.Projectiles.Laser
 			float length = unit.Length();
 			unit.Normalize();
 			lightColor = new Color(255, 255, 255) * ((255 - Projectile.alpha) / 255f);
-			for (float Distance = 0; Distance <= length; Distance += 4f) {
+			for (float Distance = 0; Distance <= length; Distance += 3.5f) 
+			{
 				Vector2 drawPos = Projectile.Center + unit * Distance - Main.screenPosition;
 				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
 				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].HasUnactuatedTile)
 				{
-					Distance -= 6f;
 					break;
 				}
 				float size = 0.4f + (Projectile.timeLeft/150f);
@@ -96,7 +92,12 @@ namespace SOTS.Projectiles.Laser
 				}
 				if(Distance >= 40)
 				{
-					Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f), size, SpriteEffects.None, 0f);
+					float alphaMult = (255 - Projectile.alpha) / 255f;
+					Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+					float rotation = (float)Math.Atan2(unit.Y, unit.X);
+					float otherMult = 1f - Distance / length;
+					float helix = otherMult * alphaMult * 0.8f * (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * -8 + Distance));
+					Main.spriteBatch.Draw(texture, drawPos, null, lightColor, rotation, texture.Size() / 2, new Vector2(1.0f, size * (1.2f + helix)), unit.X > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 					Lighting.AddLight(position, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.3f / 255f);
 					if(dust)
 					{

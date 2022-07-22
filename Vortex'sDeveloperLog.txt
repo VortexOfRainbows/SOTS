@@ -28,6 +28,7 @@ Daily Log:
 1. Port treasure bags
 2. Crates are ported!
 3. Animated Pyramid Heart Crystal!
+4. PP Laser lingers 7 frames less. Is more gel like, turns the correct direction.
 
 7/20/22
 1. Bug fixes + extractable SOOT
