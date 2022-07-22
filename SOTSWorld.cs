@@ -310,11 +310,10 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("Ghost Town", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
-
-				progress.Message = "Generating Abandoned Towns";
-				AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
+				progress.Message = "Generating Abandoned Village";
+				//AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
 			}));
 			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
