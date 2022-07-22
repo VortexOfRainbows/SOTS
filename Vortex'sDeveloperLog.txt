@@ -1,9 +1,6 @@
 The following is my development plans :D
 1. Change in player class reseteffects order might break some things... Have to keep an eye on it.
 
-TMODLOADER BUGS:
-1. Crate opens infinitely for some reason
-
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
 	1. Subspace Treads
@@ -24,14 +21,13 @@ Other 1.4 related objectives:
 2. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 3. Final 2 starter houses
 4. Bestiary for all enemies
-5. Animated Pyramid Life Crystal
-
 
 Daily Log:
 
 7/21/22
 1. Port treasure bags
-2. Crates are somewhat ported...?
+2. Crates are ported!
+3. Animated Pyramid Heart Crystal!
 
 7/20/22
 1. Bug fixes + extractable SOOT

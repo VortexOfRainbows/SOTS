@@ -24,6 +24,20 @@ namespace SOTS.Items.Pyramid
             HitSound = SoundID.Tink;
 			MineResist = 2.5f;
 			DustType = 12;
+            AnimationFrameHeight = 36;
+        }
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            frameCounter++;
+            if (frameCounter > 5)
+            {
+                frameCounter = 0;
+                frame++;
+                if (frame >= 11)
+                {
+                    frame = 0;
+                }
+            }
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
