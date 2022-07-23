@@ -16,8 +16,8 @@ namespace SOTS.Projectiles.Tide
         }
         public override void SetDefaults()
         {
-            Projectile.width = 18;
-            Projectile.height = 18;
+            Projectile.width = 20;
+            Projectile.height = 22;
             Projectile.aiStyle = 20;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Tide
             Projectile.alpha = 255;
             Projectile.ownerHitCheck = true;
         }
-        float segmentDist = 11f;
+        float segmentDist = 16f;
         int length = 4;
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Tide
         public void cataloguePos()
         {
             Vector2 current = Projectile.Center;
-            current += new Vector2(length * segmentDist - 4, 0).RotatedBy(Projectile.rotation);
+            current += new Vector2(length * segmentDist - 12, 0).RotatedBy(Projectile.rotation);
             float currentR = Projectile.rotation;
             for (int i = 0; i < trailPos.Length; i++)
             {
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Tide
             Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Tide/GradientScale").Value;
-            Vector2 previousPosition = Projectile.Center + new Vector2(length * segmentDist - 4, 0).RotatedBy(Projectile.rotation);
+            Vector2 previousPosition = Projectile.Center + new Vector2(length * segmentDist - 12, 0).RotatedBy(Projectile.rotation);
             for (int k = 1; k < trailPos.Length; k++)
             {
                 float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;

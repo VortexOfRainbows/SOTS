@@ -21,8 +21,8 @@ namespace SOTS.Items
 		{
 			Item.damage = 20;
 			Item.DamageType = DamageClass.Melee;
-			Item.width = 30;
-			Item.height = 30;
+			Item.width = 36;
+			Item.height = 38;
 			Item.useTime = 14;
 			Item.useAnimation = 14;
 			Item.useStyle = ItemUseStyleID.Shoot;
