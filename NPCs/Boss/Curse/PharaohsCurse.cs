@@ -110,16 +110,17 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (Main.netMode == NetmodeID.Server)
-				return;
 			if (NPC.life > 0)
 			{
-				SOTSUtils.PlaySound(SoundID.NPCHit54, NPC.Center, 1.2f, -0.25f);
-				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
+				if (Main.netMode != NetmodeID.Server)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
-					num++;
+					SOTSUtils.PlaySound(SoundID.NPCHit54, NPC.Center, 1.2f, -0.25f);
+					int num = 0;
+					while ((double)num < damage / (double)NPC.lifeMax * 60.0)
+					{
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+						num++;
+					}
 				}
 			}
 			else
@@ -134,15 +135,18 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 				else if(aiPhase == 7)
 				{
-					for (int k = 0; k < 240; k++)
+					if (Main.netMode != NetmodeID.Server)
 					{
-						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
-						dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) + new Vector2(0, -2);
-						dust.scale *= Main.rand.NextFloat(2) + 1;
-						dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
-						dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						dust.scale *= Main.rand.NextFloat(2) + 1;
-						dust.noGravity = true;
+						for (int k = 0; k < 240; k++)
+						{
+							Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+							dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) + new Vector2(0, -2);
+							dust.scale *= Main.rand.NextFloat(2) + 1;
+							dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+							dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+							dust.scale *= Main.rand.NextFloat(2) + 1;
+							dust.noGravity = true;
+						}
 					}
 				}
 				else

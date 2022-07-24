@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(160, 200, 220, 100), new Color(120, 140, 180, 100), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);

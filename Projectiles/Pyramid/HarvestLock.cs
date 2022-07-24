@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Pyramid
 						for (int i = 0; i < 360; i += 4)
 						{
 							Vector2 rotationalPos = new Vector2(7, 0).RotatedBy(MathHelper.ToRadians(i));
-							int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(20, 20) - new Vector2(5), 40, 40, Mod.Find<ModDust>("CopyDust4").Type);
+							int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(20, 20) - new Vector2(5), 40, 40, ModContent.DustType<Dusts.CopyDust4>());
 							Dust dust = Main.dust[num1];
 							dust.noGravity = true;
 							dust.velocity *= 0.1f;

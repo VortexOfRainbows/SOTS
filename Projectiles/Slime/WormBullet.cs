@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Slime
 		{
 			for(int i = 0; i < 30; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(250, 100, 190, 40);
 				dust.noGravity = true;

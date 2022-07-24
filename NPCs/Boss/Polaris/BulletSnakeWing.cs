@@ -106,7 +106,7 @@ namespace SOTS.NPCs.Boss.Polaris
             for (int i = 0; i < 5; i++)
             {
                 float mult = 0.2f * i;
-                int num1 = Dust.NewDust(NPC.Center - new Vector2(5) + new Vector2(-14 * NPC.spriteDirection, 32).RotatedBy(NPC.rotation) + velocity * mult, 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+                int num1 = Dust.NewDust(NPC.Center - new Vector2(5) + new Vector2(-14 * NPC.spriteDirection, 32).RotatedBy(NPC.rotation) + velocity * mult, 0, 0, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num1];
                 dust.velocity *= 1.0f;
                 dust.velocity += new Vector2(0, 15).RotatedBy(NPC.rotation + MathHelper.ToRadians(Main.rand.NextFloat(-10, 10)));

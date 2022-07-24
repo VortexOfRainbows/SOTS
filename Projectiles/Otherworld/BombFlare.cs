@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Otherworld
                 Vector2 rotational = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(counter * 4));
                 for(int i = -1; i < 2; i += 2)
                 {
-                    var num371 = Dust.NewDust(position116, 6, 6, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, newColor, 1.6f);
+                    var num371 = Dust.NewDust(position116, 6, 6, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, newColor, 1.6f);
                     Dust dust = Main.dust[num371];
                     dust.position += new Vector2(0, rotational.X * i).RotatedBy(lastVelo.ToRotation());
                     dust.velocity.Y *= 0.1f;

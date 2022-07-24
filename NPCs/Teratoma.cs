@@ -160,7 +160,7 @@ namespace SOTS.NPCs
 		{
 			if (NPC.velocity.Y == 0 && Math.Abs(NPC.velocity.X) > 0.5f && !Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(0, (NPC.height - 2) * NPC.scale) - new Vector2(5), (int)(NPC.width * NPC.scale), 4, Mod.Find<ModDust>("CurseDust3").Type, 0, 0, 0, default, 0.8f);
+				Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(0, (NPC.height - 2) * NPC.scale) - new Vector2(5), (int)(NPC.width * NPC.scale), 4, ModContent.DustType<Dusts.CurseDust3>(), 0, 0, 0, default, 0.8f);
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
 				NPC.velocity.X *= 0.97125f;

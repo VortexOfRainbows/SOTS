@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Otherworld
 				ogPos = Projectile.Center;
 				for (int i = 0; i < 12; i++)
 				{
-					var num372 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+					var num372 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 					Dust dust2 = Main.dust[num372];
 					dust2.velocity += Projectile.velocity * 0.5f;
 					dust2.noGravity = true;
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			counter++;
 			Vector2 rotational = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(counter * 4));
-			var num371 = Dust.NewDust(Projectile.Center - new Vector2(5), 0, 0, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+			var num371 = Dust.NewDust(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 			Dust dust = Main.dust[num371];
 			dust.position += new Vector2(0, rotational.X).RotatedBy(Projectile.velocity.ToRotation());
 			dust.velocity *= 0.05f;
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for(int i = 0; i < 20; i++)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.velocity += Projectile.velocity * 0.3f;
 				dust.noGravity = true;

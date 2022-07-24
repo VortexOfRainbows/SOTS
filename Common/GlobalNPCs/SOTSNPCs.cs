@@ -579,7 +579,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			else if (player.ZoneCorrupt || player.ZoneCrimson)
 			{
-				if (SOTSWorld.downedPinky)
+				if (SOTSWorld.downedPinky && player.ZoneOverworldHeight)
 				{
 					pool.Add(ModContent.NPCType<FluxSlime>(), 0.075f);
 				}
@@ -708,10 +708,22 @@ namespace SOTS.Common.GlobalNPCs
         public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			SpawnConditionBestiaryInfoElement Surface = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface;
+			SpawnConditionBestiaryInfoElement Underground = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground;
+			SpawnConditionBestiaryInfoElement Caverns = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns;
+			SpawnConditionBestiaryInfoElement UndergroundGlowingMushroom = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundMushroom;
 			SpawnConditionBestiaryInfoElement Crimson = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson;
+			SpawnConditionBestiaryInfoElement UndergroundCrimson = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCrimson;
 			SpawnConditionBestiaryInfoElement Corruption = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption;
+			SpawnConditionBestiaryInfoElement UndergroundHallow = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundHallow;
+			SpawnConditionBestiaryInfoElement TheHallow = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow;
+			SpawnConditionBestiaryInfoElement UndergroundCorruption = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCorruption;
 			SpawnConditionBestiaryInfoElement Sky = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky;
 			SpawnConditionBestiaryInfoElement SurfaceSnow = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow;
+			SpawnConditionBestiaryInfoElement UndergroundSnow = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundSnow;
+			SpawnConditionBestiaryInfoElement TheDungeon = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon;
+			SpawnConditionBestiaryInfoElement Jungle = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle;
+			SpawnConditionBestiaryInfoElement UndergroundJungle = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle;
+			SpawnConditionBestiaryInfoElement TheUnderworld = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld;
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
 			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
@@ -792,6 +804,99 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText = new FlavorTextBestiaryInfoElement("A Blue Slime which became airborne by evolving crude wings. Its wings are easily knocked off with force, depriving it of its flight.");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Surface,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<SittingMushroom>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Sitting mushrooms are spitting mushrooms.");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Underground,
+					Caverns,
+					UndergroundGlowingMushroom,
+					flavorText
+				});
+			}
+			if (npc.ModNPC is TreasureSlime)
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("The nobility of slimes! Unlike the others, these slimes value their lives, and any attempts to steal their treasure will cause them to flee without a second thought.");
+				if(npc.type == ModContent.NPCType<BasicTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						Surface,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<CorruptionTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						Corruption,
+						UndergroundCorruption,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<CrimsonTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						Crimson,
+						UndergroundCrimson,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<DungeonTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						TheDungeon,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<GoldenTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						Underground,
+						Caverns,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<IceTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						SurfaceSnow,
+						UndergroundSnow,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<JungleTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						Jungle,
+						UndergroundJungle,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<PyramidTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						Pyramid,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<ShadowTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						TheUnderworld,
+						flavorText
+					});
+				}
+				if (npc.type == ModContent.NPCType<HallowTreasureSlime>())
+				{
+					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+						TheHallow,
+						UndergroundHallow,
+						flavorText
+					});
+				}
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					flavorText
 				});
 			}

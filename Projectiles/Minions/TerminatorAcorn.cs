@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile.ai[0]--;
 				for (int i = 0; i < 12; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
 					dust.velocity += Projectile.velocity * 0.225f;
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile.scale -= 0.125f * Projectile.ai[0];
 				for (int i = 0; i < 3; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
 					dust.velocity += Projectile.velocity * 0.1f;

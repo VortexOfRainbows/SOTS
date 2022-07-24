@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Base
 			if ((int)type == 8) //Macaroni Heal
 			{
 				counter++;
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Base
 				Color color1 = new Color(177, 238, 181, 100);
 				Color color2 = new Color(64, 178, 77, 100);
 				counter++;
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
 				dust.color = Color.Lerp(color1, color2, new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);

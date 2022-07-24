@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if((endHow == 1 && endHow != 2 && Main.rand.NextBool(6)) || (Main.rand.NextBool(35) && Projectile.velocity.Length() > 0))
 			{
-				int dust1 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+				int dust1 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[dust1];
 				dust.scale *= 1f * (10f - iterator)/10f;
 				dust.velocity += Projectile.velocity * 0.3f;

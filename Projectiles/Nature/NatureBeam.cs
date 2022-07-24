@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Nature
 				ogPos = Projectile.Center;
 				for (int i = 0; i < 15; i++)
 				{
-					Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+					Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust2.velocity += Projectile.velocity * 0.5f;
 					dust2.noGravity = true;
 					dust2.color = VoidPlayer.natureColor;
@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Nature
 				if(Main.rand.NextBool(4))
 				{
 					Vector2 center = drawPoints[j];
-					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust.velocity += Projectile.velocity * 0.3f;
 					dust.noGravity = true;
 					dust.color = VoidPlayer.natureColor;
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, default, 1.6f);
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				dust.velocity += Projectile.velocity * 0.3f;
 				dust.noGravity = true;
 				dust.color = VoidPlayer.natureColor;

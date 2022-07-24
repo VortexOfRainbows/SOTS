@@ -119,7 +119,7 @@ namespace SOTS.NPCs.Constructs
 				float overrideRotation = rotationOrigin.ToRotation();
 				Vector2 dustVelo = new Vector2(7.2f, 0).RotatedBy(overrideRotation);
 				Vector2 fromBody = NPC.Center + new Vector2(direction * (NPC.width / 2 - 4), -6).RotatedBy(NPC.rotation);
-				int index = Dust.NewDust(fromBody + dustVelo * NPC.scale + new Vector2(-4, -4), 0, 0, Mod.Find<ModDust>("CopyDust2").Type, 0, 0, 0, Color.White);
+				int index = Dust.NewDust(fromBody + dustVelo * NPC.scale + new Vector2(-4, -4), 0, 0, ModContent.DustType<Dusts.CopyDust2>(), 0, 0, 0, Color.White);
 				Dust dust = Main.dust[index];
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;

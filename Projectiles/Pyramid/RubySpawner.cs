@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Pyramid
 				if(Main.rand.NextBool(2))
 				{
 					Vector2 circular = new Vector2(Projectile.width * 0.6f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					int num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+					int num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num2];
 					dust.color = new Color(127, 80, 80, 40);
 					dust.noGravity = true;
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Pyramid
 					dust.velocity *= 0.2f;
 					dust.velocity += circular.RotatedBy(MathHelper.ToRadians(80 * direction)).SafeNormalize(Vector2.Zero) * (1.3f + Projectile.scale * 0.7f);
 					circular = new Vector2(Projectile.width * 0.2f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+					num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					dust = Main.dust[num2];
 					dust.color = new Color(255, 164, 164, 40);
 					dust.noGravity = true;

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
@@ -105,7 +106,7 @@ namespace SOTS.Projectiles.Pyramid
 				Lighting.AddLight(Projectile.Center, 0.25f, 0.1f, 0.1f);
 				if(Main.rand.NextBool(5))
 				{
-					int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+					int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 					Dust dust = Main.dust[num2];
 					dust.color = new Color(180, 140, 140, 40);
 					dust.noGravity = true;

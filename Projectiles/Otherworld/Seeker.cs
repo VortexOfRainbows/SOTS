@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Otherworld
 		public override void AI()
 		{
 			Projectile.ai[0]++;
-			int num1 = Dust.NewDust(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), 8, 8, Mod.Find<ModDust>("CopyDust4").Type);
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), 8, 8, ModContent.DustType<Dusts.CopyDust4>());
 			Dust dust = Main.dust[num1];
 			dust.velocity *= 0.2f;
 			dust.noGravity = true;

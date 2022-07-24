@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.timeLeft = 40;
 			if ((Main.rand.NextBool(2) && end) || Main.rand.NextBool(22))
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;

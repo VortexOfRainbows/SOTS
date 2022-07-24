@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Pyramid
 			counter++;
 			if (Main.rand.NextBool(3) && counter > 12)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.7f;
 				dust.noGravity = true;
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for(int i = 0; i < 30; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num1];
 				dust.velocity += 0.15f * Projectile.velocity;
 				dust.noGravity = true;

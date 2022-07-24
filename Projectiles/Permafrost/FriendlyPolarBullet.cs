@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.ai[0]--;
 				for (int i = 0; i < 3.3 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
 					dust.velocity += Projectile.oldVelocity * 0.5f;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.position += Projectile.velocity * 2;
 				for (int i = 0; i < 1.5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.15f;
 					dust.velocity += Projectile.velocity * 0.4f;

@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Otherworld
 					}
 					if(Main.rand.NextBool(100))
 					{
-						int num1 = Dust.NewDust(addPos - new Vector2(5), 4, 4, Mod.Find<ModDust>("CopyDust4").Type);
+						int num1 = Dust.NewDust(addPos - new Vector2(5), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 						Dust dust = Main.dust[num1];
 						dust.velocity *= 0.4f;
 						dust.noGravity = true;

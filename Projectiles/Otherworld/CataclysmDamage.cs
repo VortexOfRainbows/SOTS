@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Otherworld
 				for (int i = 0; i < 360; i += 5)
 				{
 					Vector2 circularLocation = new Vector2(10, 0).RotatedBy(MathHelper.ToRadians(i));
-					int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+					int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num];
 					dust.velocity = circularLocation;
 					dust.color = new Color(220, 60, 10, 40);
@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 circularLocation = new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(i));
 					circularLocation.X /= 2;
 					circularLocation = circularLocation.RotatedBy(MathHelper.ToRadians(randseed));
-					int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+					int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num];
 					dust.velocity = circularLocation;
 					dust.color = new Color(220, 60, 10, 40);
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 circularLocation = new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(i));
 					circularLocation.X /= 2;
 					circularLocation = circularLocation.RotatedBy(MathHelper.ToRadians(randseed + 90));
-					int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, Mod.Find<ModDust>("CopyDust4").Type);
+					int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num];
 					dust.velocity = circularLocation;
 					dust.color = new Color(220, 60, 10, 40);

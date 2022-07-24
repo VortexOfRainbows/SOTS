@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Otherworld
             {
                 var position116 = new Vector2(Projectile.position.X, Projectile.position.Y - 2f);
                 Color newColor = default(Color);
-                var num371 = Dust.NewDust(position116, 6, 6, Mod.Find<ModDust>("CopyDust4").Type, 0, 0, 100, newColor, 1.6f);
+                var num371 = Dust.NewDust(position116, 6, 6, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, newColor, 1.6f);
                 Dust dust = Main.dust[num371];
                 dust.velocity.Y *= 0.4f;
                 dust.noGravity = true;

@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int i = 0; i < 16; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 110, 110, 0).MultiplyRGBA(color);
 				dust.color = color2;
@@ -138,7 +138,7 @@ namespace SOTS.Projectiles.Otherworld
 				Projectile.timeLeft = 40;
 			if ((Main.rand.NextBool(2) && end) || Main.rand.NextBool(24))
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CopyDust4").Type);
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 110, 110, 0).MultiplyRGBA(color);
 				dust.color = color2;

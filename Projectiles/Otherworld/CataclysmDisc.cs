@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 helixPos4 = new Vector2(22f, 0).RotatedBy(rad - MathHelper.ToRadians(90));
 			helixPos3 *= Projectile.scale;
 			helixPos4 *= Projectile.scale;
-			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, Mod.Find<ModDust>("CopyDust4").Type);
+			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 			Dust dust = Main.dust[num2];
 			dust.color = Color.Lerp(new Color(220, 60, 10, 40), new Color(255, 250, 130, 40), new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.localAI[0])).X + 0.5f);
 			dust.noGravity = true;
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Otherworld
 			dust.velocity = helixPos3 * 0.065f + Projectile.velocity * 0.35f;
 			dust.alpha = Projectile.alpha;
 
-			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, Mod.Find<ModDust>("CopyDust4").Type);
+			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 			dust = Main.dust[num2];
 			dust.color = Color.Lerp(new Color(220, 60, 10, 40), new Color(255, 250, 130, 40), -new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.localAI[0])).X + 0.5f);
 			dust.noGravity = true;
