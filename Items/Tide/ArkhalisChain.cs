@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -111,9 +112,13 @@ namespace SOTS.Items.Tide
 			b = 0.2f;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
-        {
-			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Type].Value;
-			Texture2D textureSword = Terraria.GameContent.TextureAssets.Item[ItemID.Arkhalis].Value;
+		{
+			if (!TextureAssets.Item[ItemID.Arkhalis].IsLoaded)
+			{
+				Main.instance.LoadItem(ItemID.Arkhalis);
+			}
+			Texture2D texture = TextureAssets.Tile[Type].Value;
+			Texture2D textureSword = TextureAssets.Item[ItemID.Arkhalis].Value;
 			Vector2 origin = new Vector2(8, 10);
 			//float height = 16;
 			float timer = Main.GlobalTimeWrappedHourly * 40 + (i + j) * 4;

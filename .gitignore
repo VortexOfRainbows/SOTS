@@ -8,3 +8,8 @@ obj/Debug/net45/SOTS.assets.cache
 obj/Debug/net45/SOTS.assets.cache
 *.v2
 *.vsidx
+*.lock
+*.cs
+*.cache
+*.editorconfig
+*.targets
