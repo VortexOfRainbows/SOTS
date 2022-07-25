@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				if(dust || Main.rand.NextBool(250))
 				{
-					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, Mod.Find<ModDust>("CodeDust2").Type);
+					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CodeDust2>());
 					Main.dust[num1].velocity *= 1.75f;
 					Main.dust[num1].scale *= 2.75f;
 				}

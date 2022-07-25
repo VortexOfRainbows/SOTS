@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Otherworld.EpicWings;
 using System.Collections.Generic;
 using Terraria;
@@ -219,7 +220,10 @@ namespace SOTS.Common.PlayerDrawing
 						if (drawInfo.shadow == 0f)
 						{
 							Color colorDust = changeColorBasedOnStealth(Color.White, drawInfo);
-							int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f * scale + new Vector2(-4, -4), 0, 0, Mod.Find<ModDust>("CopyDust" + (j == 0 ? "3" : "")).Type, 0, 0, 0, colorDust);
+							int dustType = ModContent.DustType<CopyDust>();
+							if(j == 0)
+								dustType = ModContent.DustType<CopyDust3>();
+							int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f * scale + new Vector2(-4, -4), 0, 0, dustType, 0, 0, 0, colorDust);
 							Dust dust = Main.dust[index];
 							dust.noGravity = true;
 							dust.fadeIn = 0.1f;
@@ -235,7 +239,7 @@ namespace SOTS.Common.PlayerDrawing
 						{
 							if (drawInfo.shadow == 0f)
 							{
-								int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f + new Vector2(-5, -5), 0, 0, Mod.Find<ModDust>("CubeDust").Type);
+								int index = Dust.NewDust(currentPos2 + dustVelo * 1.5f + new Vector2(-5, -5), 0, 0, ModContent.DustType("CubeDust").Type);
 								Dust dust = Main.dust[index];
 								dust.noGravity = true;
 								dust.fadeIn = 0.5f;
@@ -321,7 +325,10 @@ namespace SOTS.Common.PlayerDrawing
 									if (drawInfo.shadow == 0f)
 									{
 										Color colorDust = changeColorBasedOnStealth(Color.White, drawInfo);
-										int index = Dust.NewDust(currentPos2 + tilt3 * scale + tilt2 * scale + (tilt * Main.rand.Next(16, 34) * scale) + new Vector2(-4, -4), 0, 0, Mod.Find<ModDust>("CopyDust" + (j == 0 ? "3" : "")).Type, 0, 0, 0, colorDust);
+										int dustType = ModContent.DustType<CopyDust>();
+										if (j == 0)
+											dustType = ModContent.DustType<CopyDust3>();
+										int index = Dust.NewDust(currentPos2 + tilt3 * scale + tilt2 * scale + (tilt * Main.rand.Next(16, 34) * scale) + new Vector2(-4, -4), 0, 0, dustType, 0, 0, 0, colorDust);
 										Dust dust = Main.dust[index];
 										dust.noGravity = true;
 										dust.fadeIn = 0.6f;

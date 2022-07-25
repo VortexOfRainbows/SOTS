@@ -219,7 +219,7 @@ namespace SOTS.Projectiles.Otherworld
 					{
 						float dustScale = 1f;
 						float rand = Main.rand.NextFloat(0.9f, 1.35f);
-						int type = Mod.Find<ModDust>("CodeDust2").Type;
+						int type = ModContent.DustType<Dusts.CodeDust2>();
 						if (Main.rand.NextBool(3))
                         {
 							type = DustID.Electric;
@@ -237,7 +237,7 @@ namespace SOTS.Projectiles.Otherworld
 					for (int i = 0; i < amt / 2; i++)
 					{
 						float rand = Main.rand.NextFloat(0.9f, 1.35f);
-						int type = Mod.Find<ModDust>("CodeDust2").Type;
+						int type = ModContent.DustType<Dusts.CodeDust2>();
 						if (Main.rand.NextBool(2))
 						{
 							type = DustID.Electric;

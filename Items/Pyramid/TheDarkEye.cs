@@ -286,7 +286,7 @@ namespace SOTS.Items.Pyramid
 							Vector2 circularRotation = new Vector2(-16, 0).RotatedBy(MathHelper.ToRadians(u));
 							if (Main.myPlayer == player.whoAmI)
 							{
-								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
+								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, ModContent.DustType<Dusts.ShortlivedCurseDust>());
 								Main.dust[num].velocity *= 0.1f;
 								Main.dust[num].alpha = 255 - (alpha1 < 45 ? alpha1 : 45);
 								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
@@ -314,7 +314,7 @@ namespace SOTS.Items.Pyramid
 							Vector2 circularRotation = new Vector2(-16, 0).RotatedBy(MathHelper.ToRadians(u));
 							if (Main.myPlayer == player.whoAmI)
 							{	
-								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, Mod.Find<ModDust>("ShortlivedCurseDust").Type);
+								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, ModContent.DustType<Dusts.ShortlivedCurseDust>());
 								Main.dust[num].velocity *= 0.1f;
 								Main.dust[num].alpha = 255 - (alpha2 < 45 ? alpha2 : 45);
 								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);

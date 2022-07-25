@@ -14,8 +14,8 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-            Item.width = 56;     
-            Item.height = 50;   
+            Item.width = 36;     
+            Item.height = 60;   
             Item.value = 0;
             Item.rare = ItemRarityID.Lime;
 			Item.accessory = true;

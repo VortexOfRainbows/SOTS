@@ -107,7 +107,7 @@ namespace SOTS.NPCs
 			}
 			for (int i = 0; i < amt; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(NPC.position.X - dist/2 - 2, NPC.position.Y - dist/2 - 2), NPC.width + dist, NPC.height + dist, Mod.Find<ModDust>("AvaritianDust").Type, 0, 0, 0, default, scale);
+				int num1 = Dust.NewDust(new Vector2(NPC.position.X - dist/2 - 2, NPC.position.Y - dist/2 - 2), NPC.width + dist, NPC.height + dist, ModContent.DustType<Dusts.AvaritianDust>(), 0, 0, 0, default, scale);
 				Main.dust[num1].noGravity = true;
 				float dusDisX = Main.dust[num1].position.X - NPC.Center.X;
 				float dusDisY = Main.dust[num1].position.Y - NPC.Center.Y;

@@ -193,7 +193,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.HellstoneBar, 12).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 20).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
+			CreateRecipe(1).AddIngredient(ItemID.HellstoneBar, 6).AddIngredient(ModContent.ItemType<HardlightAlloy>(), 20).AddIngredient(ModContent.ItemType<DissolvingAether>(), 1).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 

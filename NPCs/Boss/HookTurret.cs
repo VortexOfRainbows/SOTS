@@ -209,8 +209,8 @@ namespace SOTS.NPCs.Boss
 				}
 				return;
 			}
-			NPC putridPinky = Main.npc[pIndex];
-			Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, Mod.Find<ModDust>("BigPinkDust").Type);
+			//NPC putridPinky = Main.npc[pIndex];
+			Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<Dusts.BigPinkDust>());
 		}
 	}
 }

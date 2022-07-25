@@ -2,6 +2,7 @@ The following is my development plans :D
 1. Change in player class reseteffects order might break some things... Have to keep an eye on it.
 2. Mod.Find<Object>() causes a lot of errors for multiplayer/dusts. Will have to keep an eye out on all of these.
 
+
 TMODLOADER BUGS:
 1. Treasure bags and crates straight up do not work in multiplayer.
 
@@ -28,6 +29,9 @@ Other 1.4 related objectives:
 5. Add the special boss bag glow that 1.4 adds behind treasure bags.
 
 Daily Log:
+
+7/24/22
+1. Remove Mod.Find<ModDust>() from all files
 
 7/23/22
 1. Baguette resprite/buff
