@@ -34,6 +34,7 @@ using SOTS.Items.Fishing;
 using SOTS.Items.Chaos;
 using SOTS.Projectiles.Otherworld;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent;
 
 namespace SOTS
 {
@@ -280,9 +281,59 @@ namespace SOTS
 					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
 				}
 			}
+			if(item.type == ItemType<Items.Slime.PinkyBag>() || item.type == ItemType<TheAdvisorBossBag>() || item.type == ItemType<CurseBag>() || item.type == ItemType<Items.Permafrost.PolarisBossBag>() || item.type == ItemType<SubspaceBag>() || item.type == ItemType<LuxBag>())
+			{
+				float alphaMult = 1f;
+				if (item.type == ItemType<LuxBag>())
+					alphaMult = 0.2f;
+				Texture2D texture = TextureAssets.Item[item.type].Value;
+
+				Rectangle frame;
+
+				if (Main.itemAnimations[item.type] != null)
+				{
+					// In case this item is animated, this picks the correct frame
+					frame = Main.itemAnimations[item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+				}
+				else
+				{
+					frame = texture.Frame();
+				}
+
+				Vector2 frameOrigin = frame.Size() / 2f;
+				Vector2 offset = new Vector2(item.width / 2 - frameOrigin.X, item.height - frame.Height);
+				Vector2 drawPos = item.position - Main.screenPosition + frameOrigin + offset;
+
+				float time = Main.GlobalTimeWrappedHourly;
+				float timer = item.timeSinceItemSpawned / 240f + time * 0.04f;
+
+				time %= 4f;
+				time /= 2f;
+
+				if (time >= 1f)
+				{
+					time = 2f - time;
+				}
+
+				time = time * 0.5f + 0.5f;
+
+				for (float i = 0f; i < 1f; i += 0.25f)
+				{
+					float radians = (i + timer) * MathHelper.TwoPi;
+
+					spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(90, 70, 255, 50) * alphaMult, rotation, frameOrigin, scale, SpriteEffects.None, 0);
+				}
+
+				for (float i = 0f; i < 1f; i += 0.34f)
+				{
+					float radians = (i + timer) * MathHelper.TwoPi;
+
+					spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians) * time, frame, new Color(140, 120, 255, 77) * alphaMult, rotation, frameOrigin, scale, SpriteEffects.None, 0);
+				}
+			}
 			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
 			if (rarities1.Contains(item.type))
 			{

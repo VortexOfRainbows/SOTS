@@ -11,8 +11,12 @@ namespace SOTS.Items.Otherworld.FromChests
 {
 	[AutoloadEquip(EquipType.Back)]
 	public class BlinkPack : ModItem	
-	{	
-		public override void SetStaticDefaults() => this.SetResearchCost(1);
+	{
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("temp"); //this is needed for the tooltip to be modified later.
+			this.SetResearchCost(1);
+		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
 			foreach (string key in SOTS.BlinkHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
