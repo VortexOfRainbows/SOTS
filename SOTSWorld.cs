@@ -40,6 +40,7 @@ using SOTS.WorldgenHelpers;
 using SOTS.Items.Furniture.AncientGold;
 using Terraria.UI;
 using SOTS.Void;
+using SOTS.Items.Nvidia;
 
 namespace SOTS
 {
@@ -471,6 +472,7 @@ namespace SOTS
 		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = "Generating SOTS Ores";
+			SOTSWorldgenHelper.GenerateEvostoneInMushroomBiome();
 			float max = 240;
 			if (Main.maxTilesX > 6000) //medium worlds
 				max = 360;

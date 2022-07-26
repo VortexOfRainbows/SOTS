@@ -4519,6 +4519,31 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 		}
+		public static void GenerateEvostoneInMushroomBiome()
+		{
+			for (int k = 100; k < Main.maxTilesX - 100; k++)
+			{
+				for (int l = (int)WorldGen.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
+				{
+					Tile tile = Main.tile[k, l];
+					if (tile.TileType == TileID.MushroomGrass)
+					{
+						Tile tile1 = Main.tile[k + 1, l];
+						Tile tile2 = Main.tile[k - 1, l];
+						Tile tile3 = Main.tile[k, l + 1];
+						Tile tile4 = Main.tile[k, l - 1];
+						if (tile1.TileType == TileID.Mud && tile2.TileType == TileID.Mud && tile3.TileType == TileID.Mud && tile4.TileType == TileID.Mud)
+						{
+							if (WorldGen.genRand.NextBool(13))
+							{
+								Vector2 speed = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(WorldGen.genRand.NextFloat(360)));
+								WorldGen.TileRunner(k, l, WorldGen.genRand.NextFloat(6, 8), Main.rand.Next(2, 7), ModContent.TileType<EvostoneTile>(), false, speed.X, speed.Y, false, true);
+							}
+						}
+					}
+				}
+			}
+		}
 		public static void SmoothRegion(int spawnX, int spawnY, int width, int height, int whitelist = -1)
 		{
 			int startX = spawnX - width / 2;
