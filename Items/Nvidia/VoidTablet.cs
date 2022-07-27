@@ -10,7 +10,7 @@ namespace SOTS.Items.Nvidia
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases void gain by 1 and max void by 50\nDecreases max life by 20");
+			Tooltip.SetDefault("Increases void gain by 1 and max void by 50\nReduces healing recieved from potions by 20");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -28,7 +28,8 @@ namespace SOTS.Items.Nvidia
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 1;
 			voidPlayer.voidMeterMax2 += 50;
-			player.statLifeMax2 -= 20;
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			modPlayer.additionalHeal -= 20;
 		}
 		public override void AddRecipes()
 		{
