@@ -30,7 +30,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.MarbleBlock, 50).AddIngredient<FragmentOfEarth>(4).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ItemID.Marble, 50).AddIngredient<FragmentOfEarth>(4).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

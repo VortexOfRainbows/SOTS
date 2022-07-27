@@ -28,6 +28,11 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+7/27/22
+1. Void Tablet
+2. Granite and Marble Earth Fragment shields no longer require the "refined" block variant.
+	1. Was somewhat unnecessary.
+
 7/26/22
 1. Evostone generates in small clusters in Glowing Mushroom Biomes
 2. Backup Bow Rework
