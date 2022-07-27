@@ -30,6 +30,7 @@ Daily Log:
 
 7/26/22
 1. Evostone generates in small clusters in Glowing Mushroom Biomes
+2. Backup Bow Rework
 
 7/24/22
 1. Remove Mod.Find<ModDust>() from all files

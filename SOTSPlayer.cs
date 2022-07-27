@@ -201,6 +201,7 @@ namespace SOTS
 		public bool PhaseBiome => Player.InModBiome<Biomes.PhaseBiome>();
 		public bool PyramidBiome => Player.InModBiome<Biomes.PyramidBiome>();
 		public bool backUpBow = false;
+		public bool backUpBowVisual = false;
 		public int doubledActive = 0;
 		public int doubledAmount = 0;
 		public bool ceres = false;
@@ -582,7 +583,13 @@ namespace SOTS
 			if (petFreeWisp >= 0)
 				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
 			if (VisionVanity)
+			{
 				runPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
+			}
+			else if (backUpBowVisual)
+			{
+				runPets(ref probes[8], ModContent.ProjectileType<BackupBowVisual>());
+			}
 			doPlanetAqueduct();
 			if (rippleEffect)
 			{
@@ -699,6 +706,7 @@ namespace SOTS
 			BlinkDamage = 0;
 			BlinkType = 0;
 			VisionVanity = false;
+			backUpBowVisual = false;
 			rippleEffect = false;
 			rippleBonusDamage = 0;
 			symbioteDamage = -1;
@@ -751,6 +759,8 @@ namespace SOTS
                 {
 					VisionVanity = true;
 				}
+				if (item.type == ModContent.ItemType<BackupBow>())
+					backUpBowVisual = true;
 				if (item.type == ModContent.ItemType<TestWings>())
 				{
 					TestWingsPlayer testWingsPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -1064,11 +1074,11 @@ namespace SOTS
 				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(8));
 				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, ModContent.ProjectileType<Pebble>(), damage, knockback, Player.whoAmI);
 			}*/
-			if(backUpBow && item.DamageType == DamageClass.Ranged)
+			/*if(backUpBow && item.DamageType == DamageClass.Ranged)
 			{
 				Vector2 perturbedSpeed = -velocity;
 				Projectile.NewProjectile(source, position, perturbedSpeed, ModContent.ProjectileType<BackupArrow>(), (int)(damage * 0.45f) + 1, knockback, Player.whoAmI);
-			}
+			}*/
 			if(doubledActive == 1 && item.fishingPole > 0)
 			{
 				for(int i = doubledAmount; i > 0; i--)

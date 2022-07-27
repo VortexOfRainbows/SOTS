@@ -18,6 +18,7 @@ using SOTS.Projectiles.Otherworld;
 using SOTS.Projectiles.Permafrost;
 using SOTS.Void;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -688,5 +689,22 @@ namespace SOTS
 				dust.fadeIn = 0.1f;
 			}
 		}
-	}
+        public override void OnSpawn(Projectile projectile, IEntitySource source)
+        {
+			if(!Main.gameMenu && !Main.gameInactive)
+            {
+				Player player = Main.player[projectile.owner];
+				if (projectile.arrow && SOTSPlayer.ModPlayer(player).backUpBow && source is EntitySource_ItemUse_WithAmmo)
+                {
+					if(projectile.arrow)
+                    {
+						if(Main.myPlayer == projectile.owner)
+                        {
+							Projectile.NewProjectile(projectile.GetSource_FromThis(), player.Center, -projectile.velocity * 0.9f, projectile.type, (int)(projectile.damage * 0.5f), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                        }
+                    }
+				}					
+            }
+        }
+    }
 }
