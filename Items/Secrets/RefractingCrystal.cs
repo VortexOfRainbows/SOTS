@@ -102,7 +102,7 @@ namespace SOTS.Items.Secrets
 				float rotation2 = rotationAround.ToRotation() - MathHelper.ToRadians(90);
 				float dist = 2;
 				float scale2 = 1 + 0.5f * lightIntesity;
-				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2), null, color * lightIntesity, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition, null, color * lightIntesity, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				for (int k = 0; k < 51; k++)
 				{
 					scale2 += 0.1f + 0.01f * lightIntesity;

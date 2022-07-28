@@ -63,18 +63,18 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect").Value;
 			for (int k = 0; k < 2; k++)
-				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width/2, texture.Height/2), scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width/2, texture.Height/2), scale, SpriteEffects.None, 0f);
 			texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect2").Value;
 			for (int k = 0; k < 2; k++)
-				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 			texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect3").Value;
 			for (int k = 0; k < 2; k++)
-				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 
 			texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/StarcoreAssaultRifleGlow").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			base.PostDrawInWorld(spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
         }
         public override int GetVoid(Player player)

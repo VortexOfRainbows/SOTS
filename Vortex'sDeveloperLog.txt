@@ -32,6 +32,7 @@ Daily Log:
 1. Void Tablet
 2. Granite and Marble Earth Fragment shields no longer require the "refined" block variant.
 	1. Was somewhat unnecessary.
+3. Fix some item drawcode methods. Also reorganize for the eventual reimplementation of Subspace Locket.
 
 7/26/22
 1. Evostone generates in small clusters in Glowing Mushroom Biomes

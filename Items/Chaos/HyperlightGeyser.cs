@@ -43,7 +43,7 @@ namespace SOTS.Items.Chaos
 				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition + new Vector2(0, 2), frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			texture = Mod.Assets.Request<Texture2D>("Items/Chaos/HyperlightGeyserGlow").Value;
-			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), frame, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return true;
 		}
 		public override void SetStaticDefaults()

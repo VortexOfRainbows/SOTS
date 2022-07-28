@@ -41,7 +41,7 @@ namespace SOTS.Items.Potions
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
 				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
+				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y),
 				null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}

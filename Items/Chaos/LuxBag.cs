@@ -23,9 +23,9 @@ namespace SOTS.Items.Chaos
 				Vector2 circular = new Vector2(3 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 30 + Main.GameUpdateCount * 1.2f));
 				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 30));
 				color.A = 0;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2) + circular, null, color * 0.4f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + circular, null, color * 0.4f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, Color.White * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

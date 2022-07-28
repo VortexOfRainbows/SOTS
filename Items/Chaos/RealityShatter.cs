@@ -24,14 +24,14 @@ namespace SOTS.Items.Chaos
 				Vector2 circular = new Vector2(2 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 				color.A = 0;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2) + circular, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + circular, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(textureBlack, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, Color.Black, rotation, drawOrigin, scale, SpriteEffects.None, 0f); 
+			Main.spriteBatch.Draw(textureBlack, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.Black, rotation, drawOrigin, scale, SpriteEffects.None, 0f); 
 			color = Color.Black * 0.7f;
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(1 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60));
-				Main.spriteBatch.Draw(textureBlack, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2) + circular, null,color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(textureBlack, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + circular, null,color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

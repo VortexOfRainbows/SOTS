@@ -101,10 +101,10 @@ namespace SOTS.Items.Pyramid
 						break;
 				}
 				Vector2 rotationAround2 = 0.5f * new Vector2((6 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition, null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/RoyalRubyShard").Value;
-			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition + new Vector2(0, 2), null, lightColor, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition, null, lightColor, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void AddRecipes()

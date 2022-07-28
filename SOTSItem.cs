@@ -225,7 +225,7 @@ namespace SOTS
         {
 			for(int i = 0; i < unsafeWallItem.Length; i++)
 			{
-				Texture2D texture = Terraria.GameContent.TextureAssets.Item[unsafeWallItem[i]].Value;
+				Texture2D texture = TextureAssets.Item[unsafeWallItem[i]].Value;
 				Texture2D textureOutline;
 				textureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
 				textureOutline.SetData(0, null, ConvertToSingleColor(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
@@ -278,7 +278,7 @@ namespace SOTS
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition, null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
 				}
 			}
 			if(item.type == ItemType<Items.Slime.PinkyBag>() || item.type == ItemType<TheAdvisorBossBag>() || item.type == ItemType<CurseBag>() || item.type == ItemType<Items.Permafrost.PolarisBossBag>() || item.type == ItemType<SubspaceBag>() || item.type == ItemType<LuxBag>())
