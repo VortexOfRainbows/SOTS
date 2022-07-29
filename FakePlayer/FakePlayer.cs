@@ -11,11 +11,16 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Terraria.Player;
 
 namespace SOTS.FakePlayer
 {
     public class FakePlayer
     {
+        public static bool IsValidUseStyle(Item item)
+        {
+            return (item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot);
+        }
         public void ItemCheckHack(Player player)
         {
             SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
@@ -36,7 +41,7 @@ namespace SOTS.FakePlayer
             proj.active = false;
             proj.Kill();
             #endregion
-            if (canUseItem && lastUsedItem.type == item.type && item.active && !item.IsAir && (item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot) && !subspacePlayer.servantIsVanity)
+            if (canUseItem && lastUsedItem.type == item.type && item.active && !item.IsAir && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity)
             {
                 subspacePlayer.foundItem = true;
                 RunItemCheck(player);
@@ -45,6 +50,9 @@ namespace SOTS.FakePlayer
             if (player.itemAnimation == 0)
                 lastUsedItem = heldItem.Clone();
         }
+        SavedPlayerValues PlayerSavedProperties;
+        CompositeArmData compositeFrontArm;
+        CompositeArmData compositeBackArm;
         Item heldItem;
         Item lastUsedItem;
         private int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
@@ -68,53 +76,77 @@ namespace SOTS.FakePlayer
 
         public int AttackCD;
         public int ItemUsesThisAnimation;
+        public int BoneGloveTimer;
         public FakePlayer(int type = 0)
         {
             FakePlayerType = type;
+            PlayerSavedProperties = new SavedPlayerValues();
+        }
+        public void Update()
+        {
+            if (BoneGloveTimer > 0)
+            {
+                BoneGloveTimer--;
+            }
         }
         public void RunItemCheck(Player player)
         {
             int whoAmI = player.whoAmI;
-
+            SaveRealPlayerValues(player);
+            CopyFakeToReal(player);
+            player.ItemCheck(whoAmI); //Run the actual item use code
+            CopyRealToFake(player);
+            LoadRealPlayerValues(player);
+        }
+        public void SaveRealPlayerValues(Player player)
+        {
             //Save Player original values
-            int SavedSelectedItem = player.selectedItem;
-            Item PlayerOwnedLastVisualizedSelectedItem = player.lastVisualizedSelectedItem.Clone();
-            bool saveChannel = player.channel;
-            bool saveFrozen = player.frozen;
-            bool saveWebbed = player.webbed;
-            bool saveStoned = player.stoned;
-            bool saveMount = player.mount.Active;
-            int saveAltFunctionUse = player.altFunctionUse;
-            bool savePulley = player.pulley;
-            bool savePettingAnimal = player.isPettingAnimal;
+            PlayerSavedProperties.SavedSelectedItem = player.selectedItem;
+            PlayerSavedProperties.PlayerOwnedLastVisualizedSelectedItem = player.lastVisualizedSelectedItem.Clone();
+            PlayerSavedProperties.saveChannel = player.channel;
+            PlayerSavedProperties.saveFrozen = player.frozen;
+            PlayerSavedProperties.saveWebbed = player.webbed;
+            PlayerSavedProperties.saveStoned = player.stoned;
+            PlayerSavedProperties.saveWet = player.wet;
+            PlayerSavedProperties.saveMount = player.mount.Active;
+            PlayerSavedProperties.saveAltFunctionUse = player.altFunctionUse;
+            PlayerSavedProperties.savePulley = player.pulley;
+            PlayerSavedProperties.savePettingAnimal = player.isPettingAnimal;
+            PlayerSavedProperties.saveHeldProj = player.heldProj;
 
             //Save Player original values that have corresponding fakeplayer values
-            bool savecompositeFrontArmEnabled = player.compositeFrontArm.enabled;
-            bool savecompositeBackArmEnabled = player.compositeBackArm.enabled;
-            int saveToolTime = player.toolTime;
-            int saveItemAnimation = player.itemAnimation;
-            int saveItemAnimationMax = player.itemAnimationMax;
-            int saveItemTime = player.itemTime;
-            int saveItemTimeMax = player.itemTimeMax;
-            float saveItemRotation = player.itemRotation;
-            Vector2 saveItemLocation = player.itemLocation;
-            int saveItemWidth = player.itemWidth;
-            int saveItemHeight = player.itemHeight;
-            int saveDirection = player.direction;
-            int saveReuseDelay = player.reuseDelay;
-            bool saveReleaseUseItem = player.releaseUseItem;
-            int saveAttackCD = player.attackCD;
-            int saveItemUsesThisAnimation = player.ItemUsesThisAnimation;
-
+            PlayerSavedProperties.savecompositeFrontArmEnabled = player.compositeFrontArm.enabled;
+            PlayerSavedProperties.savecompositeBackArmEnabled = player.compositeBackArm.enabled;
+            PlayerSavedProperties.saveToolTime = player.toolTime;
+            PlayerSavedProperties.saveItemAnimation = player.itemAnimation;
+            PlayerSavedProperties.saveItemAnimationMax = player.itemAnimationMax;
+            PlayerSavedProperties.saveItemTime = player.itemTime;
+            PlayerSavedProperties.saveItemTimeMax = player.itemTimeMax;
+            PlayerSavedProperties.saveItemRotation = player.itemRotation;
+            PlayerSavedProperties.saveItemLocation = player.itemLocation;
+            PlayerSavedProperties.saveItemWidth = player.itemWidth;
+            PlayerSavedProperties.saveItemHeight = player.itemHeight;
+            PlayerSavedProperties.saveDirection = player.direction;
+            PlayerSavedProperties.saveReuseDelay = player.reuseDelay;
+            PlayerSavedProperties.saveReleaseUseItem = player.releaseUseItem;
+            PlayerSavedProperties.saveAttackCD = player.attackCD;
+            PlayerSavedProperties.saveItemUsesThisAnimation = player.ItemUsesThisAnimation;
+            PlayerSavedProperties.saveBoneGloveTimer = player.boneGloveTimer;
+            PlayerSavedProperties.saveFrontArm = player.compositeFrontArm;
+            PlayerSavedProperties.saveBackArm = player.compositeBackArm;
+        }
+        public void CopyFakeToReal(Player player)
+        {
             //Set default values (ones that aren't used/modified by FakePlayer)
             player.selectedItem = UseItemSlot;
             player.lastVisualizedSelectedItem = lastUsedItem;
             player.channel = false;
-            player.frozen = player.stoned = player.webbed = false;
+            player.frozen = player.stoned = player.webbed = player.wet = false;
             player.mount._active = false;
             player.altFunctionUse = 0;
             player.pulley = false;
             player.isPettingAnimal = false;
+            player.heldProj = -1;
 
             //Set values that player uses to the FakePlayer's values
             player.compositeFrontArm.enabled = compositeFrontArmEnabled;
@@ -132,10 +164,13 @@ namespace SOTS.FakePlayer
             player.itemRotation = itemRotation;
             player.itemLocation = itemLocation;
             player.attackCD = AttackCD;
+            player.boneGloveTimer = BoneGloveTimer;
+            player.compositeFrontArm = compositeFrontArm;
+            player.compositeBackArm = compositeBackArm;
             SetPlayerItemUsesThisAnimationViaReflection(player, ItemUsesThisAnimation);
-
-            player.ItemCheck(whoAmI); //Run the actual item use code
-
+        }
+        public void CopyRealToFake(Player player)
+        {
             //Run using FakePlayer values, then set FakePlayer values to the newly updated ones
             compositeFrontArmEnabled = player.compositeFrontArm.enabled;
             compositeBackArmEnabled = player.compositeBackArm.enabled;
@@ -153,36 +188,46 @@ namespace SOTS.FakePlayer
             releaseUseItem = player.releaseUseItem;
             AttackCD = player.attackCD;
             ItemUsesThisAnimation = player.ItemUsesThisAnimation;
-
+            BoneGloveTimer = player.boneGloveTimer;
+            compositeFrontArm = player.compositeFrontArm;
+            compositeBackArm = player.compositeBackArm;
+        }
+        public void LoadRealPlayerValues(Player player)
+        {
             //Reset player values back to normal
-            player.selectedItem = SavedSelectedItem;
-            player.lastVisualizedSelectedItem = PlayerOwnedLastVisualizedSelectedItem;
-            player.channel = saveChannel;
-            player.frozen = saveFrozen;
-            player.webbed = saveWebbed;
-            player.stoned = saveStoned;
-            player.mount._active = saveMount;
-            player.altFunctionUse = saveAltFunctionUse;
-            player.pulley = savePulley;
-            player.isPettingAnimal = savePettingAnimal;
+            player.selectedItem = PlayerSavedProperties.SavedSelectedItem;
+            player.lastVisualizedSelectedItem = PlayerSavedProperties.PlayerOwnedLastVisualizedSelectedItem;
+            player.channel = PlayerSavedProperties.saveChannel;
+            player.frozen = PlayerSavedProperties.saveFrozen;
+            player.webbed = PlayerSavedProperties.saveWebbed;
+            player.stoned = PlayerSavedProperties.saveStoned;
+            player.wet = PlayerSavedProperties.saveWet;
+            player.mount._active = PlayerSavedProperties.saveMount;
+            player.altFunctionUse = PlayerSavedProperties.saveAltFunctionUse;
+            player.pulley = PlayerSavedProperties.savePulley;
+            player.isPettingAnimal = PlayerSavedProperties.savePettingAnimal;
+            player.heldProj = PlayerSavedProperties.saveHeldProj;
 
             //Reset other player values back to normal
-            player.compositeFrontArm.enabled = savecompositeFrontArmEnabled;
-            player.compositeBackArm.enabled = savecompositeBackArmEnabled;
-            player.toolTime = saveToolTime;
-            player.itemAnimation = saveItemAnimation;
-            player.itemAnimationMax = saveItemAnimationMax;
-            player.itemTime = saveItemTime;
-            player.itemTimeMax = saveItemTimeMax;
-            player.itemRotation = saveItemRotation;
-            player.itemLocation = saveItemLocation;
-            player.itemWidth = saveItemWidth;
-            player.itemHeight = saveItemHeight;
-            player.direction = saveDirection;
-            player.reuseDelay = saveReuseDelay;
-            player.releaseUseItem = saveReleaseUseItem;
-            player.attackCD = saveAttackCD;
-            SetPlayerItemUsesThisAnimationViaReflection(player, saveItemUsesThisAnimation);
+            player.compositeFrontArm.enabled = PlayerSavedProperties.savecompositeFrontArmEnabled;
+            player.compositeBackArm.enabled = PlayerSavedProperties.savecompositeBackArmEnabled;
+            player.toolTime = PlayerSavedProperties.saveToolTime;
+            player.itemAnimation = PlayerSavedProperties.saveItemAnimation;
+            player.itemAnimationMax = PlayerSavedProperties.saveItemAnimationMax;
+            player.itemTime = PlayerSavedProperties.saveItemTime;
+            player.itemTimeMax = PlayerSavedProperties.saveItemTimeMax;
+            player.itemRotation = PlayerSavedProperties.saveItemRotation;
+            player.itemLocation = PlayerSavedProperties.saveItemLocation;
+            player.itemWidth = PlayerSavedProperties.saveItemWidth;
+            player.itemHeight = PlayerSavedProperties.saveItemHeight;
+            player.direction = PlayerSavedProperties.saveDirection;
+            player.reuseDelay = PlayerSavedProperties.saveReuseDelay;
+            player.releaseUseItem = PlayerSavedProperties.saveReleaseUseItem;
+            player.attackCD = PlayerSavedProperties.saveAttackCD;
+            player.boneGloveTimer = PlayerSavedProperties.saveBoneGloveTimer;
+            player.compositeFrontArm = PlayerSavedProperties.saveFrontArm;
+            player.compositeBackArm = PlayerSavedProperties.saveBackArm;
+            SetPlayerItemUsesThisAnimationViaReflection(player, PlayerSavedProperties.saveItemUsesThisAnimation);
         }
         public void SetPlayerItemUsesThisAnimationViaReflection(Player player, int setUses)
         {
@@ -190,6 +235,45 @@ namespace SOTS.FakePlayer
             PropertyInfo prop = type.GetProperty("ItemUsesThisAnimation");
             prop.SetValue(player, setUses, null);
         }
+        public void HijackItemDrawing(ref PlayerDrawSet drawinfo)
+        {
+            PlayerDrawLayers.DrawPlayer_27_HeldItem(ref drawinfo);
+        }
+    }
+    public class SavedPlayerValues
+    {
+        public int SavedSelectedItem;
+        public Item PlayerOwnedLastVisualizedSelectedItem;
+        public bool saveChannel;
+        public bool saveFrozen;
+        public bool saveWebbed;
+        public bool saveStoned;
+        public bool saveWet;
+        public bool saveMount;
+        public int saveAltFunctionUse;
+        public bool savePulley;
+        public bool savePettingAnimal;
+        public int saveHeldProj;
+
+        public bool savecompositeFrontArmEnabled;
+        public bool savecompositeBackArmEnabled;
+        public int saveToolTime;
+        public int saveItemAnimation;
+        public int saveItemAnimationMax;
+        public int saveItemTime;
+        public int saveItemTimeMax;
+        public float saveItemRotation;
+        public Vector2 saveItemLocation;
+        public int saveItemWidth;
+        public int saveItemHeight;
+        public int saveDirection;
+        public int saveReuseDelay;
+        public bool saveReleaseUseItem;
+        public int saveAttackCD;
+        public int saveItemUsesThisAnimation;
+        public int saveBoneGloveTimer;
+        public CompositeArmData saveFrontArm;
+        public CompositeArmData saveBackArm;
     }
     //public class FakePlayer
     //{

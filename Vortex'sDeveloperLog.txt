@@ -28,8 +28,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-7/28/22
+7/28/22 & 7/29/22
 1. Some WIP Subspace Locket
+	1. Make sure item does not appear on the cursor when dual wielding pickaxe, for example 
 
 7/27/22
 1. Void Tablet
