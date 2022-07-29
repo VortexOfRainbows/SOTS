@@ -4,6 +4,7 @@ using SOTS.Projectiles.Celestial;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -24,19 +25,22 @@ namespace SOTS.FakePlayer
             #region check if item is useable
             Projectile proj = new Projectile();
             proj.SetDefaults(item.shoot);
-            if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.channel || item.consumable || lastUsedItem == null)
+            if(SOTSPlayer.locketBlacklist.Contains(item.type))
+            {
+                canUseItem = false;
+            }
+            else if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.channel || item.consumable || lastUsedItem == null || item.mountType != -1)
             {
                 canUseItem = false;
             }
             proj.active = false;
             proj.Kill();
             #endregion
-
-            int type = item.type;
-            if (canUseItem && lastUsedItem.type == item.type && item.active && !item.IsAir && !SOTSPlayer.locketBlacklist.Contains(type) && (item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot) && !subspacePlayer.servantIsVanity)
+            if (canUseItem && lastUsedItem.type == item.type && item.active && !item.IsAir && (item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot) && !subspacePlayer.servantIsVanity)
             {
                 subspacePlayer.foundItem = true;
                 RunItemCheck(player);
+                //Main.NewText(player.ItemUsesThisAnimation);
             }
             if (player.itemAnimation == 0)
                 lastUsedItem = heldItem.Clone();
@@ -48,17 +52,22 @@ namespace SOTS.FakePlayer
         public bool compositeFrontArmEnabled = false;
         public bool compositeBackArmEnabled = false;
 
+        public int toolTime;
         public int itemAnimation;
         public int itemAnimationMax;
         public int itemTime;
         public int itemTimeMax;
         public float itemRotation;
+        public Vector2 itemLocation = Vector2.Zero;
 
         public int itemWidth;
         public int itemHeight;
         public int direction;
         public int reuseDelay;
         public bool releaseUseItem;
+
+        public int AttackCD;
+        public int ItemUsesThisAnimation;
         public FakePlayer(int type = 0)
         {
             FakePlayerType = type;
@@ -76,20 +85,26 @@ namespace SOTS.FakePlayer
             bool saveStoned = player.stoned;
             bool saveMount = player.mount.Active;
             int saveAltFunctionUse = player.altFunctionUse;
+            bool savePulley = player.pulley;
+            bool savePettingAnimal = player.isPettingAnimal;
 
             //Save Player original values that have corresponding fakeplayer values
             bool savecompositeFrontArmEnabled = player.compositeFrontArm.enabled;
             bool savecompositeBackArmEnabled = player.compositeBackArm.enabled;
+            int saveToolTime = player.toolTime;
             int saveItemAnimation = player.itemAnimation;
             int saveItemAnimationMax = player.itemAnimationMax;
             int saveItemTime = player.itemTime;
             int saveItemTimeMax = player.itemTimeMax;
             float saveItemRotation = player.itemRotation;
+            Vector2 saveItemLocation = player.itemLocation;
             int saveItemWidth = player.itemWidth;
             int saveItemHeight = player.itemHeight;
             int saveDirection = player.direction;
             int saveReuseDelay = player.reuseDelay;
             bool saveReleaseUseItem = player.releaseUseItem;
+            int saveAttackCD = player.attackCD;
+            int saveItemUsesThisAnimation = player.ItemUsesThisAnimation;
 
             //Set default values (ones that aren't used/modified by FakePlayer)
             player.selectedItem = UseItemSlot;
@@ -98,10 +113,13 @@ namespace SOTS.FakePlayer
             player.frozen = player.stoned = player.webbed = false;
             player.mount._active = false;
             player.altFunctionUse = 0;
+            player.pulley = false;
+            player.isPettingAnimal = false;
 
             //Set values that player uses to the FakePlayer's values
             player.compositeFrontArm.enabled = compositeFrontArmEnabled;
             player.compositeBackArm.enabled = compositeBackArmEnabled;
+            player.toolTime = toolTime;
             player.itemAnimation = itemAnimation;
             player.itemAnimationMax = itemAnimationMax;
             player.itemTime = itemTime;
@@ -112,12 +130,16 @@ namespace SOTS.FakePlayer
             player.reuseDelay = reuseDelay;
             player.releaseUseItem = releaseUseItem;
             player.itemRotation = itemRotation;
+            player.itemLocation = itemLocation;
+            player.attackCD = AttackCD;
+            SetPlayerItemUsesThisAnimationViaReflection(player, ItemUsesThisAnimation);
 
             player.ItemCheck(whoAmI); //Run the actual item use code
 
             //Run using FakePlayer values, then set FakePlayer values to the newly updated ones
             compositeFrontArmEnabled = player.compositeFrontArm.enabled;
             compositeBackArmEnabled = player.compositeBackArm.enabled;
+            toolTime = player.toolTime;
             itemAnimation = player.itemAnimation;
             itemAnimationMax = player.itemAnimationMax;
             itemTime = player.itemTime;
@@ -125,9 +147,12 @@ namespace SOTS.FakePlayer
             itemWidth = player.itemWidth;
             itemHeight = player.itemHeight;
             itemRotation = player.itemRotation;
+            itemLocation = player.itemLocation;
             direction = player.direction;
             reuseDelay = player.reuseDelay;
             releaseUseItem = player.releaseUseItem;
+            AttackCD = player.attackCD;
+            ItemUsesThisAnimation = player.ItemUsesThisAnimation;
 
             //Reset player values back to normal
             player.selectedItem = SavedSelectedItem;
@@ -138,20 +163,32 @@ namespace SOTS.FakePlayer
             player.stoned = saveStoned;
             player.mount._active = saveMount;
             player.altFunctionUse = saveAltFunctionUse;
+            player.pulley = savePulley;
+            player.isPettingAnimal = savePettingAnimal;
 
             //Reset other player values back to normal
             player.compositeFrontArm.enabled = savecompositeFrontArmEnabled;
             player.compositeBackArm.enabled = savecompositeBackArmEnabled;
+            player.toolTime = saveToolTime;
             player.itemAnimation = saveItemAnimation;
             player.itemAnimationMax = saveItemAnimationMax;
             player.itemTime = saveItemTime;
             player.itemTimeMax = saveItemTimeMax;
             player.itemRotation = saveItemRotation;
+            player.itemLocation = saveItemLocation;
             player.itemWidth = saveItemWidth;
             player.itemHeight = saveItemHeight;
             player.direction = saveDirection;
             player.reuseDelay = saveReuseDelay;
             player.releaseUseItem = saveReleaseUseItem;
+            player.attackCD = saveAttackCD;
+            SetPlayerItemUsesThisAnimationViaReflection(player, saveItemUsesThisAnimation);
+        }
+        public void SetPlayerItemUsesThisAnimationViaReflection(Player player, int setUses)
+        {
+            Type type = player.GetType();
+            PropertyInfo prop = type.GetProperty("ItemUsesThisAnimation");
+            prop.SetValue(player, setUses, null);
         }
     }
     //public class FakePlayer
