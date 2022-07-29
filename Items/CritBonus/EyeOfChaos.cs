@@ -15,8 +15,8 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-            Item.width = 44;     
-            Item.height = 42;     
+            Item.width = 36;     
+            Item.height = 38;     
             Item.value = Item.sellPrice(0, 7, 25, 0);
             Item.rare = ItemRarityID.Yellow;
 			Item.accessory = true;
