@@ -30,7 +30,7 @@ namespace SOTS.FakePlayer
             #region check if item is useable
             Projectile proj = new Projectile();
             proj.SetDefaults(item.shoot);
-            if(SOTSPlayer.locketBlacklist.Contains(item.type))
+            if (SOTSPlayer.locketBlacklist.Contains(item.type))
             {
                 canUseItem = false;
             }
@@ -73,6 +73,7 @@ namespace SOTS.FakePlayer
         public int direction;
         public int reuseDelay;
         public bool releaseUseItem;
+        public bool justDroppedAnItem;
 
         public int AttackCD;
         public int ItemUsesThisAnimation;
@@ -113,6 +114,8 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties.savePulley = player.pulley;
             PlayerSavedProperties.savePettingAnimal = player.isPettingAnimal;
             PlayerSavedProperties.saveHeldProj = player.heldProj;
+            PlayerSavedProperties.saveStealth = player.stealth;
+            PlayerSavedProperties.saveGravDir = player.gravDir;
 
             //Save Player original values that have corresponding fakeplayer values
             PlayerSavedProperties.savecompositeFrontArmEnabled = player.compositeFrontArm.enabled;
@@ -129,6 +132,7 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties.saveDirection = player.direction;
             PlayerSavedProperties.saveReuseDelay = player.reuseDelay;
             PlayerSavedProperties.saveReleaseUseItem = player.releaseUseItem;
+            PlayerSavedProperties.saveJustDroppedAnItem = player.JustDroppedAnItem;
             PlayerSavedProperties.saveAttackCD = player.attackCD;
             PlayerSavedProperties.saveItemUsesThisAnimation = player.ItemUsesThisAnimation;
             PlayerSavedProperties.saveBoneGloveTimer = player.boneGloveTimer;
@@ -147,6 +151,8 @@ namespace SOTS.FakePlayer
             player.pulley = false;
             player.isPettingAnimal = false;
             player.heldProj = -1;
+            player.stealth = 1f;
+            player.gravDir = 1f;
 
             //Set values that player uses to the FakePlayer's values
             player.compositeFrontArm.enabled = compositeFrontArmEnabled;
@@ -161,6 +167,7 @@ namespace SOTS.FakePlayer
             player.direction = direction;
             player.reuseDelay = reuseDelay;
             player.releaseUseItem = releaseUseItem;
+            player.JustDroppedAnItem = justDroppedAnItem;
             player.itemRotation = itemRotation;
             player.itemLocation = itemLocation;
             player.attackCD = AttackCD;
@@ -186,6 +193,7 @@ namespace SOTS.FakePlayer
             direction = player.direction;
             reuseDelay = player.reuseDelay;
             releaseUseItem = player.releaseUseItem;
+            justDroppedAnItem = player.JustDroppedAnItem;
             AttackCD = player.attackCD;
             ItemUsesThisAnimation = player.ItemUsesThisAnimation;
             BoneGloveTimer = player.boneGloveTimer;
@@ -207,6 +215,8 @@ namespace SOTS.FakePlayer
             player.pulley = PlayerSavedProperties.savePulley;
             player.isPettingAnimal = PlayerSavedProperties.savePettingAnimal;
             player.heldProj = PlayerSavedProperties.saveHeldProj;
+            player.stealth = PlayerSavedProperties.saveStealth;
+            player.gravDir = PlayerSavedProperties.saveGravDir;
 
             //Reset other player values back to normal
             player.compositeFrontArm.enabled = PlayerSavedProperties.savecompositeFrontArmEnabled;
@@ -223,6 +233,7 @@ namespace SOTS.FakePlayer
             player.direction = PlayerSavedProperties.saveDirection;
             player.reuseDelay = PlayerSavedProperties.saveReuseDelay;
             player.releaseUseItem = PlayerSavedProperties.saveReleaseUseItem;
+            player.JustDroppedAnItem = PlayerSavedProperties.saveJustDroppedAnItem;
             player.attackCD = PlayerSavedProperties.saveAttackCD;
             player.boneGloveTimer = PlayerSavedProperties.saveBoneGloveTimer;
             player.compositeFrontArm = PlayerSavedProperties.saveFrontArm;
@@ -235,9 +246,104 @@ namespace SOTS.FakePlayer
             PropertyInfo prop = type.GetProperty("ItemUsesThisAnimation");
             prop.SetValue(player, setUses, null);
         }
+        SpriteEffects playerEffect;
+        SpriteEffects itemEffect;
         public void HijackItemDrawing(ref PlayerDrawSet drawinfo)
         {
+            Player player = drawinfo.drawPlayer;
+            SaveRealPlayerValues(player);
+            CopyFakeToReal(player);
+
+            float saveShadow = drawinfo.shadow;
+            Item saveHeldItem = drawinfo.heldItem;
+            Vector2 saveLocation = drawinfo.ItemLocation;
+            SpriteEffects savePlayerEffect = drawinfo.playerEffect;
+            SpriteEffects saveItemEffect = drawinfo.itemEffect;
+
+            drawinfo.shadow = 0f; //shadow should be 1f for this draw.
+            drawinfo.heldItem = heldItem;
+            drawinfo.ItemLocation = itemLocation;
+            drawinfo.playerEffect = playerEffect;
+            drawinfo.itemEffect = itemEffect;
+
+            SetupSpriteDirection(ref drawinfo, player);
             PlayerDrawLayers.DrawPlayer_27_HeldItem(ref drawinfo);
+
+            itemLocation = drawinfo.ItemLocation;
+            heldItem = drawinfo.heldItem;
+            playerEffect = drawinfo.playerEffect;
+            itemEffect = drawinfo.itemEffect;
+
+            drawinfo.heldItem = saveHeldItem;
+            drawinfo.shadow = saveShadow;
+            drawinfo.ItemLocation = saveLocation;
+            drawinfo.playerEffect = savePlayerEffect;
+            drawinfo.itemEffect = saveItemEffect;
+
+            CopyRealToFake(player);
+            LoadRealPlayerValues(player);
+        }
+        public void DrawFakePlayer(ref PlayerDrawSet drawinfo)
+        {
+            HijackItemDrawing(ref drawinfo);
+        }
+        public void SetupSpriteDirection(ref PlayerDrawSet drawinfo, Player player)
+        {
+            drawinfo.playerEffect = (SpriteEffects)0;
+            drawinfo.itemEffect = (SpriteEffects)1;
+            if (player.gravDir == 1f)
+            {
+                if (player.direction == 1)
+                {
+                    drawinfo.playerEffect = 0;
+                    drawinfo.itemEffect = 0;
+                }
+                else
+                {
+                    drawinfo.playerEffect = (SpriteEffects)1;
+                    drawinfo.itemEffect = (SpriteEffects)1;
+                }
+                /*if (!player.dead)
+                {
+                    player.legPosition.Y = 0f;
+                    player.headPosition.Y = 0f;
+                    player.bodyPosition.Y = 0f;
+                }*/
+            }
+            else
+            {
+                if (player.direction == 1)
+                {
+                    drawinfo.playerEffect = (SpriteEffects)2;
+                    drawinfo.itemEffect = (SpriteEffects)2;
+                }
+                else
+                {
+                    drawinfo.playerEffect = (SpriteEffects)3;
+                    drawinfo.itemEffect = (SpriteEffects)3;
+                }
+                /*if (!player.dead)
+                {
+                    player.legPosition.Y = 6f;
+                    player.headPosition.Y = 6f;
+                    player.bodyPosition.Y = 6f;
+                }*/
+            }
+            switch (drawinfo.heldItem.type)
+            {
+                case 3182:
+                case 3184:
+                case 3185:
+                case 3782:
+                    drawinfo.itemEffect = (SpriteEffects)((int)drawinfo.itemEffect ^ 3);
+                    break;
+                case 5118:
+                    if (player.gravDir < 0f)
+                    {
+                        drawinfo.itemEffect = (SpriteEffects)((int)drawinfo.itemEffect ^ 3);
+                    }
+                    break;
+            }
         }
     }
     public class SavedPlayerValues
@@ -254,6 +360,8 @@ namespace SOTS.FakePlayer
         public bool savePulley;
         public bool savePettingAnimal;
         public int saveHeldProj;
+        public float saveStealth;
+        public float saveGravDir;
 
         public bool savecompositeFrontArmEnabled;
         public bool savecompositeBackArmEnabled;
@@ -269,12 +377,14 @@ namespace SOTS.FakePlayer
         public int saveDirection;
         public int saveReuseDelay;
         public bool saveReleaseUseItem;
+        public bool saveJustDroppedAnItem;
         public int saveAttackCD;
         public int saveItemUsesThisAnimation;
         public int saveBoneGloveTimer;
         public CompositeArmData saveFrontArm;
         public CompositeArmData saveBackArm;
     }
+}
     //public class FakePlayer
     //{
     //    public bool foundItem = false;
@@ -2938,5 +3048,3 @@ namespace SOTS.FakePlayer
     //        return vector2;
     //    }
     //}
-
-}

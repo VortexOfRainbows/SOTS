@@ -15,7 +15,7 @@ namespace SOTS.FakePlayer
 {
     public class SubspacePlayer : ModPlayer
     {
-        FakePlayer fPlayer;
+        public FakePlayer fPlayer;
         public override void SetStaticDefaults()
         {
         }
