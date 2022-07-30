@@ -38,7 +38,7 @@ namespace SOTS.Items.Earth
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(-0.25f, -0.25f);
+			return new Vector2(-21f, -1.50f);
 		}
 		public override void AddRecipes()
 		{
