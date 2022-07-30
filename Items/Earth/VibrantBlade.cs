@@ -14,17 +14,18 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 17;
+			Item.damage = 19;
 			Item.DamageType = DamageClass.Melee;
-			Item.width = 40;
-			Item.height = 40;
+			Item.width = 48;
+			Item.height = 48;
+			Item.scale = 1.25f;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 2.5f;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = SoundID.Item15;
 			Item.autoReuse = false;  
 			Item.shoot = ModContent.ProjectileType<Projectiles.Laser.VibrantBlade>(); 
             Item.shootSpeed = 1.9f;
