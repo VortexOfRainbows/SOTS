@@ -45,7 +45,8 @@ namespace SOTS.Projectiles.Earth
             {
                 for (int l = j - 1; l <= j + 1; l++)
                 {
-                    player.PickTile(k, l, 18);
+                    if (Framing.GetTileSafely(k, l).TileType != TileID.DemonAltar)
+                        player.PickTile(k, l, 18);
                 }
             }
         }

@@ -18,7 +18,7 @@ namespace SOTS.Items.Earth
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 48;
 			Item.height = 48;
-			Item.scale = 1.25f;
+			Item.scale = 1.1f;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Swing;

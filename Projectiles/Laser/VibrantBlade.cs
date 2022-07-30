@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Laser
 					float y = Main.rand.Next(-10, 11) * 0.15f;
 					if(!Projectile.oldPos[k].Equals(Projectile.position))
 					{
-						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, new Color(color.R, color.G, color.B, 0), Projectile.rotation, drawOrigin, (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Laser
 		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = VoidPlayer.EarthColor;
+			Color color = VoidPlayer.VibrantColor;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{

@@ -121,7 +121,8 @@ namespace SOTS.Projectiles.Earth
 			Player player = Main.player[Projectile.owner];
 			int i = (int)Projectile.Center.X / 16;
 			int j = (int)Projectile.Center.Y / 16;
-			player.PickTile(i, j, 30);
+            if (Framing.GetTileSafely(i, j).TileType != TileID.DemonAltar)
+				player.PickTile(i, j, 30);
 		}
     }
 }

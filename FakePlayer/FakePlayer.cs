@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using SOTS.Projectiles.Celestial;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
@@ -19,7 +21,7 @@ namespace SOTS.FakePlayer
     {
         public static bool IsValidUseStyle(Item item)
         {
-            return (item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot);
+            return item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot || item.useStyle == ItemUseStyleID.MowTheLawn || item.useStyle == ItemUseStyleID.RaiseLamp || item.useStyle == ItemUseStyleID.HoldUp;
         }
         public void ItemCheckHack(Player player)
         {
@@ -28,24 +30,31 @@ namespace SOTS.FakePlayer
             heldItem = item;
             bool canUseItem = true;
             #region check if item is useable
-            Projectile proj = new Projectile();
-            proj.SetDefaults(item.shoot);
-            if (SOTSPlayer.locketBlacklist.Contains(item.type))
+            if(!SOTSPlayer.locketWhitelist.Contains(item.type) || lastUsedItem == null)
             {
-                canUseItem = false;
+                Projectile proj = new Projectile();
+                proj.SetDefaults(item.shoot);
+                if (SOTSPlayer.locketBlacklist.Contains(item.type) || item.damage <= 0)
+                {
+                    canUseItem = false;
+                }
+                else if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.channel || item.consumable || lastUsedItem == null || item.mountType != -1)
+                {
+                    canUseItem = false;
+                }
+                proj.active = false;
+                proj.Kill();
             }
-            else if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.channel || item.consumable || lastUsedItem == null || item.mountType != -1)
-            {
-                canUseItem = false;
-            }
-            proj.active = false;
-            proj.Kill();
             #endregion
             if (canUseItem && lastUsedItem.type == item.type && item.active && !item.IsAir && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity)
             {
                 subspacePlayer.foundItem = true;
                 RunItemCheck(player);
                 //Main.NewText(player.ItemUsesThisAnimation);
+            }
+            else
+            {
+                ResetVariables();
             }
             if (player.itemAnimation == 0)
                 lastUsedItem = heldItem.Clone();
@@ -78,6 +87,25 @@ namespace SOTS.FakePlayer
         public int AttackCD;
         public int ItemUsesThisAnimation;
         public int BoneGloveTimer;
+        public void ResetVariables()
+        {
+            toolTime = 0;
+            itemAnimation = 0;
+            itemAnimationMax = 0;
+            itemTime = 0;
+            itemTimeMax = 0;
+            itemRotation = 0;
+            itemLocation = Vector2.Zero;
+            itemWidth = 0;
+            itemHeight = 0;
+            direction = 0;
+            reuseDelay = 0;
+            releaseUseItem = false;
+            justDroppedAnItem = false;
+            AttackCD = 0;
+            ItemUsesThisAnimation = 0;
+            BoneGloveTimer = 0;
+        }
         public FakePlayer(int type = 0)
         {
             FakePlayerType = type;
@@ -267,7 +295,13 @@ namespace SOTS.FakePlayer
             drawinfo.itemEffect = itemEffect;
 
             SetupSpriteDirection(ref drawinfo, player);
-            PlayerDrawLayers.DrawPlayer_27_HeldItem(ref drawinfo);
+            ConvertItemTextureToGreen(drawinfo.heldItem);
+            Draw27_HeldItem(ref drawinfo, new Vector2(1, 0));
+            Draw27_HeldItem(ref drawinfo, new Vector2(-1, 0));
+            Draw27_HeldItem(ref drawinfo, new Vector2(0, 1));
+            Draw27_HeldItem(ref drawinfo, new Vector2(0, -1));
+            ConvertItemTextureBackToNormal(drawinfo.heldItem);
+            Draw27_HeldItem(ref drawinfo, Vector2.Zero);
 
             itemLocation = drawinfo.ItemLocation;
             heldItem = drawinfo.heldItem;
@@ -283,9 +317,54 @@ namespace SOTS.FakePlayer
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
         }
+        public void Draw27_HeldItem(ref PlayerDrawSet drawinfo, Vector2 offset)
+        {
+            Player player = drawinfo.drawPlayer;
+            Vector2 savePlayerPos = player.itemLocation;
+            Vector2 saveDrawinfoPos = drawinfo.ItemLocation;
+
+            player.itemLocation += offset;
+            drawinfo.ItemLocation += offset;
+
+            FakeItem.overrideLightColor = true;
+            FakeItem.runOnce = true;
+            PlayerDrawLayers.DrawPlayer_27_HeldItem(ref drawinfo);
+            FakeItem.overrideLightColor = false;
+
+            player.itemLocation = savePlayerPos;    
+            drawinfo.ItemLocation = saveDrawinfoPos;
+        }
         public void DrawFakePlayer(ref PlayerDrawSet drawinfo)
         {
             HijackItemDrawing(ref drawinfo);
+        }
+        public Texture2D saveGreenTexture;
+        public Texture2D saveNormalTexture;
+        public int lastItemID = -1;
+        public void ConvertItemTextureToGreen(Item item)
+        {
+            saveNormalTexture = TextureAssets.Item[item.type].Value;
+            if (item.type != lastItemID)
+            {
+                Texture2D itemTexture = TextureAssets.Item[item.type].Value;
+                lastItemID = item.type;
+                Color[] colors = SOTSItem.ConvertToSingleColor(itemTexture, new Color(0, 255, 0));
+                saveGreenTexture = new Texture2D(Main.graphics.GraphicsDevice, itemTexture.Width, itemTexture.Height);
+                saveGreenTexture.SetData(0, null, colors, 0, itemTexture.Width * itemTexture.Height);
+            }
+            SetTextureValueViaReflection(TextureAssets.Item[item.type], saveGreenTexture);
+        }
+        public void ConvertItemTextureBackToNormal(Item item)
+        {
+            SetTextureValueViaReflection(TextureAssets.Item[item.type], saveNormalTexture);
+        }
+        public void SetTextureValueViaReflection(Asset<Texture2D> texture, Texture2D newValue)
+        {
+            Type type = texture.GetType();
+            FieldInfo fieldInfo = type.GetField("ownValue", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (fieldInfo == null)
+                return;
+            fieldInfo.SetValue(texture, newValue);
         }
         public void SetupSpriteDirection(ref PlayerDrawSet drawinfo, Player player)
         {
@@ -383,6 +462,30 @@ namespace SOTS.FakePlayer
         public int saveBoneGloveTimer;
         public CompositeArmData saveFrontArm;
         public CompositeArmData saveBackArm;
+    }
+    public class FakeItem : GlobalItem
+    {
+        public static bool overrideLightColor = false;
+        public static bool runOnce = false;
+        public static bool superOverrideLightColor = false;
+        public override Color? GetAlpha(Item item, Color lightColor)
+        {
+            if(superOverrideLightColor)
+            {
+                return Color.White;
+            }
+            if(overrideLightColor)
+            {
+                lightColor = Color.White;
+                if(runOnce)
+                {
+                    runOnce = false;
+                    Color color = item.GetAlpha(lightColor);
+                    return color;
+                }
+            }
+            return base.GetAlpha(item, lightColor);
+        }
     }
 }
     //public class FakePlayer

@@ -58,6 +58,7 @@ namespace SOTS
 			return player.GetModPlayer<SOTSPlayer>();
 		}
 		public static int[] locketBlacklist;
+		public static int[] locketWhitelist;
 		public static int[] typhonBlacklist;
 		public static int[] typhonWhitelist;
 		public static int[] symbioteBlacklist;
@@ -65,9 +66,10 @@ namespace SOTS
 		public static bool pyramidBattle = false;
 		public static void LoadArrays()
 		{
-			locketBlacklist = new int[] { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
+			locketBlacklist = new int[] { ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
 				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
+			locketWhitelist = new int[] { ItemID.LawnMower };
 			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), ModContent.ProjectileType<BlazingArrow>() };
 			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>() };
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };

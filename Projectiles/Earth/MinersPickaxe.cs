@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Earth
                         if (Main.netMode != NetmodeID.SinglePlayer)
                             NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
                     }
-                    else if (Main.myPlayer == Projectile.owner && NPC.downedBoss2)
+                    else if (Main.myPlayer == Projectile.owner && NPC.downedBoss2 && Framing.GetTileSafely(i, j).TileType != TileID.DemonAltar)
                         player.PickTile(i, j, 70);
                 }
             }

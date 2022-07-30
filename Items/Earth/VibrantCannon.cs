@@ -32,7 +32,11 @@ namespace SOTS.Items.Earth
             Item.shoot = ModContent.ProjectileType<VibrantBall>(); 
             Item.shootSpeed = 8;
 		}
-		public override int GetVoid(Player player)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+			position += velocity.SafeNormalize(Vector2.Zero) * 24;
+        }
+        public override int GetVoid(Player player)
 		{
 			return 22;
 		}
