@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Earth
 		public override void SetDefaults() 
 		{
 			Projectile.width = 26;
-			Projectile.height = 46;
+			Projectile.height = 58;
             Projectile.aiStyle = 20;
 			Projectile.friendly = false;
 			Projectile.penetrate = -1;

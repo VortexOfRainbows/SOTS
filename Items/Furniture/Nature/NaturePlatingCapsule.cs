@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.DataStructures;
@@ -30,6 +31,7 @@ namespace SOTS.Items.Furniture.Nature
             return false;
         }
         protected override string ChestName => "Nature Plating Capsule";
+        protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<NaturePlatingCapsule>();
         protected override int DustType => DustID.Tungsten;
         protected override void AddMapEntires()
@@ -37,6 +39,10 @@ namespace SOTS.Items.Furniture.Nature
             Color color = Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.17f);
             ModTranslation name = CreateMapEntryName();
             name.SetDefault(ChestName);
+            AddMapEntry(color, name, MapChestName);
+
+            name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
+            name.SetDefault("Locked " + ChestName);
             AddMapEntry(color, name, MapChestName);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

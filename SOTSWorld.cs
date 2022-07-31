@@ -41,6 +41,7 @@ using SOTS.Items.Furniture.AncientGold;
 using Terraria.UI;
 using SOTS.Void;
 using SOTS.Items.Nvidia;
+using SOTS.Items.Furniture.Nature;
 
 namespace SOTS
 {
@@ -532,6 +533,7 @@ namespace SOTS
         }
         public override void PostWorldGen()
 		{
+			string worldName = Main.worldName;
 			// Iterate chests
 			List<int> starItemPool2 = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(), ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
 			List<int> lightItemPool2 = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>() };
@@ -749,6 +751,39 @@ namespace SOTS
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.GoldCoin);
 						chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
+						slot++;
+					}
+				}
+				if (tile.TileType == ModContent.TileType<NaturePlatingCapsuleTile>())
+				{
+					int slot = 0;
+					Tile tile2 = Main.tile[chest.x, chest.y + 2];
+					if (tile.TileFrameX >= 36 && tile2.TileType == ModContent.TileType<NaturePlatingTile>() && tile.WallType == ModContent.WallType<NaturePlatingWallWall>() && Framing.GetTileSafely(chest.x -1, chest.y).TileType == ModContent.TileType<NaturePlatingCapsuleTile>()) //locked chest
+					{
+						if (worldName.Contains("Starbound") || worldName.Contains("starbound"))
+						{
+							chest.item[slot].SetDefaults(ModContent.ItemType<Earthshaker>());
+							chest.item[slot].stack = 1;
+							slot++;
+						}
+						else
+						{
+							chest.item[slot].SetDefaults(ModContent.ItemType<NatureHydroponics>());
+							chest.item[slot].stack = 3;
+							slot++;
+						}
+						chest.item[slot].SetDefaults(ItemID.HerbBag);
+						chest.item[slot].stack = 10;
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<FoulConcoction>());
+						chest.item[slot].stack = 10;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
 						slot++;
 					}
 				}
