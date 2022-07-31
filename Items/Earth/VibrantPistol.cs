@@ -21,8 +21,8 @@ namespace SOTS.Items.Earth
 		{
             Item.damage = 15;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 30;
-            Item.height = 22;
+            Item.width = 36;
+            Item.height = 24;
             Item.useTime = 5; 
             Item.useAnimation = 5;
             Item.useStyle = ItemUseStyleID.Shoot;    
