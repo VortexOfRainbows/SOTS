@@ -1,0 +1,18 @@
+0.22.0:
+
+1. Ported Secrets of the Shadows to Terraria 1.4!
+2. Bug fixes
+3. New Void Bar visuals (Config)
+4. Added some enemies to the Bestiary (not all of them have descriptions yet)
+5. Master Mode Relics
+6. Changed some recipes, sprites, and added polish to various areas
+
+New Content:
+1. New Reforge for void weapons: Chthonic
+2. Added Pistol Shrimp, Polarizer Accessories, and other new items
+3. Evostone Generates in underground Mushroom Biomes and has an accompanying Accessory
+4. 9 New starter house variants. The old ones are still available, but far rarer
+
+Removed:
+1. Removed Hungry Hunter and Goopwood Spike flail weapons due to incompatability with new Flail projectile AI
+2. Removed Subspace Locket until further notice

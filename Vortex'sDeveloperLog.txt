@@ -2,9 +2,6 @@ The following is my development plans :D
 1. Change in player class reseteffects order might break some things... Have to keep an eye on it.
 2. Mod.Find<Object>() causes a lot of errors for multiplayer/dusts. Will have to keep an eye out on all of these.
 
-TMODLOADER BUGS:
-1. Treasure bags open twice at once.
-
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
 	1. Subspace Treads
