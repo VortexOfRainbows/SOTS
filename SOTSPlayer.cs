@@ -53,7 +53,29 @@ namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
-		public static SOTSPlayer ModPlayer(Player player)
+		private const string worldEnter = "(SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.";
+		private int LogInMessageTimer = 7;
+		public override void SetControls()
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+			{
+				if(LogInMessageTimer > 0)
+					LogInMessageTimer -= 1;
+				if (LogInMessageTimer == 0)
+				{
+					LogInMessageTimer = -1;
+					Main.NewText(worldEnter, new Color(20, 255, 40));
+				}
+			}
+		}
+        public override void OnEnterWorld(Player player)
+        {
+			if (Main.netMode != NetmodeID.Server)
+            {
+				Main.NewText(worldEnter, new Color(20, 255, 40));
+            }
+        }
+        public static SOTSPlayer ModPlayer(Player player)
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}

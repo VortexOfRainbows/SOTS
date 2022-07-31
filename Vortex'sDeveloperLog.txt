@@ -28,6 +28,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+7/31/22
+1. Texture pack login message
+
 7/30/22
 1. More Subspace Locket
 2. Other bug fixes (demon altar breaking with mining tools)
