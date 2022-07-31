@@ -139,13 +139,17 @@ namespace SOTS.Items.Furniture.Nature
 		}
         public override void PlaceInWorld(int i, int j, Item item)
 		{
+			PlaceInWorldStatic(i, j, item);
+		}
+		public static void PlaceInWorldStatic(int i, int j, Item item)
+		{
 			GetTopLeft(ref i, ref j);
 			for (int y = 0; y < 6; y++)
 			{
 				for (int x = 0; x < 6; x++)
 				{
 					Tile growTile = Main.tile[i + x, j + y];
-					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
+					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == ModContent.TileType<Hydroponics>())
 					{
 						SetPlant(i + x, j + y, Main.rand.Next(7));
 						NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
@@ -153,7 +157,7 @@ namespace SOTS.Items.Furniture.Nature
 				}
 			}
 		}
-        public static void SetPlant(int i, int j, int type)
+		public static void SetPlant(int i, int j, int type)
 		{
 			Tile tile = Main.tile[i, j];
 			//daybloom, moonglow, blinkroot, deathweed, waterleaf, fireblossom, shiverthorn
@@ -219,7 +223,7 @@ namespace SOTS.Items.Furniture.Nature
 			}
 			return false;
 		}
-		public void GetTopLeft(ref int i, ref int j)
+		public static void GetTopLeft(ref int i, ref int j)
 		{
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameX == 0 && tile.TileFrameY == 0 && tile.TileType == ModContent.TileType<Hydroponics>())

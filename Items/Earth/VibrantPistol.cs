@@ -42,7 +42,7 @@ namespace SOTS.Items.Earth
 			if (modPlayer.VibrantArmor)
 			{
 				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Earth/VibrantRifle").Value;
-				Main.spriteBatch.Draw(texture, position - new Vector2((texture.Width - Item.width)/ 2 - 3.5f, 0), null, drawColor, 0f, origin, scale * 0.85f, SpriteEffects.None, 0f); //I had to position and draw this by testing values manually ughh
+				Main.spriteBatch.Draw(texture, position - new Vector2((texture.Width - Item.width)/ 2 - 9f, -3f), null, drawColor, 0f, origin, scale * 0.72f, SpriteEffects.None, 0f); //I had to position and draw this by testing values manually ughh
 				return false;
 			}
 			return true;
