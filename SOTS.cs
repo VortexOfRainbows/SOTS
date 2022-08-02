@@ -555,82 +555,96 @@ namespace SOTS
 						sb.Draw(texture, centered, color);
 					}
 					);
-				/*bossChecklist.Call(
+				bossChecklist.Call(
 					"AddBoss",
-					4.5f,
-					new List<int>() { ModContent.NPCType<PharaohsCurse>() },
 					this,
 					"Pharaoh's Curse",
+					new List<int>() { ModContent.NPCType<PharaohsCurse>() },
+					4.5f,
 					(Func<bool>)(() => SOTSWorld.downedCurse),
-					ModContent.ItemType<Sarcophagus>(),
+					() => true,
 					new List<int>() { },
-					new List<int>() { ModContent.ItemType<CurseBag>(), ModContent.ItemType<CursedMatter>() },
+					ModContent.ItemType<Sarcophagus>(),
 					"Activate the [i:" + ModContent.ItemType<Sarcophagus>() + "] in the pyramid",
 					"",
-					"SOTS/BossCL/PharaohPortrait",
-					"",
-					(Func<bool>)(() => true));
+					(SpriteBatch sb, Rectangle rect, Color color) => {
+						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PharaohPortrait").Value;
+						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+						sb.Draw(texture, centered, color);
+					}
+					);
 				bossChecklist.Call(
 					"AddBoss",
-					5.9f,
-					new List<int>() { ModContent.NPCType<TheAdvisorHead>() },
 					this,
 					"The Advisor",
+					new List<int>() { ModContent.NPCType<TheAdvisorHead>() },
+					5.9f,
 					(Func<bool>)(() => SOTSWorld.downedAdvisor),
-					ModContent.ItemType<AvaritianGateway>(),
+					() => true,
 					new List<int>() { ModContent.ItemType<AdvisorMusicBox>() },
-					new List<int>() { ModContent.ItemType<TheAdvisorBossBag>(), ModContent.ItemType<SkywareKey>(), ModContent.ItemType<StarlightAlloy>(), ModContent.ItemType<StrangeKey>(), ModContent.ItemType<HardlightAlloy>(), ModContent.ItemType<MeteoriteKey>(), ModContent.ItemType<OtherworldlyAlloy>() },
+					ModContent.ItemType<AvaritianGateway>(),
 					"Destroy the 4 tethered Otherworldly Constructs of the Planetarium",
 					"",
-					"SOTS/BossCL/AdvisorPortrait",
-					"",
-					(Func<bool>)(() => true));
+					(SpriteBatch sb, Rectangle rect, Color color) => {
+						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/AdvisorPortrait").Value;
+						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+						sb.Draw(texture, centered, color);
+					}
+					);
 				bossChecklist.Call(
 					"AddBoss",
-					9.05f,
-					new List<int>() { ModContent.NPCType<Polaris>() },
 					this,
 					"Polaris",
+					new List<int>() { ModContent.NPCType<Polaris>() },
+					9.05f,
 					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
-					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
+					() => true,
 					new List<int>() { ModContent.ItemType<PolarisMusicBox>() },
-					new List<int>() { ModContent.ItemType<PolarisBossBag>(), ModContent.ItemType<AbsoluteBar>(), ItemID.FrostCore },
+					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
 					"Activate the [i:" + ModContent.ItemType<FrostArtifact>() + "] of the snow biome using [i:" + ModContent.ItemType<FrostedKey>() + "]",
 					"",
-					"SOTS/BossCL/PolarisPortrait",
-					"",
-					(Func<bool>)(() => true));
+					(SpriteBatch sb, Rectangle rect, Color color) => {
+						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PolarisPortrait").Value;
+						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+						sb.Draw(texture, centered, color);
+					}
+					);
 				bossChecklist.Call(
 					"AddBoss",
-					12.5f,
-					new List<int>() { ModContent.NPCType<Lux>() },
 					this,
 					"Lux",
+					new List<int>() { ModContent.NPCType<Lux>() },
+					12.5f,
 					(Func<bool>)(() => SOTSWorld.downedLux),
-					new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
+					() => true,
 					new List<int>() { },
-					new List<int>() { ModContent.ItemType<LuxBag>(), ModContent.ItemType<DissolvingBrilliance>(), ModContent.ItemType<PhaseOre>(), ItemID.SoulofLight },
+					new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
 					"Anger a Chaos Spirit",
 					"",
-					"SOTS/BossCL/LuxBossLog",
-					"",
-					(Func<bool>)(() => true));
+					(SpriteBatch sb, Rectangle rect, Color color) => {
+						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/LuxBossLog").Value;
+						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+						sb.Draw(texture, centered, color);
+					}
+					);
 				bossChecklist.Call(
 					"AddBoss",
-					12.9f,
-					new List<int>() { ModContent.NPCType<SubspaceSerpentHead>(), ModContent.NPCType<SubspaceSerpentBody>(), ModContent.NPCType<SubspaceSerpentTail>() },
 					this,
 					"Subspace Serpent",
+					new List<int>() { ModContent.NPCType<SubspaceSerpentHead>(), ModContent.NPCType<SubspaceSerpentBody>(), ModContent.NPCType<SubspaceSerpentTail>() },
+					12.9f,
 					(Func<bool>)(() => SOTSWorld.downedSubspace),
-					new List<int>() { ModContent.ItemType<CatalystBomb>() },
+					() => true,
 					new List<int>() { ModContent.ItemType<SubspaceSerpentMusicBox>() },
-					new List<int>() { ModContent.ItemType<SubspaceBag>(), ModContent.ItemType<SanguiteBar>()},
-					"Tear a dimensional rift in hell by detonating a [i:" + ModContent.ItemType<CatalystBomb>() + "]",
+					new List<int>() { ModContent.ItemType<CatalystBomb>() },
+					"Anger a Chaos Spirit",
 					"",
-					"SOTS/BossCL/SubspaceSerpentPortrait",
-					"",
-					(Func<bool>)(() => true));*/
-
+					(SpriteBatch sb, Rectangle rect, Color color) => {
+						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/SubspaceSerpentPortrait").Value;
+						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+						sb.Draw(texture, centered, color);
+					}
+					);
 
 				//bossChecklist.Call("AddBossWithInfo", "The Advisor", 5.9f, (Func<bool>)(() => SOTSWorld.downedAdvisor), "Destroy the 4 tethered Otherworldly Constructs on the Planetarium");
 				//bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
@@ -639,9 +653,9 @@ namespace SOTS
 				//bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
 				//bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
 				//bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 11.1f, (Func<bool>)(() => SOTSWorld.downedLux), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
-               // bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
+				// bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
 
-			 }
+			}
 			/*for(int i = Main.maxItems; i < ItemLoader.ItemCount; i++)
             {
 				SOTSUtils.SetResearchCost(i, 1);
