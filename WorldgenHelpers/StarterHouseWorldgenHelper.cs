@@ -6496,7 +6496,7 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 38:
 									tile.HasTile = true;
-									tile.TileType = 662;
+									tile.TileType = (ushort)ModContent.TileType<NaturePlatingTile>();
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 									if (confirmPlatforms == 1)
@@ -6547,7 +6547,7 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 4:
 									tile.HasTile = true;
-									tile.TileType = 662;
+									tile.TileType = (ushort)ModContent.TileType<NaturePlatingTile>();
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 									break;
@@ -6565,7 +6565,7 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 7:
 									tile.HasTile = true;
-									tile.TileType = 656;
+									tile.TileType = (ushort)ModContent.TileType<DissolvingNatureTile>();
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 									break;
