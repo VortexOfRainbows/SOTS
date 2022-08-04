@@ -23,7 +23,18 @@ Other 1.4 related objectives:
 3. Final 1 starter house
 4. Bestiary for all enemies
 
+For Locket:
+	1. Make sure item does not appear on the cursor (when dual wielding pickaxe, for example)
+	2. Work on Arm Framing, Head Framing, body framing, projectile movement.
+
 Daily Log:
+
+8/3/22
+1. More work on the epic thing! Subspace Servant!
+
+
+--1.4 Update Released!!!--
+
 
 7/31/22
 1. Texture pack login message
@@ -35,7 +46,7 @@ Daily Log:
 
 7/28/22 & 7/29/22
 1. Some WIP Subspace Locket
-	1. Make sure item does not appear on the cursor when dual wielding pickaxe, for example 
+
 
 7/27/22
 1. Void Tablet

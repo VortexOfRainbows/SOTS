@@ -19,6 +19,11 @@ namespace SOTS.FakePlayer
 {
     public class FakePlayer
     {
+        public const int Width = 20;
+        public const int Height = 42;
+        public Vector2 Position = Vector2.Zero;
+        public Vector2 OldPosition = Vector2.Zero;
+        public Rectangle bodyFrame = Rectangle.Empty;
         public static bool IsValidUseStyle(Item item)
         {
             return item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot || item.useStyle == ItemUseStyleID.MowTheLawn || item.useStyle == ItemUseStyleID.RaiseLamp || item.useStyle == ItemUseStyleID.HoldUp;
@@ -49,20 +54,25 @@ namespace SOTS.FakePlayer
             if (canUseItem && lastUsedItem.type == item.type && item.active && !item.IsAir && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity)
             {
                 subspacePlayer.foundItem = true;
-                RunItemCheck(player);
+                RunItemCheck(player, true);
                 //Main.NewText(player.ItemUsesThisAnimation);
             }
             else
             {
+                RunItemCheck(player, false);
                 ResetVariables();
             }
             if (player.itemAnimation == 0)
                 lastUsedItem = heldItem.Clone();
         }
-        SavedPlayerValues PlayerSavedProperties;
-        CompositeArmData compositeFrontArm;
-        CompositeArmData compositeBackArm;
-        Item heldItem;
+        public SavedPlayerValues PlayerSavedProperties;
+        public CompositeArmData compositeFrontArm;
+        public CompositeArmData compositeBackArm;
+        public float compositeFrontArmRotation;
+        public float compositeBackArmRotation;
+        public Rectangle compFrontArmFrame = Rectangle.Empty;
+        public Rectangle compBackArmFrame = Rectangle.Empty;
+        Item heldItem;                        
         Item lastUsedItem;
         private int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
         public int UseItemSlot => 49; //it should always use the last slot. Maybe add a config to this later, or an individual slot.
@@ -118,18 +128,21 @@ namespace SOTS.FakePlayer
                 BoneGloveTimer--;
             }
         }
-        public void RunItemCheck(Player player)
+        public void RunItemCheck(Player player, bool canUseItem = false)
         {
             int whoAmI = player.whoAmI;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
-            player.ItemCheck(whoAmI); //Run the actual item use code
+            if(canUseItem)
+                player.ItemCheck(whoAmI); //Run the actual item use code
+            SetupBodyFrame(player); //run code to get frame after
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
         }
         public void SaveRealPlayerValues(Player player)
         {
             //Save Player original values
+            PlayerSavedProperties.SavePosition = player.position;
             PlayerSavedProperties.SavedSelectedItem = player.selectedItem;
             PlayerSavedProperties.PlayerOwnedLastVisualizedSelectedItem = player.lastVisualizedSelectedItem.Clone();
             PlayerSavedProperties.saveChannel = player.channel;
@@ -183,6 +196,7 @@ namespace SOTS.FakePlayer
             player.gravDir = 1f;
 
             //Set values that player uses to the FakePlayer's values
+            player.position = Position;
             player.compositeFrontArm.enabled = compositeFrontArmEnabled;
             player.compositeBackArm.enabled = compositeBackArmEnabled;
             player.toolTime = toolTime;
@@ -207,6 +221,7 @@ namespace SOTS.FakePlayer
         public void CopyRealToFake(Player player)
         {
             //Run using FakePlayer values, then set FakePlayer values to the newly updated ones
+            Position = player.position;
             compositeFrontArmEnabled = player.compositeFrontArm.enabled;
             compositeBackArmEnabled = player.compositeBackArm.enabled;
             toolTime = player.toolTime;
@@ -231,6 +246,7 @@ namespace SOTS.FakePlayer
         public void LoadRealPlayerValues(Player player)
         {
             //Reset player values back to normal
+            player.position = PlayerSavedProperties.SavePosition;
             player.selectedItem = PlayerSavedProperties.SavedSelectedItem;
             player.lastVisualizedSelectedItem = PlayerSavedProperties.PlayerOwnedLastVisualizedSelectedItem;
             player.channel = PlayerSavedProperties.saveChannel;
@@ -276,67 +292,111 @@ namespace SOTS.FakePlayer
         }
         SpriteEffects playerEffect;
         SpriteEffects itemEffect;
-        public void HijackItemDrawing(ref PlayerDrawSet drawinfo)
+        public void HijackItemDrawing(ref PlayerDrawSet drawInfo)
         {
-            Player player = drawinfo.drawPlayer;
+            Player player = drawInfo.drawPlayer;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
 
-            float saveShadow = drawinfo.shadow;
-            Item saveHeldItem = drawinfo.heldItem;
-            Vector2 saveLocation = drawinfo.ItemLocation;
-            SpriteEffects savePlayerEffect = drawinfo.playerEffect;
-            SpriteEffects saveItemEffect = drawinfo.itemEffect;
+            float saveShadow = drawInfo.shadow;
+            Item saveHeldItem = drawInfo.heldItem;
+            Vector2 saveLocation = drawInfo.ItemLocation;
+            SpriteEffects savePlayerEffect = drawInfo.playerEffect;
+            SpriteEffects saveItemEffect = drawInfo.itemEffect;
 
-            drawinfo.shadow = 0f; //shadow should be 1f for this draw.
-            drawinfo.heldItem = heldItem;
-            drawinfo.ItemLocation = itemLocation;
-            drawinfo.playerEffect = playerEffect;
-            drawinfo.itemEffect = itemEffect;
+            drawInfo.shadow = 0f; //shadow should be 1f for this draw.
+            drawInfo.heldItem = heldItem;
+            drawInfo.ItemLocation = itemLocation;
+            drawInfo.playerEffect = playerEffect;
+            drawInfo.itemEffect = itemEffect;
 
-            SetupSpriteDirection(ref drawinfo, player);
-            ConvertItemTextureToGreen(drawinfo.heldItem);
-            Draw27_HeldItem(ref drawinfo, new Vector2(1, 0));
-            Draw27_HeldItem(ref drawinfo, new Vector2(-1, 0));
-            Draw27_HeldItem(ref drawinfo, new Vector2(0, 1));
-            Draw27_HeldItem(ref drawinfo, new Vector2(0, -1));
-            ConvertItemTextureBackToNormal(drawinfo.heldItem);
-            Draw27_HeldItem(ref drawinfo, Vector2.Zero);
+            SetupSpriteDirection(ref drawInfo, player);
+            ConvertItemTextureToGreen(drawInfo.heldItem);
+            Draw27_HeldItem(ref drawInfo, new Vector2(1, 0));
+            Draw27_HeldItem(ref drawInfo, new Vector2(-1, 0));
+            Draw27_HeldItem(ref drawInfo, new Vector2(0, 1));
+            Draw27_HeldItem(ref drawInfo, new Vector2(0, -1));
+            ConvertItemTextureBackToNormal(drawInfo.heldItem);
+            Draw27_HeldItem(ref drawInfo, Vector2.Zero);
 
-            itemLocation = drawinfo.ItemLocation;
-            heldItem = drawinfo.heldItem;
-            playerEffect = drawinfo.playerEffect;
-            itemEffect = drawinfo.itemEffect;
+            itemLocation = drawInfo.ItemLocation;
+            heldItem = drawInfo.heldItem;
+            playerEffect = drawInfo.playerEffect;
+            itemEffect = drawInfo.itemEffect;
 
-            drawinfo.heldItem = saveHeldItem;
-            drawinfo.shadow = saveShadow;
-            drawinfo.ItemLocation = saveLocation;
-            drawinfo.playerEffect = savePlayerEffect;
-            drawinfo.itemEffect = saveItemEffect;
+            drawInfo.heldItem = saveHeldItem;
+            drawInfo.shadow = saveShadow;
+            drawInfo.ItemLocation = saveLocation;
+            drawInfo.playerEffect = savePlayerEffect;
+            drawInfo.itemEffect = saveItemEffect;
 
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
         }
-        public void Draw27_HeldItem(ref PlayerDrawSet drawinfo, Vector2 offset)
+        public void Draw27_HeldItem(ref PlayerDrawSet drawInfo, Vector2 offset)
         {
-            Player player = drawinfo.drawPlayer;
+            Player player = drawInfo.drawPlayer;
             Vector2 savePlayerPos = player.itemLocation;
-            Vector2 saveDrawinfoPos = drawinfo.ItemLocation;
+            Vector2 saveDrawinfoPos = drawInfo.ItemLocation;
 
             player.itemLocation += offset;
-            drawinfo.ItemLocation += offset;
+            drawInfo.ItemLocation += offset;
 
             FakeItem.overrideLightColor = true;
             FakeItem.runOnce = true;
-            PlayerDrawLayers.DrawPlayer_27_HeldItem(ref drawinfo);
+            PlayerDrawLayers.DrawPlayer_27_HeldItem(ref drawInfo);
             FakeItem.overrideLightColor = false;
 
             player.itemLocation = savePlayerPos;    
-            drawinfo.ItemLocation = saveDrawinfoPos;
+            drawInfo.ItemLocation = saveDrawinfoPos;
         }
-        public void DrawFakePlayer(ref PlayerDrawSet drawinfo)
+        public void DrawFakePlayer(ref PlayerDrawSet drawInfo)
         {
-            HijackItemDrawing(ref drawinfo);
+            float savegfxOffY = drawInfo.drawPlayer.gfxOffY;
+            drawInfo.drawPlayer.gfxOffY = 0;
+            if (bodyFrame.IsEmpty)
+                return;
+            SetupCompositeDrawing(ref drawInfo);
+
+            //Save Arm Data
+            CompositeArmData saveFrontArm = drawInfo.drawPlayer.compositeFrontArm;
+            CompositeArmData saveBackArm = drawInfo.drawPlayer.compositeBackArm;
+            Rectangle saveFrontArmFrame = drawInfo.compFrontArmFrame;
+            Rectangle saveBackArmFrame = drawInfo.compBackArmFrame;
+            float saveFrontArmRotation = drawInfo.compositeFrontArmRotation;
+            float saveBackArmRotation = drawInfo.compositeBackArmRotation;
+
+            //Copy this arm data
+            drawInfo.drawPlayer.compositeFrontArm = this.compositeFrontArm;
+            drawInfo.drawPlayer.compositeBackArm = this.compositeBackArm;
+            drawInfo.compFrontArmFrame = this.compFrontArmFrame;
+            drawInfo.compBackArmFrame = this.compBackArmFrame;
+            drawInfo.compositeFrontArmRotation = this.compositeFrontArmRotation;
+            drawInfo.compositeBackArmRotation = this.compositeBackArmRotation;
+
+            //draw back arm here
+            DrawTail(ref drawInfo, true);
+            DrawTail(ref drawInfo, false);
+            HijackItemDrawing(ref drawInfo);
+            //draw front arm here
+
+            //Save this arm data
+            compositeFrontArm = drawInfo.drawPlayer.compositeFrontArm;
+            compositeBackArm = drawInfo.drawPlayer.compositeBackArm;
+            compFrontArmFrame = drawInfo.compFrontArmFrame;
+            compBackArmFrame = drawInfo.compBackArmFrame;
+            compositeFrontArmRotation = drawInfo.compositeFrontArmRotation;
+            compositeBackArmRotation = drawInfo.compositeBackArmRotation;
+
+            //Reload Arm Data
+            drawInfo.drawPlayer.compositeFrontArm = saveFrontArm;
+            drawInfo.drawPlayer.compositeBackArm = saveBackArm;
+            drawInfo.compFrontArmFrame = saveFrontArmFrame;
+            drawInfo.compBackArmFrame = saveBackArmFrame;
+            drawInfo.compositeFrontArmRotation = saveFrontArmRotation;
+            drawInfo.compositeBackArmRotation = saveBackArmRotation;
+
+            drawInfo.drawPlayer.gfxOffY = savegfxOffY;
         }
         public Texture2D saveGreenTexture;
         public Texture2D saveNormalTexture;
@@ -366,21 +426,21 @@ namespace SOTS.FakePlayer
                 return;
             fieldInfo.SetValue(texture, newValue);
         }
-        public void SetupSpriteDirection(ref PlayerDrawSet drawinfo, Player player)
+        public void SetupSpriteDirection(ref PlayerDrawSet drawInfo, Player player)
         {
-            drawinfo.playerEffect = (SpriteEffects)0;
-            drawinfo.itemEffect = (SpriteEffects)1;
+            drawInfo.playerEffect = (SpriteEffects)0;
+            drawInfo.itemEffect = (SpriteEffects)1;
             if (player.gravDir == 1f)
             {
                 if (player.direction == 1)
                 {
-                    drawinfo.playerEffect = 0;
-                    drawinfo.itemEffect = 0;
+                    drawInfo.playerEffect = 0;
+                    drawInfo.itemEffect = 0;
                 }
                 else
                 {
-                    drawinfo.playerEffect = (SpriteEffects)1;
-                    drawinfo.itemEffect = (SpriteEffects)1;
+                    drawInfo.playerEffect = (SpriteEffects)1;
+                    drawInfo.itemEffect = (SpriteEffects)1;
                 }
                 /*if (!player.dead)
                 {
@@ -393,13 +453,13 @@ namespace SOTS.FakePlayer
             {
                 if (player.direction == 1)
                 {
-                    drawinfo.playerEffect = (SpriteEffects)2;
-                    drawinfo.itemEffect = (SpriteEffects)2;
+                    drawInfo.playerEffect = (SpriteEffects)2;
+                    drawInfo.itemEffect = (SpriteEffects)2;
                 }
                 else
                 {
-                    drawinfo.playerEffect = (SpriteEffects)3;
-                    drawinfo.itemEffect = (SpriteEffects)3;
+                    drawInfo.playerEffect = (SpriteEffects)3;
+                    drawInfo.itemEffect = (SpriteEffects)3;
                 }
                 /*if (!player.dead)
                 {
@@ -408,25 +468,101 @@ namespace SOTS.FakePlayer
                     player.bodyPosition.Y = 6f;
                 }*/
             }
-            switch (drawinfo.heldItem.type)
+            switch (drawInfo.heldItem.type)
             {
                 case 3182:
                 case 3184:
                 case 3185:
                 case 3782:
-                    drawinfo.itemEffect = (SpriteEffects)((int)drawinfo.itemEffect ^ 3);
+                    drawInfo.itemEffect = (SpriteEffects)((int)drawInfo.itemEffect ^ 3);
                     break;
                 case 5118:
                     if (player.gravDir < 0f)
                     {
-                        drawinfo.itemEffect = (SpriteEffects)((int)drawinfo.itemEffect ^ 3);
+                        drawInfo.itemEffect = (SpriteEffects)((int)drawInfo.itemEffect ^ 3);
                     }
                     break;
+            }
+        }
+        public void SetupBodyFrame(Player player)
+        {
+            Player PlayerToFrame = new Player();
+            PlayerToFrame.itemAnimation = itemAnimation;
+            PlayerToFrame.itemAnimationMax = itemAnimationMax;
+            PlayerToFrame.selectedItem = UseItemSlot;
+            PlayerToFrame.PlayerFrame(); //don't care about what happens in here except for the body frame outcome
+            bodyFrame = PlayerToFrame.bodyFrame;
+            PlayerToFrame = null;
+        }
+        public void SetupCompositeDrawing(ref PlayerDrawSet drawInfo)
+        {
+            Player PlayerDummy = new Player();
+            PlayerDummy.compositeBackArm = compositeBackArm;
+            PlayerDummy.compositeFrontArm = compositeFrontArm;
+            PlayerDummy.bodyFrame = bodyFrame;
+            PlayerDrawSet DrawInfoDummy = new PlayerDrawSet();
+            DrawInfoDummy.drawPlayer = PlayerDummy;
+            RunCreateCompositeDataViaReflection(ref DrawInfoDummy);
+            compFrontArmFrame = DrawInfoDummy.compFrontArmFrame;
+            compBackArmFrame = DrawInfoDummy.compBackArmFrame;
+            compositeFrontArmRotation = DrawInfoDummy.compositeFrontArmRotation;
+            compositeBackArmRotation = DrawInfoDummy.compositeBackArmRotation;
+        }
+        public void RunCreateCompositeDataViaReflection(ref PlayerDrawSet drawInfo)
+        {
+            MethodInfo privateMethod = drawInfo.GetType().GetMethod("CreateCompositeData", BindingFlags.NonPublic | BindingFlags.Instance);
+            privateMethod.Invoke(drawInfo, new object[] { });
+        }
+        public void DrawTail(ref PlayerDrawSet drawInfo, bool outLine = false)
+        {
+            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTail").Value;
+            Texture2D textureOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailOutline").Value;
+            Texture2D texture2 = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailScales").Value;
+            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 center = Position + new Vector2(Width, Height) / 2;
+            Vector2 velo = new Vector2(0, 4f);
+            float scale = 1f;
+            List<Vector2> positions = new List<Vector2>();
+            List<float> rotations = new List<float>();
+            for (int i = 0; i < 9; i++)
+            {
+                Vector2 toOldPosition = OldPosition - Position;
+                toOldPosition.SafeNormalize(Vector2.Zero);
+                velo += toOldPosition * 0.333f;
+                velo = velo.SafeNormalize(Vector2.Zero) * scale * 4;
+                center += velo;
+                Vector2 drawPos = center - Main.screenPosition + new Vector2(0, -16 + Height / 2);
+                positions.Add(drawPos);
+                rotations.Add(velo.ToRotation() - MathHelper.ToRadians(90));
+                scale -= 0.0725f;
+            }
+            if (outLine)
+            {
+                for (int i = 8; i >= 0; i--)
+                {
+                    for (int k = 0; k < 4; k++)
+                    {
+                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                        drawInfo.DrawDataCache.Add(new DrawData(textureOutline, positions[i] + circular, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 8; i >= 0; i--)
+                {
+                    drawInfo.DrawDataCache.Add(new DrawData(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                }
+                for (int i = 8; i >= 0; i--)
+                {
+                    drawInfo.DrawDataCache.Add(new DrawData(texture2, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                }
             }
         }
     }
     public class SavedPlayerValues
     {
+        public Vector2 SavePosition;
         public int SavedSelectedItem;
         public Item PlayerOwnedLastVisualizedSelectedItem;
         public bool saveChannel;
