@@ -22,12 +22,16 @@ Other 1.4 related objectives:
 2. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 3. Final 1 starter house
 4. Bestiary for all enemies
+5. Check if enchanted pickaxe is obtainable
 
 For Locket:
 	1. Make sure item does not appear on the cursor (when dual wielding pickaxe, for example)
-	2. Work on Arm Framing, Head Framing, body framing, projectile movement.
+	2. Work on Arm Framing (done?), Head Framing, body framing, projectile movement.
 
 Daily Log:
+
+8/6/22
+1. Subspace Servant Arm framing
 
 8/3/22
 1. More work on the epic thing! Subspace Servant!

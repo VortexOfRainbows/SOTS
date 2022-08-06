@@ -32,6 +32,7 @@ namespace SOTS.FakePlayer
             {
                 if(fPlayer == null)
                     fPlayer = new FakePlayer(0);
+                fPlayer.direction = -Math.Sign(Player.position.X - Main.MouseWorld.X);
                 fPlayer.OldPosition = fPlayer.Position;
                 fPlayer.Position = Vector2.Lerp(Player.position, Main.MouseWorld - new Vector2(FakePlayer.Width, FakePlayer.Height) / 2, 0.9f);
                 fPlayer.ItemCheckHack(Player);
