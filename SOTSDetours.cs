@@ -11,6 +11,7 @@ using SOTS.Utilities;
 using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Social;
 
@@ -21,6 +22,8 @@ namespace SOTS
 		public static RenderTarget2D TargetProj;
 		public static void Initialize()
 		{
+			On.Terraria.NetMessage.SendData += NetMessage_SendData;
+
 			On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
@@ -49,17 +52,10 @@ namespace SOTS
 			if (!Main.dedServ)
 				ResizeTargets();
 		}
-
-		public static void ResizeTargets()
-		{
-			Main.QueueMainThreadAction(() =>
-			{
-				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
-			});
-		}
-
 		public static void Unload()
 		{
+			On.Terraria.NetMessage.SendData -= NetMessage_SendData;
+
 			On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers_AfterProjectiles -= Main_DrawPlayers_AfterProjectiles;
@@ -81,6 +77,24 @@ namespace SOTS
 			On.Terraria.Player.ItemCheck_MeleeHitNPCs -= Player_ItemCheck_MeleeHitNPCs;
 
 			Main.OnPreDraw -= Main_OnPreDraw;
+		}
+		public static void ResizeTargets()
+		{
+			Main.QueueMainThreadAction(() =>
+			{
+				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
+			});
+		}
+		private static void NetMessage_SendData(On.Terraria.NetMessage.orig_SendData orig, int msgType, int remoteClient = -1, int ignoreClient = -1, NetworkText text = null, int number = 0, float number2 = 0f, float number3 = 0f, float number4 = 0f, int number5 = 0, int number6 = 0, int number7 = 0)
+        {
+			if(FakePlayer.FakePlayer.SupressNetMessage13and41)
+            {
+				if(msgType == 13 || msgType == 41)
+                {
+					return;
+                }
+			}
+			orig(msgType, remoteClient, ignoreClient, text, number, number2, number3, number4, number5, number6, number7);
 		}
 		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{

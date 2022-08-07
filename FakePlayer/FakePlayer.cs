@@ -19,6 +19,7 @@ namespace SOTS.FakePlayer
 {
     public class FakePlayer
     {
+        public static bool SupressNetMessage13and41 = false;
         public bool ShouldUseWingsArmPosition = false;
         public int WingFrame = 0;
         public int TrailingType = 0;
@@ -59,6 +60,7 @@ namespace SOTS.FakePlayer
         }
         public void ItemCheckHack(Player player)
         {
+            SupressNetMessage13and41 = true;
             SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
             Item item = player.inventory[UseItemSlot];
             heldItem = item;
@@ -123,6 +125,7 @@ namespace SOTS.FakePlayer
             player.cursorItemIconID = saveCursorIconID;
             item.autoReuse = saveAutoSwing;
             item.useTurn = saveUseTurn;
+            SupressNetMessage13and41 = false;
         }
         public SavedPlayerValues PlayerSavedProperties;
         public CompositeArmData compositeFrontArm;

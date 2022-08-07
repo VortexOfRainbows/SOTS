@@ -19,13 +19,16 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 
 Other 1.4 related objectives:
-1. (DELAYED) Reprogram Subspace Locket. Preferably create a system that is less hard-coded.
-2. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
-3. Final 1 starter house
-4. Bestiary for all enemies
-5. Subspace Locket Recipe
+1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
+2. Final 1 starter house
+3. Bestiary for all enemies
+4. Subspace Locket Recipe
 
 Daily Log:
+
+8/7/22
+1. Fix weird bug where void wasn't consumed depending on ammo consumption for some void+ranged weapons
+2. Fix Subspace Locket in multiplayer!
 
 8/6/22
 1. Added SUBSPACE LOCKET!!
