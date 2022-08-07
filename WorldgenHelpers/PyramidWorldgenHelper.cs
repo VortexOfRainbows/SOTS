@@ -1752,9 +1752,8 @@ namespace SOTS.WorldgenHelpers
 										tile.IsHalfBlock = false;
 										if (type == 0)
 											WorldGen.PlaceTile(k, l, ModContent.TileType<EnchantedSwordShrineTile>(), true, true, -1, 0);
-
 										if (type == 1)
-											WorldGen.PlaceTile(k, l, ModContent.TileType<EnchantedSwordShrineTile>(), true, true, -1, 0);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<EnchantedPickShrineTile>(), true, true, -1, 0);
 									}
 									break;
 								case 8:

@@ -104,11 +104,14 @@ namespace SOTS.Items.Pyramid
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			modPlayer.CanCurseSwap = true;
 			string theKey = "Unbound";
-			foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys())
+			if(Main.netMode != NetmodeID.Server)
 			{
-				theKey = key;
-			}
-			player.setBonus = "Press the '" + theKey + "' key to change the Ruby Monolith into an offensive stance\nWhile in offensive stance, decreases the cooldown of Curse Flaring by 80%\nHowever, increases void drain by 6 instead of increasing void regeneration speed by 10%";
+				foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys())
+				{
+					theKey = key;
+				}
+				player.setBonus = "Press the '" + theKey + "' key to change the Ruby Monolith into an offensive stance\nWhile in offensive stance, decreases the cooldown of Curse Flaring by 80%\nHowever, increases void drain by 6 instead of increasing void regeneration speed by 10%";
+			}				
 		}
 		public override void AddRecipes()
 		{
