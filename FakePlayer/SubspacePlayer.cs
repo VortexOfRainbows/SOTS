@@ -15,7 +15,6 @@ namespace SOTS.FakePlayer
 {
     public class SubspacePlayer : ModPlayer
     {
-        public FakePlayer fPlayer;
         public override void SetStaticDefaults()
         {
         }
@@ -30,47 +29,16 @@ namespace SOTS.FakePlayer
         {
             if(servantActive)
             {
-                if(fPlayer == null)
-                    fPlayer = new FakePlayer(0);
-                fPlayer.direction = -Math.Sign(Player.position.X - Main.MouseWorld.X);
-                fPlayer.OldPosition = fPlayer.Position;
-                fPlayer.Position = Vector2.Lerp(Player.position, Main.MouseWorld - new Vector2(FakePlayer.Width, FakePlayer.Height) / 2, 0.9f);
-                fPlayer.ItemCheckHack(Player);
+                Summon();
             }
         }
-        /*public static readonly PlayerLayer DrawServant = new PlayerLayer("SOTS", "DrawServant", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
-        {
-            Mod mod = ModLoader.GetMod("SOTS");
-            Player drawPlayer = drawInfo.drawPlayer;
-            if (drawPlayer.active)
-            {
-                SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(drawPlayer);
-                int Probe = modPlayer.Probe;
-                for (int i = 0; i < Main.projectile.Length; i++)
-                {
-                    Projectile proj = Main.projectile[i];
-                    SubspaceServant subServ = proj.ModProjectile as SubspaceServant;
-                    if (subServ != null && proj.owner == drawInfo.drawPlayer.whoAmI && proj.active)
-                    {
-                        float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-                        float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
-                        Color color = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16));
-                        subServ.PreDraw(Main.spriteBatch, color);
-                        subServ.PostDraw(Main.spriteBatch, color);
-                    }
-                }
-            }
-        });
-        public override void ModifyDrawLayers(List<PlayerLayer> layers)
-        {
-            DrawServant.visible = true;
-            layers.Insert(0, DrawServant);
-        }*/
         public int subspaceServantShader = 0;
         public override void ResetEffects()
         {
             subspaceServantShader = 0;
             servantIsVanity = false;
+            servantActive = false;
+            foundItem = false;
             for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
             {
                 Item item = Player.armor[i];
@@ -92,28 +60,25 @@ namespace SOTS.FakePlayer
             //        SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
             //    }
             //}
-            /*if (servantActive)
-                Summon();*/
-            servantActive = false;
-            foundItem = false;
         }
         public int Probe = -1;
-        /*public void Summon()
+        public void Summon()
         {
             int type = ModContent.ProjectileType<SubspaceServant>();
-            if (Main.myPlayer == Player.whoAmI)
+            SOTSPlayer.ModPlayer(Player).runPets(ref Probe, type, 0, 0, false);
+        }
+        public static List<FakePlayer> GetServantFakePlayers(Player player)
+        {
+            List<FakePlayer> ret = new List<FakePlayer>();
+            for (int i = 0; i < Main.projectile.Length; i++)
             {
-                if (Probe == -1)
+                Projectile proj = Main.projectile[i];
+                if (proj.ModProjectile is SubspaceServant subServ && proj.owner == player.whoAmI && proj.active)
                 {
-                    Probe = Projectile.NewProjectile(Player.Center, Vector2.Zero, type, 0, 0, Player.whoAmI, 0);
+                    ret.Add(subServ.FakePlayer);
                 }
-                Projectile temp = Main.projectile[Probe];
-                if (!temp.active || temp.type != type || temp.owner != Player.whoAmI)
-                {
-                    Probe = Projectile.NewProjectile(Player.Center, Vector2.Zero, type, 0, 0, Player.whoAmI, 0);
-                }
-                Main.projectile[Probe].timeLeft = 6;
             }
-        }*/
+            return ret;
+        }
     }
 }

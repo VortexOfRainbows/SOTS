@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using SOTS.FakePlayer;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -23,7 +24,11 @@ namespace SOTS.Common.PlayerDrawing
 			{
 				return;
 			}
-			SubspacePlayer.ModPlayer(drawInfo.drawPlayer).fPlayer.DrawFakePlayer(ref drawInfo);
+			List<FakePlayer.FakePlayer> fPlayers = SubspacePlayer.GetServantFakePlayers(drawInfo.drawPlayer);
+			for(int i = 0; i < fPlayers.Count; i++)
+			{
+                fPlayers[i].DrawFakePlayer(ref drawInfo);
+			}
 		}
 	}
 }

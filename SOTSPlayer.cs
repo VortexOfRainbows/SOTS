@@ -90,10 +90,10 @@ namespace SOTS
 		{
 			locketBlacklist = new int[] { ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
-				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
-			locketWhitelist = new int[] { ItemID.LawnMower };
+				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>(), ItemID.Zenith };
+			locketWhitelist = new int[] { ItemID.LawnMower, ItemID.CarbonGuitar, ItemID.IvyGuitar };
 			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), ModContent.ProjectileType<BlazingArrow>() };
-			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>() };
+			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter };
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
 			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };
 		}

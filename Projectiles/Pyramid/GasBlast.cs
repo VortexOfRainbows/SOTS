@@ -108,19 +108,22 @@ namespace SOTS.Projectiles.Pyramid
         }
         public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[Projectile.owner];
-			if(player.active)
+			if(Main.netMode != NetmodeID.Server)
 			{
-				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-				for (int j = 0; j < 24; j++)
+				Player player = Main.player[Projectile.owner];
+				if (player.active)
 				{
-					Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.75f, 2f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f))) + Projectile.velocity * 0.5f;
-					modPlayer.foamParticleList1.Add(new CurseFoam(Projectile.Center, rotational, 1.15f, true));
-				}
-				for(int j = 0; j < foamParticleList1.Count; j++)
-				{
-					foamParticleList1[j].noMovement = true;
-					modPlayer.foamParticleList1.Add(foamParticleList1[j]);
+					SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+					for (int j = 0; j < 24; j++)
+					{
+						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.75f, 2f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f))) + Projectile.velocity * 0.5f;
+						modPlayer.foamParticleList1.Add(new CurseFoam(Projectile.Center, rotational, 1.15f, true));
+					}
+					for (int j = 0; j < foamParticleList1.Count; j++)
+					{
+						foamParticleList1[j].noMovement = true;
+						modPlayer.foamParticleList1.Add(foamParticleList1[j]);
+					}
 				}
 			}
 			foamParticleList1 = null;
@@ -128,14 +131,17 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void AI()
 		{
-			if(foamParticleList1 != null)
+			if (Main.netMode != NetmodeID.Server)
 			{
-				PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center, 1.0f * Projectile.scale, foamParticleList1, 0.12f, 4, 27, Projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
-				for (float i = 0; i < 1; i += 0.2f)
+				if (foamParticleList1 != null)
 				{
-					foamParticleList1.Add(new CurseFoam(Projectile.Center - Projectile.velocity * i, new Vector2(Main.rand.NextFloat(-0.15f, 0.15f), Main.rand.NextFloat(-0.15f, 0.15f)), 0.45f, true));
+					PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center, 1.0f * Projectile.scale, foamParticleList1, 0.12f, 4, 27, Projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
+					for (float i = 0; i < 1; i += 0.2f)
+					{
+						foamParticleList1.Add(new CurseFoam(Projectile.Center - Projectile.velocity * i, new Vector2(Main.rand.NextFloat(-0.15f, 0.15f), Main.rand.NextFloat(-0.15f, 0.15f)), 0.45f, true));
+					}
+					catalogueParticles();
 				}
-				catalogueParticles();
 			}
 			Projectile.scale *= 0.995f; 
 		}

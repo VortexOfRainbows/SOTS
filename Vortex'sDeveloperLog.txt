@@ -1,6 +1,7 @@
 The following is my development plans :D
 1. Change in player class reseteffects order might break some things... Have to keep an eye on it.
 2. Mod.Find<Object>() causes a lot of errors for multiplayer/dusts. Will have to keep an eye out on all of these.
+3. Might still have some bugs with Subspace Locket
 
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
@@ -22,16 +23,19 @@ Other 1.4 related objectives:
 2. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 3. Final 1 starter house
 4. Bestiary for all enemies
-5. Check if enchanted pickaxe is obtainable
-
-For Locket:
-	1. Make sure item does not appear on the cursor (when dual wielding pickaxe, for example)
-	2. Work on Arm Framing (done?), Head Framing, body framing, projectile movement.
+5. Subspace Locket Recipe
 
 Daily Log:
 
 8/6/22
+1. Added SUBSPACE LOCKET!!
+
+8/6/22
 1. Subspace Servant Arm framing
+2. Projectile and Proper drawing
+3. Fixed multiplayer bug with Cursed Robe and spawning bosses.
+4. Fixed symbiote abigail interaction
+5. Fixed Enchanted Pickaxe Spawning
 
 8/3/22
 1. More work on the epic thing! Subspace Servant!
