@@ -25,6 +25,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.value = Item.sellPrice(0, 4, 50, 0);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.accessory = true;
+			Item.canBePlacedInVanityRegardlessOfConditions = true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

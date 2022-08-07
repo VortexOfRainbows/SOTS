@@ -27,6 +27,7 @@ namespace SOTS.Items.Pyramid
 			//Item.createTile = mod.TileType("CursedAppleTile");
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.accessory = true;
+			Item.canBePlacedInVanityRegardlessOfConditions = true;
 		}
 		public override void EquipFrameEffects(Player player, EquipType type)
 		{

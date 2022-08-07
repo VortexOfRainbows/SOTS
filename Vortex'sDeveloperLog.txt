@@ -22,13 +22,13 @@ Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
-4. Subspace Locket Recipe
 
 Daily Log:
 
 8/7/22
 1. Fix weird bug where void wasn't consumed depending on ammo consumption for some void+ranged weapons
 2. Fix Subspace Locket in multiplayer!
+3. Subspace Locket Recipe
 
 8/6/22
 1. Added SUBSPACE LOCKET!!
