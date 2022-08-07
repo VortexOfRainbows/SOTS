@@ -22,8 +22,8 @@ namespace SOTS.Items.Evil
 		{
 			Item.damage = 50;
 			Item.DamageType = DamageClass.Melee;
-			Item.width = 48;
-			Item.height = 48;
+			Item.width = 68;
+			Item.height = 68;
 			Item.useTime = 11;
 			Item.useAnimation = 33;
 			Item.useStyle = ItemUseStyleID.Swing;
