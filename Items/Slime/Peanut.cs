@@ -14,8 +14,8 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 26;
-			Item.height = 26;
+			Item.width = 30;
+			Item.height = 28;
 			Item.maxStack = 999;      
 			Item.knockBack = 1.15f;
 			Item.value = Item.sellPrice(0, 0, 0, 25);
