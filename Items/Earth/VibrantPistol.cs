@@ -11,6 +11,12 @@ namespace SOTS.Items.Earth
 {
 	public class VibrantPistol : VoidItem
 	{
+		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/VibrantPistolGlow").Value;
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Pistol");
@@ -34,6 +40,10 @@ namespace SOTS.Items.Earth
             Item.autoReuse = false;
             Item.shoot = ModContent.ProjectileType<VibrantBolt>(); 
             Item.shootSpeed = 24f;
+			if (!Main.dedServ)
+			{
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
+			}
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

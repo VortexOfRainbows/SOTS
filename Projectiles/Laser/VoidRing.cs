@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override void AI()
 		{
-			Lighting.AddLight(Projectile.Center, 1f, 0.5f, 1f);
+			Lighting.AddLight(Projectile.Center, 1f, 0.4f, 0.4f);
 			Projectile.rotation += MathHelper.ToRadians(2);
 			Projectile.alpha += 4;
 			if (Projectile.timeLeft < 12)

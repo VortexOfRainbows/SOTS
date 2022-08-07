@@ -1,6 +1,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 
 namespace SOTS.Items.Earth
@@ -8,6 +10,12 @@ namespace SOTS.Items.Earth
 	[AutoloadEquip(EquipType.Legs)]
 	public class VibrantLeggings : ModItem
 	{
+		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/VibrantLeggingsGlow").Value;
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+		}
 		public override void SetDefaults()
 		{
 			Item.width = 22;
@@ -24,7 +32,7 @@ namespace SOTS.Items.Earth
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == Mod.Find<ModItem>("VibrantChestplate") .Type&& head.type == Mod.Find<ModItem>("VibrantHelmet").Type;
+			return body.type == ModContent.ItemType<VibrantChestplate>() && head.type == ModContent.ItemType<VibrantHelmet>();
         }
 		public override void UpdateEquip(Player player)
 		{

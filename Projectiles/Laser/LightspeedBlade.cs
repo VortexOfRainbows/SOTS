@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Laser
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			Lighting.AddLight(Projectile.Center, 1f, 0.5f, 1f);
+			Lighting.AddLight(Projectile.Center, 1f, 0.4f, 0.4f);
 			if (inititate == 0)
 			{
 				inititate++;
