@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -7,8 +8,16 @@ namespace SOTS.Projectiles.Earth
 {
 	
 	public class VibrantRifle : ModProjectile
-	{
-		public override void SetStaticDefaults()
+    {
+        public override void PostDraw(Color lightColor)
+        {
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/VibrantRifleGlow");
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            Color color = Color.White;
+            Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+        }
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Rifle");
 		}

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using SOTS.Items.Pyramid;
 using Terraria;
 using Terraria.ID;
@@ -33,6 +34,10 @@ namespace SOTS.Items.Earth
 		{
 			CreateRecipe(200).AddIngredient(ModContent.ItemType<VibrantBar>(), 1).AddTile(TileID.Anvils).Register();
 		}
+		public override Color? GetAlpha(Color lightColor)
+		{
+			return Color.White * ((255 - Item.alpha) / 255f);
+		}
 	}
 	public class VibrantArrow : ModItem
 	{
@@ -61,6 +66,10 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			CreateRecipe(200).AddIngredient(ModContent.ItemType<VibrantBar>(), 1).AddTile(TileID.Anvils).Register();
+		}
+		public override Color? GetAlpha(Color lightColor)
+		{
+			return Color.White * ((255 - Item.alpha) / 255f);
 		}
 	}
 }

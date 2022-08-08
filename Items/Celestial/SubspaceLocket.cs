@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.FakePlayer;
+using SOTS.Items.Fragments;
 using SOTS.Projectiles.Celestial;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -18,7 +20,7 @@ namespace SOTS.Items.Celestial
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Subspace Locket");
-            Tooltip.SetDefault("Summons a Subspace Servant to assist in combat\nUses the item in your last inventory slot for you (bottom right inventory slot)\nDoesn't work with all items\nDecreases damage by 25% multiplicatively\n'You've proven yourself plenty'");
+            Tooltip.SetDefault("Summons a Subspace Servant to assist in combat\nUses the item in your last inventory slot for you (bottom right inventory slot)\nDoesn't work with all items\nDecreases damage by 25% multiplicatively\nIncreases max void by 50, but reduces healing recieved from potions by 40");
         }
         public override void SetDefaults()
         {
@@ -27,7 +29,6 @@ namespace SOTS.Items.Celestial
             Item.value = Item.sellPrice(0, 20, 0, 0);
             Item.rare = ItemRarityID.Red;
             Item.accessory = true;
-            Item.expert = true;
             Item.canBePlacedInVanityRegardlessOfConditions = true;
         }
         bool accessory = true;
@@ -36,6 +37,11 @@ namespace SOTS.Items.Celestial
             SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
             modPlayer.servantActive = true;
             player.GetDamage(DamageClass.Generic) *= 0.75f;
+
+            VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+            voidPlayer.voidMeterMax2 += 50;
+            SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+            sPlayer.additionalHeal -= 40;
         }
         public override void UpdateInventory(Player player)
         {
@@ -60,6 +66,10 @@ namespace SOTS.Items.Celestial
                     spriteBatch.Draw(itemTextureOutline, position + circular, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
                 }
             return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient<TerminalCluster>(1).AddIngredient<PrecariousCluster>(1).AddIngredient<Nvidia.VoidTablet>(1).AddIngredient<SanguiteBar>(15).AddTile(TileID.MythrilAnvil).Register();
         }
     }
     public class SubspaceItem : GlobalItem

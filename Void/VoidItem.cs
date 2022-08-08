@@ -132,14 +132,10 @@ namespace SOTS.Void
 		}
         public sealed override bool CanConsumeAmmo(Item ammo, Player player)
         {
-			if(Item.useAmmo != 0 && BeforeDrainMana(player))
-				DrainMana(player);
+			//if(Item.useAmmo != 0 && BeforeDrainMana(player))
+			//	DrainMana(player);
 			bool canUse = BeforeConsumeAmmo(player);
-			if(!canUse)
-			{
-				return false;
-			}
-			return true;
+			return canUse;
 		}
 		public void OnUseEffects(Player player)
 		{
@@ -171,10 +167,16 @@ namespace SOTS.Void
 				player.statMana += Item.mana;
 			return true;
 		}
-		//<summary>
-		// return false to not consume void
-		//</summary>
-		public virtual bool BeforeDrainMana(Player player)
+        public sealed override bool? UseItem(Player player)
+		{
+			if (Item.useAmmo != 0 && BeforeDrainMana(player) && !Item.CountsAsClass(DamageClass.Summon))
+				DrainMana(player);
+			return true;
+        }
+        ///<summary>
+        /// return false to not consume void
+        ///</summary>
+        public virtual bool BeforeDrainMana(Player player)
 		{
 			return true;
 		}
@@ -182,9 +184,9 @@ namespace SOTS.Void
 		{
 			return true;
 		}
-		//<summary>
-		// return false to not consume ammo
-		//</summary>
+		///<summary>
+		/// return false to not consume ammo
+		///</summary>
 		public virtual bool BeforeConsumeAmmo(Player player)
 		{
 			return true;

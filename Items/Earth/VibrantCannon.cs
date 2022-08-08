@@ -4,11 +4,18 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Projectiles.Earth;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Earth
 {
 	public class VibrantCannon : VoidItem
 	{
+		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/VibrantCannonGlow").Value;
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Cannon");
@@ -31,6 +38,12 @@ namespace SOTS.Items.Earth
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<VibrantBall>(); 
             Item.shootSpeed = 8;
+			if (!Main.dedServ)
+			{
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -21;
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = -2;
+			}
 		}
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
@@ -42,7 +55,7 @@ namespace SOTS.Items.Earth
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(-21f, -1.50f);
+			return new Vector2(-21f, -2f);
 		}
 		public override void AddRecipes()
 		{

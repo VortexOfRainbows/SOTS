@@ -28,7 +28,7 @@ namespace SOTS.Common.PlayerDrawing
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			if (drawInfo.shadow != 0)
 				return;
-			if (!drawPlayer.HeldItem.IsAir)
+			if (!drawPlayer.HeldItem.IsAir && !drawPlayer.HeldItem.noUseGraphic)
 			{
 				Item item = drawPlayer.HeldItem;
 				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;

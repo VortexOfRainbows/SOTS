@@ -9,6 +9,8 @@ namespace SOTS.FakePlayer
 	public class SubspaceServant : ModProjectile
 	{
 		public FakePlayer FakePlayer;
+		public Vector2 ItemLocation;
+		public float ItemRotation;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Subspace Servant");
@@ -49,6 +51,9 @@ namespace SOTS.FakePlayer
 		{
 			writer.Write(cursorArea.X);
 			writer.Write(cursorArea.Y);
+			writer.Write(ItemLocation.X);
+			writer.Write(ItemLocation.Y);
+			writer.Write(ItemRotation);
 			writer.Write(Direction);
 			base.SendExtraAI(writer);
         }
@@ -56,6 +61,9 @@ namespace SOTS.FakePlayer
 		{
 			cursorArea.X = reader.ReadSingle();
 			cursorArea.Y = reader.ReadSingle();
+			ItemLocation.X = reader.ReadSingle();
+			ItemLocation.Y = reader.ReadSingle();
+			ItemRotation = reader.ReadSingle();
 			Direction = reader.ReadInt32();
 			base.ReceiveExtraAI(reader);
         }
@@ -84,7 +92,6 @@ namespace SOTS.FakePlayer
                 {
 					Direction = Math.Sign(cursorArea.X - Projectile.Center.X);
                 }
-				Projectile.netUpdate = true;
 			}
 			if (cursorArea != Vector2.Zero)
 			{
@@ -154,6 +161,8 @@ namespace SOTS.FakePlayer
 					circular.Y *= 0.5f;
 				Projectile.velocity.Y += circular.Y;
 
+				FakePlayer.itemLocation = ItemLocation;
+				FakePlayer.itemRotation = ItemRotation;
 				FakePlayer.WingFrame = (int)(Projectile.ai[1] / 4);
 				FakePlayer.OldPosition = Projectile.position + new Vector2(-5 * Projectile.ai[0], 2);
 				Projectile.position += Projectile.velocity;
@@ -162,7 +171,14 @@ namespace SOTS.FakePlayer
 				FakePlayer.Velocity = Projectile.velocity; //this is only used for wing drawing
 				FakePlayer.ItemCheckHack(player);
 				Direction = FakePlayer.direction;
+				if (Main.myPlayer == player.whoAmI)
+				{
+					ItemLocation = FakePlayer.itemLocation;
+					ItemRotation = FakePlayer.itemRotation;
+				}
 			}
+			if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
+				Projectile.netUpdate = true;
 			Lighting.AddLight(Projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
 		}
         public override bool PreDraw(ref Color lightColor)

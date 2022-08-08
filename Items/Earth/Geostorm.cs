@@ -6,11 +6,18 @@ using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Projectiles.Earth;
 using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Earth
 {
 	public class Geostorm : VoidItem
 	{
+		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/GeostormGlow").Value;
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Geostorm");
@@ -34,6 +41,10 @@ namespace SOTS.Items.Earth
 			Item.shoot = ModContent.ProjectileType<GeostormCrystal>();
             Item.shootSpeed = 5.5f; //arbitrary
 			Item.noMelee = true;
+			if (!Main.dedServ)
+			{
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
+			}
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
