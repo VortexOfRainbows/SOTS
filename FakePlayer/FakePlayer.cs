@@ -261,7 +261,7 @@ namespace SOTS.FakePlayer
             player.stealth = 1f;
             player.gravDir = 1f;
             player.invis = false;
-            player.bodyFrame = new Rectangle(0, 0, 40, 56);
+            player.bodyFrame = bodyFrame;
 
             //Set values that player uses to the FakePlayer's values
             player.position = Position;
