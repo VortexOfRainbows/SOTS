@@ -16,15 +16,10 @@ Subspace Serpent: Done
 Sprites/Resprites To Do:
 
 SOTS Resprite to do:
-1.Soot Block, to match the new Ash I am making
-2.Ultimate Polarizer
-3.Crack the Sky
-Eye Of Chaos
-Chaos Badge
+1.Ultimate Polarizer
+2.Crack the Sky
 Curgeon (fish)
-Harass Blasfah for spirit staffs
 Subspace Items/Drops
-Vibrant Armor and Weapons (1.4)
 Frigid Armor and Weapons (1.4)
 Miners Pickaxe 
 Cruise Caller
@@ -32,13 +27,10 @@ Clover Charm
 Sharanga
 
 SOTS Texture Pack To Do:
-Ash Block (holding up Soot Block resprite)
-Tungsten Ore
 Trophy Background (holding up SOTS boss trophies)
 Tinkerers Workshop
 Sign
 Iron Chain
-Platnum Ore
 Bar Stool
 Glass Wall
 
