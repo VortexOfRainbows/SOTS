@@ -22,7 +22,6 @@ Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
-4. Vibrant Armor Sheeting Glowmask
 
 Daily Log:
 
