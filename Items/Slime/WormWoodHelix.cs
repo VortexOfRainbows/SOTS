@@ -19,7 +19,7 @@ namespace SOTS.Items.Slime
             Item.damage = 20;  
             Item.DamageType = DamageClass.Ranged;    
             Item.width = 60;  
-            Item.height = 28;   
+            Item.height = 30;   
             Item.useTime = 24;  
             Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Shoot;    

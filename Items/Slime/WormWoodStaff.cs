@@ -18,8 +18,8 @@ namespace SOTS.Items.Slime
 		{
             Item.damage = 20;  
             Item.DamageType = DamageClass.Magic;  
-            Item.width = 34;    
-            Item.height = 34;   
+            Item.width = 36;    
+            Item.height = 36;   
             Item.useTime = 8;  
             Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Swing;    

@@ -20,8 +20,8 @@ namespace SOTS.Items.Crushers
 		{
             Item.damage = 34;
             Item.DamageType = DamageClass.Melee;  
-            Item.width = 42;
-            Item.height = 42;  
+            Item.width = 44;
+            Item.height = 44;  
             Item.useTime = 30; 
             Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;    

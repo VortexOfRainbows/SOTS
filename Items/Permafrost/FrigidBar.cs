@@ -12,8 +12,8 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.IronBar);
-			Item.width = 24;
-			Item.height = 22;
+			Item.width = 34;
+			Item.height = 28;
             Item.value = Item.sellPrice(0, 0, 6, 0);
 			Item.rare = ItemRarityID.Green;
 			Item.maxStack = 99;
