@@ -17,11 +17,17 @@ Update Objectives:
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
+4. Potential Nerfs:
+	1. Skyward Blade Damage
+	2. Putrid Eye Hit Rate
+	3. Obsidian Eruption is too Strong! Move in tier..?
 
 Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
+4. Assassination Potion bugging with creatures below 20 hp, or 10%... May also effect non creatures
+5. Chest Swapping isn't working... Banner buffs aren't working..?
 
 Daily Log:
 

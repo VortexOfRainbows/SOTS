@@ -14,7 +14,7 @@ namespace SOTS.NPCs
 		{
 			DisplayName.SetDefault("Blue Slimer");
 		}
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
 			NPC.CloneDefaults(NPCID.Slimer);
             NPC.aiStyle = 44;
