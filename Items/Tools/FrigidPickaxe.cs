@@ -19,8 +19,8 @@ namespace SOTS.Items.Tools
 		{
             Item.damage = 11;
             Item.DamageType = DamageClass.Melee;  
-            Item.width = 34;   
-            Item.height = 34;   
+            Item.width = 36;   
+            Item.height = 36;   
             Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
             Item.useTime = 15;
