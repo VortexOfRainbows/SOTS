@@ -32,7 +32,6 @@ Other 1.4 related objectives:
 7. Chests break when blocks under them are swapped..?
 8. Crit chance items (Focus Reticle and Eye of Chaos) not working
 9. Foggy Clairvoyance Bugged..?
-10. Frigid Javelin visual rework
 
 Daily Log:
 

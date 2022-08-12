@@ -26,10 +26,7 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritFrost = true;
-			player.GetCritChance(DamageClass.Melee) += 3;
-			player.GetCritChance(DamageClass.Ranged) += 3;
-			player.GetCritChance(DamageClass.Magic) += 3;
-			player.GetCritChance(DamageClass.Throwing) += 3;
+			player.GetCritChance(DamageClass.Generic) += 3;
 		}
 		public override void AddRecipes()
 		{
@@ -56,10 +53,7 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritCurseFire = true;
-			player.GetCritChance(DamageClass.Melee) += 3;
-			player.GetCritChance(DamageClass.Ranged) += 3;
-			player.GetCritChance(DamageClass.Magic) += 3;
-			player.GetCritChance(DamageClass.Throwing) += 3;
+			player.GetCritChance(DamageClass.Generic) += 3;
 		}
 		public override void AddRecipes()
 		{
@@ -86,10 +80,7 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritFire = true;
-			player.GetCritChance(DamageClass.Melee) += 3;
-			player.GetCritChance(DamageClass.Ranged) += 3;
-			player.GetCritChance(DamageClass.Magic) += 3;
-			player.GetCritChance(DamageClass.Throwing) += 3;
+			player.GetCritChance(DamageClass.Generic) += 3;
 		}
 		public override void AddRecipes()
 		{

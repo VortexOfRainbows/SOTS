@@ -32,10 +32,7 @@ namespace SOTS.Items
 			voidPlayer.bonusVoidGain += 2;
 			player.lifeRegen += 1;
 			player.endurance += 0.07f;
-			player.GetCritChance(DamageClass.Melee) += 4;
-			player.GetCritChance(DamageClass.Ranged) += 4;
-			player.GetCritChance(DamageClass.Magic) += 4;
-			player.GetCritChance(DamageClass.Throwing) += 4;
+			player.GetCritChance(DamageClass.Generic) += 4;
 		}
 		public override void AddRecipes()
 		{

@@ -33,10 +33,7 @@ namespace SOTS.Items.ChestItems
 					critbonus++;
 				}
 			}
-			player.GetCritChance(DamageClass.Melee) += (int)(critbonus * 0.25f);
-			player.GetCritChance(DamageClass.Ranged) += (int)(critbonus * 0.25f);
-			player.GetCritChance(DamageClass.Magic) += (int)(critbonus * 0.25f);
-			player.GetCritChance(DamageClass.Throwing) += (int)(critbonus * 0.25f);
+			player.GetCritChance(DamageClass.Generic) += (int)(critbonus * 0.25f);
 		}
 		public override void AddRecipes()
 		{

@@ -33,10 +33,7 @@ namespace SOTS.Items.Evil
 			player.statLifeMax2 += 40;
 			player.GetArmorPenetration(DamageClass.Generic) += 8;
 			modPlayer.CritNightmare = true;
-			player.GetCritChance(DamageClass.Magic) += 5;
-			player.GetCritChance(DamageClass.Melee) += 5;
-			player.GetCritChance(DamageClass.Ranged) += 5;
-			player.GetCritChance(DamageClass.Throwing) += 5;
+			player.GetCritChance(DamageClass.Generic) += 5;
 		}
 		public override void AddRecipes()
 		{

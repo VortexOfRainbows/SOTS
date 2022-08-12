@@ -23,10 +23,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetCritChance(DamageClass.Melee) += 10;
-			player.GetCritChance(DamageClass.Ranged) += 10;
-			player.GetCritChance(DamageClass.Magic) += 10;
-			player.GetCritChance(DamageClass.Throwing) += 10;
+			player.GetCritChance(DamageClass.Generic) += 10;
 		}
 		public override void AddRecipes()
 		{

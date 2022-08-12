@@ -70,11 +70,8 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
-			player.GetCritChance(DamageClass.Melee) += 20;
-			player.GetCritChance(DamageClass.Ranged) += 20;
-			player.GetCritChance(DamageClass.Magic) += 20;
-			player.GetCritChance(DamageClass.Throwing) += 20;
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			player.GetCritChance(DamageClass.Generic) += 20;
 			modPlayer.CritBonusDamage += 25;
             player.buffImmune[BuffID.Bleeding] = true; 
             player.buffImmune[BuffID.Poisoned] = true; 
@@ -103,10 +100,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Melee) += 5;
-			player.GetCritChance(DamageClass.Ranged) += 5;
-			player.GetCritChance(DamageClass.Magic) += 5;
-			player.GetCritChance(DamageClass.Throwing) += 5;
+			player.GetCritChance(DamageClass.Generic) += 5;
 			modPlayer.CritLifesteal += 1 + (Main.rand.NextBool(3)? 1 : 0);
 			modPlayer.CritVoidsteal += 1.25f;
 			modPlayer.CritManasteal += 5 + Main.rand.Next(4);

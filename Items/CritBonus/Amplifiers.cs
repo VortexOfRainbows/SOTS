@@ -119,10 +119,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Melee) += 3;
-			player.GetCritChance(DamageClass.Ranged) += 3;
-			player.GetCritChance(DamageClass.Magic) += 3;
-			player.GetCritChance(DamageClass.Throwing) += 3;
+			player.GetCritChance(DamageClass.Generic) += 3;
 			if (Main.rand.NextBool(2))
 			{
 				modPlayer.CritBonusDamage += 20;
@@ -156,10 +153,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Melee) += 5;
-			player.GetCritChance(DamageClass.Ranged) += 5;
-			player.GetCritChance(DamageClass.Magic) += 5;
-			player.GetCritChance(DamageClass.Throwing) += 5;
+			player.GetCritChance(DamageClass.Generic) += 5;
 			modPlayer.CritBonusDamage += 25;
 			player.buffImmune[BuffID.Bleeding] = true;
 			player.buffImmune[BuffID.Poisoned] = true;

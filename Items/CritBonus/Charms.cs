@@ -26,10 +26,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Melee) += 3;
-			player.GetCritChance(DamageClass.Ranged) += 3;
-			player.GetCritChance(DamageClass.Magic) += 3;
-			player.GetCritChance(DamageClass.Throwing) += 3;
+			player.GetCritChance(DamageClass.Generic) += 3;
 			if(Main.rand.NextBool(2))
 				modPlayer.CritLifesteal += Main.rand.Next(3) + 3;
 		}
@@ -57,10 +54,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Melee) += 2;
-			player.GetCritChance(DamageClass.Ranged) += 2;
-			player.GetCritChance(DamageClass.Magic) += 2;
-			player.GetCritChance(DamageClass.Throwing) += 2;
+			player.GetCritChance(DamageClass.Generic) += 2;
 			if (Main.rand.NextBool(2))
 				modPlayer.CritVoidsteal += 2.5f + Main.rand.Next(2);
 		}
@@ -88,10 +82,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Melee) += 3;
-			player.GetCritChance(DamageClass.Ranged) += 3;
-			player.GetCritChance(DamageClass.Magic) += 3;
-			player.GetCritChance(DamageClass.Throwing) += 3;
+			player.GetCritChance(DamageClass.Generic) += 3;
 			modPlayer.CritManasteal += 7 + Main.rand.Next(4);
 			modPlayer.CritLifesteal += 2 + Main.rand.Next(2);
 			modPlayer.CritVoidsteal += 2.25f;

@@ -97,10 +97,7 @@ namespace SOTS.Items.Chaos
 					modPlayer.CritBonusMultiplier += 0.2f;
 					break;
 				case 4: //pyro, inferno
-					player.GetCritChance(DamageClass.Magic) += 6;
-					player.GetCritChance(DamageClass.Melee) += 6;
-					player.GetCritChance(DamageClass.Ranged) += 6;
-					player.GetCritChance(DamageClass.Throwing) += 6;
+					player.GetCritChance(DamageClass.Generic) += 6;
 					break;
 				case 5: //hydro, tidal
 					player.statLifeMax2 += 40;

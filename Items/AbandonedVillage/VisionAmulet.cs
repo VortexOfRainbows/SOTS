@@ -94,10 +94,7 @@ namespace SOTS.Items.AbandonedVillage
 					modPlayer.attackSpeedMod += 0.12f;
 					break;
 				case 3: //cyro
-					player.GetCritChance(DamageClass.Magic) += 10;
-					player.GetCritChance(DamageClass.Melee) += 10;
-					player.GetCritChance(DamageClass.Ranged) += 10;
-					player.GetCritChance(DamageClass.Throwing) += 10;
+					player.GetCritChance(DamageClass.Generic) += 10;
 					break;
 				case 4: //pyro
 					modPlayer.CritBonusMultiplier += 0.3f;
