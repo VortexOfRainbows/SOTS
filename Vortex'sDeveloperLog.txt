@@ -26,12 +26,11 @@ Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
-4. Assassination Potion bugging with creatures below 20 hp, or 10%... May also effect non creatures
-5. Chest Swapping isn't working..? Banner buffs aren't working..?
-6. Transmutation Altar not working..?
-7. Chests break when blocks under them are swapped..?
-8. Crit chance items (Focus Reticle and Eye of Chaos) not working
-9. Foggy Clairvoyance Bugged..?
+
+1. Assassination Potion bugging with creatures below 20 hp, or 10%... May also effect non creatures
+2. Chest Swapping isn't working..? Banner buffs aren't working (confirmed)
+3. Chests crash when platforms are swapped below them (confirmed)
+4. Foggy Clairvoyance Bugged..?
 
 Daily Log:
 
