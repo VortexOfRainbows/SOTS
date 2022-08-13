@@ -30,9 +30,11 @@ Other 1.4 related objectives:
 1. Assassination Potion bugging with creatures below 20 hp, or 10%... May also effect non creatures
 2. Chest Swapping isn't working..? Banner buffs aren't working (confirmed)
 3. Chests crash when platforms are swapped below them (confirmed)
-4. Foggy Clairvoyance Bugged..?
 
 Daily Log:
+
+8/11/12 & 8/12/22
+1. Bug fixes!
 
 8/7/22
 1. Fix weird bug where void wasn't consumed depending on ammo consumption for some void+ranged weapons

@@ -138,7 +138,7 @@ namespace SOTS.Items.Otherworld.Blocks
             {
 				alphaScale *= 0.45f;
             }
-			Texture2D omega = Terraria.GameContent.TextureAssets.Item[ModContent.TileType<HardlightBlockTile>()].Value;
+			Texture2D omega = Terraria.GameContent.TextureAssets.Tile[ModContent.TileType<HardlightBlockTile>()].Value;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{

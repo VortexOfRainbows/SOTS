@@ -11,7 +11,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Foggy Clairvoyance");
-			Tooltip.SetDefault("Increases damage by 15% and grants immunity to almost every debuff, but at a cost\n'Cursed'");
+			Tooltip.SetDefault("Increases damage by 15% and grants immunity to almost every debuff\n'Cursed'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -31,11 +31,6 @@ namespace SOTS.Items.Celestial
 		{
 			player.AddBuff(ModContent.BuffType<FluidCurse>(), 3);
 			List<int> bList = new List<int>() { BuffID.PotionSickness, ModContent.BuffType<FluidCurse>(), ModContent.BuffType<VoidRecovery>(), ModContent.BuffType<VoidShock>(), ModContent.BuffType<VoidSickness>(), BuffID.ManaSickness, ModContent.BuffType<Satiated>(), ModContent.BuffType<VoidMetamorphosis>(), BuffID.ChaosState };
-			Mod catalyst = ModLoader.GetMod("Catalyst");
-			if(catalyst != null)
-            {
-				bList.Add(catalyst.Find<ModBuff>("InfluxCoreCooldown").Type);
-            }
 			for(int i = 0; i < player.buffImmune.Length; i++)
             {
 				bool debuff = Main.debuff[i];

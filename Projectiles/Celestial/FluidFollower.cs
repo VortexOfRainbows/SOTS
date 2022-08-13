@@ -159,11 +159,15 @@ namespace SOTS.Projectiles.Celestial
 			}
 			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			float otherAlphaMult = 1f;
 			if (modPlayer.FluidCurse && player.active)
 			{
 				Projectile.timeLeft = (int)modPlayer.FluidCurseMult;
 				Vector2 toPlayer = player.Center - Projectile.Center;
 				float dist = toPlayer.Length();
+				otherAlphaMult = dist / 64f;
+				if (otherAlphaMult > 1)
+					otherAlphaMult = 1;
 				float speed = (0.4f + dist * 0.1f / (float)Math.Pow(modPlayer.FluidCurseMult, 0.5f));
 				if (speed > dist)
 					speed = dist;
@@ -173,7 +177,7 @@ namespace SOTS.Projectiles.Celestial
 			{
 				Projectile.Kill();
 			}
-			Projectile.alpha = 255 - (int)(Projectile.timeLeft * 255f / 60f);
+			Projectile.alpha = 255 - (int)(Projectile.timeLeft * 255f / 60f * otherAlphaMult);
         }
     }
 }
