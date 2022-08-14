@@ -149,6 +149,7 @@ namespace SOTS.Items.Banners
 					default:
 						return;
 				}
+				Main.SceneMetrics.hasBanner = true;
 				Main.SceneMetrics.NPCBannerBuff[type] = true;
 			}
 		}
@@ -799,6 +800,7 @@ namespace SOTS.Items.Banners
 					default:
 						return;
 				}
+				Main.SceneMetrics.hasBanner = true;
 				Main.SceneMetrics.NPCBannerBuff[type] = true;
 			}
 		}

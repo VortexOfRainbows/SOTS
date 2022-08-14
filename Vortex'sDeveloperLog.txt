@@ -3,6 +3,14 @@ The following is my development plans :D
 2. Mod.Find<Object>() causes a lot of errors for multiplayer/dusts. Will have to keep an eye out on all of these.
 3. Might still have some bugs with Subspace Locket
 
+Tmodloader Bugs:
+1. Chest Swapping isn't working..? (Issue already in Tmodloader)
+2. Chests crash when platforms are swapped below them (confirmed, Filed issue for Tmodloader)
+
+Acknowledged But Likely Delayed:
+1. (Mod Compat Probably) Assassination Potion MAY BE bugging with creatures below 20 hp, or 10%... I am completely unable to replicate this...
+2. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
+
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
 	1. Subspace Treads
@@ -26,10 +34,6 @@ Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
-
-1. Assassination Potion bugging with creatures below 20 hp, or 10%... May also effect non creatures
-2. Chest Swapping isn't working..? Banner buffs aren't working (confirmed)
-3. Chests crash when platforms are swapped below them (confirmed)
 
 Daily Log:
 

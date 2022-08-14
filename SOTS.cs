@@ -637,7 +637,7 @@ namespace SOTS
 					() => true,
 					new List<int>() { ModContent.ItemType<SubspaceSerpentMusicBox>() },
 					new List<int>() { ModContent.ItemType<CatalystBomb>() },
-					"Anger a Chaos Spirit",
+					"Tear a dimensional rift in hell by detonating a [i:" + ModContent.ItemType<CatalystBomb>() + "]",
 					"",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/SubspaceSerpentPortrait").Value;

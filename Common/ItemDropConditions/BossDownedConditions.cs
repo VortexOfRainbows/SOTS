@@ -12,7 +12,7 @@ namespace SOTS.Common.ItemDropConditions
 			if (!info.IsInSimulation)
 			{
 				Player player = info.player;
-				if (SOTSWorld.downedSubspace && player.ZoneUnderworldHeight)
+				if (SOTSWorld.downedSubspace && player.ZoneUnderworldHeight)// && !info.npc.CountsAsACritter)
 				{
 					return true;
 				}
