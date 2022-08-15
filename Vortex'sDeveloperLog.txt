@@ -32,6 +32,7 @@ Update Objectives:
 	3. Pyrocide
 	4. Helios
 	5. Proper Generation
+6. Subspace Serpent Expert Drop
 
 Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
