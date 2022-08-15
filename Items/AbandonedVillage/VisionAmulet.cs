@@ -116,7 +116,7 @@ namespace SOTS.Items.AbandonedVillage
 					player.discount = true;
 					break;
 				case 1: //inazuma
-					modPlayer.inazumaLongerPotions = true;
+					modPlayer.PotionBuffDegradeRate -= 0.2f;
 					player.manaCost -= 0.1f;
 					break;
 				case 2: //mondstadt
@@ -162,7 +162,7 @@ namespace SOTS.Items.AbandonedVillage
 					text += "\nShops prices lowered by 20%";
 					break;
 				case 1: //inazuma
-					text += "\nIncreases potion duration by 20%\nDecreases mana cost by 10%";
+					text += "\nIncreases buff duration by 25%\nDecreases mana cost by 10%";
 					break;
 				case 2: //mondstadt
 					text += "\nIncreases melee speed and movement speed by 10%\nIncreases jump speed";

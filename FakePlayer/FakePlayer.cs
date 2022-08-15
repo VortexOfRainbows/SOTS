@@ -63,6 +63,11 @@ namespace SOTS.FakePlayer
             SupressNetMessage13and41 = true;
             SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
             Item item = player.inventory[UseItemSlot];
+            if(Main.netMode != NetmodeID.Server)
+            {
+                if (!TextureAssets.Item[item.type].IsLoaded)
+                    Main.instance.LoadItem(item.type);
+            }
             heldItem = item;
             TrailingType = 0;
             bool saveCursorIconEnabled = player.cursorItemIconEnabled;
@@ -84,7 +89,7 @@ namespace SOTS.FakePlayer
             }
             else
             {
-                if(lastUsedItem != null && lastUsedItem.type != item.type)
+                if(lastUsedItem != null && lastUsedItem.type != item.type && !subspacePlayer.servantIsVanity)
                 {
                     lastUsedItem = heldItem.Clone();
                     RunItemCheck(player, true);
@@ -403,6 +408,7 @@ namespace SOTS.FakePlayer
             if (bodyFrame.IsEmpty)
                 return;
             Player player = drawInfo.drawPlayer;
+            SubspacePlayer sPlayer = SubspacePlayer.ModPlayer(player);
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
 

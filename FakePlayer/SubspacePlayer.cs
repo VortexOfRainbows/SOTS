@@ -39,6 +39,10 @@ namespace SOTS.FakePlayer
             servantIsVanity = false;
             servantActive = false;
             foundItem = false;
+            if (Main.gameMenu || Main.gameInactive) //hopefully prevent projectile entity issues
+            {
+                return;
+            }
             for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
             {
                 Item item = Player.armor[i];

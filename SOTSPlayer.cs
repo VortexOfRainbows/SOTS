@@ -157,7 +157,7 @@ namespace SOTS
 		public bool VMincubator = false;
 		public bool normalizedGravity = false;
 		public bool VisionVanity = false;
-		public bool inazumaLongerPotions = false;
+		public float PotionBuffDegradeRate = 1f;
 		public bool noMoreConstructs = false;
 		public bool CanKillNPC = false;
 		public bool CreativeFlightButtonPressed = false;
@@ -178,6 +178,7 @@ namespace SOTS
 		public int baguetteLengthCounter = 0;
 		public int halfLifeRegen = 0;
 		public int additionalHeal = 0;
+		public int additionalPotionMana = 0;
 		public int darkEyeShader = 0;
 		public int platformShader = 0;
 		public int HoloEyeDamage = 0;
@@ -725,6 +726,7 @@ namespace SOTS
 				}
 			}
 			additionalHeal = 0;
+			additionalPotionMana = 0;
 			HoloEyeAutoAttack = false;
 			blinkPackMult = 1f;
 			BlinkDamage = 0;
@@ -1297,8 +1299,11 @@ namespace SOTS
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {
 			healValue += additionalHeal;
-            base.GetHealLife(item, quickHeal, ref healValue);
         }
+        public override void GetHealMana(Item item, bool quickHeal, ref int healValue)
+        {
+			healValue += additionalPotionMana;
+		}
         public override bool PreItemCheck()
 		{
 			return base.PreItemCheck();
@@ -1368,9 +1373,21 @@ namespace SOTS
             }
 			base.UpdateBadLifeRegen();
         }
+		float delayPotionCounter = 0;
         public override void PreUpdateBuffs()
         {
-            if(Player.HasBuff(ModContent.BuffType<Harmony>()) || (inazumaLongerPotions && orbitalCounter % 5 == 0))
+			bool DelayPotionDegrade = false;
+			if(PotionBuffDegradeRate <= 1f)
+            {
+				float Increment = 1f - PotionBuffDegradeRate;
+				delayPotionCounter += Increment;
+				if(delayPotionCounter >= 1)
+                {
+					delayPotionCounter -= 1;
+					DelayPotionDegrade = true;
+				}
+			}
+            if(Player.HasBuff(ModContent.BuffType<Harmony>()) || DelayPotionDegrade)
             {
 				for(int i = 0; i < Player.buffTime.Length; i++)
 				{
@@ -1381,7 +1398,7 @@ namespace SOTS
 					}
 				}
 			}
-			inazumaLongerPotions = false;
+			PotionBuffDegradeRate = 1f;
 		}
 		public static bool ZoneForest(Player player)
 		{
