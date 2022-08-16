@@ -106,6 +106,11 @@ namespace SOTS.Projectiles.Temple
 				int baseTotal = 30;
 				if (projectileType == ProjectileID.ChlorophyteBullet)
 					baseTotal = 18;
+				if (projectileType == ModContent.ProjectileType<Otherworld.ChargedCataclysmBullet>())
+				{
+					baseTotal = 15;
+					Projectile.damage *= 2;
+				}
 				int max = (int)(baseTotal * Projectile.ai[1]);
 				for(int i = 0; i < max; i++)
 				{

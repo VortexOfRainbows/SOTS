@@ -22,7 +22,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.width = 32;
 			Item.height = 32;
 			Item.maxStack = 1;
-			Item.consumable = false;           
+			Item.consumable = true;           
 			Item.knockBack = 1f;
             Item.value = Item.sellPrice(0, 4, 0, 0);
 			Item.rare = ItemRarityID.LightRed; 

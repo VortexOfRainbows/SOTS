@@ -137,6 +137,13 @@ namespace SOTS.Void
 			bool canUse = BeforeConsumeAmmo(player);
 			return canUse;
 		}
+        public sealed override bool CanBeConsumedAsAmmo(Item weapon, Player player)
+        {
+			//if(Item.useAmmo != 0 && BeforeDrainMana(player))
+			//	DrainMana(player);
+			bool canUse = BeforeConsumeAmmo(player);
+			return canUse;
+		}
 		public void OnUseEffects(Player player)
 		{
 			BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
