@@ -1,12 +1,9 @@
 The following is my development plans :D
-1. Change in player class reseteffects order might break some things... Have to keep an eye on it.
-2. Mod.Find<Object>() causes a lot of errors for multiplayer/dusts. Will have to keep an eye out on all of these.
-3. Might still have some bugs with Subspace Locket
+1. Might still have some bugs with Subspace Locket
 
 Tmodloader Bugs:
 1. Chest Swapping isn't working..? (Issue already in Tmodloader)
 2. Chests crash when platforms are swapped below them (confirmed, Filed issue for Tmodloader)
-
 Acknowledged But Likely Delayed:
 1. (Mod Compat Probably) Assassination Potion MAY BE bugging with creatures below 20 hp, or 10%... I am completely unable to replicate this...
 2. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
@@ -33,13 +30,20 @@ Update Objectives:
 	4. Helios
 	5. Proper Generation
 6. Subspace Serpent Expert Drop
+7. Check if player possesses Texture Pack
+8. Make SOTS Dev Team on git hub!
+9. Placeable D.E.F.E
 
 Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
+4. D.E.F.E Not working in multiplayer..?
 
 Daily Log:
+
+8/16/22
+1. Fix Ghost Pepper void bar visuals not appearing
 
 8/11/12 through 8/14/22
 1. Bug fixes!

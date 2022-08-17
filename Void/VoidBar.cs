@@ -22,8 +22,6 @@ namespace SOTS.Void
 
         }
 		private VoidBarSprite barAmount;
-		private SoulBar barAmount3;
-		private BarDivider barDivider;
 		private VoidBarBorder2 barBackground;
 		private UIText text;
         public override void Update(GameTime gameTime)
@@ -65,12 +63,6 @@ namespace SOTS.Void
 			barBackground.Width.Set(width, 0f);
 			barBackground.Height.Set(height, 0f);
 
-			barDivider = new BarDivider();
-			barDivider.Left.Set(2f, 0f);
-			barDivider.Top.Set(4f, 0f);
-			barDivider.Width.Set(2, 0f);
-			barDivider.Height.Set(20, 0f);
-
 			barAmount = new VoidBarSprite(ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite").Value); 
 			barAmount.SetPadding(0);
 			barAmount.Left.Set(5.01f, 0f);
@@ -78,21 +70,12 @@ namespace SOTS.Void
 			barAmount.Width.Set(188, 0f);
 			barAmount.Height.Set(18, 0f);
 
-			barAmount3 = new SoulBar();
-			barAmount3.SetPadding(0);
-			barAmount3.Left.Set(6f, 0f);
-			barAmount3.Top.Set(6f, 0f);
-			barAmount3.Width.Set(188, 0f);
-			barAmount3.Height.Set(18, 0f);
-
 			text = new UIText("0|0"); 
 			text.Width.Set(width, 0f);
 			text.Height.Set(height, 0f);
 			text.Top.Set(height - 42 - text.MinHeight.Pixels / 2, 0f);
 
 			barBackground.Append(barAmount);
-			barBackground.Append(barAmount3);
-			barBackground.Append(barDivider);
 			barBackground.Append(text);
 			base.Append(barBackground);
 		}
@@ -115,7 +98,7 @@ namespace SOTS.Void
 			int voidMax = voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption;
 			string voidManaMaxText = voidMax.ToString();
 			string voidSoulsText = voidPlayer.lootingSouls.ToString();
-			barAmount3.backgroundColor = VoidPlayer.soulLootingColor;
+			Color soulColor = VoidPlayer.soulLootingColor;
 			if (text != null)
 			{
 				if (player.dead)
@@ -235,17 +218,12 @@ namespace SOTS.Void
 				if (length + prevRight > 188)
 					length = 188 - prevRight;
 				barAmount.Width.Set(length, 0f);
+				Vector2 soulBarOffset = Vector2.Zero;
+				int soulBarWidth = 0;
 				if(voidPlayer.lootingSouls > 0)
 				{
-					barAmount3.Width.Set(quotient2 * 188, 0f);
-					barAmount3.Left.Set(200f - quotient2 * 188 - 6, 0f);
-					barDivider.Width.Set(2, 0);
-					barDivider.Left.Set(200f - quotient2 * 188 - 8, 0f);
-				}
-				else
-				{
-					barAmount3.Width.Set(0, 0);
-					barDivider.Width.Set(0, 0);
+					soulBarWidth = (int)(quotient2 * 188f);
+					soulBarOffset.X = 200f - quotient2 * 188 - 6;
 				}
 				Recalculate();
 				if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter && voidPlayer.lerpingVoidMeter < voidPlayer.voidMeterMax2) //this draws the red part of the sprite
@@ -266,6 +244,13 @@ namespace SOTS.Void
 						spriteBatch.Draw(divider, rectangles[i].FlipHorizontal(flipOrigin), Color.White);
 					}
 				}
+				if(soulBarWidth > 0)
+				{
+					Texture2D soulFill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/SoulBar");
+					spriteBatch.Draw(soulFill, new Rectangle((int)(SOTS.Config.voidBarPointX + soulBarOffset.X), (int)(SOTS.Config.voidBarPointY + soulBarOffset.Y + padding.Y), soulBarWidth + 2, height).FlipHorizontal(flipOrigin), soulColor * 1.5f);
+					spriteBatch.Draw(divider, new Rectangle((int)(SOTS.Config.voidBarPointX + soulBarOffset.X - 2), (int)(SOTS.Config.voidBarPointY + soulBarOffset.Y + padding.Y), 2, 20).FlipHorizontal(flipOrigin), Color.White);
+				}
+
 				fill2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarBorder2");
 				spriteBatch.Draw(fill2, new Rectangle((int)SOTS.Config.voidBarPointX, (int)SOTS.Config.voidBarPointY, 200, 30).FlipHorizontal(flipOrigin), Color.White);
 				DrawGreenBar(spriteBatch);
