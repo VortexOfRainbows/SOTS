@@ -57,12 +57,9 @@ namespace SOTS.Items.Furniture.AncientGold
 			AnimationFrameHeight = 36;
 		}
         public override void NearbyEffects(int i, int j, bool closer)
-        {
-			if (closer)
-			{
-				Main.SceneMetrics.HasCampfire = true;
-			}
-            base.NearbyEffects(i, j, closer);
+		{
+			Main.SceneMetrics.HasCampfire = true;
+			base.NearbyEffects(i, j, closer);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{

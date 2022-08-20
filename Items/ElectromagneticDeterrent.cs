@@ -14,17 +14,19 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Disruptive Electromagnetic Field Emitter");
-			Tooltip.SetDefault("Prevents constructs from spawning while favorited in the inventory");
+			Tooltip.SetDefault("Prevents constructs from spawning while favorited in the inventory or when placed");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 15));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
+			Item.CloneDefaults(ItemID.StoneBlock);
             Item.width = 54;     
             Item.height = 32;   
             Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Orange;
+			Item.createTile = ModContent.TileType<ElectromagneticDeterrentTile>();
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

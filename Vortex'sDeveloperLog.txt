@@ -31,7 +31,6 @@ Update Objectives:
 6. Subspace Serpent Expert Drop
 7. Check if player possesses Texture Pack
 8. Make SOTS Dev Team on git hub!
-9. Placeable D.E.F.E
 
 Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
@@ -40,10 +39,13 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+8/20/22
+1. Placeable D.E.F.E
+
 8/19/22
 1. Fixed skyward blade appears on map for some reason
 2. Solar Bullet
-3. Fix multiplayer DEFEd
+3. Fix multiplayer DEFE
 4. Lower Earthen Construct spawns rates by a tad
 5. D.E.F.E Droprate 1/75 -> 1/20
 
