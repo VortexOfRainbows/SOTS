@@ -15,8 +15,9 @@ namespace SOTS.Common.PlayerDrawing
 		{
 			return true;
 		}
-		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
-		protected override void Draw(ref PlayerDrawSet drawInfo)
+		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.FinchNest);
+        public override bool IsHeadLayer => false;
+        protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
 			if (Main.dresserInterfaceDummy == drawInfo.drawPlayer)
 				return;

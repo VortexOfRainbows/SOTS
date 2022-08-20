@@ -76,9 +76,9 @@ namespace SOTS.Items.Chaos
 		public override bool KillSound(int i, int j, bool fail)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)pos.X, (int)pos.Y, 0.25f, 0.6f);
+			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)pos.X, (int)pos.Y, 0.3f, 0.6f);
 			int type = Main.rand.Next(3) + 1;
-			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/VibrantOre" + type), (int)pos.X, (int)pos.Y, 1.85f, -0.2f + Main.rand.NextFloat(0.1f, 0.2f));
+			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/PhaseOre" + type), (int)pos.X, (int)pos.Y, 1.3f, Main.rand.NextFloat(-0.1f, 0.1f));
 			return false;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

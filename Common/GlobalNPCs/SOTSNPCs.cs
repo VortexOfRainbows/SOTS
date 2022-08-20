@@ -334,7 +334,7 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
 			{
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrushingResistor>(), 50));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectromagneticDeterrent>(), 75));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectromagneticDeterrent>(), 20));
 				if (npc.type != ModContent.NPCType<OtherworldlyConstructHead2>() && npc.type != ModContent.NPCType<OtherworldlyConstructHead>())
 				{
 					if (npc.type == ModContent.NPCType<NatureConstruct>())
@@ -497,7 +497,7 @@ namespace SOTS.Common.GlobalNPCs
 		{
 			Player player = spawnInfo.Player;
 			float constructRateMultiplier = 1f;
-			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
+			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
 				constructRateMultiplier = 0f;
 			bool ZoneForest = SOTSPlayer.ZoneForest(player);
 			bool ZonePlanetarium = spawnInfo.Player.GetModPlayer<SOTSPlayer>().PlanetariumBiome;
@@ -625,15 +625,15 @@ namespace SOTS.Common.GlobalNPCs
 						if (player.ZoneCorrupt || player.ZoneHallow || player.ZoneCrimson)
 						{
 							if (player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.00125f * constructRateMultiplier);
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.001f * constructRateMultiplier);
 						}
 						else if (player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
 						{
 							if(player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f * constructRateMultiplier);
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
 						}
 						else if(player.ZoneDesert && !player.ZoneUndergroundDesert)
-							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.01f * constructRateMultiplier); //this is desert spawn so it shouldn't require additional healthgating
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f * constructRateMultiplier); //this is desert spawn so it shouldn't require additional healthgating
 						else if(player.ZoneUndergroundDesert)
 							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
 

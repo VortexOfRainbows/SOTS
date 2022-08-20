@@ -25,10 +25,9 @@ Update Objectives:
 4. Glow Moth and Glow Silk to the glowing mushroom biome.
 5. Temple Tier items
 	1. Revolution (staff)
-	2. Solar Bullet
-	3. Pyrocide
-	4. Helios
-	5. Proper Generation
+	2. Pyrocide
+	3. Helios
+	4. Proper Generation
 6. Subspace Serpent Expert Drop
 7. Check if player possesses Texture Pack
 8. Make SOTS Dev Team on git hub!
@@ -38,9 +37,15 @@ Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
-4. D.E.F.E Not working in multiplayer..?
 
 Daily Log:
+
+8/19/22
+1. Fixed skyward blade appears on map for some reason
+2. Solar Bullet
+3. Fix multiplayer DEFEd
+4. Lower Earthen Construct spawns rates by a tad
+5. D.E.F.E Droprate 1/75 -> 1/20
 
 8/16/22
 1. Fix Ghost Pepper void bar visuals not appearing

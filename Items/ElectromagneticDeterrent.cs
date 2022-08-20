@@ -69,7 +69,10 @@ namespace SOTS.Items
 		public override void UpdateInventory(Player player)
 		{
 			if (Item.favorited)
+            {
+				player.AddBuff(ModContent.BuffType<Buffs.DEFEBuff>(), 6);
 				SOTSPlayer.ModPlayer(player).noMoreConstructs = true;
+			}
         }
     }
 }
