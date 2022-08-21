@@ -28,7 +28,7 @@ namespace SOTS.Common.PlayerDrawing
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			if (drawInfo.shadow != 0)
 				return;
-			if (!drawPlayer.HeldItem.IsAir && !drawPlayer.HeldItem.noUseGraphic)
+			if (!drawPlayer.HeldItem.IsAir && (!drawPlayer.HeldItem.noUseGraphic || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))
 			{
 				Item item = drawPlayer.HeldItem;
 				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
@@ -65,7 +65,10 @@ namespace SOTS.Common.PlayerDrawing
 								origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, (float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Height);
 								width -= Terraria.GameContent.TextureAssets.Item[item.type].Value.Width;
 							}
-
+							if(item.type == ModContent.ItemType<Items.Temple.Revolution>())
+                            {
+								texture = Mod.Assets.Request<Texture2D>(Items.Temple.Revolution.TextureName).Value;
+							}
 							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Color.White, rotation, origin, item.scale, effects, 0);
 							drawInfo.DrawDataCache.Add(value);
 						}

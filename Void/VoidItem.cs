@@ -60,7 +60,7 @@ namespace SOTS.Void
 					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
 				finalCost = (int)(baseCost * voidPlayer.voidCost * voidCostMult);
-				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>())
+				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>())
 				{
 					finalCost = 1;
 				}
