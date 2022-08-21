@@ -24,10 +24,9 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 4. Glow Moth and Glow Silk to the glowing mushroom biome.
 5. Temple Tier items
-	1. Revolution (staff)
-	2. Pyrocide
-	3. Helios
-	4. Proper Generation
+	1. Pyrocide
+	2. Helios
+	3. Proper Generation
 6. Subspace Serpent Expert Drop
 7. Check if player possesses Texture Pack
 8. Make SOTS Dev Team on git hub!
@@ -41,6 +40,7 @@ Daily Log:
 
 8/20/22
 1. Placeable D.E.F.E
+2. Added Revolution
 
 8/19/22
 1. Fixed skyward blade appears on map for some reason
