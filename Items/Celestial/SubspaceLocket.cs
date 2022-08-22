@@ -43,6 +43,12 @@ namespace SOTS.Items.Celestial
             SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
             sPlayer.additionalHeal -= 40;
         }
+        public override void UpdateVanity(Player player)
+        {
+            SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
+            modPlayer.servantActive = true;
+            modPlayer.servantIsVanity = true;
+        }
         public override void UpdateInventory(Player player)
         {
             accessory = false;

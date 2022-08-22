@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Otherworld
 		bool runOnce = true;
 		int counter = 0;
 		bool runOnce2 = true;
-		public override void AI()
+		public override bool PreAI()
 		{
 			if(runOnce)
             {
@@ -82,6 +82,7 @@ namespace SOTS.Projectiles.Otherworld
 				runOnce = false;
             }
 			Player player = Main.player[Projectile.owner];
+			Projectile.direction = player.direction;
 			counter++;
 
 			Vector2 ownerMountedCenter = player.RotatedRelativePoint(player.MountedCenter, true);
@@ -90,7 +91,6 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 toMouse = mousePosition;
 			Projectile.velocity = new Vector2(-Projectile.velocity.Length(), 0).RotatedBy(toMouse.ToRotation());
 
-			Projectile.direction = player.direction;
 			player.heldProj = Projectile.whoAmI;
 			player.itemTime = player.itemAnimation;
 			Projectile.position.X = ownerMountedCenter.X - (float)(Projectile.width / 2);
@@ -100,7 +100,8 @@ namespace SOTS.Projectiles.Otherworld
 				if (movementFactor == 0f) 
 				{
 					movementFactor = 10f; 
-					Projectile.netUpdate = true;
+					if (Main.myPlayer == Projectile.owner)
+						Projectile.netUpdate = true;
 				}
 				if (player.itemAnimation < player.itemAnimationMax / 3) // Somewhere along the item animation, make sure the spear moves back
 				{
@@ -112,7 +113,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor;
-			if (player.itemAnimation == 0)
+			if (player.itemAnimation <= 1 && counter > 5 && Main.myPlayer == Projectile.owner)
 			{
 				Projectile.Kill();
 			}
@@ -147,6 +148,7 @@ namespace SOTS.Projectiles.Otherworld
 				if(Projectile.owner == Main.myPlayer)
 					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, ModContent.ProjectileType<HardlightColumn>(), (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
 			}
+			return false;
 		}
 		int storeData = -1;
 		public override void PostAI()

@@ -25,8 +25,7 @@ Update Objectives:
 4. Glow Moth and Glow Silk to the glowing mushroom biome.
 5. Temple Tier items
 	1. Pyrocide
-	2. Helios
-	3. Proper Generation
+	2. Proper Generation
 6. Subspace Serpent Expert Drop
 7. Check if player possesses Texture Pack
 8. Make SOTS Dev Team on git hub!
@@ -37,6 +36,11 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 
 Daily Log:
+
+8/21/22
+1. Added Helios
+2. Fix spears in multiplayer (exception of right click Riptide, which is a bit weird)
+3. Fix subspace servant multiplayer vanity
 
 8/20/22
 1. Placeable D.E.F.E

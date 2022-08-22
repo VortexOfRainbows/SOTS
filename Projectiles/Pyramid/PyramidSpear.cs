@@ -17,7 +17,12 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.alpha = 0;
 		}
 		int storeData = -1;
-		public override void PostAI()
+        public override bool PreAI()
+        {
+			Player player = Main.player[Projectile.owner];
+            return true;
+        }
+        public override void PostAI()
 		{
 			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{

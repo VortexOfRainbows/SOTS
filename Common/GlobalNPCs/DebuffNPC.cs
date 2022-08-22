@@ -77,6 +77,7 @@ namespace SOTS.Common.GlobalNPCs
         public int HarvestCurse = 0;
         public int DestableCurse = 0;
         public int BleedingCurse = 0;
+        public int BlazingCurse = 0;
         public int timeFrozen = 0;
         public bool netUpdateTime = false;
         public bool frozen = false;
@@ -264,6 +265,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(PlatinumCurse);
                 packet.Write(DestableCurse);
                 packet.Write(BleedingCurse);
+                packet.Write(BlazingCurse);
                 packet.Send();
             }
             else if(type == 1) //can be called by server or player
@@ -301,173 +303,42 @@ namespace SOTS.Common.GlobalNPCs
                 scale *= 0.97f;
             }
         }
+        public void DrawPermanentDebuffs(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Texture2D texture, ref int DebuffVariable, ref int Height)
+        {
+            if (DebuffVariable <= 0)
+                return;
+            int size = 0;
+            for (int i = DebuffVariable; i > 0; i /= 10)
+            {
+                size++;
+            }
+            Vector2 pos = new Vector2(npc.Center.X, npc.position.Y);
+            pos.X += size * ((texture.Width / 11f) - 2) / 2f;
+            pos.X += 4;
+            pos.Y -= Height;
+            Vector2 origin = new Vector2(texture.Width / 22, texture.Height / 2);
+            Rectangle frame;
+            for (int i = DebuffVariable; i > 0; i /= 10)
+            {
+                int currentNum = i % 10;
+                frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
+                spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                pos.X -= (texture.Width / 11f) - 2;
+            }
+            pos.X -= 4;
+            frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
+            pos.Y -= 1;
+            spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+            Height += 24;
+        }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             int height = 18;
-            if(PlatinumCurse > 0)
-            {
-                drawColor = Color.White;
-                Color color = new Color(100, 100, 255, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/PlatinumCurse").Value;
-                int size = 0;
-                for(int plat = PlatinumCurse; plat > 0; plat /= 10)
-                {
-                    size++;
-                }
-                Vector2 pos = new Vector2(npc.Center.X, npc.position.Y);
-                pos.X += size * ((texture.Width / 11f) - 2 ) / 2f;
-                pos.X += 4;
-                pos.Y -= height;
-                Vector2 origin = new Vector2(texture.Width / 22, texture.Height/2);
-                Rectangle frame;
-                for (int plat = PlatinumCurse; plat > 0; plat /= 10)
-                {
-                    int currentNum = plat % 10;
-                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    /*for (int i = 0; i < 6; i++)
-                    {
-                        float x = Main.rand.Next(-10, 11) * 0.3f;
-                        float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }*/
-                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    pos.X -= (texture.Width / 11f) - 2;
-                }
-                pos.X -= 4;
-                frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
-                pos.Y -= 1;
-                /*for (int i = 0; i < 6; i++)
-                {
-                    float x = Main.rand.Next(-10, 11) * 0.3f;
-                    float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }*/
-                Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                height += 24;
-            }
-            if (HarvestCurse > 0)
-            {
-                drawColor = Color.White;
-                Color color = new Color(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value;
-                int size = 0;
-                for (int plat = HarvestCurse; plat > 0; plat /= 10)
-                {
-                    size++;
-                }
-                Vector2 pos = new Vector2(npc.Center.X, npc.position.Y);
-                pos.X += size * ((texture.Width / 11f) - 2) / 2f;
-                pos.X += 4;
-                pos.Y -= height;
-                Vector2 origin = new Vector2(texture.Width / 22, texture.Height / 2);
-                Rectangle frame;
-                for (int plat = HarvestCurse; plat > 0; plat /= 10)
-                {
-                    int currentNum = plat % 10;
-                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    /*for (int i = 0; i < 6; i++)
-                    {
-                        float x = Main.rand.Next(-10, 11) * 0.3f;
-                        float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }*/
-                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    pos.X -= (texture.Width / 11f) - 2;
-                }
-                pos.X -= 4;
-                frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
-                pos.Y -= 1;
-                /*for (int i = 0; i < 6; i++)
-                {
-                    float x = Main.rand.Next(-10, 11) * 0.3f;
-                    float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }*/
-                Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                height += 24;
-            }
-            if (DestableCurse > 0)
-            {
-                drawColor = Color.White;
-                Color color = new Color(VoidPlayer.destabilizeColor.R, VoidPlayer.destabilizeColor.G, VoidPlayer.destabilizeColor.B, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value;
-                int size = 0;
-                for (int plat = DestableCurse; plat > 0; plat /= 10)
-                {
-                    size++;
-                }
-                Vector2 pos = new Vector2(npc.Center.X, npc.position.Y);
-                pos.X += size * ((texture.Width / 11f) - 2) / 2f;
-                pos.X += 4;
-                pos.Y -= height;
-                Vector2 origin = new Vector2(texture.Width / 22, texture.Height / 2);
-                Rectangle frame;
-                for (int plat = DestableCurse; plat > 0; plat /= 10)
-                {
-                    int currentNum = plat % 10;
-                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    /*for (int i = 0; i < 6; i++)
-                    {
-                        float x = Main.rand.Next(-10, 11) * 0.3f;
-                        float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }*/
-                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    pos.X -= (texture.Width / 11f) - 2;
-                }
-                pos.X -= 4;
-                frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
-                pos.Y -= 1;
-                /*for (int i = 0; i < 6; i++)
-                {
-                    float x = Main.rand.Next(-10, 11) * 0.3f;
-                    float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }*/
-                Main.spriteBatch.Draw(texture, pos - screenPos, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                height += 24;
-            }
-            if (BleedingCurse > 0)
-            {
-                drawColor = new Color(255, 0, 0);
-                Color color = new Color(255, 50, 50, 0);
-                Texture2D texture = Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value;
-                int size = 0;
-                for (int plat = BleedingCurse; plat > 0; plat /= 10)
-                {
-                    size++;
-                }
-                Vector2 pos = new Vector2(npc.Center.X, npc.position.Y);
-                pos.X += size * ((texture.Width / 11f) - 2) / 2f;
-                pos.X += 4;
-                pos.Y -= height;
-                Vector2 origin = new Vector2(texture.Width / 22, texture.Height / 2);
-                Rectangle frame;
-                for (int plat = BleedingCurse; plat > 0; plat /= 10)
-                {
-                    int currentNum = plat % 10;
-                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    /*for (int i = 0; i < 6; i++)
-                    {
-                        float x = Main.rand.Next(-10, 11) * 0.3f;
-                        float y = Main.rand.Next(-10, 11) * 0.3f;
-                        Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }*/
-                    Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    pos.X -= (texture.Width / 11f) - 2;
-                }
-                pos.X -= 4;
-                frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
-                pos.Y -= 1;
-                /*for (int i = 0; i < 6; i++)
-                {
-                    float x = Main.rand.Next(-10, 11) * 0.3f;
-                    float y = Main.rand.Next(-10, 11) * 0.3f;
-                    Main.spriteBatch.Draw(texture, pos - screenPos + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }*/
-                Main.spriteBatch.Draw(texture, pos - screenPos, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                height += 24;
-            }
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/PlatinumCurse").Value, ref PlatinumCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, VoidPlayer.soulLootingColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value, ref HarvestCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, VoidPlayer.destabilizeColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 0, 0), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref BleedingCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
         {
@@ -475,10 +346,10 @@ namespace SOTS.Common.GlobalNPCs
         }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
+            Player player = Main.player[projectile.owner];
             lastHitWasCrit = crit;
             if (projectile.type == ProjectileType<HarvestLock>())
             {
-                Player player = Main.player[projectile.owner];
                 VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
                 int amt = HarvestCost(npc);
                 if (!npc.immortal)
@@ -494,6 +365,17 @@ namespace SOTS.Common.GlobalNPCs
                     if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
+            }
+            if (npc.immortal)
+            {
+                return;
+            }
+            if (projectile.type == ProjectileType<Projectiles.Temple.Helios>())
+            {
+                if(BlazingCurse < 5)
+                    BlazingCurse++;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                    SendClientChanges(player, npc);
             }
         }
         bool hitByRay = false;
@@ -582,6 +464,10 @@ namespace SOTS.Common.GlobalNPCs
                     damage = (int)(damage * 0.8f);
                 }
             }
+            if(BlazingCurse > 0)
+            {
+                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse));
+            }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -625,6 +511,10 @@ namespace SOTS.Common.GlobalNPCs
                     BleedingCurse++;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
+            }
+            if (BlazingCurse > 0)
+            {
+                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse));
             }
             base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
         }

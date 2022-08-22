@@ -31,8 +31,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 48;
 			Item.height = 54;
-			Item.useTime = 36;
-			Item.useAnimation = 36;
+			Item.useTime = 37;
+			Item.useAnimation = 37;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4.5f;
             Item.value = Item.sellPrice(0, 5, 75, 0);
@@ -43,10 +43,11 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.shootSpeed = 6.2f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
+			Item.reuseDelay = 1;
 		}
 		public override bool BeforeUseItem(Player player)
 		{
-			return player.ownedProjectileCounts[Item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1 || player.whoAmI != Main.myPlayer;
 		}
 		public override void AddRecipes()
 		{

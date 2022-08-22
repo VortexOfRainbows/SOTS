@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Temple
 				Color color = Projectile.GetAlpha(toChange) * scale;
 				float rotation = Projectile.oldRot[k];
 				float stretch = 1.5f;
-				Main.spriteBatch.Draw(texture, drawPos, null, color * 0.6f, rotation + MathHelper.PiOver2, new Vector2(texture.Width / 2, 6), new Vector2(Projectile.scale * scale * 0.9f, stretch), SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, color * 0.6f, rotation + MathHelper.PiOver2, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(Projectile.scale * scale * 0.9f, stretch), SpriteEffects.None, 0f);
 			}
 			if(drawMain)
 			{

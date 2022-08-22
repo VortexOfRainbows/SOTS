@@ -70,7 +70,7 @@ namespace SOTS.Items.Tide
 		}
 		public override bool CanUseItem(Player player)
 		{
-			return player.ownedProjectileCounts[Item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1 || player.whoAmI != Main.myPlayer;
 		}
 	}
 }

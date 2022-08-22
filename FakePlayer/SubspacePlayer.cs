@@ -39,31 +39,6 @@ namespace SOTS.FakePlayer
             servantIsVanity = false;
             servantActive = false;
             foundItem = false;
-            if (Main.gameMenu || Main.gameInactive) //hopefully prevent projectile entity issues
-            {
-                return;
-            }
-            for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
-            {
-                Item item = Player.armor[i];
-                if (item.type == ModContent.ItemType<SubspaceLocket>())
-                {
-                    servantActive = true;
-                    servantIsVanity = true;
-                }
-                //if (Item.type == ModContent.ItemType<SubspaceLocket>())
-                //{
-                //    SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
-                //}
-            }
-            //for (int i = 0; i < 10; i++) //iterating through armor + accessories
-            //{
-            //    Item item = player.armor[i];
-            //    if (Item.type == ModContent.ItemType<SubspaceLocket>())
-            //    {
-            //        SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
-            //    }
-            //}
         }
         public int Probe = -1;
         public void Summon()

@@ -12,13 +12,17 @@ namespace SOTS.Items.Temple
 {
 	public class SupernovaScatter : VoidItem
 	{
-		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Temple/SupernovaScatterGlow").Value;
+        /*public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Temple/SupernovaScatterGlow").Value;
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-		}
-		public override void SetStaticDefaults()
+		}*/
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Supernova Scatter");
 			this.SetResearchCost(1);
@@ -41,9 +45,10 @@ namespace SOTS.Items.Temple
             Item.shoot = ModContent.ProjectileType<SolarPetal>(); 
             Item.shootSpeed = 16;
 			Item.useAmmo = AmmoID.Bullet;
+			Item.noUseGraphic = true;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Temple/SupernovaScatter").Value;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -28;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = -3;
 			}

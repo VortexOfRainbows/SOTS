@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Projectiles.Pyramid;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Pyramid
 {
@@ -32,9 +34,9 @@ namespace SOTS.Items.Pyramid
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 		}
-		public override bool CanUseItem(Player player)
+        public override bool CanUseItem(Player player)
 		{
-			return player.ownedProjectileCounts[Item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1 || player.whoAmI != Main.myPlayer;
 		}
 	}
 }

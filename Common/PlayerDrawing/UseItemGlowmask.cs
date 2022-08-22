@@ -28,7 +28,7 @@ namespace SOTS.Common.PlayerDrawing
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			if (drawInfo.shadow != 0)
 				return;
-			if (!drawPlayer.HeldItem.IsAir && (!drawPlayer.HeldItem.noUseGraphic || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))
+			if (!drawPlayer.HeldItem.IsAir && (!drawPlayer.HeldItem.noUseGraphic || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))
 			{
 				Item item = drawPlayer.HeldItem;
 				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
