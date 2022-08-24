@@ -16,8 +16,8 @@ namespace SOTS.Items.Tide
 		}
 		public override void SetDefaults()
 		{
-            Item.width = 42;     
-            Item.height = 40;   
+            Item.width = 38;     
+            Item.height = 38;   
             Item.value = Item.sellPrice(0, 2, 50, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;
