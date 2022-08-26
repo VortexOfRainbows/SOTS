@@ -25,7 +25,6 @@ Update Objectives:
 4. Glow Moth and Glow Silk to the glowing mushroom biome.
 5. Temple Tier items
 	1. Pyrocide
-	2. Proper Generation
 6. Subspace Serpent Expert Drop
 7. Check if player possesses Texture Pack
 8. Make SOTS Dev Team on git hub!
@@ -36,6 +35,12 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 
 Daily Log:
+
+8/24/22
+1. Pyramid Curse should no longer damage you outside of the pyramid
+2. Temple items spawn correctly
+3. Big Vibrant geode should now spawn a minimum of 140 blocks from the temple
+4. Lihzahrd Tail drops 1/200 from Lihzahrd
 
 8/21/22
 1. Added Helios

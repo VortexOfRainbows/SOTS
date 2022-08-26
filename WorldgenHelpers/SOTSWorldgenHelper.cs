@@ -3948,7 +3948,7 @@ namespace SOTS.WorldgenHelpers
 			int tilesLeft = 0;
 			int tilesRight = 0;
 			Point finalPoint = new Point(templeX, templeY);
-			for (int i = 1000; i > 0; i--)
+			for (int i = 1000; i > 140; i--)
 			{
 				int p = templeX + i;
 				if (!WorldGen.InWorld(p, templeY))
@@ -3966,7 +3966,7 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
-			for (int i = 1000; i > 0; i--)
+			for (int i = 1000; i > 140; i--)
 			{
 				int p = templeX - i;
 				if (!WorldGen.InWorld(p, templeY))
@@ -3992,6 +3992,8 @@ namespace SOTS.WorldgenHelpers
 				}
 				else
 					finalPoint.X = templeX + tilesRight;
+				if (finalPoint.X == templeX)
+					finalPoint.X += 140 * (WorldGen.genRand.Next(2) * 2 - 1);
 				GenerateBigGeode(finalPoint.X, finalPoint.Y, jungleSide);
 			}
 		}

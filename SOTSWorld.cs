@@ -42,6 +42,7 @@ using Terraria.UI;
 using SOTS.Void;
 using SOTS.Items.Nvidia;
 using SOTS.Items.Furniture.Nature;
+using SOTS.Items.Temple;
 
 namespace SOTS
 {
@@ -534,7 +535,7 @@ namespace SOTS
         public override void PostWorldGen()
 		{
 			string worldName = Main.worldName;
-			// Iterate chests
+
 			List<int> starItemPool2 = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(), ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
 			List<int> lightItemPool2 = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>() };
 			List<int> fireItemPool2 = new List<int>() { ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>() };
@@ -542,6 +543,10 @@ namespace SOTS
 			List<int> starItemPool = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(),ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
 			List<int> lightItemPool = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>() };
 			List<int> fireItemPool = new List<int>() { ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>() };
+
+			List<int> LihzahrdItems2 = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>() };
+			List<int> LihzahrdItems = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>() };
+			// Iterate chests
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest
@@ -1337,6 +1342,18 @@ namespace SOTS
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<TinyPlanet>());
 						slot++;
+					}
+					if(firstType == ItemID.LihzahrdPowerCell)
+					{
+						int addItem = LihzahrdItems2[Main.rand.Next(LihzahrdItems2.Count)]; //this picks a random item
+						if (LihzahrdItems.Count > 0) //this picks a random item that has not been picked yet
+						{
+							int rand = Main.rand.Next(LihzahrdItems.Count);
+							addItem = LihzahrdItems[rand];
+							LihzahrdItems.RemoveAt(rand);
+							chest.item[slot].SetDefaults(addItem); //add item to chest loot
+							slot++;
+						}
 					}
 				}
 			}

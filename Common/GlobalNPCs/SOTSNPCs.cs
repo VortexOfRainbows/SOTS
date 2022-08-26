@@ -38,6 +38,7 @@ using SOTS.NPCs;
 using SOTS.Items.Otherworld.FromChests;
 using Terraria.GameContent.Bestiary;
 using SOTS.Biomes;
+using SOTS.Items.Temple;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -285,6 +286,10 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson) //if npc is pigron
             {
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<AlmondMilk>(), 2, 1)); //guaranteed in expert, 50% in normal
+			}
+			if (npc.type == NPCID.Lihzahrd || npc.type == NPCID.LihzahrdCrawler)
+			{
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LihzahrdTail>(), 200));
 			}
 			if (npc.type == NPCID.WyvernHead)
 			{

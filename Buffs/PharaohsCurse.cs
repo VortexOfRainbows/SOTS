@@ -1,3 +1,5 @@
+using SOTS.Items.Pyramid;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
  
@@ -19,11 +21,17 @@ namespace SOTS.Buffs
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (NPC.downedBoss2 || modPlayer.weakerCurse)
 			{
-				update = false;	
+				update = false;
 			}
-			if(update)
+			int tileBehindX = (int)(player.Center.X / 16);
+			int tileBehindY = (int)(player.Center.Y / 16);
+			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
+			if (SOTSWall.unsafePyramidWall.Contains(tile.WallType) || tile.WallType == (ushort)ModContent.WallType<TrueSandstoneWallWall>())
 			{
-				player.lifeRegen -= 100;
+				if (update)
+				{
+					player.lifeRegen -= 100;
+				}
 			}
 			modPlayer.weakerCurse = false;
 		}
