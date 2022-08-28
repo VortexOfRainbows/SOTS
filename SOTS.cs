@@ -360,8 +360,8 @@ namespace SOTS
 					playernumber2 = reader.ReadInt32();
 					SOTSWorld.GlobalTimeFreeze = reader.ReadInt32();
 					SOTSWorld.GlobalFrozen = reader.ReadBoolean();
-					SOTSWorld.GlobalFreezeCounter = reader.Read();
-					SOTSWorld.GlobalSpeedMultiplier = reader.Read();
+					SOTSWorld.GlobalFreezeCounter = reader.ReadSingle();
+					SOTSWorld.GlobalSpeedMultiplier = reader.ReadSingle();
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
