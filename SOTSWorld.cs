@@ -43,6 +43,7 @@ using SOTS.Void;
 using SOTS.Items.Nvidia;
 using SOTS.Items.Furniture.Nature;
 using SOTS.Items.Temple;
+using SOTS.Items.Furniture.Permafrost;
 
 namespace SOTS
 {
@@ -792,26 +793,27 @@ namespace SOTS
 						slot++;
 					}
 				}
+				if (tile.TileType == ModContent.TileType<PermafrostPlatingCapsuleTile>() && tile.WallType == ModContent.WallType<HardIceBrickWallWall>())
+				{
+					int slot = 0;
+					chest.item[slot].SetDefaults(ModContent.ItemType<GlazeBow>()); //Will be replaced with Glaze Repeater
+					slot++;
+					chest.item[slot].SetDefaults(ModContent.ItemType<StrawberryIcecream>());
+					chest.item[slot].stack = 10;
+					slot++;
+					chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+					slot++;
+					chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+					slot++;
+					chest.item[slot].SetDefaults(ItemID.GoldCoin);
+					chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
+					slot++;
+				}
 				if (tile.TileType == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
-					if (tile2.TileType == ModContent.TileType<CharredWoodTile>() && tile.WallType == ModContent.WallType<HardIceBrickWallWall>())
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<GlazeBow>()); //Will be replaced with Glaze Repeater
-						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<StrawberryIcecream>());
-						chest.item[slot].stack = 10;
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.GoldCoin);
-						chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
-						slot++;
-					}
-					else if(tile2.TileType == ModContent.TileType<PyramidBrickTile>())
+					if(tile2.TileType == ModContent.TileType<PyramidBrickTile>())
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
 						slot++;

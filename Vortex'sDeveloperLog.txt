@@ -36,6 +36,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+8/30/22
+1. Permafrost Furniture!!!!
+
 8/24/22 to 8/27/22
 1. Pyramid Curse should no longer damage you outside of the pyramid
 2. Temple items spawn correctly

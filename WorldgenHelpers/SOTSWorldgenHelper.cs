@@ -3615,7 +3615,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<Items.Furniture.Permafrost.PermafrostPlatingCapsuleTile>(), true, true, -1, 1);
 										tile.WallType = (ushort)ModContent.WallType<HardIceBrickWallWall>();
 									}
 									break;

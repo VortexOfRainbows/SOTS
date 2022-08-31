@@ -38,8 +38,10 @@ namespace SOTS
         }
         public static Color NaturePlatingColor = new Color(119, 141, 138);
         public static Color EarthenPlatingColor = new Color(112, 90, 86);
+        public static Color PermafrostPlatingColor = new Color(165, 179, 198);
         public static Vector3 NaturePlatingLight = new Vector3(0.275f, 0.4f, 0.215f);
         public static Vector3 EarthenPlatingLight = new Vector3(0.36f, 0.32f, 0.11f);
+        public static Vector3 PermafrostPlatingLight = new Vector3(0.225f, 0.30f, 0.30f);
         public static int[] pyramidTiles;
         public static void LoadArrays() //called in SOTS.Load()
         {

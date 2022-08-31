@@ -212,7 +212,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			ItemDrop = ModContent.ItemType<PermafrostPlating>();
-			AddMapEntry(new Color(165, 179, 198));
+			AddMapEntry(SOTSTile.PermafrostPlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Silver;
@@ -240,9 +240,9 @@ namespace SOTS.Items.Fragments
         {
 			if(canGlow(i, j))
 			{
-				r = 0.225f;
-				g = 0.3f;
-				b = 0.3f;
+				r = SOTSTile.PermafrostPlatingLight.X;
+				g = SOTSTile.PermafrostPlatingLight.Y;
+				b = SOTSTile.PermafrostPlatingLight.Z;
 			}
 			else
             {

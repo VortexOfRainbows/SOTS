@@ -8,9 +8,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Furniture.Nature
+namespace SOTS.Items.Furniture.Permafrost
 {
-	public class NaturePlatingTorch : ModItem
+	public class PermafrostPlatingTorch : ModItem
 	{
 		public override void SetStaticDefaults() => this.SetResearchCost(100);
 		public override void SetDefaults()
@@ -18,12 +18,12 @@ namespace SOTS.Items.Furniture.Nature
 			Item.CloneDefaults(ItemID.Torch);
 			Item.Size = new Vector2(14, 14);
 			Item.rare = ItemRarityID.Blue;
-			Item.createTile = ModContent.TileType<NaturePlatingTorchTile>();
+			Item.createTile = ModContent.TileType<PermafrostPlatingTorchTile>();
 		}
 		public override void HoldItem(Player player)
 		{
 			Vector2 position = player.RotatedRelativePoint(new Vector2(player.itemLocation.X + 12f * player.direction + player.velocity.X, player.itemLocation.Y - 14f + player.velocity.Y), true);
-			Lighting.AddLight(position, SOTSTile.NaturePlatingLight * 2.7f);
+			Lighting.AddLight(position, SOTSTile.PermafrostPlatingLight * 2.7f);
 		}
 		public override void PostUpdate()
 		{
@@ -38,10 +38,10 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(3).AddIngredient(ItemID.Torch, 3).AddIngredient(ModContent.ItemType<NaturePlating>()).Register();
+			CreateRecipe(3).AddIngredient(ItemID.Torch, 3).AddIngredient(ModContent.ItemType<PermafrostPlating>()).Register();
 		}
 	}
-	public class NaturePlatingTorchTile : ModTile
+	public class PermafrostPlatingTorchTile : ModTile
 	{
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -50,7 +50,7 @@ namespace SOTS.Items.Furniture.Nature
 		public override bool CreateDust(int i, int j, ref int type)
 		{
 			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, DustID.RainbowMk2);
-			dust.color = new Color(SOTSTile.NaturePlatingLight);
+			dust.color = new Color(SOTSTile.PermafrostPlatingLight);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 1.8f;
@@ -82,11 +82,11 @@ namespace SOTS.Items.Furniture.Nature
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Nature Plating Torch");
+			name.SetDefault("Permafrost Plating Torch");
 			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			DustType = DustID.GoldCoin;
-			ItemDrop = ModContent.ItemType<NaturePlatingTorch>();
+			DustType = DustID.PlatinumCoin;
+			ItemDrop = ModContent.ItemType<PermafrostPlatingTorch>();
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Torches };
 			TileID.Sets.Torch[Type] = true;
@@ -97,7 +97,7 @@ namespace SOTS.Items.Furniture.Nature
         }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			Vector3 color = SOTSTile.NaturePlatingLight * 2.5f;
+			Vector3 color = SOTSTile.PermafrostPlatingLight * 2.5f;
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameX < 66)
 			{
@@ -108,7 +108,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			Color color = new Color(100, 100, 100, 0);
+			Color color = new Color(50, 60, 100, 0);
 			int frameX = Main.tile[i, j].TileFrameX;
 			int frameY = Main.tile[i, j].TileFrameY;
 			int width = 20;
