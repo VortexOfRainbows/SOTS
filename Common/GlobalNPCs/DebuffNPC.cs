@@ -343,6 +343,22 @@ namespace SOTS.Common.GlobalNPCs
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
         {
             lastHitWasCrit = crit;
+            if (npc.immortal)
+            {
+                return;
+            }
+            if (item.DamageType.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.DamageType.CountsAsClass(DamageClass.Melee))
+            {
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 2f) * (BlazingCurse + 2f)))
+                        BlazingCurse++;
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        SendClientChanges(player, npc);
+                    }
+                }
+            }
         }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
@@ -376,6 +392,18 @@ namespace SOTS.Common.GlobalNPCs
                     BlazingCurse++;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
+            }
+            if(projectile.CountsAsClass(DamageClass.SummonMeleeSpeed) || projectile.CountsAsClass(DamageClass.Melee))
+            {
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 1f) * (BlazingCurse + 1f) + 1f))
+                        BlazingCurse++;
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        SendClientChanges(player, npc);
+                    }
+                }
             }
         }
         bool hitByRay = false;

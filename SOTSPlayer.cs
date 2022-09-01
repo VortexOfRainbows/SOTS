@@ -211,6 +211,7 @@ namespace SOTS
 		public int assassinateFlat = 0;
 		public bool assassinate = false;
 		public int polarCannons = 0;
+		public float meleeItemScale = 1f;
 
 		public Vector2 starCen;
 
@@ -273,6 +274,7 @@ namespace SOTS
 		public int CactusSpineDamage = 0;
 		public bool netUpdate = false;
 		public bool BlazingQuiver = false;
+		public bool SerpentSpine = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -906,6 +908,8 @@ namespace SOTS
 			if (PyramidBiome)
 				Player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
+			meleeItemScale = 1f;
+			SerpentSpine = false;
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
@@ -1404,7 +1408,12 @@ namespace SOTS
 		{
 			return !player.GetModPlayer<SOTSPlayer>().PyramidBiome && player.ZoneForest;
 		}
-	}
+        public override void ModifyItemScale(Item item, ref float scale)
+        {
+			if(item.CountsAsClass(DamageClass.Melee))
+				scale *= meleeItemScale;
+		}
+    }
 }
 
 

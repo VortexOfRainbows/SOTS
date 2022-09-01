@@ -35,6 +35,7 @@ namespace SOTS.Common.PlayerDrawing
 				Vector2 zero2 = Vector2.Zero;
 				SpriteEffects effects = drawInfo.playerEffect; //this is just a guess... might actually require drawInfo.itemEffect
 				bool isTwilightPole = item.type == ModContent.ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ModContent.ProjectileType<TwilightBobber>()] > 0;
+				float beginningScale = drawPlayer.GetAdjustedItemScale(item);
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
 					Vector2 location = drawInfo.ItemLocation;
@@ -69,7 +70,7 @@ namespace SOTS.Common.PlayerDrawing
                             {
 								texture = Mod.Assets.Request<Texture2D>(Items.Temple.Revolution.TextureName).Value;
 							}
-							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Color.White, rotation, origin, item.scale, effects, 0);
+							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Color.White, rotation, origin, beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value);
 						}
 						else
@@ -91,7 +92,7 @@ namespace SOTS.Common.PlayerDrawing
 								origin5 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Width + num107), (float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Height / 2));
 							}
 
-							//value = new DrawData(Terraria.GameContent.TextureAssets.Item[item.type].Value, new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), item.GetAlpha(color37), drawPlayer.itemRotation, origin5, item.scale, effect, 0);
+							//value = new DrawData(Terraria.GameContent.TextureAssets.Item[item.type].Value, new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), item.GetAlpha(color37), drawPlayer.itemRotation, origin5, beginningScale, effect, 0);
 							//drawInfo.DrawDataCache.Add(value);
 
 							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
@@ -109,15 +110,15 @@ namespace SOTS.Common.PlayerDrawing
 									Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 									color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
 									color.A = 0;
-									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), color, drawPlayer.itemRotation, origin5, item.scale, effects, 0);
+									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), color, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 									drawInfo.DrawDataCache.Add(value2);
 								}
-								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, item.scale, effects, 0);
+								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, item.scale, effects, 0);
+								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 						}
@@ -132,17 +133,17 @@ namespace SOTS.Common.PlayerDrawing
 								Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
-								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, effects, 0);
+								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 							Texture2D tBlack = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterBlack").Value;
-							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, effects, 0);
+							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value2);
 							for (int k = 0; k < 6; k++)
 							{
 								Color color = Color.Black * 0.7f;
 								Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 60));
-								DrawData value = new DrawData(tBlack, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, effects, 0);
+								DrawData value = new DrawData(tBlack, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 						}
@@ -155,12 +156,12 @@ namespace SOTS.Common.PlayerDrawing
 								Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
-								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, effects, 0);
+								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
-							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, effects, 0);
+							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value2);
-							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, effects, 0);
+							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value2);
 						}
 						else
@@ -179,7 +180,7 @@ namespace SOTS.Common.PlayerDrawing
 									modPlayer.rainbowGlowmasks ? color : Color.White,
 									drawPlayer.itemRotation,
 									 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height),
-									item.scale,
+									beginningScale,
 									effects,
 									0);
 								drawInfo.DrawDataCache.Add(value);

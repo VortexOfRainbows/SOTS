@@ -25,9 +25,8 @@ Update Objectives:
 4. Glow Moth and Glow Silk to the glowing mushroom biome.
 5. Temple Tier items
 	1. Pyrocide
-6. Subspace Serpent Expert Drop
-7. Check if player possesses Texture Pack
-8. Make SOTS Dev Team on git hub!
+6. Check if player possesses Texture Pack
+7. Make SOTS Dev Team on git hub!
 
 Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
@@ -35,6 +34,10 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 
 Daily Log:
+
+8/31/22
+1. Serpent Spine (subspace expert drop)
+	1. Not the biggest fan of it but we'll see how it is recieved
 
 8/30/22
 1. Permafrost Furniture!!!!

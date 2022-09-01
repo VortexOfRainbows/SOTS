@@ -51,7 +51,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Item.DamageType, Item.useTime));
+			Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 6.2f, type, damage, knockback, player.whoAmI, SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Item.DamageType, Item.useTime));
 			return false; 
 		}
     }

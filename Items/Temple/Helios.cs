@@ -18,7 +18,7 @@ namespace SOTS.Items.Temple
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Helios");
-			Tooltip.SetDefault("Enemy armor is burnt permanently with each hit, increasing damage done by 3%\nStacks up to 5 times\nLaunches waves that deal 40% damage");
+			Tooltip.SetDefault("Attacks scorch with each hit, increasing damage done by 3% permanently\nStacks up to 5 times\nLaunches waves that deal 40% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

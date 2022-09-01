@@ -33,7 +33,7 @@ namespace SOTS.Items.Celestial
 		}
         public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-			//itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SubspaceLocket>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SerpentSpine>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SanguiteBar>(), 1, 16, 29));
 		}
 	}
