@@ -22,6 +22,7 @@ using SOTS.Items.Chaos;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -4784,5 +4785,27 @@ namespace SOTS.WorldgenHelpers
 			tile.HasTile = false;
 			NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, spawnX, spawnY, 0f, 0, 0, 0);
 		}
+		public static void PlaceSetpiecesInMushroomBiome()
+        {
+			Vector2[] mushroomBiomes = WorldGen.mushroomBiomesPosition;
+			int total = mushroomBiomes.Length;
+			for(int i = 0; i < total; i++)
+            {
+				Vector2 position = mushroomBiomes[i];
+				Point pos = position.ToPoint();
+				for(int k = -9; k <= 9; k++)
+				{
+					for (int j = -9; j <= 9; j++)
+					{
+						Point spawnTilePos = pos + new Point(k, j);
+						Tile tile = Framing.GetTileSafely(spawnTilePos);
+						tile.HasTile = true;
+						tile.TileType = TileID.RedBrick;
+						tile.Slope = 0;
+						tile.IsHalfBlock = false;
+					}
+				}
+            }
+        }
 	}
 }

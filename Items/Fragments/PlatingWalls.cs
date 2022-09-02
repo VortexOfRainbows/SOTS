@@ -140,4 +140,31 @@ namespace SOTS.Items.Fragments
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
 		}
 	}
+	public class PermafrostPlatingWall : ModItem
+	{
+		public override void SetStaticDefaults() => this.SetResearchCost(400);
+		public override void SetDefaults()
+		{
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<PermafrostPlatingWallWall>();
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<PermafrostPlating>(), 1).AddTile(TileID.WorkBenches).Register();
+			Recipe.Create(ModContent.ItemType<PermafrostPlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
+		}
+	}
+	public class PermafrostPlatingWallWall : ModWall
+	{
+		public override void SetStaticDefaults()
+		{
+			Main.wallHouse[Type] = true;
+			DustType = DustID.Silver;
+			ItemDrop = ModContent.ItemType<PermafrostPlatingWall>();
+			AddMapEntry(Color.Lerp(SOTSTile.PermafrostPlatingColor, Color.Black, 0.2f));
+		}
+	}
 }

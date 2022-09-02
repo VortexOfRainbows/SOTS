@@ -476,6 +476,7 @@ namespace SOTS
 		{
 			progress.Message = "Generating SOTS Ores";
 			SOTSWorldgenHelper.GenerateEvostoneInMushroomBiome();
+			//SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
 			float max = 240;
 			if (Main.maxTilesX > 6000) //medium worlds
 				max = 360;
