@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System;
 using SOTS.WorldgenHelpers;
+using SOTS.Items.Earth.Glowmoth;
 
 namespace SOTS.Items.Tools
 {
@@ -35,7 +36,7 @@ namespace SOTS.Items.Tools
 			Vector2 tileLocation = mousePos / 16f;
 			//PhaseWorldgenHelper.ClearPrevious = true;
 			//PhaseWorldgenHelper.Generate();
-			SOTSWorldgenHelper.FindAndGenerateBigGeode(Main.rand.Next(2) * 2 -1);
+			WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCacoonTile>(), true, true, -1, 0);
 			//counter++;
 			return true;
 		}

@@ -271,7 +271,7 @@ namespace SOTS
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].TileType == (ushort)TileType<SarcophagusTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<RubyKeystoneTile>())
+            if (Main.tile[i, j - 1].TileType == (ushort)TileType<SarcophagusTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<RubyKeystoneTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<Items.Earth.Glowmoth.SilkCacoonTile>())
             {
                 return false;
             }

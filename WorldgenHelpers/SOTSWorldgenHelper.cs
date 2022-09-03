@@ -23,6 +23,7 @@ using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using SOTS.Items.Earth.Glowmoth;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -4789,23 +4790,84 @@ namespace SOTS.WorldgenHelpers
         {
 			Vector2[] mushroomBiomes = WorldGen.mushroomBiomesPosition;
 			int total = mushroomBiomes.Length;
-			for(int i = 0; i < total; i++)
-            {
-				Vector2 position = mushroomBiomes[i];
+			for(int A = 0; A < total; A++)
+			{
+				int bestDistance = 0;
+				Vector2 position = mushroomBiomes[A];
 				Point pos = position.ToPoint();
-				for(int k = -9; k <= 9; k++)
+				Point bestPoint = pos;
+				for (int i = -50; i <= 50; i++)
 				{
-					for (int j = -9; j <= 9; j++)
+					for (int j = -50; j <= 50; j++)
 					{
-						Point spawnTilePos = pos + new Point(k, j);
-						Tile tile = Framing.GetTileSafely(spawnTilePos);
-						tile.HasTile = true;
-						tile.TileType = TileID.RedBrick;
-						tile.Slope = 0;
-						tile.IsHalfBlock = false;
+						pos = position.ToPoint() + new Point(i, j);
+						int blocksL = CountBlocksInDirection(pos, new Point(-1, 0), TileID.MushroomGrass, 60);
+						int blocksR = CountBlocksInDirection(pos, new Point(1, 0), TileID.MushroomGrass, 60);
+						int blocksU = CountBlocksInDirection(pos, new Point(0, -1), TileID.MushroomGrass, 60);
+						int blocksD = CountBlocksInDirection(pos, new Point(0, 1), TileID.MushroomGrass, 60);
+						int totalBlocksChecked = blocksL + blocksR + blocksU + blocksD;
+						if(totalBlocksChecked > bestDistance)
+                        {
+							bestDistance = totalBlocksChecked;
+							bestPoint = pos;
+                        }
 					}
 				}
-            }
+
+				Point spawnTilePos = bestPoint;
+				Tile tile = Framing.GetTileSafely(spawnTilePos);
+				for (int j = 12; j >= -12; j--)
+				{
+					for (int i = -12; i <= 12; i++)
+					{
+						pos = spawnTilePos + new Point(i, j);
+						bool active = false;
+						float circularLength = new Point(i, j).ToVector2().Length();
+						if (circularLength <= 5.0f)
+						{
+							tile = Framing.GetTileSafely(pos);
+							tile.HasTile = false;
+							tile.IsHalfBlock = false;
+							tile.Slope = 0;
+							if (j >= 2) //bottom layer
+							{
+								tile.HasTile = true;
+								tile.TileType = TileID.RedBrick;
+								tile.Slope = 0;
+								tile.IsHalfBlock = false;
+							}
+							active = true;
+						}
+						if (!active)
+						{
+							tile = Framing.GetTileSafely(pos);
+							if (tile.HasTile && TrueTileSolid(pos.X, pos.Y))
+							{
+								tile.TileType = TileID.RedBrick;
+								tile.Slope = 0;
+								tile.IsHalfBlock = false;
+							}
+						}
+					}
+				}
+				WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCacoonTile>(), true, true, -1, 0);
+			}
+		}
+		public static int CountBlocksInDirection(Point start, Point direction, int BlockType, int distance)
+        {
+			for(int i = 0; i < distance; i++)
+            {
+				start += direction;
+				Tile tile = Framing.GetTileSafely(start);
+				if(TrueTileSolid(start.X, start.Y))
+                {
+					if (tile.TileType == BlockType || BlockType < 0)
+						return i;
+					else
+						return -distance;
+                }
+			}
+			return -distance;
         }
 	}
 }

@@ -257,6 +257,7 @@ namespace SOTS
 			tasks.Insert(genIndexTraps + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Surface Structures";
+				SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
 				StarterHouseWorldgenHelper.GenerateStarterHouseFull();
 				int iceY = -1;
 				int iceX = -1;
@@ -476,7 +477,6 @@ namespace SOTS
 		{
 			progress.Message = "Generating SOTS Ores";
 			SOTSWorldgenHelper.GenerateEvostoneInMushroomBiome();
-			//SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
 			float max = 240;
 			if (Main.maxTilesX > 6000) //medium worlds
 				max = 360;
