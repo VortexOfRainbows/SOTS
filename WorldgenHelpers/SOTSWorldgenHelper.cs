@@ -24,6 +24,7 @@ using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using SOTS.Items.Earth.Glowmoth;
+using Terraria.DataStructures;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -4794,17 +4795,17 @@ namespace SOTS.WorldgenHelpers
 			{
 				int bestDistance = 0;
 				Vector2 position = mushroomBiomes[A];
-				Point pos = position.ToPoint();
-				Point bestPoint = pos;
+				Point16 pos = position.ToPoint16();
+				Point16 bestPoint = pos;
 				for (int i = -50; i <= 50; i++)
 				{
 					for (int j = -50; j <= 50; j++)
 					{
-						pos = position.ToPoint() + new Point(i, j);
-						int blocksL = CountBlocksInDirection(pos, new Point(-1, 0), TileID.MushroomGrass, 60);
-						int blocksR = CountBlocksInDirection(pos, new Point(1, 0), TileID.MushroomGrass, 60);
-						int blocksU = CountBlocksInDirection(pos, new Point(0, -1), TileID.MushroomGrass, 60);
-						int blocksD = CountBlocksInDirection(pos, new Point(0, 1), TileID.MushroomGrass, 60);
+						pos = position.ToPoint16() + new Point16(i, j);
+						int blocksL = CountBlocksInDirection(pos, new Point16(-1, 0), TileID.MushroomGrass, 60);
+						int blocksR = CountBlocksInDirection(pos, new Point16(1, 0), TileID.MushroomGrass, 60);
+						int blocksU = CountBlocksInDirection(pos, new Point16(0, -1), TileID.MushroomGrass, 60);
+						int blocksD = CountBlocksInDirection(pos, new Point16(0, 1), TileID.MushroomGrass, 60);
 						int totalBlocksChecked = blocksL + blocksR + blocksU + blocksD;
 						if(totalBlocksChecked > bestDistance)
                         {
@@ -4814,15 +4815,15 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 
-				Point spawnTilePos = bestPoint;
+				Point16 spawnTilePos = bestPoint;
 				Tile tile = Framing.GetTileSafely(spawnTilePos);
 				for (int j = 12; j >= -12; j--)
 				{
 					for (int i = -12; i <= 12; i++)
 					{
-						pos = spawnTilePos + new Point(i, j);
+						pos = spawnTilePos + new Point16(i, j);
 						bool active = false;
-						float circularLength = new Point(i, j).ToVector2().Length();
+						float circularLength = new Point16(i, j).ToVector2().Length();
 						if (circularLength <= 5.0f)
 						{
 							tile = Framing.GetTileSafely(pos);
@@ -4851,9 +4852,11 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 				WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCacoonTile>(), true, true, -1, 0);
+				GenerateSilkWeb(spawnTilePos.X, spawnTilePos.Y, 4, Vector2.Zero, true);
+				//SmoothRegion(spawnTilePos.X, spawnTilePos.Y, 120, 80, TileID.RedBrick);
 			}
 		}
-		public static int CountBlocksInDirection(Point start, Point direction, int BlockType, int distance)
+		public static int CountBlocksInDirection(Point16 start, Point16 direction, int BlockType, int distance)
         {
 			for(int i = 0; i < distance; i++)
             {
@@ -4869,5 +4872,61 @@ namespace SOTS.WorldgenHelpers
 			}
 			return -distance;
         }
+		public static void GenerateSilkWeb(int spawnX, int spawnY, int i, Vector2 myDirection, bool startingTree = false)
+		{
+			if (i <= 0)
+			{
+				return;
+			}
+			float lengthMultiplier = WorldGen.genRand.NextFloat(2.6f, 3.3f);
+			if (startingTree)
+			{
+				i--;
+				float iRand = WorldGen.genRand.NextFloat(360);
+				for (int k = 0; k < 5; k++)
+				{
+					float rand = WorldGen.genRand.NextFloat(-24, 24);
+					Vector2 direction = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 72 + rand + iRand));
+					Vector2 spawnPos = new Vector2(spawnX, spawnY);
+					for (float j = (6 - i) * lengthMultiplier + 3; j > 0; j--)
+					{
+						if (TrueTileSolid((int)spawnPos.X, (int)spawnPos.Y) && Framing.GetTileSafely((int)spawnPos.X, (int)spawnPos.Y).TileType != TileID.RedBrick)
+							return;
+						for (int a = 0; a < 5; a++)
+						{
+							Vector2 circular = new Vector2(a == 0 ? 0 : 0.2f, 0).RotatedBy(a * MathHelper.PiOver2);
+							Vector2 pos = (spawnPos + circular);
+							if (WorldGen.InWorld((int)pos.X, (int)pos.Y))
+								WorldGen.PlaceTile((int)pos.X, (int)pos.Y, TileID.RedBrick, true, false, -1, 0);
+						}
+						spawnPos += direction;
+					}
+					GenerateSilkWeb((int)spawnPos.X, (int)spawnPos.Y, i - 1, direction, false);
+				}
+			}
+			else if (i > 0)
+			{
+				for (int k = -1; k <= 1; k += 2)
+				{
+					float rand = WorldGen.genRand.NextFloat(-18 + i, 18 - i);
+					Vector2 direction = myDirection.RotatedBy(MathHelper.ToRadians(k * WorldGen.genRand.NextFloat(20, 35) + rand));
+					Vector2 spawnPos = new Vector2(spawnX, spawnY);
+					for (float j = (6 - i) * lengthMultiplier + 3; j > 0; j--)
+					{
+						if (TrueTileSolid((int)spawnPos.X, (int)spawnPos.Y) && Framing.GetTileSafely((int)spawnPos.X, (int)spawnPos.Y).TileType != TileID.RedBrick)
+							return;
+						for (int a = 0; a < 5; a++)
+						{
+							Vector2 circular = new Vector2(a == 0 ? 0 : 0.2f, 0).RotatedBy(a * MathHelper.PiOver2);
+							Vector2 pos = (spawnPos + circular);
+							if (WorldGen.InWorld((int)pos.X, (int)pos.Y))
+								WorldGen.PlaceTile((int)pos.X, (int)pos.Y, TileID.RedBrick, true, false, -1, 0);
+						}
+						spawnPos += direction;
+					}
+					GenerateSilkWeb((int)spawnPos.X, (int)spawnPos.Y, i - 1, direction, false);
+				}
+			}
+		}
 	}
 }
