@@ -19,7 +19,7 @@ namespace SOTS.Items.Earth.Glowmoth
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Place Cacoon");
+			DisplayName.SetDefault("Place Cocoon");
 			//Tooltip.SetDefault("A slab from an ancient burial site, it may be hard to break");
 			this.SetResearchCost(1);
 		}
@@ -35,10 +35,10 @@ namespace SOTS.Items.Earth.Glowmoth
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = ModContent.TileType<SilkCacoonTile>();
+			Item.createTile = ModContent.TileType<SilkCocoonTile>();
 		}
 	}
-	public class SilkCacoonTile : ModTile
+	public class SilkCocoonTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -56,7 +56,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			TileObjectData.newTile.WaterDeath = false;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Glow Cacoon");
+			name.SetDefault("Glow Cocoon");
 			AddMapEntry(new Color(30, 90, 180), name);
 			DustType = DustID.Silk;
 			HitSound = SoundID.NPCHit18;
@@ -67,7 +67,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			SOTSTile.DrawSlopedGlowMask(i, j, Type, ModContent.Request<Texture2D>("SOTS/Items/Earth/Glowmoth/SilkCacoonTileGlow").Value, Color.White, new Vector2(0, 2));
+			SOTSTile.DrawSlopedGlowMask(i, j, Type, ModContent.Request<Texture2D>("SOTS/Items/Earth/Glowmoth/SilkCocoonTileGlow").Value, Color.White, new Vector2(0, 2));
 		}
         public override void RandomUpdate(int i, int j)
 		{
@@ -99,7 +99,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			{
 				if (Main.netMode != NetmodeID.MultiplayerClient && fail)
 				{
-					Projectile.NewProjectile(new EntitySource_Misc("SOTS:BreakSilkCacoon"), new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<SilkCacoonProjectile>(), 0, 0, Main.myPlayer);
+					Projectile.NewProjectile(new EntitySource_Misc("SOTS:BreakSilkCocoon"), new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<SilkCocoonProjectile>(), 0, 0, Main.myPlayer);
 				}
 			}
 		}
@@ -123,12 +123,12 @@ namespace SOTS.Items.Earth.Glowmoth
 			b = vColor.Z;
 		}
 	}
-	public class SilkCacoonProjectile : ModProjectile
+	public class SilkCocoonProjectile : ModProjectile
 	{
-        public override string Texture => "SOTS/Items/Earth/Glowmoth/SilkCacoonTile";
+        public override string Texture => "SOTS/Items/Earth/Glowmoth/SilkCocoonTile";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("silk cacoon sync projectile");
+			DisplayName.SetDefault("silk Cocoon sync projectile");
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -172,7 +172,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			int i = (int)Projectile.Center.X / 16;
 			int j = (int)Projectile.Center.Y / 16;
 			Tile current = Framing.GetTileSafely(i, j);
-			if (!current.HasTile || current.TileType != ModContent.TileType<SilkCacoonTile>() || current.TileFrameY < 108)
+			if (!current.HasTile || current.TileType != ModContent.TileType<SilkCocoonTile>() || current.TileFrameY < 108)
 			{
 				Projectile.Kill();
 				Projectile.active = false;

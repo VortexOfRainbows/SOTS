@@ -4851,7 +4851,7 @@ namespace SOTS.WorldgenHelpers
 						}
 					}
 				}
-				WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCacoonTile>(), true, true, -1, 0);
+				WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
 				GenerateSilkWeb(spawnTilePos.X, spawnTilePos.Y, 4, Vector2.Zero, true);
 				//SmoothRegion(spawnTilePos.X, spawnTilePos.Y, 120, 80, TileID.RedBrick);
 			}
