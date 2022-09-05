@@ -4791,15 +4791,15 @@ namespace SOTS.WorldgenHelpers
         {
 			Vector2[] mushroomBiomes = WorldGen.mushroomBiomesPosition;
 			int total = mushroomBiomes.Length;
-			for(int A = 0; A < total; A++)
+			for (int A = 0; A < total; A++)
 			{
 				int bestDistance = 0;
 				Vector2 position = mushroomBiomes[A];
 				Point16 pos = position.ToPoint16();
 				Point16 bestPoint = pos;
-				for (int i = -50; i <= 50; i++)
+				for (int i = -60; i <= 60; i++)
 				{
-					for (int j = -50; j <= 50; j++)
+					for (int j = -60; j <= 60; j++)
 					{
 						pos = position.ToPoint16() + new Point16(i, j);
 						int blocksL = CountBlocksInDirection(pos, new Point16(-1, 0), TileID.MushroomGrass, 60);
@@ -4807,11 +4807,11 @@ namespace SOTS.WorldgenHelpers
 						int blocksU = CountBlocksInDirection(pos, new Point16(0, -1), TileID.MushroomGrass, 60);
 						int blocksD = CountBlocksInDirection(pos, new Point16(0, 1), TileID.MushroomGrass, 60);
 						int totalBlocksChecked = blocksL + blocksR + blocksU + blocksD;
-						if(totalBlocksChecked > bestDistance)
-                        {
+						if (totalBlocksChecked > bestDistance)
+						{
 							bestDistance = totalBlocksChecked;
 							bestPoint = pos;
-                        }
+						}
 					}
 				}
 
@@ -4822,7 +4822,6 @@ namespace SOTS.WorldgenHelpers
 					for (int i = -12; i <= 12; i++)
 					{
 						pos = spawnTilePos + new Point16(i, j);
-						bool active = false;
 						float circularLength = new Point16(i, j).ToVector2().Length();
 						if (circularLength <= 5.0f)
 						{
@@ -4833,18 +4832,7 @@ namespace SOTS.WorldgenHelpers
 							if (j >= 2) //bottom layer
 							{
 								tile.HasTile = true;
-								tile.TileType = TileID.RedBrick;
-								tile.Slope = 0;
-								tile.IsHalfBlock = false;
-							}
-							active = true;
-						}
-						if (!active)
-						{
-							tile = Framing.GetTileSafely(pos);
-							if (tile.HasTile && TrueTileSolid(pos.X, pos.Y))
-							{
-								tile.TileType = TileID.RedBrick;
+								tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
 								tile.Slope = 0;
 								tile.IsHalfBlock = false;
 							}
@@ -4852,8 +4840,37 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 				WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
-				GenerateSilkWeb(spawnTilePos.X, spawnTilePos.Y, 4, Vector2.Zero, true);
-				//SmoothRegion(spawnTilePos.X, spawnTilePos.Y, 120, 80, TileID.RedBrick);
+				GenerateSilkWeb(spawnTilePos.X, spawnTilePos.Y);
+				for (int j = 12; j >= -12; j--)
+				{
+					for (int i = -12; i <= 12; i++)
+					{
+						pos = spawnTilePos + new Point16(i, j);
+						float circularLength = new Point16(i, j).ToVector2().Length();
+						if (circularLength <= 11.0f + Main.rand.NextFloat(-1, 1))
+						{
+							tile = Framing.GetTileSafely(pos);
+							if ((tile.HasTile && TrueTileSolid(pos.X, pos.Y)) || (circularLength <= 4.0f + Main.rand.NextFloat(-1, 1) && !tile.HasTile))
+							{
+								tile.HasTile = true;
+								tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
+								tile.Slope = 0;
+								tile.IsHalfBlock = false;
+							}
+							else
+							{
+								if (!tile.HasTile && !WorldGen.genRand.NextBool(10 - (int)circularLength / 2))
+								{
+									tile.HasTile = true;
+									tile.TileType = TileID.Cobweb;
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+								}
+							}
+						}
+					}
+				}
+				SmoothRegion(spawnTilePos.X, spawnTilePos.Y, 160, 160, ModContent.TileType<GlowSilkTile>());
 			}
 		}
 		public static int CountBlocksInDirection(Point16 start, Point16 direction, int BlockType, int distance)
@@ -4872,59 +4889,66 @@ namespace SOTS.WorldgenHelpers
 			}
 			return -distance;
         }
-		public static void GenerateSilkWeb(int spawnX, int spawnY, int i, Vector2 myDirection, bool startingTree = false)
+		public static void GenerateSilkWeb(int spawnX, int spawnY)
 		{
-			if (i <= 0)
+			float iRand = WorldGen.genRand.NextFloat(360);
+			for (int k = 0; k < 6; k++)
 			{
-				return;
-			}
-			float lengthMultiplier = WorldGen.genRand.NextFloat(2.6f, 3.3f);
-			if (startingTree)
-			{
-				i--;
-				float iRand = WorldGen.genRand.NextFloat(360);
-				for (int k = 0; k < 5; k++)
+				float rand = WorldGen.genRand.NextFloat(-20, 20);
+				Vector2 direction = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 60 + rand + iRand));
+				Vector2 spawnPos = new Vector2(spawnX, spawnY);
+				for (float j = 0; j < 80; j++)
 				{
-					float rand = WorldGen.genRand.NextFloat(-24, 24);
-					Vector2 direction = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 72 + rand + iRand));
-					Vector2 spawnPos = new Vector2(spawnX, spawnY);
-					for (float j = (6 - i) * lengthMultiplier + 3; j > 0; j--)
+					if (TrueTileSolid((int)spawnPos.X, (int)spawnPos.Y) && Framing.GetTileSafely((int)spawnPos.X, (int)spawnPos.Y).TileType != ModContent.TileType<GlowSilkTile>())
 					{
-						if (TrueTileSolid((int)spawnPos.X, (int)spawnPos.Y) && Framing.GetTileSafely((int)spawnPos.X, (int)spawnPos.Y).TileType != TileID.RedBrick)
-							return;
-						for (int a = 0; a < 5; a++)
+						for (int a1 = 8; a1 >= -8; a1--)
 						{
-							Vector2 circular = new Vector2(a == 0 ? 0 : 0.2f, 0).RotatedBy(a * MathHelper.PiOver2);
-							Vector2 pos = (spawnPos + circular);
-							if (WorldGen.InWorld((int)pos.X, (int)pos.Y))
-								WorldGen.PlaceTile((int)pos.X, (int)pos.Y, TileID.RedBrick, true, false, -1, 0);
+							for (int b1 = -8; b1 <= 8; b1++)
+							{
+								Tile tile;
+								float circularLength = new Vector2(a1, b1).Length();
+								if (circularLength <= 5.0f + Main.rand.NextFloat(-2, 1))
+								{
+									tile = Framing.GetTileSafely((int)spawnPos.X + a1, (int)spawnPos.Y + b1);
+									if(TrueTileSolid((int)spawnPos.X + a1, (int)spawnPos.Y + b1))
+									{
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+									}
+								}
+							}
 						}
-						spawnPos += direction;
+						break;
 					}
-					GenerateSilkWeb((int)spawnPos.X, (int)spawnPos.Y, i - 1, direction, false);
-				}
-			}
-			else if (i > 0)
-			{
-				for (int k = -1; k <= 1; k += 2)
-				{
-					float rand = WorldGen.genRand.NextFloat(-18 + i, 18 - i);
-					Vector2 direction = myDirection.RotatedBy(MathHelper.ToRadians(k * WorldGen.genRand.NextFloat(20, 35) + rand));
-					Vector2 spawnPos = new Vector2(spawnX, spawnY);
-					for (float j = (6 - i) * lengthMultiplier + 3; j > 0; j--)
+					for (int a = 0; a < 9; a++)
 					{
-						if (TrueTileSolid((int)spawnPos.X, (int)spawnPos.Y) && Framing.GetTileSafely((int)spawnPos.X, (int)spawnPos.Y).TileType != TileID.RedBrick)
-							return;
-						for (int a = 0; a < 5; a++)
+						Vector2 circular = new Vector2(a == 0 ? 0 : WorldGen.genRand.NextFloat(0.15f) + 0.02f * j, 0).RotatedBy(a * MathHelper.PiOver4);
+						Vector2 pos = (spawnPos + circular);
+						Tile tile = Framing.GetTileSafely((int)pos.X, (int)pos.Y);
+						if(!tile.HasTile || tile.TileType == TileID.Cobweb)
 						{
-							Vector2 circular = new Vector2(a == 0 ? 0 : 0.2f, 0).RotatedBy(a * MathHelper.PiOver2);
-							Vector2 pos = (spawnPos + circular);
-							if (WorldGen.InWorld((int)pos.X, (int)pos.Y))
-								WorldGen.PlaceTile((int)pos.X, (int)pos.Y, TileID.RedBrick, true, false, -1, 0);
+							tile.HasTile = true;
+							tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
+							tile.Slope = 0;
+							tile.IsHalfBlock = false;
 						}
-						spawnPos += direction;
 					}
-					GenerateSilkWeb((int)spawnPos.X, (int)spawnPos.Y, i - 1, direction, false);
+					for (int a = 1; a < 9; a++)
+					{
+						Vector2 circular = new Vector2(a == 0 ? 0 : WorldGen.genRand.NextFloat(0.3f) + 0.04f * j + 0.2f, 0).RotatedBy(a * MathHelper.PiOver4);
+						Vector2 pos = (spawnPos + circular);
+						Tile tile = Framing.GetTileSafely((int)pos.X, (int)pos.Y);
+						if (!tile.HasTile)
+						{
+							tile.HasTile = true;
+							tile.TileType = (ushort)TileID.Cobweb;
+							tile.Slope = 0;
+							tile.IsHalfBlock = false;
+						}
+					}
+					spawnPos += direction;
 				}
 			}
 		}

@@ -35,10 +35,15 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+9/4/22
+1. Glowsilk and Otherworld Blocks
+2. Glowmoth cocoon generation
+
 9/2/22 & 9/3/22
 1. Framework for Glowmoth structure spawning
-2. ToDo: rework vine spawning in orded to prevent branches that attach to nothing.
+2. ToDo: rework vine spawning in order to prevent branches that attach to nothing.
 	1. Check valid paths first, then generate vines
+	2. Straight, slightly curved lines might be better than branching
 
 8/31/22
 1. Serpent Spine (subspace expert drop)

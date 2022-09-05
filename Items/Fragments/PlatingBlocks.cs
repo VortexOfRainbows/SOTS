@@ -252,6 +252,64 @@ namespace SOTS.Items.Fragments
             }
         }
 	}
+	public class OtherworldPlating : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Otherworld Plating");
+			this.SetResearchCost(100);
+		}
+		public override void SetDefaults()
+		{
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<OtherworldPlatingTile>();
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 1).AddRecipeGroup("SOTS:PHMOre", 1).AddTile(TileID.HeavyWorkBench).Register();
+		}
+	}
+	public class OtherworldPlatingTile : PlatingTile
+	{
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/OtherworldPlatingTileGlow").Value;
+		public override void SafeSetDefaults()
+		{
+			ItemDrop = ModContent.ItemType<OtherworldPlating>();
+			AddMapEntry(new Color(48, 57, 70));
+			MineResist = 1.5f;
+			HitSound = SoundID.Tink;
+			DustType = DustID.Lead; //demonite
+		}
+		public override bool canGlow(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
+			if (frameX >= 1 && frameX <= 3 && frameY == 2)
+				return false;
+			if ((frameX == 9 || frameX == 12) && frameY >= 0 && frameY <= 2)
+				return false;
+			if (frameX >= 6 && frameY >= 3)
+				return false;
+			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.19f;
+				g = 0.095f;
+				b = 0.21f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
+		}
+	}
 	public class TidePlating : ModItem
 	{
 		public override void SetStaticDefaults()
@@ -525,7 +583,16 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(8).AddIngredient(ModContent.ItemType<NaturePlating>(), 1).AddIngredient(ModContent.ItemType<EarthenPlating>(), 1).AddIngredient(ModContent.ItemType<PermafrostPlating>(), 1).AddIngredient(ModContent.ItemType<DullPlating>(), 1).AddIngredient(ModContent.ItemType<TidePlating>(), 1).AddIngredient(ModContent.ItemType<EvilPlating>(), 1).AddIngredient(ModContent.ItemType<ChaosPlating>(), 1).AddIngredient(ModContent.ItemType<InfernoPlating>(), 1).AddTile(TileID.HeavyWorkBench).Register();
+			CreateRecipe(15).AddIngredient<NaturePlating>(1)
+				.AddIngredient<EarthenPlating>(1)
+				.AddIngredient<PermafrostPlating>(1)
+				.AddIngredient<OtherworldPlating>(1)
+				.AddIngredient<TidePlating>(1)
+				.AddIngredient<EvilPlating>(1)
+				.AddIngredient<ChaosPlating>(1)
+				.AddIngredient<InfernoPlating>(1)
+				.AddIngredient<DullPlating>(1)
+				.AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class UltimatePlatingTile : PlatingTile
