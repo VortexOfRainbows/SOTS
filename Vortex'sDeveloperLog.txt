@@ -23,6 +23,8 @@ Update Objectives:
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 4. Glow Moth and Glow Silk to the glowing mushroom biome.
+	1. Glow Nylon
+		1. Can craft Torch Bomb, Water Walking Boots
 5. Temple Tier items
 	1. Pyrocide
 6. Check if player possesses Texture Pack
@@ -39,6 +41,7 @@ Daily Log:
 1. Glowsilk and Otherworld Blocks
 2. Glowmoth cocoon generation
 3. Nerf Chaos Chamber usetime 5 -> 7, damage 100 -> 90
+4. Glow web and more visual improvements!
 
 9/2/22 & 9/3/22
 1. Framework for Glowmoth structure spawning

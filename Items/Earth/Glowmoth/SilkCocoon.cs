@@ -71,7 +71,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
         public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(30))
+			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(21))
 			{
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.TileFrameX / 18) % 3;
@@ -117,7 +117,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			Vector3 vColor = VoidPlayer.VibrantColor.ToVector3() * 0.5f;
+			Vector3 vColor = VoidPlayer.VibrantColor.ToVector3() * 0.65f;
 			r = vColor.X;
 			g = vColor.Y;
 			b = vColor.Z;
@@ -192,7 +192,7 @@ namespace SOTS.Items.Earth.Glowmoth
 
 					}
 				}
-				int item = Item.NewItem(Projectile.GetSource_FromThis(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<GlowSilk>(), Main.rand.Next(5, 11), false, 0, true);
+				int item = Item.NewItem(Projectile.GetSource_FromThis(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<GlowSilk>(), Main.rand.Next(25, 41), false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 			}
 			SOTSUtils.PlaySound(SoundID.NPCDeath1, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.10f, -0.2f);

@@ -591,7 +591,6 @@ namespace SOTS.Items.Fragments
 				.AddIngredient<EvilPlating>(1)
 				.AddIngredient<ChaosPlating>(1)
 				.AddIngredient<InfernoPlating>(1)
-				.AddIngredient<DullPlating>(1)
 				.AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}

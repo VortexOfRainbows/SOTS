@@ -4862,7 +4862,7 @@ namespace SOTS.WorldgenHelpers
 								if (!tile.HasTile && !WorldGen.genRand.NextBool(10 - (int)circularLength / 2))
 								{
 									tile.HasTile = true;
-									tile.TileType = TileID.Cobweb;
+									tile.TileType = (ushort)ModContent.TileType<GlowWebTile>();
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 								}
@@ -4892,63 +4892,66 @@ namespace SOTS.WorldgenHelpers
 		public static void GenerateSilkWeb(int spawnX, int spawnY)
 		{
 			float iRand = WorldGen.genRand.NextFloat(360);
-			for (int k = 0; k < 6; k++)
+			for (int k = 0; k < 8; k++)
 			{
 				float rand = WorldGen.genRand.NextFloat(-20, 20);
-				Vector2 direction = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 60 + rand + iRand));
-				Vector2 spawnPos = new Vector2(spawnX, spawnY);
-				for (float j = 0; j < 80; j++)
-				{
-					if (TrueTileSolid((int)spawnPos.X, (int)spawnPos.Y) && Framing.GetTileSafely((int)spawnPos.X, (int)spawnPos.Y).TileType != ModContent.TileType<GlowSilkTile>())
+				if (k != 0 && k != 4) //this is to make the shape more vertical, AKA destroy less mushroom biom trees
+                {
+					Vector2 direction = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 45 + rand + iRand));
+					Vector2 spawnPos = new Vector2(spawnX, spawnY);
+					for (float j = 0; j < 80; j++)
 					{
-						for (int a1 = 8; a1 >= -8; a1--)
+						if (TrueTileSolid((int)spawnPos.X, (int)spawnPos.Y) && Framing.GetTileSafely((int)spawnPos.X, (int)spawnPos.Y).TileType != ModContent.TileType<GlowSilkTile>())
 						{
-							for (int b1 = -8; b1 <= 8; b1++)
+							for (int a1 = 8; a1 >= -8; a1--)
 							{
-								Tile tile;
-								float circularLength = new Vector2(a1, b1).Length();
-								if (circularLength <= 5.0f + Main.rand.NextFloat(-2, 1))
+								for (int b1 = -8; b1 <= 8; b1++)
 								{
-									tile = Framing.GetTileSafely((int)spawnPos.X + a1, (int)spawnPos.Y + b1);
-									if(TrueTileSolid((int)spawnPos.X + a1, (int)spawnPos.Y + b1))
+									Tile tile;
+									float circularLength = new Vector2(a1, b1).Length();
+									if (circularLength <= 5.0f + Main.rand.NextFloat(-2, 1))
 									{
-										tile.HasTile = true;
-										tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
-										tile.Slope = 0;
-										tile.IsHalfBlock = false;
+										tile = Framing.GetTileSafely((int)spawnPos.X + a1, (int)spawnPos.Y + b1);
+										if (TrueTileSolid((int)spawnPos.X + a1, (int)spawnPos.Y + b1))
+										{
+											tile.HasTile = true;
+											tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
+										}
 									}
 								}
 							}
+							break;
 						}
-						break;
-					}
-					for (int a = 0; a < 9; a++)
-					{
-						Vector2 circular = new Vector2(a == 0 ? 0 : WorldGen.genRand.NextFloat(0.15f) + 0.02f * j, 0).RotatedBy(a * MathHelper.PiOver4);
-						Vector2 pos = (spawnPos + circular);
-						Tile tile = Framing.GetTileSafely((int)pos.X, (int)pos.Y);
-						if(!tile.HasTile || tile.TileType == TileID.Cobweb)
+						for (int a = 0; a < 9; a++)
 						{
-							tile.HasTile = true;
-							tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
-							tile.Slope = 0;
-							tile.IsHalfBlock = false;
+							Vector2 circular = new Vector2(a == 0 ? 0 : WorldGen.genRand.NextFloat(0.15f) + 0.02f * j, 0).RotatedBy(a * MathHelper.PiOver4);
+							Vector2 pos = (spawnPos + circular);
+							Tile tile = Framing.GetTileSafely((int)pos.X, (int)pos.Y);
+							if (!tile.HasTile || tile.TileType == ModContent.TileType<GlowWebTile>())
+							{
+								tile.HasTile = true;
+								tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
+								tile.Slope = 0;
+								tile.IsHalfBlock = false;
+							}
 						}
-					}
-					for (int a = 1; a < 9; a++)
-					{
-						Vector2 circular = new Vector2(a == 0 ? 0 : WorldGen.genRand.NextFloat(0.3f) + 0.04f * j + 0.2f, 0).RotatedBy(a * MathHelper.PiOver4);
-						Vector2 pos = (spawnPos + circular);
-						Tile tile = Framing.GetTileSafely((int)pos.X, (int)pos.Y);
-						if (!tile.HasTile)
+						for (int a = 1; a < 9; a++)
 						{
-							tile.HasTile = true;
-							tile.TileType = (ushort)TileID.Cobweb;
-							tile.Slope = 0;
-							tile.IsHalfBlock = false;
+							Vector2 circular = new Vector2(a == 0 ? 0 : WorldGen.genRand.NextFloat(0.3f) + 0.04f * j + 0.2f, 0).RotatedBy(a * MathHelper.PiOver4);
+							Vector2 pos = (spawnPos + circular);
+							Tile tile = Framing.GetTileSafely((int)pos.X, (int)pos.Y);
+							if (!tile.HasTile)
+							{
+								tile.HasTile = true;
+								tile.TileType = (ushort)ModContent.TileType<GlowWebTile>();
+								tile.Slope = 0;
+								tile.IsHalfBlock = false;
+							}
 						}
+						spawnPos += direction;
 					}
-					spawnPos += direction;
 				}
 			}
 		}

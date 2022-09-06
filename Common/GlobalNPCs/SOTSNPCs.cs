@@ -374,7 +374,9 @@ namespace SOTS.Common.GlobalNPCs
 						type = ModContent.ItemType<ChaosPlating>();
 					if (npc.type == ModContent.NPCType<InfernoConstruct>())
 						type = ModContent.ItemType<InfernoPlating>();
-					if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+					if(npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+						type = ModContent.ItemType<OtherworldPlating>();
+					if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
 					{
 						type = ModContent.ItemType<DullPlating>();
 						npcLoot.Add(ItemDropRule.Common(type, 1, 5, 10));

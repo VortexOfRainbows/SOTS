@@ -388,9 +388,9 @@ namespace SOTS
 		}
 		public override void AddRecipes()
 		{
-			Recipe.Create(ItemID.SlimeStaff, 1).AddIngredient(ModContent.ItemType<Wormwood>(), 30).AddTile(TileID.Anvils);
-			Recipe.Create(ItemID.FlowerBoots, 1).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils);
-			Recipe.Create(ItemID.WaterWalkingBoots, 1).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 10).AddIngredient(ItemID.WaterWalkingPotion, 5).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils);
+			Recipe.Create(ItemID.SlimeStaff, 1).AddIngredient(ModContent.ItemType<Wormwood>(), 30).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.FlowerBoots, 1).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.WaterWalkingBoots, 1).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 10).AddIngredient(ItemID.WaterWalkingPotion, 5).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils).Register();
 		}
 		public override void AddRecipeGroups()
 		{
