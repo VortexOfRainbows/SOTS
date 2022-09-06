@@ -1,5 +1,6 @@
 The following is my development plans :D
 1. Might still have some bugs with Subspace Locket
+2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
 
 Tmodloader Bugs:
 1. Chest Swapping isn't working..? (Issue already in Tmodloader)
@@ -24,7 +25,11 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 4. Glow Moth and Glow Silk to the glowing mushroom biome.
 	1. Glow Nylon
-		1. Can craft Torch Bomb, Water Walking Boots
+		1. Can craft Torch Bomb, Water Walking Boots, Flower Boots
+		2. Guide to Illumination: magic book that makes hit enemies glow with a blue/green outline, therefore making them easier to see. Also slows by 20% or something (boss resist).
+	2. Glowspores (Royal Jelly of glow moth)
+		1. More mana from healing potions
+	3. Glowjelly (Combine with Royal Jelly)
 5. Temple Tier items
 	1. Pyrocide
 6. Check if player possesses Texture Pack
