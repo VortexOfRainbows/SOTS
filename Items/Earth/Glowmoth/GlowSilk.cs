@@ -32,10 +32,33 @@ namespace SOTS.Items.Earth.Glowmoth
 	}
 	public class GlowSilkTile : ModTile
 	{
+		private static bool FramingPreventRepitions = false;
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			if (!FramingPreventRepitions)
+			{
+				FramingPreventRepitions = true;
+				try
+				{
+					WorldGen.TileFrame(i, j, resetFrame, noBreak);
+					if (Main.tile[i, j].TileFrameY < 90 && WorldGen.genRand.NextBool(5))
+					{
+						Main.tile[i, j].TileFrameY += 90;
+					}
+					FramingPreventRepitions = false;
+					return false;
+				}
+				catch
+				{
+
+				}
+				FramingPreventRepitions = false;
+			}
+			return true;
+		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			int rand = i + j;
-			if(rand % 2 == 0)
+			if(Main.tile[i, j].TileFrameY >= 90)
 			{
 				r = 0.2f;
 				g = 0.4f;
@@ -48,22 +71,10 @@ namespace SOTS.Items.Earth.Glowmoth
 				b = 0;
             }
 		}
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
-		{
-			int rand = i + j;
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/GlowSilkTileAlt").Value;
-			if (rand % 2 == 0)
-			{
-				SOTSTile.DrawSlopedGlowMask(i, j, Type, texture, Lighting.GetColor(i, j), Vector2.Zero, false);
-				return false;
-            }
-			return base.PreDraw(i, j, spriteBatch);
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			int rand = i + j;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/GlowSilkTileGlow").Value;
-			if (rand % 2 == 0)
+			if (Main.tile[i, j].TileFrameY >= 90)
 				SOTSTile.DrawSlopedGlowMask(i, j, Type, texture, Color.White, Vector2.Zero, false);
 		}
 		public override void SetStaticDefaults()

@@ -20,12 +20,12 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 100;   
+            Item.damage = 90;   
             Item.DamageType = DamageClass.Ranged;   
             Item.width = 48;    
             Item.height = 26;  
-            Item.useTime = 5;  
-            Item.useAnimation = 5;
+            Item.useTime = 7;  
+            Item.useAnimation = 7;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true; 
             Item.knockBack = 1;

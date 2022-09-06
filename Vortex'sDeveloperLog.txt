@@ -35,9 +35,10 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-9/4/22
+9/4/22 & 9/5/22
 1. Glowsilk and Otherworld Blocks
 2. Glowmoth cocoon generation
+3. Nerf Chaos Chamber usetime 5 -> 7, damage 100 -> 90
 
 9/2/22 & 9/3/22
 1. Framework for Glowmoth structure spawning
