@@ -37,7 +37,10 @@ namespace SOTS.Items.ChestItems
 			for(int i = 0; i < player.spikedBoots; i++)
 			{
 				float speedMult = 1.25f + i * 0.25f;
-				Projectile.NewProjectile(source, position, velocity * speedMult, type, damage, knockback, player.whoAmI);
+				int totalDamage = damage - 2 - i; //slight damage fall of for farther spikes (bigger quantities)
+				if (totalDamage < damage / 2)
+					totalDamage = damage / 2;
+				Projectile.NewProjectile(source, position, velocity * speedMult, type, totalDamage, knockback, player.whoAmI);
 			}
 			return true; 
 		}

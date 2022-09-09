@@ -349,7 +349,7 @@ namespace SOTS.Common.GlobalNPCs
             }
             if (item.DamageType.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.DamageType.CountsAsClass(DamageClass.Melee))
             {
-                if (Main.myPlayer == player.whoAmI)
+                if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).SerpentSpine)
                 {
                     if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 2f) * (BlazingCurse + 2f)))
                         BlazingCurse++;
@@ -395,9 +395,9 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(projectile.CountsAsClass(DamageClass.SummonMeleeSpeed) || projectile.CountsAsClass(DamageClass.Melee))
             {
-                if (Main.myPlayer == player.whoAmI)
+                if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).SerpentSpine)
                 {
-                    if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 1f) * (BlazingCurse + 1f) + 1f))
+                    if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 2f) * (BlazingCurse + 2f)))
                         BlazingCurse++;
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {

@@ -25,7 +25,7 @@ namespace SOTS.NPCs.Constructs
             NPC.width = 36;           
             NPC.height = 40;        
             NPC.damage = 16;
-            NPC.defense = 12;
+            NPC.defense = 10;
             NPC.lifeMax = 20000;  
             NPC.knockBackResist = 0.0f;
             NPC.behindTiles = true;
