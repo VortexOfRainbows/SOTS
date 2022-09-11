@@ -5,9 +5,11 @@ The following is my development plans :D
 Tmodloader Bugs:
 1. Chest Swapping isn't working..? (Issue already in Tmodloader)
 2. Chests crash when platforms are swapped below them (confirmed, Filed issue for Tmodloader)
+3. Resolution is broken sadge
 Acknowledged But Likely Delayed:
 1. (Mod Compat Probably) Assassination Potion MAY BE bugging with creatures below 20 hp, or 10%... I am completely unable to replicate this...
 2. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
+3. Bug: book of virtues is limiting wisps to 6? Multiplayer with magic storage only
 
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
@@ -34,14 +36,18 @@ Update Objectives:
 	1. Pyrocide
 6. Check if player possesses Texture Pack
 7. Make SOTS Dev Team on git hub!
-8. Bug: book of virtues is limiting wisps to 6? Multiplayer at magic storage only
+
 
 Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
 
+
 Daily Log:
+
+9/11/22
+1. Removed Constructs from Solar Eclipse
 
 9/8/22
 1. Earthen Construct Nerfs: damage 16 -> 14, defense 12 -> 10, life 225 -> 200

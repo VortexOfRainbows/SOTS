@@ -506,6 +506,10 @@ namespace SOTS.Common.GlobalNPCs
 			float constructRateMultiplier = 1f;
 			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
 				constructRateMultiplier = 0f;
+			if(Main.eclipse)
+            {
+				constructRateMultiplier = 0f;
+            }
 			bool ZoneForest = SOTSPlayer.ZoneForest(player);
 			bool ZonePlanetarium = spawnInfo.Player.GetModPlayer<SOTSPlayer>().PlanetariumBiome;
 			if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().PyramidBiome)
