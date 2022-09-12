@@ -46,6 +46,11 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+9/12/22
+1. Fix attacks speed bug with Digital Daito (reverse scaling)
+2. Fix visual bug with Digital Daito rotation
+3. WIP Pyrocide
+
 9/11/22
 1. Removed Constructs from Solar Eclipse
 

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items;
+using SOTS.Items.Temple;
 using SOTS.NPCs.Boss.Curse;
 using System;
 using System.Collections.Generic;
@@ -210,7 +211,7 @@ namespace SOTS.Projectiles
 				{
 					frameCount = 1;
 				}
-				if(item.useStyle == ItemUseStyleID.Swing || Item.staff[item.type] || item.type == ModContent.ItemType<DigitalDaito>())
+				if(item.useStyle == ItemUseStyleID.Swing || Item.staff[item.type] || item.type == ModContent.ItemType<DigitalDaito>() || item.type == ModContent.ItemType<Pyrocide>())
                 {
 					Projectile.rotation += MathHelper.ToRadians(150) * Projectile.spriteDirection;
                 }

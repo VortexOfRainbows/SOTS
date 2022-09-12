@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			else
 				direction *= (int)Projectile.ai[0];
-			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -215 : 45);
+			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
 			for (int i = 0; i < length + 1; i++)
 			{
 				Color color1 = Color.Lerp(new Color(0, 110, 170), new Color(122, 243, 255), 1f - (float)i / length);
@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Otherworld
 					if (distance > 320)
 						distance = 320;
 					toCursor = cursorArea - player.Center;
-					spinSpeed = (1.0f + (4.4f / (float)Math.Pow(distance / 100f, 1.9f))) * randMod * 5f * (SOTSPlayer.ModPlayer(player).attackSpeedMod) / player.GetAttackSpeed(DamageClass.Melee);
+					spinSpeed = (1.0f + (4.4f / (float)Math.Pow(distance / 100f, 1.9f))) * randMod * 5f * SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee);
 				}
 				counterOffset = 205 + 45f / randMod;
 				float slashOffset = counterOffset * Projectile.ai[0];
@@ -205,7 +205,7 @@ namespace SOTS.Projectiles.Otherworld
 			float iterator2 = (float)Math.Abs(spinSpeed * Projectile.ai[0] / randMod);
 			timeLeftCounter += iterator2;
 			counter += spinSpeed * Projectile.ai[0] / randMod;
-			if(timeLeftCounter > (235.0f + (4000f / distance)) / randMod)
+			if(timeLeftCounter > (235.0f + (4000f / distance)) / randMod) //complete a bigger arc with lower distance
             {
 				Projectile.hide = true;
 				Projectile.Kill();
