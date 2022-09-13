@@ -546,8 +546,8 @@ namespace SOTS
 			List<int> lightItemPool = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>() };
 			List<int> fireItemPool = new List<int>() { ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>() };
 
-			List<int> LihzahrdItems2 = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>() };
-			List<int> LihzahrdItems = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>() };
+			List<int> LihzahrdItems2 = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
+			List<int> LihzahrdItems = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
 			// Iterate chests
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
@@ -1354,9 +1354,9 @@ namespace SOTS
 							int rand = Main.rand.Next(LihzahrdItems.Count);
 							addItem = LihzahrdItems[rand];
 							LihzahrdItems.RemoveAt(rand);
-							chest.item[slot].SetDefaults(addItem); //add item to chest loot
-							slot++;
 						}
+						chest.item[slot].SetDefaults(addItem); //add item to chest loot
+						slot++;
 					}
 				}
 			}

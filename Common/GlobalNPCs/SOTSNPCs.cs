@@ -506,7 +506,7 @@ namespace SOTS.Common.GlobalNPCs
 			float constructRateMultiplier = 1f;
 			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
 				constructRateMultiplier = 0f;
-			if(Main.eclipse)
+			if(Main.eclipse || Main.pumpkinMoon || Main.snowMoon)
             {
 				constructRateMultiplier = 0f;
             }

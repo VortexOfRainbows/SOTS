@@ -10,6 +10,7 @@ using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Temple;
+using System;
 
 namespace SOTS.Items.Temple
 {
@@ -23,7 +24,7 @@ namespace SOTS.Items.Temple
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 80;
+            Item.damage = 90;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 76;
             Item.height = 82;  
@@ -39,17 +40,19 @@ namespace SOTS.Items.Temple
             Item.shootSpeed = 18f;
             Item.noUseGraphic = true; 
             Item.noMelee = true;
-		}
-		int i = 0;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ItemID.LunarTabletFragment, 20).AddIngredient(ItemID.LihzahrdPowerCell, 1).AddTile(TileID.MythrilAnvil).Register();
+        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			i++;
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (i % 2 * 2 -1) * 5, Main.rand.NextFloat(0.8f, 0.9f));
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 5 * Math.Sign(velocity.X), Main.rand.NextFloat(0.8f, 0.9f));
 			return false;
 		}
         public override int GetVoid(Player player)
         {
-            return 6;
+            return 15;
         }
     }
 }

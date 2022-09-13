@@ -50,6 +50,7 @@ namespace SOTS
 
 		public static Effect AtenTrail;
 		public static Effect WaterTrail;
+		public static Effect FireTrail;
 		public static Effect FireballShader;
 		public static Effect GodrayShader;
 		public static Effect VisionShader;
@@ -130,6 +131,7 @@ namespace SOTS
 				Filters.Scene["VMFilter"].Load();
 				AtenTrail = Instance.Assets.Request<Effect>("Effects/AtenTrail", AssetRequestMode.ImmediateLoad).Value;
 				WaterTrail = Instance.Assets.Request<Effect>("Effects/WaterTrail", AssetRequestMode.ImmediateLoad).Value;
+				FireTrail = Instance.Assets.Request<Effect>("Effects/FireTrail", AssetRequestMode.ImmediateLoad).Value;
 				FireballShader = Instance.Assets.Request<Effect>("Effects/FireballShader", AssetRequestMode.ImmediateLoad).Value;
 				GodrayShader = Instance.Assets.Request<Effect>("Effects/GodrayShader", AssetRequestMode.ImmediateLoad).Value;
 				VisionShader = Instance.Assets.Request<Effect>("Effects/VisionShader", AssetRequestMode.ImmediateLoad).Value;
@@ -143,6 +145,7 @@ namespace SOTS
 		public override void Unload() 
 		{
 			WaterTrail = null;
+			FireTrail = null;
 			AtenTrail = null;
 			FireballShader = null;
 			GodrayShader = null;

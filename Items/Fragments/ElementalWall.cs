@@ -239,7 +239,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<UmbraWall>();
+			ItemDrop = ModContent.ItemType<NetherWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)

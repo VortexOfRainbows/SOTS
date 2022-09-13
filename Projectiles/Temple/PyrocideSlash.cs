@@ -7,12 +7,18 @@ using Terraria.ID;
 using System.IO;
 using SOTS.Utilities;
 using SOTS.Void;
+using SOTS.Prim.Trails;
 
 namespace SOTS.Projectiles.Temple
 {    
     public class PyrocideSlash : ModProjectile //, IPixellated
     {
-		public override void SetStaticDefaults()
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+			target.AddBuff(BuffID.OnFire3, 900);
+            base.OnHitNPC(target, damage, knockback, crit);
+        }
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pyrocide Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
@@ -93,21 +99,21 @@ namespace SOTS.Projectiles.Temple
 				direction *= (int)FetchDirection;
 			float rotation = toProjectile.ToRotation();
 			Color baseColor = new Color(90, 80, 70, 0);
-			int segmentHeight = 22;
+			int segmentHeight = 24;
 			int totalSegments = length / segmentHeight;
 			for (int i = 1; i < totalSegments + 1; i++)
 			{
-				float scale = MathHelper.Lerp(1.0f, 0.75f, (float)Math.Pow(i / (float)(totalSegments + 1), 2));
+				float scale = MathHelper.Lerp(1.0f, 0.65f, (float)Math.Pow(i / (float)(totalSegments + 1), 2));
 				Color color2 = Color.Lerp(Void.VoidPlayer.Inferno2, Void.VoidPlayer.Inferno1, 1f - (float)i / totalSegments);
 				color2 = Color.Lerp(color2, baseColor, 0.7f);
 				Vector2 toProj2 = rotateToPosition + rotateToPosition.SafeNormalize(Vector2.Zero) * (i * segmentHeight);
 				for(int j = 0; j < 5; j++)
                 {
 					Vector2 random = Main.rand.NextVector2Circular(j + 1, j + 1) * 0.75f;
-					color2 = Color.Lerp(color2, baseColor, 0.2f);
-					color2 = Color.Lerp(color2, new Color(160, 70, 30, 0), 0.2f);
-					scale *= 1.1f;
-					spriteBatch.Draw(texture2, player.Center + toProj2 - Main.screenPosition + random, null, color2, rotation + MathHelper.Pi, originFlame, new Vector2(1.05f, scale), direction == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+					color2 = Color.Lerp(color2, baseColor, 0.3f);
+					color2 = Color.Lerp(color2, new Color(160, 70, 30, 0), 0.3f);
+					scale *= 1.15f;
+					spriteBatch.Draw(texture2, player.Center + toProj2 - Main.screenPosition + random, null, color2, rotation + MathHelper.Pi, originFlame, new Vector2(1.5f, scale), direction == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 				}
 			}
 			rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
@@ -140,12 +146,20 @@ namespace SOTS.Projectiles.Temple
 		public float distance = 0;
 		float counterOffset;
 		float timeLeftCounter = 0;
+		public int GetArcLength()
+		{
+			Player player = Main.player[Projectile.owner];
+			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
+			int length = (int)toProjectile.Length();
+			return length;
+		}
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
 			float randMod = Projectile.ai[1];
 			if (runOnce)
 			{
+				SOTS.primitives.CreateTrail(new FireTrail(Projectile, GetArcLength() * 0.5f, FetchDirection));
 				SOTSUtils.PlaySound(SoundID.Item74, (int)player.Center.X, (int)player.Center.Y, 0.6f, 0.7f * randMod);
 				if (Main.myPlayer == Projectile.owner)
 				{
@@ -194,7 +208,7 @@ namespace SOTS.Projectiles.Temple
 					}
 					if (AbsAI0 == 1)
 					{
-						speedBonus = -0.6f;
+						speedBonus = -0.5f;
 					}
 					int damage = Projectile.damage;
 					if (AbsAI0 == 1)
@@ -210,7 +224,7 @@ namespace SOTS.Projectiles.Temple
 							a.distance = distance * 0.90f + 16;
 						if (AbsAI0 == 1)
                         {
-							a.distance = distance * 1.2f + 200;
+							a.distance = distance * 1.2f + 220;
                         }							
                     }
 				}
@@ -224,12 +238,15 @@ namespace SOTS.Projectiles.Temple
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.2f / 255f, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1.0f / 255f);
 			if(toCursor != Vector2.Zero)
 			{
-				float distMult = 14f / (float)Math.Pow(distance, 0.5);
+				int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
+				float distMult = 15f / (float)Math.Pow(distance, 0.5);
 				double deg = counter; 
 				double rad = deg * (Math.PI / 180);
 				Vector2 ovalArea = new Vector2(distance * 0.25f * mult, 0).RotatedBy(toCursor.ToRotation()); //center a point somewhat distant from the player
 				Vector2 ovalArea2 = new Vector2(distance * 0.75f * mult, 0).RotatedBy((float)rad); //create a circle
 				ovalArea2.Y *= 1f / randMod * distMult; //turn circle into an oval by compressing the y value
+				if (AbsAI0 == 1)
+					ovalArea2.Y *= 0.18f;
 				ovalArea2 = ovalArea2.RotatedBy(toCursor.ToRotation());
 				ovalArea.X += ovalArea2.X;
 				ovalArea.Y += ovalArea2.Y;
@@ -250,7 +267,7 @@ namespace SOTS.Projectiles.Temple
             {
 				if (dustAway != Vector2.Zero)
 				{
-					float amt = Main.rand.NextFloat(1.2f, 2) * distance / 480f;
+					float amt = Main.rand.NextFloat(1.4f, 2.4f) * distance / 480f;
 					for (int i = 0; i < amt; i++) //generates dust at the end of the blade
 					{
 						float dustScale = 1f;
@@ -269,7 +286,7 @@ namespace SOTS.Projectiles.Temple
 							dust.color = Color.Lerp(Void.VoidPlayer.Inferno1, Void.VoidPlayer.Inferno2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 					}
 					Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
-					for (int i = 0; i < amt * 0.8f; i++) //generates dust throughout the length of the blade
+					for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
 					{
 						float rand = Main.rand.NextFloat(0.9f, 1.35f);
 						int type = ModContent.DustType<Dusts.CopyDust4>();
