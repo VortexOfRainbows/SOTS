@@ -85,7 +85,7 @@ namespace SOTS.NPCs.Constructs
         public override void AI()
         {
 			NPC.ai[0]++;
-			if(NPC.ai[0] > 30)
+			if(NPC.ai[0] > 120)
             {
 				NPC.dontTakeDamage = false;
 			}

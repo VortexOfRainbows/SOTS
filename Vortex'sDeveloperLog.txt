@@ -10,6 +10,7 @@ Acknowledged But Likely Delayed:
 1. (Mod Compat Probably) Assassination Potion MAY BE bugging with creatures below 20 hp, or 10%... I am completely unable to replicate this...
 2. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
 3. Bug: book of virtues is limiting wisps to 6? Multiplayer with magic storage only
+4. Bug: shattershine hitting inappropriately fast (hitbox on player..?, not spawning shards)
 
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
@@ -43,6 +44,12 @@ Other 1.4 related objectives:
 
 
 Daily Log:
+
+9/16/22
+1. Chaos Chasis immunity time 0.5 seconds -> 2 seconds (should make it harder to kill on accident)
+2. Electromagnetic Deterrent (DEFE) Droprate 2% -> 5% -> 10% (now)
+3. DEFE sell price changes 3 gold -> 1 gold
+4. WIP Subspace Boosters (needs some different visuals potentially)
 
 9/12/22
 1. Fix attacks speed bug with Digital Daito (reverse scaling)

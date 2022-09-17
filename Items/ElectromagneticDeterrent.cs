@@ -24,7 +24,7 @@ namespace SOTS.Items
 			Item.CloneDefaults(ItemID.StoneBlock);
             Item.width = 54;     
             Item.height = 32;   
-            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Orange;
 			Item.createTile = ModContent.TileType<ElectromagneticDeterrentTile>();
 		}

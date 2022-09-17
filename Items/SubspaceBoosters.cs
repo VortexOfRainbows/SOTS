@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Celestial;
 using SOTS.Items.Permafrost;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,93 +9,95 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items
 {
-    [AutoloadEquip(EquipType.Shoes)]
-    public class FlashsparkBoots : ModItem
+    //[AutoloadEquip(EquipType.Shoes)]
+    public class SubspaceBoosters : ModItem
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flashspark Boots");
+			DisplayName.SetDefault("Subspace Boosters");
 			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava" +
-                "\nRunning causes you to blast forward, granting higher speed and acceleration\nThis blast cannot be controlled\n'Recipro Burst!'");
+                "\nDouble tap dash while on the ground to blast forward, granting higher speed and acceleration");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{
-            Item.width = 42;     
-            Item.height = 38;   
-            Item.value = Item.sellPrice(0, 15, 0, 0);
-            Item.rare = ItemRarityID.Yellow;
+            Item.width = 40;     
+            Item.height = 40;   
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+            Item.rare = ItemRarityID.Red;
 			Item.accessory = true;
 			Item.expert = false;
-        }
+		}
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return equippedItem.type != ModContent.ItemType<SubspaceBoosters>();
+            return equippedItem.type != ModContent.ItemType<FlashsparkBoots>();
         }
         public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.TerrasparkBoots, 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12).AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1).AddIngredient<FlashsparkBoots>(1).AddIngredient(ItemID.Tabi, 1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 12).AddTile(TileID.TinkerersWorkbench).Register();
 		}
-        bool activateParticle = false;
         int hasActivate = -1;
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.buffImmune[BuffID.Burning] = true;
 			player.waterWalk = true; 
 			player.fireWalk = true; 
-			player.lavaMax += 600;
-            player.rocketBoots = (player.vanityRocketBoots = 4);
+			player.lavaMax += 600; 
+			player.rocketBoots = (player.vanityRocketBoots = 4);
             player.iceSkate = true;
 			player.moveSpeed += 0.2f;
             player.accRunSpeed = 7f;
             bool particles = FireBoostPlayer(player);
-            if(activateParticle)
+            bool activate = false;
+            if (player.controlRight && player.releaseRight && player.doubleTapCardinalTimer[2] < 15)
+                activate = true;
+            else if (player.controlLeft && player.releaseLeft && player.doubleTapCardinalTimer[3] < 15)
+                activate = true;
+            if (hasActivate == -1 && activate && player.velocity.Y == 0.0)
             {
-                if(hasActivate == -1)
+                SOTSUtils.PlaySound(SoundID.Item45, (int)player.Center.X, (int)player.Center.Y, 1.3f, -0.4f);
+                SOTSUtils.PlaySound(SoundID.Item14, (int)player.Center.X, (int)player.Center.Y, 1.0f, -0.3f);
+                hasActivate = 60;
+                for (int i = 0; i < 3; i++)
                 {
-                    SOTSUtils.PlaySound(SoundID.Item45, (int)player.Center.X, (int)player.Center.Y, 1.3f, -0.4f);
-                    SOTSUtils.PlaySound(SoundID.Item14, (int)player.Center.X, (int)player.Center.Y, 1.0f, -0.3f);
-                    hasActivate = 180;
-                    for(int i = 0; i < 3; i++)
+                    int amt = 45 + i * 15;
+                    for (int j = 0; j < amt; j++)
                     {
-                        int amt = 45 + i * 15;
-                        for (int j = 0; j < amt; j++)
+                        Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(360f * j / amt));
+                        circularLocation.X *= 0.6f;
+                        var index = Dust.NewDust(player.Center + circularLocation - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 5f - i * 0.8f);
+                        circularLocation = circularLocation.SafeNormalize(Vector2.Zero) * 7.5f;
+                        circularLocation.X -= (player.velocity.X + player.direction * 24) * (1.3f + (i * 0.4f));
+                        if (i == 0)
                         {
-                            Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(360f * j / amt));
-                            circularLocation.X *= 0.6f;
-                            var index = Dust.NewDust(player.Center + circularLocation - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 5f - i * 0.8f);
-                            circularLocation = circularLocation.SafeNormalize(Vector2.Zero) * 7.5f;
-                            circularLocation.X -= player.velocity.X * (1.5f + (i * 0.4f));
-                            if(i == 0)
-                            {
-                                circularLocation *= 0.33f;
-                            }
-                            if (i == 1)
-                            {
-                                circularLocation *= 0.66f;
-                            }
-                            Main.dust[index].velocity.X += circularLocation.X;
-                            Main.dust[index].velocity.Y = circularLocation.Y;
-                            Main.dust[index].noGravity = true;
-                            Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                            circularLocation *= 0.33f;
                         }
+                        if (i == 1)
+                        {
+                            circularLocation *= 0.66f;
+                        }
+                        Main.dust[index].velocity.X += circularLocation.X;
+                        Main.dust[index].velocity.Y = circularLocation.Y;
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
                     }
-                    for (int j = 0; j < 20; j++)
-                    {
-                        Vector2 velo = new Vector2(-player.velocity.X * (1f + (j * 0.1f)) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-6.0f, 6.0f));
-                        velo.X *= Main.rand.NextFloat(0.5f, 1.5f);
-                        MakeDustShape(player, player.Center, velo, j % 4);
-                    }
-                    player.velocity.X *= 2.5f;
                 }
+                for (int j = 0; j < 20; j++)
+                {
+                    Vector2 velo = new Vector2(-(player.velocity.X + player.direction * 24) * (0.9f + (j * 0.1f)) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-6.0f, 6.0f));
+                    velo.X *= Main.rand.NextFloat(0.5f, 1.5f);
+                    MakeDustShape(player, player.Center, velo, j % 4);
+                }
+                if(player.velocity.X * player.direction < 0)
+                {
+                    player.velocity *= -0.6f;
+                }
+                player.velocity.X += player.direction * 12;
+                player.velocity.X *= 1.2f;
             }
-            else
-            {
-                hasActivate = -1;
-            }
-            if(hasActivate > 0)
+            if (hasActivate > -1)
             {
                 hasActivate--;
             }
@@ -280,11 +283,9 @@ namespace SOTS.Items
                     Main.dust[index].velocity.X *= 0.2f;
                     Main.dust[index].velocity.Y *= 0.2f;
                     Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
-                    activateParticle = false;
                 }
                 else
                 {
-                    activateParticle = true;
                     for (float i = 0; i <= 3; i += 0.6f)
                     {
                         int length = 1;
@@ -301,11 +302,11 @@ namespace SOTS.Items
                     }
                     for (float i = 0; i < 2; i ++)
                     {
-                        if (Main.rand.NextBool(26 - hasActivate / 9))
+                        if (Main.rand.NextBool(26 - hasActivate / 5))
                         {
-                            Vector2 velo = new Vector2(-player.velocity.X * (0.6f + 0.6f * hasActivate / 180f) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-2.4f, 2.4f));
+                            Vector2 velo = new Vector2(-player.velocity.X * (0.6f + 0.6f * hasActivate / 60f) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-2.4f, 2.4f));
                             velo.X *= Main.rand.NextFloat(0.5f, 1.25f);
-                            MakeDustShape(player, player.Center, velo, Main.rand.Next(4) % 4, 0.6f + 0.4f * hasActivate / 180f);
+                            MakeDustShape(player, player.Center, velo, Main.rand.Next(4) % 4, 0.6f + 0.4f * hasActivate / 60f);
                         }
                     }
                 }

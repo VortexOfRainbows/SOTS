@@ -339,7 +339,7 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
 			{
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrushingResistor>(), 50));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectromagneticDeterrent>(), 20));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectromagneticDeterrent>(), 10));
 				if (npc.type != ModContent.NPCType<OtherworldlyConstructHead2>() && npc.type != ModContent.NPCType<OtherworldlyConstructHead>())
 				{
 					if (npc.type == ModContent.NPCType<NatureConstruct>())
