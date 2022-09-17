@@ -50,6 +50,7 @@ Daily Log:
 2. Electromagnetic Deterrent (DEFE) Droprate 2% -> 5% -> 10% (now)
 3. DEFE sell price changes 3 gold -> 1 gold
 4. WIP Subspace Boosters (needs some different visuals potentially)
+5. Fake Player (Subserv) now uses modded special glowmasks
 
 9/12/22
 1. Fix attacks speed bug with Digital Daito (reverse scaling)

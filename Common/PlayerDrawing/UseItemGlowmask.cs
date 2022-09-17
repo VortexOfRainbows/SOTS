@@ -20,7 +20,7 @@ namespace SOTS.Common.PlayerDrawing
 			return true;
 		}
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.HeldItem);
-		protected override void Draw(ref PlayerDrawSet drawInfo)
+		public static void DrawStatic(ref PlayerDrawSet drawInfo)
 		{
 			if (Main.dresserInterfaceDummy == drawInfo.drawPlayer)
 				return;
@@ -66,9 +66,9 @@ namespace SOTS.Common.PlayerDrawing
 								origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, (float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Height);
 								width -= Terraria.GameContent.TextureAssets.Item[item.type].Value.Width;
 							}
-							if(item.type == ModContent.ItemType<Items.Temple.Revolution>())
-                            {
-								texture = Mod.Assets.Request<Texture2D>(Items.Temple.Revolution.TextureName).Value;
+							if (item.type == ModContent.ItemType<Items.Temple.Revolution>())
+							{
+								texture = ModContent.Request<Texture2D>("SOTS/" + Items.Temple.Revolution.TextureName).Value;
 							}
 							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Color.White, rotation, origin, beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value);
@@ -113,7 +113,7 @@ namespace SOTS.Common.PlayerDrawing
 									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), color, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 									drawInfo.DrawDataCache.Add(value2);
 								}
-								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
+								DrawData value = new DrawData(ModContent.Request<Texture2D>("SOTS/Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 							for (int i = 0; i < recurse; i++)
@@ -136,7 +136,7 @@ namespace SOTS.Common.PlayerDrawing
 								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
-							Texture2D tBlack = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterBlack").Value;
+							Texture2D tBlack = ModContent.Request<Texture2D>("SOTS/Items/Chaos/RealityShatterBlack").Value;
 							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value2);
 							for (int k = 0; k < 6; k++)
@@ -149,7 +149,7 @@ namespace SOTS.Common.PlayerDrawing
 						}
 						else if (item.type == ModContent.ItemType<EtherealScepter>())
 						{
-							Texture2D tEffect = Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterEffect").Value;
+							Texture2D tEffect = ModContent.Request<Texture2D>("SOTS/Items/Chaos/EtherealScepterEffect").Value;
 							for (int k = 0; k < 6; k++)
 							{
 								Color color = Color.White;
@@ -190,5 +190,9 @@ namespace SOTS.Common.PlayerDrawing
 				}
 			}
 		}
+		protected override void Draw(ref PlayerDrawSet drawInfo)
+        {
+			DrawStatic(ref drawInfo);
+        }
 	}
 }

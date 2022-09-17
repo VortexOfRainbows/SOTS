@@ -382,7 +382,10 @@ namespace SOTS.FakePlayer
                 ConvertItemTextureBackToNormal(drawInfo.heldItem);
             }
             else
+            {
                 Draw27_HeldItem(ref drawInfo, Vector2.Zero);
+                Common.PlayerDrawing.UseItemGlowmask.DrawStatic(ref drawInfo);
+            }
         }
         public void Draw27_HeldItem(ref PlayerDrawSet drawInfo, Vector2 offset)
         {
