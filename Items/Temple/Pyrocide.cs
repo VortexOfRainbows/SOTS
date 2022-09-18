@@ -33,7 +33,7 @@ namespace SOTS.Items.Temple
             Item.useStyle = ItemUseStyleID.Shoot;		
             Item.knockBack = 8f;
             Item.value = Item.sellPrice(0, 15, 0, 0);
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.Lime;
             Item.UseSound = null;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<PyrocideSlash>(); 

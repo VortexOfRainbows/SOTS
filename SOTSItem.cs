@@ -210,7 +210,7 @@ namespace SOTS
 			dedicatedMinez = new int[] { ItemType<DoorPants>(), ItemType<BandOfDoor>() }; //Minez
 			dedicatedRainbow = new int[] {  ItemType<SubspaceLocket>() }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>() }; //Blasfah
-			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
+			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>() }; //Heart Plus Up
 			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
 			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
 			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];

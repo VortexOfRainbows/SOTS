@@ -92,9 +92,10 @@ namespace SOTS.Items
                 }
                 if(player.velocity.X * player.direction < 0)
                 {
-                    player.velocity *= -0.6f;
+                    player.velocity *= -1f;
                 }
-                player.velocity.X += player.direction * 12;
+                player.velocity *= 0.6f;
+                player.velocity.X += player.direction * 14;
                 player.velocity.X *= 1.2f;
             }
             if (hasActivate > -1)

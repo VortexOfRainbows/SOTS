@@ -6,22 +6,39 @@ using Terraria.ModLoader;
 using System;
 using SOTS.Projectiles.Temple;
 using System.Collections.Generic;
+using SOTS.Projectiles.Evil;
 
 namespace SOTS.Prim.Trails
 {
 	class FireTrail : PrimTrail
 	{
 		int ClockWiseOrCounterClockwise;
-		public FireTrail(Projectile projectile, float width = 12, int clockWise = 1)
+		public Vector4 Color1;
+		public Vector4 Color2;
+		public int TextureType;
+		public FireTrail(Projectile projectile, int clockWise = 1, int maxTrailLength = 24, int textureType = 0)
 		{
 			Entity = projectile;
 			EntityType = projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
-			Color = new Color(255, 190, 0, 0);
-			Width = width;
-			Cap = 24;
+			Color1 = new Color(255, 190, 0, 0).ToVector4();
+			Cap = maxTrailLength;
 			Pixellated = false;
 			ClockWiseOrCounterClockwise = clockWise;
+			Color2 = new Vector4(0.9f, 0, 0, 0);
+			TextureType = textureType;
+		}
+		public FireTrail(Projectile projectile, int clockWise, Vector4 firstColor, Vector4 secondColor, int maxTrailLength = 24, int textureType = 0)
+		{
+			Entity = projectile;
+			EntityType = projectile.type;
+			DrawType = PrimTrailManager.DrawProjectile;
+			Color1 = firstColor;
+			Cap = maxTrailLength;
+			Pixellated = false;
+			ClockWiseOrCounterClockwise = clockWise;
+			Color2 = secondColor;
+			TextureType = textureType;
 		}
 		public override void SetDefaults() => AlphaValue = 1f;
 		public override void PrimStructure(SpriteBatch spriteBatch)
@@ -55,9 +72,14 @@ namespace SOTS.Prim.Trails
 		public override void SetShaders()
 		{
 			Effect effect = SOTS.FireTrail;
-			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().Assets.Request<Texture2D>("TrailTextures/PyrocideTrail" + (ClockWiseOrCounterClockwise == 1 ? "" : "Flipped")).Value);
-			effect.Parameters["ColorOne"].SetValue(Color.ToVector4());
-			effect.Parameters["ColorTwo"].SetValue(new Vector4(0.9f, 0, 0, 0));
+			string texture = "TrailTextures/PyrocideTrail";
+			if(TextureType == 1)
+            {
+				texture = "TrailTextures/SwordSlash";
+			}
+			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().Assets.Request<Texture2D>(texture + (ClockWiseOrCounterClockwise == 1 ? "" : "Flipped")).Value);
+			effect.Parameters["ColorOne"].SetValue(Color1);
+			effect.Parameters["ColorTwo"].SetValue(Color2);
 			PrepareShader(effect, "MainPS", 0);
 		}
 		public Vector2 ownerCenter;
@@ -85,6 +107,15 @@ namespace SOTS.Prim.Trails
 					if (pyro.FetchDirection != ClockWiseOrCounterClockwise)
 						Destroyed = true;
 					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 32, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
+				}
+				else if (proj.ModProjectile is ToothAcheSlash ache && Entity.active && Entity != null)
+				{
+					WidthList.Add(ache.GetArcLength() * 0.5f + 12);
+					ownerCenter = projOwner.Center;
+					toOwner.Add(ownerCenter - proj.Center);
+					if (ache.FetchDirection != ClockWiseOrCounterClockwise)
+						Destroyed = true;
+					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
 				}
 				else
 					OnDestroy();

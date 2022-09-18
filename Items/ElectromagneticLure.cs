@@ -36,7 +36,7 @@ namespace SOTS.Items
 		}
         public override void AddRecipes()
 		{
-			CreateRecipe(1).AddRecipeGroup("SOTS:DissolvingElement", 1).AddRecipeGroup("SOTS:ElementalFragment", 20).AddRecipeGroup("SOTS:ElementalPlating", 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddRecipeGroup("SOTS:DissolvingElement", 1).AddRecipeGroup("SOTS:ElementalFragment", 15).AddRecipeGroup("SOTS:ElementalPlating", 15).AddTile(TileID.Anvils).Register();
 		}
 		public List<int> CapableNPCS(Player player)
 		{
