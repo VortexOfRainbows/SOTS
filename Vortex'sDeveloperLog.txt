@@ -46,6 +46,8 @@ Daily Log:
 9/17/22 & 9/18/22
 1. Electromagnetic Lure now takes 20 -> 15 fragments and plating blocks.
 2. WIP Tooth Ache
+3. Subspace Boosters now use green shaders on the fire dust when no dye is available. This is because the fire dust works better with shaders, and to make
+	1. the trail consistency easier to preserve.
 
 9/16/22
 1. Chaos Chasis immunity time 0.5 seconds -> 2 seconds (should make it harder to kill on accident)

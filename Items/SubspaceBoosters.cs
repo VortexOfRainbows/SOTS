@@ -39,6 +39,10 @@ namespace SOTS.Items
 			CreateRecipe(1).AddIngredient<FlashsparkBoots>(1).AddIngredient(ItemID.Tabi, 1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 12).AddTile(TileID.TinkerersWorkbench).Register();
 		}
         int hasActivate = -1;
+        public int GetPlayerDyeShoes(Player player)
+        {
+            return player.cShoe == 0 ? (!Main.rand.NextBool(3) ? GameShaders.Armor.GetShaderIdFromItemId(ItemID.GreenDye) : GameShaders.Armor.GetShaderIdFromItemId(ItemID.LimeDye)) : player.cShoe;
+        }
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.buffImmune[BuffID.Burning] = true;
@@ -81,7 +85,7 @@ namespace SOTS.Items
                         Main.dust[index].velocity.X += circularLocation.X;
                         Main.dust[index].velocity.Y = circularLocation.Y;
                         Main.dust[index].noGravity = true;
-                        Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                        Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
                     }
                 }
                 for (int j = 0; j < 20; j++)
@@ -123,7 +127,7 @@ namespace SOTS.Items
                         dust.velocity *= 0.5f;
                         dust.velocity = velocity;
                         dust.noGravity = true;
-                        dust.shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                        dust.shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
                     }
             }
             else if (type == 1)
@@ -138,7 +142,7 @@ namespace SOTS.Items
                         dust.velocity *= 0.5f;
                         dust.velocity = velocity;
                         dust.noGravity = true;
-                        dust.shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                        dust.shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
                     }
             }
             else if (type == 2)
@@ -153,7 +157,7 @@ namespace SOTS.Items
                         dust.velocity *= 0.5f;
                         dust.velocity = velocity;
                         dust.noGravity = true;
-                        dust.shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                        dust.shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
                     }
             }
             else
@@ -166,7 +170,7 @@ namespace SOTS.Items
                     dust.velocity *= 0.5f;
                     dust.velocity = velocity;
                     dust.noGravity = true;
-                    dust.shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                    dust.shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
                 }
             }
         }
@@ -283,7 +287,7 @@ namespace SOTS.Items
                     var index = Dust.NewDust(new Vector2(player.position.X - 4f, player.position.Y + player.height + num3), player.width + 8, 4, 16, -player.velocity.X * 0.5f, player.velocity.Y * 0.5f, 50, new Color(), 1.5f);
                     Main.dust[index].velocity.X *= 0.2f;
                     Main.dust[index].velocity.Y *= 0.2f;
-                    Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                    Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
                 }
                 else
                 {
@@ -298,7 +302,7 @@ namespace SOTS.Items
                             Main.dust[index].velocity.X *= 0.65f;
                             Main.dust[index].velocity.Y *= 0.65f;
                             Main.dust[index].noGravity = true;
-                            Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                            Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
                         }
                     }
                     for (float i = 0; i < 2; i ++)
