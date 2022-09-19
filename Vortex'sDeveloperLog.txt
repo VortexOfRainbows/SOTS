@@ -48,6 +48,14 @@ Daily Log:
 2. WIP Tooth Ache
 3. Subspace Boosters now use green shaders on the fire dust when no dye is available. This is because the fire dust works better with shaders, and to make
 	1. the trail consistency easier to preserve.
+4. Blaspha damage 43 -> 45
+5. Lux damage resist during Laser orb 0.7 mult -> 0.75 mult
+	1. RGB Transition 0.35f -> 0.425f;
+	2. RBG Phase 0.5 -> 0.6
+	3. Lux Overall defense 54 -> 50 (2 more damage from all attacks)
+6. Fix Subspace Booster multiplayer
+7. Finish tooth ache (needs balancing and droprate tho)
+	1. Works in multiplayer
 
 9/16/22
 1. Chaos Chasis immunity time 0.5 seconds -> 2 seconds (should make it harder to kill on accident)

@@ -20,7 +20,7 @@ namespace SOTS.Items.Inferno
         }
 		public override void SetDefaults()
 		{
-            Item.damage = 43;
+            Item.damage = 45;
             Item.DamageType = DamageClass.Ranged;  
             Item.width = 68;   
             Item.height = 26;

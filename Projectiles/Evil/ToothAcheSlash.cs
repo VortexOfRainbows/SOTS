@@ -13,8 +13,8 @@ namespace SOTS.Projectiles.Evil
 {    
     public class ToothAcheSlash : ModProjectile //, IPixellated
     {
-		public static Color toothAcheLime = new Color(168, 201, 52);
-		public static Color toothAcheGreen = new Color(98, 118, 18);
+		public static Color toothAcheLime = new Color(174, 213, 56);
+		public static Color toothAcheGreen = new Color(110, 132, 22);
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			target.AddBuff(BuffID.Poisoned, 180);
@@ -142,6 +142,7 @@ namespace SOTS.Projectiles.Evil
 		{
 			Player player = Main.player[Projectile.owner];
 			float randMod = Projectile.ai[1];
+			int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 			if (runOnce)
 			{
 				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: FetchDirection, toothAcheLime.ToVector4(), toothAcheGreen.ToVector4(), 20, 1));
@@ -160,8 +161,10 @@ namespace SOTS.Projectiles.Evil
 					}
 					toCursor = cursorArea - player.Center;
 					spinSpeed = (2.2f + (1.2f / (float)Math.Pow(distance / 120f, 2f))) * randMod * 5f * (0.7f + 0.3f * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee)));
+					if (AbsAI0 == 2)
+						spinSpeed *= 0.6f;
 				}
-				counterOffset = 235 + 15f / randMod;
+				counterOffset = 200 + 15f / randMod;
 				float slashOffset = counterOffset * FetchDirection;
 				counter = slashOffset;
 				runOnce = false;
@@ -179,39 +182,37 @@ namespace SOTS.Projectiles.Evil
 				{
 					AbsAI0--;
 					float speedBonus = 0f;
-					if(AbsAI0 == 4)
+					if(AbsAI0 == 3)
                     {
-						//speedBonus = 0.7f;
-					}
-					if (AbsAI0 == 3)
-					{
-						//speedBonus = -0.1f;
+						speedBonus = 0.3f;
 					}
 					if (AbsAI0 == 2)
 					{
-						//speedBonus = 0.4f;
+						speedBonus = -0.3f;
 					}
 					if (AbsAI0 == 1)
 					{
-						//speedBonus = -0.5f;
+						speedBonus = 0.1f;
 					}
 					int damage = Projectile.damage;
 					if (AbsAI0 == 1)
-						damage = (int)(damage * 1.5f);
-					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * AbsAI0, Projectile.ai[1] + speedBonus);
-					if(proj.ModProjectile is ToothAcheSlash a)
 					{
-						a.distance = distance;
-						/*if (AbsAI0 == 4)
-							a.distance = distance * 0.65f + 16;
-						else if (AbsAI0 == 3)
-							a.distance = distance * 1.10f + 8; 
-						else if (AbsAI0 == 2)
-							a.distance = distance * 0.90f + 16;
-						if (AbsAI0 == 1)
-                        {
-							a.distance = distance * 1.2f + 220;
-                        }*/
+						damage = (int)(damage * 1.0f);
+						Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<ToothAcheThrow>(), damage, Projectile.knockBack, player.whoAmI, 0, FetchDirection);
+					}
+					else
+					{
+						Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * AbsAI0, Projectile.ai[1] + speedBonus);
+						if (proj.ModProjectile is ToothAcheSlash a)
+						{
+							a.distance = distance;
+							if (AbsAI0 == 3)
+								a.distance = distance * 1.08f + 24;
+							else if (AbsAI0 == 2)
+								a.distance = distance * 0.9f;
+							else	
+								a.distance = distance * 0.95f + 16;
+						}
 					}
 				}
 			}
@@ -221,18 +222,20 @@ namespace SOTS.Projectiles.Evil
 			Player player = Main.player[Projectile.owner];
 			float randMod = Projectile.ai[1];
 			float mult = 0.7f + 0.3f * Projectile.ai[1];
+			int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.2f / 255f, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1.0f / 255f);
 			if(toCursor != Vector2.Zero)
 			{
-				int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 				float yDistMult = (float)Math.Pow(distance / 124f, 0.5);
 				double deg = counter; 
 				double rad = deg * (Math.PI / 180);
 				Vector2 ovalArea = new Vector2(distance * 0.25f * mult, 0).RotatedBy(toCursor.ToRotation()); //center a point somewhat distant from the player
 				Vector2 ovalArea2 = new Vector2(distance * 0.75f * mult, 0).RotatedBy((float)rad); //create a circle
 				ovalArea2.Y *= 0.85f / randMod * yDistMult; //turn circle into an oval by compressing the y value
-				if (AbsAI0 == 1)
-					ovalArea2.Y *= 0.5f;
+				if (AbsAI0 == 3)
+					ovalArea2.Y *= 0.4f;
+				if (AbsAI0 == 2)
+					ovalArea2.Y *= 0.8f;
 				ovalArea2 = ovalArea2.RotatedBy(toCursor.ToRotation());
 				ovalArea.X += ovalArea2.X;
 				ovalArea.Y += ovalArea2.Y;
@@ -244,7 +247,10 @@ namespace SOTS.Projectiles.Evil
 			float iterator2 = (float)Math.Abs(incremendAmount);
 			timeLeftCounter += iterator2;
 			counter += incremendAmount;
-			if(timeLeftCounter > (265.0f + (1800f / distance))) //complete a bigger arc with a lower distance
+			float totalSwipeDegrees = (270.0f + (1800f / distance));
+			if (AbsAI0 == 3)
+				totalSwipeDegrees += 10;
+			if (timeLeftCounter > totalSwipeDegrees) //complete a bigger arc with a lower distance
             {
 				Projectile.hide = true;
 				Projectile.Kill();

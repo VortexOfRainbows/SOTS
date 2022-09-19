@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Permafrost;
 using Terraria;
 using Terraria.DataStructures;
@@ -21,7 +22,7 @@ namespace SOTS.Items.Permafrost
             Item.damage = 14;
             Item.DamageType = DamageClass.Magic;
             Item.width = 40;
-            Item.height = 38;
+            Item.height = 50;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -34,6 +35,11 @@ namespace SOTS.Items.Permafrost
 			Item.mana = 15;
 			Item.crit = 2;
 			Item.shoot = ModContent.ProjectileType<IceStorm>();
+            Item.noUseGraphic = true;
+            if (!Main.dedServ)
+            {
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Permafrost/StormSpellAnim").Value;
+            }
         }
 		public override void AddRecipes()
 		{

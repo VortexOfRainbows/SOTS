@@ -12,7 +12,7 @@ namespace SOTS.Prim.Trails
 {
 	class FireTrail : PrimTrail
 	{
-		int ClockWiseOrCounterClockwise;
+		public int ClockWiseOrCounterClockwise;
 		public Vector4 Color1;
 		public Vector4 Color2;
 		public int TextureType;
@@ -73,11 +73,14 @@ namespace SOTS.Prim.Trails
 		{
 			Effect effect = SOTS.FireTrail;
 			string texture = "TrailTextures/PyrocideTrail";
-			if(TextureType == 1)
-            {
+			if (TextureType == 1 || TextureType == 2)
+			{
 				texture = "TrailTextures/SwordSlash";
 			}
-			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().Assets.Request<Texture2D>(texture + (ClockWiseOrCounterClockwise == 1 ? "" : "Flipped")).Value);
+			int directionCheck = 1;
+			if (TextureType == 2)
+				directionCheck = -1;
+			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().Assets.Request<Texture2D>(texture + (ClockWiseOrCounterClockwise == directionCheck ? "" : "Flipped")).Value);
 			effect.Parameters["ColorOne"].SetValue(Color1);
 			effect.Parameters["ColorTwo"].SetValue(Color2);
 			PrepareShader(effect, "MainPS", 0);
@@ -117,6 +120,15 @@ namespace SOTS.Prim.Trails
 						Destroyed = true;
 					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
 				}
+				else if (proj.ModProjectile is ToothAcheThrow throwSword && Entity.active && Entity != null)
+				{
+					WidthList.Add(36);
+					//ownerCenter = projOwner.Center;
+					toOwner.Add(new Vector2(1, -1).RotatedBy(proj.rotation));
+					if (throwSword.initialDirection != ClockWiseOrCounterClockwise)
+						Destroyed = true;
+					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 32); // - new Vector2(Width / 2, Width / 2));
+				}
 				else
 					OnDestroy();
 			}
@@ -128,16 +140,24 @@ namespace SOTS.Prim.Trails
 		public override void OnDestroy()
 		{
 			Destroyed = true;
-			if (Points.Count > 0)
+			int repeats = 1;
+			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>())
 			{
-				Points.RemoveAt(0);
-				if (WidthList.Count > 0)
-					WidthList.RemoveAt(0);
-				if (toOwner.Count > 0)
-					toOwner.RemoveAt(0);
+				repeats = 3;
 			}
-			else
-				Dispose();
+			for (int i = 0; i < repeats; i++)
+			{
+				if (Points.Count > 0)
+				{
+					Points.RemoveAt(0);
+					if (WidthList.Count > 0)
+						WidthList.RemoveAt(0);
+					if (toOwner.Count > 0)
+						toOwner.RemoveAt(0);
+				}
+				else
+					Dispose();
+			}
 		}
 	}
 }

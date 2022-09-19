@@ -4,6 +4,7 @@ using ReLogic.Content;
 using SOTS.Items.Chaos;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using Terraria;
@@ -28,10 +29,14 @@ namespace SOTS.Common.PlayerDrawing
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			if (drawInfo.shadow != 0)
 				return;
-			if (!drawPlayer.HeldItem.IsAir && (!drawPlayer.HeldItem.noUseGraphic || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))
+			if (!drawPlayer.HeldItem.IsAir && (!drawPlayer.HeldItem.noUseGraphic || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || drawPlayer.HeldItem.type == ModContent.ItemType<StormSpell>() || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))
 			{
 				Item item = drawPlayer.HeldItem;
 				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
+				if (item.type == ModContent.ItemType<StormSpell>())
+				{
+					texture = ModContent.Request<Texture2D>("SOTS/Items/Permafrost/StormSpellAnim").Value;
+				}
 				Vector2 zero2 = Vector2.Zero;
 				SpriteEffects effects = drawInfo.playerEffect; //this is just a guess... might actually require drawInfo.itemEffect
 				bool isTwilightPole = item.type == ModContent.ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ModContent.ProjectileType<TwilightBobber>()] > 0;
@@ -66,19 +71,27 @@ namespace SOTS.Common.PlayerDrawing
 								origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, (float)Terraria.GameContent.TextureAssets.Item[item.type].Value.Height);
 								width -= Terraria.GameContent.TextureAssets.Item[item.type].Value.Width;
 							}
+							Rectangle? frame = new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height));
 							if (item.type == ModContent.ItemType<Items.Temple.Revolution>())
 							{
 								texture = ModContent.Request<Texture2D>("SOTS/" + Items.Temple.Revolution.TextureName).Value;
 							}
-							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), Color.White, rotation, origin, beginningScale, effects, 0);
+							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), frame, Color.White, rotation, origin, beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value);
 						}
 						else
 						{
-							Vector2 vector10 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Width / 2), (float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Height / 2));
-
+							Texture2D itemTexture = Terraria.GameContent.TextureAssets.Item[item.type].Value;
+							float width = itemTexture.Width;
+							int frameCount = 1;
+							if (item.type == ModContent.ItemType<StormSpell>())
+							{
+								itemTexture = texture;
+								frameCount = 5;
+							}
+							Vector2 vector10 = new Vector2((float)(width / 2), (float)(itemTexture.Height / 2 / frameCount));
 							//Vector2 vector11 = this.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
-							Vector2 vector11 = new Vector2(10, texture.Height / 2);
+							Vector2 vector11 = new Vector2(10, texture.Height / 2 / frameCount);
 							if (item.GetGlobalItem<ItemUseGlow>().glowOffsetX != 0)
 							{
 								vector11.X = item.GetGlobalItem<ItemUseGlow>().glowOffsetX;
@@ -86,13 +99,13 @@ namespace SOTS.Common.PlayerDrawing
 							vector11.Y += item.GetGlobalItem<ItemUseGlow>().glowOffsetY * drawPlayer.gravDir;
 							int num107 = (int)vector11.X;
 							vector10.Y = vector11.Y;
-							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Height / 2));
+							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(itemTexture.Height / 2 / frameCount));
 							if (drawPlayer.direction == -1)
 							{
-								origin5 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Width + num107), (float)(Terraria.GameContent.TextureAssets.Item[item.type].Value.Height / 2));
+								origin5 = new Vector2((float)(width + num107), (float)(itemTexture.Height / 2 / frameCount));
 							}
 
-							//value = new DrawData(Terraria.GameContent.TextureAssets.Item[item.type].Value, new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), item.GetAlpha(color37), drawPlayer.itemRotation, origin5, beginningScale, effect, 0);
+							//value = new DrawData(itemTexture, new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, itemTexture.Width, itemTexture.Height)), item.GetAlpha(color37), drawPlayer.itemRotation, origin5, beginningScale, effect, 0);
 							//drawInfo.DrawDataCache.Add(value);
 
 							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
@@ -102,7 +115,13 @@ namespace SOTS.Common.PlayerDrawing
 							{
 								recurse = 2;
 							}
+							Rectangle? frame = new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, itemTexture.Width, itemTexture.Height));
 							Vector2 position = location - Main.screenPosition + vector10;
+							if (item.type == ModContent.ItemType<StormSpell>())
+							{
+								int frameTimer = (SOTSWorld.GlobalCounter / 5) % 5;
+								frame = new Rectangle?(new Rectangle(0, texture.Height / 5 * frameTimer, texture.Width, texture.Height / 5));
+							}
 							if (item.type == ModContent.ItemType<SupernovaStorm>())
 							{
 								for (int k = 0; k < 6; k++)
@@ -118,7 +137,7 @@ namespace SOTS.Common.PlayerDrawing
 							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
+								DrawData value = new DrawData(texture, position, frame, rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 						}

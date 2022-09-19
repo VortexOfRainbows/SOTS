@@ -16,8 +16,8 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
 			Item.maxStack = 1;
-            Item.width = 34;     
-            Item.height = 52;   
+            Item.width = 36;     
+            Item.height = 44;   
             Item.value = Item.sellPrice(0, 1, 10, 0);
             Item.rare = ItemRarityID.Green;
 			Item.defense = 1;

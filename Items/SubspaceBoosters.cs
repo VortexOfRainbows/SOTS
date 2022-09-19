@@ -39,7 +39,7 @@ namespace SOTS.Items
 			CreateRecipe(1).AddIngredient<FlashsparkBoots>(1).AddIngredient(ItemID.Tabi, 1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 12).AddTile(TileID.TinkerersWorkbench).Register();
 		}
         int hasActivate = -1;
-        public int GetPlayerDyeShoes(Player player)
+        public static int GetPlayerDyeShoes(Player player)
         {
             return player.cShoe == 0 ? (!Main.rand.NextBool(3) ? GameShaders.Armor.GetShaderIdFromItemId(ItemID.GreenDye) : GameShaders.Armor.GetShaderIdFromItemId(ItemID.LimeDye)) : player.cShoe;
         }
@@ -59,52 +59,17 @@ namespace SOTS.Items
                 activate = true;
             else if (player.controlLeft && player.releaseLeft && player.doubleTapCardinalTimer[3] < 15)
                 activate = true;
-            if (hasActivate == -1 && activate && player.velocity.Y == 0.0)
+            if (Main.myPlayer == player.whoAmI)
             {
-                SOTSUtils.PlaySound(SoundID.Item45, (int)player.Center.X, (int)player.Center.Y, 1.3f, -0.4f);
-                SOTSUtils.PlaySound(SoundID.Item14, (int)player.Center.X, (int)player.Center.Y, 1.0f, -0.3f);
-                hasActivate = 60;
-                for (int i = 0; i < 3; i++)
+                if (hasActivate == -1 && activate && player.velocity.Y == 0.0)
                 {
-                    int amt = 45 + i * 15;
-                    for (int j = 0; j < amt; j++)
-                    {
-                        Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(360f * j / amt));
-                        circularLocation.X *= 0.6f;
-                        var index = Dust.NewDust(player.Center + circularLocation - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 5f - i * 0.8f);
-                        circularLocation = circularLocation.SafeNormalize(Vector2.Zero) * 7.5f;
-                        circularLocation.X -= (player.velocity.X + player.direction * 24) * (1.3f + (i * 0.4f));
-                        if (i == 0)
-                        {
-                            circularLocation *= 0.33f;
-                        }
-                        if (i == 1)
-                        {
-                            circularLocation *= 0.66f;
-                        }
-                        Main.dust[index].velocity.X += circularLocation.X;
-                        Main.dust[index].velocity.Y = circularLocation.Y;
-                        Main.dust[index].noGravity = true;
-                        Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(GetPlayerDyeShoes(player), player);
-                    }
+                    Projectile.NewProjectile(player.GetSource_Misc("SOTS:SubspaceBoosterMultiplayerSync"), player.Center, Vector2.Zero, ModContent.ProjectileType<SubspaceBoosterProj>(), 0, 0, Main.myPlayer);
+                    hasActivate = 60;
                 }
-                for (int j = 0; j < 20; j++)
+                if (hasActivate > -1)
                 {
-                    Vector2 velo = new Vector2(-(player.velocity.X + player.direction * 24) * (0.9f + (j * 0.1f)) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-6.0f, 6.0f));
-                    velo.X *= Main.rand.NextFloat(0.5f, 1.5f);
-                    MakeDustShape(player, player.Center, velo, j % 4);
+                    hasActivate--;
                 }
-                if(player.velocity.X * player.direction < 0)
-                {
-                    player.velocity *= -1f;
-                }
-                player.velocity *= 0.6f;
-                player.velocity.X += player.direction * 14;
-                player.velocity.X *= 1.2f;
-            }
-            if (hasActivate > -1)
-            {
-                hasActivate--;
             }
             if (particles && doAccel)
             {
@@ -112,7 +77,7 @@ namespace SOTS.Items
                 player.velocity *= 1 / 0.96f;
             }
         }
-        public void MakeDustShape(Player player, Vector2 spawnPos, Vector2 velocity, int type = 0, float scale = 1f)
+        public static void MakeDustShape(Player player, Vector2 spawnPos, Vector2 velocity, int type = 0, float scale = 1f)
         {
             float size = Main.rand.NextFloat(0.75f, 1.25f) * scale;
             if(type == 0)
@@ -319,4 +284,68 @@ namespace SOTS.Items
             return doDust;
         }
 	}
+    public class SubspaceBoosterProj : ModProjectile
+    {
+        public override string Texture => "SOTS/Items/SubspaceBoosters";
+        public override void SetDefaults()
+        {
+            Projectile.width = 50;
+            Projectile.height = 50;
+            Projectile.timeLeft = 10;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.aiStyle = -1;
+            Projectile.alpha = 255;
+        }
+        bool effect = false;
+        public override void AI()
+        {
+            Player player = Main.player[Projectile.owner];
+            if (!effect)
+            {
+                effect = true;
+                SOTSUtils.PlaySound(SoundID.Item45, (int)player.Center.X, (int)player.Center.Y, 1.3f, -0.4f);
+                SOTSUtils.PlaySound(SoundID.Item14, (int)player.Center.X, (int)player.Center.Y, 1.0f, -0.3f);
+                for (int i = 0; i < 3; i++)
+                {
+                    int amt = 45 + i * 15;
+                    for (int j = 0; j < amt; j++)
+                    {
+                        Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(360f * j / amt));
+                        circularLocation.X *= 0.6f;
+                        var index = Dust.NewDust(player.Center + circularLocation - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 5f - i * 0.8f);
+                        circularLocation = circularLocation.SafeNormalize(Vector2.Zero) * 7.5f;
+                        circularLocation.X -= (player.velocity.X + player.direction * 24) * (1.3f + (i * 0.4f));
+                        if (i == 0)
+                        {
+                            circularLocation *= 0.33f;
+                        }
+                        if (i == 1)
+                        {
+                            circularLocation *= 0.66f;
+                        }
+                        Main.dust[index].velocity.X += circularLocation.X;
+                        Main.dust[index].velocity.Y = circularLocation.Y;
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].shader = GameShaders.Armor.GetSecondaryShader(SubspaceBoosters.GetPlayerDyeShoes(player), player);
+                    }
+                }
+                for (int j = 0; j < 20; j++)
+                {
+                    Vector2 velo = new Vector2(-(player.velocity.X + player.direction * 24) * (0.9f + (j * 0.1f)) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-6.0f, 6.0f));
+                    velo.X *= Main.rand.NextFloat(0.5f, 1.5f);
+                    SubspaceBoosters.MakeDustShape(player, player.Center, velo, j % 4);
+                }
+                if (player.velocity.X * player.direction < 0)
+                {
+                    player.velocity *= -1f;
+                }
+                player.velocity *= 0.6f;
+                player.velocity.X += player.direction * 14;
+                player.velocity.X *= 1.2f;
+            }
+        }
+    }
 }

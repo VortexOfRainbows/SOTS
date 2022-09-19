@@ -57,7 +57,7 @@ namespace SOTS.NPCs.Boss.Lux
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 60000;
 			NPC.damage = 100;
-			NPC.defense = 54;
+			NPC.defense = 50;
 			NPC.knockBackResist = 0f;
 			NPC.width = 70;
 			NPC.height = 70;
@@ -328,13 +328,13 @@ namespace SOTS.NPCs.Boss.Lux
 			switch(attackPhase)
             {
 				case LaserOrbPhase:
-					damageMult = 0.7f;
+					damageMult = 0.75f;
 					break;
 				case RGBTransition:
-					damageMult = 0.35f;
+					damageMult = 0.425f;
 					break;
 				case RGBPhase:
-					damageMult = 0.5f;
+					damageMult = 0.6f;
 					break;
 			}
 			if (damageMult != 1)
