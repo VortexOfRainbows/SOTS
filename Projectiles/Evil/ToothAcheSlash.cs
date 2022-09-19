@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Evil
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 5;
+			Projectile.localNPCHitCooldown = 4;
 			Projectile.ownerHitCheck = true;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -198,7 +198,7 @@ namespace SOTS.Projectiles.Evil
 					if (AbsAI0 == 1)
 					{
 						damage = (int)(damage * 1.0f);
-						Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<ToothAcheThrow>(), damage, Projectile.knockBack, player.whoAmI, 0, FetchDirection);
+						Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<ToothAcheThrow>(), (int)(damage * 0.8f), Projectile.knockBack, player.whoAmI, 0, FetchDirection);
 					}
 					else
 					{

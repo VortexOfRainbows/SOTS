@@ -14,19 +14,19 @@ namespace SOTS.Items.Evil
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tooth Ache");
-            Tooltip.SetDefault("Strike with 3 slashes, then toss a spinning blade that ignores enemy defense");
+            Tooltip.SetDefault("Strike with 3 slashes, then toss a spinning blade for 80% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 20;
+            Item.damage = 27;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 84;
             Item.height = 64;  
             Item.useTime = 30; 
             Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;		
-            Item.knockBack = 8f;
+            Item.knockBack = 3.6f;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Green;
             Item.UseSound = null;
@@ -43,7 +43,7 @@ namespace SOTS.Items.Evil
 		}
         public override int GetVoid(Player player)
         {
-            return 5;
+            return 9;
         }
     }
 }

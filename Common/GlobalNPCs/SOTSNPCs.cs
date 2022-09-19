@@ -282,6 +282,8 @@ namespace SOTS.Common.GlobalNPCs
 		}
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) //modify loot and vanilla loot
 		{
+			LeadingConditionRule preEoC = new LeadingConditionRule(new ItemDropConditions.PreBoss1DropCondition());
+			LeadingConditionRule postEoC = new LeadingConditionRule(new ItemDropConditions.PostBoss1DropCondition());
 			LeadingConditionRule notExpert = new LeadingConditionRule(new Conditions.NotExpert());
 			if (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson) //if npc is pigron
             {
@@ -303,9 +305,15 @@ namespace SOTS.Common.GlobalNPCs
 			}*/
 			if (npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail)
 			{
+				LeadingConditionRule preEoC2 = new LeadingConditionRule(new ItemDropConditions.PreBoss1DropConditionEoW());
+				LeadingConditionRule postEoC2 = new LeadingConditionRule(new ItemDropConditions.PostBoss1DropConditionEoW());
 				LeadingConditionRule leadingConditionRule = new(new Conditions.LegacyHack_IsABoss());
 				leadingConditionRule.OnSuccess(notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>())));
 				npcLoot.Add(leadingConditionRule);
+				preEoC2.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ToothAche>()));
+				postEoC2.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ToothAche>(), 20));
+				npcLoot.Add(preEoC2);
+				npcLoot.Add(postEoC2);
 			}
 			if (npc.type == NPCID.BrainofCthulhu)
 			{
@@ -411,8 +419,6 @@ namespace SOTS.Common.GlobalNPCs
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<OlympianAxe>(), 25, 20));
 			if (DebuffNPC.Zombies.Contains(npc.type))
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ZombieHand>(), 100, 80));
-			LeadingConditionRule preEoC = new LeadingConditionRule(new ItemDropConditions.PreBoss1DropCondition());
-			LeadingConditionRule postEoC = new LeadingConditionRule(new ItemDropConditions.PostBoss1DropCondition());
 			if (npc.type == NPCID.QueenBee)
             {
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1));

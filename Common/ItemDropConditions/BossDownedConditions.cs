@@ -206,4 +206,48 @@ namespace SOTS.Common.ItemDropConditions
 			return "Orange Lesser Wisps";
 		}
 	}
+	public class PreBoss1DropConditionEoW : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info)
+		{
+			if (!info.IsInSimulation)
+			{
+				if (!NPC.downedBoss1 && info.npc.boss)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		public bool CanShowItemDropInUI()
+		{
+			return true;
+		}
+		public string GetConditionDescription()
+		{
+			return "Before the Eye of Cthulhu has been defeated";
+		}
+	}
+	public class PostBoss1DropConditionEoW : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info)
+		{
+			if (!info.IsInSimulation && info.npc.boss)
+			{
+				if (NPC.downedBoss1)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		public bool CanShowItemDropInUI()
+		{
+			return true;
+		}
+		public string GetConditionDescription()
+		{
+			return "After the Eye of Cthulhu has been defeated";
+		}
+	}
 }

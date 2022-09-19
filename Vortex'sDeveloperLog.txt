@@ -54,7 +54,7 @@ Daily Log:
 	2. RBG Phase 0.5 -> 0.6
 	3. Lux Overall defense 54 -> 50 (2 more damage from all attacks)
 6. Fix Subspace Booster multiplayer
-7. Finish tooth ache (needs balancing and droprate tho)
+7. Finish tooth ache
 	1. Works in multiplayer
 
 9/16/22

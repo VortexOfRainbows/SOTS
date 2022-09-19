@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Evil
 			Projectile.hostile = false;
 			Projectile.alpha = 0;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 5;
+			Projectile.localNPCHitCooldown = 7;
 			Projectile.extraUpdates = 2;
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Evil
 			if(!Projectile.tileCollide)
             {
 				resetTileCollide++;
-				if(resetTileCollide > 9)
+				if(resetTileCollide > 15)
 				{
 					resetTileCollide = 0;
 					Projectile.tileCollide = true;
