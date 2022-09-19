@@ -56,16 +56,6 @@ namespace SOTS.Projectiles.Evil
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
-			if(oldVelocity.X != Projectile.velocity.X)
-            {
-				initialVelo.X = MathHelper.Lerp(initialVelo.X, -oldVelocity.X, 0.5f);
-			}
-			if (oldVelocity.Y != Projectile.velocity.Y)
-			{
-				initialVelo.Y = MathHelper.Lerp(initialVelo.Y, -oldVelocity.Y, 0.5f);
-			}
-			Projectile.tileCollide = false;
-			Projectile.netUpdate = true;
             return false;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -95,19 +85,9 @@ namespace SOTS.Projectiles.Evil
 		Vector2 initialVelo;
 		Vector2 initialCenter;
 		public int initialDirection = 0;
-		public int resetTileCollide = 0;
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
-			if(!Projectile.tileCollide)
-            {
-				resetTileCollide++;
-				if(resetTileCollide > 15)
-				{
-					resetTileCollide = 0;
-					Projectile.tileCollide = true;
-				}
-			}				
 			if (runOnce)
 			{
 				SOTSUtils.PlaySound(SoundID.DD2_GhastlyGlaivePierce, (int)player.Center.X, (int)player.Center.Y, 1.6f, -0.1f);
@@ -185,7 +165,10 @@ namespace SOTS.Projectiles.Evil
 				if (type == ModContent.DustType<Dusts.CopyDust4>())
 					dust.color = Color.Lerp(ToothAcheSlash.toothAcheGreen, ToothAcheSlash.toothAcheLime, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
-			Projectile.Center += Projectile.velocity;
+			if (Projectile.timeLeft >= 110)
+				Projectile.Center += Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
+			else
+				Projectile.Center += Projectile.velocity;
 			foreach (PrimTrail trail in SOTS.primitives._trails.ToArray())
 			{
 				if (trail is FireTrail fireTrail)
