@@ -11,11 +11,11 @@ using System.IO;
 using SOTS.Prim.Trails;
 using SOTS.Prim;
 
-namespace SOTS.Projectiles.Evil
+namespace SOTS.Projectiles.Blades
 {    
     public class ToothAcheThrow : ModProjectile 
     {
-		public override string Texture => "SOTS/Projectiles/Evil/ToothAcheSlash";
+		public override string Texture => "SOTS/Projectiles/Blades/ToothAcheSlash";
         float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{

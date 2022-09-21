@@ -43,6 +43,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+9/20/22
+1. Reorganize blades
+
 9/17/22 & 9/18/22
 1. Electromagnetic Lure now takes 20 -> 15 fragments and plating blocks.
 2. WIP Tooth Ache

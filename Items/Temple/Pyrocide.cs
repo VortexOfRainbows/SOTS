@@ -9,7 +9,7 @@ using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
-using SOTS.Projectiles.Temple;
+using SOTS.Projectiles.Blades;
 using System;
 
 namespace SOTS.Items.Temple

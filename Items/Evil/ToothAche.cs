@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.DataStructures;
 using System;
-using SOTS.Projectiles.Evil;
+using SOTS.Projectiles.Blades;
 
 namespace SOTS.Items.Evil
 {

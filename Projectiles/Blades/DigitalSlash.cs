@@ -7,7 +7,7 @@ using Terraria.ID;
 using System.IO;
 using SOTS.Utilities;
 
-namespace SOTS.Projectiles.Otherworld
+namespace SOTS.Projectiles.Blades
 {    
     public class DigitalSlash : ModProjectile //, IPixellated
     {
@@ -79,8 +79,8 @@ namespace SOTS.Projectiles.Otherworld
         {
 			Player player = Main.player[Projectile.owner];
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DigitalSlashBlade");
-			Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DigitalSlashBlade2");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Blades/DigitalSlashBlade");
+			Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Blades/DigitalSlashBlade2");
 			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
 			int length = (int)toProjectile.Length() / 2 - 8;
 			Vector2 rotateToPosition = relativePoint(toProjectile);

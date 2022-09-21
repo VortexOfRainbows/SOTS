@@ -257,7 +257,7 @@ namespace SOTS
 			tasks.Insert(genIndexTraps + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Surface Structures";
-				SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
+				//SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
 				StarterHouseWorldgenHelper.GenerateStarterHouseFull();
 				int iceY = -1;
 				int iceX = -1;

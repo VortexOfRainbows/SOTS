@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using SOTS.Utilities;
 
-namespace SOTS.Projectiles.Otherworld
+namespace SOTS.Projectiles.Blades
 {    
     public class DigitalTrail : ModProjectile //, IPixellated
 	{
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Otherworld
 			bool black = Projectile.ai[0] < 0;
 			if (black)
 			{
-				texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/DigitalTrailBlack").Value;
+				texture = Mod.Assets.Request<Texture2D>("Projectiles/Blades/DigitalTrailBlack").Value;
 			}
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = trailPos[0];

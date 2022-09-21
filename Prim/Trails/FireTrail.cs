@@ -7,6 +7,7 @@ using System;
 using SOTS.Projectiles.Temple;
 using System.Collections.Generic;
 using SOTS.Projectiles.Evil;
+using SOTS.Projectiles.Blades;
 
 namespace SOTS.Prim.Trails
 {

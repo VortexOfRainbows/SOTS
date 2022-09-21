@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.DataStructures;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Blades;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Fragments;
