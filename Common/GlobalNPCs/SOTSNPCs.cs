@@ -319,6 +319,10 @@ namespace SOTS.Common.GlobalNPCs
 			{
 				notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>(), 1, 1, 1));
 				npcLoot.Add(notExpert);
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Vertebraeker>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Vertebraeker>(), 20));
+				npcLoot.Add(postEoC);
+				npcLoot.Add(preEoC);
 			}
 			/*if (npc.type == NPCID.PossessedArmor)
 			{

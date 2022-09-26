@@ -121,6 +121,15 @@ namespace SOTS.Prim.Trails
 						Destroyed = true;
 					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
 				}
+				else if (proj.ModProjectile is VertebraekerSlash vert && Entity.active && Entity != null)
+				{
+					WidthList.Add(vert.GetArcLength() * 0.5f + 16);
+					ownerCenter = projOwner.Center;
+					toOwner.Add(ownerCenter - proj.Center);
+					if (vert.FetchDirection != ClockWiseOrCounterClockwise)
+						Destroyed = true;
+					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
+				}
 				else if (proj.ModProjectile is ToothAcheThrow throwSword && Entity.active && Entity != null)
 				{
 					WidthList.Add(36);
@@ -129,6 +138,15 @@ namespace SOTS.Prim.Trails
 					if (throwSword.initialDirection != ClockWiseOrCounterClockwise)
 						Destroyed = true;
 					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 32); // - new Vector2(Width / 2, Width / 2));
+				}
+				else if (proj.ModProjectile is VertebraekerThrow throwSword2 && Entity.active && Entity != null)
+				{
+					WidthList.Add(26);
+					//ownerCenter = projOwner.Center;
+					toOwner.Add(new Vector2(1, -1).RotatedBy(proj.rotation));
+					if (throwSword2.initialDirection != ClockWiseOrCounterClockwise)
+						Destroyed = true;
+					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 24); // - new Vector2(Width / 2, Width / 2));
 				}
 				else
 					OnDestroy();
@@ -142,7 +160,7 @@ namespace SOTS.Prim.Trails
 		{
 			Destroyed = true;
 			int repeats = 1;
-			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>())
+			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>() || EntityType == ModContent.ProjectileType<VertebraekerThrow>())
 			{
 				repeats = 3;
 			}

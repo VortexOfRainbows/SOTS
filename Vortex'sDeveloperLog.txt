@@ -33,6 +33,8 @@ Update Objectives:
 	3. Glowjelly (Combine with Royal Jelly)
 4. Check if player possesses Texture Pack
 5. Make SOTS Dev Team on git hub!
+6. Nerf Teratoma health in Master
+7. Voidmage Incubator is bugged with Blade Items. Isn't that big of an issue currently.
 
 
 Other 1.4 related objectives:
@@ -42,6 +44,10 @@ Other 1.4 related objectives:
 
 
 Daily Log:
+
+9/25/22
+1. Vertebraeker added (not tested in multiplayer)
+2. Coconut Gun damage 17 -> 20, void cost 24 -> 20
 
 9/20/22
 1. Reorganize blades

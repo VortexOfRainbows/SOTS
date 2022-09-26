@@ -11,18 +11,13 @@ using SOTS.Prim.Trails;
 
 namespace SOTS.Projectiles.Blades
 {    
-    public class ToothAcheSlash : ModProjectile //, IPixellated
+    public class VertebraekerSlash : ModProjectile
     {
-		public static Color toothAcheLime = new Color(174, 213, 56);
-		public static Color toothAcheGreen = new Color(110, 132, 22);
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-			target.AddBuff(BuffID.Poisoned, 180);
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
+		public static Color vertebraekerRed = new Color(255, 185, 81);
+		public static Color vertebraekerOrange = new Color(209, 117, 61);
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tooth Ache Slash");
+			DisplayName.SetDefault("Vertebraeker Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        
@@ -50,7 +45,7 @@ namespace SOTS.Projectiles.Blades
 			float point = 0f;
 			Vector2 previousPosition = Projectile.Center;
 			float scale = Projectile.scale * 1f;
-			if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), previousPosition + dustAway.SafeNormalize(Vector2.Zero) * 36, center, 40f * scale, ref point))
+			if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), previousPosition + dustAway.SafeNormalize(Vector2.Zero) * 30, center, 30f * scale, ref point))
 			{
 				return true;
 			}
@@ -87,7 +82,7 @@ namespace SOTS.Projectiles.Blades
 			int length = (int)toProjectile.Length();
 			Vector2 rotateToPosition = relativePoint(toProjectile, 24);
 			Vector2 drawPos = player.Center + rotateToPosition - Main.screenPosition;
-			Vector2 origin = new Vector2(12, 60);
+			Vector2 origin = new Vector2(10, 52);
 
 			int direction = 1;
 			if (toCursor.X < 0)
@@ -98,7 +93,7 @@ namespace SOTS.Projectiles.Blades
 			else
 				direction *= (int)FetchDirection;
 			if(direction == -1)
-			origin = new Vector2(texture.Width - 12, 60);
+				origin = new Vector2(texture.Width - 10, 52);
 			float standardSwordLength = (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) - 24;
 			float scaleMultiplier = length / standardSwordLength;
 			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
@@ -145,8 +140,8 @@ namespace SOTS.Projectiles.Blades
 			int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 			if (runOnce)
 			{
-				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: FetchDirection, toothAcheLime.ToVector4(), toothAcheGreen.ToVector4(), 20, 1));
-				SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.75f * randMod);
+				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: FetchDirection, vertebraekerRed.ToVector4(), vertebraekerOrange.ToVector4(), 20, 1));
+				SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.6f * randMod);
 				if (Main.myPlayer == Projectile.owner)
 				{
 					cursorArea = Main.MouseWorld;
@@ -154,17 +149,15 @@ namespace SOTS.Projectiles.Blades
 					if(distance == 0)
 					{
 						distance = Vector2.Distance(player.Center, cursorArea) * randMod;
-						if (distance < 108)
-							distance = 108;
-						if (distance > 124)
-							distance = 124;
+						if (distance < 80)
+							distance = 80;
+						if (distance > 92)
+							distance = 92;
 					}
 					toCursor = cursorArea - player.Center;
-					spinSpeed = (2.2f + (1.2f / (float)Math.Pow(distance / 120f, 2f))) * randMod * 5f * (0.7f + 0.3f * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee)));
-					if (AbsAI0 == 2)
-						spinSpeed *= 0.6f;
+					spinSpeed = (2.5f + (1.0f / (float)Math.Pow(distance / 92f, 2f))) * randMod * 5f * (0.9f + 0.1f * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee)));
 				}
-				counterOffset = 200 + 15f / randMod;
+				counterOffset = 270 - 60f / randMod;
 				float slashOffset = counterOffset * FetchDirection;
 				counter = slashOffset;
 				runOnce = false;
@@ -181,37 +174,23 @@ namespace SOTS.Projectiles.Blades
 				if (AbsAI0 > 1)
 				{
 					AbsAI0--;
-					float speedBonus = 0f;
-					if(AbsAI0 == 3)
-                    {
-						speedBonus = 0.3f;
-					}
+					float speedBonus = 0.14f;
+					if (AbsAI0 < 12)
+						speedBonus = 0;
 					if (AbsAI0 == 2)
-					{
-						speedBonus = -0.3f;
-					}
-					if (AbsAI0 == 1)
-					{
-						speedBonus = 0.1f;
-					}
+						speedBonus = -1.0f;
 					int damage = Projectile.damage;
 					if (AbsAI0 == 1)
 					{
 						damage = (int)(damage * 1.0f);
-						Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<ToothAcheThrow>(), (int)(damage * 0.8f), Projectile.knockBack, player.whoAmI, 0, FetchDirection);
+						Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<VertebraekerThrow>(), (int)(damage * 1.2f), Projectile.knockBack, player.whoAmI, 0, 0);
 					}
 					else
 					{
 						Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * AbsAI0, Projectile.ai[1] + speedBonus);
-						if (proj.ModProjectile is ToothAcheSlash a)
+						if (proj.ModProjectile is VertebraekerSlash a)
 						{
-							a.distance = distance;
-							if (AbsAI0 == 3)
-								a.distance = distance * 1.08f + 24;
-							else if (AbsAI0 == 2)
-								a.distance = distance * 0.9f;
-							else	
-								a.distance = distance * 0.95f + 16;
+							a.distance = distance * 0.9f + 8;
 						}
 					}
 				}
@@ -226,16 +205,12 @@ namespace SOTS.Projectiles.Blades
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.2f / 255f, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1.0f / 255f);
 			if(toCursor != Vector2.Zero)
 			{
-				float yDistMult = (float)Math.Pow(distance / 124f, 0.5);
+				float yDistMult = (float)Math.Pow(distance / 92f, 0.5);
 				double deg = counter; 
 				double rad = deg * (Math.PI / 180);
 				Vector2 ovalArea = new Vector2(distance * 0.25f * mult, 0).RotatedBy(toCursor.ToRotation()); //center a point somewhat distant from the player
 				Vector2 ovalArea2 = new Vector2(distance * 0.75f * mult, 0).RotatedBy((float)rad); //create a circle
-				ovalArea2.Y *= 0.85f / randMod * yDistMult; //turn circle into an oval by compressing the y value
-				if (AbsAI0 == 3)
-					ovalArea2.Y *= 0.4f;
-				if (AbsAI0 == 2)
-					ovalArea2.Y *= 0.8f;
+				ovalArea2.Y *= (0.75f + AbsAI0 * 0.005f) / randMod * yDistMult; //turn circle into an oval by compressing the y value
 				ovalArea2 = ovalArea2.RotatedBy(toCursor.ToRotation());
 				ovalArea.X += ovalArea2.X;
 				ovalArea.Y += ovalArea2.Y;
@@ -247,9 +222,7 @@ namespace SOTS.Projectiles.Blades
 			float iterator2 = (float)Math.Abs(incremendAmount);
 			timeLeftCounter += iterator2;
 			counter += incremendAmount;
-			float totalSwipeDegrees = (270.0f + (1800f / distance));
-			if (AbsAI0 == 3)
-				totalSwipeDegrees += 10;
+			float totalSwipeDegrees = (262.5f + (1800f / distance / randMod));
 			if (timeLeftCounter > totalSwipeDegrees) //complete a bigger arc with a lower distance
             {
 				Projectile.hide = true;
@@ -266,7 +239,7 @@ namespace SOTS.Projectiles.Blades
 						float rand = Main.rand.NextFloat(0.9f, 1.1f);
 						int type = ModContent.DustType<Dusts.CopyDust4>();
 						if (Main.rand.NextBool(5))
-							type = DustID.JungleSpore;
+							type = DustID.RedTorch;
 						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + dustAway.SafeNormalize(Vector2.Zero) * 24, 16, 16, type);
 						dust.velocity *= 0.8f / rand;
 						dust.velocity += dustAway.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
@@ -275,7 +248,7 @@ namespace SOTS.Projectiles.Blades
 						dust.scale += 1.3f / rand * dustScale;
 						dust.fadeIn = 0.1f;
 						if (type == ModContent.DustType<Dusts.CopyDust4>())
-							dust.color = Color.Lerp(toothAcheGreen, toothAcheLime, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+							dust.color = Color.Lerp(vertebraekerOrange, vertebraekerRed, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 					}
 					Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
 					for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
@@ -283,7 +256,7 @@ namespace SOTS.Projectiles.Blades
 						float rand = Main.rand.NextFloat(0.9f, 1.1f);
 						int type = ModContent.DustType<Dusts.CopyDust4>();
 						if (Main.rand.NextBool(3))
-							type = DustID.JungleSpore;
+							type = DustID.RedTorch;
 						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
 						dust.velocity *= 0.1f / rand;
 						dust.velocity += dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.4f, 0.9f) * rand;
@@ -292,7 +265,7 @@ namespace SOTS.Projectiles.Blades
 						dust.scale += 1.1f * rand;
 						dust.fadeIn = 0.1f;
 						if (type == ModContent.DustType<Dusts.CopyDust4>())
-							dust.color = Color.Lerp(toothAcheLime, toothAcheGreen, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+							dust.color = Color.Lerp(vertebraekerRed, vertebraekerOrange, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 					}
 				}
 			}
