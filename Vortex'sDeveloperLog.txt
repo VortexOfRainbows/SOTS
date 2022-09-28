@@ -34,7 +34,6 @@ Update Objectives:
 4. Check if player possesses Texture Pack
 5. Make SOTS Dev Team on git hub!
 6. Nerf Teratoma health in Master
-7. Voidmage Incubator is bugged with Blade Items. Isn't that big of an issue currently.
 
 
 Other 1.4 related objectives:
@@ -43,7 +42,12 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 
 
+
 Daily Log:
+
+9/27/22
+1. Blades now function with VM incubator
+2. Nerf Teratoma Master mode 360 -> 318
 
 9/25/22
 1. Vertebraeker added (not tested in multiplayer)

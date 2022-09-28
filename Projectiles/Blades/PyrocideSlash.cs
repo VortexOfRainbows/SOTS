@@ -186,9 +186,9 @@ namespace SOTS.Projectiles.Blades
 		public int FetchDirection => Math.Sign(Projectile.ai[0]);
         public override void Kill(int timeLeft)
 		{
-			if(Projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			if (Projectile.owner == Main.myPlayer && !player.dead)
 			{
-				Player player = Main.player[Projectile.owner];
 				int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 				if (AbsAI0 > 1)
 				{

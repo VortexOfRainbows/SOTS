@@ -35,7 +35,11 @@ namespace SOTS
 			immuneToTimeFreeze = new int[]
 			{
 				ModContent.ProjectileType<VisionWeapon>(),
-				ModContent.ProjectileType<ChaosThorn>()
+				ModContent.ProjectileType<ChaosThorn>(),
+				ModContent.ProjectileType<Projectiles.Blades.DigitalSlash>(),
+				ModContent.ProjectileType<Projectiles.Blades.PyrocideSlash>(),
+				ModContent.ProjectileType<Projectiles.Blades.ToothAcheSlash>(),
+				ModContent.ProjectileType<Projectiles.Blades.VertebraekerSlash>()
 			};
 			isChargeWeapon = new int[]
 			{

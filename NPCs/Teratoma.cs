@@ -34,7 +34,7 @@ namespace SOTS.NPCs
         }
         public override void SetDefaults()
 		{
-			NPC.aiStyle =3;
+			NPC.aiStyle = 3;
 			NPC.width = 40;
 			NPC.height = 48;
 			NPC.lifeMax = 160;
@@ -52,7 +52,11 @@ namespace SOTS.NPCs
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			NPC.lifeMax = NPC.lifeMax * 3 / 4;
+			NPC.lifeMax = NPC.lifeMax * 3 / 4; //240
+			if(Main.masterMode) //320
+			{
+				NPC.lifeMax = NPC.lifeMax * 8 / 9; //318
+			}
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
