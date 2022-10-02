@@ -706,6 +706,7 @@ namespace SOTS.Projectiles.Inferno
 		public override void SafeSetDefaults()
 		{
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.ContinuouslyUpdateDamage = false;
 			Projectile.localNPCHitCooldown = 30;
 		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

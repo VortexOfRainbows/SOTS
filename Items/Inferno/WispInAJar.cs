@@ -27,7 +27,8 @@ namespace SOTS.Items.Inferno
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.petFreeWisp += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, Item.damage);
+			if(!hideVisual)
+				modPlayer.petFreeWisp += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, Item.damage);
 			modPlayer.BlueFireOrange = true;
 		}
 		public override void AddRecipes()

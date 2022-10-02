@@ -275,6 +275,9 @@ namespace SOTS
 		public bool netUpdate = false;
 		public bool BlazingQuiver = false;
 		public bool SerpentSpine = false;
+
+		public bool PlasmaShrimpVanity = false;
+		public bool PlasmaShrimp = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -399,9 +402,9 @@ namespace SOTS
 				CreativeFlightButtonPressed = false;
 			}
 		}
-		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1};
-		int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
-		int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
+		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+		int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
+		int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
 		public int aqueductNum = 0;
 		public int aqueductDamage = -1;
 		int lastAqueductMax = 0;
@@ -616,6 +619,10 @@ namespace SOTS
 			else if (backUpBowVisual)
 			{
 				runPets(ref probes[8], ModContent.ProjectileType<BackupBowVisual>());
+			}
+			if (PlasmaShrimp)
+			{
+				runPets(ref probes[9], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
 			}
 			doPlanetAqueduct();
 			if (rippleEffect)
@@ -910,6 +917,8 @@ namespace SOTS
 			polarCannons = 0;
 			meleeItemScale = 1f;
 			SerpentSpine = false;
+			PlasmaShrimpVanity = false;
+			PlasmaShrimp = false;
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

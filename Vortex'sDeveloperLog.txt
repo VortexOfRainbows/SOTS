@@ -33,7 +33,6 @@ Update Objectives:
 	3. Glowjelly (Combine with Royal Jelly)
 4. Check if player possesses Texture Pack
 5. Make SOTS Dev Team on git hub!
-6. Nerf Teratoma health in Master
 
 
 Other 1.4 related objectives:
@@ -42,12 +41,13 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 
 
-
 Daily Log:
 
-9/27/22
+9/27/22 & 10/01/22 & 10/02/22
 1. Blades now function with VM incubator
 2. Nerf Teratoma Master mode 360 -> 318
+3. Fixed Wisp in a Jar not spawning minion properly
+4. Plasma Shrimp visuals started
 
 9/25/22
 1. Vertebraeker added (not tested in multiplayer)
