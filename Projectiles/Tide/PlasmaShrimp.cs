@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Tide
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Backup Bow Visual");
+			DisplayName.SetDefault("Plasma Shrimp");
 		}
 		public sealed override void SetDefaults()
 		{
@@ -32,9 +32,14 @@ namespace SOTS.Projectiles.Tide
         public override void PostDraw(Color lightColor)
 		{
 			Texture2D Stexture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Tide/PlasmaShrimpStem");
-			Player player = Main.player[Projectile.owner];
-			Color color = Projectile.GetAlpha(lightColor);
+			Texture2D StextureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Tide/PlasmaShrimpStemGlow");
+			Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Tide/PlasmaShrimpGlow");
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
+			Player player = Main.player[Projectile.owner];
+			float glow = player.statMana / (float)player.statManaMax2;
+			if (Main.myPlayer != Projectile.owner)
+				glow = 0.5f;
+			Color color = Projectile.GetAlpha(lightColor);
 			Vector2 drawOrigin = new Vector2(19 - player.direction * player.gravDir, 36);
 			Vector2 drawOriginStem = new Vector2(18, 31);
 			Vector2 mousePos = new Vector2(Projectile.ai[0], Projectile.ai[1]);
@@ -64,8 +69,20 @@ namespace SOTS.Projectiles.Tide
 				if ((player.direction * otherOtherFlip) == -1)
 					drawOriginStem = new Vector2(Stexture.Width - 18, 31);
 				Main.spriteBatch.Draw(Stexture, new Vector2((int)round.X, (int)round.Y) + new Vector2(0, player.gfxOffY), null, color, rotation, drawOriginStem, Projectile.scale, (player.direction * otherOtherFlip) == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			}				
-			Main.spriteBatch.Draw(texture, new Vector2((int)round.X, (int)round.Y) + new Vector2(0, player.gfxOffY), null, color, Rotation, drawOrigin, Projectile.scale,spriteEffects, 0f);
+				for (int i = 0; i < 18 * glow; i++)
+				{
+					Color color2 = new Color(70, 55, 68, 0) * (0.1f + 0.3f * glow);
+					Vector2 circular = Main.rand.NextVector2Circular(2, 2) * (0.25f + 0.75f * glow);
+					Main.spriteBatch.Draw(StextureGlow, new Vector2((int)round.X, (int)round.Y) + new Vector2(0, player.gfxOffY) + circular, null, color2, rotation, drawOriginStem, Projectile.scale, (player.direction * otherOtherFlip) == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
+			}
+			Main.spriteBatch.Draw(texture, new Vector2((int)round.X, (int)round.Y) + new Vector2(0, player.gfxOffY), null, color, Rotation, drawOrigin, Projectile.scale, spriteEffects, 0f);
+			for (int i = 0; i < 18 * glow; i++)
+			{
+				Color color2 = new Color(70, 55, 68, 0) * (0.1f + 0.3f * glow);
+				Vector2 circular = Main.rand.NextVector2Circular(2, 2) * (0.25f + 0.75f * glow);
+				Main.spriteBatch.Draw(textureGlow, new Vector2((int)round.X, (int)round.Y) + new Vector2(0, player.gfxOffY) + circular, null, color2, Rotation, drawOrigin, Projectile.scale, spriteEffects, 0f);
+			}
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -93,15 +110,25 @@ namespace SOTS.Projectiles.Tide
 			idlePosition.Y -= 30 * player.gravDir;
 			Projectile.Center = idlePosition;
 		}
-		public override void AI()
+		public void FireTowards(Vector2 cursor, int damage = 10)
 		{
 			Player player = Main.player[Projectile.owner];
+			Vector2 center = Projectile.Center - new Vector2(0, 12);
+			if (Projectile.owner == Main.myPlayer)
+            {
+				Vector2 toCursor = cursor - center;
+				toCursor = toCursor.SafeNormalize(Vector2.Zero);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), center + toCursor * 36, toCursor * 8.5f + Main.rand.NextVector2Circular(1.25f, 1.25f), ModContent.ProjectileType<ShrimpLaser>(), damage, 1.0f, player.whoAmI, -1);
+			}
+        }
+		public override void AI()
+		{
 			FindPosition();
 			if(Main.myPlayer == Projectile.owner)
             {
 				Projectile.ai[0] = Main.MouseWorld.X;
 				Projectile.ai[1] = Main.MouseWorld.Y;
-				if (SOTSWorld.GlobalCounter % 5 == 0)
+				if (SOTSWorld.GlobalCounter % 4 == 0)
 					Projectile.netUpdate = true;
             }
 			/*if (player.itemAnimation > 0)
@@ -114,7 +141,7 @@ namespace SOTS.Projectiles.Tide
 			}
 			else
 				Projectile.alpha = 0;
-			Lighting.AddLight(Projectile.Center, GetColor().ToVector3() * 0.25f);
+			Lighting.AddLight(Projectile.Center, GetColor().ToVector3() * 1f);
 		}
 	}
 }

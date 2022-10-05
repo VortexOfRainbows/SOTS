@@ -13,26 +13,22 @@ Acknowledged But Likely Delayed:
 4. Bug: shattershine hitting inappropriately fast (hitbox on player..?, not spawning shards)
 
 Update Objectives:
-1. Plasma Shrimp
-	1. Pistol Shrimp but accessory
-	2. Based of of RR2 Plasma Shrimp: when above 50% mana, fire a plasma bolt with every magic hit that does 40% damage
-	3. Also takes destroyer emblem, ectoplasm. Kinda like Sniper Scope
-2. Ghost Town!
+1. Ghost Town!
 	1. Make it spawn
 	2. Cave that integrates into evil biome
 	3. Smart spawning houses and rubble
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-3. Glow Moth and Glow Silk to the glowing mushroom biome.
+2. Glow Moth and Glow Silk to the glowing mushroom biome.
 	1. Glow Nylon
 		1. Can craft Torch Bomb, Water Walking Boots, Flower Boots
 		2. Guide to Illumination: magic book that makes hit enemies glow with a blue/green outline, therefore making them easier to see. Also slows by 20% or something (boss resist).
 	2. Glowspores (Royal Jelly of glow moth)
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
-4. Check if player possesses Texture Pack
-5. Make SOTS Dev Team on git hub!
+3. Check if player possesses Texture Pack
+4. Make SOTS Dev Team on git hub!
 
 
 Other 1.4 related objectives:

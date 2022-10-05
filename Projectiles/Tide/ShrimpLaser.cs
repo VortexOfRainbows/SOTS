@@ -52,6 +52,10 @@ namespace SOTS.Projectiles.Tide
 			triggerUpdate();
 			return false;
 		}
+		public static Color PurpleShrimpColorAttempt(float lerp)
+		{
+			return Color.Lerp(new Color(169, 117, 238), new Color(165, 68, 68), lerp);
+		}
 		public void TrailPreDraw()
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
@@ -65,6 +69,11 @@ namespace SOTS.Projectiles.Tide
 					break;
 				}
 				Color color = VoidPlayer.ShrimpColorAttempt((float)k / (trailPos.Length - 1)) * 1.2f;
+                if (Projectile.ai[0] == -1)
+				{
+					color = PurpleShrimpColorAttempt((float)k / (trailPos.Length - 1)) * 1.0f;
+					scale *= 0.8f;
+				}
 				color.A = 0;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
@@ -94,14 +103,34 @@ namespace SOTS.Projectiles.Tide
 			Lighting.AddLight(Projectile.Center, VoidPlayer.TideColor.ToVector3());
 			if (runOnce)
 			{
+				if (Projectile.ai[0] == -1)
+				{
+					for (int i = 0; i < 6; i++)
+					{
+						int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+						Dust dust = Main.dust[dust2];
+						dust.color = PurpleShrimpColorAttempt(Main.rand.NextFloat(1)) * 1.0f;
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 2.2f;
+						dust.velocity *= 0.5f;
+						dust.velocity += Projectile.velocity * 0.6f;
+						dust.alpha = 125;
+					}
+					trailPos = new Vector2[20];
+					SOTSUtils.PlaySound(SoundID.Item91, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.3f, 0.1f);
+				}
 				runOnce = false;
-				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 60, 0.8f, -0.1f);
 			}
 			if(Main.rand.NextBool(40) || (hasHit && Main.rand.NextBool(8)))
             {
 				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
 				dust.color = VoidPlayer.ShrimpColorAttempt(Main.rand.NextFloat(1)) * 1.2f;
+				if (Projectile.ai[0] == -1)
+				{
+					dust.color = PurpleShrimpColorAttempt(Main.rand.NextFloat(1)) * 1.2f;
+				}
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;
@@ -120,17 +149,25 @@ namespace SOTS.Projectiles.Tide
 			else
 			{
 				float sin = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 1.1f)) * 0.1f;
+				if (Projectile.ai[0] == -1)
+					sin = 1.9f * sin;
 				Projectile.Center += new Vector2(0, sin).RotatedBy(Projectile.velocity.ToRotation());
 				Projectile.ai[1]++;
 				counter += 0.05f;
-				int target = Common.GlobalNPCs.SOTSNPCs.FindTarget_Basic(Projectile.Center, 240, needsLOS: true);
+				float homingDist = 240;
+				if (Projectile.ai[0] == -1)
+					homingDist = 480;
+				int target = Common.GlobalNPCs.SOTSNPCs.FindTarget_Basic(Projectile.Center, homingDist, needsLOS: true);
 				if (target >= 0 && counter > 1)
                 {
 					NPC npc = Main.npc[target];
 					if(npc.CanBeChasedBy())
                     {
 						Vector2 toNPC = npc.Center - Projectile.Center;
-						Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * 4f, 0.002f + counter / 400f);
+						float homing = 0.002f + counter / 400f;
+						if (Projectile.ai[0] == -1)
+							homing *= 2;
+						Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * 4f, homing);
 						counter++;
 					}
                 }
@@ -142,7 +179,8 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			target.AddBuff(BuffID.OnFire, 600, false);
+			if (Projectile.ai[0] != -1)
+				target.AddBuff(BuffID.OnFire, 600, false);
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
