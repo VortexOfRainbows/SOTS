@@ -39,6 +39,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+10/04/22
+1. Added Plasma Shrimp. Works in Multiplayer
+
 9/27/22 & 10/01/22 & 10/02/22
 1. Blades now function with VM incubator
 2. Nerf Teratoma Master mode 360 -> 318

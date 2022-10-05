@@ -1,8 +1,8 @@
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium, Pyramid, Furniture folders remaining.
-3. Lux Balancing
-4. Ghost Town to Evil Biome
+3. Ghost Town to Evil Biome
+4. Remap (make Abstract) the Blades folder/items
 
 Low Priority Objectives:
 1. Archaelogist NPC

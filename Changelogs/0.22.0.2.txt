@@ -1,0 +1,43 @@
+Version 0.22.0.2:
+
+New Content!
+1. Readded Subspace Locket
+2. and a new Subspace Serpent Expert Drop: Serpent Spine!
+3. Permafrost Furniture Set!
+4. 5 new Lihzahrd Temple Items that spawn in Lihzahrd Chests
+5. Blazing Club (upgrade to spiked club)
+6. Subspace Booster!!! (tap-activated Flashspark Boots)
+7. Plasma Shrimp accessory
+8. New special "blades" that drop from Eater of Worlds and Brain of Cthulhu
+
+Balance Changes:
+Buffs:
+Distruptive Electromagnetic Field Emitter (D.E.F.E.) drop rate 1/75 -> 1/10, sell price 3g -> 1g
+Electromagnetici Lure is now cheaper to craft
+Blaspha damage 43 -> 45
+Coconut Gun damage 17 -> 20, void cost 24 -> 20
+
+Nerfs:
+Chaos Chamber attack speed 5 -> 7, damage 100 -> 90
+Skyward Blade damage 37 -> 33
+Putrid Eye hit rate 5 -> 6
+Earthen Construct spawn rates lowered slightly
+Earthen Construct damage 16 -> 14, defense 12 -> 10, (normal mode) life 225 -> 200
+Spike Club damage damage 12 -> 10 - n; where n is the extra spike
+Lux has been made less tanky overall, taking more damage during certain attacks; defense 54 -> 50
+Terratoma Master Mode health 360 -> 318
+
+Other:
+1. Constructs no longer spawn during Solar Eclipse, Frost Moon, Pumpkin Moon
+2. Chaos Chasis (Lux's Jail Ball) is now immune for 0.5 -> 2 seconds, making it harder to instantly kill on accident
+
+Bug Fixes:
+1. Void ranged weapons that use ammo now properly consume Void
+2. Ghost Pepper (Cursed Apple) visuals appear on the void bar properly
+3. Most spears fixed in multiplayer
+4. Voidmage Incubator should no longer freeze permanently in multiplayer
+5. Pharaoh's Curse debuff no longer hurts you outside of the pyramid
+6. Mega Vibrant Geode should no longer spawn on the Jungle Temple
+7. Digital Daito properly scales with melee attack speed
+8. Digital Daito handle now holds more properly when inversed
+9. Wisp in a Jar now properly spawns its minions
