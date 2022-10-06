@@ -389,13 +389,13 @@ namespace SOTS
 					break;
 			}
 		}
-		public override void AddRecipes()
+		public override void AddRecipes()/* tModPorter Note: Removed. Use ModSystem.AddRecipes */
 		{
 			Recipe.Create(ItemID.SlimeStaff, 1).AddIngredient(ModContent.ItemType<Wormwood>(), 30).AddTile(TileID.Anvils).Register();
 			Recipe.Create(ItemID.FlowerBoots, 1).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils).Register();
 			Recipe.Create(ItemID.WaterWalkingBoots, 1).AddIngredient(ModContent.ItemType<FragmentOfTide>(), 10).AddIngredient(ItemID.WaterWalkingPotion, 5).AddIngredient(ItemID.HermesBoots, 1).AddTile(TileID.Anvils).Register();
 		}
-		public override void AddRecipeGroups()
+		public override void AddRecipeGroups()/* tModPorter Note: Removed. Use ModSystem.AddRecipeGroups */
 		{
 			RecipeGroup group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Silver Bar", new int[]
 			{
