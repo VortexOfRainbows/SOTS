@@ -35,9 +35,22 @@ Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
+4. 7-Gem monuments
 
 
 Daily Log:
+
+10/15/22
+1. Cursed Impale still works at higher attack speeds
+2. Pot Generator bug fix: no longer acts like 2 pot generators when there is only 1. This previously caused pots to generate in 30 seconds
+	1. also made the first stack only bring it down to 20 seconds
+	2. Nerf to single pots, buff to stacking (overall nerf)
+3. Fixed Golden Dragonfly Jar dropping in Damocles Room
+4. Cursed Robe spawns the Crystal when in Vanity (no stats).
+5. Bulwark of the Ancients Crafting-Tree Projectiles no longer cut tiles
+	1. Also increased Hitbox Size; tear 30 -> 64, water 12 -> 48
+
+10/05/22 -- UPDATE 0.22.0.2
 
 10/04/22
 1. Added Plasma Shrimp. Works in Multiplayer

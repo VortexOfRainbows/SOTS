@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Pyramid
 			shader = player.cBody;
 			if (Main.myPlayer != Projectile.owner)
 				Projectile.timeLeft = 20;
-			if (modPlayer.CanCurseSwap)
+			if (modPlayer.CanCurseSwap && modPlayer.RubyMonolithIsNOTVanity)
 			{
 				if (modPlayer.CurseSwap)
 				{
@@ -131,13 +131,16 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				Projectile.frame = (int)Projectile.ai[1];
 			}
-			if (Projectile.frame == 1)
-            {
-				player.AddBuff(ModContent.BuffType<RubyMonolithAttack>(), 2);
-            }
-			else
+			if (modPlayer.RubyMonolithIsNOTVanity)
 			{
-				player.AddBuff(ModContent.BuffType<RubyMonolithDefense>(), 2);
+				if (Projectile.frame == 1)
+				{
+					player.AddBuff(ModContent.BuffType<RubyMonolithAttack>(), 2);
+				}
+				else
+				{
+					player.AddBuff(ModContent.BuffType<RubyMonolithDefense>(), 2);
+				}
 			}
 			Vector2 idlePosition = player.Center;
 			idlePosition.X -= player.direction * 32f;

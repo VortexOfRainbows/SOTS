@@ -1,34 +1,8 @@
+Things to Note For Later:
+1. Bosses HP is ludicrous for Master Mode
+2. Void consumable appear in magic storage?
+3. Need more void armors!
+4. Treasure slimes drop too much money!
+5. Red Wall bug. Make separate sprites..?
 
 
-
-Known Bugs/Issues:
-1. Player freezing completely, locking out menu (conditions unknown)
-	1. Seems to be actually a modder's toolkit error
-2. Game crashes with Recipe Browser enabled
-3. In Multiplayer, when some players run frame skip subtle and others do not, Time may be frozen forever by VM incubator
-	1. Make sure to better sync or correct time freeze (sync other freeze related variables).
-
-
-Complete:
-1. Mod Loadable in 1.4
-2. Projectile damage from enemies works properly (GetBaseDamage(NPC npc))!
-3. Sound playing works!
-4. Fixed void bar visuals!
-5. Global NPC Loot and Gores work! 
-6. Advisor HP scales properly
-7. Treasure Slime/Transmutation table assets load correctly.
-8. NPC spawning should be working correctly...
-9. Shaders work!
-10. Chests, Chairs, Dressers fixed!
-11. NPC loot and spawns seem to work for 1.4!
-
-
-
-Should be fixed:
-1. Lag generates in multiplayer after a while of playing. (Maybe fixed?)
-	1. Seem to generate client-side not server side..?
-	2. No memory leak on single player, or client side when testing..?
-	3. *Still seems to happen, but way less often and requires some hours (2+) of playing
-2. Primitives crash. (Fixed?)
-3 Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
-	1. Less frequent than before 0.20, but still happens? *Seems to be fixed now..?

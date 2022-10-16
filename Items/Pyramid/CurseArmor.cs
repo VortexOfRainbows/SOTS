@@ -63,8 +63,9 @@ namespace SOTS.Items.Pyramid
 			vPlayer.voidCost -= 0.15f;
 			player.manaCost -= 0.15f;
 			modPlayer.RubyMonolith = true;
+			modPlayer.RubyMonolithIsNOTVanity = true;
 		}
-		public override void AddRecipes()
+        public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 12).AddRecipeGroup("SOTS:GemRobes", 1).AddIngredient(ModContent.ItemType<RubyKeystone>(), 1).AddTile(TileID.Anvils).Register();
 		}
@@ -83,7 +84,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Hood");
-			Tooltip.SetDefault("Increases magic damage and void damage by 8%\nAlso increases magic crit chance and void crit chance by 5%\nThe closest enemy to you is afflicted with a curse\nUpon taking damage, cursed enemies will Flare, dealing 140% additional damage to it and other nearby enemies\nThis effect has a 2 second cooldown");
+			Tooltip.SetDefault("Increases magic damage and void damage by 8%\nAlso increases magic crit chance and void crit chance by 5%\nThe closest enemy to you is afflicted with a curse\nUpon taking damage, cursed enemies will Flare, taking 140% additional damage and dealing 140% damage to other nearby enemies\nThis effect has a 2 second cooldown");
 			this.SetResearchCost(1);
 		}
 		public override void UpdateEquip(Player player)

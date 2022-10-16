@@ -28,7 +28,12 @@ namespace SOTS.Projectiles.Tide
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
 		}
-        public override bool PreDraw(ref Color lightColor)
+		public override void ModifyDamageHitbox(ref Rectangle hitbox)
+		{
+			int width = 48;
+			hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
+		}
+		public override bool PreDraw(ref Color lightColor)
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(140, 90, 160, 0);
@@ -44,6 +49,10 @@ namespace SOTS.Projectiles.Tide
         public override bool ShouldUpdatePosition()
         {
 			return false;
+        }
+        public override bool? CanCutTiles()
+        {
+            return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

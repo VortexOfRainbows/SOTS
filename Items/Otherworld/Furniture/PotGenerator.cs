@@ -275,7 +275,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 			else
             {
-				for (int i = 0; i < 3600; i++)
+				for (int i = 1; i < 3600; i++)
 				{
 					if (WorldGen.InWorld(whereX, Position.Y + i, 10) && Main.tile[whereX, Position.Y + i].HasTile && Main.tile[whereX + 1, Position.Y + i].HasTile && Main.tile[whereX, Position.Y + i].TileType == TileType<PotGeneratorTile>() && Main.tile[whereX + 1, Position.Y + i].TileType == TileType<PotGeneratorTile>())
 					{

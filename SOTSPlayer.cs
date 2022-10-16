@@ -249,6 +249,7 @@ namespace SOTS
 		public bool CurseVision = false;
 		public float curseVisionCounter = 0;
 		public bool RubyMonolith = false;
+		public bool RubyMonolithIsNOTVanity = false;
 		public bool CanCurseSwap = false;
 		public bool CurseSwap = false;
 
@@ -761,6 +762,8 @@ namespace SOTS
 			tPlanetDamage = -1;
 			lastPlanetMax = tPlanetNum;
 			tPlanetNum = 0;
+			RubyMonolith = false;
+			RubyMonolithIsNOTVanity = false;
 			for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
             {
 				Item item = Player.armor[i];
@@ -790,7 +793,9 @@ namespace SOTS
 					}
 					HoloEye = true;
 				}
-				if(item.type == ModContent.ItemType<VisionAmulet>())
+				if (item.type == ModContent.ItemType<CursedRobe>())
+					RubyMonolith = true;
+				if (item.type == ModContent.ItemType<VisionAmulet>())
                 {
 					VisionVanity = true;
 				}
@@ -906,7 +911,6 @@ namespace SOTS
 			CritCurseFire = false;
 			CritNightmare = false;
 			CurseAura = false;
-			RubyMonolith = false;
 			CanCurseSwap = false;
 			BlueFire = false;
 			BlueFireOrange = false;

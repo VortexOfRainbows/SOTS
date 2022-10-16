@@ -3193,7 +3193,7 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
 				{0,0,0,2,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0},
 				{0,0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,0,0,0},
-				{0,0,0,2,8,1,7,13,1,10,1,13,1,1,7,7,8,1,7,1,1,1,1,12,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0},
+				{0,0,0,2,8,1,7,1,1,10,1,1,1,1,7,7,8,1,7,1,1,1,1,12,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0},
 				{0,0,0,2,2,2,2,2,5,5,5,2,0,0,0,9,9,9,9,9,9,9,2,2,2,9,9,9,0,1,1,1,1,1,1,1,1,0,0,0},
 				{0,0,0,0,0,0,0,2,0,0,0,2,0,0,0,14,16,16,16,16,16,16,2,2,2,16,16,16,16,16,16,16,16,16,16,16,16,0,0,0},
 				{0,0,0,0,0,0,0,2,0,0,0,2,0,0,0,0,14,17,17,17,17,17,2,2,2,17,17,17,17,17,17,17,17,17,17,17,17,0,0,0},
@@ -3306,10 +3306,13 @@ namespace SOTS.WorldgenHelpers
 								case 10:
 									if (confirmPlatforms == 1)
 									{
+										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<AncientGoldThroneTile>(), true, true, -1, 0);
+									}
+                                    else
+									{
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<AncientGoldThroneTile>(), true, true, -1, 0);
 									}
 									break;
 								case 11:
@@ -3329,12 +3332,6 @@ namespace SOTS.WorldgenHelpers
 										tile.IsHalfBlock = false;
 										WorldGen.PlaceTile(k, l, 215, true, true, -1, 7);
 									}
-									break;
-								case 13:
-									tile.HasTile = true;
-									tile.TileType = 527;
-									tile.Slope = 0;
-									tile.IsHalfBlock = true;
 									break;
 								case 14:
 									tile.HasTile = true;

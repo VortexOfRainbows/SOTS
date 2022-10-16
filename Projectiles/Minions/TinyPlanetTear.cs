@@ -25,6 +25,15 @@ namespace SOTS.Projectiles.Minions
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
 		}
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+			int width = 64;
+			hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
+        }
+        public override bool? CanCutTiles()
+		{
+			return false;
+		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;

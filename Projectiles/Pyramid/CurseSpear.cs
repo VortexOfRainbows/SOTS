@@ -26,5 +26,14 @@ namespace SOTS.Projectiles.Pyramid
                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<RubyBurst>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }
+        public override void Kill(int timeLeft)
+        {
+            if (counter < 10)
+            {
+                if (Main.myPlayer == Projectile.owner)
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<RubyBurst>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                counter = -1;
+            }
+        }
     }
 }
