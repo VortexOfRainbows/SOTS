@@ -49,6 +49,7 @@ Daily Log:
 4. Cursed Robe spawns the Crystal when in Vanity (no stats).
 5. Bulwark of the Ancients Crafting-Tree Projectiles no longer cut tiles
 	1. Also increased Hitbox Size; tear 30 -> 64, water 12 -> 48
+6. Otherworld Plating can be used in plating recipes
 
 10/05/22 -- UPDATE 0.22.0.2
 

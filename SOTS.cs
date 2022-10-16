@@ -503,6 +503,7 @@ namespace SOTS
 
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Elemental Plating", new int[]
 			{
+				ModContent.ItemType<OtherworldPlating>(),
 				ModContent.ItemType<UltimatePlating>(),
 				ModContent.ItemType<DullPlating>(),
 				ModContent.ItemType<NaturePlating>(),
