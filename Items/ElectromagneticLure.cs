@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Projectiles;
 using SOTS.Buffs;
 using Terraria.Audio;
+using SOTS.Void;
 
 namespace SOTS.Items
 {
@@ -21,7 +22,31 @@ namespace SOTS.Items
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);
 		}
-		public override void SetDefaults()
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			List<int> CapableNPCs = CapableNPCS(Main.LocalPlayer);
+			tooltips.Add(new TooltipLine(Mod, "Construct0", "Possible constructs:"));
+			if (CapableNPCs.Contains(ModContent.NPCType<NatureConstruct>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct1", "Nature Construct") { OverrideColor = VoidPlayer.natureColor });
+			if (CapableNPCs.Contains(ModContent.NPCType<EarthenConstruct>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct2", "Earthen Construct") { OverrideColor = VoidPlayer.EarthColor });
+			if (CapableNPCs.Contains(ModContent.NPCType<PermafrostConstruct>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct3", "Permafrost Construct") { OverrideColor = VoidPlayer.PermafrostColor });
+			if (CapableNPCs.Contains(ModContent.NPCType<OtherworldlyConstructHead>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct4", "Otherworldly Construct") { OverrideColor = VoidPlayer.OtherworldColor });
+			if (CapableNPCs.Contains(ModContent.NPCType<TidalConstruct>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct5", "Tidal Construct") { OverrideColor = VoidPlayer.TideColor });
+			if (CapableNPCs.Contains(ModContent.NPCType<EvilConstruct>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct6", "Evil Construct") { OverrideColor = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B)  });
+			if (CapableNPCs.Contains(ModContent.NPCType<ChaosConstruct>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct7", "Chaos Construct") { OverrideColor = VoidPlayer.pastelRainbow });
+			if (CapableNPCs.Contains(ModContent.NPCType<InfernoConstruct>()))
+				tooltips.Add(new TooltipLine(Mod, "Construct8", "Inferno Construct") { OverrideColor = VoidPlayer.Inferno1 });
+			if(CapableNPCs.Count <= 0)
+				tooltips.Add(new TooltipLine(Mod, "Construct8", "None") { OverrideColor = new Color(150, 150, 150) });
+
+		}
+        public override void SetDefaults()
 		{
 			Item.width = 18;
 			Item.height = 40;

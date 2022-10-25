@@ -5,6 +5,8 @@ using static Terraria.ModLoader.ModContent;
 using System.Linq;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Pyramid;
+using Terraria;
+using SOTS.Items.Gems;
 
 namespace SOTS
 {
@@ -25,6 +27,8 @@ namespace SOTS
         {
             if (unsafePyramidWall.Contains(type))
                 fail = !SOTSWorld.downedCurse;
+            if (Framing.GetTileSafely(i, j).TileType == TileType<SOTSGemLockTiles>())
+                fail = true;
             base.KillWall(i, j, type, ref fail);
         }
     }

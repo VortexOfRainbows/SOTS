@@ -4,5 +4,5 @@ Things to Note For Later:
 3. Need more void armors!
 4. Treasure slimes drop too much money!
 5. Red Wall bug. Make separate sprites..?
-
+6. Mannequins make minions spawned by void/summon weapons disappear..?
 
