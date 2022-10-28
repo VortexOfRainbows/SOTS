@@ -182,6 +182,21 @@ namespace SOTS.Items.Gems
 						}
 					}
 				}
+				if (key == ItemID.LargeRuby)
+					SOTSWorld.RubyKeySlotted = true;
+				if (key == ItemID.LargeSapphire)
+					SOTSWorld.SapphireKeySlotted = true;
+				if (key == ItemID.LargeEmerald)
+					SOTSWorld.EmeraldKeySlotted = true;
+				if (key == ItemID.LargeTopaz)
+					SOTSWorld.TopazKeySlotted = true;
+				if (key == ItemID.LargeAmethyst)
+					SOTSWorld.AmethystKeySlotted = true;
+				if (key == ItemID.LargeDiamond)
+					SOTSWorld.DiamondKeySlotted	 = true;
+				if (key == ItemID.LargeAmber)
+					SOTSWorld.AmberKeySlotted = true;
+				NetMessage.SendData(MessageID.WorldData); //This should sync the world variables
 			}
 			return true;
 		}

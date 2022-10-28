@@ -36,9 +36,14 @@ Other 1.4 related objectives:
 2. Final 1 starter house
 3. Bestiary for all enemies
 4. 7-Gem monuments
+5. Evostone Armor + Fishing Rod (Void)!
 
 
 Daily Log:
+
+10/28/22
+1. Gem locks have global variables + saves after world relog
+	1. Needs multiplayer testing, but it should work
 
 10/26/22
 1. Numismatic Ring added. At base void stats, should generate about 10-15 gold per hour.

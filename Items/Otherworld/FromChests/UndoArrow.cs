@@ -43,6 +43,13 @@ namespace SOTS.Items.Otherworld.FromChests
 				if(Main.npc[i].active)
 					Main.npc[i].aiStyle = -420;
             }
+			Main.NewText("Ruby: " + SOTSWorld.RubyKeySlotted);
+			Main.NewText("Sapphire: " + SOTSWorld.SapphireKeySlotted);
+			Main.NewText("Emerald: " + SOTSWorld.EmeraldKeySlotted);
+			Main.NewText("Topaz: " + SOTSWorld.TopazKeySlotted);
+			Main.NewText("Amethyst: " + SOTSWorld.AmethystKeySlotted);
+			Main.NewText("Diamond: " + SOTSWorld.DiamondKeySlotted);
+			Main.NewText("Amber: " + SOTSWorld.AmberKeySlotted);
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 24;

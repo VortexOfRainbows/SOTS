@@ -189,7 +189,15 @@ namespace SOTS
 		public static bool downedLux = false;
 		public static bool downedSubspace = false;
 		public static bool downedAdvisor = false;
-        public override void OnWorldLoad()
+
+		public static bool RubyKeySlotted = false;
+		public static bool SapphireKeySlotted = false;
+		public static bool EmeraldKeySlotted = false;
+		public static bool TopazKeySlotted = false;
+		public static bool AmethystKeySlotted = false;
+		public static bool DiamondKeySlotted = false;
+		public static bool AmberKeySlotted = true;
+		public override void OnWorldLoad()
 		{
 			SOTSConfig.voidBarNeedsLoading = 1;
 			SOTSConfig.PreviousBarMode = 0;
@@ -204,6 +212,14 @@ namespace SOTS
 			downedAmalgamation = false;
 			downedLux = false;
 			downedSubspace = false;
+
+			RubyKeySlotted = false;
+			SapphireKeySlotted = false;
+			EmeraldKeySlotted = false;
+			TopazKeySlotted = false;
+			AmethystKeySlotted = false;
+			DiamondKeySlotted = false;
+			AmberKeySlotted = true;
 		}
         public override void SaveWorldData(TagCompound tag)
 		{
@@ -213,6 +229,14 @@ namespace SOTS
 			tag["DownedAmalgamation"] = downedAmalgamation;
 			tag["DownedLux"] = downedLux;
 			tag["DownedSubspace"] = downedSubspace;
+
+			tag["RubyKey"] = RubyKeySlotted;
+			tag["SapphireKey"] = SapphireKeySlotted;
+			tag["EmeraldKey"] = EmeraldKeySlotted;
+			tag["TopazKey"] = TopazKeySlotted;
+			tag["AmethystKey"] = AmethystKeySlotted;
+			tag["DiamondKey"] = DiamondKeySlotted;
+			//tag["AmberKey"] = AmberKeySlotted;
 		}
         public override void LoadWorldData(TagCompound tag)
 		{
@@ -222,6 +246,14 @@ namespace SOTS
 			downedAmalgamation = tag.GetBool("DownedAmalgamation");
 			downedLux = tag.GetBool("DownedLux");
 			downedSubspace = tag.GetBool("DownedSubspace");
+
+			RubyKeySlotted = tag.GetBool("RubyKey");
+			SapphireKeySlotted = tag.GetBool("SapphireKey");
+			EmeraldKeySlotted = tag.GetBool("EmeraldKey");
+			TopazKeySlotted = tag.GetBool("TopazKey");
+			AmethystKeySlotted = tag.GetBool("AmethystKey");
+			DiamondKeySlotted = tag.GetBool("DiamondKey");
+			//AmberKeySlotted = tag.GetBool("AmberKey");
 		}
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
@@ -231,7 +263,18 @@ namespace SOTS
 			flags[3] = downedCurse;
 			flags[4] = downedLux;
 			flags[5] = downedSubspace;
+
+			BitsByte gemFlags = new BitsByte();
+			gemFlags[0] = RubyKeySlotted;
+			gemFlags[1] = SapphireKeySlotted;
+			gemFlags[2] = EmeraldKeySlotted;
+			gemFlags[3] = TopazKeySlotted;
+			gemFlags[4] = AmethystKeySlotted;
+			gemFlags[5] = DiamondKeySlotted;
+			//gemFlags[6] = AmberKeySlotted;
+
 			writer.Write(flags);
+			writer.Write(gemFlags);
 			writer.Write(GlobalCounter);
 		}
 		public override void NetReceive(BinaryReader reader) {
@@ -242,6 +285,16 @@ namespace SOTS
 			downedCurse = flags[3];
 			downedLux = flags[4];
 			downedSubspace = flags[5];
+
+			BitsByte gemFlags = reader.ReadByte();
+			RubyKeySlotted = gemFlags[0];
+			SapphireKeySlotted = gemFlags[1];
+			EmeraldKeySlotted = gemFlags[2];
+			TopazKeySlotted = gemFlags[3];
+			AmethystKeySlotted = gemFlags[4];
+			DiamondKeySlotted = gemFlags[5];
+			//AmberKeySlotted = gemFlags[6];
+
 			GlobalCounter = reader.ReadInt32();
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
