@@ -40,6 +40,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+10/26/22
+1. Numismatic Ring added. At base void stats, should generate about 10-15 gold per hour.
+
 10/24/22
 1. Framework for Modded Gem Locks (they need visuals, global variables, unbreakable, server syncing, etc)
 2. Possible constructs now appear on the Electromagnetic Lure's tooltip

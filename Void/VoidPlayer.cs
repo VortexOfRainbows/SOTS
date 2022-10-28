@@ -55,6 +55,7 @@ namespace SOTS.Void
 		public float CrushTransformer = 1f;
 		public int BonusCrushRangeMin = 0;
 		public int BonusCrushRangeMax = 0;
+		public float VoidGenerateMoney = 0;
 		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
 			tag["voidMeterMax"] = voidMeterMax;
@@ -761,8 +762,8 @@ namespace SOTS.Void
 			{
 				voidRegenSpeed -= 0.9f;
 			}
-			if (voidRegenSpeed < 0)
-				voidRegenSpeed = 0;
+			if (voidRegenSpeed < 0.01f)
+				voidRegenSpeed = 0.01f;
 			float increaseAmount = voidRegenSpeed;
 			if (voidRecovery)
 			{
@@ -790,13 +791,48 @@ namespace SOTS.Void
 				voidRegenTimer += increaseAmount;
 
 			voidRegenTimer = MathHelper.Clamp(voidRegenTimer, 0, voidRegenTimerMax);
-			if(voidRegenTimer >= voidRegenTimerMax)
+			if(voidRegenTimer >= voidRegenTimerMax) //this is for Void GAIN
 			{
 				if(!voidRecovery)
 				{
 					float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
 					VoidEffect(Player, (int)voidGain);
 					voidMeter += voidGain;
+					if(VoidGenerateMoney > 0)
+                    {
+						float generateMoneyValue = (Main.rand.NextFloat(50, 70) + 4 * voidGain) * (VoidGenerateMoney + (float)Math.Sqrt(16* VoidGenerateMoney + voidGain)) * voidGainMultiplier;
+						while ((int)generateMoneyValue > 0)
+						{
+							if (generateMoneyValue > 1000000f)
+							{
+								int num4 = (int)(generateMoneyValue / 1000000f);
+								generateMoneyValue -= (1000000 * num4);
+								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.PlatinumCoin, num4);
+							}
+							else if (generateMoneyValue > 10000f)
+							{
+								int num6 = (int)(generateMoneyValue / 10000f);
+								generateMoneyValue -= (10000 * num6);
+								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.GoldCoin, num6);
+							}
+							else if (generateMoneyValue > 100f)
+							{
+								int num7 = (int)(generateMoneyValue / 100f);
+								generateMoneyValue -= (100 * num7);
+								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.SilverCoin, num7);
+							}
+							else
+							{
+								int num8 = (int)generateMoneyValue;
+								if (num8 < 1)
+								{
+									num8 = 1;
+								}
+								generateMoneyValue -= num8;
+								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.CopperCoin, num8);
+							}
+						}
+					}						
 				}
 				else
 					resolveVoidCounter = 15;
@@ -804,7 +840,7 @@ namespace SOTS.Void
 				GreenBarCounter = 20;
 			}
 			float voidRegen = flatVoidRegen / 60f;
-			if(voidRegen < 0)
+			if(voidRegen < 0) //this is negative void regen
 			{
 				int numberScaling = (int)(flatVoidRegen * -0.25f);
 				negativeVoidRegenPopupNumber = numberScaling + 1;
@@ -826,7 +862,7 @@ namespace SOTS.Void
 					voidMeter -= negativeVoidRegenPopupNumber;
 				}
 			}
-			else if(voidMeter >= 0)
+			else if(voidMeter >= 0) //this is positive void regen
 			{
 				positiveVoidRegenCounter += voidRegen;
 				if(positiveVoidRegenCounter > 1)
@@ -843,6 +879,7 @@ namespace SOTS.Void
 			flatVoidRegen = 0f;
 			voidShock = false;
 			voidRecovery = false;
+			VoidGenerateMoney = 0;
 			#endregion
 
 			#region apply upgrade effects
