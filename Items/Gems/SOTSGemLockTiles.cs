@@ -25,8 +25,13 @@ namespace SOTS.Items.Gems
 			name.SetDefault("Mysterious Switch");
 			AddMapEntry(new Color(34, 25, 48), name);
 			DustType = DustID.Obsidian;
+			MinPick = 250;
 		}
-        public override void NumDust(int i, int j, bool fail, ref int num)
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		{
+			return false;
+		}
+		public override void NumDust(int i, int j, bool fail, ref int num)
         {
 			num = 4;
         }
