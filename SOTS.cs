@@ -188,7 +188,8 @@ namespace SOTS
 			SyncGlobalNPCTime,
 			SyncGlobalProjTime,
 			SyncGlobalWorldFreeze,
-			SyncGlobalCounter
+			SyncGlobalCounter,
+			SyncGlobalGemLocks
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -385,6 +386,30 @@ namespace SOTS
 						packet.Write((byte)SOTSMessageType.SyncGlobalCounter);
 						packet.Write(SOTSWorld.GlobalCounter);
 						packet.Send(-1, -1);
+					}
+					break;
+				case (int)SOTSMessageType.SyncGlobalGemLocks:
+					playernumber2 = reader.ReadInt32();
+					SOTSWorld.RubyKeySlotted = reader.ReadBoolean();
+					SOTSWorld.SapphireKeySlotted = reader.ReadBoolean();
+					SOTSWorld.EmeraldKeySlotted = reader.ReadBoolean();
+					SOTSWorld.TopazKeySlotted = reader.ReadBoolean();
+					SOTSWorld.AmethystKeySlotted  = reader.ReadBoolean();
+					SOTSWorld.DiamondKeySlotted = reader.ReadBoolean();
+					SOTSWorld.AmberKeySlotted = reader.ReadBoolean();
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncGlobalGemLocks);
+						packet.Write(playernumber2);
+						packet.Write(SOTSWorld.RubyKeySlotted);
+						packet.Write(SOTSWorld.SapphireKeySlotted);
+						packet.Write(SOTSWorld.EmeraldKeySlotted);
+						packet.Write(SOTSWorld.TopazKeySlotted);
+						packet.Write(SOTSWorld.AmethystKeySlotted);
+						packet.Write(SOTSWorld.DiamondKeySlotted);
+						packet.Write(SOTSWorld.AmberKeySlotted);
+						packet.Send(-1, playernumber2);
 					}
 					break;
 			}

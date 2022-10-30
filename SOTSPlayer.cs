@@ -279,6 +279,7 @@ namespace SOTS
 
 		public bool PlasmaShrimpVanity = false;
 		public bool PlasmaShrimp = false;
+		public bool VultureRing = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -923,6 +924,7 @@ namespace SOTS
 			SerpentSpine = false;
 			PlasmaShrimpVanity = false;
 			PlasmaShrimp = false;
+			VultureRing = false;
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
@@ -1418,16 +1420,28 @@ namespace SOTS
 			}
             if(Player.HasBuff(ModContent.BuffType<Harmony>()) || DelayPotionDegrade)
             {
-				for(int i = 0; i < Player.buffTime.Length; i++)
-				{
-					int type = Player.buffType[i];
-					if (!Main.debuff[type] && (Player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type)) && type != ModContent.BuffType<Harmony>())
-					{
-						Player.buffTime[i]++;
-					}
-				}
+				IncreaseBuffDurations(Player, 1, 0, 1, false);
 			}
 			PotionBuffDegradeRate = 1f;
+		}
+		public static void IncreaseBuffDurations(Player player, int time, float timeBonusMultiplier = 0, int maximumTimeBonus = 1, bool affectAll = false)
+		{
+			for (int i = 0; i < player.buffTime.Length; i++)
+			{
+				int type = player.buffType[i];
+				if (!Main.debuff[type] && (((player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type)) && type != ModContent.BuffType<Harmony>()) || affectAll))
+				{
+					int totalIncrease = time;
+					if(timeBonusMultiplier > 0)
+                    {
+						int bonusTime = (int)(timeBonusMultiplier * player.buffTime[i]); //gets a percentage increase
+						totalIncrease += bonusTime;
+                    }
+					if (totalIncrease > maximumTimeBonus)
+						totalIncrease = maximumTimeBonus;
+					player.buffTime[i] += totalIncrease;
+				}
+			}
 		}
 		public static bool ZoneForest(Player player)
 		{

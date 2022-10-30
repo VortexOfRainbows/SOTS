@@ -56,6 +56,21 @@ namespace SOTS
 		public static float GlobalFreezeCounter = 0;
 		public static float GlobalSpeedMultiplier = 1;
 		public static bool IsFrozenThisFrame = false;
+		public static void SyncGemLocks(Player clientSender)
+		{
+			int playerWhoAmI = clientSender != null ? clientSender.whoAmI : -1;
+			var packet = Instance.GetPacket();
+			packet.Write((byte)SOTSMessageType.SyncGlobalGemLocks);
+			packet.Write(playerWhoAmI);
+			packet.Write(RubyKeySlotted);
+			packet.Write(SapphireKeySlotted);
+			packet.Write(EmeraldKeySlotted);
+			packet.Write(TopazKeySlotted);
+			packet.Write(AmethystKeySlotted);
+			packet.Write(DiamondKeySlotted);
+			packet.Write(AmberKeySlotted);
+			packet.Send();
+		}
 		public static void SyncTimeFreeze(Player clientSender)
 		{
 			int playerWhoAmI = clientSender != null ? clientSender.whoAmI : -1;
@@ -219,7 +234,7 @@ namespace SOTS
 			TopazKeySlotted = false;
 			AmethystKeySlotted = false;
 			DiamondKeySlotted = false;
-			AmberKeySlotted = true;
+			AmberKeySlotted = false;
 		}
         public override void SaveWorldData(TagCompound tag)
 		{
@@ -236,7 +251,7 @@ namespace SOTS
 			tag["TopazKey"] = TopazKeySlotted;
 			tag["AmethystKey"] = AmethystKeySlotted;
 			tag["DiamondKey"] = DiamondKeySlotted;
-			//tag["AmberKey"] = AmberKeySlotted;
+			tag["AmberKey"] = AmberKeySlotted;
 		}
         public override void LoadWorldData(TagCompound tag)
 		{
@@ -253,7 +268,7 @@ namespace SOTS
 			TopazKeySlotted = tag.GetBool("TopazKey");
 			AmethystKeySlotted = tag.GetBool("AmethystKey");
 			DiamondKeySlotted = tag.GetBool("DiamondKey");
-			//AmberKeySlotted = tag.GetBool("AmberKey");
+			AmberKeySlotted = tag.GetBool("AmberKey");
 		}
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
@@ -264,17 +279,16 @@ namespace SOTS
 			flags[4] = downedLux;
 			flags[5] = downedSubspace;
 
-			BitsByte gemFlags = new BitsByte();
+			/*BitsByte gemFlags = new BitsByte();
 			gemFlags[0] = RubyKeySlotted;
 			gemFlags[1] = SapphireKeySlotted;
 			gemFlags[2] = EmeraldKeySlotted;
 			gemFlags[3] = TopazKeySlotted;
 			gemFlags[4] = AmethystKeySlotted;
 			gemFlags[5] = DiamondKeySlotted;
-			//gemFlags[6] = AmberKeySlotted;
+			writer.Write(gemFlags);*/
 
 			writer.Write(flags);
-			writer.Write(gemFlags);
 			writer.Write(GlobalCounter);
 		}
 		public override void NetReceive(BinaryReader reader) {
@@ -286,14 +300,14 @@ namespace SOTS
 			downedLux = flags[4];
 			downedSubspace = flags[5];
 
-			BitsByte gemFlags = reader.ReadByte();
+			/*BitsByte gemFlags = reader.ReadByte();
 			RubyKeySlotted = gemFlags[0];
 			SapphireKeySlotted = gemFlags[1];
 			EmeraldKeySlotted = gemFlags[2];
 			TopazKeySlotted = gemFlags[3];
 			AmethystKeySlotted = gemFlags[4];
 			DiamondKeySlotted = gemFlags[5];
-			//AmberKeySlotted = gemFlags[6];
+			//AmberKeySlotted = gemFlags[6];*/
 
 			GlobalCounter = reader.ReadInt32();
 		}

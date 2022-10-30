@@ -201,7 +201,7 @@ namespace SOTS.Items.Gems
 					SOTSWorld.DiamondKeySlotted	 = true;
 				if (key == ItemID.LargeAmber)
 					SOTSWorld.AmberKeySlotted = true;
-				NetMessage.SendData(MessageID.WorldData); //This should sync the world variables
+				SOTSWorld.SyncGemLocks(Main.LocalPlayer); //This should sync the world variables
 			}
 			return true;
 		}

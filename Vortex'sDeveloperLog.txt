@@ -38,7 +38,7 @@ Other 1.4 related objectives:
 4. 7-Gem monuments
 5. Evostone Armor + Fishing Rod (Void)!
 6. Gem Rings:
-	1. Amethyst. spirit minion that can place blocks
+	1. Amethyst. spirit minion that can mine blocks
 	2. Topaz. killing enemies grants a random buff for 30 seconds
 	3. Sapphire. generate money overtime
 	4. Emerald. enemies have a 10% chance to drop double loot
@@ -48,6 +48,10 @@ Other 1.4 related objectives:
 
 
 Daily Log:
+
+10/30/22
+1. Gem Locks globals now sync in multiplayer.
+2. Vulture's Ring + Renamed Numistmatist's Ring
 
 10/28/22
 1. Gem locks have global variables + saves after world relog

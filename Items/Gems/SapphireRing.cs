@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Gems
 {
-	public class NumismaticRing : ModItem
+	public class SapphireRing : ModItem
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Numismatic Ring");
-			Tooltip.SetDefault("Generate income when the void is gained\nDecreases void regeneration speed by 30%");
+			DisplayName.SetDefault("Numismatist's Ring");
+			Tooltip.SetDefault("Generate income when the void is gained\nDecreases void regeneration speed by 20%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace SOTS.Items.Gems
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			vPlayer.voidRegenSpeed -= 0.3f;
+			vPlayer.voidRegenSpeed -= 0.2f;
 			vPlayer.VoidGenerateMoney += 1f;
 		}
 	}

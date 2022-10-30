@@ -1003,6 +1003,7 @@ namespace SOTS.Common.GlobalNPCs
             }
             else
             {
+                int heartCount = 0;
                 int packCount = 0;
                 int baguetteCount = 0;
                 for(int i = 0; i < Main.maxItems; i++)
@@ -1017,6 +1018,11 @@ namespace SOTS.Common.GlobalNPCs
                     {
                         if (item.active)
                             baguetteCount++;
+                    }
+                    if (item.type == ItemID.Heart)
+                    {
+                        if (item.active)
+                            heartCount++;
                     }
                 }
                 for (int i = 0; i < Main.maxPlayers; i++)
@@ -1059,7 +1065,11 @@ namespace SOTS.Common.GlobalNPCs
                             for (int j = 0; j < rand; j++)
                                 Item.NewItem(npc.GetSource_Death("SOTS:KilledByBaguette"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BaguetteCrumb>(), 1);
                         }
-                        if(sPlayer.HarvestersScythe && Main.rand.NextBool(lastHitWasCrit ? 5 : 10))
+                        if (sPlayer.VultureRing && heartCount < 40)
+                        {
+                            Item.NewItem(npc.GetSource_Death("SOTS:KilledWithVulture"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Heart, 1);
+                        }
+                        if (sPlayer.HarvestersScythe && Main.rand.NextBool(lastHitWasCrit ? 5 : 10))
                         {
                             sPlayer.HarvestersScythe = false;
                             npc.extraValue = 0;
