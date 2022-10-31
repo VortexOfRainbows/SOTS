@@ -52,11 +52,7 @@ public static class LazyMinerHelper
 		if (damageTileAmount >= 100)
 		{
 			damageTileAmount = self.hitTile.AddDamage(num, -damageTileAmount);
-			///THIS IS WHERE I WILL PUT STUFF THAT
-			///adds mined tile to cache
-			///finds future tiles of same type to add to cache
-			///breaks all tiles in cache once mouse is released or 100 tiles are added to the cache
-			///this will be done through a projectile, to allow multiple caches of block types to be added
+			Main.NewText("I'm here!");
 			if (damageTileAmount >= 100)
 			{
 				bool num3 = Main.tile[x, y].HasTile;

@@ -6,3 +6,6 @@ Things to Note For Later:
 5. Red Wall bug. Make separate sprites..?
 6. Mannequins make minions spawned by void/summon weapons disappear..?
 
+Need:
+1. Wind mechanics for vines and banners
+

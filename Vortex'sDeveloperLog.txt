@@ -5,7 +5,7 @@ The following is my development plans :D
 Tmodloader Bugs:
 1. Chest Swapping isn't working..? (Issue already in Tmodloader)
 2. Chests crash when platforms are swapped below them (confirmed, Filed issue for Tmodloader)
-3. Resolution is broken sadge
+3. PickTile detour will unload randomly sometimes and never come back
 Acknowledged But Likely Delayed:
 1. (Mod Compat Probably) Assassination Potion MAY BE bugging with creatures below 20 hp, or 10%... I am completely unable to replicate this...
 2. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)

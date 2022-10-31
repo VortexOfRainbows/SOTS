@@ -30,7 +30,6 @@ namespace SOTS
 			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update += Player_Update;
-			On.Terraria.Player.PickTile += Player_PickTile;
 			On.Terraria.NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update += Gore_Update;
             On.Terraria.Projectile.Update += Projectile_Update;
@@ -48,14 +47,14 @@ namespace SOTS
 
 			//1.4 ZombieHand
 			On.Terraria.Player.ItemCheck_MeleeHitNPCs += Player_ItemCheck_MeleeHitNPCs;
-
 			Main.OnPreDraw += Main_OnPreDraw;
+			On.Terraria.Player.PickTile += Player_PickTile;
 			if (!Main.dedServ)
 				ResizeTargets();
 		}
-		public static void Unload()
+		public static void Unload() //Apparently unloading Detours is handled automatically now..?
 		{
-			On.Terraria.NetMessage.SendData -= NetMessage_SendData;
+			/*On.Terraria.NetMessage.SendData -= NetMessage_SendData;
 
 			On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
@@ -63,7 +62,6 @@ namespace SOTS
 
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update -= Player_Update;
-			On.Terraria.Player.PickTile -= Player_PickTile;
 			On.Terraria.NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update -= Gore_Update;
 			On.Terraria.Projectile.Update -= Projectile_Update;
@@ -79,6 +77,7 @@ namespace SOTS
 			On.Terraria.Player.ItemCheck_MeleeHitNPCs -= Player_ItemCheck_MeleeHitNPCs;
 
 			Main.OnPreDraw -= Main_OnPreDraw;
+			On.Terraria.Player.PickTile -= Player_PickTile;*/
 		}
 		public static void ResizeTargets()
 		{
@@ -97,16 +96,6 @@ namespace SOTS
                 }
 			}
 			orig(msgType, remoteClient, ignoreClient, text, number, number2, number3, number4, number5, number6, number7);
-		}
-		private static void Player_PickTile(On.Terraria.Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
-		{
-			if(SOTSPlayer.ModPlayer(self).LazyMinerRing)
-            {
-				bool DoNotMineNormally = LazyMinerHelper.FakePickTile(self, x, y, pickPower);
-				if (DoNotMineNormally)
-					return;
-            }
-			orig(self, x, y, pickPower);
 		}
 		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{
@@ -162,6 +151,23 @@ namespace SOTS
 				}
 			}
 			orig(self, i);
+		}
+		private static void Player_PickTile(On.Terraria.Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
+		{
+			Main.NewText("1"); //This does not even run at all after the second reload
+			if (self != null)
+			{
+				Main.NewText("2 " + SOTSPlayer.ModPlayer(self).LazyMinerRing);
+				if (SOTSPlayer.ModPlayer(self).LazyMinerRing)
+				{
+					Main.NewText("3");
+					bool DoNotMineNormally = LazyMinerHelper.FakePickTile(self, x, y, pickPower);
+					if (DoNotMineNormally)
+						return;
+				}
+				Main.NewText("4");
+			}
+			orig(self, x, y, pickPower);
 		}
 		private static void Player_ItemCheck_MeleeHitNPCs(On.Terraria.Player.orig_ItemCheck_MeleeHitNPCs orig, Player self, Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack)
 		{
