@@ -38,21 +38,14 @@ Other 1.4 related objectives:
 4. 7-Gem monuments
 5. Evostone Armor + Fishing Rod (Void)!
 6. Gem Rings:
-	1. Amethyst. spirit minion that can mine blocks
-	2. Topaz. killing enemies grants a random buff for 30 seconds
-	3. Sapphire. generate money overtime
-	4. Emerald. enemies have a 10% chance to drop double loot
-	5. Ruby. enemies drop hearts on death guaranteed
-	6. Diamond. increases damage by your defense stat, but defense no longer contributes to damage reduction. Also increases flat damage
-	7. Amber. getting hit grants a random buff for 30 seconds
-
+	1. Amethyst (Belphegor). Adds a veinmine-adjacent mechanic.
 
 Daily Log:
 
 10/30/22
 1. Gem Locks globals now sync in multiplayer.
-2. Vulture's Ring + Renamed Numistmatist's Ring
-3. Masochist's Ring
+2. Finished all SIN RINGS except for Amethyst (Belphegor)
+	1. Leviathan and Lucifer need testing
 
 10/28/22
 1. Gem locks have global variables + saves after world relog

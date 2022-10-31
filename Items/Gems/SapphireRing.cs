@@ -9,7 +9,7 @@ namespace SOTS.Items.Gems
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Numismatist's Ring");
+			DisplayName.SetDefault("Mammon's Ring");
 			Tooltip.SetDefault("Generate income when the void is gained\nDecreases void regeneration speed by 20%");
 			this.SetResearchCost(1);
 		}

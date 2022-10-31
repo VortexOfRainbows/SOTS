@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Gems
 {
-	public class RubyRing : ModItem
+	public class TopazRing : ModItem
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Beelzebub's Ring");
-			Tooltip.SetDefault("Killed enemies always drop hearts\nCollecting hearts lengthens the durations of active buffs");
+			DisplayName.SetDefault("Sathanas's Ring");
+			Tooltip.SetDefault("Killing enemies grants a random buff for 30 seconds");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace SOTS.Items.Gems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer.ModPlayer(player).VultureRing = true;
+			SOTSPlayer.ModPlayer(player).SadistRing = true;
 		}
 	}
 }

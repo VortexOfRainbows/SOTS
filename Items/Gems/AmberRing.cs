@@ -9,7 +9,7 @@ namespace SOTS.Items.Gems
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Masochist's Ring");
+			DisplayName.SetDefault("Asmodeus's Ring");
 			Tooltip.SetDefault("Getting hit grants a random buff for 30 seconds");
 			this.SetResearchCost(1);
 		}

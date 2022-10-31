@@ -5,26 +5,26 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Gems
 {
-	public class RubyRing : ModItem
+	public class EmeraldRing : ModItem
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Beelzebub's Ring");
-			Tooltip.SetDefault("Killed enemies always drop hearts\nCollecting hearts lengthens the durations of active buffs");
+			DisplayName.SetDefault("Leviathan's Ring");
+			Tooltip.SetDefault("Enemies have a 20% chance to drop double the loot");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
 			Item.maxStack = 1;
-            Item.width = 22;     
-            Item.height = 20;   
+            Item.width = 24;     
+            Item.height = 22;   
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Green;
 			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer.ModPlayer(player).VultureRing = true;
+			SOTSPlayer.ModPlayer(player).ImposterRing = true;
 		}
 	}
 }

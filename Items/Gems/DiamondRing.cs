@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Gems
 {
-	public class RubyRing : ModItem
+	public class DiamondRing : ModItem
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Beelzebub's Ring");
-			Tooltip.SetDefault("Killed enemies always drop hearts\nCollecting hearts lengthens the durations of active buffs");
+			DisplayName.SetDefault("Lucifer's Ring");
+			Tooltip.SetDefault("Converts defense into damage percent increase\nDefense no longer reduces damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace SOTS.Items.Gems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer.ModPlayer(player).VultureRing = true;
+			SOTSPlayer.ModPlayer(player).DevilRing = true;
 		}
 	}
 }

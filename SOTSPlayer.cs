@@ -281,6 +281,9 @@ namespace SOTS
 		public bool PlasmaShrimp = false;
 		public bool VultureRing = false;
 		public bool MasochistRing = false;
+		public bool SadistRing = false;
+		public bool ImposterRing = false;
+		public bool DevilRing = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -643,6 +646,12 @@ namespace SOTS
 			{
 				rippleTimer = 0;
 			}
+			if(DevilRing)
+			{
+				Player.GetDamage(DamageClass.Generic) += Player.statDefense * 0.01f;
+				Player.statDefense = 0;
+			}
+			DevilRing = false;
 		}
         public override void ResetEffects()
 		{
@@ -927,6 +936,8 @@ namespace SOTS
 			PlasmaShrimp = false;
 			VultureRing = false;
 			MasochistRing = false;
+			SadistRing = false;
+			ImposterRing = false;
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

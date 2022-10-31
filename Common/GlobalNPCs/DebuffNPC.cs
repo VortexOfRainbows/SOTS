@@ -1069,9 +1069,19 @@ namespace SOTS.Common.GlobalNPCs
                         {
                             Item.NewItem(npc.GetSource_Death("SOTS:KilledWithVulture"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Heart, 1);
                         }
+                        if (sPlayer.SadistRing)
+                        {
+                            SOTSPlayer.GrantRandomRingBuff(player);
+                        }
                         if (sPlayer.HarvestersScythe && Main.rand.NextBool(lastHitWasCrit ? 5 : 10))
                         {
                             sPlayer.HarvestersScythe = false;
+                            npc.extraValue = 0;
+                            npc.NPCLoot();
+                        }
+                        if (sPlayer.ImposterRing && Main.rand.NextBool(5))
+                        {
+                            sPlayer.ImposterRing = false;
                             npc.extraValue = 0;
                             npc.NPCLoot();
                         }
