@@ -52,6 +52,7 @@ Daily Log:
 10/30/22
 1. Gem Locks globals now sync in multiplayer.
 2. Vulture's Ring + Renamed Numistmatist's Ring
+3. Masochist's Ring
 
 10/28/22
 1. Gem locks have global variables + saves after world relog

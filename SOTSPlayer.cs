@@ -280,6 +280,7 @@ namespace SOTS
 		public bool PlasmaShrimpVanity = false;
 		public bool PlasmaShrimp = false;
 		public bool VultureRing = false;
+		public bool MasochistRing = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -925,6 +926,7 @@ namespace SOTS
 			PlasmaShrimpVanity = false;
 			PlasmaShrimp = false;
 			VultureRing = false;
+			MasochistRing = false;
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
@@ -1103,6 +1105,8 @@ namespace SOTS
 					}
 				}
 			}
+			if (MasochistRing)
+				GrantRandomRingBuff(Player);
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
 		}
 		int shotCounter = 0;
@@ -1443,6 +1447,23 @@ namespace SOTS
 				}
 			}
 		}
+		public static void GrantRandomRingBuff(Player player)
+        {
+			List<int> possibleBuffs = new List<int>()
+			{
+				BuffID.Swiftness,
+				BuffID.Regeneration,
+				BuffID.Ironskin,
+				BuffID.Wrath,
+				BuffID.Rage,
+				ModContent.BuffType<SoulAccess>(),
+				ModContent.BuffType<Roughskin>(),
+				BuffID.Thorns,
+				BuffID.ManaRegeneration,
+				ModContent.BuffType<DiamondSkin>()
+			};
+			player.AddBuff(possibleBuffs[Main.rand.Next(possibleBuffs.Count)], 1800);
+        }
 		public static bool ZoneForest(Player player)
 		{
 			return !player.GetModPlayer<SOTSPlayer>().PyramidBiome && player.ZoneForest;
