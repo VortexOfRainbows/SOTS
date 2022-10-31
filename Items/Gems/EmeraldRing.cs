@@ -10,7 +10,7 @@ namespace SOTS.Items.Gems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Leviathan's Ring");
-			Tooltip.SetDefault("Enemies have a 20% chance to drop double the loot");
+			Tooltip.SetDefault("Enemies have a 14.3% chance to drop double the loot");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

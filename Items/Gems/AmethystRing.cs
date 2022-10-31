@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Gems
 {
-	public class SapphireRing : ModItem
+	public class AmethystRing : ModItem
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Mammon's Ring");
-			Tooltip.SetDefault("Generate income when the void is gained");
+			DisplayName.SetDefault("Belphegor's Ring");
+			Tooltip.SetDefault("Chain together blocks when mining, breaking all of them at once");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -24,8 +24,7 @@ namespace SOTS.Items.Gems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			vPlayer.VoidGenerateMoney += 1f;
+			SOTSPlayer.ModPlayer(player).LazyMinerRing = true;
 		}
 	}
 }

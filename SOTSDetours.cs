@@ -30,6 +30,7 @@ namespace SOTS
 			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update += Player_Update;
+			On.Terraria.Player.PickTile += Player_PickTile;
 			On.Terraria.NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update += Gore_Update;
             On.Terraria.Projectile.Update += Projectile_Update;
@@ -62,6 +63,7 @@ namespace SOTS
 
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update -= Player_Update;
+			On.Terraria.Player.PickTile -= Player_PickTile;
 			On.Terraria.NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
 			On.Terraria.Gore.Update -= Gore_Update;
 			On.Terraria.Projectile.Update -= Projectile_Update;
@@ -95,6 +97,16 @@ namespace SOTS
                 }
 			}
 			orig(msgType, remoteClient, ignoreClient, text, number, number2, number3, number4, number5, number6, number7);
+		}
+		private static void Player_PickTile(On.Terraria.Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
+		{
+			if(SOTSPlayer.ModPlayer(self).LazyMinerRing)
+            {
+				bool DoNotMineNormally = LazyMinerHelper.FakePickTile(self, x, y, pickPower);
+				if (DoNotMineNormally)
+					return;
+            }
+			orig(self, x, y, pickPower);
 		}
 		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{

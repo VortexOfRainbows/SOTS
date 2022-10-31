@@ -284,6 +284,8 @@ namespace SOTS
 		public bool SadistRing = false;
 		public bool ImposterRing = false;
 		public bool DevilRing = false;
+		public bool LazyMinerRing = false;
+		public int previousDefense = 0;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -649,7 +651,8 @@ namespace SOTS
 			if(DevilRing)
 			{
 				Player.GetDamage(DamageClass.Generic) += Player.statDefense * 0.01f;
-				Player.statDefense = 0;
+				previousDefense = Player.statDefense;
+				Player.statDefense = (int)Math.Sqrt(previousDefense);
 			}
 			DevilRing = false;
 		}
@@ -934,10 +937,7 @@ namespace SOTS
 			SerpentSpine = false;
 			PlasmaShrimpVanity = false;
 			PlasmaShrimp = false;
-			VultureRing = false;
-			MasochistRing = false;
-			SadistRing = false;
-			ImposterRing = false;
+			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = false;
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

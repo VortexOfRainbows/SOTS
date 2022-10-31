@@ -1079,7 +1079,7 @@ namespace SOTS.Common.GlobalNPCs
                             npc.extraValue = 0;
                             npc.NPCLoot();
                         }
-                        if (sPlayer.ImposterRing && Main.rand.NextBool(5))
+                        if (sPlayer.ImposterRing && Main.rand.NextBool(7))
                         {
                             sPlayer.ImposterRing = false;
                             npc.extraValue = 0;
