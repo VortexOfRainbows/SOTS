@@ -154,18 +154,18 @@ namespace SOTS
 		}
 		private static void Player_PickTile(On.Terraria.Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
 		{
-			Main.NewText("1"); //This does not even run at all after the second reload
+			//Main.NewText("1"); //This does not even run at all after the second reload
 			if (self != null)
 			{
-				Main.NewText("2 " + SOTSPlayer.ModPlayer(self).LazyMinerRing);
+				//Main.NewText("2 " + SOTSPlayer.ModPlayer(self).LazyMinerRing);
 				if (SOTSPlayer.ModPlayer(self).LazyMinerRing)
 				{
-					Main.NewText("3");
+					//Main.NewText("3");
 					bool DoNotMineNormally = LazyMinerHelper.FakePickTile(self, x, y, pickPower);
 					if (DoNotMineNormally)
 						return;
 				}
-				Main.NewText("4");
+				//Main.NewText("4");
 			}
 			orig(self, x, y, pickPower);
 		}

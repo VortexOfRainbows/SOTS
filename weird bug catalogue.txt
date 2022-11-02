@@ -5,6 +5,7 @@ Things to Note For Later:
 4. Treasure slimes drop too much money!
 5. Red Wall bug. Make separate sprites..?
 6. Mannequins make minions spawned by void/summon weapons disappear..?
+7. Block swap is not prevented for pyramid tiles pre EoW
 
 Need:
 1. Wind mechanics for vines and banners

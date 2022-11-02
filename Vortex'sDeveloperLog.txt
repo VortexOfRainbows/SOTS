@@ -37,10 +37,12 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 4. 7-Gem monuments
 5. Evostone Armor + Fishing Rod (Void)!
-6. Gem Rings:
-	1. Amethyst (Belphegor). Adds a veinmine-adjacent mechanic.
+
 
 Daily Log:
+
+11/1/22
+1. Belphagor's Ring added! NEEDS MULTIPLAYER TESTING
 
 10/30/22
 1. Gem Locks globals now sync in multiplayer.

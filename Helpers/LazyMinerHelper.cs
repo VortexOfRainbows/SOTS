@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using SOTS.Projectiles.Base;
 using SOTS.Projectiles.Celestial;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Terraria.HitTile;
 using static Terraria.Player;
 
 public static class LazyMinerHelper
 {
+	public static LazyMinerProjectile savedProj;
     public static bool FakePickTile(Player self, int x, int y, int pickPower)
 	{
 		int num = self.hitTile.HitObject(x, y, 1);
@@ -51,18 +54,23 @@ public static class LazyMinerHelper
         int damageTileAmount = self.hitTile.AddDamage(num, num2);
 		if (damageTileAmount >= 100)
 		{
-			damageTileAmount = self.hitTile.AddDamage(num, -damageTileAmount);
-			Main.NewText("I'm here!");
-			if (damageTileAmount >= 100)
-			{
-				bool num3 = Main.tile[x, y].HasTile;
-				WorldGen.KillTile(x, y);
-				if (Main.netMode == 1)
+			WorldGen.KillTile(x, y, fail: true);
+			HitTileObject hitTileObject = self.hitTile.data[num];
+			hitTileObject.damage = 0;
+			if (Main.myPlayer == self.whoAmI)
+            {
+                if (!LazyMinerProjectile.PlayerOwnsLazyMiner(self))
 				{
-					NetMessage.SendData(17, -1, -1, null, 0, x, y);
+					Projectile proj = Projectile.NewProjectileDirect(new EntitySource_TileBreak(x, y, "SOTS:LazyMiner"), new Vector2(x * 16 + 8, y * 16 + 8), Vector2.Zero, ModContent.ProjectileType<LazyMinerProjectile>(), 0, 0, Main.myPlayer);
+					savedProj = proj.ModProjectile as LazyMinerProjectile;
+					savedProj.FindNextTile(x, y, tile.TileType, self.direction);
 				}
-				RunClearMiningCacheAt(self, x, y, 1);
+				else
+                {
+					savedProj.FindNextTile(x, y, tile.TileType, self.direction);
+				}
 			}
+			//RunClearMiningCacheAt(self, x, y, 1);
 		}
 		else
 		{

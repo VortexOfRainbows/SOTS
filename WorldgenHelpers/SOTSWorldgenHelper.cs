@@ -51,9 +51,9 @@ namespace SOTS.WorldgenHelpers
 			}
 			return canKillTile;
 		}
-		public static bool TrueTileSolid(int i, int j)
+		public static bool TrueTileSolid(int i, int j, bool includeActuated = false)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j].TileType] == false && Main.tileSolid[Main.tile[i, j].TileType] == true && Main.tile[i, j].HasUnactuatedTile);
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j].TileType] == false && Main.tileSolid[Main.tile[i, j].TileType] == true && (Main.tile[i, j].HasUnactuatedTile || includeActuated));
 		}
 		public static bool TileTopCapable(int i, int j)
 		{
