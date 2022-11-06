@@ -37,9 +37,25 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 4. 7-Gem monuments
 5. Evostone Armor + Fishing Rod (Void)!
+6. Make Ethereal Scepter Minions have a better performance in Performance Mode
+7. Memory Leak from Foggy Clairovoyance
 
+Things to Note For Later:
+1. Bosses HP is ludicrous for Master Mode
+2. Void consumable appear in magic storage?
+3. Need more void armors!
+4. Treasure slimes drop too much money!
+5. Red Wall bug. Make separate sprites..?
+6. Mannequins make minions spawned by void/summon weapons disappear..?
+7. Block swap is not prevented for pyramid tiles pre EoW
+Need:
+1. Wind mechanics for vines and banners
 
 Daily Log:
+
+11/6/22
+1. Added glow effects to all rings and to the gem locks
+2. 
 
 11/1/22
 1. Belphagor's Ring added! NEEDS MULTIPLAYER TESTING

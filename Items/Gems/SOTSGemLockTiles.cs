@@ -84,15 +84,31 @@ namespace SOTS.Items.Gems
 				Vector2 location = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 				Color color = Lighting.GetColor(i, j, WorldGen.paintColor(Main.tile[i, j].TileColor));
 				int xFrame = tile.TileFrameX / 54;
-				for(int a = 0; a < 2; a++)
+				for(int a = 0; a < 2; a++) //this draws the first layer and then the gem border
 				{
 					int yFrame = a;
 					Rectangle frame = new Rectangle(0 + 50 * xFrame, 50 * yFrame, 48, 48);
 					spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+					if (a == 0 && tile.TileFrameY > 54)
+					{
+						frame = new Rectangle(2 + 50 * xFrame, 52, 44, 44);
+						for (int b = 0; b < 6; b++)
+						{
+							Vector2 circular = new Vector2(0, 2).RotatedBy(MathHelper.ToRadians(b * 60 + SOTSWorld.GlobalCounter * 2));
+							spriteBatch.Draw(texture, location + zero + circular - Main.screenPosition, frame, new Color(120 - b * 7, 110 - b * 2, 100 + b * 4, 0), 0f, new Vector2(22, 22), 1f, SpriteEffects.None, 0f);
+						}
+						color = Color.Lerp(color, Color.White, 0.5f);
+					}
 				}
-				if(tile.TileFrameY > 54)
+				if(tile.TileFrameY > 54) //This draws the gem inside
 				{
 					Rectangle frame = new Rectangle(0 + 50 * xFrame, 100, 48, 48);
+					for (int b = 0; b < 6; b++)
+					{
+						Rectangle frame2 = new Rectangle(2 + 50 * xFrame, 102, 44, 44);
+						Vector2 circular = new Vector2(0, 2).RotatedBy(MathHelper.ToRadians(b * 60 + SOTSWorld.GlobalCounter * 2));
+						spriteBatch.Draw(texture, location + zero + circular - Main.screenPosition, frame2, new Color(120 - b * 7, 110 - b * 2, 100 + b * 4, 0), 0f, new Vector2(22, 22), 1f, SpriteEffects.None, 0f);
+					}
 					spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
 				}
 			}
@@ -201,7 +217,8 @@ namespace SOTS.Items.Gems
 					SOTSWorld.DiamondKeySlotted	 = true;
 				if (key == ItemID.LargeAmber)
 					SOTSWorld.AmberKeySlotted = true;
-				SOTSWorld.SyncGemLocks(Main.LocalPlayer); //This should sync the world variables
+				if(Main.netMode != NetmodeID.SinglePlayer)
+					SOTSWorld.SyncGemLocks(Main.LocalPlayer); //This should sync the world variables
 			}
 			return true;
 		}

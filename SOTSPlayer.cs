@@ -1295,7 +1295,7 @@ namespace SOTS
 							}
 						}
 					}
-					if (CritNightmare && (projectile != null || (projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())))
+					if (CritNightmare && projectile != null && projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())
 					{
 						if (nightmareArmCD <= 0)
 						{
