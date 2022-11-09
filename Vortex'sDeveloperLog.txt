@@ -37,8 +37,7 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 4. 7-Gem monuments
 5. Evostone Armor + Fishing Rod (Void)!
-6. Make Ethereal Scepter Minions have a better performance in Performance Mode
-7. Memory Leak from Foggy Clairovoyance
+6. Memory Leak from Foggy Clairovoyance
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
@@ -53,9 +52,9 @@ Need:
 
 Daily Log:
 
-11/6/22
+11/6/22 & 11/8/22
 1. Added glow effects to all rings and to the gem locks
-2. 
+2. Gem chest sprites + Ethereal scepter is less intensive in performance mode
 
 11/1/22
 1. Belphagor's Ring added! NEEDS MULTIPLAYER TESTING

@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Minions
 				color.A = 0;
 				Vector2 towards = lastPosition - drawPos;
 				float lengthTowards = towards.Length() / textureTrail.Height / scale;
-				for(int j = 0; j < 2; j++)
+				for(int j = 0; j < 2 - (SOTS.Config.lowFidelityMode ? 1 : 0); j++)
 				{
 					Main.spriteBatch.Draw(textureTrail, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Projectile.GetAlpha(color) * scale * (1 - j * 0.5f), towards.ToRotation() - MathHelper.PiOver2, drawOrigin2, new Vector2(1, lengthTowards) * scale * (1 + j * 0.05f), Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Minions
 			Vector2 drawPos2 = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
 			Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 2));
 			color2.A = 0;
-			for(int i = 0; i < 3; i++)
+			for(int i = 0; i < 3 - (SOTS.Config.lowFidelityMode ? 1 : 0); i++)
 				Main.spriteBatch.Draw(texture, drawPos2 + Main.rand.NextVector2CircularEdge(1, 1), null, Projectile.GetAlpha(color2), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -130,7 +130,7 @@ namespace SOTS.Projectiles.Minions
             }
 			if (Main.netMode != NetmodeID.Server)
 			{
-				if(!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+				if(!SOTS.Config.lowFidelityMode || Main.rand.NextBool(3))
 				{
 					if (!Main.rand.NextBool(3))
 					{
