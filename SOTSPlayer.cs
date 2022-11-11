@@ -649,11 +649,10 @@ namespace SOTS
 				rippleTimer = 0;
 			}
 			if(DevilRing)
-			{
 				Player.GetDamage(DamageClass.Generic) += Player.statDefense * 0.01f;
-				previousDefense = Player.statDefense;
+			previousDefense = Player.statDefense;
+			if (DevilRing)
 				Player.statDefense = (int)Math.Sqrt(previousDefense);
-			}
 			DevilRing = false;
 		}
         public override void ResetEffects()
@@ -1116,7 +1115,7 @@ namespace SOTS
 					}
 				}
 			}
-			if (MasochistRing)
+			if (MasochistRing && Main.myPlayer == Player.whoAmI)
 				GrantRandomRingBuff(Player);
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
 		}
@@ -1327,6 +1326,11 @@ namespace SOTS
 							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.3f), 0, Main.myPlayer, 1);
 						}
 					}
+					if (SadistRing)
+					{
+						if (Main.myPlayer == Player.whoAmI)
+							SOTSPlayer.GrantRandomRingBuff(Player);
+					}
 				}
 				if(Main.myPlayer == Player.whoAmI && Player.statMana > Player.statManaMax2 * 0.4f && PlasmaShrimp && projectile != null && projectile.CountsAsClass(DamageClass.Magic))
                 {
@@ -1473,7 +1477,7 @@ namespace SOTS
 				BuffID.ManaRegeneration,
 				ModContent.BuffType<DiamondSkin>()
 			};
-			player.AddBuff(possibleBuffs[Main.rand.Next(possibleBuffs.Count)], 1800);
+			player.AddBuff(possibleBuffs[Main.rand.Next(possibleBuffs.Count)], 1800, false);
         }
 		public static bool ZoneForest(Player player)
 		{

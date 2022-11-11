@@ -798,7 +798,7 @@ namespace SOTS.Void
 					float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
 					VoidEffect(Player, (int)voidGain);
 					voidMeter += voidGain;
-					if(VoidGenerateMoney > 0)
+					if(VoidGenerateMoney > 0 && Main.myPlayer == Player.whoAmI)
                     {
 						float generateMoneyValue = (Main.rand.NextFloat(50, 70) + 4 * voidGain) * (VoidGenerateMoney + (float)Math.Sqrt(16* VoidGenerateMoney + voidGain)) * voidGainMultiplier;
 						while ((int)generateMoneyValue > 0)
@@ -807,19 +807,19 @@ namespace SOTS.Void
 							{
 								int num4 = (int)(generateMoneyValue / 1000000f);
 								generateMoneyValue -= (1000000 * num4);
-								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.PlatinumCoin, num4);
+								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.PlatinumCoin, num4);
 							}
 							else if (generateMoneyValue > 10000f)
 							{
 								int num6 = (int)(generateMoneyValue / 10000f);
 								generateMoneyValue -= (10000 * num6);
-								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.GoldCoin, num6);
+								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.GoldCoin, num6);
 							}
 							else if (generateMoneyValue > 100f)
 							{
 								int num7 = (int)(generateMoneyValue / 100f);
 								generateMoneyValue -= (100 * num7);
-								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.SilverCoin, num7);
+								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.SilverCoin, num7);
 							}
 							else
 							{
@@ -829,7 +829,7 @@ namespace SOTS.Void
 									num8 = 1;
 								}
 								generateMoneyValue -= num8;
-								Item.NewItem(Player.GetSource_Misc("SOTS:VoidCoins"), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, ItemID.CopperCoin, num8);
+								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.CopperCoin, num8);
 							}
 						}
 					}						

@@ -169,9 +169,8 @@ namespace SOTS.Items.Furniture
 			{
 				if (isLocked)
 				{
-					// Make sure to change the code in UnlockChest if you don't want the chest to only unlock at night.
 					int key = ChestKey;
-					if (player.ConsumeItem(key) && Chest.Unlock(left, top))
+					if ((tile.TileType == ModContent.TileType<Gems.GemChestTile>() || player.ConsumeItem(key)) && Chest.Unlock(left, top))
 					{
 						if (Main.netMode == NetmodeID.MultiplayerClient)
 						{

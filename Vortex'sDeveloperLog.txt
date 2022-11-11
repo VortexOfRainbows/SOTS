@@ -37,7 +37,6 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 4. 7-Gem monuments
 5. Evostone Armor + Fishing Rod (Void)!
-6. Memory Leak from Foggy Clairovoyance
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
@@ -52,12 +51,15 @@ Need:
 
 Daily Log:
 
-11/6/22 & 11/8/22
+11/6/22 & 11/8/22 & 11/10/22
 1. Added glow effects to all rings and to the gem locks
 2. Gem chest sprites + Ethereal scepter is less intensive in performance mode
+3. Gem Chest added: locking, unlocking, glow, etc. Tested in multiplayer, works
+4. Ring Testing In multiplayer... ALL OF THEM WORK.
+5. Devils ring displays stats properly before equip
 
 11/1/22
-1. Belphagor's Ring added! NEEDS MULTIPLAYER TESTING
+1. Belphagor's Ring added!
 
 10/30/22
 1. Gem Locks globals now sync in multiplayer.
