@@ -193,10 +193,7 @@ namespace SOTS
 		public static int[] dedicatedBlasfah;
 		public static int[] dedicatedHeartPlus;
 		public static int[] dedicatedCoolio;
-		public static Texture2D[] unsafeWallItemRedTextures;
-		public static int[] unsafeWallItem;
 		public static int[] piscesFishItems;
-		public static bool hasSetupRed = false;
 		public static void LoadArrays() //called in SOTS.Load()
 		{
 			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() }; //Dark Blue
@@ -212,26 +209,13 @@ namespace SOTS
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>() }; //Heart Plus Up
 			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
-			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
-			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];
+			//unsafeWallItem = new int[] { ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
 
 			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
 			ItemID.MutantFlinxfin, ItemID.Pengfish, ItemID.Pixiefish, ItemID.Slimefish, ItemID.Spiderfish, ItemID.TropicalBarracuda, ItemID.TundraTrout, ItemID.UnicornFish, ItemID.Wyverntail, ItemID.ZombieFish, ItemID.ArmoredCavefish, ItemID.AtlanticCod, ItemID.Bass, ItemID.BlueJellyfish, ItemID.ChaosFish, ItemID.CrimsonTigerfish,
 			ItemID.Damselfish, ItemID.DoubleCod, ItemID.Ebonkoi, ItemID.FlarefinKoi, ItemID.FrostMinnow, ItemID.GoldenCarp, ItemID.GreenJellyfish, ItemID.Hemopiranha, ItemID.Honeyfin, ItemID.NeonTetra, ItemID.Obsidifish, ItemID.PinkJellyfish, ItemID.PrincessFish, ItemID.Prismite, ItemID.RedSnapper, ItemID.Salmon, ItemID.Shrimp, ItemID.SpecularFish,
 			ItemID.Stinkfish, ItemID.Trout, ItemID.Tuna, ItemID.VariegatedLardfish, ItemType<Curgeon>(), ItemType<PhantomFish>(), ItemType<SeaSnake>(), ItemType<TinyPlanetFish>(), ItemID.ScarabFish, ItemID.ScorpioFish, ItemID.Flounder, ItemID.RockLobster };
-		}
-		public static void setUpRedTextures()
-        {
-			for(int i = 0; i < unsafeWallItem.Length; i++)
-			{
-				Texture2D texture = TextureAssets.Item[unsafeWallItem[i]].Value;
-				Texture2D textureOutline;
-				textureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
-				textureOutline.SetData(0, null, ConvertToSingleColor(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
-				unsafeWallItemRedTextures[i] = textureOutline;
-			}
-			hasSetupRed = true;
 		}
 		public static Color[] ConvertToSingleColor(Texture2D texture, Color color)
 		{
@@ -248,39 +232,10 @@ namespace SOTS
 		}
 		public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			if (!hasSetupRed)
-				setUpRedTextures();
-			if (unsafeWallItem.Contains(item.type))
-			{
-				List<int> items = unsafeWallItem.ToList();
-				int id = items.IndexOf(item.type);
-				items = null;
-				Texture2D texture = unsafeWallItemRedTextures[id];
-				for (int i = 0; i < 4; i++)
-				{
-					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-					spriteBatch.Draw(texture, position + circular, frame, Color.Red, 0f, origin, scale, SpriteEffects.None, 0f);
-				}
-			}
 			return base.PreDrawInInventory(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
         public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			if (!hasSetupRed)
-				setUpRedTextures();
-			if (unsafeWallItem.Contains(item.type))
-			{
-				List<int> items = unsafeWallItem.ToList();
-				int id = items.IndexOf(item.type);
-				items = null;
-				Texture2D texture = unsafeWallItemRedTextures[id];
-				Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
-				for (int i = 0; i < 4; i++)
-				{
-					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition, null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
-				}
-			}
 			if(item.type == ItemType<Items.Slime.PinkyBag>() || item.type == ItemType<TheAdvisorBossBag>() || item.type == ItemType<CurseBag>() || item.type == ItemType<Items.Permafrost.PolarisBossBag>() || item.type == ItemType<SubspaceBag>() || item.type == ItemType<LuxBag>())
 			{
 				float alphaMult = 1f;

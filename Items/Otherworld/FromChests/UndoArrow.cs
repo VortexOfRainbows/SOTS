@@ -50,6 +50,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Main.NewText("Amethyst: " + SOTSWorld.AmethystKeySlotted);
 			Main.NewText("Diamond: " + SOTSWorld.DiamondKeySlotted);
 			Main.NewText("Amber: " + SOTSWorld.AmberKeySlotted);
+			Main.NewText("Is Texture Pack On: " + SOTS.SOTSTexturePackEnabled);
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 24;

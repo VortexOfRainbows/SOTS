@@ -26,6 +26,7 @@ namespace SOTS.Items.Flails
             Item.shoot = ModContent.ProjectileType<Projectiles.Earth.Shattershine>();
             Item.shootSpeed = 10f;
             Item.knockBack = 4f;
+            Item.noMelee = true;
         }
         public override void AddRecipes()
         {

@@ -36,11 +36,29 @@ using SOTS.Items;
 using SOTS.Items.Chaos;
 using SOTS.Items.Otherworld.Blocks;
 using ReLogic.Content;
+using Terraria.GameContent;
+using System.Linq;
 
 namespace SOTS
 {
 	public class SOTS : Mod
 	{
+		private const string SOTSTexturePackName = "Secrets of the Shadows Texture Pack";
+		public static bool IsSOTSTexturePackEnabled()
+		{
+			AssetSourceController aSC = Main.AssetSourceController;
+            IEnumerable<Terraria.IO.ResourcePack> list = aSC.ActiveResourcePackList.EnabledPacks;
+			foreach(Terraria.IO.ResourcePack item in list)
+            {
+				//Main.NewText(item.Name);
+				if(item.Name.Equals(SOTSTexturePackName))
+                {
+					return true;
+                }
+            }				
+			return false;
+		}
+		public static bool SOTSTexturePackEnabled = false;
 		public static PrimTrailManager primitives;
 
 		public static ModKeybind BlinkHotKey;
@@ -141,6 +159,7 @@ namespace SOTS
 				});
 			}
 			SOTSDetours.Initialize();
+			SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
 		}
 		public override void Unload() 
 		{

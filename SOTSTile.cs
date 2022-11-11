@@ -299,6 +299,7 @@ namespace SOTS
         }
         public override bool PreDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
+            GenerateDustInPreDraw(i, j, type);
             Tile tile = Framing.GetTileSafely(i, j);
             if (tile.WallType == WallType<NatureWallWall>() && tile.TileType != TileType<DissolvingNatureTile>())
                 DissolvingNatureTile.DrawEffects(i, j, Mod, true);
@@ -411,6 +412,41 @@ namespace SOTS
                     drawPos = new Vector2(i * 16, j * 16) + offsets;
                     TileFrame = new Rectangle(TileFrameX, TileFrameY, 16, 2);
                     Main.spriteBatch.Draw(texture, drawPos, TileFrame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                }
+            }
+        }
+        public override void ModifyLight(int i, int j, int type, ref float r, ref float g, ref float b)
+        {
+            if (SOTS.SOTSTexturePackEnabled && (type == TileID.Hellstone || type == TileID.MetalBars))
+            {
+                Tile tile = Main.tile[i, j];
+                if (type == TileID.Hellstone || (type == TileID.MetalBars && (tile.TileFrameX / 18) == 10)) //hellstone is number 11
+                {
+                    r = 0.894f * 0.8f;
+                    b = 0.4157f * 0.8f;
+                    g = 0.2745f * 0.8f;
+                }
+            }
+        }
+        public void GenerateDustInPreDraw(int i, int j, int type)
+        {
+            if (SOTS.SOTSTexturePackEnabled && type == TileID.Hellstone)
+            {
+                Tile tile = Main.tile[i, j];
+                Tile tileAbove = Main.tile[i, j - 1];
+                if (tileAbove.IsActuated || !tileAbove.HasTile)
+                {
+                    if ((Main.drawToScreen && WorldGen.genRand.NextBool(6)) || !Main.drawToScreen)
+                    {
+                        int yOff = 0;
+                        if (tile.IsHalfBlock)
+                            yOff = 8;
+                        Dust dust = Dust.NewDustDirect(new Vector2((float)(i * 16 + 4 + Main.rand.Next(9)), (float)(j * 16 - 4 + yOff)), 0, 8, DustID.Smoke, 0f, 0f, 100);
+                        dust.alpha += WorldGen.genRand.Next(100);
+                        dust.velocity *= 0.2f;
+                        dust.velocity.Y -= 0.5f + WorldGen.genRand.Next(10) * 0.1f;
+                        dust.fadeIn = 0.5f + WorldGen.genRand.Next(10) * 0.1f;
+                    }
                 }
             }
         }

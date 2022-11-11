@@ -3,14 +3,13 @@ The following is my development plans :D
 2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
 
 Tmodloader Bugs:
-1. Chest Swapping isn't working..? (Issue already in Tmodloader)
-2. Chests crash when platforms are swapped below them (confirmed, Filed issue for Tmodloader)
-3. PickTile detour will unload randomly sometimes and never come back
+1. Chest Swapping doesn't drop item.
+2. Chests crash when platforms are swapped below them.
+3. Block swap is not prevented for pyramid tiles pre EoW (don't think there is support for this in TMOD)
 Acknowledged But Likely Delayed:
-1. (Mod Compat Probably) Assassination Potion MAY BE bugging with creatures below 20 hp, or 10%... I am completely unable to replicate this...
-2. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
-3. Bug: book of virtues is limiting wisps to 6? Multiplayer with magic storage only
-4. Bug: shattershine hitting inappropriately fast (hitbox on player..?, not spawning shards)
+1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
+2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
+
 
 Update Objectives:
 1. Ghost Town!
@@ -27,8 +26,7 @@ Update Objectives:
 	2. Glowspores (Royal Jelly of glow moth)
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
-3. Check if player possesses Texture Pack
-4. Make SOTS Dev Team on git hub!
+3. Make SOTS Dev Team on git hub!
 
 
 Other 1.4 related objectives:
@@ -40,16 +38,18 @@ Other 1.4 related objectives:
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
-2. Void consumable appear in magic storage?
-3. Need more void armors!
-4. Treasure slimes drop too much money!
-5. Red Wall bug. Make separate sprites..?
-6. Mannequins make minions spawned by void/summon weapons disappear..?
-7. Block swap is not prevented for pyramid tiles pre EoW
+2. Treasure slimes drop too much money!
+
 Need:
 1. Wind mechanics for vines and banners
 
 Daily Log:
+
+11/10/22
+1. Remove distinction for Unsafe Walls (red drawcode), as vanilla has now added their own visuals (will fix when get hold of vanilla sprites)
+2. Remove shatter shines fake melee hitbox
+3. Hellstone glows and releases particles when the texture pack is enabled. WIP
+	1. TEXTURE PACK ENABLED CHECKS WOOO
 
 11/6/22 & 11/8/22 & 11/10/22
 1. Added glow effects to all rings and to the gem locks

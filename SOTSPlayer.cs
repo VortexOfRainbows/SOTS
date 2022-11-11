@@ -54,6 +54,7 @@ namespace SOTS
 	public class SOTSPlayer : ModPlayer
 	{
 		private const string worldEnter = "(SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.";
+		private const string worldEnterThanks = "(SOTS): Thank you for using the SOTS texture pack! Please enjoy all the hard effort that went into it!";
 		private int LogInMessageTimer = 7;
 		public override void SetControls()
 		{
@@ -61,7 +62,12 @@ namespace SOTS
 			{
 				if(LogInMessageTimer > 0)
 					LogInMessageTimer -= 1;
-				if (LogInMessageTimer == 0)
+				if(SOTS.SOTSTexturePackEnabled)
+				{
+					LogInMessageTimer = -1;
+					Main.NewText(worldEnterThanks, new Color(255, 150, 255));
+				}
+				else if (LogInMessageTimer == 0)
 				{
 					LogInMessageTimer = -1;
 					Main.NewText(worldEnter, new Color(20, 255, 40));
@@ -69,12 +75,16 @@ namespace SOTS
 			}
 		}
         public override void OnEnterWorld(Player player)
-        {
+		{
+			SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
 			if (Main.netMode != NetmodeID.Server)
-            {
-				Main.NewText(worldEnter, new Color(20, 255, 40));
-            }
-        }
+			{
+				if (SOTS.SOTSTexturePackEnabled)
+					Main.NewText(worldEnterThanks, new Color(255, 150, 255));
+				else
+					Main.NewText(worldEnter, new Color(20, 255, 40));
+			}
+		}
         public static SOTSPlayer ModPlayer(Player player)
 		{
 			return player.GetModPlayer<SOTSPlayer>();
