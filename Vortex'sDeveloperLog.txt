@@ -35,10 +35,12 @@ Other 1.4 related objectives:
 3. Bestiary for all enemies
 4. 7-Gem monuments
 5. Evostone Armor + Fishing Rod (Void)!
+6. New elemenetal Amulet border for Sumeru
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
 2. Treasure slimes drop too much money!
+3. Glowmasks for Corruption Trees in SOTSTP
 
 Need:
 1. Wind mechanics for vines and banners

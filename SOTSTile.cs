@@ -422,9 +422,9 @@ namespace SOTS
                 Tile tile = Main.tile[i, j];
                 if (type == TileID.Hellstone || (type == TileID.MetalBars && (tile.TileFrameX / 18) == 10)) //hellstone is number 11
                 {
-                    r = 0.894f * 0.8f;
-                    b = 0.4157f * 0.8f;
-                    g = 0.2745f * 0.8f;
+                    r = 0.894f * 0.9f;
+                    b = 0.4157f * 0.9f;
+                    g = 0.2745f * 0.9f;
                 }
             }
         }
@@ -436,12 +436,12 @@ namespace SOTS
                 Tile tileAbove = Main.tile[i, j - 1];
                 if (tileAbove.IsActuated || !tileAbove.HasTile)
                 {
-                    if ((Main.drawToScreen && WorldGen.genRand.NextBool(6)) || !Main.drawToScreen)
+                    if ((Main.drawToScreen && WorldGen.genRand.NextBool(7)) || !Main.drawToScreen)
                     {
                         int yOff = 0;
-                        if (tile.IsHalfBlock)
+                        if (tile.IsHalfBlock || tile.Slope == SlopeType.SlopeDownLeft || tile.Slope == SlopeType.SlopeDownRight)
                             yOff = 8;
-                        Dust dust = Dust.NewDustDirect(new Vector2((float)(i * 16 + 4 + Main.rand.Next(9)), (float)(j * 16 - 4 + yOff)), 0, 8, DustID.Smoke, 0f, 0f, 100);
+                        Dust dust = Dust.NewDustDirect(new Vector2((i * 16 + Main.rand.Next(9)), (float)(j * 16 - 2 + yOff)), 0, 8, DustID.Smoke, 0f, 0f, 100);
                         dust.alpha += WorldGen.genRand.Next(100);
                         dust.velocity *= 0.2f;
                         dust.velocity.Y -= 0.5f + WorldGen.genRand.Next(10) * 0.1f;
