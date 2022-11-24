@@ -430,6 +430,8 @@ namespace SOTS
         }
         public void GenerateDustInPreDraw(int i, int j, int type)
         {
+            if (SOTSWorld.GlobalFrozen)
+                return;
             if (SOTS.SOTSTexturePackEnabled && type == TileID.Hellstone)
             {
                 Tile tile = Main.tile[i, j];
@@ -449,6 +451,14 @@ namespace SOTS
                     }
                 }
             }
+        }
+        public override int[] AdjTiles(int type)
+        {
+            if (SOTSPlayer.ModPlayer(Main.LocalPlayer).LazyCrafterAmulet)
+            {
+                return new int[] { TileID.WorkBenches, TileID.Furnaces, TileID.Anvils, TileID.AlchemyTable, TileID.Bottles, TileID.Tables }; 
+            }
+            return base.AdjTiles(type);
         }
     }
 }

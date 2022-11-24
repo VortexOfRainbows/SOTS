@@ -39,7 +39,7 @@ namespace SOTS.NPCs
 			DisplayName.SetDefault("Phase Eye");
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
-				Hide = true
+				CustomTexturePath = "SOTS/NPCs/PhaseEye",
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData

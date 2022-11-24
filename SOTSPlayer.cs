@@ -295,6 +295,7 @@ namespace SOTS
 		public bool ImposterRing = false;
 		public bool DevilRing = false;
 		public bool LazyMinerRing = false;
+		public bool LazyCrafterAmulet = false;
 		public int previousDefense = 0;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -595,7 +596,7 @@ namespace SOTS
         }
 		public void ResetVisionID()
         {
-			UniqueVisionNumber = Main.rand.Next(24);
+			UniqueVisionNumber = Main.rand.Next(32);
         }
 		public override void PreUpdate()
 		{
@@ -946,7 +947,17 @@ namespace SOTS
 			SerpentSpine = false;
 			PlasmaShrimpVanity = false;
 			PlasmaShrimp = false;
-			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = false;
+			if(LazyCrafterAmulet) //this needs to be done in both Detours and Here due to how the original recipe functions determine when to update recipes
+			{
+				Player.adjTile[TileID.WorkBenches] = true;
+				Player.adjTile[TileID.Furnaces] = true;
+				Player.adjTile[TileID.Anvils] = true;
+				Player.adjTile[TileID.AlchemyTable] = true;
+				Player.adjTile[TileID.Bottles] = true;
+				Player.adjTile[TileID.Tables] = true;
+				Player.alchemyTable = true;
+			}
+			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
 		}
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

@@ -124,6 +124,11 @@ namespace SOTS.Items.AbandonedVillage
 					player.moveSpeed += 0.1f;
 					player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
 					break;
+				case 3: //Sumeru		
+					modPlayer.LazyCrafterAmulet = true;
+					modPlayer.additionalPotionMana += 40;
+					player.statManaMax2 += 40;
+					break;
 			}
         }
 		public string GetTooltip(int gem, int frame)
@@ -166,6 +171,9 @@ namespace SOTS.Items.AbandonedVillage
 					break;
 				case 2: //mondstadt
 					text += "\nIncreases melee speed and movement speed by 10%\nIncreases jump speed";
+					break;
+				case 3: //Sumeru
+					text += "\nProvides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations\nIncreases max mana and mana recieved from potions by 40";
 					break;
 			}
 			return text;

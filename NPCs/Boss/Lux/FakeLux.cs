@@ -22,6 +22,11 @@ namespace SOTS.NPCs.Boss.Lux
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chaos Illusion");
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Hide = true
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{
@@ -182,12 +187,12 @@ namespace SOTS.NPCs.Boss.Lux
 				if (NPC.ai[3] == 0) //3 different AI()
 				{
 					Vector2 aimAtCenter = rotateCenter;
-					if (Type() == 2)
+					if (ColorType() == 2)
 						aimAtCenter = player.Center;
 					modifyRotation(true, aimAtCenter, true);
 					ring.aiming = true;
 					ring.targetRadius = 40;
-					if (Type() == 2) // blue
+					if (ColorType() == 2) // blue
 					{
 						if (counter > 300)
 						{
@@ -198,12 +203,12 @@ namespace SOTS.NPCs.Boss.Lux
 								SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+									Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -ColorType());
 								}
 							}
 						}
 					}
-					else if (Type() == 1) //green
+					else if (ColorType() == 1) //green
 					{
 						if (counter > 300)
 						{
@@ -217,7 +222,7 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = -2; i <= 2; i++)
 									{
 										outward = new Vector2(0, 1).RotatedBy(NPC.rotation + MathHelper.ToRadians(i * 22.5f));
-										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (2f + 1.5f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
+										Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (2f + 1.5f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -ColorType());
 									}
 								}
 							}
@@ -250,7 +255,7 @@ namespace SOTS.NPCs.Boss.Lux
 							SOTSUtils.PlaySound(SoundID.Item91, (int)NPC.Center.X, (int)NPC.Center.Y, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (6f + 8f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 48, outward * (6f + 8f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -ColorType());
 							}
 							fireRateCounter -= 9;
 						}
@@ -323,7 +328,7 @@ namespace SOTS.NPCs.Boss.Lux
 			if(!runOnce)
 				ring.Draw(screenPos, spriteBatch, illusionColor(), 3, (255 - NPC.alpha) / 255f, 1, 1, NPC.rotation, front);
 		}
-		public int Type()
+		public int ColorType()
 		{
 			if (NPC.ai[1] == 120)
 				return 1; //green
@@ -333,9 +338,9 @@ namespace SOTS.NPCs.Boss.Lux
         }
 		public Color illusionColor()
         {
-			if(Type() == 1)
+			if(ColorType() == 1)
 				return new Color(80, 240, 80);
-			if (Type() == 2)
+			if (ColorType() == 2)
 				return new Color(60, 140, 200);
 			return new Color(200, 100, 100);
         }

@@ -51,6 +51,8 @@ namespace SOTS
 			On.Terraria.Player.PickTile += Player_PickTile;
 			if (!Main.dedServ)
 				ResizeTargets();
+
+			On.Terraria.Recipe.FindRecipes += Recipe_FindRecipes;
 		}
 		public static void Unload() //Apparently unloading Detours is handled automatically now..?
 		{
@@ -86,6 +88,22 @@ namespace SOTS
 				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
 			});
 		}
+		public static void Recipe_FindRecipes(On.Terraria.Recipe.orig_FindRecipes orig, bool canDelayCheck = false)
+        {
+			if(SOTSPlayer.ModPlayer(Main.LocalPlayer).LazyCrafterAmulet)
+            {
+				//Main.NewText("I am being updated");
+				Player player = Main.LocalPlayer;
+				player.adjTile[TileID.WorkBenches] = true;
+				player.adjTile[TileID.Furnaces] = true;
+				player.adjTile[TileID.Anvils] = true;
+				player.adjTile[TileID.AlchemyTable] = true;
+				player.adjTile[TileID.Bottles] = true;
+				player.adjTile[TileID.Tables] = true;
+				player.alchemyTable = true;
+			}
+			orig(canDelayCheck);
+        }
 		private static void NetMessage_SendData(On.Terraria.NetMessage.orig_SendData orig, int msgType, int remoteClient = -1, int ignoreClient = -1, NetworkText text = null, int number = 0, float number2 = 0f, float number3 = 0f, float number4 = 0f, int number5 = 0, int number6 = 0, int number7 = 0)
         {
 			if(FakePlayer.FakePlayer.SupressNetMessage13and41)

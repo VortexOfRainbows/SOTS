@@ -53,7 +53,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Main.NewText("Is Texture Pack On: " + SOTS.SOTSTexturePackEnabled);
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
-			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 24;
+			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 32;
 			//Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
 			return false; 
 		}

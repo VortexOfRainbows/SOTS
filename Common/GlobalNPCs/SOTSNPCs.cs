@@ -747,7 +747,7 @@ namespace SOTS.Common.GlobalNPCs
 			SpawnConditionBestiaryInfoElement TheUnderworld = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld;
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
-			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an average slime. Its source of energy is unknown.");
 
@@ -755,7 +755,8 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of a sword. Its source of energy is unknown.");
 				if (npc.type == ModContent.NPCType<HoloEye>())
 					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an eyeball. Its source of energy is unknown.");
-
+				if (npc.type == ModContent.NPCType<PhaseEye>())
+					flavorText = new FlavorTextBestiaryInfoElement("A mindless sphere of energy that protects the Planetarium, created with exclusively to be used as a puppet for The Advisor");
 				if (npc.type == ModContent.NPCType<TwilightDevil>())
 					flavorText = new FlavorTextBestiaryInfoElement("A mindless drone that protects the Planetarium. It seems to be controlled centrally, as nothing hides behind its cloak.");
 				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
@@ -782,7 +783,7 @@ namespace SOTS.Common.GlobalNPCs
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A trapped soul that resides in the Pyramid. It has not come to rest, as it still seems to be searching for something.");
 				if (npc.type == ModContent.NPCType<Snake>())
-					flavorText = new FlavorTextBestiaryInfoElement("A long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. This particular one has a venomous bite, and it calls the Pyramid home.");
+					flavorText = new FlavorTextBestiaryInfoElement("A long limbless reptile that has no eyelids, a short tail, and jaws that are capable of considerable extension. This particular one has a venomous bite, and it calls the Pyramid home.");
 				if (npc.type == ModContent.NPCType<SnakePot>())
 					flavorText = new FlavorTextBestiaryInfoElement("A group of snakes that uses a pot for defense. When the pot breaks, the snakes inside are forced to scatter.");
 				if (npc.type == ModContent.NPCType<WallMimic>())
@@ -818,11 +819,13 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>())
+			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>() || npc.type == ModContent.NPCType<NatureConstruct>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("An abomination with an endless hunger for peanuts. Putrid Pinky was created in a failed experiment using pink slime.");
 				if(npc.type == ModContent.NPCType<BlueSlimer>())
 					flavorText = new FlavorTextBestiaryInfoElement("A Blue Slime which became airborne by evolving crude wings. Its wings are easily knocked off with force, depriving it of its flight.");
+				if (npc.type == ModContent.NPCType<NatureConstruct>())
+					flavorText = new FlavorTextBestiaryInfoElement("An ancient machine originally created to advance spirit energy harvesting technology. Now, it serves as a protector of forests under the spirit's control");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Surface,
 					flavorText
@@ -844,77 +847,67 @@ namespace SOTS.Common.GlobalNPCs
 				if(npc.type == ModContent.NPCType<BasicTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-						Surface,
-						flavorText
+						Surface
 					});
 				}
 				if (npc.type == ModContent.NPCType<CorruptionTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						Corruption,
-						UndergroundCorruption,
-						flavorText
+						UndergroundCorruption
 					});
 				}
 				if (npc.type == ModContent.NPCType<CrimsonTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						Crimson,
-						UndergroundCrimson,
-						flavorText
+						UndergroundCrimson
 					});
 				}
 				if (npc.type == ModContent.NPCType<DungeonTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-						TheDungeon,
-						flavorText
+						TheDungeon
 					});
 				}
 				if (npc.type == ModContent.NPCType<GoldenTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						Underground,
-						Caverns,
-						flavorText
+						Caverns
 					});
 				}
 				if (npc.type == ModContent.NPCType<IceTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						SurfaceSnow,
-						UndergroundSnow,
-						flavorText
+						UndergroundSnow
 					});
 				}
 				if (npc.type == ModContent.NPCType<JungleTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						Jungle,
-						UndergroundJungle,
-						flavorText
+						UndergroundJungle
 					});
 				}
 				if (npc.type == ModContent.NPCType<PyramidTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-						Pyramid,
-						flavorText
+						Pyramid
 					});
 				}
 				if (npc.type == ModContent.NPCType<ShadowTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-						TheUnderworld,
-						flavorText
+						TheUnderworld
 					});
 				}
 				if (npc.type == ModContent.NPCType<HallowTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						TheHallow,
-						UndergroundHallow,
-						flavorText
+						UndergroundHallow
 					});
 				}
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {

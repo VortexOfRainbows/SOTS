@@ -153,6 +153,7 @@ namespace SOTS.Projectiles.Blades
 			return (2.5f + (1.0f / (float)Math.Pow(swordLength / 92f, 2f)));
 		}
 		public virtual float MeleeSpeedModifier => 0.1f;
+		public virtual float OverAllSpeedMultiplier => 5f;
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
@@ -175,7 +176,7 @@ namespace SOTS.Projectiles.Blades
 							distance = 92;
 					}
 					toCursor = cursorArea - player.Center;
-					spinSpeed = GetBaseSpeed(distance) * randMod * 5f * ((1 - MeleeSpeedModifier) + MeleeSpeedModifier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee))); //add virtual/abstract variables for this
+					spinSpeed = GetBaseSpeed(distance) * randMod * OverAllSpeedMultiplier * ((1 - MeleeSpeedModifier) + MeleeSpeedModifier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee))); //add virtual/abstract variables for this
 				}
 				counterOffset = 270 - 60f / randMod; //add virtual/abstract variables for this
 				float slashOffset = counterOffset * FetchDirection;
