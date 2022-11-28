@@ -29,7 +29,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			NPC.damage = 40;
 			NPC.defense = 36; //has crazy defense, but other stats are less than shadow
 			NPC.knockBackResist = 0.04f;
-			NPC.value = Item.buyPrice(0, 5, 0, 0);
+			NPC.value = Item.buyPrice(0, 2, 50, 0);
 			NPC.Size = new Vector2(32, 40);
 			NPC.npcSlots = 1f;
 			Banner = NPC.type;

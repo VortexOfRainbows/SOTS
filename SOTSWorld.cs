@@ -211,11 +211,9 @@ namespace SOTS
 		public static bool TopazKeySlotted = false;
 		public static bool AmethystKeySlotted = false;
 		public static bool DiamondKeySlotted = false;
-		public static bool AmberKeySlotted = true;
-		public override void OnWorldLoad()
+		public static bool AmberKeySlotted = false;
+		public void ResetWorldVariables()
 		{
-			SOTSConfig.voidBarNeedsLoading = 1;
-			SOTSConfig.PreviousBarMode = 0;
 			GlobalCounter = 0;
 			GlobalTimeFreeze = 0;
 			GlobalFrozen = false;
@@ -236,7 +234,17 @@ namespace SOTS
 			DiamondKeySlotted = false;
 			AmberKeySlotted = false;
 		}
-        public override void SaveWorldData(TagCompound tag)
+		public override void OnWorldLoad()
+		{
+			SOTSConfig.voidBarNeedsLoading = 1;
+            SOTSConfig.PreviousBarMode = 0;
+			ResetWorldVariables();
+		}
+        public override void OnWorldUnload()
+		{
+			ResetWorldVariables();
+		}
+		public override void SaveWorldData(TagCompound tag)
 		{
 			tag["DownedPinky"] = downedPinky;
 			tag["DownedCurse"] = downedCurse;

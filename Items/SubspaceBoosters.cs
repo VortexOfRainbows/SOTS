@@ -55,15 +55,22 @@ namespace SOTS.Items
             player.accRunSpeed = 7f;
             bool particles = FireBoostPlayer(player);
             bool activate = false;
+            int direction = 0;
             if (player.controlRight && player.releaseRight && player.doubleTapCardinalTimer[2] < 15)
+            {
+                direction = 1;
                 activate = true;
+            }
             else if (player.controlLeft && player.releaseLeft && player.doubleTapCardinalTimer[3] < 15)
+            {
+                direction = -1;
                 activate = true;
+            }
             if (Main.myPlayer == player.whoAmI)
             {
                 if (hasActivate == -1 && activate && player.velocity.Y == 0.0)
                 {
-                    Projectile.NewProjectile(player.GetSource_Misc("SOTS:SubspaceBoosterMultiplayerSync"), player.Center, Vector2.Zero, ModContent.ProjectileType<SubspaceBoosterProj>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(player.GetSource_Misc("SOTS:SubspaceBoosterMultiplayerSync"), player.Center, Vector2.Zero, ModContent.ProjectileType<SubspaceBoosterProj>(), 0, 0, Main.myPlayer, direction);
                     hasActivate = 60;
                 }
                 if (hasActivate > -1)
@@ -305,6 +312,9 @@ namespace SOTS.Items
             Player player = Main.player[Projectile.owner];
             if (!effect)
             {
+                int direction = player.direction;
+                if (Projectile.ai[0] != 0)
+                    direction = (int)Projectile.ai[0];
                 effect = true;
                 SOTSUtils.PlaySound(SoundID.Item45, (int)player.Center.X, (int)player.Center.Y, 1.3f, -0.4f);
                 SOTSUtils.PlaySound(SoundID.Item14, (int)player.Center.X, (int)player.Center.Y, 1.0f, -0.3f);
@@ -317,7 +327,7 @@ namespace SOTS.Items
                         circularLocation.X *= 0.6f;
                         var index = Dust.NewDust(player.Center + circularLocation - new Vector2(5), 0, 0, DustID.Torch, -player.velocity.X * 1.5f, player.velocity.Y * 0.5f, 50, new Color(), 5f - i * 0.8f);
                         circularLocation = circularLocation.SafeNormalize(Vector2.Zero) * 7.5f;
-                        circularLocation.X -= (player.velocity.X + player.direction * 24) * (1.3f + (i * 0.4f));
+                        circularLocation.X -= (player.velocity.X + direction * 24) * (1.3f + (i * 0.4f));
                         if (i == 0)
                         {
                             circularLocation *= 0.33f;
@@ -334,16 +344,16 @@ namespace SOTS.Items
                 }
                 for (int j = 0; j < 20; j++)
                 {
-                    Vector2 velo = new Vector2(-(player.velocity.X + player.direction * 24) * (0.9f + (j * 0.1f)) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-6.0f, 6.0f));
+                    Vector2 velo = new Vector2(-(player.velocity.X + direction * 24) * (0.9f + (j * 0.1f)) + Main.rand.NextFloat(-1.00f, 1.00f), Main.rand.NextFloat(-6.0f, 6.0f));
                     velo.X *= Main.rand.NextFloat(0.5f, 1.5f);
                     SubspaceBoosters.MakeDustShape(player, player.Center, velo, j % 4);
                 }
-                if (player.velocity.X * player.direction < 0)
+                if (player.velocity.X * direction < 0)
                 {
                     player.velocity *= -1f;
                 }
                 player.velocity *= 0.6f;
-                player.velocity.X += player.direction * 14;
+                player.velocity.X += direction * 14;
                 player.velocity.X *= 1.2f;
             }
         }

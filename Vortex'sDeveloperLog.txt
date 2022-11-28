@@ -38,18 +38,22 @@ Other 1.4 related objectives:
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
-2. Treasure slimes drop too much money!
-3. Glowmasks for Corruption Trees in SOTSTP
+2. Glowmasks for Corruption Trees in SOTSTP
 
 Need:
 1. Wind mechanics for vines and banners
 
 Daily Log:
 
+11/27/22
+1. Subspace Treads now dashes in the right direction when using held items
+2. Stellar Serpent Launcher firerate 20 -> 24
+3. Cut money treasure slime drops in half
+4. Fix bug with world variables transfering between worlds before reload
+
 11/23/22
 1. Added Sumeru Elemental Amulet Borders
 2. Fixed some bestiary stuff and added two new entries (Nature Construct and Phase Eye)
-3. 
 
 11/10/22
 1. Remove distinction for Unsafe Walls (red drawcode), as vanilla has now added their own visuals (will fix when get hold of vanilla sprites)

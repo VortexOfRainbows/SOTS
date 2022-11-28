@@ -27,7 +27,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			NPC.damage = 15;
 			NPC.defense = 8;
 			NPC.knockBackResist = 0.6f;
-			NPC.value = Item.buyPrice(0, 0, 80, 0);
+			NPC.value = Item.buyPrice(0, 0, 40, 0);
 			NPC.Size = new Vector2(32, 40);
 			NPC.npcSlots = 1f;
 			Banner = NPC.type;
