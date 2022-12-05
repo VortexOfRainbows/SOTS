@@ -45,6 +45,10 @@ Need:
 
 Daily Log:
 
+12/4/22
+1. Fix bug with dissolving elemental walls
+2. Worked on worldgen structure for Amber Lock (not in code yet)
+
 11/27/22
 1. Subspace Treads now dashes in the right direction when using held items
 2. Stellar Serpent Launcher firerate 20 -> 24

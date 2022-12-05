@@ -320,9 +320,9 @@ namespace SOTS
                 if (tile.WallType == WallType<BrillianceWallWall>() || tile.TileType == (ushort)TileType<DissolvingBrillianceTile>())
                     DissolvingBrillianceTile.DrawEffects(i, j, Mod, true);
             }
-            if (Main.tile[i, j + 1].HasTile&& (Main.tile[i, j + 1].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i, j + 1].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
+            if (Main.tile[i, j + 1].HasTile && (Main.tile[i, j + 1].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i, j + 1].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
                 DissolvingBrillianceTile.DrawEffects(i, j + 1, Mod, true);
-            if (Main.tile[i + 1, j].HasTile&& (Main.tile[i + 1, j].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i + 1, j].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
+            if (Main.tile[i + 1, j].HasTile && (Main.tile[i + 1, j].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i + 1, j].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
                 DissolvingBrillianceTile.DrawEffects(i + 1, j, Mod, true);
             return base.PreDraw(i, j, type, spriteBatch);
         }

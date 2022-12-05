@@ -52,6 +52,12 @@ namespace SOTS.Items.Fragments
 			dust.velocity *= 2.4f;
 			return false;
 		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
+		}
 	}
 	public class EarthWall : ElementalWall
 	{
@@ -87,6 +93,12 @@ namespace SOTS.Items.Fragments
 			dust.scale *= 1.8f;
 			dust.velocity *= 2.4f;
 			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
 		}
 	}
 	public class DelugeWall : ElementalWall
@@ -124,6 +136,12 @@ namespace SOTS.Items.Fragments
 			dust.velocity *= 2.4f;
 			return false;
 		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
+		}
 	}
 	public class AetherWall : ElementalWall
 	{
@@ -159,6 +177,12 @@ namespace SOTS.Items.Fragments
 			dust.scale *= 1.8f;
 			dust.velocity *= 2.4f;
 			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
 		}
 	}
 	public class AuroraWall : ElementalWall
@@ -196,6 +220,12 @@ namespace SOTS.Items.Fragments
 			dust.velocity *= 2.4f;
 			return false;
 		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
+		}
 	}
 	public class UmbraWallWall : ModWall
 	{
@@ -219,6 +249,12 @@ namespace SOTS.Items.Fragments
 			dust.scale *= 1.8f;
 			dust.velocity *= 2.4f;
 			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
 		}
 	}
 	public class UmbraWall : ElementalWall
@@ -255,6 +291,12 @@ namespace SOTS.Items.Fragments
 			dust.scale *= 1.8f;
 			dust.velocity *= 2.4f;
 			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
 		}
 	}
 	public class NetherWall : ElementalWall
@@ -303,6 +345,12 @@ namespace SOTS.Items.Fragments
 			dust.scale *= 1.8f;
 			dust.velocity *= 2.4f;
 			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.03f;
+			g = 0.03f;
+			b = 0.03f;
 		}
 	}
 }
