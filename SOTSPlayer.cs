@@ -297,6 +297,7 @@ namespace SOTS
 		public bool LazyMinerRing = false;
 		public bool LazyCrafterAmulet = false;
 		public int previousDefense = 0;
+		public float AmmoConsumptionModifier = 0.0f;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -958,7 +959,12 @@ namespace SOTS
 				Player.alchemyTable = true;
 			}
 			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
+			AmmoConsumptionModifier = 0.0f;
 		}
+        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
+        {
+            return base.AddStartingItems(mediumCoreDeath);
+        }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
 			//Fish Set 1
@@ -1509,6 +1515,15 @@ namespace SOTS
 			if(item.CountsAsClass(DamageClass.Melee))
 				scale *= meleeItemScale;
 		}
+        public override bool CanConsumeAmmo(Item weapon, Item ammo)
+        {
+			if(AmmoConsumptionModifier > 0)
+            {
+				if (Main.rand.NextFloat(1f) < AmmoConsumptionModifier)
+					return false;
+            }
+            return base.CanConsumeAmmo(weapon, ammo);
+        }
     }
 }
 

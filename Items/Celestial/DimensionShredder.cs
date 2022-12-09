@@ -20,13 +20,14 @@ namespace SOTS.Items.Celestial
 		{
 			Item.CloneDefaults(ItemID.ChainGun); //chaingun
 			Item.damage = 42;
-            Item.width = 48;   
-            Item.height = 32;   
+            Item.width = 100;   
+            Item.height = 60;   
 			Item.rare = ItemRarityID.Yellow;
 			Item.useTime = 4;
 			Item.useAnimation = 4;
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.shootSpeed = 15.5f;
+			Item.scale = 0.85f;
 		}
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {
@@ -41,7 +42,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(-1, 0.5f);
+			return new Vector2(-14, 5f);
 		}
 		public override void AddRecipes()
 		{
@@ -50,13 +51,15 @@ namespace SOTS.Items.Celestial
 		int num = 0;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+			position += velocity.SafeNormalize(Vector2.Zero) * 20 + new Vector2(2.5f).RotatedBy(MathHelper.ToRadians(num * 60 % 360));
 			num++;
-			if (num % 30 == 0)
+			if (num % 15 == 0)
 			{
+				SOTSUtils.PlaySound(SoundID.Item78, position, 0.5f, -0.1f);
 				Vector2 randomized = velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-60, 60)));
-				Projectile.NewProjectile(source, position, randomized * 0.25f, ModContent.ProjectileType<DimensionalFlame>(), damage, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position, randomized * 0.5f, ModContent.ProjectileType<DimensionalFlame>(), damage, knockback, player.whoAmI);
 			}
-			if(num % 2 == 0)
+			if(num % 4 == 0)
 				for (int i = 0; i < Main.maxProjectiles; i++)
 				{
 					Projectile projectile = Main.projectile[i];
@@ -68,17 +71,8 @@ namespace SOTS.Items.Celestial
 						Projectile.NewProjectile(source, center, toVelo, type, damage, knockback, player.whoAmI);
 					}
 				}
-			if (num % 3 == 0)
-			{
-				Projectile.NewProjectile(source, position.X + (velocity.Y * 0.2f), position.Y - (velocity.X * 0.2f), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
-				return false;
-			}
-			if(num % 3 == 1)
-			{
-				Projectile.NewProjectile(source, position.X - (velocity.Y * 0.2f), position.Y + (velocity.X * 0.2f), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
-				return false;
-			}
-			return true; 
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+			return false; 
 		}
 	}
 }

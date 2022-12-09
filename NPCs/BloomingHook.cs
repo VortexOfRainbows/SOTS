@@ -156,11 +156,11 @@ namespace SOTS.NPCs
 					frame++;
 					if (frame == 7)
 					{
-						SOTSUtils.PlaySound(SoundID.Item30, (int)NPC.Center.X, (int)NPC.Center.Y, 0.7f, -0.4f);
+						SOTSUtils.PlaySound(SoundID.Item30, (int)NPC.Center.X, (int)NPC.Center.Y, 0.4f, -0.4f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage = Common.GlobalNPCs.SOTSNPCs.GetBaseDamage(NPC) / 2;
-							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVector * 0.4f, ModContent.ProjectileType<FlowerBolt>(), damage, 0, Main.myPlayer);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVector * 0.45f, ModContent.ProjectileType<FlowerBolt>(), damage, 0, Main.myPlayer);
 							NPC.netUpdate = true;
 						}
 					}

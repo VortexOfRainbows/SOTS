@@ -27,6 +27,12 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Make SOTS Dev Team on git hub!
+
+Ideas:
+4. Jade-Bloom Camera: reference to Nahida elemental skill
+5. Ceremonial Knife: throw a knife. teleport to it. then unleash a fury of slashes.
+6. Brachial Dicharge: upgrade to Geostorm at curse-earlyHM-tier
+
 Order Of Gems: 
 
 1. Purple (Pyramid) - Acedia
@@ -59,6 +65,9 @@ Daily Log:
 1. Fix bug with dissolving elemental walls
 2. Worked on worldgen structure for Amber Lock (not in code yet)
 3. Worked on worldgen strcuture for Sapphire, Emerald, Amethyst Locks
+4. WIP Bag of Ammunition Gathering (needs refund effect)
+5. Resprite of Dimension Shredder implemented. Now released flames 2x as fast, but flames shoot 2x slower. Plays sound when releasing flames
+6. Reduce volume of flower slime launch sound 0.7f -> 0.45f
 
 11/27/22
 1. Subspace Treads now dashes in the right direction when using held items

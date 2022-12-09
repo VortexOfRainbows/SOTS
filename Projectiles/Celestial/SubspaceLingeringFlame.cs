@@ -182,7 +182,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void AI()
 		{
-			Projectile.velocity *= 0.965f;
+			Projectile.velocity *= 0.925f;
 			if (Projectile.timeLeft <= 51)
 				Projectile.alpha += 5;
 			if (Projectile.timeLeft <= 15)
