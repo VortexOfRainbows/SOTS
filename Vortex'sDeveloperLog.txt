@@ -1,4 +1,4 @@
-wThe following is my development plans :D
+The following is my development plans :D
 1. Might still have some bugs with Subspace Locket
 2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
 
@@ -9,7 +9,6 @@ Tmodloader Bugs:
 Acknowledged But Likely Delayed:
 1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
 2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
-
 
 Update Objectives:
 1. Ghost Town!
@@ -29,9 +28,13 @@ Update Objectives:
 3. Make SOTS Dev Team on git hub!
 
 Ideas:
-4. Jade-Bloom Camera: reference to Nahida elemental skill
-5. Ceremonial Knife: throw a knife. teleport to it. then unleash a fury of slashes.
-6. Brachial Dicharge: upgrade to Geostorm at curse-earlyHM-tier
+4. Void Ruins Items: 
+	a. Jade-Bloom Camera: reference to Nahida elemental skill
+	b. Ceremonial Knife: throw a knife. teleport to it. then unleash a fury of slashes.
+5. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
+6. Rock Candy: found in Acedia Gem Chest: increases pickaxe power, mining speed, movement speed
+7. Desert Key Item:
+	a. Need ideas..?
 
 Order Of Gems: 
 
