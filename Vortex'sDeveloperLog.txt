@@ -1,4 +1,4 @@
-The following is my development plans :D
+wThe following is my development plans :D
 1. Might still have some bugs with Subspace Locket
 2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
 
@@ -27,7 +27,17 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Make SOTS Dev Team on git hub!
+Order Of Gems: 
 
+1. Purple (Pyramid) - Acedia
+2. Red (Abandoned Village) - Gula
+3. Orange (Abandoned Aqueduct) - Luxuria
+4. Yellow (Lihzahrd Temple) -  Ira
+5. Blue (Planetarium) - Avaritia
+6. Green (Void Ruins) - Invidia
+7. White (Diamond) - Superbia 
+
+This is the plan currently
 
 Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
@@ -45,9 +55,10 @@ Need:
 
 Daily Log:
 
-12/4/22
+12/4/22 & 12/8/22
 1. Fix bug with dissolving elemental walls
 2. Worked on worldgen structure for Amber Lock (not in code yet)
+3. Worked on worldgen strcuture for Sapphire, Emerald, Amethyst Locks
 
 11/27/22
 1. Subspace Treads now dashes in the right direction when using held items

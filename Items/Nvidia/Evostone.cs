@@ -19,6 +19,8 @@ namespace SOTS.Items.Nvidia
 			Main.tileMerge[TileID.Mud][Type] = true;
 			Main.tileMerge[Type][TileID.MushroomGrass] = true;
 			Main.tileMerge[TileID.MushroomGrass][Type] = true;
+			Main.tileMerge[Type][ModContent.TileType<EvostoneBrickTile>()] = true;
+			Main.tileMerge[ModContent.TileType<EvostoneBrickTile>()][Type] = true;
 			DustType = 37; //obsidian
 			ItemDrop = ModContent.ItemType<Evostone>();
 			AddMapEntry(new Color(31, 39, 57));
