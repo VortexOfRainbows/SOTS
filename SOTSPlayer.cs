@@ -296,6 +296,7 @@ namespace SOTS
 		public bool DevilRing = false;
 		public bool LazyMinerRing = false;
 		public bool LazyCrafterAmulet = false;
+		public int bonusPickaxePower = 0;
 		public int previousDefense = 0;
 		public float AmmoConsumptionModifier = 0.0f;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
@@ -960,6 +961,7 @@ namespace SOTS
 			}
 			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
 			AmmoConsumptionModifier = 0.0f;
+			bonusPickaxePower = 0;
 		}
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {

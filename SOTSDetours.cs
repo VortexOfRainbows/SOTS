@@ -175,6 +175,8 @@ namespace SOTS
 			//Main.NewText("1"); //This does not even run at all after the second reload
 			if (self != null)
 			{
+				if (SOTSPlayer.ModPlayer(self).bonusPickaxePower > 0)
+					pickPower += SOTSPlayer.ModPlayer(self).bonusPickaxePower;
 				//Main.NewText("2 " + SOTSPlayer.ModPlayer(self).LazyMinerRing);
 				if (SOTSPlayer.ModPlayer(self).LazyMinerRing)
 				{
