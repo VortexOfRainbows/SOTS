@@ -25,6 +25,7 @@ namespace SOTS.Items
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.AmmoConsumptionModifier += 0.2f;
+			modPlayer.AmmoRegather = true;
 		}
 	}
 }

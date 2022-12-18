@@ -299,6 +299,7 @@ namespace SOTS
 		public int bonusPickaxePower = 0;
 		public int previousDefense = 0;
 		public float AmmoConsumptionModifier = 0.0f;
+		public bool AmmoRegather = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -962,6 +963,7 @@ namespace SOTS
 			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
+			AmmoRegather = false;
 		}
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
@@ -1372,6 +1374,13 @@ namespace SOTS
 							pShrimp.FireTowards(Main.MouseWorld, (int)(damage * 0.5f) + 1);
                         }
                     }
+                }
+				if(Main.myPlayer == Player.whoAmI && AmmoRegather)
+                {
+					if(projectile.CountsAsClass(DamageClass.Ranged))
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, Main.rand.Next(30));
+					}
                 }
             }
 		}
