@@ -10,47 +10,53 @@ using SOTS.Common.GlobalNPCs;
 using System.IO;
 using SOTS.Prim.Trails;
 using SOTS.Prim;
+using SOTS.Projectiles.Lightning;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Blades
 {    
-    public class ToothAcheThrow : ModProjectile 
+    public class VorpalThrow : ModProjectile 
     {
-		public override string Texture => "SOTS/Projectiles/Blades/ToothAcheSlash";
+		public static Color VorpalColor1 = new Color(86, 226, 100);
+		public static Color VorpalColor2 = new Color(56, 114, 135);
+		public override string Texture => "SOTS/Projectiles/Blades/VorpalKnife";
         float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{
+			writer.Write(Projectile.timeLeft);
 			writer.Write(Projectile.tileCollide);
 			writer.Write(Projectile.velocity.X);
 			writer.Write(Projectile.velocity.Y);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
+			Projectile.timeLeft = reader.ReadInt32();
 			Projectile.tileCollide = reader.ReadBoolean();
 			Projectile.velocity.X = reader.ReadSingle();
 			Projectile.velocity.Y = reader.ReadSingle();
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tooth Ache");
+			DisplayName.SetDefault("Vertebraeker");
 		}
         public override void SetDefaults()
         {
-			Projectile.height = 84;
+			Projectile.height = 60;
 			Projectile.width = 64;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
-			Projectile.timeLeft = 240;
+			Projectile.timeLeft = 270;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
 			Projectile.alpha = 0;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 7;
+			Projectile.localNPCHitCooldown = 45; //15 frames, given extra updates
 			Projectile.extraUpdates = 2;
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-			int width = 148;
+			int width = 100;
 			hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -68,109 +74,146 @@ namespace SOTS.Projectiles.Blades
         {
 			hitDirection = initialDirection;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
-			if(!Main.rand.NextBool(6))
-            {
-				target.AddBuff(BuffID.Poisoned, 120);
-            }
-			else
-			{
-				target.AddBuff(BuffID.Poisoned, 360);
-			}
-		}
 		bool runOnce = true;
 		Vector2 initialVelo;
 		Vector2 initialCenter;
 		public int initialDirection = 0;
+		int soundCounter = 0;
+		bool runOnce2 = true;
+		public Vector2 newCenter;
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
 			if (runOnce)
 			{
+				newCenter = Projectile.Center;
 				SOTSUtils.PlaySound(SoundID.DD2_GhastlyGlaivePierce, (int)player.Center.X, (int)player.Center.Y, 1.6f, -0.1f);
 				runOnce = false;
 				initialVelo = Projectile.velocity;
 				if(Projectile.velocity.X > 0)
 				{
-					rotation = -MathHelper.ToRadians(90);
+					rotation = MathHelper.ToRadians(180);
 					initialDirection = 1;
 				}
 				else
 				{
-					rotation = 0;
+					rotation = MathHelper.ToRadians(90);
 					initialDirection = -1;
 				}
 				initialCenter = player.Center;
 				Projectile.ai[0] = -180 * initialDirection;
-				Projectile.scale = 1.65f;
-				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: initialDirection, ToothAcheSlash.toothAcheLime.ToVector4(), ToothAcheSlash.toothAcheGreen.ToVector4(), 36, 2));
+				Projectile.scale = 1.2f;
+				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: -initialDirection, VorpalColor1.ToVector4(), VorpalColor2.ToVector4(), 36, 2));
 			}
-			else if(Projectile.timeLeft % 20 == 0)
-				SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.1f);
-			player.itemAnimation = 3;
-			player.itemTime = 3;
-			player.itemRotation = MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() + (initialDirection == -1 ? MathHelper.ToRadians(180) : 0));
-			Projectile.ai[0] += 2.4f * initialDirection;
-			if (Projectile.timeLeft >= 90)
+			else if(soundCounter % 21 == 0)
+				SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.1f);
+			soundCounter++;
+			Projectile.ai[0] += 2f * initialDirection;
+			if (Projectile.timeLeft >= 180)
 			{
 				Vector2 initialCenter = this.initialCenter;
-				int length = 132;
+				int length = 180;
 				double rad = MathHelper.ToRadians(Projectile.ai[0]);
 				Vector2 ovalArea = new Vector2(length, 0).RotatedBy(initialVelo.ToRotation());
 				Vector2 ovalArea2 = new Vector2(length, 0).RotatedBy((float)rad);
-				ovalArea2.Y *= -0.6f;
+				ovalArea2.Y *= 0.5f * Projectile.ai[1];
 				ovalArea2 = ovalArea2.RotatedBy(initialVelo.ToRotation());
 				ovalArea.X += ovalArea2.X;
 				ovalArea.Y += ovalArea2.Y;
 				Vector2 goTo = initialCenter + ovalArea;
 				float dist = (Projectile.Center - goTo).Length();
 				Vector2 circular = new Vector2(-(dist > 18 ? 18 : dist), 0).RotatedBy((Projectile.Center - goTo).ToRotation());
-				Projectile.velocity = circular + new Vector2(0, -1.5f);
+				Projectile.velocity = circular + new Vector2(0, -1.7f);
+				newCenter = Projectile.Center;
+			}
+			else if (Projectile.timeLeft > 120)
+			{
+				double rad = MathHelper.ToRadians(Projectile.ai[0]);
+				Projectile.velocity *= 0.725f;
+				Projectile.velocity += new Vector2(0.6f * initialDirection, 0).RotatedBy(rad);
+				Projectile.ai[0] += 2f * initialDirection;
+				Projectile.timeLeft = 150;
 			}
 			else
-            {
+			{
+				if(runOnce2)
+				{
+					Projectile.damage *= 3;
+					SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.2f);
+					if (Main.myPlayer == Projectile.owner)
+					{
+						for (int j = -1; j <= 1; j++)
+							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(0, 24 + Main.rand.NextFloat(-8, 8)), new Vector2(j * 0.3f + Main.rand.NextFloat(-0.1f, 0.1f), -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer, -1);
+						Otherworld.GenesisCore.LaunchLightningAtNearbyEnemies(Projectile, ModContent.ProjectileType<VorpalLightning>(), 8, 176, Projectile.damage);
+					}
+					runOnce2 = false;
+					for (int i = 0; i < 360; i += 2)
+					{
+						if (Main.rand.NextBool(3))
+						{
+							Vector2 circularLocation = new Vector2(13 * Main.rand.NextFloat(1), 0).RotatedBy(MathHelper.ToRadians(i));
+							Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, ModContent.DustType<CopyDust4>());
+							dust.noGravity = true;
+							dust.velocity *= 0.8f;
+							dust.velocity += circularLocation;
+							dust.scale *= 1.7f;
+							dust.fadeIn = 0.1f;
+							dust.color = Color.Lerp(VorpalColor1, VorpalColor2, 1 - Main.rand.NextFloat(1f) * Main.rand.NextFloat(1f));
+							dust.alpha = 100;
+						}
+						else
+						{
+							Vector2 circularLocation = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(i));
+							Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation, 0, 0, ModContent.DustType<CopyDust4>());
+							dust.noGravity = true;
+							dust.velocity *= 0.4f;
+							dust.velocity += circularLocation.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.4f, 1.4f);
+							dust.scale *= 1.5f;
+							dust.fadeIn = 0.1f;
+							dust.color = Color.Lerp(VorpalColor1, VorpalColor2, 1 - Main.rand.NextFloat(1f) * Main.rand.NextFloat(1f));
+							dust.alpha = 100;
+						}
+					}
+				}
 				float dist = (Projectile.Center - player.Center).Length();
-				float maxSpeed = 12 + (12 * (90 - Projectile.timeLeft) / 90f);
+				float maxSpeed = 12 + (24 * (90 - Projectile.timeLeft) / 90f);
 				Vector2 circular = new Vector2(-(dist > maxSpeed ? maxSpeed : dist), 0).RotatedBy((Projectile.Center - player.Center).ToRotation());
 				Projectile.velocity = circular;
 				Projectile.tileCollide = false;
-				if((Projectile.Center - player.Center).Length() <= 12)
-                {
+				if ((Projectile.Center - player.Center).Length() <= 24)
+				{
 					Projectile.Kill();
-                }
+				}
 			}
-            return base.PreAI();
+			return base.PreAI();
         }
         public override void AI()
 		{
-			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.6f / 255f, (255 - Projectile.alpha) * 0.6f / 255f, (255 - Projectile.alpha) * 1.8f / 255f);
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.9f / 255f, (255 - Projectile.alpha) * 0.5f / 255f);
 			Player player = Main.player[Projectile.owner];
-			rotation += -initialDirection * MathHelper.ToRadians(16);
+			rotation += initialDirection * MathHelper.ToRadians(11);
 			Projectile.rotation = rotation;
 			Projectile.spriteDirection = initialDirection;
 
-			for (int i = 0; i < 1 + Main.rand.NextFloat(-0.5f, 0.2f); i++) //generates dust at the end of the blade
+			if(Main.rand.NextBool(3))
 			{
-				Vector2 circular = Main.rand.NextVector2CircularEdge(70, 70);
-				circular = circular.RotateRandom(Projectile.rotation) * Main.rand.NextFloat(0.9f + i * 0.3f, 1.2f);
-				float dustScale = 1.2f;
+				Vector2 circular = Main.rand.NextVector2CircularEdge(40, 40);
+				circular = circular.RotateRandom(Projectile.rotation) * Main.rand.NextFloat(0.9f, 1.2f);
+				float dustScale = 1.0f;
 				float rand = Main.rand.NextFloat(0.9f, 1.1f);
 				int type = ModContent.DustType<Dusts.CopyDust4>();
-				if (Main.rand.NextBool(4))
-					type = DustID.JungleSpore;
+				if (Main.rand.NextBool(5))
+					type = DustID.GreenTorch;
 				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + circular, 0, 0, type);
 				dust.velocity *= 0.4f / rand;
-				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3.2f, 3.6f) * rand;
+				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2.4f, 3.0f) * rand;
 				dust.noGravity = true;
 				dust.scale *= 0.2f / rand;
 				dust.scale += 1.2f / rand * dustScale;
 				dust.fadeIn = 0.1f;
 				if (type == ModContent.DustType<Dusts.CopyDust4>())
-					dust.color = Color.Lerp(ToothAcheSlash.toothAcheGreen, ToothAcheSlash.toothAcheLime, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
-			}
+					dust.color = Color.Lerp(VorpalColor1, VorpalColor2, Main.rand.NextFloat(1f) * Main.rand.NextFloat(1f));
+			}				
 			if (Projectile.timeLeft >= 110)
 				Projectile.Center += Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
 			else

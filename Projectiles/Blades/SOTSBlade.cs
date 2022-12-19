@@ -195,25 +195,7 @@ namespace SOTS.Projectiles.Blades
 				if (AbsAI0 > 1)
 				{
 					AbsAI0--;
-					float speedBonus = 0.14f;
-					if (AbsAI0 < 12)
-						speedBonus = 0;
-					if (AbsAI0 == 2)
-						speedBonus = -1.0f;
-					int damage = Projectile.damage;
-					if (AbsAI0 == 1)
-					{
-						damage = (int)(damage * 1.0f);
-						Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<VertebraekerThrow>(), (int)(damage * 1.2f), Projectile.knockBack, player.whoAmI, 0, 0);
-					}
-					else
-					{
-						Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * AbsAI0, Projectile.ai[1] + speedBonus);
-						if (proj.ModProjectile is VertebraekerSlash a)
-						{
-							a.distance = distance * 0.9f + 8;
-						}
-					}
+					SlashPattern(player, AbsAI0);
 				}
 			}
 		}
@@ -244,7 +226,7 @@ namespace SOTS.Projectiles.Blades
 			timeLeftCounter += iterator2;
 			counter += incremendAmount;
 			float totalSwipeDegrees = (262.5f + (1800f / distance / randMod));
-			if (timeLeftCounter > totalSwipeDegrees) //complete a bigger arc with a lower distance
+			if (timeLeftCounter > totalSwipeDegrees)
             {
 				Projectile.hide = true;
 				Projectile.Kill();
@@ -253,42 +235,68 @@ namespace SOTS.Projectiles.Blades
             {
 				if (dustAway != Vector2.Zero)
 				{
-					float amt = Main.rand.NextFloat(1.0f, 1.4f) * distance / 180f;
-					for (int i = 0; i < amt * 0.6f; i++) //generates dust at the end of the blade
-					{
-						float dustScale = 1f;
-						float rand = Main.rand.NextFloat(0.9f, 1.1f);
-						int type = ModContent.DustType<Dusts.CopyDust4>();
-						if (Main.rand.NextBool(5))
-							type = DustID.RedTorch;
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + dustAway.SafeNormalize(Vector2.Zero) * 24, 16, 16, type);
-						dust.velocity *= 0.8f / rand;
-						dust.velocity += dustAway.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
-						dust.noGravity = true;
-						dust.scale *= 0.2f / rand;
-						dust.scale += 1.3f / rand * dustScale;
-						dust.fadeIn = 0.1f;
-						if (type == ModContent.DustType<Dusts.CopyDust4>())
-							dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
-					}
-					Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
-					for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
-					{
-						float rand = Main.rand.NextFloat(0.9f, 1.1f);
-						int type = ModContent.DustType<Dusts.CopyDust4>();
-						if (Main.rand.NextBool(3))
-							type = DustID.RedTorch;
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
-						dust.velocity *= 0.1f / rand;
-						dust.velocity += dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.4f, 0.9f) * rand;
-						dust.noGravity = true;
-						dust.scale *= 0.2f / rand;
-						dust.scale += 1.1f * rand;
-						dust.fadeIn = 0.1f;
-						if (type == ModContent.DustType<Dusts.CopyDust4>())
-							dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
-					}
+					SpawnDustDuringSwing(player, distance, dustAway);
 				}
+			}
+		}
+		public virtual void SlashPattern(Player player, int slashNumber)
+        {
+			float speedBonus = 0.14f;
+			if (slashNumber < 12)
+				speedBonus = 0;
+			if (slashNumber == 2)
+				speedBonus = -1.0f;
+			int damage = Projectile.damage;
+			if (slashNumber == 1)
+			{
+				damage = (int)(damage * 1.0f);
+				Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<VertebraekerThrow>(), (int)(damage * 1.2f), Projectile.knockBack, player.whoAmI, 0, 0);
+			}
+			else
+			{
+				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1] + speedBonus);
+				if (proj.ModProjectile is VertebraekerSlash a)
+				{
+					a.distance = distance * 0.9f + 8;
+				}
+			}
+		}
+		public virtual void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
+		{
+			float amt = Main.rand.NextFloat(1.0f, 1.4f) * bladeLength / 180f;
+			for (int i = 0; i < amt * 0.6f; i++) //generates dust at the end of the blade
+			{
+				float dustScale = 1f;
+				float rand = Main.rand.NextFloat(0.9f, 1.1f);
+				int type = ModContent.DustType<Dusts.CopyDust4>();
+				if (Main.rand.NextBool(5))
+					type = DustID.RedTorch;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + bladeDirection.SafeNormalize(Vector2.Zero) * 24, 16, 16, type);
+				dust.velocity *= 0.8f / rand;
+				dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
+				dust.noGravity = true;
+				dust.scale *= 0.2f / rand;
+				dust.scale += 1.3f / rand * dustScale;
+				dust.fadeIn = 0.1f;
+				if (type == ModContent.DustType<Dusts.CopyDust4>())
+					dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+			}
+			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
+			for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
+			{
+				float rand = Main.rand.NextFloat(0.9f, 1.1f);
+				int type = ModContent.DustType<Dusts.CopyDust4>();
+				if (Main.rand.NextBool(3))
+					type = DustID.RedTorch;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
+				dust.velocity *= 0.1f / rand;
+				dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.4f, 0.9f) * rand;
+				dust.noGravity = true;
+				dust.scale *= 0.2f / rand;
+				dust.scale += 1.1f * rand;
+				dust.fadeIn = 0.1f;
+				if (type == ModContent.DustType<Dusts.CopyDust4>())
+					dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
 		}
         public override void SendExtraAI(BinaryWriter writer)

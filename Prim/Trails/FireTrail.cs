@@ -148,6 +148,15 @@ namespace SOTS.Prim.Trails
 						Destroyed = true;
 					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 24); // - new Vector2(Width / 2, Width / 2));
 				}
+				else if (proj.ModProjectile is VorpalThrow throwSword3 && Entity.active && Entity != null)
+				{
+					WidthList.Add(22);
+					//ownerCenter = projOwner.Center;
+					toOwner.Add(new Vector2(1, -1).RotatedBy(proj.rotation));
+					if (throwSword3.initialDirection != -ClockWiseOrCounterClockwise)
+						Destroyed = true;
+					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 14); // - new Vector2(Width / 2, Width / 2));
+				}
 				else
 					OnDestroy();
 			}
@@ -160,7 +169,7 @@ namespace SOTS.Prim.Trails
 		{
 			Destroyed = true;
 			int repeats = 1;
-			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>() || EntityType == ModContent.ProjectileType<VertebraekerThrow>())
+			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>() || EntityType == ModContent.ProjectileType<VertebraekerThrow>() || EntityType == ModContent.ProjectileType<VorpalThrow>())
 			{
 				repeats = 3;
 			}

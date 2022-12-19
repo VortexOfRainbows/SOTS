@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Lightning
 			Projectile.width = 12;
 			Projectile.height = 12;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Magic;
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidMagic>();
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;

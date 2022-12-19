@@ -81,16 +81,22 @@ namespace SOTS.Projectiles.Blades
 				runOnce = false;
 				initialVelo = Projectile.velocity;
 				if(Projectile.velocity.X > 0)
+				{
+					rotation = -MathHelper.ToRadians(90);
 					initialDirection = 1;
+				}
 				else
+				{
+					rotation = 0;
 					initialDirection = -1;
+				}
 				initialCenter = player.Center;
 				Projectile.ai[0] = -180 * initialDirection;
 				Projectile.scale = 1.5f;
 				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: initialDirection, VertebraekerSlash.vertebraekerRed.ToVector4(), VertebraekerSlash.vertebraekerOrange.ToVector4(), 36, 2));
 			}
 			else if(Projectile.timeLeft % 18 == 0)
-				SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)player.Center.X, (int)player.Center.Y, 1.2f, 0.2f);
+				SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.2f);
 			player.itemAnimation = 3;
 			player.itemTime = 3;
 			player.itemRotation = MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() + (initialDirection == -1 ? MathHelper.ToRadians(180) : 0));

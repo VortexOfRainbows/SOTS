@@ -84,6 +84,7 @@ namespace SOTS.Projectiles.Lightning
 		int[] randStorage = new int[90];
 		int dist = 90;
 		float extraLength = 0;
+		float lengthMultiplier = 0.4f;
 		bool runOnce2 = true;
 		public override void AI()
 		{
@@ -102,16 +103,18 @@ namespace SOTS.Projectiles.Lightning
 				originalVelo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
 				originalPos = Projectile.Center;
 				runOnce = false;
+				if (Projectile.ai[0] == -1) 
+					lengthMultiplier = 0.25f;
 			}
 
 			Vector2 temp = originalPos;
 			addPos = Projectile.Center;
 			for (int i = 0; i < dist; i++)
 			{
-				originalPos += originalVelo * 0.125f * (8f + 0.4f * extraLength);
+				originalPos += originalVelo * 0.125f * (8f + lengthMultiplier * extraLength);
 				for (int reps = 0; reps < 18; reps++)
 				{
-					Vector2 attemptToPosition = (originalPos + originalVelo * (8f + 0.4f * extraLength)) - addPos;
+					Vector2 attemptToPosition = (originalPos + originalVelo * (8f + lengthMultiplier * extraLength)) - addPos;
 					addPos += new Vector2(originalVelo.Length(), 0).RotatedBy(attemptToPosition.ToRotation() + MathHelper.ToRadians(randStorage[i]));
 					trailPos[i] = addPos;
 				}

@@ -63,9 +63,10 @@ Need:
 
 Daily Log:
 
-12/18/22
+12/18/22 & 12/19/22
 1. Bag of Ammunition Gathering Added (Tested for Multiplayer, IT WORKS!)
 2. Fix bug with texture pack related thanks messages in multiplayer
+3. WIP Vorpal Blade: left click effect added
 
 12/14/22
 1. Added Rock Candy

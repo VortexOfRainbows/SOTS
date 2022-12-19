@@ -148,46 +148,46 @@ namespace SOTS.Projectiles.Otherworld
 					Main.dust[dust].noGravity = true;
 				}
 			}
-
-			Player player = Main.player[Projectile.owner];
 			if (Projectile.owner == Main.myPlayer)
 			{
-				List<int> blackList = new List<int>();
-				for (int j = 0; j < 36; j++)
-				{
-					int npcIndex = -1;
-					double distanceTB = 1256;
-					for (int i = 0; i < 200; i++) //find first enemy
-					{
-						NPC npc = Main.npc[i];
-						if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage && !blackList.Contains(npc.whoAmI))
-						{
-							if (npcIndex != i)
-							{
-								float disX = Projectile.Center.X - npc.Center.X;
-								float disY = Projectile.Center.Y - npc.Center.Y;
-								double dis = Math.Sqrt(disX * disX + disY * disY);
-								if (dis < distanceTB)
-								{
-									distanceTB = dis;
-									npcIndex = i;
-								}
-							}
-						}
-					}
-					if (npcIndex != -1)
-					{
-						blackList.Add(npcIndex);
-						NPC npc = Main.npc[npcIndex];
-						if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
-						{
-							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<OriginLightningZap>(), (int)(Projectile.damage * 1f), 0, Projectile.owner, npc.whoAmI);
-						}
-					}
-				}
+				LaunchLightningAtNearbyEnemies(Projectile, ModContent.ProjectileType<OriginLightningZap>(), 36, 1256, Projectile.damage);
 			}
 			base.Kill(timeLeft);
         }
+		public static void LaunchLightningAtNearbyEnemies(Projectile Projectile, int LightningType, int TotalNPCs, int distance, int damage)
+		{
+			List<int> blackList = new List<int>();
+			for (int j = 0; j < TotalNPCs; j++)
+			{
+				int npcIndex = -1;
+				float distanceTB = distance;
+				for (int i = 0; i < 200; i++) //find first enemy
+				{
+					NPC npc = Main.npc[i];
+					if (npc.CanBeChasedBy() && !blackList.Contains(npc.whoAmI))
+					{
+						if (npcIndex != i)
+						{
+							float dis = (Projectile.Center - npc.Center).Length();
+							if (dis < distanceTB)
+							{
+								distanceTB = dis;
+								npcIndex = i;
+							}
+						}
+					}
+				}
+				if (npcIndex != -1)
+				{
+					blackList.Add(npcIndex);
+					NPC npc = Main.npc[npcIndex];
+					if (npc.CanBeChasedBy())
+					{
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, LightningType, damage, 0, Projectile.owner, npc.whoAmI);
+					}
+				}
+			}
+		}
     }
 }
 		
