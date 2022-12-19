@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Items.Otherworld.FromChests;
 using SOTS.NPCs;
 using SOTS.Projectiles;
 using SOTS.Projectiles.Chaos;
@@ -96,6 +97,7 @@ namespace SOTS
 		public bool frozen = false;
 		public float aiSpeedCounter = 0;
 		public float aiSpeedMultiplier = 1;
+		public int AmmoUsedID = -1;
 		public static void SetTimeFreeze(Player player, Projectile proj, int time)
 		{
 			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
@@ -698,7 +700,8 @@ namespace SOTS
 			if(!Main.gameMenu && !Main.gameInactive)
             {
 				Player player = Main.player[projectile.owner];
-				if (projectile.arrow && SOTSPlayer.ModPlayer(player).backUpBow && source is EntitySource_ItemUse_WithAmmo)
+				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+				if (projectile.arrow && modPlayer.backUpBow && source is EntitySource_ItemUse_WithAmmo)
                 {
 					if(projectile.arrow)
                     {
@@ -707,7 +710,20 @@ namespace SOTS
 							Projectile.NewProjectile(projectile.GetSource_FromThis(), player.Center, -projectile.velocity * 0.9f, projectile.type, (int)(projectile.damage * 0.5f), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
                         }
                     }
-				}					
+				}
+				if(projectile.CountsAsClass(DamageClass.Ranged) && modPlayer.AmmoRegather && source is EntitySource_ItemUse_WithAmmo withAmmo)
+                {
+					int ammoType = withAmmo.AmmoItemIdUsed;
+					if(ammoType == ItemID.FallenStar && Main.dayTime)
+                    {
+						ammoType = -1;
+					}
+					if (ammoType == ItemID.EndlessMusketPouch || ammoType == ItemID.EndlessQuiver || ammoType == ModContent.ItemType<HardlightQuiver>() || ammoType == ModContent.ItemType<CataclysmMusketPouch>())
+					{
+						ammoType = -1;
+					}
+					AmmoUsedID = ammoType;
+				}
             }
         }
     }

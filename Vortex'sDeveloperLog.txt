@@ -41,7 +41,7 @@ Order Of Gems:
 2. Red (Abandoned Village) - Gula
 3. Orange (Abandoned Aqueduct) - Luxuria
 4. Yellow (Lihzahrd Temple) -  Ira
-5. Blue (Planetarium) - Avaritia
+5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
 6. Green (Void Ruins) - Invidia
 7. White (Diamond) - Superbia 
 
@@ -62,6 +62,10 @@ Need:
 1. Wind mechanics for vines and banners
 
 Daily Log:
+
+12/18/22
+1. Bag of Ammunition Gathering Added (Tested for Multiplayer, IT WORKS!)
+2. Fix bug with texture pack related thanks messages in multiplayer
 
 12/14/22
 1. Added Rock Candy

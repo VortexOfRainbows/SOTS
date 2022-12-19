@@ -85,6 +85,7 @@ namespace SOTS.Common.GlobalNPCs
         public float aiSpeedMultiplier = 1;
         public const float timeBeforeFullFreeze = 30f;
         public float frozenForTime = 0;
+        public List<int> ammoRegatherList = new List<int>();
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
@@ -1081,6 +1082,24 @@ namespace SOTS.Common.GlobalNPCs
                             npc.extraValue = 0;
                             npc.NPCLoot();
                         }
+                    }
+                }
+            }
+        }
+        public void AddAmmoToList(Projectile projectile)
+        {
+            Player player = Main.player[projectile.owner];
+            if(SOTSPlayer.ModPlayer(player).AmmoRegather && projectile.CountsAsClass(DamageClass.Ranged))
+            {
+                int currentAmmoSize = ammoRegatherList.Count;
+                float chanceOfAddingAmmo = 1f / (4 + currentAmmoSize); //25% base chance to add ammo to the pool, then 20, then 16.667, then 14%, then 12.5%, then 11%, then 10%, etc
+                if(Main.rand.NextFloat(1) < chanceOfAddingAmmo)
+                {
+                    SOTSProjectile instancedProj = projectile.GetGlobalProjectile<SOTSProjectile>();
+                    int ammoType = instancedProj.AmmoUsedID;
+                    if(ammoType != -1)
+                    {
+                        ammoRegatherList.Add(ammoType);
                     }
                 }
             }

@@ -101,7 +101,7 @@ namespace SOTS
 				if (!item.CountsAsClass(DamageClass.Summon) && item.ModItem is VoidItem vItem)
 				{
 					int voidAmt = vItem.GetVoid(Main.LocalPlayer);
-					if (voidAmt != 0)
+					if (voidAmt != 0 && voidAmt != 1)
                     {
 						int intMax = (int)(voidCostMultiplier * voidAmt);
 						float mult = intMax / (float)voidAmt;

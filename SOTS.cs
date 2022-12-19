@@ -46,6 +46,8 @@ namespace SOTS
 		private const string SOTSTexturePackName = "Secrets of the Shadows Texture Pack";
 		public static bool IsSOTSTexturePackEnabled()
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return false;
 			AssetSourceController aSC = Main.AssetSourceController;
             IEnumerable<Terraria.IO.ResourcePack> list = aSC.ActiveResourcePackList.EnabledPacks;
 			foreach(Terraria.IO.ResourcePack item in list)

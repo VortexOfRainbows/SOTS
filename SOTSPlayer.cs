@@ -61,16 +61,19 @@ namespace SOTS
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				if(LogInMessageTimer > 0)
-					LogInMessageTimer -= 1;
-				if(SOTS.SOTSTexturePackEnabled)
+					LogInMessageTimer -= 1; 
+				if (LogInMessageTimer == 0)
 				{
-					LogInMessageTimer = -1;
-					Main.NewText(worldEnterThanks, new Color(255, 150, 255));
-				}
-				else if (LogInMessageTimer == 0)
-				{
-					LogInMessageTimer = -1;
-					Main.NewText(worldEnter, new Color(20, 255, 40));
+					if (SOTS.SOTSTexturePackEnabled)
+					{
+						LogInMessageTimer = -1;
+						Main.NewText(worldEnterThanks, new Color(255, 150, 255));
+					}
+					else
+					{
+						LogInMessageTimer = -1;
+						Main.NewText(worldEnter, new Color(20, 255, 40));
+					}
 				}
 			}
 		}
@@ -300,6 +303,7 @@ namespace SOTS
 		public int previousDefense = 0;
 		public float AmmoConsumptionModifier = 0.0f;
 		public bool AmmoRegather = false;
+		public float AmmoRegatherDelay = 0f;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -964,6 +968,8 @@ namespace SOTS
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
 			AmmoRegather = false;
+			if (AmmoRegatherDelay < 120)
+				AmmoRegatherDelay++;
 		}
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
@@ -1339,8 +1345,9 @@ namespace SOTS
 				}
 			}
 			else
-            {
-				if(target.life <= 0)
+			{
+				DebuffNPC instancedTarget = target.GetGlobalNPC<DebuffNPC>();
+				if (target.life <= 0)
 				{
 					if (Main.myPlayer == Player.whoAmI)
 					{
@@ -1360,8 +1367,18 @@ namespace SOTS
 					if (SadistRing)
 					{
 						if (Main.myPlayer == Player.whoAmI)
-							SOTSPlayer.GrantRandomRingBuff(Player);
+							GrantRandomRingBuff(Player);
 					}
+					if(AmmoRegather)
+                    {
+						if (projectile.owner == Main.myPlayer)
+							instancedTarget.AddAmmoToList(projectile); //since the ammo adding happens soley on clientn, and the kill function is called on player, ammo regathering only occurs to the player who gets the final kill
+						List<int> localizedAmmoList = instancedTarget.ammoRegatherList;
+						for(int i = 0; i < localizedAmmoList.Count; i++)
+						{
+							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
+						}
+                    }
 				}
 				if(Main.myPlayer == Player.whoAmI && Player.statMana > Player.statManaMax2 * 0.4f && PlasmaShrimp && projectile != null && projectile.CountsAsClass(DamageClass.Magic))
                 {
@@ -1375,11 +1392,25 @@ namespace SOTS
                         }
                     }
                 }
-				if(Main.myPlayer == Player.whoAmI && AmmoRegather)
+				if(Main.myPlayer == Player.whoAmI && AmmoRegather && !target.immortal)
                 {
-					if(projectile.CountsAsClass(DamageClass.Ranged))
+					if(projectile.CountsAsClass(DamageClass.Ranged) && projectile != null)
 					{
-						Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, Main.rand.Next(30));
+						SOTSProjectile instancedProj = projectile.GetGlobalProjectile<SOTSProjectile>();
+						int ammoType = instancedProj.AmmoUsedID;
+						if(instancedProj.AmmoUsedID >= 0)
+						{
+							float chance = AmmoRegatherDelay / 120f * 0.12f; //12% base chance to regather ammo, but decreases every successful regather to 0%, linearly coming back to 12% after 2 seconds
+							if(Main.rand.NextFloat(1) < chance)
+							{
+								Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(Main.rand.NextFloat(5f, 7f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, ammoType);
+								AmmoRegatherDelay = 0;
+							}
+							else //only add to NPC ammo count if missed initial chance of regather
+							{
+								instancedTarget.AddAmmoToList(projectile);
+							}
+						}
 					}
                 }
             }

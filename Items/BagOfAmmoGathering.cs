@@ -9,7 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bag of Ammunition Gathering");
-			Tooltip.SetDefault("20% chance not to consume ammo\nStriking and killing enemies has a chance to refund ammo");
+			Tooltip.SetDefault("20% chance not to consume ammo\nStriking enemies has a chance to refund ammo\nLanding the killing blow on enemies may also refund ammo");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
