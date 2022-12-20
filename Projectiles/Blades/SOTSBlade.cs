@@ -13,8 +13,9 @@ namespace SOTS.Projectiles.Blades
 {    
     public abstract class SOTSBlade : ModProjectile
     {
-		public static Color color1 = new Color(255, 185, 81);
-		public static Color color2 = new Color(209, 117, 61);
+		public int thisSlashNumber => Math.Abs((int)Projectile.ai[0]);
+		public virtual Color color1 => new Color(255, 185, 81);
+		public virtual Color color2 => new Color(209, 117, 61);
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Some Slash");
@@ -35,16 +36,15 @@ namespace SOTS.Projectiles.Blades
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 15;
 			Projectile.ownerHitCheck = true;
 			SafeSetDefaults();
 		}
 		public virtual float HitboxWidth => 30;
 		public virtual float AdditionalTipLength => 30;
 		public virtual void SafeSetDefaults()
-        {
-
-        }
+		{
+			Projectile.localNPCHitCooldown = 15;
+		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			Player player = Main.player[Projectile.owner];
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Blades
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
 			int length = (int)toProjectile.Length();
-			Vector2 rotateToPosition = relativePoint(toProjectile, 24);
+			Vector2 rotateToPosition = relativePoint(toProjectile, handleOffset);
 			Vector2 drawPos = player.Center + rotateToPosition - Main.screenPosition;
 			Vector2 origin = new Vector2(drawOrigin.X, drawOrigin.Y);
 
@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Blades
 		}
 		Vector2 dustAway = Vector2.Zero;
 		Vector2 cursorArea = Vector2.Zero;
-		Vector2 toCursor = Vector2.Zero;
+		public Vector2 toCursor = Vector2.Zero;
 		bool runOnce = true;
 		public float distance = 0;
 		float counterOffset;
@@ -145,20 +145,21 @@ namespace SOTS.Projectiles.Blades
 		}
 		public virtual void SwingSound(Player player)
 		{
-			SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.6f * randModifier); //playsound function
+			SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.6f * speedModifier); //playsound function
 		}
-		public virtual float randModifier => Projectile.ai[1];
+		public virtual float speedModifier => Projectile.ai[1];
 		public virtual float GetBaseSpeed(float swordLength)
         {
-			return (2.5f + (1.0f / (float)Math.Pow(swordLength / 92f, 2f)));
+			return (2.5f + (1.0f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)));
 		}
-		public virtual float MeleeSpeedModifier => 0.1f;
+		public virtual float MeleeSpeedMultiplier => 0.1f;
 		public virtual float OverAllSpeedMultiplier => 5f;
+		public virtual float MinSwipeDistance => 80;
+		public virtual float MaxSwipeDistance => 92;
+		public virtual float ArcStartDegrees => 270 - 60f / speedModifier;
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
-			float randMod = randModifier;
-			int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 			if (runOnce)
 			{
 				SOTS.primitives.CreateTrail(new FireTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), 20, 1));
@@ -169,16 +170,16 @@ namespace SOTS.Projectiles.Blades
 					Projectile.netUpdate = true;
 					if(distance == 0)
 					{
-						distance = Vector2.Distance(player.Center, cursorArea) * randMod;
-						if (distance < 80)
-							distance = 80;
-						if (distance > 92)
-							distance = 92;
+						distance = Vector2.Distance(player.Center, cursorArea) * speedModifier;
+						if (distance < MinSwipeDistance)
+							distance = MinSwipeDistance;
+						if (distance > MaxSwipeDistance)
+							distance = MaxSwipeDistance;
 					}
 					toCursor = cursorArea - player.Center;
-					spinSpeed = GetBaseSpeed(distance) * randMod * OverAllSpeedMultiplier * ((1 - MeleeSpeedModifier) + MeleeSpeedModifier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee))); //add virtual/abstract variables for this
+					spinSpeed = GetBaseSpeed(distance) * speedModifier * OverAllSpeedMultiplier * ((1 - MeleeSpeedMultiplier) + MeleeSpeedMultiplier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee))); //add virtual/abstract variables for this
 				}
-				counterOffset = 270 - 60f / randMod; //add virtual/abstract variables for this
+				counterOffset = ArcStartDegrees; //add virtual/abstract variables for this
 				float slashOffset = counterOffset * FetchDirection;
 				counter = slashOffset;
 				runOnce = false;
@@ -192,28 +193,33 @@ namespace SOTS.Projectiles.Blades
 			if (Projectile.owner == Main.myPlayer && !player.dead)
 			{
 				int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
-				if (AbsAI0 > 1)
-				{
-					AbsAI0--;
-					SlashPattern(player, AbsAI0);
-				}
+				AbsAI0--;
+				SlashPattern(player, AbsAI0);
 			}
 		}
-        public override void AI()
+		public virtual float swipeDegreesTotal => 262.5f + (1800f / distance / speedModifier);
+		public virtual float swingSizeMult => 0.7f + 0.3f * speedModifier;
+		public virtual float ArcOffsetFromPlayer => 0.25f;
+		public virtual Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
+		{
+			original.Y *= (0.75f + swingNumber * 0.005f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+			return original;
+		}
+		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			float randMod = Projectile.ai[1];
-			float mult = 0.7f + 0.3f * Projectile.ai[1];
 			int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.2f / 255f, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1.0f / 255f);
 			if(toCursor != Vector2.Zero)
 			{
-				float yDistMult = (float)Math.Pow(distance / 92f, 0.5);
+				float yDistMult = (float)Math.Pow(distance / MaxSwipeDistance, 0.5);
 				double deg = counter; 
 				double rad = deg * (Math.PI / 180);
-				Vector2 ovalArea = new Vector2(distance * 0.25f * mult, 0).RotatedBy(toCursor.ToRotation()); //center a point somewhat distant from the player
-				Vector2 ovalArea2 = new Vector2(distance * 0.75f * mult, 0).RotatedBy((float)rad); //create a circle
-				ovalArea2.Y *= (0.75f + AbsAI0 * 0.005f) / randMod * yDistMult; //turn circle into an oval by compressing the y value
+				Vector2 ovalArea = new Vector2(distance * ArcOffsetFromPlayer * swingSizeMult, 0).RotatedBy(toCursor.ToRotation()); //center a point somewhat distant from the player
+				Vector2 ovalArea2 = new Vector2(distance * (1 - ArcOffsetFromPlayer) * swingSizeMult, 0).RotatedBy((float)rad); //create a circle
+
+				ovalArea2 = ModifySwingVector2(ovalArea2, yDistMult, AbsAI0);
+
 				ovalArea2 = ovalArea2.RotatedBy(toCursor.ToRotation());
 				ovalArea.X += ovalArea2.X;
 				ovalArea.Y += ovalArea2.Y;
@@ -225,7 +231,7 @@ namespace SOTS.Projectiles.Blades
 			float iterator2 = (float)Math.Abs(incremendAmount);
 			timeLeftCounter += iterator2;
 			counter += incremendAmount;
-			float totalSwipeDegrees = (262.5f + (1800f / distance / randMod));
+			float totalSwipeDegrees = swipeDegreesTotal;
 			if (timeLeftCounter > totalSwipeDegrees)
             {
 				Projectile.hide = true;
@@ -319,7 +325,10 @@ namespace SOTS.Projectiles.Blades
 			cursorArea.Y = reader.ReadSingle();
 			distance = reader.ReadSingle();
 		}
-    }
+		public virtual float AddedTrailLength => 12f;
+		public virtual float TrailDistanceFromHandle => 38f;
+
+	}
 }
 		
 			

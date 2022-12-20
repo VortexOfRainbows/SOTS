@@ -130,6 +130,15 @@ namespace SOTS.Prim.Trails
 						Destroyed = true;
 					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
 				}
+				else if (proj.ModProjectile is SOTSBlade sBlade && Entity.active && Entity != null)
+				{
+					WidthList.Add(sBlade.GetArcLength() * 0.5f + sBlade.AddedTrailLength);
+					ownerCenter = projOwner.Center;
+					toOwner.Add(ownerCenter - proj.Center);
+					if (sBlade.FetchDirection != ClockWiseOrCounterClockwise)
+						Destroyed = true;
+					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * sBlade.TrailDistanceFromHandle, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
+				}
 				else if (proj.ModProjectile is ToothAcheThrow throwSword && Entity.active && Entity != null)
 				{
 					WidthList.Add(36);

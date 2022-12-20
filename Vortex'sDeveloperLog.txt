@@ -30,7 +30,6 @@ Update Objectives:
 Ideas:
 4. Void Ruins Items: 
 	a. Jade-Bloom Camera: reference to Nahida elemental skill
-	b. Ceremonial Knife: throw a knife. teleport to it. then unleash a fury of slashes.
 5. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
 6. Desert Key Item:
 	a. Need ideas..?
@@ -42,7 +41,7 @@ Order Of Gems:
 3. Orange (Abandoned Aqueduct) - Luxuria
 4. Yellow (Lihzahrd Temple) -  Ira
 5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
-6. Green (Void Ruins) - Invidia
+6. Green (Void Ruins) - Invidia, Vorpal Knife
 7. White (Diamond) - Superbia 
 
 This is the plan currently
@@ -66,7 +65,9 @@ Daily Log:
 12/18/22 & 12/19/22
 1. Bag of Ammunition Gathering Added (Tested for Multiplayer, IT WORKS!)
 2. Fix bug with texture pack related thanks messages in multiplayer
-3. WIP Vorpal Blade: left click effect added
+3. Vorpal Blade left click and right click effects! NEEDS MULTIPLAYER TESTING! (and more visual/audio perhaps)
+4. Subspace Servant now works again!
+5. Fix Putrid Pinky Pet dealing damage in social slots
 
 12/14/22
 1. Added Rock Candy

@@ -48,6 +48,7 @@ using SOTS.Common.GlobalNPCs;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Audio;
 using static SOTS.SOTS;
+using SOTS.Items.Nvidia;
 
 namespace SOTS
 {
@@ -60,10 +61,11 @@ namespace SOTS
 		{
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
-				if(LogInMessageTimer > 0)
+				if (LogInMessageTimer > 0)
 					LogInMessageTimer -= 1; 
 				if (LogInMessageTimer == 0)
 				{
+					SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
 					if (SOTS.SOTSTexturePackEnabled)
 					{
 						LogInMessageTimer = -1;
@@ -103,7 +105,7 @@ namespace SOTS
 		{
 			locketBlacklist = new int[] { ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
-				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>(), ItemID.Zenith };
+				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>(), ItemID.Zenith, ModContent.ItemType<VorpalKnife>() };
 			locketWhitelist = new int[] { ItemID.LawnMower, ItemID.CarbonGuitar, ItemID.IvyGuitar, ItemID.DrumStick, ItemID.Harp, ItemID.Bell };
 			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), ModContent.ProjectileType<BlazingArrow>() };
 			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter };
@@ -633,7 +635,7 @@ namespace SOTS
 			if (HoloEye)
 				runPets(ref probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
 			if (petPinky >= 0)
-				runPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky + 1);
+				runPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky);
 			if (RubyMonolith)
 				runPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
 			if (petFreeWisp >= 0)
@@ -1369,7 +1371,7 @@ namespace SOTS
 						if (Main.myPlayer == Player.whoAmI)
 							GrantRandomRingBuff(Player);
 					}
-					if(AmmoRegather)
+					if(AmmoRegather && projectile != null)
                     {
 						if (projectile.owner == Main.myPlayer)
 							instancedTarget.AddAmmoToList(projectile); //since the ammo adding happens soley on clientn, and the kill function is called on player, ammo regathering only occurs to the player who gets the final kill
@@ -1392,9 +1394,9 @@ namespace SOTS
                         }
                     }
                 }
-				if(Main.myPlayer == Player.whoAmI && AmmoRegather && !target.immortal)
+				if(Main.myPlayer == Player.whoAmI && AmmoRegather && !target.immortal && projectile != null)
                 {
-					if(projectile.CountsAsClass(DamageClass.Ranged) && projectile != null)
+					if(projectile.CountsAsClass(DamageClass.Ranged))
 					{
 						SOTSProjectile instancedProj = projectile.GetGlobalProjectile<SOTSProjectile>();
 						int ammoType = instancedProj.AmmoUsedID;

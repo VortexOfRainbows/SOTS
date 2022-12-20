@@ -12,14 +12,15 @@ using SOTS.Prim.Trails;
 using SOTS.Prim;
 using SOTS.Projectiles.Lightning;
 using SOTS.Dusts;
+using System;
 
 namespace SOTS.Projectiles.Blades
 {    
     public class VorpalThrow : ModProjectile 
     {
-		public static Color VorpalColor1 = new Color(86, 226, 100);
-		public static Color VorpalColor2 = new Color(56, 114, 135);
-		public override string Texture => "SOTS/Projectiles/Blades/VorpalKnife";
+		public static Color VorpalColor1 = new Color(56, 159, 135);
+		public static Color VorpalColor2 = new Color(43, 113, 50);
+		public override string Texture => "SOTS/Projectiles/Blades/VorpalKnifeSlash";
         float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -163,10 +164,10 @@ namespace SOTS.Projectiles.Blades
 						}
 						else
 						{
-							Vector2 circularLocation = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(i));
+							Vector2 circularLocation = new Vector2(160 + Main.rand.NextFloat(-12, 12), 0).RotatedBy(MathHelper.ToRadians(i));
 							Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation, 0, 0, ModContent.DustType<CopyDust4>());
 							dust.noGravity = true;
-							dust.velocity *= 0.4f;
+							dust.velocity *= 0.5f;
 							dust.velocity += circularLocation.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.4f, 1.4f);
 							dust.scale *= 1.5f;
 							dust.fadeIn = 0.1f;
@@ -241,6 +242,52 @@ namespace SOTS.Projectiles.Blades
 			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation + (initialDirection == 1 ? MathHelper.PiOver2 : 0), new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, initialDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
-	}
+        public override void Kill(int timeLeft)
+        {
+			if(runOnce2)
+            {
+				Player player = Main.player[Projectile.owner];
+				TeleportPlayer(player);
+            }
+        }
+		public void TeleportPlayer(Player player)
+		{
+			float distanceMult = (float)Math.Sqrt(player.Center.Distance(Projectile.Center));
+			Vector2 toProj = (Projectile.Center - player.Center).SafeNormalize(Vector2.Zero) * (12f + 0.1f * distanceMult);
+			if (player.Center.Distance(Projectile.Center) < 3200)
+            {
+				player.velocity.X *= 0.5f;
+				player.velocity.Y *= 0.3f;
+				player.velocity += toProj + new Vector2(0, -3);
+				player.direction = Math.Sign(toProj.X);
+				if (Main.myPlayer == Projectile.owner)
+				{
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, toProj, ModContent.ProjectileType<VorpalLightning2>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer, Projectile.Center.X, Projectile.Center.Y);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, toProj, ModContent.ProjectileType<VorpalKnifeSlash>(), Projectile.damage * 2, Projectile.knockBack * 1.5f, Main.myPlayer, 3 * Math.Sign(toProj.X), 1f);
+				}
+			}
+			else
+			{
+				player.direction = Math.Sign(toProj.X);
+				if (Main.myPlayer == Projectile.owner)
+				{
+					for (int j = -1; j <= 1; j++)
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - new Vector2(0, 32 + Main.rand.NextFloat(-8, 8)), new Vector2(j * 0.4f + Main.rand.NextFloat(-0.1f, 0.1f), -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer, -1);
+					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, ModContent.ProjectileType<VorpalKnifeSlash>(), Projectile.damage * 2, Projectile.knockBack * 1.5f, player.whoAmI, 1 * player.direction, 0.8f);
+					if (proj.ModProjectile is VorpalKnifeSlash v)
+					{
+						v.distance = 160;
+					}
+				}
+				player.velocity.X *= 0.12f;
+				player.velocity.Y *= 0.08f;
+				player.velocity.Y -= 6.66f;
+				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.05f, 0.2f);
+			}
+			player.Teleport(Projectile.Center + new Vector2(0, -16), -1, 0);
+			player.immune = true;
+			player.immuneTime = 60;
+		}
+    }
 }
 		

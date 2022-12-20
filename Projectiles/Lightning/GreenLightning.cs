@@ -81,7 +81,6 @@ namespace SOTS.Projectiles.Lightning
 		Vector2 addPos = Vector2.Zero;
 		Vector2 originalVelo = Vector2.Zero;
 		Vector2 originalPos = Vector2.Zero;
-		Vector2 nextPos = Vector2.Zero;
 		int[] randStorage = new int[250];
 		int dist = 250;
 		public override void AI()

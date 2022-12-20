@@ -37,18 +37,36 @@ namespace SOTS.Items.Nvidia
 			Item.shoot = ModContent.ProjectileType<VorpalThrow>();
 			Item.shootSpeed = 12;
 		}
+        public override bool BeforeDrainMana(Player player)
+        {
+			Item.useTime = Item.useAnimation;
+            return true;
+        }
+        public override bool AltFunctionUse(Player player)
+        {
+			return distanceFromBlade(player) > 32 && !player.mount.Active;
+        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			for(int i = 0; i < 1000; i++)
             {
 				Projectile proj = Main.projectile[i];
 				if(proj.type == type && proj.active && proj.owner == player.whoAmI)
-                {
-					proj.timeLeft = 90;
-					proj.netUpdate = true;
+				{
+					if (player.altFunctionUse == 2)
+                    {
+						proj.Kill();
+                    }
+					else
+					{
+						proj.timeLeft = 90;
+						proj.netUpdate = true;
+					}
 					return false;
 				}
             }
+			if (player.altFunctionUse == 2)
+				return false;
 			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, 0, 0.6f);
 			return false;
         }
