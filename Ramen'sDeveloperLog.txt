@@ -3,9 +3,9 @@ Dev plans:
 * Figure out a way to make the Titanium Forge have a diff ambient sound than the Adamantite Forge (not priority)
 
 Fixes:
-* Fix ambient tile sounds (done)
+* Fix ambient tile sounds (almost? done)
 
 Daily Log:
 
-12/20/22 - Fixed ambient tile sounds, now they loop and end when the tile breaks
+12/20/22 - Fixed (sorta, not really) ambient tile sounds, now they loop and end when the tile breaks
 12/19/22 - First entry, added ambient tile sound system, scuffed as shit
