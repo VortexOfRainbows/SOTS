@@ -47,7 +47,7 @@ namespace SOTS
         SoundStyle hellforge = new(SoundsPath + "hellforge", SoundType.Ambient);
         public override void DrawEffects(int i, int j, int type, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            if (SOTS.IsSOTSTexturePackEnabled())
+            if (SOTS.SOTSTexturePackEnabled)
             {
                 if (type == TileID.AlchemyTable)
                 {

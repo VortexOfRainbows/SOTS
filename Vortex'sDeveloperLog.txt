@@ -26,6 +26,9 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Make SOTS Dev Team on git hub!
+a. Config (disable/enable) for Texture Pack ambient sounds...
+b. Texture Pack ambient sounds to not stack in frequency with multiple tiles
+c. Texture Pack sounds to disable when block is broken
 
 Ideas:
 4. Void Ruins Items: 
