@@ -6,12 +6,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.ObjectData;
 
 namespace SOTS
 {
     public class AmbientTileSounds : GlobalTile
     {
         public const string SoundsPath = "SOTS/Sounds/Tiles/";
+        private static bool WereSoundsOn = false;
 
         SoundStyle alchtable = new(SoundsPath + "alchemytable", SoundType.Ambient);
         SoundStyle skymill = new(SoundsPath + "skymill", SoundType.Ambient);
@@ -30,173 +32,126 @@ namespace SOTS
             alchtable.MaxInstances = skymill.MaxInstances = autoham.MaxInstances = orb.MaxInstances = solidifier.MaxInstances = furnace.MaxInstances = cookingpot.MaxInstances = heart.MaxInstances = titan.MaxInstances = adama.MaxInstances = hellforge.MaxInstances = 1;
             alchtable.SoundLimitBehavior = skymill.SoundLimitBehavior = autoham.SoundLimitBehavior = orb.SoundLimitBehavior = solidifier.SoundLimitBehavior = furnace.SoundLimitBehavior = cookingpot.SoundLimitBehavior = heart.SoundLimitBehavior = titan.SoundLimitBehavior = adama.SoundLimitBehavior = hellforge.SoundLimitBehavior = SoundLimitBehavior.IgnoreNew;
         }
-
-        public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
+        public void KillAmbiance(int type, bool fail, bool all = false)
         {
-            alchtable.IsLooped = skymill.IsLooped = autoham.IsLooped = orb.IsLooped = solidifier.IsLooped = furnace.IsLooped = cookingpot.IsLooped = heart.IsLooped = titan.IsLooped = adama.IsLooped = hellforge.IsLooped = true;
-            alchtable.MaxInstances = skymill.MaxInstances = autoham.MaxInstances = orb.MaxInstances = solidifier.MaxInstances = furnace.MaxInstances = cookingpot.MaxInstances = heart.MaxInstances = titan.MaxInstances = adama.MaxInstances = hellforge.MaxInstances = 1;
-            alchtable.SoundLimitBehavior = skymill.SoundLimitBehavior = autoham.SoundLimitBehavior = orb.SoundLimitBehavior = solidifier.SoundLimitBehavior = furnace.SoundLimitBehavior = cookingpot.SoundLimitBehavior = heart.SoundLimitBehavior = titan.SoundLimitBehavior = adama.SoundLimitBehavior = hellforge.SoundLimitBehavior = SoundLimitBehavior.IgnoreNew;
             if (!fail)
             {
-                if (type == TileID.AlchemyTable)
+                if (all || type == TileID.AlchemyTable)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(alchtable);
-                    if (snd != null)
-                        snd.Stop();
-                    return;
+                    TurnOffSound(alchtable);
                 }
-                if (type == TileID.SkyMill)
+                if (all || type == TileID.SkyMill)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(skymill);
-                    if (snd != null)
-                        snd.Stop();
-                    return;
+                    TurnOffSound(skymill);
                 }
-                if (type == TileID.Autohammer)
+                if (all || type == TileID.Autohammer)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(autoham);
-                    if (snd != null)
-                        snd.Stop();
-                    return;
+                    TurnOffSound(autoham);
                 }
-                if (type == TileID.ShadowOrbs)
+                if (all || type == TileID.ShadowOrbs)
                 {
                     if (WorldGen.crimson)
                     {
-                        ActiveSound? snd;
-                        snd = SoundEngine.FindActiveSound(heart);
-                        if (snd != null)
-                            snd.Stop();
-                        return;
+                        TurnOffSound(heart);
                     }
                     else
                     {
-                        ActiveSound? snd;
-                        snd = SoundEngine.FindActiveSound(orb);
-                        if (snd != null)
-                            snd.Stop();
-                        return;
+                        TurnOffSound(orb);
                     }
                 }
-                if (type == TileID.Solidifier)
+                if (all || type == TileID.Solidifier)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(solidifier);
-                    if (snd != null)
-                        snd.Stop();
-                    return;
+                    TurnOffSound(solidifier);
                 }
-                if (type == TileID.Furnaces)
+                if (all || type == TileID.Furnaces)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(furnace);
-                    if (snd != null)    
-                        snd.Stop();
-                    return;
+                    TurnOffSound(furnace);
                 }
-                if (type == TileID.CookingPots)
+                if (all || type == TileID.CookingPots)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(cookingpot);
-                    if (snd != null)
-                        snd.Stop();
-                    return;
+                    TurnOffSound(cookingpot);
                 }
-                if (type == TileID.AdamantiteForge)
+                if (all || type == TileID.AdamantiteForge)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(adama);
-                    if (snd != null)
-                        snd.Stop();
-                    return;
+                    TurnOffSound(adama);
                 }
-                if (type == TileID.Hellforge)
+                if (all || type == TileID.Hellforge)
                 {
-                    ActiveSound? snd;
-                    snd = SoundEngine.FindActiveSound(hellforge);
-                    if (snd != null)
-                        snd.Stop();
-                    return;
+                    TurnOffSound(hellforge);
                 }
             }
-            
+        }
+        public void TurnOffSound(SoundStyle sound)
+        {
+            ActiveSound? snd = SoundEngine.FindActiveSound(sound);
+            if (snd != null)
+            {
+                snd.Sound.Stop(true);
+            }
+        }
+        public void TurnOnSound(SoundStyle sound, int i, int j)
+        {
+            SoundEngine.PlaySound(sound, new Vector2(i * 16, j * 16));
+        }
+        public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            KillAmbiance(type, fail);
         }
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            alchtable.IsLooped = skymill.IsLooped = autoham.IsLooped = orb.IsLooped = solidifier.IsLooped = furnace.IsLooped = cookingpot.IsLooped = heart.IsLooped = titan.IsLooped = adama.IsLooped = hellforge.IsLooped = true;
-            alchtable.MaxInstances = skymill.MaxInstances = autoham.MaxInstances = orb.MaxInstances = solidifier.MaxInstances = furnace.MaxInstances = cookingpot.MaxInstances = heart.MaxInstances = titan.MaxInstances = adama.MaxInstances = hellforge.MaxInstances = 1;
-            alchtable.SoundLimitBehavior = skymill.SoundLimitBehavior = autoham.SoundLimitBehavior = orb.SoundLimitBehavior = solidifier.SoundLimitBehavior = furnace.SoundLimitBehavior = cookingpot.SoundLimitBehavior = heart.SoundLimitBehavior = titan.SoundLimitBehavior = adama.SoundLimitBehavior = hellforge.SoundLimitBehavior = SoundLimitBehavior.IgnoreNew;
-            if (SOTS.SOTSTexturePackEnabled)
+            if (SOTS.SOTSTexturePackEnabledAudio && !Main.gamePaused)
             {
+                WereSoundsOn = true;
                 if (type == TileID.AlchemyTable)
                 {
-                    if (SoundEngine.SoundPlayer.FindActiveSound(alchtable) == null)
-                        SoundEngine.PlaySound(alchtable, new Vector2(i * 16, j * 16));
-                    return;               
+                    TurnOnSound(alchtable, i, j);
                 }
                 if (type == TileID.SkyMill)
                 {
-                    if (SoundEngine.SoundPlayer.FindActiveSound(skymill) == null)
-                        SoundEngine.PlaySound(skymill, new Vector2(i * 16, j * 16));
-                    return;
+                    TurnOnSound(skymill, i, j);
                 }
                 if (type == TileID.Autohammer)
                 {
-                    if (SoundEngine.FindActiveSound(autoham) == null)
-                        SoundEngine.PlaySound(autoham, new Vector2(i * 16, j * 16));
-                    return;
+                    TurnOnSound(autoham, i, j);
                 }
                 if (type == TileID.Solidifier)
                 {
-                    if (SoundEngine.SoundPlayer.FindActiveSound(solidifier) == null)
-                        SoundEngine.PlaySound(solidifier, new Vector2(i * 16, j * 16));
-                    return;
+                    TurnOnSound(solidifier, i, j);
                 }
                 if (type == TileID.Furnaces)
                 {
-                    if (SoundEngine.SoundPlayer.FindActiveSound(furnace) == null)
-                        SoundEngine.PlaySound(furnace, new Vector2(i * 16, j * 16));
-                    return;
+                    TurnOnSound(furnace, i, j);
                 }
                 if (type == TileID.CookingPots)
                 {
-                    if (SoundEngine.SoundPlayer.FindActiveSound(cookingpot) == null)
-                        SoundEngine.PlaySound(cookingpot, new Vector2(i * 16, j * 16));
-                    return;
+                    TurnOnSound(cookingpot, i, j);
                 }
                 if (type == TileID.ShadowOrbs)
                 {
                     if (WorldGen.crimson)
-                    { 
-                        if (SoundEngine.SoundPlayer.FindActiveSound(heart) == null)
-                            SoundEngine.PlaySound(heart, new Vector2(i * 16, j * 16));
-                        return;
+                    {
+                        TurnOnSound(heart, i, j);
                     }
                     else
                     {
-                        if (SoundEngine.SoundPlayer.FindActiveSound(orb) == null)
-                            SoundEngine.PlaySound(orb, new Vector2(i * 16, j * 16));
-                        return;
+                        TurnOnSound(orb, i, j);
                     }
                 }
                 if (type == TileID.AdamantiteForge)
                 {
-                    if (SoundEngine.SoundPlayer.FindActiveSound(adama) == null)
-                        SoundEngine.PlaySound(adama, new Vector2(i * 16, j * 16));
-                    return;
+                    TurnOnSound(adama, i, j);
                 }
                 if (type == TileID.Hellforge)
                 {
-                    if (SoundEngine.SoundPlayer.FindActiveSound(hellforge) == null)
-                        SoundEngine.PlaySound(hellforge, new Vector2(i * 16, j * 16));
-                    return;
+                    TurnOnSound(hellforge, i, j);
                 }
             }
+            else
+            {
+                if(WereSoundsOn)
+                    KillAmbiance(type, false, true);
+                WereSoundsOn = false;
+            }
         }
-
     }
-
 }

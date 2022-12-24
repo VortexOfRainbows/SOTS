@@ -86,9 +86,9 @@ namespace SOTS.Void
 			{
 				if (SOTSConfig.voidBarNeedsLoading >= 2)
 				{
-					Main.NewText("Alive For: " + SOTSConfig.voidBarNeedsLoading);
-					Main.NewText("voidBarPointX: " + SOTS.Config.voidBarPointX);
-					Main.NewText("voidBarOffsetX: " + VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset.X);
+					//Main.NewText("Alive For: " + SOTSConfig.voidBarNeedsLoading);
+					//Main.NewText("voidBarPointX: " + SOTS.Config.voidBarPointX);
+					//Main.NewText("voidBarOffsetX: " + VoidPlayer.ModPlayer(Main.LocalPlayer).voidBarOffset.X);
 					SOTSConfig.voidBarNeedsLoading--;
 				}
 				else

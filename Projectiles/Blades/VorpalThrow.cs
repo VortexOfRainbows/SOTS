@@ -25,16 +25,10 @@ namespace SOTS.Projectiles.Blades
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Projectile.timeLeft);
-			writer.Write(Projectile.tileCollide);
-			writer.Write(Projectile.velocity.X);
-			writer.Write(Projectile.velocity.Y);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			Projectile.timeLeft = reader.ReadInt32();
-			Projectile.tileCollide = reader.ReadBoolean();
-			Projectile.velocity.X = reader.ReadSingle();
-			Projectile.velocity.Y = reader.ReadSingle();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -54,6 +48,7 @@ namespace SOTS.Projectiles.Blades
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 45; //15 frames, given extra updates
 			Projectile.extraUpdates = 2;
+			Projectile.netImportant = true;
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
@@ -139,6 +134,7 @@ namespace SOTS.Projectiles.Blades
 			{
 				if(runOnce2)
 				{
+					Projectile.netUpdate = true;
 					Projectile.damage *= 3;
 					SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.2f);
 					if (Main.myPlayer == Projectile.owner)
@@ -147,7 +143,6 @@ namespace SOTS.Projectiles.Blades
 							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(0, 24 + Main.rand.NextFloat(-8, 8)), new Vector2(j * 0.3f + Main.rand.NextFloat(-0.1f, 0.1f), -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer, -1);
 						Otherworld.GenesisCore.LaunchLightningAtNearbyEnemies(Projectile, ModContent.ProjectileType<VorpalLightning>(), 8, 176, Projectile.damage);
 					}
-					runOnce2 = false;
 					for (int i = 0; i < 360; i += 2)
 					{
 						if (Main.rand.NextBool(3))
@@ -176,12 +171,13 @@ namespace SOTS.Projectiles.Blades
 						}
 					}
 				}
+				runOnce2 = false;
 				float dist = (Projectile.Center - player.Center).Length();
 				float maxSpeed = 12 + (24 * (90 - Projectile.timeLeft) / 90f);
 				Vector2 circular = new Vector2(-(dist > maxSpeed ? maxSpeed : dist), 0).RotatedBy((Projectile.Center - player.Center).ToRotation());
 				Projectile.velocity = circular;
 				Projectile.tileCollide = false;
-				if ((Projectile.Center - player.Center).Length() <= 24)
+				if (dist <= 24)
 				{
 					Projectile.Kill();
 				}

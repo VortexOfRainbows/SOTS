@@ -9,6 +9,8 @@ Tmodloader Bugs:
 Acknowledged But Likely Delayed:
 1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
 2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
+3. Items transform into different item IDs randomly in multiplayer or singleplayer..?
+4. Evil spirit runs away on dedicated server (needs varification)
 
 Update Objectives:
 1. Ghost Town!
@@ -26,9 +28,8 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Make SOTS Dev Team on git hub!
-a. Config (disable/enable) for Texture Pack ambient sounds...
-b. Texture Pack ambient sounds to not stack in frequency with multiple tiles
-c. Texture Pack sounds to disable when block is broken
+b. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
+c. Texture Pack sounds to disable when block is broken (tied to specific blocks)
 
 Ideas:
 4. Void Ruins Items: 
@@ -65,10 +66,14 @@ Need:
 
 Daily Log:
 
+12/23/22
+1. Vorpal Blade now works in multiplayer!
+2. WIP Configs and some attempts to fix ambient sounds
+
 12/18/22 & 12/19/22
 1. Bag of Ammunition Gathering Added (Tested for Multiplayer, IT WORKS!)
 2. Fix bug with texture pack related thanks messages in multiplayer
-3. Vorpal Blade left click and right click effects! NEEDS MULTIPLAYER TESTING! (and more visual/audio perhaps)
+3. Vorpal Blade left click and right click effects!
 4. Subspace Servant now works again!
 5. Fix Putrid Pinky Pet dealing damage in social slots
 

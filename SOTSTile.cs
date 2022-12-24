@@ -417,7 +417,7 @@ namespace SOTS
         }
         public override void ModifyLight(int i, int j, int type, ref float r, ref float g, ref float b)
         {
-            if (SOTS.SOTSTexturePackEnabled && (type == TileID.Hellstone || type == TileID.MetalBars))
+            if (SOTS.SOTSTexturePackEnabledWithTiles && (type == TileID.Hellstone || type == TileID.MetalBars))
             {
                 Tile tile = Main.tile[i, j];
                 if (type == TileID.Hellstone || (type == TileID.MetalBars && (tile.TileFrameX / 18) == 10)) //hellstone is number 11
@@ -432,7 +432,7 @@ namespace SOTS
         {
             if (SOTSWorld.GlobalFrozen)
                 return;
-            if (SOTS.SOTSTexturePackEnabled && type == TileID.Hellstone)
+            if (SOTS.SOTSTexturePackEnabledWithTiles && type == TileID.Hellstone)
             {
                 Tile tile = Main.tile[i, j];
                 Tile tileAbove = Main.tile[i, j - 1];

@@ -60,7 +60,6 @@ namespace SOTS.Items.Nvidia
 					else
 					{
 						proj.timeLeft = 90;
-						proj.netUpdate = true;
 					}
 					return false;
 				}
