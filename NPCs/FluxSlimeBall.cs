@@ -64,31 +64,34 @@ namespace SOTS.NPCs
 		float[] randSeed1 = new float[6];
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/FluxSlimeVine");
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			NPC owner = Main.npc[(int)ownerID];
-			Vector2 ownerCenter = new Vector2(owner.Center.X, owner.position.Y + 6);
-			Vector2 dynamicScaling = new Vector2(40, 0).RotatedBy(MathHelper.ToRadians(aiCounter * 1.1f));
-			float moreScaling = 1.15f - 0.25f * Math.Abs(dynamicScaling.X) / 40f;
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/FluxSlimeVine"); //This fetches the texture which will be used for visualizing the bezier curve
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f); //This centers the origin of the vine, which makes its rotation look consistent
+			NPC owner = Main.npc[(int)ownerID]; //This fetches the NPC object that "owns" the ball
+			Vector2 ownerCenter = new Vector2(owner.Center.X, owner.position.Y + 6); //This gets the position the bezier curve will dry attaching to
+			float dynamicScaling = 40 * (float)Math.Cos(MathHelper.ToRadians(aiCounter * 1.1f)); //Sinusoidal function
+			float moreScaling = 1.15f - 0.25f * Math.Abs(dynamicScaling) / 40f; //Add some variety to the movement of the curve using a sinusoidal function
 			if (owner.type == ModContent.NPCType<FluxSlime>() && owner.active)
 			{
+				//These 4 vectors are used in the bezier curve function, which is defined outside this class
+				//The bezier curve function was made using a tutorial, but its utilization in this function is completely my creation
 				Vector2 p0 = ownerCenter;
-				Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling.X)) * 3.5f * moreScaling;
+				Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling)) * 3.5f * moreScaling; //Add some variety to the movement of the curve using a sinusoidal function
 				Vector2 p2 = NPC.Center - baseVelo * 8f * moreScaling;
 				Vector2 p3 = NPC.Center;
 				int segments = 36;
 				for (int i = 0; i < segments; i++)
 				{
 					float t = i / (float)segments;
-					Vector2 drawPos2 = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
+					Vector2 drawPos2 = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3); //t is the iterative variable that tells where along the curve the texture will be drawn
 					t = (i + 1) / (float)segments;
-					Vector2 drawPosNext = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
+					Vector2 drawPosNext = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3); //t varies from 0 to 1 as a decimal number
 					float rotation = (drawPos2 - drawPosNext).ToRotation();
-					drawColor = Lighting.GetColor((int)drawPos2.X / 16, (int)(drawPos2.Y / 16));
-					spriteBatch.Draw(texture, drawPos2 - screenPos, null, NPC.GetAlpha(drawColor), rotation - MathHelper.ToRadians(90), drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+					drawColor = Lighting.GetColor((int)drawPos2.X / 16, (int)(drawPos2.Y / 16)); //fetch the lighting engine's color at the location of the texture
+					spriteBatch.Draw(texture, drawPos2 - screenPos, null, NPC.GetAlpha(drawColor), rotation - MathHelper.ToRadians(90), drawOrigin, NPC.scale, SpriteEffects.None, 0f); //Terraria's main drawing function
 				}
 			}
 			Vector2 drawPos = NPC.Center - screenPos;
+			//the following if statement nests the function that draws the spikes along the ball's border, which gives it the mace-like appearance
 			if (!runOnce)
 			{
 				for (int i = 0; i < 6; i++)
@@ -121,8 +124,8 @@ namespace SOTS.NPCs
 			}
 			texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			spriteBatch.Draw(texture, drawPos, null, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
-			return false;
+			spriteBatch.Draw(texture, drawPos, null, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f); //This draws the actual ball
+			return false; //Returning false prevents Terraria's standard drawing operation
 		}
 		public override bool PreAI()
 		{

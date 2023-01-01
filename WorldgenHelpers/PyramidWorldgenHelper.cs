@@ -240,7 +240,7 @@ namespace SOTS.WorldgenHelpers
 									}
 									break;
 								case 8:
-									if (confirmPlatforms >= 1 && Main.rand.Next(9) > 1 && !tile.HasTile && Framing.GetTileSafely(k, l + 1).HasTile)
+									if (confirmPlatforms >= 1 && WorldGen.genRand.Next(9) > 1 && !tile.HasTile && Framing.GetTileSafely(k, l + 1).HasTile)
 									{
 										tile.HasTile = true;
 										tile.TileType = TileID.GoldCoinPile;
@@ -405,7 +405,7 @@ namespace SOTS.WorldgenHelpers
 			tile.LiquidType = 0;
 			tile.HasTile = true;
 		}
-		public static void GenerateSOTSPyramid(Mod mod)
+		public static void GenerateSOTSPyramid(Mod mod, bool generateAllSteps = true, int generateCertainStep = -1, int manualPlacementX = -1, int manualPlacementY = -1, int manualSeed = -1)
 		{
 			int dungeonSide = -1;
 			if (Main.dungeonX > (int)(Main.maxTilesX / 2))
@@ -413,35 +413,44 @@ namespace SOTS.WorldgenHelpers
 				dungeonSide = 1;
 			}
 			// -1 = dungeon on left, 1 = dungeon on right
-			int pyramidY = -1;
-			int pyramidX = -1;
+			if (manualSeed != -1)
+				WorldGen._genRandSeed = manualSeed; //this should hopefull make the worldgen steps consistent with manual mode!
+			int pyramidY = manualPlacementY;
+			int pyramidX = manualPlacementX;
 			int checks = 0;
-			int xCheck = dungeonSide == 1 ? Main.rand.Next(500, Main.maxTilesX / 2) : Main.rand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500);
-			for (; xCheck != -1; xCheck = (dungeonSide == 1 ? Main.rand.Next(500, Main.maxTilesX / 2) : Main.rand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500)))
+			if(manualPlacementX == -1 || manualPlacementY == -1 || manualSeed == -1)
 			{
-				for (int ydown = 0; ydown != -1; ydown++)
+				int xCheck = dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500);
+				for (; xCheck != -1; xCheck = (dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500)))
 				{
-					Tile tile = Framing.GetTileSafely(xCheck, ydown);
-					if (tile.HasTile && (tile.TileType == TileID.Sand || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand || checks >= 1000))
+					for (int ydown = 0; ydown != -1; ydown++)
 					{
-						if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 60)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 120))) || checks > 200)
+						Tile tile = Framing.GetTileSafely(xCheck, ydown);
+						if (tile.HasTile && (tile.TileType == TileID.Sand || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand || checks >= 1000))
 						{
-							pyramidY = ydown;
+							if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 60)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 120))) || checks > 200)
+							{
+								pyramidY = ydown;
+							}
+							break;
 						}
-						break;
+						else if (tile.HasTile)
+						{
+							break;
+						}
 					}
-					else if (tile.HasTile)
+					if (pyramidY != -1)
 					{
+						pyramidX = xCheck;
 						break;
 					}
+					checks++;
 				}
-				if (pyramidY != -1)
-				{
-					pyramidX = xCheck;
-					break;
-				}
-				checks++;
 			}
+			else
+			{
+				pyramidY += 15;
+            }
 			pyramidY -= 15;
 			int direction = WorldGen.genRand.Next(2) * 2 - 1;
 			int finalDirection = direction;
@@ -518,7 +527,6 @@ namespace SOTS.WorldgenHelpers
 						}
 					}
 				}
-
 				if (pyramidLevel >= 15 && initialPath == 1)
 				{
 					if (15 + nextAmount <= pyramidLevel)
@@ -561,10 +569,12 @@ namespace SOTS.WorldgenHelpers
 					endingTileY = pyramidY + pyramidLevel;
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 0)
+				return;
 			for (int totalAmount = 0; totalAmount < size; totalAmount += nextAmount) //generate downwards cooridor into the pyramid
 			{
 				direction *= -1;
-				nextAmount = Main.rand.Next(6, 31);
+				nextAmount = WorldGen.genRand.Next(6, 31);
 				if (totalAmount > size - 230)
 				{
 					if (endingTileX > pyramidX && endingTileX < pyramidX + 85)
@@ -617,7 +627,7 @@ namespace SOTS.WorldgenHelpers
 						}
 					}
 					int spawnX = endingTileX + totalAmount * finalDirection - 4 * finalDirection;
-					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(40, 61) * finalDirection, pyramidY + midPoint - 16, finalDirection, 20, true);
+					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + WorldGen.genRand.Next(40, 61) * finalDirection, pyramidY + midPoint - 16, finalDirection, 20, true);
 					endingTileX += (int)(totalAmount * 0.66f) * finalDirection;
 					hasGeneratedDivertCooridor1 = true;
 					finalDirection *= -1;
@@ -647,13 +657,17 @@ namespace SOTS.WorldgenHelpers
 						}
 					}
 					int spawnX = endingTileX + length * finalDirection - 5 * finalDirection;
-					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(30, 51) * finalDirection, pyramidY + midPoint, -finalDirection, 24, true);
+					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + WorldGen.genRand.Next(30, 51) * finalDirection, pyramidY + midPoint, -finalDirection, 24, true);
 					endingTileX += (int)(length * 0.75f) * finalDirection;
 					hasGeneratedDivertCooridor2 = true;
 					finalDirection *= -1;
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 1)
+				return;
 			GeneratePyramidPath(mod, endingTileX, pyramidY + size, pyramidX, pyramidY + size + 16, -finalDirection, 45, true);
+			if (!generateAllSteps && generateCertainStep == 2)
+				return;
 
 			//creates cooridors
 			int overgrownX = -1;
@@ -745,7 +759,7 @@ namespace SOTS.WorldgenHelpers
 						if (!(findTileY > pyramidY + (size - 70) && finalDirection == 1) && tileLeft.HasTile && tile.HasTile && !tileRight.HasTile && tileRight.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 						{
 							//generate cooridor to the left
-							int randDistance = Main.rand.Next(min, max);
+							int randDistance = WorldGen.genRand.Next(min, max);
 							counterL++;
 							int height = 2;
 							if (WorldGen.genRand.NextBool(3) && counterL >= 40)
@@ -776,7 +790,7 @@ namespace SOTS.WorldgenHelpers
 						if (!(findTileY > pyramidY + (size - 70) && finalDirection == -1) && tileRight.HasTile && tile.HasTile && !tileLeft.HasTile && tileLeft.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 						{
 							//generate cooridor to the right
-							int randDistance = Main.rand.Next(min, max);
+							int randDistance = WorldGen.genRand.Next(min, max);
 							counterR++;
 							int height = 2;
 							if (WorldGen.genRand.NextBool(3) && counterR >= 40)
@@ -812,8 +826,8 @@ namespace SOTS.WorldgenHelpers
 							if (counterSpike >= 44)
 							{
 								counterSpike = 0;
-								int spikeSize = Main.rand.Next(4, 17);
-								int secondSize = Main.rand.Next(4, 17);
+								int spikeSize = WorldGen.genRand.Next(4, 17);
+								int secondSize = WorldGen.genRand.Next(4, 17);
 								if (spikeSize > secondSize)
 									spikeSize = secondSize;
 								for (int sizeSpike = 0; sizeSpike < spikeSize; sizeSpike++)
@@ -861,19 +875,23 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 3)
+				return;
 			int bossPosX = pyramidX + ((size - 115) * finalDirection);
 			if (finalDirection == 1)
 				bossPosX += 1;
 			int bossPosY = pyramidY + (size - 40);
 			GenerateBossRoom(bossPosX, bossPosY, finalDirection);
+			if (!generateAllSteps && generateCertainStep == 4)
+				return;
 
 			bool buildSword = false;
 			bool buildPick = false;
 			while (!buildPick)
 			{
-				int findTileY = Main.rand.Next(pyramidY + 40, pyramidY + (size - 70));
+				int findTileY = WorldGen.genRand.Next(pyramidY + 40, pyramidY + (size - 70));
 				int width = findTileY - pyramidY;
-				int findTileX = pyramidX + Main.rand.Next(-width, width + 1);
+				int findTileX = pyramidX + WorldGen.genRand.Next(-width, width + 1);
 				int structureWidth = 19;
 				int structureHeight = 14;
 				int structureRect = structureHeight * structureWidth;
@@ -897,9 +915,9 @@ namespace SOTS.WorldgenHelpers
 			}
 			while (!buildSword)
 			{
-				int findTileY = Main.rand.Next(pyramidY + 40, pyramidY + (size - 70));
+				int findTileY = WorldGen.genRand.Next(pyramidY + 40, pyramidY + (size - 70));
 				int width = findTileY - pyramidY;
-				int findTileX = pyramidX + Main.rand.Next(-width, width + 1);
+				int findTileX = pyramidX + WorldGen.genRand.Next(-width, width + 1);
 				int structureWidth = 19;
 				int structureHeight = 14;
 				int structureRect = structureHeight * structureWidth;
@@ -921,6 +939,8 @@ namespace SOTS.WorldgenHelpers
 					GenerateShrineRoom(findTileX, findTileY, mod, 1);
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 5)
+				return;
 			float counterRoom = 0;
 			for (int findTileY = pyramidY + (size - 70); findTileY > pyramidY + 25; findTileY--)
 			{
@@ -1054,7 +1074,11 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 6)
+				return;
 			GenerateZepline(pyramidX, pyramidY + (size - 40), mod);
+			if (!generateAllSteps && generateCertainStep == 7)
+				return;
 
 			//rebuild outside of pyramid
 			for (int pyramidLevel = 0; pyramidLevel < size; pyramidLevel++)
@@ -1069,15 +1093,19 @@ namespace SOTS.WorldgenHelpers
 						}
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 8)
+				return;
 			if (overgrownX != -1 && overgrownY != -1)
 				SOTSWorldgenHelper.GenerateAcediaRoom(overgrownX, overgrownY, mod, finalDirection);
+			if (!generateAllSteps && generateCertainStep == 9)
+				return;
 			int sizeNumber = 0;
 			for (int findTileY = pyramidY + (size - 30); findTileY > pyramidY + 30; findTileY--)
 			{
 				int width = findTileY - pyramidY;
 				for (int t = 0; t < 6; t++)
 				{
-					int findTileX = pyramidX + Main.rand.Next(-width, width + 1);
+					int findTileX = pyramidX + WorldGen.genRand.Next(-width, width + 1);
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 					for (int built = 0; built < 2; built++)
 					{
@@ -1095,13 +1123,13 @@ namespace SOTS.WorldgenHelpers
 								}
 								else
 								{
-									float thickness = Main.rand.NextFloat(0.65f, 1.25f);
+									float thickness = WorldGen.genRand.NextFloat(0.65f, 1.25f);
 									int width2 = WorldGen.genRand.Next(7, 19 - worldSizeModifier);
 									int height = WorldGen.genRand.Next(5, 13 - worldSizeModifier / 2);
 									GeneratePyramidOval(mod, findTileX, findTileY, width2, height, thickness, 3, true);
 									break;
 								}
-								findTileX += Main.rand.Next(-20, 21);
+								findTileX += WorldGen.genRand.Next(-20, 21);
 							}
 							else break;
 						}
@@ -1115,8 +1143,8 @@ namespace SOTS.WorldgenHelpers
 					{
 						for (int i = 0; i < 1 + sizeNumber * 2; i++)
 						{
-							int randOffY = Main.rand.Next(-(sizeNumber + i) * 8 - 5, (sizeNumber + i) * 8 + 10);
-							int randOff = Main.rand.Next(-width + 20, width - 19);
+							int randOffY = WorldGen.genRand.Next(-(sizeNumber + i) * 8 - 5, (sizeNumber + i) * 8 + 10);
+							int randOff = WorldGen.genRand.Next(-width + 20, width - 19);
 							int currentXSize = pyramidX + randOff;
 							DoAltBlocksGeneration(currentXSize, findTileY + randOffY + 30, 12 - worldSizeModifier + 10 * sizeNumber - i * 2);
 						}
@@ -1124,9 +1152,12 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 10)
+				return;
+			int extraSize = size + 50;
 			for (int findTileY = pyramidY + (size - 30); findTileY > pyramidY + 30; findTileY--)
 			{
-				for (int findTileX = Main.maxTilesX - 100; findTileX > 100; findTileX--)
+				for (int findTileX = pyramidX + extraSize; findTileX > pyramidX - extraSize; findTileX--)
 				{
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 					Tile tileU = Framing.GetTileSafely(findTileX, findTileY - 1);
@@ -1140,9 +1171,9 @@ namespace SOTS.WorldgenHelpers
 					{
 						if (WorldGen.genRand.NextBool(4))
 						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidPots>(), true, true, -1, Main.rand.Next(9)); //pots
+							WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidPots>(), true, true, -1, WorldGen.genRand.Next(9)); //pots
 						}
-						else if (Main.rand.Next(size / 2) == 0)
+						else if (WorldGen.genRand.Next(size / 2) == 0)
 						{
 							if (WorldGen.genRand.NextBool(2))
 							{
@@ -1163,7 +1194,7 @@ namespace SOTS.WorldgenHelpers
 						}
 						else if (!tileU3.HasTile && !tileLU3.HasTile && WorldGen.genRand.NextBool(size / 2))
 						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 						}
 					}
 					if (tile.WallType == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && WorldGen.genRand.NextBool(500) && tile.TileType != ModContent.TileType<CursedTumorTile>() && tile.HasTile)
@@ -1180,7 +1211,7 @@ namespace SOTS.WorldgenHelpers
 									float distFromCenter = (float)Math.Sqrt(x * x + y * y);
 									int distRand = (int)distFromCenter;
 									Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
-									if (!tileRad.HasTile && tileRad.WallType != ModContent.WallType<UnsafeCursedTumorWallWall>() && Main.rand.Next(100) > 4 + distRand * 5)
+									if (!tileRad.HasTile && tileRad.WallType != ModContent.WallType<UnsafeCursedTumorWallWall>() && WorldGen.genRand.Next(100) > 4 + distRand * 5)
 									{
 										tileRad.TileType = 51; //cobweb
 										tileRad.HasTile = true;
@@ -1191,8 +1222,9 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 11) //11: add cobwebs and loot
+				return;
 			//int malditeNum = 0;
-			int extraSize = size + 50;
 			for (int findTileY = pyramidY - 50; findTileY < pyramidY + extraSize; findTileY++)
 			{
 				int width = findTileY - pyramidY;
@@ -1212,7 +1244,7 @@ namespace SOTS.WorldgenHelpers
 					{
 						if (tile.HasTile && (tile.TileType == ModContent.TileType<CursedTumorTile>() || tile.WallType == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
 						{
-							int randType = Main.rand.Next(6);
+							int randType = WorldGen.genRand.Next(6);
 							if (randType == 0)
 							{
 								int left = findTileX;
@@ -1239,7 +1271,7 @@ namespace SOTS.WorldgenHelpers
 									}
 								}
 								if (capable)
-									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x1Curse>(), false, false, -1, Main.rand.Next(2));
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x1Curse>(), false, false, -1, WorldGen.genRand.Next(2));
 							}
 							else if (randType == 2)
 							{
@@ -1279,7 +1311,7 @@ namespace SOTS.WorldgenHelpers
 									}
 								}
 								if (capable)
-									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile3x2Curse>(), false, false, -1, Main.rand.Next(3));
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile3x2Curse>(), false, false, -1, WorldGen.genRand.Next(3));
 							}
 							else if (randType == 4)
 							{
@@ -1304,14 +1336,14 @@ namespace SOTS.WorldgenHelpers
 						}
 						/*if (tile.HasTile && (tile.TileType == ModContent.TileType<MalditeTile>() || tile.WallType == (ushort)ModContent.WallType<UnsafeMalditeWallWall>()))
 						{
-							int randType = Main.rand.Next(3);
+							int randType = WorldGen.genRand.Next(3);
 							if (randType == 0)
 							{
 								int left = findTileX;
 								int top = findTileY - 1;
 								Tile tile2 = Framing.GetTileSafely(left, top);
 								if (!tile2.HasTile)
-									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1Curse>(), false, false, -1, 1 + Main.rand.Next(2));
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1Curse>(), false, false, -1, 1 + WorldGen.genRand.Next(2));
 							}
 							else if (randType == 1)
 							{
@@ -1358,14 +1390,14 @@ namespace SOTS.WorldgenHelpers
 					if (WorldGen.genRand.NextBool(3))
 						if (tile.WallType != 0 && tile.HasTile && (tile.TileType == ModContent.TileType<PyramidBrickTile>() || tile.TileType == ModContent.TileType<PyramidSlabTile>() || tile.TileType == ModContent.TileType<RuinedPyramidBrickTile>() || tile.TileType == ModContent.TileType<PyramidRubbleTile>() || tile.WallType == (ushort)ModContent.WallType<PyramidWallWall>()))
 						{
-							int randType = Main.rand.Next(3);
+							int randType = WorldGen.genRand.Next(3);
 							if (randType == 0)
 							{
 								int left = findTileX;
 								int top = findTileY - 1;
 								Tile tile2 = Framing.GetTileSafely(left, top);
 								if (!tile2.HasTile)
-									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1>(), false, false, -1, Main.rand.Next(2));
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1>(), false, false, -1, WorldGen.genRand.Next(2));
 							}
 							else if (randType == 1)
 							{
@@ -1385,7 +1417,7 @@ namespace SOTS.WorldgenHelpers
 									}
 								}
 								if (capable)
-									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x1>(), false, false, -1, Main.rand.Next(3));
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x1>(), false, false, -1, WorldGen.genRand.Next(3));
 							}
 							else if (randType == 2)
 							{
@@ -1411,6 +1443,8 @@ namespace SOTS.WorldgenHelpers
 
 				}
 			}
+			if (!generateAllSteps && generateCertainStep == 12) //12: add ambient tiles and ruined block clusters
+				return;
 		}
 		public static void GenerateZepline(int spawnX, int spawnY, Mod mod)
 		{
@@ -1652,7 +1686,7 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void GenerateCrate(int x, int y, Mod mod)
 		{
-			int rand = Main.rand.Next(4);
+			int rand = WorldGen.genRand.Next(4);
 			if (rand != 3)
 			{
 				WorldGen.PlaceTile(x, y, 376, true, true, -1, rand);
@@ -1798,7 +1832,7 @@ namespace SOTS.WorldgenHelpers
 											Tile tile5 = Framing.GetTileSafely(k, l - h - 3);
 											if (tile2.TileType == ModContent.TileType<PyramidSlabTile>() && tile2.HasTile && tile3.TileType == ModContent.TileType<PyramidSlabTile>() && tile3.HasTile && tile4.TileType == ModContent.TileType<PyramidSlabTile>() && tile4.HasTile && tile5.TileType == ModContent.TileType<PyramidSlabTile>() && tile5.HasTile)
 											{
-												if (Main.rand.Next(h) <= Main.rand.Next(50))
+												if (WorldGen.genRand.Next(h) <= WorldGen.genRand.Next(50))
 												{
 													tile2.HasTile = false;
 													tile2.IsHalfBlock = false;
@@ -1946,7 +1980,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -2036,7 +2070,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -3118,7 +3152,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -3208,7 +3242,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -3298,7 +3332,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -3484,7 +3518,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 6:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 7:
 												tile.HasTile = false;
@@ -3752,7 +3786,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -3773,7 +3807,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 9:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, WorldGen.genRand.Next(16, 18)); //hanging skeleton
 												break;
 										}
 									}
@@ -3864,7 +3898,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 9:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, WorldGen.genRand.Next(16, 18)); //hanging skeleton
 												break;
 										}
 									}
@@ -3934,7 +3968,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, WorldGen.genRand.Next(16, 18)); //hanging skeleton
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -4307,7 +4341,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -4398,7 +4432,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -4488,7 +4522,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -4942,7 +4976,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 4:
 												if (confirmPlatforms == 1)
-													WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+													WorldGen.PlaceTile(k, l, 240, true, true, -1, WorldGen.genRand.Next(16, 18)); //hanging skeleton
 												break;
 											case 5:
 												tile.HasTile = false;
@@ -5037,7 +5071,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, WorldGen.genRand.Next(16, 18)); //hanging skeleton
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -5129,7 +5163,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, WorldGen.genRand.Next(16, 18)); //hanging skeleton
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -5432,7 +5466,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -5523,7 +5557,7 @@ namespace SOTS.WorldgenHelpers
 												break;
 											case 5:
 												tile.HasTile = false;
-												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, WorldGen.genRand.Next(71)); //random statue
 												break;
 											case 6:
 												tile.HasTile = false;
@@ -6590,7 +6624,7 @@ namespace SOTS.WorldgenHelpers
 			int i2 = i;
 			int amt = 1;
 			if (item)
-				amt = Main.rand.Next(2) + 2;
+				amt = WorldGen.genRand.Next(2) + 2;
 			for (int k = 0; k < amt; k++)
 			{
 				sumRolls = new int[11];
@@ -6600,9 +6634,9 @@ namespace SOTS.WorldgenHelpers
 				{
 					for (int k2 = 0; k2 < 30; k2++)
 					{
-						int rand = Main.rand.Next(5);
-						int rand2 = Main.rand.Next(4);
-						int rand3 = Main.rand.Next(4);
+						int rand = WorldGen.genRand.Next(5);
+						int rand2 = WorldGen.genRand.Next(4);
+						int rand3 = WorldGen.genRand.Next(4);
 						int sum = rand + rand2 + rand3;
 						if (sumRolls[sum] < 9)
 						{
@@ -6627,8 +6661,8 @@ namespace SOTS.WorldgenHelpers
 					}
 					for (int k2 = 0; k2 < 20; k2++)
 					{
-						int rand = Main.rand.Next(5);
-						int rand2 = Main.rand.Next(5);
+						int rand = WorldGen.genRand.Next(5);
+						int rand2 = WorldGen.genRand.Next(5);
 						int sum = rand + rand2;
 						if (sumRolls2[sum] < 3)
 						{
@@ -6659,9 +6693,9 @@ namespace SOTS.WorldgenHelpers
 				{
 					for (int k2 = 0; k2 < 30; k2++)
 					{
-						int rand = Main.rand.Next(5);
-						int rand2 = Main.rand.Next(4);
-						int rand3 = Main.rand.Next(4);
+						int rand = WorldGen.genRand.Next(5);
+						int rand2 = WorldGen.genRand.Next(4);
+						int rand3 = WorldGen.genRand.Next(4);
 						int sum = rand + rand2 + rand3;
 						if (sumRolls[sum] < 9)
 						{
@@ -6686,8 +6720,8 @@ namespace SOTS.WorldgenHelpers
 					}
 					for (int k2 = 0; k2 < 20; k2++)
 					{
-						int rand = Main.rand.Next(5);
-						int rand2 = Main.rand.Next(5);
+						int rand = WorldGen.genRand.Next(5);
+						int rand2 = WorldGen.genRand.Next(5);
 						int sum = rand + rand2;
 						if (sumRolls2[sum] < 3)
 						{
@@ -6711,7 +6745,7 @@ namespace SOTS.WorldgenHelpers
 						}
 					}
 				}
-				i = Main.rand.Next(-30, 31) + i2;
+				i = WorldGen.genRand.Next(-30, 31) + i2;
 			}
 		}
 		public static void GeneratePyramidCrystalRoom(Mod mod, int spawnX, int spawnY)
@@ -6754,7 +6788,7 @@ namespace SOTS.WorldgenHelpers
 			Vector2 midPoint = (start + end) * 0.5f;
 			spawnX = (int)midPoint.X;
 			spawnY = (int)midPoint.Y;
-			float yDistMult = Main.rand.NextFloat(0.25f, 1.00f) * direction;
+			float yDistMult = WorldGen.genRand.NextFloat(0.25f, 1.00f) * direction;
 			if (surround)
 			{
 				for (int i = 0; i < max; i++)
@@ -6791,7 +6825,7 @@ namespace SOTS.WorldgenHelpers
 			{
 				for (float y = -radius; y <= radius; y += (invertScale * 0.85f))
 				{
-					float radialMod = Main.rand.NextFloat(2.5f, 4.5f) * thickMult;
+					float radialMod = WorldGen.genRand.NextFloat(2.5f, 4.5f) * thickMult;
 					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
 					{
 						int xPosition6 = spawnX + x;
@@ -6834,7 +6868,7 @@ namespace SOTS.WorldgenHelpers
 						int xPosition6 = spawnX + x;
 						int yPosition6 = spawnY + y;
 						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-						if (tile.HasTile && Main.rand.NextBool((int)Math.Sqrt(x * x + y * y) + 2) && (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.TileType == (ushort)ModContent.TileType<RuinedPyramidBrickTile>()))
+						if (tile.HasTile && WorldGen.genRand.NextBool((int)Math.Sqrt(x * x + y * y) + 2) && (tile.TileType == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.TileType == (ushort)ModContent.TileType<RuinedPyramidBrickTile>()))
 						{
 							tile.TileType = (ushort)ModContent.TileType<CursedHive>();
 							tile.HasTile = true;
@@ -6885,7 +6919,7 @@ namespace SOTS.WorldgenHelpers
 			int radiusAlt = size + WorldGen.genRand.Next(4);
 			int sizeX = radiusAlt;
 			int sizeY = sizeX;
-			float sizeYMod = Main.rand.NextFloat(0.55f, 0.85f);
+			float sizeYMod = WorldGen.genRand.NextFloat(0.55f, 0.85f);
 			for (int x = -sizeX; x <= sizeX; x++)
 			{
 				for (float y = -sizeY; y <= sizeY; y += 0.66f)

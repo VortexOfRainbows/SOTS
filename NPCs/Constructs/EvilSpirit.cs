@@ -98,13 +98,14 @@ namespace SOTS.NPCs.Constructs
 		public override void AI()
 		{
 			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);
+			NPC.TargetClosest(false);
 			Player player = Main.player[NPC.target];
 			float mult = (100 + NPC.ai[2]) / 100f;
 			UpdateEyes(Vector2.Zero, false, -2, mult);
 			counter2++;
 			if (phase == 3)
 			{
-				NPC.aiStyle =-1;
+				NPC.aiStyle = -1;
 				NPC.dontTakeDamage = false;
 				int damage = NPC.GetBaseDamage() / 2;
 				if (NPC.ai[0] >= 0 && NPC.ai[2] >= 0)
