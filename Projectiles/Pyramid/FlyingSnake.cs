@@ -59,7 +59,10 @@ namespace SOTS.Projectiles.Pyramid
 		public override void AI()
         {
 			Player player = Main.player[Projectile.owner];
-			
+			if(player.whoAmI != Main.myPlayer)
+            {
+				Projectile.timeLeft = 20;
+            }
 			Projectile.tileCollide = true;
             Projectile.frameCounter++;
 			if(!Projectile.active)
