@@ -98,7 +98,7 @@ namespace SOTS.NPCs.Constructs
 		public override void AI()
 		{
 			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);
-			NPC.TargetClosest(false);
+			NPC.TargetClosest(false); //this should fix the multiplayer lose targetting
 			Player player = Main.player[NPC.target];
 			float mult = (100 + NPC.ai[2]) / 100f;
 			UpdateEyes(Vector2.Zero, false, -2, mult);
@@ -299,7 +299,7 @@ namespace SOTS.NPCs.Constructs
 					NPC.netUpdate = true;
 				}
 				phase = 1;
-				NPC.aiStyle =-1;
+				NPC.aiStyle = -1;
 				NPC.velocity.Y -= 0.014f;
 				NPC.dontTakeDamage = true;
 			}

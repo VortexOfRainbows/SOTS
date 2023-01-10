@@ -40,7 +40,8 @@ namespace SOTS
 				ModContent.ProjectileType<Projectiles.Blades.DigitalSlash>(),
 				ModContent.ProjectileType<Projectiles.Blades.PyrocideSlash>(),
 				ModContent.ProjectileType<Projectiles.Blades.ToothAcheSlash>(),
-				ModContent.ProjectileType<Projectiles.Blades.VertebraekerSlash>()
+				ModContent.ProjectileType<Projectiles.Blades.VertebraekerSlash>(),
+				ModContent.ProjectileType<Projectiles.Celestial.ClairvoyanceShade>()
 			};
 			isChargeWeapon = new int[]
 			{
@@ -448,7 +449,7 @@ namespace SOTS
 		public void NatureSlimeUnit(Projectile projectile)
 		{
 			Player player = Main.player[projectile.owner];
-			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && (Main.projPet[projectile.type] || VoidPlayer.isVoidMinion(projectile.type)) && projectile.damage > 0)
+			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) && projectile.damage > 0)
 			{
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 				if(modPlayer.symbioteDamage > 0 && projectile.owner == Main.myPlayer)

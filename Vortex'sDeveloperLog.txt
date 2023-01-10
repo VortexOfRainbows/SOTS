@@ -9,9 +9,7 @@ Tmodloader Bugs:
 Acknowledged But Likely Delayed:
 1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
 2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
-3. Evil spirit runs away on dedicated server (needs varification)
-4. Foggy Clairvoyance EATS your RAM after a few minutes. It goes up by around 60MB/s until it reaches the cap.
-5. Botanical Symbiote doesn't work with Calamity mod summons
+3. Darkness effect from Subspace Serpent may be causing a memory leak.
 
 Update Objectives:
 1. Ghost Town!
@@ -61,11 +59,18 @@ Other 1.4 related objectives:
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
 2. Glowmasks for Corruption Trees in SOTSTP
+3. Nerf Critical Strike accessories
 
 Need:
 1. Wind mechanics for vines and banners
 
 Daily Log:
+
+1/9/22
+1. Changed botanical symbiote to hopefull work with calamity symmons now..? Not actually tested.
+2. Foggy Clairvoyance optimizations + immune to time freeze. It should no longer lag nearly as much.
+3. Evil Spirit should no longer disappear in multiplayer
+
 
 12/23/22
 1. Vorpal Blade now works in multiplayer!
