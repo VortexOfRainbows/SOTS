@@ -10,6 +10,7 @@ Acknowledged But Likely Delayed:
 1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
 2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
 3. Darkness effect from Subspace Serpent may be causing a memory leak.
+4. Cursed Apple somehow not working in multiplayer (so far looks like false alarm)
 
 Update Objectives:
 1. Ghost Town!
