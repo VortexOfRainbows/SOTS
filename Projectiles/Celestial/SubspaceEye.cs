@@ -33,7 +33,6 @@ namespace SOTS.Projectiles.Celestial
         public override void AI()
         {
             //Main.NewText(Projectile.timeLeft);
-            counter++;
             NPC master = Main.npc[(int)Projectile.ai[0]];
             if(master.active && (master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>() || master.type == ModContent.NPCType<NPCs.Boss.SubspaceSerpentHead>()) && (master.ai[3] != -1 || Projectile.ai[1] == -1))
             {
@@ -128,6 +127,7 @@ namespace SOTS.Projectiles.Celestial
                 }
             }
         }
+        Texture2D ShadowTexture = null;
         public override bool PreDraw(ref Color lightColor)
         {
             if (!Projectile.active)
@@ -146,9 +146,9 @@ namespace SOTS.Projectiles.Celestial
                         defaultdataColors[x + y * width] = Color.Black;
                     }
                 }
+                counter = 0;
             }
-
-            if(counter < 5 || Projectile.timeLeft < 5)
+            if(counter < 4 || Projectile.timeLeft < 5)
             {
                 lightsUpdate(true); //reset color
                 lightSpots = new List<Vector3>();
@@ -157,10 +157,13 @@ namespace SOTS.Projectiles.Celestial
                 else if ((int)Projectile.ai[1] == -1)
                     lightSpots.Add(new Vector3((drawPlayer.Center.X - Main.screenPosition.X) / scale, (drawPlayer.Center.Y - Main.screenPosition.Y) / scale, 1280f));
                 lightsUpdate(false); //now that we have lights make them transparent
+                Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
+                TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
+                ShadowTexture = TheShadow;
             }
-            Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
-            TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
-            Main.spriteBatch.Draw(TheShadow, Vector2.Zero, null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, Vector2.Zero, scale, SpriteEffects.None, .2f);
+            counter++;
+            if (ShadowTexture != null)
+                Main.spriteBatch.Draw(ShadowTexture, Vector2.Zero, null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, Vector2.Zero, scale, SpriteEffects.None, .2f);
             screenWidthOld = Main.screenWidth;
             screenHeightOld = Main.screenHeight;
             return false;

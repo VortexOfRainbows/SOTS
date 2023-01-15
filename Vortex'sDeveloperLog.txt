@@ -9,8 +9,9 @@ Tmodloader Bugs:
 Acknowledged But Likely Delayed:
 1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
 2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
-3. Darkness effect from Subspace Serpent may be causing a memory leak.
-4. Cursed Apple somehow not working in multiplayer (so far looks like false alarm)
+3. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
+4. Texture Pack sounds to disable when block is broken (tied to specific blocks)
+
 
 Update Objectives:
 1. Ghost Town!
@@ -28,8 +29,6 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Make SOTS Dev Team on git hub!
-b. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
-c. Texture Pack sounds to disable when block is broken (tied to specific blocks)
 
 Ideas:
 4. Void Ruins Items: 
@@ -60,14 +59,19 @@ Other 1.4 related objectives:
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
 2. Glowmasks for Corruption Trees in SOTSTP
-3. Nerf Critical Strike accessories
 
 Need:
 1. Wind mechanics for vines and banners
 
 Daily Log:
 
-1/9/22
+1/15/23
+1. Optimized the internals for Subspace Serpent shade effect. This should fix the memory leak.
+2. Disabled Ambient Audio capabilities.
+3. Cataclysm Spheres damage 40 -> 45, lightning 90% -> 100%
+4. Sweeping nerfs to the stats of many critical strike accessories. Mainly crit bonus damage and crit chance.
+
+1/9/23
 1. Changed botanical symbiote to hopefull work with calamity symmons now..? Not actually tested.
 2. Foggy Clairvoyance optimizations + immune to time freeze. It should no longer lag nearly as much.
 3. Evil Spirit should no longer disappear in multiplayer

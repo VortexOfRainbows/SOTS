@@ -15,7 +15,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Focus Reticle");
-			Tooltip.SetDefault("20% increased crit chance\nCritical strikes deal 50 more damage\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("20% increased crit chance\nCritical strikes deal 40 more damage\nImmunity to bleeding and poisoned debuffs");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 16));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);
@@ -72,7 +72,7 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.GetCritChance(DamageClass.Generic) += 20;
-			modPlayer.CritBonusDamage += 25;
+			modPlayer.CritBonusDamage += 20;
             player.buffImmune[BuffID.Bleeding] = true; 
             player.buffImmune[BuffID.Poisoned] = true; 
 		}

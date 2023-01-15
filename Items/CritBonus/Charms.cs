@@ -12,7 +12,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Clover Charm");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to steal life\n3% increased crit chance");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to steal life\n2% increased crit chance");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Generic) += 3;
+			player.GetCritChance(DamageClass.Generic) += 2;
 			if(Main.rand.NextBool(2))
 				modPlayer.CritLifesteal += Main.rand.Next(3) + 3;
 		}
@@ -68,7 +68,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Soul Charm");
-			Tooltip.SetDefault("Critical strikes steal life, regenerate void, and recover mana\n3% increased crit chance");
+			Tooltip.SetDefault("Critical strikes steal life, regenerate void, and recover mana\n2% increased crit chance");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -82,7 +82,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Generic) += 3;
+			player.GetCritChance(DamageClass.Generic) += 2;
 			modPlayer.CritManasteal += 7 + Main.rand.Next(4);
 			modPlayer.CritLifesteal += 2 + Main.rand.Next(2);
 			modPlayer.CritVoidsteal += 2.25f;

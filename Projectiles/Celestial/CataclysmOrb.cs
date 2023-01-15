@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < amt; i++)
 				{
 					Vector2 circular = -Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CataclysmLightning>(), (int)(Projectile.damage * 0.9f + 0.5f), 0, Projectile.owner, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CataclysmLightning>(), Projectile.damage, 0, Projectile.owner, 0);
 				}
 			}
 		}

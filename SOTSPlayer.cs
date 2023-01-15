@@ -1466,7 +1466,7 @@ namespace SOTS
 					{
 						Vector2 toSubEye = projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)
-							Main.screenPosition = new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2);
+							Main.screenPosition = new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2);
 					}
 				}
             }

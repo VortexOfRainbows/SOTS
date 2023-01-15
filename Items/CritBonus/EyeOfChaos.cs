@@ -10,7 +10,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Eye of Chaos");
-			Tooltip.SetDefault("Increases crit chance by 20%");
+			Tooltip.SetDefault("Increases crit chance by 18%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -23,7 +23,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetCritChance(DamageClass.Generic) += 20;
+			player.GetCritChance(DamageClass.Generic) += 18;
 		}
 		public override void AddRecipes()
 		{

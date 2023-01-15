@@ -38,7 +38,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bloodstained Coin");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 30 more damage\nReceiving damage has a 50% chance to bleed you");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 24 more damage\nReceiving damage has a 50% chance to bleed you");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -54,7 +54,7 @@ namespace SOTS.Items.CritBonus
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Main.rand.NextBool(2))
 			{
-				modPlayer.CritBonusDamage += 15;
+				modPlayer.CritBonusDamage += 12;
 				if (modPlayer.onhit == 1)
 				{
 					player.AddBuff(BuffID.Bleeding, 1020, false); //17 seconds
@@ -71,7 +71,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Coin");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 30 more damage\nReceiving damage has a 50% chance to poison you");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 24 more damage\nReceiving damage has a 50% chance to poison you");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -87,7 +87,7 @@ namespace SOTS.Items.CritBonus
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Main.rand.NextBool(2))
 			{
-				modPlayer.CritBonusDamage += 15;
+				modPlayer.CritBonusDamage += 12;
 				if (modPlayer.onhit == 1)
 				{
 					player.AddBuff(BuffID.Poisoned, 300, false); //5 seconds
@@ -104,7 +104,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Polished Coin");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 40 more damage\n3% increased crit chance\nImmunity to bleeding and poisoned");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 36 more damage\n2% increased crit chance\nImmunity to bleeding and poisoned");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -119,10 +119,10 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Generic) += 3;
+			player.GetCritChance(DamageClass.Generic) += 2;
 			if (Main.rand.NextBool(2))
 			{
-				modPlayer.CritBonusDamage += 20;
+				modPlayer.CritBonusDamage += 18;
 			}
 			player.buffImmune[BuffID.Bleeding] = true;
 			player.buffImmune[BuffID.Poisoned] = true;
@@ -138,7 +138,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Focus Crystal");
-			Tooltip.SetDefault("Critical strikes deal 50 more damage\n5% increased crit chance\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("Critical strikes deal 40 more damage\n4% increased crit chance\nImmunity to bleeding and poisoned debuffs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -153,8 +153,8 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Generic) += 5;
-			modPlayer.CritBonusDamage += 25;
+			player.GetCritChance(DamageClass.Generic) += 4;
+			modPlayer.CritBonusDamage += 20;
 			player.buffImmune[BuffID.Bleeding] = true;
 			player.buffImmune[BuffID.Poisoned] = true;
 		}

@@ -118,11 +118,11 @@ namespace SOTS.Projectiles.Celestial
             }
         }
         bool runOnce2 = true;
+        Texture2D ShadowTexture = null;
         public override bool PreDraw(ref Color lightColor)
         {
             if (!Projectile.active)
                 return false;
-            Player drawPlayer = Main.LocalPlayer;
             if (Main.screenHeight != screenHeightOld)
             {
                 height = (int)(Main.screenHeight / scale);
@@ -136,17 +136,21 @@ namespace SOTS.Projectiles.Celestial
                         defaultdataColors[x + y * width] = Color.Black;
                     }
                 }
+                runOnce2 = true;
             }
             if(runOnce2)
+            {
                 lightsUpdate(false);
-            runOnce2 = false;
+                Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
+                TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
+                ShadowTexture = TheShadow;
+                runOnce2 = false;
+            }
             NPC master = Main.npc[(int)Projectile.ai[0]];
             if (master.active && (master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>() || master.type == ModContent.NPCType<NPCs.Boss.SubspaceSerpentHead>()) && master.ai[3] != -1)
             {
                 Projectile.Center = master.Center;
             }
-            Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
-            TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
             float offset = Projectile.ai[1];
             if (Projectile.ai[1] > 0 && Math.Abs(Projectile.ai[1]) < 1000)
             {
@@ -156,7 +160,7 @@ namespace SOTS.Projectiles.Celestial
             {
                 offset -= Main.screenWidth + 800;
             }
-            Main.spriteBatch.Draw(TheShadow, new Vector2(Projectile.Center.X + Projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
+            Main.spriteBatch.Draw(ShadowTexture, new Vector2(Projectile.Center.X + Projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
             screenHeightOld = Main.screenHeight;
             return false;
         }

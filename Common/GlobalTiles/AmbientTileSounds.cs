@@ -8,10 +8,14 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.ObjectData;
 
-namespace SOTS
+namespace SOTS.Common.GlobalTiles
 {
     public class AmbientTileSounds : GlobalTile
     {
+        public override bool IsLoadingEnabled(Mod mod) //Disabling ambient audio because it is very WIP and may not work with the audio system.
+        {
+            return false;
+        }
         public const string SoundsPath = "SOTS/Sounds/Tiles/";
         private static bool WereSoundsOn = false;
 
