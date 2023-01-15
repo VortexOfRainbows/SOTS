@@ -39,13 +39,13 @@ Ideas:
 
 Order Of Gems: 
 
-1. Purple (Pyramid) - Acedia, Rock Candy
-2. Red (Abandoned Village) - Gula
-3. Orange (Abandoned Aqueduct) - Luxuria
-4. Yellow (Lihzahrd Temple) -  Ira
-5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
-6. Green (Void Ruins) - Invidia, Vorpal Knife
-7. White (Diamond) - Superbia 
+1. D Purple (Pyramid) - Acedia, Rock Candy
+2. D Red (Abandoned Village) - Gula
+3. D Orange (Abandoned Aqueduct) - Luxuria
+4. D Yellow (Lihzahrd Temple) -  Ira
+5. D Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
+6. D Green (Void Ruins) - Invidia, Vorpal Knife
+7. D White (Diamond) - Superbia 
 
 This is the plan currently
 
