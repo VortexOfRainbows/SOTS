@@ -27,6 +27,10 @@ namespace SOTS.Biomes
         public override bool IsBiomeActive(Player player)
 		{
 			bool inBiome = (SOTSWorld.planetarium > 100) && player.Center.Y < Main.worldSurface * 16 * 0.5f; //planetarium if block count is greater than 100
+			if(player.Center.X / 16 < 300) //if the player is withine 300 blocks of the left side world border, no planetarium is allowed
+            {
+				return false;
+            }
 			return inBiome;
 		}
 	}

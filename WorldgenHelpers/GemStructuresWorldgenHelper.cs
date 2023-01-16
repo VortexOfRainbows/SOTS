@@ -18,6 +18,10 @@ namespace SOTS.WorldgenHelpers
 {
     public static class GemStructureWorldgenHelper
     {
+		public static void GenerateGemStructures()
+        {
+
+        }
 		public static ushort EvostoneWall => (ushort)ModContent.WallType<EvostoneBrickWallTile>(); 
 		public static ushort EvostoneBrick => (ushort)ModContent.TileType<EvostoneBrickTile>();
 		public static ushort Evostone => (ushort)ModContent.TileType<EvostoneTile>();
@@ -26,8 +30,8 @@ namespace SOTS.WorldgenHelpers
 		public static ushort GemLock => (ushort)ModContent.TileType<SOTSGemLockTiles>();
 		public static void GenerateAmethystDesertCamp(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 27; //spawnX and spawnY is where you want the anchor to be when this generates
-			int PosY = spawnY - 40;
+			int PosX = spawnX - 32; //spawnX and spawnY is where you want the anchor to be when this generates
+			int PosY = spawnY - 16;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -505,7 +509,7 @@ namespace SOTS.WorldgenHelpers
         public static void GenerateTopazLihzahrdCamp(int spawnX, int spawnY)
 		{
 			int PosX = spawnX - 17;
-			int PosY = spawnY - 8;
+			int PosY = spawnY - 15;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
 				{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
@@ -749,8 +753,8 @@ namespace SOTS.WorldgenHelpers
 		}
         public static void GenerateSapphireIceCamp(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 11;
-			int PosY = spawnY - 10;
+			int PosX = spawnX - 12;
+			int PosY = spawnY - 20;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -1085,8 +1089,8 @@ namespace SOTS.WorldgenHelpers
 		}
         public static void GenerateRubyAbandonedLab(int spawnX, int spawnY, bool crimson = false)
 		{
-			int PosX = spawnX - 12;
-			int PosY = spawnY - 12;
+			int PosX = spawnX - 10;
+			int PosY = spawnY - 5;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
@@ -1444,8 +1448,8 @@ namespace SOTS.WorldgenHelpers
 		}
         public static void GenerateDiamondSkyStructure(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 45;
-			int PosY = spawnY - 2;
+			int PosX = spawnX - 31;
+			int PosY = spawnY - 28;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -1713,8 +1717,8 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void GenerateAmberWaterVault(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 13;
-			int PosY = spawnY - 10;
+			int PosX = spawnX - 26;
+			int PosY = spawnY - 5;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -2118,8 +2122,10 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void GenerateEmeraldVoidRuins(int spawnX, int spawnY)
 		{
+			spawnX -= 15;
+			spawnY -= 14;
 			GenerateEmeraldVoidRuinsTop(spawnX, spawnY);
-			GenerateEmeraldVoidRuinsBottom(spawnX, spawnY + 50);
+			GenerateEmeraldVoidRuinsBottom(spawnX, spawnY + 49);
 		}
 		public static void GenerateEmeraldVoidRuinsTop(int spawnX, int spawnY)
 		{

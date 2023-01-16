@@ -601,7 +601,7 @@ namespace SOTS
 		}
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
 		{
-			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];
+			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];// - 50 * tileCounts[ModContent.TileType<Items.Gems.SOTSGemLockTiles>()];
 			phaseBiome = tileCounts[ModContent.TileType<PhaseOreTile>()];
 			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()] + tileCounts[ModContent.TileType<AcediaGatewayTile>()];
 		}
