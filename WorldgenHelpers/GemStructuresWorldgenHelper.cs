@@ -172,7 +172,7 @@ namespace SOTS.WorldgenHelpers
 				{20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,39,39,39,39,39,39,39,39,26,26,26,26,26,39,39,39,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20},
 				{20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,39,39,39,39,39,39,39,39,39,39,39,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}
 			};
-			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+			for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
 			{
 				for (int i = 0; i < _structure.GetLength(0); i++)
 				{
@@ -199,14 +199,17 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 1);
 									}
 									break;
 								case 2:
-									tile.HasTile = true;
-									tile.TileType = 178;
-									tile.Slope = 0;
-									tile.IsHalfBlock = false;
+									if (confirmPlatforms == 1)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, 178, true, true, -1, 0);
+									}
 									break;
 								case 3:
 									tile.HasTile = true;
@@ -559,10 +562,10 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 			_structure = new int[,] {
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,1,1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,0,0,0,0,0},
-				{0,0,0,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,0},
-				{0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24},
+				{24,24,24,24,24,24,1,1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,24,24,24,24,24},
+				{24,24,24,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,24},
+				{24,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 				{2,2,2,2,2,2,2,2,3,0,0,4,2,5,2,2,2,2,2,2,2,2,5,2,3,0,5},
 				{2,2,2,2,5,3,0,0,0,0,0,0,0,5,4,2,2,2,2,2,2,2,5,0,0,0,5},
 				{2,2,2,3,5,0,0,0,0,0,0,0,0,5,0,0,0,0,0,2,2,0,5,0,0,0,5},
@@ -595,8 +598,8 @@ namespace SOTS.WorldgenHelpers
 									if (confirmPlatforms == 0)
 									{
 										tile.HasTile = false;
-										tile.IsHalfBlock = false;
 										tile.Slope = 0;
+										tile.IsHalfBlock = false;
 									}
 									break;
 								case 1:
@@ -635,7 +638,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 1);
 									}
 									break;
 								case 7:
@@ -700,10 +703,13 @@ namespace SOTS.WorldgenHelpers
 									}
 									break;
 								case 18:
-									tile.HasTile = true;
-									tile.TileType = 178;
-									tile.Slope = 0;
-									tile.IsHalfBlock = false;
+									if (confirmPlatforms == 1)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, 178, true, true, -1, 1);
+									}
 									break;
 								case 19:
 									tile.HasTile = true;
@@ -807,9 +813,9 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 			_structure = new int[,]  {
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,1,1,2,2,2,3,4,0,0,0,0,0,0,0,0,0,0,0},
+				{37,37,37,37,37,37,37,37,37,37,0,0,0,0,37,37,37,37,37,37,37,37,37,37,37,37},
+				{37,37,37,37,37,37,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,37,37,37,37,37},
+				{37,37,0,0,0,0,0,0,1,1,2,2,2,3,4,0,0,0,0,0,0,0,0,37,37,37},
 				{0,0,0,0,0,0,5,6,2,2,2,2,3,3,4,7,0,0,0,0,0,0,0,0,0,0},
 				{0,2,8,0,0,0,3,2,2,2,2,9,9,4,4,4,0,0,0,5,5,10,4,4,10,0},
 				{3,2,2,11,11,11,3,2,2,0,0,0,12,0,4,13,0,10,4,4,4,4,9,9,3,3},
@@ -824,7 +830,7 @@ namespace SOTS.WorldgenHelpers
 				{25,25,26,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,19,19,24,0,19,19,15,28},
 				{25,25,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,22,22,22,22,22,22,15,18},
 				{25,25,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,14,25},
-				{18,25,25,0,0,30,31,31,30,0,0,0,0,0,0,0,0,15,0,0,0,0,0,33,14,25},
+				{18,25,25,0,0,30,31,31,30,0,0,0,0,0,0,0,0,15,0,0,29,0,0,33,14,25},
 				{25,18,18,34,31,31,31,31,31,31,31,31,30,0,0,32,0,15,35,14,14,14,14,14,18,18},
 				{25,18,18,25,31,31,31,31,31,31,31,31,31,31,31,36,36,14,14,14,14,25,25,18,18,25},
 				{25,25,18,18,18,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,34,18,18,18,18,25},
@@ -877,10 +883,13 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									break;
 								case 5:
-									tile.HasTile = true;
-									tile.TileType = 178;
-									tile.Slope = 0;
-									tile.IsHalfBlock = false;
+									if (confirmPlatforms == 1)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, 178, true, true, -1, 2);
+									}
 									break;
 								case 6:
 									tile.HasTile = true;
@@ -993,7 +1002,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 1);
 									}
 									break;
 								case 25:
@@ -1158,7 +1167,7 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
 				{0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
 				{0,0,0,1,3,4,4,4,3,1,2,1,1,5,1,1,1,1,1,1,1,0,0},
-				{0,0,0,4,4,4,4,4,4,8,8,8,8,5,1,1,6,1,1,7,1,0,0},
+				{0,0,0,4,4,4,4,4,4,8,8,8,8,5,1,1,6,1,1,6,1,0,0},
 				{0,0,0,9,9,9,9,9,9,9,9,9,9,5,1,1,1,1,1,1,1,0,0},
 				{0,0,0,10,11,1,12,13,10,11,1,12,13,5,1,1,1,1,1,1,1,0,0},
 				{0,0,0,1,10,9,13,1,1,10,9,13,1,5,1,1,1,1,1,1,1,0,0},
@@ -1183,7 +1192,7 @@ namespace SOTS.WorldgenHelpers
 				{21,21,21,21,20,21,30,30,30,30,30,30,30,30,30,30,30,30,30,21,20,20,21},
 				{21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21}
 			};
-			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+			for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)
 			{
 				for (int i = 0; i < _structure.GetLength(0); i++)
 				{
@@ -1210,7 +1219,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, crimson ? TileID.FleshCloningVat : 499, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, TileID.DemonAltar, true, true, -1, crimson ? 1 : 0);
 									}
 									break;
 								case 3:
@@ -1237,7 +1246,25 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, TileID.ShadowOrbs, true, true, -1, crimson ? 1 : 0);
+										tile.TileType = TileID.ShadowOrbs;
+										tile.HasTile = true;
+										Main.tile[k, l + 1].TileType = TileID.ShadowOrbs;
+										Main.tile[k + 1, l + 1].TileType = TileID.ShadowOrbs;
+										Main.tile[k + 1, l].TileType = TileID.ShadowOrbs;
+										Framing.GetTileSafely(k, l + 1).HasTile = true;
+										Framing.GetTileSafely(k + 1, l + 1).HasTile = true;
+										Framing.GetTileSafely(k + 1, l).HasTile = true;
+										Framing.GetTileSafely(k, l + 1).TileFrameY += 18;
+										Framing.GetTileSafely(k + 1, l + 1).TileFrameX += 18;
+										Framing.GetTileSafely(k + 1, l + 1).TileFrameY += 18;
+										Framing.GetTileSafely(k + 1, l).TileFrameX += 18;
+										if (crimson)
+                                        {
+											tile.TileFrameX += 36;
+											Framing.GetTileSafely(k, l + 1).TileFrameX += 36;
+											Framing.GetTileSafely(k + 1, l + 1).TileFrameX += 36;
+											Framing.GetTileSafely(k + 1, l).TileFrameX += 36;
+										}
 									}
 									break;
 								case 8:
@@ -1248,37 +1275,37 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 9:
 									tile.HasTile = true;
-									tile.TileType = 472;
+									tile.TileType = crimson ? TileID.LeadBrick : TileID.IronBrick;
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 									break;
 								case 10:
 									tile.HasTile = true;
-									tile.TileType = 472;
+									tile.TileType = crimson ? TileID.LeadBrick : TileID.IronBrick;
 									tile.Slope = (SlopeType)4;
 									tile.IsHalfBlock = false;
 									break;
 								case 11:
 									tile.HasTile = true;
-									tile.TileType = 472;
+									tile.TileType = crimson ? TileID.LeadBrick : TileID.IronBrick;
 									tile.Slope = (SlopeType)1;
 									tile.IsHalfBlock = false;
 									break;
 								case 12:
 									tile.HasTile = true;
-									tile.TileType = 472;
+									tile.TileType = crimson ? TileID.LeadBrick : TileID.IronBrick;
 									tile.Slope = (SlopeType)2;
 									tile.IsHalfBlock = false;
 									break;
 								case 13:
 									tile.HasTile = true;
-									tile.TileType = 472;
+									tile.TileType = crimson ? TileID.LeadBrick : TileID.IronBrick;
 									tile.Slope = (SlopeType)3;
 									tile.IsHalfBlock = false;
 									break;
 								case 14:
 									tile.HasTile = true;
-									tile.TileType = 472;
+									tile.TileType = crimson ? TileID.LeadBrick : TileID.IronBrick;
 									tile.Slope = 0;
 									tile.IsHalfBlock = true;
 									break;
@@ -1295,10 +1322,13 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = true;
 									break;
 								case 17:
-									tile.HasTile = true;
-									tile.TileType = 178;
-									tile.Slope = 0;
-									tile.IsHalfBlock = false;
+									if (confirmPlatforms == 1)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, 178, true, true, -1, 4);
+									}
 									break;
 								case 18:
 									if (confirmPlatforms == 1)
@@ -1353,7 +1383,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 1);
 									}
 									break;
 								case 26:
@@ -1470,7 +1500,6 @@ namespace SOTS.WorldgenHelpers
 						switch (_structure[i, j])
 						{
 							case 0:
-								tile.WallType = 0;
 								break;
 							case 1:
 								tile.WallType = EvostoneWall;
@@ -1544,12 +1573,6 @@ namespace SOTS.WorldgenHelpers
 							switch (_structure[i, j])
 							{
 								case 0:
-									if (confirmPlatforms == 0)
-									{
-										tile.HasTile = false;
-										tile.IsHalfBlock = false;
-										tile.Slope = 0;
-									}
 									break;
 								case 1:
 									if (confirmPlatforms == 1)
@@ -1610,18 +1633,21 @@ namespace SOTS.WorldgenHelpers
 									tile.TileType = 189;
 									tile.Slope = 0;
 									tile.IsHalfBlock = true;
+									tile.WallType = WallID.Cloud;
 									break;
 								case 8:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
+									tile.WallType = WallID.Cloud;
 									break;
 								case 9:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)2;
 									tile.IsHalfBlock = false;
+									tile.WallType = WallID.Cloud;
 									break;
 								case 10:
 									if (confirmPlatforms == 0)
@@ -1643,28 +1669,34 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									break;
 								case 13:
-									tile.HasTile = true;
-									tile.TileType = 178;
-									tile.Slope = 0;
-									tile.IsHalfBlock = false;
+									if (confirmPlatforms == 1)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, 178, true, true, -1, 5);
+									}
 									break;
 								case 14:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)3;
 									tile.IsHalfBlock = false;
+									tile.WallType = WallID.Cloud;
 									break;
 								case 15:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)4;
 									tile.IsHalfBlock = false;
+									tile.WallType = WallID.Cloud;
 									break;
 								case 16:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)1;
 									tile.IsHalfBlock = false;
+									tile.WallType = WallID.Cloud;
 									break;
 								case 17:
 									tile.HasTile = true;
@@ -1777,11 +1809,11 @@ namespace SOTS.WorldgenHelpers
 				{2,4,2,2,2,2,2,2,2,5,5,5,5,5,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,5,5,5,5,5,4,2},
 				{2,4,2,11,11,11,11,11,11,11,7,7,7,7,7,7,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,5,4,2},
 				{2,4,2,11,7,7,7,7,7,12,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,13,13,13,14,15,7,7,7,7,7,7,7,7,2,4,2},
-				{2,4,2,11,16,17,18,19,17,12,7,7,7,7,7,7,20,13,13,13,13,9,9,9,9,9,9,9,9,9,13,7,7,7,7,7,7,7,2,4,2},
+				{2,4,2,11,16,16,18,19,17,12,7,7,7,7,7,7,20,13,13,13,13,9,9,9,9,9,9,9,9,9,13,7,7,7,7,7,7,7,2,4,2},
 				{2,4,2,11,21,21,21,21,21,12,21,21,21,21,21,5,22,22,9,9,9,9,9,9,9,9,9,9,9,9,9,23,7,7,7,7,7,7,2,4,2},
 				{2,4,2,11,7,7,7,7,7,12,7,7,7,7,7,12,25,22,22,22,22,22,9,9,9,9,9,9,9,9,9,9,4,4,4,7,7,4,4,4,2},
-				{2,4,2,11,24,7,7,7,7,12,7,7,7,7,7,12,7,7,27,7,27,25,5,9,22,22,9,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
-				{2,4,2,11,21,21,7,7,7,12,7,7,7,7,7,12,7,7,7,7,7,7,12,25,22,22,22,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
+				{2,4,2,11,16,16,7,7,7,12,7,7,7,7,7,12,7,7,27,7,27,25,5,9,22,22,9,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
+				{2,4,2,11,11,11,7,7,7,12,7,7,7,7,7,12,7,7,7,7,7,7,12,25,22,22,22,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
 				{2,4,2,11,7,7,7,26,7,12,7,15,7,7,7,12,7,7,7,7,7,7,12,7,27,7,22,22,9,9,9,9,4,2,4,7,7,4,2,4,2},
 				{2,4,2,11,11,11,11,11,11,11,9,9,13,13,28,12,28,7,7,28,28,28,12,30,13,9,9,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
 				{2,4,2,11,11,11,11,11,11,11,9,9,9,9,9,12,31,29,7,31,14,13,12,9,9,9,9,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
@@ -1789,7 +1821,7 @@ namespace SOTS.WorldgenHelpers
 				{2,4,32,32,32,32,32,32,32,32,32,32,32,32,4,9,9,9,9,9,9,9,9,4,2,2,2,2,2,2,2,2,2,2,4,7,7,4,2,4,2},
 				{2,4,2,7,7,7,7,7,7,7,7,7,7,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,4,4,4,2},
 				{2,4,2,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,2,4,2},
-				{2,4,2,7,7,34,7,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,2,4,2},
+				{2,4,2,33,7,34,7,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,2,4,2},
 				{2,4,4,4,4,4,4,4,4,5,31,20,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,27,30,5,4,2},
 				{2,2,2,2,2,2,2,2,2,5,5,9,13,30,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,27,27,36,37,9,9,5,4,2},
 				{0,0,0,0,0,0,0,0,0,2,5,9,9,9,23,31,31,31,31,31,31,31,31,31,31,31,31,31,31,38,13,13,9,9,9,9,9,9,5,4,2},
@@ -1797,7 +1829,7 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,0,0,0,0,0,0,2,4,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,4,4,4,2},
 				{0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 			};
-			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+			for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)
 			{
 				for (int i = 0; i < _structure.GetLength(0); i++)
 				{
@@ -1956,12 +1988,12 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									break;
 								case 24:
-									if (confirmPlatforms == 1)
+									if (confirmPlatforms == 2)
 									{
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, 96, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, TileID.CookingPots, true, true, -1, 0);
 									}
 									break;
 								case 25:
@@ -1980,10 +2012,13 @@ namespace SOTS.WorldgenHelpers
 									}
 									break;
 								case 27:
-									tile.HasTile = true;
-									tile.TileType = 178;
-									tile.Slope = 0;
-									tile.IsHalfBlock = false;
+									if (confirmPlatforms == 1)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, 178, true, true, -1, 6);
+									}
 									break;
 								case 28:
 									if (confirmPlatforms == 0)
@@ -2042,7 +2077,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 1);
 									}
 									break;
 								case 35:
@@ -2263,10 +2298,13 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									break;
 								case 7:
-									tile.HasTile = true;
-									tile.TileType = 178;
-									tile.Slope = 0;
-									tile.IsHalfBlock = false;
+									if (confirmPlatforms == 1)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										WorldGen.PlaceTile(k, l, 178, true, true, -1, 3);
+									}
 									break;
 								case 8:
 									if (confirmPlatforms == 0)
@@ -2301,7 +2339,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 1);
 									}
 									break;
 							}
@@ -2312,8 +2350,8 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void GenerateEmeraldVoidRuinsBottom(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 14;
-			int PosY = spawnY - 10;
+			int PosX = spawnX + 5;
+			int PosY = spawnY;
 			int[,] _structure = {
 				{0,0,0,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,0,0,0},
 				{0,0,0,1,1,1,3,1,1,1,2,1,1,1,1,1,1,1,0,0,0},
@@ -2391,7 +2429,7 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,6,1,1,1,1,1,1,7,1,4,1,7,7,5,5,6,0,0},
 				{0,0,6,5,1,8,1,1,1,1,9,9,9,9,9,9,6,5,0,0,0},
 				{0,0,5,6,10,1,1,1,1,1,1,1,1,1,1,13,14,5,0,0,0},
-				{0,0,0,6,5,11,1,1,1,1,8,1,1,1,15,16,14,14,0,0,0},
+				{0,0,0,6,5,11,1,1,1,1,8,1,12,1,15,16,14,14,0,0,0},
 				{0,0,0,5,5,17,17,6,6,14,15,15,16,16,16,16,14,14,0,0,0},
 				{0,0,0,0,5,5,6,6,14,14,14,16,16,16,16,14,14,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -2507,7 +2545,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, 376, true, true, -1, 22);
+										WorldGen.PlaceTile(k, l, TileID.FishingCrate, true, true, -1, 22);
 									}
 									break;
 								case 13:

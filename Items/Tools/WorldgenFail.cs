@@ -19,8 +19,8 @@ namespace SOTS.Items.Tools
 		{
 			Item.width = 32;
 			Item.height = 32;
-			Item.useTime = 8;
-			Item.useAnimation = 15;
+			Item.useTime = 32;
+			Item.useAnimation = 32;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Cyan;
@@ -31,14 +31,30 @@ namespace SOTS.Items.Tools
 		{
 			player.rulerGrid = true;
 		}
+		int num = 0;
 		public override bool? UseItem(Player player)
 		{
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			//PhaseWorldgenHelper.ClearPrevious = true;
-			//PhaseWorldgenHelper.Generate();
-			WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<Furniture.Nature.NaturePlatingPlatformTile>(), true, true, -1, 0);
-			//counter++;
+			int x = (int)tileLocation.X;
+			int y = (int)tileLocation.Y;
+			if(num % 8 == 0)
+				GemStructureWorldgenHelper.GenerateAmethystDesertCamp(x, y);
+			if (num % 8 == 1)
+				GemStructureWorldgenHelper.GenerateTopazLihzahrdCamp(x, y);
+			if (num % 8 == 2)
+				GemStructureWorldgenHelper.GenerateSapphireIceCamp(x, y);
+			if (num % 8 == 3)
+				GemStructureWorldgenHelper.GenerateEmeraldVoidRuins(x, y);
+			if (num % 8 == 4)
+				GemStructureWorldgenHelper.GenerateRubyAbandonedLab(x, y);
+			if (num % 8 == 5)
+				GemStructureWorldgenHelper.GenerateRubyAbandonedLab(x, y, true);
+			if (num % 8 == 6)
+				GemStructureWorldgenHelper.GenerateDiamondSkyStructure(x, y);
+			if (num % 8 == 7)
+				GemStructureWorldgenHelper.GenerateAmberWaterVault(x, y);
+			num++;
 			return true;
 		}
 	}
