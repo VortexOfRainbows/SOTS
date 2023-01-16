@@ -28,13 +28,12 @@ Update Objectives:
 	2. Glowspores (Royal Jelly of glow moth)
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
-3. Make SOTS Dev Team on git hub!
 
 Ideas:
-4. Void Ruins Items: 
+3. Void Ruins Items: 
 	a. Jade-Bloom Camera: reference to Nahida elemental skill
-5. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
-6. Desert Key Item:
+4. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
+5. Desert Key Item:
 	a. Need ideas..?
 
 Order Of Gems: 
@@ -54,16 +53,17 @@ Other 1.4 related objectives:
 2. Final 1 starter house
 3. Bestiary for all enemies
 4. 7-Gem monuments
-5. Evostone Armor + Fishing Rod (Void)!
+5. Evostone Armor + Fishing Rod (Void) + Claymore (Void)!
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
 2. Glowmasks for Corruption Trees in SOTSTP
-
-Need:
-1. Wind mechanics for vines and banners
+3. Wind mechanics for vines and banners
 
 Daily Log:
+
+1/16/23
+1. Ultimate Polarizer added
 
 1/15/23
 1. Optimized the internals for Subspace Serpent shade effect. This should fix the memory leak.

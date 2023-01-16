@@ -77,7 +77,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Exotic Polarizer");
-			Tooltip.SetDefault("Increases jump height, life regen, and void gain by 2\nChanges the effects of exotic dissolving elements in your inventory");
+			Tooltip.SetDefault("Increases jump speed, life regen, and void gain by 2\nChanges the effects of exotic dissolving elements in your inventory");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -102,6 +102,42 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient<DissolvingAether>(1).AddIngredient<DissolvingBrilliance>(1).AddIngredient<DissolvingUmbra>(1).AddIngredient<AncientSteelBar>(5).AddIngredient<Chaos.PhaseBar>(2).AddTile(TileID.MythrilAnvil).Register();
+		}
+	}
+	public class UltimatePolarizer : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Ultimate Polarizer");
+			Tooltip.SetDefault("Increases damage, endurance, and movement speed by 3%\nIncreases max life, mana, and void by 20\nIncreases jump speed, life regen, and void gain by 2\nChanges the effects of all dissolving elements in your inventory");
+			this.SetResearchCost(1);
+		}
+		public override void SetDefaults()
+		{
+			Item.maxStack = 1;
+			Item.width = 30;
+			Item.height = 50;
+			Item.value = Item.sellPrice(gold: 20);
+			Item.rare = ItemRarityID.Cyan;
+			Item.accessory = true;
+		}
+		public override void UpdateAccessory(Player player, bool hideVisual)
+		{
+			player.GetDamage(DamageClass.Generic) += 0.03f;
+			player.endurance += 0.03f;
+			player.moveSpeed += 0.03f;
+			player.statLifeMax2 += 20;
+			player.statManaMax2 += 20;
+			VoidPlayer.ModPlayer(player).voidMeterMax2 += 20;
+			player.jumpSpeedBoost += 2;
+			player.lifeRegen += 2;
+			VoidPlayer.ModPlayer(player).bonusVoidGain += 2;
+			DissolvingElementsPlayer DEP = DissolvingElementsPlayer.ModPlayer(player);
+			DEP.PolarizeBrilliance = DEP.PolarizeNether = DEP.PolarizeUmbra = DEP.PolarizeDeluge = DEP.PolarizeAether = DEP.PolarizeAurora = DEP.PolarizeEarth = DEP.PolarizeNature = true;
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe(1).AddIngredient<ExoticPolarizer>(1).AddIngredient<ThermalPolarizer>(1).AddIngredient<WorldlyPolarizer>(1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }
