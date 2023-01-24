@@ -43,7 +43,7 @@ Order Of Gems:
 3. Orange (Abandoned Aqueduct) - Luxuria
 4. Yellow (Lihzahrd Temple) -  Ira
 5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
-6. Green (Void Ruins) - Invidia, Vorpal Knife
+6. Green (Void Ruins) - IInvidia, Vorpal Knife
 7. White (Diamond) - Superbia 
 
 This is the plan currently

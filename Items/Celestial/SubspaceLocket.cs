@@ -75,7 +75,7 @@ namespace SOTS.Items.Celestial
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<TerminalCluster>(1).AddIngredient<PrecariousCluster>(1).AddIngredient<Nvidia.VoidTablet>(1).AddIngredient<SanguiteBar>(15).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<TerminalCluster>(1).AddIngredient<PrecariousCluster>(1).AddIngredient<Invidia.VoidTablet>(1).AddIngredient<SanguiteBar>(15).AddTile(TileID.MythrilAnvil).Register();
         }
     }
     public class SubspaceItem : GlobalItem

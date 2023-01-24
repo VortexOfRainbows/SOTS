@@ -17,7 +17,7 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Earth;
-using SOTS.Items.Nvidia;
+using SOTS.Items.Invidia;
 using SOTS.Items.Chaos;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Fragments;

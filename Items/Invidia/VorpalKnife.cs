@@ -8,7 +8,7 @@ using SOTS.Projectiles.Blades;
 using System;
 using SOTS.Projectiles.Lightning;
 
-namespace SOTS.Items.Nvidia
+namespace SOTS.Items.Invidia
 {
 	public class VorpalKnife : VoidItem
 	{

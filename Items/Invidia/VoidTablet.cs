@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Nvidia
+namespace SOTS.Items.Invidia
 {
 	public class VoidTablet : ModItem
 	{	

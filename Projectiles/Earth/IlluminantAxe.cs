@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Void;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -35,9 +36,29 @@ namespace SOTS.Projectiles.Earth
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 			}
-			return true;
+            if(AI3 == 4)
+            {
+                texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/IlluminantAxeBorder");
+                drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+                if (Projectile.ai[0] > 0)
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Vector2 circular = new Vector2(48 - Projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians((float)Math.Pow(Projectile.ai[0], 1.25) + i * 60));
+                        Vector2 drawPos = Projectile.Center - Main.screenPosition;
+                        Main.spriteBatch.Draw(texture, drawPos + circular, null, new Color(60, 80, 100, 0) * (Projectile.ai[0] / 48f), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+                    }
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[1] * 0.25f + i * 60));
+                    Vector2 drawPos = Projectile.Center - Main.screenPosition;
+                    Main.spriteBatch.Draw(texture, drawPos + circular, null, new Color(255, 255, 255) * MathHelper.Clamp(Projectile.ai[1] / 36, 0, 1), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+                }
+            }
+            texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+            return false;
         }
         public override void PostDraw(Color lightColor)
         {
@@ -63,30 +84,81 @@ namespace SOTS.Projectiles.Earth
         {
             if(AI3 == 5)
             {
+                if (Projectile.velocity.X < 0)
+                    Projectile.direction = -1;
+                else
+                    Projectile.direction = 1;
                 Projectile.tileCollide = false;
+                if (Projectile.velocity.Length() > 1)
+                    Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.velocity *= 0.1f;
+                Projectile.aiStyle = 0;
+                Projectile.ai[0] = -12;
+                Projectile.ai[1] = 0;
+                Projectile.extraUpdates = 0;
+                Projectile.friendly = false;
                 AI3 = 4;
             }
             else if (AI3 == 4)
             {
+                if (Projectile.velocity.X < 0)
+                    Projectile.direction = -1;
+                else
+                    Projectile.direction = 1;
+                Projectile.aiStyle = 0;
                 Projectile.tileCollide = false;
+                if (Projectile.velocity.Length() > 1)
+                    Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.velocity *= 0.9f;
+                Projectile.ai[0]++;
+                Projectile.ai[1]++;
+                if (Projectile.ai[0] > 48)
+                {
+                    SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.3f);
+                    for(int i = 30; i > 0; i--)
+                    {
+                        Vector2 circular = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 12));
+                        int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
+                        Dust dust = Main.dust[num2];
+                        dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180, 360) - VoidPlayer.soulColorCounter * 2.5f);
+                        dust.noGravity = true;
+                        dust.fadeIn = 0.1f;
+                        dust.scale *= 1.6f;
+                        dust.velocity *= 0.8f;
+                        dust.velocity += circular / dust.scale;
+                    }
+                    Projectile.ai[0] = -22;
+                }
+                Projectile.extraUpdates = 0;
             }
-            counter++;
-            if (counter % 3 != 0)
-                Projectile.soundDelay++;
-            Projectile.rotation -= 0.12f * (float)Projectile.direction;
+            else if(AI3 <= 3 && AI3 > 0)
+            {
+                Projectile.direction = -1;
+                Projectile.netUpdate = true;
+                Projectile.aiStyle = 3;
+                Projectile.ai[0] = -1;
+                AI3--;
+                Projectile.extraUpdates = 2;
+                Projectile.friendly = true;
+            }
+            else
+            {
+                counter++;
+                if (counter % 2 != 0)
+                    Projectile.soundDelay++;
+                Projectile.rotation -= 0.1f * (float)Projectile.direction;
+            }
             if (Main.rand.NextBool(12))
             {
                 int num1 = Dust.NewDust(new Vector2(Projectile.Hitbox.X, Projectile.Hitbox.Y), Projectile.Hitbox.Width, Projectile.Hitbox.Height, DustID.GlowingMushroom, 0f, 0f, 150, default(Color), 1.3f);
                 Main.dust[num1].velocity *= 0.2f;
                 Main.dust[num1].scale = 0.8f;
             }
-            else if(Main.rand.NextBool(6))
+            else if (Main.rand.NextBool(6))
             {
                 int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num2];
-                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
+                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180));
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.44f;

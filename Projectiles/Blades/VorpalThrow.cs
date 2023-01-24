@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Blades
     public class VorpalThrow : ModProjectile 
     {
 		public static Color VorpalColor1 = new Color(56, 159, 135);
-		public static Color VorpalColor2 = new Color(43, 113, 50);
+		public static Color VorpalColor2 = new Color(86, 226, 100);
 		public override string Texture => "SOTS/Projectiles/Blades/VorpalKnifeSlash";
         float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)

@@ -48,7 +48,7 @@ using SOTS.Common.GlobalNPCs;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Audio;
 using static SOTS.SOTS;
-using SOTS.Items.Nvidia;
+using SOTS.Items.Invidia;
 
 namespace SOTS
 {

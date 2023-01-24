@@ -14,7 +14,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Illuminant Axe");
-            Tooltip.SetDefault("Right click to toss the axe for 150% damage");
+            Tooltip.SetDefault("Right click to toss the axe for 150% damage\nThe axe will stick to walls, releasing energy bolts for 50% damage\nRight click to recall the axe");
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             this.SetResearchCost(1);
         }
@@ -53,7 +53,7 @@ namespace SOTS.Items.Earth.Glowmoth
             {
                 int num2 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num2];
-                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
+                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180, 360) - VoidPlayer.soulColorCounter * 2.5f);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.44f;
@@ -71,15 +71,24 @@ namespace SOTS.Items.Earth.Glowmoth
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            return player.ownedProjectileCounts[Item.shoot] < 1 && player.altFunctionUse == 2;
+            if(player.altFunctionUse == 2)
+            {
+                for (int i = 0; i < 1000; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (proj.type == type && proj.active && proj.owner == player.whoAmI && proj.ModProjectile is Projectiles.Earth.IlluminantAxe axe)
+                    {
+                        axe.AI3 = 3;
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
         }
-        public override float UseAnimationMultiplier(Player player)
+        public override float UseSpeedMultiplier(Player player)
         {
-            return UseTimeMultiplier(player);
-        }
-        public override float UseTimeMultiplier(Player player)
-        {
-            return 1f / (player.altFunctionUse == 2 ? 0.5f : 1);
+            return 1f;
         }
         public override bool CanUseItem(Player player)
         {
@@ -89,13 +98,15 @@ namespace SOTS.Items.Earth.Glowmoth
                 Item.noUseGraphic = true;
                 Item.UseSound = SoundID.Item19;
                 Item.axe = 0;
+                Item.useTime = 32;
             }
             else
             {
                 Item.noMelee = false;
                 Item.noUseGraphic = false;
                 Item.UseSound = SoundID.Item1;
-                Item.axe = 16;
+                Item.axe = 12;
+                Item.useTime = 16;
                 return player.ownedProjectileCounts[Item.shoot] < 1;
             }
             return true;

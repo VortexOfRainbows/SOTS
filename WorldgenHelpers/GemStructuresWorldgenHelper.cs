@@ -7,7 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.ID;
-using SOTS.Items.Nvidia;
+using SOTS.Items.Invidia;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Gems;
 using SOTS.Items.Permafrost;

@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Nvidia;
+using SOTS.Items.Invidia;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

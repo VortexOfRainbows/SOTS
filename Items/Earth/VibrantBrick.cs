@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.Nvidia;
+using SOTS.Items.Invidia;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Otherworld.Furniture;
 using System;

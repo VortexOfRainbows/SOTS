@@ -19,6 +19,7 @@ namespace SOTS.Items.Temple
 		{
 			DisplayName.SetDefault("Helios");
 			Tooltip.SetDefault("Attacks scorch with each hit, increasing damage done by 3% permanently\nStacks up to 5 times\nLaunches waves that deal 40% damage");
+			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

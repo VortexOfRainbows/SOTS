@@ -40,7 +40,7 @@ using SOTS.WorldgenHelpers;
 using SOTS.Items.Furniture.AncientGold;
 using Terraria.UI;
 using SOTS.Void;
-using SOTS.Items.Nvidia;
+using SOTS.Items.Invidia;
 using SOTS.Items.Furniture.Nature;
 using SOTS.Items.Temple;
 using SOTS.Items.Furniture.Permafrost;
