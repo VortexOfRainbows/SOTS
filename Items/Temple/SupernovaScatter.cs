@@ -49,7 +49,7 @@ namespace SOTS.Items.Temple
 			if (!Main.dedServ)
 			{
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Temple/SupernovaScatter").Value;
-				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -28;
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -20;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = -3;
 			}
 		}
@@ -79,6 +79,10 @@ namespace SOTS.Items.Temple
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ItemID.LunarTabletFragment, 20).AddIngredient(ItemID.LihzahrdPowerCell, 1).AddTile(TileID.MythrilAnvil).Register();
+		}
+		public override bool BeforeUseItem(Player player)
+		{
+			return NPC.downedPlantBoss;
 		}
 	}
 }

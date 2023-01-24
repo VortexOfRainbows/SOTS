@@ -547,6 +547,11 @@ namespace SOTS
 				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
 				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
+			tasks.Insert(genIndexEnd + 7, new PassLegacy("genIndexGemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
+			{
+				progress.Message = "Generating Gem Structures";
+				GemStructureWorldgenHelper.GenerateGemStructures();
+			}));
 		}
 		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
 		{

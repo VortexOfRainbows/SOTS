@@ -54,5 +54,9 @@ namespace SOTS.Items.Temple
         {
             return 15;
         }
+        public override bool BeforeUseItem(Player player)
+        {
+            return NPC.downedPlantBoss;
+        }
     }
 }

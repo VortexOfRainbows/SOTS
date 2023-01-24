@@ -17,6 +17,7 @@ using SOTS.Projectiles.Laser;
 using SOTS.Projectiles.Nature;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Projectiles.Permafrost;
+using SOTS.Projectiles.Temple;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
@@ -99,6 +100,18 @@ namespace SOTS
 		public float aiSpeedCounter = 0;
 		public float aiSpeedMultiplier = 1;
 		public int AmmoUsedID = -1;
+		public const float GlobalFreezeSlowdownDuration = 12f;
+		public float GlobalFreezeSlowdownCounter = 0;
+		public int frostFlake = 0;
+		public int affixID = 0;
+		public bool hasHitYet = false;
+		public bool effect = true;
+		public int counter = 0;
+		public int petAdvisorID = -1;
+		private float spinCounter = 0;
+		public bool hasFrostBloomed = false;
+		public int bloomingHookAssignment = -1;
+		private Vector2 initialVelo = Vector2.Zero;
 		public static void SetTimeFreeze(Player player, Projectile proj, int time)
 		{
 			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
@@ -107,8 +120,6 @@ namespace SOTS
 			if ((player == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
 				instancedProjectile.SendClientChanges(player, proj, 1);
 		}
-		public const float GlobalFreezeSlowdownDuration = 12f;
-		public float GlobalFreezeSlowdownCounter = 0;
 		public static bool GlobalFreezeSlowdown(Projectile proj)
 		{
 			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
@@ -174,13 +185,6 @@ namespace SOTS
 				return true;
 			return false;
 		}
-		public int frostFlake = 0;
-		public int affixID = 0;
-		public bool hasHitYet = false;
-		public bool effect = true;
-		public int counter = 0;
-		public int petAdvisorID = -1;
-		private float spinCounter = 0;
 		public void SendClientChanges(Player player, Projectile projectile, int type = 0)
 		{
 			// Send a Mod Packet with the changes.
@@ -206,7 +210,6 @@ namespace SOTS
 				packet.Send();
 			}
 		}
-		private Vector2 initialVelo = Vector2.Zero;
 		public void AffixUnit(Projectile projectile)
         {
 			if(affixID < 0)
@@ -291,6 +294,63 @@ namespace SOTS
 						NPC npc = Main.npc[target];
 						projectile.velocity = Vector2.Lerp(projectile.velocity, (npc.Center - projectile.Center).SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 3), 0.055f);
 					}
+				}
+				if (affixID == 4 && projectile.type != ModContent.ProjectileType<CataclysmBullet>()) //Dimension Shredder
+				{
+					for (int i = 0; i < 3; i++)
+					{
+						if (Main.rand.NextBool(14))
+						{
+							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.33f);
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+							dust.velocity *= 0.6f;
+							dust.noGravity = true;
+							dust.scale *= 0.2f;
+							dust.scale += 0.6f;
+							dust.color = new Color(75, 255, 33, 0);
+							dust.alpha = (int)(projectile.alpha * 0.5f + 125);
+							dust.fadeIn = 0.1f;
+							dust.velocity += projectile.velocity * 0.1f;
+						}
+					}
+					if(projectile.tileCollide && projectile.type != ModContent.ProjectileType<SolarBullet>() && projectile.type != ProjectileID.MeteorShot)
+                    {
+						projectile.tileCollide = false;
+					}
+					if (!projectile.tileCollide && WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16))
+                    {
+						if(spinCounter <= 6)
+                        {
+							projectile.velocity *= 0.86f;
+							for(float i = 4 - 0.5f * spinCounter; i > 0; i--)
+							{
+								if(!Main.rand.NextBool(3))
+								{
+									Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+									dust.velocity *= 1.8f;
+									dust.noGravity = true;
+									dust.scale *= 0.5f - 0.05f * spinCounter;
+									dust.scale += 0.7f - 0.05f * spinCounter;
+									dust.color = new Color(115, 255, 70, 0);
+									dust.alpha = (int)(projectile.alpha * 0.5f + 170);
+									dust.fadeIn = 0.1f;
+									dust.velocity -= projectile.velocity * 0.6f;
+								}
+							}
+                        }
+						if(spinCounter == 0)
+						{
+							if(Main.myPlayer == projectile.owner)
+                            {
+								for(int i = 0; i < 2; i++)
+								{
+									Vector2 outward = Main.rand.NextVector2CircularEdge(2.5f, 2.5f);
+									Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center - projectile.velocity, outward, ModContent.ProjectileType<Projectiles.Lightning.DimensionShredderLightning>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, 2);
+								}
+							}
+						}
+						spinCounter++;
+                    }
 				}
 			}
 		}
@@ -444,8 +504,6 @@ namespace SOTS
 				}
 			}
 		}
-		public bool hasFrostBloomed = false;
-		public int bloomingHookAssignment = -1;
 		public void NatureSlimeUnit(Projectile projectile)
 		{
 			Player player = Main.player[projectile.owner];
@@ -485,6 +543,14 @@ namespace SOTS
 						outward = Main.rand.NextVector2CircularEdge(9, 9);
                     }
 					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, outward, ModContent.ProjectileType<InfernoSeeker>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+				}
+			}
+			if(affixID == 4 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>() && spinCounter == 0)
+			{
+				for (int i = 0; i < 2; i++)
+				{
+					Vector2 outward = Main.rand.NextVector2CircularEdge(2.5f, 2.5f);
+					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center - projectile.velocity, outward, ModContent.ProjectileType<Projectiles.Lightning.DimensionShredderLightning>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, 2);
 				}
 			}
 		}

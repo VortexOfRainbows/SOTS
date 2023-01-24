@@ -28,7 +28,7 @@ namespace SOTS.Items.Gems
 			Item.rare = ItemRarityID.Blue;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<GemChestTile>();
-			Item.placeStyle = PlaceStyle + 1;
+			Item.placeStyle = PlaceStyle;
 		}
 		public override void AddRecipes()
 		{

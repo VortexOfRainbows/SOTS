@@ -43,7 +43,7 @@ namespace SOTS.Items.Temple
 		}
         public override bool CanUseItem(Player player)
         {
-			return player.ownedProjectileCounts[Item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1 && NPC.downedPlantBoss;
 		}
 		public override void AddRecipes()
 		{

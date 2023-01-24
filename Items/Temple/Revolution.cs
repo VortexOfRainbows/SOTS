@@ -144,5 +144,9 @@ namespace SOTS.Items.Temple
 		{
 			CreateRecipe(1).AddIngredient(ItemID.LunarTabletFragment, 20).AddIngredient(ItemID.LihzahrdPowerCell, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
+		public override bool BeforeUseItem(Player player)
+		{
+			return NPC.downedPlantBoss;
+		}
 	}
 }
