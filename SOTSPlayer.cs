@@ -49,6 +49,7 @@ using SOTS.Buffs.DilationSickness;
 using Terraria.Audio;
 using static SOTS.SOTS;
 using SOTS.Items.Invidia;
+using SOTS.Projectiles.Lightning;
 
 namespace SOTS
 {
@@ -107,7 +108,9 @@ namespace SOTS
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
 				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>(), ItemID.Zenith, ModContent.ItemType<VorpalKnife>() };
 			locketWhitelist = new int[] { ItemID.LawnMower, ItemID.CarbonGuitar, ItemID.IvyGuitar, ItemID.DrumStick, ItemID.Harp, ItemID.Bell };
-			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), ModContent.ProjectileType<BlazingArrow>() };
+			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), 
+				ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), 
+				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() };
 			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter };
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
 			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };

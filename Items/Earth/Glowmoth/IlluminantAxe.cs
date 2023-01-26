@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
+using SOTS.Projectiles.Earth;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,20 +15,20 @@ namespace SOTS.Items.Earth.Glowmoth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Illuminant Axe");
-            Tooltip.SetDefault("Right click to toss the axe for 150% damage\nThe axe will stick to walls, releasing energy bolts for 50% damage\nRight click to recall the axe");
+            Tooltip.SetDefault("Releases wandering energy bolts for 60% damage\nRight click to toss the axe, which sticks to walls\nRight click again to recall the axe");
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{
-            Item.damage = 16; 
+            Item.damage = 17; 
             Item.DamageType = DamageClass.Melee;  
             Item.width = 54;   
             Item.height = 46;
             Item.useTime = 16; 
             Item.useAnimation = 32;
             Item.useStyle = ItemUseStyleID.Swing;    
-            Item.knockBack = 4f;
+            Item.knockBack = 5f;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
@@ -53,7 +54,7 @@ namespace SOTS.Items.Earth.Glowmoth
             {
                 int num2 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num2];
-                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180, 360) - VoidPlayer.soulColorCounter * 2.5f);
+                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.44f;
@@ -66,9 +67,9 @@ namespace SOTS.Items.Earth.Glowmoth
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            damage = (int)(damage * 1.5f);
             velocity *= (SOTSPlayer.ModPlayer(player).attackSpeedMod);
         }
+        int counter = 0;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if(player.altFunctionUse == 2)
@@ -83,6 +84,12 @@ namespace SOTS.Items.Earth.Glowmoth
                     }
                 }
                 return true;
+            }
+            else
+            {
+                counter++;
+                if (player.ItemUsesThisAnimation == 1 && counter % 2 == 1)
+                    Projectile.NewProjectile(source, position + velocity, 0.2f * velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-12, 12))), ModContent.ProjectileType<IlluminantBolt>(), (int)(damage * 0.6f), knockback * 0.2f, Main.myPlayer, Main.rand.NextFloat(180, 360));
             }
             return false;
         }

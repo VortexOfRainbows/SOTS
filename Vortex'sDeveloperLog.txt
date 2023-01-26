@@ -62,6 +62,10 @@ Things to Note For Later:
 
 Daily Log:
 
+1/25/23
+1. Illuminant Axe finished, but needs multiplayer testing (and maybe some balancing)
+2. Fix typo in Armaggedon tooltip
+
 1/23/23
 1. Lihzahrd Chest weapons are no longer usuable until after plantera
 2. Reworked Dimension Shredder (works in multiplayer)

@@ -16,7 +16,7 @@ namespace SOTS.Items.Chaos
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Armageddon");
-			Tooltip.SetDefault("Unleash a flurry punches\nProvides a small light source\n'Power from the heavens'");
+			Tooltip.SetDefault("Unleash a flurry of punches\nProvides a small light source\n'Power from the heavens'");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
