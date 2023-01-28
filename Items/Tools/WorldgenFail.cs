@@ -38,7 +38,7 @@ namespace SOTS.Items.Tools
 			Vector2 tileLocation = mousePos / 16f;
 			int x = (int)tileLocation.X;
 			int y = (int)tileLocation.Y;
-			if(num % 8 == 0)
+			/*if(num % 8 == 0)
 				GemStructureWorldgenHelper.GenerateAmethystDesertCamp(x, y);
 			if (num % 8 == 1)
 				GemStructureWorldgenHelper.GenerateTopazLihzahrdCamp(x, y);
@@ -53,7 +53,8 @@ namespace SOTS.Items.Tools
 			if (num % 8 == 6)
 				GemStructureWorldgenHelper.GenerateDiamondSkyStructure(x, y);
 			if (num % 8 == 7)
-				GemStructureWorldgenHelper.GenerateAmberWaterVault(x, y);
+				GemStructureWorldgenHelper.GenerateAmberWaterVault(x, y);*/
+			GemStructureWorldgenHelper.GenerateGemStructures();
 			num++;
 			return true;
 		}

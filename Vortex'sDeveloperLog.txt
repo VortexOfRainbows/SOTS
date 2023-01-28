@@ -62,6 +62,9 @@ Things to Note For Later:
 
 Daily Log:
 
+1/27/23
+1. WIP Worldgen stuff
+
 1/25/23
 1. Illuminant Axe finished, but needs multiplayer testing (and maybe some balancing)
 2. Fix typo in Armaggedon tooltip

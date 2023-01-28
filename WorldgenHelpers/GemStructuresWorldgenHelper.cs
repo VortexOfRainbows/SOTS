@@ -20,7 +20,51 @@ namespace SOTS.WorldgenHelpers
     {
 		public static void GenerateGemStructures()
         {
+			int i = 130 + WorldGen.genRand.Next(-10, 11); //140 tiles from left
+			int j = 90 + WorldGen.genRand.Next(-4, 5); //90 tiles from top
+			GenerateDiamondSkyStructure(i, j);
 
+			int underworldHeight = Main.UnderworldLayer + 39;
+			int rightSideOfWorld = Main.maxTilesX * 11 / 12;
+			int chosenX = -1000;
+			int chosenY = -1;
+			int mostLava = -1;
+			for(int xOffset = -100; xOffset <= 100; xOffset++)
+            {
+				int tempY = -1;
+				int tempLava = 0;
+				for (int yOffset = 0; yOffset < 500; yOffset++)
+                {
+					Tile tile = Framing.GetTileSafely(rightSideOfWorld + xOffset, underworldHeight + yOffset);
+					if(!tile.HasTile && tile.LiquidType == LiquidID.Lava && tile.LiquidAmount > 50)
+                    {
+						if(tempY == -1)
+							tempY = yOffset;
+						if (yOffset + underworldHeight < Main.maxTilesY - 100)
+							tempLava++;
+						else
+						{
+							break;
+						}
+					}
+					else if(tempLava > 3)
+                    {
+						break;
+                    }
+                }
+				if(mostLava < tempLava)
+                {
+					chosenX = xOffset;
+					chosenY = tempY;
+					mostLava = tempLava;
+				}
+            }
+			if (chosenX == -1000)
+				chosenX = 0;
+			if (chosenY == -1)
+				chosenY = 0;
+			int length = mostLava;
+			GenerateEmeraldVoidRuins(rightSideOfWorld + chosenX, underworldHeight + chosenY - 20, length + 20);
         }
 		public static ushort EvostoneWall => (ushort)ModContent.WallType<EvostoneBrickWallTile>(); 
 		public static ushort EvostoneBrick => (ushort)ModContent.TileType<EvostoneBrickTile>();
@@ -2120,12 +2164,35 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 		}
-		public static void GenerateEmeraldVoidRuins(int spawnX, int spawnY)
+		public static void GenerateEmeraldVoidRuins(int spawnX, int spawnY, int height = 1)
 		{
-			spawnX -= 15;
-			spawnY -= 14;
-			GenerateEmeraldVoidRuinsTop(spawnX, spawnY);
-			GenerateEmeraldVoidRuinsBottom(spawnX, spawnY + 49);
+			int offsetX = 15;
+			int offsetY = 14;
+			GenerateEmeraldVoidRuinsTop(spawnX - offsetX, spawnY - offsetY);
+			for(int j = height; j > 0; j--)
+			{
+				for(int i = 10; i >= -10; i--)
+				{
+					Tile tile = Framing.GetTileSafely(spawnX + i, spawnY + 34 + j);
+					if(Math.Abs(i) <= 2)
+                    {
+						tile.HasTile = false;
+                    }
+					else
+					{
+						tile.HasTile = true;
+						tile.TileType = EvostoneBrick;
+						tile.Slope = 0;
+						tile.IsHalfBlock = false;
+					}
+					tile.LiquidAmount = 0;
+					if (Math.Abs(i) <= 9)
+					{
+						tile.WallType = EvostoneWall;
+					}
+				}
+			}
+			GenerateEmeraldVoidRuinsBottom(spawnX - offsetX, spawnY - offsetY + 49 + height);
 		}
 		public static void GenerateEmeraldVoidRuinsTop(int spawnX, int spawnY)
 		{
@@ -2246,11 +2313,11 @@ namespace SOTS.WorldgenHelpers
 				{6,6,6,6,6,5,5,5,5,5,5,5,11,11,11,11,11,11,11,5,5,5,5,5,5,5,6,6,6,6,6},
 				{6,6,6,6,6,5,5,5,5,5,5,5,11,11,11,11,11,11,5,5,5,5,5,5,5,5,6,6,6,6,6},
 				{6,6,6,6,6,5,5,5,5,5,5,5,5,11,11,11,0,11,5,5,5,5,5,5,5,5,6,6,6,6,6},
-				{0,6,6,6,6,5,5,5,5,5,5,5,5,11,11,11,0,11,5,5,5,5,5,5,5,5,6,6,6,6,0},
-				{0,0,6,6,6,5,5,5,5,5,5,5,5,11,11,0,0,11,5,5,5,5,5,5,5,5,6,6,6,0,0},
-				{0,0,0,6,6,5,5,5,5,5,5,5,5,11,0,0,0,0,5,5,5,5,5,5,5,5,6,6,0,0,0},
-				{0,0,0,0,6,5,5,5,5,5,5,5,5,11,0,0,0,0,5,5,5,5,5,5,5,5,6,0,0,0,0},
-				{0,0,0,0,0,5,5,5,5,5,5,5,5,0,0,0,0,0,5,5,5,5,5,5,5,5,0,0,0,0,0}
+				{6,6,6,6,6,5,5,5,5,5,5,5,5,11,11,11,0,11,5,5,5,5,5,5,5,5,6,6,6,6,6},
+				{6,6,6,6,6,5,5,5,5,5,5,5,5,11,11,0,0,11,5,5,5,5,5,5,5,5,6,6,6,6,6},
+				{6,6,6,6,6,5,5,5,5,5,5,5,5,11,0,0,0,0,5,5,5,5,5,5,5,5,6,6,6,6,6},
+				{6,6,6,6,6,5,5,5,5,5,5,5,5,11,0,0,0,0,5,5,5,5,5,5,5,5,6,6,6,6,6},
+				{6,6,6,6,6,5,5,5,5,5,5,5,5,0,0,0,0,0,5,5,5,5,5,5,5,5,6,6,6,6,6}
 			};
 			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
 			{
@@ -2348,6 +2415,10 @@ namespace SOTS.WorldgenHelpers
 										WorldGen.PlaceTile(k, l, RuinedChest, true, true, -1, 1);
 									}
 									break;
+							}
+                            if (_structure[i, j] != 6)
+                            {
+								tile.LiquidAmount = 0;
 							}
 						}
 					}
@@ -2585,6 +2656,7 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									break;
 							}
+							tile.LiquidAmount = 0;
 						}
 					}
 				}
