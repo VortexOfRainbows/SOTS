@@ -18,27 +18,23 @@ namespace SOTS.WorldgenHelpers
 {
     public static class GemStructureWorldgenHelper
     {
-		public static void GenerateGemStructures()
-        {
-			int i = 130 + WorldGen.genRand.Next(-10, 11); //140 tiles from left
-			int j = 90 + WorldGen.genRand.Next(-4, 5); //90 tiles from top
-			GenerateDiamondSkyStructure(i, j);
-
+		private static void PlaceAndGenerateEmerald()
+		{
 			int underworldHeight = Main.UnderworldLayer + 39;
 			int rightSideOfWorld = Main.maxTilesX * 11 / 12;
 			int chosenX = -1000;
 			int chosenY = -1;
 			int mostLava = -1;
-			for(int xOffset = -100; xOffset <= 100; xOffset++)
-            {
+			for (int xOffset = -100; xOffset <= 100; xOffset++)
+			{
 				int tempY = -1;
 				int tempLava = 0;
 				for (int yOffset = 0; yOffset < 500; yOffset++)
-                {
+				{
 					Tile tile = Framing.GetTileSafely(rightSideOfWorld + xOffset, underworldHeight + yOffset);
-					if(!tile.HasTile && tile.LiquidType == LiquidID.Lava && tile.LiquidAmount > 50)
-                    {
-						if(tempY == -1)
+					if (!tile.HasTile && tile.LiquidType == LiquidID.Lava && tile.LiquidAmount > 50)
+					{
+						if (tempY == -1)
 							tempY = yOffset;
 						if (yOffset + underworldHeight < Main.maxTilesY - 100)
 							tempLava++;
@@ -47,25 +43,41 @@ namespace SOTS.WorldgenHelpers
 							break;
 						}
 					}
-					else if(tempLava > 3)
-                    {
+					else if (tempLava > 3)
+					{
 						break;
-                    }
-                }
-				if(mostLava < tempLava)
-                {
+					}
+				}
+				if (mostLava < tempLava)
+				{
 					chosenX = xOffset;
 					chosenY = tempY;
 					mostLava = tempLava;
 				}
-            }
+			}
 			if (chosenX == -1000)
 				chosenX = 0;
 			if (chosenY == -1)
 				chosenY = 0;
 			int length = mostLava;
 			GenerateEmeraldVoidRuins(rightSideOfWorld + chosenX, underworldHeight + chosenY - 20, length + 20);
+		}
+		private static void PlaceAndGenerateDiamond()
+		{
+			int i = 130 + WorldGen.genRand.Next(-10, 11); //140 tiles from left
+			int j = 90 + WorldGen.genRand.Next(-4, 5); //90 tiles from top
+			GenerateDiamondSkyStructure(i, j);
+		}
+		private static void PlaceAndGenerateTopaz()
+        {
+			//for loop to find top of lihzahrd temple.
+			//Place at the very top of the lihzahrd temple, assuming there is no door it cuts off
         }
+		public static void GenerateGemStructures()
+        {
+			PlaceAndGenerateDiamond();
+			PlaceAndGenerateEmerald();
+		}
 		public static ushort EvostoneWall => (ushort)ModContent.WallType<EvostoneBrickWallTile>(); 
 		public static ushort EvostoneBrick => (ushort)ModContent.TileType<EvostoneBrickTile>();
 		public static ushort Evostone => (ushort)ModContent.TileType<EvostoneTile>();
