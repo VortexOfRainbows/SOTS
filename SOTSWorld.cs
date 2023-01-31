@@ -374,7 +374,7 @@ namespace SOTS
 				{
 					int direction = dungeonSide;
 					int fromBorder = 70 + Main.rand.Next(20);
-					if (direction == -1)
+					if (direction == -1) //go to the opposite side of the dungeon
 					{
 						fromBorder = Main.maxTilesX - fromBorder;
 					}
