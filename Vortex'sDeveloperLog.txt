@@ -43,7 +43,7 @@ Order Of Gems:
 3. Orange (Abandoned Aqueduct) - Luxuria
 4. Yellow (Lihzahrd Temple) -  Ira
 5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
-6. Green (Void Ruins) - IInvidia, Vorpal Knife
+6. Green (Void Ruins) - Invidia, Vorpal Knife
 7. White (Diamond) - Superbia 
 
 This is the plan currently
@@ -61,6 +61,10 @@ Things to Note For Later:
 3. Wind mechanics for vines and banners
 
 Daily Log:
+
+1/30/23 & 1/29/23
+1. WIP Gem Worldgen
+	1. Finished Diamond, Emerald, Topaz
 
 1/27/23
 1. WIP Worldgen stuff
