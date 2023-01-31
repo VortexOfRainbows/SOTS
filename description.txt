@@ -23,6 +23,7 @@ Major Stuctures: 2
 Credits:
 (Current Developers)
 Code, Direction, Art: Vortex#6230
+Code: Ramen
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
 Art: Mochi, MrPetkins, HugeKraken, Cloud, Lunatix

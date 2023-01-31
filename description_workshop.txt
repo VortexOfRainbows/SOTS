@@ -18,6 +18,7 @@ Warriors, Rangers, Mages, and Summoners can all have void weapons at their dispo
 
 [b]~Developers~[/b]
 Code, Direction, Art: Vortex
+Code: Ramen
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
 Art: Mochi, MrPetkins, HugeKraken, Cloud, Lunatix
