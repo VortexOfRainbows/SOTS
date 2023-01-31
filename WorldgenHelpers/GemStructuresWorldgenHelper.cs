@@ -36,7 +36,7 @@ namespace SOTS.WorldgenHelpers
 					{
 						if (tempY == -1)
 							tempY = yOffset;
-						if (yOffset + underworldHeight < Main.maxTilesY - 100)
+						if (yOffset + underworldHeight < Main.maxTilesY - 105)
 							tempLava++;
 						else
 						{
@@ -92,9 +92,14 @@ namespace SOTS.WorldgenHelpers
 						}
                         else
                         {
-							break;
-                        }
-                    }
+							if(totalSpan < 4)
+                            {
+								totalSpan = 0;
+								heightToBeat += 5;
+                            }
+						}
+						break;
+					}
                 }
             }
 			chosenX += totalSpan / 2;
@@ -102,11 +107,86 @@ namespace SOTS.WorldgenHelpers
 			//for loop to find top of lihzahrd temple.
 			//Place at the very top of the lihzahrd temple, assuming there is no door it cuts off
         }
+		private static void PlaceAndGenerateSapphire()
+		{
+			int x = 0;
+			int side;
+			int tilesFromRight = 0;
+			int tilesFromLeft = 0;
+			for (int i = 100; i < Main.maxTilesX / 2 - 100; i++)
+			{
+				for (int j = 100; j < Main.maxTilesY - 100; j++)
+				{
+					x++;
+					Tile tile = Framing.GetTileSafely(i, j);
+					if (tile.HasTile && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
+					{
+						tilesFromLeft = x;
+						break;
+					}
+				}
+			}
+			x = 0;
+			for (int i = Main.maxTilesX - 100; i > Main.maxTilesX / 2 - 100; i--)
+			{
+				for (int j = 100; j < Main.maxTilesY - 100; j++)
+				{
+					x++;
+					Tile tile = Framing.GetTileSafely(i, j);
+					if (tile.HasTile && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
+					{
+						tilesFromRight = x;
+						break;
+					}
+				}
+			}
+			if(tilesFromLeft > tilesFromRight) //if farther from the left side of the world than the right side
+            {
+				side = -1; //go to the left
+            }
+            else
+            {
+				side = 1; //go to the right
+			}
+			int yToBeat = -1;
+			int xTB = -1;
+			for (int i = Main.maxTilesX / 2; ; i += side)
+			{
+				if (side == -1)
+				{
+					if (i < 480)
+					{
+						break;
+					}
+				}
+				else if (side == 1)
+				{
+					if (i > Main.maxTilesX - 480)
+					{
+						break;
+					}
+				}
+				for (int j = Main.maxTilesY - 100; j > 100; j--)
+				{
+					Tile tile = Framing.GetTileSafely(i, j);
+					if (tile.HasTile && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
+					{
+						if(yToBeat < j - 8)
+                        {
+							xTB = i;
+							yToBeat = j; //first tile it contacts with on the bottom of the snow biome
+						}
+					}
+				}
+			}
+			GenerateSapphireIceCamp(xTB + 20 * side, yToBeat);
+		}
 		public static void GenerateGemStructures()
 		{
 			PlaceAndGenerateDiamond();
 			PlaceAndGenerateEmerald();
 			PlaceAndGenerateTopaz();
+			PlaceAndGenerateSapphire();
 		}
 		public static ushort EvostoneWall => (ushort)ModContent.WallType<EvostoneBrickWallTile>(); 
 		public static ushort EvostoneBrick => (ushort)ModContent.TileType<EvostoneBrickTile>();
@@ -595,7 +675,7 @@ namespace SOTS.WorldgenHelpers
         public static void GenerateTopazLihzahrdCamp(int spawnX, int spawnY)
 		{
 			int PosX = spawnX - 13;
-			int PosY = spawnY - 14;
+			int PosY = spawnY - 16;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
 				{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
@@ -839,8 +919,6 @@ namespace SOTS.WorldgenHelpers
 		}
         public static void GenerateSapphireIceCamp(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 12;
-			int PosY = spawnY - 20;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -866,6 +944,8 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 			};
+			int PosX = spawnX - _structure.GetLength(1) / 2;
+			int PosY = spawnY - 15;
 			for (int i = 0; i < _structure.GetLength(0); i++)
 			{
 				for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
@@ -1140,7 +1220,7 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, GemChest, true, true, -1, 2);
+										WorldGen.PlaceTile(k, l, GemChest, true, true, -1, 3);
 									}
 									break;
 								case 33:
@@ -1172,6 +1252,7 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
+			StarterHouseWorldgenHelper.UseStarterHouseHalfCircle(spawnX, spawnY + 9, 2, 17, 10, TileID.Stone, TileID.GrayBrick);
 		}
         public static void GenerateRubyAbandonedLab(int spawnX, int spawnY, bool crimson = false)
 		{

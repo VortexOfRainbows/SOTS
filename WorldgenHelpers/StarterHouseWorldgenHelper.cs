@@ -216,7 +216,7 @@ namespace SOTS.WorldgenHelpers
 			}
 			GenerateStarterHouse(spawnX, spawnY, Type);
 		}
-		public static void UseStarterHouseHalfCircle(int spawnX, int spawnY, int side = 0, int radius = 10, int radiusY = 10)
+		public static void UseStarterHouseHalfCircle(int spawnX, int spawnY, int side = 0, int radius = 10, int radiusY = 10, int type = 0, int type2 = 0)
 		{
 			radius += 2;
 			radiusY++;
@@ -250,12 +250,39 @@ namespace SOTS.WorldgenHelpers
 							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
 							if (!tile.HasTile)
 							{
-								tile.TileType = TileID.Dirt;
+								tile.TileType = (ushort)type;
 								tile.HasTile = true;
 							}
-							if (!tile2.HasTile && tile.TileType == TileID.Dirt)
+							if (!tile2.HasTile && tile.TileType == type)
 							{
-								tile.TileType = 2;
+								tile.TileType = (ushort)type2;
+							}
+							//tile.HasTile;
+						}
+					}
+				}
+			}
+			else if (side == 2)
+			{
+				for (int x = -radius; x <= radius; x++)
+				{
+					for (float y = -1; y <= radius; y += invertScale)
+					{
+						if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+						{
+							int xPosition6 = spawnX + x;
+							int yPosition6 = spawnY + (int)(y * scale + 0.5f);
+							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
+							if (!tile.HasTile)
+							{
+								tile.TileType = (ushort)type;
+								tile.HasTile = true;
+							}
+							if (tile2.HasTile && tile.TileType == type)
+							{
+								if(WorldGen.genRand.NextBool(3))
+									tile.TileType = (ushort)type2;
 							}
 							//tile.HasTile;
 						}

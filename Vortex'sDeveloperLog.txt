@@ -28,6 +28,15 @@ Update Objectives:
 	2. Glowspores (Royal Jelly of glow moth)
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
+3. Archaeologist NPC
+	1. Needs a sprite!
+	2. Ideas:
+		1. Could be a plain dressed archaeologist, or could be somewhat futuristic?
+		2. A travelling merchant that doesn't fight or move, therefore needs no movement frames or attack frames
+		3. Cannot be hurt
+		4. Has a note pad that they are animated to be jotting on (if it is not too difficult)
+		5. Maybe is somewhat holographic?
+                6. Can be found randomly across various generated structures, from the portals to the gem locks
 
 Ideas:
 3. Void Ruins Items: 
@@ -39,12 +48,12 @@ Ideas:
 Order Of Gems: 
 
 1. Purple (Pyramid) - Acedia, Rock Candy
-2. Red (Abandoned Village) - Gula
-3. Orange (Abandoned Aqueduct) - Luxuria
-4. Yellow (Lihzahrd Temple) -  Ira
+2. Red (Abandoned Village) - Gula, 
+3. Orange (Abandoned Aqueduct) - Luxuria, 
+4. Yellow (Lihzahrd Temple) -  Ira, 
 5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
 6. Green (Void Ruins) - Invidia, Vorpal Knife
-7. White (Diamond) - Superbia 
+7. White (Diamond) - Superbia, No Ruined Chest 
 
 This is the plan currently
 
@@ -59,12 +68,16 @@ Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
 2. Glowmasks for Corruption Trees in SOTSTP
 3. Wind mechanics for vines and banners
+4. Reminder for spriters: 
+"@Spriter would somebody be able to sheet this armor set at some point @cloud#6423 @Lunatix#4113.
+If you're busy, you don't have to ofc."
 
 Daily Log:
 
 1/30/23 & 1/29/23
 1. WIP Gem Worldgen
-	1. Finished Diamond, Emerald, Topaz
+	1. Finished Diamond, Emerald, Topaz, Sapphire
+	2. Remaining: Ruby, Amethyst, Amber
 
 1/27/23
 1. WIP Worldgen stuff
