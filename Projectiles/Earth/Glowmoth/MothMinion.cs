@@ -66,6 +66,10 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 
 			GeneralBehavior(owner, out Vector2 vectorToIdlePosition, out float distanceToIdlePosition);
 			SearchForTargets(owner, out bool foundTarget, out float distanceFromTarget, out Vector2 targetCenter);
+			if (Main.mouseRight)
+            {
+				targetCenter = Main.MouseWorld;
+            }
 			Movement(foundTarget, distanceFromTarget, targetCenter, distanceToIdlePosition, vectorToIdlePosition);
 			Visuals();
 		}
@@ -92,7 +96,10 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		{
 			Vector2 idlePosition = owner.Center;
 			idlePosition.Y -= 48f; // Go up 48 coordinates (three tiles from the center of the player)
-
+			if (Main.mouseRight)
+			{
+				idlePosition = Main.MouseWorld;
+			}
 			// If your minion doesn't aimlessly move around when it's idle, you need to "put" it into the line of other summoned minions
 			// The index is projectile.minionPos
 			//float minionPositionOffsetX = (10 + Projectile.minionPos * 40) * -owner.direction;
@@ -203,7 +210,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		private void Movement(bool foundTarget, float distanceFromTarget, Vector2 targetCenter, float distanceToIdlePosition, Vector2 vectorToIdlePosition)
 		{
 			// Default movement parameters (here for attacking)
-			float speed = 8f;
+			float speed = 12f;
 			float inertia = 20f;
 
 			if (foundTarget)
