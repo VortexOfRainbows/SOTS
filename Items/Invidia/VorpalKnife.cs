@@ -48,6 +48,8 @@ namespace SOTS.Items.Invidia
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			if (player.ItemUsesThisAnimation > 1)
+				return false;
 			for(int i = 0; i < 1000; i++)
             {
 				Projectile proj = Main.projectile[i];

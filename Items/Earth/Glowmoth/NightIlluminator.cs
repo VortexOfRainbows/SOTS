@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.Projectiles.Earth.Glowmoth;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Earth.Glowmoth
 {
@@ -15,50 +16,68 @@ namespace SOTS.Items.Earth.Glowmoth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Night Illuminator");
-			Tooltip.SetDefault("Summons luminous moths to swarm your enemies\nThree moths take up one minion slot");
-
+			Tooltip.SetDefault("Summons three luminous moths to swarm your enemies\nRight click to call the moths to your cursor");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
-
 		public override void SetDefaults()
 		{
-			Item.damage = 12;
+			Item.damage = 8;
 			Item.knockBack = 3f;
-			Item.mana = 10; // mana cost
-			Item.width = 32;
-			Item.height = 32;
+			Item.mana = 10;
+			Item.width = 58;
+			Item.height = 58;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.useStyle = ItemUseStyleID.Swing; // how the player's arm moves when using the item
-			Item.value = Item.sellPrice(gold: 30);
-			Item.rare = ItemRarityID.Cyan;
-			Item.UseSound = SoundID.Item44; // What sound should play when using the item
+			Item.shootSpeed = 12;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item44;
 
 			// These below are needed for a minion weapon
-			Item.noMelee = true; // this item doesn't do any melee damage
-			Item.DamageType = DamageClass.Summon; // Makes the damage register as summon. If your item does not have any damage type, it becomes true damage (which means that damage scalars will not affect it). Be sure to have a damage type
+			Item.noMelee = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<NightIlluminatorBuff>();
-			// No buffTime because otherwise the item tooltip would say something like "1 minute duration"
-			Item.shoot = ModContent.ProjectileType<MothMinion>(); // This item creates the minion projectile
+			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.Glowmoth.NightIlluminator>();
+			if (!Main.dedServ)
+			{
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/NightIlluminatorGlow").Value;
+			}
 		}
-
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
 		{
-			// Here you can change where the minion is spawned. Most vanilla minions spawn at the cursor position
-			position = Main.MouseWorld;
+			if (player.altFunctionUse == 2)
+				mult = 0;
+			else
+				mult = 1;
 		}
-
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool? UseItem(Player player)
 		{
+			if (player.altFunctionUse == 2)
+			{
+				Item.noUseGraphic = true;
+			}
+			else
+			{
+				Item.noUseGraphic = false;
+			}
+			return base.UseItem(player);
+		}
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			if (player.altFunctionUse == 2)
+			{
+				return true;
+			}
 			player.AddBuff(Item.buffType, 2);
-
-			var m1 = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
-			var m2 = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
-			var m3 = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
-			m1.originalDamage = m2.originalDamage = m3.originalDamage = Item.damage;
-
+			for(int i = 0; i< 3; i++)
+				player.SpawnMinionOnCursor(source, player.whoAmI, ModContent.ProjectileType<MothMinion>(), Item.damage, knockback);
 			return false;
 		}
 	}

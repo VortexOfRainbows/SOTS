@@ -12,7 +12,6 @@ Acknowledged But Likely Delayed:
 3. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
 4. Texture Pack sounds to disable when block is broken (tied to specific blocks)
 
-
 Update Objectives:
 1. Ghost Town!
 	1. Make it spawn
@@ -44,15 +43,13 @@ Ideas:
 4. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
 5. Desert Key Item:
 	a. Need ideas..?
-6. Betrayer's Knife (for wrath chest)
-7. Needs ideas for gluttony and envy chest
 
 Order Of Gems: 
 
 1. Purple (Pyramid) - Acedia, Rock Candy
-2. Red (Abandoned Village) - Gula, 
-3. Orange (Abandoned Aqueduct) - Luxuria, 
-4. Yellow (Lihzahrd Temple) -  Ira, 
+2. Red (Abandoned Village) - Gula, Mechanical Liver (WIP)
+3. Orange (Abandoned Aqueduct) - Luxuria, Kelp Whip (WIP)
+4. Yellow (Lihzahrd Temple) -  Ira, Betrayer's Knife (WIP)
 5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
 6. Green (Void Ruins) - Invidia, Vorpal Knife
 7. White (Diamond) - Superbia, No Ruined Chest 
@@ -63,8 +60,7 @@ Other 1.4 related objectives:
 1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 2. Final 1 starter house
 3. Bestiary for all enemies
-4. 7-Gem monuments
-5. Evostone Armor + Fishing Rod (Void) + Claymore (Void)!
+4. Evostone Armor + Fishing Rod (Void) + Claymore (Void)!
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
@@ -75,6 +71,11 @@ Things to Note For Later:
 If you're busy, you don't have to ofc."
 
 Daily Log:
+
+1/31/23
+1. Added visuals to moth swarm staff (needs buff icon)
+	1. Works in Multiplayer :D
+2. Bug fix to Vorpal Knife exploding during single swing
 
 1/30/23 & 1/29/23
 1. WIP Gem Worldgen
