@@ -290,7 +290,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 
 			// Some visuals here
-			Lighting.AddLight(Projectile.Center, Color.White.ToVector3() * 0.78f);
+			Lighting.AddLight(Projectile.Center, new Color(172, 252, 173).ToVector3());
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -309,9 +309,9 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			{
 				Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				Main.EntitySpriteDraw(texture, drawPos, yFrame, color, Projectile.rotation, drawOrigin, Projectile.scale, Main.player[Projectile.owner].position.X > Projectile.position.X ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+				Main.EntitySpriteDraw(texture, drawPos, yFrame, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.velocity.X > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 			}
-			Main.EntitySpriteDraw(texture, Projectile.position, yFrame, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, Main.player[Projectile.owner].position.X > Projectile.position.X ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+			Main.EntitySpriteDraw(texture, Projectile.position, yFrame, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.velocity.X > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 			return false;
 		}
 	}
