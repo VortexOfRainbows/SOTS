@@ -181,12 +181,102 @@ namespace SOTS.WorldgenHelpers
 			}
 			GenerateSapphireIceCamp(xTB + 20 * side, yToBeat);
 		}
+		private static void PlaceAndGenerateAmber()
+		{
+			int dungeonSide = -1; //-1 = dungeon on left, 1 = dungeon on right
+			if (Main.dungeonX > (int)(Main.maxTilesX / 2))
+			{
+				dungeonSide = 1;
+			}
+			Mod Calamity;
+			bool calAvailable = ModLoader.TryGetMod("CalamityMod", out Calamity);
+			if (calAvailable)
+			{
+				dungeonSide *= -1; //ocean cave will not generate in calamities sulphiric sea
+			}
+			int i = dungeonSide == -1 ? 20 : Main.maxTilesX - 20;
+			int chosenX = 0;
+			int chosenY = 0;
+			for (; ; i -= dungeonSide)
+			{
+				if (dungeonSide == 1)
+				{
+					if (i < Main.maxTilesX - 400)
+					{
+						break;
+					}
+				}
+				else if (i > 400)
+				{
+					break;
+				}
+				int tempY = -1;
+				int tempWater = 0;
+				int tempSand = 0;
+				int savedSand = 0;
+				int savedY = -1;
+				for (int j = 0; j < 1600; j++)
+				{
+					Tile tile = Framing.GetTileSafely(i, j);
+					if(tempWater > 7 && tile.HasTile && tile.TileType == TileID.Sand && Framing.GetTileSafely(i - 1, j).TileType == TileID.Sand && Framing.GetTileSafely(i + 1, j).TileType == TileID.Sand)
+                    {
+						if (tempY == -1)
+							tempY = j;
+						tempSand++;
+                    }
+					else if (tempSand <= 0 && !SOTSWorldgenHelper.TrueTileSolid(i, j) && tile.LiquidType == LiquidID.Water && tile.LiquidAmount > 200)
+					{
+						tempWater++;
+					}
+					else if (tempWater > 7)
+					{
+						if (tempSand > 13 && savedY < tempY)
+						{
+							savedY = tempY; 
+							savedSand = tempSand;
+						}
+						tempY = -1;
+						tempSand = 0;
+						tempWater = 0;
+					}
+				}
+				if (chosenY < savedY && savedSand > 10)
+				{
+					chosenY = savedY;
+					chosenX = i;
+				}
+			}
+			GenerateAmberWaterVault(chosenX, chosenY);
+		}
+		private static void PlaceAndGenerateRuby()
+		{
+			int yToBeat = -1;
+			int xTB = -1;
+			for (int i = Main.maxTilesX - 500; i > 500; i--)
+			{
+				for (int j = Main.maxTilesY - 100; j > 100; j--)
+				{
+					Tile tile = Framing.GetTileSafely(i, j);
+					if (tile.HasTile && tile.TileType == TileID.ShadowOrbs)
+					{
+						if (yToBeat < j)
+						{
+							xTB = i;
+							yToBeat = j;
+						}
+					}
+				}
+			}
+			GenerateRubyAbandonedLab(xTB, yToBeat, WorldGen.crimson);
+		}
 		public static void GenerateGemStructures()
 		{
 			PlaceAndGenerateDiamond();
 			PlaceAndGenerateEmerald();
 			PlaceAndGenerateTopaz();
 			PlaceAndGenerateSapphire();
+			PlaceAndGenerateAmber();
+			PlaceAndGenerateRuby();
 		}
 		public static ushort EvostoneWall => (ushort)ModContent.WallType<EvostoneBrickWallTile>(); 
 		public static ushort EvostoneBrick => (ushort)ModContent.TileType<EvostoneBrickTile>();
@@ -1256,8 +1346,9 @@ namespace SOTS.WorldgenHelpers
 		}
         public static void GenerateRubyAbandonedLab(int spawnX, int spawnY, bool crimson = false)
 		{
-			int PosX = spawnX - 10;
-			int PosY = spawnY - 5;
+			StarterHouseWorldgenHelper.UseStarterHouseHalfCircle(spawnX - 2, spawnY + 11, 3, 15, 19, crimson ? TileID.Crimstone : TileID.Ebonstone, crimson ? TileID.Crimstone : TileID.Ebonstone);
+			int PosX = spawnX - 13;
+			int PosY = spawnY - 3;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
@@ -1358,10 +1449,10 @@ namespace SOTS.WorldgenHelpers
 				{21,20,1,17,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 				{21,20,1,19,19,19,28,25,1,1,1,1,26,1,1,1,1,1,1,1,27,1,1},
 				{21,21,8,8,8,4,4,19,19,28,29,1,1,1,29,29,29,29,8,8,8,8,8},
-				{21,21,30,30,30,30,4,19,19,19,19,16,16,31,31,31,31,31,30,30,30,30,30},
-				{21,21,20,20,20,21,30,4,4,4,4,8,8,8,8,8,8,8,30,20,20,21,21},
-				{21,21,21,21,20,21,30,30,30,30,30,30,30,30,30,30,30,30,30,21,20,20,21},
-				{21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21}
+				{0,21,30,30,30,30,4,19,19,19,19,16,16,31,31,31,31,31,30,30,30,30,30},
+				{0,21,20,20,20,21,30,4,4,4,4,8,8,8,8,8,8,8,30,20,20,21,0},
+				{0,0,0,21,20,21,30,30,30,30,30,30,30,30,30,30,30,30,30,21,20,0,0},
+				{0,0,0,0,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,0,0,0,0}
 			};
 			for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)
 			{
@@ -1419,6 +1510,14 @@ namespace SOTS.WorldgenHelpers
 										tile.IsHalfBlock = false;
 										tile.TileType = TileID.ShadowOrbs;
 										tile.HasTile = true;
+										tile.TileFrameX = 0;
+										Framing.GetTileSafely(k, l + 1).TileFrameX = 0;
+										Framing.GetTileSafely(k + 1, l + 1).TileFrameX = 0;
+										Framing.GetTileSafely(k + 1, l).TileFrameX = 0;
+										tile.TileFrameY = 0;
+										Framing.GetTileSafely(k, l + 1).TileFrameY = 0;
+										Framing.GetTileSafely(k + 1, l + 1).TileFrameY = 0;
+										Framing.GetTileSafely(k + 1, l).TileFrameY = 0;
 										Main.tile[k, l + 1].TileType = TileID.ShadowOrbs;
 										Main.tile[k + 1, l + 1].TileType = TileID.ShadowOrbs;
 										Main.tile[k + 1, l].TileType = TileID.ShadowOrbs;
@@ -1884,8 +1983,8 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void GenerateAmberWaterVault(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 26;
-			int PosY = spawnY - 5;
+			int PosX = spawnX - 27;
+			int PosY = spawnY - 2;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},

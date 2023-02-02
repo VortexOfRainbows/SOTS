@@ -426,9 +426,9 @@ namespace SOTS.WorldgenHelpers
 					for (int ydown = 0; ydown != -1; ydown++)
 					{
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
-						if (tile.HasTile && (tile.TileType == TileID.Sand || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand || checks >= 1000))
+						if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 100) || checks > 1000))
 						{
-							if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 60)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 120))) || checks > 200)
+							if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 80)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 200))) || checks > 300)
 							{
 								pyramidY = ydown;
 							}

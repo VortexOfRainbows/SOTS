@@ -289,6 +289,33 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
+			if (side == 3)
+			{
+				for (int x = -radius; x <= radius; x++)
+				{
+					for (float y = -radius; y <= radius; y += invertScale)
+					{
+						if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+						{
+							int xPosition6 = spawnX + x;
+							int yPosition6 = spawnY + (int)(y * scale + 0.5f);
+							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
+							if ((!tile.HasTile || tile.TileType == TileID.Stone || tile.TileType == TileID.Dirt) && tile.WallType == WallID.None)
+							{
+								tile.TileType = (ushort)type;
+								tile.HasTile = true;
+							}
+							if (tile2.HasTile && tile.TileType == type)
+							{
+								if (WorldGen.genRand.NextBool(3))
+									tile.TileType = (ushort)type2;
+							}
+							//tile.HasTile;
+						}
+					}
+				}
+			}
 		}
 		public static void GenerateStarterHouse(int spawnX, int spawnY, int type)
 		{

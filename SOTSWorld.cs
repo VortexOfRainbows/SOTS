@@ -326,8 +326,11 @@ namespace SOTS
 			int genIndexTraps = tasks.FindIndex(genpass => genpass.Name.Equals("Traps"));
 			int genIndexSunflowers = tasks.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
 			int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+			int oceanTunnel = tasks.FindIndex(genpass => genpass.Name.Equals("Create Ocean Caves"));
 
-			tasks.Insert(genIndexOres, new PassLegacy("SOTSOres", GenSOTSOres));
+			tasks.RemoveAt(oceanTunnel);
+			tasks.Insert(oceanTunnel, new PassLegacy("SOTSOres", OceanCaveGeneration));
+			tasks.Insert(genIndexOres, new PassLegacy("SOTS Replace: Create Ocean Caves", GenSOTSOres));
 			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTSOres", GenSOTSGeodes));
 			tasks.Insert(genIndexTraps + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
@@ -552,6 +555,35 @@ namespace SOTS
 				progress.Message = "Generating Gem Structures";
 				//GemStructureWorldgenHelper.GenerateGemStructures();
 			}));
+		}
+		private void OceanCaveGeneration(GenerationProgress progress, GameConfiguration configuration)
+		{
+			int dungeonSide = 0; // 0 = dungeon on left, 1 = dungeon on right
+			if (Main.dungeonX > (int)(Main.maxTilesX / 2))
+			{
+				dungeonSide = 1;
+			}
+			Mod Calamity;
+			bool calAvailable = ModLoader.TryGetMod("CalamityMod", out Calamity);
+			if (calAvailable)
+			{
+				dungeonSide = dungeonSide == 0 ? 1 : 0; //ocean cave will not generate in calamities sulphiric sea
+			}
+			for (int side = 0; side < 2; side++)
+			{
+				if ((!calAvailable && (WorldGen.genRand.NextBool(4) || WorldGen.drunkWorldGen)) || side == dungeonSide) //SOTS will always generate a ocean cave on the same side as the dungeon
+				{
+					progress.Message = Lang.gen[90].Value;
+					int x = WorldGen.genRand.Next(55, 95);
+					if (side == 1)
+					{
+						x = WorldGen.genRand.Next(Main.maxTilesX - 95, Main.maxTilesX - 55);
+					}
+					int y;
+					for (y = 0; !Main.tile[x, y].HasTile; y++) { } ;
+					WorldGen.oceanCave(x, y);
+				}
+			}
 		}
 		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
 		{

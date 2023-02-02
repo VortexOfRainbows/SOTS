@@ -38,10 +38,10 @@ Update Objectives:
                 6. Can be found randomly across various generated structures, from the portals to the gem locks
 
 Ideas:
-3. Void Ruins Items: 
+4. Void Ruins Items: 
 	a. Jade-Bloom Camera: reference to Nahida elemental skill
-4. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
-5. Desert Key Item:
+5. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
+6. Desert Key Item:
 	a. Need ideas..?
 
 Order Of Gems: 
@@ -67,10 +67,14 @@ Things to Note For Later:
 2. Glowmasks for Corruption Trees in SOTSTP
 3. Wind mechanics for vines and banners
 4. Reminder for spriters: 
-"@Spriter would somebody be able to sheet this armor set at some point @cloud#6423 @Lunatix#4113.
-If you're busy, you don't have to ofc."
 
 Daily Log:
+
+2/1/23
+1. Added Amber Strucure and Guaranteed Ocean Cave generation (amber breaks when spawned in..?)
+	1. Added Ruby Structure
+	2. Still need to add Amethyst
+3. Vein miner no longer breaks unbreakable blocks (like blocks under special tiles)
 
 1/31/23
 1. Added visuals to moth swarm staff (needs buff icon)
@@ -80,7 +84,6 @@ Daily Log:
 1/30/23 & 1/29/23
 1. WIP Gem Worldgen
 	1. Finished Diamond, Emerald, Topaz, Sapphire
-	2. Remaining: Ruby, Amethyst, Amber
 
 1/27/23
 1. WIP Worldgen stuff

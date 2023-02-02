@@ -119,7 +119,8 @@ namespace SOTS.Projectiles.Base
                         else
                             tY += 1;
                         Tile tile = Main.tile[tX, tY];
-                        if (!doesContainPointAt(tX, tY) && tile.TileType == type && SOTSWorldgenHelper.TrueTileSolid(tX, tY, true))
+                        bool obsolete = false;
+                        if (!doesContainPointAt(tX, tY) && tile.TileType == type && TileLoader.CanKillTile(tX, tY, tile.TileType, ref obsolete) && SOTSWorldgenHelper.TrueTileSolid(tX, tY, true))
                         {
                             tileLocations.Add(new Point(tX, tY));
                             foundATile = true;
