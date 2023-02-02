@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			if(Projectile.owner == Main.myPlayer) //This makes sure it only responds to if the projectile owner right clicks
 			{
-				if (Main.mouseRight)
+				if (Main.mouseRight && Main.player[Projectile.owner].HeldItem.type == ModContent.ItemType<Items.Earth.Glowmoth.NightIlluminator>() && Main.player[Projectile.owner].ItemAnimationActive)
 				{
 					mousePosition.X = Main.MouseWorld.X; 
 					mousePosition.Y = Main.MouseWorld.Y;
