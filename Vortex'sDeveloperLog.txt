@@ -74,7 +74,9 @@ Daily Log:
 1. Added Amber Strucure and Guaranteed Ocean Cave generation (amber breaks when spawned in..?)
 	1. Added Ruby Structure
 	2. Still need to add Amethyst
-3. Vein miner no longer breaks unbreakable blocks (like blocks under special tiles)
+2. Vein miner no longer breaks unbreakable blocks (like blocks under special tiles)
+3. Added Residual desert biome always to main desert
+4. Pyramid should no longer block the Underground Desert!
 
 1/31/23
 1. Added visuals to moth swarm staff (needs buff icon)

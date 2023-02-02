@@ -425,10 +425,12 @@ namespace SOTS.WorldgenHelpers
 				{
 					for (int ydown = 0; ydown != -1; ydown++)
 					{
+						int widthRect = 90 - checks / 10;
+						Rectangle CheckInteract = new Rectangle(xCheck - widthRect / 2, ydown, widthRect, 200);
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
-						if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 100) || checks > 1000))
+						if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 200) || checks > 1000))
 						{
-							if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 80)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 200))) || checks > 300)
+							if ((!WorldGen.UndergroundDesertLocation.Intersects(CheckInteract)) || checks > 400)
 							{
 								pyramidY = ydown;
 							}

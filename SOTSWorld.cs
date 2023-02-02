@@ -44,6 +44,7 @@ using SOTS.Items.Invidia;
 using SOTS.Items.Furniture.Nature;
 using SOTS.Items.Temple;
 using SOTS.Items.Furniture.Permafrost;
+using Terraria.GameContent.Biomes;
 
 namespace SOTS
 {
@@ -320,8 +321,11 @@ namespace SOTS
 			GlobalCounter = reader.ReadInt32();
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
-        {
-            int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
+		{
+			int desert = tasks.FindIndex(genpass => genpass.Name.Equals("Full Desert"));
+			tasks.Insert(desert + 1, new PassLegacy("SOTSAdditionalDesert", AdjacentDesertGeneration));
+
+			int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
 			int genIndexGeodes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
 			int genIndexTraps = tasks.FindIndex(genpass => genpass.Name.Equals("Traps"));
 			int genIndexSunflowers = tasks.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
@@ -329,10 +333,11 @@ namespace SOTS
 			int oceanTunnel = tasks.FindIndex(genpass => genpass.Name.Equals("Create Ocean Caves"));
 
 			tasks.RemoveAt(oceanTunnel);
-			tasks.Insert(oceanTunnel, new PassLegacy("SOTSOres", OceanCaveGeneration));
-			tasks.Insert(genIndexOres, new PassLegacy("SOTS Replace: Create Ocean Caves", GenSOTSOres));
-			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTSOres", GenSOTSGeodes));
-			tasks.Insert(genIndexTraps + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(oceanTunnel, new PassLegacy("SOTS: Additional Desert", OceanCaveGeneration));
+
+			tasks.Insert(genIndexOres, new PassLegacy("SOTS: Ocean Caves", GenSOTSOres));
+			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTS: Ores", GenSOTSGeodes));
+			tasks.Insert(genIndexTraps + 1, new PassLegacy("SOTS: Structures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Surface Structures";
 				//SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
@@ -393,12 +398,12 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("SOTS: Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Abandoned Village";
 				//AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
 			}));
-			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexEnd + 5, new PassLegacy("SOTS: Planetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Sky Artifacts";
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
@@ -544,17 +549,41 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexEnd + 6, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexEnd + 6, new PassLegacy("SOTS: Pyramid", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating A Pyramid";
 				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
 				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
-			tasks.Insert(genIndexEnd + 7, new PassLegacy("genIndexGemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexEnd + 7, new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Gem Structures";
 				//GemStructureWorldgenHelper.GenerateGemStructures();
 			}));
+		}
+		private void AdjacentDesertGeneration(GenerationProgress progress, GameConfiguration configuration)
+		{
+			progress.Message = "Sand is irritating and gets everywhere!";
+			int centerX = WorldGen.UndergroundDesertLocation.X + WorldGen.UndergroundDesertLocation.Width / 2;
+			int widthX = WorldGen.UndergroundDesertLocation.Width / 2;
+			int centerY = 0;
+			int direction = (centerX > Main.maxTilesX / 2) ? 1 : -1;
+			for(int j = 0; j < Main.maxTilesY; j++)
+            {
+				Tile tile = Framing.GetTileSafely(centerX, j);
+				if((tile.HasTile && tile.TileType == TileID.Sand) || (tile.WallType == WallID.HardenedSand))
+                {
+					centerY = j;
+					break;
+                }
+            }
+			Point toSpawnDesert = new Point(centerX + widthX * direction + WorldGen.genRand.Next(-10, 11), centerY - 60);
+			Desertify(toSpawnDesert);
+		}
+		private void Desertify(Point origin)
+		{
+			DunesBiome dunesBiome = WorldGen.configuration.CreateBiome<DunesBiome>();
+			dunesBiome.Place(origin, WorldGen.structures);
 		}
 		private void OceanCaveGeneration(GenerationProgress progress, GameConfiguration configuration)
 		{

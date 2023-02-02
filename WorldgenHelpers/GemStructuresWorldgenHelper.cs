@@ -1342,7 +1342,7 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
-			StarterHouseWorldgenHelper.UseStarterHouseHalfCircle(spawnX, spawnY + 9, 2, 17, 10, TileID.Stone, TileID.GrayBrick);
+			StarterHouseWorldgenHelper.UseStarterHouseHalfCircle(spawnX, spawnY + 7, 2, 15, 11, TileID.Stone, TileID.GrayBrick);
 		}
         public static void GenerateRubyAbandonedLab(int spawnX, int spawnY, bool crimson = false)
 		{
@@ -1903,21 +1903,24 @@ namespace SOTS.WorldgenHelpers
 									tile.TileType = 189;
 									tile.Slope = 0;
 									tile.IsHalfBlock = true;
-									tile.WallType = WallID.Cloud;
+                                    if (Main.tile[k - 1, l].HasTile && Main.tile[k + 1, l].HasTile && Main.tile[k, l + 1].HasTile && Main.tile[k, l - 1].HasTile)
+										tile.WallType = WallID.Cloud;
 									break;
 								case 8:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
-									tile.WallType = WallID.Cloud;
+									if (Main.tile[k - 1, l].HasTile && Main.tile[k + 1, l].HasTile && Main.tile[k, l + 1].HasTile && Main.tile[k, l - 1].HasTile)
+										tile.WallType = WallID.Cloud;
 									break;
 								case 9:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)2;
 									tile.IsHalfBlock = false;
-									tile.WallType = WallID.Cloud;
+									if (Main.tile[k - 1, l].HasTile && Main.tile[k + 1, l].HasTile && Main.tile[k, l + 1].HasTile && Main.tile[k, l - 1].HasTile)
+										tile.WallType = WallID.Cloud;
 									break;
 								case 10:
 									if (confirmPlatforms == 0)
@@ -1952,21 +1955,24 @@ namespace SOTS.WorldgenHelpers
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)3;
 									tile.IsHalfBlock = false;
-									tile.WallType = WallID.Cloud;
+									if (Main.tile[k - 1, l].HasTile && Main.tile[k + 1, l].HasTile && Main.tile[k, l + 1].HasTile && Main.tile[k, l - 1].HasTile)
+										tile.WallType = WallID.Cloud;
 									break;
 								case 15:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)4;
 									tile.IsHalfBlock = false;
-									tile.WallType = WallID.Cloud;
+									if (Main.tile[k - 1, l].HasTile && Main.tile[k + 1, l].HasTile && Main.tile[k, l + 1].HasTile && Main.tile[k, l - 1].HasTile)
+										tile.WallType = WallID.Cloud;
 									break;
 								case 16:
 									tile.HasTile = true;
 									tile.TileType = 189;
 									tile.Slope = (SlopeType)1;
 									tile.IsHalfBlock = false;
-									tile.WallType = WallID.Cloud;
+									if (Main.tile[k - 1, l].HasTile && Main.tile[k + 1, l].HasTile && Main.tile[k, l + 1].HasTile && Main.tile[k, l - 1].HasTile)
+										tile.WallType = WallID.Cloud;
 									break;
 								case 17:
 									tile.HasTile = true;
@@ -2083,7 +2089,7 @@ namespace SOTS.WorldgenHelpers
 				{2,4,2,11,21,21,21,21,21,12,21,21,21,21,21,5,22,22,9,9,9,9,9,9,9,9,9,9,9,9,9,23,7,7,7,7,7,7,2,4,2},
 				{2,4,2,11,7,7,7,7,7,12,7,7,7,7,7,12,25,22,22,22,22,22,9,9,9,9,9,9,9,9,9,9,4,4,4,7,7,4,4,4,2},
 				{2,4,2,11,16,16,7,7,7,12,7,7,7,7,7,12,7,7,27,7,27,25,5,9,22,22,9,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
-				{2,4,2,11,11,11,7,7,7,12,7,7,7,7,7,12,7,7,7,7,7,7,12,25,22,22,22,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
+				{2,4,2,11,21,21,7,7,7,12,7,7,7,7,7,12,7,7,7,7,7,7,12,25,22,22,22,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
 				{2,4,2,11,7,7,7,26,7,12,7,15,7,7,7,12,7,7,7,7,7,7,12,7,27,7,22,22,9,9,9,9,4,2,4,7,7,4,2,4,2},
 				{2,4,2,11,11,11,11,11,11,11,9,9,13,13,28,12,28,7,7,28,28,28,12,30,13,9,9,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
 				{2,4,2,11,11,11,11,11,11,11,9,9,9,9,9,12,31,29,7,31,14,13,12,9,9,9,9,9,9,9,9,9,4,2,4,7,7,4,2,4,2},
