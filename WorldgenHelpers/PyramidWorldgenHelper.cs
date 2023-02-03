@@ -428,9 +428,9 @@ namespace SOTS.WorldgenHelpers
 						int widthRect = 90 - checks / 10;
 						Rectangle CheckInteract = new Rectangle(xCheck - widthRect / 2, ydown, widthRect, 200);
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
-						if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 200) || checks > 1000))
+						if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 400) || checks > 1000))
 						{
-							if ((!WorldGen.UndergroundDesertLocation.Intersects(CheckInteract)) || checks > 400)
+							if ((!WorldGen.UndergroundDesertLocation.Intersects(CheckInteract)) || checks > 800)
 							{
 								pyramidY = ydown;
 							}

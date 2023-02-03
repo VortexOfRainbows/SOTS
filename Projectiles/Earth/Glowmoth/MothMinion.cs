@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Lumina Moth");
-			Main.projFrames[Projectile.type] = 1;
+			Main.projFrames[Projectile.type] = 3;
 			//ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true; //We don't want the special right click since the minions already special target with right click
 
 			Main.projPet[Projectile.type] = true; 
@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 
 		public sealed override void SetDefaults()
 		{
-			Projectile.width = 20;
+			Projectile.width = 24;
 			Projectile.height = 20;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
@@ -189,7 +189,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 					if (WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16))
 					{
-						if (Projectile.velocity.Length() > 8f)
+						if (Projectile.velocity.Length() > 6f)
 							Projectile.velocity *= 0.95f;
                     }
 				}
@@ -201,8 +201,8 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					}
 					else
 					{
-						if(Projectile.velocity.Length() > 6f)
-							Projectile.velocity *= 0.97f;
+						if(Projectile.velocity.Length() > 4f)
+							Projectile.velocity *= 0.95f;
 					}
 					Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(7) * Math.Sin(MathHelper.ToRadians(Projectile.ai[0] * 4f)));
 					if (!Main.rand.NextBool(3))
@@ -250,16 +250,17 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			SpinCounter += Projectile.velocity.Length() * Math.Sign(Projectile.velocity.X);
 		}
 		int graduallyBringInTrail = 0;
+		float frameCounter = 0;
 		private void Visuals()
 		{
 			Projectile.rotation = Projectile.velocity.X * 0.05f;
 
+			frameCounter += 0.8f + 0.2f * Projectile.ai[1];
 			// This is a simple "loop through all frames from top to bottom" animation
 			int frameSpeed = 5;
-			Projectile.frameCounter++;
-			if (Projectile.frameCounter >= frameSpeed)
+			if (frameCounter >= frameSpeed)
 			{
-				Projectile.frameCounter = 0;
+				frameCounter -= 5;
 				Projectile.frame++;
 				if (Projectile.frame >= Main.projFrames[Projectile.type])
 				{

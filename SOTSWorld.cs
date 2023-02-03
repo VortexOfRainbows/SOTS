@@ -558,7 +558,7 @@ namespace SOTS
 			tasks.Insert(genIndexEnd + 7, new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = "Generating Gem Structures";
-				//GemStructureWorldgenHelper.GenerateGemStructures();
+				GemStructureWorldgenHelper.GenerateGemStructures();
 			}));
 		}
 		private void AdjacentDesertGeneration(GenerationProgress progress, GameConfiguration configuration)

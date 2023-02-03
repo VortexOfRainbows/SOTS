@@ -28,7 +28,7 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Archaeologist NPC
-	1. Needs a sprite!
+	1. Needs a sprite!w
 	2. Ideas:
 		1. Could be a plain dressed archaeologist, or could be somewhat futuristic?
 		2. A travelling merchant that doesn't fight or move, therefore needs no movement frames or attack frames
@@ -70,10 +70,14 @@ Things to Note For Later:
 
 Daily Log:
 
+2/2/23
+1. Animate glowmoth summon
+2. Final Gem structure now generates!
+3. Generation is not completely finalized, however.
+
 2/1/23
 1. Added Amber Strucure and Guaranteed Ocean Cave generation (amber breaks when spawned in..?)
 	1. Added Ruby Structure
-	2. Still need to add Amethyst
 2. Vein miner no longer breaks unbreakable blocks (like blocks under special tiles)
 3. Added Residual desert biome always to main desert
 4. Pyramid should no longer block the Underground Desert!

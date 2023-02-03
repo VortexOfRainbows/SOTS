@@ -269,6 +269,51 @@ namespace SOTS.WorldgenHelpers
 			}
 			GenerateRubyAbandonedLab(xTB, yToBeat, WorldGen.crimson);
 		}
+		private static void PlaceAndGenerateAmethyst()
+		{
+			int startingX = WorldGen.UndergroundDesertLocation.X;
+			int endingX = startingX + WorldGen.UndergroundDesertLocation.Width;
+			int chosenX = Main.maxTilesX / 2;
+			int totalSpan = 0;
+			int heightToBeat = Main.maxTilesY;
+			int bestSpan = 0;
+			int bestHeight = 0;
+			for (int i = startingX; i < endingX - 60; i++)
+			{
+				totalSpan = 0;
+				for (int i2 = 0; i2 <= 60; i2++)
+				{
+					heightToBeat = 0;
+					for (int j = 200; j < Main.maxTilesY / 2; j++)
+					{
+						Tile tile = Framing.GetTileSafely(i + i2, j);
+						if (tile.HasTile && tile.TileType == ModContent.TileType<Items.Pyramid.PyramidSlabTile>())
+                        {
+							bestSpan = -1;
+							break;
+                        }
+						else if (tile.HasTile && tile.TileType == TileID.Sand)
+						{
+							if (heightToBeat == 0)
+								heightToBeat = j;
+							if (j == heightToBeat || j == heightToBeat + 1 || j == heightToBeat - 1)
+							{
+								totalSpan++;
+							}
+							break;
+						}
+					}
+				}
+				if (totalSpan > bestSpan)
+				{
+					bestHeight = heightToBeat;
+					bestSpan = totalSpan;
+					chosenX = i;
+				}
+			}
+			chosenX += totalSpan / 2;
+			GenerateAmethystDesertCamp(chosenX, bestHeight);
+		}
 		public static void GenerateGemStructures()
 		{
 			PlaceAndGenerateDiamond();
@@ -277,6 +322,7 @@ namespace SOTS.WorldgenHelpers
 			PlaceAndGenerateSapphire();
 			PlaceAndGenerateAmber();
 			PlaceAndGenerateRuby();
+			PlaceAndGenerateAmethyst();
 		}
 		public static ushort EvostoneWall => (ushort)ModContent.WallType<EvostoneBrickWallTile>(); 
 		public static ushort EvostoneBrick => (ushort)ModContent.TileType<EvostoneBrickTile>();
@@ -286,8 +332,6 @@ namespace SOTS.WorldgenHelpers
 		public static ushort GemLock => (ushort)ModContent.TileType<SOTSGemLockTiles>();
 		public static void GenerateAmethystDesertCamp(int spawnX, int spawnY)
 		{
-			int PosX = spawnX - 32; //spawnX and spawnY is where you want the anchor to be when this generates
-			int PosY = spawnY - 16;
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -339,6 +383,8 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 			};
+			int PosX = spawnX - _structure.GetLength(1) / 2; //spawnX and spawnY is where you want the anchor to be when this generates
+			int PosY = spawnY - 16;
 			for (int i = 0; i < _structure.GetLength(0); i++)
 			{
 				for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
