@@ -9,14 +9,14 @@ namespace SOTS.Items.Tide
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Cannon Shrimp");
+			DisplayName.SetDefault("Plasma Shrimp");
 			Tooltip.SetDefault("When above 40% mana, magic hits fire hot, shrimpy plasma for 50% damage\nReduces mana cost by 5%\n'Not so shrimple now'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
             Item.width = 50;     
-            Item.height = 40;   
+            Item.height = 46;   
             Item.value = 0;
             Item.rare = ItemRarityID.Lime;
 			Item.value = Item.sellPrice(0, 10, 0, 0);

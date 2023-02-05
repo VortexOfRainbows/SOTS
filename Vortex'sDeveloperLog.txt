@@ -70,6 +70,13 @@ Things to Note For Later:
 
 Daily Log:
 
+2/5/23
+1. Stellar Serpent Launcher damage 60 -> 55
+	1. Durat 75% damage to Subspace Serpent
+	3. It's still really strong, but not as strong
+2. Dimension Shredder damage 42 -> 37 (slight adjustment to account for the buffs/rework)
+3. Plasma shrimp resprite!
+
 2/2/23
 1. Animate glowmoth summon
 2. Final Gem structure now generates!

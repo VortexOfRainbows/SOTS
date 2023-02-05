@@ -21,7 +21,7 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.ChainGun); //chaingun
-			Item.damage = 42;
+			Item.damage = 37;
             Item.width = 100;   
             Item.height = 42;   
 			Item.rare = ItemRarityID.Yellow;

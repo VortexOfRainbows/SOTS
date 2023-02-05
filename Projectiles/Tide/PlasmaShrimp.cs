@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Tide
 		public sealed override void SetDefaults()
 		{
 			Projectile.width = 50;
-			Projectile.height = 40;
+			Projectile.height = 46;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
 			Projectile.penetrate = -1;

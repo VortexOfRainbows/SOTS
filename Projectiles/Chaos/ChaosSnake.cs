@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.width = 24;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
-			Projectile.timeLeft = 1500;
+			Projectile.timeLeft = 1200;
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
 			Projectile.DamageType = DamageClass.Ranged;

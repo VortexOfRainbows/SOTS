@@ -39,7 +39,7 @@ namespace SOTS.Common.GlobalNPCs
         public static int[] nerfBeeNPC;
         public static int[] nerfBeeBoss;
         public static int[] nerfBeeProj;
-        public static int[] nerfRealityShatter;
+        public static int[] isSubspaceSerpent;
         public static int[] vanillaNPCHasVoidDamage;
         public static int[] miniBosses;
         public static int[] intimidating;
@@ -63,7 +63,7 @@ namespace SOTS.Common.GlobalNPCs
             nerfBeeNPC = new int[] { NPCType<PutridHook>() };
             nerfBeeBoss = new int[] { NPCType<PutridPinkyPhase2>(), NPCType<NPCs.Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>() };
             nerfBeeProj = new int[] { ProjectileID.Bee, ProjectileID.GiantBee };
-            nerfRealityShatter = new int[] { NPCType<SubspaceSerpentBody>(), NPCType<SubspaceSerpentHead>(), NPCType<SubspaceSerpentTail>() };
+            isSubspaceSerpent = new int[] { NPCType<SubspaceSerpentBody>(), NPCType<SubspaceSerpentHead>(), NPCType<SubspaceSerpentTail>() };
             Zombies = new int[] { NPCID.Zombie, NPCID.ZombieDoctor, NPCID.ZombieElf, NPCID.ZombieElfBeard,
                 NPCID.ZombieElfGirl, NPCID.ZombieEskimo, NPCID.ZombieMushroom, NPCID.ZombieMushroomHat, NPCID.ZombiePixie, NPCID.ZombieRaincoat,
                 NPCID.ZombieSuperman, NPCID.ZombieSweater, NPCID.ZombieXmas, NPCID.ArmedZombie, NPCID.ArmedZombieCenx, NPCID.ArmedZombieEskimo,
@@ -486,11 +486,18 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(projectile.type == ProjectileType<RealityShatter>())
             {
-                if (nerfRealityShatter.Contains(npc.type))
+                if (isSubspaceSerpent.Contains(npc.type))
                     damage = (int)(damage * 0.3f);
                 else if(npc.boss)
                 {
                     damage = (int)(damage * 0.8f);
+                }
+            }
+            if(isSubspaceSerpent.Contains(npc.type))
+            {
+                if(projectile.type == ProjectileType<ChaosSnake>())
+                {
+                    damage = (int)(damage * 0.75f);
                 }
             }
             if(BlazingCurse > 0)
