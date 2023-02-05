@@ -13,6 +13,8 @@ using SOTS.Items.Gems;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.Furniture;
+using System.Linq;
+using SOTS.Items.Potions;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -2943,6 +2945,218 @@ namespace SOTS.WorldgenHelpers
 				return false;
 			else
 				return true;
+		}
+		public static void FillChestsWithLoot()
+		{
+
+			foreach (Chest chest in Main.chest.Where(c => c != null))
+			{
+				// Get a chest
+				var tile = Main.tile[chest.x, chest.y]; // the chest tile 
+				if (tile.TileType == GemChest)
+				{
+					int slot = 0;
+					int gemType = tile.TileFrameX / 72; //0 = ruby, 1 = sapphire, 2 = emerald, 3 = topaz, 4 = amethyst, 5 = diamond, 6 = amber
+					int secondaryItemType = WorldGen.genRand.Next(6); //0 = gems, 1 = hook, 2 = gem staff, 3 = gem robe, 4 = gem minecart, 5 = phaseblade
+					int tritiaryItemType = WorldGen.genRand.Next(6); //0 = gems, 1 = hook, 2 = gem staff, 3 = gem robe, 4 = gem minecart, 5 = phaseblade
+					int ringType = ModContent.ItemType<AmethystRing>();
+					int gemItemType = ItemID.Amethyst;
+					int hookType = ItemID.AmethystHook;
+					int staffType = ItemID.AmethystStaff; //These have varying strenghs and should thus be fine as loot
+					int robeType = ItemID.AmethystRobe;
+					int cartType = ItemID.AmethystMinecart;
+					int phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+					int cornType = ItemID.GemTreeAmethystSeed;
+					int torchType = ItemID.PurpleTorch;
+					int potion1Type = ItemID.MiningPotion;
+					int potion2Type = ModContent.ItemType<SoulAccessPotion>();
+					if (gemType == 3)
+					{
+						ringType = ModContent.ItemType<TopazRing>();
+						gemItemType = ItemID.Topaz;
+						hookType = ItemID.TopazHook;
+						staffType = ItemID.TopazStaff; //These have varying strenghs and should thus be fine as loot
+						robeType = ItemID.TopazRobe;
+						cartType = ItemID.TopazMinecart;
+						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						cornType = ItemID.GemTreeTopazSeed;
+						torchType = ItemID.YellowTorch;
+						potion1Type = ItemID.WrathPotion;
+						potion2Type = ModContent.ItemType<VibePotion>();
+					}
+					if (gemType == 1)
+					{
+						ringType = ModContent.ItemType<SapphireRing>();
+						gemItemType = ItemID.Sapphire;
+						hookType = ItemID.SapphireHook;
+						staffType = ItemID.SapphireStaff; //These have varying strenghs and should thus be fine as loot
+						robeType = ItemID.SapphireRobe;
+						cartType = ItemID.SapphireMinecart;
+						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						cornType = ItemID.GemTreeSapphireSeed;
+						torchType = ItemID.BlueTorch;
+						potion1Type = ItemID.FlaskofGold;
+						potion2Type = ModContent.ItemType<BrittlePotion>();
+					}
+					if (gemType == 2)
+					{
+						ringType = ModContent.ItemType<EmeraldRing>();
+						gemItemType = ItemID.Emerald;
+						hookType = ItemID.EmeraldHook;
+						staffType = ItemID.EmeraldStaff; //These have varying strenghs and should thus be fine as loot
+						robeType = ItemID.EmeraldRobe;
+						cartType = ItemID.EmeraldMinecart;
+						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						cornType = ItemID.GemTreeEmeraldSeed;
+						torchType = ItemID.GreenTorch;
+						potion1Type = ItemID.ObsidianSkinPotion;
+						potion2Type = ModContent.ItemType<BluefirePotion>();
+					}
+					if (gemType == 0)
+					{
+						ringType = ModContent.ItemType<RubyRing>();
+						gemItemType = ItemID.Ruby;
+						hookType = ItemID.RubyHook;
+						staffType = ItemID.RubyStaff; //These have varying strenghs and should thus be fine as loot
+						robeType = ItemID.RubyRobe;
+						cartType = ItemID.RubyMinecart;
+						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						cornType = ItemID.GemTreeRubySeed;
+						torchType = ItemID.RedTorch;
+						potion1Type = ItemID.RagePotion;
+						potion2Type = ModContent.ItemType<NightmarePotion>();
+					}
+					if (gemType == 5)
+					{
+						ringType = ModContent.ItemType<DiamondRing>();
+						gemItemType = ItemID.Diamond;
+						hookType = ItemID.DiamondHook;
+						staffType = ItemID.DiamondStaff; //These have varying strenghs and should thus be fine as loot
+						robeType = ItemID.DiamondRobe;
+						cartType = ItemID.DiamondMinecart;
+						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						cornType = ItemID.GemTreeDiamondSeed;
+						torchType = ItemID.WhiteTorch;
+						potion1Type = ItemID.GravitationPotion;
+						potion2Type = ModContent.ItemType<AssassinationPotion>();
+					}
+					if (gemType == 6)
+					{
+						ringType = ModContent.ItemType<AmberRing>();
+						gemItemType = ItemID.Amber;
+						hookType = ItemID.AmberHook;
+						staffType = ItemID.AmberStaff; //These have varying strenghs and should thus be fine as loot
+						robeType = ItemID.AmberRobe;
+						cartType = ItemID.AmberMinecart;
+						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						cornType = ItemID.GemTreeAmberSeed;
+						torchType = ItemID.OrangeTorch;
+						potion1Type = ItemID.GillsPotion;
+						potion2Type = ModContent.ItemType<RipplePotion>();
+					}
+
+					chest.item[slot].SetDefaults(ringType); //item 1
+					slot++;
+
+					//items 2, 3
+					if (secondaryItemType == 5 || tritiaryItemType == 5) 
+					{
+						chest.item[slot].SetDefaults(phaseBladeType);
+						slot++;
+					}
+					if (secondaryItemType == 2 || tritiaryItemType == 2)
+					{
+						chest.item[slot].SetDefaults(staffType);
+						slot++;
+					}
+					if (secondaryItemType == 1 || tritiaryItemType == 1)
+					{
+						chest.item[slot].SetDefaults(hookType);
+						slot++;
+					}
+					if (secondaryItemType == 3 || tritiaryItemType == 3)
+					{
+						chest.item[slot].SetDefaults(robeType);
+						slot++;
+					}
+					if (secondaryItemType == 4 || tritiaryItemType == 4)
+					{
+						chest.item[slot].SetDefaults(cartType);
+						slot++;
+					}
+					if (secondaryItemType == 0 || tritiaryItemType == 0)
+					{
+						chest.item[slot].SetDefaults(gemItemType);
+						chest.item[slot].stack = 5 + Main.rand.Next(6); //refund 5-10 gems
+						slot++;
+					}
+                    if (secondaryItemType == tritiaryItemType)
+					{
+						chest.item[slot].SetDefaults(cornType);
+						chest.item[slot].stack = 5 + Main.rand.Next(6); //refund 5-10 gemcorns
+						slot++;
+					}
+
+					//item 4
+					if(WorldGen.genRand.Next(5) <= 1) //40%
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<OldKey>());
+						slot++;
+					}
+					else //60%
+                    {
+						if(WorldGen.genRand.NextBool(2))
+						{
+							chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						}
+						else
+						{
+							chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						}
+						slot++;
+					}
+
+					//item 5
+					chest.item[slot].SetDefaults(potion1Type);
+					chest.item[slot].stack = Main.rand.Next(1) + 2; // 2 to 3
+					slot++;
+
+					//item 6
+					chest.item[slot].SetDefaults(potion2Type);
+					chest.item[slot].stack = Main.rand.Next(1) + 2; // 2 to 3
+					slot++;
+
+					//item 7
+					chest.item[slot].SetDefaults(torchType);
+					chest.item[slot].stack = Main.rand.Next(31) + 60; // 60 to 90
+					slot++;
+
+					//item 8
+					chest.item[slot].SetDefaults(ItemID.GoldCoin);
+					chest.item[slot].stack = Main.rand.Next(1) + 1; // 1 to 2
+					slot++;
+				}
+				if (tile.TileType == ModContent.TileType<RuinedChestTile>())
+				{
+					int slot = 0;
+					Tile tile2 = Main.tile[chest.x, chest.y + 2];
+					if (tile2.TileType == ModContent.TileType<Items.Pyramid.OvergrownPyramidTileSafe>()) //This is the Amethyst Ruined Chest
+					{
+						/*chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutMilk>());
+						chest.item[slot].stack = 10; // 3 to 5
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
+						slot++;*/
+					}
+				}
+			}
 		}
 	}
 }
