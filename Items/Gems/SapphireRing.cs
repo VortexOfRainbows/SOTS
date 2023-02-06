@@ -46,7 +46,7 @@ namespace SOTS.Items.Gems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mammon's Ring");
-			Tooltip.SetDefault("Generate income when the void is gained");
+			Tooltip.SetDefault("Generate income when void is gained");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

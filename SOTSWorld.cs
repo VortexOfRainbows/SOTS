@@ -690,6 +690,7 @@ namespace SOTS
 			List<int> LihzahrdItems2 = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
 			List<int> LihzahrdItems = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
 			// Iterate chests
+			GemStructureWorldgenHelper.FillChestsWithLoot();
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest

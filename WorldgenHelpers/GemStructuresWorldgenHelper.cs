@@ -15,6 +15,10 @@ using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.Furniture;
 using System.Linq;
 using SOTS.Items.Potions;
+using SOTS.Items;
+using SOTS.Items.ChestItems;
+using SOTS.Items.Fragments;
+using SOTS.Items.Void;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -283,10 +287,10 @@ namespace SOTS.WorldgenHelpers
 			for (int i = startingX; i < endingX - 60; i++)
 			{
 				totalSpan = 0;
+				heightToBeat = 0;
 				for (int i2 = 0; i2 <= 60; i2++)
 				{
-					heightToBeat = 0;
-					for (int j = 200; j < Main.maxTilesY / 2; j++)
+					for (int j = 100; j < Main.maxTilesY / 2; j++)
 					{
 						Tile tile = Framing.GetTileSafely(i + i2, j);
 						if (tile.HasTile && tile.TileType == ModContent.TileType<Items.Pyramid.PyramidSlabTile>())
@@ -302,6 +306,10 @@ namespace SOTS.WorldgenHelpers
 							{
 								totalSpan++;
 							}
+							else
+                            {
+								totalSpan--;
+                            }
 							break;
 						}
 					}
@@ -2952,7 +2960,7 @@ namespace SOTS.WorldgenHelpers
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest
-				var tile = Main.tile[chest.x, chest.y]; // the chest tile 
+				Tile tile = Main.tile[chest.x, chest.y]; // the chest tile 
 				if (tile.TileType == GemChest)
 				{
 					int slot = 0;
@@ -2978,7 +2986,7 @@ namespace SOTS.WorldgenHelpers
 						staffType = ItemID.TopazStaff; //These have varying strenghs and should thus be fine as loot
 						robeType = ItemID.TopazRobe;
 						cartType = ItemID.TopazMinecart;
-						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						phaseBladeType = ItemID.YellowPhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
 						cornType = ItemID.GemTreeTopazSeed;
 						torchType = ItemID.YellowTorch;
 						potion1Type = ItemID.WrathPotion;
@@ -2992,7 +3000,7 @@ namespace SOTS.WorldgenHelpers
 						staffType = ItemID.SapphireStaff; //These have varying strenghs and should thus be fine as loot
 						robeType = ItemID.SapphireRobe;
 						cartType = ItemID.SapphireMinecart;
-						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						phaseBladeType = ItemID.BluePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
 						cornType = ItemID.GemTreeSapphireSeed;
 						torchType = ItemID.BlueTorch;
 						potion1Type = ItemID.FlaskofGold;
@@ -3006,7 +3014,7 @@ namespace SOTS.WorldgenHelpers
 						staffType = ItemID.EmeraldStaff; //These have varying strenghs and should thus be fine as loot
 						robeType = ItemID.EmeraldRobe;
 						cartType = ItemID.EmeraldMinecart;
-						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						phaseBladeType = ItemID.GreenPhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
 						cornType = ItemID.GemTreeEmeraldSeed;
 						torchType = ItemID.GreenTorch;
 						potion1Type = ItemID.ObsidianSkinPotion;
@@ -3020,7 +3028,7 @@ namespace SOTS.WorldgenHelpers
 						staffType = ItemID.RubyStaff; //These have varying strenghs and should thus be fine as loot
 						robeType = ItemID.RubyRobe;
 						cartType = ItemID.RubyMinecart;
-						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						phaseBladeType = ItemID.RedPhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
 						cornType = ItemID.GemTreeRubySeed;
 						torchType = ItemID.RedTorch;
 						potion1Type = ItemID.RagePotion;
@@ -3034,7 +3042,7 @@ namespace SOTS.WorldgenHelpers
 						staffType = ItemID.DiamondStaff; //These have varying strenghs and should thus be fine as loot
 						robeType = ItemID.DiamondRobe;
 						cartType = ItemID.DiamondMinecart;
-						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						phaseBladeType = ItemID.WhitePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
 						cornType = ItemID.GemTreeDiamondSeed;
 						torchType = ItemID.WhiteTorch;
 						potion1Type = ItemID.GravitationPotion;
@@ -3048,7 +3056,7 @@ namespace SOTS.WorldgenHelpers
 						staffType = ItemID.AmberStaff; //These have varying strenghs and should thus be fine as loot
 						robeType = ItemID.AmberRobe;
 						cartType = ItemID.AmberMinecart;
-						phaseBladeType = ItemID.PurplePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
+						phaseBladeType = ItemID.OrangePhaseblade; //starfury is frankly a much better weapon than these even after 1.4.4 balance changes, so giving these early should not be too big a deal
 						cornType = ItemID.GemTreeAmberSeed;
 						torchType = ItemID.OrangeTorch;
 						potion1Type = ItemID.GillsPotion;
@@ -3139,21 +3147,117 @@ namespace SOTS.WorldgenHelpers
 				if (tile.TileType == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
-					Tile tile2 = Main.tile[chest.x, chest.y + 2];
-					if (tile2.TileType == ModContent.TileType<Items.Pyramid.OvergrownPyramidTileSafe>()) //This is the Amethyst Ruined Chest
+					Tile tileBelowLeft = Main.tile[chest.x, chest.y + 2];
+					Tile tileBelowRight = Main.tile[chest.x + 1, chest.y + 2];
+					Tile tileBelowLeft2 = Main.tile[chest.x - 1, chest.y + 1];
+					Tile tileBelowRight2 = Main.tile[chest.x + 2, chest.y + 1];
+					bool isSpecialChest = false;
+					int SpecialItem = 0;
+					int fragmentItem = ModContent.ItemType<FragmentOfOtherworld>();
+					int barItem = ModContent.ItemType<AncientSteelBar>(); //most will use ancient steel
+					int potionItem = ItemID.RestorationPotion;
+					int miscItemType = ItemID.Torch;
+					if (tileBelowLeft.TileType == ModContent.TileType<Items.Pyramid.OvergrownPyramidTileSafe>() && tileBelowRight.TileType == ModContent.TileType<Items.Pyramid.OvergrownPyramidTileSafe>()) //This is the Amethyst Ruined Chest
 					{
-						/*chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
+						SpecialItem = ModContent.ItemType<RockCandy>();
+						fragmentItem = ModContent.ItemType<FragmentOfEarth>();
+						potionItem = ItemID.LesserHealingPotion;
+						isSpecialChest = true;
+					}
+					if (tileBelowLeft.TileType == TileID.Platforms && tileBelowRight.TileType == TileID.Platforms && tileBelowLeft2.TileType == TileID.Books && tileBelowRight2.TileType == TileID.Books) 
+					{
+						if(tile.WallType == WallID.Jungle) //This is the Topaz Ruined Chest
+						{
+							SpecialItem = ItemID.BladeofGrass; //temporary item
+							fragmentItem = ModContent.ItemType<FragmentOfNature>();
+							potionItem = ItemID.BottledHoney;
+							isSpecialChest = true;
+						}
+						if(tile.WallType == WallID.BorealWood) //This is the Sapphire Ruined Chest
+						{
+							SpecialItem = ModContent.ItemType<BagOfAmmoGathering>();
+							fragmentItem = ModContent.ItemType<FragmentOfPermafrost>();
+							barItem = ModContent.ItemType<FrigidBar>();
+							isSpecialChest = true;
+						}
+					}
+					if (tileBelowLeft.TileType == ModContent.TileType<EvostoneTile>() && tileBelowRight.TileType == ModContent.TileType<EvostoneTile>() && tile.WallType == EvostoneWall) //This is the Emerald Ruined Chest
+					{
+						SpecialItem = ModContent.ItemType<VorpalKnife>();
+						fragmentItem = ModContent.ItemType<FragmentOfInferno>();
+						barItem = ItemID.HellstoneBar;
+						potionItem = ItemID.GreaterHealingPotion;
+						miscItemType = ItemID.GreaterManaPotion;
+						isSpecialChest = true;
+					}
+					if (tileBelowLeft.TileType == ModContent.TileType<SootBlockTile>() && tileBelowRight.TileType == ModContent.TileType<SootBlockTile>() && (tile.WallType == WallID.IronBrick || tile.WallType == WallID.LeadBrick)) //This is the Ruby Ruined Chest
+					{
+						SpecialItem = WorldGen.crimson ? ItemID.DeathbringerPickaxe : ItemID.NightmarePickaxe; //temporary item
+						fragmentItem = ModContent.ItemType<FragmentOfEvil>();
+						miscItemType = ItemID.Bomb;
+						isSpecialChest = true;
+					}
+					if (tileBelowLeft.TileType == ModContent.TileType<EvostoneBrickTile>() && tileBelowRight.TileType == ModContent.TileType<EvostoneBrickTile>() && tile.WallType == WallID.LeadBrick) //This is the Amber Ruined Chest
+					{
+						SpecialItem = ItemID.WaterWalkingBoots; //temporary item
+						fragmentItem = ModContent.ItemType<FragmentOfTide>();
+						miscItemType = ItemID.Glowstick;
+						isSpecialChest = true;
+					}
+					if(isSpecialChest && SpecialItem != 0)
+					{
+						chest.item[slot].SetDefaults(SpecialItem);
 						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutMilk>());
-						chest.item[slot].stack = 10; // 3 to 5
+
+						chest.item[slot].SetDefaults(barItem);
+						chest.item[slot].stack = WorldGen.genRand.Next(11) + 8; //8-18 bars of the chest type
 						slot++;
-						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+
+						chest.item[slot].SetDefaults(potionItem);
+						chest.item[slot].stack = WorldGen.genRand.Next(4) + 6; //6-9
 						slot++;
-						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+
+						chest.item[slot].SetDefaults(fragmentItem);
+						chest.item[slot].stack = WorldGen.genRand.Next(4) + 4; //4-7 fragments of the chest type
 						slot++;
-						chest.item[slot].SetDefaults(ItemID.GoldCoin);
-						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
-						slot++;*/
+
+						chest.item[slot].SetDefaults(miscItemType);
+						chest.item[slot].stack = WorldGen.genRand.Next(21) + 30; //30-50 misc items of the chest type
+						if(miscItemType == ItemID.Bomb)
+						{
+							chest.item[slot].stack /= 3; //10-16 bombs
+						}
+						slot++;
+
+						if (WorldGen.genRand.NextBool(2))
+						{
+							if (WorldGen.genRand.NextBool(2))
+							{
+								chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+							}
+							else
+							{
+								chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+							}
+						}
+						else
+						{
+							chest.item[slot].SetDefaults(ModContent.ItemType<AlmondMilk>());
+							chest.item[slot].stack = 5;
+						}
+						slot++;
+
+						if (!WorldGen.genRand.NextBool(3))
+						{
+							chest.item[slot].SetDefaults(ItemID.SilverCoin);
+							chest.item[slot].stack = WorldGen.genRand.Next(30, 61); //30-60
+						}
+						else
+						{
+							chest.item[slot].SetDefaults(ItemID.GoldCoin);
+							chest.item[slot].stack = WorldGen.genRand.Next(1, 3); //1-2
+						}
+						slot++;
 					}
 				}
 			}

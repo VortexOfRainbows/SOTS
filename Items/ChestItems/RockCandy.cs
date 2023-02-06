@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items
+namespace SOTS.Items.ChestItems
 {
 	public class RockCandy : ModItem
 	{	
