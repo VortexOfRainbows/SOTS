@@ -70,7 +70,7 @@ namespace SOTS.NPCs.Boss.Lux
 			NPC.HitSound = SoundID.NPCHit54;
 			NPC.DeathSound = SoundID.NPCDeath6;
 			NPC.netAlways = false;
-			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Lux1");
+			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Lux");
 			SceneEffectPriority = SceneEffectPriority.BossHigh;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
@@ -1171,7 +1171,6 @@ namespace SOTS.NPCs.Boss.Lux
 						if (attackTimer4 < end)
 							NPC.alpha = 0;
 						SecondPhase = true;
-						Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Lux2");
 					}
 					else
 					{
