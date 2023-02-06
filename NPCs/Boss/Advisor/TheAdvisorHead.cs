@@ -276,7 +276,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
-				y += 5;
+				y += 7;
 				spriteBatch.Draw(texture, new Vector2((float)(NPC.Center.X - (int)screenPos.X) + x, (float)(NPC.Center.Y - (int)screenPos.Y) + y), null, color, 0f, drawOrigin, 1.125f, SpriteEffects.None, 0f);
 			}
 		}
