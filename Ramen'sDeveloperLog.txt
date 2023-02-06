@@ -1,10 +1,10 @@
 Dev plans:
 * Add dev item at some point
 * Figure out a way to make the Titanium Forge have a diff ambient sound than the Adamantite Forge (not priority)
-* Give moths a glow effect and dust
+
 Fixes:
 * Fix ambient tile sounds (maybe later zz)
-* Give moths animations hopefully cause they look a lil ugly without them
+
 
 Daily Log:
 

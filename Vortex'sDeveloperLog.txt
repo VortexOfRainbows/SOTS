@@ -28,7 +28,7 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Archaeologist NPC
-	1. Needs a sprite!w
+	1. Needs a sprite!
 	2. Ideas:
 		1. Could be a plain dressed archaeologist, or could be somewhat futuristic?
 		2. A travelling merchant that doesn't fight or move, therefore needs no movement frames or attack frames
@@ -45,15 +45,12 @@ Ideas:
 	a. The Dune Splicer
 7. Worldgen Step that cleans up floating trees!
 
-Order Of Gems: 
+Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
-1. Purple (Pyramid) - Acedia, Rock Candy
 2. Red (Abandoned Village) - Gula, Mechanical Liver (WIP)
 3. Orange (Abandoned Aqueduct) - Luxuria, Kelp Whip (WIP)
 4. Yellow (Lihzahrd Temple) -  Ira, Betrayer's Knife (WIP)
-5. Blue (Planetarium) - Avaritia, Bag of Ammunition Gathering
-6. Green (Void Ruins) - Invidia, Vorpal Knife
-7. White (Diamond) - Superbia, No Ruined Chest
+
 
 This is the plan currently
 
@@ -62,13 +59,11 @@ Other 1.4 related objectives:
 2. Final 1 starter house
 3. Bestiary for all enemies
 4. Evostone Armor + Fishing Rod (Void) + Claymore (Void)!
-5. Worldgen fixes + working Gem Ruins loot pools!
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
 2. Glowmasks for Corruption Trees in SOTSTP
 3. Wind mechanics for vines and banners
-4. Reminder for spriters: 
 
 Daily Log:
 
