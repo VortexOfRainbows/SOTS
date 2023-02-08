@@ -32,7 +32,9 @@ namespace SOTS.Projectiles.Earth
 			hitbox.Y = (int)Projectile.Center.Y;
 			hitbox.Width = 24;
 			hitbox.Height = 24;
-        }
+			hitbox.X -= 12;
+			hitbox.Y -= 12;
+		}
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			if (Projectile.velocity.X != oldVelocity.X)

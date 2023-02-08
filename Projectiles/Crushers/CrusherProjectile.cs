@@ -375,11 +375,12 @@ namespace SOTS.Projectiles.Crushers
 			}
 			Texture2D headTexture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin2 = new Vector2(headTexture.Width / 2, headTexture.Height / 2);
-			Main.spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, Projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			float radiansChange = Projectile.spriteDirection == 1 ? MathHelper.ToRadians(45) : MathHelper.ToRadians(135);
+			Main.spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, Projectile.rotation + radiansChange, origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			if (Projectile.type == ModContent.ProjectileType<PulverizerCrusher>())
             {
 				headTexture = Mod.Assets.Request<Texture2D>("Projectiles/Crushers/PulverizerCrusherGlow").Value;
-				Main.spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), Color.White, Projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), Color.White, Projectile.rotation + radiansChange, origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
         }

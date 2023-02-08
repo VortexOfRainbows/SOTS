@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using SOTS.Dusts;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Earth 
 {    

@@ -11,6 +11,7 @@ Acknowledged But Likely Delayed:
 2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
 3. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
 4. Texture Pack sounds to disable when block is broken (tied to specific blocks)
+5. Worldgen Step that cleans up floating trees!
 
 Update Objectives:
 1. Ghost Town!
@@ -43,7 +44,7 @@ Ideas:
 5. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
 6. Desert Key Item:
 	a. The Dune Splicer
-7. Worldgen Step that cleans up floating trees!
+
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -66,6 +67,10 @@ Things to Note For Later:
 3. Wind mechanics for vines and banners
 
 Daily Log:
+
+2/7/23
+1. Added Dune Splicer (WIP. Needs feedback and Multiplayer Balancing, and proper spawning)
+
 
 2/5/23
 1. Stellar Serpent Launcher damage 60 -> 55
