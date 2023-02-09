@@ -7,6 +7,7 @@
       BlastDoor: Blast Door
       Chest: Chest
       Dresser: Dresser
+      GemChest : Gem Chest
     }
     ItemName:
     {
@@ -278,6 +279,9 @@
       EarthenPlatingToilet: Earthen Plating Toilet
       EarthenPlatingTorch: Earthen Plating Torch
       EarthenPlatingWorkBench: Earthen Plating Work Bench
+      AmethystRing: Belphegor's Ring
+      DiamondRing: Light-Bringer's Ring
+      EmeraldRing: Leviathan's Ring
       GoopwoodBarrel: Goopwood Barrel
       GoopwoodBed: Goopwood Bed
       GoopwoodCandle: Goopwood Candle
@@ -1332,6 +1336,13 @@
       EarthenPlatingToilet: ""
       EarthenPlatingTorch: ""
       EarthenPlatingWorkBench: Also functions as an anvil
+      AmethystRing: Chain together blocks when mining, breaking up to 50 blocks at once
+      DiamondRing: 
+        '''
+        Increases damage by {defenseStat}%
+        Defense is set to {defenseStat2}
+        '''
+      EmeraldRing: Enemies have a 14.3% chance to drop double the loot
       GoopwoodBarrel: ""
       GoopwoodBed: ""
       GoopwoodCandle: ""
@@ -3445,13 +3456,6 @@
         Increases void gain by 2
         Grants autofire to the Vibrant Pistol at the cost of accuracy
         '''
-    }
-    DiamondRingText: {
-      0: 
-        '''
-        Increases damage by {defenseStat} %
-        Defense is set to {defenseStat2}
-        ''' 
     }
     SOTSConfig:
     {
