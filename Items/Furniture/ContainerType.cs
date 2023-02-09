@@ -34,7 +34,7 @@ namespace SOTS.Items.Furniture
 		protected virtual int ChestKey => ItemID.GoldenKey;
 		protected virtual int ChestDrop => ItemID.Chest;
         protected virtual int DustType => DustID.Dirt;
-        protected virtual string ChestName => "Chest";
+        protected virtual string ChestName => Language.GetTextValue("Mods.SOTS.Common.Chest");
         public override void SetStaticDefaults()
 		{
 			ContainerName.SetDefault(ChestName);

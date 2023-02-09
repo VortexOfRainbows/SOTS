@@ -9,6 +9,7 @@ using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Localization;
 
 namespace SOTS.Items.Furniture
 {
@@ -18,7 +19,7 @@ namespace SOTS.Items.Furniture
 		public virtual int OpenDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileOpen>();
 		public virtual string GetName()
 		{
-			return "Blast Door";
+			return Language.GetTextValue("Mods.SOTS.Common.BlastDoor");
 		}
 		public override bool CanExplode(int i, int j)
 		{
@@ -102,7 +103,7 @@ namespace SOTS.Items.Furniture
 		public virtual int ClosedDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileClosed>();
 		public virtual string GetName()
 		{
-			return "Blast Door";
+			return Language.GetTextValue("Mods.SOTS.Common.BlastDoor");
 		}
 		public override bool CanExplode(int i, int j)
 		{

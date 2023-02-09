@@ -48,8 +48,6 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Primordial Cluster");
-			Tooltip.SetDefault("Does the following while in your inventory:\nNature\nEarth\nAurora\nAether\n'A great gift for your friend's inventory!'");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -209,8 +207,6 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Terminal Cluster");
-			Tooltip.SetDefault("Does the following while in your inventory:\nDeluge\nUmbra\nNether\nBrilliance");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()

@@ -12,7 +12,6 @@ namespace SOTS.Items.Furniture.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Plating Platform");
 			this.SetResearchCost(200);
 		}
 		public override void SetDefaults()

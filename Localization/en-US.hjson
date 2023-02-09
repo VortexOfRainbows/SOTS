@@ -2,6 +2,12 @@
 {
   SOTS:
   {
+    Common:
+    {
+      BlastDoor: Blast Door
+      Chest: Chest
+      Dresser: Dresser
+    }
     ItemName:
     {
       AncientSteelBar: Ancient Steel Bar
@@ -3059,13 +3065,11 @@
       GoopwoodDoorClosed: Mods.SOTS.MapObject.GoopwoodDoorClosed
       GoopwoodDoorOpen: Mods.SOTS.MapObject.GoopwoodDoorOpen
       Hydroponics: Hydroponics
-      NaturePlatingBlastDoorTileClosed: Nature Plating Blast Door
-      NaturePlatingBlastDoorTileOpen: Nature Plating Blast Door
+      NaturePlatingBlastDoorTile: Nature Plating Blast Door
       NaturePlatingCapsuleTile: Nature Plating Capsule
       NaturePlatingCapsuleTile_Locked: Locked Nature Plating Capsule
       NaturePlatingTorchTile: Nature Plating Torch
-      PermafrostPlatingBlastDoorTileClosed: Permafrost Plating Blast Door
-      PermafrostPlatingBlastDoorTileOpen: Permafrost Plating Blast Door
+      PermafrostPlatingBlastDoorTile: Permafrost Plating Blast Door
       PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
       PermafrostPlatingCapsuleTile_Locked: Locked Permafrost Plating Capsule
       PermafrostPlatingTorchTile: Permafrost Plating Torch
@@ -3180,8 +3184,7 @@
       AncientGoldWorkbenchTile: ""
       EarthenPlatingBathtubTile: ""
       EarthenPlatingBedTile: ""
-      EarthenPlatingBlastDoorTileClosed: ""
-      EarthenPlatingBlastDoorTileOpen: ""
+      EarthenPlatingBlastDoorTile: ""
       EarthenPlatingBookcaseTile: ""
       EarthenPlatingBulbTile: ""
       EarthenPlatingChairTile: ""
@@ -3212,8 +3215,7 @@
       Hydroponics: ""
       NaturePlatingBathtubTile: ""
       NaturePlatingBedTile: ""
-      NaturePlatingBlastDoorTileClosed: ""
-      NaturePlatingBlastDoorTileOpen: ""
+      NaturePlatingBlastDoorTile: ""
       NaturePlatingBookcaseTile: ""
       NaturePlatingBulbTile: ""
       NaturePlatingCapsuleTile: Nature Plating Capsule
@@ -3234,8 +3236,7 @@
       PermafrostPlatingBathtubTile: ""
       PermafrostPlatingBedTile: ""
       PermafrostPlatingBenchTile: ""
-      PermafrostPlatingBlastDoorTileClosed: ""
-      PermafrostPlatingBlastDoorTileOpen: ""
+      PermafrostPlatingBlastDoorTile: Permafrost Plating Blast Door
       PermafrostPlatingBookcaseTile: ""
       PermafrostPlatingBulbTile: ""
       PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
@@ -3444,6 +3445,13 @@
         Increases void gain by 2
         Grants autofire to the Vibrant Pistol at the cost of accuracy
         '''
+    }
+    DiamondRingText: {
+      0: 
+        '''
+        Increases damage by {defenseStat} %
+        Defense is set to {defenseStat2}
+        ''' 
     }
     SOTSConfig:
     {
