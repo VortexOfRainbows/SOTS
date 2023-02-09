@@ -1,0 +1,124 @@
+using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
+using System.IO;
+using SOTS.Utilities;
+using SOTS.Void;
+using SOTS.Prim.Trails;
+
+namespace SOTS.Projectiles.Blades
+{    
+    public class BetrayersSlash : SOTSBlade
+	{
+		public override Color color1 => new Color(189, 6, 26);
+		public override Color color2 => new Color(151, 176, 218);
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Betrayer's Slash");
+		}
+		public override void SafeSetDefaults()
+		{
+			Projectile.localNPCHitCooldown = 5;
+		}
+		public override float HitboxWidth => 24;
+		public override float AdditionalTipLength => 32;
+		public override float handleOffset => 18;
+		public override float handleSize => 18;
+		public override Vector2 drawOrigin => new Vector2(7, 11);
+		public override bool isDiagonalSprite => false;
+        public override void SwingSound(Player player)
+		{
+			SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.6f * speedModifier); //playsound function
+		}
+		public override float speedModifier => Projectile.ai[1];
+		public override float GetBaseSpeed(float swordLength)
+		{
+			return 3f + (1.0f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)) + (thisSlashNumber == 1 ? 2.7f : 0);
+		}
+		public override float MeleeSpeedMultiplier => 0.5f; //melee speed only has 50% effectiveness on this weapon
+		public override float OverAllSpeedMultiplier => 5f;
+		public override float MinSwipeDistance => 96;
+		public override float MaxSwipeDistance => 96;
+		public override float ArcStartDegrees => thisSlashNumber == 1 ? 270 : 270 - 60f / speedModifier;
+		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 830f : 262.5f) + (1800f / distance / speedModifier);
+		public override float swingSizeMult => 1.0f;
+		public override float ArcOffsetFromPlayer => thisSlashNumber == 1 ? 0 : 0.25f;
+		public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
+		{
+			original.Y *= (0.75f + swingNumber * 0.005f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+			return original;
+		}
+		public override void SlashPattern(Player player, int slashNumber)
+		{
+			int damage = Projectile.damage;
+			float speedBonus = 0;
+			if (slashNumber == 2)
+				speedBonus = 0.1f;
+			if (slashNumber == 1)
+				speedBonus = -0.3f;
+			if (slashNumber > 0)
+			{
+				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1] + speedBonus);
+				if (proj.ModProjectile is VorpalKnifeSlash v)
+				{
+					if (slashNumber == 2)
+						v.distance = distance * 0.9f;
+					if (slashNumber == 1)
+						v.distance = distance * 1.2f;
+				}
+			}
+		}
+		public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
+		{
+			float amt = Main.rand.NextFloat(1.0f, 1.5f);
+			float dustScale = 1f;
+			float rand = Main.rand.NextFloat(0.9f, 1.1f);
+			int type = ModContent.DustType<Dusts.CopyDust4>();
+			if (Main.rand.NextBool(5))
+				type = DustID.Blood;
+			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + bladeDirection.SafeNormalize(Vector2.Zero) * 24, 16, 16, type);
+			dust.velocity *= 0.45f;
+			dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
+			dust.noGravity = true;
+			dust.scale *= 0.2f / rand;
+			dust.scale += 1.1f / rand * dustScale;
+			dust.fadeIn = 0.1f;
+			if (type == ModContent.DustType<Dusts.CopyDust4>())
+				dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+
+			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
+			for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
+			{
+				rand = Main.rand.NextFloat(0.9f, 1.1f);
+				type = ModContent.DustType<Dusts.CopyDust4>();
+				if (Main.rand.NextBool(3))
+					type = DustID.Blood;
+				dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
+				dust.velocity *= 0.1f;
+				dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.3f, 0.4f) * rand;
+				dust.noGravity = true;
+				dust.scale *= 0.1f;
+				dust.scale += rand;
+				dust.fadeIn = 0.1f;
+				if (type == ModContent.DustType<Dusts.CopyDust4>())
+					dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+			}
+		}
+		public override float TrailDistanceFromHandle => 40f;
+		public override float AddedTrailLength => 4f;
+        public override void PostAI()
+        {
+			base.PostAI();
+			if (thisSlashNumber == 1)
+            {
+				Projectile.localNPCHitCooldown = 3;
+				distance *= 0.97f;
+			}
+		}
+    }
+}
+		
+			

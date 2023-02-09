@@ -84,6 +84,7 @@ namespace SOTS.Projectiles.Blades
 		public virtual float handleOffset => 24;
 		public virtual float handleSize => 24;
 		public virtual Vector2 drawOrigin => new Vector2(10, 52);
+		public virtual bool isDiagonalSprite => true;
 		public void Draw(SpriteBatch spriteBatch)
         {
 			Player player = Main.player[Projectile.owner];
@@ -106,7 +107,7 @@ namespace SOTS.Projectiles.Blades
 				origin = new Vector2(texture.Width - drawOrigin.X, drawOrigin.Y);
 			float standardSwordLength = (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) - handleSize;
 			float scaleMultiplier = length / standardSwordLength;
-			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
+			float rotation = toProjectile.ToRotation() + (isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : 0);
 			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		float counter = 225;
@@ -247,24 +248,12 @@ namespace SOTS.Projectiles.Blades
 		}
 		public virtual void SlashPattern(Player player, int slashNumber)
         {
-			float speedBonus = 0.14f;
-			if (slashNumber < 12)
-				speedBonus = 0;
-			if (slashNumber == 2)
-				speedBonus = -1.0f;
+			float speedBonus = 0.2f;
 			int damage = Projectile.damage;
-			if (slashNumber == 1)
+			Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1] + speedBonus);
+			if (proj.ModProjectile is VertebraekerSlash a)
 			{
-				damage = (int)(damage * 1.0f);
-				Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<VertebraekerThrow>(), (int)(damage * 1.2f), Projectile.knockBack, player.whoAmI, 0, 0);
-			}
-			else
-			{
-				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1] + speedBonus);
-				if (proj.ModProjectile is VertebraekerSlash a)
-				{
-					a.distance = distance * 0.9f + 8;
-				}
+				a.distance = distance * 0.9f + 8;
 			}
 		}
 		public virtual void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
