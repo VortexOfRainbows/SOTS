@@ -28,6 +28,6 @@ namespace SOTS.Items.Furniture.AncientGold
             return false;
         }
         protected override int DresserDrop => ModContent.ItemType<AncientGoldDresser>();
-        protected override string DresserName => "Ancient Gold Dresser";
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.AncientGoldDresserTile");
     }
 }

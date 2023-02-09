@@ -3051,8 +3051,7 @@
       AncientGoldDoorOpen: Mods.SOTS.MapObject.AncientGoldDoorOpen
       AncientGoldThroneTile: Ancient Gold Throne
       AncientGoldTorchTile: Ancient Gold Torch
-      EarthenPlatingBlastDoorTileClosed: Earthen Plating Blast Door
-      EarthenPlatingBlastDoorTileOpen: Earthen Plating Blast Door
+      EarthenPlatingBlastDoorTile: Earthen Plating Blast Door
       EarthenPlatingStorageTile: Earthen Plating Storage
       EarthenPlatingStorageTile_Locked: Locked Earthen Plating Storage
       EarthenPlatingTorchTile: Earthen Plating Torch
