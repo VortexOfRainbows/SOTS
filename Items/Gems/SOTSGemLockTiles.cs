@@ -22,7 +22,6 @@ namespace SOTS.Items.Gems
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Mysterious Switch");
 			AddMapEntry(new Color(34, 25, 48), name);
 			DustType = DustID.Obsidian;
 			MinPick = 250;

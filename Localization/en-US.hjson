@@ -282,6 +282,8 @@
       AmethystRing: Belphegor's Ring
       DiamondRing: Light-Bringer's Ring
       EmeraldRing: Leviathan's Ring
+      RubyRing: Beelzebub's Ring
+      SapphireRing: Mammon's Ring
       GoopwoodBarrel: Goopwood Barrel
       GoopwoodBed: Goopwood Bed
       GoopwoodCandle: Goopwood Candle
@@ -1343,6 +1345,12 @@
         Defense is set to {defenseStat2}
         '''
       EmeraldRing: Enemies have a 14.3% chance to drop double the loot
+      RubyRing: 
+        '''
+        Killed enemies always drop hearts
+        Collecting hearts lengthens the duration of active buffs
+        '''
+      SapphireRing: Generate income when void is gained
       GoopwoodBarrel: ""
       GoopwoodBed: ""
       GoopwoodCandle: ""
@@ -3336,6 +3344,7 @@
       WormwoodTile: ""
       TheBars: ""
       ArkhalisChainTile: ""
+      SOTSGemLockTiles: Mysterious Switch
     }
     Bestiary: {
       SomeThing: A holographic mimic of an average slime. Its source of energy is unknown.
