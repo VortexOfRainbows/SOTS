@@ -111,7 +111,7 @@ namespace SOTS.Items.Chaos
         }
 		public string GetTooltip(int gem)
 		{
-			string text = string text = Language.GetTextValue($"Mods.SOTS.VoidmageIncubator.{gem}");
+			string text = Language.GetTextValue($"Mods.SOTS.VoidmageIncubator.{gem}");
 		}
 		public override void AddRecipes()
 		{
