@@ -3371,7 +3371,7 @@
       2: Increases attack speed by 12%
       3: Increases critical strike chance by 10%
       4: Increases critical strike damage by 30%
-      5:  
+      5: 
         '''
         Increases healing recieved from potions by 40
         Increases life regeneration by 2 
@@ -3380,10 +3380,29 @@
       7: Increases void regeneration speed by 20%      
 			}
       VisionAmuletTextList2: {
-			0: "\nShops prices lowered by 20%"
-			1: "\nIncreases buff duration by 25%\nDecreases mana cost by 10%"
-      2: "\nIncreases melee speed and movement speed by 10%\nIncreases jump speed"
-      3: "\nProvides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations\nIncreases max mana and mana recieved from potions by 40" 
+			0: 
+        '''
+
+        Shops prices lowered by 20%
+        '''
+			1: 
+        '''
+
+        Increases buff duration by 25%
+        Decreases mana cost by 10% 
+        '''
+      2: 
+        '''
+
+        Increases melee speed and movement speed by 10%
+        Increases jump speed
+        '''
+      3: 
+        '''
+
+        Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
+        Increases max mana and mana recieved from potions by 40
+        '''
 			}
     SOTSConfig:
     {

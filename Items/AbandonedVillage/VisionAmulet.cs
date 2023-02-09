@@ -132,8 +132,8 @@ namespace SOTS.Items.AbandonedVillage
         }
 		public string GetTooltip(int gem, int frame)
 		{
-			string text += Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList.{gem}");
-			string text2 += Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList2.{frame}");
+			string text = Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList.{gem}");
+			text += Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList2.{frame}");
 		}
 	}
 }
