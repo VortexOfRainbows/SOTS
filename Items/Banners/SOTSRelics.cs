@@ -172,7 +172,6 @@ namespace SOTS.Items.Banners
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pharaoh's Curse Relic");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

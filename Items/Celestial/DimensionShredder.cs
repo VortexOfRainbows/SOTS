@@ -13,8 +13,6 @@ namespace SOTS.Items.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dimension Shredder");
-			Tooltip.SetDefault("Summons dimensional wisps around you that fire towards your cursor\nRight click to summon a cluster of dimensional wisps\nBullets travel through blocks and release lightning for 50% damage\n66% chance to not consume ammo\n'Tear a rift through your enemies'");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			this.SetResearchCost(1);
 		}

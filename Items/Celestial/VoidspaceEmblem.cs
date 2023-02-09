@@ -12,8 +12,6 @@ namespace SOTS.Items.Celestial
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Voidspace Emblem");
-			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nIncreases void crit by 10%\nCritical strikes heal small amounts of void\nReduces void cost by 8%\nIncreases void gain by 4 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
