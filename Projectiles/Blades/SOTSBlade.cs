@@ -14,6 +14,8 @@ namespace SOTS.Projectiles.Blades
     public abstract class SOTSBlade : ModProjectile
     {
 		public int thisSlashNumber => Math.Abs((int)Projectile.ai[0]);
+		private float delayDeathSlowdown = 1f;
+		public virtual float delayDeathSlowdownAmount => 0.5f;
 		public virtual Color color1 => new Color(255, 185, 81);
 		public virtual Color color2 => new Color(209, 117, 61);
         public override void SetStaticDefaults()
@@ -41,6 +43,7 @@ namespace SOTS.Projectiles.Blades
 		}
 		public virtual float HitboxWidth => 30;
 		public virtual float AdditionalTipLength => 30;
+		public int delayDeathTime = 0;
 		public virtual void SafeSetDefaults()
 		{
 			Projectile.localNPCHitCooldown = 15;
@@ -84,6 +87,7 @@ namespace SOTS.Projectiles.Blades
 		public virtual float handleOffset => 24;
 		public virtual float handleSize => 24;
 		public virtual Vector2 drawOrigin => new Vector2(10, 52);
+		public virtual bool isDiagonalSprite => true;
 		public void Draw(SpriteBatch spriteBatch)
         {
 			Player player = Main.player[Projectile.owner];
@@ -106,7 +110,7 @@ namespace SOTS.Projectiles.Blades
 				origin = new Vector2(texture.Width - drawOrigin.X, drawOrigin.Y);
 			float standardSwordLength = (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) - handleSize;
 			float scaleMultiplier = length / standardSwordLength;
-			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
+			float rotation = toProjectile.ToRotation() + (isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : MathHelper.ToRadians(90));
 			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		float counter = 225;
@@ -227,15 +231,27 @@ namespace SOTS.Projectiles.Blades
 				dustAway = ovalArea;
 				Projectile.rotation = dustAway.ToRotation();
 			}
+			float totalSwipeDegrees = swipeDegreesTotal;
 			float incremendAmount = spinSpeed * FetchDirection;
+			if (timeLeftCounter > totalSwipeDegrees)
+			{
+				if (delayDeathTime > 0)
+				{
+					delayDeathTime--;
+					delayDeathSlowdown *= delayDeathSlowdownAmount;
+					incremendAmount *= delayDeathSlowdown;
+				}
+			}
 			float iterator2 = (float)Math.Abs(incremendAmount);
 			timeLeftCounter += iterator2;
 			counter += incremendAmount;
-			float totalSwipeDegrees = swipeDegreesTotal;
 			if (timeLeftCounter > totalSwipeDegrees)
             {
-				Projectile.hide = true;
-				Projectile.Kill();
+				if(delayDeathTime <= 0)
+				{
+					Projectile.hide = true;
+					Projectile.Kill();
+				}
             }
 			else
             {
@@ -247,24 +263,12 @@ namespace SOTS.Projectiles.Blades
 		}
 		public virtual void SlashPattern(Player player, int slashNumber)
         {
-			float speedBonus = 0.14f;
-			if (slashNumber < 12)
-				speedBonus = 0;
-			if (slashNumber == 2)
-				speedBonus = -1.0f;
+			float speedBonus = 0.2f;
 			int damage = Projectile.damage;
-			if (slashNumber == 1)
+			Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1] + speedBonus);
+			if (proj.ModProjectile is VertebraekerSlash a)
 			{
-				damage = (int)(damage * 1.0f);
-				Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 9f, ModContent.ProjectileType<VertebraekerThrow>(), (int)(damage * 1.2f), Projectile.knockBack, player.whoAmI, 0, 0);
-			}
-			else
-			{
-				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1] + speedBonus);
-				if (proj.ModProjectile is VertebraekerSlash a)
-				{
-					a.distance = distance * 0.9f + 8;
-				}
+				a.distance = distance * 0.9f + 8;
 			}
 		}
 		public virtual void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)

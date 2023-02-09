@@ -73,6 +73,7 @@ Daily Log:
 1. Pyrocide Damage 90 -> 84
 2. Upgraded dissolving loot drops from biome chest pools
 3. Desert biome chest now spawns in the sky
+4. Added framework for Betrayer's Knife
 
 2/7/23
 1. Added Dune Splicer (WIP. Needs feedback and Multiplayer Balancing, and proper spawning)
