@@ -3361,6 +3361,30 @@
       PlanetariumBiome: Drops in Planetarium biome
       OnFire: Drops if on fire
     }
+    VisionAmuletTextList: {
+			0: Reduces damage taken by 10%
+			1: 
+        '''
+        Increases max minions and sentries by 1
+        Increases damage by 10%
+        '''
+      2: Increases attack speed by 12%
+      3: Increases critical strike chance by 10%
+      4: Increases critical strike damage by 30%
+      5:  
+        '''
+        Increases healing recieved from potions by 40
+        Increases life regeneration by 2 
+        '''
+      6: Increases max life by 80
+      7: Increases void regeneration speed by 20%      
+			}
+      VisionAmuletTextList2: {
+			0: "\nShops prices lowered by 20%"
+			1: "\nIncreases buff duration by 25%\nDecreases mana cost by 10%"
+      2: "\nIncreases melee speed and movement speed by 10%\nIncreases jump speed"
+      3: "\nProvides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations\nIncreases max mana and mana recieved from potions by 40" 
+			}
     SOTSConfig:
     {
       Config:

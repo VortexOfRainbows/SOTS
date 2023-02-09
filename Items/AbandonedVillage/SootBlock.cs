@@ -25,7 +25,6 @@ namespace SOTS.Items.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Contains remnants of burned material inside\nCan be used in an Extractinator"); 
 			ItemID.Sets.ExtractinatorMode[Type] = Type;
 			this.SetResearchCost(10);
 		}
