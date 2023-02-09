@@ -1341,6 +1341,9 @@
       AmethystRing: Chain together blocks when mining, breaking up to 50 blocks at once
       DiamondRing: 
         '''
+        '''
+      DiamondRingText: 
+        '''
         Increases damage by {defenseStat}%
         Defense is set to {defenseStat2}
         '''
