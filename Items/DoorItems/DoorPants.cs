@@ -17,6 +17,8 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Door Pants");
+			Tooltip.SetDefault("Accelerates horizontal movement when going through doors\nBuilds up speed while standing in doors");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -25,7 +27,7 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.DoorItems");
+			player.setBonus = "Acceleration lasts longer\nBuild up speed faster";
 			DoorPlayer doorPlayer = DoorPlayer.ModPlayer(player);
 			doorPlayer.doorPants++;
 		}

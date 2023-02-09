@@ -12,6 +12,8 @@ namespace SOTS.Items.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Soul Eater");
+			Tooltip.SetDefault("Charge to increase damage up to 1000%\nTakes 2.5 seconds to reach max charge\nKilled enemies regenerate mana and void");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

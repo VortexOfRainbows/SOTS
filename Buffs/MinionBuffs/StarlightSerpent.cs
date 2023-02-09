@@ -8,6 +8,8 @@ namespace SOTS.Buffs.MinionBuffs
     {
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Crystal Serpent");
+			Description.SetDefault("A Crystal Serpent assists with combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

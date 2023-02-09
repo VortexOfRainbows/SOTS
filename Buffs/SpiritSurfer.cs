@@ -7,6 +7,8 @@ namespace SOTS.Buffs
     {	
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Spirit Surfer");
+			Description.SetDefault("Surf across the interdimensional plane!");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;
         }

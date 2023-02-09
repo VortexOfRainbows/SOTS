@@ -13,6 +13,8 @@ namespace SOTS.Items.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Cataclysm Spheres");
+			Tooltip.SetDefault("Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 100% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

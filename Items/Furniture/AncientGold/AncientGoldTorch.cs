@@ -84,6 +84,7 @@ namespace SOTS.Items.Furniture.AncientGold
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Ancient Gold Torch");
 			AddMapEntry(new Color(255, 220, 100), name);
 			DustType = DustID.GoldCoin;
 			ItemDrop = ItemType<AncientGoldTorch>();

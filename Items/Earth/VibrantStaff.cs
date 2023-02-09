@@ -17,6 +17,8 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Vibrant Staff");
+			Tooltip.SetDefault("Fires a homing bolt");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

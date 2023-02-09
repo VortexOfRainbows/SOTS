@@ -8,6 +8,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Cybernetic Enhancements");
+			Description.SetDefault("Increased void damage by 10%");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;

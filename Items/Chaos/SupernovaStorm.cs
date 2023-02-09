@@ -36,6 +36,8 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Supernova Storm");
+			Tooltip.SetDefault("Calls down a Supernova Beam from the sky\nCauses enemies to rupture into homing bolts for 3x140% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

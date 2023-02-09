@@ -11,6 +11,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Clover Charm");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to steal life\n2% increased crit chance");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -37,6 +39,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Void Charm");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to regenerate void\n2% increased crit chance");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -63,6 +67,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Soul Charm");
+			Tooltip.SetDefault("Critical strikes steal life, regenerate void, and recover mana\n2% increased crit chance");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

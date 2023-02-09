@@ -8,6 +8,7 @@ namespace SOTS.Items.ChestItems
 	{	
 		public override void SetStaticDefaults()
 		{
+			Tooltip.SetDefault("Increases pickaxe power by 5\nIncreases mining speed, melee speed, and movement speed by 5%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

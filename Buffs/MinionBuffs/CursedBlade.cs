@@ -8,6 +8,8 @@ namespace SOTS.Buffs.MinionBuffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Cursed Blade");
+            Description.SetDefault("Cursed Blades assist you in combat");
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }

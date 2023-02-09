@@ -7,6 +7,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+           DisplayName.SetDefault("Sulfur Burn");
+			Description.SetDefault("Soul power draining");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = true;

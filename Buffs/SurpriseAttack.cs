@@ -7,7 +7,9 @@ namespace SOTS.Buffs
     public class SurpriseAttack : ModBuff
     {
         public override void SetStaticDefaults()
-        {  
+        {
+            DisplayName.SetDefault("Surprise Attack");
+			Description.SetDefault("Melee damage increased by 50%\n'*Teleports behind you*'");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;

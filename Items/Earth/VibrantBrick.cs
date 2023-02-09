@@ -16,6 +16,7 @@ namespace SOTS.Items.Earth
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Vibrant Brick");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -43,6 +44,7 @@ namespace SOTS.Items.Earth
 			Main.tileLighted[Type] = true;
 			ItemDrop = ModContent.ItemType<VibrantBrick>();
 			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Vibrant Brick");
 			AddMapEntry(new Color(181, 220, 97), name);
 			MineResist = 1.0f;
 			HitSound = SoundID.Tink;

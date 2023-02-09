@@ -10,6 +10,8 @@ namespace SOTS.Items.Flails
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("North Star");
+            Tooltip.SetDefault("Conjures polar stars that do 70% damage and explode for 210% damage");
             this.SetResearchCost(1);
         }
         public override void SafeSetDefaults()

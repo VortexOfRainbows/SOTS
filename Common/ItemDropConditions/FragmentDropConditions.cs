@@ -2,7 +2,6 @@ using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 
 namespace SOTS.Common.ItemDropConditions
 {
@@ -27,7 +26,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.ForestAndJungleBiomes");
+			return "Drops in forest and jungle biomes";
 		}
 	}
 	public class EarthFragmentDropCondition : IItemDropRuleCondition
@@ -50,7 +49,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.PyramidAndDesertAndUndergroundBiomes");
+			return "Drops in Pyramid, desert, and underground biomes";
 		}
 	}
 	public class PermafrostFragmentDropCondition : IItemDropRuleCondition
@@ -73,7 +72,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.ColdBiomes");
+			return "Drops in cold biomes";
 		}
 	}
 	public class OtherworldFragmentDropCondition : IItemDropRuleCondition
@@ -96,7 +95,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.SkyAndMeteorBiomes");
+			return "Drops in sky and meteor biomes";
 		}
 	}
 	public class TideFragmentDropCondition : IItemDropRuleCondition
@@ -119,7 +118,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.BeachAndDungeonBiomes");
+			return "Drops in beach and dungeon biomes";
 		}
 	}
 	public class InfernoFragmentDropCondition : IItemDropRuleCondition
@@ -142,7 +141,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.Underworld");
+			return "Drops in the underworld";
 		}
 	}
 	public class EvilFragmentDropCondition : IItemDropRuleCondition
@@ -165,7 +164,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.EvilBiome");
+			return "Drops in the evil biome";
 		}
 	}
 	public class ChaosFragmentDropCondition : IItemDropRuleCondition
@@ -188,7 +187,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.HallowBiome");
+			return "Drops in the hallow biome";
 		}
 	}
 	public class BeachDropCondition : IItemDropRuleCondition
@@ -211,7 +210,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.BeachBiome");
+			return "Drops in the beach biome";
 		}
 	}
 	public class DungeonDropCondition : IItemDropRuleCondition
@@ -234,7 +233,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.Dungeon");
+			return "Drops in the dungeon";
 		}
 	}
 	public class PlanetariumDropCondition : IItemDropRuleCondition
@@ -257,7 +256,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.PlanetariumBiome");
+			return "Drops in Planetarium biome";
 		}
 	}
 	public class OnFireCondition : IItemDropRuleCondition
@@ -279,7 +278,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.OnFire");
+			return "Drops if on fire";
 		}
     }
 }

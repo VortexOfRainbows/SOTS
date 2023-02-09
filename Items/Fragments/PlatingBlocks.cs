@@ -74,6 +74,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Nature Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -131,6 +132,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Earthen Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -190,6 +192,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Permafrost Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -253,6 +256,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Otherworld Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -310,6 +314,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Tide Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -371,6 +376,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Evil Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -430,6 +436,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Chaos Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -493,6 +500,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Inferno Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -564,6 +572,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Ultimate Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

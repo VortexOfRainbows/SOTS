@@ -13,6 +13,8 @@ namespace SOTS.Items.Evil
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Tooth Ache");
+            Tooltip.SetDefault("Strike with 3 slashes, then toss a spinning blade for 80% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

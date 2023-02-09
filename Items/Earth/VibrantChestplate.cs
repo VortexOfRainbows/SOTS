@@ -26,6 +26,8 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Vibrant Chestplate");
+			Tooltip.SetDefault("Increases void damage by 10% and ranged damage by 5%");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)

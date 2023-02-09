@@ -20,6 +20,7 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Trophy");
 			AddMapEntry(new Color(120, 85, 60), name);
 		}
         public override bool CreateDust(int i, int j, ref int type)

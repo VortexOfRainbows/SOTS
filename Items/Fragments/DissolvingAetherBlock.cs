@@ -11,6 +11,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Purple Aether Block");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

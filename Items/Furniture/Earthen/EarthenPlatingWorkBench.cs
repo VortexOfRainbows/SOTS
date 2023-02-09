@@ -12,6 +12,7 @@ namespace SOTS.Items.Furniture.Earthen
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("Also functions as an anvil");
             this.SetResearchCost(1);
         }
         public override void SetDefaults()

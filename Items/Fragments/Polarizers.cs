@@ -13,6 +13,8 @@ namespace SOTS.Items.Fragments
 	{	
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Worldly Polarizer");
+			Tooltip.SetDefault("Increases damage, endurance, and movement speed by 3%\nChanges the effects of worldly dissolving elements in your inventory");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -43,6 +45,8 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Thermal Polarizer");
+			Tooltip.SetDefault("Increases max life, mana, and void by 20\nChanges the effects of thermal dissolving elements in your inventory");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -72,6 +76,8 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Exotic Polarizer");
+			Tooltip.SetDefault("Increases jump speed, life regen, and void gain by 2\nChanges the effects of exotic dissolving elements in your inventory");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -102,6 +108,8 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Ultimate Polarizer");
+			Tooltip.SetDefault("Increases damage, endurance, and movement speed by 3%\nIncreases max life, mana, and void by 20\nIncreases jump speed, life regen, and void gain by 2\nChanges the effects of all dissolving elements in your inventory");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

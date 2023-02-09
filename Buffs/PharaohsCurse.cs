@@ -9,6 +9,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Pharaoh's Curse");
+			Description.SetDefault("Something is watching you, spawn rates increased");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = true;

@@ -8,6 +8,8 @@ namespace SOTS.Buffs.MinionBuffs
     {
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Virtuous");
+			Description.SetDefault("'Spiritual Companionship'");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

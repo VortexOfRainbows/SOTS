@@ -8,6 +8,8 @@ namespace SOTS.Buffs
     {	
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Shattered");
+			Description.SetDefault("Next hit will hurt a lot!");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

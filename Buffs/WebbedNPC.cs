@@ -8,6 +8,8 @@ namespace SOTS.Buffs
     {	
         public override void SetStaticDefaults()
         {
+			DisplayName.SetDefault("Webbed");
+			Description.SetDefault("Slowed, but only for enemies");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

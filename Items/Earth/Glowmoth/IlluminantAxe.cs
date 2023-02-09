@@ -14,7 +14,9 @@ namespace SOTS.Items.Earth.Glowmoth
 	{
 		public override void SetStaticDefaults()
 		{
-			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			DisplayName.SetDefault("Illuminant Axe");
+            Tooltip.SetDefault("Releases wandering energy bolts for 60% damage\nRight click to toss the axe, which sticks to walls\nRight click again to recall the axe");
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()

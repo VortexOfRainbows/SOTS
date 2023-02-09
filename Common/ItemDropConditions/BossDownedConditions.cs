@@ -2,7 +2,6 @@ using SOTS.NPCs.Inferno;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace SOTS.Common.ItemDropConditions
 {
@@ -26,7 +25,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatSubspaceSerpent");
+			return "Drops if Subspace Serpent has been defeated";
 		}
 	}
 	public class DownedAdvisorDropCondition : IItemDropRuleCondition
@@ -48,7 +47,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatAdvisor");
+			return "Drops if Advisor has been defeated";
 		}
 	}
 	public class PreCurseDropCondition : IItemDropRuleCondition
@@ -70,7 +69,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatPharaohsCurseBefor");
+			return "Before Pharaoh's Curse has been defeated";
 		}
 	}
 	public class DownedCurseDropCondition : IItemDropRuleCondition
@@ -92,7 +91,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatPharaohsCurse");
+			return "After Pharaoh's Curse has been defeated";
 		}
 	}
 	public class PreBoss1DropCondition : IItemDropRuleCondition
@@ -114,7 +113,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatEyeofCthulhuBefor");
+			return "Before the Eye of Cthulhu has been defeated";
 		}
 	}
 	public class PostBoss1DropCondition : IItemDropRuleCondition
@@ -136,7 +135,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatEyeofCthulhu");
+			return "After the Eye of Cthulhu has been defeated";
 		}
 	}
 	public class OtherworldSpiritAlternateCondition : IItemDropRuleCondition
@@ -158,7 +157,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.Killedfully");
+			return "Drops when killed fully";
 		}
 	}
 	public class IsSansWisp : IItemDropRuleCondition
@@ -181,7 +180,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.SansUndertale");
+			return "Sans Undertale";
 		}
 	}
 	public class NotSansWisp : IItemDropRuleCondition
@@ -204,7 +203,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.OrangeLesserWisps");
+			return "Orange Lesser Wisps";
 		}
 	}
 	public class PreBoss1DropConditionEoW : IItemDropRuleCondition
@@ -226,7 +225,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatEyeofCthulhuBefor");
+			return "Before the Eye of Cthulhu has been defeated";
 		}
 	}
 	public class PostBoss1DropConditionEoW : IItemDropRuleCondition
@@ -248,7 +247,7 @@ namespace SOTS.Common.ItemDropConditions
 		}
 		public string GetConditionDescription()
 		{
-			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatEyeofCthulhu");
+			return "After the Eye of Cthulhu has been defeated";
 		}
 	}
 }

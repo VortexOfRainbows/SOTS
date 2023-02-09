@@ -8,6 +8,8 @@ namespace SOTS.Items.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Ancient Steel Bar");
+			Tooltip.SetDefault("'An ancient proto-steel used by various civilizations... and goblins'");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

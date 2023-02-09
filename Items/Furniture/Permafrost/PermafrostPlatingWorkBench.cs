@@ -12,6 +12,7 @@ namespace SOTS.Items.Furniture.Permafrost
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("Also functions as an anvil");
             this.SetResearchCost(1);
         }
         public override void SetDefaults()

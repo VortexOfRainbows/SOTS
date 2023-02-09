@@ -7,6 +7,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Ripple");
+			Description.SetDefault("Release waves of damage periodically");   
             Main.buffNoSave[Type] = false;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;

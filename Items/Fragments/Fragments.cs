@@ -10,6 +10,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Nature");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -25,6 +26,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Earth");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -40,6 +42,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Permafrost");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -55,6 +58,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Tide");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -70,6 +74,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Otherworld");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -85,6 +90,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Evil");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -112,6 +118,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Chaos");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -127,6 +134,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Fragment of Inferno");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

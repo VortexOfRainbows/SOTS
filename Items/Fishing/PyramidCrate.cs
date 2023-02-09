@@ -16,6 +16,8 @@ namespace SOTS.Items.Fishing
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Pyramid Crate");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 			this.SetResearchCost(10);
 			ItemID.Sets.IsFishingCrate[Type] = true;
 		}
@@ -174,6 +176,7 @@ namespace SOTS.Items.Fishing
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
 			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Pyramid Crate");
 			AddMapEntry(new Color(200, 180, 100), name);
 			TileObjectData.addTile(Type);
 		}

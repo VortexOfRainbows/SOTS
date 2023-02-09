@@ -8,6 +8,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Void Recovery");
+			Description.SetDefault("Soul returning");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

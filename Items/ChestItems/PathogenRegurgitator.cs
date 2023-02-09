@@ -12,6 +12,8 @@ namespace SOTS.Items.ChestItems
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Pathogen Regurgitator");
+            Tooltip.SetDefault("Fire pathogen balls\nHits may infect enemies for 12 damage per second\nWhen an infected enemy is killed, it releases more pathogen balls");
             this.SetResearchCost(1);
         }
         public override void SetDefaults()

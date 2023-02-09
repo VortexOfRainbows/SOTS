@@ -12,6 +12,7 @@ namespace SOTS.Items.Furniture.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Permafrost Plating Platform");
 			this.SetResearchCost(200);
 		}
 		public override void SetDefaults()

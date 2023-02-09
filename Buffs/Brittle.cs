@@ -7,6 +7,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Brittle");
+			Description.SetDefault("Getting hit surrounds you with ice shards");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;

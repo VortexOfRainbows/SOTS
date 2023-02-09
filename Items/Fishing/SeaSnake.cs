@@ -9,6 +9,8 @@ namespace SOTS.Items.Fishing
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Water Snake");
+			Tooltip.SetDefault("'Not actually venomous'");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()

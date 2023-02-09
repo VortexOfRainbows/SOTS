@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Nature
 {
@@ -11,6 +10,7 @@ namespace SOTS.Items.Furniture.Nature
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Nature Plating Blast Door");
 			//Tooltip.SetDefault("Cannot be opened by NPCs");
 			this.SetResearchCost(1);
 		}
@@ -33,7 +33,7 @@ namespace SOTS.Items.Furniture.Nature
 		public override int OpenDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileOpen>();
 		public override string GetName()
         {
-			return Language.GetTextValue("Mods.SOTS.MapObject.NaturePlatingBlastDoor");
+			return "Nature Plating Blast Door";
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -47,7 +47,7 @@ namespace SOTS.Items.Furniture.Nature
 		public override int ClosedDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileClosed>();
 		public override string GetName()
 		{
-			return Language.GetTextValue("Mods.SOTS.MapObject.NaturePlatingBlastDoor");
+			return "Nature Plating Blast Door";
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

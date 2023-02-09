@@ -16,6 +16,8 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Harvester's Scythe");
+			Tooltip.SetDefault("Increases critical strike damage by 20%\nEnemies have a 10% chance to drop double the loot, or 20% when killed by critical strike");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

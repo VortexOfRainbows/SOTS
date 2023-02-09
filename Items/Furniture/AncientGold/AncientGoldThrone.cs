@@ -14,6 +14,8 @@ namespace SOTS.Items.Furniture.AncientGold
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Ancient Gold Throne");
+            Tooltip.SetDefault("'A throne fit for a very old king'");
             this.SetResearchCost(1);
         }
         public override void SetDefaults()
@@ -46,6 +48,7 @@ namespace SOTS.Items.Furniture.AncientGold
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Ancient Gold Throne");
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             AddMapEntry(new Color(220, 180, 25), name);
             DustType = DustID.GoldCoin;

@@ -23,6 +23,10 @@ namespace SOTS.Biomes
 		public override Color? BackgroundColor => base.BackgroundColor; //default background color
 		public override string MapBackground => BackgroundPath;
 
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Cursed Pyramid");
+		}
 		public override bool IsBiomeActive(Player player)
 		{
 			bool pyramidBiome = false;

@@ -11,6 +11,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Otherworldly Amplifier");
+			Tooltip.SetDefault("Critical strikes deal 12 more damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -35,6 +37,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Bloodstained Coin");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 24 more damage\nReceiving damage has a 50% chance to bleed you");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -66,6 +70,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Putrid Coin");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 24 more damage\nReceiving damage has a 50% chance to poison you");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -97,6 +103,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Polished Coin");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 36 more damage\n2% increased crit chance\nImmunity to bleeding and poisoned");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -129,6 +137,8 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Focus Crystal");
+			Tooltip.SetDefault("Critical strikes deal 40 more damage\n4% increased crit chance\nImmunity to bleeding and poisoned debuffs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

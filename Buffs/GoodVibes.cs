@@ -8,6 +8,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Good Vibes");
+			Description.SetDefault("Increased stats while not moving");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
         }

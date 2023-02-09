@@ -13,6 +13,8 @@ namespace SOTS.Items.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Eclipse");
+			Tooltip.SetDefault("Charge to increase damage up to 700%\nTakes 3 seconds to reach max charge\nCan strike through walls\nReleases bubbles that do 10% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

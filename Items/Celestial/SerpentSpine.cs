@@ -10,6 +10,8 @@ namespace SOTS.Items.Celestial
 	{	
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Serpent Spine");
+			Tooltip.SetDefault("Increases melee weapon size by 40% and whip length by 40%\nIncreases melee speed by 10%\nMelee and whip attacks may scorch enemies, increasing damage dealt by 3% permanently");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

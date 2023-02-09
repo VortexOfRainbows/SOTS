@@ -9,6 +9,8 @@ namespace SOTS.Buffs.MinionBuffs
     {
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Ethereal");
+			Description.SetDefault("Ethereal Flames assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

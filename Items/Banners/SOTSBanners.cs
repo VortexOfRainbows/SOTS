@@ -11,7 +11,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
-using Terraria.Localization;
 
 namespace SOTS.Items.Banners
 {
@@ -30,6 +29,7 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
         public override bool CreateDust(int i, int j, ref int type)
@@ -235,6 +235,10 @@ namespace SOTS.Items.Banners
 	}
 	public class NatureSlimeBanner : ModBanner
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Flowering Slime Banner");
+		}
 		public override void SafeSetDefaults()
 		{
 			Item.createTile = TileType<SOTSBanners>();
@@ -347,6 +351,10 @@ namespace SOTS.Items.Banners
 	}
 	public class HoloSwordBanner : ModBanner
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Holo Blade Banner");
+		}
 		public override void SafeSetDefaults()
 		{
 			Item.createTile = TileType<HoloSwordBannerTile>();
@@ -675,6 +683,7 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
         public override bool CreateDust(int i, int j, ref int type)

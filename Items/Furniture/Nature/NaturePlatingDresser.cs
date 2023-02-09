@@ -4,7 +4,6 @@ using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Nature
 {
@@ -30,7 +29,7 @@ namespace SOTS.Items.Furniture.Nature
 			return false;
 		}
 		protected override int DresserDrop => ModContent.ItemType<NaturePlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.NaturePlatingDresserTile");
+        protected override string DresserName => "Nature Plating Dresser";
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));

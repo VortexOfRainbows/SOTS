@@ -11,6 +11,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Deluge Block");
 			this.SetResearchCost(100);
 		}
 

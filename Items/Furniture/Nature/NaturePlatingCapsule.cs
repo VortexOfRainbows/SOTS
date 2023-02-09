@@ -6,7 +6,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Nature
 {
@@ -31,7 +30,7 @@ namespace SOTS.Items.Furniture.Nature
         {
             return false;
         }
-        protected override string ChestName => Language.GetTextValue("Mods.SOTS.MapObject.NaturePlatingCapsuleTile");
+        protected override string ChestName => "Nature Plating Capsule";
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<NaturePlatingCapsule>();
         protected override int DustType => DustID.Tungsten;
@@ -39,9 +38,11 @@ namespace SOTS.Items.Furniture.Nature
         {
             Color color = Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.17f);
             ModTranslation name = CreateMapEntryName();
+            name.SetDefault(ChestName);
             AddMapEntry(color, name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
+            name.SetDefault("Locked " + ChestName);
             AddMapEntry(color, name, MapChestName);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

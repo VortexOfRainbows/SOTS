@@ -10,6 +10,8 @@ namespace SOTS.Items.ChestItems
 		float shield = 0;
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Shield of Desecar");
+			Tooltip.SetDefault("'Less is more'\nGrants 1 defense for every 4 empty inventory slots");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -14,6 +14,8 @@ namespace SOTS.Items.Chaos
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Stellar Shot");
+			Tooltip.SetDefault("Rapidly fires piercing lasers");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

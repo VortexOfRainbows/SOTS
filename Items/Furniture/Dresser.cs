@@ -17,7 +17,7 @@ namespace SOTS.Items.Furniture
         protected virtual Color MapColor => new Color(191, 142, 111, 255);
         protected virtual int DresserDrop => ItemID.Dresser;
         protected virtual int DustType => DustID.Dirt;
-        protected virtual string DresserName => Language.GetTextValue("Mods.SOTS.Common.Dresser");
+        protected virtual string DresserName => "Dresser";
         public override void SetStaticDefaults()
         {
             // Properties

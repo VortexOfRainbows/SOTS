@@ -7,6 +7,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Satiated");
+			Description.SetDefault("No more eating!");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;

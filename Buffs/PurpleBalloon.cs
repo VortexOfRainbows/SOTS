@@ -9,6 +9,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+			DisplayName.SetDefault("Purple Balloon");
+			Description.SetDefault("Fishing friend");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 			Main.lightPet[Type] = true;

@@ -45,6 +45,8 @@ namespace SOTS.Items.Gems
 		}
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Belphegor's Ring");
+			Tooltip.SetDefault("Chain together blocks when mining, breaking up to 50 blocks at once");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -82,6 +82,7 @@ namespace SOTS.Items.Furniture.Nature
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Nature Plating Torch");
 			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;

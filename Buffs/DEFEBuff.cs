@@ -9,6 +9,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Electromagnetic Interference");
+			Description.SetDefault("'No more constructs!'");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = false;

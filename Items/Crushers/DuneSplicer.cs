@@ -12,6 +12,8 @@ namespace SOTS.Items.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Dune Splicer");
+			Tooltip.SetDefault("Launches out a swarm of short-range, homing spikes\nCharge to increase damage up to 350%\nTakes 4 seconds to reach max charge");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

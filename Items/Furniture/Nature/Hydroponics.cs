@@ -17,6 +17,8 @@ namespace SOTS.Items.Furniture.Nature
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Nature Plating Hydroponics");
+			Tooltip.SetDefault("Automatically grows an assortment of alchemical herbs\nRight click to harvest all fully grown herbs\nPlants can be harvested at any time or weather");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
