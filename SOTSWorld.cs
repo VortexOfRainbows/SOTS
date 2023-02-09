@@ -503,11 +503,12 @@ namespace SOTS
 				bool hasDoneEvil = false;
 				int overrideCounter = 0;
 				bool hasDoneJungle = false;
+				bool hasDoneDesert = false;
 				int xCord = Main.rand.Next(240, Main.maxTilesX - 240);
 				for (; xCord != -1; xCord = Main.rand.Next(240, Main.maxTilesX - 240))
 				{
 					overrideCounter++;
-					if (hasDoneEvil && hasDoneJungle)
+					if (hasDoneEvil && hasDoneJungle && hasDoneDesert)
                     {
 						xCord = -1;
 						return;
@@ -526,7 +527,7 @@ namespace SOTS
 								}
 								break;
 							}
-							if (tile.TileType == TileID.Crimstone || tile.TileType == TileID.CrimsonGrass || tile.TileType == TileID.Crimsand || overrideCounter > 100)
+							if (tile.TileType == TileID.Crimstone || tile.TileType == TileID.CrimsonGrass || (tile.TileType == TileID.Crimsand && overrideCounter > 20) || overrideCounter > 100)
 							{
 								int y = 140 + Main.rand.Next(50);
 								if (!hasDoneEvil)
@@ -535,12 +536,21 @@ namespace SOTS
 								}
 								break;
 							}
-							if (tile.TileType == TileID.Ebonstone || tile.TileType == TileID.CorruptGrass || tile.TileType == TileID.Ebonsand || overrideCounter > 100)
+							if (tile.TileType == TileID.Ebonstone || tile.TileType == TileID.CorruptGrass || (tile.TileType == TileID.Ebonsand && overrideCounter > 20) || overrideCounter > 100)
 							{
 								int y = 140 + Main.rand.Next(50);
 								if (!hasDoneEvil)
 								{
 									hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 1, Mod);
+								}
+								break;
+							}
+							if (tile.TileType == TileID.Sand || overrideCounter > 100)
+							{
+								int y = 140 + Main.rand.Next(50);
+								if (!hasDoneDesert)
+								{
+									hasDoneDesert = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 5, Mod);
 								}
 								break;
 							}
@@ -1334,12 +1344,12 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.TileType == TileID.Containers)
+				if (tile.TileType == TileID.Containers || tile.TileType == TileID.Containers2)
 				{
 					int slot = 39;
-					for(int i = 0; i < 39; i++)
+					for (int i = 0; i < 39; i++)
 					{
-						if(chest.item[i].type == ItemID.None && i < slot)
+						if (chest.item[i].type == ItemID.None && i < slot)
 						{
 							slot = i;
 						}
@@ -1349,7 +1359,7 @@ namespace SOTS
 					int style = TileObjectData.GetTileStyle(tile);
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
 					Tile tile3 = Main.tile[chest.x, chest.y + 5];
-					if (style >= 23 && style <= 27 && (tile3.TileType == ModContent.TileType<DullPlatingTile>() || tile3.TileType == ModContent.TileType<AvaritianPlatingTile>()))
+					if ((style == 13 && tile.TileType == TileID.Containers2) || (style >= 23 && style <= 27 && tile.TileType == TileID.Containers) && (tile3.TileType == ModContent.TileType<DullPlatingTile>() || tile3.TileType == ModContent.TileType<AvaritianPlatingTile>()))
                     {
 						int importantItem = 0;
 						int importantItem2 = 0;
@@ -1364,19 +1374,19 @@ namespace SOTS
 						if (style == 24)
 						{
 							importantItem = ModContent.ItemType<PathogenRegurgitator>();
-							importantItem2 = ModContent.ItemType<DissolvingDeluge>();
+							importantItem2 = ModContent.ItemType<DissolvingUmbra>();
 							consumable = ModContent.ItemType<AlmondMilk>();
 						}
 						if (style == 25)
 						{
 							importantItem = ModContent.ItemType<RebarRifle>();
-							importantItem2 = ModContent.ItemType<DissolvingEarth>();
+							importantItem2 = ModContent.ItemType<DissolvingUmbra>();
 							consumable = ModContent.ItemType<AlmondMilk>();
 						}
 						if (style == 26)
 						{
 							importantItem = ModContent.ItemType<StarcallerStaff>();
-							importantItem2 = ModContent.ItemType<DissolvingAether>();
+							importantItem2 = ModContent.ItemType<DissolvingBrilliance>();
 							consumable = ModContent.ItemType<DigitalCornSyrup>();
 						}
 						if (style == 27)
@@ -1386,7 +1396,14 @@ namespace SOTS
 							consumable = ModContent.ItemType<StrawberryIcecream>();
 							consumableQuant = 20;
 						}
-						if(!chest.item[0].active)
+						if (style == 13)
+						{
+							importantItem = ModContent.ItemType<DuneSplicer>();
+							importantItem2 = ModContent.ItemType<DissolvingEarth>();
+							consumable = ModContent.ItemType<CursedCaviar>();
+							consumableQuant = 15;
+						}
+						if (!chest.item[0].active)
 						{
 							if(importantItem != 0)
 							{

@@ -25,7 +25,7 @@ namespace SOTS.Items.Temple
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 90;
+            Item.damage = 84;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 76;
             Item.height = 82;  

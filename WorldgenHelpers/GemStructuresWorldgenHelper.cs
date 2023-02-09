@@ -321,7 +321,7 @@ namespace SOTS.WorldgenHelpers
 					chosenX = i;
 				}
 			}
-			chosenX += totalSpan / 2;
+			chosenX += 30;
 			GenerateAmethystDesertCamp(chosenX, bestHeight);
 		}
 		public static void GenerateGemStructures()
