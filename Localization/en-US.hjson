@@ -3107,10 +3107,10 @@
       Precarious: Precarious
       Soulbound: Soulbound
     }
-    Containers:
+    ContainerName:
     {
       CharredWoodTile: ""
-      RuinedChestTile: 114514
+      RuinedChestTile: Ruined Chest
       SootBlockTile: ""
       HoloEyeBannerTile: ""
       HoloSlimeBannerTile: ""
