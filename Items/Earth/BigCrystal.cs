@@ -15,7 +15,6 @@ namespace SOTS.Items.Earth
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Big");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -46,7 +45,6 @@ namespace SOTS.Items.Earth
 			TileObjectData.newTile.Origin = new Point16(7, 13);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Giant Crystal");
 			AddMapEntry(new Color(237, 255, 193), name);
 			MinPick = 250;
 			DustType = ModContent.DustType<VibrantDust>();

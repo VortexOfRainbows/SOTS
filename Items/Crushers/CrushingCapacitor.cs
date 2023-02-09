@@ -9,7 +9,6 @@ namespace SOTS.Items.Crushers
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Makes the fourth charge of Crushers no longer consumes void");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -11,8 +11,6 @@ namespace SOTS.Items.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pulverizer");
-			Tooltip.SetDefault("Charge to increase damage up to 500%\nThe initial charge consumes no void\nTakes 3 seconds to reach max charge\nLaser deals 60% of the total damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

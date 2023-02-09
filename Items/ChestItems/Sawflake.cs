@@ -8,9 +8,7 @@ namespace SOTS.Items.ChestItems
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sawflake");
-			Tooltip.SetDefault("Throw a Sawflake that exudes a spiral of razor ice mist in every direction");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

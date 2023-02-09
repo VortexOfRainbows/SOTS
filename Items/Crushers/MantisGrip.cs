@@ -11,9 +11,7 @@ namespace SOTS.Items.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Mantis Grip");
-			Tooltip.SetDefault("Charge to increase damage up to 500%\nThe initial charge consumes no void\nTakes 4 seconds to reach max charge");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
 		public override void SafeSetDefaults()
 		{

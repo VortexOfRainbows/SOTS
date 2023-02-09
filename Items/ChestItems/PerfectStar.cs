@@ -12,8 +12,6 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Perfect Star");
-			Tooltip.SetDefault("'The perfect weapon'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

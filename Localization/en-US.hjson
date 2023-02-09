@@ -3378,8 +3378,8 @@
         '''
       6: Increases max life by 80
       7: Increases void regeneration speed by 20%      
-			}
-      VisionAmuletTextList2: {
+		}
+    VisionAmuletTextList2: {
 			0: 
         '''
 
@@ -3403,7 +3403,33 @@
         Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
         Increases max mana and mana recieved from potions by 40
         '''
-			}
+		}
+    VoidmageIncubator: {
+			0: Reduces damage taken by 5%
+      1: Increases damage by 8%
+      2: 
+        '''
+        Increases movement speed by 10%
+        Increases jump speed
+        '''
+      3: Increases critical strike damage by 20%
+      4: Increases critical strike chance by 6%
+      5: Increases max life by 40
+      6: Increases life regeneration by 2
+      7: Increases max void by 40
+    }
+    ArmorSetBonus: {
+      DoorItems: 
+        '''
+        Acceleration lasts longer
+        Build up speed faster
+        '''
+      Vibrant: 
+        '''
+        Increases void gain by 2
+        Grants autofire to the Vibrant Pistol at the cost of accuracy
+        '''
+    }
     SOTSConfig:
     {
       Config:

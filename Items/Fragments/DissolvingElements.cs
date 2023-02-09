@@ -40,12 +40,7 @@ namespace SOTS.Items.Fragments
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(FrameSpeed, TotalFrames));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
-			Tooltip.SetDefault("Temporary Tooltip");
 			this.SetResearchCost(3);
-		}
-		public virtual void SafeSetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dissolving Nature");
 		}
         public sealed override void SetDefaults()
 		{

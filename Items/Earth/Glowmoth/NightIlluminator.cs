@@ -15,8 +15,6 @@ namespace SOTS.Items.Earth.Glowmoth
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Night Illuminator");
-			Tooltip.SetDefault("Summons three luminous moths to swarm your enemies\nRight click to call the moths to your cursor");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

@@ -16,7 +16,6 @@ namespace SOTS.Items.Earth
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Shard");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -47,7 +46,6 @@ namespace SOTS.Items.Earth
 			Main.tileLighted[Type] = true;
 			ItemDrop = ModContent.ItemType<VibrantOre>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Vibrant Ore");
 			AddMapEntry(new Color(123, 166, 36), name);
 			MineResist = 1.0f;
 			MinPick = 40; //no copper/tin pickaxe!
@@ -80,7 +78,6 @@ namespace SOTS.Items.Earth
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Vibrant Shard");
 			AddMapEntry(new Color(156, 209, 46), name);
 			HitSound = SoundID.Item27;
 			DustType = ModContent.DustType<VibrantDust>();
@@ -184,10 +181,6 @@ namespace SOTS.Items.Earth
 	}
 	public class VibrantWall : ModItem
 	{
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Unsafe Vibrant Ore Wall");
-		}
         public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneWall);

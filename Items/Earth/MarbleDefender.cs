@@ -9,8 +9,6 @@ namespace SOTS.Items.Earth
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Marble Defender");
-			Tooltip.SetDefault("Launches attackers away from you with javelins");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

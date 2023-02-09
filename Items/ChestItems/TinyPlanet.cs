@@ -11,8 +11,6 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tiny Planet");
-			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

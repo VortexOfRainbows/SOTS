@@ -11,8 +11,6 @@ namespace SOTS.Items.Evil
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Midnight Prism");
-			Tooltip.SetDefault("Increases armor penetration by 8, critical strike chance by 5%, and max life by 40\nRelease waves of damage periodically that ignore up to 16 defense total\nRelease more waves at lower health\nCritical strikes unleash Nightmare Arms that do 10% damage and pull enemies together\nHas a 6 second cooldown\nWaves disabled when hidden");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

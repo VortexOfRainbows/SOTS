@@ -14,8 +14,6 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Focus Reticle");
-			Tooltip.SetDefault("20% increased crit chance\nCritical strikes deal 40 more damage\nImmunity to bleeding and poisoned debuffs");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 16));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);
@@ -83,11 +81,6 @@ namespace SOTS.Items.CritBonus
 	}
 	public class BagOfCharms : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Bag of Charms");
-			Tooltip.SetDefault("5% increased critical strike chance\nCritical strikes may detonate enemies for 50% critical damage\nCritical strikes steal life, regenerate void, and recover mana");
-		}
 		public override void SetDefaults()
 		{
 			Item.width = 30;

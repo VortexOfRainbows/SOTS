@@ -20,8 +20,6 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Geostorm");
-			Tooltip.SetDefault("Bombards your cursor with crystals");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

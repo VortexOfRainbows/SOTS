@@ -13,8 +13,6 @@ namespace SOTS.Items.Earth.Glowmoth
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Glow Web");
-			Tooltip.SetDefault("");
 			this.SetResearchCost(200);
 		}
 		public override void SetDefaults()
