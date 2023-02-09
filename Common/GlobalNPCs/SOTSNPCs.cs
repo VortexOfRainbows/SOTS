@@ -39,6 +39,7 @@ using SOTS.Items.Otherworld.FromChests;
 using Terraria.GameContent.Bestiary;
 using SOTS.Biomes;
 using SOTS.Items.Temple;
+using Terraria.Localization;
 
 namespace SOTS.Common.GlobalNPCs
 {

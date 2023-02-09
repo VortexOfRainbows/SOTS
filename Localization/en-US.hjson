@@ -3336,6 +3336,31 @@
       SittingMushroom: Sitting mushrooms are spitting mushrooms.
       TreasureSlime: The nobility of slimes! Unlike the others, these slimes value their lives, and any attempts to steal their treasure will cause them to flee without a second thought.
     }
+    DropCondition:
+    {
+      DefeatSubspaceSerpent: Drops if Subspace Serpent has been defeated
+      DefeatAdvisor: Drops if Advisor has been defeated
+      DefeatPharaohsCurseBefor: Before Pharaoh's Curse has been defeated
+      DefeatPharaohsCurse: After Pharaoh's Curse has been defeated
+      DefeatEyeofCthulhuBefor: Before the Eye of Cthulhu has been defeated
+      DefeatEyeofCthulhu: After the Eye of Cthulhu has been defeated
+      Killedfully: Drops when killed fully
+      SansUndertale: Sans Undertale
+      OrangeLesserWisps: Orange Lesser Wisps
+
+      ForestAndJungleBiomes: Drops in forest and jungle biomes
+      PyramidAndDesertAndUndergroundBiomes: Drops in Pyramid, desert, and underground biomes
+      ColdBiomes: Drops in cold biomes
+      SkyAndMeteorBiomes: Drops in sky and meteor biomes
+      BeachAndDungeonBiomes: Drops in beach and dungeon biomes
+      Underworld: Drops in the underworld
+      EvilBiome: Drops in the evil biome
+      HallowBiome: Drops in the hallow biome
+      BeachBiome: Drops in the beach biome
+      Dungeon: Drops in the dungeon
+      PlanetariumBiome: Drops in Planetarium biome
+      OnFire: Drops if on fire
+    }
     SOTSConfig:
     {
       Config:
