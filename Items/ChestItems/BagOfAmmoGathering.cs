@@ -15,8 +15,8 @@ namespace SOTS.Items.ChestItems
 		public override void SetDefaults()
 		{
 			Item.maxStack = 1;
-            Item.width = 30;     
-            Item.height = 28;   
+            Item.width = 32;     
+            Item.height = 34;   
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Blue;
 			Item.accessory = true;
