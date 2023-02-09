@@ -6,9 +6,7 @@ namespace SOTS.Buffs
     public class SpawnBossIce : ModBuff
     {
         public override void SetStaticDefaults()
-        {
-			DisplayName.SetDefault("Debug");
-			Description.SetDefault("This is a work around since I don't know how to program multiplayer");   
+        { 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = false;

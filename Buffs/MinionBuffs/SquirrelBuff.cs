@@ -9,8 +9,6 @@ namespace SOTS.Buffs.MinionBuffs
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Squirrel");
-			Description.SetDefault("Squirrels assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

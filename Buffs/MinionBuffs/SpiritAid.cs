@@ -8,8 +8,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Nature Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -25,8 +23,6 @@ namespace SOTS.Buffs.MinionBuffs
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Earthen Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -42,8 +38,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Permafrost Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -59,8 +53,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Otherworldly Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -76,8 +68,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Tidal Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -93,8 +83,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Evil Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -110,8 +98,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Inferno Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -127,8 +113,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Aid");
-			Description.SetDefault("Chaos Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

@@ -7,9 +7,7 @@ namespace SOTS.Buffs
     public class RubyMonolithAttack : ModBuff
     {
         public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Ruby Monolith Attack");
-			Description.SetDefault("Increases void drain by 6\nIncreases void damage by 10%");   
+        { 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }

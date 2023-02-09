@@ -749,18 +749,18 @@ namespace SOTS.Common.GlobalNPCs
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
 			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an average slime. Its source of energy is unknown.");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing");
 
 				if(npc.type == ModContent.NPCType<HoloBlade>())
-					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of a sword. Its source of energy is unknown.");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.HoloBlade");
 				if (npc.type == ModContent.NPCType<HoloEye>())
-					flavorText = new FlavorTextBestiaryInfoElement("A holographic mimic of an eyeball. Its source of energy is unknown.");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.HoloEye");
 				if (npc.type == ModContent.NPCType<PhaseEye>())
-					flavorText = new FlavorTextBestiaryInfoElement("A mindless sphere of energy that protects the Planetarium, created with exclusively to be used as a puppet for The Advisor");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PhaseEye");
 				if (npc.type == ModContent.NPCType<TwilightDevil>())
-					flavorText = new FlavorTextBestiaryInfoElement("A mindless drone that protects the Planetarium. It seems to be controlled centrally, as nothing hides behind its cloak.");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TwilightDevil");
 				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
-					flavorText = new FlavorTextBestiaryInfoElement("Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlyConstructHead");
 
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Planetarium,

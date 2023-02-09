@@ -8,8 +8,6 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul Access");
-			Description.SetDefault("Increases void regeneration speed by 10%");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
         }

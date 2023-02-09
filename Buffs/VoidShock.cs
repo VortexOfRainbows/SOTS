@@ -8,9 +8,7 @@ namespace SOTS.Buffs
     public class VoidShock : ModBuff
     {
         public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Void Shock");
-			Description.SetDefault("Quickly losing life, increases damage taken by 200%");   
+        { 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

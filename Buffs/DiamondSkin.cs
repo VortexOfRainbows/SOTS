@@ -8,9 +8,7 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Diamond Skin");
-			Description.SetDefault("Increases defense by 8, reduces damage taken by 8, and increases movement speed by 8");   
-            Main.buffNoSave[Type] = true;
+           Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;
         }
