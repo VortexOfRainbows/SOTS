@@ -6,6 +6,8 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using System.Collections.Generic;
+using Terraria.Localization;
+
 
 namespace SOTS.Items.Fragments
 {
@@ -115,9 +117,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNature : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nature");
-		public override string NormalToolTip => "Reduces damage dealt by 10% while in the inventory";
-		public override string PolarizeToolTip => "Increases life regeneration by 1 while in the inventory, up to 4 total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingNature");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingNatureNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingNaturePT");
         public override int FrameSpeed => 5;
         public override int TotalFrames => 6;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature;
@@ -133,9 +135,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingEarth : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Earth");
-		public override string NormalToolTip => "Reduces endurance by 10% while in the inventory";
-		public override string PolarizeToolTip => "Increases defense by 2 while in the inventory, up to 8 total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingEarth");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingEarthNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingEarthPT");
 		public override int FrameSpeed => 6;
 		public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth;
@@ -151,9 +153,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAurora : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aurora");
-		public override string NormalToolTip => "Reduces movement speed by 20% while in the inventory";
-		public override string PolarizeToolTip => "Increases movement speed by 5% while in the inventory, up to 20% total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingAurora");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingAuroraNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingAuroraPT");
 		public override int FrameSpeed => 8;
 		public override int TotalFrames => 5;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora;
@@ -169,9 +171,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingDeluge : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Deluge");
-		public override string NormalToolTip => "Decreases max life and mana by 10 while in the inventory";
-		public override string PolarizeToolTip => "Increases ranged damage by 3% while in the inventory, up to 12% total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingDeluge");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingDelugeNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingDelugePT");
 		public override int FrameSpeed => 6;
 		public override int TotalFrames => 12;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge;
@@ -188,9 +190,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAether : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aether");
-		public override string NormalToolTip => "Reduces gravity while in the inventory";
-		public override string PolarizeToolTip => "Increases magic damage by 3% while in the inventory, up to 12% total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingAether");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingAetherNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingAetherPT");
 		public override int FrameSpeed => 6;
         public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether;
@@ -207,9 +209,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingUmbra : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Umbra");
-		public override string NormalToolTip => "Reduces max void by 20 while in the inventory";
-		public override string PolarizeToolTip => "Increases void damage by 3% while in the inventory, up to 12% total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingUmbra");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingUmbraNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingUmbraPT");
 		public override Color glowColor => VoidPlayer.EvilColor * 1.2f;
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 10;
@@ -227,9 +229,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNether : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nether");
-		public override string NormalToolTip => "Decreases life regeneration by 2 while in the inventory";
-		public override string PolarizeToolTip => "Increases melee damage by 3% while in the inventory, up to 12% total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingNether");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingNetherNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingNetherPT");
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether;
@@ -246,9 +248,9 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingBrilliance : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Brilliance");
-		public override string NormalToolTip => "Increases void drain by 0.5 while in the inventory";
-		public override string PolarizeToolTip => "Increases summon damage by 3% while in the inventory, up to 12% total";
+		public override void SafeSetStaticDefaults() => Language.GetTextValue("Mods.SOTS.ItemName.DissolvingBrilliance");
+		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingBrillianceNT");
+		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingBrilliancePT");
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance;

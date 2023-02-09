@@ -1204,20 +1204,36 @@
       ChaosPlating: ""
       DelugeWall: ""
       DissolvingAether: Temporary Tooltip
+      DissolvingAetherNT: Reduces gravity while in the inventory
+      DissolvingAetherPT: Increases magic damage by 3% while in the inventory, up to 12% total
       DissolvingAetherBlock: ""
       DissolvingAurora: Temporary Tooltip
+      DissolvingAuroraNT: Reduces movement speed by 20% while in the inventory
+      DissolvingAuroraPT: Increases movement speed by 5% while in the inventory, up to 20% total
       DissolvingAuroraBlock: ""
       DissolvingBrilliance: Temporary Tooltip
+      DissolvingBrillianceNT: Increases void drain by 0.5 while in the inventory
+      DissolvingBrilliancePT: Increases summon damage by 3% while in the inventory, up to 12% total
       DissolvingBrillianceBlock: ""
       DissolvingDeluge: Temporary Tooltip
+      DissolvingDelugeNT: Decreases max life and mana by 10 while in the inventory
+      DissolvingDelugePT: Increases ranged damage by 3% while in the inventory, up to 12% total
       DissolvingDelugeBlock: ""
       DissolvingEarth: Temporary Tooltip
+      DissolvingEarthNT: Reduces endurance by 10% while in the inventory
+      DissolvingEarthPT: Increases defense by 2 while in the inventory, up to 8 total
       DissolvingEarthBlock: ""
       DissolvingNature: Temporary Tooltip
+      DissolvingNatureNT: Reduces damage dealt by 10% while in the inventory
+      DissolvingNaturePT: Increases life regeneration by 1 while in the inventory, up to 4 total
       DissolvingNatureBlock: ""
       DissolvingNether: Temporary Tooltip
+      DissolvingNetherNT: Decreases life regeneration by 2 while in the inventory
+      DissolvingNetherPT: Increases melee damage by 3% while in the inventory, up to 12% total
       DissolvingNetherBlock: ""
       DissolvingUmbra: Temporary Tooltip
+      DissolvingUmbraNT: Reduces max void by 20 while in the inventory
+      DissolvingUmbraPT: Increases void damage by 3% while in the inventory, up to 12% total
       DissolvingUmbraBlock: ""
       EarthenPlating: ""
       EarthenPlatingBeam: ""
