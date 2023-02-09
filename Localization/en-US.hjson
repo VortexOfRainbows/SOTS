@@ -1339,14 +1339,7 @@
       EarthenPlatingTorch: ""
       EarthenPlatingWorkBench: Also functions as an anvil
       AmethystRing: Chain together blocks when mining, breaking up to 50 blocks at once
-      DiamondRing: 
-        '''
-        '''
-      DiamondRingText: 
-        '''
-        Increases damage by {defenseStat}%
-        Defense is set to {defenseStat2}
-        '''
+      DiamondRing: Increases damage by (defense)%
       EmeraldRing: Enemies have a 14.3% chance to drop double the loot
       RubyRing: 
         '''
@@ -3468,6 +3461,13 @@
         Increases void gain by 2
         Grants autofire to the Vibrant Pistol at the cost of accuracy
         '''
+    }
+    DiamondRingText: {
+      0: 
+        '''
+        Increases damage by {defenseStat} %
+        Defense is set to {defenseStat2}
+        ''' 
     }
     SOTSConfig:
     {

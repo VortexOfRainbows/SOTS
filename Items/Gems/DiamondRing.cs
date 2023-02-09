@@ -60,7 +60,7 @@ namespace SOTS.Items.Gems
 
 					string defenseStat = defenseStat;
 					string defenseStat2 = (int)Math.Sqrt(defenseStat);
-					line.Text = Language.GetTextValueWith("Mod.SOTS.ItemTooltip.DiamondRingText", defenseStat, defenseStat2)
+					line.Text = Language.GetTextValueWith("Mod.SOTS.DiamondRingText", defenseStat, defenseStat2)
 					return;
 				}
 			}
