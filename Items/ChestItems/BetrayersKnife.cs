@@ -14,19 +14,19 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Betrayer's Knife");
-            Tooltip.SetDefault("Bleeds and deals double damage on the first hit");
+            Tooltip.SetDefault("Strike with 2 slashes, which always bleed enemies on the first hit\nThe second slash does 150% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 21;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 14;
             Item.height = 54;  
-            Item.useTime = 30; 
-            Item.useAnimation = 30;
+            Item.useTime = 24; 
+            Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Shoot;		
-            Item.knockBack = 3.6f;
+            Item.knockBack = 1.75f;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = null;

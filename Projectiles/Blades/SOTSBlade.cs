@@ -14,6 +14,8 @@ namespace SOTS.Projectiles.Blades
     public abstract class SOTSBlade : ModProjectile
     {
 		public int thisSlashNumber => Math.Abs((int)Projectile.ai[0]);
+		private float delayDeathSlowdown = 1f;
+		public virtual float delayDeathSlowdownAmount => 0.5f;
 		public virtual Color color1 => new Color(255, 185, 81);
 		public virtual Color color2 => new Color(209, 117, 61);
         public override void SetStaticDefaults()
@@ -41,6 +43,7 @@ namespace SOTS.Projectiles.Blades
 		}
 		public virtual float HitboxWidth => 30;
 		public virtual float AdditionalTipLength => 30;
+		public int delayDeathTime = 0;
 		public virtual void SafeSetDefaults()
 		{
 			Projectile.localNPCHitCooldown = 15;
@@ -107,7 +110,7 @@ namespace SOTS.Projectiles.Blades
 				origin = new Vector2(texture.Width - drawOrigin.X, drawOrigin.Y);
 			float standardSwordLength = (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) - handleSize;
 			float scaleMultiplier = length / standardSwordLength;
-			float rotation = toProjectile.ToRotation() + (isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : 0);
+			float rotation = toProjectile.ToRotation() + (isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : MathHelper.ToRadians(90));
 			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		float counter = 225;
@@ -228,15 +231,27 @@ namespace SOTS.Projectiles.Blades
 				dustAway = ovalArea;
 				Projectile.rotation = dustAway.ToRotation();
 			}
+			float totalSwipeDegrees = swipeDegreesTotal;
 			float incremendAmount = spinSpeed * FetchDirection;
+			if (timeLeftCounter > totalSwipeDegrees)
+			{
+				if (delayDeathTime > 0)
+				{
+					delayDeathTime--;
+					delayDeathSlowdown *= delayDeathSlowdownAmount;
+					incremendAmount *= delayDeathSlowdown;
+				}
+			}
 			float iterator2 = (float)Math.Abs(incremendAmount);
 			timeLeftCounter += iterator2;
 			counter += incremendAmount;
-			float totalSwipeDegrees = swipeDegreesTotal;
 			if (timeLeftCounter > totalSwipeDegrees)
             {
-				Projectile.hide = true;
-				Projectile.Kill();
+				if(delayDeathTime <= 0)
+				{
+					Projectile.hide = true;
+					Projectile.Kill();
+				}
             }
 			else
             {
