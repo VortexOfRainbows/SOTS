@@ -1770,6 +1770,11 @@ namespace SOTS.WorldgenHelpers
 					firstUniqueTile = TileID.IceBrick;
 					secondUniqueTile = TileID.SnowBrick;
 				}
+				if (type == 5)
+				{
+					firstUniqueTile = (ushort)ModContent.TileType<PyramidSlabTile>();
+					secondUniqueTile = (ushort)ModContent.TileType<PyramidBrickTile>();
+				}
 				int[,] _structure = {
 					{0,0,0,1,0,0,0,0,0,1,0,0,0},
 					{2,2,3,3,3,2,2,2,3,3,3,2,2},
@@ -2528,6 +2533,141 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 3:
 									tile.WallType = 90;
+									break;
+							}
+						}
+					}
+				}
+			}
+			if (type == 5)
+			{
+				int[,] _structure = {
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
+					{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
+					{0,0,1,2,1,1,1,1,1,1,2,1,0,0},
+					{0,1,1,1,1,0,0,0,0,1,1,1,1,0},
+					{0,0,1,0,0,0,0,0,0,0,0,1,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,4,0,0,0,3,0,0,0,0,4,1,0},
+					{2,1,1,1,4,4,1,1,4,4,1,1,1,2},
+					{6,6,6,6,6,6,6,6,6,6,6,6,6,6},
+					{0,2,2,2,2,2,6,6,2,2,2,2,2,0},
+					{0,0,0,2,2,2,6,6,2,2,2,0,0,0},
+					{0,0,0,0,2,2,6,6,2,2,0,0,0,0},
+					{0,0,0,0,0,2,6,6,2,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,0,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,0,0,0,0,0,0}
+				};
+				int PosX = x - 6;  //spawnX and spawnY is where you want the anchor to be when this generates
+				int PosY = y - 10;
+				if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5))
+				{
+					return false;
+				}
+				//i = vertical, j = horizontal
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.HasTile = false;
+											tile.IsHalfBlock = false;
+											tile.Slope = 0;
+										}
+										break;
+									case 1:
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										break;
+									case 2:
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<PyramidBrickTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										break;
+									case 3:
+										if (confirmPlatforms == 1)
+										{
+											tile.HasTile = false;
+											tile.Slope = 0;
+											tile.IsHalfBlock = false;
+											WorldGen.PlaceTile(k, l, TileID.Containers2, true, true, -1, 13);
+										}
+										break;
+									case 4:
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<PyramidSlabTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = true;
+										break;
+									case 6:
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										break;
+								}
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,1,1,1,1,1,1,0,0,0,0},
+					{0,0,0,2,1,1,1,1,1,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.WallType = 0;
+									break;
+								case 1:
+									tile.WallType = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									break;
+								case 2:
+									tile.WallType = (ushort)ModContent.WallType<PyramidBrickWallWall>();
+									break;
+								case 3:
+									tile.WallType = WallID.YellowStainedGlass;
 									break;
 							}
 						}

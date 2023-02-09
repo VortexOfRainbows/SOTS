@@ -289,7 +289,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture2 = ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/Glowmoth/MothMinionTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
-			Vector2 trailOrigin = new Vector2(2, texture2.Height * 0.5f);
+			Vector2 trailOrigin = new Vector2(texture2.Width - 6, texture2.Height * 0.5f);
 			Rectangle yFrame = texture.Frame(1, Main.projFrames[Projectile.type], 0, Projectile.frame);
 			float scaleOffSpeed = MathHelper.Clamp(Projectile.velocity.Length() / 15f, 0, 1);
 			for (int i = 0; i < 6; i++)

@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Crushers
 		{
 			Projectile.width = 26;
 			Projectile.height = 30;
-			maxDamage = 3;
+			maxDamage = 3.5f;
 			chargeTime = 240;
 			minExplosions = 2;
 			maxExplosions = 6;
@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Crushers
 			accSpeed = 0.5f;
 			initialExplosiveRange = 64;
 			exponentReduction = 0.6f;
-			minDamage = 0.5f;
+			minDamage = 0.7f;
 			finalDist = 155;
 			minExplosionSpread = 1;
 			maxExplosionSpread = 2;

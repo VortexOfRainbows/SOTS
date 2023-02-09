@@ -13,12 +13,12 @@ namespace SOTS.Items.Crushers
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dune Splicer");
-			Tooltip.SetDefault("Launches out a swarm of short-range, homing spikes\nCharge to increase damage up to 300%\nTakes 4 seconds to reach max charge");
+			Tooltip.SetDefault("Launches out a swarm of short-range, homing spikes\nCharge to increase damage up to 350%\nTakes 4 seconds to reach max charge");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 46;
+            Item.damage = 54;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 54;
             Item.height = 62;  
@@ -42,7 +42,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override int GetVoid(Player player)
 		{
-			return 7;
+			return 8;
 		}
 	}
 }
