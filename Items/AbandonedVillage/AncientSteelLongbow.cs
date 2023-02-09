@@ -12,8 +12,6 @@ namespace SOTS.Items.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Steel Longbow");
-			Tooltip.SetDefault("Has to windup before firing\nArrows travel fast and explode into piercing shrapnel for 100% damage upon hitting enemies");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

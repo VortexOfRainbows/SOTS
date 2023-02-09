@@ -13,7 +13,6 @@ namespace SOTS.FakePlayer
 		public float ItemRotation;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Subspace Servant");
 			Main.projPet[Projectile.type] = true;
 			//Main.vanityPet[Projectile.type] = true;
 		}

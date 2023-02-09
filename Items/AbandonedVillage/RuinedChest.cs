@@ -27,7 +27,7 @@ namespace SOTS.Items.AbandonedVillage
 	}
 	public class RuinedChestTile : Furniture.ContainerType
 	{
-		protected override string ChestName => "Ruined Chest";
+		// protected override string ChestName => "Ruined Chest";
 		protected override int ChestDrop => ModContent.ItemType<RuinedChest>();
 		protected override int ChestKey => ModContent.ItemType<OldKey>();
 		protected override int DustType => 122;

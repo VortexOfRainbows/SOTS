@@ -11,9 +11,7 @@ namespace SOTS.Items.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Steel Sword");
-            Tooltip.SetDefault("Does area damage on hit for 80% damage\nCritical strikes deal 50% more damage and may also apply a stacking, permanent bleed for 5 damage per second");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

@@ -3110,7 +3110,7 @@
     Containers:
     {
       CharredWoodTile: ""
-      RuinedChestTile: Ruined Chest
+      RuinedChestTile: 114514
       SootBlockTile: ""
       HoloEyeBannerTile: ""
       HoloSlimeBannerTile: ""

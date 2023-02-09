@@ -24,8 +24,6 @@ namespace SOTS.Items.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Charred Wood");
-			Tooltip.SetDefault("'Too burnt to be used'");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -50,7 +48,6 @@ namespace SOTS.Items.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Charred Wood Wall");
 			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()
