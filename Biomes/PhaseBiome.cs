@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Biomes
 {
@@ -20,10 +21,6 @@ namespace SOTS.Biomes
 		public override string BackgroundPath => base.BackgroundPath; //default background
 		public override Color? BackgroundColor => base.BackgroundColor; //default background color
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Phase Ore Clusters");
-		}
 		public override bool IsBiomeActive(Player player)
 		{
 			bool inBiome = (SOTSWorld.phaseBiome > 50) && player.Center.Y < Main.worldSurface * 16 * 0.35f; //phase biome if nearby ore is greater than 50

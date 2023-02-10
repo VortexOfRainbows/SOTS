@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Biomes
 {
@@ -20,10 +21,6 @@ namespace SOTS.Biomes
 		public override Color? BackgroundColor => base.BackgroundColor; //default background color
 		public override string MapBackground => BackgroundPath;
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Planetarium");
-		}
         public override bool IsBiomeActive(Player player)
 		{
 			bool inBiome = (SOTSWorld.planetarium > 100) && player.Center.Y < Main.worldSurface * 16 * 0.5f; //planetarium if block count is greater than 100

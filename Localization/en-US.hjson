@@ -1,6 +1,13 @@
 Mods: {
 	SOTS: {
+		Common: {
+
+		}
+
 		BiomeName: {
+            PyramidBiome: Cursed Pyramid
+            PhaseBiome: Phase Ore Clusters
+            PlanetariumBiome: Planetarium
 		}
 
 		DropCondition: {
@@ -35,74 +42,108 @@ Mods: {
 		}
 
 		ItemName: {
-		# Accessories
+		# Abandoned Village
+			AncientSteelBar: Ancient Steel Bar
+			AncientSteelHalberd: Ancient Steel Halberd
+			AncientSteelLongbow: Ancient Steel Longbow
+			AncientSteelSword: Ancient Steel Sword
 
-		# Summoner Accessories
+			CharredWood: Charred Wood
+			CharredWoodWall: Charred Wood Wall
+			OldKey: Old Key
+			RuinedChest: Ruined Chest
 
-		# Healing Accessories
+			SootBlock: Soot Block
+			SootWall: Soot Wall
 
-		# Fishing Accessories
+			VisionAmulet: Elemental Amulet
 
-		# Vanity Accessories
+		# Banner
+			NatureSlimeBanner: Flowering Slime Banner
+			HoloSwordBanner: Holo Blade Banner
 
-		# Melee Weapons
-
-		# Ranged Weapons
-
-		# Magic Weapons
-
-		# Summon Weapons
-
-		# Whips
-
-		# Armor
-
-		# Tools
-
-		# Baits
-
-		# Foods & Potions
-
-		# Critter Items
-
-		# Fish
-
-		# Quest Fish
-
-		# Fish
-
-		# Fishing Rods
-
-		# Pets
-
-		# Hooks
-
-		# Mounts
-
-		# Crates
-
-		# Vanity
-
-		# Blocks & Walls
-
-		# Paintings
-
-		# Relics & Trophies
-
-		# Banners
-
-		# Furniture Misc
-
-		# Summons Items
-
-		# Misc
+		# 
 
 		}
 
 		ItemTooltip: {
+		# Abandoned Village
+			AncientSteelBar: "'An ancient proto-steel used by various civilizations... and goblins'"
+			AncientSteelHalberd: "Shatters enemies, making the next melee attack ignore defense and a guaranteed critical strike\nThough the Halberd cannot make use of the shattered effect"
+			AncientSteelLongbow: 
+				'''
+				Has to windup before firing
+				Arrows travel fast and explode into piercing shrapnel for 100% damage upon hitting enemies
+				'''
+			AncientSteelSword: 
+				'''
+				Does area damage on hit for 80% damage
+				Critical strikes deal 50% more damage and may also apply a stacking, permanent bleed for 5 damage per second
+				'''
+			
+			CharredWood: "'Too burnt to be used'"
+			OldKey: "'It's starting to show signs of rusting'"
+
+			SootBlock: 
+				'''
+				Contains remnants of burned material inside
+				Can be used in an Extractinator"
+				'''
+
+			VisionAmulet: 
+				'''
+				Epic Gamer
+				'Resonates with your ambitions'
+				'''
+			VisionAmuletTextList: {
+				0: Reduces damage taken by 10%
+				1: 
+					'''
+					Increases max minions and sentries by 1
+					Increases damage by 10%
+					'''
+				2: Increases attack speed by 12%
+				3: Increases critical strike chance by 10%
+				4: Increases critical strike damage by 30%
+				5: 
+					'''
+					Increases healing recieved from potions by 40
+					Increases life regeneration by 2 
+					'''
+				6: Increases max life by 80
+				7: Increases void regeneration speed by 20%      
+			}
+			VisionAmuletTextList2: {
+				0: 
+					'''
+
+					Shops prices lowered by 20%
+					'''
+				1: 
+					'''
+
+					Increases buff duration by 25%
+					Decreases mana cost by 10% 
+					'''
+				2: 
+					'''
+
+					Increases melee speed and movement speed by 10%
+					Increases jump speed
+					'''
+				3: 
+					'''
+
+					Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
+					Increases max mana and mana recieved from potions by 40
+					'''
+        	}
 		}
 
 		BuffName: {
+		}
+
+		BuffDescription: {
 		}
 
 		ProjectileName: {
@@ -122,27 +163,26 @@ Mods: {
 		}
 
 		ContainerName: {
+			RuinedChestTile: Ruined Chest
 		}
 
 		MapObject: {
+			RuinedChestTile: Ruined Chest
+			RuinedChestTile_Locked: Locked Ruined Chest
+			
+			HoloEyeBannerTile: Banner
+			HoloSlimeBannerTile: Banner
+			HoloSwordBannerTile: Banner
+			SOTSBanners: Banner
+			SOTSBanners2: Banner
+
+			SOTSTrophies: Trophy
 		}
 
 		WorldGeneration: {
 		}
 
-		QuestFish: {
-		}
-
-		FishingLocation: {
-		}
-
 		NPCName: {
-		}
-
-		PaintingSignature: {
-		}
-
-		Common: {
 		}
 
 		Bestiary: {
