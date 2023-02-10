@@ -11,8 +11,6 @@ namespace SOTS.Items.Earth
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spore Sprayer");
-            Tooltip.SetDefault("Fires a burst of Spore Clouds that do 66% damage whenever an arrow is launched");
             this.SetResearchCost(1);
         }
         public override void SetDefaults()

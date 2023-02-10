@@ -130,8 +130,75 @@ Mods: {
 			BagOfCharms: Bag of Charms
 
 			EyeOfChaos: Increases crit chance by 18%
-
 			FocusReticle: Focus Reticle
+
+			BorealisIcosahedron: Borealis Icosahedron
+			CursedIcosahedron: Cursed Icosahedron
+			HellfireIcosahedron: Hellfire Icosahedron
+
+			SnakeEyes: Snake Eyes
+
+		# Crushers
+			AquaticEclipse: Eclipse
+			BoneClapper: Bone Clapper
+			CardiacCollapse: Cardiac Collapse
+			CircuitBoard: Circuit Board
+			CrabClaw: Crab Claw
+
+			CrushingAmplifier: Crushing Amplifier
+			CrushingCapacitor: Crushing Capacitor
+			CrushingResistor: Crushing Resistor
+			CrushingTransformer: Crushing Transformer
+
+			DuneSplicer: Dune Splicer
+			Hellbreaker: Hellbreaker
+			IrradiatedChainReactor: Irradiated Chain-Reactor
+			MantisGrip: Mantis Grip
+			Pulverizer: Pulverizer
+			SoulEater: Soul Eater
+			SpiderCrusher: Fly Catcher
+			WormWoodCollapse: Goopwood Collapse
+		
+		# DoorItems
+			DoorPants: Door Pants
+
+		# Dyes
+			TaintedPrismDye: Tainted Prism Dye
+		
+		# Earth
+			# Glowmoth
+				GlowSilk: Glow Web
+
+				IlluminantAxe: Illuminant Axe
+				NightIlluminator: Night Illuminator
+				GlowmothBag: Place Cocoon
+			
+			BigCrystal: Big Crystal
+			EchoDisk: Echo Disc
+			Geostorm: Geostorm
+			GraniteProtector: Granite Protector
+			HarvestersScythe: Harvester's Scythe
+			MarbleDefender: Marble Defender
+			SporeSprayer: Spore Sprayer
+
+			VibrantOre: Vibrant Shard
+			VibrantBar: Vibrant Alloy
+			VibrantBrick: Vibrant Brick
+			VibrantWall: Unsafe Vibrant Ore Wall
+
+			VibrantBullet: Vibrant Bullet
+			VibrantArrow: Vibrant Arrow
+			VibrantBlade: Vibrant Blade
+			VibrantCannon: Vibrant Cannon
+			VibrantPistol: Vibrant Pistol
+			VibrantStaff: Vibrant Staff
+
+			VibrantChestplate: Vibrant Chestplate
+			VibrantHelmet: Vibrant Helmet
+			VibrantLeggings: Vibrant Leggings
+		
+		# Evil
+			AbyssalFury: Abyssal Fury
 
 		}
 
@@ -461,13 +528,183 @@ Mods: {
 					'''
 				
 				EyeOfChaos: Eye of Chaos
-
 				FocusReticle: 
 					'''
 					20% increased crit chance
 					Critical strikes deal 40 more damage
 					Immunity to bleeding and poisoned debuffs
 					'''
+
+				BorealisIcosahedron: 
+					'''
+					Critical strikes may cause a frostburn explosion, dealing 100% critical damage
+					2% increased crit chance
+					'''
+				CursedIcosahedron: 
+					'''
+					Critical strikes may cause a release of cursed thunder, dealing 50% critical damage
+					Critical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage
+					2% increased crit chance
+					'''
+				HellfireIcosahedron: 
+					'''
+					Critical strikes may cause a flaming explosion, dealing 50% critical damage
+					2% increased crit chance
+					'''
+
+				SnakeEyes: Increases crit chance by 8%
+			
+			# Crushers
+				AquaticEclipse: 
+					'''
+					Charge to increase damage up to 700%
+					Takes 3 seconds to reach max charge
+					Can strike through walls
+					Releases bubbles that do 10% damage
+					'''
+				BoneClapper: 
+					'''
+					Charge to increase damage up to 450%
+					Takes 2 seconds to reach max charge
+					'''
+				CardiacCollapse: 
+					'''
+					Charge to increase damage up to 800%
+					Takes 3.5 seconds to reach max charge
+					Killed enemies regenerate health
+					'''
+				CircuitBoard: 
+					'''
+					The second charge of a Crusher has a 33% chance to not consume void
+					The fourth charge of Crushers no longer consumes void
+					Extends the range of Crushers by 1
+					Increases melee speed and melee damage by 5%
+					Increases Crusher charge speed by 10%
+					'''
+				CrabClaw: 
+					'''
+					Charge to increase damage up to 800%
+					Takes 4 seconds to reach max charge
+					'''
+
+				CrushingAmplifier: 
+					'''
+					Extends the range of Crushers by 1
+					Also increases melee damage by 5%
+					'''
+				CrushingCapacitor: Makes the fourth charge of Crushers no longer consumes void
+				CrushingResistor: The second charge of a Crusher has a 33% chance to not consume void
+				CrushingTransformer: 
+					'''
+					Increases melee speed by 8%
+					Increases Crusher charge speed by 12%
+					'''
+
+				DuneSplicer: 
+					'''
+					Launches out a swarm of short-range, homing spikes
+					Charge to increase damage up to 350%
+					Takes 4 seconds to reach max charge
+					'''
+				Hellbreaker: 
+					'''
+					Charge to increase damage up to 600%
+					Takes 4.5 seconds to reach max charge
+					'''
+				IrradiatedChainReactor: 
+					'''
+					Charge to increase damage up to 500%
+					Launches out spores that deal 50% damage
+					Takes 1.66 seconds to reach max charge
+					'''
+				MantisGrip: 
+					'''
+					Charge to increase damage up to 500%
+					The initial charge consumes no void
+					Takes 4 seconds to reach max charge
+					'''
+				Pulverizer: 
+					'''
+					Charge to increase damage up to 500%
+					The initial charge consumes no void
+					Takes 3 seconds to reach max charge
+					Laser deals 60% of the total damage
+					'''
+				SoulEater: 
+					'''
+					Charge to increase damage up to 1000%
+					Takes 2.5 seconds to reach max charge
+					Killed enemies regenerate mana and void
+					'''
+				SpiderCrusher: 
+					'''
+					Charge to increase damage up to 180%
+					Releases spider webs that slow hit enemies
+					Releases more when charged
+					Takes 2.5 seconds to reach max charge
+					'That's really clever actually'
+					'''
+				WormWoodCollapse: 
+					'''
+					Charge to increase damage up to 500%
+					Takes 3 seconds to reach max charge
+					'''
+
+			# DoorItems
+				DoorPants: 
+					'''
+					Accelerates horizontal movement when going through doors
+					Builds up speed while standing in doors
+					'''
+
+			# Earth
+				# Glowmoth
+					IlluminantAxe: 
+						'''
+						Releases wandering energy bolts for 60% damage
+						Right click to toss the axe, which sticks to walls
+						Right click again to recall the axe
+						'''
+					NightIlluminator: 
+						'''
+						Summons three luminous moths to swarm your enemies
+						Right click to call the moths to your cursor
+						'''
+
+				Geostorm: Bombards your cursor with crystals
+				GraniteProtector: Reduces damage taken by 6%
+				HarvestersScythe: 
+					'''
+					Increases critical strike damage by 20%
+					Enemies have a 10% chance to drop double the loot, or 20% when killed by critical strike
+					'''
+				MarbleDefender: Launches attackers away from you with javelins
+				SporeSprayer: Fires a burst of Spore Clouds that do 66% damage whenever an arrow is launched
+
+				VibrantBullet: 
+					'''
+					Splits into 3 shards
+					One shard flies straight for 100% damage
+					The other shards deal 25% damage
+					'''
+				VibrantArrow: 
+					'''
+					Scatters 3 shards below the area of impact for 120% damage
+					'''
+				VibrantPistol: Fires almost as fast as you can pull the trigger
+				VibrantStaff: Fires a homing bolt
+
+				VibrantChestplate: Increases void damage by 10% and ranged damage by 5%
+				VibrantHelmet: 
+					'''
+					Increases max void by 50
+					5% increased ranged crit chance
+					'''
+				VibrantLeggings: Decreased void usage by 10%
+			
+			# Evil
+				AbyssalFury: Summons Shadow Blades from the sky to your cursor
+
 		}
 
 		BuffName: {
@@ -477,6 +714,7 @@ Mods: {
 		}
 
 		ProjectileName: {
+			SilkCocoonProjectile: silk Cocoon sync projectile
 		}
 
 		ArmorSetBonus: {
@@ -507,6 +745,14 @@ Mods: {
 			SOTSBanners2: Banner
 
 			SOTSTrophies: Trophy
+
+			SilkCocoonTile: Glow Cocoon
+			BigCrystalTile: Giant Crystal
+
+			VibrantOreTile: Vibrant Ore
+			VibrantCrystalTile: Vibrant Shard
+			VibrantBrickTile: Vibrant Brick
+			VibrantCrystalLargeTile: Large Vibrant Shard
 		}
 
 		WorldGeneration: {

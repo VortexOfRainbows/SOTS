@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
+using Terraria.Localization;
 
 namespace SOTS.Items.Earth
 {
@@ -26,8 +27,6 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Helmet");
-			Tooltip.SetDefault("Increases max void by 50\n5% increased ranged crit chance");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -44,7 +43,7 @@ namespace SOTS.Items.Earth
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Increases void gain by 2\nGrants autofire to the Vibrant Pistol at the cost of accuracy";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Vibrant")
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 2f;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

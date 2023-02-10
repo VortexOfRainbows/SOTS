@@ -19,7 +19,6 @@ namespace SOTS.Items.Earth.Glowmoth
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Place Cocoon");
 			//Tooltip.SetDefault("A slab from an ancient burial site, it may be hard to break");
 			this.SetResearchCost(1);
 		}
@@ -56,7 +55,6 @@ namespace SOTS.Items.Earth.Glowmoth
 			TileObjectData.newTile.WaterDeath = false;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Glow Cocoon");
 			AddMapEntry(new Color(30, 90, 180), name);
 			DustType = DustID.Silk;
 			HitSound = SoundID.NPCHit18;
@@ -126,10 +124,6 @@ namespace SOTS.Items.Earth.Glowmoth
 	public class SilkCocoonProjectile : ModProjectile
 	{
         public override string Texture => "SOTS/Items/Earth/Glowmoth/SilkCocoonTile";
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("silk Cocoon sync projectile");
-		}
 		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
