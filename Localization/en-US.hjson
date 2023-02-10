@@ -62,7 +62,76 @@ Mods: {
 			NatureSlimeBanner: Flowering Slime Banner
 			HoloSwordBanner: Holo Blade Banner
 
-		# 
+		# Celestial
+			Apocalypse: Apocalypse
+			CataclysmSpheres: Cataclysm Spheres
+			CatalystBomb: Catalyst Bomb
+			ContinuumCollapse: Continuum Collapse
+			DanceOfDeath: Cast many demon scythes around you
+			DimensionShredder: Dimension Shredder
+			FoggyClairvoyance: Foggy Clairvoyance
+			Lemegeton: Lemegeton
+			PlasmaCutterButOnAChain: Plasma Cutter on a Chain
+			SanguiteBar: Sanguite Scales
+			SerpentSpine: Serpent Spine
+			SubspaceBag: Treasure Bag
+			SubspaceLocket: Subspace Locket
+			SubspaceScissors: Spirit Scissors
+			VoidspaceAuraStaff: Voidspace Aura Staff
+			VoidspaceEmblem: Voidspace Emblem
+
+		# Chaos
+			Armaggedon: Armageddon
+			ChaosChamber: Chaos Chamber
+			EtherealScepter: Ethereal Scepter
+			Hyperdrive: Hyperdrive
+			HyperlightGeyser: Hyperlight Geyser
+			LuxBag: Treasure Bag
+			ParticleRelocator: Particle Relocator
+			PhaseBar: Phase Bar
+			PhaseOre: Phase Ore
+			RealityShatter: Reality Shatter
+			RoseBow: Rose Bow
+			StellarSerpentLauncher: Stellar Serpent Launcher
+			StellarShot: Stellar Shot
+			SupernovaStorm: Supernova Storm
+			VoidAnomaly: Void Anomaly
+			VoidmageIncubator: Voidmage Incubator
+
+		# ChestItems
+			BagOfAmmoGathering: Bag of Ammunition Gathering
+			BetrayersKnife: Betrayer's Knife
+			CoconutGun: Coconut Gun
+			GlazeBow: Glaze Bow
+			PathogenRegurgitator: Pathogen Regurgitator
+			PerfectStar: Perfect Star
+			RebarRifle: Rebar Rifle
+			RockCandy: Rock Candy
+			Sawflake: Sawflake
+			ShieldofDesecar: Shield of Desecar
+			ShieldofStekpla: Shield of Stekpla
+			SpikedClub: Spiked Club
+			StarcallerStaff: Starcaller Staff
+			TangleStaff: Tangle Staff
+			TinyPlanet: Tiny Planet
+			WingedKnife: Winged Knife
+
+		# CritBonus
+			OtherworldlyAmplifier: Otherworldly Amplifier
+			BloodstainedCoin: Bloodstained Coin
+			PutridCoin: Putrid Coin
+			PolishedCoin: Polished Coin
+			FocusCrystal: Focus Crystal
+			ChaosBadge: Chaos Badge
+
+			CloverCharm: Clover Charm
+			VoidCharm: Void Charm
+			SoulCharm: Soul Charm
+			BagOfCharms: Bag of Charms
+
+			EyeOfChaos: Increases crit chance by 18%
+
+			FocusReticle: Focus Reticle
 
 		}
 
@@ -113,6 +182,7 @@ Mods: {
 				6: Increases max life by 80
 				7: Increases void regeneration speed by 20%      
 			}
+
 			VisionAmuletTextList2: {
 				0: 
 					'''
@@ -138,6 +208,266 @@ Mods: {
 					Increases max mana and mana recieved from potions by 40
 					'''
         	}
+
+			# Celestial
+				Apocalypse: 
+					'''
+					Release green thunder towards your cursor
+					Green thunder chains off enemies for 90% damage
+					Provides a light source while in the inventory
+					'Power straight from the underworld'
+					'''
+				CataclysmSpheres: Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 100% damage
+				CatalystBomb: "'It's almost strong enough to tear a hole between dimensions, if only it were used in the right place'"
+				ContinuumCollapse: 
+					'''
+					'Devour all that is infinite, including your system's memory'
+					Can hit up to 15 enemies at a time
+					Will not hurt players
+					'''
+				DanceOfDeath: Cast many demon scythes around you
+				DimensionShredder: 
+					'''
+					Summons dimensional wisps around you that fire towards your cursor
+					Right click to summon a cluster of dimensional wisps
+					Bullets travel through blocks and release lightning for 50% damage
+					66% chance to not consume ammo
+					'Tear a rift through your enemies'
+					'''
+				FoggyClairvoyance: 
+					'''
+					Increases damage by 15% and grants immunity to almost every debuff
+					'Cursed'
+					'''
+				Lemegeton: 
+					'''
+					Summons a horde of Wisps to defend you from nearby enemies
+					Red wisps will attack closer enemies and steal life for 100% damage
+					Green wisps will fire short-ranged blasts for 200% damage
+					Purple wisps launch a cluster of homing bolts for 75% damage each
+					'''
+				PlasmaCutterButOnAChain: "'This is utmost wonderful idea'"
+				SanguiteBar: "'It smells of sulfur and blood'"
+				SerpentSpine: 
+					'''
+					Increases melee weapon size by 40% and whip length by 40%
+					Increases melee speed by 10%
+					Melee and whip attacks may scorch enemies, increasing damage dealt by 3% permanently
+					'''
+				SubspaceBag: "{$CommonItemTooltip.RightClickToOpen}"
+				SubspaceLocket: 
+					'''
+					Summons a Subspace Servant to assist in combat
+					Uses the item in your last inventory slot for you (bottom right inventory slot)
+					Doesn't work with all items
+					Decreases damage by 25% multiplicatively
+					Increases max void by 50, but reduces healing recieved from potions by 40
+					'''
+				SubspaceScissors: "'Assistance from purgatory'"
+				VoidspaceAuraStaff: 
+					'''
+					Summons a voidspace cell on your cursor that releases flames at nearby enemies
+					Grants stat boosts while in the radius of the cell
+					Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
+					Damages all enemies within range
+					Range scales with summon damage
+					'''
+				VoidspaceEmblem: 
+					'''
+					Increases void damage and magic damage by 10%
+					Increases void crit by 10%
+					Critical strikes heal small amounts of void
+					Reduces void cost by 8%
+					Increases void gain by 4 and max void by 50
+					Regenerate void when hit
+					Immunity to broken armor and ichor
+					'''
+				
+			# Chaos
+				Armaggedon: 
+					'''
+					Unleash a flurry of punches
+					Provides a small light source
+					'Power from the heavens'
+					'''
+				ChaosChamber: 
+					'''
+					Unloads almost as fast as the trigger is pulled
+					Bullets gain homing capabilities
+					Transforms bullets into laser balls every 6th shot
+					'''
+				EtherealScepter: 
+					'''
+					Summons an Ethereal Flame to fight for you
+					Ethereal Flames attack enemies by rapidly dashing through them
+					'''
+				Hyperdrive: 
+					'''
+					The second charge of a Crusher has a 33% chance to not consume void
+					The fourth charge of Crushers no longer consumes void
+					Extends the range of Crushers by 1
+					Increases attack speed by 25% and melee damage by 5%
+					Reduces void cost by 10%
+					'''
+				HyperlightGeyser: Launches 4 beams of light which each home at up to 10 enemies
+				LuxBag: "{$CommonItemTooltip.RightClickToOpen}"
+				ParticleRelocator: 
+					'''
+					When an enemy hits you, you will be teleported behind them, avoiding damage and stunning them temporarily
+					16 second cooldown, but increases melee damage by 50% for 7 seconds after teleporting
+					Does damage equal to your defense
+					'''
+				PhaseBar: "'It borders on the edge of reality'"
+				RealityShatter: Enemies recieve an additional flurry of slashes that do 4x50% damage
+				RoseBow: 
+					'''
+					Transforms arrows into spears of light that can travel through walls
+					When briefly charged, arrows explode for 600% damage
+					When fully charged, arrows bloom for 1500% damage
+					Charging will also conjure thorns, which are launched for 2x100% damage each
+					Only consumes void when charged
+					'''
+				StellarSerpentLauncher: Launches a Starlight Serpent which homes on enemys and attacks them repeatedly
+				StellarShot: Rapidly fires piercing lasers
+				SupernovaStorm: 
+					'''
+					Calls down a Supernova Beam from the sky
+					Causes enemies to rupture into homing bolts for 3x140% damage
+					'''
+				VoidAnomaly: 
+					'''
+					Increases void gain by 10 and void regeneration speed by 10%
+					Getting hit will convert void into life for a duration
+					Increases the potency of Void Shock and Void Recovery
+					'''
+				VoidmageIncubator: 
+					'''
+					Epic Gamer
+					Increases void gain by 10 and void regeneration speed by 10%
+					Getting hit will freeze time, converting void into life for the duration
+					Increases the potency of Void Shock and Void Recovery
+					'''
+
+			# ChestItems
+				BagOfAmmoGathering: 
+					'''
+					20% chance not to consume ammo
+					Striking enemies has a chance to refund ammo
+					Landing the killing blow on enemies may also refund ammo
+					'''
+				BetrayersKnife: 
+					'''
+					Strike with 2 slashes, which always bleed enemies on the first hit
+					The second slash does 150% damage
+					'''
+				CoconutGun: 
+					'''
+					Launches coconut cluster bombs with homing coconut milk shrapnel
+					'It fires in spurts'
+					'''
+				GlazeBow: 
+					'''
+					Coalesces ice mist to power up your arrows
+					When briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage
+					When fully charged, arrows bloom into wisps of ice, dealing 600% damage
+					'''
+				PathogenRegurgitator: 
+					'''
+					Fire pathogen balls
+					Hits may infect enemies for 12 damage per second
+					When an infected enemy is killed, it releases more pathogen balls
+					'''
+				PerfectStar: "'The perfect weapon'"
+				RebarRifle: Shoots a powerful, high velocity rebar that applies a stacking, permanent bleed to hit enemies for 5 damage per second
+				RockCandy: 
+					'''
+					Increases pickaxe power by 5
+					Increases mining speed, melee speed, and movement speed by 5%
+					'''
+				Sawflake: Throw a Sawflake that exudes a spiral of razor ice mist in every direction
+				ShieldofDesecar: 
+					'''
+					'Less is more'
+					Grants 1 defense for every 4 empty inventory slots
+					'''
+				ShieldofStekpla: 
+					'''
+					'More is more'
+					Grants 1% bonus crit chance for every 4 full inventory slots
+					'''
+				SpikedClub: 
+					'''
+					Lays down spike traps
+					Lays down more traps when wearing climbing related accessories
+					'''
+				StarcallerStaff: 
+					'''
+					Summons a Crystal Serpent to fight for you
+					The Crystal Serpent circles around enemies and fires stars at them
+					'''
+				TangleStaff: 
+					'''
+					Fire a flower that ensnares enemies
+					Ensnared enemies are slowed and have their life drained
+					Increases life regeneration for each ensnared enemy
+					'''
+				TinyPlanet: Surrounds you with 2 orbital projectiles
+			# CritBonus
+				OtherworldlyAmplifier: Critical strikes deal 12 more damage
+				BloodstainedCoin: 
+					'''
+					Critical strikes have a 50% chance to deal 24 more damage
+					Receiving damage has a 50% chance to bleed you
+					'''
+				PutridCoin: 
+					'''
+					Critical strikes have a 50% chance to deal 24 more damage
+					Receiving damage has a 50% chance to poison you
+					'''
+				PolishedCoin: 
+					'''
+					Critical strikes have a 50% chance to deal 36 more damage
+					2% increased crit chance
+					Immunity to bleeding and poisoned
+					'''
+				FocusCrystal: 
+					'''
+					Critical strikes deal 40 more damage
+					4% increased crit chance
+					Immunity to bleeding and poisoned debuffs
+					'''
+				ChaosBadge: Increases crit chance by 10%
+
+				CloverCharm: 
+					'''
+					Critical strikes have a 50% chance to steal life
+					2% increased crit chance
+					'''
+				VoidCharm: 
+					'''
+					Critical strikes have a 50% chance to regenerate void
+					2% increased crit chance
+					'''
+				SoulCharm: 
+					'''
+					Critical strikes steal life, regenerate void, and recover mana
+					2% increased crit chance
+					'''
+				BagOfCharms: 
+					'''
+					5% increased critical strike chance
+					Critical strikes may detonate enemies for 50% critical damage
+					Critical strikes steal life, regenerate void, and recover mana
+					'''
+				
+				EyeOfChaos: Eye of Chaos
+
+				FocusReticle: 
+					'''
+					20% increased crit chance
+					Critical strikes deal 40 more damage
+					Immunity to bleeding and poisoned debuffs
+					'''
 		}
 
 		BuffName: {
@@ -272,7 +602,7 @@ Mods: {
                 '''
 		}
 
-        VoidmageIncubator: {
+        VoidmageIncubatorTextList: {
 		    0: Reduces damage taken by 5%
 		    1: Increases damage by 8%
 		    2: 

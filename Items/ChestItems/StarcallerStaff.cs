@@ -16,8 +16,6 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Starcaller Staff");
-			Tooltip.SetDefault("Summons a Crystal Serpent to fight for you\nThe Crystal Serpent circles around enemies and fires stars at them");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;

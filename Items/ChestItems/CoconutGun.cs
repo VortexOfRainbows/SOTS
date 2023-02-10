@@ -12,8 +12,6 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Coconut Gun");
-			Tooltip.SetDefault("Launches coconut cluster bombs with homing coconut milk shrapnel\n'It fires in spurts'");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

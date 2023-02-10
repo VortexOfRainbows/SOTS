@@ -8,8 +8,6 @@ namespace SOTS.Items.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sanguite Scales");
-			Tooltip.SetDefault("'It smells of sulfur and blood'");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

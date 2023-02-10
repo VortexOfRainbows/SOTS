@@ -17,11 +17,6 @@ namespace SOTS.Items.Celestial
 {
     public class SubspaceLocket : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Subspace Locket");
-            Tooltip.SetDefault("Summons a Subspace Servant to assist in combat\nUses the item in your last inventory slot for you (bottom right inventory slot)\nDoesn't work with all items\nDecreases damage by 25% multiplicatively\nIncreases max void by 50, but reduces healing recieved from potions by 40");
-        }
         public override void SetDefaults()
         {
             Item.width = 40;

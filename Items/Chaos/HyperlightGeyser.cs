@@ -48,8 +48,6 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hyperlight Geyser");
-			Tooltip.SetDefault("Launches 4 beams of light which each home at up to 10 enemies");
 			this.SetResearchCost(1);
 		}
         public override void SetDefaults()

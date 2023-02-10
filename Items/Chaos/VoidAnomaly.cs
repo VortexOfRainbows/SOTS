@@ -16,8 +16,6 @@ namespace SOTS.Items.Chaos
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Anomaly");
-			Tooltip.SetDefault("Increases void gain by 10 and void regeneration speed by 10%\nGetting hit will convert void into life for a duration\nIncreases the potency of Void Shock and Void Recovery");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

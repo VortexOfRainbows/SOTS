@@ -12,8 +12,6 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Glaze Bow");
-			Tooltip.SetDefault("Coalesces ice mist to power up your arrows\nWhen briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage\nWhen fully charged, arrows bloom into wisps of ice, dealing 600% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

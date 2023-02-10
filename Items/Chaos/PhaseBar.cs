@@ -36,8 +36,6 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phase Bar");
-			Tooltip.SetDefault("'It borders on the edge of reality'");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

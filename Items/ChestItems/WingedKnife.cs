@@ -7,7 +7,6 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Winged Knife");
 			this.SetResearchCost(99);
 		}
 		public override void SetDefaults()

@@ -10,8 +10,6 @@ namespace SOTS.Items.Celestial
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Foggy Clairvoyance");
-			Tooltip.SetDefault("Increases damage by 15% and grants immunity to almost every debuff\n'Cursed'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

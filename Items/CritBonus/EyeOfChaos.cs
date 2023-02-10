@@ -9,8 +9,6 @@ namespace SOTS.Items.CritBonus
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Eye of Chaos");
-			Tooltip.SetDefault("Increases crit chance by 18%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

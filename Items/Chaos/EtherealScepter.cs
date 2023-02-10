@@ -38,8 +38,6 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Ethereal Scepter");
-			Tooltip.SetDefault("Summons an Ethereal Flame to fight for you\nEthereal Flames attack enemies by rapidly dashing through them");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			this.SetResearchCost(1);
