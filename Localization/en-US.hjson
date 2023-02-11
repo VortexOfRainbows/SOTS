@@ -199,6 +199,43 @@ Mods: {
 		
 		# Evil
 			AbyssalFury: Abyssal Fury
+			DeathSpiral: Death Spiral
+			MidnightPrism: Midnight Prism
+			TomeOfTheReaper: Tome of the Reaper
+			ToothAche: Tooth Ache
+			Vertebraeker: Vertebraeker
+			WitchHeart: Witch's Heart
+		
+		# Fishing
+			Curgeon: Curgeon
+			PhantomFish: Phantom Fish
+			SeaSnake: Water Snake
+			TinyPlanetFish: Planet Fish
+			ZephyrousZeppelin: Zephyrous Zeppelin
+
+			PyramidCrate: Pyramid Crate
+
+		# Flails
+			Aten: Aten
+			NorthStar: North Star
+			Shattershine: Shattershine
+
+		# Fragments
+			DissolvingAetherBlock: Purple Aether Block
+			DissolvingAuroraBlock: Aurora Block
+			DissolvingBrillianceBlock: Brilliance Block
+			DissolvingDelugeBlock: Deluge Block
+			DissolvingEarthBlock: Earth Block
+
+			DissolvingNature: Dissolving Nature
+			DissolvingEarth: Dissolving Earth
+			DissolvingAurora: Dissolving Aurora
+			DissolvingDeluge: Dissolving Deluge
+			DissolvingAether: Dissolving Aether
+			DissolvingUmbra: Dissolving Umbra
+			DissolvingNether: Dissolving Nether
+
+			DissolvingBrilliance: Dissolving Brilliance
 
 		}
 
@@ -231,50 +268,6 @@ Mods: {
 				Epic Gamer
 				'Resonates with your ambitions'
 				'''
-			VisionAmuletTextList: {
-				0: Reduces damage taken by 10%
-				1: 
-					'''
-					Increases max minions and sentries by 1
-					Increases damage by 10%
-					'''
-				2: Increases attack speed by 12%
-				3: Increases critical strike chance by 10%
-				4: Increases critical strike damage by 30%
-				5: 
-					'''
-					Increases healing recieved from potions by 40
-					Increases life regeneration by 2 
-					'''
-				6: Increases max life by 80
-				7: Increases void regeneration speed by 20%      
-			}
-
-			VisionAmuletTextList2: {
-				0: 
-					'''
-
-					Shops prices lowered by 20%
-					'''
-				1: 
-					'''
-
-					Increases buff duration by 25%
-					Decreases mana cost by 10% 
-					'''
-				2: 
-					'''
-
-					Increases melee speed and movement speed by 10%
-					Increases jump speed
-					'''
-				3: 
-					'''
-
-					Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
-					Increases max mana and mana recieved from potions by 40
-					'''
-        	}
 
 			# Celestial
 				Apocalypse: 
@@ -479,6 +472,7 @@ Mods: {
 					Increases life regeneration for each ensnared enemy
 					'''
 				TinyPlanet: Surrounds you with 2 orbital projectiles
+
 			# CritBonus
 				OtherworldlyAmplifier: Critical strikes deal 12 more damage
 				BloodstainedCoin: 
@@ -704,6 +698,82 @@ Mods: {
 			
 			# Evil
 				AbyssalFury: Summons Shadow Blades from the sky to your cursor
+				DeathSpiral: 
+					'''
+					Surrounds you with lightning tentacles
+					Has a chance to apply a stacking, permanent bleed to hit enemies for 5 damage per second
+					'''
+				MidnightPrism: 
+					'''
+					Increases armor penetration by 8, critical strike chance by 5%, and max life by 40
+					Release waves of damage periodically that ignore up to 16 defense total
+					Release more waves at lower health
+					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+					Has a 6 second cooldown
+					Waves disabled when hidden
+					'''
+				TomeOfTheReaper: Cast three scythes that move towards your cursor
+				ToothAche: Strike with 3 slashes, then toss a spinning blade for 80% damage
+				Vertebraeker: Strike with a flurry of slashes, then toss a spinning blade for 120% damage
+				WitchHeart: 
+					'''
+					Increases critical strike chance by 5%
+					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+					Has a 6 second cooldown
+					Increases max life by 20
+					'''
+
+			# Fishing
+				Curgeon: Has valuable eggs that can only be harvested by disection
+				PhantomFish: "'Feeds off of energy within voidspace'"
+				SeaSnake: "'Not actually venomous'"
+				ZephyrousZeppelin: Surrounded by a ring of razorwater that deals 75% damage
+
+				PyramidCrate: "{$CommonItemTooltip.RightClickToOpen}"
+
+			# Flails
+				Aten: 
+					'''
+					Conjures stars that do 70% damage and explode for 140% damage
+					'The defunct god... now in flail form'
+					'''
+				NorthStar: 
+					'''
+					Conjures polar stars that do 70% damage and explode for 210% damage
+					'''
+				Shattershine: 
+					'''
+					Releases a cluster of sparkles upon hitting an enemy, each doing 60% damage
+					Doesn't release sparkles while charging
+					'''
+
+			# Fragments
+				DissolvingElements: {
+						DissolvingNatureNT: Reduces damage dealt by 10% while in the inventory
+						DissolvingNaturePT: Increases life regeneration by 1 while in the inventory, up to 4 total
+
+						DissolvingEarthNT: Reduces endurance by 10% while in the inventory
+						DissolvingEarthpt: Increases defense by 2 while in the inventory, up to 8 total
+
+						DissolvingAuroraNT: Reduces movement speed by 20% while in the inventory
+						DissolvingAuroraPT: Increases movement speed by 5% while in the inventory, up to 20% total
+
+						DissolvingDelugeNT: Decreases max life and mana by 10 while in the inventory
+						DissolvingDelugePT: Increases ranged damage by 3% while in the inventory, up to 12% total
+
+						DissolvingAetherNT: Reduces gravity while in the inventory
+						DissolvingAetherPT: Increases magic damage by 3% while in the inventory, up to 12% total
+
+						DissolvingUmbraNT: Reduces max void by 20 while in the inventory
+						DissolvingUmbraPT: Increases void damage by 3% while in the inventory, up to 12% total
+
+						DissolvingNetherNT: Decreases life regeneration by 2 while in the inventory
+						DissolvingNetherPT: Increases melee damage by 3% while in the inventory, up to 12% total
+
+						DissolvingBrillianceNT: Increases void drain by 0.5 while in the inventory
+						DissolvingBrilliancePT: Increases summon damage by 3% while in the inventory, up to 12% total
+				}
+			
 
 		}
 
@@ -753,6 +823,8 @@ Mods: {
 			VibrantCrystalTile: Vibrant Shard
 			VibrantBrickTile: Vibrant Brick
 			VibrantCrystalLargeTile: Large Vibrant Shard
+
+			PyramidCrateTile: Pyramid Crate
 		}
 
 		WorldGeneration: {

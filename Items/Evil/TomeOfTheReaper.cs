@@ -12,8 +12,6 @@ namespace SOTS.Items.Evil
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tome of the Reaper");
-			Tooltip.SetDefault("Cast three scythes that move towards your cursor");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

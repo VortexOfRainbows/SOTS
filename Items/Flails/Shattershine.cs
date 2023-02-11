@@ -11,8 +11,6 @@ namespace SOTS.Items.Flails
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shattershine");
-            Tooltip.SetDefault("Releases a cluster of sparkles upon hitting an enemy, each doing 60% damage\nDoesn't release sparkles while charging");
             this.SetResearchCost(1);
         }
         public override void SafeSetDefaults()

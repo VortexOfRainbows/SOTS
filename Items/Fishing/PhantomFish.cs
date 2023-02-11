@@ -8,8 +8,6 @@ namespace SOTS.Items.Fishing
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phantom Fish");
-			Tooltip.SetDefault("'Feeds off of energy within voidspace'");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()

@@ -13,8 +13,6 @@ namespace SOTS.Items.Evil
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vertebraeker");
-            Tooltip.SetDefault("Strike with a flurry of slashes, then toss a spinning blade for 120% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
