@@ -234,8 +234,37 @@ Mods: {
 			DissolvingAether: Dissolving Aether
 			DissolvingUmbra: Dissolving Umbra
 			DissolvingNether: Dissolving Nether
-
 			DissolvingBrilliance: Dissolving Brilliance
+
+			DissolvingNatureBlock: Nature Block
+			DissolvingNetherBlock: Nether Block
+			DissolvingUmbraBlock: Umbra Block
+
+			FragmentOfNature: Fragment of Nature
+			FragmentOfEarth: Fragment of Earth
+			FragmentOfPermafrost: Fragment of Permafrost
+			FragmentOfTide: Fragment of Tide
+			FragmentOfOtherworld: Fragment of Otherworld
+			FragmentOfEvil: Fragment of Evil
+			FragmentOfChaos: Fragment of Chaos
+			FragmentOfInferno: Fragment of Inferno
+
+			NaturePlating: Nature Plating
+			EarthenPlating: Earthen Plating
+			PermafrostPlating: Permafrost Plating
+			OtherworldPlating: Otherworld Plating
+			TidePlating: Tide Plating
+			EvilPlating: Evil Plating
+			ChaosPlating: Chaos Plating
+			InfernoPlating: Inferno Plating
+			UltimatePlating: Ultimate Plating
+
+			WorldlyPolarizer: Worldly Polarizer
+			ThermalPolarizer: Thermal Polarizer
+			ExoticPolarizer: Exotic Polarizer
+			UltimatePolarizer: Ultimate Polarizer
+
+			PrecariousCluster: Primordial Cluster
 
 		}
 
@@ -772,8 +801,40 @@ Mods: {
 
 						DissolvingBrillianceNT: Increases void drain by 0.5 while in the inventory
 						DissolvingBrilliancePT: Increases summon damage by 3% while in the inventory, up to 12% total
-				}
-			
+					}
+
+				WorldlyPolarizer: 
+					'''
+					Increases damage, endurance, and movement speed by 3%
+					Changes the effects of worldly dissolving elements in your inventory
+					'''
+				ThermalPolarizer: 
+					'''
+					Increases max life, mana, and void by 20
+					Changes the effects of thermal dissolving elements in your inventory
+					'''
+				ExoticPolarizer: 
+					'''
+					Increases jump speed, life regen, and void gain by 2
+					Changes the effects of exotic dissolving elements in your inventory
+					'''
+				UltimatePolarizer: 
+					'''
+					Increases damage, endurance, and movement speed by 3%
+					Increases max life, mana, and void by 20
+					Increases jump speed, life regen, and void gain by 2
+					Changes the effects of all dissolving elements in your inventory
+					'''
+
+				PrecariousCluster: 
+					'''
+					Does the following while in your inventory:
+					Nature
+					Earth
+					Aurora
+					Aether
+					'A great gift for your friend's inventory!'
+					'''
 
 		}
 
@@ -942,5 +1003,10 @@ Mods: {
                 Defense is set to {defenseStat2}
                 '''
         }
+
+		PrecariousClusterTextList: {
+			T1: Reduces damage dealt by 10%
+			T2: Increases life regeneration by 1, up to 4 total
+		}
 	}
 }

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace SOTS.Items.Fragments
 {
@@ -19,9 +20,9 @@ namespace SOTS.Items.Fragments
 				if (line.Mod == "Terraria" && line.Name == "Tooltip1")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature)
-						line.Text = "Reduces damage dealt by 10%";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.T1");
 					else
-						line.Text = "Increases life regeneration by 1, up to 4 total";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.T2");
 				}
 				if (line.Mod == "Terraria" && line.Name == "Tooltip2")
 				{

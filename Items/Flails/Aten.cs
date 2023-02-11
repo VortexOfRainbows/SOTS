@@ -10,7 +10,7 @@ namespace SOTS.Items.Flails
     {
         public override void SetStaticDefaults()
         {
-           this.SetResearchCost(1);
+            this.SetResearchCost(1);
         }
         public override void SafeSetDefaults()
         {
