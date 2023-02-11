@@ -36,12 +36,11 @@ namespace SOTS.Items.Fragments
 		public virtual Color glowColor => new Color(100, 100, 100, 0);
 		public sealed override void SetStaticDefaults()
 		{
-			SafeSetStaticDefaults();
+			//SafeSetStaticDefaults();
 			//Tooltip.SetDefault("WILL BE FILLED IN GAME");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(FrameSpeed, TotalFrames));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
-			Tooltip.SetDefault("Temporary Tooltip");
 			this.SetResearchCost(3);
 		}
         public sealed override void SetDefaults()
@@ -117,7 +116,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNature : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nature");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nature");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNatureNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNaturePT");
         public override int FrameSpeed => 5;
@@ -135,7 +134,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingEarth : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Earth");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Earth");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingEarthNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingEarthPT");
 		public override int FrameSpeed => 6;
@@ -153,7 +152,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAurora : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aurora");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aurora");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAuroraNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAuroraPT");
 		public override int FrameSpeed => 8;
@@ -171,7 +170,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingDeluge : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Deluge");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Deluge");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingDelugeNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingDelugePT");
 		public override int FrameSpeed => 6;
@@ -190,7 +189,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAether : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aether");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aether");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAetherNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAetherPT");
 		public override int FrameSpeed => 6;
@@ -209,7 +208,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingUmbra : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Umbra");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Umbra");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingUmbraNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingUmbraPT");
 		public override Color glowColor => VoidPlayer.EvilColor * 1.2f;
@@ -229,7 +228,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNether : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nether");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nether");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNetherNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNetherPT");
 		public override int FrameSpeed => 5;
@@ -248,7 +247,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingBrilliance : DissolvingElement
 	{
-		public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Brilliance");
+		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Brilliance");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingBrillianceNT");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingBrilliancePT");
 		public override int FrameSpeed => 5;

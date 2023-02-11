@@ -43,7 +43,7 @@ namespace SOTS.Items.Earth
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Vibrant")
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Vibrant");
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 2f;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

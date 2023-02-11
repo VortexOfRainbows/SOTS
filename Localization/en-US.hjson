@@ -227,6 +227,8 @@ Mods: {
 			DissolvingDelugeBlock: Deluge Block
 			DissolvingEarthBlock: Earth Block
 
+			DissolvingElement: Dissolving Nature
+
 			DissolvingNature: Dissolving Nature
 			DissolvingEarth: Dissolving Earth
 			DissolvingAurora: Dissolving Aurora
@@ -777,6 +779,8 @@ Mods: {
 					'''
 
 			# Fragments
+				DissolvingElement: Temporary Tooltip
+
 				DissolvingElements: {
 						DissolvingNatureNT: Reduces damage dealt by 10% while in the inventory
 						DissolvingNaturePT: Increases life regeneration by 1 while in the inventory, up to 4 total

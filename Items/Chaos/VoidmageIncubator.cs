@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using SOTS.Void;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
-using Terraria.
 using Terraria.Localization;
 
 namespace SOTS.Items.Chaos
