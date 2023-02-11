@@ -134,6 +134,7 @@ namespace SOTS.Items.AbandonedVillage
 		{
 			string text = Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList.{gem}");
 			text += Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList2.{frame}");
+			return text;
 		}
 	}
 }
