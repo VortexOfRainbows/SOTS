@@ -267,7 +267,25 @@ Mods: {
 			UltimatePolarizer: Ultimate Polarizer
 
 			PrecariousCluster: Primordial Cluster
+			TerminalCluster: Terminal Cluster
+		
+		# Furniture
+			# AncientGold
+				AncientGoldBed: Ancient Gold Bed
+				AncientGoldCampfire: Eternal Fireplace
+				AncientGoldCandelabra: Ancient Gold Lamp
+				AncientGoldCandle: Ancient Gold Candle
+				AncientGoldChair: Ancient Gold Chair
+				AncientGoldCouch: Ancient Gold Sofa
+				AncientGoldDoor: Ancient Gold Door
+				AncientGoldDresser: Ancient Gold Dresser
+				AncientGoldPlatform: Ancient Gold Platform
+				AncientGoldTable: Ancient Gold Table
+				AncientGoldThrone: Ancient Gold Throne
+				AncientGoldWorkbench: Ancient Gold Work Bench
 
+			# Earthen
+				EarthenPlatingBlastDoor: Earthen Plating Blast Door
 		}
 
 		ItemTooltip: {
@@ -839,6 +857,19 @@ Mods: {
 					Aether
 					'A great gift for your friend's inventory!'
 					'''
+				TerminalCluster: 
+					'''
+					Does the following while in your inventory:
+					Deluge
+					Umbra
+					Nether
+					Brilliance
+					'''
+
+			# Furniture
+				# AncientGold
+					AncientGoldBed: "'For naps fit for a king'"
+					AncientGoldThrone: "'A throne fit for a very old king'"
 
 		}
 
@@ -867,6 +898,7 @@ Mods: {
 
 		ContainerName: {
 			RuinedChestTile: Ruined Chest
+			AncientGoldDresserTile: Ancient Gold Dresser
 		}
 
 		MapObject: {
@@ -890,6 +922,10 @@ Mods: {
 			VibrantCrystalLargeTile: Large Vibrant Shard
 
 			PyramidCrateTile: Pyramid Crate
+
+			AncientGoldCampfireTile: Eternal Fireplace
+			AncientGoldThroneTile: Ancient Gold Throne
+			AncientGoldTorchTile: Ancient Gold Torch
 		}
 
 		WorldGeneration: {
@@ -1009,8 +1045,25 @@ Mods: {
         }
 
 		PrecariousClusterTextList: {
-			T1: Reduces damage dealt by 10%
-			T2: Increases life regeneration by 1, up to 4 total
+			0: Reduces damage dealt by 10%
+			1: Increases life regeneration by 1, up to 4 total
+			2: Reduces endurance by 10%
+			3: Increases defense by 2, up to 8 total
+			4: Reduces movespeed by 20%
+			5: Increases movement speed by 5%, up to 20% total
+			6: Reduces gravity
+			7: Increases magic damage by 3%, up to 12% total
+		}
+
+		TerminalClusterTextList: {
+			0: Reduces max life and mana by 10
+			1: Increases ranged damage by 3%, up to 12% total
+			2: Reduces max void by 20 while in the inventory
+			3: Increases void damage by 3%, up to 12% total
+			4: Reduces life regeneration by 2
+			5: Increases melee damage by 3%, up to 12% total
+			6: Increases void drain by 0.5 while in the inventory
+			7: Increases summon damage by 3%, up to 12% total
 		}
 	}
 }

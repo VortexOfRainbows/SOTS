@@ -3,6 +3,7 @@ using SOTS.Items.Pyramid;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.AncientGold
 {
@@ -28,6 +29,6 @@ namespace SOTS.Items.Furniture.AncientGold
             return false;
         }
         protected override int DresserDrop => ModContent.ItemType<AncientGoldDresser>();
-        protected override string DresserName => "Ancient Gold Dresser";
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ItemName.AncientGoldDresser");
     }
 }

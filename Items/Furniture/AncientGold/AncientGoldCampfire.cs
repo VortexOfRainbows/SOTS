@@ -13,7 +13,6 @@ namespace SOTS.Items.Furniture.AncientGold
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Eternal Fireplace");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -49,7 +48,6 @@ namespace SOTS.Items.Furniture.AncientGold
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Eternal Fireplace");
 			AddMapEntry(new Color(255, 220, 100), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;
