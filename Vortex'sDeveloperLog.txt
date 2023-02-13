@@ -1,7 +1,7 @@
 The following is my development plans :D
 1. Might still have some bugs with Subspace Locket
 2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
-3. MAKE hjson files!
+3. MAKE hjson localization files!
 
 Tmodloader Bugs:
 1. Chest Swapping doesn't drop item.
@@ -43,16 +43,11 @@ Ideas:
 4. Void Ruins Items: 
 	a. Jade-Bloom Camera: reference to Nahida elemental skill
 5. Brachial Dicharge: upgrade to Geostorm at curse-early-HM-tier
-6. Desert Key Item:
-	a. The Dune Splicer
-
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
 2. Red (Abandoned Village) - Gula, Mechanical Liver (WIP)
 3. Orange (Abandoned Aqueduct) - Luxuria, Kelp Whip (WIP)
-4. Yellow (Lihzahrd Temple) -  Ira, Betrayer's Knife (WIP)
-
 
 This is the plan currently
 
@@ -68,6 +63,12 @@ Things to Note For Later:
 3. Wind mechanics for vines and banners
 
 Daily Log:
+
+2/9/23 & 2/12/23
+1. Betrayer's knife more fixes
+2. Made all slashing blades use composite arm (this should make the swing animation look better)
+3. Betrayer's knife bleeding effects (Works in multiplayer), also added to loot pool
+4. Ruined Key can now be part on Normal and Golden treasure slime loot pools (though they are not guaranteed, 0.75 weight)
 
 2/8/23
 1. Pyrocide Damage 90 -> 84

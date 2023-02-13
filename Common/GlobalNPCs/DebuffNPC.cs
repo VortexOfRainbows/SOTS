@@ -31,6 +31,7 @@ using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
 using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Constructs;
+using SOTS.Projectiles.Blades;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -476,6 +477,15 @@ namespace SOTS.Common.GlobalNPCs
                 DestableCurse += 4;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
+            }
+            if(projectile.type == ProjectileType<BetrayersSlash>())
+            {
+                if(BleedingCurse < 1)
+                {
+                    BleedingCurse++;
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                        SendClientChanges(player, npc);
+                }
             }
             if (nerfBeeProj.Contains(projectile.type))
             {
