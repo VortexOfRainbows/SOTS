@@ -27,9 +27,9 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float HitboxWidth => 18;
 		public override float AdditionalTipLength => 18;
-		public override float handleOffset => 20;
-		public override float handleSize => 10;
-		public override Vector2 drawOrigin => new Vector2(7, 42);
+		public override float handleOffset => 16;
+		public override float handleSize => 6;
+		public override Vector2 drawOrigin => new Vector2(7, 45);
 		public override bool isDiagonalSprite => false;
         public override void SwingSound(Player player)
 		{
@@ -44,11 +44,12 @@ namespace SOTS.Projectiles.Blades
 		public override float OverAllSpeedMultiplier => 4f;
 		public override float MinSwipeDistance => 100;
 		public override float MaxSwipeDistance => 100;
-		public override float ArcStartDegrees => thisSlashNumber == 1 ? 215 : 290;
-		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 205f : 222.5f) + (1800f / distance / speedModifier);
+		public override float ArcStartDegrees => thisSlashNumber == 1 ? 215 : 240;
+		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 205f : 202.5f) + (1800f / distance / speedModifier);
 		public override float swingSizeMult => 1.0f;
 		public override float ArcOffsetFromPlayer => thisSlashNumber == 1 ? 0.25f : 0.3f;
 		public override float delayDeathSlowdownAmount => 0.5f;
+		public override Color? DrawColor => null;
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
 			if (original.Y * Projectile.ai[0] > 0)
@@ -72,7 +73,8 @@ namespace SOTS.Projectiles.Blades
 				}
 			}
 		}
-		public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
+		public override float ArmAngleOffset => -20; //hold it with a backwards grip because thats funny
+        public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
 		{
 			float amt = Main.rand.NextFloat(0.5f, 1.2f);
 			float dustScale = 1f;
@@ -118,7 +120,15 @@ namespace SOTS.Projectiles.Blades
 				}
 			}
 		}
-		public override float TrailDistanceFromHandle => 20f;
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+			if(Main.myPlayer == Projectile.owner)
+            {
+				Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection));
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, direction, ModContent.ProjectileType<BloodSplatter>(), 0, 0, Main.myPlayer);
+            }
+        }
+        public override float TrailDistanceFromHandle => 20f;
 		public override float AddedTrailLength => 0f;
     }
 }

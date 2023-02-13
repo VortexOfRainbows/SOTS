@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Blades
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
 			int length = (int)toProjectile.Length();
-			Vector2 rotateToPosition = relativePoint(toProjectile, 24);
+			Vector2 rotateToPosition = relativePoint(toProjectile, 20);
 			Vector2 drawPos = player.Center + rotateToPosition - Main.screenPosition;
 			Vector2 origin = new Vector2(12, 60);
 
@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Blades
 				direction *= (int)FetchDirection;
 			if(direction == -1)
 			origin = new Vector2(texture.Width - 12, 60);
-			float standardSwordLength = (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) - 24;
+			float standardSwordLength = (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) - 16;
 			float scaleMultiplier = length / standardSwordLength;
 			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
 			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
@@ -118,7 +118,9 @@ namespace SOTS.Projectiles.Blades
 				Projectile.alpha = 0;
 				player.ChangeDir(direction);
 				player.heldProj = Projectile.whoAmI;
-				player.itemRotation = MathHelper.WrapAngle(toProjectile.ToRotation() + (direction == -1 ? MathHelper.ToRadians(180) : 0));
+				player.compositeFrontArm.enabled = true;
+				player.compositeBackArm.enabled = true;
+				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (direction == -1 ? -12 : 12)));
 				player.itemTime = 4;
 				player.itemAnimation = 4;
 			}

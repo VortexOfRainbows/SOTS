@@ -114,7 +114,7 @@ namespace SOTS.Prim.Trails
 				}
 				else if (proj.ModProjectile is ToothAcheSlash ache && Entity.active && Entity != null)
 				{
-					WidthList.Add(ache.GetArcLength() * 0.5f + 12);
+					WidthList.Add(ache.GetArcLength() * 0.5f + 6);
 					ownerCenter = projOwner.Center;
 					toOwner.Add(ownerCenter - proj.Center);
 					if (ache.FetchDirection != ClockWiseOrCounterClockwise)
