@@ -142,9 +142,11 @@ namespace SOTS.Projectiles.Blades
 				Projectile.alpha = 0;
 				player.ChangeDir(direction);
 				player.heldProj = Projectile.whoAmI;
-				player.itemRotation = MathHelper.WrapAngle(toProjectile.ToRotation() + (direction == -1 ? MathHelper.ToRadians(180) : 0));
 				player.itemTime = 2;
 				player.itemAnimation = 2;
+				player.compositeFrontArm.enabled = true;
+				player.compositeBackArm.enabled = true;
+				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (direction == -1 ? -15 : 15)));
 			}
 			Projectile.hide = false;
 		}

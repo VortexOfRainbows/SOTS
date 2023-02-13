@@ -81,15 +81,20 @@ namespace SOTS.Projectiles.Blades
 		}
         public override bool PreDraw(ref Color lightColor)
 		{
-			Draw(Main.spriteBatch);
+			Draw(Main.spriteBatch, ref lightColor);
 			return false;
 		}
 		public virtual float handleOffset => 24;
 		public virtual float handleSize => 24;
 		public virtual Vector2 drawOrigin => new Vector2(10, 52);
 		public virtual bool isDiagonalSprite => true;
-		public void Draw(SpriteBatch spriteBatch)
+		public virtual Color? DrawColor => Color.White;
+		public void Draw(SpriteBatch spriteBatch, ref Color lightColor)
         {
+			if(DrawColor != null)
+            {
+				lightColor = (Color)DrawColor;
+            }
 			Player player = Main.player[Projectile.owner];
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
@@ -115,6 +120,7 @@ namespace SOTS.Projectiles.Blades
 		}
 		float counter = 225;
 		float spinSpeed = 0;
+		public virtual float ArmAngleOffset => 18;
         public override void PostAI()
 		{
 			Player player = Main.player[Projectile.owner];
@@ -127,9 +133,11 @@ namespace SOTS.Projectiles.Blades
 				Projectile.alpha = 0;
 				player.ChangeDir(direction);
 				player.heldProj = Projectile.whoAmI;
-				player.itemRotation = MathHelper.WrapAngle(toProjectile.ToRotation() + (direction == -1 ? MathHelper.ToRadians(180) : 0));
 				player.itemTime = 4;
 				player.itemAnimation = 4;
+				player.compositeFrontArm.enabled = true;
+				player.compositeBackArm.enabled = true;
+				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (direction == -1 ? -ArmAngleOffset : ArmAngleOffset)));
 			}
 			Projectile.hide = false;
 		}

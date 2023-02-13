@@ -3168,7 +3168,7 @@ namespace SOTS.WorldgenHelpers
 					{
 						if(tile.WallType == WallID.Jungle) //This is the Topaz Ruined Chest
 						{
-							SpecialItem = ItemID.BladeofGrass; //temporary item
+							SpecialItem = ModContent.ItemType<BetrayersKnife>();
 							fragmentItem = ModContent.ItemType<FragmentOfNature>();
 							potionItem = ItemID.BottledHoney;
 							isSpecialChest = true;
