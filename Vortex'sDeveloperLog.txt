@@ -7,6 +7,7 @@ Tmodloader Bugs:
 1. Chest Swapping doesn't drop item.
 2. Chests crash when platforms are swapped below them.
 3. Block swap is not prevented for pyramid tiles pre EoW (don't think there is support for this in TMOD)
+4. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 Acknowledged But Likely Delayed:
 1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
 2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
@@ -52,10 +53,9 @@ Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 This is the plan currently
 
 Other 1.4 related objectives:
-1. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
-2. Final 1 starter house
-3. Bestiary for all enemies
-4. Evostone Armor + Fishing Rod (Void) + Claymore (Void)!
+1. Final 1 starter house
+2. Bestiary for all enemies
+3. Evostone Fishing Rod (Void) + Claymore (Void)!
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
@@ -63,6 +63,9 @@ Things to Note For Later:
 3. Wind mechanics for vines and banners
 
 Daily Log:
+
+2/13/23
+1. Added Evostone (Vespera) Armor. (Potentially WIP) Sprites and Set bonus!
 
 2/9/23 & 2/12/23
 1. Betrayer's knife more fixes
