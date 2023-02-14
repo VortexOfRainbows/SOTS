@@ -4,6 +4,7 @@ using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Earthen
 {
@@ -29,7 +30,7 @@ namespace SOTS.Items.Furniture.Earthen
 			return false;
 		}
 		protected override int DresserDrop => ModContent.ItemType<EarthenPlatingDresser>();
-        protected override string DresserName => "Earthen Plating Dresser";
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.EarthenPlatingDresserTile");
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));

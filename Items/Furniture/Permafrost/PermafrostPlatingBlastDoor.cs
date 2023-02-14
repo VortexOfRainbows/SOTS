@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Permafrost
 {
@@ -10,7 +11,6 @@ namespace SOTS.Items.Furniture.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Permafrost Plating Blast Door");
 			//Tooltip.SetDefault("Cannot be opened by NPCs");
 			this.SetResearchCost(1);
 		}
@@ -33,7 +33,7 @@ namespace SOTS.Items.Furniture.Permafrost
 		public override int OpenDoorTile => ModContent.TileType<Permafrost.PermafrostPlatingBlastDoorTileOpen>();
 		public override string GetName()
         {
-			return "Permafrost Plating Blast Door";
+			return Language.GetTextValue("Mods.SOTS.ItemName.PermafrostPlatingBlastDoor");
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -47,7 +47,7 @@ namespace SOTS.Items.Furniture.Permafrost
 		public override int ClosedDoorTile => ModContent.TileType<Permafrost.PermafrostPlatingBlastDoorTileClosed>();
 		public override string GetName()
 		{
-			return "Permafrost Plating Blast Door";
+			return Language.GetTextValue("Mods.SOTS.ItemName.PermafrostPlatingBlastDoor");
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
