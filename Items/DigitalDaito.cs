@@ -44,7 +44,7 @@ namespace SOTS.Items
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			i++;
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, i % 2 * 2 -1, Main.rand.NextFloat(0.875f, 1.125f));
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (i % 2 * 2 -1) * player.gravDir, Main.rand.NextFloat(0.875f, 1.125f));
 			return false;
 		}
 		public override void AddRecipes()

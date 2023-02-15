@@ -13,6 +13,7 @@ namespace SOTS.Projectiles.Blades
 {    
     public abstract class SOTSBlade : ModProjectile
     {
+		public int GravDirection => (int)Main.player[Projectile.owner].gravDir;
 		public int thisSlashNumber => Math.Abs((int)Projectile.ai[0]);
 		private float delayDeathSlowdown = 1f;
 		public virtual float delayDeathSlowdownAmount => 0.5f;
@@ -137,7 +138,7 @@ namespace SOTS.Projectiles.Blades
 				player.itemAnimation = 4;
 				player.compositeFrontArm.enabled = true;
 				player.compositeBackArm.enabled = true;
-				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (direction == -1 ? -ArmAngleOffset : ArmAngleOffset)));
+				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(GravDirection * -90 + (FetchDirection == -1 ? -ArmAngleOffset : ArmAngleOffset)));
 			}
 			Projectile.hide = false;
 		}
@@ -197,9 +198,9 @@ namespace SOTS.Projectiles.Blades
 				runOnce = false;
 			}
 			return base.PreAI();
-        }
+		}
 		public int FetchDirection => Math.Sign(Projectile.ai[0]);
-        public override void Kill(int timeLeft)
+		public override void Kill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.owner == Main.myPlayer && !player.dead)

@@ -48,7 +48,7 @@ namespace SOTS.Items.Temple
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 5 * Math.Sign(velocity.X), Main.rand.NextFloat(0.8f, 0.9f));
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 5 * Math.Sign(velocity.X) * player.gravDir, Main.rand.NextFloat(0.8f, 0.9f));
 			return false;
 		}
         public override int GetVoid(Player player)

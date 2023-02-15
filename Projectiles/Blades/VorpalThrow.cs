@@ -259,7 +259,7 @@ namespace SOTS.Projectiles.Blades
 				if (Main.myPlayer == Projectile.owner)
 				{
 					Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, toProj, ModContent.ProjectileType<VorpalLightning2>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer, Projectile.Center.X, Projectile.Center.Y);
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, toProj, ModContent.ProjectileType<VorpalKnifeSlash>(), Projectile.damage * 2, Projectile.knockBack * 1.5f, Main.myPlayer, 3 * Math.Sign(toProj.X), 1f);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, toProj, ModContent.ProjectileType<VorpalKnifeSlash>(), Projectile.damage * 2, Projectile.knockBack * 1.5f, Main.myPlayer, 3 * Math.Sign(toProj.X) * player.gravDir, 1f);
 				}
 			}
 			else
@@ -269,7 +269,7 @@ namespace SOTS.Projectiles.Blades
 				{
 					for (int j = -1; j <= 1; j++)
 						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - new Vector2(0, 32 + Main.rand.NextFloat(-8, 8)), new Vector2(j * 0.4f + Main.rand.NextFloat(-0.1f, 0.1f), -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer, -1);
-					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, ModContent.ProjectileType<VorpalKnifeSlash>(), Projectile.damage * 2, Projectile.knockBack * 1.5f, player.whoAmI, 1 * player.direction, 0.8f);
+					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, ModContent.ProjectileType<VorpalKnifeSlash>(), Projectile.damage * 2, Projectile.knockBack * 1.5f, player.whoAmI, 1 * player.direction * player.gravDir, 0.8f);
 					if (proj.ModProjectile is VorpalKnifeSlash v)
 					{
 						v.distance = 160;
