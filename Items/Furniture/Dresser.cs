@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Localization;
 
 namespace SOTS.Items.Furniture
 {
@@ -17,7 +18,7 @@ namespace SOTS.Items.Furniture
         protected virtual Color MapColor => new Color(191, 142, 111, 255);
         protected virtual int DresserDrop => ItemID.Dresser;
         protected virtual int DustType => DustID.Dirt;
-        protected virtual string DresserName => "Dresser";
+        protected virtual string DresserName => Language.GetTextValue("Mods.SOTS.Common.Dresser");
         public override void SetStaticDefaults()
         {
             // Properties
@@ -33,8 +34,6 @@ namespace SOTS.Items.Furniture
             TileID.Sets.IsAContainer[Type] = true;
             TileID.Sets.InteractibleByNPCs[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
-
-            ContainerName.SetDefault(DresserName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.Origin = new Point16(1, 1);

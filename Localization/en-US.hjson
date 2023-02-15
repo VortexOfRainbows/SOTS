@@ -1,7 +1,8 @@
 Mods: {
 	SOTS: {
 		Common: {
-
+			BlastDoor: Blast Door
+			Dresser: Dresser
 		}
 
 		BiomeName: {
@@ -295,6 +296,29 @@ Mods: {
 
 			# Permafrost
 				PermafrostPlatingBlastDoor: Permafrost Plating Blast Door
+				PermafrostPlatingCapsule: Permafrost Plating Capsule
+				PermafrostPlatingPlatform: Permafrost Plating Platform
+
+		# Gems
+			AmberRing: Asmodeus's Ring
+			AmethystRing: Belphegor's Ring
+			DiamondRing: Light-Bringer's Ring
+			EmeraldRing: Leviathan's Ring
+			RubyRing: Beelzebub's Ring
+			SapphireRing: Mammon's Ring
+			TopazRing: Accuser's Ring
+
+			SOTSRubyGemLock: Vespera Ruby Gem Lock
+			SOTSSapphireGemLock: Vespera Sapphire Gem Lock
+			SOTSEmeraldGemLock: Vespera Emerald Gem Lock
+			SOTSTopazGemLock: Vespera Topaz Gem Lock
+			SOTSAmethystGemLock: Vespera Amethyst Gem Lock
+			SOTSDiamondGemLock: Vespera Diamond Gem Lock
+			SOTSAmberGemLock: Vespera Amber Gem Lock
+
+		# Inferno
+			BlazingClub: Blazing Club
+			BlazingQuiver: Blazing Quiver
 		}
 
 		ItemTooltip: {
@@ -892,6 +916,37 @@ Mods: {
 						'''
 					NaturePlatingWorkBench: Also functions as an anvil
 
+				# Permafrost
+					PermafrostPlatingWorkBench: Also functions as an anvil
+
+			# Gems
+				AmberRing: Getting hit grants a random buff for 30 seconds	
+				AmethystRing: Chain together blocks when mining, breaking up to 50 blocks at once
+				DiamondRing: Increases damage by (defense)%
+				EmeraldRing: Enemies have a 14.3% chance to drop double the loot
+				RubyRing: 
+					'''
+					Killed enemies always drop hearts
+					Collecting hearts lengthens the duration of active buffs
+					'''
+				SapphireRing: Generate income when void is gained
+				TopazRing: Killing enemies grants a random buff for 30 seconds
+			
+			# Inferno
+				BlazingClub: 
+					'''
+					Deploys spiked mines in the air
+					Right click to launch them instead
+					Mines linger and explode into shrapnel for 10% damage
+					Deploys and launches more mines when wearing climbing related accessories
+					'''
+				lazingQuiver: 
+					'''
+					Increases ranged damage by 10% and greatly increases arrow speed
+					20% chance not to consume arrows
+					Converts wooden arrows into Blazing Arrows
+					Blazing Arrows ignore gravity, pierce once, and explode for 15% damage
+					'''
 		}
 
 		BuffName: {
@@ -922,10 +977,13 @@ Mods: {
 			EarthenPlatingStorageTile: Earthen Plating Storage
 			GoopwoodBarrelTile: Goopwood Barrel
 			NaturePlatingCapsuleTile: Nature Plating Capsule
+			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
 
 			AncientGoldDresserTile: Ancient Gold Dresser
 			EarthenPlatingDresserTile: Earthen Plating Dresser
 			NaturePlatingDresserTile: Nature Plating Dresser
+			PermafrostPlatingDresserTile: Permafrost Plating Dresser
+			Dresser: Dresser
 		}
 
 		MapObject: {
@@ -935,6 +993,8 @@ Mods: {
 			EarthenPlatingStorageTile_Locked: Locked Earthen Plating Storage
 			NaturePlatingCapsuleTile: Nature Plating Capsule
 			NaturePlatingCapsuleTilee_Locked: Locked Nature Plating Capsule
+			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
+			PermafrostPlatingCapsuleTile_Locked: Locked Permafrost Plating Capsule
 			HoloEyeBannerTile: Banner
 			HoloSlimeBannerTile: Banner
 			HoloSwordBannerTile: Banner
@@ -955,6 +1015,8 @@ Mods: {
 			GoopwoodBarrelTile: Goopwood Barrel
 			Hydroponics: Hydroponics
 			NaturePlatingTorchTile: Nature Plating Torch
+			PermafrostPlatingTorchTile: Permafrost Plating Torch
+			SOTSGemLockTiles: Mysterious Switch
 		}
 
 		WorldGeneration: {
@@ -1094,5 +1156,11 @@ Mods: {
 			6: Increases void drain by 0.5 while in the inventory
 			7: Increases summon damage by 3%, up to 12% total
 		}
+
+		DiamondRingText: 
+			'''
+			Increases damage by {defenseStat}%
+			Defense is set to {defenseStat2}
+			'''
 	}
 }

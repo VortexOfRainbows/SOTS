@@ -45,8 +45,6 @@ namespace SOTS.Items.Gems
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Accuser's Ring");
-			Tooltip.SetDefault("Killing enemies grants a random buff for 30 seconds");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

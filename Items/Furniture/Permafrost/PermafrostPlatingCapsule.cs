@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Permafrost
 {
@@ -30,7 +31,7 @@ namespace SOTS.Items.Furniture.Permafrost
         {
             return false;
         }
-        protected override string ChestName => "Permafrost Plating Capsule";
+        protected override string ChestName => Language.GetTextValue("Mods.SOTS.ItemName.PermafrostPlatingCapsule");
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<PermafrostPlatingCapsule>();
         protected override int DustType => DustID.Silver;
@@ -38,11 +39,9 @@ namespace SOTS.Items.Furniture.Permafrost
         {
             Color color = Color.Lerp(SOTSTile.PermafrostPlatingColor, Color.Black, 0.17f);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault(ChestName);
             AddMapEntry(color, name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-            name.SetDefault("Locked " + ChestName);
             AddMapEntry(color, name, MapChestName);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
