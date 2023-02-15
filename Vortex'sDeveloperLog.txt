@@ -64,6 +64,9 @@ Things to Note For Later:
 
 Daily Log:
 
+2/14/23
+1. Finished spritesheet for Vespera!
+
 2/13/23
 1. Added Evostone (Vespera) Armor. (Potentially WIP) Sprites and Set bonus!
 
