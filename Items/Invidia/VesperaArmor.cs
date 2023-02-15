@@ -101,7 +101,7 @@ namespace SOTS.Items.Invidia
 				return;
 			int equipSlotBody = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body);
 			ArmorIDs.Body.Sets.shouldersAreAlwaysInTheBack[equipSlotBody] = false;
-			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = true;
+			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = false;
 			ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
 		}
 		public override void SetDefaults()

@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Blades
 				player.heldProj = Projectile.whoAmI;
 				player.compositeFrontArm.enabled = true;
 				player.compositeBackArm.enabled = true;
-				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (direction == -1 ? -15 : 15)));
+				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(player.gravDir * -90 + (FetchDirection == -1 ? -15 : 15)));
 				player.itemTime = 4;
 				player.itemAnimation = 4;
 			}
@@ -184,9 +184,9 @@ namespace SOTS.Projectiles.Blades
 				runOnce = false;
 			}
 			return base.PreAI();
-        }
+		}
 		public int FetchDirection => Math.Sign(Projectile.ai[0]);
-        public override void Kill(int timeLeft)
+		public override void Kill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.owner == Main.myPlayer && !player.dead)

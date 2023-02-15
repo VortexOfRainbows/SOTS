@@ -21,7 +21,7 @@ Code, Direction, Art: Vortex
 Code: Ramen
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Art: Mochi, MrPetkins, HugeKraken, Cloud, Lunatix
+Art: MrPetkins, Mochi, HugeKraken, Cloud, Lunatix
 
 [b]~Past Developers~[/b]
 Direction, Art: Coolio

@@ -66,6 +66,9 @@ Daily Log:
 
 2/14/23
 1. Finished spritesheet for Vespera!
+2. Sprites for other vespera stuff!
+3. Blades now work well with reversed gravity
+4. PrimTrails now work correctly with reversed gravity
 
 2/13/23
 1. Added Evostone (Vespera) Armor. (Potentially WIP) Sprites and Set bonus!

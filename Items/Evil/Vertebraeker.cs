@@ -36,7 +36,7 @@ namespace SOTS.Items.Evil
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 20 * Math.Sign(velocity.X), Main.rand.NextFloat(0.98f, 1.02f));
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 20 * Math.Sign(velocity.X) * player.gravDir, Main.rand.NextFloat(0.98f, 1.02f));
 			return false;
 		}
         public override int GetVoid(Player player)

@@ -91,10 +91,10 @@ namespace SOTS.Projectiles.Blades
 			if (toCursor.X < 0)
 			{
 				direction = -1;
-				direction *= -(int)Projectile.ai[0];
+				direction *= -(int)FetchDirection;
 			}
 			else
-				direction *= (int)Projectile.ai[0];
+				direction *= (int)FetchDirection;
 			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
 			for (int i = 0; i < length + 1; i++)
 			{
@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Blades
 				player.itemAnimation = 2;
 				player.compositeFrontArm.enabled = true;
 				player.compositeBackArm.enabled = true;
-				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (direction == -1 ? -15 : 15)));
+				player.compositeFrontArm.rotation = MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(player.gravDir * -90 + (FetchDirection == -1 ? -15 : 15)));
 			}
 			Projectile.hide = false;
 		}
@@ -157,7 +157,8 @@ namespace SOTS.Projectiles.Blades
 		float distance = 0;
 		float counterOffset;
 		float timeLeftCounter = 0;
-        public override bool PreAI()
+		public int FetchDirection => Math.Sign(Projectile.ai[0]);
+		public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
 			float randMod = Projectile.ai[1];
@@ -177,7 +178,7 @@ namespace SOTS.Projectiles.Blades
 					spinSpeed = (1.0f + (4.4f / (float)Math.Pow(distance / 100f, 1.9f))) * randMod * 5f * SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee);
 				}
 				counterOffset = 205 + 45f / randMod;
-				float slashOffset = counterOffset * Projectile.ai[0];
+				float slashOffset = counterOffset * FetchDirection;
 				counter = slashOffset;
 				runOnce = false;
 			}
@@ -204,9 +205,9 @@ namespace SOTS.Projectiles.Blades
 				dustAway = ovalArea;
 				Projectile.rotation = dustAway.ToRotation();
 			}
-			float iterator2 = (float)Math.Abs(spinSpeed * Projectile.ai[0] / randMod);
+			float iterator2 = (float)Math.Abs(spinSpeed * FetchDirection / randMod);
 			timeLeftCounter += iterator2;
-			counter += spinSpeed * Projectile.ai[0] / randMod;
+			counter += spinSpeed * FetchDirection / randMod;
 			if(timeLeftCounter > (235.0f + (4000f / distance)) / randMod) //complete a bigger arc with lower distance
             {
 				Projectile.hide = true;
@@ -248,7 +249,7 @@ namespace SOTS.Projectiles.Blades
 						int num = Dust.NewDust(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + -toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
 						Dust dust = Main.dust[num];
 						dust.velocity *= 0.15f / rand;
-						dust.velocity += dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * Projectile.ai[0])) * Main.rand.NextFloat(0.5f, 1f) * rand;
+						dust.velocity += dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.5f, 1f) * rand;
 						dust.noGravity = true;
 						dust.scale *= 0.15f / rand;
 						dust.scale += 1.00f * rand;
