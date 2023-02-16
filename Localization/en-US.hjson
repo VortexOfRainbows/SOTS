@@ -1116,6 +1116,8 @@ Mods: {
 						Hold down to fall quickly to the floor
 						Provides immunity to fall damage
 						'''
+				# FromChests
+					ArclightOrbs: Throw a cluster of thunder orbs that explode into chain lightning for 80% damage
 		}
 
 		BuffName: {
