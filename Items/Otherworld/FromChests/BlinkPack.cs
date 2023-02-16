@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -25,8 +26,8 @@ namespace SOTS.Items.Otherworld.FromChests
 				{
 					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.Text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
-						return;
+						line.Text = Language.GetTextValueWith("Mods.SOTS.BlinkPackText", Key)
+						return line.Text;
 					}
 				}
 			}
@@ -34,8 +35,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
-					string key = "Unbound";
-					line.Text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
+					string key = Language.GetTextValue("Mods.SOTS.Common.Unbound")
+					line.Text = Language.GetTextValueWith("Mods.SOTS.BlinkPackText", Key)
 				}
 			}
 			base.ModifyTooltips(tooltips);

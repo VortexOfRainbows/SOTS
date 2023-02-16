@@ -14,7 +14,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Arclight Orbs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

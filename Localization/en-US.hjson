@@ -386,6 +386,13 @@ Mods: {
 			# EpicWings
 				TestWings: Machina Booster
 				TwilightGyroscope: Twilight Gyroscope
+			
+			# FromChests
+				ArclightOrbs: Arclight Orbs
+				ArcStaffMk2: Arc Staff Mk2
+				Calculator: Calculator
+				CataclysmDisc: Cataclysm Disc
+				CataclysmMusketPouch: Cataclysm Musket Pouch
 		}
 
 		ItemTooltip: {
@@ -1118,6 +1125,29 @@ Mods: {
 						'''
 				# FromChests
 					ArclightOrbs: Throw a cluster of thunder orbs that explode into chain lightning for 80% damage
+					ArcStaffMk2: 
+						'''
+						Launch a massive sphere of lightning
+						Detonates at the end of its lifespan, doing 250% damage to low health, non-boss enemies, but only 100% to bosses
+						'''
+					Calculator: 
+						'''
+						Summons a pet Advisor to assist in combat
+						Instead of attacking enemies directly, the Advisor assists with your aim
+						'He really wants to help!'
+						'''
+					CataclysmDisc: 
+						'''
+						Deals more damage at the peak of its trajectory and explodes for 300% damage
+						'''
+					CataclysmMusketPouch: 
+						'''
+						Grants access to infinite cataclysm bullets
+						Cataclysm bullets travel faster and more erratically than normal bullets
+						They will also incur 20% damage to an enemy surrounding the initially hit enemy
+						When favorited, bullets will be supercharged at the cost of some void
+						Supercharged bullets travel instantly, and gain increased arcing capabilies
+						'''
 		}
 
 		BuffName: {
@@ -1351,6 +1381,14 @@ Mods: {
 			Increases void gain by 1
 			Press the '{key}' key to gain fast, multidirectional flight at the cost of 5 void
 			Increases void drain by 3 while active
+			'''
+		
+		BlinkPackTextt: 
+			'''
+			Press the '{key}' key to blink towards your cursor
+			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
+			Provides some immunity after dashing
+			Negates fall damage
 			'''
 	}
 }
