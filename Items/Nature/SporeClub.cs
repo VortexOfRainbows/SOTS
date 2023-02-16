@@ -10,8 +10,6 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spore Club");
-			Tooltip.SetDefault("Launch a spore that may confuse enemies");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

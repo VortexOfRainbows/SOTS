@@ -5,6 +5,7 @@ using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Invidia
 {
@@ -13,7 +14,6 @@ namespace SOTS.Items.Invidia
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases max void by 25 and void gain by 1");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -39,7 +39,7 @@ namespace SOTS.Items.Invidia
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Increases max void by 25 and void gain by 50%";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Vespera");
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 25;
 			voidPlayer.voidGainMultiplier += 0.5f;
@@ -68,7 +68,6 @@ namespace SOTS.Items.Invidia
 		}
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases max void by 25 and movement speed by 5%");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -91,7 +90,6 @@ namespace SOTS.Items.Invidia
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases max void by 25 and void damage by 5%");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}

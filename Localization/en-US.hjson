@@ -3,6 +3,7 @@ Mods: {
 		Common: {
 			BlastDoor: Blast Door
 			Dresser: Dresser
+			Unbound: Unbound
 		}
 
 		BiomeName: {
@@ -162,6 +163,7 @@ Mods: {
 		
 		# DoorItems
 			DoorPants: Door Pants
+			BandOfDoor: Band of Door
 
 		# Dyes
 			TaintedPrismDye: Tainted Prism Dye
@@ -319,6 +321,71 @@ Mods: {
 		# Inferno
 			BlazingClub: Blazing Club
 			BlazingQuiver: Blazing Quiver
+			BookOfVirtues: Book of Virtues
+			IncineratorGlove: Incinerator Glove
+			ObsidianEruption: Obsidian Eruption
+			PlasmaAccelerator: Plasma Accelerator
+			Sharanga: Sharanga
+			TheBlaspha: Blaspha
+			WispInAJar: Wisp in a Jar
+
+		# Invidia
+			VesperaMask: Vespera Mask
+			VesperaLeggings: Vespera Leggings
+			VesperaBreastplate: Vespera Breastplate
+
+			VoidTablet: Void Tablet
+			VorpalKnife: Vorpal Knife
+		
+		# MusicBoxes
+			AdvisorMusicBox: Music Box (Advisor)
+			AncientPyramidMusicBox: Music Box (Cursed Pyramid)
+			KnucklesMusicBox: Music Box (Knuckles)
+			LuxMusicBox: Music Box (Lux)
+			PlanetariumMusicBox: Music Box (Planetarium)
+			PolarisMusicBox: Music Box (Polaris)
+			PutridPinkyMusicBox: Music Box (Putrid Pinky)
+			PyramidBattleMusicBox: Music Box (Pyramid Battle)
+			SubspaceSerpentMusicBox: Music Box (Subspace Serpent)
+
+		# Nature
+			AcornBag: Acorn Bag
+			BerryBombs: Berry Bombs
+			BiomassBarrage: Biomass Bloom
+			BiomassBlast: Biomass Blast
+			BotanicalSymbiote: Botanical Symbiote
+			NatureWreath: Wormwood Wreath
+			NatureLeggings: Wormwood Leggings
+			NatureShirt: Wormwood Shirt
+			NatureSpell: Flower Spell
+			PricklyPearShield: Prickly Pear Shield
+			Scatterseed: Scatterseed
+			SporeBombs: Spore Bombs
+			SporeClub: Spore Club
+		
+		# OreItems
+			GoldArkStaff: Gold Arc Staff
+			GoldBattery: Gold Battery
+			GoldChakram: Gold Chakram
+			GoldGlaive: Gold Glaive
+
+			PlatinumBattery: Platinum Battery
+			PlatinumDart: Platinum Dart
+			PlatinumScythe: Platinum Scythe
+			PlatinumSoulStaff: Platinum Soul Staff
+
+			WardingCharm: Warding Charm
+		
+		# Otherworld
+			# Blocks
+				AvaritianPlating: Avaritia Plating
+				HologlassWall: Hardlight Wall
+				PortalPlating: Avaritia Portal Plating
+				PortalPlatingWall: Avaritia Plating Wall
+			
+			# EpicWings
+				TestWings: Machina Booster
+				TwilightGyroscope: Twilight Gyroscope
 		}
 
 		ItemTooltip: {
@@ -732,6 +799,7 @@ Mods: {
 					Accelerates horizontal movement when going through doors
 					Builds up speed while standing in doors
 					'''
+				BandOfDoor: "'Open the door to the ultimate form of travel'"
 
 			# Earth
 				# Glowmoth
@@ -947,6 +1015,107 @@ Mods: {
 					Converts wooden arrows into Blazing Arrows
 					Blazing Arrows ignore gravity, pierce once, and explode for 15% damage
 					'''
+				BookOfVirtues: 
+					'''
+					Summons a Spectral Wisp that defends you from nearby enemies
+					The wisp does 75% damage on contact with enemies, and 100% with its laser
+					'''
+				IncineratorGlove: 
+					'''
+					Charge up a short-ranged ball of hot plasma
+					Gains 40% additional damage each charge
+					Maxes out at 80 charges
+					Only does half damage prior to firing
+					'''
+				PlasmaAccelerator: Fires supercharged plasma arrows
+				Sharanga: Fires supercharged hellfire arrows
+				TheBlaspha: Launch a scatter of inferno-infused bullets which release homings embers for 50% damage
+				WispInAJar: 
+					'''
+					Summons a Inferno Wisp that assists in combat
+					Killed enemies explode into flames for 30% of the damage dealt to them on the killing blow
+					'''
+			# Invidia
+				VesperaMask: Increases max void by 25 and void gain by 1
+				VesperaLeggings: Increases max void by 25 and movement speed by 5%
+				VesperaBreastplate: Increases max void by 25 and void damage by 5%
+
+				VoidTablet: 
+					'''
+					Increases void gain by 1 and max void by 50
+					Reduces healing recieved from potions by 20
+					'''
+				VorpalKnife: 
+					'''
+					Toss a blade that lingers in the air
+					Detonate with left click, dealing 300% damage
+					Teleport with right click, slashing for 200% damage
+					Drains more void to detonate or teleport the farther away the blade is
+					'''
+			# MusicBoxes
+				KnucklesMusicBox: "'Can I put my...'"
+			
+			# Nature
+				AcornBag: Summons a squirrel to fight for you
+				BerryBombs: Throw a cluster of explosive berries
+				BiomassBarrage: Launches a cluster of acorns
+				BiomassBlast: Launches an acorn that rapidly accelerates its growth upon hitting an enemy or tile
+				BotanicalSymbiote: 
+					'''
+					Increases life regeneration by 1 during the day
+					Grants a Blooming Hook to all minions
+					'''
+				NatureWreath: Increased max minions
+				NatureLeggings: 5% increased minion damage and movement speed
+				NatureShirt: Increased defense for every active minion
+				NatureSpell: 
+					'''
+					Launches a seed that latches onto enemies
+					When the seed blooms, it does 500% damage
+					'''
+				PricklyPearShield: Getting hit releases Cactus Spines that poison nearby enemies
+				Scatterseed: 
+					'''
+					Scatters seeds that latch onto enemies
+					When the seeds bloom, they do 125% damage
+					'''
+				SporeBombs: 
+					'''
+					Throw a cluster of explosive spore sacks
+					Released spores deal 50% damage
+					'The toxic grenades look almost edible'
+					'''
+				SporeClub: Launch a spore that may confuse enemies
+
+			# OreItems
+				GoldArkStaff: Deal 150% damage to up to 2 enemies surrounding the initially hit enemy
+				GoldBattery: 
+					'''
+					Increases void gain by 1 and max void by 20
+					Regenerate void when hit, but also have a 10% chance to recieve ichor when near max void
+					'''
+				GoldChakram: Deals more damage at the peak of its trajectory
+				GoldGlaive: Fires 3 bolts at your cursor, each dealing 75% damage
+
+				PlatinumBattery: 
+					'''
+					Increases void gain by 1 and max void by 20
+					Regenerate void when hit, but also have a 10% chance to recieve broken armor when near max void
+					'''
+				PlatinumDart: A heavy dart that sticks to enemies, slowing them down drastically
+				PlatinumScythe: Attacks permanently curse enemies for 4 damage per second, stacking up to 10 times
+				PlatinumSoulStaff: Absorb life from up to 3 enemies at a time
+			
+			# Otherworld
+				# EpicWings
+					TestWings: Allows flight and slow fall
+					TwilightGyroscope: 
+						'''
+						Increases jump height and flight speed
+						Increases movement speed by 20%
+						Hold down to fall quickly to the floor
+						Provides immunity to fall damage
+						'''
 		}
 
 		BuffName: {
@@ -970,6 +1139,8 @@ Mods: {
                 Increases void gain by 2
                 Grants autofire to the Vibrant Pistol at the cost of accuracy
                 '''
+			Vespera: Increases max void by 25 and void gain by 50%
+			NatureWreath: Summons three Blooming Hooks to assist in combat
 		}
 
 		ContainerName: {
@@ -1017,6 +1188,15 @@ Mods: {
 			NaturePlatingTorchTile: Nature Plating Torch
 			PermafrostPlatingTorchTile: Permafrost Plating Torch
 			SOTSGemLockTiles: Mysterious Switch
+			AdvisorMusicBoxTile: Music Box
+			AncientPyramidMusicBoxTile: Music Box
+			KnucklesMusicBoxTile: Music Box
+			LuxMusicBoxTile: Music Box
+			PlanetariumMusicBoxTile: Music Box
+			PolarisMusicBoxTile: Music Box
+			PutridPinkyMusicBoxTile: Music Box
+			PyramidBattleMusicBoxTile: Music Box
+			SubspaceSerpentMusicBoxTile: Music Box
 		}
 
 		WorldGeneration: {
@@ -1161,6 +1341,14 @@ Mods: {
 			'''
 			Increases damage by {defenseStat}%
 			Defense is set to {defenseStat2}
+			'''
+
+		TestWingsText: 
+			'''
+			Allows flight and slow fall
+			Increases void gain by 1
+			Press the '{key}' key to gain fast, multidirectional flight at the cost of 5 void
+			Increases void drain by 3 while active
 			'''
 	}
 }

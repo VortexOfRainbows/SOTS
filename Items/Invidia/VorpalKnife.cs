@@ -14,8 +14,6 @@ namespace SOTS.Items.Invidia
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vorpal Knife");
-			Tooltip.SetDefault("Toss a blade that lingers in the air\nDetonate with left click, dealing 300% damage\nTeleport with right click, slashing for 200% damage\nDrains more void to detonate or teleport the farther away the blade is");//\n'It originally served a purpose as a weapon of sacrificial beheading'");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

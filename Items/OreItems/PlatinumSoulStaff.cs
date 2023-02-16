@@ -13,8 +13,6 @@ namespace SOTS.Items.OreItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Platinum Soul Staff");
-			Tooltip.SetDefault("Absorb life from up to 3 enemies at a time");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

@@ -10,7 +10,6 @@ namespace SOTS.Items.Invidia
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases void gain by 1 and max void by 50\nReduces healing recieved from potions by 20");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

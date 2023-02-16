@@ -12,6 +12,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
+using Terraria.Localization;
 
 namespace SOTS.Items.Otherworld.EpicWings
 {
@@ -19,9 +20,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 	public class TestWings : ModItem
 	{ 
 		public override void SetStaticDefaults()
-		{	
-			DisplayName.SetDefault("Machina Booster");
-			Tooltip.SetDefault("Allows flight and slow fall");
+		{
 			this.SetResearchCost(1);
 			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(150, 8.2f, 1.4f);
 		}
@@ -33,8 +32,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 				{
 					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.Text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
-						return;
+						line.Text = Language.GetTextValue("Mods.SOTS.TestWingsText", Key)
+						return line.Text;
 					}
 				}
 			}
@@ -42,8 +41,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
-					string key = "Unbound";
-					line.Text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
+					string key = Language.GetTextValue("Mods.SOTS.Common.Unbound")
+					line.Text = Language.GetTextValue("Mods.SOTS.TestWingsText", Key)
 				}
 			}
 			base.ModifyTooltips(tooltips);

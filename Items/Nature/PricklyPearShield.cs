@@ -9,8 +9,6 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Prickly Pear Shield");
-			Tooltip.SetDefault("Getting hit releases Cactus Spines that poison nearby enemies");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

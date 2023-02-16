@@ -11,7 +11,6 @@ namespace SOTS.Items.Inferno
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases ranged damage by 10% and greatly increases arrow speed\n20% chance not to consume arrows\nConverts wooden arrows into Blazing Arrows\nBlazing Arrows ignore gravity, pierce once, and explode for 15% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

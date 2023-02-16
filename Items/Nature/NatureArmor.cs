@@ -4,6 +4,7 @@ using SOTS.Projectiles.Nature;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Nature
 {
@@ -12,8 +13,6 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Wreath");
-			Tooltip.SetDefault("Increased max minions");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -39,7 +38,7 @@ namespace SOTS.Items.Nature
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Summons three Blooming Hooks to assist in combat";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.NatureWreath");
 			if (Main.myPlayer == player.whoAmI)
 			{
 				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
@@ -70,8 +69,6 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Leggings");
-			Tooltip.SetDefault("5% increased minion damage and movement speed");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -93,8 +90,6 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Shirt");
-			Tooltip.SetDefault("Increased defense for every active minion");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}

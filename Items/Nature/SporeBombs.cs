@@ -12,8 +12,6 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spore Bombs");
-			Tooltip.SetDefault("Throw a cluster of explosive spore sacks\nReleased spores deal 50% damage\n'The toxic grenades look almost edible'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

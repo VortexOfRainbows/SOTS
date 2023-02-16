@@ -53,8 +53,6 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Band of Door");
-			Tooltip.SetDefault("'Open the door to the ultimate form of travel'");
 			this.SetResearchCost(1);
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
