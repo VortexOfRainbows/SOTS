@@ -393,6 +393,24 @@ Mods: {
 				Calculator: Calculator
 				CataclysmDisc: Cataclysm Disc
 				CataclysmMusketPouch: Cataclysm Musket Pouch
+				ChainedPlasma: Chained Plasma
+				CodeCorrupter: Code Corrupter
+				CrescentStaff: Crescent Staff
+				FlareDetonator: Flare Detonator
+				HardlightGlaive: Hardlight Glaive
+				HardlightQuiver: Hardlight Quiver
+				InfernoHook: Inferno Hook
+				LashesOfLightning: Lashes of Lightning
+				PlatformGenerator: Platform Generator
+				Poyoyo: Poyo-yo
+				SectionChiefsScythe: Section Chief's Scythe
+				SkywardBlades: Skyward Blades
+				SkywareBattery: Skyware Battery
+				Starbelt: Starbelt
+				StarcoreAssaultRifle: Starcore Assault Rifle
+				StarshotCrossbow: Starshot Crossbow
+				SupernovaHammer: Supernova Hammer
+				TerminatorAcorns: Terminator Acorns
 		}
 
 		ItemTooltip: {
@@ -1148,6 +1166,78 @@ Mods: {
 						When favorited, bullets will be supercharged at the cost of some void
 						Supercharged bullets travel instantly, and gain increased arcing capabilies
 						'''
+					ChainedPlasma: 
+						'''
+						Chains between enemies for 70% damage
+						Tries to move towards your cursor
+						'''
+					CodeCorrupter: 
+						'''
+						Fires a short ranged and a long ranged blast
+						The short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabalize enemies
+						Destabilized enemies gain a 5% flat chance to be critically striked
+						This is calculated after normal crits, allowing some attacks to double crit
+						Destabilization is permanent and can stack, but the chance of applying it gets lower with each level already applied
+						'''
+					CrescentStaff: Cast a wave of Crescents that each lock onto an enemy, and then steal life and mana from them
+					FlareDetonator: Fire an explosive flare that detonates upon releasing the trigger
+					HardlightGlaive: Unleash a burst of lightning that deals 160% damage
+					HardlightQuiver: 
+						'''
+						Grants access to infinite hardlight arrows
+						Hardlight arrows travel faster and are not affected by gravity
+						When favorited, arrows will be supercharged at the cost of some void
+						Supercharged arrows travel instantly, and gain slight homing at longer ranges
+						'''
+					InfernoHook: A very fast hook that strikes enemies as it travels
+					LashesOfLightning: 
+						'''
+						Unleash rapid strikes of lightning in a small area in front of you
+						Deals slightly more damage and can hit through walls at the tip
+						'''
+					PlatformGenerator: 
+						'''
+						10% increased minion damage
+						Generates 2 platforms to the left and right of you
+						You can right click to drag the platforms, but they will always remain symmetrical
+						Sentries can be summoned on top of the platforms
+						'Bring your sentries with you!'
+						'''
+					Poyoyo: Leaves behind a rainbow trail that does 60% damage
+					SectionChiefsScythe: 
+						'''
+						Critical hits summon a Soul of Retaliation into the air
+						Every 10th void attack will release the soul in the form of a powerful laser
+						Direct melee hits permanently curse enemies for 4 damage per second, stacking up to 10 times
+						'''
+					SkywardBlades: 
+						'''
+						Arm yourself with several deadly throwing knives
+						Scoring a hit restores a dagger
+						'Watch this!'
+						'''
+					SkywareBattery: 
+						'''
+						Increases void gain by 2 and max void by 50
+						Regenerate void when hit
+						Immunity to broken armor and ichor
+						'''
+					Starbelt: 
+						'''
+						Critical strikes recover mana
+						Increased max mana by 40
+						10% increased magic crit chance
+						'''
+					StarcoreAssaultRifle: Fires a stream of bouncy, colorful projectiles
+					StarshotCrossbow: Fire a star that scatters arrows in every direction
+					SupernovaHammer: 
+						'''
+						Critical strikes release 3 seekers that do 50% critical damage
+						Killing enemies releases 3 seekers that do 70% damage
+						Enemies killed by seekers release 2 more seekers, each doing 75% damage
+						Seekers home onto enemies, but do not attack the enemies they are released from
+						'''
+					TerminatorAcorns: Summons a Mechanically Modified Squirrel to fight for you
 		}
 
 		BuffName: {
@@ -1339,13 +1429,11 @@ Mods: {
 		    7: Increases max void by 40
 		}
 
-        DiamondRingText: {
-            0: 
-                '''
-                Increases damage by {defenseStat}%
-                Defense is set to {defenseStat2}
-                '''
-        }
+		DiamondRingText: 
+			'''
+			Increases damage by {defenseStat}%
+			Defense is set to {defenseStat2}
+			'''
 
 		PrecariousClusterTextList: {
 			0: Reduces damage dealt by 10%
@@ -1368,12 +1456,6 @@ Mods: {
 			6: Increases void drain by 0.5 while in the inventory
 			7: Increases summon damage by 3%, up to 12% total
 		}
-
-		DiamondRingText: 
-			'''
-			Increases damage by {defenseStat}%
-			Defense is set to {defenseStat2}
-			'''
 
 		TestWingsText: 
 			'''

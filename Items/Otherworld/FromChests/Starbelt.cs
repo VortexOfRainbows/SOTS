@@ -12,8 +12,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starbelt");
-			Tooltip.SetDefault("Critical strikes recover mana\nIncreased max mana by 40\n10% increased magic crit chance");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

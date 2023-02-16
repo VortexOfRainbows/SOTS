@@ -15,8 +15,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{ 	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Skyward Blades");
-			Tooltip.SetDefault("Arm yourself with several deadly throwing knives\nScoring a hit restores a dagger\n'Watch this!'");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

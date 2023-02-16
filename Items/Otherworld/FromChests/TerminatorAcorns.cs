@@ -16,8 +16,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Terminator Acorns");
-			Tooltip.SetDefault("Summons a Mechanically Modified Squirrel to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			this.SetResearchCost(1);

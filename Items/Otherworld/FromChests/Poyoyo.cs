@@ -18,9 +18,7 @@ namespace SOTS.Items.Otherworld.FromChests
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Poyo-yo");
-			Tooltip.SetDefault("Leaves behind a rainbow trail that does 60% damage");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {
