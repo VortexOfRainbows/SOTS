@@ -28,7 +28,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Pot");
             AddMapEntry(new Color(66, 77, 93), name);
             DustType = DustType<AvaritianDust>();
         }

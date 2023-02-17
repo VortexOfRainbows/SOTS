@@ -424,6 +424,11 @@ Mods: {
 				DigitalDisplay: Digital Display
 				HardlightFabricator: Hardlight Fabricator
 				LockedMeteoriteChest: Meteorite Chest
+				LockedSkywareChest: Skyware Chest
+				StrangeChest: Planetarium Chest
+
+				PotGenerator: Pot Generator
+				SkyChain: Sky Chain
 		}
 
 		ItemTooltip: {
@@ -1275,6 +1280,13 @@ Mods: {
 				# Furniture
 					DigitalDisplay: Right click to increase void damage by 10%
 					HardlightFabricator: Used to craft otherworldly objects and gear
+					PotGenerator: 
+						'''
+						Generates pots on top of its surface
+						Can be stacked to increase production of the topmost generator
+						'No, not that type of pot'
+						'''
+					SkyChain: "'It anchors onto... somewhere'"
 		}
 
 		BuffName: {
@@ -1332,6 +1344,10 @@ Mods: {
 			PermafrostPlatingCapsuleTile_Locked: Locked Permafrost Plating Capsule
 			LockedMeteoriteChest: Meteorite Chest
 			LockedMeteoriteChest_Locked: Locked Meteorite Chest
+			LockedSkywareChest: Skyware Chest
+			LockedSkywareChest_Locked: Locked Skyware Chest
+			LockedStrangeChest: Planetarium Chest
+			LockedStrangeChest_Locked: Locked Planetarium Chest
 			HoloEyeBannerTile: Banner
 			HoloSlimeBannerTile: Banner
 			HoloSwordBannerTile: Banner
@@ -1366,6 +1382,9 @@ Mods: {
 			DigitalDisplayTile: Digital Display
 			HardlightFabricatorTile: Hardlight Fabricator
 			HardlightTableTile: Hardlight Table
+			PotGeneratorTile: Pot Generator
+			SkyPots: Pot
+			SkyChainTile: Sky Chain
 		}
 
 		WorldGeneration: {
@@ -1573,6 +1592,12 @@ Mods: {
 			Diamond: "Diamond: {0}"
 			Amber: "Amber: {0}"
 			Pack: "Is Texture Pack On: {0}"
+		}
+
+		PotGeneratorTileText: {
+			0: Status: N/A
+			1: Status: Complete
+			2: "Time left: {0}"
 		}
 	}
 }
