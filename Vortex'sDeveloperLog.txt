@@ -55,7 +55,7 @@ This is the plan currently
 Other 1.4 related objectives:
 1. Final 1 starter house
 2. Bestiary for all enemies
-3. Evostone Fishing Rod (Void) + Claymore (Void)!
+3. Evostone Fishing Rod, Claymore, Bow (all void items)
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
