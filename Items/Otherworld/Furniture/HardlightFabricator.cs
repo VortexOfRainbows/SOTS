@@ -16,8 +16,6 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hardlight Fabricator");
-			Tooltip.SetDefault("Used to craft otherworldly objects and gear");
 			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -89,7 +87,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Hardlight Fabricator");
 			AddMapEntry(new Color(55, 55, 55), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();

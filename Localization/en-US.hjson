@@ -411,6 +411,19 @@ Mods: {
 				StarshotCrossbow: Starshot Crossbow
 				SupernovaHammer: Supernova Hammer
 				TerminatorAcorns: Terminator Acorns
+				TwilightAssassinsCirclet: Twilight Assassin Circlet
+				TwilightAssassinsChestplate: Twilight Assassin Chestplate
+				TwilightAssassinsLeggings: Twilight Assassin Leggings
+				TwilightFishingPole: Twilight Fishing Pole
+				TwilightShard: Twilight Plate
+				OtherworldlyAlloy: Twilight Alloy
+				UndoArrow: Developer Test Item
+				VibrancyModule: Vibrancy Module
+
+			# Furniture
+				DigitalDisplay: Digital Display
+				HardlightFabricator: Hardlight Fabricator
+				LockedMeteoriteChest: Meteorite Chest
 		}
 
 		ItemTooltip: {
@@ -1238,6 +1251,30 @@ Mods: {
 						Seekers home onto enemies, but do not attack the enemies they are released from
 						'''
 					TerminatorAcorns: Summons a Mechanically Modified Squirrel to fight for you
+					TwilightAssassinsCirclet: Gamer
+					TwilightAssassinsChestplate: 
+						'''
+						Increased your max number of minions by 1
+						Increased melee and void critical strike chance by 10%
+						Increased life regeneration by 2 and void regeneration speed by 10%
+						'''
+					TwilightAssassinsLeggings: 
+						'''
+						Increased movement speed by 15%
+						Blink Pack decreased cooldown by 20%
+						Slightly increased jump speed
+						'''
+					TwilightFishingPole: Casts two lines at once
+					UndoArrow: Makes all NPC have zero epicness
+					VibrancyModule: 
+						'''
+						Increases void attack speed by 10%
+						Reduces void cost by 10%
+						'''
+				
+				# Furniture
+					DigitalDisplay: Right click to increase void damage by 10%
+					HardlightFabricator: Used to craft otherworldly objects and gear
 		}
 
 		BuffName: {
@@ -1263,6 +1300,11 @@ Mods: {
                 '''
 			Vespera: Increases max void by 25 and void gain by 50%
 			NatureWreath: Summons three Blooming Hooks to assist in combat
+			TwilightAssassins: 
+                '''
+				The Holo Eye now automatically attacks for you
+				Automatic attacks have a 25% chance to destabilize enemies, but the chance of applying it gets lower with each level already applied
+				'''
 		}
 
 		ContainerName: {
@@ -1288,6 +1330,8 @@ Mods: {
 			NaturePlatingCapsuleTilee_Locked: Locked Nature Plating Capsule
 			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
 			PermafrostPlatingCapsuleTile_Locked: Locked Permafrost Plating Capsule
+			LockedMeteoriteChest: Meteorite Chest
+			LockedMeteoriteChest_Locked: Locked Meteorite Chest
 			HoloEyeBannerTile: Banner
 			HoloSlimeBannerTile: Banner
 			HoloSwordBannerTile: Banner
@@ -1319,6 +1363,9 @@ Mods: {
 			PutridPinkyMusicBoxTile: Music Box
 			PyramidBattleMusicBoxTile: Music Box
 			SubspaceSerpentMusicBoxTile: Music Box
+			DigitalDisplayTile: Digital Display
+			HardlightFabricatorTile: Hardlight Fabricator
+			HardlightTableTile: Hardlight Table
 		}
 
 		WorldGeneration: {
@@ -1429,10 +1476,12 @@ Mods: {
 		    7: Increases max void by 40
 		}
 
-		DiamondRingText: 
+		DiamondRingText: "Increases damage by {0}%"
+
+		DiamondRingText2: 
 			'''
-			Increases damage by {defenseStat}%
-			Defense is set to {defenseStat2}
+			
+			Defense is set to {0}
 			'''
 
 		PrecariousClusterTextList: {
@@ -1464,13 +1513,66 @@ Mods: {
 			Press the '{key}' key to gain fast, multidirectional flight at the cost of 5 void
 			Increases void drain by 3 while active
 			'''
+
+		TestWingsText2: 
+			'''
+			Allows flight and slow fall
+			Increases void gain by 1
+			Press the '{Textkey}' key to gain fast, multidirectional flight at the cost of 5 void
+			Increases void drain by 3 while active
+			'''
 		
-		BlinkPackTextt: 
+		BlinkPackText: 
 			'''
 			Press the '{key}' key to blink towards your cursor
 			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
 			Provides some immunity after dashing
 			Negates fall damage
 			'''
+
+		BlinkPackText2: 
+			'''
+			Press the '{Textkey}' key to blink towards your cursor
+			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
+			Provides some immunity after dashing
+			Negates fall damage
+			'''
+
+		TwilightAssassinsCircletText: 
+			'''
+			Increases your max number of minions and sentries by 1
+			Increases minion and melee damage by 7%
+			Increased max void by 50
+			Provides a Holo Eye minion to assist in combat
+			Press the '{key}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Destabilized enemies gain a 5% flat chance to be critically striked
+			This is calculated after normal crits, allowing some attacks to double crit
+			Costs 6 void to launch
+			nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
+			'''
+
+		TwilightAssassinsCircletText2: 
+			'''
+			Increases your max number of minions and sentries by 1
+			Increases minion and melee damage by 7%
+			Increased max void by 50
+			Provides a Holo Eye minion to assist in combat
+			Press the '{Textkey}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Destabilized enemies gain a 5% flat chance to be critically striked
+			This is calculated after normal crits, allowing some attacks to double crit
+			Costs 6 void to launch
+			nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
+			'''
+
+		UndoArrow: {
+			Ruby: "Ruby: {0}"
+			Sapphire: "Sapphire: {0}"
+			Emerald: "Emerald: {0}"
+			Topaz: "Topaz: {0}"
+			Amethyst: "Amethyst: {0}"
+			Diamond: "Diamond: {0}"
+			Amber: "Amber: {0}"
+			Pack: "Is Texture Pack On: {0}"
+		}
 	}
 }

@@ -12,7 +12,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Plate");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -79,7 +78,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Alloy");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

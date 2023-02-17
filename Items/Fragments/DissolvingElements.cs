@@ -36,7 +36,6 @@ namespace SOTS.Items.Fragments
 		public virtual Color glowColor => new Color(100, 100, 100, 0);
 		public sealed override void SetStaticDefaults()
 		{
-			SafeSetStaticDefaults();
 			//Tooltip.SetDefault("WILL BE FILLED IN GAME");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(FrameSpeed, TotalFrames));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
