@@ -1510,7 +1510,7 @@ Mods: {
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1
-			Press the '{key}' key to gain fast, multidirectional flight at the cost of 5 void
+			Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
 			Increases void drain by 3 while active
 			'''
 
@@ -1518,13 +1518,13 @@ Mods: {
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1
-			Press the '{Textkey}' key to gain fast, multidirectional flight at the cost of 5 void
+			Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
 			Increases void drain by 3 while active
 			'''
 		
 		BlinkPackText: 
 			'''
-			Press the '{key}' key to blink towards your cursor
+			Press the '{0}' key to blink towards your cursor
 			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
 			Provides some immunity after dashing
 			Negates fall damage
@@ -1532,7 +1532,7 @@ Mods: {
 
 		BlinkPackText2: 
 			'''
-			Press the '{Textkey}' key to blink towards your cursor
+			Press the '{0}' key to blink towards your cursor
 			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
 			Provides some immunity after dashing
 			Negates fall damage
@@ -1544,11 +1544,11 @@ Mods: {
 			Increases minion and melee damage by 7%
 			Increased max void by 50
 			Provides a Holo Eye minion to assist in combat
-			Press the '{key}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked
 			This is calculated after normal crits, allowing some attacks to double crit
 			Costs 6 void to launch
-			nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
+			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
 			'''
 
 		TwilightAssassinsCircletText2: 
@@ -1557,11 +1557,11 @@ Mods: {
 			Increases minion and melee damage by 7%
 			Increased max void by 50
 			Provides a Holo Eye minion to assist in combat
-			Press the '{Textkey}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked
 			This is calculated after normal crits, allowing some attacks to double crit
 			Costs 6 void to launch
-			nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
+			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
 			'''
 
 		UndoArrow: {
