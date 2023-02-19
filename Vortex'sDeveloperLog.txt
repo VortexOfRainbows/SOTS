@@ -64,6 +64,10 @@ Things to Note For Later:
 
 Daily Log:
 
+2/17/23
+1. Added Vespera NanDao! WIP as it still needs additional effects.
+2. 
+
 2/14/23
 1. Finished spritesheet for Vespera!
 2. Sprites for other vespera stuff!
