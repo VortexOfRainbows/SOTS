@@ -18,7 +18,7 @@ namespace SOTS.Items.Invidia
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 14;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 14;
             Item.height = 54;  

@@ -8,6 +8,7 @@ using System.IO;
 using SOTS.Utilities;
 using SOTS.Void;
 using SOTS.Prim.Trails;
+using SOTS.Projectiles.Earth;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -27,12 +28,12 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float HitboxWidth => 18;
 		public override float AdditionalTipLength => 18;
-		public override float handleOffset => 12;
+		public override float handleOffset => 8;
 		public override float handleSize => 8;
 		public override Vector2 drawOrigin => new Vector2(6, 41);
         public override void SwingSound(Player player)
 		{
-			SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.5f * speedModifier); //playsound function
+			SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, thisSlashNumber == 1 ? -0.5f : 0.7f); //playsound function
 		}
 		public override float speedModifier => Projectile.ai[1];
 		public override float GetBaseSpeed(float swordLength)
@@ -49,6 +50,21 @@ namespace SOTS.Projectiles.Blades
 		public override float ArcOffsetFromPlayer => 0.3f;
 		public override float delayDeathSlowdownAmount => 0.5f;
 		public override Color? DrawColor => null;
+		private float nextIntervalForRocks = 80;
+        public override void PostAI()
+        {
+            base.PostAI();
+			if(timeLeftCounter > nextIntervalForRocks && thisSlashNumber == 1)
+			{
+				if (nextIntervalForRocks >= 130)
+					nextIntervalForRocks += 100000;
+				if(Main.myPlayer == Projectile.owner)
+                {
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(0, -12), new Vector2(Main.player[Projectile.owner].direction * 1.35f, -Main.rand.NextFloat(4, 6)), ModContent.ProjectileType<EvostonePebble>(), (int)(Projectile.damage * 0.7f), Projectile.knockBack, Main.myPlayer);
+                }
+				nextIntervalForRocks += 25;
+			}
+        }
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
 			if (original.Y * Projectile.ai[0] > 0)
@@ -105,7 +121,7 @@ namespace SOTS.Projectiles.Blades
 				dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
 		}
-        public override float TrailDistanceFromHandle => 14f;
+        public override float TrailDistanceFromHandle => 16f;
 		public override float AddedTrailLength => 0f;
     }
 }

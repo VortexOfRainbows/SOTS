@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Blades
 		bool runOnce = true;
 		public float distance = 0;
 		float counterOffset;
-		float timeLeftCounter = 0;
+		public float timeLeftCounter = 0;
 		public int GetArcLength()
 		{
 			Player player = Main.player[Projectile.owner];

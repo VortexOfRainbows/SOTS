@@ -21,7 +21,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 19;
+			Item.damage = 23;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 48;
 			Item.height = 48;
