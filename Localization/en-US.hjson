@@ -333,6 +333,7 @@ Mods: {
 			VesperaMask: Vespera Mask
 			VesperaLeggings: Vespera Leggings
 			VesperaBreastplate: Vespera Breastplate
+			VesperaNanDao: Vespera NanDao
 
 			VoidTablet: Void Tablet
 			VorpalKnife: Vorpal Knife
@@ -468,6 +469,23 @@ Mods: {
 
 			IceDeployer: Snow Crystal
 			IcicleImpale: Icicle Impale
+			Metalmalgamation: Metalmalgamation
+			PermafrostMedallion: Permafrost Medallion
+			PolarisBossBag: Treasure Bag
+
+			ShardGuard: Shard Guard
+			ShardStaff: Shard Staff
+			ShardstormSpell: Azure Bombardment
+
+			ShatterBlade: Shatter Blade
+			ShatterHeartShield: Shatter Heart Shield
+			ShatterShardChestplate: Shatter Shard Chestplate
+			
+			ShoeIce: Shoe Ice
+			StormSpell: Storm Spell
+
+		# Potions
+			
 		}
 
 		ItemTooltip: {
@@ -1117,10 +1135,16 @@ Mods: {
 					Summons a Inferno Wisp that assists in combat
 					Killed enemies explode into flames for 30% of the damage dealt to them on the killing blow
 					'''
+
 			# Invidia
 				VesperaMask: Increases max void by 25 and void gain by 1
 				VesperaLeggings: Increases max void by 25 and movement speed by 5%
 				VesperaBreastplate: Increases max void by 25 and void damage by 5%
+				VesperaNanDao: 
+					'''
+					Strike with 2 slashes
+					The second slash scatters rocks for 50% damage
+					'''
 
 				VoidTablet: 
 					'''
@@ -1134,6 +1158,7 @@ Mods: {
 					Teleport with right click, slashing for 200% damage
 					Drains more void to detonate or teleport the farther away the blade is
 					'''
+
 			# MusicBoxes
 				KnucklesMusicBox: "'Can I put my...'"
 			
@@ -1407,6 +1432,47 @@ Mods: {
 					Launches large icicles
 					Regenerates void upon hit
 					'''
+				Metalmalgamation: 
+					'''
+					Rapidly sprays out bullets in a radius around it that deal 35% damage
+					'Guns on MY children's toy!?'
+					'''
+				PermafrostMedallion: Surrounds you with a blizzard of artifact probes
+				PolarisBossBag: "{$CommonItemTooltip.RightClickToOpen}"
+
+				ShardGuard: 
+					'''
+					Puts a shell around the owner when below 50% life that reduces damage by 25%
+					Surrounds you with a blizzard of artifact probes
+					Getting hit surrounds you with ice shards
+					Increases max life by 20
+					'''
+				ShardStaff: Summons shards around the player
+				ShardstormSpell: Create an area of arctic obliteration targeted on your cursor
+
+				ShatterBlade: 
+					'''
+					Shatters on critical strike, surrounding you with 3 ice shards
+					Repairs itself after shattering
+					'Don't worry, it's not a durability system'
+					'''
+				ShatterHeartShield: 
+					'''
+					Getting hit surrounds you with ice shards
+					Increases max life by 20
+					'''
+				ShatterShardChestplate: Getting hit surrounds you with ice shards
+				
+				ShoeIce: 
+					'''
+					Allows the ability to slide down walls
+					Improved ability if combined with Climbing Claws or Shoe Spikes
+					40% increased movement speed
+					'Ice physics, everyone's favorite!'
+					'''
+				StormSpell: Create an arctic storm targeted on your cursor
+			
+			# Potions
 		}
 
 		BuffName: {
@@ -1443,6 +1509,11 @@ Mods: {
 				Decreases void damage by 15%
 				'''
 			FrostArtifact: Most melee and ranged attacks summon a handful of Polar Cannons that each deal 25% damage
+			ShatterShard: 
+				'''
+				Increases life regen by 2
+				Immunity to Chilled, Frozen, and Frostburn
+				'''
 		}
 
 		ContainerName: {

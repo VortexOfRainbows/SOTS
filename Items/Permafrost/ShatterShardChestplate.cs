@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Permafrost
 {
@@ -17,8 +18,6 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shatter Shard Chestplate");
-			Tooltip.SetDefault("Getting hit surrounds you with ice shards");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -38,7 +37,7 @@ namespace SOTS.Items.Permafrost
 		}
         public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Increases life regen by 2\nImmunity to Chilled, Frozen, and Frostburn";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.ShatterShard");
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 2;
 			player.buffImmune[BuffID.Chilled] = true;

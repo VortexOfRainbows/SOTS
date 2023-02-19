@@ -12,8 +12,6 @@ namespace SOTS.Items.Permafrost
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Azure Bombardment");
-			Tooltip.SetDefault("Create an area of arctic obliteration targeted on your cursor");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -14,9 +14,7 @@ namespace SOTS.Items.Invidia
 	{
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vespera NanDao");
-            Tooltip.SetDefault("Strike with 2 slashes\nThe second slash scatters rocks for 50% damage");
-			this.SetResearchCost(1);
+           this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{
