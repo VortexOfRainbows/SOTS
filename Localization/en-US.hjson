@@ -1143,7 +1143,7 @@ Mods: {
 				VesperaNanDao: 
 					'''
 					Strike with 2 slashes
-					The second slash scatters rocks for 50% damage
+					The second slash scatters rocks for 70% damage
 					'''
 
 				VoidTablet: 
