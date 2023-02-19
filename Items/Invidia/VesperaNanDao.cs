@@ -15,12 +15,12 @@ namespace SOTS.Items.Invidia
 		public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Vespera NanDao");
-            Tooltip.SetDefault("Strike with 2 slashes\nThe second slash scatters rocks for 50% damage");
+            Tooltip.SetDefault("Strike with 2 slashes\nThe second slash scatters rocks for 70% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 14;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 14;
             Item.height = 54;  
