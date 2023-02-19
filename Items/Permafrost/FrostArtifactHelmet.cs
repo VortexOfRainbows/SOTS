@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Permafrost
 {
@@ -17,8 +18,6 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frost Artifact Helmet");
-			Tooltip.SetDefault("14% increased melee and ranged damage");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -27,7 +26,7 @@ namespace SOTS.Items.Permafrost
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Most melee and ranged attacks summon a handful of Polar Cannons that each deal 25% damage";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.FrostArtifact");
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.polarCannons += 3;
 		}

@@ -19,8 +19,6 @@ namespace SOTS.Items.Permafrost
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frigid Javelin");
-			Tooltip.SetDefault("Throw a powerful, fast traveling javelin that ricochets of surfaces");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

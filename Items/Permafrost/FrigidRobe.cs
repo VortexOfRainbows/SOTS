@@ -2,6 +2,7 @@ using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Permafrost
 {
@@ -18,8 +19,6 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frigid Robe");
-			Tooltip.SetDefault("Frigid Javelin gains better bouncing capabilities");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -37,7 +36,7 @@ namespace SOTS.Items.Permafrost
 		public override void UpdateArmorSet(Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.setBonus = "Frigid Javelin no longer costs void\nDecreases void damage by 15%";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Frigid");
 			player.GetDamage<VoidGeneric>() -= 0.15f;
 			modPlayer.frigidJavelinNoCost = true;
 		}

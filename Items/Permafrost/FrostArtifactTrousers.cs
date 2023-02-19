@@ -17,8 +17,6 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frost Artifact Trousers");
-			Tooltip.SetDefault("10% increased melee and movement speed");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)

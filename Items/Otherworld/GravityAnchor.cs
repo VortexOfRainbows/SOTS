@@ -8,8 +8,6 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gravity Anchor");
-			Tooltip.SetDefault("Normalizes gravity and grants immunity to knockback");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

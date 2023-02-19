@@ -26,7 +26,6 @@ namespace SOTS.Items.Permafrost
 			DustType = ModContent.DustType<ModIceDust>();
 			ItemDrop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(100, 173, 232), name);
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
@@ -72,7 +71,6 @@ namespace SOTS.Items.Permafrost
 			DustType = ModContent.DustType<ModIceDust>();
 			ItemDrop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
@@ -93,7 +91,6 @@ namespace SOTS.Items.Permafrost
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frigid Ore");
 			this.SetResearchCost(100);
 		}
         public override void SetDefaults()

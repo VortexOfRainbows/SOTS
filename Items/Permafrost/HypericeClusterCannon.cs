@@ -11,7 +11,6 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hyperice Cluster Cannon");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

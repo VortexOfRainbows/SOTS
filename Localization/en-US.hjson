@@ -429,6 +429,45 @@ Mods: {
 
 				PotGenerator: Pot Generator
 				SkyChain: Sky Chain
+				TransmutationAltar: Transmutation Altar
+
+			AvaritianGateway: Avaritia Gateway
+			BladeGenerator: Blade Generator
+			BladeNecklace: Blade Necklace
+			GravityAnchor: Gravity Anchor
+			JarOfSouls: Jar of Souls
+			MeteoriteKey: Meteorite Key
+			PhaseCannon: Phase Cannon
+			SkywareKey: Skyware Key
+			StrangeKey: Strange Key
+			TheAdvisorBossBag: Treasure Bag
+			ThundershockShortbow: Thundershock Shortbow
+			TwilightBeads: Twilight Beads
+			TwilightGel: Twilight Gel
+
+		# Permafrost
+			AbsoluteBar: Absolute Alloy
+			CruiseCaller: Cruise Caller
+			CryoCannon: Cryo Cannon
+			EndothermicAfterburner: Endothermic Afterburner
+
+			FrigidCrown: Frigid Crown
+			FrigidGreaves: Frigid Greaves
+			FrigidHourglass: Frigid Hourglass
+			FrigidIce: Frigid Ore
+			FrigidJavelin: Frigid Javelin
+			FrigidRobe: Frigid Robe
+
+			FrostArtifact: Frost Artifact
+			FrostArtifactChestplate: Frost Artifact Breastplate
+			FrostArtifactHelmet: Frost Artifact Helmet
+			FrostArtifactTrousers: Frost Artifact Trousers
+			FrostedKey: Frost Key
+
+			HypericeClusterCannon: Hyperice Cluster Cannon
+
+			IceDeployer: Snow Crystal
+			IcicleImpale: Icicle Impale
 		}
 
 		ItemTooltip: {
@@ -1287,6 +1326,87 @@ Mods: {
 						'No, not that type of pot'
 						'''
 					SkyChain: "'It anchors onto... somewhere'"
+					TransmutationAltar: 
+						'''
+						Used for crafting
+						Allows the conversion of material and equipment to equivalent but different forms
+						Also counts as a demon altar for crafting
+						Crafting using the altar can be undone
+						'''
+
+				AvaritianGateway: 
+					'''
+					'A strange portal that leads nowhere'
+					Serves as the spawning location for the Advisor
+					'''
+				BladeGenerator: 
+					'''
+					Periodically accumulate up to 9 swords that rotate around you
+					Every 10th melee attack will launch forth the swords
+					'''
+				BladeNecklace: 
+					'''
+					Increases void gain by 1
+					Periodically accumulate up to 9 swords that rotate around you
+					Every 10th melee attack will launch forth the swords
+					Getting hit summons 5 Souls of Retaliation into the air
+					Every 10th void attack will release the souls in the form of a powerful laser
+					'''
+				GravityAnchor: Normalizes gravity and grants immunity to knockback
+				JarOfSouls: "{$CommonItemTooltip.RightClickToOpen}"
+				MeteoriteKey: Opens one locked Meteorite Chest
+				PhaseCannon: Fires a supercharged ball of plasma that can travel through walls
+				SkywareKey: Opens one locked Skyware Chest
+				StrangeKey: Opens one locked Strange Chest
+				TheAdvisorBossBag: "{$CommonItemTooltip.RightClickToOpen}"
+				ThundershockShortbow: Fires powerful bolts of lightning instead of arrows
+				TwilightBeads: 
+					'''
+					Increases void gain by 1
+					Getting hit summons 5 Souls of Retaliation into the air, assuming you have less than 5 Souls active already
+					Every 10th void attack will release the souls in the form of a powerful laser
+					'''
+			# Permafrost
+				AbsoluteBar: "'It burns to touch'"
+				CruiseCaller: Summons a fleet of Penguin Copters to fight for you
+				CryoCannon: Uses snowballs as ammo
+				EndothermicAfterburner: 
+					'''
+					Melee attacks send a Frost Burst behind you, dealing 70% damage and inflicting Frostburn
+					Hitting an enemy with the Frost Burst will increase movement speed and melee speed by 10% for 10 seconds
+					'''
+
+				FrigidCrown: Adds an additional burst to the Shard Staff and Storm Spell
+				FrigidGreaves: 
+					'''
+					Grants Ice Skates effect
+					10% increased movement and void attack speed
+					'''
+				FrigidHourglass: 
+					'''
+					Freezes your void meter for 15 seconds every minute
+					Provides immunity to Slow, Chilled, Frozen, and Frostburn
+					Increases movement speed by 10%
+					'''
+				FrigidJavelin: Throw a powerful, fast traveling javelin that ricochets of surfaces
+				FrigidRobe: Frigid Javelin gains better bouncing capabilities
+
+				FrostArtifact: Has a slot for a key
+				FrostArtifactChestplate: 16% increased melee and ranged critical strike chance
+				FrostArtifactHelmet: 14% increased melee and ranged damage
+				FrostArtifactTrousers: 10% increased melee and movement speed
+				FrostedKey: "'Cold to the touch'"
+
+				IceDeployer: 
+					'''
+					Summons the snow-shield mount
+					While mounted, gain 8 defense
+					'''
+				IcicleImpale: 
+					'''
+					Launches large icicles
+					Regenerates void upon hit
+					'''
 		}
 
 		BuffName: {
@@ -1317,6 +1437,12 @@ Mods: {
 				The Holo Eye now automatically attacks for you
 				Automatic attacks have a 25% chance to destabilize enemies, but the chance of applying it gets lower with each level already applied
 				'''
+			Frigid: 
+				'''
+				Frigid Javelin no longer costs void
+				Decreases void damage by 15%
+				'''
+			FrostArtifact: Most melee and ranged attacks summon a handful of Polar Cannons that each deal 25% damage
 		}
 
 		ContainerName: {
@@ -1385,6 +1511,11 @@ Mods: {
 			PotGeneratorTile: Pot Generator
 			SkyPots: Pot
 			SkyChainTile: Sky Chain
+			TransmutationAltarTile: Transmutation Altar
+			AvaritianGatewayTile: Strange Gateway
+			FrigidIceTile: Frigid Ore
+			FrigidIceTileSafe: Frigid Ore
+			FrostArtifactTile: Frost Artifact
 		}
 
 		WorldGeneration: {

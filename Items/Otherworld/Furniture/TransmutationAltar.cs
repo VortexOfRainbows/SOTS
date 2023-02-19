@@ -22,8 +22,6 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Transmutation Altar");
-			Tooltip.SetDefault("Used for crafting\nAllows the conversion of material and equipment to equivalent but different forms\nAlso counts as a demon altar for crafting\nCrafting using the altar can be undone");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -107,7 +105,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Transmutation Altar");
 			AddMapEntry(new Color(125, 55, 55), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustType<AvaritianDust>();

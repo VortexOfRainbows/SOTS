@@ -12,15 +12,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-
 namespace SOTS.Items.Otherworld
 {
 	public class AvaritianGateway : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Avaritia Gateway");
-			Tooltip.SetDefault("'A strange portal that leads nowhere'\nServes as the spawning location for the Advisor");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -57,7 +54,6 @@ namespace SOTS.Items.Otherworld
 			TileObjectData.newTile.Origin = new Point16(4, 8);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Strange Gateway");
 			AddMapEntry(new Color(55, 45, 65), name);
 		}
         public override bool CreateDust(int i, int j, ref int type)

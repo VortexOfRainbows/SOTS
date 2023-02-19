@@ -12,8 +12,6 @@ namespace SOTS.Items.Permafrost
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Endothermic Afterburner");
-			Tooltip.SetDefault("Melee attacks send a Frost Burst behind you, dealing 70% damage and inflicting Frostburn\nHitting an enemy with the Frost Burst will increase movement speed and melee speed by 10% for 10 seconds");
 			this.SetResearchCost(1);
 		}
         public override void SetDefaults()
