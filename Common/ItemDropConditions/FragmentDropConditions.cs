@@ -6,6 +6,24 @@ using Terraria.Localization;
 
 namespace SOTS.Common.ItemDropConditions
 {
+	public class DontDropOnFriendlyCondition : IItemDropRuleCondition, IProvideItemConditionDescription //Thank you Nalydddd!!! CODE FROM AEQUUS
+	{
+		public DontDropOnFriendlyCondition()
+		{
+		}
+		public virtual bool CanDrop(DropAttemptInfo info)
+		{
+			return info.npc?.friendly != true && info.npc.lifeMax > 5 && !NPCID.Sets.CountsAsCritter[info.npc.type];
+		}
+		public virtual bool CanShowItemDropInUI()
+		{
+			return true;
+		}
+		public virtual string GetConditionDescription()
+		{
+			return null;
+		}
+	}
 	public class NatureFragmentDropCondition : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)

@@ -108,7 +108,7 @@ namespace SOTS
 		public bool effect = true;
 		public int counter = 0;
 		public int petAdvisorID = -1;
-		private float spinCounter = 0;
+		private float AffixAI0 = 0;
 		public bool hasFrostBloomed = false;
 		public int bloomingHookAssignment = -1;
 		private Vector2 initialVelo = Vector2.Zero;
@@ -319,18 +319,18 @@ namespace SOTS
 					}
 					if (!projectile.tileCollide && WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16))
                     {
-						if(spinCounter <= 6)
+						if(AffixAI0 <= 6)
                         {
 							projectile.velocity *= 0.86f;
-							for(float i = 4 - 0.5f * spinCounter; i > 0; i--)
+							for(float i = 4 - 0.5f * AffixAI0; i > 0; i--)
 							{
 								if(!Main.rand.NextBool(3))
 								{
 									Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
 									dust.velocity *= 1.8f;
 									dust.noGravity = true;
-									dust.scale *= 0.5f - 0.05f * spinCounter;
-									dust.scale += 0.7f - 0.05f * spinCounter;
+									dust.scale *= 0.5f - 0.05f * AffixAI0;
+									dust.scale += 0.7f - 0.05f * AffixAI0;
 									dust.color = new Color(115, 255, 70, 0);
 									dust.alpha = (int)(projectile.alpha * 0.5f + 170);
 									dust.fadeIn = 0.1f;
@@ -338,7 +338,7 @@ namespace SOTS
 								}
 							}
                         }
-						if(spinCounter == 0)
+						if(AffixAI0 == 0)
 						{
 							if(Main.myPlayer == projectile.owner)
                             {
@@ -349,8 +349,27 @@ namespace SOTS
 								}
 							}
 						}
-						spinCounter++;
+						AffixAI0++;
                     }
+				}
+				if (affixID == 5) //Evostone Longbow
+				{
+					if (projectile.extraUpdates < 1)
+						projectile.extraUpdates++;
+					for (int i = 0; i < 2; i++)
+					{
+						Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
+						Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, DustID.Obsidian, 0, 0, 0, Color.LightGray);
+						dust.noGravity = true;
+						dust.scale = 1.2f;
+						dust.velocity = Vector2.Zero;
+					}
+					if (initialVelo == Vector2.Zero)
+						initialVelo = projectile.velocity;
+					else
+						initialVelo -= (initialVelo - projectile.velocity) * 0.7f; //only recieve 70% of arrows usual gravity
+					if (projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
+						projectile.velocity = initialVelo;
 				}
 			}
 		}
@@ -366,7 +385,7 @@ namespace SOTS
             }
 			if (projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
 				return;
-			spinCounter += projectile.velocity.Length() * MathHelper.ToRadians(0.75f) * projectile.direction;
+			AffixAI0 += projectile.velocity.Length() * MathHelper.ToRadians(0.75f) * projectile.direction;
 			if (level == 1)
 			{
 				if (!Main.rand.NextBool(3))
@@ -545,7 +564,7 @@ namespace SOTS
 					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, outward, ModContent.ProjectileType<InfernoSeeker>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
 				}
 			}
-			if(affixID == 4 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>() && spinCounter == 0)
+			if(affixID == 4 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>() && AffixAI0 == 0)
 			{
 				for (int i = 0; i < 2; i++)
 				{
@@ -558,14 +577,29 @@ namespace SOTS
 		{
 			if (!hasFrostBloomed && frostFlake >= 3)
 				FrostBloom(projectile);
-			if(affixID == 1)
+			if(affixID == 1 || (affixID == 5 && AffixAI0 == 0))
 			{
 				if (Main.myPlayer == projectile.owner)
 				{
+					Vector2 velo = projectile.velocity;
+					if(projectile.type == ModContent.ProjectileType<HardlightArrow>())
+                    {
+						velo = Main.rand.NextVector2CircularEdge(24, 24);
+                    }
+					int type = ModContent.ProjectileType<SteelShrapnel>();
+					int baseSpread = 5;
+					float dmgMult = 1.0f;
+					if(affixID == 5)
+                    {
+						velo = new Vector2(0, -18);
+						type = ModContent.ProjectileType<BigEvostonePebble>();
+						baseSpread = 12;
+						dmgMult = 0.7f;
+					}
 					for (int i = 0; i < 3; i++)
 					{
-						float randAmt = 5 + 12 * i;
-						Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(projectile.damage), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+						float randAmt = baseSpread + 12 * i;
+						Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), type, (int)(projectile.damage * dmgMult), projectile.knockBack, Main.myPlayer, Main.rand.Next(60));
 					}
 				}
 			}
@@ -574,6 +608,15 @@ namespace SOTS
 		{
 			if (!hasFrostBloomed && frostFlake >= 3)
 				FrostBloom(projectile);
+			if((affixID == 5 && AffixAI0 == 0))
+			{
+				Vector2 velo = new Vector2(0, -18);
+				for (int i = 0; i < 3; i++)
+				{
+					float randAmt = 12 + 12 * i;
+					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<BigEvostonePebble>(), (int)(projectile.damage * 0.7f), projectile.knockBack, Main.myPlayer, Main.rand.Next(60));
+				}
+			}
 			if (affixID == 1)
 			{
 				if (Main.myPlayer == projectile.owner)
@@ -600,7 +643,7 @@ namespace SOTS
 					float damageMult = 2;
 					if (ffValue == 2)
 						damageMult = 6;
-					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), (int)(projectile.damage * damageMult), projectile.knockBack, Main.myPlayer, ffValue, spinCounter);
+					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), (int)(projectile.damage * damageMult), projectile.knockBack, Main.myPlayer, ffValue, AffixAI0);
 				}
 				if (Main.netMode == NetmodeID.MultiplayerClient)
 					SendClientChanges(Main.player[projectile.owner], projectile);
@@ -621,7 +664,7 @@ namespace SOTS
 						alphaMult = 0;
 					float dist1 = 8 * percent;
 					float dist2 = 6 * percent;
-					DrawStar(spawnPos, alphaMult, projectile.velocity.ToRotation(), spinCounter + MathHelper.ToRadians(30 * i), 6, dist1, dist2, 0.6f);
+					DrawStar(spawnPos, alphaMult, projectile.velocity.ToRotation(), AffixAI0 + MathHelper.ToRadians(30 * i), 6, dist1, dist2, 0.6f);
 				}
 			}
 			/*(if (bloomingHookAssignment != -1)

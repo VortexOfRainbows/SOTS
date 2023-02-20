@@ -16,7 +16,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 15;
+			Item.damage = 17;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 30;
 			Item.height = 64;

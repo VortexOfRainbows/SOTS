@@ -9,11 +9,10 @@ Tmodloader Bugs:
 3. Block swap is not prevented for pyramid tiles pre EoW (don't think there is support for this in TMOD)
 4. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 Acknowledged But Likely Delayed:
-1. Critters dropping global loot (this HAS a fix, but waiting for Tmodloader to address it is probably smarter..?)
-2. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
-3. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
-4. Texture Pack sounds to disable when block is broken (tied to specific blocks)
-5. Worldgen Step that cleans up floating trees!
+1. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
+2. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
+3. Texture Pack sounds to disable when block is broken (tied to specific blocks)
+4. Worldgen Step that cleans up floating trees!
 
 Update Objectives:
 1. Ghost Town!
@@ -55,7 +54,7 @@ This is the plan currently
 Other 1.4 related objectives:
 1. Final 1 starter house
 2. Bestiary for all enemies
-3. Evostone Fishing Rod, Claymore, Bow (all void items)
+3. Evostone Fishing Rod, Bow (all void items)
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
@@ -64,10 +63,13 @@ Things to Note For Later:
 
 Daily Log:
 
-2/17/23 & 2/18/23
+2/17/23 & 2/18/23 & 2/19/23
 1. Added Vespera NanDao! Not tested in multiplayer as it should work fine (copied from other components)
 2. Vibrant Blade damage 19 -> 23
 3. Golden Glaive damaage 28 -> 26
+4. Ancient Steel Longbow damage 15 -> 17
+5. Added Vespera Longbow! Not tested in multiplayer, but should work fine (might need some balancing)
+6. Critters should no longer drop items (Needs more testing)
 
 2/14/23
 1. Finished spritesheet for Vespera!

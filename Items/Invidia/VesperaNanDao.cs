@@ -26,7 +26,7 @@ namespace SOTS.Items.Invidia
             Item.useAnimation = 22;
             Item.useStyle = ItemUseStyleID.Shoot;		
             Item.knockBack = 2.5f;
-            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = null;
             Item.autoReuse = true;

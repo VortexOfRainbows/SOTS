@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.tileCollide = false;
 			Projectile.width = 14;
 			Projectile.height = 14;
-            Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
+            Projectile.DamageType = ModContent.GetInstance<Void.VoidGeneric>(); //generic because multiple classes use this projectile
 			Projectile.penetrate = 1;
 			Projectile.alpha = 0; 
 			Projectile.friendly = true;

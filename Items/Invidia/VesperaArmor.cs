@@ -28,7 +28,7 @@ namespace SOTS.Items.Invidia
 		{
 			Item.width = 26;
 			Item.height = 22;
-			Item.value = Item.sellPrice(0, 0, 50, 0);
+			Item.value = Item.sellPrice(0, 0, 10, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.defense = 2;
 		}
@@ -62,7 +62,7 @@ namespace SOTS.Items.Invidia
 		{
 			Item.width = 22;
 			Item.height = 16;
-			Item.value = Item.sellPrice(0, 0, 40, 0);
+			Item.value = Item.sellPrice(0, 0, 10, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.defense = 3;
 		}
@@ -106,7 +106,7 @@ namespace SOTS.Items.Invidia
 		{
 			Item.width = 26;
 			Item.height = 18;
-			Item.value = Item.sellPrice(0, 0, 60, 0);
+			Item.value = Item.sellPrice(0, 0, 10, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.defense = 3;
 		}
