@@ -248,11 +248,12 @@ namespace SOTS.Common.GlobalNPCs
 		}
         public override void ModifyGlobalLoot(GlobalLoot globalLoot) //global rules, such as fragments, soulds, ectoplasm
         {
-			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<AlmondMilk>(), 100, 1, 1));
-			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<StrawberryIcecream>(), 100, 1, 1));
-			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.BeachDropCondition(), ModContent.ItemType<CoconutMilk>(), 100, 1, 1));
-			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<AvocadoSoup>(), 120, 1, 1));
-			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.PlanetariumDropCondition(), ModContent.ItemType<DigitalCornSyrup>(), 100, 1, 1));
+			LeadingConditionRule notCritter = new LeadingConditionRule(new ItemDropConditions.DontDropOnFriendlyCondition());
+			notCritter.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AlmondMilk>(), 100, 1, 1));
+			notCritter.OnSuccess(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<StrawberryIcecream>(), 100, 1, 1));
+			notCritter.OnSuccess(ItemDropRule.ByCondition(new ItemDropConditions.BeachDropCondition(), ModContent.ItemType<CoconutMilk>(), 100, 1, 1));
+			notCritter.OnSuccess(ItemDropRule.ByCondition(new ItemDropConditions.PermafrostFragmentDropCondition(), ModContent.ItemType<AvocadoSoup>(), 120, 1, 1));
+			notCritter.OnSuccess(ItemDropRule.ByCondition(new ItemDropConditions.PlanetariumDropCondition(), ModContent.ItemType<DigitalCornSyrup>(), 100, 1, 1));
 
 			LeadingConditionRule otherworld = new LeadingConditionRule(new ItemDropConditions.OtherworldFragmentDropCondition());
 			LeadingConditionRule tide = new LeadingConditionRule(new ItemDropConditions.TideFragmentDropCondition());
@@ -270,15 +271,16 @@ namespace SOTS.Common.GlobalNPCs
 							earth.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 35, 1, 2)).OnFailedConditions(
 								inferno.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfInferno>(), 35, 1, 2)))))));
 			evil.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 35, 1, 2)).OnFailedConditions(chaos.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfChaos>(), 35, 1, 2)));
-			globalLoot.Add(ItemDropRule.ByCondition(new ItemDropConditions.DownedSubspaceDropCondition(), ModContent.ItemType<SanguiteBar>(), 35, 4, 5, 1));
-			globalLoot.Add(otherworld);
-			globalLoot.Add(tide);
-			globalLoot.Add(nature);
-			globalLoot.Add(permafrost);
-			globalLoot.Add(earth);
-			globalLoot.Add(inferno);
-			globalLoot.Add(evil);
-			globalLoot.Add(chaos);
+			notCritter.OnSuccess(ItemDropRule.ByCondition(new ItemDropConditions.DownedSubspaceDropCondition(), ModContent.ItemType<SanguiteBar>(), 35, 4, 5, 1));
+			notCritter.OnSuccess(otherworld);
+			notCritter.OnSuccess(tide);
+			notCritter.OnSuccess(nature);
+			notCritter.OnSuccess(permafrost);
+			notCritter.OnSuccess(earth);
+			notCritter.OnSuccess(inferno);
+			notCritter.OnSuccess(evil);
+			notCritter.OnSuccess(chaos);
+			globalLoot.Add(notCritter);
 		}
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) //modify loot and vanilla loot
 		{
@@ -516,7 +518,7 @@ namespace SOTS.Common.GlobalNPCs
 			float constructRateMultiplier = 1f;
 			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
 				constructRateMultiplier = 0f;
-			if(Main.eclipse || Main.pumpkinMoon || Main.snowMoon)
+			if(Main.eclipse || Main.pumpkinMoon || Main.snowMoon || Main.invasionType == InvasionID.None)
             {
 				constructRateMultiplier = 0f;
             }
