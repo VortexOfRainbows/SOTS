@@ -333,6 +333,7 @@ Mods: {
 			VesperaMask: Vespera Mask
 			VesperaLeggings: Vespera Leggings
 			VesperaBreastplate: Vespera Breastplate
+			VesperaLongbow: Vespera Longbow
 			VesperaNanDao: Vespera NanDao
 
 			VoidTablet: Void Tablet
@@ -1157,6 +1158,11 @@ Mods: {
 				VesperaMask: Increases max void by 25 and void gain by 1
 				VesperaLeggings: Increases max void by 25 and movement speed by 5%
 				VesperaBreastplate: Increases max void by 25 and void damage by 5%
+				VesperaLongbow: 
+					'''
+					Has to windup before firing
+					Arrows travel fast and scatter into rock shrapnel for 70% damage
+					'''
 				VesperaNanDao: 
 					'''
 					Strike with 2 slashes
