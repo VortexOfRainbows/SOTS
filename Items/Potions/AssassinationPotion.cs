@@ -9,8 +9,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Assassination Potion");
-			Tooltip.SetDefault("Execute enemies below 20 health or 10% health");
 			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()

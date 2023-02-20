@@ -14,8 +14,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blazing Tonic");
-			Tooltip.SetDefault("Randomly receive 2 of the following:\nBluefire for 15 minutes\nInferno for 13 minutes\nObsidian Skin for 11 minutes\nMagic Power for 9 minutes\n'Is this really safe to drink?'");
 			this.SetResearchCost(20);
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

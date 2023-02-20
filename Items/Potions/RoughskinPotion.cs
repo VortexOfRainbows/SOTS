@@ -9,8 +9,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Roughskin Potion");
-			Tooltip.SetDefault("Increases defense by 4 and damage by 4%");
 			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()

@@ -11,8 +11,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bluefire Potion");
-			Tooltip.SetDefault("Killed enemies explode into flames for 40% of the damage dealt to them on the killing blow");
 			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()

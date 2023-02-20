@@ -10,8 +10,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starlight Tonic");
-			Tooltip.SetDefault("Receive the following:\nAssassination for 15 minutes\nMagic Power for 13 minutes\nHeartreach for 11 minutes\nMana Regeneration for 9 minutes");
 			this.SetResearchCost(20);
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

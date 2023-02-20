@@ -485,7 +485,24 @@ Mods: {
 			StormSpell: Storm Spell
 
 		# Potions
-			
+			AbyssalTonic: Abyssal Tonic
+			AssassinationPotion: Assassination Potion
+			BlazingTonic: Blazing Tonic
+			BlightfulTonic: Blightful Tonic
+			BluefirePotion: Bluefire Potion
+			BrittlePotion: Brittle Potion
+			DoubleVisionPotion: Double Vision Potion
+			EtherealTonic: Ethereal Tonic
+			GlacialTonic: Glacial Tonic
+			HarmonyPotion: Harmony Potion
+			HereticTonic: Heretic Tonic
+			NightmarePotion: Nightmare Potion
+			RipplePotion: Ripple Potion
+			RoughskinPotion: Roughskin Potion
+			SeismicTonic: Seismic Tonic
+			SoulAccessPotion: Soul Access Potion
+			StarlightTonic: Starlight Tonic
+			VibePotion: Vibe Potion
 		}
 
 		ItemTooltip: {
@@ -1473,6 +1490,103 @@ Mods: {
 				StormSpell: Create an arctic storm targeted on your cursor
 			
 			# Potions
+				AbyssalTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Gills for 15 minutes
+					Flipper for 13 minutes
+					Ripple for 11 minutes
+					Calm for 9 minutes
+					'''
+				AssassinationPotion: Execute enemies below 20 health or 10% health
+				BlazingTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Bluefire for 15 minutes
+					Inferno for 13 minutes
+					Obsidian Skin for 11 minutes
+					Magic Power for 9 minutes
+					'Is this really safe to drink?'
+					'''
+				BlightfulTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Ironskin for 15 minutes
+					Good Vibes for 13 minutes
+					Swiftness for 11 minutes
+					Regeneration for 9 minutes
+					'''
+				BluefirePotion: Killed enemies explode into flames for 40% of the damage dealt to them on the killing blow
+				BrittlePotion: Getting hit surrounds you with ice shards
+				DoubleVisionPotion: 
+					'''
+					Adds additional lines to your fishing rod, stacks with itself
+					Maxes out at 6 additional lines
+					'''
+				EtherealTonic: 
+					'''
+					Receive the following:
+					Harmony for 15 minutes
+					Lifeforce for 13 minutes
+					Regeneration for 11 minutes
+					Magic Power for 9 minutes
+					'''
+				GlacialTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Warmth for 15 minutes
+					Brittle for 13 minutes
+					Titan for 11 minutes
+					Mana Regeneration for 9 minutes
+					'''
+				HarmonyPotion: 
+					'''
+					Prevents other buffs from decaying while active
+					Doesn't work on most buffs with below 30 seconds remaining
+					'''
+				HereticTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Nightmare for 15 minutes
+					Wrath for 13 minutes
+					Rage for 13 minutes
+					Ammo Reservation for 9 minutes
+					'The world around you follows your example'
+					'''
+				NightmarePotion: 
+					'''
+					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+					Has a 6 second cooldown
+					'''
+				RipplePotion: 
+					'''
+					Release waves of damaging water periodically
+					Release more waves at lower health
+					Waves ignore up to 8 defense
+					'''
+				RoughskinPotion: Increases defense by 4 and damage by 4%
+				SeismicTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Ironskin for 15 minutes
+					Soul Access for 13 minutes
+					Endurance for 11 minutes
+					Roughskin for 9 minutes
+					'''
+				SoulAccessPotion: Increases void regeneration speed by 10%
+				StarlightTonic: 
+					'''
+					Receive the following:
+					Assassination for 15 minutes
+					Magic Power for 13 minutes
+					Heartreach for 11 minutes
+					Mana Regeneration for 9 minutes
+					'''
+				VibePotion: 
+					'''
+					Increases attack speed by 20% while not moving and by 5% while moving
+					Increases life regeneration by 4 while not moving
+					'''
 		}
 
 		BuffName: {
