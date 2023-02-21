@@ -27,7 +27,6 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override string Texture => "SOTS/Items/Pyramid/PyramidWalls/PyramidWall";
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Changes the biome to pyramid when in front of\nAlso envokes the Pharaoh's Curse");
 			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()

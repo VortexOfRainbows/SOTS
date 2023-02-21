@@ -504,6 +504,21 @@ Mods: {
 			SoulAccessPotion: Soul Access Potion
 			StarlightTonic: Starlight Tonic
 			VibePotion: Vibe Potion
+
+		# Pyramid
+			# AltPyramidBlocks
+				PyramidAmbient: Pyramid Ambient
+				PyramidRubble: Pyramid Rubble
+
+			# PyramidWalls
+				AncientGoldBeam: Ancient Gold Beam (Wall)
+				AncientGoldBrickWall: Ancient Gold Brick Wall
+
+			AcediaGateway: Acedia Gateway
+			AcediaPlating: Acedia Portal Plating
+
+			AncientGoldGate: Ancient Gold Pillar
+			AncientGoldGateGems: Gems
 		}
 
 		ItemTooltip: {
@@ -1593,6 +1608,35 @@ Mods: {
 					Increases attack speed by 20% while not moving and by 5% while moving
 					Increases life regeneration by 4 while not moving
 					'''
+
+			# Pyramid
+				# AltPyramidBlocks
+					PyramidRubble: "'It's much less a brick than just a collection of rocks'"
+
+				# PyramidWalls
+					UnsafeCursedTumorWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+					UnsafeOvergrownPyramidWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+					UnsafePyramidBrickWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+					UnsafePyramidWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+
+				AcediaGateway: "'A strange portal that leads nowhere'"
+				AcediaPlating: "'It bares striking resemblance to luminite'"
 		}
 
 		BuffName: {
@@ -1707,6 +1751,8 @@ Mods: {
 			FrigidIceTile: Frigid Ore
 			FrigidIceTileSafe: Frigid Ore
 			FrostArtifactTile: Frost Artifact
+			AcediaGatewayTile: Strange Gateway
+			AncientGoldGateTile: Strange Pillar
 		}
 
 		WorldGeneration: {

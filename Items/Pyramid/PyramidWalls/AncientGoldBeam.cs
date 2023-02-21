@@ -9,7 +9,6 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Gold Beam (Wall)");
 			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()
@@ -44,11 +43,6 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	}
 	public class AncientGoldBrickWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Ancient Gold Brick Wall");
-			Tooltip.SetDefault("");
-		}
 		public override void SetDefaults()
 		{
 			Item.width = 28;

@@ -10,8 +10,6 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyramid Rubble");
-			Tooltip.SetDefault("'It's much less a brick than just a collection of rocks'");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
