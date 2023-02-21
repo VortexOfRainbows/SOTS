@@ -595,6 +595,7 @@ namespace SOTS
 						type = ModContent.ProjectileType<BigEvostonePebble>();
 						baseSpread = 12;
 						dmgMult = 0.7f;
+						AffixAI0 = 1;
 					}
 					for (int i = 0; i < 3; i++)
 					{
@@ -616,6 +617,7 @@ namespace SOTS
 					float randAmt = 12 + 12 * i;
 					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<BigEvostonePebble>(), (int)(projectile.damage * 0.7f), projectile.knockBack, Main.myPlayer, Main.rand.Next(60));
 				}
+				AffixAI0 = 1;
 			}
 			if (affixID == 1)
 			{
