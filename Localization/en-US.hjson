@@ -734,8 +734,9 @@ Mods: {
 					'''
 				DreamLamp: 
 					'''
-					Chains together enemies, slowing them down
+					Chain together up to 10 enemies, slowing them
 					When a chained enemy is killed, all chained enemies will take additional damage
+					Chain together items to pull them towards you
 					'What do you wish for?'
 					'''
 				GlazeBow: 
