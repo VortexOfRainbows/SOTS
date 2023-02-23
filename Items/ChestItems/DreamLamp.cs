@@ -15,7 +15,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dreaming Lamp");
-			Tooltip.SetDefault("Chains together enemies, slowing them down\nWhen a chained enemy is killed, all chained enemies will take additional damage\n'What do you wish for?'");
+			Tooltip.SetDefault("Chain together up to 10 enemies, slowing them\nWhen a chained enemy is killed, all chained enemies will take additional damage\nChain together items to pull them towards you\n'What do you wish for?'");
 			ItemID.Sets.ItemNoGravity[Type] = true;
 			this.SetResearchCost(1);
 		}
@@ -23,6 +23,7 @@ namespace SOTS.Items.ChestItems
 		public Texture2D inventoryBoxTexture => Terraria.GameContent.TextureAssets.InventoryBack.Value;
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
+			scale *= Item.scale;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 sinusoid = new Vector2(0, 6 * scale * (float)Math.Cos(1.7f * MathHelper.ToRadians(VoidPlayer.soulColorCounter))) + new Vector2(0, -3 * scale);
 			rotation = 15 * (float)Math.Sin(1f * MathHelper.ToRadians(VoidPlayer.soulColorCounter));
@@ -50,18 +51,19 @@ namespace SOTS.Items.ChestItems
 			Item.useAnimation = 40;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = false;            
-			Item.shoot = ModContent.ProjectileType<IncineratorGloveProjectile>(); //temporary because the proj is not worked on yet
+			Item.shoot = ModContent.ProjectileType<Projectiles.Camera.DreamLamp>(); //temporary because the proj is not worked on yet
 			Item.shootSpeed = 5f;
 			Item.knockBack = 5;
 			Item.channel = true;
 			Item.UseSound = SoundID.Item15; 
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
+			Item.scale = 0.8f;
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			Vector2 normal = velocity.SafeNormalize(Vector2.Zero);
-			Projectile.NewProjectile(source, position, normal * 5, type, damage, knockback, player.whoAmI, Item.useTime);
+			Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI);
 			return false;
         }
 		public override int GetVoid(Player player)
