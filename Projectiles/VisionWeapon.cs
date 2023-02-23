@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items;
+using SOTS.Items.ChestItems;
 using SOTS.Items.Temple;
 using SOTS.NPCs.Boss.Curse;
 using System;
@@ -78,7 +79,11 @@ namespace SOTS.Projectiles
 				Texture2D texture = Terraria.GameContent.TextureAssets.Item[itemType].Value;
 				Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / frameCount / 2);
 				Rectangle rectangleFrame = new Rectangle(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount);
-
+				float scale = Projectile.scale;
+				if(item.type == ModContent.ItemType<DreamLamp>())
+                {
+					scale = item.scale;
+                }
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 				SOTS.VisionShader.Parameters["progress"].SetValue(itemAlpha);
@@ -87,7 +92,7 @@ namespace SOTS.Projectiles
 				SOTS.VisionShader.Parameters["uImageSize0"].SetValue(new Vector2(texture.Width, texture.Height));
 				SOTS.VisionShader.Parameters["uSourceRect"].SetValue(new Vector4(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount));
 				SOTS.VisionShader.CurrentTechnique.Passes[0].Apply();
-				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, rectangleFrame, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, rectangleFrame, color, Projectile.rotation, drawOrigin, scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			}
