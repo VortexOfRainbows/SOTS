@@ -10,8 +10,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Tumor Block");
-			Tooltip.SetDefault("'Baked beans'");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

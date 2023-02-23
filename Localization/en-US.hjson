@@ -104,6 +104,7 @@ Mods: {
 			BagOfAmmoGathering: Bag of Ammunition Gathering
 			BetrayersKnife: Betrayer's Knife
 			CoconutGun: Coconut Gun
+			DreamLamp: Dreaming Lamp
 			GlazeBow: Glaze Bow
 			PathogenRegurgitator: Pathogen Regurgitator
 			PerfectStar: Perfect Star
@@ -522,6 +523,27 @@ Mods: {
 			AncientGoldGateGems: Gems
 
 			CursedRobe: Cursed Robe
+			CursedHood: Cursed Hood
+
+			CurseBag: Treasure Bag
+
+			CurseballTome: Cursed Spear Storm
+			CursedApple: Cursed Apple
+			CursedBlade: Cursed Blade
+			CursedImpale: Cursed Impale
+			CurseWard: Curse Ward
+
+			CursedHiveBlock: Infected Pyramid Brick
+			CursedTumor: Cursed Tumor Block
+
+			EmeraldBracelet: Emerald Bracelet
+			GhoulBlaster: Ghoul Blaster
+			HeartInAJar: Heart in a Jar
+			ImperialPike: Imperial Pike
+			JeweledGauntlet: Cursed Gauntlet
+			JuryRiggedDrill: Jury Rigged Drill
+			LuckyPurpleBalloon: Lucky Purple Balloon
+			OvergrownPyramidBlock: Overgrown Pyramid Brick
 		}
 
 		ItemTooltip: {
@@ -709,6 +731,12 @@ Mods: {
 					'''
 					Launches coconut cluster bombs with homing coconut milk shrapnel
 					'It fires in spurts'
+					'''
+				DreamLamp: 
+					'''
+					Chains together enemies, slowing them down
+					When a chained enemy is killed, all chained enemies will take additional damage
+					'What do you wish for?'
 					'''
 				GlazeBow: 
 					'''
@@ -1649,6 +1677,66 @@ Mods: {
 					Summons a Ruby Monolith to your side
 					The Ruby Monolith increases your void regeneration speed by 10%
 					'''
+				CursedHood: 
+					'''
+					Increases magic damage and void damage by 8%
+					Also increases magic crit chance and void crit chance by 5%
+					The closest enemy to you is afflicted with a curse
+					Upon taking damage, cursed enemies will Flare, taking 140% additional damage and dealing 140% damage to other nearby enemies
+					This effect has a 2 second cooldown
+					'''
+
+				CurseBag: "{$CommonItemTooltip.RightClickToOpen}"
+				CurseballTome: Unleashes a flurry of highly potent but inaccurate Cursed Spears
+				CursedApple: 
+					'''
+					Summons a pet Ghost Pepper to assist after combat
+					Plunder 2 Souls of Looting from every killed enemy, and store them inside your void meter
+					Right click on an enemy to mark it for harvesting, consuming 10 souls
+					Marked enemies drop extra loot
+					Enemies can be marked multiple times
+					Requires 100 souls to mark a boss
+					Some rare enemies will also require more souls to mark
+					'''
+				CursedBlade: 
+				 	'''
+					Summons a Cursed Blade to assist in combat
+					Hit enemies receive a storm of sword strikes, dealing 50% damage each, and ending in an explosion
+					The explosion deals 100% damage and always critical strikes
+					'''
+				CursedImpale: Releases a short ranged burst of energy
+				CurseWard: 
+					'''
+					Weakens the pyramid's curse while in the inventory
+					No longer needed, as the curse will weaken automatically after killing the BoC or EoW
+					'''
+
+				CursedTumor: "'Baked beans'"
+
+				EmeraldBracelet: Increases void gain by 2
+				GhoulBlaster: 
+					'''
+					Unloads almost as fast as the trigger is pulled
+					Transforms bullets into cursed singularities every 6th shot
+					'''
+				HeartInAJar: 
+					'''
+					Curses enemies within a small radius around you, draining 10 life per second
+					Cursed enemies release a Curse Fragment upon death, which seeks out other enemies
+					Curse fragments deal damage equivalent to 10% of the killed enemies max health plus an additional 10 damage
+					Increases max life by 20
+					'''
+				ImperialPike: Leaves behind a trail that continues to damage enemies
+				JuryRiggedDrill: 
+					'''
+					Can break the walls of the pyramid
+					Breaks after some usage
+					'''
+				LuckyPurpleBalloon: 
+					'''
+					Grants an additional fishing line
+					Counts as a light pet
+					'''
 		}
 
 		BuffName: {
@@ -1689,6 +1777,12 @@ Mods: {
 				'''
 				Increases life regen by 2
 				Immunity to Chilled, Frozen, and Frostburn
+				'''
+			Cursed: 
+				'''
+				Press the '{0}' key to change the Ruby Monolith into an offensive stance
+				While in offensive stance, decreases the cooldown of Curse Flaring by 80%
+				However, increases void drain by 6 instead of increasing void regeneration speed by 10%
 				'''
 		}
 
@@ -1766,6 +1860,9 @@ Mods: {
 			AcediaGatewayTile: Strange Gateway
 			AncientGoldGateTile: Strange Pillar
 			CrystalStatue: Crystal Statue
+			CursedAppleTile: Strange Fruit
+			CursedGrowthTile: Cursed Growth
+			ManaStatue: Mana Statue
 		}
 
 		WorldGeneration: {

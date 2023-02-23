@@ -11,7 +11,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Infected Pyramid Brick");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

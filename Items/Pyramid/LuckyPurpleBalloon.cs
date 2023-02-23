@@ -9,9 +9,7 @@ namespace SOTS.Items.Pyramid
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lucky Purple Balloon");
-			Tooltip.SetDefault("Grants an additional fishing line\nCounts as a light pet");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

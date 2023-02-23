@@ -14,8 +14,6 @@ namespace SOTS.Items.ChestItems
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dreaming Lamp");
-			Tooltip.SetDefault("Chains together enemies, slowing them down\nWhen a chained enemy is killed, all chained enemies will take additional damage\n'What do you wish for?'");
 			ItemID.Sets.ItemNoGravity[Type] = true;
 			this.SetResearchCost(1);
 		}

@@ -19,7 +19,6 @@ namespace SOTS.Items.Pyramid
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Mana Statue");		
 			AddMapEntry(new Color(0, 0, 155), name);
             HitSound = SoundID.Tink;
             TileObjectData.addTile(Type);
