@@ -16,7 +16,6 @@ namespace SOTS.Items.Invidia
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Casts five lines at once");
 			ItemID.Sets.CanFishInLava[Item.type] = false;
 			this.SetResearchCost(1);
 		}

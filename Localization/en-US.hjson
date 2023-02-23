@@ -333,6 +333,7 @@ Mods: {
 			VesperaMask: Vespera Mask
 			VesperaLeggings: Vespera Leggings
 			VesperaBreastplate: Vespera Breastplate
+			VesperaFishingRod: : Vespera Fishing Rod
 			VesperaLongbow: Vespera Longbow
 			VesperaNanDao: Vespera NanDao
 
@@ -519,6 +520,8 @@ Mods: {
 
 			AncientGoldGate: Ancient Gold Pillar
 			AncientGoldGateGems: Gems
+
+			CursedRobe: Cursed Robe
 		}
 
 		ItemTooltip: {
@@ -1173,6 +1176,7 @@ Mods: {
 				VesperaMask: Increases max void by 25 and void gain by 1
 				VesperaLeggings: Increases max void by 25 and movement speed by 5%
 				VesperaBreastplate: Increases max void by 25 and void damage by 5%
+				VesperaFishingRod: Casts five lines at once
 				VesperaLongbow: 
 					'''
 					Has to windup before firing
@@ -1637,6 +1641,14 @@ Mods: {
 
 				AcediaGateway: "'A strange portal that leads nowhere'"
 				AcediaPlating: "'It bares striking resemblance to luminite'"
+
+				CursedRobe: 
+					'''
+					Increased maximum mana and void by 80
+					Reduces mana and void usage by 15%
+					Summons a Ruby Monolith to your side
+					The Ruby Monolith increases your void regeneration speed by 10%
+					'''
 		}
 
 		BuffName: {
@@ -1753,6 +1765,7 @@ Mods: {
 			FrostArtifactTile: Frost Artifact
 			AcediaGatewayTile: Strange Gateway
 			AncientGoldGateTile: Strange Pillar
+			CrystalStatue: Crystal Statue
 		}
 
 		WorldGeneration: {
