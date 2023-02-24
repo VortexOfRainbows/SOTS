@@ -80,11 +80,6 @@ namespace SOTS.Projectiles.Camera
                 Projectile.alpha = 0;
             }
             Projectile.rotation = (float)(Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57000005245209);
-            if(player.channel)
-            {
-                player.itemAnimation = 2;
-                player.itemTime = 2;
-            }
             if (player.itemTime != 0 && player.itemAnimation != 0)
             {
                 player.ChangeDir(Projectile.direction);

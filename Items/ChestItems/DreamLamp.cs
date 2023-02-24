@@ -7,6 +7,7 @@ using SOTS.Void;
 using System;
 using SOTS.Projectiles.Inferno;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Camera;
 
 namespace SOTS.Items.ChestItems
 {
@@ -64,6 +65,7 @@ namespace SOTS.Items.ChestItems
         {
 			Vector2 normal = velocity.SafeNormalize(Vector2.Zero);
 			Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<DreamingFrame>(), damage, knockback, player.whoAmI);
 			return false;
         }
 		public override int GetVoid(Player player)
