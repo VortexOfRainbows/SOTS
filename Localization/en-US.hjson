@@ -544,6 +544,10 @@ Mods: {
 			JuryRiggedDrill: Jury Rigged Drill
 			LuckyPurpleBalloon: Lucky Purple Balloon
 			OvergrownPyramidBlock: Overgrown Pyramid Brick
+
+			PatchLeatherHat: Patch Leather Hat
+			PatchLeatherPants: Patch Leather Boots
+			PatchLeatherTunic: Patch Leather Tunic
 		}
 
 		ItemTooltip: {
@@ -1738,6 +1742,14 @@ Mods: {
 					Grants an additional fishing line
 					Counts as a light pet
 					'''
+
+				PatchLeatherHat: Increases max minions by 1
+				PatchLeatherPants: Increases minion damage by 10%
+				PatchLeatherTunic: 
+					'''
+					Increases minion damage by 10%
+					Grants immunity to venom and poison debuffs
+					'''
 		}
 
 		BuffName: {
@@ -1784,6 +1796,10 @@ Mods: {
 				Press the '{0}' key to change the Ruby Monolith into an offensive stance
 				While in offensive stance, decreases the cooldown of Curse Flaring by 80%
 				However, increases void drain by 6 instead of increasing void regeneration speed by 10%
+				'''
+			PatchLeather: 
+				'''
+				Summons a flock of flying snakes to assist in combat
 				'''
 		}
 
