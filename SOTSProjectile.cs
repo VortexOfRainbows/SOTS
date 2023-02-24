@@ -769,10 +769,12 @@ namespace SOTS
 		{
 			DrawStar(location, new Color(116, 125, 238, 0), alphaMult, rotation, spin, pointAmount, innerDistAdd, innerDistMin, xCompress, density);
 		}
-		public static void DrawStar(Vector2 location, Color color, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180)
+		public static void DrawStar(Vector2 location, Color color, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180, float forceInward = 0f, int textureType = 0)
 		{
 			Vector2 fireFrom = location; 
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradient");
+			if(textureType == 1)
+				texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradientDarker");
 			for (float k = 0; k < 360; k += 360 / (float)density)
 			{
 				float length = innerDistAdd + innerDistMin;
@@ -781,11 +783,38 @@ namespace SOTS
 				float x = (float)Math.Cos(rad + rand);
 				float y = (float)Math.Sin(rad + rand);
 				float mult = (Math.Abs((rad * (pointAmount / 2) % (float)Math.PI) - (float)Math.PI / 2) * innerDistAdd) + innerDistMin;//triangle wave function
-				Vector2 circular = new Vector2(x, y).RotatedBy(spin) * mult;
-				circular.X *= xCompress;
-				Vector2 scale = new Vector2(circular.Length() / length, 0.5f);
-				circular = circular.RotatedBy(rotation);
-				Main.spriteBatch.Draw(texture, fireFrom + circular - Main.screenPosition, null, color * alphaMult * (1 / (circular.Length() / length)), circular.ToRotation(), new Vector2(texture.Width / 2, texture.Height / 2), scale * 1.25f, SpriteEffects.None, 0f);
+				Vector2 circular = new Vector2(x, y) * mult;
+				bool draw = true;
+				float otherAlphaMult = 1f;
+				if(forceInward != 0)
+                {
+					float betweenPetals = 360 / pointAmount;
+					float whereAmIPetalWise = (k) / betweenPetals - 0.5f;
+					if (whereAmIPetalWise < 0)
+						whereAmIPetalWise += pointAmount;
+					whereAmIPetalWise = (float)Math.Truncate(whereAmIPetalWise); //give a number 0, 1, 2... point amount - 1
+					Vector2 towardCenter = new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(betweenPetals * whereAmIPetalWise));
+					circular += towardCenter * -forceInward;
+					float lengthToMiddle = circular.Length();
+					if(lengthToMiddle < innerDistMin)
+                    {
+						draw = false;
+                    }
+					else if(lengthToMiddle < innerDistMin + 4)
+                    {
+						float toReduceAlpha = lengthToMiddle - innerDistMin;
+						otherAlphaMult = toReduceAlpha / 4;
+                    }
+
+				}
+				if(draw)
+				{
+					circular = circular.RotatedBy(spin);
+					circular.X *= xCompress;
+					Vector2 scale = new Vector2(circular.Length() / length, 0.5f);
+					circular = circular.RotatedBy(rotation);
+					Main.spriteBatch.Draw(texture, fireFrom + circular - Main.screenPosition, null, color * otherAlphaMult * alphaMult * (1 / (circular.Length() / length)), circular.ToRotation(), new Vector2(texture.Width / 2, texture.Height / 2), scale * 1.25f, SpriteEffects.None, 0f);
+				}
 			}
 		}
 		public static void DustStar(Vector2 location, Vector2 velocity, float rotation, int total = 30, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, float scaleMult = 1f)
