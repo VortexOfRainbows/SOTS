@@ -10,8 +10,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sandstone Warhammer");
-			Tooltip.SetDefault("Launches homing hammers");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

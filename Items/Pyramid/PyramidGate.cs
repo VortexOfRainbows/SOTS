@@ -55,7 +55,6 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Pyramid Gate");
 			AddMapEntry(new Color(220, 180, 25), name);
 			DustType = DustID.GoldCoin;
 		}

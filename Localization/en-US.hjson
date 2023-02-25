@@ -548,6 +548,44 @@ Mods: {
 			PatchLeatherHat: Patch Leather Hat
 			PatchLeatherPants: Patch Leather Boots
 			PatchLeatherTunic: Patch Leather Tunic
+
+			PharaohsCane: Pharaoh's Cane
+			PitatiLongbow: Pitati Longbow
+
+			PyramidBrick: Pyramid Brick
+			PyramidKey: Mysterious Key
+			PyramidPot: Pyramid Pot
+			PyramidSlab: Pyramid Slab
+			RoyalGoldBrick: Ancient Gold Brick
+			RoyalMagnum: Royal Magnum
+			RoyalRubyShard: Keystone Shard
+			RubyKeystone: Ruby Keystone
+
+			SandstoneEdge: Sandstone Edge
+			SandstoneWarhammer: Sandstone Warhammer
+
+			ShiftingSands: Shifting Sands
+
+			SnakeBow: Snake Bow
+			Snakeskin: Snakeskin
+
+			SpiritGlove: Spirit Glove
+			SpiritShield: Spirit Shield
+			SpiritSurfer: Spirit Surfer
+			SpiritTracer: Spirit Tracer
+
+			SunlightAmulet: Sunlight Amulet
+
+			TaintedKeystone: Tainted Keystone
+			TheDarkEye: The Dark Eye
+
+			TrueSandstoneBlock: True Sandstone Block
+			TrueSandstoneWall: True Sandstone Wall
+
+			VoidenBracelet: Voiden Bracelet
+
+		# Secrets
+			PhotonGeyser: Photon Geyser
 		}
 
 		ItemTooltip: {
@@ -580,859 +618,860 @@ Mods: {
 				'Resonates with your ambitions'
 				'''
 
-			# Celestial
-				Apocalypse: 
-					'''
-					Release green thunder towards your cursor
-					Green thunder chains off enemies for 90% damage
-					Provides a light source while in the inventory
-					'Power straight from the underworld'
-					'''
-				CataclysmSpheres: Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 100% damage
-				CatalystBomb: "'It's almost strong enough to tear a hole between dimensions, if only it were used in the right place'"
-				ContinuumCollapse: 
-					'''
-					'Devour all that is infinite, including your system's memory'
-					Can hit up to 15 enemies at a time
-					Will not hurt players
-					'''
-				DanceOfDeath: Cast many demon scythes around you
-				DimensionShredder: 
-					'''
-					Summons dimensional wisps around you that fire towards your cursor
-					Right click to summon a cluster of dimensional wisps
-					Bullets travel through blocks and release lightning for 50% damage
-					66% chance to not consume ammo
-					'Tear a rift through your enemies'
-					'''
-				FoggyClairvoyance: 
-					'''
-					Increases damage by 15% and grants immunity to almost every debuff
-					'Cursed'
-					'''
-				Lemegeton: 
-					'''
-					Summons a horde of Wisps to defend you from nearby enemies
-					Red wisps will attack closer enemies and steal life for 100% damage
-					Green wisps will fire short-ranged blasts for 200% damage
-					Purple wisps launch a cluster of homing bolts for 75% damage each
-					'''
-				PlasmaCutterButOnAChain: "'This is utmost wonderful idea'"
-				SanguiteBar: "'It smells of sulfur and blood'"
-				SerpentSpine: 
-					'''
-					Increases melee weapon size by 40% and whip length by 40%
-					Increases melee speed by 10%
-					Melee and whip attacks may scorch enemies, increasing damage dealt by 3% permanently
-					'''
-				SubspaceBag: "{$CommonItemTooltip.RightClickToOpen}"
-				SubspaceLocket: 
-					'''
-					Summons a Subspace Servant to assist in combat
-					Uses the item in your last inventory slot for you (bottom right inventory slot)
-					Doesn't work with all items
-					Decreases damage by 25% multiplicatively
-					Increases max void by 50, but reduces healing recieved from potions by 40
-					'''
-				SubspaceScissors: "'Assistance from purgatory'"
-				VoidspaceAuraStaff: 
-					'''
-					Summons a voidspace cell on your cursor that releases flames at nearby enemies
-					Grants stat boosts while in the radius of the cell
-					Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
-					Damages all enemies within range
-					Range scales with summon damage
-					'''
-				VoidspaceEmblem: 
-					'''
-					Increases void damage and magic damage by 10%
-					Increases void crit by 10%
-					Critical strikes heal small amounts of void
-					Reduces void cost by 8%
-					Increases void gain by 4 and max void by 50
-					Regenerate void when hit
-					Immunity to broken armor and ichor
-					'''
+		# Celestial
+			Apocalypse: 
+				'''
+				Release green thunder towards your cursor
+				Green thunder chains off enemies for 90% damage
+				Provides a light source while in the inventory
+				'Power straight from the underworld'
+				'''
+			CataclysmSpheres: Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 100% damage
+			CatalystBomb: "'It's almost strong enough to tear a hole between dimensions, if only it were used in the right place'"
+			ContinuumCollapse: 
+				'''
+				'Devour all that is infinite, including your system's memory'
+				Can hit up to 15 enemies at a time
+				Will not hurt players
+				'''
+			DanceOfDeath: Cast many demon scythes around you
+			DimensionShredder: 
+				'''
+				Summons dimensional wisps around you that fire towards your cursor
+				Right click to summon a cluster of dimensional wisps
+				Bullets travel through blocks and release lightning for 50% damage
+				66% chance to not consume ammo
+				'Tear a rift through your enemies'
+				'''
+			FoggyClairvoyance: 
+				'''
+				Increases damage by 15% and grants immunity to almost every debuff
+				'Cursed'
+				'''
+			Lemegeton: 
+				'''
+				Summons a horde of Wisps to defend you from nearby enemies
+				Red wisps will attack closer enemies and steal life for 100% damage
+				Green wisps will fire short-ranged blasts for 200% damage
+				Purple wisps launch a cluster of homing bolts for 75% damage each
+				'''
+			PlasmaCutterButOnAChain: "'This is utmost wonderful idea'"
+			SanguiteBar: "'It smells of sulfur and blood'"
+			SerpentSpine: 
+				'''
+				Increases melee weapon size by 40% and whip length by 40%
+				Increases melee speed by 10%
+				Melee and whip attacks may scorch enemies, increasing damage dealt by 3% permanently
+				'''
+			SubspaceBag: "{$CommonItemTooltip.RightClickToOpen}"
+			SubspaceLocket: 
+				'''
+				Summons a Subspace Servant to assist in combat
+				Uses the item in your last inventory slot for you (bottom right inventory slot)
+				Doesn't work with all items
+				Decreases damage by 25% multiplicatively
+				Increases max void by 50, but reduces healing recieved from potions by 40
+				'''
+			SubspaceScissors: "'Assistance from purgatory'"
+			VoidspaceAuraStaff: 
+				'''
+				Summons a voidspace cell on your cursor that releases flames at nearby enemies
+				Grants stat boosts while in the radius of the cell
+				Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
+				Damages all enemies within range
+				Range scales with summon damage
+				'''
+			VoidspaceEmblem: 
+				'''
+				Increases void damage and magic damage by 10%
+				Increases void crit by 10%
+				Critical strikes heal small amounts of void
+				Reduces void cost by 8%
+				Increases void gain by 4 and max void by 50
+				Regenerate void when hit
+				Immunity to broken armor and ichor
+				'''
 				
-			# Chaos
-				Armaggedon: 
-					'''
-					Unleash a flurry of punches
-					Provides a small light source
-					'Power from the heavens'
-					'''
-				ChaosChamber: 
-					'''
-					Unloads almost as fast as the trigger is pulled
-					Bullets gain homing capabilities
-					Transforms bullets into laser balls every 6th shot
-					'''
-				EtherealScepter: 
-					'''
-					Summons an Ethereal Flame to fight for you
-					Ethereal Flames attack enemies by rapidly dashing through them
-					'''
-				Hyperdrive: 
-					'''
-					The second charge of a Crusher has a 33% chance to not consume void
-					The fourth charge of Crushers no longer consumes void
-					Extends the range of Crushers by 1
-					Increases attack speed by 25% and melee damage by 5%
-					Reduces void cost by 10%
-					'''
-				HyperlightGeyser: Launches 4 beams of light which each home at up to 10 enemies
-				LuxBag: "{$CommonItemTooltip.RightClickToOpen}"
-				ParticleRelocator: 
-					'''
-					When an enemy hits you, you will be teleported behind them, avoiding damage and stunning them temporarily
-					16 second cooldown, but increases melee damage by 50% for 7 seconds after teleporting
-					Does damage equal to your defense
-					'''
-				PhaseBar: "'It borders on the edge of reality'"
-				RealityShatter: Enemies recieve an additional flurry of slashes that do 4x50% damage
-				RoseBow: 
-					'''
-					Transforms arrows into spears of light that can travel through walls
-					When briefly charged, arrows explode for 600% damage
-					When fully charged, arrows bloom for 1500% damage
-					Charging will also conjure thorns, which are launched for 2x100% damage each
-					Only consumes void when charged
-					'''
-				StellarSerpentLauncher: Launches a Starlight Serpent which homes on enemys and attacks them repeatedly
-				StellarShot: Rapidly fires piercing lasers
-				SupernovaStorm: 
-					'''
-					Calls down a Supernova Beam from the sky
-					Causes enemies to rupture into homing bolts for 3x140% damage
-					'''
-				VoidAnomaly: 
-					'''
-					Increases void gain by 10 and void regeneration speed by 10%
-					Getting hit will convert void into life for a duration
-					Increases the potency of Void Shock and Void Recovery
-					'''
-				VoidmageIncubator: 
-					'''
-					Epic Gamer
-					Increases void gain by 10 and void regeneration speed by 10%
-					Getting hit will freeze time, converting void into life for the duration
-					Increases the potency of Void Shock and Void Recovery
-					'''
+		# Chaos
+			Armaggedon: 
+				'''
+				Unleash a flurry of punches
+				Provides a small light source
+				'Power from the heavens'
+				'''
+			ChaosChamber: 
+				'''
+				Unloads almost as fast as the trigger is pulled
+				Bullets gain homing capabilities
+				Transforms bullets into laser balls every 6th shot
+				'''
+			EtherealScepter: 
+				'''
+				Summons an Ethereal Flame to fight for you
+				Ethereal Flames attack enemies by rapidly dashing through them
+				'''
+			Hyperdrive: 
+				'''
+				The second charge of a Crusher has a 33% chance to not consume void
+				The fourth charge of Crushers no longer consumes void
+				Extends the range of Crushers by 1
+				Increases attack speed by 25% and melee damage by 5%
+				Reduces void cost by 10%
+				'''
+			HyperlightGeyser: Launches 4 beams of light which each home at up to 10 enemies
+			LuxBag: "{$CommonItemTooltip.RightClickToOpen}"
+			ParticleRelocator: 
+				'''
+				When an enemy hits you, you will be teleported behind them, avoiding damage and stunning them temporarily
+				16 second cooldown, but increases melee damage by 50% for 7 seconds after teleporting
+				Does damage equal to your defense
+				'''
+			PhaseBar: "'It borders on the edge of reality'"
+			RealityShatter: Enemies recieve an additional flurry of slashes that do 4x50% damage
+			RoseBow: 
+				'''
+				Transforms arrows into spears of light that can travel through walls
+				When briefly charged, arrows explode for 600% damage
+				When fully charged, arrows bloom for 1500% damage
+				Charging will also conjure thorns, which are launched for 2x100% damage each
+				Only consumes void when charged
+				'''
+			StellarSerpentLauncher: Launches a Starlight Serpent which homes on enemys and attacks them repeatedly
+			StellarShot: Rapidly fires piercing lasers
+			SupernovaStorm: 
+				'''
+				Calls down a Supernova Beam from the sky
+				Causes enemies to rupture into homing bolts for 3x140% damage
+				'''
+			VoidAnomaly: 
+				'''
+				Increases void gain by 10 and void regeneration speed by 10%
+				Getting hit will convert void into life for a duration
+				Increases the potency of Void Shock and Void Recovery
+				'''
+			VoidmageIncubator: 
+				'''
+				Epic Gamer
+				Increases void gain by 10 and void regeneration speed by 10%
+				Getting hit will freeze time, converting void into life for the duration
+				Increases the potency of Void Shock and Void Recovery
+				'''
 
-			# ChestItems
-				BagOfAmmoGathering: 
-					'''
-					20% chance not to consume ammo
-					Striking enemies has a chance to refund ammo
-					Landing the killing blow on enemies may also refund ammo
-					'''
-				BetrayersKnife: 
-					'''
-					Strike with 2 slashes, which always bleed enemies on the first hit
-					The second slash does 150% damage
-					'''
-				CoconutGun: 
-					'''
-					Launches coconut cluster bombs with homing coconut milk shrapnel
-					'It fires in spurts'
-					'''
-				DreamLamp: 
-					'''
-					Chain together up to 10 enemies, slowing them
-					When a chained enemy is killed, all chained enemies will take additional damage
-					Chain together items to pull them towards you
-					'What do you wish for?'
-					'''
-				GlazeBow: 
-					'''
-					Coalesces ice mist to power up your arrows
-					When briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage
-					When fully charged, arrows bloom into wisps of ice, dealing 600% damage
-					'''
-				PathogenRegurgitator: 
-					'''
-					Fire pathogen balls
-					Hits may infect enemies for 12 damage per second
-					When an infected enemy is killed, it releases more pathogen balls
-					'''
-				PerfectStar: "'The perfect weapon'"
-				RebarRifle: Shoots a powerful, high velocity rebar that applies a stacking, permanent bleed to hit enemies for 5 damage per second
-				RockCandy: 
-					'''
-					Increases pickaxe power by 5
-					Increases mining speed, melee speed, and movement speed by 5%
-					'''
-				Sawflake: Throw a Sawflake that exudes a spiral of razor ice mist in every direction
-				ShieldofDesecar: 
-					'''
-					'Less is more'
-					Grants 1 defense for every 4 empty inventory slots
-					'''
-				ShieldofStekpla: 
-					'''
-					'More is more'
-					Grants 1% bonus crit chance for every 4 full inventory slots
-					'''
-				SpikedClub: 
-					'''
-					Lays down spike traps
-					Lays down more traps when wearing climbing related accessories
-					'''
-				StarcallerStaff: 
-					'''
-					Summons a Crystal Serpent to fight for you
-					The Crystal Serpent circles around enemies and fires stars at them
-					'''
-				TangleStaff: 
-					'''
-					Fire a flower that ensnares enemies
-					Ensnared enemies are slowed and have their life drained
-					Increases life regeneration for each ensnared enemy
-					'''
-				TinyPlanet: Surrounds you with 2 orbital projectiles
+		# ChestItems
+			BagOfAmmoGathering: 
+				'''
+				20% chance not to consume ammo
+				Striking enemies has a chance to refund ammo
+				Landing the killing blow on enemies may also refund ammo
+				'''
+			BetrayersKnife: 
+				'''
+				Strike with 2 slashes, which always bleed enemies on the first hit
+				The second slash does 150% damage
+				'''
+			CoconutGun: 
+				'''
+				Launches coconut cluster bombs with homing coconut milk shrapnel
+				'It fires in spurts'
+				'''
+			DreamLamp: 
+				'''
+				Chain together up to 10 enemies, slowing them
+				When a chained enemy is killed, all chained enemies will take additional damage
+				Chain together items to pull them towards you
+				'What do you wish for?'
+				'''
+			GlazeBow: 
+				'''
+				Coalesces ice mist to power up your arrows
+				When briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage
+				When fully charged, arrows bloom into wisps of ice, dealing 600% damage
+				'''
+			PathogenRegurgitator: 
+				'''
+				Fire pathogen balls
+				Hits may infect enemies for 12 damage per second
+				When an infected enemy is killed, it releases more pathogen balls
+				'''
+			PerfectStar: "'The perfect weapon'"
+			RebarRifle: Shoots a powerful, high velocity rebar that applies a stacking, permanent bleed to hit enemies for 5 damage per second
+			RockCandy: 
+				'''
+				Increases pickaxe power by 5
+				Increases mining speed, melee speed, and movement speed by 5%
+				'''
+			Sawflake: Throw a Sawflake that exudes a spiral of razor ice mist in every direction
+			ShieldofDesecar: 
+				'''
+				'Less is more'
+			Grants 1 defense for every 4 empty inventory slots
+				'''
+			ShieldofStekpla: 
+				'''
+				'More is more'
+				Grants 1% bonus crit chance for every 4 full inventory slots
+				'''
+			SpikedClub: 
+				'''
+				Lays down spike traps
+				Lays down more traps when wearing climbing related accessories
+				'''
+			StarcallerStaff: 
+				'''
+				Summons a Crystal Serpent to fight for you
+				The Crystal Serpent circles around enemies and fires stars at them
+				'''
+			TangleStaff: 
+				'''
+				Fire a flower that ensnares enemies
+				Ensnared enemies are slowed and have their life drained
+				Increases life regeneration for each ensnared enemy
+				'''
+			TinyPlanet: Surrounds you with 2 orbital projectiles
 
-			# CritBonus
-				OtherworldlyAmplifier: Critical strikes deal 12 more damage
-				BloodstainedCoin: 
-					'''
-					Critical strikes have a 50% chance to deal 24 more damage
-					Receiving damage has a 50% chance to bleed you
-					'''
-				PutridCoin: 
-					'''
-					Critical strikes have a 50% chance to deal 24 more damage
-					Receiving damage has a 50% chance to poison you
-					'''
-				PolishedCoin: 
-					'''
-					Critical strikes have a 50% chance to deal 36 more damage
-					2% increased crit chance
-					Immunity to bleeding and poisoned
-					'''
-				FocusCrystal: 
-					'''
-					Critical strikes deal 40 more damage
-					4% increased crit chance
-					Immunity to bleeding and poisoned debuffs
-					'''
-				ChaosBadge: Increases crit chance by 10%
+		# CritBonus
+			OtherworldlyAmplifier: Critical strikes deal 12 more damage
+			BloodstainedCoin: 
+				'''
+				Critical strikes have a 50% chance to deal 24 more damage
+				Receiving damage has a 50% chance to bleed you
+				'''
+			PutridCoin: 
+				'''
+				Critical strikes have a 50% chance to deal 24 more damage
+				Receiving damage has a 50% chance to poison you
+				'''
+			PolishedCoin: 
+				'''
+				Critical strikes have a 50% chance to deal 36 more damage
+				2% increased crit chance
+				Immunity to bleeding and poisoned
+				'''
+			FocusCrystal: 
+				'''
+				Critical strikes deal 40 more damage
+				4% increased crit chance
+				Immunity to bleeding and poisoned debuffs
+				'''
+			ChaosBadge: Increases crit chance by 10%
 
-				CloverCharm: 
-					'''
-					Critical strikes have a 50% chance to steal life
-					2% increased crit chance
-					'''
-				VoidCharm: 
-					'''
-					Critical strikes have a 50% chance to regenerate void
-					2% increased crit chance
-					'''
-				SoulCharm: 
-					'''
-					Critical strikes steal life, regenerate void, and recover mana
-					2% increased crit chance
-					'''
-				BagOfCharms: 
-					'''
-					5% increased critical strike chance
-					Critical strikes may detonate enemies for 50% critical damage
-					Critical strikes steal life, regenerate void, and recover mana
-					'''
+			CloverCharm: 
+				'''
+				Critical strikes have a 50% chance to steal life
+				2% increased crit chance
+				'''
+			VoidCharm: 
+				'''
+				Critical strikes have a 50% chance to regenerate void
+				2% increased crit chance
+				'''
+			SoulCharm: 
+				'''
+				Critical strikes steal life, regenerate void, and recover mana
+				2% increased crit chance
+				'''
+			BagOfCharms: 
+				'''
+				5% increased critical strike chance
+				Critical strikes may detonate enemies for 50% critical damage
+				Critical strikes steal life, regenerate void, and recover mana
+				'''
 				
-				EyeOfChaos: Eye of Chaos
-				FocusReticle: 
-					'''
-					20% increased crit chance
-					Critical strikes deal 40 more damage
-					Immunity to bleeding and poisoned debuffs
-					'''
+			EyeOfChaos: Eye of Chaos
+			FocusReticle: 
+				'''
+				20% increased crit chance
+				Critical strikes deal 40 more damage
+				Immunity to bleeding and poisoned debuffs
+				'''
 
-				BorealisIcosahedron: 
-					'''
-					Critical strikes may cause a frostburn explosion, dealing 100% critical damage
-					2% increased crit chance
-					'''
-				CursedIcosahedron: 
-					'''
-					Critical strikes may cause a release of cursed thunder, dealing 50% critical damage
-					Critical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage
-					2% increased crit chance
-					'''
-				HellfireIcosahedron: 
-					'''
-					Critical strikes may cause a flaming explosion, dealing 50% critical damage
-					2% increased crit chance
-					'''
+			BorealisIcosahedron: 
+				'''
+				Critical strikes may cause a frostburn explosion, dealing 100% critical damage
+				2% increased crit chance
+				'''
+			CursedIcosahedron: 
+				'''
+				Critical strikes may cause a release of cursed thunder, dealing 50% critical damage
+				Critical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage
+				2% increased crit chance
+				'''
+			HellfireIcosahedron: 
+				'''
+				Critical strikes may cause a flaming explosion, dealing 50% critical damage
+				2% increased crit chance
+				'''
 
 				SnakeEyes: Increases crit chance by 8%
 			
-			# Crushers
-				AquaticEclipse: 
+		# Crushers
+			AquaticEclipse: 
+				'''
+				Charge to increase damage up to 700%
+				Takes 3 seconds to reach max charge
+				Can strike through walls
+				Releases bubbles that do 10% damage
+				'''
+			BoneClapper: 
+				'''
+				Charge to increase damage up to 450%
+				Takes 2 seconds to reach max charge
+				'''
+			CardiacCollapse: 
+				'''
+				Charge to increase damage up to 800%
+				Takes 3.5 seconds to reach max charge
+				Killed enemies regenerate health
+				'''
+			CircuitBoard: 
+				'''
+				The second charge of a Crusher has a 33% chance to not consume void
+				The fourth charge of Crushers no longer consumes void
+				Extends the range of Crushers by 1
+				Increases melee speed and melee damage by 5%
+				Increases Crusher charge speed by 10%
+				'''
+			CrabClaw: 
+				'''
+				Charge to increase damage up to 800%
+				Takes 4 seconds to reach max charge
+				'''
+
+			CrushingAmplifier: 
+				'''
+				Extends the range of Crushers by 1
+				Also increases melee damage by 5%
+				'''
+			CrushingCapacitor: Makes the fourth charge of Crushers no longer consumes void
+			CrushingResistor: The second charge of a Crusher has a 33% chance to not consume void
+			CrushingTransformer: 
+				'''
+				Increases melee speed by 8%
+				Increases Crusher charge speed by 12%
+				'''
+
+			DuneSplicer: 
+				'''
+				Launches out a swarm of short-range, homing spikes
+				Charge to increase damage up to 350%
+				Takes 4 seconds to reach max charge
+				'''
+			Hellbreaker: 
+				'''
+				Charge to increase damage up to 600%
+				Takes 4.5 seconds to reach max charge
+				'''
+			IrradiatedChainReactor: 
+				'''
+				Charge to increase damage up to 500%
+				Launches out spores that deal 50% damage
+				Takes 1.66 seconds to reach max charge
+				'''
+			MantisGrip: 
+				'''
+				Charge to increase damage up to 500%
+				The initial charge consumes no void
+				Takes 4 seconds to reach max charge
+				'''
+			Pulverizer: 
+				'''
+				Charge to increase damage up to 500%
+				The initial charge consumes no void
+				Takes 3 seconds to reach max charge
+				Laser deals 60% of the total damage
+				'''
+			SoulEater: 
+				'''
+				Charge to increase damage up to 1000%
+				Takes 2.5 seconds to reach max charge
+				Killed enemies regenerate mana and void
+				'''
+			SpiderCrusher: 
+				'''
+				Charge to increase damage up to 180%
+				Releases spider webs that slow hit enemies
+				Releases more when charged
+				Takes 2.5 seconds to reach max charge
+				'That's really clever actually'
+				'''
+			WormWoodCollapse: 
+				'''
+				Charge to increase damage up to 500%
+				Takes 3 seconds to reach max charge
+				'''
+
+		# DoorItems
+			DoorPants: 
+				'''
+				Accelerates horizontal movement when going through doors
+				Builds up speed while standing in doors
+				'''
+			BandOfDoor: "'Open the door to the ultimate form of travel'"
+
+		# Earth
+			# Glowmoth
+				IlluminantAxe: 
 					'''
-					Charge to increase damage up to 700%
-					Takes 3 seconds to reach max charge
-					Can strike through walls
-					Releases bubbles that do 10% damage
+					Releases wandering energy bolts for 60% damage
+					Right click to toss the axe, which sticks to walls
+					Right click again to recall the axe
 					'''
-				BoneClapper: 
+				NightIlluminator: 
 					'''
-					Charge to increase damage up to 450%
-					Takes 2 seconds to reach max charge
-					'''
-				CardiacCollapse: 
-					'''
-					Charge to increase damage up to 800%
-					Takes 3.5 seconds to reach max charge
-					Killed enemies regenerate health
-					'''
-				CircuitBoard: 
-					'''
-					The second charge of a Crusher has a 33% chance to not consume void
-					The fourth charge of Crushers no longer consumes void
-					Extends the range of Crushers by 1
-					Increases melee speed and melee damage by 5%
-					Increases Crusher charge speed by 10%
-					'''
-				CrabClaw: 
-					'''
-					Charge to increase damage up to 800%
-					Takes 4 seconds to reach max charge
+					Summons three luminous moths to swarm your enemies
+					Right click to call the moths to your cursor
 					'''
 
-				CrushingAmplifier: 
-					'''
-					Extends the range of Crushers by 1
-					Also increases melee damage by 5%
-					'''
-				CrushingCapacitor: Makes the fourth charge of Crushers no longer consumes void
-				CrushingResistor: The second charge of a Crusher has a 33% chance to not consume void
-				CrushingTransformer: 
-					'''
-					Increases melee speed by 8%
-					Increases Crusher charge speed by 12%
-					'''
+			Geostorm: Bombards your cursor with crystals
+			GraniteProtector: Reduces damage taken by 6%
+			HarvestersScythe: 
+				'''
+				Increases critical strike damage by 20%
+				Enemies have a 10% chance to drop double the loot, or 20% when killed by critical strike
+				'''
+			MarbleDefender: Launches attackers away from you with javelins
+			SporeSprayer: Fires a burst of Spore Clouds that do 66% damage whenever an arrow is launched
 
-				DuneSplicer: 
-					'''
-					Launches out a swarm of short-range, homing spikes
-					Charge to increase damage up to 350%
-					Takes 4 seconds to reach max charge
-					'''
-				Hellbreaker: 
-					'''
-					Charge to increase damage up to 600%
-					Takes 4.5 seconds to reach max charge
-					'''
-				IrradiatedChainReactor: 
-					'''
-					Charge to increase damage up to 500%
-					Launches out spores that deal 50% damage
-					Takes 1.66 seconds to reach max charge
-					'''
-				MantisGrip: 
-					'''
-					Charge to increase damage up to 500%
-					The initial charge consumes no void
-					Takes 4 seconds to reach max charge
-					'''
-				Pulverizer: 
-					'''
-					Charge to increase damage up to 500%
-					The initial charge consumes no void
-					Takes 3 seconds to reach max charge
-					Laser deals 60% of the total damage
-					'''
-				SoulEater: 
-					'''
-					Charge to increase damage up to 1000%
-					Takes 2.5 seconds to reach max charge
-					Killed enemies regenerate mana and void
-					'''
-				SpiderCrusher: 
-					'''
-					Charge to increase damage up to 180%
-					Releases spider webs that slow hit enemies
-					Releases more when charged
-					Takes 2.5 seconds to reach max charge
-					'That's really clever actually'
-					'''
-				WormWoodCollapse: 
-					'''
-					Charge to increase damage up to 500%
-					Takes 3 seconds to reach max charge
-					'''
+			VibrantBullet: 
+				'''
+				Splits into 3 shards
+				One shard flies straight for 100% damage
+				The other shards deal 25% damage
+				'''
+			VibrantArrow: 
+				'''
+				Scatters 3 shards below the area of impact for 120% damage
+				'''
+			VibrantPistol: Fires almost as fast as you can pull the trigger
+			VibrantStaff: Fires a homing bolt
 
-			# DoorItems
-				DoorPants: 
-					'''
-					Accelerates horizontal movement when going through doors
-					Builds up speed while standing in doors
-					'''
-				BandOfDoor: "'Open the door to the ultimate form of travel'"
-
-			# Earth
-				# Glowmoth
-					IlluminantAxe: 
-						'''
-						Releases wandering energy bolts for 60% damage
-						Right click to toss the axe, which sticks to walls
-						Right click again to recall the axe
-						'''
-					NightIlluminator: 
-						'''
-						Summons three luminous moths to swarm your enemies
-						Right click to call the moths to your cursor
-						'''
-
-				Geostorm: Bombards your cursor with crystals
-				GraniteProtector: Reduces damage taken by 6%
-				HarvestersScythe: 
-					'''
-					Increases critical strike damage by 20%
-					Enemies have a 10% chance to drop double the loot, or 20% when killed by critical strike
-					'''
-				MarbleDefender: Launches attackers away from you with javelins
-				SporeSprayer: Fires a burst of Spore Clouds that do 66% damage whenever an arrow is launched
-
-				VibrantBullet: 
-					'''
-					Splits into 3 shards
-					One shard flies straight for 100% damage
-					The other shards deal 25% damage
-					'''
-				VibrantArrow: 
-					'''
-					Scatters 3 shards below the area of impact for 120% damage
-					'''
-				VibrantPistol: Fires almost as fast as you can pull the trigger
-				VibrantStaff: Fires a homing bolt
-
-				VibrantChestplate: Increases void damage by 10% and ranged damage by 5%
-				VibrantHelmet: 
-					'''
-					Increases max void by 50
-					5% increased ranged crit chance
-					'''
-				VibrantLeggings: Decreased void usage by 10%
+			VibrantChestplate: Increases void damage by 10% and ranged damage by 5%
+			VibrantHelmet: 
+				'''
+				Increases max void by 50
+				5% increased ranged crit chance
+				'''
+			VibrantLeggings: Decreased void usage by 10%
 			
-			# Evil
-				AbyssalFury: Summons Shadow Blades from the sky to your cursor
-				DeathSpiral: 
-					'''
-					Surrounds you with lightning tentacles
-					Has a chance to apply a stacking, permanent bleed to hit enemies for 5 damage per second
-					'''
-				MidnightPrism: 
-					'''
-					Increases armor penetration by 8, critical strike chance by 5%, and max life by 40
-					Release waves of damage periodically that ignore up to 16 defense total
-					Release more waves at lower health
-					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
-					Has a 6 second cooldown
-					Waves disabled when hidden
-					'''
-				TomeOfTheReaper: Cast three scythes that move towards your cursor
+		# Evil
+			AbyssalFury: Summons Shadow Blades from the sky to your cursor
+			DeathSpiral: 
+				'''
+				Surrounds you with lightning tentacles
+				Has a chance to apply a stacking, permanent bleed to hit enemies for 5 damage per second
+				'''
+			MidnightPrism: 
+				'''
+				Increases armor penetration by 8, critical strike chance by 5%, and max life by 40
+				Release waves of damage periodically that ignore up to 16 defense total
+				Release more waves at lower health
+				Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+				Has a 6 second cooldown
+				Waves disabled when hidden
+				'''
+			TomeOfTheReaper: Cast three scythes that move towards your cursor
 				ToothAche: Strike with 3 slashes, then toss a spinning blade for 80% damage
 				Vertebraeker: Strike with a flurry of slashes, then toss a spinning blade for 120% damage
-				WitchHeart: 
-					'''
-					Increases critical strike chance by 5%
-					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
-					Has a 6 second cooldown
-					Increases max life by 20
-					'''
+			WitchHeart: 
+				'''
+				Increases critical strike chance by 5%
+				Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+				Has a 6 second cooldown
+				Increases max life by 20
+				'''
 
-			# Fishing
-				Curgeon: Has valuable eggs that can only be harvested by disection
-				PhantomFish: "'Feeds off of energy within voidspace'"
-				SeaSnake: "'Not actually venomous'"
-				ZephyrousZeppelin: Surrounded by a ring of razorwater that deals 75% damage
+		# Fishing
+			Curgeon: Has valuable eggs that can only be harvested by disection
+			PhantomFish: "'Feeds off of energy within voidspace'"
+			SeaSnake: "'Not actually venomous'"
+			ZephyrousZeppelin: Surrounded by a ring of razorwater that deals 75% damage
 
-				PyramidCrate: "{$CommonItemTooltip.RightClickToOpen}"
+			PyramidCrate: "{$CommonItemTooltip.RightClickToOpen}"
 
-			# Flails
-				Aten: 
-					'''
-					Conjures stars that do 70% damage and explode for 140% damage
-					'The defunct god... now in flail form'
-					'''
-				NorthStar: 
-					'''
-					Conjures polar stars that do 70% damage and explode for 210% damage
-					'''
-				Shattershine: 
-					'''
-					Releases a cluster of sparkles upon hitting an enemy, each doing 60% damage
-					Doesn't release sparkles while charging
-					'''
+		# Flails
+			Aten: 
+				'''
+				Conjures stars that do 70% damage and explode for 140% damage
+				'The defunct god... now in flail form'
+				'''
+			NorthStar: 
+				'''
+				Conjures polar stars that do 70% damage and explode for 210% damage
+				'''
+			Shattershine: 
+				'''
+				Releases a cluster of sparkles upon hitting an enemy, each doing 60% damage
+				Doesn't release sparkles while charging
+				'''
 
-			# Fragments
-				DissolvingElement: Temporary Tooltip
+		# Fragments
+			DissolvingElement: Temporary Tooltip
 
-				DissolvingElements: {
-						DissolvingNatureNT: Reduces damage dealt by 10% while in the inventory
-						DissolvingNaturePT: Increases life regeneration by 1 while in the inventory, up to 4 total
+			DissolvingElements: {
+				DissolvingNatureNT: Reduces damage dealt by 10% while in the inventory
+				DissolvingNaturePT: Increases life regeneration by 1 while in the inventory, up to 4 total
 
-						DissolvingEarthNT: Reduces endurance by 10% while in the inventory
-						DissolvingEarthpt: Increases defense by 2 while in the inventory, up to 8 total
+				DissolvingEarthNT: Reduces endurance by 10% while in the inventory
+				DissolvingEarthpt: Increases defense by 2 while in the inventory, up to 8 total
 
-						DissolvingAuroraNT: Reduces movement speed by 20% while in the inventory
-						DissolvingAuroraPT: Increases movement speed by 5% while in the inventory, up to 20% total
+				DissolvingAuroraNT: Reduces movement speed by 20% while in the inventory
+				DissolvingAuroraPT: Increases movement speed by 5% while in the inventory, up to 20% total
 
-						DissolvingDelugeNT: Decreases max life and mana by 10 while in the inventory
-						DissolvingDelugePT: Increases ranged damage by 3% while in the inventory, up to 12% total
+				DissolvingDelugeNT: Decreases max life and mana by 10 while in the inventory
+				DissolvingDelugePT: Increases ranged damage by 3% while in the inventory, up to 12% total
 
-						DissolvingAetherNT: Reduces gravity while in the inventory
-						DissolvingAetherPT: Increases magic damage by 3% while in the inventory, up to 12% total
+				DissolvingAetherNT: Reduces gravity while in the inventory
+				DissolvingAetherPT: Increases magic damage by 3% while in the inventory, up to 12% total
 
-						DissolvingUmbraNT: Reduces max void by 20 while in the inventory
-						DissolvingUmbraPT: Increases void damage by 3% while in the inventory, up to 12% total
+				DissolvingUmbraNT: Reduces max void by 20 while in the inventory
+				DissolvingUmbraPT: Increases void damage by 3% while in the inventory, up to 12% total
 
-						DissolvingNetherNT: Decreases life regeneration by 2 while in the inventory
-						DissolvingNetherPT: Increases melee damage by 3% while in the inventory, up to 12% total
+				DissolvingNetherNT: Decreases life regeneration by 2 while in the inventory
+				DissolvingNetherPT: Increases melee damage by 3% while in the inventory, up to 12% total
 
-						DissolvingBrillianceNT: Increases void drain by 0.5 while in the inventory
-						DissolvingBrilliancePT: Increases summon damage by 3% while in the inventory, up to 12% total
-					}
+				DissolvingBrillianceNT: Increases void drain by 0.5 while in the inventory
+				DissolvingBrilliancePT: Increases summon damage by 3% while in the inventory, up to 12% total
+			}
 
-				WorldlyPolarizer: 
-					'''
-					Increases damage, endurance, and movement speed by 3%
-					Changes the effects of worldly dissolving elements in your inventory
-					'''
-				ThermalPolarizer: 
-					'''
-					Increases max life, mana, and void by 20
-					Changes the effects of thermal dissolving elements in your inventory
-					'''
-				ExoticPolarizer: 
-					'''
-					Increases jump speed, life regen, and void gain by 2
-					Changes the effects of exotic dissolving elements in your inventory
-					'''
-				UltimatePolarizer: 
-					'''
-					Increases damage, endurance, and movement speed by 3%
-					Increases max life, mana, and void by 20
-					Increases jump speed, life regen, and void gain by 2
-					Changes the effects of all dissolving elements in your inventory
-					'''
+			WorldlyPolarizer: 
+				'''
+				Increases damage, endurance, and movement speed by 3%
+				Changes the effects of worldly dissolving elements in your inventory
+				'''
+			ThermalPolarizer: 
+				'''
+				Increases max life, mana, and void by 20
+				Changes the effects of thermal dissolving elements in your inventory
+				'''
+			ExoticPolarizer: 
+				'''
+				Increases jump speed, life regen, and void gain by 2
+				Changes the effects of exotic dissolving elements in your inventory
+				'''
+			UltimatePolarizer: 
+				'''
+				Increases damage, endurance, and movement speed by 3%
+				Increases max life, mana, and void by 20
+				Increases jump speed, life regen, and void gain by 2
+				Changes the effects of all dissolving elements in your inventory
+				'''
 
-				PrecariousCluster: 
-					'''
-					Does the following while in your inventory:
-					Nature
-					Earth
-					Aurora
-					Aether
-					'A great gift for your friend's inventory!'
-					'''
-				TerminalCluster: 
-					'''
-					Does the following while in your inventory:
-					Deluge
-					Umbra
-					Nether
-					Brilliance
-					'''
+			PrecariousCluster: 
+				'''
+				Does the following while in your inventory:
+				Nature
+				Earth
+				Aurora
+				Aether
+				'A great gift for your friend's inventory!'
+				'''
+			TerminalCluster: 
+				'''
+				Does the following while in your inventory:
+				Deluge
+				Umbra
+				Nether
+				Brilliance
+				'''
 
-			# Furniture
-				# AncientGold
-					AncientGoldBed: "'For naps fit for a king'"
-					AncientGoldThrone: "'A throne fit for a very old king'"
+		# Furniture
+			# AncientGold
+				AncientGoldBed: "'For naps fit for a king'"
+				AncientGoldThrone: "'A throne fit for a very old king'"
 
-				# Earthen
-					EarthenPlatingWorkBench: Also functions as an anvil
+			# Earthen
+				EarthenPlatingWorkBench: Also functions as an anvil
 				
-				# Nature
-					NatureHydroponics: 
-						'''
-						Automatically grows an assortment of alchemical herbs
-						Right click to harvest all fully grown herbs
-						Plants can be harvested at any time or weather
-						'''
-					NaturePlatingWorkBench: Also functions as an anvil
-
-				# Permafrost
-					PermafrostPlatingWorkBench: Also functions as an anvil
-
-			# Gems
-				AmberRing: Getting hit grants a random buff for 30 seconds	
-				AmethystRing: Chain together blocks when mining, breaking up to 50 blocks at once
-				DiamondRing: Increases damage by (defense)%
-				EmeraldRing: Enemies have a 14.3% chance to drop double the loot
-				RubyRing: 
-					'''
-					Killed enemies always drop hearts
-					Collecting hearts lengthens the duration of active buffs
-					'''
-				SapphireRing: Generate income when void is gained
-				TopazRing: Killing enemies grants a random buff for 30 seconds
-			
-			# Inferno
-				BlazingClub: 
-					'''
-					Deploys spiked mines in the air
-					Right click to launch them instead
-					Mines linger and explode into shrapnel for 10% damage
-					Deploys and launches more mines when wearing climbing related accessories
-					'''
-				lazingQuiver: 
-					'''
-					Increases ranged damage by 10% and greatly increases arrow speed
-					20% chance not to consume arrows
-					Converts wooden arrows into Blazing Arrows
-					Blazing Arrows ignore gravity, pierce once, and explode for 15% damage
-					'''
-				BookOfVirtues: 
-					'''
-					Summons a Spectral Wisp that defends you from nearby enemies
-					The wisp does 75% damage on contact with enemies, and 100% with its laser
-					'''
-				IncineratorGlove: 
-					'''
-					Charge up a short-ranged ball of hot plasma
-					Gains 40% additional damage each charge
-					Maxes out at 80 charges
-					Only does half damage prior to firing
-					'''
-				PlasmaAccelerator: Fires supercharged plasma arrows
-				Sharanga: Fires supercharged hellfire arrows
-				TheBlaspha: Launch a scatter of inferno-infused bullets which release homings embers for 50% damage
-				WispInAJar: 
-					'''
-					Summons a Inferno Wisp that assists in combat
-					Killed enemies explode into flames for 30% of the damage dealt to them on the killing blow
-					'''
-
-			# Invidia
-				VesperaMask: Increases max void by 25 and void gain by 1
-				VesperaLeggings: Increases max void by 25 and movement speed by 5%
-				VesperaBreastplate: Increases max void by 25 and void damage by 5%
-				VesperaFishingRod: Casts five lines at once
-				VesperaLongbow: 
-					'''
-					Has to windup before firing
-					Arrows travel fast and scatter into rock shrapnel for 70% damage
-					'''
-				VesperaNanDao: 
-					'''
-					Strike with 2 slashes
-					The second slash scatters rocks for 70% damage
-					'''
-
-				VoidTablet: 
-					'''
-					Increases void gain by 1 and max void by 50
-					Reduces healing recieved from potions by 20
-					'''
-				VorpalKnife: 
-					'''
-					Toss a blade that lingers in the air
-					Detonate with left click, dealing 300% damage
-					Teleport with right click, slashing for 200% damage
-					Drains more void to detonate or teleport the farther away the blade is
-					'''
-
-			# MusicBoxes
-				KnucklesMusicBox: "'Can I put my...'"
-			
 			# Nature
-				AcornBag: Summons a squirrel to fight for you
-				BerryBombs: Throw a cluster of explosive berries
-				BiomassBarrage: Launches a cluster of acorns
-				BiomassBlast: Launches an acorn that rapidly accelerates its growth upon hitting an enemy or tile
-				BotanicalSymbiote: 
+				NatureHydroponics: 
 					'''
-					Increases life regeneration by 1 during the day
-					Grants a Blooming Hook to all minions
+					Automatically grows an assortment of alchemical herbs
+					Right click to harvest all fully grown herbs
+					Plants can be harvested at any time or weather
 					'''
-				NatureWreath: Increased max minions
-				NatureLeggings: 5% increased minion damage and movement speed
-				NatureShirt: Increased defense for every active minion
-				NatureSpell: 
-					'''
-					Launches a seed that latches onto enemies
-					When the seed blooms, it does 500% damage
-					'''
-				PricklyPearShield: Getting hit releases Cactus Spines that poison nearby enemies
-				Scatterseed: 
-					'''
-					Scatters seeds that latch onto enemies
-					When the seeds bloom, they do 125% damage
-					'''
-				SporeBombs: 
-					'''
-					Throw a cluster of explosive spore sacks
-					Released spores deal 50% damage
-					'The toxic grenades look almost edible'
-					'''
-				SporeClub: Launch a spore that may confuse enemies
+				NaturePlatingWorkBench: Also functions as an anvil
 
-			# OreItems
-				GoldArkStaff: Deal 150% damage to up to 2 enemies surrounding the initially hit enemy
-				GoldBattery: 
-					'''
-					Increases void gain by 1 and max void by 20
-					Regenerate void when hit, but also have a 10% chance to recieve ichor when near max void
-					'''
-				GoldChakram: Deals more damage at the peak of its trajectory
-				GoldGlaive: Fires 3 bolts at your cursor, each dealing 75% damage
+			# Permafrost
+				PermafrostPlatingWorkBench: Also functions as an anvil
 
-				PlatinumBattery: 
-					'''
-					Increases void gain by 1 and max void by 20
-					Regenerate void when hit, but also have a 10% chance to recieve broken armor when near max void
-					'''
-				PlatinumDart: A heavy dart that sticks to enemies, slowing them down drastically
-				PlatinumScythe: Attacks permanently curse enemies for 4 damage per second, stacking up to 10 times
-				PlatinumSoulStaff: Absorb life from up to 3 enemies at a time
+		# Gems
+			AmberRing: Getting hit grants a random buff for 30 seconds	
+			AmethystRing: Chain together blocks when mining, breaking up to 50 blocks at once
+			DiamondRing: Increases damage by (defense)%
+			EmeraldRing: Enemies have a 14.3% chance to drop double the loot
+			RubyRing: 
+				'''
+				Killed enemies always drop hearts
+				Collecting hearts lengthens the duration of active buffs
+				'''
+			SapphireRing: Generate income when void is gained
+			TopazRing: Killing enemies grants a random buff for 30 seconds
 			
-			# Otherworld
-				# EpicWings
-					TestWings: Allows flight and slow fall
-					TwilightGyroscope: 
-						'''
-						Increases jump height and flight speed
-						Increases movement speed by 20%
-						Hold down to fall quickly to the floor
-						Provides immunity to fall damage
-						'''
-				# FromChests
-					ArclightOrbs: Throw a cluster of thunder orbs that explode into chain lightning for 80% damage
-					ArcStaffMk2: 
-						'''
-						Launch a massive sphere of lightning
-						Detonates at the end of its lifespan, doing 250% damage to low health, non-boss enemies, but only 100% to bosses
-						'''
-					Calculator: 
-						'''
-						Summons a pet Advisor to assist in combat
-						Instead of attacking enemies directly, the Advisor assists with your aim
-						'He really wants to help!'
-						'''
-					CataclysmDisc: 
-						'''
-						Deals more damage at the peak of its trajectory and explodes for 300% damage
-						'''
-					CataclysmMusketPouch: 
-						'''
-						Grants access to infinite cataclysm bullets
-						Cataclysm bullets travel faster and more erratically than normal bullets
-						They will also incur 20% damage to an enemy surrounding the initially hit enemy
-						When favorited, bullets will be supercharged at the cost of some void
-						Supercharged bullets travel instantly, and gain increased arcing capabilies
-						'''
-					ChainedPlasma: 
-						'''
-						Chains between enemies for 70% damage
-						Tries to move towards your cursor
-						'''
-					CodeCorrupter: 
-						'''
-						Fires a short ranged and a long ranged blast
-						The short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabalize enemies
-						Destabilized enemies gain a 5% flat chance to be critically striked
-						This is calculated after normal crits, allowing some attacks to double crit
-						Destabilization is permanent and can stack, but the chance of applying it gets lower with each level already applied
-						'''
-					CrescentStaff: Cast a wave of Crescents that each lock onto an enemy, and then steal life and mana from them
-					FlareDetonator: Fire an explosive flare that detonates upon releasing the trigger
-					HardlightGlaive: Unleash a burst of lightning that deals 160% damage
-					HardlightQuiver: 
-						'''
-						Grants access to infinite hardlight arrows
-						Hardlight arrows travel faster and are not affected by gravity
-						When favorited, arrows will be supercharged at the cost of some void
-						Supercharged arrows travel instantly, and gain slight homing at longer ranges
-						'''
-					InfernoHook: A very fast hook that strikes enemies as it travels
-					LashesOfLightning: 
-						'''
-						Unleash rapid strikes of lightning in a small area in front of you
-						Deals slightly more damage and can hit through walls at the tip
-						'''
-					PlatformGenerator: 
-						'''
-						10% increased minion damage
-						Generates 2 platforms to the left and right of you
-						You can right click to drag the platforms, but they will always remain symmetrical
-						Sentries can be summoned on top of the platforms
-						'Bring your sentries with you!'
-						'''
-					Poyoyo: Leaves behind a rainbow trail that does 60% damage
-					SectionChiefsScythe: 
-						'''
-						Critical hits summon a Soul of Retaliation into the air
-						Every 10th void attack will release the soul in the form of a powerful laser
-						Direct melee hits permanently curse enemies for 4 damage per second, stacking up to 10 times
-						'''
-					SkywardBlades: 
-						'''
-						Arm yourself with several deadly throwing knives
-						Scoring a hit restores a dagger
-						'Watch this!'
-						'''
-					SkywareBattery: 
-						'''
-						Increases void gain by 2 and max void by 50
-						Regenerate void when hit
-						Immunity to broken armor and ichor
-						'''
-					Starbelt: 
-						'''
-						Critical strikes recover mana
-						Increased max mana by 40
-						10% increased magic crit chance
-						'''
-					StarcoreAssaultRifle: Fires a stream of bouncy, colorful projectiles
-					StarshotCrossbow: Fire a star that scatters arrows in every direction
-					SupernovaHammer: 
-						'''
-						Critical strikes release 3 seekers that do 50% critical damage
-						Killing enemies releases 3 seekers that do 70% damage
-						Enemies killed by seekers release 2 more seekers, each doing 75% damage
-						Seekers home onto enemies, but do not attack the enemies they are released from
-						'''
-					TerminatorAcorns: Summons a Mechanically Modified Squirrel to fight for you
-					TwilightAssassinsCirclet: Gamer
-					TwilightAssassinsChestplate: 
-						'''
-						Increased your max number of minions by 1
-						Increased melee and void critical strike chance by 10%
-						Increased life regeneration by 2 and void regeneration speed by 10%
-						'''
-					TwilightAssassinsLeggings: 
-						'''
-						Increased movement speed by 15%
-						Blink Pack decreased cooldown by 20%
-						Slightly increased jump speed
-						'''
-					TwilightFishingPole: Casts two lines at once
-					UndoArrow: Makes all NPC have zero epicness
-					VibrancyModule: 
-						'''
-						Increases void attack speed by 10%
-						Reduces void cost by 10%
-						'''
+		# Inferno
+			BlazingClub: 
+				'''
+				Deploys spiked mines in the air
+				Right click to launch them instead
+				Mines linger and explode into shrapnel for 10% damage
+				Deploys and launches more mines when wearing climbing related accessories
+				'''
+			lazingQuiver: 
+				'''
+				Increases ranged damage by 10% and greatly increases arrow speed
+				20% chance not to consume arrows
+				Converts wooden arrows into Blazing Arrows
+				Blazing Arrows ignore gravity, pierce once, and explode for 15% damage
+				'''
+			BookOfVirtues: 
+				'''
+				Summons a Spectral Wisp that defends you from nearby enemies
+				The wisp does 75% damage on contact with enemies, and 100% with its laser
+				'''
+			IncineratorGlove: 
+				'''
+				Charge up a short-ranged ball of hot plasma
+				Gains 40% additional damage each charge
+				Maxes out at 80 charges
+				Only does half damage prior to firing
+				'''
+			PlasmaAccelerator: Fires supercharged plasma arrows
+			Sharanga: Fires supercharged hellfire arrows
+			TheBlaspha: Launch a scatter of inferno-infused bullets which release homings embers for 50% damage
+			WispInAJar: 
+				'''
+				Summons a Inferno Wisp that assists in combat
+				Killed enemies explode into flames for 30% of the damage dealt to them on the killing blow
+				'''
+
+		# Invidia
+			VesperaMask: Increases max void by 25 and void gain by 1
+			VesperaLeggings: Increases max void by 25 and movement speed by 5%
+			VesperaBreastplate: Increases max void by 25 and void damage by 5%
+			VesperaFishingRod: Casts five lines at once
+			VesperaLongbow: 
+				'''
+				Has to windup before firing
+				Arrows travel fast and scatter into rock shrapnel for 70% damage
+				'''
+			VesperaNanDao: 
+				'''
+				Strike with 2 slashes
+				The second slash scatters rocks for 70% damage
+				'''
+
+			VoidTablet: 
+				'''
+				Increases void gain by 1 and max void by 50
+				Reduces healing recieved from potions by 20
+				'''
+			VorpalKnife: 
+				'''
+				Toss a blade that lingers in the air
+				Detonate with left click, dealing 300% damage
+				Teleport with right click, slashing for 200% damage
+				Drains more void to detonate or teleport the farther away the blade is
+				'''
+
+		# MusicBoxes
+			KnucklesMusicBox: "'Can I put my...'"
+			
+		# Nature
+			AcornBag: Summons a squirrel to fight for you
+			BerryBombs: Throw a cluster of explosive berries
+			BiomassBarrage: Launches a cluster of acorns
+			BiomassBlast: Launches an acorn that rapidly accelerates its growth upon hitting an enemy or tile
+			BotanicalSymbiote: 
+				'''
+				Increases life regeneration by 1 during the day
+				Grants a Blooming Hook to all minions
+				'''
+			NatureWreath: Increased max minions
+			NatureLeggings: 5% increased minion damage and movement speed
+			NatureShirt: Increased defense for every active minion
+			NatureSpell: 
+				'''
+				Launches a seed that latches onto enemies
+				When the seed blooms, it does 500% damage
+				'''
+			PricklyPearShield: Getting hit releases Cactus Spines that poison nearby enemies
+			Scatterseed: 
+				'''
+				Scatters seeds that latch onto enemies
+				When the seeds bloom, they do 125% damage
+				'''
+			SporeBombs: 
+				'''
+				Throw a cluster of explosive spore sacks
+				Released spores deal 50% damage
+				'The toxic grenades look almost edible'
+				'''
+			SporeClub: Launch a spore that may confuse enemies
+
+		# OreItems
+			GoldArkStaff: Deal 150% damage to up to 2 enemies surrounding the initially hit enemy
+			GoldBattery: 
+				'''
+				Increases void gain by 1 and max void by 20
+				Regenerate void when hit, but also have a 10% chance to recieve ichor when near max void
+				'''
+			GoldChakram: Deals more damage at the peak of its trajectory
+			GoldGlaive: Fires 3 bolts at your cursor, each dealing 75% damage
+
+			PlatinumBattery: 
+				'''
+				Increases void gain by 1 and max void by 20
+				Regenerate void when hit, but also have a 10% chance to recieve broken armor when near max void
+				'''
+			PlatinumDart: A heavy dart that sticks to enemies, slowing them down drastically
+			PlatinumScythe: Attacks permanently curse enemies for 4 damage per second, stacking up to 10 times
+			PlatinumSoulStaff: Absorb life from up to 3 enemies at a time
+			
+		# Otherworld
+			# EpicWings
+				TestWings: Allows flight and slow fall
+				TwilightGyroscope: 
+					'''
+					Increases jump height and flight speed
+					Increases movement speed by 20%
+					Hold down to fall quickly to the floor
+					Provides immunity to fall damage
+					'''
+
+			# FromChests
+				ArclightOrbs: Throw a cluster of thunder orbs that explode into chain lightning for 80% damage
+				ArcStaffMk2: 
+					'''
+					Launch a massive sphere of lightning
+					Detonates at the end of its lifespan, doing 250% damage to low health, non-boss enemies, but only 100% to bosses
+					'''
+				Calculator: 
+					'''
+					Summons a pet Advisor to assist in combat
+					Instead of attacking enemies directly, the Advisor assists with your aim
+					'He really wants to help!'
+					'''
+				CataclysmDisc: 
+					'''
+					Deals more damage at the peak of its trajectory and explodes for 300% damage
+					'''
+				CataclysmMusketPouch: 
+					'''
+					Grants access to infinite cataclysm bullets
+					Cataclysm bullets travel faster and more erratically than normal bullets
+					They will also incur 20% damage to an enemy surrounding the initially hit enemy
+					When favorited, bullets will be supercharged at the cost of some void
+					Supercharged bullets travel instantly, and gain increased arcing capabilies
+					'''
+				ChainedPlasma: 
+					'''
+					Chains between enemies for 70% damage
+					Tries to move towards your cursor
+					'''
+				CodeCorrupter: 
+					'''
+					Fires a short ranged and a long ranged blast
+					The short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabalize enemies
+					Destabilized enemies gain a 5% flat chance to be critically striked
+					This is calculated after normal crits, allowing some attacks to double crit
+					Destabilization is permanent and can stack, but the chance of applying it gets lower with each level already applied
+					'''
+				CrescentStaff: Cast a wave of Crescents that each lock onto an enemy, and then steal life and mana from them
+				FlareDetonator: Fire an explosive flare that detonates upon releasing the trigger
+				HardlightGlaive: Unleash a burst of lightning that deals 160% damage
+				HardlightQuiver: 
+					'''
+					Grants access to infinite hardlight arrows
+					Hardlight arrows travel faster and are not affected by gravity
+					When favorited, arrows will be supercharged at the cost of some void
+					Supercharged arrows travel instantly, and gain slight homing at longer ranges
+					'''
+				InfernoHook: A very fast hook that strikes enemies as it travels
+				LashesOfLightning: 
+					'''
+					Unleash rapid strikes of lightning in a small area in front of you
+					Deals slightly more damage and can hit through walls at the tip
+					'''
+				PlatformGenerator: 
+					'''
+					10% increased minion damage
+					Generates 2 platforms to the left and right of you
+					You can right click to drag the platforms, but they will always remain symmetrical
+					Sentries can be summoned on top of the platforms
+					'Bring your sentries with you!'
+					'''
+				Poyoyo: Leaves behind a rainbow trail that does 60% damage
+				SectionChiefsScythe: 
+					'''
+					Critical hits summon a Soul of Retaliation into the air
+					Every 10th void attack will release the soul in the form of a powerful laser
+					Direct melee hits permanently curse enemies for 4 damage per second, stacking up to 10 times
+					'''
+				SkywardBlades: 
+					'''
+					Arm yourself with several deadly throwing knives
+					Scoring a hit restores a dagger
+					'Watch this!'
+					'''
+				SkywareBattery: 
+					'''
+					Increases void gain by 2 and max void by 50
+					Regenerate void when hit
+					Immunity to broken armor and ichor
+					'''
+				Starbelt: 
+					'''
+					Critical strikes recover mana
+					Increased max mana by 40
+					10% increased magic crit chance
+					'''
+				StarcoreAssaultRifle: Fires a stream of bouncy, colorful projectiles
+				StarshotCrossbow: Fire a star that scatters arrows in every direction
+				SupernovaHammer: 
+					'''
+					Critical strikes release 3 seekers that do 50% critical damage
+					Killing enemies releases 3 seekers that do 70% damage
+					Enemies killed by seekers release 2 more seekers, each doing 75% damage
+					Seekers home onto enemies, but do not attack the enemies they are released from
+					'''
+				TerminatorAcorns: Summons a Mechanically Modified Squirrel to fight for you
+				TwilightAssassinsCirclet: Gamer
+				TwilightAssassinsChestplate: 
+					'''
+					Increased your max number of minions by 1
+					Increased melee and void critical strike chance by 10%
+					Increased life regeneration by 2 and void regeneration speed by 10%
+					'''
+				TwilightAssassinsLeggings: 
+					'''
+					Increased movement speed by 15%
+					Blink Pack decreased cooldown by 20%
+					Slightly increased jump speed
+					'''
+				TwilightFishingPole: Casts two lines at once
+				UndoArrow: Makes all NPC have zero epicness
+				VibrancyModule: 
+					'''
+					Increases void attack speed by 10%
+					Reduces void cost by 10%
+					'''
 				
-				# Furniture
-					DigitalDisplay: Right click to increase void damage by 10%
-					HardlightFabricator: Used to craft otherworldly objects and gear
-					PotGenerator: 
-						'''
-						Generates pots on top of its surface
-						Can be stacked to increase production of the topmost generator
-						'No, not that type of pot'
-						'''
-					SkyChain: "'It anchors onto... somewhere'"
-					TransmutationAltar: 
-						'''
-						Used for crafting
-						Allows the conversion of material and equipment to equivalent but different forms
-						Also counts as a demon altar for crafting
-						Crafting using the altar can be undone
-						'''
+			# Furniture
+				DigitalDisplay: Right click to increase void damage by 10%
+				HardlightFabricator: Used to craft otherworldly objects and gear
+				PotGenerator: 
+					'''
+					Generates pots on top of its surface
+					Can be stacked to increase production of the topmost generator
+					'No, not that type of pot'
+					'''
+				SkyChain: "'It anchors onto... somewhere'"
+				TransmutationAltar: 
+					'''
+					Used for crafting
+					Allows the conversion of material and equipment to equivalent but different forms
+					Also counts as a demon altar for crafting
+					Crafting using the altar can be undone
+					'''
 
 				AvaritianGateway: 
 					'''
@@ -1466,6 +1505,7 @@ Mods: {
 					Getting hit summons 5 Souls of Retaliation into the air, assuming you have less than 5 Souls active already
 					Every 10th void attack will release the souls in the form of a powerful laser
 					'''
+
 			# Permafrost
 				AbsoluteBar: "'It burns to touch'"
 				CruiseCaller: Summons a fleet of Penguin Copters to fight for you
@@ -1545,211 +1585,264 @@ Mods: {
 					40% increased movement speed
 					'Ice physics, everyone's favorite!'
 					'''
-				StormSpell: Create an arctic storm targeted on your cursor
+			StormSpell: Create an arctic storm targeted on your cursor
 			
-			# Potions
-				AbyssalTonic: 
+		# Potions
+			AbyssalTonic: 
+				'''
+				Randomly receive 2 of the following:
+				Gills for 15 minutes
+				Flipper for 13 minutes
+				Ripple for 11 minutes
+				Calm for 9 minutes
+				'''
+			AssassinationPotion: Execute enemies below 20 health or 10% health
+			BlazingTonic: 
+				'''
+				Randomly receive 2 of the following:
+				Bluefire for 15 minutes
+				Inferno for 13 minutes
+				Obsidian Skin for 11 minutes
+				Magic Power for 9 minutes
+				'Is this really safe to drink?'
+				'''
+			BlightfulTonic: 
+				'''
+				Randomly receive 2 of the following:
+				Ironskin for 15 minutes
+				Good Vibes for 13 minutes
+				Swiftness for 11 minutes
+				Regeneration for 9 minutes
+				'''
+			BluefirePotion: Killed enemies explode into flames for 40% of the damage dealt to them on the killing blow
+			BrittlePotion: Getting hit surrounds you with ice shards
+			DoubleVisionPotion: 
+				'''
+				Adds additional lines to your fishing rod, stacks with itself
+				Maxes out at 6 additional lines
+				'''
+			EtherealTonic: 
+				'''
+				Receive the following:
+				Harmony for 15 minutes
+				Lifeforce for 13 minutes
+				Regeneration for 11 minutes
+				Magic Power for 9 minutes
+				'''
+			GlacialTonic: 
+				'''
+				Randomly receive 2 of the following:
+				Warmth for 15 minutes
+				Brittle for 13 minutes
+				Titan for 11 minutes
+				Mana Regeneration for 9 minutes
+				'''
+			HarmonyPotion: 
+				'''
+				Prevents other buffs from decaying while active
+				Doesn't work on most buffs with below 30 seconds remaining
+				'''
+			HereticTonic: 
+				'''
+				Randomly receive 2 of the following:
+				Nightmare for 15 minutes
+				Wrath for 13 minutes
+				Rage for 13 minutes
+				Ammo Reservation for 9 minutes
+				'The world around you follows your example'
+				'''
+			NightmarePotion: 
+				'''
+				Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+				Has a 6 second cooldown
+				'''
+			RipplePotion: 
+				'''
+				Release waves of damaging water periodically
+				Release more waves at lower health
+				Waves ignore up to 8 defense
+				'''
+			RoughskinPotion: Increases defense by 4 and damage by 4%
+			SeismicTonic: 
+				'''
+				Randomly receive 2 of the following:
+				Ironskin for 15 minutes
+				Soul Access for 13 minutes
+				Endurance for 11 minutes
+				Roughskin for 9 minutes
+				'''
+			SoulAccessPotion: Increases void regeneration speed by 10%
+			StarlightTonic: 
+				'''
+				Receive the following:
+				Assassination for 15 minutes
+				Magic Power for 13 minutes
+				Heartreach for 11 minutes
+				Mana Regeneration for 9 minutes
+				'''
+			VibePotion: 
+				'''
+				Increases attack speed by 20% while not moving and by 5% while moving
+				Increases life regeneration by 4 while not moving
+				'''
+
+		# Pyramid
+			# AltPyramidBlocks
+				PyramidRubble: "'It's much less a brick than just a collection of rocks'"
+
+			# PyramidWalls
+				UnsafeCursedTumorWall: 
 					'''
-					Randomly receive 2 of the following:
-					Gills for 15 minutes
-					Flipper for 13 minutes
-					Ripple for 11 minutes
-					Calm for 9 minutes
+					Changes the biome to pyramid when in front of
+					Also envokes the Pharaoh's Curse
 					'''
-				AssassinationPotion: Execute enemies below 20 health or 10% health
-				BlazingTonic: 
+				UnsafeOvergrownPyramidWall: 
 					'''
-					Randomly receive 2 of the following:
-					Bluefire for 15 minutes
-					Inferno for 13 minutes
-					Obsidian Skin for 11 minutes
-					Magic Power for 9 minutes
-					'Is this really safe to drink?'
+					Changes the biome to pyramid when in front of
+					Also envokes the Pharaoh's Curse
 					'''
-				BlightfulTonic: 
+				UnsafePyramidBrickWall: 
 					'''
-					Randomly receive 2 of the following:
-					Ironskin for 15 minutes
-					Good Vibes for 13 minutes
-					Swiftness for 11 minutes
-					Regeneration for 9 minutes
+					Changes the biome to pyramid when in front of
+					Also envokes the Pharaoh's Curse
 					'''
-				BluefirePotion: Killed enemies explode into flames for 40% of the damage dealt to them on the killing blow
-				BrittlePotion: Getting hit surrounds you with ice shards
-				DoubleVisionPotion: 
+				UnsafePyramidWall: 
 					'''
-					Adds additional lines to your fishing rod, stacks with itself
-					Maxes out at 6 additional lines
-					'''
-				EtherealTonic: 
-					'''
-					Receive the following:
-					Harmony for 15 minutes
-					Lifeforce for 13 minutes
-					Regeneration for 11 minutes
-					Magic Power for 9 minutes
-					'''
-				GlacialTonic: 
-					'''
-					Randomly receive 2 of the following:
-					Warmth for 15 minutes
-					Brittle for 13 minutes
-					Titan for 11 minutes
-					Mana Regeneration for 9 minutes
-					'''
-				HarmonyPotion: 
-					'''
-					Prevents other buffs from decaying while active
-					Doesn't work on most buffs with below 30 seconds remaining
-					'''
-				HereticTonic: 
-					'''
-					Randomly receive 2 of the following:
-					Nightmare for 15 minutes
-					Wrath for 13 minutes
-					Rage for 13 minutes
-					Ammo Reservation for 9 minutes
-					'The world around you follows your example'
-					'''
-				NightmarePotion: 
-					'''
-					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
-					Has a 6 second cooldown
-					'''
-				RipplePotion: 
-					'''
-					Release waves of damaging water periodically
-					Release more waves at lower health
-					Waves ignore up to 8 defense
-					'''
-				RoughskinPotion: Increases defense by 4 and damage by 4%
-				SeismicTonic: 
-					'''
-					Randomly receive 2 of the following:
-					Ironskin for 15 minutes
-					Soul Access for 13 minutes
-					Endurance for 11 minutes
-					Roughskin for 9 minutes
-					'''
-				SoulAccessPotion: Increases void regeneration speed by 10%
-				StarlightTonic: 
-					'''
-					Receive the following:
-					Assassination for 15 minutes
-					Magic Power for 13 minutes
-					Heartreach for 11 minutes
-					Mana Regeneration for 9 minutes
-					'''
-				VibePotion: 
-					'''
-					Increases attack speed by 20% while not moving and by 5% while moving
-					Increases life regeneration by 4 while not moving
+					Changes the biome to pyramid when in front of
+					Also envokes the Pharaoh's Curse
 					'''
 
-			# Pyramid
-				# AltPyramidBlocks
-					PyramidRubble: "'It's much less a brick than just a collection of rocks'"
+			AcediaGateway: "'A strange portal that leads nowhere'"
+			AcediaPlating: "'It bares striking resemblance to luminite'"
 
-				# PyramidWalls
-					UnsafeCursedTumorWall: 
-						'''
-						Changes the biome to pyramid when in front of
-						Also envokes the Pharaoh's Curse
-						'''
-					UnsafeOvergrownPyramidWall: 
-						'''
-						Changes the biome to pyramid when in front of
-						Also envokes the Pharaoh's Curse
-						'''
-					UnsafePyramidBrickWall: 
-						'''
-						Changes the biome to pyramid when in front of
-						Also envokes the Pharaoh's Curse
-						'''
-					UnsafePyramidWall: 
-						'''
-						Changes the biome to pyramid when in front of
-						Also envokes the Pharaoh's Curse
-						'''
+			CursedRobe: 
+				'''
+				Increased maximum mana and void by 80
+				Reduces mana and void usage by 15%
+				Summons a Ruby Monolith to your side
+				The Ruby Monolith increases your void regeneration speed by 10%
+				'''
+			CursedHood: 
+				'''
+				Increases magic damage and void damage by 8%
+				Also increases magic crit chance and void crit chance by 5%
+				The closest enemy to you is afflicted with a curse
+				Upon taking damage, cursed enemies will Flare, taking 140% additional damage and dealing 140% damage to other nearby enemies
+				This effect has a 2 second cooldown
+				'''
 
-				AcediaGateway: "'A strange portal that leads nowhere'"
-				AcediaPlating: "'It bares striking resemblance to luminite'"
+			CurseBag: "{$CommonItemTooltip.RightClickToOpen}"
+			CurseballTome: Unleashes a flurry of highly potent but inaccurate Cursed Spears
+			CursedApple: 
+				'''
+				Summons a pet Ghost Pepper to assist after combat
+				Plunder 2 Souls of Looting from every killed enemy, and store them inside your void meter
+				Right click on an enemy to mark it for harvesting, consuming 10 souls
+				Marked enemies drop extra loot
+				Enemies can be marked multiple times
+				Requires 100 souls to mark a boss
+				Some rare enemies will also require more souls to mark
+				'''
+			CursedBlade: 
+				'''
+				Summons a Cursed Blade to assist in combat
+				Hit enemies receive a storm of sword strikes, dealing 50% damage each, and ending in an explosion
+				The explosion deals 100% damage and always critical strikes
+				'''
+			CursedImpale: Releases a short ranged burst of energy
+			CurseWard: 
+				'''
+				Weakens the pyramid's curse while in the inventory
+				No longer needed, as the curse will weaken automatically after killing the BoC or EoW
+				'''
 
-				CursedRobe: 
-					'''
-					Increased maximum mana and void by 80
-					Reduces mana and void usage by 15%
-					Summons a Ruby Monolith to your side
-					The Ruby Monolith increases your void regeneration speed by 10%
-					'''
-				CursedHood: 
-					'''
-					Increases magic damage and void damage by 8%
-					Also increases magic crit chance and void crit chance by 5%
-					The closest enemy to you is afflicted with a curse
-					Upon taking damage, cursed enemies will Flare, taking 140% additional damage and dealing 140% damage to other nearby enemies
-					This effect has a 2 second cooldown
-					'''
+			CursedTumor: "'Baked beans'"
 
-				CurseBag: "{$CommonItemTooltip.RightClickToOpen}"
-				CurseballTome: Unleashes a flurry of highly potent but inaccurate Cursed Spears
-				CursedApple: 
-					'''
-					Summons a pet Ghost Pepper to assist after combat
-					Plunder 2 Souls of Looting from every killed enemy, and store them inside your void meter
-					Right click on an enemy to mark it for harvesting, consuming 10 souls
-					Marked enemies drop extra loot
-					Enemies can be marked multiple times
-					Requires 100 souls to mark a boss
-					Some rare enemies will also require more souls to mark
-					'''
-				CursedBlade: 
-				 	'''
-					Summons a Cursed Blade to assist in combat
-					Hit enemies receive a storm of sword strikes, dealing 50% damage each, and ending in an explosion
-					The explosion deals 100% damage and always critical strikes
-					'''
-				CursedImpale: Releases a short ranged burst of energy
-				CurseWard: 
-					'''
-					Weakens the pyramid's curse while in the inventory
-					No longer needed, as the curse will weaken automatically after killing the BoC or EoW
-					'''
+			EmeraldBracelet: Increases void gain by 2
+			GhoulBlaster: 
+				'''
+				Unloads almost as fast as the trigger is pulled
+				Transforms bullets into cursed singularities every 6th shot
+				'''
+			HeartInAJar: 
+				'''
+				Curses enemies within a small radius around you, draining 10 life per second
+				Cursed enemies release a Curse Fragment upon death, which seeks out other enemies
+				Curse fragments deal damage equivalent to 10% of the killed enemies max health plus an additional 10 damage
+				Increases max life by 20
+				'''
+			ImperialPike: Leaves behind a trail that continues to damage enemies
+			JuryRiggedDrill: 
+				'''
+				Can break the walls of the pyramid
+				Breaks after some usage
+				'''
+			LuckyPurpleBalloon: 
+				'''
+				Grants an additional fishing line
+				Counts as a light pet
+				'''
 
-				CursedTumor: "'Baked beans'"
+			PatchLeatherHat: Increases max minions by 1
+			PatchLeatherPants: Increases minion damage by 10%
+			PatchLeatherTunic: 
+				'''
+				Increases minion damage by 10%
+				Grants immunity to venom and poison debuffs
+				'''
 
-				EmeraldBracelet: Increases void gain by 2
-				GhoulBlaster: 
-					'''
-					Unloads almost as fast as the trigger is pulled
-					Transforms bullets into cursed singularities every 6th shot
-					'''
-				HeartInAJar: 
-					'''
-					Curses enemies within a small radius around you, draining 10 life per second
-					Cursed enemies release a Curse Fragment upon death, which seeks out other enemies
-					Curse fragments deal damage equivalent to 10% of the killed enemies max health plus an additional 10 damage
-					Increases max life by 20
-					'''
-				ImperialPike: Leaves behind a trail that continues to damage enemies
-				JuryRiggedDrill: 
-					'''
-					Can break the walls of the pyramid
-					Breaks after some usage
-					'''
-				LuckyPurpleBalloon: 
-					'''
-					Grants an additional fishing line
-					Counts as a light pet
-					'''
+			PharaohsCane: 
+				'''
+				Terrible for combat, but makes enemies drop more gold
+				'Who would ever want such a thing?'
+				'''
+			PitatiLongbow: Fires an additional bouncing emerald bolt with each shot
 
-				PatchLeatherHat: Increases max minions by 1
-				PatchLeatherPants: Increases minion damage by 10%
-				PatchLeatherTunic: 
-					'''
-					Increases minion damage by 10%
-					Grants immunity to venom and poison debuffs
-					'''
+			PyramidBrick: A slab from an ancient burial site, it may be hard to break
+			PyramidSlab: A slab from an ancient burial site, it may be hard to break
+			RoyalGoldBrick: "'You can feel the regalness'"
+			RoyalMagnum: Releases golden light upon hitting the ground or an enemy
+
+			SandstoneEdge: Critical hits release a torrent of homing emerald bolts that do 50% damage
+			SandstoneWarhammer: Launches homing hammers
+
+			ShiftingSands: Pushes back nearby enemies with a wave of sand
+
+			SnakeBow: Launches snakes that latch on to enemies
+			Snakeskin: Slick and durable
+
+			SpiritGlove: Increases void regeneration speed by 5% and melee crit chance by 8%
+			SpiritShield: Increases void gain by 2, life regen by 1, and reduces damage taken by 2%
+			SpiritSurfer: 
+				'''
+				Summons an extremely fast spirit board mount
+				Increases void drain by 6 while active
+				'''
+			SpiritTracer: 
+				'''
+				Fires phantom arrows
+				Can hit up to 3 enemies at a time
+				'''
+
+			SunlightAmulet: Grants permanent hunter and dangersense effects
+
+			TaintedKeystone: "'What a regal crystallization of void energy!'"
+			TheDarkEye: 
+				'''
+				Allows the ability to perform an instant dash to the left or right at the cost of 5 void
+				Also allows the ability to dash through walls
+				Dashing into enemies will strike them, but consumes more void
+				'''
+
+			TrueSandstoneBlock: The ultimate sandstone
+			TrueSandstoneWall: "'Only the gods could've forged a wall with such power'"
+
+			VoidenBracelet: 
+				'''
+				Increases void damage and magic damage by 8%
+				Reduces void cost by 8%
+				'''
+		# Secrets
 		}
 
 		BuffName: {
@@ -1880,6 +1973,13 @@ Mods: {
 			CursedAppleTile: Strange Fruit
 			CursedGrowthTile: Cursed Growth
 			ManaStatue: Mana Statue
+			PyramidChestTile: Pyramid Chest
+			PyramidGateTile: Pyramid Gate
+			PyramidPots: Pot
+			RoyalRubyShardTile: Keystone Shard
+			RubyKeystoneTile: Strange Keystone
+			SarcophagusTile: Sarcophagus
+			TaintedKeystoneShardTile: Tainted Keystone Shard
 		}
 
 		WorldGeneration: {

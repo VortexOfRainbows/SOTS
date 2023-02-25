@@ -10,8 +10,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyramid Brick");
-			Tooltip.SetDefault("A slab from an ancient burial site, it may be hard to break");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

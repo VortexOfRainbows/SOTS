@@ -32,7 +32,6 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Pot");
             AddMapEntry(new Color(150, 130, 20), name);
             DustType = 32;
         }
@@ -376,10 +375,6 @@ namespace SOTS.Items.Pyramid
     }
     internal class PyramidPot : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Pyramid Pot");
-		}
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.DartTrap);

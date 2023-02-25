@@ -11,8 +11,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shifting Sands");
-			Tooltip.SetDefault("Pushes back nearby enemies with a wave of sand");
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()

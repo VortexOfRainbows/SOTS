@@ -12,8 +12,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Tracer");
-			Tooltip.SetDefault("Fires phantom arrows\nCan hit up to 3 enemies at a time");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

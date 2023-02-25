@@ -10,7 +10,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Keystone Shard");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -128,7 +127,6 @@ namespace SOTS.Items.Pyramid
 			Main.tileObsidianKill[Type] = true;
 			ItemDrop = ModContent.ItemType<RoyalRubyShard>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Keystone Shard");
 			AddMapEntry(new Color(211, 69, 74), name);
 			HitSound = SoundID.Item27;
 			DustType = 12;
