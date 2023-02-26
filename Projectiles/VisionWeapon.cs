@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items;
 using SOTS.Items.ChestItems;
+using SOTS.Items.Evil;
 using SOTS.Items.Temple;
 using SOTS.NPCs.Boss.Curse;
 using System;
@@ -216,7 +217,9 @@ namespace SOTS.Projectiles
 				{
 					frameCount = 1;
 				}
-				if(item.useStyle == ItemUseStyleID.Swing || Item.staff[item.type] || item.type == ModContent.ItemType<DigitalDaito>() || item.type == ModContent.ItemType<Pyrocide>())
+				int type = item.type;
+				bool isBlade = type == ModContent.ItemType<DigitalDaito>() || type == ModContent.ItemType<Pyrocide>() || type == ModContent.ItemType<ToothAche>() || type == ModContent.ItemType<Vertebraeker>() || type == ModContent.ItemType<Items.Invidia.VesperaNanDao>() || type == ItemID.Arkhalis;
+				if (item.useStyle == ItemUseStyleID.Swing || Item.staff[item.type] || isBlade)
                 {
 					Projectile.rotation += MathHelper.ToRadians(150) * Projectile.spriteDirection;
                 }

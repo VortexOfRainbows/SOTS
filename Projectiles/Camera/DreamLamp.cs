@@ -53,47 +53,45 @@ namespace SOTS.Projectiles.Camera
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
-            Vector2 vector2_1 = Main.player[Projectile.owner].RotatedRelativePoint(Main.player[Projectile.owner].MountedCenter, true);
-            if (Main.myPlayer == Projectile.owner)
+            Vector2 centerOnPlayer = Main.player[Projectile.owner].RotatedRelativePoint(Main.player[Projectile.owner].MountedCenter, true);
+            int ID = -1;
+            for(int i = 0; i < 1000; i++)
             {
-                float num1 = 20 * Projectile.scale;
-                Vector2 vector2_2 = vector2_1;
-                float num2 = (float)((double)Main.mouseX + Main.screenPosition.X - vector2_2.X);
-                float num3 = (float)((double)Main.mouseY + Main.screenPosition.Y - vector2_2.Y);
-                if ((double)Main.player[Projectile.owner].gravDir == -1.0)
-                    num3 = (float)((double)(Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector2_2.Y);
-                float num4 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
-                float num5 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
-                float num6 = num1 / num5;
-                float num7 = num2 * num6;
-                float num8 = num3 * num6;
-
-                if ((double)num7 != Projectile.velocity.X || (double)num8 != Projectile.velocity.Y)
-                    Projectile.netUpdate = true;
-                Projectile.velocity.X = num7;
-                Projectile.velocity.Y = num8;
-                Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0]);
+                Projectile camera = Main.projectile[i];
+                if(camera.active && camera.owner == Projectile.owner && camera.type == ModContent.ProjectileType<DreamingFrame>())
+                {
+                    ID = i;
+                    break;
+                }
             }
-            if (Projectile.hide == false)
+            if(ID != -1)
             {
-                Main.player[Projectile.owner].heldProj = Projectile.whoAmI;
-                Projectile.alpha = 0;
-            }
-            Projectile.rotation = (float)(Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57000005245209);
-            if (player.itemTime != 0 && player.itemAnimation != 0)
-            {
-                player.ChangeDir(Projectile.direction);
-                player.heldProj = Projectile.whoAmI;
-                player.compositeBackArm.enabled = true;
-                player.compositeFrontArm.enabled = true;
-                player.compositeBackArm.rotation = Projectile.rotation + MathHelper.Pi;
-                player.compositeFrontArm.rotation = Projectile.rotation + MathHelper.Pi;
+                Projectile camera = Main.projectile[ID];
+                Projectile.velocity = Projectile.velocity.Length() * (camera.Center - player.Center).SafeNormalize(Projectile.velocity.SafeNormalize(new Vector2(0, 1)));
+                if (Projectile.hide == false)
+                {
+                    Main.player[Projectile.owner].heldProj = Projectile.whoAmI;
+                    Projectile.alpha = 0;
+                }
                 Projectile.timeLeft = 2;
+                Projectile.rotation = (float)(Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57000005245209);
+                if (player.itemTime != 0 && player.itemAnimation != 0)
+                {
+                    player.ChangeDir(Projectile.direction);
+                    player.heldProj = Projectile.whoAmI;
+                    player.compositeBackArm.enabled = true;
+                    player.compositeFrontArm.enabled = true;
+                    player.compositeBackArm.rotation = Projectile.rotation + MathHelper.Pi;
+                    player.compositeFrontArm.rotation = Projectile.rotation + MathHelper.Pi;
+                }
+                Projectile.hide = false;
+                Projectile.spriteDirection = Projectile.direction;
+                Projectile.Center = centerOnPlayer;
             }
-            Projectile.hide = false;
-            Projectile.spriteDirection = Projectile.direction;
-            Projectile.position.X = (vector2_1.X - (Projectile.width / 2));
-            Projectile.position.Y = (vector2_1.Y - (Projectile.height / 2));
+            else
+            {
+                Projectile.Kill();
+            }
             return false;
         }
     }
