@@ -8,8 +8,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Peanut");
-			Tooltip.SetDefault("'The favorite snack of a devilish slime'");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

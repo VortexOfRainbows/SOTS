@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
 using Terraria.ObjectData;
+using Terraria.Localization;
 
 namespace SOTS.Items.Tools
 {
@@ -13,8 +14,6 @@ namespace SOTS.Items.Tools
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wall Capture");
-			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY\nHas many errors that I'm too lazy to fix currently\nDon't bother using this item");
 			/*
 				"\nCaptures a structure and exports code to generate it to the client log" +
 				"\nClick to select points, click the same point twice to reset the structure" +

@@ -8,8 +8,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vial of Acid");
-			Tooltip.SetDefault("'A gooey corrosive substance that excels at dissolving organic compounds'");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()
@@ -25,8 +23,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Corrosive Gel");
-			Tooltip.SetDefault("'It's like pink gel except it'll melt your fingers if you're not careful'");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

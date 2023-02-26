@@ -9,8 +9,6 @@ namespace SOTS.Items.Slime
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goopwood Parasite");
-			Tooltip.SetDefault("Increases void gain by 2 and void critical strike chance by 8%\nCritical strikes heal small amounts of void\nDecreases max void by 20");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

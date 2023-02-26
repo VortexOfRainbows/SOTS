@@ -5,16 +5,12 @@ using Microsoft.Xna.Framework;
 using System;
 using SOTS.WorldgenHelpers;
 using SOTS.Items.Earth.Glowmoth;
+using Terraria.Localization;
 
 namespace SOTS.Items.Tools
 {
 	public class PyramidGenerator : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Pyramid Generation Demonstrator");
-			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY\nUsing this may generate a whole pyramid on your cursor, step-by-step\nRight clicking will literally make your world vanish\nWhatever the case, it's probably best not to use it");
-		}
 		public override void SetDefaults()
 		{
 			Item.width = 20;
@@ -50,8 +46,8 @@ namespace SOTS.Items.Tools
 			{
 				GenSeed = Main.rand.Next(1000000); //kind of ironic. I'm seeding the random generation using a number fetched by random generation :)
 			}
-			Main.NewText("Generating with seed: " + GenSeed);
-			Main.NewText("Generated Pyramid Step " + StepNumber % 13);
+			Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.Speed", Convert.ToString(dGenSeed)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.StepNumber", Convert.ToString((string)(StepNumber % 13))));
 			PyramidWorldgenHelper.GenerateSOTSPyramid(Mod, false, StepNumber % 13, (int)tileLocation.X, (int)tileLocation.Y, GenSeed);
 			player.position.X += 11600; //move 16 pix * 800 tiles 
 			StepNumber++;
@@ -61,7 +57,7 @@ namespace SOTS.Items.Tools
         {
 			if(warning == 3)
             {
-				Main.NewText("Here comes NOTHING!!!", Color.Red);
+				Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.Warning3"), Color.Red);
 				for (int x = 0; x < Main.maxTilesX; x++)
 				{
 					for (int y = 0; y < Main.maxTilesY; y++)
@@ -73,15 +69,15 @@ namespace SOTS.Items.Tools
 			}
 			if(warning == 2)
 			{
-				Main.NewText("If anything goes wrong, it's because YOU asked for it", Color.Red);
+				Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.Warning2"), Color.Red);
 			}
 			if (warning == 1)
 			{
-				Main.NewText("Seriously. I'm warning you", Color.Red);
+				Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.Warning1"), Color.Red);
 			}
 			if (warning == 0)
 			{
-				Main.NewText("Don't right click this. Your world will be gone", Color.Red);
+				Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.Warning0"), Color.Red);
 			}
 			warning++;
         }

@@ -18,7 +18,6 @@ namespace SOTS.Items.SpiritStaves
 	{
 		public override void SetStaticDefaults() 
 		{
-			Tooltip.SetDefault("Summons an Otherworldly Spirit to fight for you\nAccumulates up to 4 thunder charges that are launched at enemies in quick succession");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			this.SetResearchCost(1);

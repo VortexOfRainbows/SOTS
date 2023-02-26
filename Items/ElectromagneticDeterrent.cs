@@ -13,8 +13,6 @@ namespace SOTS.Items
 		int frame = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Disruptive Electromagnetic Field Emitter");
-			Tooltip.SetDefault("Prevents constructs from spawning while favorited in the inventory or when placed");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 15));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);

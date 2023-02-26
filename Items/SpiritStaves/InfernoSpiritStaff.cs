@@ -17,7 +17,6 @@ namespace SOTS.Items.SpiritStaves
 	{
 		public override void SetStaticDefaults() 
 		{
-			Tooltip.SetDefault("Summons an Inferno Spirit to fight for you\nAttacks up to 7 enemies at a time");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			this.SetResearchCost(1);

@@ -14,10 +14,7 @@ namespace SOTS.Items
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Subspace Boosters");
-			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava" +
-                "\nDouble tap dash while on the ground to blast forward, granting higher speed and acceleration");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             this.SetResearchCost(1);
         }

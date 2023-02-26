@@ -9,8 +9,6 @@ namespace SOTS.Items
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Peanut Butter");
-			Tooltip.SetDefault("Summons a pet Putrid Pinky to assist in combat\nLatches onto enemies, slowing them down and draining life\nIncreases life regeneration by 1");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

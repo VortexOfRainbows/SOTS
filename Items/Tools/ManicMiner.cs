@@ -18,8 +18,6 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Manic Miner");
-			Tooltip.SetDefault("Converts void into short-ranged mining lasers");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

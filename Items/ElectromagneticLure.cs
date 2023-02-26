@@ -16,8 +16,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Electromagnetic Lure");
-			Tooltip.SetDefault("Attracts a single biome construct");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);

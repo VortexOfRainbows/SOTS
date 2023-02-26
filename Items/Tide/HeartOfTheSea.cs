@@ -10,8 +10,6 @@ namespace SOTS.Items.Tide
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Heart of the Sea");
-			Tooltip.SetDefault("Release waves of damage periodically\nRelease more waves at lower health\nWaves ignore up to 8 defense\nIncreases max life by 20\nWaves disabled when hidden\n'Death by heartbeat'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

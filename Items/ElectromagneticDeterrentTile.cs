@@ -24,7 +24,6 @@ namespace SOTS.Items
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("D.E.F.E");
 			AddMapEntry(new Color(66, 77, 93), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.Electric;

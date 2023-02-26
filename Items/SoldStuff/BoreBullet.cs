@@ -9,8 +9,6 @@ namespace SOTS.Items.SoldStuff
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bore Bullet");
-			Tooltip.SetDefault("20% of damage done ignores defense completely\nIn addition, a flat 10 damage will also completely ignore defense");
 			this.SetResearchCost(99);
 		}
 		public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace SOTS.Items.Void
 	{
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			TooltipLine line = new TooltipLine(Mod, "VoidConsumable", "Automatically consumed when void drops below zero");
+			TooltipLine line = new TooltipLine(Mod, "VoidConsumable", $"Mods.SOTS.Common.ACZV");
 			tooltips.Add(line);
 			base.ModifyTooltips(tooltips);
 		}
@@ -100,8 +100,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Almond Milk");
-			Tooltip.SetDefault("Refills 20 void");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -125,8 +123,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Coconut Milk");
-			Tooltip.SetDefault("Refills 30 void");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -148,8 +144,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cooked Mushroom");
-			Tooltip.SetDefault("Refills 13 void\nCauses temporary poison");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -178,8 +172,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Digital Corn Syrup");
-			Tooltip.SetDefault("Refills 15 void\n'Yes, really'");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -203,8 +195,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chocolate");
-			Tooltip.SetDefault("Refills 15 void\n'The number one thing to bring on pirating adventures'");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -228,8 +218,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Caviar");
-			Tooltip.SetDefault("40% chance to refill 20 void and receive Well Fed for 90 seconds\n35% chance to refill 15 void and receive Mana Regeneration for 90 seconds\n25% chance to refill 10 void and receive Battle for 90 seconds");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -272,8 +260,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Foul Concoction");
-			Tooltip.SetDefault("Refills 4 void");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -297,8 +283,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Strawberry Icecream");
-			Tooltip.SetDefault("50% chance to refill 10 void and surround you with an ice shard\n50% chance to refill 6 void and surround you with 2 ice shards");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()
@@ -347,7 +331,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Refills 24 void and recieve Regeneration for 60 seconds\n'Finally some good soup!'");
 			this.SetResearchCost(20);
 		}
 		public override void SafeSetDefaults()

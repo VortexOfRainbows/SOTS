@@ -14,8 +14,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spectre Spirit Storm");
-			Tooltip.SetDefault("Fires phantom arrows\nCan hit up to 4 enemies at a time");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

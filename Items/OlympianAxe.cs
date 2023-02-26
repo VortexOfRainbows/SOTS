@@ -11,9 +11,7 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Olympian Waraxe");
-            Tooltip.SetDefault("Enter a 3 second Frenzy after killing an enemy, massively increasing melee attack speed\nRight click to toss the axe for 60% damage\nCan toss two axes when under Frenzy");
-            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()

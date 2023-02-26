@@ -13,8 +13,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jar Of Peanuts");
-			Tooltip.SetDefault("Summons the Putrid Pinky");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

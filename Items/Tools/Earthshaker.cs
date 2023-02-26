@@ -19,7 +19,6 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Launch a long ranged pickaxe which is capable of breaking many blocks at a time");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -12,8 +12,6 @@ namespace SOTS.Items.Tide
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pistol Shrimp");
-			Tooltip.SetDefault("Fires hot, shrimpy plasma that homes on close enemies\n'Teamwork makes the dream work'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

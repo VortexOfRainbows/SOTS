@@ -29,8 +29,6 @@ namespace SOTS.Items.Temple
         }
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Revolution");
-			Tooltip.SetDefault("Does not consume void during the night");
 			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
 			this.SetResearchCost(1);
 		}

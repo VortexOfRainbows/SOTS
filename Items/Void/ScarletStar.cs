@@ -10,8 +10,6 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Scarlet Crescent");
-			Tooltip.SetDefault("Increases max void by 50 and void regeneration speed 5%\nCan only be used once");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

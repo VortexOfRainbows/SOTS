@@ -10,11 +10,6 @@ namespace SOTS.Items.Tools
 {
 	public class WorldgenFail: ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Worldgen Paste 2");
-			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY\nUsing this may break your world, or spawn a ton of ore, or generate a whole pyramid\nWhatever the case, it's probably best not to use it");
-		}
 		public override void SetDefaults()
 		{
 			Item.width = 32;

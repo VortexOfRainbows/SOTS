@@ -8,7 +8,6 @@ namespace SOTS.Items.SoldStuff
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Suprem");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

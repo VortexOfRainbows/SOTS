@@ -23,7 +23,6 @@ namespace SOTS.Items
             TileObjectData.newTile.StyleWrapLimit = 36;
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-		    name.SetDefault("Pickaxe Shrine");		
 		    AddMapEntry(new Color(170, 150, 85), name);
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1200;

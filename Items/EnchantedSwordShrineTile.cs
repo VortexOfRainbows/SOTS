@@ -23,7 +23,6 @@ namespace SOTS.Items
             TileObjectData.addTile(Type);
             DustType = 32;
             ModTranslation name = CreateMapEntryName();
-		    name.SetDefault("Sword Shrine");		
 		    AddMapEntry(new Color(170, 150, 85), name);
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1200;

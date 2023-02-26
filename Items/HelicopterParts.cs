@@ -8,7 +8,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Helicopter Parts");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

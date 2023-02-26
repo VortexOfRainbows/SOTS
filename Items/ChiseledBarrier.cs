@@ -10,8 +10,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chiseled Barrier");
-			Tooltip.SetDefault("Surrounds you with 4 orbital projectiles\nLaunches attackers away from you with javelins\nProjectiles disabled when hidden");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

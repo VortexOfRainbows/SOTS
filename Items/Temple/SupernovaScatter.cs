@@ -24,7 +24,6 @@ namespace SOTS.Items.Temple
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Supernova Scatter");
 			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
 			this.SetResearchCost(1);
 		}

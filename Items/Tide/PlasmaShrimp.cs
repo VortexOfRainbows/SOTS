@@ -9,8 +9,6 @@ namespace SOTS.Items.Tide
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Shrimp");
-			Tooltip.SetDefault("When above 40% mana, magic hits fire hot, shrimpy plasma for 50% damage\nReduces mana cost by 5%\n'Not so shrimple now'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

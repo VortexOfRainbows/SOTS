@@ -8,8 +8,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Backup Bow");
-			Tooltip.SetDefault("Attaches a bow to your back which fires arrows behind you for 50% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
