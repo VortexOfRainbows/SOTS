@@ -13,10 +13,6 @@ namespace SOTS.NPCs
 {
 	public class ArcticGoblin : ModNPC
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Arctic Goblin");
-		}
 		public override void SetDefaults()
 		{
 			NPC.CloneDefaults(NPCID.GoblinPeon);

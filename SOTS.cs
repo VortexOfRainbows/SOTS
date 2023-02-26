@@ -94,9 +94,9 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			BlinkHotKey = KeybindLoader.RegisterKeybind(this, "Blink", "V");
-			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, "Armor Set", "F");
-			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, "Modify Flight Mode", "C");
+			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.Blink"), "V");
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.ArmorSet"), "F");
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.MFM"), "C");
 			SOTSWorld.LoadUI();
 			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)

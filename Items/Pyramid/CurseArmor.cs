@@ -101,7 +101,7 @@ namespace SOTS.Items.Pyramid
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			modPlayer.CanCurseSwap = true;
-			string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
+			string theKey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
 			if(Main.netMode != NetmodeID.Server)
 			{
 				foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys())

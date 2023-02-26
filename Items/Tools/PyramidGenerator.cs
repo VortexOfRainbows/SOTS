@@ -46,8 +46,8 @@ namespace SOTS.Items.Tools
 			{
 				GenSeed = Main.rand.Next(1000000); //kind of ironic. I'm seeding the random generation using a number fetched by random generation :)
 			}
-			Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.Speed", Convert.ToString(dGenSeed)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.StepNumber", Convert.ToString((string)(StepNumber % 13))));
+			Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.Speed", Convert.ToString(GenSeed)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.PyramidGenerator.StepNumber", Convert.ToString(StepNumber % 13)));
 			PyramidWorldgenHelper.GenerateSOTSPyramid(Mod, false, StepNumber % 13, (int)tileLocation.X, (int)tileLocation.Y, GenSeed);
 			player.position.X += 11600; //move 16 pix * 800 tiles 
 			StepNumber++;

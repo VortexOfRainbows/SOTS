@@ -20,10 +20,6 @@ namespace SOTS.NPCs.Constructs
 	public class ChaosConstruct : ModNPC
 	{
 		float dir = 0f;
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Chaos Construct");
-		}
 		public override void SetDefaults()
 		{
 			NPC.aiStyle = 0;

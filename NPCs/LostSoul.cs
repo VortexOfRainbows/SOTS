@@ -13,11 +13,6 @@ namespace SOTS.NPCs
 	public class LostSoul : ModNPC
 	{	float ai1 = 0;
 		float ai2 = 0;
-		public override void SetStaticDefaults()
-		{
-			
-			DisplayName.SetDefault("Lost Soul");
-		}
 		public override void SetDefaults()
 		{
             NPC.aiStyle = 44;

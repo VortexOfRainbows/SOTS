@@ -21,7 +21,6 @@ namespace SOTS.NPCs
 		bool drawTrail = false;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Holo Blade");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 8;
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData

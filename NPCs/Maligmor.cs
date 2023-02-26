@@ -14,12 +14,7 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class Maligmor : ModNPC
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Maligmor");
-		}
-		public override void SetDefaults()
+	{		public override void SetDefaults()
 		{
             NPC.lifeMax = 200;   
             NPC.damage = 40; 

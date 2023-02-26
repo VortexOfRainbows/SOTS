@@ -16,7 +16,7 @@ namespace SOTS.WorldgenHelpers
         public static bool ClearPrevious = false;
         public static string GetStatus()
         {
-            return "Generating starlight...";
+            return Language.GetTextValue("Mods.SOTS.WorldGeneration.GetStatus");
         }
         private static void ClearPreviousGen()
         {
@@ -103,7 +103,7 @@ namespace SOTS.WorldgenHelpers
                     randomMult += 1;
                 }
             }
-            string text = "Starlight solidifies in the upper atmosphere!";
+            string text = Language.GetTextValue("Mods.SOTS.WorldGeneration.Atmosphere");
             Generating = false;
             if (Main.netMode == NetmodeID.Server)
                 Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), VoidPlayer.ChaosPink);

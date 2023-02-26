@@ -24,7 +24,6 @@ namespace SOTS.NPCs
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Holo Slime");
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]

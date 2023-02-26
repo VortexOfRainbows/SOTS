@@ -15,6 +15,7 @@ using SOTS.Projectiles.Inferno;
 using SOTS.Items.Void;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs.DilationSickness;
+using Terraria.Localization;
 
 namespace SOTS.Void
 {
@@ -160,17 +161,17 @@ namespace SOTS.Void
 			}
 		}
 		public static string[] voidDeathMessages = {
-			" was extremely careless.",
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),
 			//" was devoured by the void.",
-			" was consumed by the void.",
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),
 			//" was taken by the void.",
-			" was devoured by the darkness.",
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),
 			//" was consumed by the darkness.",
 			//" was taken by the darkness.",
-			" doesn't understand void mechanics.",
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),
 			//" couldn't handle their own power.",
 			//" didn't manage their void well.",
-			" died."
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")
 		};
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{

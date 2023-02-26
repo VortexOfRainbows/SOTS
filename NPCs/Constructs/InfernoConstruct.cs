@@ -38,10 +38,6 @@ namespace SOTS.NPCs.Constructs
 			set => NPC.ai[3] = value;
 		}
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Inferno Construct");
-		}
 		public override void SetDefaults()
 		{
 			NPC.aiStyle = 0;

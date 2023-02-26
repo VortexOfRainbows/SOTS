@@ -63,7 +63,6 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Putrid Pinky");
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]

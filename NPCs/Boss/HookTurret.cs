@@ -62,7 +62,6 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Putrid Turret");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 4;  
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)

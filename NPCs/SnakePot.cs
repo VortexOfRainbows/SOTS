@@ -16,7 +16,6 @@ namespace SOTS.NPCs
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Snake Pot");
 			Main.npcFrameCount[NPC.type] = 1;
 		}
 		public override void SetDefaults()

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 using System;
+using Terraria.Localization;
 
 namespace SOTS.Void
 {
@@ -103,7 +104,7 @@ namespace SOTS.Void
 			{
 				if (player.dead)
 					voidManaText = "0 ";
-				string textStart = "Void: ";
+				string textStart = Language.GetTextValue("Mods.SOTS.Common.Void");
 				string textThing = "";
 				if (voidMax - voidPlayer.lootingSouls <= 0)
 				{

@@ -21,7 +21,6 @@ namespace SOTS.NPCs.Boss.Lux
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Illusion");
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true

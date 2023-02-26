@@ -30,7 +30,6 @@ namespace SOTS.NPCs
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Scouter");
 			Main.npcFrameCount[NPC.type] = 3;
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{

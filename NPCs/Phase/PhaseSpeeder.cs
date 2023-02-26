@@ -37,7 +37,6 @@ namespace SOTS.NPCs.Phase
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phase Speeder");
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]

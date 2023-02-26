@@ -42,10 +42,6 @@ namespace SOTS.NPCs
 			get => NPC.localAI[0];
 			set => NPC.localAI[0] = value;
 		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Wall Mimic");
-		}
 		public override void SetDefaults()
 		{
             NPC.aiStyle =0; 

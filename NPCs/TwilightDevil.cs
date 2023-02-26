@@ -49,7 +49,6 @@ namespace SOTS.NPCs
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Devil");
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]

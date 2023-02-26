@@ -28,7 +28,6 @@ namespace SOTS.NPCs.Boss.Lux
 		public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 1;
-			DisplayName.SetDefault("Lux");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 10;
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -577,7 +576,7 @@ namespace SOTS.NPCs.Boss.Lux
 					{
 						SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.3f, 0.1f);
 						if(Main.netMode != NetmodeID.Server)
-							Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
+							Main.NewText(Language.GetTextValue("Mods.SOTS.BossAwoken.Lux"), 175, 75, byte.MaxValue);
 					}
 					if (attackTimer1 > 60)
 					{

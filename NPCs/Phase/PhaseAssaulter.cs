@@ -20,7 +20,6 @@ namespace SOTS.NPCs.Phase
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Phase Assaulter");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[]
@@ -271,7 +270,6 @@ namespace SOTS.NPCs.Phase
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Phase Assaulter");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 Hide = true
@@ -409,7 +407,6 @@ namespace SOTS.NPCs.Phase
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Phase Assaulter");
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 Hide = true

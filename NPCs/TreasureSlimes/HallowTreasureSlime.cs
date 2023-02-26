@@ -17,7 +17,6 @@ namespace SOTS.NPCs.TreasureSlimes
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hallowed Treasure Slime");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
 			NPCID.Sets.TrailingMode[NPC.type] = 2;
 		}

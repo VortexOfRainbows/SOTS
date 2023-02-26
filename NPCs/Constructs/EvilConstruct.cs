@@ -25,10 +25,6 @@ namespace SOTS.NPCs.Constructs
         {
 			writer.Write(currentArmID);
         }
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Evil Construct");
-		}
 		public override void SetDefaults()
 		{
 			NPC.aiStyle =0;

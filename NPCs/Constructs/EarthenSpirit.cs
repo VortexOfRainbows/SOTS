@@ -16,7 +16,6 @@ namespace SOTS.NPCs.Constructs
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Earthen Spirit");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
 			NPCID.Sets.TrailingMode[NPC.type] = 0;   
 		}

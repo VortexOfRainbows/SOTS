@@ -13,10 +13,6 @@ namespace SOTS.NPCs
 {
 	public class NatureSlime : ModNPC
 	{	int initiateSize = 1;
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Flowering Slime");
-		}
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);

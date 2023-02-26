@@ -18,7 +18,6 @@ namespace SOTS.NPCs.TreasureSlimes
 		public static Color color = new Color(132, 141, 206, 100);
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dungeon Treasure Slime");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
 			NPCID.Sets.TrailingMode[NPC.type] = 2;
 		}

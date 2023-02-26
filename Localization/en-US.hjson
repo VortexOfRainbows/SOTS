@@ -5,7 +5,28 @@ Mods: {
 			Dresser: Dresser
 			Unbound: Unbound
 			ACZV: Automatically consumed when void drops below zero
+			Void: "Void: "
+			Damage: damage
+			Void2: " void "
+			VoidM: " void + melee "
+			VoidR: " void + ranged "
+			VoidM2: " void + magic "
+			VoidS: " void + summon "
+			CV: "Consumes {0} void"
 		}
+
+		KeyBindName: {
+			Blink: Blink
+			ArmorSet: Armor Set
+			MFM: Modify Flight Mode
+		}
+
+		BossAwoken: {
+			Advisor: The Advisor has awoken!
+			PharaohsCurse: Pharaoh's Curse has awoken!
+			Lux: Lux has awoken!
+		}
+
 
 		BiomeName: {
             PyramidBiome: Cursed Pyramid
@@ -335,7 +356,7 @@ Mods: {
 				VesperaMask: Vespera Mask
 				VesperaLeggings: Vespera Leggings
 				VesperaBreastplate: Vespera Breastplate
-				VesperaFishingRod: : Vespera Fishing Rod
+				VesperaFishingRod: Vespera Fishing Rod
 				VesperaLongbow: Vespera Longbow
 				VesperaNanDao: Vespera NanDao
 
@@ -2506,9 +2527,129 @@ Mods: {
 		}
 
 		WorldGeneration: {
+			GetStatus: Generating starlight...
+			Atmosphere: Starlight solidifies in the upper atmosphere!
 		}
 
 		NPCName: {
+			# Boss
+				# Advisor
+					TheAdvisorHead: The Advisor
+
+				# Curse
+					PharaohsCurse: Pharaoh's Curse
+					SmallGas: Pharaoh's Curse
+
+				# Lux
+					Lux: Lux
+					FakeLux: Chaos Illusion
+
+				# Polaris
+					BulletSnakeHead: Bullet Snake
+					BulletSnakeBody: Bullet Snake
+					BulletSnakeEnd: Bullet Snake
+					BulletSnakeWing: Bullet Snake
+
+					Polaris: Polaris
+					PolarisCannon: Polar Cannon
+					PolarisLaser: Polar Quad-Cannon
+					PolarisSpike: Polar Spike
+
+				HookTurret: Putrid Turret
+				PutridHook: Putrid Hook
+				PutridPinky1: Putrid Pinky
+				PutridPinkyPhase2: Putrid Pinky
+
+				SubspaceEye: Subspace Gaze
+				SubspaceSerpentHead: Subspace Serpent
+				SubspaceSerpentBody: Subspace Serpent
+				SubspaceSerpentTail: Subspace Serpent
+
+			# Constructs
+				ChaosConstruct: Chaos Construct
+				ChaosRubble: Chaos Construct Chassis
+				ChaosSpirit: Chaos Spirit
+
+				Collector: Collector
+				Collector2: Collector
+
+				EarthenConstruct: Earthen Construct
+				EarthenConstructTail: Earthen Construct
+				EarthenSpirit: Earthen Spirit
+
+				EvilConstruct: Evil Construct
+				EvilSpirit: Evil Spirit
+
+				InfernoConstruct: Inferno Construct
+				InfernoSpirit: Inferno Spirit
+
+				NatureConstruct: Nature Construct
+				NatureSpirit: Nature Spirit
+
+				OtherworldlyConstructHead: Otherworldly Construct
+				OtherworldlyConstructHead2: Otherworldly Construct
+				OtherworldlySpirit: Otherworldly Spirit
+
+				PermafrostConstruct: Permafrost Construct
+				PermafrostSpirit: Permafrost Spirit
+
+				TidalConstruct: Tidal Construct
+				TidalSpirit: Tidal Spirit
+
+			# Inferno
+				LesserWisp: Lesser Wisp
+
+			# Phase
+				PhaseAssaulterHead: Phase Assaulter
+				PhaseAssaulterBody: Phase Assaulter
+				PhaseAssaulterTail: Phase Assaulter
+
+				PhaseSpeeder: Phase Speeder
+
+			# TreasureSlimes
+				TreasureSlimes: Treasure Slime
+				BasicTreasureSlime: Treasure Slime
+				CorruptionTreasureSlime: Corruption Treasure Slime
+				CrimsonTreasureSlime: Crimson Treasure Slime
+				DungeonTreasureSlime: Dungeon Treasure Slime
+				GoldenTreasureSlime: Golden Treasure Slime
+				HallowTreasureSlime: Hallowed Treasure Slime
+				IceTreasureSlime: Frozen Treasure Slime
+				JungleTreasureSlime: Jungle Treasure Slime
+				PyramidTreasureSlime: Pyramid Treasure Slime
+				ShadowTreasureSlime: Shadow Treasure Slime
+
+			ArcticGoblin: Arctic Goblin
+			BloomingHook: Blooming Hook
+			BlueSlimer: Blue Slimer
+
+			FluxSlime: Flux Slime
+			FluxSlimeBall: Flux Slime Hook
+
+			Ghast: Ghast
+			FlamingGhast: Flaming Ghast
+			BleedingGhast: Bleeding Ghast
+
+			HoloBlade: Holo Blade
+			HoloEye: Holo Eye
+			HoloSlime: Holo Slime
+
+			knuckles: Knuckles
+			LostSoul: Lost Soul
+
+			Maligmor: Maligmor
+			MaligmorChild: Maligmor
+
+			NatureSlime: Flowering Slime
+			PhaseEye: Phase Eye
+			SittingMushroom: Sitting Mushroom
+			SnakePot: Snake Pot
+			Teratoma: Teratoma
+
+			TwilightDevil: Twilight Devil
+			TwilightScouter: Twilight Scouter
+
+			WallMimic: Wall Mimic
 		}
 
 		Bestiary: {
@@ -2545,6 +2686,11 @@ Mods: {
 		}
 
 		DeathMessage: {
+			VD1: " was extremely careless."
+			VD2: " was consumed by the void."
+			VD3: " was devoured by the darkness."
+			VD4: " doesn't understand void mechanics."
+			VD5: " died."
 		}
 
 		Census: {
