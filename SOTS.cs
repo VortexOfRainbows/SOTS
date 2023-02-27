@@ -94,9 +94,12 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.Blink"), "V");//TODO: Localize it when 1.4.4 comes
-			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.ArmorSet"), "F");
-			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.MFM"), "C");
+			string blinkKeyBind = LocalizationLoader.GetOrCreateTranslation("Mods.SOTS.KeyBindName.Blink").GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
+            string armorSetKeyBind = LocalizationLoader.GetOrCreateTranslation("Mods.SOTS.KeyBindName.ArmorSet").GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
+            string mfmKeyBind = LocalizationLoader.GetOrCreateTranslation("Mods.SOTS.KeyBindName.MFM").GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
+            BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue(blinkKeyBind), "V");//TODO: Localize it when 1.4.4 comes
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, armorSetKeyBind, "F");
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, mfmKeyBind, "C");
 			SOTSWorld.LoadUI();
 			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
