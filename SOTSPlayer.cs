@@ -50,6 +50,7 @@ using Terraria.Audio;
 using static SOTS.SOTS;
 using SOTS.Items.Invidia;
 using SOTS.Projectiles.Lightning;
+using SOTS.Projectiles.Camera;
 
 namespace SOTS
 {
@@ -1437,6 +1438,7 @@ namespace SOTS
         {
 			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
 			bool seenSubspace = false;
+			bool seenCamera = false;
 			for(int i = 0; i < 1000; i++)
             {
 				Projectile projectile = Main.projectile[i];
@@ -1447,7 +1449,7 @@ namespace SOTS
 					current -= 50;
 					if (current < 0)
 						current = 0;
-					float percent = (float)current / 205f;
+					float percent = current / 205f;
 					if((int)projectile.ai[1] == -1)
 					{
 						percent *= 0.5f;
@@ -1465,7 +1467,14 @@ namespace SOTS
                 }
 				if(!seenSubspace)
 				{
-					if (projectile.type == ModContent.ProjectileType<FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
+					if (projectile.type == ModContent.ProjectileType<DreamingFrame>() && projectile.active && projectile.owner == Main.myPlayer) //need to include a lerp back to normal so the transition isn't jarring (this will be done with a new death projectile)
+					{
+						float percent = projectile.alpha / 255f;
+						percent = Math.Clamp(percent, 0, 1);
+						seenCamera = true;
+						Main.screenPosition = Vector2.Lerp(Main.screenPosition, new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2), 0.25f * (1 - percent));
+					}
+					else if (!seenCamera && projectile.type == ModContent.ProjectileType<FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
 					{
 						Vector2 toSubEye = projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)

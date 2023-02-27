@@ -54,7 +54,7 @@ namespace SOTS.Items.ChestItems
 			Item.shootSpeed = 5f;
 			Item.knockBack = 5;
 			Item.channel = true;
-			Item.UseSound = SoundID.Item15; 
+			Item.UseSound = SoundID.Item8; 
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.scale = 0.8f;
@@ -63,7 +63,7 @@ namespace SOTS.Items.ChestItems
         {
 			Vector2 normal = velocity.SafeNormalize(Vector2.Zero);
 			Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI);
-			Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<DreamingFrame>(), damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<DreamingFrame>(), damage, knockback, player.whoAmI);
 			return false;
         }
 		public override int GetVoid(Player player)
