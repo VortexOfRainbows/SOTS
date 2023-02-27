@@ -43,7 +43,7 @@ namespace SOTS
 {
 	public class SOTS : Mod
 	{
-		private const string SOTSTexturePackName = Language.GetTextValue("Mods.SOTS.Common.SOTSTexturePackName");//TODO: 文本无法正常显示
+		private const string SOTSTexturePackName = "Secrets of the Shadows Texture Pack";
 		public static bool IsSOTSTexturePackEnabled()
 		{
 			if (Main.netMode == NetmodeID.Server)
