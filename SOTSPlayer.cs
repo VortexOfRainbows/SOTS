@@ -57,8 +57,6 @@ namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
-		private const string worldEnter = Language.GetTextValue("Mods.SOTS.Common.worldEnter");//TODO: 文本无法正常显示
-		private const string worldEnterThanks = Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks");//TODO: 文本无法正常显示
 		private int LogInMessageTimer = 7;
 		public override void SetControls()
 		{
@@ -72,12 +70,12 @@ namespace SOTS
 					if (SOTS.SOTSTexturePackEnabled)
 					{
 						LogInMessageTimer = -1;
-						Main.NewText(worldEnterThanks, new Color(255, 150, 255));
+						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
 					}
 					else
 					{
 						LogInMessageTimer = -1;
-						Main.NewText(worldEnter, new Color(20, 255, 40));
+						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
 					}
 				}
 			}
@@ -88,9 +86,9 @@ namespace SOTS
 			if (Main.netMode != NetmodeID.Server)
 			{
 				if (SOTS.SOTSTexturePackEnabled)
-					Main.NewText(worldEnterThanks, new Color(255, 150, 255));
+					Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
 				else
-					Main.NewText(worldEnter, new Color(20, 255, 40));
+					Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
 			}
 		}
         public static SOTSPlayer ModPlayer(Player player)

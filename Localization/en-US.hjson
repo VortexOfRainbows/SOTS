@@ -2363,7 +2363,7 @@ Mods: {
 					'''
 					Increases max void by 20 and void regeneration speed by 2%
 					Caps out at 5
-						'''
+					'''
 
 			ArcaneAqueduct: Surrounds you with 2 orbital projectiles
 			BackupBow: Attaches a bow to your back which fires arrows behind you for 50% damage
