@@ -51,6 +51,7 @@ using static SOTS.SOTS;
 using SOTS.Items.Invidia;
 using SOTS.Projectiles.Lightning;
 using SOTS.Projectiles.Camera;
+using Terraria.Localization;
 
 namespace SOTS
 {

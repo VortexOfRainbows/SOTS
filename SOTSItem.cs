@@ -35,6 +35,7 @@ using SOTS.Items.Chaos;
 using SOTS.Projectiles.Otherworld;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent;
+using Terraria.Localization;
 
 namespace SOTS
 {

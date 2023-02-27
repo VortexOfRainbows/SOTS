@@ -8,6 +8,7 @@ Mods: {
 			Dresser: Dresser
 			Unbound: Unbound
 			ACZV: Automatically consumed when void drops below zero
+			SOTSTexturePackName: Secrets of the Shadows Texture Pack
 			Void: "Void: "
 			Damage: damage
 			Void2: "{0} void {1}"
@@ -16,7 +17,6 @@ Mods: {
 			VoidM2: "{0} void + magic {1}"
 			VoidS: "{0} void + summon {1}"
 			CV: "Consumes {0} void"
-			SOTSTexturePackName: Secrets of the Shadows Texture Pack
 			GenSOTSOres: Generating SOTS Ores
 			GenSOTSGeodes: Generating Fancy Geodes
 		}
@@ -33,7 +33,7 @@ Mods: {
 			SEverywhere: Sand is irritating and gets everywhere!
 		}
 
-		Config: {
+		Configuration: {
 			Header: {
 				UI: UI
 				GS: Graphics Settings

@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace SOTS
 {
-	[Label("$Mods.SOTS.Configs.Label.Config")]
+	[Label("$Mods.SOTS.Configuration.Label.Config")]
 	[BackgroundColor(45, 50, 65, 192)]
 	public class SOTSConfig : ModConfig
 	{
@@ -19,80 +19,80 @@ namespace SOTS
         }
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-		[Label("$Mods.SOTS.Configs.Header.UI")]
-		[Label("$Mods.SOTS.Configs.Label.VBX")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBX")]
+		[Header("$Mods.SOTS.Configuration.Header.UI")]
+		[Label("$Mods.SOTS.Configuration.Label.VBX")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.VBX")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[Increment(5)]
 		[Range(0, 3200)]
 		[DefaultValue(810)]
 		public int voidBarPointX;
 
-		[Label("$Mods.SOTS.Configs.Label.VBY")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBY")]
+		[Label("$Mods.SOTS.Configuration.Label.VBY")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.VBY")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[Increment(5)]
 		[Range(0, 1600)]
 		[DefaultValue(30)]
 		public int voidBarPointY;
 
-		[Label("$Mods.SOTS.Configs.Label.LVB")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.LVB")]
+		[Label("$Mods.SOTS.Configuration.Label.LVB")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.LVB")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool lockVoidBar { get; set; }
 
-		[Label("$Mods.SOTS.Configs.Label.AVBD")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.AVBD")]
+		[Label("$Mods.SOTS.Configuration.Label.AVBD")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.AVBD")]
 		[BackgroundColor(194, 111, 234, 192)]
 		[DefaultValue(false)]
 		public bool alternateVoidBarDirection { get; set; }
 
-		[Label("$Mods.SOTS.Configs.Label.AVBS")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.AVBS")]
+		[Label("$Mods.SOTS.Configuration.Label.AVBS")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.AVBS")]
 		[BackgroundColor(194, 111, 234, 192)]
 		[DefaultValue(false)]
 		public bool alternateVoidBarStyle { get; set; }
 
-		[Label("$Mods.SOTS.Configs.Label.VBTT")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBTT")]
+		[Label("$Mods.SOTS.Configuration.Label.VBTT")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.VBTT")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool voidBarTextOn { get; set; }
 
-		[Label("$Mods.SOTS.Configs.Label.VBHT")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBHT")]
+		[Label("$Mods.SOTS.Configuration.Label.VBHT")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.VBHT")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool voidBarHoverTextOn { get; set; }
 
-		[Label("$Mods.SOTS.Configs.Label.SVBT")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.SVBT")]
+		[Label("$Mods.SOTS.Configuration.Label.SVBT")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.SVBT")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool simpleVoidText { get; set; }
 
-		[Label("$Mods.SOTS.Configs.Label.SVBF")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.SVBF")]
+		[Label("$Mods.SOTS.Configuration.Label.SVBF")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.SVBF")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool simpleVoidFill { get; set; }
 
-		[Header("$Mods.SOTS.Configs.Header.GS")]
-		[Label("$Mods.SOTS.Configs.Label.PM")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.PM")]
+		[Header("$Mods.SOTS.Configuration.Header.GS")]
+		[Label("$Mods.SOTS.Configuration.Label.PM")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.PM")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool lowFidelityMode { get; set; }
-		[Label("$Mods.SOTS.Configs.Label.CTF")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.CTF")]
+		[Label("$Mods.SOTS.Configuration.Label.CTF")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.CTF")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool coloredTimeFreeze { get; set; }
 
-		[Header("$Mods.SOTS.Configs.Header.TPS")]
-		[Label("$Mods.SOTS.Configs.Label.AVE")]
-		[Tooltip("$Mods.SOTS.Configs.Tooltip.AVE")]
+		[Header("$Mods.SOTS.Configuration.Header.TPS")]
+		[Label("$Mods.SOTS.Configuration.Label.AVE")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.AVE")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool additionalTexturePackVisuals { get; set; }
