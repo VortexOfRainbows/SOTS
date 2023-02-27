@@ -379,7 +379,7 @@ namespace SOTS
 			}
 			if (dedicated)
 			{
-				TooltipLine line = new TooltipLine(Mod, "Dedicated", Language.GetTextValue("Mods.SOTS.Common.Dedicated"));
+				TooltipLine line = new TooltipLine(Mod, "Dedicated", Language.GetTextValue("Mods.SOTS.Common.Dedicated"));//TODO: 文本无法正常显示
 				line.OverrideColor = dedicatedColor;
 				tooltips.Add(line);
 			}

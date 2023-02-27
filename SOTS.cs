@@ -43,7 +43,7 @@ namespace SOTS
 {
 	public class SOTS : Mod
 	{
-		private const string SOTSTexturePackName = Language.GetTextValue("Mods.SOTS.Common.SOTSTexturePackName");
+		private const string SOTSTexturePackName = Language.GetTextValue("Mods.SOTS.Common.SOTSTexturePackName");//TODO: 文本无法正常显示
 		public static bool IsSOTSTexturePackEnabled()
 		{
 			if (Main.netMode == NetmodeID.Server)
@@ -94,9 +94,9 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.Blink"), "V");
-			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.ArmorSet"), "F");
-			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.MFM"), "C");
+			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.Blink"), "V");//TODO: 文本无法正常显示
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.ArmorSet"), "F");//TODO: 文本无法正常显示
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.MFM"), "C");//TODO: 文本无法正常显示
 			SOTSWorld.LoadUI();
 			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)

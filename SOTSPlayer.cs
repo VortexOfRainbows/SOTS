@@ -57,8 +57,8 @@ namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
-		private const string worldEnter = Language.GetTextValue("Mods.SOTS.Common.worldEnter");
-		private const string worldEnterThanks = Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks");
+		private const string worldEnter = Language.GetTextValue("Mods.SOTS.Common.worldEnter");//TODO: 文本无法正常显示
+		private const string worldEnterThanks = Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks");//TODO: 文本无法正常显示
 		private int LogInMessageTimer = 7;
 		public override void SetControls()
 		{

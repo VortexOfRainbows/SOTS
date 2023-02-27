@@ -1,6 +1,6 @@
 Mods: {
 	SOTS: {
-		Common: {
+		Common: {//TODO: 文本无法正常显示
 			worldEnter: (SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.
 			worldEnterThanks: (SOTS): Thank you for using the SOTS texture pack! Please enjoy all the hard effort that went into it!
 			Dedicated: Dedicated Item
@@ -2898,12 +2898,6 @@ Mods: {
 		    NatureConstruct: An ancient machine originally created to advance spirit energy harvesting technology. Now, it serves as a protector of forests under the spirit's control
 		    SittingMushroom: Sitting mushrooms are spitting mushrooms.
 		    TreasureSlime: The nobility of slimes! Unlike the others, these slimes value their lives, and any attempts to steal their treasure will cause them to flee without a second thought.
-		}
-
-		GameTips: {
-		}
-
-		TownNPCMood: {
 		}
 
 		DeathMessage: {
