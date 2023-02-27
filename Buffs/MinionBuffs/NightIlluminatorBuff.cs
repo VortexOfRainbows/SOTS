@@ -14,9 +14,6 @@ namespace SOTS.Buffs.MinionBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lumina Moth");
-			Description.SetDefault("Luminous moths to swarm your enemies");
-
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

@@ -8,8 +8,6 @@ namespace SOTS.Buffs.MinionBuffs
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Infernal Defense");
-			Description.SetDefault("'Wisp Summoner'");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

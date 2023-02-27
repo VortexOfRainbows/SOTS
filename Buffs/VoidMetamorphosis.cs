@@ -10,8 +10,6 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Metamorphosis");
-			Description.SetDefault("Increases void drain by 6\nLosing void to void drain will recover life");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

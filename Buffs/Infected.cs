@@ -8,8 +8,6 @@ namespace SOTS.Buffs
     {	
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infected");
-			Description.SetDefault("");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

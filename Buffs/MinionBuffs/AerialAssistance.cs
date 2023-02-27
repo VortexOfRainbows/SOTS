@@ -8,8 +8,6 @@ namespace SOTS.Buffs.MinionBuffs
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Aerial Assistance");
-			Description.SetDefault("Penguins assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
