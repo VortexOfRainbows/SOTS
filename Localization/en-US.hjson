@@ -1,18 +1,109 @@
 Mods: {
 	SOTS: {
 		Common: {
+			worldEnter: (SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.
+			worldEnterThanks: (SOTS): Thank you for using the SOTS texture pack! Please enjoy all the hard effort that went into it!
+			Dedicated: Dedicated Item
 			BlastDoor: Blast Door
 			Dresser: Dresser
 			Unbound: Unbound
 			ACZV: Automatically consumed when void drops below zero
 			Void: "Void: "
 			Damage: damage
-			Void2: " void "
-			VoidM: " void + melee "
-			VoidR: " void + ranged "
-			VoidM2: " void + magic "
-			VoidS: " void + summon "
+			Void2: "{0} void {1}"
+			VoidM: "{0} void + melee {1}"
+			VoidR: "{0} void + ranged {1}"
+			VoidM2: "{0} void + magic {1}"
+			VoidS: "{0} void + summon {1}"
 			CV: "Consumes {0} void"
+			SOTSTexturePackName: Secrets of the Shadows Texture Pack
+			GenSOTSOres: Generating SOTS Ores
+			GenSOTSGeodes: Generating Fancy Geodes
+		}
+
+		ModifyWorldGenTasks: {
+			GeneratingSurfaceStructures: Generating Surface Structures
+			GeneratingAbandonedVillage: Generating Abandoned Village
+			GeneratingSkyArtifacts: Generating Sky Artifacts
+			GeneratingAPyramid: Generating A Pyramid
+			GeneratingGemStructures: Generating Gem Structures
+		}
+
+		AdjacentDesertGeneration: {
+			SEverywhere: Sand is irritating and gets everywhere!
+		}
+
+		Config: {
+			Header: {
+				UI: UI
+				GS: Graphics Settings
+				TPS: Texture Pack Settings
+			}
+			Label: {
+				Config: Config
+
+				VBX: Void Bar X
+				VBY: Void Bar Y
+				LVB: Lock Void Bar
+				AVBD: Alternative Void Bar Direction
+				AVBS: Alternative Void Bar Style
+				VBTT: Void Bar Top Text
+				VBHT: Void Bar Hover Text
+				SVBT: Simple Void Bar Text
+				SVBF: Simple Void Bar Fill
+				PM: Performance Mode
+				CTF: Colored Time Freeze
+				AVE: Additional Visual Effects
+			}
+			Tooltip: {
+				VBX: 
+					'''
+					The Void Bar's horizontal position on the screen
+					Measured in pixels from left
+					'''
+				VBY: 
+					'''
+					The Void Bar's vertical position on the screen
+					Measured in pixels from top
+					'''
+				LVB: 
+					'''
+					Prevents the Void Bar from being moved by your cursor
+					Also prevents the Void Bar from automatically switching positions when using the 'Bars' Health and Mana Style interface setting
+					'''
+				AVBD: Changes the Void Bar's roll down direction
+				AVBS: Modifies the Void Bar's visuals slightly
+				VBTT: Enable/disable the text above the Void Bar
+				VBHT: Enable/disable the text that appears when you hover over the Void Bar
+				SVBT: Removes Void Minion quantity indicators from the Void Bar text
+				SVBF: Removes the division lines between inner fill Void Bar elements
+				PM: 
+					'''
+					Reduces various visual effects in order to increase framerate
+					Mostly affects boss-related visuals and projectile trails
+					'''
+				CTF: Whether the color of the screen during time freeze is tinted or black and white
+				AVE: 
+					'''
+					Adds bonus visuals, such as dusts, to a handful of tiles
+					Only works with the SOTS Texture Pack enabled
+					'''
+			}
+		}
+
+		AddRecipeGroups: {
+			SB: " Silver Bar"
+			EM: " Evil Material"
+			EB: " Evil Bar"
+			GB: " Gold Bar"
+			GR: " Gem Robe"
+			PHO: " Pre-Hardmode Ore"
+			T2D2A: " Tier 2 DD2 Armor"
+			T2Dd2A: " Tier 2 DD2 Accessory"
+			DE: " Dissolving Element"
+			EF: " Elemental Fragment"
+			EP: " Elemental Plating"
+			AS: " Alchemical Seeds"
 		}
 
 		KeyBindName: {
@@ -59,10 +150,10 @@ Mods: {
 		    OnFire: Drops if on fire
 		}
 
-		PrefixName: {
-		}
-
-		Prefixes: {
+		Prefix: {
+			MaxVoid: " max void"
+			RegVoid: " void gain"
+			CosVoid: "% void cost"
 		}
 
 		ItemName: {
@@ -2385,9 +2476,139 @@ Mods: {
 		}
 
 		BuffName: {
+		AbyssalInferno : Abyssal Inferno
+		AerialAssistance : Aerial Assistance
+		Assassination : Assassination
+		AuraBoost : Aura Boost
+		Bluefire : Bluefire
+		Brittle : Brittle
+		ChaosSpiritAid : Spirit Aid
+		CreativeShock2 : Creative Shock
+		CursedBlade : Cursed Blade
+		CurseVision : Curse Vision
+		CyberneticEnhancements : Cybernetic Enhancements
+		DEFEBuff : Electromagnetic Interference
+		DiamondSkin : Diamond Skin
+		DilationSickness : Dilation Sickness
+		DoubleVision : Double Vision
+		EarthenSpiritAid : Spirit Aid
+		Ethereal : Ethereal
+		EvilSpiritAid : Spirit Aid
+		Fat : Fat
+		FluidCurse : Fluid Curse
+		Frenzy : Frenzy
+		GoodVibes : Good Vibes
+		Harmony : Harmony
+		IceShield : Ice Shield
+		Infected : Infected
+		InfernalDefense : Infernal Defense
+		InfernoSpiritAid : Spirit Aid
+		IntimidatingPresence : Intimidating Presence
+		NatureSpiritAid : Spirit Aid
+		Nightmare : Nightmare
+		OtherworldlySpiritAid : Spirit Aid
+		Overheat : Overheat
+		PermafrostSpiritAid : Spirit Aid
+		PharaohsCurse : Pharaoh's Curse
+		PurpleBalloon : Purple Balloon
+		RippleBuff : Ripple
+		Roughskin : Roughskin
+		RubyMonolithAttack : Ruby Monolith Attack
+		RubyMonolithDefense : Ruby Monolith Defense
+		Satiated : Satiated
+		Shattered : Shattered
+		SoulAccess : Soul Access
+		SpawnBossCurse : Debug
+		SpawnBossIce : Debug
+		SpiritSurfer : Spirit Surfer
+		SquirrelBuff : Squirrel
+		StarlightSerpent : Crystal Serpent
+		SulfurBurn : Sulfur Burn
+		SurpriseAttack : Surprise Attack
+		TerminatorSquirrelBuff : Mechanical Squirrel
+		TidalSpiritAid : Spirit Aid
+		Virtuous : Virtuous
+		VoidBurn : Void Burn
+		VoidMetamorphosis : Void Metamorphosis
+		VoidRecovery : Void Recovery
+		VoidShock : Void Shock
+		VoidSickness : Void Sickness
+		WebbedNPC : Webbed
 		}
 
 		BuffDescription: {
+		AbyssalInferno : "'No more skin!'"
+		AerialAssistance : Penguins assist you in combat
+		Assassination : Execute enemies below 10% health
+		AuraBoost : Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
+		Bluefire : Killed enemies explode into flames
+		Brittle : Getting hit surrounds you with ice shards
+		ChaosSpiritAid : Chaos Spirits assist you in combat
+		CreativeShock2 : You have lost the power of creation!
+		CursedBlade : Cursed Blades assist you in combat
+		CurseVision : Afflicted?
+		CyberneticEnhancements : Increased void damage by 10%
+		DEFEBuff : "'No more constructs!'"
+		DiamondSkin : 15 increased defense, 15% reduced damage taken, and 15% increased movement speed
+		DilationSickness : Decreases void regeneration speed by 90%
+		DoubleVision : Extra fishing lines
+		EarthenSpiritAid : Earthen Spirits assist you in combat
+		Ethereal : Ethereal Flames assist you in combat
+		EvilSpiritAid : Evil Spirits assist you in combat
+		Fat : Speed decreased, endurance increased
+		Frenzy : Melee Speed increased by 100%
+		GoodVibes : Increased stats while not moving
+		Harmony : Buff companionship
+		IceShield : A holy levitating ice shield surrounds you
+		InfernalDefense : "'Wisp Summoner'"
+		InfernoSpiritAid : Inferno Spirits assist you in combat
+		IntimidatingPresence : Drastically lowered enemy spawns
+		NatureSpiritAid : Nature Spirits assist you in combat
+		Nightmare : Compress enemies together with critical strikes
+		OtherworldlySpiritAid : Otherworldly Spirits assist you in combat
+		Overheat : Movement speed and melee speed increased by 10%
+		PermafrostSpiritAid : Permafrost Spirits assist you in combat
+		PharaohsCurse : Something is watching you, spawn rates increased
+		PurpleBalloon : Fishing friend
+		RippleBuff : Release waves of damage periodically
+		Roughskin : 4 increased defense and 4% increased damage
+		RubyMonolithAttack : 
+		  '''
+		  Increases void drain by 6
+		  Increases void damage by 10%
+		  '''
+		RubyMonolithDefense : 
+		  '''
+		  Increases void regeneration speed by 10%
+		  Reduces damage taken by 5%
+		  '''
+		Satiated : No more eating!
+		Shattered : Next hit will hurt a lot!
+		SoulAccess : Increases void regeneration speed by 10%
+		SpawnBossCurse : This is a work around since I don't know how to program multiplayer
+		SpawnBossIce : This is a work around since I don't know how to program multiplayer
+		SpiritSurfer : Surf across the interdimensional plane!
+		SquirrelBuff : Squirrels assist you in combat
+		StarlightSerpent : A Crystal Serpent assists with combat
+		SulfurBurn : Soul power draining
+		SurpriseAttack : 
+		  '''
+		  Melee damage increased by 50%
+		  '*Teleports behind you*'
+		  '''
+		TerminatorSquirrelBuff : Squirrels assist you in combat
+		TidalSpiritAid : Tidal Spirits assist you in combat
+		Virtuous : "'Spiritual Companionship'"
+		VoidBurn : Increases void drain by 2
+		VoidMetamorphosis : 
+		  '''
+		  Increases void drain by 6
+		  Losing void to void drain will recover life
+		  '''
+		VoidRecovery : Soul returning
+		VoidShock : Quickly losing life, increases damage taken by 200%
+		VoidSickness : Decreases void damage by 10%
+		WebbedNPC : Slowed, but only for enemies
 		}
 
 		ProjectileName: {
@@ -2693,10 +2914,31 @@ Mods: {
 			VD5: " died."
 		}
 
-		Census: {
-		}
-
 		BossChecklist: {
+			BossName: {
+				PutridPinky: Putrid Pinky
+				PharaohsCurse: Pharaoh's Curse
+				TheAdvisor: The Advisor
+				Polaris: Polaris
+				Lux: Lux
+				SubspaceSerpent: Subspace Serpent
+			}
+			BossDescription: {
+				PutridPinky: "Summon in any biome at any time using a {0}"
+				PharaohsCurse: "Activate the {0} in the pyramid"
+				TheAdvisor: Destroy the 4 tethered Otherworldly Constructs of the Planetarium
+				Polaris: "Activate the {0} of the snow biome using {1}"
+				Lux: Anger a Chaos Spirit
+				SubspaceSerpent: "Tear a dimensional rift in hell by detonating a {0}"
+			}
+			BossDisappear: {
+				PutridPinky: Putrid Pinky has robbed everyone of their peanuts!
+				PharaohsCurse: ""
+				TheAdvisor: ""
+				Polaris: ""
+				Lux: ""
+				SubspaceSerpent: ""
+			}
 		}
 
 		VisionAmuletTextList: {
@@ -2851,7 +3093,7 @@ Mods: {
 			Ruby: "Ruby: {0}"
 			Sapphire: "Sapphire: {0}"
 			Emerald: "Emerald: {0}"
-						Topaz: "Topaz: {0}"
+			Topaz: "Topaz: {0}"
 			Amethyst: "Amethyst: {0}"
 			Diamond: "Diamond: {0}"
 			Amber: "Amber: {0}"

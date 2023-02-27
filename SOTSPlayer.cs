@@ -56,8 +56,8 @@ namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
-		private const string worldEnter = "(SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.";
-		private const string worldEnterThanks = "(SOTS): Thank you for using the SOTS texture pack! Please enjoy all the hard effort that went into it!";
+		private const string worldEnter = Language.GetTextValue("Mods.SOTS.Common.worldEnter");
+		private const string worldEnterThanks = Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks");
 		private int LogInMessageTimer = 7;
 		public override void SetControls()
 		{

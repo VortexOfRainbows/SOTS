@@ -43,7 +43,7 @@ namespace SOTS
 {
 	public class SOTS : Mod
 	{
-		private const string SOTSTexturePackName = "Secrets of the Shadows Texture Pack";
+		private const string SOTSTexturePackName = Language.GetTextValue("Mods.SOTS.Common.SOTSTexturePackName");
 		public static bool IsSOTSTexturePackEnabled()
 		{
 			if (Main.netMode == NetmodeID.Server)
@@ -446,35 +446,35 @@ namespace SOTS
 		}
 		public override void AddRecipeGroups()/* tModPorter Note: Removed. Use ModSystem.AddRecipeGroups */
 		{
-			RecipeGroup group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Silver Bar", new int[]
+			RecipeGroup group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.SB"), new int[]
 			{
 				ItemID.SilverBar,
 				ItemID.TungstenBar
 			});
 			RecipeGroup.RegisterGroup("SOTS:SilverBar", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Material", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EM"), new int[]
 			{
 				ItemID.TissueSample,
 				ItemID.ShadowScale
 			});
 			RecipeGroup.RegisterGroup("SOTS:EvilMaterial", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Bar", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EB"), new int[]
 			{
 				ItemID.CrimtaneBar,
 				ItemID.DemoniteBar
 			});
 			RecipeGroup.RegisterGroup("SOTS:EvilBar", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gold Bar", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.GB"), new int[]
 			{
 				ItemID.GoldBar,
 				ItemID.PlatinumBar
 			});
 			RecipeGroup.RegisterGroup("SOTS:GoldBar", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gem Robe", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.GR"), new int[]
 			{
 				ItemID.RubyRobe,
 				ItemID.AmethystRobe,
@@ -485,7 +485,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:GemRobes", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Pre-Hardmode Ore", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.PHO"), new int[]
 			{
 				ItemID.TungstenOre,
 				ItemID.CopperOre,
@@ -498,7 +498,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:PHMOre", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Armor", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.T2D2A"), new int[]
 			{
 				ItemID.SquirePlating,
 				ItemID.SquireGreatHelm,
@@ -515,7 +515,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:T2DD2Armor", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Accessory", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.T2DD2A"), new int[]
 			{
 				ItemID.SquireShield,
 				ItemID.HuntressBuckler,
@@ -524,7 +524,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:T2DD2Accessory", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Dissolving Element", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.DE"), new int[]
 			{
 				ModContent.ItemType<DissolvingAether>(),
 				ModContent.ItemType<DissolvingNature>(),
@@ -537,7 +537,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:DissolvingElement", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Elemental Fragment", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EF"), new int[]
 			{
 				ModContent.ItemType<FragmentOfOtherworld>(),
 				ModContent.ItemType<FragmentOfNature>(),
@@ -550,7 +550,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:ElementalFragment", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Elemental Plating", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EP"), new int[]
 			{
 				ModContent.ItemType<OtherworldPlating>(),
 				ModContent.ItemType<UltimatePlating>(),
@@ -565,7 +565,7 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:ElementalPlating", group);
 
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Alchemical Seeds", new int[]
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.AS"), new int[]
 			{
 				ItemID.DaybloomSeeds,
 				ItemID.MoonglowSeeds,
@@ -595,15 +595,15 @@ namespace SOTS
 				bossChecklist.Call( 
 					"AddBoss",
 					this,
-					"Putrid Pinky",
+					$"$Mods.SOTS.BossChecklist.BossName.PutridPinky",
 					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() },
 					4.25f,
 					(Func<bool>)(() => SOTSWorld.downedPinky),
 					() => true,
 					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
 					ModContent.ItemType<JarOfPeanuts>(),
-					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
-					"Putrid Pinky has robbed everyone of their peanuts!",
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.PutridPinky", "[i:" + ModContent.ItemType<JarOfPeanuts> () + "]"),
+					$"$Mods.SOTS.BossChecklist.BossDisappear.PutridPinky",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinky1_Display").Value;
 						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
@@ -613,15 +613,15 @@ namespace SOTS
 				bossChecklist.Call(
 					"AddBoss",
 					this,
-					"Pharaoh's Curse",
+					$"$Mods.SOTS.BossChecklist.BossName.PharaohsCurse",
 					new List<int>() { ModContent.NPCType<PharaohsCurse>() },
 					4.5f,
 					(Func<bool>)(() => SOTSWorld.downedCurse),
 					() => true,
 					new List<int>() { },
 					ModContent.ItemType<Sarcophagus>(),
-					"Activate the [i:" + ModContent.ItemType<Sarcophagus>() + "] in the pyramid",
-					"",
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.PharaohsCurse", "[i:" + ModContent.ItemType<Sarcophagus> () + "]"),
+					$"$Mods.SOTS.BossChecklist.BossDisappear.PharaohsCurse",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PharaohPortrait").Value;
 						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
@@ -631,15 +631,15 @@ namespace SOTS
 				bossChecklist.Call(
 					"AddBoss",
 					this,
-					"The Advisor",
+					$"$Mods.SOTS.BossChecklist.BossName.TheAdvisor",
 					new List<int>() { ModContent.NPCType<TheAdvisorHead>() },
 					5.9f,
 					(Func<bool>)(() => SOTSWorld.downedAdvisor),
 					() => true,
 					new List<int>() { ModContent.ItemType<AdvisorMusicBox>() },
 					ModContent.ItemType<AvaritianGateway>(),
-					"Destroy the 4 tethered Otherworldly Constructs of the Planetarium",
-					"",
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.TheAdvisor"),
+					$"$Mods.SOTS.BossChecklist.BossDisappear.TheAdvisor",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/AdvisorPortrait").Value;
 						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
@@ -649,15 +649,15 @@ namespace SOTS
 				bossChecklist.Call(
 					"AddBoss",
 					this,
-					"Polaris",
+					$"$Mods.SOTS.BossChecklist.BossName.Polaris",
 					new List<int>() { ModContent.NPCType<Polaris>() },
 					9.05f,
 					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
 					() => true,
 					new List<int>() { ModContent.ItemType<PolarisMusicBox>() },
 					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
-					"Activate the [i:" + ModContent.ItemType<FrostArtifact>() + "] of the snow biome using [i:" + ModContent.ItemType<FrostedKey>() + "]",
-					"",
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.PharaohsCurse", "[i:" + ModContent.ItemType<FrostArtifact> () + "]", "[i:" + ModContent.ItemType<FrostedKey> () + "]"),
+					$"$Mods.SOTS.BossChecklist.BossDisappear.Polaris",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PolarisPortrait").Value;
 						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
@@ -667,15 +667,15 @@ namespace SOTS
 				bossChecklist.Call(
 					"AddBoss",
 					this,
-					"Lux",
+					$"$Mods.SOTS.BossChecklist.BossName.Lux",
 					new List<int>() { ModContent.NPCType<Lux>() },
 					12.5f,
 					(Func<bool>)(() => SOTSWorld.downedLux),
 					() => true,
 					new List<int>() { },
 					new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
-					"Anger a Chaos Spirit",
-					"",
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Lux"),
+					$"$Mods.SOTS.BossChecklist.BossDisappear.Lux",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/LuxBossLog").Value;
 						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
@@ -685,15 +685,15 @@ namespace SOTS
 				bossChecklist.Call(
 					"AddBoss",
 					this,
-					"Subspace Serpent",
+					$"$Mods.SOTS.BossChecklist.BossName.SubspaceSerpent",
 					new List<int>() { ModContent.NPCType<SubspaceSerpentHead>(), ModContent.NPCType<SubspaceSerpentBody>(), ModContent.NPCType<SubspaceSerpentTail>() },
 					12.9f,
 					(Func<bool>)(() => SOTSWorld.downedSubspace),
 					() => true,
 					new List<int>() { ModContent.ItemType<SubspaceSerpentMusicBox>() },
 					new List<int>() { ModContent.ItemType<CatalystBomb>() },
-					"Tear a dimensional rift in hell by detonating a [i:" + ModContent.ItemType<CatalystBomb>() + "]",
-					"",
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.SubspaceSerpent", "[i:" + ModContent.ItemType<CatalystBomb>() + "]"),
+					$"$Mods.SOTS.BossChecklist.BossDisappear.SubspaceSerpent",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/SubspaceSerpentPortrait").Value;
 						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));

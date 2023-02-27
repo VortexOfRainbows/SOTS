@@ -3,10 +3,11 @@ using SOTS.Void;
 using System.ComponentModel;
 using Terraria;
 using Terraria.ModLoader.Config;
+using Terraria.Localization;
 
 namespace SOTS
 {
-	[Label("Config")]
+	[Label("$Mods.SOTS.Configs.Label.Config")]
 	[BackgroundColor(45, 50, 65, 192)]
 	public class SOTSConfig : ModConfig
 	{
@@ -18,80 +19,80 @@ namespace SOTS
         }
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-		[Header("UI")]
-		[Label("Void Bar X")]
-		[Tooltip("The Void Bar's horizontal position on the screen\nMeasured in pixels from left")]
+		[Label("$Mods.SOTS.Configs.Header.UI")]
+		[Label("$Mods.SOTS.Configs.Label.VBX")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBX")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[Increment(5)]
 		[Range(0, 3200)]
 		[DefaultValue(810)]
 		public int voidBarPointX;
 
-		[Label("Void Bar Y")]
-		[Tooltip("The Void Bar's vertical position on the screen\nMeasured in pixels from top")]
+		[Label("$Mods.SOTS.Configs.Label.VBY")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBY")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[Increment(5)]
 		[Range(0, 1600)]
 		[DefaultValue(30)]
 		public int voidBarPointY;
 
-		[Label("Lock Void Bar")]
-		[Tooltip("Prevents the Void Bar from being moved by your cursor\nAlso prevents the Void Bar from automatically switching positions when using the 'Bars' Health and Mana Style interface setting")]
+		[Label("$Mods.SOTS.Configs.Label.LVB")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.LVB")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool lockVoidBar { get; set; }
 
-		[Label("Alternative Void Bar Direction")]
-		[Tooltip("Changes the Void Bar's roll down direction")]
+		[Label("$Mods.SOTS.Configs.Label.AVBD")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.AVBD")]
 		[BackgroundColor(194, 111, 234, 192)]
 		[DefaultValue(false)]
 		public bool alternateVoidBarDirection { get; set; }
 
-		[Label("Alternative Void Bar Style")]
-		[Tooltip("Modifies the Void Bar's visuals slightly")]
+		[Label("$Mods.SOTS.Configs.Label.AVBS")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.AVBS")]
 		[BackgroundColor(194, 111, 234, 192)]
 		[DefaultValue(false)]
 		public bool alternateVoidBarStyle { get; set; }
 
-		[Label("Void Bar Top Text")]
-		[Tooltip("Enable/disable the text above the Void Bar")]
+		[Label("$Mods.SOTS.Configs.Label.VBTT")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBTT")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool voidBarTextOn { get; set; }
 
-		[Label("Void Bar Hover Text")]
-		[Tooltip("Enable/disable the text that appears when you hover over the Void Bar")]
+		[Label("$Mods.SOTS.Configs.Label.VBHT")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.VBHT")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool voidBarHoverTextOn { get; set; }
 
-		[Label("Simple Void Bar Text")]
-		[Tooltip("Removes Void Minion quantity indicators from the Void Bar text")]
+		[Label("$Mods.SOTS.Configs.Label.SVBT")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.SVBT")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool simpleVoidText { get; set; }
 
-		[Label("Simple Void Bar Fill")]
-		[Tooltip("Removes the division lines between inner fill Void Bar elements")]
+		[Label("$Mods.SOTS.Configs.Label.SVBF")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.SVBF")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool simpleVoidFill { get; set; }
 
-		[Header("Graphics Settings")]
-		[Label("Performance Mode")]
-		[Tooltip("Reduces various visual effects in order to increase framerate\nMostly affects boss-related visuals and projectile trails")]
+		[Header("$Mods.SOTS.Configs.Header.GS")]
+		[Label("$Mods.SOTS.Configs.Label.PM")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.PM")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool lowFidelityMode { get; set; }
-		[Label("Colored Time Freeze")]
-		[Tooltip("Whether the color of the screen during time freeze is tinted or black and white")]
+		[Label("$Mods.SOTS.Configs.Label.CTF")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.CTF")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool coloredTimeFreeze { get; set; }
 
-		[Header("Texture Pack Settings")]
-		[Label("Additional Visual Effects")]
-		[Tooltip("Adds bonus visuals, such as dusts, to a handful of tiles\nOnly works with the SOTS Texture Pack enabled")]
+		[Header("$Mods.SOTS.Configs.Header.TPS")]
+		[Label("$Mods.SOTS.Configs.Label.AVE")]
+		[Tooltip("$Mods.SOTS.Configs.Tooltip.AVE")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool additionalTexturePackVisuals { get; set; }
