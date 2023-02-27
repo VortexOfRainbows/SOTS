@@ -16,7 +16,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dreaming Lamp");
-			Tooltip.SetDefault("Chain together up to 10 enemies, slowing them\nWhen a chained enemy is killed, all chained enemies will take additional damage\nChain together items to pull them towards you\n'What do you wish for?'");
+			Tooltip.SetDefault("Chain together up to 10 enemies, slowing them down for 20 seconds\nWhen a chained enemy is killed, all chained enemies will take additional damage\nChain together items to grab them\n'What do you wish for?'");
 			ItemID.Sets.ItemNoGravity[Type] = true;
 			this.SetResearchCost(1);
 		}
@@ -42,14 +42,14 @@ namespace SOTS.Items.ChestItems
         }
         public override void SafeSetDefaults()
 		{
-			Item.damage = 20;
+			Item.damage = 24;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 42;
 			Item.height = 50;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightRed;
-			Item.useTime = 40;
-			Item.useAnimation = 40;
+			Item.useTime = 48;
+			Item.useAnimation = 48;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = false;            
 			Item.shoot = ModContent.ProjectileType<Projectiles.Camera.DreamLamp>(); //temporary because the proj is not worked on yet
