@@ -1021,9 +1021,9 @@ Mods: {
 					'''
 				DreamLamp: 
 					'''
-					Chain together up to 10 enemies, slowing them
+					Chain together up to 10 enemies, slowing them down for 20 seconds
 					When a chained enemy is killed, all chained enemies will take additional damage
-					Chain together items to pull them towards you
+					Chain together items to grab them
 					'What do you wish for?'
 					'''
 				GlazeBow: 
