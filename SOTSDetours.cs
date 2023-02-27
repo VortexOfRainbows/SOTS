@@ -4,6 +4,7 @@ using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Furniture;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Nature;
+using SOTS.Projectiles.Camera;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
@@ -385,6 +386,15 @@ namespace SOTS
 			if (!Main.dedServ)
 			{
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				/*for (int i = 0; i < Main.projectile.Length; i++)
+				{
+					Projectile proj = Main.projectile[i];
+					if (proj.active && proj.ModProjectile is DreamingFrame modProj)
+					{
+						Color color = Color.White;
+						modProj.PreDraw(ref color);
+					}
+				}*/
 				for (int i = 0; i < Main.player.Length; i++)
 				{
 					Player player = Main.player[i];

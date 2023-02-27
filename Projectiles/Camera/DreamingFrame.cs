@@ -13,6 +13,17 @@ namespace SOTS.Projectiles.Camera
 {    
     public class DreamingFrame : ModProjectile 
     {
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(mousePosition.X);
+			writer.Write(mousePosition.Y);
+		}
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			mousePosition.X = reader.ReadSingle();
+			mousePosition.Y = reader.ReadSingle();
+		}
+        public Vector2 mousePosition = Vector2.Zero;
 		public Color Green1 => new Color(86, 226, 100, 0);
 		public override void SetStaticDefaults()
 		{
@@ -23,21 +34,35 @@ namespace SOTS.Projectiles.Camera
         {
 			Projectile.DamageType = ModContent.GetInstance<Void.VoidMagic>();
 			Projectile.friendly = true;
-			Projectile.width = 36;
-			Projectile.height = 36;
-			Projectile.timeLeft = 60;
+			Projectile.width = 120;
+			Projectile.height = 120;
+			Projectile.timeLeft = 80;
 			Projectile.penetrate = -1;
 			Projectile.alpha = 255;
 			Projectile.tileCollide = false;
+			Projectile.hide = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 30;
 		}
-		public override bool PreDraw(ref Color lightColor)
+        public override bool? CanCutTiles()
+        {
+            return true;
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            return true;
+        }
+        public override bool? CanHitNPC(NPC target)
+        {
+            return Projectile.timeLeft < 16 && Projectile.ai[0] == 1 && Vector2ListContainsX(npcVectors, target.whoAmI);
+        }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+			overWiresUI.Add(index);
+        }
+        public override bool PreDraw(ref Color lightColor)
 		{
-			/*Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
-			for (int k = 0; k < Projectile.oldPos.Length; k++) {
-				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-			}*/
+			DrawAllGrabReticle();
 			Player player = Main.player[Projectile.owner];
 			float scaleMult = 1f;
 			float windUpProgress = windUp / windUpTime;
@@ -48,11 +73,17 @@ namespace SOTS.Projectiles.Camera
 			Texture2D frameTexture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
 			Vector2 center = Projectile.Center - Main.screenPosition;
 			float squareRadius = 60;
+			if(Projectile.timeLeft < 20)
+            {
+				squareRadius += (float)Math.Pow((20 - Projectile.timeLeft) * 0.4f, 2);
+				float alphaMult = 1 - ((20 - Projectile.timeLeft) / 20f);
+				color *= (0.55f * alphaMult + 0.45f * (float)Math.Pow(alphaMult, 2));
+			}
 			for (int i = 0; i < 4; i++)
 			{
 				float progress = windUpProgress;
-				Vector2 playerToProjectile = Projectile.Center + new Vector2(0, Projectile.gfxOffY) - player.Center;
-				Vector2 offset = player.Center + new Vector2(24, -5 * player.direction).RotatedBy(playerToProjectile.ToRotation());
+				Vector2 playerToProjectile = Projectile.Center + new Vector2(0, Projectile.gfxOffY) - player.MountedCenter;
+				Vector2 offset = player.MountedCenter + new Vector2(28, -4.5f * player.direction).RotatedBy(playerToProjectile.ToRotation());
 				Vector2 framePosition = new Vector2(-squareRadius, -squareRadius);
 				float borderRotation = 0;
 				progress /= 0.75f;
@@ -113,13 +144,13 @@ namespace SOTS.Projectiles.Camera
 			float starWindUp = (windUp + longerExplode - ActivateRange + 3) / (windUpTime - ActivateRange + 13);
 			if(starWindUp > 0)
 			{
-				scaleMult *= (1.2f - 0.2f * (float)Math.Cos(MathHelper.ToRadians(420 * starWindUp))); // 11 / 10 scale is final
-				SOTSProjectile.DrawStar(Projectile.Center, color, 0.2f * starWindUp, MathHelper.PiOver4, 0f, 4, 12.8f * scaleMult, 12 * scaleMult, 1f, 540, 4.8f * scaleMult, 1);
-				SOTSProjectile.DrawStar(Projectile.Center, color, 0.4f * starWindUp, 0, 0f, 4, 2.56f * scaleMult, 0, 1f, 240, 0, 1);
+				scaleMult *= (1.2f - 0.2f * (float)Math.Cos(MathHelper.ToRadians(420 * starWindUp))) * (squareRadius / 60f); // 11 / 10 scale is final
+				SOTSProjectile.DrawStar(Projectile.Center, color, 0.3f * starWindUp, MathHelper.PiOver4, 0f, 4, 12.8f * scaleMult, 12 * scaleMult, 1f, 540, 4.8f * scaleMult, 1);
+				SOTSProjectile.DrawStar(Projectile.Center, color, 0.5f * starWindUp, 0, 0f, 4, 2.56f * scaleMult, 0, 1f, 240, 0, 1);
 				for (int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(1.5f, 0).RotatedBy(MathHelper.ToRadians(45 * i));
-					Main.spriteBatch.Draw(texture, center + circular, null, color * 0.6f * starWindUp * starWindUp, 0, texture.Size() / 2, scaleMult * 0.8f, SpriteEffects.None, 0);
+					Main.spriteBatch.Draw(texture, center + circular, null, color * 0.5f * starWindUp * starWindUp, 0, texture.Size() / 2, scaleMult * 0.8f, SpriteEffects.None, 0);
 				}
 			}
 			for (int i = 0; i < 4; i++)
@@ -257,41 +288,161 @@ namespace SOTS.Projectiles.Camera
 			}
 			return false;
 		}
+		public void DrawAllGrabReticle()
+		{
+			Player player = Main.player[Projectile.owner];
+			Vector2 playerToProjectile = Projectile.Center + new Vector2(0, Projectile.gfxOffY) - player.MountedCenter;
+			Vector2 offset = player.MountedCenter + new Vector2(28, -4.5f * player.direction).RotatedBy(playerToProjectile.ToRotation());
+			Color color = Green1;
+			Texture2D textureGradient = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/LongGradient");
+			for (int i = 0; i < itemVectors.Count; i++)
+            {
+				Item item = Main.item[(int)itemVectors[i].X];
+				float progress = itemVectors[i].Y / (float)timeToGrabVisual;
+				float alternateProgress = (Projectile.timeLeft - 5f) / 15f;
+				alternateProgress = Math.Clamp(alternateProgress, 0, 1);
+				progress *= alternateProgress;
+				if(Projectile.timeLeft > 8)
+				{
+					float scaleMult = 1.1f - 1f * (float)Math.Cos(MathHelper.ToRadians(Math.Clamp(510f * (1 - alternateProgress), 0, 360)));
+					Vector2 itemToPlayer = item.Center - new Vector2(0, 2) - offset;
+					Main.spriteBatch.Draw(textureGradient, offset - Main.screenPosition, null, color * (0.1f + 0.1f * scaleMult), itemToPlayer.ToRotation(), new Vector2(1, 1), new Vector2(1f / (textureGradient.Width - 32) * itemToPlayer.Length() * (float)Math.Sqrt(alternateProgress), 1 + 0.4f * scaleMult), SpriteEffects.None, 0);
+				}
+				DrawGrabReticle(item.Center + new Vector2(0, -2), progress, 0.75f);
+			}
+			for (int i = 0; i < npcVectors.Count; i++)
+			{
+				NPC npc = Main.npc[(int)npcVectors[i].X];
+				float progress = npcVectors[i].Y / (float)timeToGrabVisual;
+				if (Projectile.timeLeft < 20)
+					progress *= (Projectile.timeLeft - 10f) / 10f;
+				if (progress < 0)
+					progress = 0;
+				DrawGrabReticle(npc.Center + new Vector2(0, -2), progress, 1.0f);
+			}
+		}
+		public static int timeToGrabVisual = 18;
+		public void DrawGrabReticle(Vector2 position, float progress, float sizeMult = 1f)
+		{
+			Color color = Green1;
+			float scaleMult = sizeMult;
+			float starWindUp = progress;
+			if (starWindUp > 0)
+			{
+				scaleMult *= (1.4f - 0.4f * (float)Math.Cos(MathHelper.ToRadians(420 * starWindUp)));
+				SOTSProjectile.DrawStar(position, color, starWindUp, 0f, 0f, 4, 6.6f * scaleMult, 6 * scaleMult, 1f, 180, 2.7f * scaleMult, 0);
+				/*SOTSProjectile.DrawStar(Projectile.Center, color, 0.4f * starWindUp, 0, 0f, 4, 2.56f * scaleMult, 0, 1f, 240, 0, 1);
+				for (int i = 0; i < 8; i++)
+				{
+					Vector2 circular = new Vector2(1.5f, 0).RotatedBy(MathHelper.ToRadians(45 * i));
+					Main.spriteBatch.Draw(texture, center + circular, null, color * 0.6f * starWindUp * starWindUp, 0, texture.Size() / 2, scaleMult * 0.8f, SpriteEffects.None, 0);
+				}*/
+			}
+		}
 		private static float windUpTime = 18f;
 		public static float ActivateRange = 12f;
 		float postCounter = 0;
 		bool runOnce = true;
 		float windUp = 0f;
+		public List<Vector2> npcVectors = new List<Vector2>();
+		public List<Vector2> itemVectors = new List<Vector2>();
 		public override void AI()
 		{ 
 			Player player = Main.player[Projectile.owner];
 			Lighting.AddLight(Projectile.Center, new Vector3(86 / 255f, 226 / 255f, 100 / 255f) * windUp / windUpTime);
 			Projectile.rotation += 0.2f;
-			if (Projectile.alpha > 0)
-				Projectile.alpha -= 6; //this should take 43 frames to fully remove
-			else
-				Projectile.alpha = 0;
 			if (windUp < windUpTime)
 				windUp += 1;
 			else
 				postCounter++;
 			if (Main.myPlayer == Projectile.owner)
             {
-				Projectile.ai[0] = Main.MouseWorld.X;
-				Projectile.ai[1] = Main.MouseWorld.Y;
+				mousePosition = Main.MouseWorld;
 				Projectile.netUpdate = true;
 			}
-			if (player.channel || Projectile.timeLeft > 2)
+			if (player.channel || Projectile.timeLeft > 22)
 			{
-				if(player.itemTime < 2)
+				if(player.itemTime < 22)
 				{
-					player.itemAnimation = 2;
-					player.itemTime = 2;
-					Projectile.timeLeft = 2;
+					player.itemAnimation = 21;
+					player.itemTime = 21;
+					Projectile.timeLeft = 21;
 				}
-				if(Projectile.timeLeft < 2)
-					Projectile.timeLeft = 2;
+				if(Projectile.timeLeft < 22)
+					Projectile.timeLeft = 21;
+				if (Projectile.alpha > 0) //alpha in this case controls the camera movement
+					Projectile.alpha -= 6; //this should take 43 frames to fully remove
+				Projectile.alpha = Math.Clamp(Projectile.alpha, 0, 255);
 			}
+			else if(!player.channel) //this is for the projectiles ending phase
+			{
+				if(Projectile.timeLeft == 19)
+                {
+					SOTSUtils.PlaySound(SoundID.Item84, player.MountedCenter, 0.45f, 0.36f);
+                }
+				if(Projectile.timeLeft < 15)
+				{
+					float squareRadius = 60;
+					if (Projectile.timeLeft < 20)
+					{
+						squareRadius += (float)Math.Pow((20 - Projectile.timeLeft) * 0.4f, 2);
+					}
+					for (int i = 0; i < 4; i++)
+                    {
+						Vector2 corner = new Vector2(-squareRadius -32, -squareRadius).RotatedBy(MathHelper.PiOver2 * i);
+						for(int j = 0; j < 15; j++)
+                        {
+							if(Main.rand.NextBool(Projectile.timeLeft + 3))
+							{
+								Vector2 onward = new Vector2((squareRadius * 2 + 32) * (float)Math.Sqrt(j / 15f), 0).RotatedBy(MathHelper.PiOver2 * i);
+								Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + onward + corner, 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>());
+								dust.color = Green1 * 0.9f;
+								dust.velocity = dust.velocity * 0.2f + onward.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3.5f, 4.2f) + onward * 0.0075f;
+								dust.noGravity = true;
+								dust.fadeIn = 0.1f;
+								dust.scale = dust.scale * 0.4f + 0.7f + (0.5f * 60f / squareRadius);
+							}
+						}
+                    }
+                }
+				if (Projectile.timeLeft < 16)
+				{
+					if (Projectile.timeLeft == 15)
+					{
+						for (int i = 0; i < npcVectors.Count; i++)
+						{
+							NPC target = Main.npc[(int)npcVectors[i].X];
+							if (isNPCValidTarget(target))
+							{
+								if (target.catchItem > 0)
+								{
+									NPC.CheckCatchNPC(target, target.Hitbox, player.HeldItem, player, true);
+								}
+								SOTSProjectile.DustStar(target.Center, Vector2.Zero, Green1 * 0.5f, 0f, 40, 0, 4, 12f, 9f, 1f, 0.9f, 0.08f);
+							}
+						}
+					}
+					Projectile.ai[0] = 1;
+				}
+				if (Projectile.alpha < 255)
+				{
+					Projectile.alpha += 13; //should take only 20 frames to return to normal
+				}
+				Projectile.alpha = Math.Clamp(Projectile.alpha, 0, 255);
+				Projectile.velocity *= 0.5f;
+				for(int i = 0; i < itemVectors.Count; i++)
+				{
+					Item item = Main.item[(int)itemVectors[i].X];
+					if (item.active)
+                    {
+						if(Projectile.timeLeft <= 5)
+							item.Center = player.MountedCenter;
+						if(Projectile.timeLeft == 6)
+							SOTSProjectile.DustStar(item.Center, Vector2.Zero, Green1 * 0.5f, 0f, 32, 0, 4, 8f, 6f, 1f, 0.75f, 0.04f);
+					}
+				}
+				return;
+            }
 			if(windUp > ActivateRange)
             {
 				if(runOnce)
@@ -323,18 +474,97 @@ namespace SOTS.Projectiles.Camera
 				runOnce = false;
             }
 			float speedMult = windUp / windUpTime;
-			if (Projectile.ai[0] > 0 && Projectile.ai[1] > 0)
+			if (mousePosition.X > 0 && mousePosition.Y > 0)
             {
-				Vector2 mousePos = new Vector2(Projectile.ai[0], Projectile.ai[1]);
-				Vector2 toMousePos = mousePos - Projectile.Center;
+				Vector2 toMousePos = mousePosition - Projectile.Center;
 				Vector2 velo = toMousePos.SafeNormalize(Vector2.Zero) * 3.2f * speedMult;
 				if(velo.Length() > toMousePos.Length())
 					velo = toMousePos;
 				Projectile.velocity *= 0.4f;
 				Projectile.velocity += velo;
-				Projectile.Center = Vector2.Lerp(Projectile.Center, mousePos, 0.016f * speedMult);
+				Projectile.Center = Vector2.Lerp(Projectile.Center, mousePosition, 0.016f * speedMult);
             }
 			Projectile.oldPosition = Projectile.position;
+			ManageListCounters();
+			ManageHitbox();
+		}
+		public bool isNPCValidTarget(NPC npc)
+        {
+			return npc.active && !npc.friendly && !npc.immortal;
+        }
+		public bool Vector2ListContainsX(List<Vector2> Vector2s, int x)
+        {
+			for(int i = 0; i < Vector2s.Count; i++)
+            {
+                if (Vector2s[i].X == x)
+                {
+					return true;
+                }
+            }
+			return false;
+        }
+		public void ManageHitbox()
+        {
+			int width = 120;
+			Rectangle hitbox = new Rectangle((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width / 2, width, width);
+			if(npcVectors.Count < 10)
+			{
+				for (int i = 0; i < 200; i++)
+				{
+					NPC target = Main.npc[i];
+					if (!Vector2ListContainsX(npcVectors, i) && isNPCValidTarget(target) && target.Hitbox.Intersects(hitbox))
+					{
+						npcVectors.Add(new Vector2(i, 0));
+					}
+					if (npcVectors.Count >= 10)
+					{
+						break;
+					}
+				}
+			}
+			for (int i = 0; i < 400; i++)
+			{
+				Item target = Main.item[i];
+				if (!Vector2ListContainsX(itemVectors, i) && target.Hitbox.Intersects(hitbox) && target.active)
+				{
+					itemVectors.Add(new Vector2(i, 0));
+				}
+			}
+		}
+		public void ManageListCounters()
+		{
+			for (int i = 0; i < npcVectors.Count; i++)
+			{
+				NPC npc = Main.npc[(int)npcVectors[i].X];
+				if (!isNPCValidTarget(npc))
+				{
+					npcVectors.RemoveAt(i);
+				}
+				else if (npcVectors[i].Y < timeToGrabVisual)
+				{
+					npcVectors[i] = new Vector2(npcVectors[i].X, npcVectors[i].Y + 1);
+					if (npcVectors[i].Y == 6)
+					{
+						SOTSUtils.PlaySound(SoundID.MenuTick, Main.player[Projectile.owner].Center, 1.2f, -0.1f);
+					}
+				}
+			}
+			for (int i = 0; i < itemVectors.Count; i++)
+			{
+				Item item = Main.item[(int)itemVectors[i].X];
+				if (!item.active)
+				{
+					itemVectors.RemoveAt(i);
+				}
+				else if (itemVectors[i].Y < timeToGrabVisual)
+				{
+					itemVectors[i] = new Vector2(itemVectors[i].X, itemVectors[i].Y + 1);
+                    if (itemVectors[i].Y == 6)
+                    {
+						SOTSUtils.PlaySound(SoundID.MenuTick, Main.player[Projectile.owner].Center, 1.2f, 0.1f);
+                    }
+				}
+			}
 		}
 	}
 }

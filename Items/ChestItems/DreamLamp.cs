@@ -40,14 +40,14 @@ namespace SOTS.Items.ChestItems
         }
         public override void SafeSetDefaults()
 		{
-			Item.damage = 20;
+			Item.damage = 24;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 42;
 			Item.height = 50;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightRed;
-			Item.useTime = 40;
-			Item.useAnimation = 40;
+			Item.useTime = 48;
+			Item.useAnimation = 48;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = false;            
 			Item.shoot = ModContent.ProjectileType<Projectiles.Camera.DreamLamp>(); //temporary because the proj is not worked on yet

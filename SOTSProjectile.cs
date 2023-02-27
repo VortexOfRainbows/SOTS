@@ -821,7 +821,7 @@ namespace SOTS
 		{
 			DustStar(location, velocity, new Color(116, 125, 238), rotation, total, spin, pointAmount, innerDistAdd, innerDistMin, xCompress, scaleMult);
 		}
-		public static void DustStar(Vector2 location, Vector2 velocity, Color color, float rotation, int total = 30, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, float scaleMult = 1f)
+		public static void DustStar(Vector2 location, Vector2 velocity, Color color, float rotation, int total = 30, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, float scaleMult = 1f, float circularVelocityMult = 0f)
 		{
 			for (float k = 0; k < total; k++)
 			{
@@ -836,7 +836,7 @@ namespace SOTS
 				Dust dust = Dust.NewDustDirect(circular + location - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
 				dust.noGravity = true;
 				dust.scale = (dust.scale * 0.5f + 1) * scaleMult;
-				dust.velocity = dust.velocity * 0.1f + velocity;
+				dust.velocity = dust.velocity * 0.1f + velocity + circular * circularVelocityMult;
 				dust.fadeIn = 0.1f;
 			}
 		}

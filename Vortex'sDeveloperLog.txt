@@ -61,9 +61,12 @@ Things to Note For Later:
 
 Daily Log:
 
-2/22/23 & 2/23/23
+2/26/23
+1. Dreaming Lamp item pickup mechanic and npc hurt mechanic (Still needed: Chaining Mechanic, Death Damage, Server Syncing)
+
+2/22/23 & 2/23/23 & 2/25/23
 1. Dreaming Lamp sprite + animates in inventory and world + holdout
-2. Dreaming Lamp: some visuals and framework
+2. Dreaming Lamp: visuals and framework
 
 2/17/23 & 2/18/23 & 2/19/23 & 2/20/23
 1. Added Vespera NanDao! Not tested in multiplayer as it should work fine (copied from other components)
