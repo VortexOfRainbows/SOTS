@@ -94,9 +94,9 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.Blink"), "V");//TODO: 文本无法正常显示
-			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.ArmorSet"), "F");//TODO: 文本无法正常显示
-			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.MFM"), "C");//TODO: 文本无法正常显示
+			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.Blink"), "V");//TODO: Localize it when 1.4.4 comes
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.ArmorSet"), "F");
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.SOTS.KeyBindName.MFM"), "C");
 			SOTSWorld.LoadUI();
 			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
