@@ -7,6 +7,7 @@ using SOTS.Void;
 using System.Collections.Generic;
 using SOTS.Buffs;
 using SOTS.Projectiles.Permafrost;
+using Terraria.Localization;
 
 namespace SOTS.Items.Void
 {
@@ -14,7 +15,7 @@ namespace SOTS.Items.Void
 	{
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			TooltipLine line = new TooltipLine(Mod, "VoidConsumable", $"Mods.SOTS.Common.ACZV");
+			TooltipLine line = new TooltipLine(Mod, "VoidConsumable", Language.GetTextValue("Mods.SOTS.Common.ACZV"));
 			tooltips.Add(line);
 			base.ModifyTooltips(tooltips);
 		}
