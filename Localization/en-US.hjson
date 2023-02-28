@@ -2534,6 +2534,7 @@ Mods: {
 		VoidShock : Void Shock
 		VoidSickness : Void Sickness
 		WebbedNPC : Webbed
+		DendroChain: Dendro Chain
 		}
 
 		BuffDescription: {
