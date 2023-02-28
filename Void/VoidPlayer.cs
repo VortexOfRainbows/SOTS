@@ -60,20 +60,20 @@ namespace SOTS.Void
 		public float VoidGenerateMoney = 0;
 
 		public static string[] voidDeathMessages = new string[] { };
-		//{
+        //{
         //    Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//TODO 文本无法正常显示
-		//	//" was devoured by the void.",
-		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//TODO 文本无法正常显示
-		//	//" was taken by the void.",
-		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),//TODO 文本无法正常显示
-		//	//" was consumed by the darkness.",
-		//	//" was taken by the darkness.",
-		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),//TODO 文本无法正常显示
-		//	//" couldn't handle their own power.",
-		//	//" didn't manage their void well.",
-		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")//TODO 文本无法正常显示
-		//};
-        public override void Load()
+        //	//" was devoured by the void.",
+        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//TODO 文本无法正常显示
+        //	//" was taken by the void.",
+        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),//TODO 文本无法正常显示
+        //	//" was consumed by the darkness.",
+        //	//" was taken by the darkness.",
+        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),//TODO 文本无法正常显示
+        //	//" couldn't handle their own power.",
+        //	//" didn't manage their void well.",
+        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")//TODO 文本无法正常显示
+        //};
+        public override void SetStaticDefaults()
         {
 			voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD1")).ToArray(); //TODO Test it
             voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD2")).ToArray();
