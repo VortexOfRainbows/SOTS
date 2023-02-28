@@ -15,8 +15,6 @@ namespace SOTS.Items.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Knuckles)");
-			Tooltip.SetDefault("'Can I put my...'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -63,7 +61,6 @@ namespace SOTS.Items.MusicBoxes
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Music Box");
 			AddMapEntry(new Color(255, 0, 0), name);
 		}
 

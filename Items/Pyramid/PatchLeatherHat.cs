@@ -2,6 +2,7 @@ using SOTS.Projectiles.Pyramid;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Pyramid
 {
@@ -19,8 +20,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Patch Leather Hat");
-			Tooltip.SetDefault("Increases max minions by 1");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -40,7 +39,7 @@ namespace SOTS.Items.Pyramid
 		int Probe3 = -1;
 		public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Summons a flock of flying snakes to assist in combat";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.PatchLeather");
 			int counter = 0;
 			for(int i = 0; i < 1000; i++)
 			{

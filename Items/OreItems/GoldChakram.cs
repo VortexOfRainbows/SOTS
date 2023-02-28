@@ -9,8 +9,6 @@ namespace SOTS.Items.OreItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gold Chakram");
-			Tooltip.SetDefault("Deals more damage at the peak of its trajectory");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

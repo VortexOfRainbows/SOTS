@@ -10,8 +10,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Harmony Potion");
-			Tooltip.SetDefault("Prevents other buffs from decaying while active\nDoesn't work on most buffs with below 30 seconds remaining");
 			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()

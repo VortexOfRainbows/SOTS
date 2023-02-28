@@ -13,7 +13,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Overgrown Pyramid Brick");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

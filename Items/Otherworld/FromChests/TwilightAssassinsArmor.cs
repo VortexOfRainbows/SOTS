@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -17,8 +18,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Assassin Circlet");
-			Tooltip.SetDefault("Gamer");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -45,15 +44,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				{
 					if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 					{
-						line.Text = "Increases your max number of minions and sentries by 1" +
-							"\nIncreases minion and melee damage by 7%" +
-							"\nIncreased max void by 50" +
-							"\nProvides a Holo Eye minion to assist in combat" +
-							"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy" +
-							"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
-							"\nThis is calculated after normal crits, allowing some attacks to double crit" +
-							"\nCosts 6 void to launch" +
-							"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack";
+						line.Text = Language.GetTextValueWith("Mods.SOTS.TwilightAssassinsCircletText", key);
 						return;
 					}
 				}
@@ -62,16 +53,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
-					string key = "Unbound";
-					line.Text = "Increases your max number of minions and sentries by 1" +
-						"\nIncreases minion and melee damage by 7%" +
-						"\nIncreased max void by 50" +
-						"\nProvides a Holo Eye minion to assist in combat" +
-						"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy" +
-						"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
-						"\nThis is calculated after normal crits, allowing some attacks to double crit" +
-						"\nCosts 6 void to launch" +
-						"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack";
+					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
+					line.Text = Language.GetTextValueWith("Mods.SOTS.TwilightAssassinsCircletText2", Textkey);
 				}
 			}
 			base.ModifyTooltips(tooltips);
@@ -83,7 +66,7 @@ namespace SOTS.Items.Otherworld.FromChests
         public override void UpdateArmorSet(Player player)
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			player.setBonus = "The Holo Eye now automatically attacks for you\nAutomatic attacks have a 25% chance to destabilize enemies, but the chance of applying it gets lower with each level already applied";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.TwilightAssassins");
 			modPlayer.HoloEyeAutoAttack = true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -133,8 +116,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Assassin Chestplate");
-			Tooltip.SetDefault("Increased your max number of minions by 1\nIncreased melee and void critical strike chance by 10%\nIncreased life regeneration by 2 and void regeneration speed by 10%");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -210,8 +191,6 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Assassin Leggings");
-			Tooltip.SetDefault("Increased movement speed by 15%\nBlink Pack decreased cooldown by 20%\nSlightly increased jump speed");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)

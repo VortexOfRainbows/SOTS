@@ -17,8 +17,6 @@ namespace SOTS.Items.Tools
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Planetary Analyzer");
-			Tooltip.SetDefault("Displays some worldgen info that may be useful\n'Calls down the protector of that palace in the sky'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

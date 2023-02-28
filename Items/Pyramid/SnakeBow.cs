@@ -10,8 +10,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Snake Bow");
-			Tooltip.SetDefault("Launches snakes that latch on to enemies");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

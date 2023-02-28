@@ -8,8 +8,6 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fat");
-			Description.SetDefault("Speed decreased, endurance increased");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;

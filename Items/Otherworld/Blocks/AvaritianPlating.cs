@@ -14,7 +14,6 @@ namespace SOTS.Items.Otherworld.Blocks
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Avaritia Plating");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

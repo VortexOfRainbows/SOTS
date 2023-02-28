@@ -43,7 +43,6 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hardlight Wall");
 			this.SetResearchCost(400);
 		}
 		public override void SetDefaults()

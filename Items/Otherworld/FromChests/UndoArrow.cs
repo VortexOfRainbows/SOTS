@@ -14,16 +14,12 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using SOTS.Projectiles.Chaos;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
 	public class UndoArrow : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Developer Test Item");
-			Tooltip.SetDefault("Makes all NPC have zero epicness");
-		}
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.ThrowingKnife);
@@ -43,14 +39,14 @@ namespace SOTS.Items.Otherworld.FromChests
 				if(Main.npc[i].active)
 					Main.npc[i].aiStyle = -420;
             }
-			Main.NewText("Ruby: " + SOTSWorld.RubyKeySlotted);
-			Main.NewText("Sapphire: " + SOTSWorld.SapphireKeySlotted);
-			Main.NewText("Emerald: " + SOTSWorld.EmeraldKeySlotted);
-			Main.NewText("Topaz: " + SOTSWorld.TopazKeySlotted);
-			Main.NewText("Amethyst: " + SOTSWorld.AmethystKeySlotted);
-			Main.NewText("Diamond: " + SOTSWorld.DiamondKeySlotted);
-			Main.NewText("Amber: " + SOTSWorld.AmberKeySlotted);
-			Main.NewText("Is Texture Pack On: " + SOTS.SOTSTexturePackEnabled);
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Ruby", Convert.ToString(SOTSWorld.RubyKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Sapphire", Convert.ToString(SOTSWorld.SapphireKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Emerald", Convert.ToString(SOTSWorld.EmeraldKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Topaz", Convert.ToString(SOTSWorld.TopazKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Amethyst", Convert.ToString(SOTSWorld.AmethystKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Diamond", Convert.ToString(SOTSWorld.DiamondKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Amber", Convert.ToString(SOTSWorld.AmberKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Pack", Convert.ToString(SOTS.SOTSTexturePackEnabled)));
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 32;

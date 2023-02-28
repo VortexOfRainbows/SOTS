@@ -9,7 +9,6 @@ namespace SOTS.Items.Crushers
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases melee speed by 8%\nIncreases Crusher charge speed by 12%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

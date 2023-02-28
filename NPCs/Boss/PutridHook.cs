@@ -56,7 +56,6 @@ namespace SOTS.NPCs.Boss
 		private int counter = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Putrid Hook");
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]

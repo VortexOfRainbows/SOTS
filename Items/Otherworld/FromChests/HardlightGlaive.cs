@@ -21,8 +21,6 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hardlight Glaive");
-			Tooltip.SetDefault("Unleash a burst of lightning that deals 160% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

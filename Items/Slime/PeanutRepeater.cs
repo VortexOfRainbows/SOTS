@@ -11,9 +11,7 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Peanut Repeater");
-			Tooltip.SetDefault("Launches tasty peanuts that attract Pinky Air Raids\n20% chance to not consume ammo");
-            this.SetResearchCost(1);
+			 this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

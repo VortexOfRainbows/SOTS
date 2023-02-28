@@ -9,7 +9,6 @@ namespace SOTS.Items.Crushers
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("The second charge of a Crusher has a 33% chance to not consume void\nThe fourth charge of Crushers no longer consumes void\nExtends the range of Crushers by 1\nIncreases melee speed and melee damage by 5%\nIncreases Crusher charge speed by 10%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

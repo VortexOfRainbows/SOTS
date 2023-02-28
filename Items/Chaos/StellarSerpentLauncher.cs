@@ -15,8 +15,6 @@ namespace SOTS.Items.Chaos
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Stellar Serpent Launcher");
-			Tooltip.SetDefault("Launches a Starlight Serpent which homes on enemys and attacks them repeatedly");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -8,8 +8,6 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-			DisplayName.SetDefault("Double Vision");
-			Description.SetDefault("Extra fishing lines");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
         }

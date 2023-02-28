@@ -14,8 +14,6 @@ namespace SOTS.Items.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Cutter on a Chain");
-			Tooltip.SetDefault("'This is utmost wonderful idea'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

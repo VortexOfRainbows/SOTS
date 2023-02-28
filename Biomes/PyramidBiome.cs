@@ -5,6 +5,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Biomes
 {
@@ -23,10 +24,6 @@ namespace SOTS.Biomes
 		public override Color? BackgroundColor => base.BackgroundColor; //default background color
 		public override string MapBackground => BackgroundPath;
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Cursed Pyramid");
-		}
 		public override bool IsBiomeActive(Player player)
 		{
 			bool pyramidBiome = false;

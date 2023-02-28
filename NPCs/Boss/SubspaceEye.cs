@@ -10,7 +10,6 @@ namespace SOTS.NPCs.Boss
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Subspace Gaze");
             Main.npcFrameCount[NPC.type] = 1;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {

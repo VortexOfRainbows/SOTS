@@ -13,8 +13,6 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Icicle Impale");
-			Tooltip.SetDefault("Launches large icicles\nRegenerates void upon hit");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

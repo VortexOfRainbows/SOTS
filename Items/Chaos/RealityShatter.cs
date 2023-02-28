@@ -47,8 +47,6 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Reality Shatter");
-			Tooltip.SetDefault("Enemies recieve an additional flurry of slashes that do 4x50% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -13,12 +13,7 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class SittingMushroom : ModNPC
-	{	
-		public override void SetStaticDefaults()
-		{
-			
-			DisplayName.SetDefault("Sitting Mushroom");
-		}
+	{
 		public override void SetDefaults()
 		{
             NPC.aiStyle =0; 

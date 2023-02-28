@@ -11,9 +11,7 @@ namespace SOTS.Items.SoldStuff
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Recursive Bow");
-			Tooltip.SetDefault("Has a 50% chance to fire an additional arrow\nAdditional arrows also activate this ability");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

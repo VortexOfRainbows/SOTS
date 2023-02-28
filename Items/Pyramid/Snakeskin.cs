@@ -8,8 +8,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Snakeskin");
-			Tooltip.SetDefault("Slick and durable");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

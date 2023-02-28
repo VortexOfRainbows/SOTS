@@ -14,7 +14,6 @@ namespace SOTS.Items.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Advisor)");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -55,7 +54,6 @@ namespace SOTS.Items.MusicBoxes
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Music Box");
 			AddMapEntry(new Color(191, 142, 111), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

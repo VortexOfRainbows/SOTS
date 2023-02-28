@@ -15,8 +15,6 @@ namespace SOTS.Items.ChestItems
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dreaming Lamp");
-			Tooltip.SetDefault("Chain together up to 10 enemies, slowing them down for 20 seconds\nWhen a chained enemy is killed, all chained enemies will take additional damage\nChain together items to grab them\n'What do you wish for?'");
 			ItemID.Sets.ItemNoGravity[Type] = true;
 			this.SetResearchCost(1);
 		}

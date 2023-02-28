@@ -12,8 +12,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flare Detonator");
-			Tooltip.SetDefault("Fire an explosive flare that detonates upon releasing the trigger");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

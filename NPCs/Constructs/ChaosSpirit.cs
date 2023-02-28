@@ -161,7 +161,6 @@ namespace SOTS.NPCs.Constructs
         public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 1;
-			DisplayName.SetDefault("Chaos Spirit");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 5; 
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{

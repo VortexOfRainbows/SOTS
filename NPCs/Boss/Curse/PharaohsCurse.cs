@@ -14,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.NPCs.Boss.Curse
 {
@@ -57,7 +58,6 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pharaoh's Curse");
 			Main.npcFrameCount[NPC.type] = 1;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
@@ -768,7 +768,7 @@ namespace SOTS.NPCs.Boss.Curse
 					if (ai2 == timeToStart)
 					{
 						if (Main.netMode != NetmodeID.Server)
-							Main.NewText("Pharaoh's Curse has awoken!", 175, 75, byte.MaxValue);
+							Main.NewText(Language.GetTextValue("Mods.SOTS.BossAwoken.PharaohsCurse"), 175, 75, byte.MaxValue);
 						ParticleExplosion();
 					}
 					if (startParticles < 1)

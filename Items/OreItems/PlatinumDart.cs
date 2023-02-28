@@ -10,8 +10,6 @@ namespace SOTS.Items.OreItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Platinum Dart");
-			Tooltip.SetDefault("A heavy dart that sticks to enemies, slowing them down drastically");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

@@ -19,7 +19,6 @@ namespace SOTS.Items.Pyramid
             TileObjectData.newTile.StyleWrapLimit = 4;
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Crystal Statue");		
 			AddMapEntry(new Color(175, 0, 0), name);
             HitSound = SoundID.Tink;
 			MineResist = 2.5f;

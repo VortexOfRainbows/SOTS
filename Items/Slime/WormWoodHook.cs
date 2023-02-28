@@ -9,8 +9,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goopwood Hook");
-			Tooltip.SetDefault("Retracts upon hitting an enemy");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

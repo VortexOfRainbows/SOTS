@@ -10,8 +10,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Arcane Aqueduct");
-			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);

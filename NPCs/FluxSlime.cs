@@ -15,10 +15,6 @@ namespace SOTS.NPCs
 {
 	public class FluxSlime : ModNPC
 	{	int initiateSize = 1;
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Flux Slime");
-		}
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);

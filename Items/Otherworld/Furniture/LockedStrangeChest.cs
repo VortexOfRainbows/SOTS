@@ -6,15 +6,12 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Otherworld.Furniture
 {
 	public class StrangeChest : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Planetarium Chest");
-		}
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
@@ -78,18 +75,16 @@ namespace SOTS.Items.Otherworld.Furniture
 
             }
 		}
-		protected override string ChestName => "Planetarium Chest";
+		protected override string ChestName => Language.GetTextValue("Mods.SOTS.ItemName.StrangeChest");
 		protected override int ChestDrop => ModContent.ItemType<StrangeChest>();
 		protected override int ChestKey => ModContent.ItemType<StrangeKey>();
 		protected override int DustType => ModContent.DustType<AvaritianDust>();
 		protected override void AddMapEntires()
 		{
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Planetarium Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "_Locked");
-			name.SetDefault("Locked Planetarium Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 		}
 	}

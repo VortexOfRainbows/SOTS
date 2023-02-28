@@ -9,8 +9,6 @@ namespace SOTS.Items.Pyramid
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Shield");
-			Tooltip.SetDefault("Increases void gain by 2, life regen by 1, and reduces damage taken by 2%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

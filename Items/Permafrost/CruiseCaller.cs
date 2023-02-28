@@ -14,8 +14,6 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Cruise Caller");
-			Tooltip.SetDefault("Summons a fleet of Penguin Copters to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			this.SetResearchCost(1);

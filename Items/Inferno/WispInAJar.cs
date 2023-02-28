@@ -10,8 +10,6 @@ namespace SOTS.Items.Inferno
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wisp in a Jar");
-			Tooltip.SetDefault("Summons a Inferno Wisp that assists in combat\nKilled enemies explode into flames for 30% of the damage dealt to them on the killing blow");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

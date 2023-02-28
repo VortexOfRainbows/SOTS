@@ -14,9 +14,7 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Doomstick");
-            Tooltip.SetDefault("Fires two shotgun blasts in quick succession\nRight click to launch a 250% damage hook that pulls in enemies\nPulls you toward bosses instead\nKilled enemies drop packs of health and mana");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

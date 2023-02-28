@@ -15,8 +15,6 @@ namespace SOTS.Items.Inferno
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blazing Club");
-			Tooltip.SetDefault("Deploys spiked mines in the air\nRight click to launch them instead\nMines linger and explode into shrapnel for 10% damage\nDeploys and launches more mines when wearing climbing related accessories");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			this.SetResearchCost(1);
 		}

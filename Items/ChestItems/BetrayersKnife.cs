@@ -13,8 +13,6 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Betrayer's Knife");
-            Tooltip.SetDefault("Strike with 2 slashes, which always bleed enemies on the first hit\nThe second slash does 150% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

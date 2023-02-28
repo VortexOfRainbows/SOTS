@@ -9,8 +9,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crest of Dasuver");
-			Tooltip.SetDefault("Increases crit chance by 6%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -44,7 +44,6 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Polaris");
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]

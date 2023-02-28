@@ -23,7 +23,6 @@ namespace SOTS.Items.Pyramid
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = 10;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Sarcophagus");		
 			AddMapEntry(new Color(255, 215, 10), name);
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;

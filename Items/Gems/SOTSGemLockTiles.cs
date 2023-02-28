@@ -22,7 +22,6 @@ namespace SOTS.Items.Gems
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Mysterious Switch");
 			AddMapEntry(new Color(34, 25, 48), name);
 			DustType = DustID.Obsidian;
 			MinPick = 250;
@@ -244,7 +243,6 @@ namespace SOTS.Items.Gems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Ruby Gem Lock");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
@@ -257,7 +255,6 @@ namespace SOTS.Items.Gems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Sapphire Gem Lock");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
@@ -270,7 +267,6 @@ namespace SOTS.Items.Gems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Emerald Gem Lock");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
@@ -283,7 +279,6 @@ namespace SOTS.Items.Gems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Topaz Gem Lock");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
@@ -296,7 +291,6 @@ namespace SOTS.Items.Gems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Amethyst Gem Lock");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
@@ -309,7 +303,6 @@ namespace SOTS.Items.Gems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Diamond Gem Lock");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
@@ -322,7 +315,6 @@ namespace SOTS.Items.Gems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Amber Gem Lock");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

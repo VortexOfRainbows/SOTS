@@ -18,8 +18,6 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thundershock Shortbow");
-			Tooltip.SetDefault("Fires powerful bolts of lightning instead of arrows");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

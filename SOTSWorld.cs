@@ -334,12 +334,11 @@ namespace SOTS
 
 			tasks.RemoveAt(oceanTunnel);
 			tasks.Insert(oceanTunnel, new PassLegacy("SOTS: Additional Desert", OceanCaveGeneration));
-
 			tasks.Insert(genIndexOres, new PassLegacy("SOTS: Ocean Caves", GenSOTSOres));
 			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTS: Ores", GenSOTSGeodes));
 			tasks.Insert(genIndexTraps + 1, new PassLegacy("SOTS: Structures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
-				progress.Message = "Generating Surface Structures";
+				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingSurfaceStructures");
 				//SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
 				StarterHouseWorldgenHelper.GenerateStarterHouseFull();
 				int iceY = -1;
@@ -400,12 +399,12 @@ namespace SOTS
 			}));
 			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("SOTS: Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
-				progress.Message = "Generating Abandoned Village";
+				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingAbandonedVillage");
 				//AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
 			}));
 			tasks.Insert(genIndexEnd + 5, new PassLegacy("SOTS: Planetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
-				progress.Message = "Generating Sky Artifacts";
+				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingSkyArtifacts");
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
 				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
 				{
@@ -561,19 +560,19 @@ namespace SOTS
 			}));
 			tasks.Insert(genIndexEnd + 6, new PassLegacy("SOTS: Pyramid", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
-				progress.Message = "Generating A Pyramid";
+				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingAPyramid");
 				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
 				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
 			tasks.Insert(genIndexEnd + 7, new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
-				progress.Message = "Generating Gem Structures";
+				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingGemStructures");
 				GemStructureWorldgenHelper.GenerateGemStructures();
 			}));
 		}
 		private void AdjacentDesertGeneration(GenerationProgress progress, GameConfiguration configuration)
 		{
-			progress.Message = "Sand is irritating and gets everywhere!";
+			progress.Message = Language.GetTextValue("Mods.SOTS.AdjacentDesertGeneration.SEverywhere");
 			int centerX = WorldGen.UndergroundDesertLocation.X + WorldGen.UndergroundDesertLocation.Width / 2;
 			int widthX = WorldGen.UndergroundDesertLocation.Width / 2;
 			int centerY = 0;
@@ -626,7 +625,7 @@ namespace SOTS
 		}
 		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
 		{
-			progress.Message = "Generating SOTS Ores";
+			progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSOres");
 			SOTSWorldgenHelper.GenerateEvostoneInMushroomBiome();
 			float max = 240;
 			if (Main.maxTilesX > 6000) //medium worlds
@@ -647,7 +646,7 @@ namespace SOTS
 		}
 		private void GenSOTSGeodes(GenerationProgress progress, GameConfiguration configuration)
 		{
-			progress.Message = "Generating Fancy Geodes";
+			progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSGeodes");
 			int max = 60;
 			if (Main.maxTilesX > 6000) //medium worlds
 				max = 90;

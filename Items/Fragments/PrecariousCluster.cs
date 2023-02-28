@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace SOTS.Items.Fragments
 {
@@ -19,37 +20,35 @@ namespace SOTS.Items.Fragments
 				if (line.Mod == "Terraria" && line.Name == "Tooltip1")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNature)
-						line.Text = "Reduces damage dealt by 10%";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.0");
 					else
-						line.Text = "Increases life regeneration by 1, up to 4 total";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.1");
 				}
 				if (line.Mod == "Terraria" && line.Name == "Tooltip2")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeEarth)
-						line.Text = "Reduces endurance by 10%";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.2");
 					else
-						line.Text = "Increases defense by 2, up to 8 total";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.3");
 				}
 				if (line.Mod == "Terraria" && line.Name == "Tooltip3")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAurora)
-						line.Text = "Reduces movespeed by 20%";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.4");
 					else
-						line.Text = "Increases movement speed by 5%, up to 20% total";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.5");
 				}
 				if (line.Mod == "Terraria" && line.Name == "Tooltip4")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether)
-						line.Text = "Reduces gravity";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.6");
 					else
-						line.Text = "Increases magic damage by 3%, up to 12% total";
+						line.Text = Language.GetTextValue("Mods.SOTS.PrecariousClusterTextList.7");
 				}
 			}
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Primordial Cluster");
-			Tooltip.SetDefault("Does the following while in your inventory:\nNature\nEarth\nAurora\nAether\n'A great gift for your friend's inventory!'");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
@@ -180,37 +179,35 @@ namespace SOTS.Items.Fragments
 				if (line.Mod == "Terraria" && line.Name == "Tooltip1")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeDeluge)
-						line.Text = "Reduces max life and mana by 10";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.0");
 					else
-						line.Text = "Increases ranged damage by 3%, up to 12% total";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.1");
 				}
 				if (line.Mod == "Terraria" && line.Name == "Tooltip2")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra)
-						line.Text = "Reduces max void by 20 while in the inventory";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.2");
 					else
-						line.Text = "Increases void damage by 3%, up to 12% total";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.3");
 				}
 				if (line.Mod == "Terraria" && line.Name == "Tooltip3")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeNether)
-						line.Text = "Reduces life regeneration by 2";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.4");
 					else
-						line.Text = "Increases melee damage by 3%, up to 12% total";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.5");
 				}
 				if (line.Mod == "Terraria" && line.Name == "Tooltip4")
 				{
 					if (!DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeBrilliance)
-						line.Text = "Increases void drain by 0.5 while in the inventory";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.6");
 					else
-						line.Text = "Increases summon damage by 3%, up to 12% total";
+						line.Text = Language.GetTextValue("Mods.SOTS.TerminalClusterTextList.7");
 				}
 			}
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Terminal Cluster");
-			Tooltip.SetDefault("Does the following while in your inventory:\nDeluge\nUmbra\nNether\nBrilliance");
 			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()

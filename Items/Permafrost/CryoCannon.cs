@@ -11,8 +11,6 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cryo Cannon");
-			Tooltip.SetDefault("Uses snowballs as ammo");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

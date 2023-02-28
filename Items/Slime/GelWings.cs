@@ -9,9 +9,7 @@ namespace SOTS.Items.Slime
 	public class GelWings : ModItem
 	{
 		public override void SetStaticDefaults()
-		{	
-			DisplayName.SetDefault("Gel Wings");
-			Tooltip.SetDefault("Allows flight and slow fall\n'It really shouldn't hold up well'");
+		{
 			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(30, 8f, 1.01f);
 			this.SetResearchCost(1);
 		}

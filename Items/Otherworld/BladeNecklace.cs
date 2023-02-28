@@ -12,8 +12,6 @@ namespace SOTS.Items.Otherworld
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blade Necklace");
-			Tooltip.SetDefault("Increases void gain by 1\nPeriodically accumulate up to 9 swords that rotate around you\nEvery 10th melee attack will launch forth the swords\nGetting hit summons 5 Souls of Retaliation into the air\nEvery 10th void attack will release the souls in the form of a powerful laser");
 			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

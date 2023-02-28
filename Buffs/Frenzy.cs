@@ -8,8 +8,6 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frenzy");
-			Description.SetDefault("Melee Speed increased by 100%");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;

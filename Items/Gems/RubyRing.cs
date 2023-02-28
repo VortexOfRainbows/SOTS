@@ -45,8 +45,6 @@ namespace SOTS.Items.Gems
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Beelzebub's Ring");
-			Tooltip.SetDefault("Killed enemies always drop hearts\nCollecting hearts lengthens the duration of active buffs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

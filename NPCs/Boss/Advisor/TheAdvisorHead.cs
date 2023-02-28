@@ -14,6 +14,7 @@ using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.NPCs.Boss.Advisor
 {	[AutoloadBossHead]
@@ -51,7 +52,6 @@ namespace SOTS.NPCs.Boss.Advisor
 		Vector2[] hookPosTrue = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("The Advisor");
 			Main.npcFrameCount[NPC.type] = 2;
 			NPCID.Sets.ShouldBeCountedAsBoss[NPC.type] = true;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -559,7 +559,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				{
 					SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
 					if (Main.netMode != NetmodeID.Server)
-						Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
+						Main.NewText(Language.GetTextValue("Mods.SOTS.BossAwoken.Lux"), 175, 75, byte.MaxValue);
 					dormant = false;
 					NPC.dontTakeDamage = false;
 					NPC.dontCountMe = false;

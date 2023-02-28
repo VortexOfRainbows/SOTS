@@ -10,8 +10,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ripple Potion");
-			Tooltip.SetDefault("Release waves of damaging water periodically\nRelease more waves at lower health\nWaves ignore up to 8 defense");
 			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()

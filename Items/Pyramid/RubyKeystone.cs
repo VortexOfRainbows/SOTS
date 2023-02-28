@@ -11,7 +11,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ruby Keystone");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

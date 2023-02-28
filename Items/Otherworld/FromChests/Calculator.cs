@@ -11,8 +11,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Calculator");
-			Tooltip.SetDefault("Summons a pet Advisor to assist in combat\nInstead of attacking enemies directly, the Advisor assists with your aim\n'He really wants to help!'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

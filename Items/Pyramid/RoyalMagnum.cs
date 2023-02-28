@@ -10,9 +10,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Royal Magnum");
-            Tooltip.SetDefault("Releases golden light upon hitting the ground or an enemy");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
 		public override void SetDefaults()
 		{

@@ -9,11 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class BlueSlimer : ModNPC
-	{	
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Blue Slimer");
-		}
+	{
         public override void SetDefaults()
 		{
 			NPC.CloneDefaults(NPCID.Slimer);

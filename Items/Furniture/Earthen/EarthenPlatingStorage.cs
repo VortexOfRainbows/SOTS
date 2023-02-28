@@ -36,7 +36,7 @@ namespace SOTS.Items.Furniture.Earthen
         {
             return false;
         }
-        protected override string ChestName => "Earthen Plating Storage";
+        protected override string ChestName => Language.GetTextValue("Mods.SOTS.ContainerName.EarthenPlatingStorageTile");
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<EarthenPlatingStorage>();
         protected override int DustType => DustID.Iron;
@@ -44,11 +44,9 @@ namespace SOTS.Items.Furniture.Earthen
         {
             Color color = Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.17f);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault(ChestName);
             AddMapEntry(color, name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-            name.SetDefault("Locked " + ChestName);
             AddMapEntry(color, name, MapChestName);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

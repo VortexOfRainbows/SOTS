@@ -17,7 +17,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Gold Pillar");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -63,7 +62,6 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Strange Pillar");
 			AddMapEntry(new Color(220, 180, 25), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;
@@ -282,10 +280,6 @@ namespace SOTS.Items.Pyramid
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
 			behindNPCsAndTiles.Add(index);
-		}
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Gems");
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

@@ -10,8 +10,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sandstone Edge");
-			Tooltip.SetDefault("Critical hits release a torrent of homing emerald bolts that do 50% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

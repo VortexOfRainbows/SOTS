@@ -7,7 +7,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gel Throwing Axe");
 			this.SetResearchCost(99);
 		}
 		public override void SetDefaults()

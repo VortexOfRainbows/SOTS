@@ -12,7 +12,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases void regeneration speed by 10%");
 			this.SetResearchCost(20);
 		}
 		public override void SetDefaults()

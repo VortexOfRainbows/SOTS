@@ -16,10 +16,6 @@ namespace SOTS.NPCs
 {
 	public class BleedingGhast : ModNPC
 	{	float ai1 = 0;
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Bleeding Ghast");
-		}
 		public override void SetDefaults()
 		{
             NPC.lifeMax = 150;   

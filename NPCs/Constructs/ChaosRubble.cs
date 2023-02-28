@@ -26,10 +26,6 @@ namespace SOTS.NPCs.Constructs
 			spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY), null, Color.White, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
 			return false;
 		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Chaos Construct Chassis");
-		}
 		public override void SetDefaults()
 		{
             NPC.aiStyle =-1;  

@@ -9,7 +9,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goopwood");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

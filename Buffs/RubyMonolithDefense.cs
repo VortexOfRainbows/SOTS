@@ -8,8 +8,6 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ruby Monolith Defense");
-			Description.SetDefault("Increases void regeneration speed by 10%\nReduces damage taken by 5%");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }

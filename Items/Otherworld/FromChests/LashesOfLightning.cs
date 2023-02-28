@@ -14,8 +14,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{ 	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lashes of Lightning");
-			Tooltip.SetDefault("Unleash rapid strikes of lightning in a small area in front of you\nDeals slightly more damage and can hit through walls at the tip");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

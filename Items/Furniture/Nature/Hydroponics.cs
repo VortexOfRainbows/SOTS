@@ -17,8 +17,6 @@ namespace SOTS.Items.Furniture.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Plating Hydroponics");
-			Tooltip.SetDefault("Automatically grows an assortment of alchemical herbs\nRight click to harvest all fully grown herbs\nPlants can be harvested at any time or weather");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -59,7 +57,6 @@ namespace SOTS.Items.Furniture.Nature
 			TileObjectData.addTile(Type);
 			DustType = DustID.Tungsten;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Hydroponics");		
 			AddMapEntry(SOTSTile.NaturePlatingColor, name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 		}

@@ -16,8 +16,6 @@ namespace SOTS.Items.Permafrost
 		int broken = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shatter Blade");
-			Tooltip.SetDefault("Shatters on critical strike, surrounding you with 3 ice shards\nRepairs itself after shattering\n'Don't worry, it's not a durability system'");
 			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using SOTS.Void;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
+using Terraria.Localization;
 
 namespace SOTS.Items.Chaos
 {
@@ -35,8 +36,6 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Voidmage Incubator");
-			Tooltip.SetDefault("Epic Gamer\nIncreases void gain by 10 and void regeneration speed by 10%\nGetting hit will freeze time, converting void into life for the duration\nIncreases the potency of Void Shock and Void Recovery");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -112,34 +111,7 @@ namespace SOTS.Items.Chaos
         }
 		public string GetTooltip(int gem)
 		{
-			string text = "";
-			switch (gem)
-			{
-				case 0: //geo
-					text += "Reduces damage taken by 5%";
-					break;
-				case 1: //electro
-					text += "Increases damage by 8%";
-					break;
-				case 2: //anemo
-					text += "Increases movement speed by 10%\nIncreases jump speed";
-					break;
-				case 3: //cyro
-					text += "Increases critical strike damage by 20%";
-					break;
-				case 4: //pyro
-					text += "Increases critical strike chance by 6%";
-					break;
-				case 5: //hydro
-					text += "Increases max life by 40";
-					break;
-				case 6: //dendro
-					text += "Increases life regeneration by 2";
-					break;
-				case 7: //masterless
-					text += "Increases max void by 40";
-					break;
-			}
+			string text = Language.GetTextValue($"Mods.SOTS.VoidmageIncubatorTextList.{gem}");
 			return text;
 		}
 		public override void AddRecipes()

@@ -10,8 +10,6 @@ namespace SOTS.Items.Pyramid
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Heart in a Jar");
-			Tooltip.SetDefault("Curses enemies within a small radius around you, draining 10 life per second\nCursed enemies release a Curse Fragment upon death, which seeks out other enemies\nCurse fragments deal damage equivalent to 10% of the killed enemies max health plus an additional 10 damage\nIncreases max life by 20");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

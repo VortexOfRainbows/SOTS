@@ -10,8 +10,6 @@ namespace SOTS.Items.Temple
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Solar Bullet");
-			Tooltip.SetDefault("50% of damage done ignores defense completely\nIncreases in speed after bouncing off walls");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
 			ItemID.Sets.AnimatesAsSoul[Type] = true;
 			this.SetResearchCost(99);

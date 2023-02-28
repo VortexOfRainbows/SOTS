@@ -9,7 +9,6 @@ namespace SOTS.Items.Crushers
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Extends the range of Crushers by 1\nAlso increases melee damage by 5%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

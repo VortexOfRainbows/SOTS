@@ -12,8 +12,6 @@ namespace SOTS.Items.Tools
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Steel Great Hamaxe");
-			Tooltip.SetDefault("Critical strikes deal 50% more damage and may also apply a stacking, permanent bleed for 5 damage per second");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

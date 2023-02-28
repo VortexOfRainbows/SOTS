@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using SOTS.Void;
+using Terraria.Localization;
 
 namespace SOTS.Items.AbandonedVillage
 {
@@ -33,8 +34,6 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Elemental Amulet");
-			Tooltip.SetDefault("Epic Gamer\n'Resonates with your ambitions'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -133,49 +132,8 @@ namespace SOTS.Items.AbandonedVillage
         }
 		public string GetTooltip(int gem, int frame)
 		{
-			string text = "";
-			switch (gem)
-			{
-				case 0: //geo
-					text += "Reduces damage taken by 10%";
-					break;
-				case 1: //electro
-					text += "Increases max minions and sentries by 1\nIncreases damage by 10%";
-					break;
-				case 2: //anemo
-					text += "Increases attack speed by 12%";
-					break;
-				case 3: //cyro
-					text += "Increases critical strike chance by 10%";
-					break;
-				case 4: //pyro
-					text += "Increases critical strike damage by 30%";
-					break;
-				case 5: //hydro
-					text += "Increases healing recieved from potions by 40\nIncreases life regeneration by 2";
-					break;
-				case 6: //dendro
-					text += "Increases max life by 80";
-					break;
-				case 7: //masterless
-					text += "Increases void regeneration speed by 20%";
-					break;
-			}
-			switch (frame)
-			{
-				case 0: //liyue
-					text += "\nShops prices lowered by 20%";
-					break;
-				case 1: //inazuma
-					text += "\nIncreases buff duration by 25%\nDecreases mana cost by 10%";
-					break;
-				case 2: //mondstadt
-					text += "\nIncreases melee speed and movement speed by 10%\nIncreases jump speed";
-					break;
-				case 3: //Sumeru
-					text += "\nProvides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations\nIncreases max mana and mana recieved from potions by 40";
-					break;
-			}
+			string text = Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList.{gem}");
+			text += Language.GetTextValue($"Mods.SOTS.VisionAmuletTextList2.{frame}");
 			return text;
 		}
 	}

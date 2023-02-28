@@ -44,7 +44,6 @@ namespace SOTS.NPCs
 		private Vector2 lookAtPos = new Vector2(-1, -1);
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Holo Eye");
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]

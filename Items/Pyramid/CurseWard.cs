@@ -8,8 +8,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Curse Ward");
-			Tooltip.SetDefault("Weakens the pyramid's curse while in the inventory\nNo longer needed, as the curse will weaken automatically after killing the BoC or EoW");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

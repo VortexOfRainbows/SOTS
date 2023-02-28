@@ -13,8 +13,6 @@ namespace SOTS.Items.Pyramid
 		bool inInventory = false;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jury Rigged Drill");
-			Tooltip.SetDefault("Can break the walls of the pyramid\nBreaks after some usage");
 			this.SetResearchCost(200);
 		}
 		public override void SetDefaults()

@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
+using Terraria.Localization;
 
 namespace SOTS.Items.Otherworld.Furniture
 {
@@ -21,8 +22,6 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pot Generator");
-			Tooltip.SetDefault("Generates pots on top of its surface\nCan be stacked to increase production of the topmost generator\n'No, not that type of pot'");
 			this.SetResearchCost(1);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -125,7 +124,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Pot Generator");
 			AddMapEntry(new Color(180, 245, 240), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustType<AvaritianDust>();
@@ -176,15 +174,15 @@ namespace SOTS.Items.Otherworld.Furniture
 			int secondsLeft = 60 - seconds;
 			if (Main.tile[i, j - 1].TileType == Type)
 			{
-				Main.NewText("Status: N/A");
+				Main.NewText(Language.GetTextValue("Mods.SOTS.PotGeneratorTileText.0"));
 			}
 			else if (entity.timer < 0)
 			{
-				Main.NewText("Status: Complete");
+				Main.NewText(Language.GetTextValue("Mods.SOTS.PotGeneratorTileText.1"));
 			}
 			else
 			{
-				Main.NewText("Time left: " + secondsLeft);
+				Main.NewText(Language.GetTextValue("Mods.SOTS.PotGeneratorTileText.2", secondsLeft));
 			}
 			return true;
 		}

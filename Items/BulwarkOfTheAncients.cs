@@ -12,8 +12,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bulwark of the Ancients");
-			Tooltip.SetDefault("Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nIncreases void gain by 2, life regen by 1, reduces damage taken by 5%, and increases crit chance by 4%\nSurrounds you with 4 orbital projectiles\nProjectiles disabled when hidden");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

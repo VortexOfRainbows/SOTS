@@ -21,7 +21,6 @@ namespace SOTS.NPCs.Constructs
 		public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 1;
-			DisplayName.SetDefault("Inferno Spirit");
 			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
 		}

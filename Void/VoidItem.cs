@@ -90,21 +90,21 @@ namespace SOTS.Void
 			{
 				string[] splitText = tt.Text.Split(' ');
 				string damageValue = splitText.First();
-				string damageWord = "damage";
+				string damageWord = Language.GetTextValue("Mods.SOTS.Common.Damage");
 				
-				tt.Text = damageValue + " void " + damageWord;
+				tt.Text = Language.GetTextValue("Mods.SOTS.Common.Void2", damageValue, damageWord);
 				
 				if(Item.CountsAsClass(DamageClass.Melee))
-					tt.Text = damageValue + " void + melee " + damageWord;
+					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidM", damageValue, damageWord);
 				
 				if(Item.CountsAsClass(DamageClass.Ranged))
-					tt.Text = damageValue + " void + ranged " + damageWord;
+					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidR", damageValue, damageWord);
 			
 				if(Item.CountsAsClass(DamageClass.Magic))
-					tt.Text = damageValue + " void + magic " + damageWord;
+					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidM2", damageValue, damageWord);
 
 				if (Item.CountsAsClass(DamageClass.Summon))
-					tt.Text = damageValue + " void + summon " + damageWord;
+					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidS", damageValue, damageWord);
 			}
 			string voidCostText = VoidCost(Main.LocalPlayer).ToString();
 			TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.Mod == "Terraria");
@@ -114,7 +114,7 @@ namespace SOTS.Void
 				//string damageValue = splitText.First();
 				//string damageWord = splitText.Last();
 				if(Item.accessory == false)
-					tt2.Text = "Consumes " + voidCostText + " void";
+					tt2.Text = Language.GetTextValue("Mods.SOTS.Common.CV", voidCostText);
 				else
 				{
 					tooltips.Remove(tt2);

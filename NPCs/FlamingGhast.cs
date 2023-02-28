@@ -17,10 +17,6 @@ namespace SOTS.NPCs
 {
 	public class FlamingGhast : ModNPC
 	{	float ai1 = 0;
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Flaming Ghast");
-		}
 		public override void SetDefaults()
 		{
             NPC.aiStyle =0; 

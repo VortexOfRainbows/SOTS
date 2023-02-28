@@ -47,7 +47,6 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Cursed Growth");
 			AddMapEntry(new Color(78, 55, 108), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;

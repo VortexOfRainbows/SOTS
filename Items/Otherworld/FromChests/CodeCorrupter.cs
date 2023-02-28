@@ -13,8 +13,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Code Corrupter");
-			Tooltip.SetDefault("Fires a short ranged and a long ranged blast\nThe short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabalize enemies\nDestabilized enemies gain a 5% flat chance to be critically striked\nThis is calculated after normal crits, allowing some attacks to double crit\nDestabilization is permanent and can stack, but the chance of applying it gets lower with each level already applied");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

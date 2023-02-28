@@ -10,8 +10,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goopwood Staff");
-			Tooltip.SetDefault("Fires 3 bouncy, erratic, lingering pink projectiles");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

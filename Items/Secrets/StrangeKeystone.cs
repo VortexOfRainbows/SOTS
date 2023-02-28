@@ -11,8 +11,6 @@ namespace SOTS.Items.Secrets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Strange Obelisk");
-			Tooltip.SetDefault("It suffers from small cracks under intense sunlight\n'Feels hollow'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -32,7 +30,6 @@ namespace SOTS.Items.Secrets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Broken Obelisk");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -58,7 +55,6 @@ namespace SOTS.Items.Secrets
             TileObjectData.addTile(Type);
             DustType = 32;
             ModTranslation name = CreateMapEntryName();
-		    name.SetDefault("Strange Keystone");		
 		    AddMapEntry(new Color(90, 80, 45), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.Pyramid
 {
@@ -30,8 +31,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Robe");
-			Tooltip.SetDefault("Increased maximum mana and void by 80\nReduces mana and void usage by 15%\nSummons a Ruby Monolith to your side\nThe Ruby Monolith increases your void regeneration speed by 10%");
 			this.SetResearchCost(1);
 			SetupDrawing();
 		}
@@ -83,8 +82,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Hood");
-			Tooltip.SetDefault("Increases magic damage and void damage by 8%\nAlso increases magic crit chance and void crit chance by 5%\nThe closest enemy to you is afflicted with a curse\nUpon taking damage, cursed enemies will Flare, taking 140% additional damage and dealing 140% damage to other nearby enemies\nThis effect has a 2 second cooldown");
 			this.SetResearchCost(1);
 		}
 		public override void UpdateEquip(Player player)
@@ -104,14 +101,14 @@ namespace SOTS.Items.Pyramid
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			modPlayer.CanCurseSwap = true;
-			string theKey = "Unbound";
+			string theKey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
 			if(Main.netMode != NetmodeID.Server)
 			{
 				foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys())
 				{
 					theKey = key;
 				}
-				player.setBonus = "Press the '" + theKey + "' key to change the Ruby Monolith into an offensive stance\nWhile in offensive stance, decreases the cooldown of Curse Flaring by 80%\nHowever, increases void drain by 6 instead of increasing void regeneration speed by 10%";
+				player.setBonus = Language.GetTextValueWith("Mods.SOTS.ArmorSetBonus.Cursed", theKey);
 			}				
 		}
 		public override void AddRecipes()

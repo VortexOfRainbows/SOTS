@@ -16,10 +16,6 @@ namespace SOTS.NPCs.Constructs
 		int timer = 0;
 		int ai1 = 0;
 		float dir = 0f;
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Permafrost Construct");
-		}
 		public override void SetDefaults()
 		{
 			NPC.aiStyle =26; //unicorn AI

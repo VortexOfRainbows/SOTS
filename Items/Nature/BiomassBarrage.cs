@@ -11,8 +11,6 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Biomass Bloom");
-			Tooltip.SetDefault("Launches a cluster of acorns");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

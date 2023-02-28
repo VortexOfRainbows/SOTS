@@ -9,8 +9,6 @@ namespace SOTS.Items.Nature
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Botanical Symbiote");
-			Tooltip.SetDefault("Increases life regeneration by 1 during the day\nGrants a Blooming Hook to all minions");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

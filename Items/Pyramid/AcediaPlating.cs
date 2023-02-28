@@ -11,8 +11,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Acedia Portal Plating");
-			Tooltip.SetDefault("'It bares striking resemblance to luminite'");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()

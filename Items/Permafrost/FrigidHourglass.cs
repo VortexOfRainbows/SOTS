@@ -9,8 +9,6 @@ namespace SOTS.Items.Permafrost
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frigid Hourglass");
-			Tooltip.SetDefault("Freezes your void meter for 15 seconds every minute\nProvides immunity to Slow, Chilled, Frozen, and Frostburn\nIncreases movement speed by 10%");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

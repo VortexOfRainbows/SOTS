@@ -16,7 +16,6 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Digital Daito");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 15));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			this.SetResearchCost(1);

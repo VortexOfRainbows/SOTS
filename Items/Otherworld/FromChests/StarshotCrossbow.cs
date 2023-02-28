@@ -20,8 +20,6 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starshot Crossbow");
-			Tooltip.SetDefault("Fire a star that scatters arrows in every direction");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

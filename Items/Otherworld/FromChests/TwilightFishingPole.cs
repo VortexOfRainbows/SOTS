@@ -15,8 +15,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Fishing Pole");
-			Tooltip.SetDefault("Casts two lines at once");
 			ItemID.Sets.CanFishInLava[Item.type] = false;
 			this.SetResearchCost(1);
 		}

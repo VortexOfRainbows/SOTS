@@ -10,8 +10,6 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goopwood Helix");
-			Tooltip.SetDefault("Converts musket balls into helix shots");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

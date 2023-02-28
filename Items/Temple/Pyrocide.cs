@@ -18,8 +18,6 @@ namespace SOTS.Items.Temple
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrocide");
-            Tooltip.SetDefault("Strike with 5 slashes\nThe final slash does 150% damage");
             ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
             this.SetResearchCost(1);
 		}

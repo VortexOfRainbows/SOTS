@@ -11,8 +11,6 @@ namespace SOTS.Items.Tools
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frigid Pickaxe");
-			Tooltip.SetDefault("Able to mine Hellstone");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

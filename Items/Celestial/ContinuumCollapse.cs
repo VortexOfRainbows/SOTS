@@ -11,10 +11,8 @@ namespace SOTS.Items.Celestial
 {
 	public class ContinuumCollapse : VoidItem
 	{	
-		public override void SetStaticDefaults()
+		public override void SetStaticDefaults()//TODO 文本无法正常显示
 		{
-			DisplayName.SetDefault("Continuum Collapse");
-			Tooltip.SetDefault("'Devour all that is infinite, including your system's memory'\nCan hit up to 15 enemies at a time\nWill not hurt players");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

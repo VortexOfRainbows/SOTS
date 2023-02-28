@@ -13,8 +13,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Acedia Gateway");
-			Tooltip.SetDefault("'A strange portal that leads nowhere'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -51,7 +49,6 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.Origin = new Point16(4, 8);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Strange Gateway");
 			AddMapEntry(new Color(44, 12, 62), name);
 			//TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<Dusts.AcedianDust>();

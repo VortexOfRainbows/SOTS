@@ -19,8 +19,6 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Supernova Hammer");
-			Tooltip.SetDefault("Critical strikes release 3 seekers that do 50% critical damage\nKilling enemies releases 3 seekers that do 70% damage\nEnemies killed by seekers release 2 more seekers, each doing 75% damage\nSeekers home onto enemies, but do not attack the enemies they are released from");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

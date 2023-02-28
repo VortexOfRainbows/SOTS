@@ -11,8 +11,6 @@ namespace SOTS.Items.Inferno
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sharanga");
-			Tooltip.SetDefault("Fires supercharged hellfire arrows");
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()

@@ -15,8 +15,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{ 	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Section Chief's Scythe");
-			Tooltip.SetDefault("Critical hits summon a Soul of Retaliation into the air\nEvery 10th void attack will release the soul in the form of a powerful laser\nDirect melee hits permanently curse enemies for 4 damage per second, stacking up to 10 times");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

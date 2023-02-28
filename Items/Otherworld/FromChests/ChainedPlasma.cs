@@ -16,9 +16,7 @@ namespace SOTS.Items.Otherworld.FromChests
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chained Plasma");
-			Tooltip.SetDefault("Chains between enemies for 70% damage\nTries to move towards your cursor");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

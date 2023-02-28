@@ -14,7 +14,6 @@ namespace SOTS.Items.Invidia
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Has to windup before firing\nArrows travel fast and scatter into rock shrapnel for 70% damage");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

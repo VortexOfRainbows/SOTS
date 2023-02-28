@@ -11,7 +11,6 @@ namespace SOTS.Items.Inferno
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Obsidian Eruption");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

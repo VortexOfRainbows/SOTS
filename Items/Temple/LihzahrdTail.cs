@@ -8,7 +8,6 @@ namespace SOTS.Items.Temple
 	{	
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Increases buff duration by 67%\nIncreases healing and mana recieved from potions by 50");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

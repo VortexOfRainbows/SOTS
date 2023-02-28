@@ -14,8 +14,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crescent Staff");
-			Tooltip.SetDefault("Cast a wave of Crescents that each lock onto an enemy, and then steal life and mana from them");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

@@ -51,13 +51,12 @@ using static SOTS.SOTS;
 using SOTS.Items.Invidia;
 using SOTS.Projectiles.Lightning;
 using SOTS.Projectiles.Camera;
+using Terraria.Localization;
 
 namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
-		private const string worldEnter = "(SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.";
-		private const string worldEnterThanks = "(SOTS): Thank you for using the SOTS texture pack! Please enjoy all the hard effort that went into it!";
 		private int LogInMessageTimer = 7;
 		public override void SetControls()
 		{
@@ -71,12 +70,12 @@ namespace SOTS
 					if (SOTS.SOTSTexturePackEnabled)
 					{
 						LogInMessageTimer = -1;
-						Main.NewText(worldEnterThanks, new Color(255, 150, 255));
+						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
 					}
 					else
 					{
 						LogInMessageTimer = -1;
-						Main.NewText(worldEnter, new Color(20, 255, 40));
+						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
 					}
 				}
 			}
@@ -87,9 +86,9 @@ namespace SOTS
 			if (Main.netMode != NetmodeID.Server)
 			{
 				if (SOTS.SOTSTexturePackEnabled)
-					Main.NewText(worldEnterThanks, new Color(255, 150, 255));
+					Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
 				else
-					Main.NewText(worldEnter, new Color(20, 255, 40));
+					Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
 			}
 		}
         public static SOTSPlayer ModPlayer(Player player)

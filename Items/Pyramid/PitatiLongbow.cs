@@ -12,8 +12,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pitati Longbow");
-			Tooltip.SetDefault("Fires an additional bouncing emerald bolt with each shot");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Items.Slime;
+using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Goopwood
 {
@@ -23,7 +24,7 @@ namespace SOTS.Items.Furniture.Goopwood
 	}
 	public class GoopwoodBarrelTile : ContainerType
     {
-        protected override string ChestName => "Goopwood Barrel";
+        protected override string ChestName => Language.GetTextValue("Mods.SOTS.ContainerName.GoopwoodBarrelTile");
         protected override int ChestDrop => ModContent.ItemType<GoopwoodBarrel>();
         protected override int DustType => 7; //wood
         protected override void AddMapEntires()

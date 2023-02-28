@@ -10,8 +10,6 @@ namespace SOTS.Items.Flails
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Aten");
-            Tooltip.SetDefault("Conjures stars that do 70% damage and explode for 140% damage\n'The defunct god... now in flail form'");
             this.SetResearchCost(1);
         }
         public override void SafeSetDefaults()

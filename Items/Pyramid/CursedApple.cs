@@ -13,8 +13,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Apple");
-			Tooltip.SetDefault("Summons a pet Ghost Pepper to assist after combat\nPlunder 2 Souls of Looting from every killed enemy, and store them inside your void meter\nRight click on an enemy to mark it for harvesting, consuming 10 souls\nMarked enemies drop extra loot\nEnemies can be marked multiple times\nRequires 100 souls to mark a boss\nSome rare enemies will also require more souls to mark");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -53,7 +51,6 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Strange Fruit");
 			AddMapEntry(new Color(185, 20, 40), name);
 			TileObjectData.addTile(Type);
 			HitSound = SoundID.Grass;

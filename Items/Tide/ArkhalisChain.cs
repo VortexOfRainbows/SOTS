@@ -17,8 +17,6 @@ namespace SOTS.Items.Tide
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lost Chain");
-			Tooltip.SetDefault("'It probably didn't come from here'");
 			this.SetResearchCost(100);
 		}
 		public override void SetDefaults()
@@ -46,7 +44,6 @@ namespace SOTS.Items.Tide
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Lost Chain");
 			AddMapEntry(new Color(127, 127, 127), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			ItemDrop = ModContent.ItemType<ArkhalisChain>();

@@ -31,10 +31,6 @@ namespace SOTS.NPCs.Constructs
 			dir = reader.ReadSingle();
 			canSpell = reader.ReadBoolean();
 		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Nature Construct");
-		}
 		public override void SetDefaults()
 		{
 			NPC.aiStyle =0;

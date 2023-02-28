@@ -9,8 +9,6 @@ namespace SOTS.Items.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Snow Crystal");
-			Tooltip.SetDefault("Summons the snow-shield mount\nWhile mounted, gain 8 defense");
             this.SetResearchCost(1);
         }
         public override void SetDefaults()

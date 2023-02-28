@@ -11,11 +11,6 @@ namespace SOTS.Items
 {
 	public class BaguetteCrumb : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Baguette Crumb");
-			Tooltip.SetDefault("");
-		}
 		public override void SetDefaults()
 		{
 			Item.width = 14;

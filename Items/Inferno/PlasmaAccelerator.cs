@@ -15,8 +15,6 @@ namespace SOTS.Items.Inferno
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Accelerator");
-			Tooltip.SetDefault("Fires supercharged plasma arrows");
             this.SetResearchCost(1);
         }
 		public override void SetDefaults()

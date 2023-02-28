@@ -12,8 +12,6 @@ namespace SOTS.Items.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Irradiated Chain-Reactor");
-			Tooltip.SetDefault("Charge to increase damage up to 500%\nLaunches out spores that deal 50% damage\nTakes 1.66 seconds to reach max charge");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

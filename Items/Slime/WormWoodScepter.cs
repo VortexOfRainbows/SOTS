@@ -11,8 +11,6 @@ namespace SOTS.Items.Slime
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goopwood Scepter");
-			Tooltip.SetDefault("Summons a Wormwood Turret to fire upon up to 4 enemies at a time");
             this.SetResearchCost(1);
         }
         public override void SetDefaults()

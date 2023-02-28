@@ -10,11 +10,6 @@ namespace SOTS.Items
 {
 	public class HealPack : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Heal Pack");
-			Tooltip.SetDefault("");
-		}
 		public override void SetDefaults()
 		{
 			Item.width = 18;
@@ -101,11 +96,6 @@ namespace SOTS.Items
 	}
 	public class ManaPack : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Mana Pack");
-			Tooltip.SetDefault("");
-		}
 		public override void SetDefaults()
 		{
 			Item.width = 14;

@@ -119,7 +119,6 @@ namespace SOTS.Items.Pyramid
 			Main.tileObsidianKill[Type] = true;
 			ItemDrop = ModContent.ItemType<TaintedKeystoneShard>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Tainted Keystone Shard");
 			AddMapEntry(new Color(24, 24, 24), name);
 			HitSound = SoundID.Item27;
 			DustType = 195;

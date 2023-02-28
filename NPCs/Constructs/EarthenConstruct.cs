@@ -15,10 +15,6 @@ namespace SOTS.NPCs.Constructs
 {
     public class EarthenConstruct : ModNPC
     {
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Earthen Construct");
-		}
         public override void SetDefaults()
         {
             NPC.lifeMax = 200;      

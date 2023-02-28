@@ -16,8 +16,6 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sky Chain");
-			Tooltip.SetDefault("'It anchors onto... somewhere'");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -47,7 +45,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Sky Chain");
 			AddMapEntry(new Color(255, 255, 255), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			ItemDrop = ModContent.ItemType<SkyChain>();

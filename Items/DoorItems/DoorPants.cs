@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace SOTS.Items.DoorItems
 {[AutoloadEquip(EquipType.Legs)]
@@ -17,8 +18,6 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Door Pants");
-			Tooltip.SetDefault("Accelerates horizontal movement when going through doors\nBuilds up speed while standing in doors");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -27,7 +26,7 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Acceleration lasts longer\nBuild up speed faster";
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.DoorItems");
 			DoorPlayer doorPlayer = DoorPlayer.ModPlayer(player);
 			doorPlayer.doorPants++;
 		}
@@ -54,8 +53,6 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Band of Door");
-			Tooltip.SetDefault("'Open the door to the ultimate form of travel'");
 			this.SetResearchCost(1);
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -17,7 +17,6 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Blade");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

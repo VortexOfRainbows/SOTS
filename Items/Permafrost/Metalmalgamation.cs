@@ -8,9 +8,7 @@ namespace SOTS.Items.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Metalmalgamation");
-			Tooltip.SetDefault("Rapidly sprays out bullets in a radius around it that deal 35% damage\n'Guns on MY children's toy!?'");
-            this.SetResearchCost(1);
+			this.SetResearchCost(1);
         }
         public override void SetDefaults()
         {

@@ -17,7 +17,6 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Alloy");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

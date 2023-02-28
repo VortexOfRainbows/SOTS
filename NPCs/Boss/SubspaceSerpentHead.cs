@@ -40,7 +40,6 @@ namespace SOTS.NPCs.Boss
         Vector2 directVelo;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Subspace Serpent");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true } );
         }
         public override void SetDefaults()

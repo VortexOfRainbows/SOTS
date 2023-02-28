@@ -17,8 +17,6 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frost Artifact Breastplate");
-			Tooltip.SetDefault("16% increased melee and ranged critical strike chance");
 			this.SetResearchCost(1);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)

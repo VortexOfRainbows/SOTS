@@ -24,10 +24,6 @@ namespace SOTS.NPCs
 		{
 			mushForm = reader.ReadBoolean();
 		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Teratoma");
-		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return !mushForm;

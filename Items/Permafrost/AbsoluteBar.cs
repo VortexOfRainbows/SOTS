@@ -8,8 +8,6 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Absolute Alloy");
-			Tooltip.SetDefault("'It burns to touch'");
 			this.SetResearchCost(25);
 		}
 		public override void SetDefaults()

@@ -31,7 +31,6 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.Origin = new Point16(2, 4);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Strange Keystone");
 			AddMapEntry(new Color(115, 0, 0), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();

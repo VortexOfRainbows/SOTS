@@ -14,8 +14,6 @@ namespace SOTS.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Heretic Tonic");
-			Tooltip.SetDefault("Randomly receive 2 of the following:\nNightmare for 15 minutes\nWrath for 13 minutes\nRage for 13 minutes\nAmmo Reservation for 9 minutes\n'The world around you follows your example'");
 			this.SetResearchCost(20);
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

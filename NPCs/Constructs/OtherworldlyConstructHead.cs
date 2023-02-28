@@ -15,10 +15,6 @@ namespace SOTS.NPCs.Constructs
 	{
 		int ai1 = 0;
 		float dir = 0f;
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Otherworldly Construct");
-		}
 		public override void SetDefaults()
 		{
 			NPC.aiStyle =0;

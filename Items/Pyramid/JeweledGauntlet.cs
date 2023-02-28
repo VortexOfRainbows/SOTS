@@ -12,7 +12,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Gauntlet");
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()

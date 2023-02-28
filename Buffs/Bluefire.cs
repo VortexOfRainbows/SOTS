@@ -8,8 +8,6 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bluefire");
-			Description.SetDefault("Killed enemies explode into flames");   
             Main.buffNoSave[Type] = false;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;

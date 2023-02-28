@@ -112,7 +112,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Hardlight Table");
 			AddMapEntry(new Color(55, 55, 55));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();

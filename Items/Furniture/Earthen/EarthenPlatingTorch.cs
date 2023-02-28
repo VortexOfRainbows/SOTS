@@ -82,7 +82,6 @@ namespace SOTS.Items.Furniture.Earthen
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Earthen Plating Torch");
 			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
 			DustType = DustID.GoldCoin;
 			ItemDrop = ModContent.ItemType<EarthenPlatingTorch>();

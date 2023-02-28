@@ -13,8 +13,6 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phase Cannon");
-			Tooltip.SetDefault("Fires a supercharged ball of plasma that can travel through walls");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

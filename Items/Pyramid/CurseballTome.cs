@@ -11,8 +11,6 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Spear Storm");
-			Tooltip.SetDefault("Unleashes a flurry of highly potent but inaccurate Cursed Spears");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
