@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Camera
 			mousePosition.Y = reader.ReadSingle();
 		}
         public Vector2 mousePosition = Vector2.Zero;
-		public Color Green1 => new Color(86, 226, 100, 0);
+		public static Color Green1 => new Color(86, 226, 100, 0);
 		public override void SetStaticDefaults()
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;  
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Camera
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			target.AddBuff(ModContent.BuffType<DendroChain>(), 1200 + 1 + damage); //1200 is 20 seconds, + 1 + damagew
+			target.AddBuff(ModContent.BuffType<DendroChain>(), 1200 + damage); //1200 is 20 seconds, damage will be used later
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

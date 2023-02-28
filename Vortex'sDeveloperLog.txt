@@ -62,6 +62,9 @@ Things to Note For Later:
 
 Daily Log:
 
+2/27/23
+1. Dreaming Lamp on hit effects/debuff + .gitignore stuff (thanks to Lacewing!)
+
 2/26/23
 1. Dreaming Lamp item pickup mechanic and npc hurt mechanic (Still needed: Chaining Mechanic, Death Damage, Server Syncing)
 
