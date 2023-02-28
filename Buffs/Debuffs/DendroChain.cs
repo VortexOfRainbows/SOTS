@@ -17,11 +17,15 @@ namespace SOTS.Buffs.Debuffs
     }
     public static class DendroChainNPCOperators
     {
-        public static void PullOtherNPCs()
+        public static void PullOtherNPCs(NPC npc)
         {
 
         }
-        public static void HurtOtherNPCs()
+        public static void HurtOtherNPCs(NPC npc)
+        {
+
+        }
+        public static void InitiateNPCDamageStats(NPC npc, ref int outDamage)
         {
 
         }
