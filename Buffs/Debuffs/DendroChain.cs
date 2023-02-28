@@ -17,6 +17,7 @@ namespace SOTS.Buffs.Debuffs
     }
     public static class DendroChainNPCOperators
     {
+        public const int DendroChainStandardDuration = 1200;
         public static void PullOtherNPCs(NPC npc)
         {
 
@@ -27,7 +28,14 @@ namespace SOTS.Buffs.Debuffs
         }
         public static void InitiateNPCDamageStats(NPC npc, ref int outDamage)
         {
-
+            if(npc.HasBuff(ModContent.BuffType<DendroChain>()))
+            {
+                int buffIndex = npc.FindBuffIndex(ModContent.BuffType<DendroChain>());
+                int currentBuffTime = npc.buffTime[buffIndex];
+                int damageToHave = currentBuffTime - DendroChainStandardDuration;
+                outDamage = damageToHave;
+                npc.buffTime[buffIndex] = DendroChainStandardDuration;
+            }
         }
     }
 }
