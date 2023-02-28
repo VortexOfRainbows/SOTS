@@ -6,7 +6,7 @@ using Terraria.ModLoader.Config;
 using Terraria.Localization;
 
 namespace SOTS
-{//TODO: 文本无法正常显示
+{
 	[Label("$Mods.SOTS.Configuration.Label.Config")]
 	[BackgroundColor(45, 50, 65, 192)]
 	public class SOTSConfig : ModConfig
