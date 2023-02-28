@@ -1,14 +1,10 @@
 
-obj/project.assets.json
-obj/project.nuget.cache
-obj/SOTS.csproj.nuget.dgspec.json
-obj/SOTS.csproj.nuget.g.props
-obj/Debug/net45/SOTS.assets.cache
-.vs/SOTS/v16/.suo
-obj/Debug/net45/SOTS.assets.cache
+obj
+.vs
 *.v2
 *.vsidx
 *.lock
 *.cache
 *.editorconfig
 *.targets
+obj/Debug/net6.0/SOTS.AssemblyInfo.cs
