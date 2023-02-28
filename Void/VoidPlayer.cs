@@ -61,7 +61,7 @@ namespace SOTS.Void
 
 		public static string[] voidDeathMessages = new string[] { };
         //{
-        //    Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//TODO 文本无法正常显示
+        //    Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//TODO Fix these
         //	//" was devoured by the void.",
         //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//TODO 文本无法正常显示
         //	//" was taken by the void.",
