@@ -32,6 +32,7 @@ using SOTS.Items.Tools;
 using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Blades;
+using SOTS.Buffs.Debuffs;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -86,6 +87,7 @@ namespace SOTS.Common.GlobalNPCs
         public float aiSpeedMultiplier = 1;
         public const float timeBeforeFullFreeze = 30f;
         public float frozenForTime = 0;
+        private int DendroDamage = 0;
         public List<int> ammoRegatherList = new List<int>();
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
@@ -835,6 +837,19 @@ namespace SOTS.Common.GlobalNPCs
                     finalSlowdown *= 0.4f;
                 else
                     finalSlowdown *= 0.975f;
+            }
+            bool DreamLamp = npc.HasBuff<DendroChain>();
+            if(DreamLamp)
+            {
+                int lastDD = DendroDamage;
+                int damageToAdd = 0;
+                DendroChainNPCOperators.InitiateNPCDamageStats(npc, ref damageToAdd);
+                DendroDamage += damageToAdd;
+                DendroChainNPCOperators.PullOtherNPCs(npc);
+                if (lastDD != DendroDamage)
+                    Main.NewText(DendroDamage);
+                if (!npc.boss) //only slows enemies down by a modest 5%
+                    finalSlowdown *= 0.95f;
             }
             npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult * finalSlowdown);
             base.PostAI(npc);

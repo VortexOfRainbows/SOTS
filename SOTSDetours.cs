@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs.Debuffs;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Furniture;
 using SOTS.Items.Furniture.Earthen;
@@ -361,6 +362,11 @@ namespace SOTS
 					{
 						dLaser.DrawBlack(Main.spriteBatch); //change later
 					}
+					if(i < 200)
+                    {
+						NPC npc = Main.npc[i];
+						DendroChainNPCOperators.DrawFloralBloomImage(npc);
+                    }
 				}
 				Main.spriteBatch.End();
 			}
@@ -377,6 +383,7 @@ namespace SOTS
 						DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
 						if (instancedNPC.timeFrozen != 0)
 							instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch);
+						DendroChainNPCOperators.DrawChainsBetweenNPC(npc, Main.spriteBatch);
 					}
 				}
 			}
