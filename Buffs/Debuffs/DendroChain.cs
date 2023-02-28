@@ -8,8 +8,6 @@ namespace SOTS.Buffs.Debuffs
     {	
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dendro Chain");
-			Description.SetDefault("");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;
