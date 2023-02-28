@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Buffs.Debuffs;
 
 namespace SOTS.Projectiles.Camera
 {    
@@ -55,6 +56,10 @@ namespace SOTS.Projectiles.Camera
         public override bool? CanHitNPC(NPC target)
         {
             return Projectile.timeLeft < 16 && Projectile.ai[0] == 1 && Vector2ListContainsX(npcVectors, target.whoAmI);
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+			target.AddBuff(ModContent.BuffType<DendroChain>(), 1200 + 1 + damage); //1200 is 20 seconds, + 1 + damagew
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

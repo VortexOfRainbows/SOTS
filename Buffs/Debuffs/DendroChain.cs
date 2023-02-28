@@ -1,0 +1,29 @@
+using System;
+using Terraria;
+using Terraria.ModLoader;
+ 
+namespace SOTS.Buffs.Debuffs
+{
+    public class DendroChain : ModBuff //All the actual updates for this file will be ran in NPC
+    {	
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Dendro Chain");
+			Description.SetDefault("");   
+            Main.buffNoSave[Type] = true;
+            Main.buffNoTimeDisplay[Type] = false;
+			Main.debuff[Type] = true;
+        }
+    }
+    public static class DendroChainNPCOperators
+    {
+        public static void PullOtherNPCs()
+        {
+
+        }
+        public static void HurtOtherNPCs()
+        {
+
+        }
+    }
+}
