@@ -11,7 +11,7 @@ namespace SOTS.Items.Celestial
 {
 	public class ContinuumCollapse : VoidItem
 	{	
-		public override void SetStaticDefaults()//文本无法正常显示
+		public override void SetStaticDefaults()//TODO 文本无法正常显示
 		{
 			this.SetResearchCost(1);
 		}

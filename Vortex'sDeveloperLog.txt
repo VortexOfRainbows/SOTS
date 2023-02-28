@@ -53,6 +53,7 @@ This is the plan currently
 Other 1.4 related objectives:
 1. Final 1 starter house
 2. Bestiary for all enemies
+3. Release a Beta Build by 3/2/23
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
