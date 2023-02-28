@@ -10,7 +10,7 @@ using Terraria.Localization;
 
 namespace SOTS.Items.Fragments
 {
-	public abstract class DissolvingElement : ModItem//文本无法正常显示
+	public abstract class DissolvingElement : ModItem//TODO 文本无法正常显示
 	{
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{

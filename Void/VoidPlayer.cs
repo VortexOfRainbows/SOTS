@@ -161,17 +161,17 @@ namespace SOTS.Void
 			}
 		}
 		public static string[] voidDeathMessages = {
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//文本无法正常显示
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//TODO 文本无法正常显示
 			//" was devoured by the void.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//文本无法正常显示
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//TODO 文本无法正常显示
 			//" was taken by the void.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),//文本无法正常显示
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),//TODO 文本无法正常显示
 			//" was consumed by the darkness.",
 			//" was taken by the darkness.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),//文本无法正常显示
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),//TODO 文本无法正常显示
 			//" couldn't handle their own power.",
 			//" didn't manage their void well.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")//文本无法正常显示
+			Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")//TODO 文本无法正常显示
 		};
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
