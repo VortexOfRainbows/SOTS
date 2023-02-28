@@ -16,6 +16,7 @@ using SOTS.Items.Void;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Localization;
+using System.Linq;
 
 namespace SOTS.Void
 {
@@ -57,7 +58,30 @@ namespace SOTS.Void
 		public int BonusCrushRangeMin = 0;
 		public int BonusCrushRangeMax = 0;
 		public float VoidGenerateMoney = 0;
-		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
+
+		public static string[] voidDeathMessages = new string[] { };
+		//{
+        //    Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//TODO 文本无法正常显示
+		//	//" was devoured by the void.",
+		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//TODO 文本无法正常显示
+		//	//" was taken by the void.",
+		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),//TODO 文本无法正常显示
+		//	//" was consumed by the darkness.",
+		//	//" was taken by the darkness.",
+		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),//TODO 文本无法正常显示
+		//	//" couldn't handle their own power.",
+		//	//" didn't manage their void well.",
+		//	Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")//TODO 文本无法正常显示
+		//};
+        public override void Load()
+        {
+			voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD1")).ToArray(); //TODO Test it
+            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD2")).ToArray();
+            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD3")).ToArray();
+            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD4")).ToArray();
+            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")).ToArray();
+        }
+        public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
 			tag["voidMeterMax"] = voidMeterMax;
 			tag["voidMeterMax2"] = voidMeterMax2;
@@ -160,19 +184,6 @@ namespace SOTS.Void
 				//NetMessage.SendData(43, -1, -1, "", player.whoAmI, (float)voidAmount, 0f, 0f, 0);
 			}
 		}
-		public static string[] voidDeathMessages = {
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//TODO 文本无法正常显示
-			//" was devoured by the void.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//TODO 文本无法正常显示
-			//" was taken by the void.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),//TODO 文本无法正常显示
-			//" was consumed by the darkness.",
-			//" was taken by the darkness.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),//TODO 文本无法正常显示
-			//" couldn't handle their own power.",
-			//" didn't manage their void well.",
-			Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")//TODO 文本无法正常显示
-		};
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
 			if (voidShock || voidRecovery)
