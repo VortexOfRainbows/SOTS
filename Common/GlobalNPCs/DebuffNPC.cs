@@ -841,15 +841,16 @@ namespace SOTS.Common.GlobalNPCs
             bool DreamLamp = npc.HasBuff<DendroChain>();
             if(DreamLamp)
             {
-                int lastDD = DendroDamage;
                 int damageToAdd = 0;
                 DendroChainNPCOperators.InitiateNPCDamageStats(npc, ref damageToAdd);
                 DendroDamage += damageToAdd;
                 DendroChainNPCOperators.PullOtherNPCs(npc);
-                if (lastDD != DendroDamage)
-                    Main.NewText(DendroDamage);
-                if (!npc.boss) //only slows enemies down by a modest 5%
+                if (!npc.boss)
                     finalSlowdown *= 0.95f;
+            }
+            else
+            {
+                DendroDamage = 0;
             }
             npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult * finalSlowdown);
             base.PostAI(npc);
@@ -1116,6 +1117,18 @@ namespace SOTS.Common.GlobalNPCs
                         }
                     }
                 }
+            }
+            bool DreamLamp = npc.HasBuff<DendroChain>();
+            if (DreamLamp)
+            {
+                int damageToAdd = 0;
+                DendroChainNPCOperators.InitiateNPCDamageStats(npc, ref damageToAdd);
+                DendroDamage += damageToAdd;
+                DendroChainNPCOperators.PullOtherNPCs(npc);
+            }
+            if (DendroDamage > 0)
+            {
+                DendroChainNPCOperators.HurtOtherNPCs(npc, DendroDamage);
             }
         }
         public void AddAmmoToList(Projectile projectile)

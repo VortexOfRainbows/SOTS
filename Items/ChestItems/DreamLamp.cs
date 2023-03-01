@@ -68,7 +68,7 @@ namespace SOTS.Items.ChestItems
         }
 		public override int GetVoid(Player player)
 		{
-			return 6;
+			return 5;
 		}
 	}
 }

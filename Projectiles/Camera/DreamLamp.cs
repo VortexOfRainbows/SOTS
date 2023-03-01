@@ -79,10 +79,8 @@ namespace SOTS.Projectiles.Camera
                 {
                     player.ChangeDir(Projectile.direction);
                     player.heldProj = Projectile.whoAmI;
-                    player.compositeBackArm.enabled = true;
-                    player.compositeFrontArm.enabled = true;
-                    player.compositeBackArm.rotation = Projectile.rotation + MathHelper.Pi;
-                    player.compositeFrontArm.rotation = Projectile.rotation + MathHelper.Pi;
+                    player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Projectile.rotation + MathHelper.Pi);
+                    player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, Projectile.rotation + MathHelper.Pi);
                 }
                 Projectile.hide = false;
                 Projectile.spriteDirection = Projectile.direction;
@@ -93,6 +91,10 @@ namespace SOTS.Projectiles.Camera
                 Projectile.Kill();
             }
             return false;
+        }
+        public override void Kill(int timeLeft)
+        {
+            Player player = Main.player[Projectile.owner];
         }
     }
 }

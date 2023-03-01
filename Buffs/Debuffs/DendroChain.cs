@@ -4,6 +4,7 @@ using SOTS.Projectiles.Camera;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
  
 namespace SOTS.Buffs.Debuffs
@@ -25,7 +26,7 @@ namespace SOTS.Buffs.Debuffs
     {
         public static int BuffType => ModContent.BuffType<DendroChain>();
         public const int DendroChainStandardDuration = 1200;
-        public const float StandardPullRate = 0.25f; //Speed of pull rate in pixels per frame, which is lowered by distance until 0 at greater than 640 pixels (40 blocks)
+        public const float StandardPullRate = 0.2f; //Speed of pull rate in pixels per frame, which is lowered by distance until 0 at greater than 640 pixels (40 blocks)
         public const float maxPullDistance = 640f;
         public static void DrawFloralBloomImage(NPC npc)
         {
@@ -33,9 +34,9 @@ namespace SOTS.Buffs.Debuffs
             {
                 int buffIndex = npc.FindBuffIndex(BuffType);
                 int currentBuffTime = npc.buffTime[buffIndex];
-                if (currentBuffTime < 1200)
+                if (currentBuffTime < DendroChainStandardDuration)
                 {
-                    float progress = 1 - ((currentBuffTime - 1170f) / 30f);
+                    float progress = 1 - ((currentBuffTime - DendroChainStandardDuration + 30f) / 30f);
                     if (currentBuffTime < 30)
                     {
                         progress = currentBuffTime / 30f;
@@ -47,8 +48,8 @@ namespace SOTS.Buffs.Debuffs
                     if (starWindUp > 0)
                     {
                         scaleMult *= (1.4f - 0.4f * (float)Math.Cos(MathHelper.ToRadians(420 * starWindUp)));
-                        SOTSProjectile.DrawStar(npc.Center + new Vector2(0, -2), color * 0.4f, starWindUp, 0f, 0f, 4, 4.0f * scaleMult, 2.5f * scaleMult, 1f, 180, 2.0f * scaleMult, 0);
-                        SOTSProjectile.DrawStar(npc.Center + new Vector2(0, -2), color, 0.5f * starWindUp, MathHelper.PiOver4, 0f, 4, 0.4f * scaleMult, 0, 1f, 120, 0.1f * scaleMult, 1);
+                        SOTSProjectile.DrawStar(npc.Center + new Vector2(0, -2), color * 0.5f, starWindUp, 0f, 0f, 4, 4.5f * scaleMult, 2.0f * scaleMult, 1f, 180, 2.0f * scaleMult, 0);
+                        SOTSProjectile.DrawStar(npc.Center + new Vector2(0, -2), color * 0.375f, starWindUp, MathHelper.PiOver4, 0f, 4, 4.25f * scaleMult, 2.75f * scaleMult, 1f, 180, 2.0f * scaleMult, 1);
                         Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Camera/CameraCenterCross");
                         for (int i = 0; i < 4; i++)
                         {
@@ -63,29 +64,45 @@ namespace SOTS.Buffs.Debuffs
         {
             if (npc.active && npc.HasBuff(BuffType))
             {
-                int buffIndex = npc.FindBuffIndex(BuffType);
-                int currentBuffTime = npc.buffTime[buffIndex];
-                float progress = 1 - ((currentBuffTime - 1170f) / 30f);
-                if (currentBuffTime < 30)
-                {
-                    progress = currentBuffTime / 30f;
-                }
-                Texture2D textureGradient = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/LongGradient"); //This could be swapped for a more suitable chain texture in the future, but it looks decent and fits the current asthetic
+                Texture2D textureGradient = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/DuelGradient"); //This could be swapped for a more suitable chain texture in the future, but it looks decent and fits the current asthetic
                 Color color = DreamingFrame.Green1;
-                float reduceAlphaAsMoreConnect = 1f;
-                for (int i = npc.whoAmI + 1; i < 200; i++) //prevent chains from drawing on the side of both NPCs
+                int maxConnections = 6;
+                int currentBuffTime = npc.buffTime[npc.FindBuffIndex(BuffType)];
+                if (currentBuffTime < DendroChainStandardDuration)
                 {
-                    NPC otherNPC = Main.npc[i];
-                    if (otherNPC.active && otherNPC.HasBuff(BuffType)) 
+                    for (int i = npc.whoAmI + 1; i < 200; i++) //prevent chains from drawing on the side of both NPCs
                     {
-                        Vector2 toOther = otherNPC.Center - npc.Center;
-                        float dist = toOther.Length();
-                        float multiplier = Math.Clamp(1 - (dist / maxPullDistance), 0, 1) * (1.4f - 0.4f * (float)Math.Cos(MathHelper.ToRadians(420 * progress)));
-                        spriteBatch.Draw(textureGradient, npc.Center - Main.screenPosition, null, color * (0.3f * multiplier) * reduceAlphaAsMoreConnect, toOther.ToRotation(), new Vector2(1, 1), new Vector2(1f / (textureGradient.Width - 24) * dist, 1f + 1f * (1 -multiplier)), SpriteEffects.None, 0);
-                        reduceAlphaAsMoreConnect -= 0.1f;
+                        NPC otherNPC = Main.npc[i];
+                        if (otherNPC.active && otherNPC.HasBuff(BuffType))
+                        {
+                            int otherBuffTime = otherNPC.buffTime[otherNPC.FindBuffIndex(BuffType)];
+                            if(otherBuffTime < DendroChainStandardDuration)
+                            {
+                                float progress = 1 - ((currentBuffTime - DendroChainStandardDuration + 30f) / 30f);
+                                float otherProgress = 1 - ((otherBuffTime - DendroChainStandardDuration + 30f) / 30f);
+                                if (currentBuffTime < 30)
+                                {
+                                    progress = currentBuffTime / 30f;
+                                }
+                                if (otherBuffTime < 30)
+                                {
+                                    otherProgress = otherBuffTime / 30f;
+                                }
+                                progress *= otherProgress * (maxConnections / 6f);
+                                progress = Math.Clamp(progress, 0, 1);
+                                if (progress > 0)
+                                {
+                                    Vector2 toOther = otherNPC.Center - npc.Center;
+                                    float dist = toOther.Length();
+                                    float multiplier = Math.Clamp((1 - (dist / maxPullDistance)), 0, 1) * progress * (1.0f - 0.5f * (float)Math.Cos(MathHelper.ToRadians(2 * currentBuffTime)));
+                                    spriteBatch.Draw(textureGradient, npc.Center - Main.screenPosition, null, color * (0.3f * multiplier), toOther.ToRotation(), new Vector2(1, 1), new Vector2(1f / textureGradient.Width * dist, 1f + 1f * (1 - multiplier)), SpriteEffects.None, 0);
+                                    maxConnections--;
+                                }
+                            }
+                        }
+                        if (maxConnections <= 0)
+                            break;
                     }
-                    if (reduceAlphaAsMoreConnect <= 0)
-                        break;
                 }
             }
         }
@@ -106,6 +123,8 @@ namespace SOTS.Buffs.Debuffs
                         Vector2 toThis = npc.Center - otherNPC.Center;
                         float dist = toThis.Length();
                         toThis = toThis.SafeNormalize(Vector2.Zero);
+                        if (otherNPC.velocity.Y == 0)
+                            toThis.Y *= 0.0f;
                         toThis *= MathHelper.Lerp(pullRate, 0, Math.Clamp(dist / maxPullDistance, 0, 1));
                         if (dist < 64)
                             toThis *= MathHelper.Lerp(0, 1, dist / 64f);
@@ -119,9 +138,29 @@ namespace SOTS.Buffs.Debuffs
                 }
             }
         }
-        public static void HurtOtherNPCs(NPC npc)
+        public static void HurtOtherNPCs(NPC npc, int DamageToDeal)
         {
-
+            if (DamageToDeal > 0)
+            {
+                for (int i = 0; i < 200; i++)
+                {
+                    NPC otherNPC = Main.npc[i];
+                    if (otherNPC.active && otherNPC.HasBuff(BuffType) && npc.whoAmI != i)
+                    {
+                        Vector2 toOther = otherNPC.Center - npc.Center;
+                        float dist = toOther.Length();
+                        float damageMultiplier = 1f - dist / maxPullDistance;
+                        if(damageMultiplier > 0.0f)
+                        {
+                            int damage = (int)(DamageToDeal * damageMultiplier) + 1;
+                            if(Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, toOther.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<DreamLaser>(), damage, 0, Main.myPlayer, i, dist);
+                            }
+                        }
+                    }
+                }
+            }
         }
         public static void InitiateNPCDamageStats(NPC npc, ref int outDamage)
         {

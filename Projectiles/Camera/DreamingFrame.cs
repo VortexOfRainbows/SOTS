@@ -57,10 +57,6 @@ namespace SOTS.Projectiles.Camera
         {
             return Projectile.timeLeft < 16 && Projectile.ai[0] == 1 && Vector2ListContainsX(npcVectors, target.whoAmI);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-			target.AddBuff(ModContent.BuffType<DendroChain>(), 1200 + damage); //1200 is 20 seconds, damage will be used later
-        }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
 			overWiresUI.Add(index);
@@ -344,7 +340,7 @@ namespace SOTS.Projectiles.Camera
 				}*/
 			}
 		}
-		private static float windUpTime = 18f;
+        private static float windUpTime = 18f;
 		public static float ActivateRange = 12f;
 		float postCounter = 0;
 		bool runOnce = true;
@@ -423,6 +419,8 @@ namespace SOTS.Projectiles.Camera
 								{
 									NPC.CheckCatchNPC(target, target.Hitbox, player.HeldItem, player, true);
 								}
+								else
+									target.AddBuff(ModContent.BuffType<DendroChain>(), DendroChainNPCOperators.DendroChainStandardDuration + Projectile.damage);
 								SOTSProjectile.DustStar(target.Center, Vector2.Zero, Green1 * 0.5f, 0f, 40, 0, 4, 12f, 9f, 1f, 0.9f, 0.08f);
 							}
 						}

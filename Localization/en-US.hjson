@@ -1021,8 +1021,9 @@ Mods: {
 					'''
 				DreamLamp: 
 					'''
-					Chain together up to 10 enemies, slowing them down for 20 seconds
-					When a chained enemy is killed, all chained enemies will take additional damage
+					Chain together up to 10 enemies, slowing them down for 30 seconds
+					When a chained enemy is killed, all chained enemies will take another instance of damage
+					Chained enemies take less damage from this when far away from each other
 					Chain together items to grab them
 					'What do you wish for?'
 					'''
@@ -2614,6 +2615,7 @@ Mods: {
 
 		ProjectileName: {
 				SilkCocoonProjectile: silk Cocoon sync projectile
+				DreamLaser: Dream Laser
 		}
 
 		ArmorSetBonus: {
