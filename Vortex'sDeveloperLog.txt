@@ -53,7 +53,6 @@ Other 1.4 related objectives:
 1. Final 1 starter house
 2. Bestiary for all enemies
 3. Release a Beta Build by 3/2/23
-4. Fix Composite Arms for Blades by properly setting composite arm using the setter method
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
@@ -63,8 +62,14 @@ Things to Note For Later:
 Daily Log:
 
 2/28/23
-1. Dreaming Lamp finished Hit effects! Still needs: (Server Syncing, Balancing, Obtain Method)
+1. Dreaming Lamp finished Hit effects! Still needs: (Balancing, Obtain Method)
 2. Localization support thanks to Lacewing and Linnnnnna!
+3. Fixed Blades Hand offset breaking sometimes
+4. Dreaming Lamp tested: Works perfectly in multiplayer (I think)! :D
+	1. Notes: It's damage output is typically much weaker than Glaze Bow, despite planning to be later in tier. It's also a void weapon.
+		a. However, It does exceptional damage against groups, do to its exponential scaling properties
+		b. Perhaps its pulling power could be enhanced for airborne enemies? Or its slowing power?
+		c. It is incredible fun to use as a tool!
 
 2/27/23
 1. Dreaming Lamp on hit effects/debuff + .gitignore stuff (thanks to Lacewing!)
