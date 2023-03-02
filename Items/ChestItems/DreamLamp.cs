@@ -65,7 +65,11 @@ namespace SOTS.Items.ChestItems
 			Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI);
 			Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<DreamingFrame>(), damage, knockback, player.whoAmI);
 			return false;
-        }
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe(1).AddIngredient<Fragments.DissolvingNature>(1).AddRecipeGroup("SOTS:GoldBar", 10).AddTile(TileID.Anvils).Register(); //temporary recipe
+		}
 		public override int GetVoid(Player player)
 		{
 			return 5;
