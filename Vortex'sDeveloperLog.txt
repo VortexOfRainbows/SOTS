@@ -61,6 +61,9 @@ Things to Note For Later:
 
 Daily Log:
 
+3/1/23
+1. Attempt to fix Pharaoh's Curse Memory Leak
+
 2/28/23
 1. Dreaming Lamp finished Hit effects! Still needs: (Balancing, Obtain Method)
 2. Localization support thanks to Lacewing and Linnnnnna!
