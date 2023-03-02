@@ -33,6 +33,7 @@ Art: Arcri, Pokerface
 Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
 Code: Moonseer, Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
 Minor Art: Naka, DeJuiceTD, Nomis
+Localization: Lacewing, Linnnnnna
 
 (Past Developers)
 Emotional Support, Direction, Art: Coolio

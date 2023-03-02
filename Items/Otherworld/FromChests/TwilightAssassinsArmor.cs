@@ -44,7 +44,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				{
 					if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 					{
-						line.Text = Language.GetTextValueWith("Mods.SOTS.TwilightAssassinsCircletText", key);
+						line.Text = Language.GetTextValue("Mods.SOTS.TwilightAssassinsCircletText", key);
 						return;
 					}
 				}
@@ -54,7 +54,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValueWith("Mods.SOTS.TwilightAssassinsCircletText2", Textkey);
+					line.Text = Language.GetTextValue("Mods.SOTS.TwilightAssassinsCircletText2", Textkey);
 				}
 			}
 			base.ModifyTooltips(tooltips);

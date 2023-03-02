@@ -108,7 +108,7 @@ namespace SOTS.Items.Pyramid
 				{
 					theKey = key;
 				}
-				player.setBonus = Language.GetTextValueWith("Mods.SOTS.ArmorSetBonus.Cursed", theKey);
+				player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Cursed", theKey);
 			}				
 		}
 		public override void AddRecipes()

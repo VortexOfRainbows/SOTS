@@ -100,7 +100,7 @@ namespace SOTS
 		/*[Label("Experimental Ambient Audio")]
 		[Tooltip("Adds bonus audio, such as ambient sounds, to a handful of tiles\nOnly works with the SOTS Texture Pack enabled")]
 		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]*/
-		public bool playAmbientAudio = false;
+		[DefaultValue(false)]
+		public bool playAmbientAudio = false;*/
 	}
 }

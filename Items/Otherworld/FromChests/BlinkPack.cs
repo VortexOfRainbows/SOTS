@@ -26,7 +26,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				{
 					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.Text = Language.GetTextValueWith("Mods.SOTS.BlinkPackText", key);
+						line.Text = Language.GetTextValue("Mods.SOTS.BlinkPackText", key);
 						return;
 					}
 				}
@@ -36,7 +36,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValueWith("Mods.SOTS.BlinkPackText2", Textkey);
+					line.Text = Language.GetTextValue("Mods.SOTS.BlinkPackText2", Textkey);
 				}
 			}
 			base.ModifyTooltips(tooltips);

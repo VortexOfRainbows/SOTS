@@ -31,6 +31,7 @@ Art: Blasfah
 [b]~Major Contributors~[/b]
 Art: Pokerface
 Code: Moonseer
+Localization: Lacewing, Linnnnnna
 
 [b]~Minor Contributors~[/b]
 Art: Arcri, Naka, DeJuiceTD, Nomis

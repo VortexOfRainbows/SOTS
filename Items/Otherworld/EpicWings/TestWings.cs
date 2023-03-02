@@ -32,7 +32,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				{
 					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.Text = Language.GetTextValueWith("Mods.SOTS.TestWingsText", key);
+						line.Text = Language.GetTextValue("Mods.SOTS.TestWingsText", key);
 						return;
 					}
 				}
@@ -42,7 +42,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValueWith("Mods.SOTS.TestWingsText2", Textkey);
+					line.Text = Language.GetTextValue("Mods.SOTS.TestWingsText2", Textkey);
 				}
 			}
 			base.ModifyTooltips(tooltips);

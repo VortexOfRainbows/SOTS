@@ -62,7 +62,7 @@ namespace SOTS
 		}
 		public static bool SOTSTexturePackEnabled = false;
 		public static bool SOTSTexturePackEnabledWithTiles => SOTSTexturePackEnabled && Config.additionalTexturePackVisuals;
-		public static bool SOTSTexturePackEnabledAudio => SOTSTexturePackEnabled && Config.playAmbientAudio;
+		public static bool SOTSTexturePackEnabledAudio => false; //SOTSTexturePackEnabled && Config.playAmbientAudio;
 		public static PrimTrailManager primitives;
 
 		public static ModKeybind BlinkHotKey;
