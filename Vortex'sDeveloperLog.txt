@@ -39,7 +39,10 @@ Update Objectives:
                 6. Can be found randomly across various generated structures, from the portals to the gem locks
 
 Ideas:
-4. Brachial Dicharge: upgrade to Geostorm + Cursed Spear Storm at post-mech-HM-tier
+4. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
+5. Peanut Bush and Peanut "Ore"
+6. Forgotten Lamp item which is used to make Dream Lamp in late Pre-HM, Spawns on Diamond Gem Island
+7. Nature Conduit: Used to imbue surrounding players or items with Dissolving Nature. Can Probably Use a tile entity
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
