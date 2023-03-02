@@ -22,7 +22,7 @@ namespace SOTS.Items.Celestial
 			Item.width = 26;
 			Item.height = 32;
             Item.value = Item.sellPrice(0, 20, 0, 0);
-			Item.rare = 12;
+			Item.rare = 11;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;

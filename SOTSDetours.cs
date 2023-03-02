@@ -433,5 +433,47 @@ namespace SOTS
 				Main.spriteBatch.End();
 			}
 		}
+		/*Code I wrote for HeartPlusUp! Calamity Mod!
+		private static void GlassTileWallFraming(On.Terraria.Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
+        {
+			Tile tileU = Framing.GetTileSafely(i, j - 1);
+			Tile tileR = Framing.GetTileSafely(i + 1, j);
+			Tile tileD = Framing.GetTileSafely(i, j + 1);
+			Tile tileL = Framing.GetTileSafely(i - 1, j);
+			int saveTileTypeU = -1;
+			int saveTileTypeR = -1;
+			int saveTileTypeD = -1;
+			int saveTileTypeL = -1;
+			int TileType = ModContent.TileType<EutrophicGlass>();
+			if (tileU != null && tileU.HasTile && tileU.TileType == TileType)
+            {
+				saveTileTypeU = tileU.TileType;
+				tileU.TileType = 54;
+			}
+			if (tileR != null && tileR.HasTile && tileR.TileType == TileType)
+			{
+				saveTileTypeR = tileR.TileType;
+				tileR.TileType = 54;
+			}
+			if (tileD != null && tileD.HasTile && tileD.TileType == TileType)
+			{
+				saveTileTypeD = tileD.TileType;
+				tileD.TileType = 54;
+			}
+			if (tileL != null && tileL.HasTile && tileL.TileType == TileType)
+			{
+				saveTileTypeL = tileL.TileType;
+				tileL.TileType = 54;
+			}
+			orig(i, j, resetFrame);
+			if(saveTileTypeU != -1)
+				tileU.TileType = (ushort)saveTileTypeU;
+			if (saveTileTypeR!= -1)
+				tileR.TileType = (ushort)saveTileTypeU;
+			if (saveTileTypeD != -1)
+				tileD.TileType = (ushort)saveTileTypeU;
+			if (saveTileTypeL != -1)
+				tileL.TileType = (ushort)saveTileTypeU;
+		}*/
 	}
 }

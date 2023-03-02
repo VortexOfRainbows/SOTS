@@ -365,7 +365,7 @@ namespace SOTS
                 byte b = (byte)tile.Slope;
                 Rectangle TileFrame;
                 Vector2 drawPos;
-                if (b == 1 || b == 2)
+                if (b == (int)SlopeType.SlopeDownLeft || b == (int)SlopeType.SlopeDownRight)
                 {
                     int length;
                     int height2;

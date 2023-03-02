@@ -1352,31 +1352,62 @@ Mods: {
 
 			# Fragments
 				DissolvingElement: Temporary Tooltip
-
+				DissolvingNature:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingEarth:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingAurora:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingDeluge:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingAether:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingUmbra:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingNether:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingBrilliance:
+					'''
+					Temporary Tooltip
+					'''
 				DissolvingElements: {
-					DissolvingNatureNT: Reduces damage dealt by 10% while in the inventory
-					DissolvingNaturePT: Increases life regeneration by 1 while in the inventory, up to 4 total
+					DissolvingNatureNormal: Reduces damage dealt by 10% while in the inventory
+					DissolvingNatureFlipped: Increases life regeneration by 1 while in the inventory, up to 4 total
 
-					DissolvingEarthNT: Reduces endurance by 10% while in the inventory
-					DissolvingEarthpt: Increases defense by 2 while in the inventory, up to 8 total
+					DissolvingEarthNormal: Reduces endurance by 10% while in the inventory
+					DissolvingEarthFlipped: Increases defense by 2 while in the inventory, up to 8 total
 
-					DissolvingAuroraNT: Reduces movement speed by 20% while in the inventory
-					DissolvingAuroraPT: Increases movement speed by 5% while in the inventory, up to 20% total
+					DissolvingAuroraNormal: Reduces movement speed by 20% while in the inventory
+					DissolvingAuroraFlipped: Increases movement speed by 5% while in the inventory, up to 20% total
 
-					DissolvingDelugeNT: Decreases max life and mana by 10 while in the inventory
-					DissolvingDelugePT: Increases ranged damage by 3% while in the inventory, up to 12% total
+					DissolvingDelugeNormal: Decreases max life and mana by 10 while in the inventory
+					DissolvingDelugeFlipped: Increases ranged damage by 3% while in the inventory, up to 12% total
 
-					DissolvingAetherNT: Reduces gravity while in the inventory
-					DissolvingAetherPT: Increases magic damage by 3% while in the inventory, up to 12% total
+					DissolvingAetherNormal: Reduces gravity while in the inventory
+					DissolvingAetherFlipped: Increases magic damage by 3% while in the inventory, up to 12% total
 
-					DissolvingUmbraNT: Reduces max void by 20 while in the inventory
-					DissolvingUmbraPT: Increases void damage by 3% while in the inventory, up to 12% total
+					DissolvingUmbraNormal: Reduces max void by 20 while in the inventory
+					DissolvingUmbraFlipped: Increases void damage by 3% while in the inventory, up to 12% total
 
-					DissolvingNetherNT: Decreases life regeneration by 2 while in the inventory
-					DissolvingNetherPT: Increases melee damage by 3% while in the inventory, up to 12% total
+					DissolvingNetherNormal: Decreases life regeneration by 2 while in the inventory
+					DissolvingNetherFlipped: Increases melee damage by 3% while in the inventory, up to 12% total
 
-					DissolvingBrillianceNT: Increases void drain by 0.5 while in the inventory
-					DissolvingBrilliancePT: Increases summon damage by 3% while in the inventory, up to 12% total
+					DissolvingBrillianceNormal: Increases void drain by 0.5 while in the inventory
+					DissolvingBrillianceFlipped: Increases summon damage by 3% while in the inventory, up to 12% total
 				}
 
 				WorldlyPolarizer: 
