@@ -204,10 +204,6 @@ namespace SOTS.Items.Secrets
 	}
 	public class StrangeKeystoneExplosion : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Strange Keystone Explosion");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.timeLeft = 5;

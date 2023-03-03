@@ -120,9 +120,9 @@ Mods: {
 
 
 		BiomeName: {
-            PyramidBiome: Cursed Pyramid
-            PhaseBiome: Phase Ore Clusters
-            PlanetariumBiome: Planetarium
+			PyramidBiome: Cursed Pyramid
+			PhaseBiome: Phase Ore Clusters
+			PlanetariumBiome: Planetarium
 		}
 
 		DropCondition: {
@@ -174,6 +174,43 @@ Mods: {
 				VisionAmulet: Elemental Amulet
 
 			# Banner
+				AdvisorRelic: Advisor Relic
+				ArcticGoblinBanner: Arctic Goblin Banner
+				BleedingGhastBanner: Bleeding Ghast Banner
+				BlueSlimerBanner: Blue Slimer Banner
+				CorruptionTreasureSlimeBanner: Corruption Treasure Slime Banner
+				CrimsonTreasureSlimeBanner: Crimson Treasure Slime Banner
+				DungeonTreasureSlimeBanner: Dungeon Treasure Slime Banner
+				FlamingGhastBanner: Flaming Ghast Banner
+				FluxSlimeBanner: Flux Slime Banner
+				FrozenTreasureSlimeBanner: Frozen Treasure Slime Banner
+				GhastBanner: Ghast Banner
+				GoldenTreasureSlimeBanner: Golden Treasure Slime Banner
+				HallowTreasureSlimeBanner: Hallow Treasure Slime Banner
+				HoloEyeBanner: Holo Eye Banner
+				HoloSlimeBanner: Holo Slime Banner
+				JungleTreasureSlimeBanner: Jungle Treasure Slime Banner
+				LesserWispBanner: Lesser Wisp Banner
+				LostSoulBanner: Lost Soul Banner
+				LuxRelic: Lux Relic
+				MaligmorBanner: Maligmor Banner
+				PharaohsCurseRelic: Pharaoh's Curse Relic
+				PhaseAssaulterBanner: Phase Assaulter Banner
+				PhaseSpeederBanner: Phase Speeder Banner
+				PolarisRelic: Polaris Relic
+				PutridPinkyRelic: Putrid Pinky Relic
+				PutridPinkyTrophy: Putrid Pinky Trophy
+				PyramidTreasureSlimeBanner: Pyramid Treasure Slime Banner
+				ShadowTreasureSlimeBanner: Shadow Treasure Slime Banner
+				SittingMushroomBanner: Sitting Mushroom Banner
+				SnakeBanner: Snake Banner
+				SnakePotBanner: Snake Pot Banner
+				SubspaceSerpentRelic: Subspace Serpent Relic
+				TeratomaBanner: Teratoma Banner
+				TreasureSlimeBanner: Treasure Slime Banner
+				TwilightDevilBanner: Twilight Devil Banner
+				TwilightScouterBanner: Twilight Scouter Banner
+				WallMimicBanner: Wall Mimic Banner
 				NatureSlimeBanner: Flowering Slime Banner
 				HoloSwordBanner: Holo Blade Banner
 
@@ -677,11 +714,14 @@ Mods: {
 				SandstoneEdge: Sandstone Edge
 				SandstoneWarhammer: Sandstone Warhammer
 
+				Sarcophagus: Sarcophagus
+
 				ShiftingSands: Shifting Sands
 
 				SnakeBow: Snake Bow
 				Snakeskin: Snakeskin
 
+				SoulResidue: Soul Residue
 				SpiritGlove: Spirit Glove
 				SpiritShield: Spirit Shield
 				SpiritSurfer: Spirit Surfer
@@ -690,6 +730,7 @@ Mods: {
 				SunlightAmulet: Sunlight Amulet
 
 				TaintedKeystone: Tainted Keystone
+				TaintedKeystoneShard: Tainted Keystone Shard
 				TheDarkEye: The Dark Eye
 
 				TrueSandstoneBlock: True Sandstone Block
@@ -699,6 +740,7 @@ Mods: {
 
 			# Secrets
 				PhotonGeyser: Photon Geyser
+				RefractingCrystal: Weird Crystal
 				RefractingCrystalBlock: Weird Crystal Block
 				StrangeKeystone: Strange Obelisk
 				StrangeKeystoneBroken: Broken Obelisk
@@ -709,12 +751,15 @@ Mods: {
 				GelAxe: Gel Throwing Axe
 				GelWings: Gel Wings
 
+				GoopwoodWall: Goopwood Wall
+
 				JarOfPeanuts: Jar Of Peanuts
 				Peanut: Peanut
 				PeanutRepeater: Peanut Repeater
 				PinkyBag: Treasure Bag
 
 				PutridEye: Putrid Eye
+				PutridPinkyMask: Putrid Pinky Mask
 
 				VialofAcid: Vial of Acid
 				CorrosiveGel: Corrosive Gel
@@ -831,6 +876,127 @@ Mods: {
 			SpectreSpiritStorm: Spectre Spirit Storm
 			SubspaceBoosters: Subspace Boosters
 			ZombieHand: Zombie Hand
+
+		# Some Text
+   		    AetherWall: Aether Wall
+   		    AuroraWall: Aurora Wall
+   		    BrillianceWall: Brilliance Wall
+   		    DelugeWall: Deluge Wall
+   		    EarthenPlatingBeam: Earthen Plating Beam
+   		    EarthenPlatingPanelWall: Earthen Plating Panel Wall
+   		    EarthenPlatingWall: Earthen Plating Wall
+   		    EarthWall: Earth Wall
+   		    NaturePlatingPanelWall: Nature Plating Panel Wall
+   		    NaturePlatingWall: Nature Plating Wall
+   		    NatureWall: Nature Wall
+   		    NetherWall: Nether Wall
+   		    PermafrostPlatingWall: Permafrost Plating Wall
+   		    UmbraWall: Umbra Wall
+   		    AncientGoldTorch: Ancient Gold Torch
+   		    EarthenPlatingBathtub: Earthen Plating Bathtub
+   		    EarthenPlatingBed: Earthen Plating Bed
+   		    EarthenPlatingBookcase: Earthen Plating Bookcase
+   		    EarthenPlatingBulb: Earthen Plating Bulb
+   		    EarthenPlatingChair: Earthen Plating Chair
+   		    EarthenPlatingChandelier: Earthen Plating Chandelier
+   		    EarthenPlatingClock: Earthen Plating Clock
+   		    EarthenPlatingDresser: Earthen Plating Dresser
+   		    EarthenPlatingLamp: Earthen Plating Lamp
+   		    EarthenPlatingLantern: Earthen Plating Lantern
+   		    EarthenPlatingPiano: Earthen Plating Piano
+   		    EarthenPlatingPlatform: Earthen Plating Platform
+   		    EarthenPlatingSink: Earthen Plating Sink
+   		    EarthenPlatingSofa: Earthen Plating Sofa
+   		    EarthenPlatingStorage: Earthen Plating Storage
+   		    EarthenPlatingTable: Earthen Plating Table
+   		    EarthenPlatingToilet: Earthen Plating Toilet
+   		    EarthenPlatingTorch: Earthen Plating Torch
+   		    EarthenPlatingWorkBench: Earthen Plating Work Bench
+   		    GoopwoodBarrel: Goopwood Barrel
+   		    GoopwoodBed: Goopwood Bed
+   		    GoopwoodCandle: Goopwood Candle
+   		    GoopwoodChair: Goopwood Chair
+   		    GoopwoodChandelier: Goopwood Chandelier
+   		    GoopwoodDoor: Goopwood Door
+   		    GoopwoodPlatform: Goopwood Platform
+   		    GoopwoodTable: Goopwood Table
+   		    GoopwoodWorkBench: Goopwood Work Bench
+   		    NaturePlatingBathtub: Nature Plating Bathtub
+   		    NaturePlatingBed: Nature Plating Bed
+   		    NaturePlatingBookcase: Nature Plating Bookcase
+   		    NaturePlatingBulb: Nature Plating Bulb
+   		    NaturePlatingChair: Nature Plating Chair
+   		    NaturePlatingChandelier: Nature Plating Chandelier
+   		    NaturePlatingClock: Nature Plating Clock
+   		    NaturePlatingDresser: Nature Plating Dresser
+   		    NaturePlatingLamp: Nature Plating Lamp
+   		    NaturePlatingLantern: Nature Plating Lantern
+   		    NaturePlatingPiano: Nature Plating Piano
+   		    NaturePlatingSink: Nature Plating Sink
+   		    NaturePlatingSofa: Nature Plating Sofa
+   		    NaturePlatingTable: Nature Plating Table
+   		    NaturePlatingToilet: Nature Plating Toilet
+   		    NaturePlatingTorch: Nature Plating Torch
+   		    NaturePlatingWorkBench: Nature Plating Work Bench
+   		    PermafrostPlatingBathtub: Permafrost Plating Bathtub
+   		    PermafrostPlatingBed: Permafrost Plating Bed
+   		    PermafrostPlatingBench: Permafrost Plating Bench
+   		    PermafrostPlatingBookcase: Permafrost Plating Bookcase
+   		    PermafrostPlatingBulb: Permafrost Plating Bulb
+   		    PermafrostPlatingChair: Permafrost Plating Chair
+   		    PermafrostPlatingChandelier: Permafrost Plating Chandelier
+   		    PermafrostPlatingClock: Permafrost Plating Clock
+   		    PermafrostPlatingDresser: Permafrost Plating Dresser
+   		    PermafrostPlatingLamp: Permafrost Plating Lamp
+   		    PermafrostPlatingLantern: Permafrost Plating Lantern
+   		    PermafrostPlatingPiano: Permafrost Plating Piano
+   		    PermafrostPlatingSink: Permafrost Plating Sink
+   		    PermafrostPlatingTable: Permafrost Plating Table
+   		    PermafrostPlatingToilet: Permafrost Plating Toilet
+   		    PermafrostPlatingTorch: Permafrost Plating Torch
+   		    PermafrostPlatingWorkBench: Permafrost Plating Work Bench
+   		    AmberChest: Amber Chest
+   		    AmethystChest: Amethyst Chest
+   		    DiamondChest: Diamond Chest
+   		    EmeraldChest: Emerald Chest
+   		    RubyChest: Ruby Chest
+   		    SapphireChest: Sapphire Chest
+   		    TopazChest: Topaz Chest
+   		    DarkShingles: Dark Shingles
+   		    Evostone: Evostone
+   		    EvostoneBrick: Evostone Brick
+   		    EvostoneBrickWall: Evostone Brick Wall
+   		    DullPlating: Dull Plating
+   		    DullPlatingWall: Dull Plating Wall
+   		    HardlightBlock: Hardlight Block
+   		    BlinkPack: Blink Pack
+   		    HardlightAlloy: Hardlight Alloy
+   		    StarlightAlloy: Starlight Alloy
+   		    HardlightChair: Hardlight Chair
+   		    HardlightTable: Hardlight Table
+   		    FrigidBar: Frigid Bar
+   		    FrigidBrick: Frigid Brick
+   		    FrigidBrickWall: Frigid Brick Wall
+   		    HardIceBrick: Hard Ice Brick
+   		    HardIceBrickWall: Hard Ice Brick Wall
+   		    AcediaPlatingWall: Acedia Plating Wall
+   		    RuinedPyramidBrick: Ruined Pyramid Brick
+   		    AncientGoldSpike: Ancient Gold Spike
+   		    AnubisHat: Anubis Hat
+   		    CursedMatter: Cursed Matter
+   		    PyramidChest: Pyramid Chest
+   		    PyramidGate: Pyramid Gate
+   		    CursedTumorWall: Cursed Tumor Wall
+   		    OvergrownPyramidWall: Overgrown Pyramid Wall
+   		    PyramidBrickWall: Pyramid Brick Wall
+   		    PyramidWall: Pyramid Wall
+   		    UnsafeCursedTumorWall: Unsafe Cursed Tumor Wall
+   		    UnsafeOvergrownPyramidWall: Unsafe Overgrown Pyramid Wall
+   		    UnsafePyramidBrickWall: Unsafe Pyramid Brick Wall
+   		    UnsafePyramidWall: Unsafe Pyramid Wall
+      		BlackFlare: Black Flare
+       		EnchantedPickaxe: Enchanted Pickaxe
+        	FrigidHamaxe: Frigid Hamaxe
 		}
 
 		ItemTooltip: {
@@ -2439,7 +2605,7 @@ Mods: {
 				Increases movement speed greatly
 				Provides the ability to walk on water and lava
 				Grants immunity to fire blocks and 10 seconds of immunity to lava
-                Running causes you to blast forward, granting higher speed and acceleration
+				Running causes you to blast forward, granting higher speed and acceleration
 				This blast cannot be controlled
 				'Recipro Burst!'
 				'''
@@ -2644,50 +2810,42 @@ Mods: {
 		WebbedNPC : Slowed, but only for enemies
 		}
 
-		ProjectileName: {
-				SilkCocoonProjectile: silk Cocoon sync projectile
-				DreamLaser: Dream Laser
-		}
-
 		ArmorSetBonus: {
-            DoorItems: 
-                '''
-                Acceleration lasts longer
-                Build up speed faster
-                '''
-            Vibrant: 
-                '''
-                Increases void gain by 2
-                Grants autofire to the Vibrant Pistol at the cost of accuracy
-                '''
-            Vespera: Increases max void by 25 and void gain by 50%
-            NatureWreath: Summons three Blooming Hooks to assist in combat
-            TwilightAssassins: 
-                '''
-                The Holo Eye now automatically attacks for you
-                Automatic attacks have a 25% chance to destabilize enemies, but the chance of applying it gets lower with each level already applied
-                '''
+			DoorItems: 
+				'''
+				Acceleration lasts longer
+				Build up speed faster
+				'''
+			Vibrant: 
+				'''
+				Increases void gain by 2
+				Grants autofire to the Vibrant Pistol at the cost of accuracy
+				'''
+			Vespera: Increases max void by 25 and void gain by 50%
+			NatureWreath: Summons three Blooming Hooks to assist in combat
+			TwilightAssassins: 
+				'''
+				The Holo Eye now automatically attacks for you
+				Automatic attacks have a 25% chance to destabilize enemies, but the chance of applying it gets lower with each level already applied
+				'''
 			Frigid: 
-                '''
-                Frigid Javelin no longer costs void
-                Decreases void damage by 15%
-                '''
+				'''
+				Frigid Javelin no longer costs void
+				Decreases void damage by 15%
+				'''
 			FrostArtifact: Most melee and ranged attacks summon a handful of Polar Cannons that each deal 25% damage
 			ShatterShard: 
-                '''
-                Increases life regen by 2
-                Immunity to Chilled, Frozen, and Frostburn
-                '''
+				'''
+				Increases life regen by 2
+				Immunity to Chilled, Frozen, and Frostburn
+				'''
 			Cursed: 
-                '''
-                Press the '{0}' key to change the Ruby Monolith into an offensive stance
+				'''
+				Press the '{0}' key to change the Ruby Monolith into an offensive stance
 				While in offensive stance, decreases the cooldown of Curse Flaring by 80%
 				However, increases void drain by 6 instead of increasing void regeneration speed by 10%
 				'''
-			PatchLeather: 
-				'''
-				Summons a flock of flying snakes to assist in combat
-				'''
+			PatchLeather: Summons a flock of flying snakes to assist in combat
 		}
 
 		ContainerName: {
@@ -2972,56 +3130,56 @@ Mods: {
 		VisionAmuletTextList: {
 		    0: Reduces damage taken by 10%
 		    1: 
-		        '''
-                Increases max minions and sentries by 1
-                Increases damage by 10%
-                '''
+				'''
+				Increases max minions and sentries by 1
+				Increases damage by 10%
+				'''
 		    2: Increases attack speed by 12%
 		    3: Increases critical strike chance by 10%
 		    4: Increases critical strike damage by 30%
 		    5: 
-                '''
-                Increases healing recieved from potions by 40
-                Increases life regeneration by 2 
-                '''
+				'''
+				Increases healing recieved from potions by 40
+				Increases life regeneration by 2 
+				'''
 		    6: Increases max life by 80
-		    7: Increases void regeneration speed by 20%      
+		    7: Increases void regeneration speed by 20%				
 		}
 
 		VisionAmuletTextList2: {
 		    0: 
-                '''
+				'''
 
-                Shops prices lowered by 20%
-                '''
+				Shops prices lowered by 20%
+				'''
 		    1: 
-                '''
+				'''
 
-                Increases buff duration by 25%
-                Decreases mana cost by 10% 
-                '''
+				Increases buff duration by 25%
+				Decreases mana cost by 10% 
+				'''
 		    2: 
-                '''
+				'''
 
-                Increases melee speed and movement speed by 10%
-                Increases jump speed
-                '''
+				Increases melee speed and movement speed by 10%
+				Increases jump speed
+				'''
 		    3: 
-                '''
+				'''
 
-                Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
-                Increases max mana and mana recieved from potions by 40
-                '''
+				Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
+				Increases max mana and mana recieved from potions by 40
+				'''
 		}
 
-        VoidmageIncubatorTextList: {
+		VoidmageIncubatorTextList: {
 		    0: Reduces damage taken by 5%
 		    1: Increases damage by 8%
 		    2: 
-                '''
-                Increases movement speed by 10%
-                Increases jump speed
-                '''
+				'''
+				Increases movement speed by 10%
+				Increases jump speed
+				'''
 		    3: Increases critical strike damage by 20%
 		    4: Increases critical strike chance by 6%
 		    5: Increases max life by 40
