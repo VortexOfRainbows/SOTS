@@ -3142,5 +3142,488 @@ Mods: {
 			Warning2: If anything goes wrong, it's because YOU asked for it
 			Warning3: Here comes NOTHING!!!
 		}
+
+		ProjectileName : {
+			AcornOfJustice : Acorn Of Justice
+			AcornsOfJustice : Acorns Of Justice
+			AdvisorPet : Advisor Pet
+			AncientGoldGateGems : Gems
+			AncientSteelHalberd : Ancient Steel Halberd
+			AncientSteelLongbow : Ancient Steel Bow
+			ArcColumn : Arc Thunder
+			ArclightBomb : Arclight Bomb
+			ArcLightning : Thundershock Lightning
+			ArcLightningDamage : Arc Lightning
+			ArcLightningZap : Arc Lightning
+			ArkBolt : Ark Bolt
+			AtenProj : Aten
+			AtenStar : Aten Star
+			AtenStarExplosion : Aten Starsplosion
+			AvaritianExplosion : Avaritian Explosion
+			BabyLaser : Green Laser
+			BackupArrow : Backup Arrow
+			BackupBowVisual : Backup Bow Visual
+			BerryBomb : Berry Bomb
+			BlackFlareShot : Black Flare
+			Blaspha : Blaspha
+			BlastDoorProj : Blast Door Proj
+			BlazingArrow : Blazing Arrow
+			BlazingMine : Spike Trap
+			BlazingSpike : Blazing Spike
+			Blink1 : Blinding Assault
+			BlinkDamage1 : Blinding Assault
+			BlizzardProbe : Blizzard Probe
+			Bloodaxe : Bloody Hammer
+			BloodSpark : Blood Spark
+			BloomingHook : Blooming Hook
+			BloomingHookMinion : Blooming Hook
+			BluefireCrush : Bluefire Crush
+			BlueLightning : Blue Lightning
+			BlueThunderCluster : Thunder Cluster
+			BombFlare : Bomb Flare
+			BoneClapperCrusher : Bone Clapper Crusher
+			BoneCrush : Bone Crush
+			BoreBullet : Bore Bullet
+			BossBabyLaser : Red Laser
+			BrightRedLaser : Artifact Laser
+			BubbleCrush : Bubble Crush
+			CactusSpine : Cactus Spine
+			CardiacCollapseCrusher : Cardiac Collapse Arm
+			CataclysmBullet : Cataclysm Bullet
+			CataclysmBulletDamage : Cataclysm Bullet
+			CataclysmDamage : Cataclysm Collapse
+			CataclysmDisc : Cataclysm Disc
+			CataclysmLightning : Cataclysm Lightning
+			CataclysmLightningZap : Cataclysm Bullet
+			CataclysmOrb : Cataclysm Bomb
+			CatalystBomb : Catalyst Bomb
+			CelestialLightning : Subspace Thunder
+			CellBlast : Cursespire
+			ChaosArrow1 : Chaos Arrow
+			ChaosArrow2 : Chaos Arrow
+			ChaosArrowBloom : Chaos Arrow Bloom
+			ChaosBall : Chaos Ball
+			ChaosBallFriendly : Chaos Ball
+			ChaosBeam : Chaos Beam
+			ChaosBloomExplosion : Chaos Bloom
+			ChaosCircle : Chaos Ring
+			ChaosDart : Chaos Dart
+			ChaosDart2 : Chaos Dart
+			ChaosDiamond : Chaos Diamond
+			ChaosDiamondLaser : Shattering Laser
+			ChaosEraser : Hyperlight Eraser
+			ChaosEraser2 : Redlight Eraser
+			ChaosHelixLaser : Chaos Helix Laser
+			ChaosPunch : Bizarre Adventure Fist
+			ChaosSnake : Chaos Snake
+			ChaosSphere : Chaos Ring
+			ChaosSpirit : Chaos Spirit
+			ChaosSpiritChain : Chaos Chain
+			ChaosStar : Chaos Star
+			ChaosThorn : Chaos Thorn
+			ChaosWave : Chaos Wave
+			ChargeBeam : Charge Ball
+			ChargedCataclysmBullet : Charged Cataclysm Bullet
+			ChargedHardlightArrow : Charged Hardlight Arrow
+			ClairvoyanceShade : Clairvoyance Shade
+			Coconut : Coconut
+			CoconutShrapnel : Coconut Shrapnel
+			CodeBurst : Code Burst
+			CodeVolley : Code Burst
+			CollapseLaser : Continuum Collapse
+			ConstructFinder : Construct Finder
+			ContinuumExplosion : Collapse Laser
+			ContinuumSphere : Continuum Sphere
+			CrabCrusher : Crab Claw Crusher
+			CrossLaser : Unholy Light
+			CrystalSerpentBody : Crystal Serpent Counter
+			CrystalSerpentHead : Crystal Serpent
+			CurseArm : Curse
+			CurseBall : Curse
+			CursedBlade : Cursed Blade
+			CursedStab : Gas Slash
+			CursedThunder : Thunder Column
+			CurseExplosion : Curse
+			CurseExtension : Curse
+			CurseGhost : Curse Ghost
+			CurseRing : Curse
+			CurseSingularity : Cursed Singularity
+			CurseSpear : Cursed Impale
+			CurseSpike : Curse Spike
+			CurseWave : Curse
+			CurveBolt : Curve Bolt
+			DarkEyeDamage : The Dark Eye
+			DarkLight : Dark Light
+			DashIndicator : Cursespire
+			DashIndicator2 : Cursespire
+			DataTransferProj : Data Transfer Proj
+			DeathBlade : Death's Touch
+			DeathSpiralProj : Death Spiral
+			DestabilizingBeam : Destabilizing Beam
+			DigitalSlash : Digital Slash
+			DigitalTrail : Digital Trail
+			DimensionalFlame : Dimensional Flame
+			DogmaLaser : Hyperlight Beam
+			DogmaSphere : Chaos Ball
+			Doomhook : Doomhook
+			DoomstickHoldOut : Doomstick
+			DoubleLaser : Double Laser
+			DoubleLaserExplosion : Double Laser
+			EarthenBeam : Lightspeed Blade
+			EarthenBolt : Earthen Bolt
+			EarthenRing : Earthen Ring
+			EarthenShot : Lightspeed Blade
+			EarthenSpirit : Earthen Spirit
+			Earthshaker : Earthshaker
+			EarthshakerPickaxe : Earthshaker Pickaxe
+			EchoDisk : Echo Disc
+			EclipseBubble : Eclipse Bubble
+			EclipseCrush : Eclipse Crush
+			EclipseCrusher : Eclipse Arm
+			EmeraldBolt : Emerald Bolt
+			EmeraldBoltHoming : Emerald Bolt
+			EmeraldTrail : Emerald Trail
+			EndoBurst : Endo Burst
+			EnergySerpentHead : Energy Serpent
+			EnergySerpentHead2 : Energy Serpent
+			EtherealFlame : Ethereal Flame
+			EvilArm : Evil Construct Arm
+			EvilBolt : Umbra Ball
+			EvilExplosion : Evil
+			EvilGrowth : Nightmare Arms
+			EvilSpear : Umbra Spear
+			EvilSpirit : Evil Spirit
+			EvilStrike : Nightmare Strike
+			EvilWave : Umbra Bolt
+			ExplosiveKnife : Explosive Knife
+			ExtendoBaguette : Extendo Baguette
+			FallingBolt : Falling Bolt
+			FishBullet : Fish
+			FlareDetonatorHold : Flare Detonator
+			FlowerBolt : Flower Bolt
+			FloweringBud : Flowering Bud
+			FlowerSeed : Flower Seed
+			FlowerStrike : Flower Strike
+			FluidFollower : my curse behind me
+			FluxSlimeBall : Flux Slime Ball
+			FlyingSnake : Snakey Boi
+			FriendlyChaosEraser : Hyperlight Eraser
+			FriendlyCurseBall : Curse
+			FriendlyFlowerBolt : Flower Bolt
+			FriendlyOtherworldlyBall : Phase Ball
+			FriendlyOtherworldlyBolt : Phase Bolt
+			FriendlyPinkLaser : Pinky Laser
+			FriendlyPolarBullet : Polar Bullet
+			FrigidIceShard : Ice Shard
+			FrigidJavelin : Frigid Javelin
+			FrostflakePulse : Frostflake Pulse
+			FrostSpear : Frost Spear
+			Fusion1 : Helix Bolt
+			Fusion2 : Helix Bolt
+			GasBlast : Gas Blast
+			GelAxe : Gel Axe
+			GenesisArc : Genesis Arc
+			GenesisCore : Genesis Core
+			GeostormCrystal : Geostorm Crystal
+			GhastDrop : Ghast Drop
+			GhostPepper : Ghost Pepper
+			GlazeBow : Glaze Bow
+			GoldBolt : Gold Bolt
+			GoldChakram : Gold Chakram
+			GoldLight : Gold Light
+			GoldSpear : Gold Glaive
+			GreaterCellBlast : Firespire
+			GreenExplosion : Green Lightning
+			GreenLightning : Green Lightning
+			GreenLightning2 : Green Lightning
+			GreenLightningZap : Green Lightning
+			GreenThunderCluster : Thunder Cluster
+			GrowTree : Tree Grow
+			HardlightArrow : Hardlight Arrow
+			HardlightArrowDamage : Hardlight Arrow
+			HardlightColumn : Hardlight Column
+			HardlightGlaive : Hardlight Glaive
+			HardlightTrail : Hardlight Trail
+			HarvestingStrike : Harvesting Strike
+			HarvestLock : Harvest Lock
+			HealLock : Heal Lock
+			HealProj : Heal Proj
+			HeartCrush : Heart Crush
+			Helios : Helios
+			HeliosSlash : Helios Slash
+			HellbreakerCrusher : Hellbreaker Crusher
+			HellCrush : Hell Crush
+			HellfuryCrush : Hellfury Crush
+			HoloEye : Holo Eye
+			HoloMissile : Holo Missile
+			HoloPlatform : Holo Platform
+			HostileJavelin : Ice Spear
+			HungryHunter : Hungry Hunter
+			HypericeRocket : Hyperice Rocket
+			HyperlightGeyser : Hyperlight Geyser
+			HyperlightLaser : Hyperlight Laser
+			HyperlightOrb : Hyperlight Orb
+			IceCluster : Ice Cluster
+			IceImpale : IceImpale
+			IcePulse : Ice Pulse
+			IcePulseSummon : Ice Pulse
+			IceShard : Ice Shard
+			IceStorm : Ice Storm
+			IncineratorGloveProjectile : Incinerator Glove
+			InfernoBolt : Inferno Bolt
+			InfernoHook : Inferno Hook
+			InfernoLaser : Lava Laser
+			InfernoPhaseBolt : Phase Bolt
+			InfernoSeeker : Inferno Seeker
+			InfernoSpirit : Inferno Spirit
+			InfernoTrail : Inferno Trail
+			IrradiatedCrush : Irradiated Crush
+			IrradiatedCrusher : Irradiated Arm
+			JuryRiggedDrill : Jury Rigged Drill
+			LavaLaser : Lava Laser
+			LemegetonWispGreen : Lemegeton Wisp
+			LemegetonWispPurple : Lemegeton Wisp
+			LemegetonWispRed : Lemegeton Wisp
+			LesserWispLaser : Lesser Wisp Laser
+			LightningLash : Lightning Lash
+			LightningLashTrail : Lightning Trail
+			LightspeedBlade : Shadow Blade
+			LingeringFlame : Fire Bolt
+			LuckyPurpleBalloon : Lucky Purple Balloon
+			LuxRelocatorBeam : Relocator Beam
+			MacaroniBeam : Crescent Beam
+			MacaroniMoon : Macaroni Moon
+			ManaLock : Mana Lock
+			ManicMiner : Void Mining Laser
+			MantisGripCrusher : Mantis Grip Crusher
+			Metalmalgamation : Metalmalgamation
+			MinersPickaxe : Miner's Pickaxe
+			MiniPolarisCannon : Polar Cannon
+			multiplayerDarkEye : multiplayer Dark Eye
+			NatureBeam : Nature Beam
+			NatureBeat : Nature Blast
+			NatureBeatFriendly : Nature Blast
+			NatureBolt : Nature Bolt
+			NatureBoltFriendly : Nature Bolt
+			NatureSpirit : Nature Spirit
+			NorthStar : North Star
+			NorthStarExplosion : North Starsplosion
+			NorthStarStar : North Star Star
+			ObsidianStar : Hellfury Star
+			OlympianAxe : Olympian Axe
+			OrangeWispLaser : Orange Wisp Laser
+			OriginLightningDamage : Origin Thunder
+			OriginLightningZap : Origin Thunder
+			OtherworldLightning : Otherworld Lightning
+			OtherworldlyBall : Phase Ball
+			OtherworldlyBolt : Phase Bolt
+			OtherworldlySpirit : Otherworldly Spirit
+			OtherworldlyTracer : Otherworldly Tracer
+			Pathogen : Pathogen Ball
+			Peanut : Peanut
+			PeanutBomb : Peanut Bomb
+			PeanutExplosion : Peanut Bomb
+			PenguinCopter : Penguin Copter
+			PenguinMissile : Penguin Missile
+			PerfectStar : Perfect Star
+			PerfectStarLaser : Star Laser
+			PerfectStarLaser2 : Star Laser
+			PermafrostLinger : Lingering Permafrost
+			PermafrostSpike : Permafrost Spike
+			PermafrostSpirit : Permafrost Spirit
+			PetPutridPinkyCrystal : Pinky Pet
+			PhantomFist : Phantom Fist
+			PharaohShade : Pharaoh Shade
+			PhaseColumn : Phase Thunder
+			PhaseDart : Phase Dart
+			PhaseEraser : Phase Eraser
+			PhaseSpear : Phase Spear
+			PhotonGeyser : Photon Geyser
+			PinkBubble : Pink Bubble Stream
+			PinkBullet : Putrid Bullet
+			PinkCrush : Putrid Collapse
+			PinkExplosion : Pink Explosion
+			PinkLaser : Pinky Laser
+			PinkLightning : Pink Lightning
+			PinkLightningDamage : Pink Lightning
+			PinkLightningZap : Pink Lightning
+			PinkTracer : Putrid Tracer
+			PinkyBomber : Pinky Bomber
+			PinkyHook : Wormwood Hook
+			PinkyMusketBall : Pinky Shot
+			PinkyTurret : Wormwood Turret
+			PlasmaBall : Plasma Ball
+			PlasmaCrush : Plasma Crush
+			PlasmaCutter : Time to die
+			PlasmaCutterTrail : Plasma Cutter Trail
+			PlasmaLightningDamage : Plasma Lightning
+			PlasmaLightningZap : Plasma Lightning
+			PlasmaphobiaBolt : Plasma Bolt
+			PlasmaShrimp : Plasma Shrimp
+			PlasmaSphere : Plasma Sphere
+			PlasmaStar : Plasma Star
+			PlatinumCurse : Platinum Curse
+			PlatinumDart : Platinum Dart
+			PolarBullet : Polar Bullet
+			PolarMortar : Polar Mortar
+			PotProjectile : Pot Projectile
+			Poyoyo : Poyo-yo
+			PrismLaser : Photon Laser
+			PrismOrb : Starshot
+			PulverizerCrusher : Pulverizer Arm
+			PulverizerLaser : Pulverizer Laser
+			PurgatoryGhost : Purgatory Ghost
+			PurgatoryLightning : Purgatory Column
+			PurpleBobber : Purple Bobber
+			PurpleHomingBolt : Purple Homing Bolt
+			PurpleLightning : Purple Lightning
+			PurpleLightningDamage : Purple Lightning
+			PurpleLightningZap : Purple Lightning
+			PurpleThunderCluster : Thunder Cluster
+			PutridEye : Putrid Eye
+			PyramidCollapse : Fallen Bricks
+			PyramidGateProj : Multiplayer Code 5000
+			PyramidSpear : Imperial Pike
+			PyrocideSlash : Pyrocide Slash
+			Rainbolt : Rain Bolt
+			RainbowTrail : Rainbow Trail
+			Razorwater : Razorwater
+			RealityShatter : Shattering Laser
+			ReaperScythe : Reaper Scythe
+			Rebar : Rebar
+			RecollectHook : Recollect Hook
+			RedLaser : Ceremonial Laser
+			RedNatureBeat : Pulverizer Blast
+			RedNatureBolt : Pulverizer Bolt
+			RefractingCrystalProj : Refracting Crystal Counter
+			ReleaseWallMimic : Release Wall Mimic
+			RelocatorBeam : Relocator Beam
+			RevolutionBolt : Revolution Bolt
+			RevolutionBoltDay : Revolution Bolt Day
+			RevolutionBoltNight : Revolution Bolt Night
+			RippleWave : Ripple Wave
+			RippleWaveSummon : Ripple Wave
+			Riptide : Riptide
+			RoseBow : Rose Bow
+			RubyBurst : Ruby Burst
+			RubyKeystoneIndicator : Ruby Energy
+			RubyMonolith : Ruby Monolith
+			RubySpawner : Ruby Spawner
+			RubySpawnerFinder : Ruby Spawner Finder
+			SandBullet : Sand Bullet
+			SandPuff : Sandy Puff
+			Sawflake : Sawflake
+			ScytheSlash : Scythe Slash
+			Seeker : Critical Seeker
+			ShadeSpear : Curse
+			SharangaBlast : Sharanga Crush
+			SharangaBlastSummon : Sharanga Crush
+			SharangaBolt : Sharanga Bolt
+			Shardstorm : Shardstorm
+			ShatterFix : Shatter Fix
+			ShatterShard : Shatter Shard
+			Shattershine : Shattershine
+			ShattershinePulse : Shattershine Pulse
+			ShrimpLaser : Shrimp Laser
+			ShroomSpore : Spore
+			SilkCocoonProjectile : silk Cocoon sync projectile
+			SkywardBladeBeam : Skyward Blade
+			SmallCollapseLaser : Continuum Collapse
+			SmallStellarHitbox : Starsplosion
+			SmokePixel : Pathogen Cloud
+			Snake : Snakey Boi
+			SolarBullet : Solar Bullet
+			SolarPetal : Solar Petal
+			SoulCrush : Soul Crush
+			SoulEaterCrusher : Soul Eater Crusher
+			SoulLock : Soul Lock
+			SoulofLooting : Sool of Looting
+			SoulofRetaliation : Soul of Retaliation
+			SpawnGoldGate : Spawn Gold Gate
+			SpectralWisp : Spectral Wisp
+			SpectralWispLaser : Spectral Wisp Laser
+			SpiderCrusher : Spider Arm
+			SpikeTrap : Spike Trap
+			SpikyPufferfish : Spiky Pufferfish
+			SpiralDeathBeam : Spiral Death Beam
+			SporeBomb : Spore Bomb
+			SporeCloud : Spore Cloud
+			SporeCloudFriendly : Spore Cloud
+			SquirrelMinion : Squirrel
+			StarBolt : Starlight Bolt
+			StarcoreBullet : Starcore Bullet
+			StarcoreRifle : Starcore Rifle
+			StarLaser : Star Laser
+			Starshot : Starshot
+			StarshotCrossbow : Starshot Crossbow
+			SteelShrapnel : Steel Shrapnel
+			StormArrow : Tracer Arrow
+			StrangeKeystoneExplosion : Strange Keystone Explosion
+			SubspaceBoosterProj : Subspace Booster Proj
+			SubspaceCrusher : Spirit Arm
+			SubspaceDeathAnimation : Subspace Death Animation
+			SubspaceEye : Subspace Eye
+			SubspaceEyeWall : Subspace Eye Wall
+			SubspaceLingeringFlame : Fire Bolt
+			SubspaceServant : Subspace Servant
+			SupernovaHammer : Supernova Hammer
+			SupernovaLaser : Supernova Laser
+			SupernovaScatter : Supernova Scatter
+			SupernovaSmash : Supernova Hammer
+			TerminatorAcorn : Terminator Acorn
+			TerminatorSquirrel : Terminator Squirrel
+			TestFireball : Accursed Bolt
+			ThunderBall : Chaos Thunder Ball
+			ThunderColumn : Thunder Column
+			ThunderColumnBlue : Thunder Column
+			ThunderColumnFast : Thunder Column
+			ThunderRing : Thunder Ring
+			ThundershockShortbow : Thundershock Crossbow
+			ThunderSpawnBeam : Thunder Beam
+			TidalBeam : Tidal Beam
+			TidalConstructTrail : Hardlight Trail
+			TidalSpirit : Tidal Spirit
+			TidalWave : Tidal Wave
+			TinyPlanetTear : Tiny Planet Tear
+			ToothAcheSlash : Tooth Ache Slash
+			ToothAcheThrow : Tooth Ache
+			TracerArrow : Tracer Arrow
+			Trains : Train Snake
+			TravelingFlareFlame : Flare Flame
+			TreasureStarPortal : Treasure Star Portal
+			TwilightBlade : Twilight Blade
+			TwilightBobber : Twilight Bobber
+			TwilightDart : TwilightDart
+			UndoParticles : Undo
+			VertebraekerSlash : Vertebraeker Slash
+			VertebraekerThrow : Vertebraeker
+			VibrantArc : Vibrant Arc
+			VibrantArrow : Vibrant Arrow
+			VibrantBall : Vibrant Ball
+			VibrantBlade : Lightspeed Blade
+			VibrantBolt : Vibrant Bolt
+			VibrantBullet : Vibrant Bullet
+			VibrantRifle : Vibrant Rifle
+			VibrantRing : Vibrant Ring
+			VibrantShard : Vibrant Shard
+			VisionFlare : Vision Flare
+			VisionWeapon : Vision Weapon
+			VoidDeath : Voiden Collapse
+			VoidHealEffect : Void Heal Effect
+			VoidLock : Void Lock
+			VoidRing : Void Ring
+			VoidspaceCell : Voidspace Cell
+			VoidspaceExplosion : Voidspace Explosion
+			WaveBlast : Wave Blast
+			Webbing : Webbing
+			WebBolt : Web Bolt
+			WingedKnife : Winged Knife
+			WispOrange : Will o'
+			WorldgenCapture_Highlight : Worldgen Capture Visual
+			WormBullet : Wormwood Bullet
+			WormWoodCrusher : Wormwood Arm
+			WormWoodSpike : Wormwood Spike
+			Zeppelin : Zephyrous Zeppelin
+		}
 	}
 }
