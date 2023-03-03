@@ -5092,31 +5092,22 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 		}
-		/*public static void CleanUpFloatingTrees()
-        {
-			for(int i = 0; i < Main.maxTilesX; i ++)
-            {
-				for (int j = Main.maxTilesY; j > 0; j--)
-                {
+		public static void CleanUpFloatingTrees()
+		{
+			WorldGen.skipFramingDuringGen = true;
+			for (int i = 50; i < Main.maxTilesX - 50; i++)
+			{
+				for (int j = Main.maxTilesY - 50; j > 50; j--)
+				{
 					Tile tile = Main.tile[i, j];
 					Tile tileD = Main.tile[i, j + 1];
-					Tile tileU = Main.tile[i, j - 1];
-					Tile tileL = Main.tile[i - 1, j];
-					Tile tileR = Main.tile[i + 1, j];
-					if (tile.TileType == TileID.Trees && tile.HasTile)
-                    {
-						if(!tileD.HasTile)
-                        {
-							bool tileLeftTree = tileL.HasTile && tileL.TileType == TileID.Trees;
-							bool tileRightTree = tileL.HasTile && tileL.TileType == TileID.Trees;
-							if (!tileRightTree && !tileLeftTree)
-                            {
-								//unactivate tile
-                            }
-						}
-                    }
+					if ((WorldGen.IsTreeType(tile.TileType) || tile.TileType == TileID.PalmTree) && tile.HasTile && !tileD.HasTile)
+					{
+						WorldGen.SquareTileFrame(i, j);
+					}
                 }
-            }
-        }*/
+			}
+			WorldGen.skipFramingDuringGen = false;
+		}
 	}
 }

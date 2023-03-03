@@ -293,9 +293,10 @@ namespace SOTS.WorldgenHelpers
 					for (int j = 100; j < Main.maxTilesY / 2; j++)
 					{
 						Tile tile = Framing.GetTileSafely(i + i2, j);
-						if (tile.HasTile && tile.TileType == ModContent.TileType<Items.Pyramid.PyramidSlabTile>())
+						Tile tileCheckBelow = Framing.GetTileSafely(i + i2, j + 20);
+						if ((tileCheckBelow.HasTile && tileCheckBelow.TileType == ModContent.TileType<Items.Pyramid.PyramidSlabTile>()) || (tile.HasTile && tile.TileType == ModContent.TileType<Items.Pyramid.PyramidSlabTile>()))
                         {
-							bestSpan = -1;
+							totalSpan = -1;
 							break;
                         }
 						else if (tile.HasTile && tile.TileType == TileID.Sand)
@@ -313,6 +314,8 @@ namespace SOTS.WorldgenHelpers
 							break;
 						}
 					}
+					if (totalSpan == -1)
+						break;
 				}
 				if (totalSpan > bestSpan)
 				{

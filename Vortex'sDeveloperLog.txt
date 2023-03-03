@@ -11,7 +11,6 @@ Acknowledged But Likely Delayed:
 1. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
 2. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
 3. Texture Pack sounds to disable when block is broken (tied to specific blocks)
-4. Worldgen Step that cleans up floating trees!
 
 Update Objectives:
 1. Ghost Town!
@@ -61,6 +60,10 @@ Things to Note For Later:
 3. Wind mechanics for vines and banners
 
 Daily Log:
+
+3/2/23
+1. Fix Amethyst Gem Structure inappropriately cutting into the pyramid
+2. Trees are now cleared during worldgen if they lackk supporting blocks due to structure generation.
 
 3/1/23
 1. Attempt to fix Pharaoh's Curse Memory Leak

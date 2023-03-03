@@ -568,6 +568,7 @@ namespace SOTS
 			{
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingGemStructures");
 				GemStructureWorldgenHelper.GenerateGemStructures();
+				SOTSWorldgenHelper.CleanUpFloatingTrees(); //Updates tile frames for trees
 			}));
 		}
 		private void AdjacentDesertGeneration(GenerationProgress progress, GameConfiguration configuration)
