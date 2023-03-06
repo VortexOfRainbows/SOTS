@@ -228,6 +228,7 @@ Mods: {
 				ShieldofStekpla: Shield of Stekpla
 				SpikedClub: Spiked Club
 				StarcallerStaff: Starcaller Staff
+				SyntheticLiver: Synthetic Liver
 				TangleStaff: Tangle Staff
 				TinyPlanet: Tiny Planet
 				WingedKnife: Winged Knife
@@ -1066,6 +1067,12 @@ Mods: {
 					'''
 					Summons a Crystal Serpent to fight for you
 					The Crystal Serpent circles around enemies and fires stars at them
+					'''
+				SyntheticLiver:
+					'''
+					Increases void recieved from food by 25%
+					Consuming potions multiple times will increase buff duration instead of resetting it
+					Debuff durations are drained faster, increasing the duration of all active buffs
 					'''
 				TangleStaff: 
 					'''

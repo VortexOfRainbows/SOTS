@@ -50,11 +50,18 @@ namespace SOTS
 			//1.4 ZombieHand
 			On.Terraria.Player.ItemCheck_MeleeHitNPCs += Player_ItemCheck_MeleeHitNPCs;
 			Main.OnPreDraw += Main_OnPreDraw;
+
+			//Belpohegor Ring
 			On.Terraria.Player.PickTile += Player_PickTile;
+
+			//Crafting Stations carry with you (elemental amulet)
+			On.Terraria.Recipe.FindRecipes += Recipe_FindRecipes;
+
+			//Synthetic Liver
+			On.Terraria.Player.AddBuff += Player_AddBuff;
+
 			if (!Main.dedServ)
 				ResizeTargets();
-
-			On.Terraria.Recipe.FindRecipes += Recipe_FindRecipes;
 		}
 		public static void Unload() //Apparently unloading Detours is handled automatically now..?
 		{
@@ -433,6 +440,29 @@ namespace SOTS
 				Main.spriteBatch.End();
 			}
 		}
+		private static void Player_AddBuff(On.Terraria.Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet = true, bool foodHack = false)
+        {
+			if (SOTSPlayer.ModPlayer(self).PotionStacking)
+			{
+				if (type == BuffID.WellFed || type == BuffID.WellFed2 || type == BuffID.WellFed3)
+				{
+					int currentTime = 0;
+					if (self.HasBuff(BuffID.WellFed))
+						currentTime = self.buffTime[self.FindBuffIndex(BuffID.WellFed)];
+					if (self.HasBuff(BuffID.WellFed2))
+						currentTime = self.buffTime[self.FindBuffIndex(BuffID.WellFed2)];
+					if (self.HasBuff(BuffID.WellFed3))
+						currentTime = self.buffTime[self.FindBuffIndex(BuffID.WellFed3)];
+					timeToAdd += currentTime;
+				}
+				else if (self.HasBuff(type) && !Main.debuff[type])
+				{
+					int currentTime = self.buffTime[self.FindBuffIndex(type)];
+					timeToAdd += currentTime;
+				}
+			}
+			orig(self, type, timeToAdd, quiet, foodHack);
+        }
 		/*Code I wrote for HeartPlusUp! Calamity Mod!
 		private static void GlassTileWallFraming(On.Terraria.Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
         {

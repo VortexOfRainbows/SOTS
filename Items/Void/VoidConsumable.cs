@@ -49,8 +49,8 @@ namespace SOTS.Items.Void
 		public void RefillEffect(Player player, int amt)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidMeter += amt;
-			VoidPlayer.VoidEffect(player, amt);
+			voidPlayer.voidMeter += (amt * voidPlayer.VoidFoodGainMultiplier);
+			VoidPlayer.VoidEffect(player, (int)(amt * voidPlayer.VoidFoodGainMultiplier));
 		}
 		public sealed override bool ConsumeItem(Player player)
 		{

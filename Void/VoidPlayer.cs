@@ -39,6 +39,7 @@ namespace SOTS.Void
 		public static Color Inferno1 = new Color(213, 68, 13);
 		public static Color Inferno2 = new Color(255, 210, 155);
 		public static int soulColorCounter = 0;
+		public float VoidFoodGainMultiplier = 1f;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
 		public int voidStar = 0;
@@ -745,6 +746,7 @@ namespace SOTS.Void
 			{
 				VoidUI.visible = true;
 			}
+			VoidFoodGainMultiplier = 1f;
 			safetySwitch = false;
 			safetySwitchVisual = false;
 			CrushCapacitor = false;

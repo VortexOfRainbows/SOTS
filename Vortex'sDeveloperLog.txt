@@ -45,7 +45,6 @@ Ideas:
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
-2. Red (Abandoned Village) - Gula, Mechanical Liver (WIP)
 3. Orange (Abandoned Aqueduct) - Luxuria, Kelp Whip (WIP)
 
 This is the plan currently
@@ -60,6 +59,9 @@ Things to Note For Later:
 3. Wind mechanics for vines and banners
 
 Daily Log:
+
+3/5/23
+1. Added Synthetic Liver accessory
 
 3/2/23
 1. Fix Amethyst Gem Structure inappropriately cutting into the pyramid

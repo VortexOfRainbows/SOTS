@@ -3195,7 +3195,7 @@ namespace SOTS.WorldgenHelpers
 					}
 					if (tileBelowLeft.TileType == ModContent.TileType<SootBlockTile>() && tileBelowRight.TileType == ModContent.TileType<SootBlockTile>() && (tile.WallType == WallID.IronBrick || tile.WallType == WallID.LeadBrick)) //This is the Ruby Ruined Chest
 					{
-						SpecialItem = WorldGen.crimson ? ItemID.DeathbringerPickaxe : ItemID.NightmarePickaxe; //temporary item
+						SpecialItem = ModContent.ItemType<SyntheticLiver>();
 						fragmentItem = ModContent.ItemType<FragmentOfEvil>();
 						miscItemType = ItemID.Bomb;
 						isSpecialChest = true;

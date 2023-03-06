@@ -309,6 +309,8 @@ namespace SOTS
 		public float AmmoConsumptionModifier = 0.0f;
 		public bool AmmoRegather = false;
 		public float AmmoRegatherDelay = 0f;
+		public bool PotionStacking = false;
+		public bool DrainDebuffs = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -972,7 +974,7 @@ namespace SOTS
 			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
-			AmmoRegather = false;
+			AmmoRegather = PotionStacking = false;
 			if (AmmoRegatherDelay < 120)
 				AmmoRegatherDelay++;
 		}
@@ -1519,7 +1521,26 @@ namespace SOTS
 					DelayPotionDegrade = true;
 				}
 			}
-            if(Player.HasBuff(ModContent.BuffType<Harmony>()) || DelayPotionDegrade)
+			if(DrainDebuffs)
+			{
+				int totalDrainedDebuffs = 0;
+				for (int i = 0; i < Player.buffTime.Length; i++)
+				{
+					int type = Player.buffType[i];
+					if (Player.HasBuff(type) && Main.debuff[type])
+					{
+						if(Player.buffTime[i] > 30) //prevent stuff like campfire and banner from activating this
+                        {
+							Player.buffTime[i]--;
+							totalDrainedDebuffs++;
+						}
+					}
+				}
+				if (totalDrainedDebuffs >= 1)
+					IncreaseBuffDurations(Player, totalDrainedDebuffs * 3, 0f, totalDrainedDebuffs * 3, true);
+			}
+			DrainDebuffs = false;
+			if (Player.HasBuff(ModContent.BuffType<Harmony>()) || DelayPotionDegrade)
             {
 				IncreaseBuffDurations(Player, 1, 0, 1, false);
 			}
