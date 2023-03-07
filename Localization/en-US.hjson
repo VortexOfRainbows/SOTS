@@ -217,7 +217,6 @@ Mods: {
 				BagOfAmmoGathering: Bag of Ammunition Gathering
 				BetrayersKnife: Betrayer's Knife
 				CoconutGun: Coconut Gun
-				DreamLamp: Dreaming Lamp
 				GlazeBow: Glaze Bow
 				PathogenRegurgitator: Pathogen Regurgitator
 				PerfectStar: Perfect Star
@@ -703,6 +702,9 @@ Mods: {
 				RefractingCrystalBlock: Weird Crystal Block
 				StrangeKeystone: Strange Obelisk
 				StrangeKeystoneBroken: Broken Obelisk
+				DreamLamp: False Lamp
+				DreamingLamp: Dreaming Lamp
+				ForgottenLamp: Forgotten Lamp
 
 			# Slime
 				FireSpitter: Fire Spitter
@@ -1019,14 +1021,6 @@ Mods: {
 					'''
 					Launches coconut cluster bombs with homing coconut milk shrapnel
 					'It fires in spurts'
-					'''
-				DreamLamp: 
-					'''
-					Chain together up to 10 enemies, slowing them down for 30 seconds
-					When a chained enemy is killed, all chained enemies will take another instance of damage
-					Chained enemies take less damage from this when far away from each other
-					Chain together items to grab them
-					'What do you wish for?'
 					'''
 				GlazeBow: 
 					'''
@@ -2134,6 +2128,14 @@ Mods: {
 					'''
 					It suffers from small cracks under intense sunlight
 					'Feels hollow'
+					'''
+				DreamLamp: 
+					'''
+					Chain together up to 10 enemies, slowing them down for 30 seconds
+					When a chained enemy is killed, all chained enemies will take another instance of damage
+					Chained enemies take less damage from this when far away from each other
+					Chain together items to grab them
+					'What do you wish for?'
 					'''
 
 			# Slime

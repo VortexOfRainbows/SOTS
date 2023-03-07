@@ -7,10 +7,16 @@ Tmodloader Bugs:
 2. Chests crash when platforms are swapped below them.
 3. Block swap is not prevented for pyramid tiles pre EoW (don't think there is support for this in TMOD)
 4. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
+
 Acknowledged But Likely Delayed:
 1. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
 2. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
 3. Texture Pack sounds to disable when block is broken (tied to specific blocks)
+4. Reimplement Blade Items using the abstract class
+5. Earthen Plating starter house1.
+6. Bosses HP is ludicrous for Master Mode
+7. Glowmasks for Corruption Trees in SOTSTP
+8. Wind mechanics for vines and banners
 
 Update Objectives:
 1. Ghost Town!
@@ -50,20 +56,15 @@ Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 This is the plan currently
 
 Other 1.4 related objectives:
-1. Final 1 starter house
-2. Bestiary for all enemies
-3. Reorganize VoidPlayer Color helpers
-
-Things to Note For Later:
-1. Bosses HP is ludicrous for Master Mode
-2. Glowmasks for Corruption Trees in SOTSTP
-3. Wind mechanics for vines and banners
+1. Bestiary for all enemies
+2. Reorganize VoidPlayer Color helpers
 
 Daily Log:
 
 3/6/23
 1. Reorganize Ghost Pepper Folder + Resprite and Animated!
 2. Reorganize FakePlayer Blacklist/Whitelist + added some items to prevent bugs
+3. WIP Hiding Dreaming Lamp as a secret item... :)
 
 3/5/23
 1. Added Synthetic Liver accessory

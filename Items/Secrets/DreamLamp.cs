@@ -8,19 +8,48 @@ using System;
 using SOTS.Projectiles.Inferno;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Camera;
+using System.Collections.Generic;
+using Terraria.Localization;
 
-namespace SOTS.Items.ChestItems
+namespace SOTS.Items.Secrets
 {
 	public class DreamLamp : VoidItem
-	{	
-		public override void SetStaticDefaults()
+	{
+        /*public override void ModifyTooltip(List<TooltipLine> tooltips)
+		{
+			foreach (TooltipLine line in tooltips) //goes through each tooltip line
+			{
+				if (line.Mod == "Terraria" && line.Name == "ItemName")
+				{
+					string NewName = Language.GetTextValue("Mods.SOTS.ItemName.DreamingLamp");
+					if (IsLostItem)
+						NewName = Language.GetTextValue("Mods.SOTS.ItemName.ForgottenLamp");
+					line.Text = NewName;
+				}
+			}
+        }*/
+        public override void UpdateInventory(Player player)
+		{
+			SetOverridenName();
+		}
+        public override void PostUpdate()
+        {
+			SetOverridenName();
+        }
+        public override void SetStaticDefaults()
 		{
 			ItemID.Sets.ItemNoGravity[Type] = true;
 			this.SetResearchCost(1);
 		}
-		public Texture2D texture => Mod.Assets.Request<Texture2D>("Items/ChestItems/DreamLamp").Value;
+		public bool IsItemForgotten => !Main.dayTime;
+		public Texture2D texture => Mod.Assets.Request<Texture2D>("Items/Secrets/DreamLamp").Value;
 		public Texture2D inventoryBoxTexture => Terraria.GameContent.TextureAssets.InventoryBack.Value;
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		public void SetOverridenName()
+        {
+			Item.SetNameOverride(appropriateNameRightNow);
+        }
+		public string appropriateNameRightNow => IsItemForgotten ? Language.GetTextValue("Mods.SOTS.ItemName.ForgottenLamp") : Language.GetTextValue("Mods.SOTS.ItemName.DreamingLamp");
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			scale *= Item.scale;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);

@@ -120,8 +120,12 @@ namespace SOTS.Void
 					tooltips.Remove(tt2);
 				} 
 			}
-			
+			ModifyTooltip(tooltips);
 		}
+		public virtual void ModifyTooltip(List<TooltipLine> tooltips)
+        {
+
+        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			if(type != 10)

@@ -26,10 +26,10 @@ Code, Direction, Art: Vortex#6230
 Code: Ramen
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Art: MrPetkins, Mochi, HugeKraken, Cloud, Lunatix
+Art: MrPetkins, Mochi, HugeKraken, Cloud
 
 (Contributors and Other Credits)
-Art: Arcri, Pokerface
+Art: Arcri, Pokerface, Lunatix
 Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
 Code: Moonseer, Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
 Minor Art: Naka, DeJuiceTD, Nomis

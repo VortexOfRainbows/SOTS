@@ -21,7 +21,7 @@ Code, Direction, Art: Vortex
 Code: Ramen
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Art: MrPetkins, Mochi, HugeKraken, Cloud, Lunatix
+Art: MrPetkins, Mochi, HugeKraken, Cloud
 
 [b]~Past Developers~[/b]
 Direction, Art: Coolio
@@ -29,7 +29,7 @@ Direction: FlameFreezer
 Art: Blasfah
 
 [b]~Major Contributors~[/b]
-Art: Pokerface
+Art: Pokerface, Lunatix
 Code: Moonseer
 Localization: Lacewing, Linnnnnna
 

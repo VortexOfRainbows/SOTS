@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Evil;
+using SOTS.Items.Secrets;
 using SOTS.Items.Temple;
 using SOTS.NPCs.Boss.Curse;
 using System;
