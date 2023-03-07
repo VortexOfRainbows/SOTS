@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Projectiles.Pyramid 
+namespace SOTS.Projectiles.Pyramid.GhostPepper 
 {    
     public class SoulofLooting : ModProjectile 
     {
@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void PostDraw(Color lightColor)
 		{
-			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/SoulofLooting").Value;
+			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/SoulofLooting").Value;
 			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f * 0.125f);
 			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
 			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 22 * Projectile.frame, 22, 22), Projectile.GetAlpha(VoidPlayer.soulLootingColor), Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);

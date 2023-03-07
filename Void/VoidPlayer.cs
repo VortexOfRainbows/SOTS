@@ -17,6 +17,7 @@ using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Localization;
 using System.Linq;
+using SOTS.Projectiles.Pyramid.GhostPepper;
 
 namespace SOTS.Void
 {

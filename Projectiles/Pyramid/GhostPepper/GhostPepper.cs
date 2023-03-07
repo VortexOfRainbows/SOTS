@@ -7,7 +7,7 @@ using SOTS.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
-namespace SOTS.Projectiles.Pyramid
+namespace SOTS.Projectiles.Pyramid.GhostPepper
 {
 	public class GhostPepper : ModProjectile
 	{
@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			DisplayName.SetDefault("Ghost Pepper");
 			Main.projPet[Projectile.type] = true;
-			//Main.vanityPet[Projectile.type] = true;
+			Main.projFrames[Projectile.type] = 7;
 		}
 		public sealed override void SetDefaults()
 		{
@@ -45,14 +45,14 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public void cataloguePos()
 		{
-			Vector2 curve = new Vector2(110, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0]));
+			Vector2 curve = new Vector2(100, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0]));
 			Vector2 toRotate = new Vector2(0, 2.5f).RotatedBy(MathHelper.ToRadians(curve.X));
-			Vector2 current = Projectile.Center + new Vector2(0, 17.5f).RotatedBy(Projectile.rotation) + Projectile.velocity;
+			Vector2 current = Projectile.Center + new Vector2(0, 10f).RotatedBy(Projectile.rotation) + Projectile.velocity;
 			Vector2 velo = Projectile.velocity * 0.2f;
-			velo.Y += 0.55f;
+			velo.Y += 0.6f;
 			velo += toRotate;
 			velo = velo.RotatedBy(Projectile.rotation);
-			velo.Y += 0.55f;
+			velo.Y += 0.6f;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				if(trailPos[i] != Vector2.Zero)
@@ -66,69 +66,62 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (runOnce)
 				return true;
-			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperTail").Value;
+			Color color = new Color(70, 60, 70, 0);
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/GhostPepper").Value;
+			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
+			Vector2 drawOrigin1 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f / 7);
+			for (int j = 0; j < 8; j++)
+			{
+				Vector2 circular = new Vector2(1.75f, 0).RotatedBy(j * MathHelper.PiOver4);
+				Main.spriteBatch.Draw(texture3, drawPos2 + circular, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			return true;
+		}
+        public override void PostDraw(Color lightColor)
+		{
+			if (runOnce)
+				return;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/GhostPepperTail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-			Vector2 current = Projectile.Center + new Vector2(0, 17.5f).RotatedBy(Projectile.rotation);
+			Vector2 current = Projectile.Center + new Vector2(0, 10f).RotatedBy(Projectile.rotation);
 			Vector2 previousPosition = current;
-			Color color = new Color(75, 30, 75, 0);
+			Color color = new Color(45, 40, 60, 0);
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 1f;
 				if (trailPos[k] == Vector2.Zero)
 				{
-					return true;
+					return;
 				}
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				color *= 0.95f;
-				float max = betweenPositions.Length() / (4 * scale);
+				color *= 0.945f;
+				float max = betweenPositions.Length() / (5f * scale);
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
 					for (int j = 0; j < 5; j++)
 					{
-						float x = Main.rand.Next(-10, 11) * 0.1f * scale;
-						float y = Main.rand.Next(-10, 11) * 0.1f * scale;
-						if (j <= 1)
-						{
-							x = 0;
-							y = 0;
-						}
+						float x = Main.rand.Next(-10, 11) * 0.03f * scale * j;
+						float y = Main.rand.Next(-10, 11) * 0.03f * scale * j;
 						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin2, scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
 				previousPosition = currentPos;
 			}
-			Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperShell").Value;
+			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/GhostPepperGlow").Value;
+			Texture2D tFront = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/GhostPepperFront").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/GhostPepperGlowmask").Value;
+			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f);
+			color = new Color(40, 25, 35, 0);
 			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
-			Vector2 drawOrigin1 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f);
+			Main.spriteBatch.Draw(tFront, drawPos2 + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), lightColor, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			for (int j = 0; j < 8; j++)
 			{
-				float x = Main.rand.Next(-10, 11) * 0.35f * Projectile.scale;
-				float y = Main.rand.Next(-10, 11) * 0.35f * Projectile.scale;
-				Main.spriteBatch.Draw(texture3, drawPos2 + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-			}
-			return true;
-		}
-        public override void PostDraw(Color lightColor)
-		{
-			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperGlow").Value;
-			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperGlowmask").Value;
-			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f);
-			Color color = new Color(90, 40, 90, 0);
-			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
-			for (int j = 0; j < 5; j++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.125f * Projectile.scale;
-				float y = Main.rand.Next(-10, 11) * 0.125f * Projectile.scale;
-				if (j <= 3)
-				{
-					x = 0;
-					y = 0;
-				}
-				Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Vector2 circular = new Vector2(0.5f, 0).RotatedBy(j * MathHelper.PiOver4);
+				Main.spriteBatch.Draw(texture1, drawPos2 + circular, null, color, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			//Main.spriteBatch.Draw(texture3, drawPos2 + new Vector2(0, Projectile.gfxOffY), null, lightColor, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			Main.spriteBatch.Draw(texture4, drawPos2 + new Vector2(0, Projectile.gfxOffY), null, Color.White, Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
@@ -172,7 +165,7 @@ namespace SOTS.Projectiles.Pyramid
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.type == Mod.Find<ModProjectile>("SoulofLooting") .Type&& proj.active && (int)proj.ai[0] == Projectile.owner)
+					if (proj.type == ModContent.ProjectileType<SoulofLooting>() && proj.active && (int)proj.ai[0] == Projectile.owner)
 					{
 						Vector2 toNPC = proj.Center - Projectile.Center;
 						if (toNPC.Length() < lastLength)
@@ -233,6 +226,12 @@ namespace SOTS.Projectiles.Pyramid
 			#region Animation and visuals
 			if(mode != 2 || Projectile.ai[0] % (inc * 3) == 0)
 			cataloguePos();
+			Projectile.frameCounter++;
+			if(Projectile.frameCounter > 5)
+			{
+				Projectile.frameCounter = 0;
+				Projectile.frame = (Projectile.frame + 1) % 7;
+            }
 			Lighting.AddLight(Projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
 			#endregion
 		}

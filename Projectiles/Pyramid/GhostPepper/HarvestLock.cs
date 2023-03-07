@@ -11,7 +11,7 @@ using Terraria.ID;
 using SOTS.Void;
 using SOTS.Common.GlobalNPCs;
 
-namespace SOTS.Projectiles.Pyramid
+namespace SOTS.Projectiles.Pyramid.GhostPepper
 {    
     public class HarvestLock : ModProjectile 
     {	float distance = 30f;  
@@ -19,7 +19,6 @@ namespace SOTS.Projectiles.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Harvest Lock");
-			
 		}
         public override void SetDefaults()
         {
@@ -97,7 +96,7 @@ namespace SOTS.Projectiles.Pyramid
 						for (int j = 0; j < Main.projectile.Length; j++)
 						{
 							Projectile proj = Main.projectile[j];
-							if (proj.active && proj.owner == Projectile.owner && proj.type == Mod.Find<ModProjectile>("GhostPepper").Type)
+							if (proj.active && proj.owner == Projectile.owner && proj.type == ModContent.ProjectileType<GhostPepper>())
 							{
 								GhostPepper pepper = (GhostPepper)proj.ModProjectile;
 								if (pepper.npcTargetId != npc.whoAmI)
@@ -170,7 +169,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public void Draw(Vector2[] trailArray, Vector2 current)
 		{
-			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperTail").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/GhostPepperTail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = current;
 			Color color = new Color(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B, 0);

@@ -52,6 +52,7 @@ This is the plan currently
 Other 1.4 related objectives:
 1. Final 1 starter house
 2. Bestiary for all enemies
+3. Reorganize VoidPlayer Color helpers
 
 Things to Note For Later:
 1. Bosses HP is ludicrous for Master Mode
@@ -59,6 +60,9 @@ Things to Note For Later:
 3. Wind mechanics for vines and banners
 
 Daily Log:
+
+3/6/23
+1. Reorganize Ghost Pepper Folder + Resprite and Animated!
 
 3/5/23
 1. Added Synthetic Liver accessory

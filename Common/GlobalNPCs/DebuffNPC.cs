@@ -33,6 +33,7 @@ using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Blades;
 using SOTS.Buffs.Debuffs;
+using SOTS.Projectiles.Pyramid.GhostPepper;
 
 namespace SOTS.Common.GlobalNPCs
 {

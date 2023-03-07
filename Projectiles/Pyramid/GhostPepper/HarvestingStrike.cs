@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Projectiles.Pyramid
+namespace SOTS.Projectiles.Pyramid.GhostPepper
 {    
     public class HarvestingStrike : ModProjectile
 	{

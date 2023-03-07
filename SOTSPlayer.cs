@@ -52,6 +52,7 @@ using SOTS.Items.Invidia;
 using SOTS.Projectiles.Lightning;
 using SOTS.Projectiles.Camera;
 using Terraria.Localization;
+using SOTS.Projectiles.Pyramid.GhostPepper;
 
 namespace SOTS
 {
