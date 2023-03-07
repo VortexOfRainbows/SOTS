@@ -39,11 +39,11 @@ namespace SOTS.FakePlayer
             SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
             bool canUseItem = true;
             #region check if item is useable
-            if (!SOTSPlayer.locketWhitelist.Contains(item.type) || lastUsedItem == null)
+            if (!FakePlayerHelper.FakePlayerItemWhitelist.Contains(item.type) || lastUsedItem == null)
             {
                 Projectile proj = new Projectile();
                 proj.SetDefaults(item.shoot);
-                if (SOTSPlayer.locketBlacklist.Contains(item.type) || item.damage <= 0)
+                if (FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type) || item.damage <= 0)
                 {
                     canUseItem = false;
                 }

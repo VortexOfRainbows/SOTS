@@ -53,6 +53,9 @@ using SOTS.Projectiles.Lightning;
 using SOTS.Projectiles.Camera;
 using Terraria.Localization;
 using SOTS.Projectiles.Pyramid.GhostPepper;
+using SOTS.Items.Evil;
+using SOTS.Items.Temple;
+using SOTS.Items.ChestItems;
 
 namespace SOTS
 {
@@ -96,8 +99,6 @@ namespace SOTS
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}
-		public static int[] locketBlacklist;
-		public static int[] locketWhitelist;
 		public static int[] typhonBlacklist;
 		public static int[] typhonWhitelist;
 		public static int[] symbioteBlacklist;
@@ -105,10 +106,7 @@ namespace SOTS
 		public static bool pyramidBattle = false;
 		public static void LoadArrays()
 		{
-			locketBlacklist = new int[] { ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
-				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
-				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>(), ItemID.Zenith, ModContent.ItemType<VorpalKnife>() };
-			locketWhitelist = new int[] { ItemID.LawnMower, ItemID.CarbonGuitar, ItemID.IvyGuitar, ItemID.DrumStick, ItemID.Harp, ItemID.Bell };
+			FakePlayerHelper.Initialize();
 			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), 
 				ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), 
 				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() };

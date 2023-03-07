@@ -63,6 +63,7 @@ Daily Log:
 
 3/6/23
 1. Reorganize Ghost Pepper Folder + Resprite and Animated!
+2. Reorganize FakePlayer Blacklist/Whitelist + added some items to prevent bugs
 
 3/5/23
 1. Added Synthetic Liver accessory
