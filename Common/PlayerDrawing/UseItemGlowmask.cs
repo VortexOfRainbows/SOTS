@@ -5,6 +5,7 @@ using SOTS.Items.Chaos;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Permafrost;
+using SOTS.Items.Secrets;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using Terraria;
@@ -27,20 +28,39 @@ namespace SOTS.Common.PlayerDrawing
 				return;
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
+			Item heldItem = drawPlayer.HeldItem;
 			if (drawInfo.shadow != 0)
 				return;
-			if (!drawPlayer.HeldItem.IsAir && (!drawPlayer.HeldItem.noUseGraphic || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.SupernovaScatter>() || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || drawPlayer.HeldItem.type == ModContent.ItemType<StormSpell>() || drawPlayer.HeldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))
+			if (!heldItem.IsAir && (!heldItem.noUseGraphic || heldItem.type == ModContent.ItemType<Items.Temple.SupernovaScatter>() || 
+				heldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || heldItem.type == ModContent.ItemType<StormSpell>() || 
+				heldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))// || heldItem.type == ModContent.ItemType<DreamLamp>()))
 			{
-				Item item = drawPlayer.HeldItem;
+				Item item = heldItem;
+				float beginningScale = drawPlayer.GetAdjustedItemScale(item);
 				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
+				Color glowColor = Color.White;
 				if (item.type == ModContent.ItemType<StormSpell>())
 				{
 					texture = ModContent.Request<Texture2D>("SOTS/Items/Permafrost/StormSpellAnim").Value;
 				}
+				/*if (item.type == ModContent.ItemType<DreamLamp>())
+				{
+					glowColor = Lighting.GetColor(drawPlayer.itemLocation.ToTileCoordinates());
+					if (drawPlayer.altFunctionUse != 2)
+						return;
+					if (DreamLamp.IsItemForgotten)
+					{
+						texture = Terraria.GameContent.TextureAssets.Item[item.type].Value;
+					}
+					else
+                    {
+						texture = DreamLamp.texture;
+                    }
+					beginningScale = 0.8f;
+				}*/
 				Vector2 zero2 = Vector2.Zero;
 				SpriteEffects effects = drawInfo.playerEffect; //this is just a guess... might actually require drawInfo.itemEffect
 				bool isTwilightPole = item.type == ModContent.ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ModContent.ProjectileType<TwilightBobber>()] > 0;
-				float beginningScale = drawPlayer.GetAdjustedItemScale(item);
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
 					Vector2 location = drawInfo.ItemLocation;
@@ -76,7 +96,7 @@ namespace SOTS.Common.PlayerDrawing
 							{
 								texture = ModContent.Request<Texture2D>("SOTS/" + Items.Temple.Revolution.TextureName).Value;
 							}
-							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), frame, Color.White, rotation, origin, beginningScale, effects, 0);
+							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), frame, glowColor, rotation, origin, beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value);
 						}
 						else
@@ -137,7 +157,7 @@ namespace SOTS.Common.PlayerDrawing
 							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, position, frame, rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
+								DrawData value = new DrawData(texture, position, frame, rainbow ? color : glowColor, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 						}
@@ -148,7 +168,7 @@ namespace SOTS.Common.PlayerDrawing
 						{
 							for (int k = 0; k < 6; k++)
 							{
-								Color color = Color.White;
+								Color color = glowColor;
 								Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
@@ -171,16 +191,16 @@ namespace SOTS.Common.PlayerDrawing
 							Texture2D tEffect = ModContent.Request<Texture2D>("SOTS/Items/Chaos/EtherealScepterEffect").Value;
 							for (int k = 0; k < 6; k++)
 							{
-								Color color = Color.White;
+								Color color = glowColor;
 								Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
 								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
-							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
+							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), glowColor, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value2);
-							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
+							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), glowColor, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 							drawInfo.DrawDataCache.Add(value2);
 						}
 						else
@@ -196,7 +216,7 @@ namespace SOTS.Common.PlayerDrawing
 								DrawData value = new DrawData(texture,
 									new Vector2((float)((int)(location.X - Main.screenPosition.X)),
 									(float)((int)(location.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)),
-									modPlayer.rainbowGlowmasks ? color : Color.White,
+									modPlayer.rainbowGlowmasks ? color : glowColor,
 									drawPlayer.itemRotation,
 									 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height),
 									beginningScale,

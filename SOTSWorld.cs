@@ -1516,6 +1516,12 @@ namespace SOTS
 						}
 						chest.item[slot].SetDefaults(addItem); //add item to chest loot
 						slot++;
+						if(addItem == ModContent.ItemType<SupernovaScatter>())
+						{
+							chest.item[slot].SetDefaults(ModContent.ItemType<SolarBullet>()); //add item to chest loot
+							chest.item[slot].stack = WorldGen.genRand.Next(400, 601); //add item to chest loot
+							slot++;
+						}
 					}
 				}
 			}

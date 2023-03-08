@@ -24,7 +24,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.CritBonusDamage += 6;
+			modPlayer.CritBonusDamage += 4;
 		}
 		public override void AddRecipes()
 		{
@@ -50,7 +50,7 @@ namespace SOTS.Items.CritBonus
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Main.rand.NextBool(2))
 			{
-				modPlayer.CritBonusDamage += 12;
+				modPlayer.CritBonusDamage += 10;
 				if (modPlayer.onhit == 1)
 				{
 					player.AddBuff(BuffID.Bleeding, 1020, false); //17 seconds
@@ -81,7 +81,7 @@ namespace SOTS.Items.CritBonus
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Main.rand.NextBool(2))
 			{
-				modPlayer.CritBonusDamage += 12;
+				modPlayer.CritBonusDamage += 10;
 				if (modPlayer.onhit == 1)
 				{
 					player.AddBuff(BuffID.Poisoned, 300, false); //5 seconds
@@ -114,7 +114,7 @@ namespace SOTS.Items.CritBonus
 			player.GetCritChance(DamageClass.Generic) += 2;
 			if (Main.rand.NextBool(2))
 			{
-				modPlayer.CritBonusDamage += 18;
+				modPlayer.CritBonusDamage += 15;
 			}
 			player.buffImmune[BuffID.Bleeding] = true;
 			player.buffImmune[BuffID.Poisoned] = true;

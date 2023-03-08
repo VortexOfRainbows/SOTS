@@ -66,6 +66,7 @@ namespace SOTS.Items.Chaos
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
+			Main.tileNoSunLight[Type] = false;
 			ItemDrop = ModContent.ItemType<PhaseOre>();
 			//AddMapEntry(VoidPlayer.ChaosPink);
 			MineResist = 3f;

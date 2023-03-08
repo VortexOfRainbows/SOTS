@@ -123,7 +123,7 @@ namespace SOTS.Buffs.Debuffs
                         Vector2 toThis = npc.Center - otherNPC.Center;
                         float dist = toThis.Length();
                         toThis = toThis.SafeNormalize(Vector2.Zero);
-                        if (otherNPC.velocity.Y == 0)
+                        if (Math.Abs(otherNPC.velocity.Y) <= 0.33f)
                             toThis.Y *= 0.0f;
                         toThis *= MathHelper.Lerp(pullRate, 0, Math.Clamp(dist / maxPullDistance, 0, 1));
                         if (dist < 64)

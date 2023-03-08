@@ -1077,20 +1077,20 @@ Mods: {
 				TinyPlanet: Surrounds you with 2 orbital projectiles
 
 			# CritBonus
-				OtherworldlyAmplifier: Critical strikes deal 12 more damage
+				OtherworldlyAmplifier: Critical strikes deal 8 more damage
 				BloodstainedCoin: 
 					'''
-					Critical strikes have a 50% chance to deal 24 more damage
+					Critical strikes have a 50% chance to deal 20 more damage
 					Receiving damage has a 50% chance to bleed you
 					'''
 				PutridCoin: 
 					'''
-					Critical strikes have a 50% chance to deal 24 more damage
+					Critical strikes have a 50% chance to deal 20 more damage
 					Receiving damage has a 50% chance to poison you
 					'''
 				PolishedCoin: 
 					'''
-					Critical strikes have a 50% chance to deal 36 more damage
+					Critical strikes have a 50% chance to deal 30 more damage
 					2% increased crit chance
 					Immunity to bleeding and poisoned
 					'''
@@ -2131,11 +2131,20 @@ Mods: {
 					'''
 				DreamLamp: 
 					'''
+					'What do you wish for?'
+					'''
+				DreamingLamp: 
+					'''
 					Chain together up to 10 enemies, slowing them down for 30 seconds
 					When a chained enemy is killed, all chained enemies will take another instance of damage
 					Chained enemies take less damage from this when far away from each other
 					Chain together items to grab them
+					Right click to launch a floral ball that deals damage to all chained enemies
 					'What do you wish for?'
+					'''
+				FalseLamp: 
+					'''
+					Right click to launch a smog ball
 					'''
 
 			# Slime
@@ -2653,11 +2662,6 @@ Mods: {
 		WebbedNPC : Slowed, but only for enemies
 		}
 
-		ProjectileName: {
-				SilkCocoonProjectile: silk Cocoon sync projectile
-				DreamLaser: Dream Laser
-		}
-
 		ArmorSetBonus: {
             DoorItems: 
                 '''
@@ -2784,6 +2788,7 @@ Mods: {
 			SarcophagusTile: Sarcophagus
 			TaintedKeystoneShardTile: Tainted Keystone Shard
 			StrangeKeystoneTile: Strange Keystone
+			ForgottenLampTile: False Lamp
 			ArkhalisChainTile: Lost Chain
 			ElectromagneticDeterrentTile: D.E.F.E
 			EnchantedPickShrineTile: Pickaxe Shrine
@@ -3278,6 +3283,8 @@ Mods: {
 			DoomstickHoldOut : Doomstick
 			DoubleLaser : Double Laser
 			DoubleLaserExplosion : Double Laser
+			DreamLaser: Dream Laser
+			DreamingSmog: Dream Smog
 			EarthenBeam : Lightspeed Blade
 			EarthenBolt : Earthen Bolt
 			EarthenRing : Earthen Ring
@@ -3524,6 +3531,7 @@ Mods: {
 			Sawflake : Sawflake
 			ScytheSlash : Scythe Slash
 			Seeker : Critical Seeker
+			SilkCocoonProjectile: silk Cocoon sync projectile
 			ShadeSpear : Curse
 			SharangaBlast : Sharanga Crush
 			SharangaBlastSummon : Sharanga Crush

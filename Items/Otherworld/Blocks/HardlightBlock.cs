@@ -68,6 +68,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
+			Main.tileNoSunLight[Type] = false;
 			ItemDrop = ModContent.ItemType<HardlightBlock>();
 			//AddMapEntry(new Color(0, 0, 0, 0));
 			MineResist = 1.0f;
@@ -87,6 +88,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
+			Main.tileNoSunLight[Type] = false;
 			if (!Main.tile[i + 1, j].HasTile || Main.tile[i + 1, j].TileType == Type || !Main.tileSolid[Main.tile[i + 1, j].TileType])
 				Draw(i, j, spriteBatch);
 			return false;

@@ -847,7 +847,7 @@ namespace SOTS.Common.GlobalNPCs
                 DendroDamage += damageToAdd;
                 DendroChainNPCOperators.PullOtherNPCs(npc);
                 if (!npc.boss)
-                    finalSlowdown *= 0.95f;
+                    finalSlowdown *= 0.8f;
             }
             else
             {

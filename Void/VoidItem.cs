@@ -3,6 +3,7 @@ using SOTS.Buffs;
 using SOTS.Items.Celestial;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Permafrost;
+using SOTS.Items.Secrets;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -25,13 +26,13 @@ namespace SOTS.Void
 			SafeSetDefaults();
 			if (Item.DamageType == DamageClass.Melee)
 				Item.DamageType = ModContent.GetInstance<VoidMelee>();
-			else if(Item.DamageType == DamageClass.Ranged)
+			else if (Item.DamageType == DamageClass.Ranged)
 				Item.DamageType = ModContent.GetInstance<VoidRanged>();
-			else if(Item.DamageType == DamageClass.Magic)
+			else if (Item.DamageType == DamageClass.Magic)
 				Item.DamageType = ModContent.GetInstance<VoidMagic>();
-			else if(Item.DamageType == DamageClass.Summon)
+			else if (Item.DamageType == DamageClass.Summon)
 				Item.DamageType = ModContent.GetInstance<VoidSummon>();
-			else
+			else if (Item.DamageType != DamageClass.Default) //For items that cost void, but have no damage type
 				Item.DamageType = ModContent.GetInstance<VoidGeneric>();
 			Item.mana = 1;
 		}
@@ -60,7 +61,7 @@ namespace SOTS.Void
 					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
 				finalCost = (int)(baseCost * voidPlayer.voidCost * voidCostMult);
-				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>())
+				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>() && Item.type	!= ModContent.ItemType<DreamLamp>())
 				{
 					finalCost = 1;
 				}
@@ -113,11 +114,11 @@ namespace SOTS.Void
 				string[] splitText = tt2.Text.Split(' ');
 				//string damageValue = splitText.First();
 				//string damageWord = splitText.Last();
-				if(Item.accessory == false)
-					tt2.Text = Language.GetTextValue("Mods.SOTS.Common.CV", voidCostText);
+				if(Item.accessory || (Item.type == ModContent.ItemType<DreamLamp>() && VoidCost(Main.LocalPlayer) == 0))
+					tooltips.Remove(tt2);
 				else
 				{
-					tooltips.Remove(tt2);
+					tt2.Text = Language.GetTextValue("Mods.SOTS.Common.CV", voidCostText);
 				} 
 			}
 			ModifyTooltip(tooltips);
@@ -180,6 +181,10 @@ namespace SOTS.Void
 		}
         public sealed override bool? UseItem(Player player)
 		{
+			if (Item.createTile > -1)
+			{
+				return base.UseItem(player);
+			}
 			if (Item.useAmmo != 0 && BeforeDrainMana(player) && !Item.CountsAsClass(DamageClass.Summon))
 				DrainMana(player);
 			return true;
