@@ -34,20 +34,28 @@ Update Objectives:
 		1. More mana from healing potions
 	3. Glowjelly (Combine with Royal Jelly)
 3. Archaeologist NPC
-	1. Needs a sprite!
-	2. Ideas:
+	1. Ideas:
 		1. Could be a plain dressed archaeologist, or could be somewhat futuristic?
 		2. A travelling merchant that doesn't fight or move, therefore needs no movement frames or attack frames
 		3. Cannot be hurt
 		4. Has a note pad that they are animated to be jotting on (if it is not too difficult)
 		5. Maybe is somewhat holographic?
                 6. Can be found randomly across various generated structures, from the portals to the gem locks
+4. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map
+5. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. 
+	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
+		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
+		If an item is teleported through, it will not be allowed to teleport back through,
+	2. Teleports you to the other point on the map when you travel through, granting increased Maximum void by 50 Permanently (plays a short animation to indicate this).
+6. New Lux expert drop: Spirit Symphony - Inceases void stats by varying amounts. Deal double damage to Spirit Enemies
+	1. Nerf Soaring Insignia to no longer grant unlimited flight; grants unlimited flight when combined with Spirit Symphony.
+	2. Combine with Machina Booster + Soaring Insignia for new wings: Gilded Blade-Wings
 
 Ideas:
-4. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
-5. Peanut Bush and Peanut "Ore"
-6. Forgotten Lamp item which is used to make Dream Lamp in late Pre-HM, Spawns on Diamond Gem Island
-7. Nature Conduit: Used to imbue surrounding players or items with Dissolving Nature. Can Probably Use a tile entity
+7. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
+8. Peanut Bush and Peanut "Ore"
+9. Forgotten Lamp item which is used to make Dream Lamp in late Pre-HM, Spawns on Diamond Gem Island
+10. Nature Conduit: Used to imbue surrounding players or items with Dissolving Nature. Can Probably Use a tile entity
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
