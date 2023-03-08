@@ -66,7 +66,6 @@ namespace SOTS.Items.Chaos
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
-			Main.tileNoSunLight[Type] = false;
 			ItemDrop = ModContent.ItemType<PhaseOre>();
 			//AddMapEntry(VoidPlayer.ChaosPink);
 			MineResist = 3f;
@@ -98,6 +97,7 @@ namespace SOTS.Items.Chaos
 		}
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
+			Main.tileNoSunLight[Type] = false;
 			Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/PhaseOreTileOutline"), (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/PhaseOreTileFill"), i, j);
 			return false;
 		}
