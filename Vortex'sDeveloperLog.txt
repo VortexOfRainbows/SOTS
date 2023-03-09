@@ -73,6 +73,8 @@ Daily Log:
 1. WIP Dreamlamp Right Click. Needs: Visual Polish, Additional Homing Projectile, Forgotten Form, Server Syncing, Balancing
 	1. Might have to rework some of the timers to allow for a proper fade out animation, as dust spam might be too much
 	2. Tone down the dust on the lasers a bit... Maybe can add some drawcode to them for the flowers..?
+	3. Also need some modes for low performance probably.
+	4. Internals need to be streamlined
 
 3/7/23
 1. WIP Dream Lamp alternate modes, Slowdown 5% -> 20% (Generation, Framework)
