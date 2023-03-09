@@ -72,7 +72,8 @@ namespace SOTS.Projectiles.Camera
             {
                 if(Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<DreamingSmog>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, type);
+                    Vector2 velo = new Vector2(7, -3 * Projectile.direction).RotatedBy(Projectile.velocity.ToRotation()) + Main.rand.NextVector2Circular(1.2f, 1.0f);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + velo.SafeNormalize(Vector2.Zero) * 60, velo, ModContent.ProjectileType<DreamingSmog>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, type);
                 }
             }
             int ID = -1;

@@ -61,7 +61,7 @@ namespace SOTS.Void
 					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
 				finalCost = (int)(baseCost * voidPlayer.voidCost * voidCostMult);
-				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>() && Item.type	!= ModContent.ItemType<DreamLamp>())
+				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>())
 				{
 					finalCost = 1;
 				}
@@ -114,7 +114,7 @@ namespace SOTS.Void
 				string[] splitText = tt2.Text.Split(' ');
 				//string damageValue = splitText.First();
 				//string damageWord = splitText.Last();
-				if(Item.accessory || (Item.type == ModContent.ItemType<DreamLamp>() && VoidCost(Main.LocalPlayer) == 0))
+				if(Item.accessory)
 					tooltips.Remove(tt2);
 				else
 				{

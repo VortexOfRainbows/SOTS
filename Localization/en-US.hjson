@@ -2136,10 +2136,11 @@ Mods: {
 				DreamingLamp: 
 					'''
 					Chain together up to 10 enemies, slowing them down for 30 seconds
-					When a chained enemy is killed, all chained enemies will take another instance of damage
-					Chained enemies take less damage from this when far away from each other
 					Chain together items to grab them
-					Right click to launch a floral ball that deals damage to all chained enemies
+					Right click to launch a floral ball that deals damage to nearby chained enemies and resets their chain durations
+					When a chained enemy is killed, nearby chained enemies will take damage
+					Enemies that are hit multiple times deal more damage this way
+					Right clicking does not consume void
 					'What do you wish for?'
 					'''
 				FalseLamp: 

@@ -69,6 +69,11 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+3/8/23
+1. WIP Dreamlamp Right Click. Needs: Visual Polish, Additional Homing Projectile, Forgotten Form, Server Syncing, Balancing
+	1. Might have to rework some of the timers to allow for a proper fade out animation, as dust spam might be too much
+	2. Tone down the dust on the lasers a bit... Maybe can add some drawcode to them for the flowers..?
+
 3/7/23
 1. WIP Dream Lamp alternate modes, Slowdown 5% -> 20% (Generation, Framework)
 2. Otherworldly Amplifier Crit bonus 12 -> 8, Stained Coins bonus 24 -> 20, Polished coin 36 -> 30

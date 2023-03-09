@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs.Debuffs;
 using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
@@ -26,7 +27,7 @@ namespace SOTS.Projectiles.Camera
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
-			Projectile.localNPCHitCooldown = 5;
+			Projectile.localNPCHitCooldown = 45;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 		bool runOnce = true;
@@ -40,6 +41,15 @@ namespace SOTS.Projectiles.Camera
 				color = DreamingFrame.Green1;
 				SetPostitions();
 				runOnce = false;
+				NPC target = Main.npc[Math.Abs((int)Projectile.ai[0])];
+				if (Projectile.ai[0] < 0)
+				{
+					SOTSProjectile.DustStar(Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.Zero) * 16, Projectile.velocity.SafeNormalize(Vector2.Zero) * 2.4f, DreamingFrame.Green1 * 0.9f, Projectile.velocity.ToRotation(), 40, 0f, 4, 8f, 4f, 1f, 1.0f, 0.07f);
+					if (DreamingSmog.isNPCValidTarget(target))
+					{//So this only comes from the right/click effect
+						target.AddBuff(ModContent.BuffType<DendroChain>(), DendroChainNPCOperators.DendroChainStandardDuration + Projectile.damage / 2);
+					}
+				}
 				return true;
             }
 			return true;
@@ -50,8 +60,8 @@ namespace SOTS.Projectiles.Camera
 			{
 				Projectile.alpha -= 28;
 			}
-			else if (Projectile.alpha < 255 && Projectile.timeLeft < 15)
-				Projectile.alpha += 23;
+			else if (Projectile.alpha < 255 && Projectile.timeLeft < 28)
+				Projectile.alpha += 9;
 			Projectile.alpha = Math.Clamp(Projectile.alpha, 0, 255);
 		}
 		//bool collided = false;
@@ -67,16 +77,23 @@ namespace SOTS.Projectiles.Camera
 				k++;
 				posList.Add(currentPos);
 				currentPos += direction;
-				if (Main.rand.NextBool(5))
+				float size = 1f;
+				int rate = 5;
+				if (Projectile.ai[0] < 0)
+                {
+					size = 1.5f;
+					rate = 2;
+				}
+				if (Main.rand.NextBool(rate))
 				{
 					Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 					dust.fadeIn = 0.2f;
 					dust.noGravity = true;
 					dust.alpha = 100;
 					dust.color = color;
-					dust.scale *= 1.3f;
+					dust.scale *= 1.3f * size;
 					dust.velocity *= 1.6f;
-					dust.velocity += direction;
+					dust.velocity += direction * size;
 				}
 				maxDist--;
 			}
@@ -84,7 +101,7 @@ namespace SOTS.Projectiles.Camera
 		}
         public override bool? CanHitNPC(NPC target)
         {
-            return target.whoAmI == Projectile.ai[0] && Projectile.friendly && Projectile.timeLeft == 30;
+            return target.whoAmI == Math.Abs((int)Projectile.ai[0]) && Projectile.friendly && (Projectile.timeLeft == 31 || (Projectile.ai[0] < 0 && Projectile.timeLeft == 38));
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
@@ -105,22 +122,13 @@ namespace SOTS.Projectiles.Camera
 				return false;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
-			float alpha = 0;
+			float alpha;
 			Vector2 lastPosition = Projectile.Center;
 			for(int i = 0; i < posList.Count; i++)
 			{
 				Vector2 drawPos = posList[i];
-				if(i > posList.Count - 30)
-				{
-					if (alpha > 0)
-						alpha -= 0.033f;
-				}
-				else
-                {
-					if (alpha < 1)
-						alpha += 0.075f;
-                }
-				alpha = Math.Clamp(alpha, 0, 1);
+				float sizeMult = (float)Math.Sin(MathHelper.ToRadians(180f * (i + 0.5f) / posList.Count));
+				alpha = (float)Math.Clamp(Math.Sqrt(sizeMult), 0, 1);
 				Vector2 direction = drawPos - lastPosition;
 				lastPosition = drawPos;
 				float rotation = i == 0 ? Projectile.velocity.ToRotation() : direction.ToRotation();
@@ -130,10 +138,10 @@ namespace SOTS.Projectiles.Camera
 					Vector2 sinusoid = new Vector2(0, alpha * scale * (4 + 10 * alphaMult) * (float)Math.Sin(MathHelper.ToRadians(i * 2 + SOTSWorld.GlobalCounter * 2 + j * 120))).RotatedBy(rotation);
 					Color color = this.color * alphaMult * alpha * 0.2f;
 					color.A = 0;
-					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color, rotation, origin, new Vector2(scale * 2, scale * 0.5f * (0.2f + 0.8f * alphaMult)), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color, rotation, origin, new Vector2(scale * 2, scale * 0.5f * (0.5f + 0.5f * alphaMult)), SpriteEffects.None, 0f);
 				}
 			}
 			return false;
 		}
-	}
+    }
 }

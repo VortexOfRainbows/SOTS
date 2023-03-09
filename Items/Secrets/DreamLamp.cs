@@ -87,10 +87,6 @@ namespace SOTS.Items.Secrets
 			Item.channel = false;
 			Item.noUseGraphic = false;
 		}
-        public override float UseSpeedMultiplier(Player player)
-        {
-            return player.altFunctionUse == 2 ? 2 : 1;
-        }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
 		{
 			ModifyStats(player);
@@ -188,7 +184,7 @@ namespace SOTS.Items.Secrets
 			if (player.altFunctionUse == 2)
 			{
 				Vector2 normal = velocity.SafeNormalize(Vector2.Zero);
-				Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI, IsItemForgotten ? 2 : 1, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod * 0.5f));
+				Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI, IsItemForgotten ? 2 : 1, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
 			}
 			else
             {
@@ -204,9 +200,17 @@ namespace SOTS.Items.Secrets
 		}
 		public override int GetVoid(Player player)
 		{
-			if (Item.createTile >= 0)
-				return 0;
-			return 5;
+			return 10;
 		}
-	}
+        public override bool BeforeDrainMana(Player player)
+		{
+			if (Item.createTile >= 0)
+				return false;
+			if (player.altFunctionUse == 2 && !IsItemForgotten)
+            {
+				return false;
+            }
+            return base.BeforeDrainMana(player);
+        }
+    }
 }
