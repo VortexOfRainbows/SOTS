@@ -769,13 +769,20 @@ namespace SOTS
 		{
 			DrawStar(location, new Color(116, 125, 238, 0), alphaMult, rotation, spin, pointAmount, innerDistAdd, innerDistMin, xCompress, density);
 		}
-		public static void DrawStar(Vector2 location, Color color, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180, float forceInward = 0f, int textureType = 0)
+		public static void DrawStar(Vector2 location, Color color, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180, float forceInward = 0f, int textureType = 0, bool halfStar = false)
 		{
 			Vector2 fireFrom = location; 
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradient");
 			if(textureType == 1)
 				texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradientDarker");
-			for (float k = 0; k < 360; k += 360 / (float)density)
+			float offset = 0f;
+			float maxFloat = 360f;
+			if (halfStar)
+			{
+				offset = 90f;
+				maxFloat = 180f;
+            }
+			for (float k = offset; k < maxFloat + offset; k += maxFloat / (float)density)
 			{
 				float length = innerDistAdd + innerDistMin;
 				float rad = MathHelper.ToRadians(k);

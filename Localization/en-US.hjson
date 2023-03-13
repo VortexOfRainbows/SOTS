@@ -2139,7 +2139,7 @@ Mods: {
 					Chain together items to grab them
 					Right click to launch a floral ball that deals damage to nearby chained enemies and resets their chain durations
 					When a chained enemy is killed, nearby chained enemies will take damage
-					Enemies that are hit multiple times deal more damage this way
+					Enemies that are hurt multiple times before dying deal more damage this way
 					Right clicking does not consume void
 					'What do you wish for?'
 					'''

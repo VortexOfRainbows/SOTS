@@ -44,7 +44,17 @@ namespace SOTS.Projectiles.Camera
 				NPC target = Main.npc[Math.Abs((int)Projectile.ai[0])];
 				if (Projectile.ai[0] < 0)
 				{
-					SOTSProjectile.DustStar(Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.Zero) * 16, Projectile.velocity.SafeNormalize(Vector2.Zero) * 2.4f, DreamingFrame.Green1 * 0.9f, Projectile.velocity.ToRotation(), 40, 0f, 4, 8f, 4f, 1f, 1.0f, 0.07f);
+					for(int i = 0; i< 20; i++)
+                    {
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - Projectile.velocity.SafeNormalize(Vector2.Zero) * 8, 0, 0, ModContent.DustType<CopyDust4>());
+						dust.fadeIn = 0.2f;
+						dust.noGravity = true;
+						dust.alpha = 100;
+						dust.color = color;
+						dust.scale *= 1.35f;
+						dust.velocity *= 1.2f;
+						dust.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 10);
+					}
 					if (DreamingSmog.isNPCValidTarget(target))
 					{//So this only comes from the right/click effect
 						target.AddBuff(ModContent.BuffType<DendroChain>(), DendroChainNPCOperators.DendroChainStandardDuration + Projectile.damage / 2);
@@ -81,7 +91,7 @@ namespace SOTS.Projectiles.Camera
 				int rate = 5;
 				if (Projectile.ai[0] < 0)
                 {
-					size = 1.5f;
+					size = 1.25f;
 					rate = 2;
 				}
 				if (Main.rand.NextBool(rate))
