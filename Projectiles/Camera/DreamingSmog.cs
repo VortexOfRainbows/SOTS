@@ -14,6 +14,7 @@ namespace SOTS.Projectiles.Camera
 {    
     public class DreamingSmog : ModProjectile
 	{
+		public Color DrawColor => DreamingFrame.Green1;
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			height = 24;
@@ -51,7 +52,7 @@ namespace SOTS.Projectiles.Camera
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Camera/CameraCenterCross");
 			Texture2D ProjTexture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
-			Color color = DreamingFrame.Green1;
+			Color color = DrawColor;
 			float scaleMult = MathHelper.Clamp(Counter / 10f, 0, 1);
 			float starWindUp = MathHelper.Clamp(Counter / 25f, 0, 1);
 			float starWindUp2 = 0;
@@ -108,7 +109,7 @@ namespace SOTS.Projectiles.Camera
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Camera/CameraCenterCross");
 			Vector2 drawPosition;
-			Color color = DreamingFrame.Green1;
+			Color color = DrawColor;
 			float scaleMult = 0.5f + 0.5f * 32f / radius;
 			float starWindUp = progress;
 			float colorMult = 0.75f;
@@ -145,7 +146,7 @@ namespace SOTS.Projectiles.Camera
 			}
 			Vector2 drawPos = Projectile.Center;
 			Vector2 toNPC = npcCenter - Projectile.Center;
-			float startingRadians = 240 + degrees;
+			float startingRadians = (240 + degrees) * Projectile.direction;
 			startingRadians = MathHelper.Lerp(startingRadians, 0, Math.Clamp(Counter / 82f, 0, 1));
 			float rotation = toNPC.ToRotation();
 			Vector2 circularPosition = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(startingRadians));
@@ -157,7 +158,7 @@ namespace SOTS.Projectiles.Camera
 		public void DrawChainsBetween(Vector2 start, Vector2 destination, float progress, float degrees)
 		{
 			Texture2D textureGradient = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/DuelGradient"); //This could be swapped for a more suitable chain texture in the future, but it looks decent and fits the current asthetic
-			Color color = DreamingFrame.Green1;
+			Color color = DrawColor;
 			float addedHeight = 1f;
 			if (timerTimeLeft < 30)
 			{
@@ -192,13 +193,13 @@ namespace SOTS.Projectiles.Camera
 				if (i % 2 != 0)
 					scaleMult = 0.6f;
 				Vector2 velo = Main.rand.NextVector2Circular(1, 1) + FlowerVe.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 3f);
-				SOTSProjectile.DustStar(Projectile.Center + FlowerVe, velo * scaleMult, DreamingFrame.Green1 * scaleMult, 0f, 40, 0, 4, 8f, 5f, 1f, 1f * (0.2f + 0.8f * scaleMult));
+				SOTSProjectile.DustStar(Projectile.Center + FlowerVe, velo * scaleMult, DrawColor * scaleMult, 0f, 40, 0, 4, 8f, 5f, 1f, 1f * (0.2f + 0.8f * scaleMult));
 			}
 			for (int i = 0; i < 45; i++)
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(5f, 12f), 0).RotatedBy(MathHelper.ToRadians(i * 8f + Main.rand.NextFloat(-4f, 4f)));
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>());
-				dust.color = DreamingFrame.Green1;
+				dust.color = DrawColor;
 				dust.velocity = dust.velocity * 0.2f + circular + Projectile.velocity * 0.75f;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
@@ -226,7 +227,7 @@ namespace SOTS.Projectiles.Camera
 				}
 			}
 		}
-		public Color getDustColor => DreamingFrame.Green1;
+		public Color getDustColor => DrawColor;
 		public List<StarSelector> npcVectors = new List<StarSelector>();
 		public bool RunOnce = true;
 		public bool RunOnce2 = true;
@@ -360,7 +361,7 @@ namespace SOTS.Projectiles.Camera
 							outward = Main.rand.NextVector2Circular(6, 6);
 						}
 						Dust dust = Dust.NewDustDirect(position - new Vector2(5) + outward, 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>());
-						dust.color = DreamingFrame.Green1 * 1f;
+						dust.color = DrawColor * 1f;
 						dust.velocity = dust.velocity * 0.2f * scaleFactor + outward + Projectile.velocity * 0.75f;
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
