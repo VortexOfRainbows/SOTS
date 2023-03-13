@@ -16,8 +16,8 @@ namespace SOTS.Items.ChestItems
         {
             Item.damage = 135;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 68;
-            Item.height = 24;
+            Item.width = 128;
+            Item.height = 36;
             Item.useTime = 21;
             Item.useAnimation = 21;
             Item.useStyle = ItemUseStyleID.Shoot;
