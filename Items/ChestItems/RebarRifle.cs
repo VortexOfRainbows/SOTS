@@ -32,7 +32,7 @@ namespace SOTS.Items.ChestItems
         }
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-1, 0);
+            return new Vector2(-36, 2);
         }
     }
 }
