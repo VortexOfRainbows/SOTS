@@ -2135,17 +2135,16 @@ Mods: {
 					'''
 				DreamingLamp: 
 					'''
-					Chain together up to 10 enemies, slowing them down for 30 seconds
+					Chain together up to 10 enemies, decreasing their speed and defense
 					Chain together items to grab them
 					Right click to launch a floral ball that deals damage to nearby chained enemies and resets their chain durations
-					When a chained enemy is killed, nearby chained enemies will take damage
-					Enemies that are hurt multiple times before dying deal more damage this way
+					When a chained enemy is killed, nearby chained enemies will take additional damage
 					Right clicking does not consume void
 					'What do you wish for?'
 					'''
 				FalseLamp: 
 					'''
-					Right click to launch a smog ball
+					Right click to launch a mist orb that releases short-range homing bolts for 50% damage
 					'''
 
 			# Slime
@@ -3286,6 +3285,7 @@ Mods: {
 			DoubleLaserExplosion : Double Laser
 			DreamLaser: Dream Laser
 			DreamingSmog: Dream Smog
+			DreamBolt: Dream Bolt
 			EarthenBeam : Lightspeed Blade
 			EarthenBolt : Earthen Bolt
 			EarthenRing : Earthen Ring

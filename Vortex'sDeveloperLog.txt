@@ -69,16 +69,22 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-3/12/23
-1. Rework some visuals on Dreamlamp, STILL WIP
+3/12/23 & 3/13/23
+1. Rework some visuals + visual polish on Dreamlamp
+2. Forgotten Lamp form now has more unique attack style
+3. Buff Dreamlamp Base damage 24 -> 28
+	1. Right now it is QUITE STRONG. IT is weaker in DPS for its tier compared to the other OP weapons, but it should be in a decent spot.
+	2. Since it has utility, it also has more use cases + tremendous multi-target damage.
+	3. It's a bit weak in HM, but it should be useful for invasion events still due to its collateral damage.
+	4. Now has some defense penetration (30 units) (to further add to utility potential)
+	5. This defense penetration stacks erroneously with other defense penetraters, but I'm not going to bother fixing that for now
+4. Nerf Photon Geyser base damage 42 -> 34
+5. Still needed for Dream Lamp:
+	1. Server Syncing
+	2. Method of converting forms (obtain method)
 
 3/8/23
 1. WIP Dreamlamp Right Click. Needs: Visual Polish, Additional Homing Projectile, Forgotten Form, Server Syncing, Balancing
-	1. Might have to rework some of the timers to allow for a proper fade out animation, as dust spam might be too much
-	2. Tone down the dust on the lasers a bit... Maybe can add some drawcode to them for the flowers..?
-	3. Also need some modes for low performance probably.
-	4. Internals need to be streamlined
-	5. Consider making the orbiting projectiles 2 petaled instead of 4, in order to reduce clutter and add variety
 
 3/7/23
 1. WIP Dream Lamp alternate modes, Slowdown 5% -> 20% (Generation, Framework)

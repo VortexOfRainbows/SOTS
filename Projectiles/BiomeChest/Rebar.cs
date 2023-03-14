@@ -79,15 +79,23 @@ namespace SOTS.Projectiles.BiomeChest
 				runOnce = false;
 				Projectile.ai[1] = -1;
             }
-			if (counter > 13 && (Projectile.velocity.X != 0 || Projectile.velocity.Y != 0))
+			if (counter > 18 && (Projectile.velocity.X != 0 || Projectile.velocity.Y != 0))
 			{
 				Vector2 circular = new Vector2(10 * -Projectile.direction, 0).RotatedBy(MathHelper.ToRadians(counter * 20));
 				Vector2 circularLocation = new Vector2(0, circular.X).RotatedBy(Projectile.velocity.ToRotation());
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 235);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-				Main.dust[num1].velocity += circularLocation * 0.2f;
-				Main.dust[num1].scale = 1.5f;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 235);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+				dust.velocity += circularLocation * 0.2f;
+				dust.scale = 1.5f;
+				if(Main.rand.NextBool(4))
+                {
+					dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 235);
+					dust.noGravity = true;
+					dust.velocity *= 0.65f;
+					dust.velocity += Projectile.velocity * 0.6f;
+					dust.scale *= 1.25f;
+				}
 			}
 			if (startAnim)
 			{
@@ -118,8 +126,8 @@ namespace SOTS.Projectiles.BiomeChest
 						int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 235);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 1.55f;
-						Main.dust[num1].velocity += Projectile.velocity * 0.4f;
-						Main.dust[num1].scale *= 2.25f;
+						Main.dust[num1].velocity += Projectile.oldVelocity * 0.5f;
+						Main.dust[num1].scale *= 2.0f;
 					}
 					triggerAnim();
 				}

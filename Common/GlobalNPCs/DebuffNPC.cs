@@ -416,12 +416,18 @@ namespace SOTS.Common.GlobalNPCs
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Player player = Main.player[projectile.owner];
+            int ignoreDefense = ((npc.defense + 1) / 2);
             if (npc.HasBuff(BuffType<Shattered>()) && projectile.CountsAsClass(DamageClass.Melee) && projectile.type != ProjectileType<Projectiles.Evil.AncientSteelHalberd>())
             {
-                int ignoreDefense = ((npc.defense + 1) / 2);
                 damage += ignoreDefense;
                 crit = true;
                 npc.DelBuff(npc.FindBuffIndex(BuffType<Shattered>()));
+            }
+            else if(npc.HasBuff<DendroChain>())
+            {
+                if (ignoreDefense > 20)
+                    ignoreDefense = 20;
+                damage += ignoreDefense;
             }
             if (npc.immortal)
             {
@@ -525,12 +531,18 @@ namespace SOTS.Common.GlobalNPCs
             {
                 return;
             }
+            int ignoreDefense = ((npc.defense + 1) / 2);
             if (npc.HasBuff(BuffType<Shattered>()) && item.CountsAsClass(DamageClass.Melee))
             {
-                int ignoreDefense = ((npc.defense + 1) / 2);
                 damage += ignoreDefense;
                 crit = true;
                 npc.DelBuff(npc.FindBuffIndex(BuffType<Shattered>()));
+            }
+            else if (npc.HasBuff<DendroChain>())
+            {
+                if (ignoreDefense > 20)
+                    ignoreDefense = 20;
+                damage += ignoreDefense;
             }
             if (Main.rand.NextFloat(100f) < 5f * DestableCurse)
             {

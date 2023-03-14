@@ -36,7 +36,7 @@ namespace SOTS.Items.Secrets
 		{
 			Item.rare = ItemRarityID.Gray;
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 24;
+			Item.damage = 28;
 			Item.width = 42;
 			Item.height = 50;
 			Item.value = Item.sellPrice(gold: 5);
@@ -91,7 +91,7 @@ namespace SOTS.Items.Secrets
 		{
 			ModifyStats(player);
 			if (IsItemForgotten)
-				damage /= 3;
+				damage /= 2;
 		}
         public override bool BeforeUseItem(Player player)
         {
@@ -141,15 +141,19 @@ namespace SOTS.Items.Secrets
 		public string appropriateNameRightNow => IsItemForgotten ? Language.GetTextValue("Mods.SOTS.ItemName.ForgottenLamp") : Language.GetTextValue("Mods.SOTS.ItemName.DreamingLamp");
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
+			Texture2D realTexture = Terraria.GameContent.TextureAssets.Item[Type].Value;
 			scale *= Item.scale;
-			if (IsItemForgotten)
-            {
-				return true;
-            }
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 sinusoid = new Vector2(0, 6 * scale * (float)Math.Cos(1.7f * MathHelper.ToRadians(VoidPlayer.soulColorCounter))) + new Vector2(0, -3 * scale);
 			rotation = 15 * (float)Math.Sin(1f * MathHelper.ToRadians(VoidPlayer.soulColorCounter));
-			spriteBatch.Draw(texture, Item.position + origin + sinusoid - Main.screenPosition, null, lightColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+			if (IsItemForgotten)
+			{
+				rotation = 0;
+				sinusoid = new Vector2(0, 5.5f);
+			}
+			else
+				realTexture = texture;
+			spriteBatch.Draw(realTexture, Item.position + origin + sinusoid - Main.screenPosition, null, lightColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
 			return false;
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

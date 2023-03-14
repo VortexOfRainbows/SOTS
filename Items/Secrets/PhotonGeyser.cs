@@ -89,7 +89,7 @@ namespace SOTS.Items.Secrets
 		}
         public override void SetDefaults()
 		{
-			Item.damage = 42;
+			Item.damage = 34;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 74;
 			Item.height = 36;

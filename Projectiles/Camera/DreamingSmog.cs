@@ -14,14 +14,19 @@ namespace SOTS.Projectiles.Camera
 {    
     public class DreamingSmog : ModProjectile
 	{
-		public Color DrawColor => DreamingFrame.Green1;
+		public Color DrawColor => type == 1 ? DreamingFrame.Green1 : PurpleGray;
+		public static Color PurpleGray => new Color(110, 100, 130, 0);
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			height = 24;
 			width = 24;
 			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
 		}
-        public override void SetDefaults()
+		public override bool? CanCutTiles()
+		{
+			return false;
+		}
+		public override void SetDefaults()
         {
 			Projectile.DamageType = ModContent.GetInstance<VoidMagic>();
 			Projectile.tileCollide = true;
@@ -36,7 +41,7 @@ namespace SOTS.Projectiles.Camera
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-			int width = (int)(48 * Projectile.scale);
+			int width = (int)(80 * Projectile.scale);
 			hitbox = new Rectangle((int)(Projectile.Center.X - width / 2), (int)(Projectile.Center.Y - width / 2), width, width);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -79,15 +84,28 @@ namespace SOTS.Projectiles.Camera
 			if (starWindUp > 0)
 			{
 				Vector2 offSet = Projectile.velocity * MathHelper.Clamp(-5 + Counter * 0.35f, -5, 0);
-				SOTSProjectile.DrawStar(Projectile.Center + offSet, color, 0.3f * colorMult, Projectile.rotation, MathHelper.ToRadians(Counter * 3 * Projectile.direction), 4, 10f * scaleMult, 6f * scaleMult, xCompress, 480, 2f * scaleMult, 1);
-				SOTSProjectile.DrawStar(Projectile.Center + offSet * 2, color, 0.45f * colorMult, Projectile.rotation, MathHelper.ToRadians(-Counter * 2.4f * Projectile.direction), 4, 4f * scaleMult, 2, xCompress, 240, 0, 1);
-				SOTSProjectile.DrawStar(Projectile.Center, color, 0.225f * colorMult, Projectile.rotation, MathHelper.ToRadians(-Counter * Projectile.direction), 2, 8f * scaleMult, 12, xCompress, 180, 0, 1);
-				SOTSProjectile.DrawStar(Projectile.Center, color, 0.225f * colorMult, Projectile.rotation, MathHelper.ToRadians(-Counter * Projectile.direction) + MathHelper.PiOver2, 2, 8f * scaleMult, 16, xCompress, 210, 0, 1);
-				for (int i = 0; i < 8; i++)
+				float float1 = 0.5f;
+				int points = 2;
+				float firstSizeMult = 1f;
+				if (type == 1)
 				{
-					Vector2 circular = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(45 * i));
-					Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, null, color * 0.9f * starWindUp * colorMult * colorMult, 0, texture.Size() / 2, 0.5f + 0.5f * scaleMult, SpriteEffects.None, 0);
+					SOTSProjectile.DrawStar(Projectile.Center + offSet, color, 0.3f * colorMult, Projectile.rotation, MathHelper.ToRadians(Counter * 3 * Projectile.direction), 4, 10f * scaleMult, 6f * scaleMult, xCompress, 480, 2f * scaleMult, 1);
+					SOTSProjectile.DrawStar(Projectile.Center + offSet * 2, color, 0.45f * colorMult, Projectile.rotation, MathHelper.ToRadians(-Counter * 2.4f * Projectile.direction), 4, 4f * scaleMult, 2, xCompress, 240, 0, 1);
+					float1 = 0.25f;
 				}
+				else
+                {
+					firstSizeMult = 0.25f;
+					points = 1;
+				}
+				SOTSProjectile.DrawStar(Projectile.Center, color, float1 * colorMult, Projectile.rotation, MathHelper.ToRadians(-Counter * Projectile.direction), points, 8f * scaleMult * firstSizeMult, 12 * (0.75f + 0.25f * firstSizeMult), xCompress, 210, 0, 1);
+				SOTSProjectile.DrawStar(Projectile.Center, color, float1 * colorMult, Projectile.rotation, MathHelper.ToRadians(-Counter * Projectile.direction) + MathHelper.PiOver2, points, 8f * scaleMult, 16, xCompress, 240, 0, 1);
+				if(type == 1)
+					for (int i = 0; i < 8; i++)
+					{
+						Vector2 circular = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(45 * i));
+						Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, null, color * 0.9f * starWindUp * colorMult * colorMult, 0, texture.Size() / 2, 0.5f + 0.5f * scaleMult, SpriteEffects.None, 0);
+					}
 			}
 			if(timerTimeLeft > 0)
 				DrawStars(colorMult);
@@ -120,12 +138,19 @@ namespace SOTS.Projectiles.Camera
 				scaleMult *= (1.3f - 0.3f * (float)Math.Cos(MathHelper.ToRadians(420 * starWindUp)));
 				if(npcVectors[i].X >= 0)
 					DrawChainsBetween(npcCenter, Projectile.Center, progress, degrees);
+				int density = 25;
 				int pointNumber = 4;
 				if (i > 3)
 					pointNumber = 2;
 				else
 					colorMult = 0.375f;
-				SOTSProjectile.DrawStar(drawPosition, color * colorMult * starWindUp, starWindUp, toCenter, 0, pointNumber, 1f * scaleMult, 0, 1f, 25 * pointNumber, 0, 1, pointNumber == 2);
+				if(type != 1)
+                {
+					density = 100;
+					pointNumber = 1;
+					colorMult = 1.0f;
+                }
+				SOTSProjectile.DrawStar(drawPosition, color * colorMult * starWindUp, starWindUp, toCenter, 0, pointNumber, 1f * scaleMult, 0, 1f, density * pointNumber, 0, 1, pointNumber == 2);
 				if(pointNumber == 4)
 					for (int j = 0; j < 4; j++)
 					{
@@ -169,7 +194,7 @@ namespace SOTS.Projectiles.Camera
 			{
 				Vector2 toOther = destination - start;
 				float dist = toOther.Length();
-				float multiplier = Math.Clamp((1 - (dist / (DendroChainNPCOperators.maxPullDistance + 120))), 0, 1) * progress * (1.0f - 0.5f * (float)Math.Cos(MathHelper.ToRadians(2 * Counter + degrees)));
+				float multiplier = Math.Clamp((1 - (dist / (DendroChainNPCOperators.maxPullDistance + 120))), 0.5f, 1) * progress * (1.0f - 0.5f * (float)Math.Cos(MathHelper.ToRadians(2 * Counter + degrees)));
 				Main.spriteBatch.Draw(textureGradient, start - Main.screenPosition, null, color * (0.25f * multiplier * (0.6f + 0.4f * addedHeight)), toOther.ToRotation(), new Vector2(1, 1), new Vector2(1f / textureGradient.Width * dist, addedHeight + 1f * (1 - multiplier)), SpriteEffects.None, 0);
 			}
 		}
@@ -184,21 +209,31 @@ namespace SOTS.Projectiles.Camera
 		public void Activate()
 		{
 			float add = 0;
-			SOTSUtils.PlaySound(SoundID.Item84, Projectile.Center, 0.6f, 0.4f);
+			int totalDust = 40;
+			int circlePts = 4;
 			int total = 8;
+			if (type != 1) //Star dust circles
+			{
+				SOTSUtils.PlaySound(SoundID.Item96, Projectile.Center, 0.7f, -0.2f);
+				totalDust = 20;
+				circlePts = 1;
+				total = 4;
+			}
+			else
+				SOTSUtils.PlaySound(SoundID.Item84, Projectile.Center, 0.6f, 0.4f);
 			for (int i = 0; i < total; i++)
 			{
 				float scaleMult = 1f;
 				Vector2 FlowerVe = new Vector2(-StarMinDistance - 40f, 0f).RotatedBy(MathHelper.ToRadians(i * 360f / total) + MathHelper.PiOver4);
-				if (i % 2 != 0)
+				if (i % 2 != 0 || total == 4)
 					scaleMult = 0.6f;
 				Vector2 velo = Main.rand.NextVector2Circular(1, 1) + FlowerVe.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 3f);
-				SOTSProjectile.DustStar(Projectile.Center + FlowerVe, velo * scaleMult, DrawColor * scaleMult, 0f, 40, 0, 4, 8f, 5f, 1f, 1f * (0.2f + 0.8f * scaleMult));
+				SOTSProjectile.DustStar(Projectile.Center + FlowerVe, velo * scaleMult, DrawColor * scaleMult, 0f, totalDust, 0, circlePts, 8f, 5f, 1f, 1f * (0.2f + 0.8f * scaleMult));
 			}
-			for (int i = 0; i < 45; i++)
+			for (int i = 0; i < 45; i++) //normal dust explosion
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(5f, 12f), 0).RotatedBy(MathHelper.ToRadians(i * 8f + Main.rand.NextFloat(-4f, 4f)));
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>());
 				dust.color = DrawColor;
 				dust.velocity = dust.velocity * 0.2f + circular + Projectile.velocity * 0.75f;
 				dust.noGravity = true;
@@ -210,17 +245,23 @@ namespace SOTS.Projectiles.Camera
 				for (int i = 0; i < npcVectors.Count; i++)
 				{
 					int ID = (int)npcVectors[i].X;
+					int damage = Projectile.damage;
 					if (ID >= 0)
 					{
 						NPC npc = Main.npc[ID];
 						if (isNPCValidTarget(npc))
 						{
 							Vector2 toOther = npc.Center - Projectile.Center;
-							int damage = Projectile.damage;
 							Vector2 position = Projectile.Center + new Vector2(40 + StarMinDistance + add, 0).RotatedBy(toOther.ToRotation());
 							float dist = (npc.Center - position).Length();
 							Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, toOther.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<DreamLaser>(), damage, Projectile.knockBack, Main.myPlayer, -ID - 0.5f, dist);
 						}
+					}
+                    else
+					{
+						Vector2 toOther = npcVectors[i].center - Projectile.Center;
+						Vector2 position = Projectile.Center + new Vector2(40 + StarMinDistance + add, 0).RotatedBy(toOther.ToRotation());
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, toOther.SafeNormalize(Vector2.Zero) * 5f, ModContent.ProjectileType<DreamBolt>(), damage / 2, Projectile.knockBack, Main.myPlayer, type);
 					}
 					if (i > 3)
 						add += StarAddedDistance;
@@ -259,21 +300,21 @@ namespace SOTS.Projectiles.Camera
         }
         public override void AI()
 		{
-			if((int)type == 1)
+			ManageNPCList();
+			if ((int)type == 1)
             {
-				ManageNPCList();
 				if(timerTimeLeft > 30 && timerTimeLeft < 78 && Counter % 3 == 0)
 					AddClosestNPCInRange();
-				if(Counter % 3 == 0 && Counter > 0 && Counter <= 12) //5
-                {
-					int uniqueID = -(1 + (int)Counter / 3);
-					npcVectors.Add(new StarSelector(uniqueID, 0, Main.rand.NextFloat(360), Projectile.Center + new Vector2(360, 360).RotatedBy(MathHelper.ToRadians(uniqueID * 90f))));
-                }
-            }
+			}
+			if (Counter % 3 == 0 && Counter > 0 && Counter <= 12) //adds 4 defaults orbiting stars
+			{
+				int uniqueID = -(1 + (int)Counter / 3);
+				npcVectors.Add(new StarSelector(uniqueID, 0, Main.rand.NextFloat(360), Projectile.Center + new Vector2(360, 360).RotatedBy(MathHelper.ToRadians(uniqueID * 90f))));
+			}
 		}
 		public static bool isNPCValidTarget(NPC npc)
 		{
-			return npc.active && !npc.friendly && !npc.immortal;// && npc.HasBuff<DendroChain>();
+			return npc.active && !npc.friendly && !npc.immortal && npc.HasBuff<DendroChain>();
 		}
 		public bool StarSelectorListContainsX(List<StarSelector> sList, int x)
 		{

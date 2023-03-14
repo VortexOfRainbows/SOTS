@@ -29,6 +29,7 @@ namespace SOTS.Items.ChestItems
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<Rebar>();
             Item.shootSpeed = 4.75f;
+            Item.scale = 0.9f; //It looks a little comical with how big it is compared to the player
         }
         public override Vector2? HoldoutOffset()
         {

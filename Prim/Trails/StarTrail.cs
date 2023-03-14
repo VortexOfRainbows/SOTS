@@ -10,7 +10,8 @@ namespace SOTS.Prim.Trails
 	class StarTrail : PrimTrail
 	{
 		public Color color2 = new Color(140, 140, 130);
-		public StarTrail(Projectile projectile, Color colorStart, Color colorEnd, int width = 12, int length = 18)
+		public int initialProjType = -1;
+		public StarTrail(Projectile projectile, Color colorStart, Color colorEnd, int width = 12, int length = 18, int initialProjType = -1)
 		{
 			Entity = projectile;
 			EntityType = projectile.type;
@@ -59,7 +60,13 @@ namespace SOTS.Prim.Trails
 		public override void OnUpdate()
 		{
 			if (!(Entity is Projectile proj))
+            {
 				return;
+			}
+			else if(proj.type != initialProjType && initialProjType != -1)
+            {
+				return;
+            }
 			Counter++;
 			PointCount = Points.Count() * 6;
 
