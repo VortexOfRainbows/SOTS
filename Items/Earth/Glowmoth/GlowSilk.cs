@@ -34,7 +34,33 @@ namespace SOTS.Items.Earth.Glowmoth
 			Vector3 vColor = VoidPlayer.VibrantColor.ToVector3() * 0.34f;
 			Lighting.AddLight(Item.position, vColor);
 		}
-    }
+	}
+	public class GlowNylon : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			this.SetResearchCost(200);
+		}
+		public override void SetDefaults()
+		{
+			Item.width = 18;
+			Item.height = 28;
+			Item.maxStack = 999;
+			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(0, 0, 2, 0);
+		}
+		public override void Update(ref float gravity, ref float maxFallSpeed)
+		{
+			Vector3 vColor = VoidPlayer.VibrantColor.ToVector3() * 0.5f;
+			Lighting.AddLight(Item.position, vColor);
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe(1).AddIngredient<GlowSilk>(7).AddTile(TileID.Loom).Register();
+			Recipe.Create(ItemID.WaterWalkingBoots, 1).AddIngredient(ItemID.HermesBoots, 1).AddIngredient(ItemID.WaterWalkingPotion, 4).AddIngredient<Fragments.FragmentOfTide>(4).AddIngredient(this, 20).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.FlowerBoots, 1).AddIngredient(ItemID.HermesBoots, 1).AddIngredient<Fragments.DissolvingNature>(1).AddIngredient(this, 20).AddTile(TileID.Anvils).Register();
+		}
+	}
 	public class GlowSilkTile : ModTile
 	{
 		public override bool CreateDust(int i, int j, ref int type)

@@ -285,6 +285,8 @@ Mods: {
 			# Earth
 				# Glowmoth
 					GlowSilk: Glow Web
+					GlowNylon: Glow Nylon
+					GlowSpores: Glow Spores
 
 					IlluminantAxe: Illuminant Axe
 					NightIlluminator: Night Illuminator
@@ -722,7 +724,7 @@ Mods: {
 				VialofAcid: Vial of Acid
 				CorrosiveGel: Corrosive Gel
 
-				Wormwood: Wormwood
+				Wormwood: Goopwood
 				WormWoodHelix: Goopwood Helix
 				WormWoodHook: Goopwood Hook
 				WormWoodParasite: Goopwood Parasite
@@ -1050,7 +1052,7 @@ Mods: {
 				ShieldofStekpla: 
 					'''
 					'More is more'
-					Grants 1% bonus crit chance for every 4 full inventory slots
+					Increases crit chance by 1% for every 4 full inventory slots
 					'''
 				SpikedClub: 
 					'''
@@ -1091,13 +1093,13 @@ Mods: {
 				PolishedCoin: 
 					'''
 					Critical strikes have a 50% chance to deal 30 more damage
-					2% increased crit chance
+					Increases crit chance by 2%
 					Immunity to bleeding and poisoned
 					'''
 				FocusCrystal: 
 					'''
 					Critical strikes deal 40 more damage
-					4% increased crit chance
+					Increases crit chance by 4%
 					Immunity to bleeding and poisoned debuffs
 					'''
 				ChaosBadge: Increases crit chance by 10%
@@ -1105,17 +1107,17 @@ Mods: {
 				CloverCharm: 
 					'''
 					Critical strikes have a 50% chance to steal life
-					2% increased crit chance
+					Increases crit chance by 2%
 					'''
 				VoidCharm: 
 					'''
 					Critical strikes have a 50% chance to regenerate void
-					2% increased crit chance
+					Increases crit chance by 2%
 					'''
 				SoulCharm: 
 					'''
 					Critical strikes steal life, regenerate void, and recover mana
-					2% increased crit chance
+					Increases crit chance by 2%
 					'''
 				BagOfCharms: 
 					'''
@@ -1127,7 +1129,7 @@ Mods: {
 				EyeOfChaos: Eye of Chaos
 				FocusReticle: 
 					'''
-					20% increased crit chance
+					Increases crit chance by 20%
 					Critical strikes deal 40 more damage
 					Immunity to bleeding and poisoned debuffs
 					'''
@@ -1135,18 +1137,18 @@ Mods: {
 				BorealisIcosahedron: 
 					'''
 					Critical strikes may cause a frostburn explosion, dealing 100% critical damage
-					2% increased crit chance
+					Increases crit chance by 2%
 					'''
 				CursedIcosahedron: 
 					'''
 					Critical strikes may cause a release of cursed thunder, dealing 50% critical damage
 					Critical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage
-					2% increased crit chance
+					Increases crit chance by 2%
 					'''
 				HellfireIcosahedron: 
 					'''
 					Critical strikes may cause a flaming explosion, dealing 50% critical damage
-					2% increased crit chance
+					Increases crit chance by 2%
 					'''
 
 					SnakeEyes: Increases crit chance by 8%
@@ -1257,6 +1259,11 @@ Mods: {
 
 			# Earth
 				# Glowmoth
+					GlowSpores: 
+						'''
+						Increases mana recieved from potions by 40
+						Increases magic crit chance by 5%
+						'''
 					IlluminantAxe: 
 						'''
 						Releases wandering energy bolts for 60% damage
@@ -1296,7 +1303,7 @@ Mods: {
 				VibrantHelmet: 
 					'''
 					Increases max void by 50
-					5% increased ranged crit chance
+					Increases ranged crit chance by 5%
 					'''
 				VibrantLeggings: Decreased void usage by 10%
 				
@@ -1700,7 +1707,7 @@ Mods: {
 						'''
 						Critical strikes recover mana
 						Increased max mana by 40
-						10% increased magic crit chance
+						Increases magic crit chance by 10%
 						'''
 					StarcoreAssaultRifle: Fires a stream of bouncy, colorful projectiles
 					StarshotCrossbow: Fire a star that scatters arrows in every direction
@@ -2174,7 +2181,7 @@ Mods: {
 				WormWoodHook: Retracts upon hitting an enemy
 				WormWoodParasite: 
 					'''
-					ncreases void gain by 2 and void critical strike chance by 8%
+					Increases void gain by 2 and void critical strike chance by 8%
 					Critical strikes heal small amounts of void
 					Decreases max void by 20
 					'''

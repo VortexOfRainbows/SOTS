@@ -13,7 +13,7 @@ Acknowledged But Likely Delayed:
 2. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
 3. Texture Pack sounds to disable when block is broken (tied to specific blocks)
 4. Reimplement Blade Items using the abstract class
-5. Earthen Plating starter house1.
+5. Earthen Plating starter house.
 6. Bosses HP is ludicrous for Master Mode
 7. Glowmasks for Corruption Trees in SOTSTP
 8. Wind mechanics for vines and banners
@@ -28,11 +28,9 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Glow Moth and Glow Silk to the glowing mushroom biome.
 	1. Glow Nylon
-		1. Can craft Torch Bomb, Water Walking Boots, Flower Boots
+		1. Can craft Torch Bomb
 		2. Guide to Illumination: magic book that makes hit enemies glow with a blue/green outline, therefore making them easier to see. Also slows by 20% or something (boss resist).
-	2. Glowspores (Royal Jelly of glow moth)
-		1. More mana from healing potions
-	3. Glowjelly (Combine with Royal Jelly)
+	2. Glowjelly: glow spores + royal jelly
 3. Archaeologist NPC
 	1. Ideas:
 		1. Could be a plain dressed archaeologist, or could be somewhat futuristic?
@@ -68,6 +66,11 @@ Other 1.4 related objectives:
 2. Reorganize VoidPlayer Color helpers
 
 Daily Log:
+
+3/15/23
+1. Tested Dream Lamp in multiplayer: it seems to work without error!
+2. Added Glow Nylon and reorganized some recipes
+3. Added Glow Spores and standardized certain critical strike tooltips
 
 3/12/23 & 3/13/23
 1. Rework some visuals + visual polish on Dreamlamp
