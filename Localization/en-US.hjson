@@ -2491,7 +2491,11 @@ Mods: {
 				Right click to toss the axe for 60% damage
 				Can toss two axes when under Frenzy
 				'''
-
+				
+			PeanutBush: 
+				'''
+				Grows peanuts in the dirt underneath
+				'''
 			PeanutButter: 
 				'''
 				Summons a pet Putrid Pinky to assist in combat
@@ -2725,6 +2729,7 @@ Mods: {
 		}
 
 		MapObject: {
+			PeanutBushTile: Peanut Bush
 			RuinedChestTile: Ruined Chest
 			RuinedChestTile_Locked: Locked Ruined Chest
 			EarthenPlatingStorageTile: Earthen Plating Storage

@@ -71,6 +71,7 @@ Daily Log:
 1. Tested Dream Lamp in multiplayer: it seems to work without error!
 2. Added Glow Nylon and reorganized some recipes
 3. Added Glow Spores and standardized certain critical strike tooltips
+4. WIP Peanut Bush: currently doesn't do anything. Will grow in the world + generate on worldgen
 
 3/12/23 & 3/13/23
 1. Rework some visuals + visual polish on Dreamlamp

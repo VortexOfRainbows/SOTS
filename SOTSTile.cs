@@ -16,6 +16,7 @@ using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Earth;
 using Terraria.GameContent;
+using SOTS.Items;
 
 namespace SOTS
 {
@@ -102,7 +103,7 @@ namespace SOTS
         public override void RandomUpdate(int i, int j, int type)
         {
             Tile tile = Main.tile[i, j];
-            if(tile.Slope != 0 || tile.IsHalfBlock)
+            if(tile.Slope != 0 || tile.IsHalfBlock || !tile.HasUnactuatedTile)
             {
                 return;
             }
@@ -222,6 +223,39 @@ namespace SOTS
                     }
                 }
             }
+            if(tile.TileType == TileID.Grass && tile.WallType == 0)
+            {
+                int rate = 3500; //Dye plants = 3000
+                if (WorldGen.genRand.NextBool(rate))
+                {
+                    int nearbyAllowance = 60;
+                    Tile tileAbove = Main.tile[i, j - 1];
+                    if (!(tileAbove.HasTile && tileAbove.TileType != TileID.Plants && tileAbove.TileType != TileID.Cobweb && tileAbove.TileType != TileID.Plants2))
+                    {
+                        int LeftRange = Utils.Clamp(i - nearbyAllowance, 1, Main.maxTilesX - 1 - 1);
+                        int RightRange = Utils.Clamp(i + nearbyAllowance, 1, Main.maxTilesX - 1 - 1);
+                        int UpRange = Utils.Clamp(j - nearbyAllowance, 1, Main.maxTilesY - 1 - 1);
+                        int DownRange = Utils.Clamp(j + nearbyAllowance, 1, Main.maxTilesY - 1 - 1);
+                        int totalNearby = 0;
+                        for (int k = LeftRange; k < RightRange; k++)
+                        {
+                            for (int l = UpRange; l < DownRange; l++)
+                            {
+                                if (Main.tile[k, l].HasTile && Main.tile[k, l].TileType == TileType<PeanutBushTile>())
+                                {
+                                    totalNearby++;
+                                }
+                            }
+                        }
+                        if (totalNearby < 2) //Will not grow if there are more than 1 within 60 blocks
+                        {
+                            WorldGen.KillTile(i, j - 1);
+                            WorldGen.PlaceTile(i, j - 1, TileType<PeanutBushTile>(), false, true, -1, WorldGen.genRand.Next(3));
+                            //Main.NewText("Placed a peanut at: " + i + ", " + j);
+                        }
+                    }
+                }
+            }
             base.RandomUpdate(i, j, type);
         }
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
@@ -254,28 +288,29 @@ namespace SOTS
         }
         public bool IsValidTileAbove(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].TileType == (ushort)TileType<AvaritianGatewayTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<AcediaGatewayTile>())
+            Tile tileAbove = Main.tile[i, j - 1];
+            if (tileAbove.TileType == (ushort)TileType<AvaritianGatewayTile>() || tileAbove.TileType == (ushort)TileType<AcediaGatewayTile>())
             {
-                int TileFrame = Main.tile[i, j - 1].TileFrameX / 18 + (Main.tile[i, j - 1].TileFrameY / 18 * 9);
+                int TileFrame = tileAbove.TileFrameX / 18 + (tileAbove.TileFrameY / 18 * 9);
                 if (TileFrame >= 65 && TileFrame <= 69)
                     return false;
             }
-            if (Main.tile[i, j - 1].TileType == (ushort)TileType<BigCrystalTile>())
+            if (tileAbove.TileType == (ushort)TileType<BigCrystalTile>())
             {
-                int TileFrameX = Main.tile[i, j - 1].TileFrameX / 18;
-                int TileFrameY = Main.tile[i, j - 1].TileFrameY / 18;
+                int TileFrameX = tileAbove.TileFrameX / 18;
+                int TileFrameY = tileAbove.TileFrameY / 18;
                 if (TileFrameY == 13 && TileFrameX >= 2 && TileFrameX <= 11)
                     return false;
             }
-            if (Main.tile[i, j - 1].TileType == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
+            if (tileAbove.TileType == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].TileType == (ushort)TileType<SarcophagusTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<RubyKeystoneTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>())
+            if (tileAbove.TileType == (ushort)TileType<SarcophagusTile>() || tileAbove.TileType == (ushort)TileType<RubyKeystoneTile>() || tileAbove.TileType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>())
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].TileType == (ushort)TileType<AncientGoldGateTile>() && Main.tile[i, j - 1].TileFrameY < 360)
+            if (tileAbove.TileType == (ushort)TileType<AncientGoldGateTile>() && tileAbove.TileFrameY < 360)
             {
                 return false;
             }
@@ -287,7 +322,7 @@ namespace SOTS
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].TileType == (ushort)TileType<FrostArtifactTile>() && !SOTSWorld.downedAmalgamation)
+            if (tileAbove.TileType == (ushort)TileType<FrostArtifactTile>() && !SOTSWorld.downedAmalgamation)
             {
                 return false;
             }

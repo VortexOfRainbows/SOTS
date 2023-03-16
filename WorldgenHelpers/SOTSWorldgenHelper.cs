@@ -5097,7 +5097,7 @@ namespace SOTS.WorldgenHelpers
 			WorldGen.skipFramingDuringGen = true;
 			for (int i = 50; i < Main.maxTilesX - 50; i++)
 			{
-				for (int j = Main.maxTilesY - 50; j > 50; j--)
+				for (int j = (int)WorldGen.worldSurface; j > 50; j--)
 				{
 					Tile tile = Main.tile[i, j];
 					Tile tileD = Main.tile[i, j + 1];
@@ -5108,6 +5108,47 @@ namespace SOTS.WorldgenHelpers
                 }
 			}
 			WorldGen.skipFramingDuringGen = false;
+		}
+		public static void PlacePeanuts()
+		{
+			for (int i = 50; i < Main.maxTilesX - 50; i++)
+			{
+				for (int j = (int)WorldGen.worldSurface; j > 50; j--)
+				{
+					Tile tile = Main.tile[i, j];
+					if (tile.Slope == 0 && !tile.IsHalfBlock && tile.HasUnactuatedTile && WorldGen.genRand.NextBool(40) && tile.TileType == TileID.Grass && tile.WallType == 0)
+					{
+						Tile tileAbove = Main.tile[i, j - 1];
+						if (!tileAbove.HasTile || tileAbove.TileType == TileID.Plants || tileAbove.TileType == TileID.Cobweb || tileAbove.TileType == TileID.Plants2)
+						{
+							int nearbyAllowance = 50;
+							int LeftRange = Utils.Clamp(i - nearbyAllowance, 1, Main.maxTilesX - 1 - 1);
+							int RightRange = Utils.Clamp(i + nearbyAllowance, 1, Main.maxTilesX - 1 - 1);
+							int UpRange = Utils.Clamp(j - nearbyAllowance, 1, Main.maxTilesY - 1 - 1);
+							int DownRange = Utils.Clamp(j + nearbyAllowance, 1, Main.maxTilesY - 1 - 1);
+							int totalNearby = 0;
+							for (int k = LeftRange; k < RightRange; k++)
+							{
+								for (int l = UpRange; l < DownRange; l++)
+								{
+									if (Main.tile[k, l].HasTile && Main.tile[k, l].TileType == ModContent.TileType<PeanutBushTile>())
+									{
+										totalNearby++;
+										break;
+									}
+								}
+								if (totalNearby >= 1)
+									break;
+							}
+							if(totalNearby < 1) //Will not spawn if there bushes are within 50 blocks
+							{
+								tileAbove.HasTile = false;
+								WorldGen.PlaceTile(i, j - 1, ModContent.TileType<PeanutBushTile>(), false, true, -1, WorldGen.genRand.Next(3));
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

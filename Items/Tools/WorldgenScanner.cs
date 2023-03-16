@@ -52,6 +52,7 @@ namespace SOTS.Items.Tools
 				int WaterWalkingBoots = 0;
 				int LavaCharms = 0;
 				int FlowerBoots = 0;
+				int PeanutBushes = 0;
 
 				for (int scanX = 20; scanX < Main.maxTilesX - 20; scanX++)
 				{
@@ -78,6 +79,8 @@ namespace SOTS.Items.Tools
 						}
 						if (tile.TileType == TileID.ShadowOrbs)
 							ShadowOrbs++;
+						if (tile.TileType == ModContent.TileType<PeanutBushTile>())
+							PeanutBushes++;
 					}
 				}
 				foreach (Chest chest in Main.chest.Where(c => c != null))
@@ -134,6 +137,7 @@ namespace SOTS.Items.Tools
 					ChatMessage("Lava Charms: " + LavaCharms, new Color(255, LavaCharms >= 2 ? (byte)255 : (byte)0, 0));
 				if (FlowerBoots < 5)
 					ChatMessage("Flower Boots: " + FlowerBoots, new Color(255, FlowerBoots >= 2 ? (byte)255 : (byte)0, 0));
+				ChatMessage("Peanut Bushes: " + PeanutBushes, new Color(255, PeanutBushes >= 2 ? (byte)255 : (byte)0, 0));
 			}
 			return true;
 		}

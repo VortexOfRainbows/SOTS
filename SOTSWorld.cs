@@ -324,7 +324,7 @@ namespace SOTS
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
 		{
 			int desert = tasks.FindIndex(genpass => genpass.Name.Equals("Full Desert"));
-			tasks.Insert(desert + 1, new PassLegacy("SOTSAdditionalDesert", AdjacentDesertGeneration));
+			tasks.Insert(desert + 1, new PassLegacy("SOTS: Additional Desert", AdjacentDesertGeneration));
 
 			int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
 			int genIndexGeodes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
@@ -334,9 +334,9 @@ namespace SOTS
 			int oceanTunnel = tasks.FindIndex(genpass => genpass.Name.Equals("Create Ocean Caves"));
 
 			tasks.RemoveAt(oceanTunnel);
-			tasks.Insert(oceanTunnel, new PassLegacy("SOTS: Additional Desert", OceanCaveGeneration));
-			tasks.Insert(genIndexOres, new PassLegacy("SOTS: Ocean Caves", GenSOTSOres));
-			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTS: Ores", GenSOTSGeodes));
+			tasks.Insert(oceanTunnel, new PassLegacy("SOTS: Ocean Caves", OceanCaveGeneration));
+			tasks.Insert(genIndexOres, new PassLegacy("SOTS: Ores", GenSOTSOres));
+			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTS: Geodes", GenSOTSGeodes));
 			tasks.Insert(genIndexTraps + 1, new PassLegacy("SOTS: Structures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingSurfaceStructures");
@@ -402,6 +402,7 @@ namespace SOTS
 			{
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingAbandonedVillage");
 				//AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
+				SOTSWorldgenHelper.PlacePeanuts();
 			}));
 			tasks.Insert(genIndexEnd + 5, new PassLegacy("SOTS: Planetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
