@@ -5116,12 +5116,12 @@ namespace SOTS.WorldgenHelpers
 				for (int j = (int)WorldGen.worldSurface; j > 50; j--)
 				{
 					Tile tile = Main.tile[i, j];
-					if (tile.Slope == 0 && !tile.IsHalfBlock && tile.HasUnactuatedTile && WorldGen.genRand.NextBool(40) && tile.TileType == TileID.Grass && tile.WallType == 0)
+					if (tile.Slope == 0 && !tile.IsHalfBlock && tile.HasUnactuatedTile && WorldGen.genRand.NextBool(36) && tile.TileType == TileID.Grass && tile.WallType == 0)
 					{
 						Tile tileAbove = Main.tile[i, j - 1];
 						if (!tileAbove.HasTile || tileAbove.TileType == TileID.Plants || tileAbove.TileType == TileID.Cobweb || tileAbove.TileType == TileID.Plants2)
 						{
-							int nearbyAllowance = 50;
+							int nearbyAllowance = 48;
 							int LeftRange = Utils.Clamp(i - nearbyAllowance, 1, Main.maxTilesX - 1 - 1);
 							int RightRange = Utils.Clamp(i + nearbyAllowance, 1, Main.maxTilesX - 1 - 1);
 							int UpRange = Utils.Clamp(j - nearbyAllowance, 1, Main.maxTilesY - 1 - 1);
@@ -5140,10 +5140,15 @@ namespace SOTS.WorldgenHelpers
 								if (totalNearby >= 1)
 									break;
 							}
-							if(totalNearby < 1) //Will not spawn if there bushes are within 50 blocks
+							if(totalNearby < 1) //Will not spawn if there bushes are within 48 blocks
 							{
 								tileAbove.HasTile = false;
 								WorldGen.PlaceTile(i, j - 1, ModContent.TileType<PeanutBushTile>(), false, true, -1, WorldGen.genRand.Next(3));
+								if (Main.tile[i, j - 1].TileType == ModContent.TileType<PeanutBushTile>())
+									for (int attempts = 0; attempts < 25; attempts++)
+									{
+										PeanutBushTile.AttemptToGrowPeanuts(i, j - 1);
+									}
 							}
 						}
 					}

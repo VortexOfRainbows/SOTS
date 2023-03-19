@@ -55,12 +55,8 @@ namespace SOTS.Items.Otherworld
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			AddMapEntry(new Color(55, 45, 65), name);
+			DustType = ModContent.DustType<AvaritianDust>();
 		}
-        public override bool CreateDust(int i, int j, ref int type)
-        {
-			type = ModContent.DustType<AvaritianDust>();
-			return base.CreateDust(i, j, ref type);
-        }
         public override bool CanExplode(int i, int j)
 		{
 			return false;

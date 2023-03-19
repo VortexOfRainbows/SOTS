@@ -8,7 +8,7 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetStaticDefaults()
 		{
-			this.SetResearchCost(25);
+			this.SetResearchCost(250);
 		}
 		public override void SetDefaults()
 		{

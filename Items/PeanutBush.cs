@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using SOTS.Items.Slime;
 using SOTS.WorldgenHelpers;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
@@ -73,7 +75,52 @@ namespace SOTS.Items
         {
 			if (Main.rand.NextBool(3))
 				type = DustID.Grass;
-            return base.CreateDust(i, j, ref type);
+            return true;
+		}
+		public override void NumDust(int i, int j, bool fail, ref int num)
+		{
+			num = 12;
+		}
+        public override void RandomUpdate(int i, int j)
+        {
+			if(WorldGen.InWorld(i, j, 20))
+				AttemptToGrowPeanuts(i, j);
         }
-	}
+		public static void AttemptToGrowPeanuts(int i, int j)
+		{
+			for (int y = 2; y <= 7; y++)
+			{
+				for (int x = -3; x <= 3; x++)
+				{
+					Tile tileToConvert = Main.tile[i + x, j + y];
+					if(tileToConvert.HasTile && (Main.tile[i + x, j + y - 1].TileType != ModContent.TileType<PeanutBushTile>() || !Main.tile[i + x, j + y - 1].HasTile))
+					{
+						bool PeanutAdjecent = (y == 2 && x == 0)
+							|| (Main.tile[i + x - 1, j + y].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x - 1, j + y].HasTile)
+							|| (Main.tile[i + x + 1, j + y].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x + 1, j + y].HasTile)
+							|| (Main.tile[i + x, j + y - 1].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x, j + y - 1].HasTile)
+							|| (Main.tile[i + x, j + y + 1].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x, j + y + 1].HasTile);
+						int fartherAway = 2;
+						if (x == -3 || x == 3)
+						{
+							fartherAway += 2;
+						}
+						if (y >= 6)
+							fartherAway += 2;
+						if ((PeanutAdjecent || WorldGen.genRand.NextBool(50)) && (tileToConvert.TileType == TileID.Dirt || (tileToConvert.TileType == TileID.Grass && Main.tile[i + x, j + y - 1].HasTile && WorldGen.genRand.NextBool(2))))
+						{
+							if (WorldGen.genRand.NextBool(y * 2 + Math.Abs(x) * 2 + fartherAway))
+							{
+								tileToConvert.TileType = (ushort)ModContent.TileType<PeanutOreTile>();
+								WorldGen.SquareTileFrame(i + x, j + y);
+								if (Main.netMode != NetmodeID.SinglePlayer)
+									NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+    }
 }
