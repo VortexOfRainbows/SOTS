@@ -34,7 +34,7 @@ namespace SOTS.Items.Secrets
 		}
 		public void SetStats()
 		{
-			Item.rare = ItemRarityID.Gray;
+			Item.rare = ItemRarityID.LightRed;
 			Item.DamageType = DamageClass.Magic;
 			Item.damage = 28;
 			Item.width = 42;
@@ -68,7 +68,6 @@ namespace SOTS.Items.Secrets
 		}
 		public void SetDreamStats()
 		{
-			Item.rare = ItemRarityID.LightRed;
 			SetCommonStats();
 		}
 		public void SetFalseStats()
@@ -78,7 +77,6 @@ namespace SOTS.Items.Secrets
 		public void SetPlacementStats()
 		{
 			Item.shoot = 0;
-			Item.rare = ItemRarityID.Gray;
 			Item.useTime = 10;
 			Item.useAnimation = 15;
 			Item.useStyle = ItemUseStyleID.Swing;

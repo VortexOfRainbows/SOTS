@@ -182,9 +182,10 @@ namespace SOTS
 	}
 	public class SOTSItem : GlobalItem
 	{
-        public static int[] rarities1;
+		public static int[] rarities1;
 		public static int[] rarities2;
 		public static int[] rarities3;
+		public static int[] rarities4;
 		public static int[] dedicatedOrange;
 		public static int[] dedicatedBlue;
 		public static int[] dedicatedPurpleRed;
@@ -200,17 +201,18 @@ namespace SOTS
 			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() }; //Dark Blue
 			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() }; //Dark Red
 			rarities3 = new int[] { ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>() }; //Very Dark gray
+			rarities4 = new int[] { ItemType<DreamLamp>() };
 
 			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
 			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 			dedicatedPastelPink = new int[] { /*ItemType<StrangeFruit>()*/ }; //Tris
 			dedicatedMinez = new int[] { ItemType<DoorPants>(), ItemType<BandOfDoor>() }; //Minez
-			dedicatedRainbow = new int[] {  ItemType<SubspaceLocket>() }; //Vortex
+			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>(), ItemType<DreamLamp>() }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>() }; //Heart Plus Up
 			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
-			//unsafeWallItem = new int[] { ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
+																  //unsafeWallItem = new int[] { ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
 
 			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
@@ -234,10 +236,10 @@ namespace SOTS
 		public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			return base.PreDrawInInventory(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-        }
-        public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		}
+		public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			if(item.type == ItemType<Items.Slime.PinkyBag>() || item.type == ItemType<TheAdvisorBossBag>() || item.type == ItemType<CurseBag>() || item.type == ItemType<Items.Permafrost.PolarisBossBag>() || item.type == ItemType<SubspaceBag>() || item.type == ItemType<LuxBag>())
+			if (item.type == ItemType<Items.Slime.PinkyBag>() || item.type == ItemType<TheAdvisorBossBag>() || item.type == ItemType<CurseBag>() || item.type == ItemType<Items.Permafrost.PolarisBossBag>() || item.type == ItemType<SubspaceBag>() || item.type == ItemType<LuxBag>())
 			{
 				float alphaMult = 1f;
 				if (item.type == ItemType<LuxBag>())
@@ -288,7 +290,7 @@ namespace SOTS
 				}
 			}
 			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
-        }
+		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
 			if (rarities1.Contains(item.type))
@@ -322,9 +324,22 @@ namespace SOTS
 					}
 				}
 			}
+			if (rarities4.Contains(item.type))
+			{
+				Color overrideColor = new Color(66, 226, 75);
+				if (DreamLamp.IsItemForgotten)
+					overrideColor = new Color(95, 85, 105);
+				foreach (TooltipLine line2 in tooltips)
+				{
+					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
+					{
+						line2.OverrideColor = overrideColor;
+					}
+				}
+			}
 			bool dedicated = false;
 			Color dedicatedColor = Color.White;
-			if(dedicatedOrange.Contains(item.type))
+			if (dedicatedOrange.Contains(item.type))
 			{
 				dedicatedColor = new Color(255, 115, 0);
 				dedicated = true;
@@ -335,11 +350,11 @@ namespace SOTS
 				dedicated = true;
 			}
 			if (dedicatedPurpleRed.Contains(item.type))
-            {
+			{
 				dedicatedColor = VoidPlayer.soulLootingColor;
 				dedicated = true;
 			}
-			if (dedicatedRainbow.Contains(item.type))
+			if (dedicatedRainbow.Contains(item.type) && (item.type != ItemType<DreamLamp>() || !DreamLamp.IsItemForgotten))
 			{
 				dedicatedColor = VoidPlayer.pastelRainbow;
 				dedicated = true;

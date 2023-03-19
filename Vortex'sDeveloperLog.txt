@@ -52,9 +52,9 @@ Update Objectives:
 Ideas:
 7. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
 8. Forgotten Lamp item which is used to make Dream Lamp in late Pre-HM, Spawns on Diamond Gem Island
-	1. Use custom rarity for their colors (in order to make them update more appropriately)
 9. Nature Conduit: Used to imbue surrounding players or items with Dissolving Nature. Can Probably Use a tile entity
 10. Pharaoh's Curse music box
+11. Roasted Peanuts item
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -71,6 +71,7 @@ Daily Log:
 3/18/23
 1. Peanut Bush now grows peanuts + peanuts on worldgen!
 2. Tested in multiplayer: looks like it works fine!
+3. Custom Rarities for dreamlamp (text colors + dedicated)
 
 3/15/23
 1. Tested Dream Lamp in multiplayer: it seems to work without error!
