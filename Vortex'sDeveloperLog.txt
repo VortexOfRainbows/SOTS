@@ -68,6 +68,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+3/19/23
+1. WIP Conduit Tiles... Placeholder sprites
+
 3/18/23
 1. Peanut Bush now grows peanuts + peanuts on worldgen!
 2. Tested in multiplayer: looks like it works fine!
