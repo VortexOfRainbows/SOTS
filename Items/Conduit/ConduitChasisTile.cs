@@ -19,7 +19,7 @@ namespace SOTS.Items.Conduit
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.rare = ItemRarityID.Blue;
 			Item.Size = new Vector2(36, 36);
-			Item.value = Item.buyPrice(0, 0, 5, 0);
+			Item.value = Item.buyPrice(0, 0, 10, 0);
 			Item.createTile = ModContent.TileType<ConduitChasisTile>();
 		}
 	}
