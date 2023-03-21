@@ -231,6 +231,10 @@ Mods: {
 				TangleStaff: Tangle Staff
 				TinyPlanet: Tiny Planet
 				WingedKnife: Winged Knife
+				
+			# Conduit
+				ConduitChasis: Conduit Chasis
+				NatureConduit: Nature Conduit
 
 			# CritBonus
 				OtherworldlyAmplifier: Otherworldly Amplifier
@@ -1077,6 +1081,10 @@ Mods: {
 					Increases life regeneration for each ensnared enemy
 					'''
 				TinyPlanet: Surrounds you with 2 orbital projectiles
+				
+			# Conduit
+				ConduitChasis: Completes the carapace of a conduit, allowing for energy redirection
+				NatureConduit: An incomplete redirector of nature energy
 
 			# CritBonus
 				OtherworldlyAmplifier: Critical strikes deal 8 more damage
@@ -2729,6 +2737,7 @@ Mods: {
 		}
 
 		MapObject: {
+			NatureConduitTile: Nature Conduit
 			PeanutBushTile: Peanut Bush
 			PeanutOreTile: Peanut Ore
 			RuinedChestTile: Ruined Chest

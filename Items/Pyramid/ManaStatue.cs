@@ -18,10 +18,10 @@ namespace SOTS.Items.Pyramid
             Main.tileFrameImportant[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
-			ModTranslation name = CreateMapEntryName();
+            TileObjectData.addTile(Type);
+            ModTranslation name = CreateMapEntryName();
 			AddMapEntry(new Color(0, 0, 155), name);
             HitSound = SoundID.Tink;
-            TileObjectData.addTile(Type);
 			MineResist = 2.5f;
 			DustType = 15;
         }

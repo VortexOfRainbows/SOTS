@@ -45,7 +45,7 @@ namespace SOTS.Items
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-			SOTSTile.DrawSlopedGlowMask(i, j, Type, Terraria.GameContent.TextureAssets.Tile[TileID.Dirt].Value, Lighting.GetColor(i, j), Vector2.Zero, false);
+			SOTSTile.DrawSlopedGlowMask(i, j, Type, Terraria.GameContent.TextureAssets.Tile[TileID.Dirt].Value, Lighting.GetColor(i, j, WorldGen.paintColor(Main.tile[i, j].TileColor)), Vector2.Zero, false);
             return true;
         }
         public override bool Drop(int i, int j)
