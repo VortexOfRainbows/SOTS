@@ -233,7 +233,7 @@ Mods: {
 				WingedKnife: Winged Knife
 				
 			# Conduit
-				ConduitChasis: Conduit Chasis
+				ConduitChassis: Conduit Chassis
 				NatureConduit: Nature Conduit
 
 			# CritBonus
@@ -1083,7 +1083,7 @@ Mods: {
 				TinyPlanet: Surrounds you with 2 orbital projectiles
 				
 			# Conduit
-				ConduitChasis: Completes the carapace of a conduit, allowing for energy redirection
+				ConduitChassis: Completes the carapace of a conduit, allowing for energy redirection
 				NatureConduit: An incomplete redirector of nature energy
 
 			# CritBonus

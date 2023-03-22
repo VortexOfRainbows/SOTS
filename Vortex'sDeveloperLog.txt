@@ -40,6 +40,7 @@ Update Objectives:
 		5. Maybe is somewhat holographic?
                 6. Can be found randomly across various generated structures, from the portals to the gem locks
 4. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map
+	1. Chasis Manipulator - Accessory that extends reach and pickaxe power for Chasis Related tiles
 5. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. 
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
 		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
@@ -68,10 +69,11 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-3/19/23 & 3/20/23
+3/19/23 & 3/20/23 & 3/21/23
 1. WIP Conduit Tiles... Placeholder sprites
 2. Tile entity and data storage system for Conduit Tiles. Works in Multiplayer.
-	1. needs: better visuals + actual functionality
+3. Added Visuals and Audio to Conduit tiles!
+	1. Hover icon need to show the blocks required at the given stage (WIP)
 
 3/18/23
 1. Peanut Bush now grows peanuts + peanuts on worldgen!

@@ -29,7 +29,7 @@ Terratoma Master Mode health 360 -> 318
 
 Other:
 1. Constructs no longer spawn during Solar Eclipse, Frost Moon, Pumpkin Moon
-2. Chaos Chasis (Lux's Jail Ball) is now immune for 0.5 -> 2 seconds, making it harder to instantly kill on accident
+2. Chaos Chassis (Lux's Jail Ball) is now immune for 0.5 -> 2 seconds, making it harder to instantly kill on accident
 
 Bug Fixes:
 1. Void ranged weapons that use ammo now properly consume Void

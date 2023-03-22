@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Conduit
 {
-	public class ConduitChasis : ModItem
+	public class ConduitChassis : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -19,11 +19,11 @@ namespace SOTS.Items.Conduit
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.rare = ItemRarityID.Blue;
 			Item.Size = new Vector2(36, 36);
-			Item.value = Item.buyPrice(0, 0, 10, 0);
-			Item.createTile = ModContent.TileType<ConduitChasisTile>();
+			Item.value = Item.buyPrice(0, 0, 5, 0);
+			Item.createTile = ModContent.TileType<ConduitChassisTile>();
 		}
 	}
-	public class ConduitChasisTile : ModTile
+	public class ConduitChassisTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -32,7 +32,7 @@ namespace SOTS.Items.Conduit
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = false; //sunlight passes through these pipes
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<ConduitChasis>();
+			ItemDrop = ModContent.ItemType<ConduitChassis>();
 			AddMapEntry(new Color(66, 77, 93));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;

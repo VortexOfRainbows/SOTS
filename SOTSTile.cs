@@ -17,6 +17,8 @@ using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Earth;
 using Terraria.GameContent;
 using SOTS.Items;
+using System;
+using SOTS.Items.Conduit;
 
 namespace SOTS
 {
@@ -494,6 +496,39 @@ namespace SOTS
                 return new int[] { TileID.WorkBenches, TileID.Furnaces, TileID.Anvils, TileID.AlchemyTable, TileID.Bottles, TileID.Tables }; 
             }
             return base.AdjTiles(type);
+        }
+        public override bool CanPlace(int i, int j, int type)
+        {
+            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<DissolvingNatureTile>(), 0))
+                return false;
+            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<ConduitChassisTile>(), 82))
+                return false;
+            return base.CanPlace(i, j, type);
+        }
+        public static bool DoNotPlaceNearConduit(int i, int j, int myType, int PlaceTile, int frameY, int PreventNearby = -1)
+        {
+            if (PreventNearby == -1)
+                PreventNearby = ModContent.TileType<NatureConduitTile>();
+            if (myType == PlaceTile)
+            {
+                for (int k = -2; k <= 2; k++)
+                {
+                    for (int h = -2; h <= 2; h++)
+                    {
+                        if (Math.Abs(h) != 2 || Math.Abs(k) != 2) //will not check outer 4 corners
+                        {
+                            int x = i + k;
+                            int y = j + h;
+                            Tile checkTile = Main.tile[x, y];
+                            if (checkTile.HasTile && checkTile.TileType == PreventNearby && checkTile.TileFrameY == frameY)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }
