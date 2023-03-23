@@ -2574,6 +2574,7 @@ Mods: {
 		InfernoSpiritAid : Spirit Aid
 		IntimidatingPresence : Intimidating Presence
 		NatureSpiritAid : Spirit Aid
+		NatureBoosted : Nature Boosted
 		Nightmare : Nightmare
 		OtherworldlySpiritAid : Spirit Aid
 		Overheat : Overheat
@@ -2634,6 +2635,7 @@ Mods: {
 		InfernoSpiritAid : Inferno Spirits assist you in combat
 		IntimidatingPresence : Drastically lowered enemy spawns
 		NatureSpiritAid : Nature Spirits assist you in combat
+		NatureBoosted : Increases [WIP Stats]
 		Nightmare : Compress enemies together with critical strikes
 		OtherworldlySpiritAid : Otherworldly Spirits assist you in combat
 		Overheat : Movement speed and melee speed increased by 10%

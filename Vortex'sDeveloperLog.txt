@@ -69,11 +69,12 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-3/19/23 & 3/20/23 & 3/21/23
+3/19/23 & 3/20/23 & 3/21/23 & 3/22/23
 1. WIP Conduit Tiles... Placeholder sprites
 2. Tile entity and data storage system for Conduit Tiles. Works in Multiplayer.
 3. Added Visuals and Audio to Conduit tiles!
 	1. Hover icon need to show the blocks required at the given stage (WIP)
+4. Some sprites and resprites
 
 3/18/23
 1. Peanut Bush now grows peanuts + peanuts on worldgen!

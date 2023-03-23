@@ -262,7 +262,8 @@ namespace SOTS.Items.Conduit
 					}
 				}
 			}
-        }
+			ModContent.GetInstance<ConduitCounterTE>().Kill(i, j); //This should be done automatically, but I'll run it anyway
+		}
     }
 	public class ConduitCounterTE : ModTileEntity
 	{
