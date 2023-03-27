@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs.ConduitBoosts;
 using SOTS.Buffs.Debuffs;
 using SOTS.Common.GlobalNPCs;
+using SOTS.Common.Systems;
+using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Nature;
@@ -11,7 +14,10 @@ using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using SOTS.WorldgenHelpers;
+using System;
+using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -409,12 +415,40 @@ namespace SOTS
 						modProj.PreDraw(ref color);
 					}
 				}*/
+
+				foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
+				{
+					for (int j = 0; j < Main.player.Length; j++)
+					{
+						Player player = Main.player[j];
+						if (player.active)
+						{
+							float mult = 1f;
+							if (player.HasBuff<NatureBoosted>() && j == Main.myPlayer)
+							{
+								int buffIndex = player.FindBuffIndex(ModContent.BuffType<NatureBoosted>());
+								float timer = player.buffTime[buffIndex] - 30; //starts at 60, goes to 0
+								timer = Math.Clamp(timer, 0, 60);
+								float sinusoid = (float)Math.Sin(MathHelper.ToRadians(180f * (1- timer / 60f)));
+								mult += sinusoid;
+							}
+							tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, player.Center, 0.9f * mult);
+						}
+					}
+					if(ImportantTilesWorld.AcediaPortal.HasValue)
+					{
+						Vector2 acediaPortal = new Vector2(ImportantTilesWorld.AcediaPortal.Value.X * 16, ImportantTilesWorld.AcediaPortal.Value.Y * 16) + new Vector2(8, 8);
+						tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, acediaPortal, 1f, ColorHelpers.AcediaColor);
+					}
+				}
 				for (int i = 0; i < Main.player.Length; i++)
 				{
 					Player player = Main.player[i];
 					if (player.active)
 					{
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
+						if(i == Main.myPlayer)
+							ConduitBoostDrawer.DrawPlayerEffectOutline(Main.spriteBatch, player);
 					}
 				}
 				Main.spriteBatch.End();

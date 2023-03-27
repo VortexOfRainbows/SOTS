@@ -31,8 +31,13 @@ namespace SOTS.Items.Tools
 			Vector2 tileLocation = mousePos / 16f;
 			//PhaseWorldgenHelper.ClearPrevious = true;
 			//PhaseWorldgenHelper.Generate();
-			WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
+			//WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
 			//counter++;
+			Vector2? Location = Common.Systems.ImportantTilesWorld.RandomImportantLocation();
+			if(Location.HasValue)
+            {
+				player.Center = Location.Value;
+            }
 			return true;
 		}
 	}

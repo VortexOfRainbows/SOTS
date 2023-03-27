@@ -69,6 +69,19 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+3/26/23
+1. Important tile locations are now generated to the world. This will be used for Archaeologist later
+	1. Calculations are done server-side. Tested: It should work great in multiplayer, but it needs more testing to make sure
+		1. Leaves a lot of text in the chat right now; for testing purposes
+2. Nature Conduit now charges the player when at max dissolving elements
+	1. This gives a buff: syncs in multiplayer
+	2. This also has a cool visual: does NOT sync in multiplayer (simply put, buffs are extremely finicky)
+		1. Since the visuals aren't particularly important for this mechanic, it works out
+3. Nature Conduit now induces a small charging visual on the Acedia portal
+	1. Works in multiplayer
+	2. Needs to also modify the sprite!
+4. TBD: make the conduit also charge the Forgotten Lamp
+
 3/19/23 & 3/20/23 & 3/21/23 & 3/22/23
 1. WIP Conduit Tiles... Placeholder sprites
 2. Tile entity and data storage system for Conduit Tiles. Works in Multiplayer.

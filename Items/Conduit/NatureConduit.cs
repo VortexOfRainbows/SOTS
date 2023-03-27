@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs.ConduitBoosts;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Void;
@@ -224,6 +225,16 @@ namespace SOTS.Items.Conduit
 				}
 				//Main.NewText("D: " + entity.tileCountDissolving + "\nC: " + entity.tileCountChassis);
 			}
+			if(entity.tileCountDissolving >= 20)
+            {
+				Player myPlayer = Main.LocalPlayer;
+				float distance = Vector2.Distance(myPlayer.Center, new Vector2(i * 16 + 8, j * 16 + 8));
+				if(distance <= 240)
+                {
+					if(!myPlayer.HasBuff<Buffs.ConduitBoosts.NatureBoosted>())
+						myPlayer.AddBuff(ModContent.BuffType<Buffs.ConduitBoosts.NatureBoosted>(), 90, false);
+                }
+            }
 		}
 		public override bool Drop(int i, int j)
 		{
@@ -269,6 +280,58 @@ namespace SOTS.Items.Conduit
 	{
 		public int tileCountDissolving = -1;
 		public int tileCountChassis = -1;
+		public void DrawConduitToLocation(int i, int j, Vector2 destination, float alphaScale = 1f, Color lerpColor = default)
+		{
+			if (Main.netMode == NetmodeID.Server || tileCountDissolving <= 0)
+				return;
+			Vector2 startingLocation = new Vector2(i * 16 + 8, j * 16 + 8);
+			Vector2 toStart = startingLocation - destination;
+			destination += toStart.SafeNormalize(Vector2.Zero) * 4;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[ModContent.ProjectileType<Projectiles.Camera.DreamLaser>()].Value;
+			float length = Vector2.Distance(startingLocation, destination);
+			float alphaMult = tileCountDissolving / 20f;
+			float alpha = 2.2f * (alphaMult - (length / 800f)); //at about 440 -> max brightness
+			alpha = MathHelper.Clamp(alpha * alphaMult, 0, 1);
+			if (alpha <= 0)
+				return;
+			Vector2 origin = new Vector2(0, texture.Height / 2);
+			float textureSize = texture.Width;
+			float density = 0.25f;
+			float max = length / (textureSize * density);
+			int totalHelixes = 1 + tileCountDissolving / 5;
+			for (float v = 0; v < max; v += 0.5f)
+			{
+				Color color = VoidPlayer.natureColor;
+				if (lerpColor != default)
+				{
+					color = Color.Lerp(color, lerpColor, (float)Math.Pow(v / max, 2));
+				}
+				Vector2 drawPos = Vector2.Lerp(startingLocation, destination, v / max);
+				Vector2 direction = destination - startingLocation;
+				float rotation = direction.ToRotation();
+				float heightOfHelix = (float)Math.Sin(v / max * MathHelper.Pi);
+				float otherAlphaMult = (float)Math.Sqrt(heightOfHelix);
+				for (int b = 0; b < totalHelixes; b++)
+				{
+					float scaleY = 1;
+					float size = 4;
+					if (b >= 3)
+                    {
+						size = 6;
+						if (b == 3)
+							scaleY *= 0.55f;
+						else
+							scaleY *= 0.45f;
+                    }
+					float sinusoidMod = 1 + (float)Math.Sin(MathHelper.ToRadians(b * SOTSWorld.GlobalCounter * 3 * scaleY * scaleY + v * 8f / b * scaleY));
+					float sizeOfHelix = sinusoidMod * heightOfHelix * alpha * size * alphaMult;
+					Vector2 sinusoid = new Vector2(0, sizeOfHelix * (float)Math.Sin(MathHelper.ToRadians(v * 6 + SOTSWorld.GlobalCounter * 2 * scaleY + b * 120))).RotatedBy(rotation);
+					Color color2 = color * alpha * 0.33f;
+					color2.A = 0;
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color2 * otherAlphaMult * alphaScale, rotation, origin, new Vector2(density, scaleY * 0.5f), SpriteEffects.None, 0f);
+				}
+			}
+		}
         public void NearbyClientUpdate(int i, int j) //Normally, TileEntity.Update() is run for singleplayer/server... This will be run for singleplayer/client, and syncing is made that way thusly.
         {
 			tileCountDissolving = 0;
@@ -337,7 +400,7 @@ namespace SOTS.Items.Conduit
 				NetMessage.SendTileSquare(Main.myPlayer, i, j, 5);
 			}
 		}
-		public void BreakTile(int i, int j, bool noDrop = false)
+        public void BreakTile(int i, int j, bool noDrop = false)
         {
 			WorldGen.KillTile(i, j, noItem: noDrop);
 			NetMessage.SendData(MessageID.TileManipulation, Main.myPlayer, Main.myPlayer, null, 0, i, j);
@@ -359,4 +422,22 @@ namespace SOTS.Items.Conduit
 			return Place(i, j);
 		}
 	}
+	public static class ConduitBoostDrawer
+    {
+		public static void DrawPlayerEffectOutline(SpriteBatch spriteBatch, Player player)
+        {
+			if(player.HasBuff<NatureBoosted>())
+			{
+				int buffIndex = player.FindBuffIndex(ModContent.BuffType<NatureBoosted>());
+				float timer = player.buffTime[buffIndex] - 30; //starts at 60, goes to 0
+				if(timer > 0)
+				{
+					float percent = 1 - timer / 60f;
+					Color color = VoidPlayer.natureColor;
+					color.A = 0;
+					SOTSProjectile.DrawStar(player.Center, color, 0.3f * percent, MathHelper.PiOver4, 0f, 1, 52f * (float)Math.Sqrt((1 - percent)), 0, 1f, 600, 0, 1);
+				}
+			}
+        }
+    }
 }

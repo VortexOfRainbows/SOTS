@@ -20,9 +20,9 @@ namespace SOTS.Items.Permafrost
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<FrostArtifactTile>();
 		}
-		public override void AddRecipes()
+		/*public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<HardIceBrick>(), 100).AddIngredient(ModContent.ItemType<FrostedKey>(), 1).AddTile(TileID.MythrilAnvil).Register();
-		}
+		}*/
 	}
 }

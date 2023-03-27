@@ -56,6 +56,7 @@ using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.Items.Evil;
 using SOTS.Items.Temple;
 using SOTS.Items.ChestItems;
+using SOTS.Common.Systems;
 
 namespace SOTS
 {
@@ -81,6 +82,7 @@ namespace SOTS
 						LogInMessageTimer = -1;
 						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
 					}
+					ImportantTilesWorld.RequestNewPackets();
 				}
 			}
 		}

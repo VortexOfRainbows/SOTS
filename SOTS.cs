@@ -216,11 +216,18 @@ namespace SOTS
 			SyncGlobalProjTime,
 			SyncGlobalWorldFreeze,
 			SyncGlobalCounter,
-			SyncGlobalGemLocks
+			SyncGlobalGemLocks,
+			SyncTileLocations,
+			RequestTileLocations
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
 			int msgType = reader.ReadByte();
+			if (msgType == (int)SOTSMessageType.SyncTileLocations || msgType == (int)SOTSMessageType.RequestTileLocations)
+            {
+				Common.Systems.ImportantTilesWorld.HandlePacket(reader, whoAmI, msgType);
+				return;
+            }
 			/* if (Main.netMode == NetmodeID.Server)
 				NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Handling Packet: " + msgType), Color.Gray);
 			else
