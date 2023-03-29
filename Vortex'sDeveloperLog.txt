@@ -71,7 +71,7 @@ Daily Log:
 
 3/28/23
 1. Nature Conduit now creates a Glow effect on the Acedia Gateway when filled nearby
-2. Nature Conduit now connects to the Forgotten Lamp; STILL needs to Charge it properly
+2. Nature Conduit now connects to the Forgotten Lamp; STILL needs to Charge it properly for the obtain method
 3. Fix single-player important tile checks + reorganized some conduit stuff for future use
 
 3/26/23
