@@ -206,7 +206,8 @@ namespace SOTS.Common.Systems
                 {
                     ThreadTileResetting();
                     awaitTileCheck = false;
-                    Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Server runs this"), Color.Gray);
+                    if(Main.netMode == NetmodeID.Server)
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Server runs this"), Color.Gray);
                 }
                 if ((finishedThreading || (finishedFirstPacketSend && newPlayerRequestingPackets)) && Main.netMode == NetmodeID.Server)
                 {
@@ -216,11 +217,11 @@ namespace SOTS.Common.Systems
                     finishedThreading = false;
                     finishedFirstPacketSend = true;
                 }
-                if (finishedFirstPacketSend && SOTSWorld.GlobalCounter % 120 == 0 && SOTSWorld.GlobalCounter > 600) //this will be checked every 2 second
+                if ((finishedFirstPacketSend || Main.netMode == NetmodeID.SinglePlayer) && SOTSWorld.GlobalCounter % 120 == 0 && SOTSWorld.GlobalCounter > 600) //this will be checked every 2 second
                 {
                     wasTileLocationJustReset = false;
                     CheckCurrentLocations();
-                    if(wasTileLocationJustReset)
+                    if(wasTileLocationJustReset && Main.netMode == NetmodeID.Server)
                     {
                         Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
                         SyncAllLocations();

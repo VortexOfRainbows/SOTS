@@ -1084,7 +1084,11 @@ Mods: {
 				
 			# Conduit
 				ConduitChassis: Completes the carapace of a conduit, allowing for energy redirection
-				NatureConduit: An incomplete redirector of nature energy
+				NatureConduit:
+					''' 
+					An incomplete redirector of nature energy: it lacks a support chassis
+					When fully charged, it will focus nearby nature energy into valid repositories
+					'''
 
 			# CritBonus
 				OtherworldlyAmplifier: Critical strikes deal 8 more damage
