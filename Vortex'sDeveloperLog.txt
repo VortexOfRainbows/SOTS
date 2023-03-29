@@ -69,6 +69,10 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+3/28/23
+1. Nature Conduit now creates a Glow effect on the Acedia Gateway when filled nearby
+2. 
+
 3/26/23
 1. Important tile locations are now generated to the world. This will be used for Archaeologist later
 	1. Calculations are done server-side. Tested: It should work great in multiplayer, but it needs more testing to make sure
@@ -79,7 +83,7 @@ Daily Log:
 		1. Since the visuals aren't particularly important for this mechanic, it works out
 3. Nature Conduit now induces a small charging visual on the Acedia portal
 	1. Works in multiplayer
-	2. Needs to also modify the sprite!
+	2. Needs to also modify the sprite! 
 4. TBD: make the conduit also charge the Forgotten Lamp
 
 3/19/23 & 3/20/23 & 3/21/23 & 3/22/23

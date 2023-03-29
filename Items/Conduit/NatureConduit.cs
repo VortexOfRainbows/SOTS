@@ -280,10 +280,10 @@ namespace SOTS.Items.Conduit
 	{
 		public int tileCountDissolving = -1;
 		public int tileCountChassis = -1;
-		public void DrawConduitToLocation(int i, int j, Vector2 destination, float alphaScale = 1f, Color lerpColor = default)
+		public bool DrawConduitToLocation(int i, int j, Vector2 destination, float alphaScale = 1f, Color lerpColor = default)
 		{
 			if (Main.netMode == NetmodeID.Server || tileCountDissolving <= 0)
-				return;
+				return false;
 			Vector2 startingLocation = new Vector2(i * 16 + 8, j * 16 + 8);
 			Vector2 toStart = startingLocation - destination;
 			destination += toStart.SafeNormalize(Vector2.Zero) * 4;
@@ -293,7 +293,7 @@ namespace SOTS.Items.Conduit
 			float alpha = 2.2f * (alphaMult - (length / 800f)); //at about 440 -> max brightness
 			alpha = MathHelper.Clamp(alpha * alphaMult, 0, 1);
 			if (alpha <= 0)
-				return;
+				return false;
 			Vector2 origin = new Vector2(0, texture.Height / 2);
 			float textureSize = texture.Width;
 			float density = 0.25f;
@@ -331,6 +331,7 @@ namespace SOTS.Items.Conduit
 					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color2 * otherAlphaMult * alphaScale, rotation, origin, new Vector2(density, scaleY * 0.5f), SpriteEffects.None, 0f);
 				}
 			}
+			return alpha >= 0.2f;
 		}
         public void NearbyClientUpdate(int i, int j) //Normally, TileEntity.Update() is run for singleplayer/server... This will be run for singleplayer/client, and syncing is made that way thusly.
         {

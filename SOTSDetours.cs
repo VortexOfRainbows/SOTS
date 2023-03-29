@@ -8,6 +8,7 @@ using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Nature;
+using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Camera;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
@@ -415,7 +416,8 @@ namespace SOTS
 						modProj.PreDraw(ref color);
 					}
 				}*/
-
+				bool hasDrawnToAcediaPortal = false;
+				float AcediaPortalMiddleAlpha = 0.0f; //Later, another portal will be resposible for completing this value
 				foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
 				{
 					for (int j = 0; j < Main.player.Length; j++)
@@ -437,9 +439,26 @@ namespace SOTS
 					}
 					if(ImportantTilesWorld.AcediaPortal.HasValue)
 					{
-						Vector2 acediaPortal = new Vector2(ImportantTilesWorld.AcediaPortal.Value.X * 16, ImportantTilesWorld.AcediaPortal.Value.Y * 16) + new Vector2(8, 8);
-						tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, acediaPortal, 1f, ColorHelpers.AcediaColor);
+						int x = ImportantTilesWorld.AcediaPortal.Value.X;
+						int y = ImportantTilesWorld.AcediaPortal.Value.Y;
+						Vector2 acediaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
+						bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, acediaPortal, 1f, ColorHelpers.AcediaColor);
+						if(!hasDrawnToAcediaPortal && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
+						{
+							float Percent = tileEntity.tileCountDissolving / 20f;
+							Percent *= Percent;
+							hasDrawnToAcediaPortal = true;
+							AcediaGatewayTile.DrawGlowmask(x, y, Main.spriteBatch, Percent, -1);
+							AcediaPortalMiddleAlpha += Percent * 0.5f;
+						}
 					}
+				}
+				if (ImportantTilesWorld.AcediaPortal.HasValue && hasDrawnToAcediaPortal)
+				{
+					int x = ImportantTilesWorld.AcediaPortal.Value.X;
+					int y = ImportantTilesWorld.AcediaPortal.Value.Y;
+					if (AcediaPortalMiddleAlpha > 0.0f)
+						AcediaGatewayTile.DrawGlowmask(x, y, Main.spriteBatch, AcediaPortalMiddleAlpha, 0);
 				}
 				for (int i = 0; i < Main.player.Length; i++)
 				{
