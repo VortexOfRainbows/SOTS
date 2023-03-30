@@ -71,6 +71,7 @@ namespace SOTS
 			packet.Write(AmethystKeySlotted);
 			packet.Write(DiamondKeySlotted);
 			packet.Write(AmberKeySlotted);
+			packet.Write(DreamLampSolved);
 			packet.Send();
 		}
 		public static void SyncTimeFreeze(Player clientSender)
@@ -214,6 +215,7 @@ namespace SOTS
 		public static bool AmethystKeySlotted = false;
 		public static bool DiamondKeySlotted = false;
 		public static bool AmberKeySlotted = false;
+		public static bool DreamLampSolved = false;
 		public void ResetWorldVariables()
 		{
 			GlobalCounter = 0;
@@ -235,6 +237,7 @@ namespace SOTS
 			AmethystKeySlotted = false;
 			DiamondKeySlotted = false;
 			AmberKeySlotted = false;
+			DreamLampSolved = false;
 		}
 		public override void OnWorldLoad()
 		{
@@ -262,6 +265,7 @@ namespace SOTS
 			tag["AmethystKey"] = AmethystKeySlotted;
 			tag["DiamondKey"] = DiamondKeySlotted;
 			tag["AmberKey"] = AmberKeySlotted;
+			tag["DreamLamp"] = DreamLampSolved;
 		}
         public override void LoadWorldData(TagCompound tag)
 		{
@@ -279,6 +283,7 @@ namespace SOTS
 			AmethystKeySlotted = tag.GetBool("AmethystKey");
 			DiamondKeySlotted = tag.GetBool("DiamondKey");
 			AmberKeySlotted = tag.GetBool("AmberKey");
+			DreamLampSolved = tag.GetBool("DreamLamp");
 		}
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();

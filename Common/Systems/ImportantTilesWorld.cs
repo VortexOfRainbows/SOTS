@@ -28,7 +28,8 @@ namespace SOTS.Common.Systems
                 ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.dreamLamp, 0, -1);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.dreamLamp);
-                Main.NewText("(" + i + ", " + j + ")");
+                if(ImportantTilesWorld.DebugChatMessages)
+                    Main.NewText("(" + i + ", " + j + ")");
             }
             if (type == ModContent.TileType<StrangeKeystoneTile>())
             {
@@ -46,7 +47,8 @@ namespace SOTS.Common.Systems
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.coconutIslandMonumentBroken);
                 }
-                Main.NewText("(" + i + ", " + j + ")");
+                if (ImportantTilesWorld.DebugChatMessages)
+                    Main.NewText("(" + i + ", " + j + ")");
             }
         }
     }
@@ -69,6 +71,7 @@ namespace SOTS.Common.Systems
     }
     public class ImportantTilesWorld : ModSystem
     {
+        public static bool DebugChatMessages = false;
         public static void HandlePacket(BinaryReader reader, int whoAmI, int msgType)
         {
             if(msgType == (int)SOTSMessageType.SyncTileLocations)
@@ -206,12 +209,13 @@ namespace SOTS.Common.Systems
                 {
                     ThreadTileResetting();
                     awaitTileCheck = false;
-                    if(Main.netMode == NetmodeID.Server)
+                    if(Main.netMode == NetmodeID.Server && DebugChatMessages)
                         Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Server runs this"), Color.Gray);
                 }
                 if ((finishedThreading || (finishedFirstPacketSend && newPlayerRequestingPackets)) && Main.netMode == NetmodeID.Server)
                 {
-                    Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
+                    if(DebugChatMessages)
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
                     SyncAllLocations();
                     newPlayerRequestingPackets = false;
                     finishedThreading = false;
@@ -223,7 +227,8 @@ namespace SOTS.Common.Systems
                     CheckCurrentLocations();
                     if(wasTileLocationJustReset && Main.netMode == NetmodeID.Server)
                     {
-                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
+                        if(DebugChatMessages)
+                            Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
                         SyncAllLocations();
                     }
                 }
@@ -342,10 +347,13 @@ namespace SOTS.Common.Systems
         {
             if (pt == null)
             {
-                if(Main.netMode == NetmodeID.Server)
-                    Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(typeToCheck + ": Does not have a location"), Color.Gray);
-                else
-                    Main.NewText(typeToCheck + ": Does not have a location");
+                if(DebugChatMessages)
+                {
+                    if (Main.netMode == NetmodeID.Server)
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(typeToCheck + ": Does not have a location"), Color.Gray);
+                    else
+                        Main.NewText(typeToCheck + ": Does not have a location");
+                }
                 return false;
             }
             int x = pt.Value.X;
@@ -358,10 +366,13 @@ namespace SOTS.Common.Systems
             else
             {
                 pt = null;
-                if (Main.netMode == NetmodeID.Server)
-                    Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(typeToCheck + ": Reset tile location (" + x + ", " + y + ")"), Color.Gray);
-                else
-                    Main.NewText(typeToCheck + ": Reset tile location");
+                if (DebugChatMessages)
+                {
+                    if (Main.netMode == NetmodeID.Server)
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(typeToCheck + ": Reset tile location (" + x + ", " + y + ")"), Color.Gray);
+                    else
+                        Main.NewText(typeToCheck + ": Reset tile location");
+                }
                 wasTileLocationJustReset = true;
             }
             return false;

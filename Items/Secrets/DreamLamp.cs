@@ -133,7 +133,7 @@ namespace SOTS.Items.Secrets
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			this.SetResearchCost(1);
 		}
-		public static bool IsItemForgotten => !Main.dayTime;
+		public static bool IsItemForgotten => !SOTSWorld.DreamLampSolved;
         public static Texture2D texture => ModContent.Request<Texture2D>("SOTS/Items/Secrets/DreamingLamp").Value;
 		public Texture2D inventoryBoxTexture => Terraria.GameContent.TextureAssets.InventoryBack.Value;
 		public string appropriateNameRightNow => IsItemForgotten ? Language.GetTextValue("Mods.SOTS.ItemName.ForgottenLamp") : Language.GetTextValue("Mods.SOTS.ItemName.DreamingLamp");
@@ -213,6 +213,20 @@ namespace SOTS.Items.Secrets
 				return false;
             }
             return base.BeforeDrainMana(player);
+        }
+		int pickUpTimer = 0;
+        public override bool CanPickup(Player player)
+		{
+			if(!IsItemForgotten)
+            {
+				pickUpTimer++;
+				if(pickUpTimer > 80)
+                {
+					return true;
+                }
+				return false;
+            }
+            return base.CanPickup(player);
         }
     }
 }

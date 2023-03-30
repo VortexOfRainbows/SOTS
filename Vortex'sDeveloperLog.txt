@@ -56,6 +56,7 @@ Ideas:
 9. Nature Conduit: Used to imbue surrounding players or items with Dissolving Nature. Can Probably Use a tile entity
 10. Pharaoh's Curse music box
 11. Roasted Peanuts item
+12. Right Click BIG for Goliath Sword
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -68,6 +69,10 @@ Other 1.4 related objectives:
 2. Reorganize VoidPlayer Color helpers
 
 Daily Log:
+
+3/29/23
+1. Dream Lamp is now charged at a nature conduit:
+	Needs: multiplayer testing, testing with multiple conduits, dusts after conduit connection disappears (use proj.ai[0&1])
 
 3/28/23
 1. Nature Conduit now creates a Glow effect on the Acedia Gateway when filled nearby

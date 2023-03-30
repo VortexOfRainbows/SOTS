@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.ConduitBoosts;
+using SOTS.Common.Systems;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
+using SOTS.Items.Secrets;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -234,6 +236,28 @@ namespace SOTS.Items.Conduit
 					if(!myPlayer.HasBuff<Buffs.ConduitBoosts.NatureBoosted>())
 						myPlayer.AddBuff(ModContent.BuffType<Buffs.ConduitBoosts.NatureBoosted>(), 90, false);
                 }
+				if(ImportantTilesWorld.dreamLamp.HasValue)
+                {
+					Vector2 dreamLamp = new Vector2(ImportantTilesWorld.dreamLamp.Value.X * 16 + 8, ImportantTilesWorld.dreamLamp.Value.Y * 16 + 8);
+					distance = Vector2.Distance(dreamLamp, new Vector2(i * 16 + 8, j * 16 + 8));
+					if(distance <= 800)
+                    {
+						bool DoesProjectileExist = false;
+						for(int a = 0; a < 1000; a++)
+                        {
+							Projectile proj = Main.projectile[a];
+							if(proj.active && proj.type == ModContent.ProjectileType<ForgottenLampProjectile>())
+                            {
+								DoesProjectileExist = true;
+								break;
+                            }
+                        }
+						if(!DoesProjectileExist)
+						{
+							Projectile.NewProjectile(new EntitySource_TileUpdate(i, j, "SOTS:Conduit"), dreamLamp, Vector2.Zero, ModContent.ProjectileType<ForgottenLampProjectile>(), 0, 0, Main.myPlayer);
+						}
+                    }
+				}
             }
 		}
 		public override bool Drop(int i, int j)
@@ -423,22 +447,4 @@ namespace SOTS.Items.Conduit
 			return Place(i, j);
 		}
 	}
-	public static class ConduitBoostDrawer
-    {
-		public static void DrawPlayerEffectOutline(SpriteBatch spriteBatch, Player player)
-        {
-			if(player.HasBuff<NatureBoosted>())
-			{
-				int buffIndex = player.FindBuffIndex(ModContent.BuffType<NatureBoosted>());
-				float timer = player.buffTime[buffIndex] - 30; //starts at 60, goes to 0
-				if(timer > 0)
-				{
-					float percent = 1 - timer / 60f;
-					Color color = VoidPlayer.natureColor;
-					color.A = 0;
-					SOTSProjectile.DrawStar(player.Center, color, 0.3f * percent, MathHelper.PiOver4, 0f, 1, 52f * (float)Math.Sqrt((1 - percent)), 0, 1f, 600, 0, 1);
-				}
-			}
-        }
-    }
 }

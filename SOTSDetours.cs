@@ -424,7 +424,7 @@ namespace SOTS
 					{
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
 						if(i == Main.myPlayer)
-							ConduitBoostDrawer.DrawPlayerEffectOutline(Main.spriteBatch, player);
+							ConduitHelper.DrawPlayerEffectOutline(Main.spriteBatch, player);
 					}
 				}
 				Main.spriteBatch.End();
