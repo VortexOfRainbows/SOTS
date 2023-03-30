@@ -233,14 +233,14 @@ namespace SOTS.Items.Conduit
 				float distance = Vector2.Distance(myPlayer.Center, new Vector2(i * 16 + 8, j * 16 + 8));
 				if(distance <= 240)
                 {
-					if(!myPlayer.HasBuff<Buffs.ConduitBoosts.NatureBoosted>())
-						myPlayer.AddBuff(ModContent.BuffType<Buffs.ConduitBoosts.NatureBoosted>(), 90, false);
+					if(!myPlayer.HasBuff<NatureBoosted>())
+						myPlayer.AddBuff(ModContent.BuffType<NatureBoosted>(), 90, false);
                 }
 				if(ImportantTilesWorld.dreamLamp.HasValue)
                 {
 					Vector2 dreamLamp = new Vector2(ImportantTilesWorld.dreamLamp.Value.X * 16 + 8, ImportantTilesWorld.dreamLamp.Value.Y * 16 + 8);
 					distance = Vector2.Distance(dreamLamp, new Vector2(i * 16 + 8, j * 16 + 8));
-					if(distance <= 800)
+					if(distance <= 640)
                     {
 						bool DoesProjectileExist = false;
 						for(int a = 0; a < 1000; a++)
@@ -254,7 +254,7 @@ namespace SOTS.Items.Conduit
                         }
 						if(!DoesProjectileExist)
 						{
-							Projectile.NewProjectile(new EntitySource_TileUpdate(i, j, "SOTS:Conduit"), dreamLamp, Vector2.Zero, ModContent.ProjectileType<ForgottenLampProjectile>(), 0, 0, Main.myPlayer);
+							Projectile.NewProjectile(new EntitySource_TileUpdate(i, j, "SOTS:Conduit"), dreamLamp, Vector2.Zero, ModContent.ProjectileType<ForgottenLampProjectile>(), 0, 0, Main.myPlayer, i, j);
 						}
                     }
 				}

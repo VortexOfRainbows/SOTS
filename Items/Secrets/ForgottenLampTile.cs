@@ -36,7 +36,7 @@ namespace SOTS.Items.Secrets
         {
              if(frameX == 0)
              {
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<DreamLamp>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<DreamLamp>(), noGrabDelay: true);
              }
         }
 	    public override bool CanExplode(int i, int j)
@@ -93,7 +93,7 @@ namespace SOTS.Items.Secrets
         }
         public override void Kill(int timeLeft)
         {
-            if (timeLeft > 10)
+            if (timeLeft > 2)
                 return;
             int i = (int)(Projectile.Center.X / 16);
             int j = (int)(Projectile.Center.Y / 16);
@@ -110,20 +110,34 @@ namespace SOTS.Items.Secrets
                         SOTSWorld.SyncGemLocks(null);
                     }
                 }
-                if (Main.netMode != NetmodeID.Server)
+            }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                SOTSUtils.PlaySound(SoundID.Item30, Projectile.Center, 1f, -0.1f);
+                for (int a = 0; a < 64; a++)
                 {
-                    SOTSUtils.PlaySound(SoundID.Item30, Projectile.Center, 1f, -0.1f);
-                    for (int a = 0; a < 64; a++)
-                    {
-                        Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, VoidPlayer.natureColor, 1.1f);
-                        dust.scale *= 1.4f;
-                        dust.velocity *= 0.6f;
-                        dust.velocity += new Vector2(0, 9f).RotatedBy(MathHelper.TwoPi * a / 24f) / dust.scale;
-                        dust.fadeIn = 0.1f;
-                        dust.noGravity = true;
-                    }
-                    //SOTSWorld.SecretFoundMusicTimer = 720;
+                    Vector2 outward = new Vector2(0, 9f).RotatedBy(MathHelper.TwoPi * a / 24f);
+                    Dust dust = Dust.NewDustDirect(Projectile.Center + outward.SafeNormalize(Vector2.Zero) * 16 - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, VoidPlayer.natureColor, 1.1f);
+                    dust.scale *= 1.5f;
+                    dust.velocity *= 0.6f;
+                    dust.velocity += outward / dust.scale;
+                    dust.fadeIn = 0.1f;
+                    dust.noGravity = true;
                 }
+                Vector2 conduitPosition = new Vector2(Projectile.ai[0] * 16 + 8, Projectile.ai[1] * 16 + 8);
+                Vector2 betweenConduit = conduitPosition - Projectile.Center;
+                float distanceBetweenDust = 7f;
+                float length = betweenConduit.Length() / distanceBetweenDust;
+                for(int d = 0; d < length; d++)
+                {
+                    Vector2 spawnPosition = Projectile.Center + betweenConduit.SafeNormalize(Vector2.Zero) * distanceBetweenDust * d;
+                    Dust dust = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, VoidPlayer.natureColor, 1.1f);
+                    dust.scale *= 1.4f;
+                    dust.velocity *= 0.5f;
+                    dust.fadeIn = 0.1f;
+                    dust.noGravity = true;
+                }
+                //SOTSWorld.SecretFoundMusicTimer = 720;
             }
         }
         public override bool PreDraw(ref Color lightColor)

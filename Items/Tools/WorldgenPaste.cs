@@ -27,6 +27,8 @@ namespace SOTS.Items.Tools
 		}
 		public override bool? UseItem(Player player)
 		{
+			Main.NewText(SOTSWorld.AmberKeySlotted);
+			Main.NewText(SOTSWorld.DreamLampSolved);
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
 			//PhaseWorldgenHelper.ClearPrevious = true;

@@ -52,11 +52,9 @@ Update Objectives:
 
 Ideas:
 7. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
-8. Forgotten Lamp item which is used to make Dream Lamp in late Pre-HM, Spawns on Diamond Gem Island
-9. Nature Conduit: Used to imbue surrounding players or items with Dissolving Nature. Can Probably Use a tile entity
-10. Pharaoh's Curse music box
-11. Roasted Peanuts item
-12. Right Click BIG for Goliath Sword
+8. Pharaoh's Curse music box
+9. Roasted Peanuts item
+10. Right Click BIG Crystal for Goliath Sword
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -67,12 +65,14 @@ This is the plan currently
 Other 1.4 related objectives:
 1. Bestiary for all enemies
 2. Reorganize VoidPlayer Color helpers
+3. Hover icons for the Conduit Blocks (possibly?)
 
 Daily Log:
 
 3/29/23
-1. Dream Lamp is now charged at a nature conduit:
-	Needs: multiplayer testing, testing with multiple conduits, dusts after conduit connection disappears (use proj.ai[0&1])
+1. Dream Lamp is now charged at a nature conduit.
+	1. Tested: works in multiplayer, except for a few edge-cases (which shouldn't matter, as the tile only gets converted once per world max)
+2. Fix gem locks and other data not properly saving when leaving and rejoining multiplayer worlds
 
 3/28/23
 1. Nature Conduit now creates a Glow effect on the Acedia Gateway when filled nearby
@@ -96,7 +96,6 @@ Daily Log:
 1. WIP Conduit Tiles... Placeholder sprites
 2. Tile entity and data storage system for Conduit Tiles. Works in Multiplayer.
 3. Added Visuals and Audio to Conduit tiles!
-	1. Hover icon need to show the blocks required at the given stage (WIP)
 4. Some sprites and resprites
 
 3/18/23

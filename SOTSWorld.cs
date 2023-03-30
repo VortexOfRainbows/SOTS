@@ -294,16 +294,18 @@ namespace SOTS
 			flags[4] = downedLux;
 			flags[5] = downedSubspace;
 
-			/*BitsByte gemFlags = new BitsByte();
+			BitsByte gemFlags = new BitsByte();
 			gemFlags[0] = RubyKeySlotted;
 			gemFlags[1] = SapphireKeySlotted;
 			gemFlags[2] = EmeraldKeySlotted;
 			gemFlags[3] = TopazKeySlotted;
 			gemFlags[4] = AmethystKeySlotted;
 			gemFlags[5] = DiamondKeySlotted;
-			writer.Write(gemFlags);*/
+			gemFlags[6] = AmberKeySlotted;
+			gemFlags[7] = DreamLampSolved;
 
 			writer.Write(flags);
+			writer.Write(gemFlags);
 			writer.Write(GlobalCounter);
 		}
 		public override void NetReceive(BinaryReader reader) {
@@ -315,14 +317,15 @@ namespace SOTS
 			downedLux = flags[4];
 			downedSubspace = flags[5];
 
-			/*BitsByte gemFlags = reader.ReadByte();
+			BitsByte gemFlags = reader.ReadByte();
 			RubyKeySlotted = gemFlags[0];
 			SapphireKeySlotted = gemFlags[1];
 			EmeraldKeySlotted = gemFlags[2];
 			TopazKeySlotted = gemFlags[3];
 			AmethystKeySlotted = gemFlags[4];
 			DiamondKeySlotted = gemFlags[5];
-			//AmberKeySlotted = gemFlags[6];*/
+			AmberKeySlotted = gemFlags[6];
+			DreamLampSolved = gemFlags[7];
 
 			GlobalCounter = reader.ReadInt32();
 		}

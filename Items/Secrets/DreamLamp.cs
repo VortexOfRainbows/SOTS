@@ -120,7 +120,7 @@ namespace SOTS.Items.Secrets
 		}
         public override void PostUpdate()
         {
-			SetOverridenName();
+			SetOverridenName(); 
 		}
 		public void SetOverridenName()
 		{
@@ -204,6 +204,10 @@ namespace SOTS.Items.Secrets
 		{
 			return 10;
 		}
+        public override bool CanPickup(Player player)
+        {
+			return Item.timeSinceItemSpawned > 100;
+		}
         public override bool BeforeDrainMana(Player player)
 		{
 			if (Item.createTile >= 0)
@@ -213,20 +217,6 @@ namespace SOTS.Items.Secrets
 				return false;
             }
             return base.BeforeDrainMana(player);
-        }
-		int pickUpTimer = 0;
-        public override bool CanPickup(Player player)
-		{
-			if(!IsItemForgotten)
-            {
-				pickUpTimer++;
-				if(pickUpTimer > 80)
-                {
-					return true;
-                }
-				return false;
-            }
-            return base.CanPickup(player);
         }
     }
 }

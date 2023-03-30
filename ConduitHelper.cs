@@ -19,6 +19,7 @@ namespace SOTS
 		public static void preDrawBeforePlayers()
 		{
 			bool hasDrawnToAcediaPortal = false;
+			bool hasDrawnToDreamLamp = false;
 			float AcediaPortalMiddleAlpha = 0.0f; //Later, another portal will be resposible for completing this value
 			foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
 			{
