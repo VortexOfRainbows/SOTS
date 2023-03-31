@@ -297,6 +297,7 @@ Mods: {
 					GlowmothBag: Place Cocoon
 				
 				BigCrystal: Big Crystal
+				Colossus: Colossus
 				EchoDisk: Echo Disc
 				Geostorm: Geostorm
 				GraniteProtector: Granite Protector
@@ -1287,7 +1288,13 @@ Mods: {
 						Summons three luminous moths to swarm your enemies
 						Right click to call the moths to your cursor
 						'''
-
+						
+				Colossus: 
+					'''
+					Strike with 3 slashes
+					The final slash deals 120%
+					All slashes deal triple damage to healthy foes
+					'''
 				Geostorm: Bombards your cursor with crystals
 				GraniteProtector: Reduces damage taken by 6%
 				HarvestersScythe: 
@@ -3276,6 +3283,7 @@ Mods: {
 			ConstructFinder : Construct Finder
 			ContinuumExplosion : Collapse Laser
 			ContinuumSphere : Continuum Sphere
+			ColossusSlash : Colossus Slash
 			CrabCrusher : Crab Claw Crusher
 			CrossLaser : Unholy Light
 			CrystalSerpentBody : Crystal Serpent Counter

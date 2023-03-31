@@ -2,7 +2,7 @@ The following is my development plans :D
 1. Might still have some bugs with Subspace Locket
 2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
 
-Tmodloader Bugs:
+Tmodloader Bugs (some of these may be fixed, idk):
 1. Chest Swapping doesn't drop item.
 2. Chests crash when platforms are swapped below them.
 3. Block swap is not prevented for pyramid tiles pre EoW (don't think there is support for this in TMOD)
@@ -12,11 +12,12 @@ Acknowledged But Likely Delayed:
 1. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
 2. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
 3. Texture Pack sounds to disable when block is broken (tied to specific blocks)
-4. Reimplement Blade Items using the abstract class
+4. Reimplement (older) Blade Items using the abstract class
 5. Earthen Plating starter house.
 6. Bosses HP is ludicrous for Master Mode
 7. Glowmasks for Corruption Trees in SOTSTP
 8. Wind mechanics for vines and banners
+9. Earth Conduit (abstract the conduit class)
 
 Update Objectives:
 1. Ghost Town!
@@ -54,7 +55,6 @@ Ideas:
 7. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
 8. Pharaoh's Curse music box
 9. Roasted Peanuts item
-10. Right Click BIG Crystal for Goliath Sword
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -68,6 +68,12 @@ Other 1.4 related objectives:
 3. Hover icons for the Conduit Blocks (possibly?)
 
 Daily Log:
+
+3/30/23
+1. You can now obtain the BIG COLOSSUS SWORD by right clicking BIG with a BREAKER BLADE
+	1. Syncs in Multiplayer
+	2. This weapon is relatively basic, but is EXTREMELY STRONG. It is meant to be a super good true melee option.
+	3. It's obtain method will be made more difficult when the Earth Conduit is added later
 
 3/29/23
 1. Dream Lamp is now charged at a nature conduit.

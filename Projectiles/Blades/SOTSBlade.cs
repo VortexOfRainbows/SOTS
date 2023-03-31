@@ -13,6 +13,7 @@ namespace SOTS.Projectiles.Blades
 {    
     public abstract class SOTSBlade : ModProjectile
     {
+		public virtual bool createDustWhileSlowingDown => true;
 		public int GravDirection => (int)Main.player[Projectile.owner].gravDir;
 		public int thisSlashNumber => Math.Abs((int)Projectile.ai[0]);
 		private float delayDeathSlowdown = 1f;
@@ -260,7 +261,11 @@ namespace SOTS.Projectiles.Blades
 					Projectile.hide = true;
 					Projectile.Kill();
 				}
-            }
+				else if (createDustWhileSlowingDown && delayDeathSlowdown > 0.25f)
+				{
+					SpawnDustDuringSwing(player, distance, dustAway);
+				}
+			}
 			else
             {
 				if (dustAway != Vector2.Zero)

@@ -86,5 +86,56 @@ namespace SOTS.Items.Earth
 			g = 0.33f;
 			b = 0.15f;
 		}
-	}
+		public bool isHoverInCorrectLocation(int i, int j)
+        {
+			Tile tile = Main.tile[i, j];
+			int tileFrameX = tile.TileFrameX / 18;
+			int tileFrameY = tile.TileFrameY / 18;
+			if(tileFrameX >= 5 && tileFrameX <= 7 && tileFrameY <= 10)
+            {
+				return true;
+            }
+			return false;
+        }
+		public override void MouseOver(int i, int j)
+		{
+			Player player = Main.LocalPlayer;
+			if(isHoverInCorrectLocation(i, j))
+			{
+				player.cursorItemIconID = ItemID.BreakerBlade;
+				//player.cursorItemIconText = "";
+				player.noThrow = 2;
+				player.cursorItemIconEnabled = true;
+			}
+			else
+			{
+				if (player.cursorItemIconText == "")
+				{
+					player.cursorItemIconEnabled = false;
+					player.cursorItemIconID = 0;
+				}
+			}
+		}
+		public override void MouseOverFar(int i, int j)
+		{
+			MouseOver(i, j);
+			Player player = Main.LocalPlayer;
+			if (player.cursorItemIconText == "")
+			{
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
+			}
+		}
+        public override bool RightClick(int i, int j)
+		{
+			if (!isHoverInCorrectLocation(i, j))
+				return false;
+			Player player = Main.LocalPlayer;
+			if(player.ConsumeItem(ItemID.BreakerBlade, true))
+            {
+				player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j, "SOTS:BigCrystalTrade"), ModContent.ItemType<Colossus>(), 1);
+            }
+			return base.RightClick(i, j);
+        }
+    }
 }
