@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs.Boss;
+using SOTS.Projectiles.Blades;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -130,10 +131,13 @@ namespace SOTS.Items.Earth
 		{
 			if (!isHoverInCorrectLocation(i, j))
 				return false;
+			Tile tile = Main.tile[i, j];
 			Player player = Main.LocalPlayer;
 			if(player.ConsumeItem(ItemID.BreakerBlade, true))
-            {
-				player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j, "SOTS:BigCrystalTrade"), ModContent.ItemType<Colossus>(), 1);
+			{
+				int Left = i - tile.TileFrameX / 18;
+				int Top = j - tile.TileFrameY / 18;
+				Projectile.NewProjectile(new EntitySource_TileInteraction(player, i, j, "SOTS:BigCrystalTrade"), new Vector2(Left + 6, Top + 6) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<ColossusSpawnAnimation>(), 0, 0, Main.myPlayer, Top * 16 + 8, 0);
             }
 			return base.RightClick(i, j);
         }

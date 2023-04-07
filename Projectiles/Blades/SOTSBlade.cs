@@ -261,7 +261,7 @@ namespace SOTS.Projectiles.Blades
 					Projectile.hide = true;
 					Projectile.Kill();
 				}
-				else if (createDustWhileSlowingDown && delayDeathSlowdown > 0.25f)
+				else if (createDustWhileSlowingDown && delayDeathSlowdown > 0.15f)
 				{
 					SpawnDustDuringSwing(player, distance, dustAway);
 				}

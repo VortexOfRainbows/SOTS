@@ -114,7 +114,7 @@ namespace SOTS.Items.Secrets
             if (Main.netMode != NetmodeID.Server)
             {
                 SOTSUtils.PlaySound(SoundID.Item30, Projectile.Center, 1f, -0.1f);
-                for (int a = 0; a < 64; a++)
+                for (int a = 0; a < 72; a++)
                 {
                     Vector2 outward = new Vector2(0, 9f).RotatedBy(MathHelper.TwoPi * a / 24f);
                     Dust dust = Dust.NewDustDirect(Projectile.Center + outward.SafeNormalize(Vector2.Zero) * 16 - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, VoidPlayer.natureColor, 1.1f);

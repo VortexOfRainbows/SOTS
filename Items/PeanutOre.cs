@@ -20,6 +20,7 @@ namespace SOTS.Items
 			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			//Main.tileNoSunLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileSpelunker[Type] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;

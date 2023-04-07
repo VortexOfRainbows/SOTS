@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Blades
 {    
     public class ColossusSlash : SOTSBlade
 	{
-		public override Color color1 => new Color(237, 255, 193);
+		public override Color color1 => new Color(181, 220, 97);
 		public override Color color2 => new Color(51, 71, 3);
 		public override void SetStaticDefaults()
 		{
@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Blades
 		{
 			Projectile.localNPCHitCooldown = 30;
 			Projectile.DamageType = DamageClass.Melee;
-			delayDeathTime = 9;
+			delayDeathTime = 16;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -33,11 +33,11 @@ namespace SOTS.Projectiles.Blades
 				damage *= 3;
             }
         }
-        public override float HitboxWidth => 32;
-		public override float AdditionalTipLength => 16;
-		public override float handleOffset => 22;
-		public override float handleSize => 18;
-		public override Vector2 drawOrigin => new Vector2(15, 61);
+        public override float HitboxWidth => 48;
+		public override float AdditionalTipLength => 10;
+		public override float handleOffset => 16;
+		public override float handleSize => 16;
+		public override Vector2 drawOrigin => new Vector2(9, 69);
         public override void SwingSound(Player player)
 		{
 			SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, thisSlashNumber == 1 ? -0.75f : -0.3f); //playsound function
@@ -47,10 +47,10 @@ namespace SOTS.Projectiles.Blades
 		{
 			return 2f + (2f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)) + (thisSlashNumber == 1 ? 2.0f : -1f);
 		}
-		public override float MeleeSpeedMultiplier => 0.7f; //melee speed only has 70% effectiveness on this weapon
-		public override float OverAllSpeedMultiplier => 5f;
-		public override float MinSwipeDistance => 160;
-		public override float MaxSwipeDistance => 160;
+		public override float MeleeSpeedMultiplier => 0.8f; //melee speed only has 80% effectiveness on this weapon
+		public override float OverAllSpeedMultiplier => thisSlashNumber == 1 ? 6f : thisSlashNumber == 2 ? 4.5f : 5f;
+		public override float MinSwipeDistance => 200;
+		public override float MaxSwipeDistance => 200;
 		public override float ArcStartDegrees => thisSlashNumber == 1 ? 190 : 150;
 		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 227.5f : 265f) + (1800f / distance / speedModifier);
 		public override float swingSizeMult => 1.0f;
@@ -58,9 +58,15 @@ namespace SOTS.Projectiles.Blades
 		public override float delayDeathSlowdownAmount => 0.7f;
 		public override Color? DrawColor => null;
 		//private float nextIntervalForRocks = 80;
+		bool runOnce = true;
         public override void PostAI()
         {
-            base.PostAI();
+            if(runOnce && thisSlashNumber == 1)
+            {
+				Main.player[Projectile.owner].velocity.X -= Projectile.velocity.X * 0.15f;
+				runOnce = false;
+            }
+			base.PostAI();
 			/*if(timeLeftCounter > nextIntervalForRocks && thisSlashNumber == 1)
 			{
 				if (nextIntervalForRocks >= 130)
@@ -84,20 +90,24 @@ namespace SOTS.Projectiles.Blades
 			int damage = Projectile.damage;
 			if (slashNumber > 0)
 			{
+				float knockBackMult = 1;
 				if (slashNumber == 1)
+                {
 					damage = (int)(damage * 1.2f);
-				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack * 1.2f, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1]);
+					knockBackMult = 2.4f;
+				}
+				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack * knockBackMult, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1]);
 				if (proj.ModProjectile is ColossusSlash v)
 				{
 					if (slashNumber == 1)
 					{
-						v.distance = 150;
-						v.delayDeathTime = 6;
+						v.distance = 180;
+						v.delayDeathTime = 12;
 					}
 					if (slashNumber == 1)
 					{
-						v.distance = 170;
-						v.delayDeathTime = 15;
+						v.distance = 230;
+						v.delayDeathTime = 20;
 					}
 				}
 			}
@@ -135,7 +145,7 @@ namespace SOTS.Projectiles.Blades
 				dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
 		}
-        public override float TrailDistanceFromHandle => 16f;
+        public override float TrailDistanceFromHandle => 24f;
 		public override float AddedTrailLength => 0f;
     }
 }

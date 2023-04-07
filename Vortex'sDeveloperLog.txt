@@ -69,11 +69,16 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+4/6/23
+1. Colossus now has a cooler animation for the obtain method (Should work in multiplayer)
+	1. It's obtain method might be made more difficult when the Earth Conduit is added later
+	2. Also attacks slower and heavier (mostly a nerf)
+	3. But is bigger (a buff)
+
 3/30/23
 1. You can now obtain the BIG COLOSSUS SWORD by right clicking BIG with a BREAKER BLADE
 	1. Syncs in Multiplayer
 	2. This weapon is relatively basic, but is EXTREMELY STRONG. It is meant to be a super good true melee option.
-	3. It's obtain method will be made more difficult when the Earth Conduit is added later
 
 3/29/23
 1. Dream Lamp is now charged at a nature conduit.
