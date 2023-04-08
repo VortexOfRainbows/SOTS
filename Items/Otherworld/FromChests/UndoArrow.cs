@@ -39,6 +39,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				if(Main.npc[i].active)
 					Main.npc[i].aiStyle = -420;
             }
+			Main.NewText(Main.invasionType);
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Ruby", Convert.ToString(SOTSWorld.RubyKeySlotted)));
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Sapphire", Convert.ToString(SOTSWorld.SapphireKeySlotted)));
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Emerald", Convert.ToString(SOTSWorld.EmeraldKeySlotted)));

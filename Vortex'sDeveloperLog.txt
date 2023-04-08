@@ -70,6 +70,8 @@ Daily Log:
 
 4/8/23
 1. Small localization fix for advisor boss awoken
+2. Fix constructs not spawning
+3. Sparkle no long hits dummies
 
 4/7/23
 1. Added Guide to Illumination Accessory. Basically increases first hit damage and adds a stun to first hits

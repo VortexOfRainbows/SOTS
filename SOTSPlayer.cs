@@ -1242,7 +1242,7 @@ namespace SOTS
 				return;
 			if(isModify)
 			{
-				if (SparkleDamage)
+				if (SparkleDamage && !target.immortal)
 				{
 					if (Main.myPlayer == Player.whoAmI && (target.lifeMax <= target.life) && (projectile == null || projectile.type != ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>()))
 					{
