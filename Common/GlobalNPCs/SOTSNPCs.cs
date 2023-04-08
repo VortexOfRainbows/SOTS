@@ -752,18 +752,18 @@ namespace SOTS.Common.GlobalNPCs
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
 			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.SomeThing");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing");
 
 				if(npc.type == ModContent.NPCType<HoloBlade>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.HoloBlade");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.HoloBlade");
 				if (npc.type == ModContent.NPCType<HoloEye>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.HoloEye");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.HoloEye");
 				if (npc.type == ModContent.NPCType<PhaseEye>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.PhaseEye");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PhaseEye");
 				if (npc.type == ModContent.NPCType<TwilightDevil>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.TwilightDevil");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TwilightDevil");
 				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.OtherworldlyConstructHead");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlyConstructHead");
 
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Planetarium,
@@ -772,11 +772,11 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<PhaseSpeeder>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>() || npc.type == ModContent.NPCType<TwilightScouter>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.SomeThing2");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing2");
 				if (npc.type == ModContent.NPCType<TwilightScouter>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.TwilightScouter");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TwilightScouter");
 				if (npc.type == ModContent.NPCType<PhaseAssaulterHead>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.PhaseAssaulterHead");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PhaseAssaulterHead");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Sky,
 					flavorText
@@ -784,19 +784,19 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || npc.type == ModContent.NPCType<WallMimic>() || npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Ghast>() || npc.type == ModContent.NPCType<Maligmor>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.SomeThing3");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing3");
 				if (npc.type == ModContent.NPCType<Snake>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.Snake");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Snake");
 				if (npc.type == ModContent.NPCType<SnakePot>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.SnakePot");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SnakePot");
 				if (npc.type == ModContent.NPCType<WallMimic>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.WallMimic");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.WallMimic");
 				if (npc.type == ModContent.NPCType<Teratoma>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.Teratoma");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Teratoma");
 				if (npc.type == ModContent.NPCType<Ghast>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.Ghast");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Ghast");
 				if (npc.type == ModContent.NPCType<Maligmor>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.Maligmor");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Maligmor");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Pyramid,
 					flavorText
@@ -804,9 +804,9 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.SomeThing4");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing4");
 				if (npc.type == ModContent.NPCType<Polaris>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.Polaris");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Polaris");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					SurfaceSnow,
 					flavorText
@@ -814,7 +814,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<FluxSlime>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.FluxSlime");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.FluxSlime");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Surface,
 					Corruption,
@@ -824,11 +824,11 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>() || npc.type == ModContent.NPCType<NatureConstruct>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.SomeThing5");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing5");
 				if(npc.type == ModContent.NPCType<BlueSlimer>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.BlueSlimer");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.BlueSlimer");
 				if (npc.type == ModContent.NPCType<NatureConstruct>())
-					flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.NatureConstruct");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.NatureConstruct");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Surface,
 					flavorText
@@ -836,7 +836,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<SittingMushroom>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.SittingMushroom");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SittingMushroom");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Underground,
 					Caverns,
@@ -846,7 +846,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.ModNPC is TreasureSlime)
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("$Mods.SOTS.Bestiary.TreasureSlime");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TreasureSlime");
 				if(npc.type == ModContent.NPCType<BasicTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {

@@ -73,6 +73,10 @@ Daily Log:
 	1. Works in multiplayer
 2. Fix bug where synthetic liver + buff rings would double initial buff duration in multiplayer
 3. Nerf Beelzebub's Ring to only have a 50% chance to spawn a heart (100% on crit)
+4. Fix bestiary localization
+5. Framework for Archaeologist Town NPC!
+	1. Make sure he does not despawn
+	2. Guaranteed to spawn per world + cycles between stations
 
 4/6/23
 1. Colossus now has a cooler animation for the obtain method (Should work in multiplayer)
