@@ -559,7 +559,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				{
 					SOTSUtils.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 1.25f);
 					if (Main.netMode != NetmodeID.Server)
-						Main.NewText(Language.GetTextValue("Mods.SOTS.BossAwoken.Lux"), 175, 75, byte.MaxValue);
+						Main.NewText(Language.GetTextValue("Mods.SOTS.BossAwoken.Advisor"), 175, 75, byte.MaxValue);
 					dormant = false;
 					NPC.dontTakeDamage = false;
 					NPC.dontCountMe = false;
