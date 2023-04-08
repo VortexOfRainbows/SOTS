@@ -1114,7 +1114,8 @@ namespace SOTS.Common.GlobalNPCs
                         }
                         if (sPlayer.VultureRing && heartCount < 40)
                         {
-                            Item.NewItem(npc.GetSource_Death("SOTS:KilledWithVulture"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Heart, 1);
+                            if(lastHitWasCrit || Main.rand.NextBool(2))
+                                Item.NewItem(npc.GetSource_Death("SOTS:KilledWithVulture"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Heart, 1);
                         }
                         if (sPlayer.HarvestersScythe && Main.rand.NextBool(lastHitWasCrit ? 5 : 10))
                         {

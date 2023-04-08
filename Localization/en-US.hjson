@@ -291,7 +291,7 @@ Mods: {
 					GlowSilk: Glow Web
 					GlowNylon: Glow Nylon
 					GlowSpores: Glow Spores
-
+					GuideToIllumination: Guide to Illumination
 					IlluminantAxe: Illuminant Axe
 					NightIlluminator: Night Illuminator
 					GlowmothBag: Place Cocoon
@@ -1277,6 +1277,10 @@ Mods: {
 						Increases mana recieved from potions by 40
 						Increases magic crit chance by 5%
 						'''
+					GuideToIllumination:
+						'''
+						The first time an enemy takes damage, they will sparkle, stunning them for 10 damage
+						'''
 					IlluminantAxe: 
 						'''
 						Releases wandering energy bolts for 60% damage
@@ -1505,7 +1509,8 @@ Mods: {
 				EmeraldRing: Enemies have a 14.3% chance to drop double the loot
 				RubyRing: 
 					'''
-					Killed enemies always drop hearts
+					Killed enemies has a 50% chance to drop additional hearts
+					This chance increases to 100% with critical strikes
 					Collecting hearts lengthens the duration of active buffs
 					'''
 				SapphireRing: Generate income when void is gained
@@ -3434,6 +3439,7 @@ Mods: {
 			InfernoTrail : Inferno Trail
 			IrradiatedCrush : Irradiated Crush
 			IrradiatedCrusher : Irradiated Arm
+			IlluminationSparkle : Sparkle
 			JuryRiggedDrill : Jury Rigged Drill
 			LavaLaser : Lava Laser
 			LemegetonWispGreen : Lemegeton Wisp

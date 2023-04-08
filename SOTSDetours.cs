@@ -451,8 +451,8 @@ namespace SOTS
 			}
 		}
 		private static void Player_AddBuff(On.Terraria.Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet = true, bool foodHack = false)
-        {
-			if (SOTSPlayer.ModPlayer(self).PotionStacking)
+		{
+			if (SOTSPlayer.ModPlayer(self).PotionStacking && self.whoAmI == Main.myPlayer && (!quiet || Main.netMode == NetmodeID.SinglePlayer))
 			{
 				if (type == BuffID.WellFed || type == BuffID.WellFed2 || type == BuffID.WellFed3)
 				{
@@ -463,12 +463,14 @@ namespace SOTS
 						currentTime = self.buffTime[self.FindBuffIndex(BuffID.WellFed2)];
 					if (self.HasBuff(BuffID.WellFed3))
 						currentTime = self.buffTime[self.FindBuffIndex(BuffID.WellFed3)];
-					timeToAdd += currentTime;
+					if(currentTime > 120)
+						timeToAdd += currentTime;
 				}
 				else if (self.HasBuff(type) && !Main.debuff[type])
 				{
 					int currentTime = self.buffTime[self.FindBuffIndex(type)];
-					timeToAdd += currentTime;
+					if (currentTime > 120)
+						timeToAdd += currentTime;
 				}
 			}
 			orig(self, type, timeToAdd, quiet, foodHack);

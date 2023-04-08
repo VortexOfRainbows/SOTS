@@ -312,6 +312,7 @@ namespace SOTS
 		public float AmmoRegatherDelay = 0f;
 		public bool PotionStacking = false;
 		public bool DrainDebuffs = false;
+		public bool SparkleDamage = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -975,7 +976,7 @@ namespace SOTS
 			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
-			AmmoRegather = PotionStacking = false;
+			AmmoRegather = PotionStacking = SparkleDamage = false;
 			if (AmmoRegatherDelay < 120)
 				AmmoRegatherDelay++;
 		}
@@ -1241,7 +1242,20 @@ namespace SOTS
 				return;
 			if(isModify)
 			{
-				if(crit)
+				if (SparkleDamage)
+				{
+					if (Main.myPlayer == Player.whoAmI && (target.lifeMax <= target.life) && (projectile == null || projectile.type != ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>()))
+					{
+						float direction = Player.direction;
+						if (projectile != null)
+							direction = Math.Sign(projectile.velocity.X);
+						for (int i = 0; i < 10; i++)
+						{
+							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(1, 0) * direction, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 1f, Main.myPlayer, target.whoAmI, 4 + 6 * i);
+						}
+					}
+				}
+				if (crit)
                 {
 					float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
 					if(item != null)

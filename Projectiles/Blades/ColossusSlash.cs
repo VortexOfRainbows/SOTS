@@ -33,8 +33,8 @@ namespace SOTS.Projectiles.Blades
 				damage *= 3;
             }
         }
-        public override float HitboxWidth => 48;
-		public override float AdditionalTipLength => 10;
+        public override float HitboxWidth => 80;
+		public override float AdditionalTipLength => 22;
 		public override float handleOffset => 16;
 		public override float handleSize => 16;
 		public override Vector2 drawOrigin => new Vector2(9, 69);
@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Blades
 			}
 		}
         public override float TrailDistanceFromHandle => 24f;
-		public override float AddedTrailLength => 0f;
+		public override float AddedTrailLength => 8f;
     }
 }
 		
