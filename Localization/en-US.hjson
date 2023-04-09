@@ -249,7 +249,7 @@ Mods: {
 				SoulCharm: Soul Charm
 				BagOfCharms: Bag of Charms
 
-				EyeOfChaos: Increases crit chance by 18%
+				EyeOfChaos: Eye of Chaos
 				FocusReticle: Focus Reticle
 
 				BorealisIcosahedron: Borealis Icosahedron
@@ -1139,7 +1139,7 @@ Mods: {
 					Critical strikes steal life, regenerate void, and recover mana
 					'''
 					
-				EyeOfChaos: Eye of Chaos
+				EyeOfChaos: Increases crit chance by 18%
 				FocusReticle: 
 					'''
 					Increases crit chance by 20%
