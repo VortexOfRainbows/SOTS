@@ -1542,7 +1542,7 @@ namespace SOTS
 				for (int i = 0; i < Player.buffTime.Length; i++)
 				{
 					int type = Player.buffType[i];
-					if (Player.HasBuff(type) && Main.debuff[type])
+					if (Player.HasBuff(type) && Main.debuff[type] && type != ModContent.BuffType<DilationSickness>() && type != BuffID.PotionSickness)
 					{
 						if(Player.buffTime[i] > 30) //prevent stuff like campfire and banner from activating this
                         {

@@ -9,6 +9,7 @@ using SOTS.Dusts;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.NPCs;
 using SOTS.Projectiles;
+using SOTS.Projectiles.Blades;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Earth;
 using SOTS.Projectiles.Evil;
@@ -72,6 +73,10 @@ namespace SOTS
 						return false;
 					}
 					if (sPlayer.oldHeldProj == proj.whoAmI || player.heldProj == proj.whoAmI)
+                    {
+						return false;
+                    }
+					if(proj.ModProjectile is SOTSBlade)
                     {
 						return false;
                     }

@@ -61,28 +61,10 @@ namespace SOTS.Void
 		public int BonusCrushRangeMax = 0;
 		public float VoidGenerateMoney = 0;
 
-		public static string[] voidDeathMessages = new string[] { };
-        //{
-        //    Language.GetTextValue("Mods.SOTS.DeathMessage.VD1"),//TODO Fix these
-        //	//" was devoured by the void.",
-        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD2"),//TODO 文本无法正常显示
-        //	//" was taken by the void.",
-        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD3"),//TODO 文本无法正常显示
-        //	//" was consumed by the darkness.",
-        //	//" was taken by the darkness.",
-        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD4"),//TODO 文本无法正常显示
-        //	//" couldn't handle their own power.",
-        //	//" didn't manage their void well.",
-        //	Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")//TODO 文本无法正常显示
-        //};
-        public override void SetStaticDefaults()
+		public static string GetVoidDeathMessage(int num)
         {
-			voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD1")).ToArray(); //TODO Test it
-            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD2")).ToArray();
-            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD3")).ToArray();
-            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD4")).ToArray();
-            voidDeathMessages = voidDeathMessages.Append(Language.GetTextValue("Mods.SOTS.DeathMessage.VD5")).ToArray();
-        }
+			return Language.GetTextValue(("Mods.SOTS.DeathMessage.VD" + num));
+		}
         public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
 			tag["voidMeterMax"] = voidMeterMax;
@@ -195,14 +177,14 @@ namespace SOTS.Void
 			if (voidShock)
 			{
 				genGore = false; //apparently, genGore false doesn't remove almost anygore what-so-ever
-				damageSource = PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[0]);
+				damageSource = PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1));
 				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
 				return true;
 			}
 			if (damage == 10.0 && voidRecovery)
 			{
 				genGore = false;
-				damageSource = PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]);
+				damageSource = PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5)));
 				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
 				return true;
 			}
@@ -226,7 +208,7 @@ namespace SOTS.Void
 					Player.lifeRegen -= 16; // -8 hp * 10 seconds = -80 hp
 				if (Player.statLife <= 0 && Player.whoAmI == Main.myPlayer)
 				{
-					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
+					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5))), 10.0, 0, false);
 				}
 			}
 			if (voidRecovery)
@@ -247,7 +229,7 @@ namespace SOTS.Void
                 }
 				if (Player.statLife <= 0 && Player.whoAmI == Main.myPlayer)
 				{
-					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
+					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5))), 10.0, 0, false);
 				}
 			}
 		}

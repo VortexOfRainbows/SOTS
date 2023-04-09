@@ -69,9 +69,19 @@ Other 1.4 related objectives:
 Daily Log:
 
 4/8/23
+1. Fix void death message not working unless reloaded
+2. Fix issue with time freeze not working on some blade weapons
+3. Potion and Dilation sickness are no longer drained by synthetic liver
+
+
+--Beta Update for 0.22.1--
+
+
+4/8/23
 1. Small localization fix for advisor boss awoken
 2. Fix constructs not spawning
 3. Sparkle no long hits dummies
+
 
 4/7/23
 1. Added Guide to Illumination Accessory. Basically increases first hit damage and adds a stun to first hits
@@ -165,7 +175,9 @@ Daily Log:
 
 3/2/23
 1. Fix Amethyst Gem Structure inappropriately cutting into the pyramid
-2. Trees are now cleared during worldgen if they lackk supporting blocks due to structure generation.
+2. Trees are now cleared during worldgen if they lack supporting blocks due to structure generation.
+
+--Beta Release for 0.22.1--
 
 3/1/23
 1. Attempt to fix Pharaoh's Curse Memory Leak
