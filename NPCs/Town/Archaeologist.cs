@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Bestiary;
 using SOTS.Biomes;
+using System;
 
 namespace SOTS.NPCs.Town
 {
@@ -62,19 +63,137 @@ namespace SOTS.NPCs.Town
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0.5f;
-			NPC.noGravity = true;
+		}
+		public bool playerNearby = false;
+		public int AnimCycles = 0;
+		public int FrameY = 0;
+		public int FrameSpeed = 5;
+		public int TotalIdleFrameCycles = 6;
+		public int TotalLookUpFrameCycles = 3;
+		public const int MinimumIdleCycles = 5;
+		public const int MaximumIdleCycles = 21;
+		public const int MinimunLookCycles = 5;
+		public const int MaximumLookCycles = 14;
+		public int aiTimer = 0;
+        public override bool CheckActive()
+        {
+            return false;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+			int height = texture.Height / 5;
+			int width = texture.Width;
+			Vector2 origin = new Vector2(width / 2, 0);
+			int startingFrame = NPC.frame.Y;
+			for(int i = 0; i < height - 1; i++)
+			{
+				float sinusoid = 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(-aiTimer * 2.4f + i * 18));
+				float bonusAlphaMult = 0;
+				float xOffset = 0;
+				float progress = (float)i / height;
+				if (sinusoid > 0.9f)
+                {
+					sinusoid -= 0.9f;
+					sinusoid *= 1 / 0.1f;
+					sinusoid = sinusoid * sinusoid;
+					bonusAlphaMult += sinusoid;
+					xOffset += sinusoid * 0.075f;
+                }
+				Vector2 drawFromPosition = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height) + new Vector2(0, -1 * i);
+				Rectangle frame = new Rectangle(0, startingFrame + height - (i + 1), width, 1);
+				float baseAlpha = 0.10f + 0.61f * bonusAlphaFromBeingNear;
+				float gradientAlpha = 0.4f * (1 - 0.9f * bonusAlphaFromBeingNear);
+				spriteBatch.Draw(texture, drawFromPosition - screenPos, frame, drawColor * (bonusAlphaMult * 0.35f + (baseAlpha + gradientAlpha * (float)Math.Sqrt(progress))), NPC.rotation, origin, new Vector2(1 + xOffset, 1), NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			return false;
+        }
+		float bonusAlphaFromBeingNear = 0f;
+        public override void FindFrame(int frameHeight)
+		{
+			if(playerNearby)
+            {
+				AnimCycles = TotalIdleFrameCycles;
+            }
+			NPC.frameCounter++;
+			if (AnimCycles < TotalIdleFrameCycles)
+			{
+				if (NPC.frameCounter >= FrameSpeed)
+				{
+					FrameSpeed = Main.rand.Next(3, 11);
+					NPC.frameCounter = 0;
+					FrameY++;
+				}
+				if (FrameY > 1)
+				{
+					FrameY = 0;
+					AnimCycles++;
+				}
+			}
+			else if (AnimCycles >= TotalIdleFrameCycles)
+			{
+				if (NPC.frameCounter >= FrameSpeed)
+				{
+					FrameSpeed = 8;
+					NPC.frameCounter = 0;
+					if (AnimCycles >= TotalLookUpFrameCycles + TotalIdleFrameCycles)
+					{
+						FrameY--;
+					}
+					else
+						FrameY++;
+				}
+				if (FrameY > 4)
+				{
+					FrameY = 4;
+					AnimCycles++;
+				}
+				if (FrameY < 0)
+				{
+					FrameY = 0;
+					AnimCycles = 0;
+					TotalIdleFrameCycles = Main.rand.Next(MinimumIdleCycles, MaximumIdleCycles);
+					TotalLookUpFrameCycles = Main.rand.Next(MinimunLookCycles, MaximumLookCycles);
+				}
+			}
+			NPC.frame.Y = frameHeight * FrameY;
 		}
         public override bool PreAI()
         {
+			playerNearby = false;
+			for(int i = 0; i < Main.player.Length; i++)
+            {
+				Player player = Main.player[i];
+				if(player.active && player.Distance(NPC.Center) < 120)
+                {
+					playerNearby = true;
+					break;
+                }
+            }
+			if (playerNearby)
+			{
+				bonusAlphaFromBeingNear += 0.02f;
+			}
+			else
+            {
+				bonusAlphaFromBeingNear -= 0.02f;
+            }
+			bonusAlphaFromBeingNear = MathHelper.Clamp(bonusAlphaFromBeingNear, 0, 1);
 			NPC.dontTakeDamage = true;
 			NPC.dontTakeDamageFromHostiles = true;
-			NPC.velocity *= 0;
+			NPC.velocity.X *= 0;
+			aiTimer++;
+            if (aiTimer > 120)
+            {
+				NPC.noGravity = true;
+				NPC.velocity.Y *= 0f;
+            }
             return base.PreAI();
         }
         public override void PostAI()
         {
             base.PostAI();
-			NPC.velocity *= 0f;
+			NPC.velocity.X *= 0f;
         }
         //Make sure to allow your NPC to chat, since being "like a town NPC" doesn't automatically allow for chatting.
         public override bool CanChat()

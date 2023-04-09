@@ -68,6 +68,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+4/9/23
+1. WIP Archaeologist Holographic animation
+
 4/8/23
 1. Fix void death message not working unless reloaded
 2. Fix issue with time freeze not working on some blade weapons
