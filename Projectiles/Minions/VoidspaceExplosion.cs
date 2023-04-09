@@ -21,8 +21,13 @@ namespace SOTS.Projectiles.Minions
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
 			Projectile.alpha = 255;
+			Projectile.DamageType = DamageClass.Summon;
 		}
-		public override void Kill(int timeLeft)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+			crit = false;
+        }
+        public override void Kill(int timeLeft)
 		{
 			for (int i = 0; i < 360; i += 20)
 			{

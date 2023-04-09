@@ -2840,6 +2840,13 @@ Mods: {
 			Atmosphere: Starlight solidifies in the upper atmosphere!
 		}
 
+		Dialogue: {
+			ArchaeologistDialogue1 : Oh. Hey traveler, don't mind me, I'm just an Archaeologist passing by.
+			ArchaeologistDialogue2 : Oh. Hey traveler... have we met before..? I'm just an Archaeologist passing by.
+			ArchaeologistDialogue3 : This planet has quite a unique topography.
+			ArchaeologistDialogue4 : Is there anything I can do help you?
+		}
+
 		NPCName: {
 			# Boss
 				# Advisor
@@ -2927,6 +2934,10 @@ Mods: {
 				JungleTreasureSlime: Jungle Treasure Slime
 				PyramidTreasureSlime: Pyramid Treasure Slime
 				ShadowTreasureSlime: Shadow Treasure Slime
+
+			# Town
+				Archaeologist : Holographic Transmission 
+				ArchaeologistNearby : Archaeologist
 
 			ArcticGoblin: Arctic Goblin
 			BloomingHook: Blooming Hook

@@ -1,5 +1,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace SOTS.Items.AbandonedVillage
 {
@@ -15,6 +16,8 @@ namespace SOTS.Items.AbandonedVillage
 			Item.height = 32;
 			Item.maxStack = 99; 
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.shopCustomPrice = Item.buyPrice(0, 50, 0, 0);
 		}
 	}
 }

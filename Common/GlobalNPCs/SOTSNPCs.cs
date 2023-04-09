@@ -521,7 +521,7 @@ namespace SOTS.Common.GlobalNPCs
 				constructRateMultiplier = 0f;
 			if(Main.invasionType != InvasionID.None)
             {
-				constructRateMultiplier *= 0.5f;
+				constructRateMultiplier *= 0.0f;
             }
 			if(Main.eclipse || Main.pumpkinMoon || Main.snowMoon)
             {

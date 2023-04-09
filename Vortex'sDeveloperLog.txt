@@ -70,6 +70,9 @@ Daily Log:
 
 4/9/23
 1. WIP Archaeologist Holographic animation
+	1. Needs: Change direction based on player, but have a default direction.
+2. Constructs no longer spawn during invasions
+3. Voidspace Lamp no longer deals critical strikes
 
 4/8/23
 1. Fix void death message not working unless reloaded

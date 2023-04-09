@@ -28,6 +28,7 @@ namespace SOTS.Projectiles.Minions
             Projectile.tileCollide = false;
 			Projectile.netImportant = true;
 			Projectile.sentry = true;
+			Projectile.DamageType = DamageClass.Summon;
 		}
 		List<FireParticle> particleList = new List<FireParticle>();
 		public void cataloguePos()
@@ -168,7 +169,6 @@ namespace SOTS.Projectiles.Minions
 			if(!Projectile.Center.Equals(ogPosition))
             {
 				chains = false;
-
 			}
 			Main.player[Projectile.owner].UpdateMaxTurrets();
 			if(Projectile.owner == Main.myPlayer)

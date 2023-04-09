@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Bestiary;
 using SOTS.Biomes;
 using System;
+using SOTS.Items.Conduit;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS.NPCs.Town
 {
@@ -45,7 +47,6 @@ namespace SOTS.NPCs.Town
 				Direction = 1
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-
 			/*NPCProfile = new Profiles.StackedNPCProfile(
 				new Profiles.DefaultNPCProfile(Texture, -1),
 				new Profiles.DefaultNPCProfile(Texture + "_Shimmer", -1)
@@ -79,6 +80,14 @@ namespace SOTS.NPCs.Town
         {
             return false;
         }
+        public override void ModifyTypeName(ref string typeName)
+        {
+			typeName = Language.GetTextValue("Mods.SOTS.NPCName.Archaeologist");
+			if(hasPlayerChattedBefore)
+			{
+				typeName = Language.GetTextValue("Mods.SOTS.NPCName.ArchaeologistNearby");
+			}
+		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -86,11 +95,14 @@ namespace SOTS.NPCs.Town
 			int width = texture.Width;
 			Vector2 origin = new Vector2(width / 2, 0);
 			int startingFrame = NPC.frame.Y;
+			float grainy = (float)(aiTimer % 150);
+			drawColor = Color.Lerp(drawColor, Color.White, 0.5f);
 			for(int i = 0; i < height - 1; i++)
 			{
 				float sinusoid = 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(-aiTimer * 2.4f + i * 18));
 				float bonusAlphaMult = 0;
 				float xOffset = 0;
+				float xScale = 1;
 				float progress = (float)i / height;
 				if (sinusoid > 0.9f)
                 {
@@ -98,13 +110,20 @@ namespace SOTS.NPCs.Town
 					sinusoid *= 1 / 0.1f;
 					sinusoid = sinusoid * sinusoid;
 					bonusAlphaMult += sinusoid;
-					xOffset += sinusoid * 0.075f;
+					xScale += sinusoid * 0.075f;
                 }
-				Vector2 drawFromPosition = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height) + new Vector2(0, -1 * i);
+				else if(grainy > 138)
+                {
+					int grainDirection = NPC.direction * (((i / 2) % 2) * 2 - 1);
+					float grainProgress = (float)Math.Sin(MathHelper.ToRadians(360 * (grainy - 138) / 12f));
+					float grainMult = 1f * (1 - 0.5f * bonusAlphaFromBeingNear);
+					xOffset += grainDirection * grainProgress * grainMult * (0.6f + 0.4f * (float)Math.Sin(progress * MathHelper.Pi));
+                }
+				Vector2 drawFromPosition = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height) + new Vector2(xOffset, -1 * i);
 				Rectangle frame = new Rectangle(0, startingFrame + height - (i + 1), width, 1);
 				float baseAlpha = 0.10f + 0.61f * bonusAlphaFromBeingNear;
 				float gradientAlpha = 0.4f * (1 - 0.9f * bonusAlphaFromBeingNear);
-				spriteBatch.Draw(texture, drawFromPosition - screenPos, frame, drawColor * (bonusAlphaMult * 0.35f + (baseAlpha + gradientAlpha * (float)Math.Sqrt(progress))), NPC.rotation, origin, new Vector2(1 + xOffset, 1), NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(texture, drawFromPosition - screenPos, frame, drawColor * (bonusAlphaMult * 0.35f + (baseAlpha + gradientAlpha * (float)Math.Sqrt(progress))), NPC.rotation, origin, new Vector2(xScale, 1), NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
         }
@@ -211,17 +230,23 @@ namespace SOTS.NPCs.Town
 				new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ArchaeologistLore")
 			});
 		}
+		public bool hasPlayerChattedBefore = false;
 		public override string GetChat()
 		{
 			WeightedRandom<string> chat = new WeightedRandom<string>();
-
-			// These are things that the NPC has a chance of telling you when you talk to it.
-			chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue1"));
-			chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue2"));
-			chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue3"));
+			if(hasPlayerChattedBefore)
+			{
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue3"));
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue4"));
+			}
+			else if(!hasPlayerChattedBefore)
+			{
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue1"));
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue2"), 0.5);
+				hasPlayerChattedBefore = true;
+			}
 			return chat; // chat is implicitly cast to a string.
 		}
-
 		public override void SetChatButtons(ref string button, ref string button2)
 		{ 
 			button = Language.GetTextValue("LegacyInterface.28"); //This is the key to the word "Shop"
@@ -235,7 +260,11 @@ namespace SOTS.NPCs.Town
 		}
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<OldKey>());
+			nextSlot++;
 
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<ConduitChassis>());
+			nextSlot++;
 		}
 	}
 }
