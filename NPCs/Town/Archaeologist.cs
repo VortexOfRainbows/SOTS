@@ -51,6 +51,7 @@ namespace SOTS.NPCs.Town
 				new Profiles.DefaultNPCProfile(Texture, -1),
 				new Profiles.DefaultNPCProfile(Texture + "_Shimmer", -1)
 			);*/
+			NPC.behindTiles = true;
 		}
 		public override void SetDefaults()
 		{
@@ -64,6 +65,7 @@ namespace SOTS.NPCs.Town
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0.5f;
+			NPC.behindTiles = true;
 		}
 		public bool playerNearby = false;
 		public int AnimCycles = 0;
@@ -71,11 +73,13 @@ namespace SOTS.NPCs.Town
 		public int FrameSpeed = 5;
 		public int TotalIdleFrameCycles = 6;
 		public int TotalLookUpFrameCycles = 3;
-		public const int MinimumIdleCycles = 5;
-		public const int MaximumIdleCycles = 21;
+		public const int MinimumIdleCycles = 6;
+		public const int MaximumIdleCycles = 22;
 		public const int MinimunLookCycles = 5;
 		public const int MaximumLookCycles = 14;
+		public int DrawTimer = 0;
 		public int aiTimer = 0;
+		public int InitialDirection = 0;
         public override bool CheckActive()
         {
             return false;
@@ -88,18 +92,61 @@ namespace SOTS.NPCs.Town
 				typeName = Language.GetTextValue("Mods.SOTS.NPCName.ArchaeologistNearby");
 			}
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		public void DrawHoverPlatforms(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Town/ArchaeologistPlatform").Value;
+			int height = texture.Height;
+			int width = texture.Width;
+			Vector2 origin = new Vector2(width / 2, 0);
+			float grainy = (float)(DrawTimer % 150);
+			drawColor = Color.Lerp(drawColor, Color.White, 0.5f);
+			for (int i = 0; i < height - 1; i++)
+			{
+				float sinusoid = 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(-DrawTimer * 2.4f + i * 18));
+				float bonusAlphaMult = 0;
+				float xOffset = 0;
+				float xScale = 1;
+				float progress = (float)i / height;
+				if (sinusoid > 0.9f)
+				{
+					sinusoid -= 0.9f;
+					sinusoid *= 1 / 0.1f;
+					sinusoid = sinusoid * sinusoid;
+					bonusAlphaMult += sinusoid;
+					xScale += sinusoid * 0.075f;
+				}
+				else if (grainy > 138)
+				{
+					int grainDirection = NPC.direction * (((i / 2) % 2) * 2 - 1);
+					float grainProgress = (float)Math.Sin(MathHelper.ToRadians(360 * (grainy - 138) / 12f));
+					float grainMult = 1f * (1 - 0.5f * bonusAlphaFromBeingNear);
+					xOffset += grainDirection * grainProgress * grainMult * (0.6f + 0.4f * (float)Math.Sin(progress * MathHelper.Pi));
+				}
+				Vector2 drawFromPosition = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height + height - 1) + new Vector2(xOffset, -1 * i);
+				Rectangle frame = new Rectangle(0, height - (i + 1), width, 1);
+				float baseAlpha = 0.10f + 0.61f * bonusAlphaFromBeingNear;
+				float gradientAlpha = 0.4f * (1 - 0.9f * bonusAlphaFromBeingNear);
+				spriteBatch.Draw(texture, drawFromPosition - screenPos, frame, drawColor * (bonusAlphaMult * 0.35f + (baseAlpha + gradientAlpha * (float)Math.Sqrt(progress))), NPC.rotation, origin, new Vector2(xScale, 1), SpriteEffects.None, 0f);
+			}
+		}
+        public void Draw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			Texture2D texture = TextureAssets.Npc[NPC.type].Value;
 			int height = texture.Height / 5;
 			int width = texture.Width;
 			Vector2 origin = new Vector2(width / 2, 0);
 			int startingFrame = NPC.frame.Y;
-			float grainy = (float)(aiTimer % 150);
+			float grainy = (float)(DrawTimer % 150);
 			drawColor = Color.Lerp(drawColor, Color.White, 0.5f);
-			for(int i = 0; i < height - 1; i++)
+			if (screenPos != Main.screenPosition) //this should check for bestiary?
 			{
-				float sinusoid = 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(-aiTimer * 2.4f + i * 18));
+				NPC.spriteDirection = -1;
+				drawColor = Color.White;
+				bonusAlphaFromBeingNear = 0.7f;
+			}
+			for (int i = 0; i < height - 1; i++)
+			{
+				float sinusoid = 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(-DrawTimer * 2.4f + i * 18));
 				float bonusAlphaMult = 0;
 				float xOffset = 0;
 				float xScale = 1;
@@ -123,11 +170,20 @@ namespace SOTS.NPCs.Town
 				Rectangle frame = new Rectangle(0, startingFrame + height - (i + 1), width, 1);
 				float baseAlpha = 0.10f + 0.61f * bonusAlphaFromBeingNear;
 				float gradientAlpha = 0.4f * (1 - 0.9f * bonusAlphaFromBeingNear);
-				spriteBatch.Draw(texture, drawFromPosition - screenPos, frame, drawColor * (bonusAlphaMult * 0.35f + (baseAlpha + gradientAlpha * (float)Math.Sqrt(progress))), NPC.rotation, origin, new Vector2(xScale, 1), NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(texture, drawFromPosition - screenPos, frame, drawColor * (bonusAlphaMult * 0.35f + (baseAlpha + gradientAlpha * (float)Math.Sqrt(progress))), NPC.rotation, origin, new Vector2(xScale, 1), NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			if (screenPos != Main.screenPosition) //this should check for bestiary?
+			{
+				Draw(spriteBatch, screenPos, drawColor);
+			}
+			else
+				DrawHoverPlatforms(spriteBatch, screenPos, drawColor);
 			return false;
         }
-		float bonusAlphaFromBeingNear = 0f;
+        float bonusAlphaFromBeingNear = 0f;
         public override void FindFrame(int frameHeight)
 		{
 			if(playerNearby)
@@ -139,7 +195,7 @@ namespace SOTS.NPCs.Town
 			{
 				if (NPC.frameCounter >= FrameSpeed)
 				{
-					FrameSpeed = Main.rand.Next(3, 11);
+					FrameSpeed = Main.rand.Next(3, 13);
 					NPC.frameCounter = 0;
 					FrameY++;
 				}
@@ -176,19 +232,34 @@ namespace SOTS.NPCs.Town
 				}
 			}
 			NPC.frame.Y = frameHeight * FrameY;
+			DrawTimer++;
 		}
         public override bool PreAI()
         {
+			if(InitialDirection == 0)
+            {
+				InitialDirection = 1;
+            }
+			int directionToGoTo = InitialDirection;
 			playerNearby = false;
 			for(int i = 0; i < Main.player.Length; i++)
             {
 				Player player = Main.player[i];
-				if(player.active && player.Distance(NPC.Center) < 120)
-                {
+				if (player.active && player.Distance(NPC.Center) < 120)
+				{
 					playerNearby = true;
+					if (NPC.Center.X > player.Center.X)
+					{
+						directionToGoTo = -1;
+					}
+					else
+                    {
+						directionToGoTo = 1;
+                    }
 					break;
                 }
             }
+			NPC.direction = NPC.spriteDirection = directionToGoTo;
 			if (playerNearby)
 			{
 				bonusAlphaFromBeingNear += 0.02f;
@@ -266,5 +337,9 @@ namespace SOTS.NPCs.Town
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<ConduitChassis>());
 			nextSlot++;
 		}
+		public void FindALocationToGoTo()
+        {
+
+        }
 	}
 }

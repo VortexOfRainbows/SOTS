@@ -253,20 +253,38 @@ namespace SOTS.Common.Systems
         ///<summary>
         /// Gets the location of a random important tile
         ///</summary>
-        public static Vector2? RandomImportantLocation()
+        public static Vector2? RandomImportantLocation(out int ImportantTileID)
         {
-            List<Point16?> destinations = new List<Point16?>()
-            { AcediaPortal, AvaritiaPortal, gemlockAmethyst, gemlockTopaz, gemlockSapphire, gemlockEmerald, gemlockRuby, gemlockDiamond, gemlockAmber, iceMonument, coconutIslandMonumentBroken, coconutIslandMonument, dreamLamp };
+            ImportantTileID = -1;
+            List<Point16?> destinations = new List<Point16?>() { 
+                AcediaPortal, 
+                AvaritiaPortal,
+                gemlockAmethyst, 
+                gemlockTopaz, 
+                gemlockSapphire, 
+                gemlockEmerald, 
+                gemlockRuby, 
+                gemlockDiamond, 
+                gemlockAmber,
+                iceMonument, 
+                coconutIslandMonumentBroken,
+                coconutIslandMonument,
+                dreamLamp };
             Vector2? myDestination = null;
             while (myDestination == null && destinations.Count > 0)
             {
                 int randomPossibilites = Main.rand.Next(destinations.Count);
                 Point16? destination = destinations[randomPossibilites];
                 if (destination != null)
+                {
+                    ImportantTileID = randomPossibilites;
                     myDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
+                }
                 else
                     destinations.RemoveAt(randomPossibilites);
             }
+            if (!myDestination.HasValue)
+                return null;
             return myDestination + new Vector2(8, 8);
         }
         ///<summary>

@@ -68,6 +68,10 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+4/16/23
+1. Archaeologist Changes direction based on Player
+2. Archaeologist has a platform below it so floating now makes more sense
+
 4/9/23
 1. WIP Archaeologist Holographic animation
 	1. Needs: Change direction based on player, but have a default direction.

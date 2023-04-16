@@ -9,6 +9,7 @@ using SOTS.Items.Furniture;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Nature;
 using SOTS.Items.Pyramid;
+using SOTS.NPCs.Town;
 using SOTS.Projectiles.Camera;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
@@ -397,6 +398,10 @@ namespace SOTS
 						DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
 						if (instancedNPC.timeFrozen != 0)
 							instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch);
+						if(npc.ModNPC is Archaeologist arch)
+                        {
+							arch.Draw(Main.spriteBatch, Main.screenPosition, Lighting.GetColor((int)npc.Center.X / 16, (int)npc.Center.Y / 16));
+                        }
 						DendroChainNPCOperators.DrawChainsBetweenNPC(npc, Main.spriteBatch);
 					}
 				}
