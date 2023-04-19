@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Furniture;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,9 @@ namespace SOTS.Items.Otherworld
 			Item.width = 18;
 			Item.height = 30;
 			Item.maxStack = 99; 
-			Item.rare = 2;
+			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.shopCustomPrice = Item.buyPrice(0, 50, 0, 0);
 			//	Item.useAnimation = 15;
 			//	Item.useTime = 10;
 			//	Item.useStyle = ItemUseStyleID.Swing;
@@ -34,8 +37,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<MeteoriteKey>(), 1).AddTile(Mod.Find<ModTile>("TransmutationAltarTile").Type).Register();
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<SkywareKey>(), 1).AddTile(Mod.Find<ModTile>("TransmutationAltarTile").Type).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<MeteoriteKey>(), 1).AddTile<TransmutationAltarTile>().Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SkywareKey>(), 1).AddTile<TransmutationAltarTile>().Register();
 		}
 	}
 }

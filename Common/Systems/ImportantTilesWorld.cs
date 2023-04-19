@@ -54,7 +54,7 @@ namespace SOTS.Common.Systems
     }
     public static class ImportantTileID
     {
-        public const int MaxTileLocations = 13;
+        public const int MaxTileLocations = 15;
         public const int AcediaPortal = 0;
         public const int AvaritiaPortal = 1;
         public const int gemlockAmethyst = 2;
@@ -68,6 +68,8 @@ namespace SOTS.Common.Systems
         public const int coconutIslandMonumentBroken = 10;
         public const int coconutIslandMonument = 11;
         public const int dreamLamp = 12;
+        public const int damoclesChain = 13;
+        public const int bigCrystal = 14;
     }
     public class ImportantTilesWorld : ModSystem
     {
@@ -125,6 +127,12 @@ namespace SOTS.Common.Systems
                         break;
                     case ImportantTileID.dreamLamp:
                         dreamLamp = ptToSync;
+                        break;
+                    case ImportantTileID.damoclesChain:
+                        damoclesChain = ptToSync;
+                        break;
+                    case ImportantTileID.bigCrystal:
+                        bigCrystal = ptToSync;
                         break;
                 }
                 if (Main.netMode == NetmodeID.Server)
@@ -188,6 +196,8 @@ namespace SOTS.Common.Systems
             SyncImportantTileLocations(null, coconutIslandMonumentBroken, ImportantTileID.coconutIslandMonumentBroken, toClient);
             SyncImportantTileLocations(null, coconutIslandMonument, ImportantTileID.coconutIslandMonument, toClient);
             SyncImportantTileLocations(null, dreamLamp, ImportantTileID.dreamLamp, toClient);
+            SyncImportantTileLocations(null, damoclesChain, ImportantTileID.damoclesChain, toClient);
+            SyncImportantTileLocations(null, bigCrystal, ImportantTileID.bigCrystal, toClient);
         }
         public static bool awaitTileCheck = true;
         public static bool finishedThreading = false;
@@ -250,10 +260,12 @@ namespace SOTS.Common.Systems
         public static Point16? coconutIslandMonument = null;
 
         public static Point16? dreamLamp = null;
+        public static Point16? damoclesChain = null;
+        public static Point16? bigCrystal = null;
         ///<summary>
         /// Gets the location of a random important tile
         ///</summary>
-        public static Vector2? RandomImportantLocation(out int ImportantTileID)
+        public static Vector2? RandomImportantLocation(ref int ImportantTileID)
         {
             ImportantTileID = -1;
             List<Point16?> destinations = new List<Point16?>() { 
@@ -268,8 +280,8 @@ namespace SOTS.Common.Systems
                 gemlockAmber,
                 iceMonument, 
                 coconutIslandMonumentBroken,
-                coconutIslandMonument,
-                dreamLamp };
+                coconutIslandMonument
+            };
             Vector2? myDestination = null;
             while (myDestination == null && destinations.Count > 0)
             {
@@ -309,6 +321,8 @@ namespace SOTS.Common.Systems
             coconutIslandMonumentBroken = null;
             coconutIslandMonument = null;
             dreamLamp = null;
+            damoclesChain = null;
+            bigCrystal = null;
             for (int i = 15; i < Main.maxTilesX - 15; i++)
             {
                 for(int j = 15; j < Main.maxTilesY - 15; j++)
@@ -327,6 +341,8 @@ namespace SOTS.Common.Systems
                     AssignPoint(tile, i, j, ref coconutIslandMonumentBroken, ModContent.TileType<StrangeKeystoneTile>(), 54);
                     AssignPoint(tile, i, j, ref coconutIslandMonument, ModContent.TileType<StrangeKeystoneTile>(), 0);
                     AssignPoint(tile, i, j, ref dreamLamp, ModContent.TileType<ForgottenLampTile>());
+                    AssignPoint(tile, i, j, ref damoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
+                    AssignPoint(tile, i, j, ref bigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
                 }
             }
             CenterPoint(ref AcediaPortal, 4, 7);
@@ -342,6 +358,7 @@ namespace SOTS.Common.Systems
             CenterPoint(ref coconutIslandMonumentBroken, 1, 2);
             CenterPoint(ref coconutIslandMonument, 1, 2);
             CenterPoint(ref dreamLamp, 1, 0);
+            CenterPoint(ref bigCrystal, 6, 8);
             finishedThreading = true;
         }
         public static void CenterPoint(ref Point16? pt, int iOffset, int jOffset)
@@ -413,6 +430,8 @@ namespace SOTS.Common.Systems
             TileInCorrectLocation(ref coconutIslandMonumentBroken, ModContent.TileType<StrangeKeystoneTile>());
             TileInCorrectLocation(ref coconutIslandMonument, ModContent.TileType<StrangeKeystoneTile>());
             TileInCorrectLocation(ref dreamLamp, ModContent.TileType<ForgottenLampTile>());
+            TileInCorrectLocation(ref damoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
+            TileInCorrectLocation(ref bigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
         }
     }
 }

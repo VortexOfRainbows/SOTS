@@ -13,13 +13,32 @@ using SOTS.Biomes;
 using System;
 using SOTS.Items.Conduit;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Common.Systems;
+using SOTS.Items.Pyramid;
+using SOTS.Items.Gems;
+using SOTS.Items.ChestItems;
+using SOTS.Items.Secrets;
+using System.IO;
 
 namespace SOTS.NPCs.Town
 {
 	public class Archaeologist : ModNPC
 	{
-		//private static Profiles.StackedNPCProfile NPCProfile;
-		public override void SetStaticDefaults()
+		public const int timeToGoToSetPiece = 18000; //This is five minutes
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(locationTimer);
+			writer.Write(InitialDirection);
+			writer.Write(currentLocationType);
+		}
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			locationTimer = reader.ReadInt32();
+			InitialDirection = reader.ReadInt32();
+			currentLocationType = reader.ReadInt32();
+		}
+        //private static Profiles.StackedNPCProfile NPCProfile;
+        public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[Type] = 5; // The amount of frames the NPC has
 
@@ -79,6 +98,7 @@ namespace SOTS.NPCs.Town
 		public const int MaximumLookCycles = 14;
 		public int DrawTimer = 0;
 		public int aiTimer = 0;
+		public int locationTimer = 100000;
 		public int InitialDirection = 0;
         public override bool CheckActive()
         {
@@ -242,22 +262,43 @@ namespace SOTS.NPCs.Town
             }
 			int directionToGoTo = InitialDirection;
 			playerNearby = false;
+			bool playerWithinSecondRange = false;
 			for(int i = 0; i < Main.player.Length; i++)
             {
 				Player player = Main.player[i];
-				if (player.active && player.Distance(NPC.Center) < 120)
-				{
-					playerNearby = true;
-					if (NPC.Center.X > player.Center.X)
-					{
-						directionToGoTo = -1;
-					}
-					else
+				if (player.active)
+                {
+					if(player.Distance(NPC.Center) < 1600)
                     {
-						directionToGoTo = 1;
-                    }
-					break;
+						playerWithinSecondRange = true;
+
+						if (player.Distance(NPC.Center) < 120)
+						{
+							playerNearby = true;
+							if (NPC.Center.X > player.Center.X)
+							{
+								directionToGoTo = -1;
+							}
+							else
+							{
+								directionToGoTo = 1;
+							}
+							break;
+						}
+					}
+				}
+            }
+			if(!playerWithinSecondRange)
+            {
+				if(locationTimer > timeToGoToSetPiece)
+                {
+					aiTimer = 0;
+					locationTimer = timeToGoToSetPiece - 60;
+					NPC.netUpdate = true;
+					if(Main.netMode != NetmodeID.MultiplayerClient)
+						FindALocationToGoTo();
                 }
+				locationTimer++;
             }
 			NPC.direction = NPC.spriteDirection = directionToGoTo;
 			if (playerNearby)
@@ -277,6 +318,10 @@ namespace SOTS.NPCs.Town
             {
 				NPC.noGravity = true;
 				NPC.velocity.Y *= 0f;
+            }
+			else
+            {
+				NPC.noGravity = false;
             }
             return base.PreAI();
         }
@@ -329,17 +374,132 @@ namespace SOTS.NPCs.Town
 				shop = true;
 			}
 		}
+		private static void AddItemToShop(Chest shop, ref int nextSlot, int itemID)
+		{
+			shop.item[nextSlot].SetDefaults(itemID);
+			nextSlot++;
+		}
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
+			if (currentLocationType == ImportantTileID.AcediaPortal)
+			{
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<CursedApple>());
+				if(SOTSWorld.DreamLampSolved)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<DreamLamp>());
+				}
+			}
+			if (currentLocationType == ImportantTileID.AvaritiaPortal)
+            {
+				if(SOTSWorld.downedAdvisor)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Otherworld.MeteoriteKey>());
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Otherworld.SkywareKey>());
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Otherworld.StrangeKey>());
+				}
+			}
+			if (currentLocationType == ImportantTileID.gemlockAmethyst)
+			{
+				if(SOTSWorld.AmethystKeySlotted)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AmethystRing>());
+				}
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<RockCandy>());
+			}
+			if (currentLocationType == ImportantTileID.gemlockTopaz)
+			{
+				if (SOTSWorld.TopazKeySlotted)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<TopazRing>());
+				}
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<BetrayersKnife>());
+			}
+			if (currentLocationType == ImportantTileID.gemlockSapphire)
+			{
+				if (SOTSWorld.SapphireKeySlotted)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<SapphireRing>());
+				}
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<BagOfAmmoGathering>());
+			}
+			if (currentLocationType == ImportantTileID.gemlockEmerald)
+			{
+				if (SOTSWorld.EmeraldKeySlotted)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<EmeraldRing>());
+				}
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Invidia.VorpalKnife>());
+			}
+			if (currentLocationType == ImportantTileID.gemlockRuby)
+			{
+				if (SOTSWorld.RubyKeySlotted)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<RubyRing>());
+				}
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<SyntheticLiver>());
+			}
+			if (currentLocationType == ImportantTileID.gemlockDiamond)
+			{
+				if (SOTSWorld.DiamondKeySlotted)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<DiamondRing>());
+				}
+			}
+			if (currentLocationType == ImportantTileID.gemlockAmber)
+			{
+				if (SOTSWorld.AmberKeySlotted)
+				{
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AmberRing>());
+				}
+			}
+			if (currentLocationType == ImportantTileID.iceMonument)
+			{
+				if (NPC.downedBoss1)
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<GlazeBow>());
+			}
+			if (currentLocationType == ImportantTileID.coconutIslandMonument)
+			{
+				if (NPC.downedBoss1)
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<CoconutGun>());
+			}
+			if (currentLocationType == ImportantTileID.coconutIslandMonumentBroken)
+			{
+				if (NPC.downedBoss1)
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<CoconutGun>());
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<PhotonGeyser>());
+			}
+			if (currentLocationType == ImportantTileID.damoclesChain)
+			{
+				if (NPC.downedBoss1)
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Crushers.BoneClapper>());
+				AddItemToShop(shop, ref nextSlot, ItemID.Terragrim);
+			}
+			if (currentLocationType == ImportantTileID.bigCrystal)
+			{
+				if (NPC.downedBoss1)
+					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<PerfectStar>());
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<VisionAmulet>());
+			}
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<OldKey>());
 			nextSlot++;
 
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<ConduitChassis>());
 			nextSlot++;
 		}
+		public static int currentLocationType = -1;
 		public void FindALocationToGoTo()
         {
-
-        }
+			currentLocationType = 0;
+			Vector2? destination = ImportantTilesWorld.RandomImportantLocation(ref currentLocationType);
+			if(destination.HasValue)
+			{
+				NPC.Center = destination.Value;
+				Main.NewText("The location is at: " + currentLocationType);
+			}
+			else
+            {
+				currentLocationType = -1;
+            }
+		}
 	}
 }
