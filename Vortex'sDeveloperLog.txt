@@ -71,6 +71,9 @@ Daily Log:
 4/18/23
 1. Archaeologist Cycles between locations with unique trade opportunities (currently every 1 second for testing)
 2. Will not teleport if players are near
+3. Unbreakable tiles are properly unbreakable to lava and obsidian now (bug fix)
+4. Archaeologist will spawn nearby instead of right on top... And will avoid lava/honey
+5. Multiplayer: Archaeologist works in multiplayer too (or should)!
 
 4/16/23
 1. Archaeologist Changes direction based on Player

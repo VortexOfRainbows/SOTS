@@ -46,6 +46,8 @@ using SOTS.Items.Temple;
 using SOTS.Items.Furniture.Permafrost;
 using Terraria.GameContent.Biomes;
 using SOTS.Items.Slime;
+using SOTS.NPCs.Town;
+using Terraria.DataStructures;
 
 namespace SOTS
 {
@@ -1600,6 +1602,12 @@ namespace SOTS
 					SOTSPlayer.ModPlayer(Main.LocalPlayer).FoamStuff();
 				}
 			}
+			if(Main.netMode != NetmodeID.MultiplayerClient)
+				if(!NPC.AnyNPCs(ModContent.NPCType<Archaeologist>()))
+				{
+					NPC npc = NPC.NewNPCDirect(new EntitySource_SpawnNPC(""), 3200, 3200, ModContent.NPCType<Archaeologist>());
+					npc.netUpdate = true;
+				}
 		}
         public override void PostUpdateProjectiles()
         {

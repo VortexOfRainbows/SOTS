@@ -4,6 +4,7 @@ using SOTS.Items.Otherworld;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Secrets;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -264,8 +265,9 @@ namespace SOTS.Common.Systems
         public static Point16? bigCrystal = null;
         ///<summary>
         /// Gets the location of a random important tile
+        /// Also yield the direction for the Archaeologist to face and the ID of the tile
         ///</summary>
-        public static Vector2? RandomImportantLocation(ref int ImportantTileID)
+        public static Vector2? RandomImportantLocation(ref int ImportantTileID, ref int directionToGo)
         {
             ImportantTileID = -1;
             List<Point16?> destinations = new List<Point16?>() { 
@@ -280,7 +282,9 @@ namespace SOTS.Common.Systems
                 gemlockAmber,
                 iceMonument, 
                 coconutIslandMonumentBroken,
-                coconutIslandMonument
+                coconutIslandMonument,
+                damoclesChain,
+                bigCrystal
             };
             Vector2? myDestination = null;
             while (myDestination == null && destinations.Count > 0)
@@ -290,7 +294,56 @@ namespace SOTS.Common.Systems
                 if (destination != null)
                 {
                     ImportantTileID = randomPossibilites;
-                    myDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
+                    Vector2 testDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
+                    bool valid = false;
+                    int attempts = 30;
+                    while(attempts > 0)
+                    {
+                        int xOffset = Main.rand.Next(-9, 10);
+                        if (xOffset == 0 || xOffset == -1)
+                            xOffset = -2;
+                        if (xOffset == 1)
+                            xOffset = 2;
+                        directionToGo = -Math.Sign(xOffset);
+                        int tileX = destination.Value.X + xOffset;
+                        int tileY = destination.Value.Y;
+                        bool tileSpace = true;
+                        for (int j = -3; j <= 10; j++)
+                        {
+                            if (WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j, false))
+                            {
+                                bool validLiquidAndClear = true;
+                                for(int i = -3; i <= -1; i--)
+                                {
+                                    if(!WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j + i, false) && Framing.GetTileSafely(tileX, tileY + j + i).LiquidType != LiquidID.Lava && Framing.GetTileSafely(tileX, tileY + j + i).LiquidType != LiquidID.Honey)
+                                    {
+                                        validLiquidAndClear = true;
+                                    }
+                                    else
+                                    {
+                                        validLiquidAndClear = false;
+                                        break;
+                                    }    
+                                }
+                                if(validLiquidAndClear)
+                                {
+                                    tileSpace = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (tileSpace)
+                        {
+                            testDestination = new Vector2(tileX * 16, tileY * 16 - 24);
+                            valid = true;
+                            break;
+                        }
+                        attempts--;
+                    }
+                    if (valid)
+                        myDestination = testDestination;
+                    else
+                        destinations.RemoveAt(randomPossibilites);
                 }
                 else
                     destinations.RemoveAt(randomPossibilites);

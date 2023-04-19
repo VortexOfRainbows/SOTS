@@ -119,7 +119,7 @@ namespace SOTS.NPCs.Town
 			int width = texture.Width;
 			Vector2 origin = new Vector2(width / 2, 0);
 			float grainy = (float)(DrawTimer % 150);
-			drawColor = Color.Lerp(drawColor, Color.White, 0.5f);
+			drawColor = NPC.GetAlpha(Color.Lerp(drawColor, Color.White, 0.5f));
 			for (int i = 0; i < height - 1; i++)
 			{
 				float sinusoid = 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(-DrawTimer * 2.4f + i * 18));
@@ -157,7 +157,7 @@ namespace SOTS.NPCs.Town
 			Vector2 origin = new Vector2(width / 2, 0);
 			int startingFrame = NPC.frame.Y;
 			float grainy = (float)(DrawTimer % 150);
-			drawColor = Color.Lerp(drawColor, Color.White, 0.5f);
+			drawColor = NPC.GetAlpha(Color.Lerp(drawColor, Color.White, 0.5f));
 			if (screenPos != Main.screenPosition) //this should check for bestiary?
 			{
 				NPC.spriteDirection = -1;
@@ -296,7 +296,10 @@ namespace SOTS.NPCs.Town
 					locationTimer = timeToGoToSetPiece - 60;
 					NPC.netUpdate = true;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
+					{
 						FindALocationToGoTo();
+						InitialDirection = NPC.direction;
+					}
                 }
 				locationTimer++;
             }
@@ -318,9 +321,11 @@ namespace SOTS.NPCs.Town
             {
 				NPC.noGravity = true;
 				NPC.velocity.Y *= 0f;
+				NPC.alpha = 0;
             }
 			else
             {
+				NPC.alpha = (int)(255 * (1f - aiTimer / 120f));
 				NPC.noGravity = false;
             }
             return base.PreAI();
@@ -490,11 +495,16 @@ namespace SOTS.NPCs.Town
 		public void FindALocationToGoTo()
         {
 			currentLocationType = 0;
-			Vector2? destination = ImportantTilesWorld.RandomImportantLocation(ref currentLocationType);
+			int newDirection = 0;
+			Vector2? destination = ImportantTilesWorld.RandomImportantLocation(ref currentLocationType, ref newDirection);
 			if(destination.HasValue)
 			{
 				NPC.Center = destination.Value;
-				Main.NewText("The location is at: " + currentLocationType);
+				NPC.direction = newDirection;
+				if (Main.netMode == NetmodeID.Server)
+					Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The location is at: " + currentLocationType), Color.Gray);
+				else
+					Main.NewText("The location is at: " + currentLocationType);
 			}
 			else
             {

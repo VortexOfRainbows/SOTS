@@ -31,12 +31,15 @@ namespace SOTS.Items.Earth
 	{
 		public override void SetStaticDefaults()
 		{
+			Main.tileObsidianKill[Type] = false;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			Main.tileWaterDeath[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style5x4);
+			TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.Width = 13;
 			TileObjectData.newTile.Height = 14;
 			TileObjectData.newTile.DrawYOffset = 2;

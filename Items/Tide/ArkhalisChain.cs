@@ -33,10 +33,13 @@ namespace SOTS.Items.Tide
 	{
 		public override void SetStaticDefaults()
 		{
+			Main.tileObsidianKill[Type] = false;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+			TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.DrawYOffset = -2;
