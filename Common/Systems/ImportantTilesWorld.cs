@@ -267,9 +267,9 @@ namespace SOTS.Common.Systems
         /// Gets the location of a random important tile
         /// Also yield the direction for the Archaeologist to face and the ID of the tile
         ///</summary>
-        public static Vector2? RandomImportantLocation(ref int ImportantTileID, ref int directionToGo)
+        public static Vector2? RandomImportantLocation(ref int importantTileID, ref int directionToGo)
         {
-            ImportantTileID = -1;
+            importantTileID = -1;
             List<Point16?> destinations = new List<Point16?>() { 
                 AcediaPortal, 
                 AvaritiaPortal,
@@ -286,19 +286,40 @@ namespace SOTS.Common.Systems
                 damoclesChain,
                 bigCrystal
             };
+            List<int> destinationIDs = new List<int>() {
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                13,
+                14
+            };
             Vector2? myDestination = null;
             while (myDestination == null && destinations.Count > 0)
             {
+                int yOffset = 0;
                 int randomPossibilites = Main.rand.Next(destinations.Count);
                 Point16? destination = destinations[randomPossibilites];
                 if (destination != null)
                 {
-                    ImportantTileID = randomPossibilites;
+                    importantTileID = destinationIDs[randomPossibilites];
                     Vector2 testDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
                     bool valid = false;
                     int attempts = 30;
                     while(attempts > 0)
                     {
+                        if(importantTileID == ImportantTileID.damoclesChain)
+                        {
+                            yOffset = 5;
+                        }
                         int xOffset = Main.rand.Next(-9, 10);
                         if (xOffset == 0 || xOffset == -1)
                             xOffset = -2;
@@ -306,28 +327,25 @@ namespace SOTS.Common.Systems
                             xOffset = 2;
                         directionToGo = -Math.Sign(xOffset);
                         int tileX = destination.Value.X + xOffset;
-                        int tileY = destination.Value.Y;
-                        bool tileSpace = true;
-                        for (int j = -3; j <= 10; j++)
+                        int tileY = destination.Value.Y + yOffset;
+                        bool tileSpace = false;
+                        for (int j = -3; j <= 11; j++)
                         {
                             if (WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j, false))
                             {
                                 bool validLiquidAndClear = true;
-                                for(int i = -3; i <= -1; i--)
+                                for(int i = -3; i >= -1; i--)
                                 {
-                                    if(!WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j + i, false) && Framing.GetTileSafely(tileX, tileY + j + i).LiquidType != LiquidID.Lava && Framing.GetTileSafely(tileX, tileY + j + i).LiquidType != LiquidID.Honey)
-                                    {
-                                        validLiquidAndClear = true;
-                                    }
-                                    else
+                                    if(WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j + i, false) || 
+                                        Framing.GetTileSafely(tileX, tileY + j + i).LiquidType == LiquidID.Lava || 
+                                        Framing.GetTileSafely(tileX, tileY + j + i).LiquidType == LiquidID.Honey)
                                     {
                                         validLiquidAndClear = false;
-                                        break;
                                     }    
                                 }
                                 if(validLiquidAndClear)
                                 {
-                                    tileSpace = false;
+                                    tileSpace = true;
                                     break;
                                 }
                             }
@@ -343,10 +361,16 @@ namespace SOTS.Common.Systems
                     if (valid)
                         myDestination = testDestination;
                     else
+                    {
                         destinations.RemoveAt(randomPossibilites);
+                        destinationIDs.RemoveAt(randomPossibilites);
+                    }
                 }
                 else
+                {
                     destinations.RemoveAt(randomPossibilites);
+                    destinationIDs.RemoveAt(randomPossibilites);
+                }
             }
             if (!myDestination.HasValue)
                 return null;

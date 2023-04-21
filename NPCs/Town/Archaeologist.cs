@@ -85,6 +85,8 @@ namespace SOTS.NPCs.Town
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0.5f;
 			NPC.behindTiles = true;
+			NPC.noTileCollide = true;
+			NPC.noGravity = true;
 		}
 		public bool playerNearby = false;
 		public int AnimCycles = 0;
@@ -319,14 +321,13 @@ namespace SOTS.NPCs.Town
 			aiTimer++;
             if (aiTimer > 120)
             {
-				NPC.noGravity = true;
 				NPC.velocity.Y *= 0f;
 				NPC.alpha = 0;
             }
 			else
             {
 				NPC.alpha = (int)(255 * (1f - aiTimer / 120f));
-				NPC.noGravity = false;
+				NPC.velocity.Y += 0.1f;
             }
             return base.PreAI();
         }
@@ -334,7 +335,8 @@ namespace SOTS.NPCs.Town
         {
             base.PostAI();
 			NPC.velocity.X *= 0f;
-        }
+			NPC.velocity = Collision.TileCollision(new Vector2(NPC.Center.X - 8, NPC.position.Y), NPC.velocity, 16, NPC.height, false);
+		}
         //Make sure to allow your NPC to chat, since being "like a town NPC" doesn't automatically allow for chatting.
         public override bool CanChat()
 		{

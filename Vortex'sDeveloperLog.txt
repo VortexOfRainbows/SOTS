@@ -68,6 +68,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+4/20/23
+1. Fixed Archaeologist finding a correct location and trading pools when spawning location is not finalized
+
 4/18/23
 1. Archaeologist Cycles between locations with unique trade opportunities (currently every 1 second for testing)
 2. Will not teleport if players are near
