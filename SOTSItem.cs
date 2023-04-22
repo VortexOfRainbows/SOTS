@@ -36,6 +36,7 @@ using SOTS.Projectiles.Otherworld;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent;
 using Terraria.Localization;
+using SOTS.Items.Conduit;
 
 namespace SOTS
 {
@@ -539,6 +540,11 @@ namespace SOTS
 					player.velocity.X += player.direction * 7f * mult;
 				Projectile.NewProjectile(player.GetSource_Misc("SOTS:Accessory_EndothermicAfterburner"), player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(item.damage * 0.7f), 3f, player.whoAmI);
 			}
+			if (item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>())
+			{
+				if (!SOTSPlayer.ModPlayer(player).ConduitBelt)
+					return false;
+			}
 			return base.CanUseItem(item, player);
         }
         public override bool? UseItem(Item item, Player player)
@@ -557,6 +563,18 @@ namespace SOTS
 				SOTSPlayer.IncreaseBuffDurations(player, 300, 0.05f, 600, true); //increases buff duration by 5 seconds + 5% of the remaining buff duration, caps at 10 seconds
 			}
             return base.OnPickup(item, player);
+        }
+        public override void GrabRange(Item item, Player player, ref int grabRange)
+        {
+			if(item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() 
+				|| item.type == ItemType<DissolvingNatureBlock>() || item.type == ItemType<DissolvingEarthBlock>() || item.type == ItemType<DissolvingAuroraBlock>() || item.type == ItemType<DissolvingAetherBlock>()
+				|| item.type == ItemType<DissolvingBrillianceBlock>() || item.type == ItemType<DissolvingNetherBlock>() || item.type == ItemType<DissolvingUmbraBlock>() || item.type == ItemType<DissolvingDelugeBlock>())
+            {
+				if(SOTSPlayer.ModPlayer(player).ConduitBelt)
+                {
+					grabRange = (int)(grabRange * 2.5f);
+                }
+            }
         }
     }
 	public class DataTransferProj : ModProjectile

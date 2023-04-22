@@ -195,6 +195,14 @@ namespace SOTS
 				if (SOTSPlayer.ModPlayer(self).bonusPickaxePower > 0)
 					pickPower += SOTSPlayer.ModPlayer(self).bonusPickaxePower;
 				//Main.NewText("2 " + SOTSPlayer.ModPlayer(self).LazyMinerRing);
+				if (SOTSPlayer.ModPlayer(self).ConduitBelt)
+				{
+					Tile tile = Framing.GetTileSafely(x, y);
+					if (tile.TileType == ModContent.TileType<ConduitChassisTile>() || tile.TileType == ModContent.TileType<NatureConduitTile>())
+                    {
+						pickPower += 300;
+                    }
+                }
 				if (SOTSPlayer.ModPlayer(self).LazyMinerRing)
 				{
 					//Main.NewText("3");

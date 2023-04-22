@@ -313,6 +313,7 @@ namespace SOTS
 		public bool PotionStacking = false;
 		public bool DrainDebuffs = false;
 		public bool SparkleDamage = false;
+		public bool ConduitBelt = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -976,7 +977,7 @@ namespace SOTS
 			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
-			AmmoRegather = PotionStacking = SparkleDamage = false;
+			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = false;
 			if (AmmoRegatherDelay < 120)
 				AmmoRegatherDelay++;
 		}

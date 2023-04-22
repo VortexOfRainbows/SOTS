@@ -26,7 +26,7 @@ namespace SOTS.Items.Conduit
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.rare = ItemRarityID.Blue;
 			Item.Size = new Vector2(36, 36);
-			Item.value = Item.buyPrice(0, 0, 10, 0);
+			Item.value = Item.buyPrice(0, 0, 40, 0);
 			Item.createTile = ModContent.TileType<NatureConduitTile>();
 		}
 	}
@@ -48,7 +48,8 @@ namespace SOTS.Items.Conduit
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			AddMapEntry(new Color(66, 93, 77), name);
-			MineResist = 2f;
+			MineResist = 20f;
+			MinPick = 300;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Tungsten;
 			TileID.Sets.DrawsWalls[Type] = true;
@@ -296,8 +297,8 @@ namespace SOTS.Items.Conduit
 						}
 					}
 				}
+				ModContent.GetInstance<ConduitCounterTE>().Kill(i, j); //This should be done automatically, but I'll run it anyway
 			}
-			ModContent.GetInstance<ConduitCounterTE>().Kill(i, j); //This should be done automatically, but I'll run it anyway
 		}
     }
 	public class ConduitCounterTE : ModTileEntity

@@ -233,6 +233,7 @@ Mods: {
 				WingedKnife: Winged Knife
 				
 			# Conduit
+				ArchaeologistToolbelt: Archaeologist's Toolbelt
 				ConduitChassis: Conduit Chassis
 				NatureConduit: Nature Conduit
 
@@ -1084,6 +1085,12 @@ Mods: {
 				TinyPlanet: Surrounds you with 2 orbital projectiles
 				
 			# Conduit
+				ArchaeologistToolbelt:
+					'''
+					Increases block placement and tool range by 3
+					Allows the placement and destruction of conduits
+					Extends the pickup range for conduit items
+					'''
 				ConduitChassis: Completes the carapace of a conduit, allowing for energy redirection
 				NatureConduit:
 					''' 

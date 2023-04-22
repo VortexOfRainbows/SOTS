@@ -388,8 +388,12 @@ namespace SOTS.NPCs.Town
 		}
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
+			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ArchaeologistToolbelt>());
+			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ConduitChassis>());
+			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<OldKey>());
 			if (currentLocationType == ImportantTileID.AcediaPortal)
 			{
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<NatureConduit>());
 				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<CursedApple>());
 				if(SOTSWorld.DreamLampSolved)
 				{
@@ -487,11 +491,6 @@ namespace SOTS.NPCs.Town
 					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<PerfectStar>());
 				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<VisionAmulet>());
 			}
-			shop.item[nextSlot].SetDefaults(ModContent.ItemType<OldKey>());
-			nextSlot++;
-
-			shop.item[nextSlot].SetDefaults(ModContent.ItemType<ConduitChassis>());
-			nextSlot++;
 		}
 		public static int currentLocationType = -1;
 		public void FindALocationToGoTo()

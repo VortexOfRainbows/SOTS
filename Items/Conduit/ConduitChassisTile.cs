@@ -34,7 +34,8 @@ namespace SOTS.Items.Conduit
 			Main.tileLighted[Type] = true;
 			ItemDrop = ModContent.ItemType<ConduitChassis>();
 			AddMapEntry(new Color(66, 77, 93));
-			MineResist = 1.5f;
+			MineResist = 15f;
+			MinPick = 300;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Lead;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
