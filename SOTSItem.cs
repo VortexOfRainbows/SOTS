@@ -524,10 +524,11 @@ namespace SOTS
 						time = item.useAnimation;
 					if (item.autoReuse || item.channel)
 						time = -2;
-					for (int i = 0; i < polarCannons; i++)
-					{
-						Projectile.NewProjectile(player.GetSource_Misc("SOTS:SetBonus_FrostArtifact"), player.Center, Vector2.Zero, ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != ProjectileID.None ? item.useTime : item.useAnimation);
-					}
+					if(player.ownedProjectileCounts[ProjectileType<MiniPolarisCannon>()] == 0)
+						for (int i = 0; i < polarCannons; i++)
+						{
+							Projectile.NewProjectile(player.GetSource_Misc("SOTS:SetBonus_FrostArtifact"), player.Center, Vector2.Zero, ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != ProjectileID.None ? item.useTime : item.useAnimation);
+						}
 				}
 			}
 			if (modPlayer.EndothermicAfterburner && item.CountsAsClass(DamageClass.Melee) && !item.noMelee)

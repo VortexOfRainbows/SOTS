@@ -60,6 +60,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+4/23/23
+1. Fixed frost artifact armor spawning over 3 cannons in some situations
+
 4/21/23
 1. Added Archaeologist's Belt: gives access to placing/breaking conduits (and increased range + pickup)
 
