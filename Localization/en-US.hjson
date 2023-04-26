@@ -2852,6 +2852,21 @@ Mods: {
 			ArchaeologistDialogue2 : Oh. Hey traveler... have we met before..? I'm just an Archaeologist passing by.
 			ArchaeologistDialogue3 : This planet has quite a unique topography.
 			ArchaeologistDialogue4 : Is there anything I can do help you?
+			ArchaeologistDialogue5 : Compared to my home, there is quite a concentration of ancient artifacts here.
+			ArchaeologistDialogueGemlockNotDiamond : This locking mechanism doesn't seem to belong here. It's more likely a prior civilization built around it.
+			ArchaeologistDialogueGemlockDiamond : Strange, this lock is the only one without signs of prior discovery, yet it is still missing a key?
+			ArchaeologistDialoguePortalNotAvaritia : Yet another gateway... I wonder where this one leads.
+			ArchaeologistDialoguePortal1 : This gateway looks remarkably similar to the rest of them.
+			ArchaeologistDialoguePortal2 : It's strange that this planet is so littered with gateways... even mine leads here.
+			ArchaeologistDialogueAcedia1 : Despite the vines that have grown on this gateway, it shows remarkable integrity.
+			ArchaeologistDialogueAcedia2 : I believe this gateway resonates with nature and earth energy... unfortunately, I am unable to experiment with it myself.
+			ArchaeologistDialogueAvaritia1 : As to be expected of The Advisor's gateway: it is in pristine condition.
+			ArchaeologistDialogueAvaritia2 : I believe this gateway resonates with otherworldly and chaotic energy... unfortunately, I am unable to experiment with it myself.
+			ArchaeologistDialogueBigCrystal : I can feel strong energy radiating from this formation.
+			ArchaeologistDialogueCoconutMonument : This tablet is composed of highly light-reactive material. If you could find an object to focus light on it, I wonder what secrets it might reveal?
+			ArchaeologistDialogueCoconutBroken : Very clever traveler... perhaps you have a bright destiny ahead of you.
+			ArchaeologistDialogueDamocles : Hmm... was this a room for a prisoner or for a king?
+			ArchaeologistDialogueIceMonument : This keyhole is deceiving. I doubt this structure actually serves as a vessel for anything.
 		}
 
 		NPCName: {

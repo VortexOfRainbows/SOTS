@@ -357,10 +357,56 @@ namespace SOTS.NPCs.Town
 		public override string GetChat()
 		{
 			WeightedRandom<string> chat = new WeightedRandom<string>();
-			if(hasPlayerChattedBefore)
+			if (hasPlayerChattedBefore)
 			{
-				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue3"));
-				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue4"));
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue3"), 0.75);
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue4"), 0.75);
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue5"), 0.75);
+				if (currentLocationType == ImportantTileID.AcediaPortal || currentLocationType == ImportantTileID.AvaritiaPortal)
+                {
+					if(currentLocationType != ImportantTileID.AvaritiaPortal)
+						chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialoguePortalNotAvaritia"));
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialoguePortal1"));
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialoguePortal2"));
+				}
+				if (currentLocationType == ImportantTileID.AcediaPortal)
+				{
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAcedia1"));
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAcedia2"));
+				}
+				if (currentLocationType == ImportantTileID.AvaritiaPortal)
+				{
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAvaritia1"));
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAvaritia2"));
+				}
+				if (currentLocationType == ImportantTileID.bigCrystal)
+				{
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueBigCrystal"));
+				}
+				if (currentLocationType == ImportantTileID.coconutIslandMonument)
+				{
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueCoconutMonument"));
+				}
+				if (currentLocationType == ImportantTileID.coconutIslandMonumentBroken)
+				{
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueCoconutBroken"));
+				}
+				if (currentLocationType == ImportantTileID.damoclesChain)
+				{
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueDamocles"));
+				}
+				if (currentLocationType == ImportantTileID.iceMonument)
+				{
+					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueIceMonument"));
+				}
+				if (currentLocationType >= ImportantTileID.gemlockAmethyst && currentLocationType <= ImportantTileID.gemlockAmber)
+				{
+					if(currentLocationType == ImportantTileID.gemlockDiamond)
+					{
+						chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueGemlockDiamond"));
+					}
+					else chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueGemlockNotDiamond"));
+				}
 			}
 			else if(!hasPlayerChattedBefore)
 			{

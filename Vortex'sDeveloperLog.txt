@@ -45,7 +45,7 @@ Ideas:
 6. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
 7. Pharaoh's Curse music box
 8. Roasted Peanuts item
-9. Make Nature Conduit spawn naturally + more dialogue for Archaeologist
+9. Make Nature Conduit spawn naturally + EVEN more lines for the Archaeologist + Less randomization for Archaeologist portal order
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -59,6 +59,9 @@ Other 1.4 related objectives:
 3. Hover icons for the Conduit Blocks (possibly?)
 
 Daily Log:
+
+4/25/23
+1. Added more dialogue to the Archaeologist + dependent on his location
 
 4/23/23
 1. Fixed frost artifact armor spawning over 3 cannons in some situations
