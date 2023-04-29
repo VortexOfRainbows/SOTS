@@ -642,7 +642,7 @@ Mods: {
 
 				AncientGoldGate: Ancient Gold Pillar
 				AncientGoldGateGems: Gems
-
+				BrachialLance : Brachial Lance
 				CursedRobe: Cursed Robe
 				CursedHood: Cursed Hood
 
@@ -1531,7 +1531,7 @@ Mods: {
 					Mines linger and explode into shrapnel for 10% damage
 					Deploys and launches more mines when wearing climbing related accessories
 					'''
-				lazingQuiver: 
+				BlazingQuiver: 
 					'''
 					Increases ranged damage by 10% and greatly increases arrow speed
 					20% chance not to consume arrows
@@ -2030,6 +2030,13 @@ Mods: {
 
 				AcediaGateway: "'A strange portal that leads nowhere'"
 				AcediaPlating: "'It bares striking resemblance to luminite'"
+
+				BrachialLance:
+					'''
+					Throw a powerful, fast traveling lance that explodes into cursed spears
+					Charge to increase damage and the number of spears released up to 200%
+					Guaranteed to critically strike at full charge
+					'''
 
 				CursedRobe: 
 					'''
@@ -2853,7 +2860,8 @@ Mods: {
 			ArchaeologistDialogue3 : This planet has quite a unique topography.
 			ArchaeologistDialogue4 : Is there anything I can do help you?
 			ArchaeologistDialogue5 : Compared to my home, there is quite a concentration of ancient artifacts here.
-			ArchaeologistDialogueGemlockNotDiamond : This locking mechanism doesn't seem to belong here. It's more likely a prior civilization built around it.
+			ArchaeologistDialogue6 : The place I come from is rather dark. It's interesting to see this planet still gets a fair amount of sunlight.
+			ArchaeologistDialogueGemlockNotDiamond : This locking mechanism doesn't seem to be a manmade structure. Perhaps a prior civilization built around it instead.
 			ArchaeologistDialogueGemlockDiamond : Strange, this lock is the only one without signs of prior discovery, yet it is still missing a key?
 			ArchaeologistDialoguePortalNotAvaritia : Yet another gateway... I wonder where this one leads.
 			ArchaeologistDialoguePortal1 : This gateway looks remarkably similar to the rest of them.
@@ -3272,6 +3280,7 @@ Mods: {
 			BoneCrush : Bone Crush
 			BoreBullet : Bore Bullet
 			BossBabyLaser : Red Laser
+			BrachialLance : Brachial Lance
 			BrightRedLaser : Artifact Laser
 			BubbleCrush : Bubble Crush
 			CactusSpine : Cactus Spine

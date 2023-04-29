@@ -24,7 +24,7 @@ namespace SOTS.NPCs.Town
 {
 	public class Archaeologist : ModNPC
 	{
-		public const int timeToGoToSetPiece = 18000; //This is five minutes
+		public const int timeToGoToSetPiece = 600; //This is five minutes
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(locationTimer);
@@ -295,7 +295,7 @@ namespace SOTS.NPCs.Town
 				if(locationTimer > timeToGoToSetPiece)
                 {
 					aiTimer = 0;
-					locationTimer = timeToGoToSetPiece - 60;
+					locationTimer = 0;
 					NPC.netUpdate = true;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
@@ -359,9 +359,10 @@ namespace SOTS.NPCs.Town
 			WeightedRandom<string> chat = new WeightedRandom<string>();
 			if (hasPlayerChattedBefore)
 			{
-				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue3"), 0.75);
-				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue4"), 0.75);
-				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue5"), 0.75);
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue3"), 0.5);
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue4"), 0.5);
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue5"), 0.5);
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue6"), 0.5);
 				if (currentLocationType == ImportantTileID.AcediaPortal || currentLocationType == ImportantTileID.AvaritiaPortal)
                 {
 					if(currentLocationType != ImportantTileID.AvaritiaPortal)

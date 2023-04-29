@@ -25,6 +25,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using SOTS.Items.Earth.Glowmoth;
 using Terraria.DataStructures;
+using SOTS.Items.Conduit;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -95,7 +96,7 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,0,0,0,0,1,1,1,1,11,11,11,11,11,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,11,11,11,11,11,1,1,1,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,1,1,1,11,11,3,3,3,11,11,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,11,11,3,3,3,11,11,1,1,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,1,1,11,3,3,3,3,3,11,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,11,3,3,3,3,3,11,1,1,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,1,1,11,3,3,3,3,3,11,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,11,3,3,3,3,3,11,1,1,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,1,1,11,3,3,12,3,3,11,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,11,3,3,13,3,3,11,1,1,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,1,1,11,3,3,3,3,3,11,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,11,3,3,3,3,3,11,1,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,1,11,11,3,3,3,11,11,1,1,7,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,11,11,3,3,3,11,11,1,1,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,1,1,1,11,11,11,11,11,1,1,1,1,1,1,7,3,3,3,3,3,3,3,3,10,3,3,3,3,3,3,3,7,1,1,1,1,1,1,1,11,11,11,11,11,1,1,1,0,0,0,0,0,0,0,0,0,0},
@@ -217,6 +218,32 @@ namespace SOTS.WorldgenHelpers
 									tile.TileType = (ushort)ModContent.TileType<AcediaPlatingTile>();
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
+									break;
+								case 12:
+									if (confirmPlatforms == 2)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										if (direction == 1)
+										{
+											WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<NatureConduitTile>(), true, true, -1, 0);
+											ModTileEntity.PlaceEntityNet(k, l, ModContent.TileEntityType<ConduitCounterTE>());
+										}
+									}
+									break;
+								case 13:
+									if(confirmPlatforms == 2)
+									{
+										tile.HasTile = false;
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+										if (direction == -1)
+										{
+											WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<NatureConduitTile>(), true, true, -1, 0);
+											ModTileEntity.PlaceEntityNet(k, l, ModContent.TileEntityType<ConduitCounterTE>());
+										}
+									}
 									break;
 							}
 						}
