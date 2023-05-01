@@ -8,13 +8,22 @@ using SOTS.Dusts;
 using Terraria.Audio;
 using SOTS.NPCs.Boss.Curse;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SOTS.Projectiles.Pyramid
 {    
     public class BrachialLance : ModProjectile 
     {
-		public const int ThrowDuration = 36;
-		public const float ChargeDuration = 120f;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(aiCounter);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			aiCounter = reader.ReadInt32();
+        }
+        public const int ThrowDuration = 30;
+		public const float ChargeDuration = 90f;
 		int bounceCounter = 0;
 		int aiCounter = 0;
         public override void SetDefaults()
@@ -49,11 +58,13 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if (bounceCounter >= 2)
+			if (bounceCounter >= 3 + 8 * chargeProgress)
 			{
+				aiCounter = 3601;
 				Projectile.velocity *= 0;
 				Projectile.tileCollide = false;
 				Projectile.friendly = false;
+				Projectile.netUpdate = true;
 			}
 			else
 			{
@@ -111,46 +122,87 @@ namespace SOTS.Projectiles.Pyramid
 					fullCharge = true;
 				}
 			}
+			if (!WorldGen.InWorld((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, 10))
+			{
+				aiCounter = 3601;
+				Projectile.velocity *= 0;
+				Projectile.tileCollide = false;
+				Projectile.friendly = false;
+				Projectile.netUpdate = true;
+			}
 			//SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if (aiCounter >= ThrowDuration)
+			if (aiCounter > 3600)
+            {
+				Projectile.extraUpdates = 1;
+				Projectile.velocity *= 0;
+				Projectile.friendly = false;
+				Projectile.tileCollide = false;
+				Projectile.hide = true;
+				if (aiCounter > 4000)
+					Projectile.Kill();
+				if(Projectile.numUpdates == 0)
+					catalogueParticles();
+				return;
+			}
+			else if (aiCounter >= ThrowDuration)
 			{
 				Projectile.friendly = true;
 				if (runOnce)
 				{
-					Projectile.extraUpdates = 12;
+					Projectile.extraUpdates = 10;
 					if(fullCharge)
-						Projectile.extraUpdates = 20;
+						Projectile.extraUpdates = 100;
 					runOnce = false;
 					Projectile.netUpdate = true;
-					SoundEngine.PlaySound(SoundID.Item71, Projectile.Center);
+					if(fullCharge)
+                    {
+						SOTSUtils.PlaySound(SoundID.Item96, Projectile.Center, 0.9f, -0.2f, 0);
+                    }
+					else
+						SOTSUtils.PlaySound(SoundID.Item71, Projectile.Center, 0.9f, -0.4f * chargeProgress);
 					return;
 				}
 				Projectile.tileCollide = true;
 				if(Projectile.velocity.X != 0 || Projectile.velocity.Y != 0)
 				{
-					float increment = fullCharge ? 0.25f : 0.5f;
+					float increment = fullCharge && !SOTS.Config.lowFidelityMode ? 0.34f : 0.5f;
 					for (float i = 0; i < 1; i += increment)
 					{
-						CurseFoam nextFoam = new CurseFoam(Projectile.Center + i * Projectile.velocity, new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-0.1f, 0.1f)) * 0.2f + Projectile.velocity * 0.5f, (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.9f * (1f + 0.4f * chargeProgress), false);
+						CurseFoam nextFoam = new CurseFoam(Projectile.Center + i * Projectile.velocity - Projectile.velocity, Main.rand.NextVector2Circular(1, 1) * (0.9f - chargeProgress * 0.4f) + Projectile.velocity * 0.2f, (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.8f * (1f + 0.25f * chargeProgress), false);
 						foamParticleList1.Add(nextFoam);
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + i * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
+					}
+					if (Main.rand.NextBool(3))
+					{
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + 0.5f * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
 						dust.noGravity = true;
-						dust.velocity *= 0.6f * (1 - 0.3f * chargeProgress);
-						dust.scale = 1.75f * (1 + 0.25f * chargeProgress);
+						dust.velocity *= 0.75f * (1 - 0.2f * chargeProgress);
+						dust.scale = 1.5f * (1 + 0.35f * chargeProgress);
 						dust.fadeIn = 0.1f;
 						dust.color = new Color(219, 43, 43, 0) * 0.6f * (1 + 0.3f * chargeProgress);
 					}
-					Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
-					dust3.noGravity = true;
-					dust3.velocity *= 1.6f;
-					dust3.scale = 1.5f * (1 + 0.5f * chargeProgress);
-					dust3.fadeIn = 0.1f;
-					dust3.color = new Color(200, 68, 70, 0) * 0.75f * (1 + chargeProgress);
-					Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<AlphaDrainDust>());
-					dust2.noGravity = true;
-					dust2.velocity *= 0.3f;
-					dust2.scale = 1.75f;
-					dust2.color = new Color(188, 128, 228, 0) * 0.5f * (1 + 0.5f * chargeProgress);
+					if(Main.rand.NextBool(2))
+					{
+						if (!SOTS.Config.lowFidelityMode  || Main.rand.NextBool(2))
+						{
+							Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
+							dust3.noGravity = true;
+							dust3.velocity *= 1.6f;
+							dust3.scale = 1.4f * (1 + 0.25f * chargeProgress);
+							dust3.fadeIn = 0.1f;
+							dust3.color = new Color(200, 68, 70, 0) * 0.75f * (1 + chargeProgress);
+						}
+					}
+					else
+					{
+						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+						{
+							Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<AlphaDrainDust>());
+							dust2.noGravity = true;
+							dust2.velocity *= 0.3f;
+							dust2.scale = 1.5f;
+							dust2.color = new Color(188, 128, 228, 0) * 0.5f * (1 + 0.5f * chargeProgress);
+						}
+					}
 				}
 			}
 			else
@@ -185,7 +237,7 @@ namespace SOTS.Projectiles.Pyramid
 				player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() + MathHelper.ToRadians(player.gravDir * -90)));
 			}
-			if(Projectile.numUpdates == 0)
+			if(Projectile.numUpdates == 0 && aiCounter <= 3600)
 				catalogueParticles();
 		}
 		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
