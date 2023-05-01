@@ -1463,8 +1463,8 @@ namespace SOTS.NPCs.Boss.Curse
 				}
                 else
 				{
-					velocity *= 0.925f;
 					scale *= 0.955f;
+					velocity *= 0.925f;
 				}
 			}
 			if (scale <= 0.05f)

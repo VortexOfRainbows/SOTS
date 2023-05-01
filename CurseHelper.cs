@@ -23,7 +23,7 @@ namespace SOTS
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				bool validType = proj.type == ModContent.ProjectileType<GasBlast>() || proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
+				bool validType = proj.type == ModContent.ProjectileType<GasBlast>() || proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>() || proj.type == ModContent.ProjectileType<Projectiles.Pyramid.BrachialLance>();
 				if (validType && proj.active && proj.owner == player.whoAmI)
 				{
 					slots.Add(i);
@@ -62,6 +62,11 @@ namespace SOTS
 			if (proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>() && proj.active && proj.owner == player.whoAmI)
 			{
 				Projectiles.Minions.CursedBlade ring = proj.ModProjectile as Projectiles.Minions.CursedBlade;
+				return ring.foamParticleList1;
+			}
+			if (proj.type == ModContent.ProjectileType<BrachialLance>() && proj.active && proj.owner == player.whoAmI)
+			{
+				BrachialLance ring = proj.ModProjectile as BrachialLance;
 				return ring.foamParticleList1;
 			}
 			return null;

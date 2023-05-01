@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
 using Terraria.Audio;
+using SOTS.NPCs.Boss.Curse;
+using System.Collections.Generic;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -116,6 +118,8 @@ namespace SOTS.Projectiles.Pyramid
 				if (runOnce)
 				{
 					Projectile.extraUpdates = 12;
+					if(fullCharge)
+						Projectile.extraUpdates = 20;
 					runOnce = false;
 					Projectile.netUpdate = true;
 					SoundEngine.PlaySound(SoundID.Item71, Projectile.Center);
@@ -124,25 +128,28 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.tileCollide = true;
 				if(Projectile.velocity.X != 0 || Projectile.velocity.Y != 0)
 				{
-					for (float i = 0; i < 1; i += 0.5f)
+					float increment = fullCharge ? 0.25f : 0.5f;
+					for (float i = 0; i < 1; i += increment)
 					{
+						CurseFoam nextFoam = new CurseFoam(Projectile.Center + i * Projectile.velocity, new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-0.1f, 0.1f)) * 0.2f + Projectile.velocity * 0.5f, (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.9f * (1f + 0.4f * chargeProgress), false);
+						foamParticleList1.Add(nextFoam);
 						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + i * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
 						dust.noGravity = true;
-						dust.velocity *= 0.4f * (1 - 0.3f * chargeProgress);
-						dust.scale = 1.4f * (1 + 0.25f * chargeProgress);
+						dust.velocity *= 0.6f * (1 - 0.3f * chargeProgress);
+						dust.scale = 1.75f * (1 + 0.25f * chargeProgress);
 						dust.fadeIn = 0.1f;
 						dust.color = new Color(219, 43, 43, 0) * 0.6f * (1 + 0.3f * chargeProgress);
 					}
 					Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 					dust3.noGravity = true;
-					dust3.velocity *= 1.5f;
-					dust3.scale = 1.2f * (1 + 0.5f * chargeProgress);
+					dust3.velocity *= 1.6f;
+					dust3.scale = 1.5f * (1 + 0.5f * chargeProgress);
 					dust3.fadeIn = 0.1f;
 					dust3.color = new Color(200, 68, 70, 0) * 0.75f * (1 + chargeProgress);
-					Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<AlphaDrainDust>());
+					Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<AlphaDrainDust>());
 					dust2.noGravity = true;
-					dust2.velocity *= 0.2f;
-					dust2.scale = 1.6f;
+					dust2.velocity *= 0.3f;
+					dust2.scale = 1.75f;
 					dust2.color = new Color(188, 128, 228, 0) * 0.5f * (1 + 0.5f * chargeProgress);
 				}
 			}
@@ -177,6 +184,38 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() + MathHelper.ToRadians(player.gravDir * -90)));
+			}
+			if(Projectile.numUpdates == 0)
+				catalogueParticles();
+		}
+		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
+		public void catalogueParticles()
+		{
+			for (int i = 0; i < foamParticleList1.Count; i++)
+			{
+				CurseFoam particle = foamParticleList1[i];
+				particle.Update();
+				if (!particle.active)
+				{
+					particle = null;
+					foamParticleList1.RemoveAt(i);
+					i--;
+				}
+				else
+				{
+					particle.Update();
+					if (!particle.active)
+					{
+						particle = null;
+						foamParticleList1.RemoveAt(i);
+						i--;
+					}
+					else
+                    {
+						particle.scale *= 1.01f;
+						particle.position += particle.velocity * 0.975f;
+					}
+				}
 			}
 		}
 	}
