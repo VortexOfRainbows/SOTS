@@ -17,13 +17,11 @@ namespace SOTS.Projectiles.Pyramid
 			get => Projectile.ai[0];
 			set => Projectile.ai[0] = value;
 		}
-
 		private float findLocationY
 		{
 			get => Projectile.ai[1];
 			set => Projectile.ai[1] = value;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ruby Spawner Finder");
@@ -89,15 +87,31 @@ namespace SOTS.Projectiles.Pyramid
 					trailPos[i] = Vector2.Zero;
 				}
 				runOnce = false;
-				if(Main.netMode != 1)
-                {
-					findTravelTo();
-					if (findLocationX == 0 && findLocationY == 0)
+				if(Projectile.knockBack < 0)
+				{
+					if (Projectile.owner == Main.myPlayer)
 					{
-						findLocationY = Projectile.Center.Y - 48;
-						findLocationX = Projectile.Center.X;
+						findTravelTo();
+						if (findLocationX == 0 && findLocationY == 0)
+						{
+							findLocationY = Projectile.Center.Y - 48;
+							findLocationX = Projectile.Center.X;
+						}
+						Projectile.netUpdate = true;
 					}
-					Projectile.netUpdate = true;
+				}
+				else
+				{
+					if (Main.netMode != 1)
+					{
+						findTravelTo();
+						if (findLocationX == 0 && findLocationY == 0)
+						{
+							findLocationY = Projectile.Center.Y - 48;
+							findLocationX = Projectile.Center.X;
+						}
+						Projectile.netUpdate = true;
+					}
 				}
             }
 			else
@@ -132,7 +146,14 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void Kill(int timeLeft)
 		{
-			if(Main.netMode != 1)
+			if(Projectile.knockBack < 0)
+			{
+				if (Projectile.owner == Main.myPlayer)
+				{
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<BrachialPortal>(), (int)(Projectile.damage * 1f), -Projectile.knockBack, Main.myPlayer);
+				}
+			}
+			else if(Main.netMode != 1)
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RubySpawner>(), (int)(Projectile.damage * 1f), 0, Main.myPlayer);
         }
         public override bool PreDraw(ref Color lightColor)

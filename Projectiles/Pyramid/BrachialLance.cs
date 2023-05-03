@@ -17,11 +17,14 @@ namespace SOTS.Projectiles.Pyramid
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(aiCounter);
-        }
+			writer.Write(firstHit);
+		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			aiCounter = reader.ReadInt32();
-        }
+			firstHit = reader.ReadBoolean();
+		}
+		public bool firstHit = true;
         public const int ThrowDuration = 30;
 		public const float ChargeDuration = 90f;
 		int bounceCounter = 0;
@@ -45,7 +48,12 @@ namespace SOTS.Projectiles.Pyramid
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[Projectile.owner] = 4;
-			base.OnHitNPC(target, damage, knockback, crit);
+			if(firstHit)
+			{
+				Explosion(3);
+				firstHit = false;
+				Projectile.netUpdate = true;
+            }
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
@@ -68,6 +76,10 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			else
 			{
+				if (bounceCounter < 1 + 4 * chargeProgress)
+				{
+					Explosion(1);
+				}
 				if (Projectile.velocity.X != oldVelocity.X)
 					Projectile.velocity.X = -oldVelocity.X;
 				if (Projectile.velocity.Y != oldVelocity.Y)
@@ -137,7 +149,15 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.velocity *= 0;
 				Projectile.friendly = false;
 				Projectile.tileCollide = false;
-				Projectile.hide = true;
+				if(!Projectile.hide)
+				{
+					Projectile.hide = true;
+					if(firstHit)
+					{
+						Explosion(3);
+						firstHit = false;
+					}
+				}
 				if (aiCounter > 4000)
 					Projectile.Kill();
 				if(Projectile.numUpdates == 0)
@@ -168,15 +188,15 @@ namespace SOTS.Projectiles.Pyramid
 					float increment = fullCharge && !SOTS.Config.lowFidelityMode ? 0.34f : 0.5f;
 					for (float i = 0; i < 1; i += increment)
 					{
-						CurseFoam nextFoam = new CurseFoam(Projectile.Center + i * Projectile.velocity - Projectile.velocity, Main.rand.NextVector2Circular(1, 1) * (0.9f - chargeProgress * 0.4f) + Projectile.velocity * 0.2f, (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.8f * (1f + 0.25f * chargeProgress), false);
+						CurseFoam nextFoam = new CurseFoam(Projectile.Center + i * Projectile.velocity - Projectile.velocity, Main.rand.NextVector2Circular(1, 1) * (0.9f - chargeProgress * 0.35f) + Projectile.velocity * 0.2f, (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.8f * (1f + 0.225f * chargeProgress), false);
 						foamParticleList1.Add(nextFoam);
 					}
 					if (Main.rand.NextBool(3))
 					{
 						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + 0.5f * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
 						dust.noGravity = true;
-						dust.velocity *= 0.75f * (1 - 0.2f * chargeProgress);
-						dust.scale = 1.5f * (1 + 0.35f * chargeProgress);
+						dust.velocity *= 0.8f * (1 - 0.2f * chargeProgress);
+						dust.scale = 1.5f * (1 + 0.3f * chargeProgress);
 						dust.fadeIn = 0.1f;
 						dust.color = new Color(219, 43, 43, 0) * 0.6f * (1 + 0.3f * chargeProgress);
 					}
@@ -186,8 +206,8 @@ namespace SOTS.Projectiles.Pyramid
 						{
 							Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
 							dust3.noGravity = true;
-							dust3.velocity *= 1.6f;
-							dust3.scale = 1.4f * (1 + 0.25f * chargeProgress);
+							dust3.velocity *= 1.7f;
+							dust3.scale = 1.4f * (1 + 0.2f * chargeProgress);
 							dust3.fadeIn = 0.1f;
 							dust3.color = new Color(200, 68, 70, 0) * 0.75f * (1 + chargeProgress);
 						}
@@ -198,7 +218,7 @@ namespace SOTS.Projectiles.Pyramid
 						{
 							Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<AlphaDrainDust>());
 							dust2.noGravity = true;
-							dust2.velocity *= 0.3f;
+							dust2.velocity *= 0.4f;
 							dust2.scale = 1.5f;
 							dust2.color = new Color(188, 128, 228, 0) * 0.5f * (1 + 0.5f * chargeProgress);
 						}
@@ -270,6 +290,14 @@ namespace SOTS.Projectiles.Pyramid
 				}
 			}
 		}
+		public void Explosion(int num = 1)
+        {
+			if(Main.myPlayer == Projectile.owner)
+			{
+				for(int i = num; i > 0; i--)
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), Projectile.damage, -Projectile.knockBack, Main.myPlayer);
+			}
+        }
 	}
 }
 		
