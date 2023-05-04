@@ -80,6 +80,8 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void AI()
 		{
+			if (Projectile.knockBack < 0)
+				Projectile.extraUpdates = 2;
 			if (runOnce)
 			{
 				for (int i = 0; i < trailPos.Length; i++)

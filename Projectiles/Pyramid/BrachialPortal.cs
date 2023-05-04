@@ -21,6 +21,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.timeLeft = 480;
 			Projectile.tileCollide = false;
 			Projectile.hide = true;
+			Projectile.extraUpdates = 1;
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
 		{
@@ -90,7 +91,20 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public void LaunchProjectilesAtEnemy()
 		{
-
+			int nearest = Common.GlobalNPCs.SOTSNPCs.FindTarget_Basic(Projectile.Center, 640, Projectile, true);
+			if(nearest != -1)
+            {
+				NPC npc = Main.npc[nearest];
+				if(npc.active && !npc.friendly)
+                {
+					Vector2 toNPC = npc.Center - Projectile.Center;
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 6.5f + Main.rand.NextVector2Circular(1, 1) * 0.8f, ModContent.ProjectileType<FriendlyShadeSpear>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(-0.0055f, 0.0055f));
+				}
+            }
+			else
+			{
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2CircularEdge(6.5f, 6.5f) + Main.rand.NextVector2Circular(1, 1) * 0.8f, ModContent.ProjectileType<FriendlyShadeSpear>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(-0.0055f, 0.0055f));
+			}
 		}
 		public override void AI()
 		{
@@ -112,13 +126,13 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.rotation -= MathHelper.ToRadians(2);
 				if (Main.rand.NextBool(4))
 					dustRing(1);
-				if (Projectile.ai[0] == 70)
+				if (Projectile.ai[0] == 80 || Projectile.ai[0] == 68 || Projectile.ai[0] == 56)
 				{
-					for (int i = 0; i < 50; i++)
+					for (int i = 0; i < 10; i++)
 					{
 						int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[num2];
-						dust.color = new Color(127, 80, 80, 40);
+						dust.color = new Color(180, 80, 80, 40);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.25f;
@@ -147,7 +161,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num2];
-				dust.color = new Color(127, 80, 80, 40);
+				dust.color = new Color(180, 80, 80, 40);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.25f;

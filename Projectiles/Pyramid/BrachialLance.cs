@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-			damage = (int)(damage * (1 + chargeProgress));
+			damage = (int)(damage * (1 + chargeProgress * 0.6f));
 			if (chargeProgress >= 1)
 				crit = true;
         }
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Pyramid
 			target.immune[Projectile.owner] = 4;
 			if(firstHit)
 			{
-				Explosion(3);
+				Explosion(2 + (int)(chargeProgress * 2.1f));
 				firstHit = false;
 				Projectile.netUpdate = true;
             }
@@ -149,14 +149,11 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.velocity *= 0;
 				Projectile.friendly = false;
 				Projectile.tileCollide = false;
-				if(!Projectile.hide)
+				Projectile.hide = true;
+				if (firstHit)
 				{
-					Projectile.hide = true;
-					if(firstHit)
-					{
-						Explosion(3);
-						firstHit = false;
-					}
+					Explosion(2 + (int)(chargeProgress * 2.1f));
+					firstHit = false;
 				}
 				if (aiCounter > 4000)
 					Projectile.Kill();
@@ -186,41 +183,44 @@ namespace SOTS.Projectiles.Pyramid
 				if(Projectile.velocity.X != 0 || Projectile.velocity.Y != 0)
 				{
 					float increment = fullCharge && !SOTS.Config.lowFidelityMode ? 0.34f : 0.5f;
-					for (float i = 0; i < 1; i += increment)
+					if(Main.netMode != NetmodeID.Server)
 					{
-						CurseFoam nextFoam = new CurseFoam(Projectile.Center + i * Projectile.velocity - Projectile.velocity, Main.rand.NextVector2Circular(1, 1) * (0.9f - chargeProgress * 0.35f) + Projectile.velocity * 0.2f, (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.8f * (1f + 0.225f * chargeProgress), false);
-						foamParticleList1.Add(nextFoam);
-					}
-					if (Main.rand.NextBool(3))
-					{
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + 0.5f * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
-						dust.noGravity = true;
-						dust.velocity *= 0.8f * (1 - 0.2f * chargeProgress);
-						dust.scale = 1.5f * (1 + 0.3f * chargeProgress);
-						dust.fadeIn = 0.1f;
-						dust.color = new Color(219, 43, 43, 0) * 0.6f * (1 + 0.3f * chargeProgress);
-					}
-					if(Main.rand.NextBool(2))
-					{
-						if (!SOTS.Config.lowFidelityMode  || Main.rand.NextBool(2))
+						for (float i = 0; i < 1; i += increment)
 						{
-							Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
-							dust3.noGravity = true;
-							dust3.velocity *= 1.7f;
-							dust3.scale = 1.4f * (1 + 0.2f * chargeProgress);
-							dust3.fadeIn = 0.1f;
-							dust3.color = new Color(200, 68, 70, 0) * 0.75f * (1 + chargeProgress);
+							CurseFoam nextFoam = new CurseFoam(Projectile.Center + i * Projectile.velocity - Projectile.velocity, Main.rand.NextVector2Circular(1, 1) * (0.9f - chargeProgress * 0.35f) + Projectile.velocity * 0.2f, (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.8f * (1f + 0.225f * chargeProgress), false);
+							foamParticleList1.Add(nextFoam);
 						}
-					}
-					else
-					{
-						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+						if (Main.rand.NextBool(3))
 						{
-							Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<AlphaDrainDust>());
-							dust2.noGravity = true;
-							dust2.velocity *= 0.4f;
-							dust2.scale = 1.5f;
-							dust2.color = new Color(188, 128, 228, 0) * 0.5f * (1 + 0.5f * chargeProgress);
+							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + 0.5f * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
+							dust.noGravity = true;
+							dust.velocity *= 0.8f * (1 - 0.2f * chargeProgress);
+							dust.scale = 1.5f * (1 + 0.3f * chargeProgress);
+							dust.fadeIn = 0.1f;
+							dust.color = new Color(219, 43, 43, 0) * 0.6f * (1 + 0.3f * chargeProgress);
+						}
+						if (Main.rand.NextBool(2))
+						{
+							if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+							{
+								Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
+								dust3.noGravity = true;
+								dust3.velocity *= 1.7f;
+								dust3.scale = 1.4f * (1 + 0.2f * chargeProgress);
+								dust3.fadeIn = 0.1f;
+								dust3.color = new Color(200, 68, 70, 0) * 0.75f * (1 + chargeProgress);
+							}
+						}
+						else
+						{
+							if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+							{
+								Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<AlphaDrainDust>());
+								dust2.noGravity = true;
+								dust2.velocity *= 0.4f;
+								dust2.scale = 1.5f;
+								dust2.color = new Color(188, 128, 228, 0) * 0.5f * (1 + 0.5f * chargeProgress);
+							}
 						}
 					}
 				}
@@ -295,9 +295,30 @@ namespace SOTS.Projectiles.Pyramid
 			if(Main.myPlayer == Projectile.owner)
 			{
 				for(int i = num; i > 0; i--)
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), Projectile.damage, -Projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), (int)(Projectile.damage * (1 + chargeProgress * 0.6f)), -Projectile.knockBack, Main.myPlayer);
 			}
-        }
+			if(Main.netMode != NetmodeID.Server)
+			{
+				SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f + num * 0.1f, 0.4f - num * 0.3f);
+				for (int i = 0; i < (18 + num) * num; i++)
+				{
+					Vector2 circular = new Vector2(3 + num * 3, 0).RotatedBy(MathHelper.ToRadians(360f / (15f * num) * i));
+					int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Main.dust[num2];
+					dust.color = new Color(255, 80, 80, 40);
+					dust.noGravity = true;
+					dust.fadeIn = 0.1f;
+					dust.scale *= 1.6f;
+					dust.alpha = Projectile.alpha;
+					dust.velocity += circular * Main.rand.NextFloat(0.5f, 1.4f);
+					if (Main.rand.NextBool((!SOTS.Config.lowFidelityMode ? 2 : 3)))
+					{
+						CurseFoam nextFoam = new CurseFoam(Projectile.Center, Main.rand.NextVector2Circular(1, 1) + 0.4f * dust.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))), (1 + Main.rand.NextFloat(-0.1f, 0.1f)) * 0.9f * (1f + 0.1f * chargeProgress), false);
+						foamParticleList1.Add(nextFoam);
+					}
+				}
+			}
+		}
 	}
 }
 		

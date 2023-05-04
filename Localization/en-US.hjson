@@ -2033,8 +2033,8 @@ Mods: {
 
 				BrachialLance:
 					'''
-					Throw a powerful, fast traveling lance that explodes into cursed spears
-					Charge to increase damage and the number of spears released up to 200%
+					Throw a powerful, fast traveling lance that unleashes cursed spears for 3x50% damage
+					Charge to increase damage up to 160% and the number of spears unleashed upon hitting an enemy
 					Guaranteed to critically strike at full charge
 					'''
 
@@ -3621,6 +3621,7 @@ Mods: {
 			Seeker : Critical Seeker
 			SilkCocoonProjectile: silk Cocoon sync projectile
 			ShadeSpear : Curse
+			FriendlyShadeSpear : Shade Spear
 			SharangaBlast : Sharanga Crush
 			SharangaBlastSummon : Sharanga Crush
 			SharangaBolt : Sharanga Bolt

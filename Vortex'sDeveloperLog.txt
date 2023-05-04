@@ -60,6 +60,10 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+5/3/23
+1. Brachial Lance explosion, spears, and portal release; also balancing (should be on tier, if slightly strong but costly)
+	1. Still needs: server testing, more visual polish, balancing
+
 5/2/23
 1. More VERY WIP brachial lance
 

@@ -18,7 +18,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 70;  
+            Item.damage = 68;  
             Item.DamageType = DamageClass.Magic;  
             Item.width = 90;    
             Item.height = 92;
@@ -49,7 +49,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override int GetVoid(Player player)
 		{
-			return 10;
+			return 15;
 		}
 		public override float UseTimeMultiplier(Player player)
 		{
@@ -57,7 +57,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			//CreateRecipe(1).AddIngredient<FrigidJavelin>(1).AddIngredient<CurseballTome>(1).AddIngredient<Geostorm>(1).AddIngredient<CursedMatter>(5).AddIngredient(ItemID.SoulofNight, 5).AddIngredient(ItemID.SoulofMight, 5).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<FrigidJavelin>(1).AddIngredient<CurseballTome>(1).AddIngredient<Geostorm>(1).AddIngredient<CursedMatter>(5).AddIngredient(ItemID.SoulofNight, 5).AddIngredient(ItemID.SoulofMight, 5).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }
