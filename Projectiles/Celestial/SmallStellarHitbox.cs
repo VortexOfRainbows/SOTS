@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Celestial
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale = 1.3f;
-						dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 60 + j / size * 60), true);
+						dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 60 + j / size * 60), true);
 						dust.velocity = direction * 1.5f + Main.rand.NextVector2Circular(0.1f, 0.1f);
 						Vector2 rotationDirection = new Vector2(iterateBy, 0).RotatedBy(rads);
 						starPosX += rotationDirection.X;

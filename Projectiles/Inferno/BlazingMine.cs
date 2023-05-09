@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Inferno
 				if (Main.rand.NextBool(4))
 				{
 					Dust dust = Main.dust[Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>())];
-					dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+					dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.2f;
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			else
 				Projectile.velocity *= 0.95f;
-			Lighting.AddLight(Projectile.Center, VoidPlayer.InfernoColorAttemptDegrees(SOTSWorld.GlobalCounter * 2).ToVector3());
+			Lighting.AddLight(Projectile.Center, ColorHelpers.InfernoColorAttemptDegrees(SOTSWorld.GlobalCounter * 2).ToVector3());
 			Projectile.alpha = 200 - (int)(200f * Projectile.timeLeft / 1200f);
         }
 		public override void Kill(int timeLeft)
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Inferno
 				Vector2 circular = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(0.5f));
+				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(0.5f));
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.8f;

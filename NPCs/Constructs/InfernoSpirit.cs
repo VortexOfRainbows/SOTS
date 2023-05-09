@@ -409,7 +409,7 @@ namespace SOTS.NPCs.Constructs
 					for (int i = 0; i < 50; i++)
 					{
 						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+						dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 2.2f;
@@ -420,7 +420,7 @@ namespace SOTS.NPCs.Constructs
 						for (int k = 0; k < 10; k++)
 						{
 							Dust dust = Dust.NewDustDirect(miniSpirits[i].getCenter(NPC.Center, verticalCompress) - new Vector2(4, 4), 0, 0, DustID.RainbowMk2);
-							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+							dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
 							dust.noGravity = true;
 							dust.fadeIn = 0.1f;
 							dust.scale *= 2.0f;

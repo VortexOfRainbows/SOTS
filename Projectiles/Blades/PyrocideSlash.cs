@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Blades
 			for (int i = 1; i < totalSegments + 1; i++)
 			{
 				float scale = MathHelper.Lerp(1.0f, 0.65f, (float)Math.Pow(i / (float)(totalSegments + 1), 2));
-				Color color2 = Color.Lerp(Void.VoidPlayer.Inferno2, Void.VoidPlayer.Inferno1, 1f - (float)i / totalSegments);
+				Color color2 = Color.Lerp(ColorHelpers.Inferno2, ColorHelpers.Inferno1, 1f - (float)i / totalSegments);
 				color2 = Color.Lerp(color2, baseColor, 0.7f);
 				Vector2 toProj2 = rotateToPosition + rotateToPosition.SafeNormalize(Vector2.Zero) * (i * segmentHeight);
 				for(int j = 0; j < 5; j++)
@@ -284,7 +284,7 @@ namespace SOTS.Projectiles.Blades
 						dust.scale += 2.0f / rand * dustScale;
 						dust.fadeIn = 0.1f;
 						if (type == ModContent.DustType<Dusts.CopyDust4>())
-							dust.color = Color.Lerp(Void.VoidPlayer.Inferno1, Void.VoidPlayer.Inferno2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+							dust.color = Color.Lerp(ColorHelpers.Inferno1, ColorHelpers.Inferno2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 					}
 					Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
 					for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
@@ -301,7 +301,7 @@ namespace SOTS.Projectiles.Blades
 						dust.scale += 1.1f * rand;
 						dust.fadeIn = 0.1f;
 						if (type == ModContent.DustType<Dusts.CopyDust4>())
-							dust.color = Color.Lerp(Void.VoidPlayer.Inferno2, Void.VoidPlayer.Inferno1, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+							dust.color = Color.Lerp(ColorHelpers.Inferno2, ColorHelpers.Inferno1, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 					}
 				}
 			}

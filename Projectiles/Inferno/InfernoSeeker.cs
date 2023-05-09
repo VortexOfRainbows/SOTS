@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Inferno
 				dust.velocity *= 0.7f;
 				dust.noGravity = true;
 				dust.scale += 0.1f;
-				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.4f;
 				dust.alpha = Projectile.alpha; 
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Inferno
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
-				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
 				dust.fadeIn = 0.1f;
 				dust.scale = 1.2f;
 				dust.alpha = Projectile.alpha;

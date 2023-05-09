@@ -133,7 +133,7 @@ namespace SOTS.Items.Conduit
 				Vector2 origin = spiral.Size() / 2;
 				float desiredWidth = 80f * colorMultiplier;
 				float sizeMult = desiredWidth / spiral.Width;
-				colorGlow = VoidPlayer.natureColor * colorMultiplier;
+				colorGlow = ColorHelpers.natureColor * colorMultiplier;
 				colorGlow.A = 0;
 				for(int k = -2; k <= 2; k++)
 				{
@@ -147,7 +147,7 @@ namespace SOTS.Items.Conduit
 				Vector2 origin = texture.Size() / 2;
 				float desiredWidth = 110f * colorMultiplier * colorMultiplier;
 				float sizeMult = desiredWidth / texture.Width;
-				Color color = VoidPlayer.natureColor;
+				Color color = ColorHelpers.natureColor;
 				color.A = 0;
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Matrix.Identity);
@@ -160,7 +160,7 @@ namespace SOTS.Items.Conduit
 				Main.spriteBatch.Draw(texture, location - Main.screenPosition, null, Color.White, 0f, origin, sizeMult * colorMultiplier, SpriteEffects.None, 0f);
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.Identity);
-				colorGlow = VoidPlayer.natureColor * colorMultiplier;
+				colorGlow = ColorHelpers.natureColor * colorMultiplier;
 				colorGlow.A = 0;
 				desiredWidth = 18f;
 				sizeMult = desiredWidth / texture.Width;
@@ -326,7 +326,7 @@ namespace SOTS.Items.Conduit
 			int totalHelixes = 1 + tileCountDissolving / 5;
 			for (float v = 0; v < max; v += 0.5f)
 			{
-				Color color = VoidPlayer.natureColor;
+				Color color = ColorHelpers.natureColor;
 				if (lerpColor != default)
 				{
 					color = Color.Lerp(color, lerpColor, (float)Math.Pow(v / max, 2));

@@ -32,13 +32,13 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/SoulofLooting").Value;
 			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f * 0.125f);
 			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
-			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 22 * Projectile.frame, 22, 22), Projectile.GetAlpha(VoidPlayer.soulLootingColor), Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 22 * Projectile.frame, 22, 22), Projectile.GetAlpha(ColorHelpers.soulLootingColor), Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
         }
 		int owner = 0;
 		public override void AI()
 		{
 			owner = (int)Projectile.ai[0];
-			Lighting.AddLight(Projectile.Center, new Vector3(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B) * 1f / 255f);
+			Lighting.AddLight(Projectile.Center, new Vector3(ColorHelpers.soulLootingColor.R, ColorHelpers.soulLootingColor.G, ColorHelpers.soulLootingColor.B) * 1f / 255f);
 			Projectile.frameCounter++;																																						
 			if (Projectile.frameCounter >= 5)
 			{
@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 				SOTSUtils.PlaySound(SoundID.Grab, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f);
 				voidPlayer.lootingSouls++;
 				voidPlayer.SendClientChanges(voidPlayer);
-				var index = CombatText.NewText(Projectile.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), 1);
+				var index = CombatText.NewText(Projectile.Hitbox, ColorHelpers.soulLootingColor.MultiplyRGB(Color.White), 1);
 				if (Main.netMode == 2 && index != 100)
 				{
 					var combatText = Main.combatText[index];
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 				dust.scale *= 2f;
 				dust.fadeIn = 0.1f;
 				dust.alpha = Projectile.alpha;
-				dust.color = VoidPlayer.soulLootingColor;
+				dust.color = ColorHelpers.soulLootingColor;
 			}
 			base.Kill(timeLeft);
         }

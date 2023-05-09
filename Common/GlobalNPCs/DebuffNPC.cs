@@ -340,8 +340,8 @@ namespace SOTS.Common.GlobalNPCs
         {
             int height = 18;
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/PlatinumCurse").Value, ref PlatinumCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, VoidPlayer.soulLootingColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value, ref HarvestCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, VoidPlayer.destabilizeColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.soulLootingColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value, ref HarvestCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.destabilizeColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 0, 0), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref BleedingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
         }
@@ -375,7 +375,7 @@ namespace SOTS.Common.GlobalNPCs
                 int amt = HarvestCost(npc);
                 if (!npc.immortal)
                 {
-                    var index = CombatText.NewText(npc.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), -amt);
+                    var index = CombatText.NewText(npc.Hitbox, ColorHelpers.soulLootingColor.MultiplyRGB(Color.White), -amt);
                     if (Main.netMode == NetmodeID.Server && index != 100)
                     {
                         var combatText = Main.combatText[index];
@@ -938,7 +938,7 @@ namespace SOTS.Common.GlobalNPCs
                         Color color = Color.White;
                         if (proj.type == ProjectileType<EvilGrowth>())
                         {
-                            color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+                            color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
                             texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilArm").Value;
                         }
                         float scale = proj.scale;

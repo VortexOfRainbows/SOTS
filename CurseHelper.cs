@@ -88,7 +88,7 @@ namespace SOTS
 				{
 					Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
 					Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
-					color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 2)));
+					color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 2)));
 				}
 				Vector2 drawPos = dustList[i].position - Main.screenPosition;
 				Rectangle frame = new Rectangle(0, texture.Height / 3 * layer, texture.Width, texture.Width);

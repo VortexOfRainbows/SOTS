@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Earth
 						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
 						dust.velocity *= 0.8f;
 						dust.noGravity = true;
-						dust.color = VoidPlayer.EarthColor;
+						dust.color = ColorHelpers.EarthColor;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.2f;
 						dust.alpha = Projectile.alpha;
@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Earth
 						dust.velocity *= 0.5f;
 						dust.velocity += Projectile.velocity * 1.2f;
 						dust.noGravity = true;
-						dust.color = VoidPlayer.EarthColor;
+						dust.color = ColorHelpers.EarthColor;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.2f;
 						dust.alpha = Projectile.alpha;
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Earth
 					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
 					dust.velocity *= 0.8f;
 					dust.noGravity = true;
-					dust.color = VoidPlayer.EarthColor;
+					dust.color = ColorHelpers.EarthColor;
 					dust.fadeIn = 0.1f;
 					dust.scale = 1.0f;
 					dust.alpha = Projectile.alpha;

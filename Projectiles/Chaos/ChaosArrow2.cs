@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Chaos
 				else
 					SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.1f);
 				DustOut();
-				color = VoidPlayer.ChaosPink;
+				color = ColorHelpers.ChaosPink;
 				SetPostitions();
 				runOnce = false;
 				return true;
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					alpha = 1 - (i - posList.Count + (int)(timeToEnd / scale)) / (float)(int)(timeToEnd / scale);
 				}
-				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 4 + counter * -2), this.color) * alpha * (0.2f + 0.8f * percentDeath);
+				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 4 + counter * -2), this.color) * alpha * (0.2f + 0.8f * percentDeath);
 				color.A = 0;
 				Vector2 direction = drawPos - lastPosition;
 				lastPosition = drawPos;
@@ -211,7 +211,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = VoidPlayer.ChaosPink;
+				dust.color = ColorHelpers.ChaosPink;
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

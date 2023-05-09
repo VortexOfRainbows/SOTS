@@ -207,7 +207,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(7) * Math.Sin(MathHelper.ToRadians(Projectile.ai[0] * 4f)));
 					if (!Main.rand.NextBool(3))
 					{
-						Color color2 = VoidPlayer.VibrantColorAttempt(Projectile.ai[0] % 180, true);
+						Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.ai[0] % 180, true);
 						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 						dust.color = color2;
 						dust.noGravity = true;
@@ -269,7 +269,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			if(Main.rand.NextBool(10))
 			{
-				Color color2 = VoidPlayer.VibrantColorAttempt(Projectile.ai[0] % 180, true);
+				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.ai[0] % 180, true);
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.color = color2;
 				dust.noGravity = true;

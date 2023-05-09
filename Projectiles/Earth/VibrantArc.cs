@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color = VoidPlayer.VibrantColorAttempt(Projectile.whoAmI * 30);
+			Color color = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 30);
 			Vector2 drawPos = Projectile.Center - Main.screenPosition;
 			color = Projectile.GetAlpha(color);
 			for (int j = 0; j < 3; j++)
@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Earth
 				Vector2 helixPos1 = Projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir + direction * MathHelper.ToRadians(90));
 				int num1 = Dust.NewDust(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num1];
-				Color color2 = VoidPlayer.VibrantColorAttempt(Projectile.whoAmI * 30);
+				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 30);
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Earth
 			{
 				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num1];
-				Color color2 = VoidPlayer.VibrantColorAttempt(Projectile.whoAmI * 30);
+				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 30);
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;

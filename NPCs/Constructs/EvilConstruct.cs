@@ -292,7 +292,7 @@ namespace SOTS.NPCs.Constructs
 							Vector2 wave = new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(1800 * percent)) * 14f).RotatedBy(rotation);
 							Dust dust = Dust.NewDustPerfect(Vector2.Lerp(proj.Center, NPC.Center, percent) + wave, DustID.RainbowMk2, Main.rand.NextVector2Circular(1, 1));
 							dust.velocity *= 0.6f;
-							dust.color = VoidPlayer.EvilColor;
+							dust.color = ColorHelpers.EvilColor;
 							dust.color.A = 200;
 							dust.noGravity = true;
 							dust.fadeIn = 0.1f;
@@ -350,7 +350,7 @@ namespace SOTS.NPCs.Constructs
 								Vector2 pos = Vector2.Lerp(proj.Center, NPC.Center, percent);
 								Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(20, 20), DustID.RainbowMk2, Main.rand.NextVector2Circular(2, 2));
 								dust.velocity *= 1.8f;
-								dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+								dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 								dust.noGravity = true;
 								dust.fadeIn = 0.1f;
 								dust.scale *= 1.8f;

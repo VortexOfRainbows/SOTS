@@ -67,7 +67,7 @@ namespace SOTS.Items.Chaos
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
 			ItemDrop = ModContent.ItemType<PhaseOre>();
-			//AddMapEntry(VoidPlayer.ChaosPink);
+			//AddMapEntry(ColorHelpers.ChaosPink);
 			MineResist = 3f;
 			MinPick = 180; //adamantite/chlorophyte level
 			HitSound = SoundID.NPCHit53;

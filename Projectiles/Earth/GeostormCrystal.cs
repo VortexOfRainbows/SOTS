@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Earth
 			for (int i = 0; i < 360; i += 60)
 			{
 				Vector2 circular = new Vector2(windup, 0).RotatedBy(MathHelper.ToRadians(i + windup * 3f));
-				color = VoidPlayer.VibrantColorAttempt(i);
+				color = ColorHelpers.VibrantColorAttempt(i);
 				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, frame, color * ((255f - Projectile.alpha) / 255f) * (0.4f + 0.5f * windup / maxWindup), Projectile.rotation, origin, Projectile.scale * 1.1f, SpriteEffects.FlipVertically, 0.0f);
 			}
 			color = Color.White * ((255f - Projectile.alpha) / 255f);
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Earth
 				if (Projectile.timeLeft > 120)
                 {
 					if (Main.netMode != NetmodeID.Server)
-						SOTS.primitives.CreateTrail(new StarTrail(Projectile, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, 12, 8));
+						SOTS.primitives.CreateTrail(new StarTrail(Projectile, ColorHelpers.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, ColorHelpers.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, 12, 8));
 					Projectile.timeLeft = 120;
 				}
 				count += 5;
@@ -171,7 +171,7 @@ namespace SOTS.Projectiles.Earth
 					dust.scale = 1.5f + Main.rand.NextFloat(-0.1f, 0.1f);
 					dust.fadeIn = 0.1f;
 					dust.alpha = 100;
-					dust.color = VoidPlayer.VibrantColorAttempt(degrees);
+					dust.color = ColorHelpers.VibrantColorAttempt(degrees);
 					dust.velocity += velo * 0.15f + outwards;
 				}
 			}
@@ -188,7 +188,7 @@ namespace SOTS.Projectiles.Earth
 					dust.scale = 1.8f + Main.rand.NextFloat(-0.1f, 0.1f);
 					dust.fadeIn = 0.1f;
 					dust.alpha = 100;
-					dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
+					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
 					dust.velocity += Projectile.oldVelocity * 0.3f;
 				}
 				for (int i = 0; i < 16; i++)

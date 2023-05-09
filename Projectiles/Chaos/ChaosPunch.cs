@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Chaos
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(i));
-				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i + SOTSWorld.GlobalCounter), false);
+				color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i + SOTSWorld.GlobalCounter), false);
 				color.A = 0;
 				color *= 0.5f;
 				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * alphaMult, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Chaos
 				dust.scale = 1.3f;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
-				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + Projectile.whoAmI * 10), true);
+				dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + Projectile.whoAmI * 10), true);
 				dust.alpha = 100;
 			}
 		}
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Chaos
 				dust.scale *= 2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
-				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + Projectile.whoAmI * 10), true);
+				dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + Projectile.whoAmI * 10), true);
 				dust.alpha = 100;
 			}
 			base.Kill(timeLeft);

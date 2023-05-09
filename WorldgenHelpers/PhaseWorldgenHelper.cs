@@ -34,16 +34,16 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             if (Main.netMode == NetmodeID.Server)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(amtDestroyed.ToString()), VoidPlayer.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(amtDestroyed.ToString()), ColorHelpers.ChaosPink);
             else
-                Main.NewText(amtDestroyed, VoidPlayer.ChaosPink);
+                Main.NewText(amtDestroyed, ColorHelpers.ChaosPink);
         }
         private static void DoGen(object state)
         {
             /*if (Main.netMode == NetmodeID.Server)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 2"), VoidPlayer.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 2"), ColorHelpers.ChaosPink);
             else
-                Main.NewText("Gen Start 2", VoidPlayer.ChaosPink);*/
+                Main.NewText("Gen Start 2", ColorHelpers.ChaosPink);*/
             Generating = true;
             if (ClearPrevious)
                 ClearPreviousGen();
@@ -106,21 +106,21 @@ namespace SOTS.WorldgenHelpers
             string text = Language.GetTextValue("Mods.SOTS.WorldGeneration.Atmosphere");
             Generating = false;
             if (Main.netMode == NetmodeID.Server)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), VoidPlayer.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), ColorHelpers.ChaosPink);
             else
-                Main.NewText(text, VoidPlayer.ChaosPink);
+                Main.NewText(text, ColorHelpers.ChaosPink);
         }
         public static void Generate()
         {
             /*if (Main.netMode == NetmodeID.Server)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 1"), VoidPlayer.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 1"), ColorHelpers.ChaosPink);
             else
-                Main.NewText("Gen Start 1", VoidPlayer.ChaosPink);*/
+                Main.NewText("Gen Start 1", ColorHelpers.ChaosPink);*/
             ThreadPool.QueueUserWorkItem(DoGen, null);
             /*if (Main.netMode == NetmodeID.Server)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen End"), VoidPlayer.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen End"), ColorHelpers.ChaosPink);
             else
-                Main.NewText("Gen End", VoidPlayer.ChaosPink);*/
+                Main.NewText("Gen End", ColorHelpers.ChaosPink);*/
         }
     }
 }

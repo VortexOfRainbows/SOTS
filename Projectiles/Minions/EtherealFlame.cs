@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Minions
 					break;
 				float scale = 1f - 0.95f * (k / (float)trailPos.Length);
 				Vector2 drawPos = trailPos[k];
-				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 2 + k * 6));
+				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(colorCounter * 2 + k * 6));
 				color.A = 0;
 				Vector2 towards = lastPosition - drawPos;
 				float lengthTowards = towards.Length() / textureTrail.Height / scale;
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Minions
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			DrawFlames();
 			Vector2 drawPos2 = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-			Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 2));
+			Color color2 = ColorHelpers.pastelAttempt(MathHelper.ToRadians(colorCounter * 2));
 			color2.A = 0;
 			for(int i = 0; i < 3 - (SOTS.Config.lowFidelityMode ? 1 : 0); i++)
 				Main.spriteBatch.Draw(texture, drawPos2 + Main.rand.NextVector2CircularEdge(1, 1), null, Projectile.GetAlpha(color2), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
@@ -137,12 +137,12 @@ namespace SOTS.Projectiles.Minions
 						Vector2 rotational = new Vector2(0, -3f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-40f, 40f)));
 						rotational.X *= 0.5f;
 						rotational.Y *= 1f;
-						particleList.Add(new ColoredFireParticle(rotational * -1.0f, rotational * 0.8f - Projectile.velocity * 0.05f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.1f, 1.2f), VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 2 + Main.rand.NextFloat(-1, 1)), true)));
+						particleList.Add(new ColoredFireParticle(rotational * -1.0f, rotational * 0.8f - Projectile.velocity * 0.05f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.1f, 1.2f), ColorHelpers.pastelAttempt(MathHelper.ToRadians(colorCounter * 2 + Main.rand.NextFloat(-1, 1)), true)));
 					}
 					if (Main.rand.NextBool(3))
                     {
 						Vector2 rotational = new Vector2(0, -1.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-						particleList.Add(new ColoredFireParticle(Vector2.Zero, rotational * 0.8f - Projectile.velocity * 0.2f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.9f, 1.0f), VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 2 + Main.rand.NextFloat(-1, 1)), true)));
+						particleList.Add(new ColoredFireParticle(Vector2.Zero, rotational * 0.8f - Projectile.velocity * 0.2f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.9f, 1.0f), ColorHelpers.pastelAttempt(MathHelper.ToRadians(colorCounter * 2 + Main.rand.NextFloat(-1, 1)), true)));
 					}
 				}
 				colorCounter++;

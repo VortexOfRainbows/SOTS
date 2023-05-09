@@ -25,21 +25,21 @@ namespace SOTS.Items
 			List<int> CapableNPCs = CapableNPCS(Main.LocalPlayer);
 			tooltips.Add(new TooltipLine(Mod, "Construct0", "Possible constructs:"));
 			if (CapableNPCs.Contains(ModContent.NPCType<NatureConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct1", "Nature Construct") { OverrideColor = VoidPlayer.natureColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct1", "Nature Construct") { OverrideColor = ColorHelpers.natureColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<EarthenConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct2", "Earthen Construct") { OverrideColor = VoidPlayer.EarthColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct2", "Earthen Construct") { OverrideColor = ColorHelpers.EarthColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<PermafrostConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct3", "Permafrost Construct") { OverrideColor = VoidPlayer.PermafrostColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct3", "Permafrost Construct") { OverrideColor = ColorHelpers.PermafrostColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<OtherworldlyConstructHead>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct4", "Otherworldly Construct") { OverrideColor = VoidPlayer.OtherworldColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct4", "Otherworldly Construct") { OverrideColor = ColorHelpers.OtherworldColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<TidalConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct5", "Tidal Construct") { OverrideColor = VoidPlayer.TideColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct5", "Tidal Construct") { OverrideColor = ColorHelpers.TideColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<EvilConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct6", "Evil Construct") { OverrideColor = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B)  });
+				tooltips.Add(new TooltipLine(Mod, "Construct6", "Evil Construct") { OverrideColor = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B)  });
 			if (CapableNPCs.Contains(ModContent.NPCType<ChaosConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct7", "Chaos Construct") { OverrideColor = VoidPlayer.pastelRainbow });
+				tooltips.Add(new TooltipLine(Mod, "Construct7", "Chaos Construct") { OverrideColor = ColorHelpers.pastelRainbow });
 			if (CapableNPCs.Contains(ModContent.NPCType<InfernoConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct8", "Inferno Construct") { OverrideColor = VoidPlayer.Inferno1 });
+				tooltips.Add(new TooltipLine(Mod, "Construct8", "Inferno Construct") { OverrideColor = ColorHelpers.Inferno1 });
 			if(CapableNPCs.Count <= 0)
 				tooltips.Add(new TooltipLine(Mod, "Construct8", "None") { OverrideColor = new Color(150, 150, 150) });
 

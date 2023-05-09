@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Chaos
 						Dust dust = Main.dust[dust2];
 						dust.velocity *= 2f;
 						dust.velocity += Projectile.velocity * 0.2f;
-						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.alpha = 90;
 						dust.fadeIn = 0.1f;
@@ -138,8 +138,8 @@ namespace SOTS.Projectiles.Chaos
 			{
 				if (!SOTS.Config.lowFidelityMode || i % 2 == 0)
 				{
-					float radians = MathHelper.ToRadians((i + VoidPlayer.soulColorCounter) * 2);
-					Color color = VoidPlayer.pastelAttempt(radians);
+					float radians = MathHelper.ToRadians((i + ColorHelpers.soulColorCounter) * 2);
+					Color color = ColorHelpers.pastelAttempt(radians);
 					color.A = 0;
 					float mult = 1 - (i / maxLength);
 					float sinusoid = 1;
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Chaos
 						{
 							mult = 1 - (i - maxLength + 40) / 40f;
 						}
-						sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + VoidPlayer.soulColorCounter * 4f))) * Projectile.scale;
+						sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + ColorHelpers.soulColorCounter * 4f))) * Projectile.scale;
 					}
 					float scale = Projectile.scale * scalingFactor * scaleMult * sinusoid;
 					Vector2 drawPos = position - Main.screenPosition;

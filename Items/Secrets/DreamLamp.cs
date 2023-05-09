@@ -142,8 +142,8 @@ namespace SOTS.Items.Secrets
 			Texture2D realTexture = Terraria.GameContent.TextureAssets.Item[Type].Value;
 			scale *= Item.scale;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 sinusoid = new Vector2(0, 6 * scale * (float)Math.Cos(1.7f * MathHelper.ToRadians(VoidPlayer.soulColorCounter))) + new Vector2(0, -3 * scale);
-			rotation = 15 * (float)Math.Sin(1f * MathHelper.ToRadians(VoidPlayer.soulColorCounter));
+			Vector2 sinusoid = new Vector2(0, 6 * scale * (float)Math.Cos(1.7f * MathHelper.ToRadians(ColorHelpers.soulColorCounter))) + new Vector2(0, -3 * scale);
+			rotation = 15 * (float)Math.Sin(1f * MathHelper.ToRadians(ColorHelpers.soulColorCounter));
 			if (IsItemForgotten)
 			{
 				rotation = 0;
@@ -159,8 +159,8 @@ namespace SOTS.Items.Secrets
 			Texture2D realTexture = texture;
 			origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 inventoryBoxTextureCenter = new Vector2(inventoryBoxTexture.Width / 2 - 5, inventoryBoxTexture.Height / 2 - 1) * scale; //this puts the center in the box's usual position
-			Vector2 sinusoid = new Vector2(0, 3 * scale * (float)Math.Cos(0.85f * MathHelper.ToRadians(VoidPlayer.soulColorCounter))) + new Vector2(0, -scale);
-			float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(VoidPlayer.soulColorCounter));
+			Vector2 sinusoid = new Vector2(0, 3 * scale * (float)Math.Cos(0.85f * MathHelper.ToRadians(ColorHelpers.soulColorCounter))) + new Vector2(0, -scale);
+			float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(ColorHelpers.soulColorCounter));
 			if (IsItemForgotten)
 			{
 				realTexture = Terraria.GameContent.TextureAssets.Item[Type].Value;

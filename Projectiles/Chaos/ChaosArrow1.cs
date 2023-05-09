@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Chaos
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				float scale = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				Color color2 = VoidPlayer.ChaosPink;
+				Color color2 = ColorHelpers.ChaosPink;
 				color2.A = 0;
 				Color color = Projectile.GetAlpha(color2) * scale;
 				Vector2 drawPos = Projectile.oldPos[k] + new Vector2(Projectile.width / 2, Projectile.height / 2);
@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Chaos
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + Projectile.whoAmI * 18));
+			Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18));
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail();
@@ -140,7 +140,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = VoidPlayer.ChaosPink;
+				dust.color = ColorHelpers.ChaosPink;
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

@@ -42,10 +42,9 @@ Update Objectives:
 	2. Combine with Machina Booster + Soaring Insignia for new wings: Gilded Blade-Wings
 
 Ideas:
-6. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
-7. Pharaoh's Curse music box
-8. Roasted Peanuts item
-9. EVEN more lines for the Archaeologist + Less randomization for Archaeologist portal order
+6. Pharaoh's Curse music box
+7. Roasted Peanuts item
+8. EVEN more lines for the Archaeologist + Less randomization for Archaeologist portal order
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -55,14 +54,16 @@ This is the plan currently
 
 Other 1.4 related objectives:
 1. Bestiary for all enemies
-2. Reorganize VoidPlayer Color helpers
-3. Hover icons for the Conduit Blocks (possibly?)
 
 Daily Log:
 
+5/8/23
+1. Reorganized Color Helpers
+2. 
+
 5/3/23 & 5/5/23
 1. Brachial Lance explosion, spears, and portal release; also balancing (should be on tier, if slightly strong but costly)
-2. Tested in multiplayer!
+2. Tested in multiplayer! (it works)
 
 5/2/23
 1. More VERY WIP brachial lance

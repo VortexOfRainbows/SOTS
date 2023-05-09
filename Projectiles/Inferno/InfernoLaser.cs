@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Inferno
 				{
 					break;
 				}
-				Color color = VoidPlayer.InfernoColorAttemptDegrees(k);
+				Color color = ColorHelpers.InfernoColorAttemptDegrees(k);
 				color.A = 0;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Inferno
 		public override void AI()
 		{
 			cataloguePos();
-			Lighting.AddLight(Projectile.Center, VoidPlayer.Inferno1.ToVector3());
+			Lighting.AddLight(Projectile.Center, ColorHelpers.Inferno1.ToVector3());
 			if (runOnce)
 			{
 				runOnce = false;
@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Inferno
             {
 				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1));
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;

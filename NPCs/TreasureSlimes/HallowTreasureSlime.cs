@@ -34,7 +34,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			BannerItem = ItemType<HallowTreasureSlimeBanner>();
 			NPC.lavaImmune = true;
 			LootAmt = 3;
-			Color c = VoidPlayer.ChaosPink;
+			Color c = ColorHelpers.ChaosPink;
 			c.A = 100;
 			gelColor = c;
 			items = new List<TreasureSlimeItem>()

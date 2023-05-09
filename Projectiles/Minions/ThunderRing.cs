@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Minions
 						float x = Main.rand.Next(-10, 11) * 0.125f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.125f * scale;
 						if (!previousPosition.Equals(Projectile.Center))
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, VoidPlayer.OtherworldColor * 0.8f * ((255 - Projectile.alpha) / 255f), betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, ColorHelpers.OtherworldColor * 0.8f * ((255 - Projectile.alpha) / 255f), betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = circularPos;
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			Projectile.scale *= 0.99f;
-			Lighting.AddLight(Projectile.Center, VoidPlayer.OtherworldColor.R / 255f, VoidPlayer.OtherworldColor.G / 255f, VoidPlayer.OtherworldColor.B / 255f);
+			Lighting.AddLight(Projectile.Center, ColorHelpers.OtherworldColor.R / 255f, ColorHelpers.OtherworldColor.G / 255f, ColorHelpers.OtherworldColor.B / 255f);
 			Projectile.alpha += 6;
 		}
 	}

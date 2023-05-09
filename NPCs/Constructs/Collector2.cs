@@ -84,7 +84,7 @@ namespace SOTS.NPCs.Constructs
 				Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
 					color.A = 0;
 				}
 				else

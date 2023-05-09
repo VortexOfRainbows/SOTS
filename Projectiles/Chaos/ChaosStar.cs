@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Chaos
 				Vector2 circular = new Vector2(4 * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
 					color.A = 0;
 				}
 				else
@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Chaos
 				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
 				dust.velocity += circularLocation;
-				dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+				dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

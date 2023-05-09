@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
                     dust.scale = 1.4f;
                     dust.fadeIn = 0.1f;
                     dust.alpha = 100;
-                    dust.color = VoidPlayer.VibrantColorAttempt(degrees);
+                    dust.color = ColorHelpers.VibrantColorAttempt(degrees);
                     dust.velocity += velo * 0.11f;
                 }
             }

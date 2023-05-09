@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.Minions
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = Projectile.Center;
-			Color color = VoidPlayer.OtherworldColor * ((255 - Projectile.alpha) / 205f);
+			Color color = ColorHelpers.OtherworldColor * ((255 - Projectile.alpha) / 205f);
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				if (trailPos[k] == Vector2.Zero)
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Minions
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 0.55f;
 					dust4.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * -2f;
-					dust4.color = VoidPlayer.OtherworldColor;
+					dust4.color = ColorHelpers.OtherworldColor;
 					dust4.noGravity = true;
 					dust4.fadeIn = 0.1f;
 					dust4.scale *= 2.75f;
