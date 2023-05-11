@@ -7,6 +7,7 @@ using SOTS.Items.Secrets;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
@@ -263,6 +264,16 @@ namespace SOTS.Common.Systems
         public static Point16? dreamLamp = null;
         public static Point16? damoclesChain = null;
         public static Point16? bigCrystal = null;
+
+        public static void AddNewNumberToPrevious(int toAdd)
+        {
+            PreviousTeleports[4] = PreviousTeleports[3];
+            PreviousTeleports[3] = PreviousTeleports[2];
+            PreviousTeleports[2] = PreviousTeleports[1];
+            PreviousTeleports[1] = PreviousTeleports[0];
+            PreviousTeleports[0] = toAdd;
+        }
+        public static int[] PreviousTeleports = new int[5] { -1, -1, -1, -1, -1 };
         ///<summary>
         /// Gets the location of a random important tile
         /// Also yield the direction for the Archaeologist to face and the ID of the tile
@@ -303,14 +314,15 @@ namespace SOTS.Common.Systems
                 14
             };
             Vector2? myDestination = null;
+            int totalAttempts = 0;
             while (myDestination == null && destinations.Count > 0)
             {
                 int yOffset = 0;
                 int randomPossibilites = Main.rand.Next(destinations.Count);
                 Point16? destination = destinations[randomPossibilites];
-                if (destination != null)
+                importantTileID = destinationIDs[randomPossibilites];
+                if (destination != null && (!PreviousTeleports.Contains(importantTileID) || Main.rand.NextBool(4) || destinations.Count < 4))
                 {
-                    importantTileID = destinationIDs[randomPossibilites];
                     Vector2 testDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
                     bool valid = false;
                     int attempts = 30;
@@ -371,9 +383,11 @@ namespace SOTS.Common.Systems
                     destinations.RemoveAt(randomPossibilites);
                     destinationIDs.RemoveAt(randomPossibilites);
                 }
+                totalAttempts++;
             }
             if (!myDestination.HasValue)
                 return null;
+            AddNewNumberToPrevious(importantTileID);
             return myDestination + new Vector2(8, 8);
         }
         ///<summary>

@@ -10,14 +10,12 @@ Tmodloader Bugs (some of these may be fixed, idk):
 
 Acknowledged But Likely Delayed:
 1. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
-2. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
-3. Texture Pack sounds to disable when block is broken (tied to specific blocks)
-4. Reimplement (older) Blade Items using the abstract class
-5. Earthen Plating starter house.
-6. Bosses HP is ludicrous for Master Mode
-7. Glowmasks for Corruption Trees in SOTSTP
-8. Wind mechanics for vines and banners
-9. Earth Conduit (abstract the conduit class)
+2. Reimplement (older) Blade Items using the abstract class
+3. Earthen Plating starter house.
+4. Bosses HP is ludicrous for Master Mode
+5. Glowmasks for Corruption Trees in SOTSTP
+6. Wind mechanics for vines and banners
+7. Earth Conduit (abstract the conduit class)
 
 Update Objectives:
 1. Ghost Town!
@@ -44,7 +42,7 @@ Update Objectives:
 Ideas:
 6. Pharaoh's Curse music box
 7. Roasted Peanuts item
-8. EVEN more lines for the Archaeologist + Less randomization for Archaeologist portal order
+8. EVEN more lines for the Archaeologist
 
 Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
@@ -57,9 +55,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-5/8/23
+5/8/23 & 5/10/23
 1. Reorganized Color Helpers
-2. 
+2. Archaeologist now attempts to avoid more recent teleport locations
 
 5/3/23 & 5/5/23
 1. Brachial Lance explosion, spears, and portal release; also balancing (should be on tier, if slightly strong but costly)

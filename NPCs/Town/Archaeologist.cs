@@ -24,7 +24,7 @@ namespace SOTS.NPCs.Town
 {
 	public class Archaeologist : ModNPC
 	{
-		public const int timeToGoToSetPiece = 600; //This is five minutes
+		public const int timeToGoToSetPiece = 60; //This is five minutes
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(locationTimer);
@@ -542,6 +542,7 @@ namespace SOTS.NPCs.Town
 		public static int currentLocationType = -1;
 		public void FindALocationToGoTo()
         {
+			int olderLocationType = currentLocationType;
 			currentLocationType = 0;
 			int newDirection = 0;
 			Vector2? destination = ImportantTilesWorld.RandomImportantLocation(ref currentLocationType, ref newDirection);
@@ -556,7 +557,7 @@ namespace SOTS.NPCs.Town
 			}
 			else
             {
-				currentLocationType = -1;
+				currentLocationType = olderLocationType;
             }
 		}
 	}
