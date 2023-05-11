@@ -294,6 +294,7 @@ Mods: {
 					GlowSpores: Glow Spores
 					GuideToIllumination: Guide to Illumination
 					IlluminantAxe: Illuminant Axe
+					IlluminantBow: Illuminant Bow
 					NightIlluminator: Night Illuminator
 					GlowmothBag: Place Cocoon
 				
@@ -1293,6 +1294,10 @@ Mods: {
 						Releases wandering energy bolts for 60% damage
 						Right click to toss the axe, which sticks to walls
 						Right click again to recall the axe
+						'''
+					IlluminantBow: 
+						'''
+						Launches illuminant moths, which drop four arrows onto enemies
 						'''
 					NightIlluminator: 
 						'''
@@ -3251,6 +3256,8 @@ Mods: {
 			ArcLightningDamage : Arc Lightning
 			ArcLightningZap : Arc Lightning
 			ArkBolt : Ark Bolt
+			ArrowMoth : Arrow Moth
+			MothMinion : Lumina Moth
 			AtenProj : Aten
 			AtenStar : Aten Star
 			AtenStarExplosion : Aten Starsplosion

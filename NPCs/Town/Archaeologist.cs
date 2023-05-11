@@ -24,7 +24,7 @@ namespace SOTS.NPCs.Town
 {
 	public class Archaeologist : ModNPC
 	{
-		public const int timeToGoToSetPiece = 60; //This is five minutes
+		public const int timeToGoToSetPiece = 600; //This is five minutes
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(locationTimer);

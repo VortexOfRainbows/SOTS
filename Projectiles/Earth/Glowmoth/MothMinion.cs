@@ -28,7 +28,6 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lumina Moth");
 			Main.projFrames[Projectile.type] = 3;
 			//ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true; //We don't want the special right click since the minions already special target with right click
 
@@ -73,7 +72,6 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		public override void AI()
 		{
 			Player owner = Main.player[Projectile.owner];
-
 			if(runOnce)
             {
 				Projectile.ai[0] = Main.rand.Next(36) * 10;

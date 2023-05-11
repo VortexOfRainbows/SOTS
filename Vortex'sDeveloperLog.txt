@@ -55,9 +55,10 @@ Other 1.4 related objectives:
 
 Daily Log:
 
-5/8/23 & 5/10/23
+5/8/23 & 5/10/23 & 5/11/23
 1. Reorganized Color Helpers
 2. Archaeologist now attempts to avoid more recent teleport locations
+3. WIP Illuminant Bow
 
 5/3/23 & 5/5/23
 1. Brachial Lance explosion, spears, and portal release; also balancing (should be on tier, if slightly strong but costly)
