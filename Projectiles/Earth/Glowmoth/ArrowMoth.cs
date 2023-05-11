@@ -60,15 +60,15 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				if (distance > 8)
 				{
 					var normal = (destination - Projectile.Center).SafeNormalize(Vector2.Zero);
-					Projectile.velocity = Vector2.Lerp(Projectile.velocity, normal * (Projectile.velocity.Length() * 1.013f + 1.8f), 0.08775f);
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, normal * (Projectile.velocity.Length() * 1.014f + 1.6f), 0.0925f);
 				}
 				else if (distance < 28)
 				{
-					Projectile.velocity *= 1.005f;
+					Projectile.velocity *= 1.004f;
 				}
 				else if (distance < 56)
 				{
-					Projectile.velocity *= 0.996f;
+					Projectile.velocity *= 0.995f;
 				}
 			}
 		}
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
         {
 			if(Main.myPlayer == Projectile.owner)
             {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Projectile.velocity.X * 0.825f, 7), (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Projectile.velocity.X * 0.825f, 7.5f), (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
             }
 			for(int i = 0; i < 13; i++)
             {

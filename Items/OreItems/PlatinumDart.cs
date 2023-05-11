@@ -15,7 +15,7 @@ namespace SOTS.Items.OreItems
 		public override void SafeSetDefaults()
 		{
 			Item.CloneDefaults(279);
-			Item.damage = 15;
+			Item.damage = 19;
 			Item.useTime = 15;
 			Item.useAnimation = 15;
 			Item.DamageType = DamageClass.Ranged;

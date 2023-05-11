@@ -16,7 +16,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 12;
+			Item.damage = 16;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 32;
 			Item.height = 60;

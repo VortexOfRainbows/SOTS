@@ -138,7 +138,12 @@ namespace SOTS.Projectiles.Earth
                 if (counter % 2 != 0)
                     Projectile.soundDelay++;
                 if(counter % 15 == 0 && counter > 30 && counter < 70)
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - new Vector2(12, 0).RotatedBy(Projectile.rotation), Main.rand.NextVector2CircularEdge(2.75f, 2.75f), ModContent.ProjectileType<IlluminantBolt>(), (int)(Projectile.damage * 0.6f), Projectile.knockBack * 0.2f, Main.myPlayer, Main.rand.NextFloat(180, 360));
+                {
+                    if(Projectile.owner == Main.myPlayer)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - new Vector2(12, 0).RotatedBy(Projectile.rotation), Main.rand.NextVector2CircularEdge(2.75f, 2.75f), ModContent.ProjectileType<IlluminantBolt>(), (int)(Projectile.damage * 0.6f), Projectile.knockBack * 0.2f, Main.myPlayer, Main.rand.NextFloat(180, 360));
+                    }
+                }  
                 Projectile.rotation -= 0.1f * (float)Projectile.direction;
             }
             if (Main.rand.NextBool(12))
