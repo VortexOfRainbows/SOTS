@@ -39,7 +39,8 @@ namespace SOTS.Items.Tide
 		}
 		public override void UpdateInventory(Player player)
 		{
-			Lighting.AddLight(player.Center, 1f, 1f, 1f);
+			if (Item.favorited)
+				Lighting.AddLight(player.Center, 0.9f, 1.1f, 0.9f);
 		}
 		public override void AddRecipes()
 		{

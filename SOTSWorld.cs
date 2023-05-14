@@ -1641,7 +1641,7 @@ namespace SOTS
 		}
 		public override void ModifyLightingBrightness(ref float scale)
 		{
-			scale *= lightingChange;
+			scale += lightingChange - 1;
 			lightingChange = 1;
 		}
 		public static float LuxLightingFadeIn = 0;

@@ -35,7 +35,8 @@ namespace SOTS.Items.Celestial
 		}
 		public override void UpdateInventory(Player player)
 		{
-			Lighting.AddLight(player.Center, 1.25f, 1.25f, 1.25f);
+			if(Item.favorited)
+				Lighting.AddLight(player.Center, 1.15f, 1.3f, 1.15f);
 		}
 		public override void AddRecipes() => CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient<GreenJellyfishStaff>(1).AddTile(TileID.MythrilAnvil).Register();
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

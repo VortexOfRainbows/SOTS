@@ -55,12 +55,16 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+5/13/23
+1. Illuminant Lantern accessory
+2. Modified Some lighting items
+
 5/8/23 & 5/10/23 & 5/11/23
 1. Reorganized Color Helpers
 2. Archaeologist now attempts to avoid more recent teleport locations
 3. Illuminant Bow Added: should be balanced + works in multiplayer
 4. Buff Platinum Dart damage 15 -> 19, Gold Chakram Nerf damage 18 -> 17
-6. Fix illuminant axe not working in properly multiplayer.
+6. Fix illuminant axe not working in properly amultiplayer.
 
 5/3/23 & 5/5/23
 1. Brachial Lance explosion, spears, and portal release; also balancing (should be on tier, if slightly strong but costly)

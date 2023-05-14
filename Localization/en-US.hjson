@@ -293,6 +293,7 @@ Mods: {
 					GlowNylon: Glow Nylon
 					GlowSpores: Glow Spores
 					GuideToIllumination: Guide to Illumination
+					IlluminantLantern : Illuminant Lantern
 					IlluminantAxe: Illuminant Axe
 					IlluminantBow: Illuminant Bow
 					NightIlluminator: Night Illuminator
@@ -880,7 +881,7 @@ Mods: {
 					'''
 					Release green thunder towards your cursor
 					Green thunder chains off enemies for 90% damage
-					Provides a light source while in the inventory
+					Provides a light source while favorited in the inventory
 					'Power straight from the underworld'
 					'''
 				CataclysmSpheres: Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 100% damage
@@ -953,7 +954,7 @@ Mods: {
 				Armaggedon: 
 					'''
 					Unleash a flurry of punches
-					Provides a small light source
+					Provides a light source while favorited in the inventory
 					'Power from the heavens'
 					'''
 				ChaosChamber: 
@@ -1288,6 +1289,11 @@ Mods: {
 					GuideToIllumination:
 						'''
 						The first time an enemy takes damage, they will sparkle, stunning them for 10 damage
+						'''
+					IlluminantLantern:
+						'''
+						Greatly increases the intensity of lighting
+						Increases void damage by 5%
 						'''
 					IlluminantAxe: 
 						'''
@@ -2311,7 +2317,7 @@ Mods: {
 					'''
 					Fires 2 green orbs that, upon detonation, release green thunder towards your cursor
 					Green thunder chains off enemies for 90% damage
-					Provides a light source while in the inventory
+					Provides a light source while favorited in the inventory
 					'''
 				HeartOfTheSea: 
 					'''
@@ -2352,7 +2358,7 @@ Mods: {
 					'''
 					Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor
 					Purple thunder chains off enemies for 70% damage
-					Provides a light source while in the inventory
+					Provides a light source while favorited in the inventory
 					'''
 				Riptide: 
 					'''
