@@ -55,6 +55,9 @@ Other 1.4 related objectives:
 
 Daily Log:
 
+5/15/23
+1. Import kelp sprite
+
 5/13/23
 1. Illuminant Lantern accessory (should always work in multiplayer)
 2. Modified Some lighting items
