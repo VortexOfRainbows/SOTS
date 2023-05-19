@@ -9,7 +9,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
-namespace Catalyst.Backgrounds
+namespace SOTS.Backgrounds
 {
 	public class LuxSky : CustomSky
 	{

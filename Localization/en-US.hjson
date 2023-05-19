@@ -218,6 +218,7 @@ Mods: {
 				BetrayersKnife: Betrayer's Knife
 				CoconutGun: Coconut Gun
 				GlazeBow: Glaze Bow
+				KelpWhip : Kelp Whip
 				PathogenRegurgitator: Pathogen Regurgitator
 				PerfectStar: Perfect Star
 				RebarRifle: Rebar Rifle
@@ -1037,6 +1038,10 @@ Mods: {
 					Coalesces ice mist to power up your arrows
 					When briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage
 					When fully charged, arrows bloom into wisps of ice, dealing 600% damage
+					'''
+				KelpWhip:
+					'''
+					Minions critically strike the tagged enemy, but with a 2 second cooldown between critical strikes
 					'''
 				PathogenRegurgitator: 
 					'''
