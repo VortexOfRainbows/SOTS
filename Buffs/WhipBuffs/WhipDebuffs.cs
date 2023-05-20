@@ -43,13 +43,14 @@ namespace SOTS.Buffs.WhipBuffs
 					int maxDust = (int)(12 + npc.Size.Length() / 3);
 					for (int i = 0; i < maxDust; i++)
 					{
-						Vector2 circular = new Vector2(5, 0).RotatedBy(i * MathHelper.TwoPi / maxDust);
-						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.GreenMoss);
+						Vector2 circular = new Vector2(4.7f, 0).RotatedBy(i * MathHelper.TwoPi / maxDust);
+						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Grass);
 						dust.velocity *= 0.4f;
 						dust.noGravity = true;
 						dust.velocity += circular * Main.rand.NextFloat(0.8f, 1f);
 						dust.scale *= 0.3f;
-						dust.scale += 1.5f;
+						dust.scale += 1.4f;
+						dust.color = new Color(83, 113, 14) * 1.5f;
 					}
 				}
 				RunOnceKelpWhip = true;

@@ -2622,6 +2622,7 @@ Mods: {
 		NatureSpiritAid : Spirit Aid
 		NatureBoosted : Nature Boosted
 		Nightmare : Nightmare
+		NightIlluminatorBuff : Illumination
 		OtherworldlySpiritAid : Spirit Aid
 		Overheat : Overheat
 		PermafrostSpiritAid : Spirit Aid
@@ -2683,6 +2684,7 @@ Mods: {
 		NatureSpiritAid : Nature Spirits assist you in combat
 		NatureBoosted : Increases max life by 20
 		Nightmare : Compress enemies together with critical strikes
+		NightIlluminatorBuff : Protected by glowing moths
 		OtherworldlySpiritAid : Otherworldly Spirits assist you in combat
 		Overheat : Movement speed and melee speed increased by 10%
 		PermafrostSpiritAid : Permafrost Spirits assist you in combat

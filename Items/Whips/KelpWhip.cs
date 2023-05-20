@@ -54,6 +54,22 @@ namespace SOTS.Items.Whips
         public override bool PreAI()
 		{
 			Projectile.WhipSettings.RangeMultiplier = 1.1f + Projectile.ai[1];
+			List<Vector2> list = new List<Vector2>();
+			Projectile.FillWhipControlPoints(Projectile, list);
+			if(Timer > 18)
+				for (int i = 0; i < list.Count - 1; i++)
+				{
+					if(Main.rand.NextBool((int)(70 - i * 2.4f)))
+					{
+						Vector2 pos = list[i];
+						Dust dust = Dust.NewDustDirect(pos - new Vector2(6, 6), 4, 4, DustID.Grass);
+						dust.velocity *= 0.5f;
+						dust.noGravity = true;
+						dust.scale *= 0.3f;
+						dust.scale += 1.2f;
+						dust.color = new Color(83, 113, 14) * 1.5f;
+					}
+				}
 			return base.PreAI();
         }
         private float Timer
@@ -89,7 +105,6 @@ namespace SOTS.Items.Whips
 				pos += diff;
 			}
 		}
-
 		public override bool PreDraw(ref Color lightColor)
 		{
 			List<Vector2> list = new List<Vector2>();

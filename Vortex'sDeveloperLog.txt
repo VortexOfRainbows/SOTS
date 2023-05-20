@@ -49,9 +49,13 @@ Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 
 Daily Log:
 
+5/19/23
+1. Kelp Whip dust effects
+	1. Tested: Works in multiplayer!	
+	2. Needs: Add to Amber loot pool
+
 5/18/23
 1. Added Kelp Whip (should be fairly balanced. Roughly on tier with snapthorn (worse summon support, better whip))
-	1. Needs: dust effects, multiplayer testing (particles), and add to Amber loot pool
 
 5/15/23
 1. Import kelp sprite
