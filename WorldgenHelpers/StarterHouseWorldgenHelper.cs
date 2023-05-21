@@ -53,31 +53,38 @@ namespace SOTS.WorldgenHelpers
 		{
 			List<StarterHouse> houses = new List<StarterHouse>();
 			string worldName = Main.worldName;
-			if (worldName.Contains("Legacy") || worldName.Contains("legacy"))
+			int GuaranteeHouse = SOTS.Config.StarterHouseType;
+			if(GuaranteeHouse != -1)
 			{
-				if(worldName.Contains("0") || worldName.Contains("House") || worldName.Contains("house"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy0, 1));
-				if (worldName.Contains("1") || worldName.Contains("Angel") || worldName.Contains("angel"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy1, 1));
-				if (worldName.Contains("2") || worldName.Contains("Barrel") || worldName.Contains("barrel"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy2, 1));
-				if (worldName.Contains("3") || worldName.Contains("Hotel") || worldName.Contains("hotel"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy3, 1));
-				if (worldName.Contains("4") || worldName.Contains("Origin") || worldName.Contains("origin"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy4, 1));
-				if (worldName.Contains("5") || worldName.Contains("Tower") || worldName.Contains("tower"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy5, 1));
-				if (worldName.Contains("6") || worldName.Contains("Sword") || worldName.Contains("sword"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy6, 1));
-				if (worldName.Contains("7") || worldName.Contains("Tree") || worldName.Contains("tree"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy7, 1));
-				if (worldName.Contains("8") || worldName.Contains("Library") || worldName.Contains("library") || worldName.Contains("Librarian") || worldName.Contains("librarian"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy8, 1));
-				if (worldName.Contains("9") || worldName.Contains("Crate") || worldName.Contains("crate"))
-					houses.Add(new StarterHouse(StarterHouseID.Legacy9, 1));
-				if (houses.Count <= 0)
+				houses.Add(new StarterHouse(GuaranteeHouse, 1));
+			}
+			else
+			{
+				if (worldName.Contains("Legacy") || worldName.Contains("legacy"))
 				{
-					houses = new List<StarterHouse>()
+					if (worldName.Contains("0") || worldName.Contains("House") || worldName.Contains("house"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy0, 1));
+					if (worldName.Contains("1") || worldName.Contains("Angel") || worldName.Contains("angel"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy1, 1));
+					if (worldName.Contains("2") || worldName.Contains("Barrel") || worldName.Contains("barrel"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy2, 1));
+					if (worldName.Contains("3") || worldName.Contains("Hotel") || worldName.Contains("hotel"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy3, 1));
+					if (worldName.Contains("4") || worldName.Contains("Origin") || worldName.Contains("origin"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy4, 1));
+					if (worldName.Contains("5") || worldName.Contains("Tower") || worldName.Contains("tower"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy5, 1));
+					if (worldName.Contains("6") || worldName.Contains("Sword") || worldName.Contains("sword"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy6, 1));
+					if (worldName.Contains("7") || worldName.Contains("Tree") || worldName.Contains("tree"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy7, 1));
+					if (worldName.Contains("8") || worldName.Contains("Library") || worldName.Contains("library") || worldName.Contains("Librarian") || worldName.Contains("librarian"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy8, 1));
+					if (worldName.Contains("9") || worldName.Contains("Crate") || worldName.Contains("crate"))
+						houses.Add(new StarterHouse(StarterHouseID.Legacy9, 1));
+					if (houses.Count <= 0)
+					{
+						houses = new List<StarterHouse>()
 					{
 						new StarterHouse(StarterHouseID.Legacy0, 1),
 						new StarterHouse(StarterHouseID.Legacy1, 1),
@@ -92,58 +99,59 @@ namespace SOTS.WorldgenHelpers
 						new StarterHouse(StarterHouseID.Mushnib, 1),
 						new StarterHouse(StarterHouseID.Astrobit, 1)
 					};
+					}
 				}
-			}
-			if (worldName.Contains("Astro") || worldName.Contains("astro"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Astrobit, 1));
-				houses.Add(new StarterHouse(StarterHouseID.Bloodmoon, 0.1));
-			}
-			if (worldName.Contains("Bandit") || worldName.Contains("bandit"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Bandit, 1));
-			}
-			if (worldName.Contains("Blood") || worldName.Contains("blood"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Bloodmoon, 1));
-			}
-			if (worldName.Contains("Boulder") || worldName.Contains("boulder"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Boulder, 1));
-			}
-			if (worldName.Contains("Comfy") || worldName.Contains("comfy"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Comfy, 1));
-			}
-			if (worldName.Contains("Chaos") || worldName.Contains("chaos"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Chaos, 1));
-			}
-			if (worldName.Contains("Moat") || worldName.Contains("moat") || worldName.Contains("Drown") || worldName.Contains("drown") || worldName.Contains("Crab") || worldName.Contains("crab") )
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Drowned, 1));
-			}
-			if (worldName.Contains("Mine") || worldName.Contains("mine"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Mine, 1));
-			}
-			if (worldName.Contains("Mush") || worldName.Contains("mush"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Mushnib, 1));
-			}
-			if (worldName.Contains("Tavern") || worldName.Contains("tavern") || worldName.Contains("Bar") || worldName.Contains("bar"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Tavern, 1));
-			}
-			if (worldName.Contains("Starbound") || worldName.Contains("starbound"))
-			{
-				houses.Add(new StarterHouse(StarterHouseID.Nature, 1));
-			}
-            else
-			{
-				if (worldName.Contains("Nature") || worldName.Contains("nature") || worldName.Contains("Hydroponic") || worldName.Contains("hydroponic"))
+				if (worldName.Contains("Astro") || worldName.Contains("astro"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Astrobit, 1));
+					houses.Add(new StarterHouse(StarterHouseID.Bloodmoon, 0.1));
+				}
+				if (worldName.Contains("Bandit") || worldName.Contains("bandit"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Bandit, 1));
+				}
+				if (worldName.Contains("Blood") || worldName.Contains("blood"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Bloodmoon, 1));
+				}
+				if (worldName.Contains("Boulder") || worldName.Contains("boulder"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Boulder, 1));
+				}
+				if (worldName.Contains("Comfy") || worldName.Contains("comfy"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Comfy, 1));
+				}
+				if (worldName.Contains("Chaos") || worldName.Contains("chaos"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Chaos, 1));
+				}
+				if (worldName.Contains("Moat") || worldName.Contains("moat") || worldName.Contains("Drown") || worldName.Contains("drown") || worldName.Contains("Crab") || worldName.Contains("crab"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Drowned, 1));
+				}
+				if (worldName.Contains("Mine") || worldName.Contains("mine"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Mine, 1));
+				}
+				if (worldName.Contains("Mush") || worldName.Contains("mush"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Mushnib, 1));
+				}
+				if (worldName.Contains("Tavern") || worldName.Contains("tavern") || worldName.Contains("Bar") || worldName.Contains("bar"))
+				{
+					houses.Add(new StarterHouse(StarterHouseID.Tavern, 1));
+				}
+				if (worldName.Contains("Starbound") || worldName.Contains("starbound"))
 				{
 					houses.Add(new StarterHouse(StarterHouseID.Nature, 1));
+				}
+				else
+				{
+					if (worldName.Contains("Nature") || worldName.Contains("nature") || worldName.Contains("Hydroponic") || worldName.Contains("hydroponic"))
+					{
+						houses.Add(new StarterHouse(StarterHouseID.Nature, 1));
+					}
 				}
 			}
 			//The following is the default list if no codeword is in the world name.

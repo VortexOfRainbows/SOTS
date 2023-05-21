@@ -19,6 +19,7 @@ using SOTS.Items.Gems;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Secrets;
 using System.IO;
+using SOTS.Items.Whips;
 
 namespace SOTS.NPCs.Town
 {
@@ -509,6 +510,7 @@ namespace SOTS.NPCs.Town
 				{
 					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AmberRing>());
 				}
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<KelpWhip>());
 			}
 			if (currentLocationType == ImportantTileID.iceMonument)
 			{

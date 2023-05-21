@@ -38,6 +38,7 @@ Mods: {
 				UI: UI
 				GS: Graphics Settings
 				TPS: Texture Pack Settings
+				GPS: Gameplay Settings
 			}
 			Label: {
 				Config: Config
@@ -54,6 +55,7 @@ Mods: {
 				PM: Performance Mode
 				CTF: Colored Time Freeze
 				AVE: Additional Visual Effects
+				SHT: Starter House Type
 			}
 			Tooltip: {
 				VBX: 
@@ -87,6 +89,31 @@ Mods: {
 					'''
 					Adds bonus visuals, such as dusts, to a handful of tiles
 					Only works with the SOTS Texture Pack enabled
+					'''
+				SHT: 
+					'''
+					-1 = Random starter house 
+					0 = Legacy House
+					1 = Legacy Angel
+					2 = Legacy Barrel
+					3 = Legacy BIG Hotel
+					4 = Legacy Origin
+					5 = Legacy Tower
+					6 = Legacy Sword
+					7 = Legacy Tree
+					8 = Legacy Library
+					9 = Legacy Crate
+					10 = Mushnib's
+					11 = Astrobit's
+					12 = Bloodmoon
+					13 = Bandit
+					14 = Boulder
+					15 = Mine
+					16 = Tavern
+					17 = Chaos
+					18 = Drowned
+					19 = Comfy
+					20 = Nature
 					'''
 			}
 		}

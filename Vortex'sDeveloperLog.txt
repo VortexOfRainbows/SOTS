@@ -1,3 +1,4 @@
+Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
 1. Might still have some bugs with Subspace Locket
 2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
@@ -45,9 +46,11 @@ Ideas:
 8. EVEN more lines for the Archaeologist
 9. Bestiary for all enemies
 
-Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
-
 Daily Log:
+
+5/20/23
+1. Added Kelp Whip to the amber chest loot pool!
+2. Added config settings to select a starter house
 
 5/19/23
 1. Kelp Whip dust effects

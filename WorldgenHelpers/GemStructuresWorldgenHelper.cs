@@ -19,6 +19,7 @@ using SOTS.Items;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
 using SOTS.Items.Void;
+using SOTS.Items.Whips;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -2959,7 +2960,6 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void FillChestsWithLoot()
 		{
-
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest
@@ -3202,7 +3202,7 @@ namespace SOTS.WorldgenHelpers
 					}
 					if (tileBelowLeft.TileType == ModContent.TileType<EvostoneBrickTile>() && tileBelowRight.TileType == ModContent.TileType<EvostoneBrickTile>() && tile.WallType == WallID.LeadBrick) //This is the Amber Ruined Chest
 					{
-						SpecialItem = ItemID.WaterWalkingBoots; //temporary item
+						SpecialItem = ModContent.ItemType<KelpWhip>(); //temporary item
 						fragmentItem = ModContent.ItemType<FragmentOfTide>();
 						miscItemType = ItemID.Glowstick;
 						isSpecialChest = true;
