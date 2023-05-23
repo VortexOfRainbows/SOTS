@@ -22,7 +22,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 14;
+			Item.damage = 13;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 40;
 			Item.height = 72;

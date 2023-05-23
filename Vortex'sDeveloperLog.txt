@@ -50,7 +50,7 @@ Daily Log:
 
 5/22/23 & 5/23/23
 1. Added Illuminant Staff
-	1. Needs: Multiplayer testing
+	1. Works in Multiplayer!
 	2. Pondering whether it should be a void weapon... balancing will wait until Glowmoth
 2. Added glowmasks to more illuminant items
 3. If you are deranged, config allows you to disable starter house 
