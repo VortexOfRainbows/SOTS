@@ -24,7 +24,7 @@ namespace SOTS
 		[Tooltip("$Mods.SOTS.Configuration.Tooltip.SHT")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[Increment(1)]
-		[Range(-1, 20)]
+		[Range(-2, 20)]
 		[DefaultValue(-1)]
 		public int StarterHouseType;
 

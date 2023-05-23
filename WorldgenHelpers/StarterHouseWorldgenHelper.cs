@@ -154,6 +154,10 @@ namespace SOTS.WorldgenHelpers
 					}
 				}
 			}
+			if(GuaranteeHouse == -2)
+            {
+				return -1;
+            }
 			//The following is the default list if no codeword is in the world name.
 			if (houses.Count <= 0)
             {
@@ -200,6 +204,10 @@ namespace SOTS.WorldgenHelpers
 		public static void GenerateStarterHouseFull()
 		{
 			int Type = PickStarterHouseTypeUsingWorldName();
+			if(Type == -2)
+            {
+				return;
+            }
 			int spawnX = -1;
 			int spawnY = -1;
 			int randomOne = Main.rand.Next(2) * 2 - 1;

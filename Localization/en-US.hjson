@@ -55,7 +55,7 @@ Mods: {
 				PM: Performance Mode
 				CTF: Colored Time Freeze
 				AVE: Additional Visual Effects
-				SHT: Starter House Type
+				SHT: Starter House Type (Upon World Generation)
 			}
 			Tooltip: {
 				VBX: 
@@ -92,6 +92,7 @@ Mods: {
 					'''
 				SHT: 
 					'''
+					-2 = No starter house (you are deranged)
 					-1 = Random starter house 
 					0 = Legacy House
 					1 = Legacy Angel

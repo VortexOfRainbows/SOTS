@@ -42,7 +42,7 @@ Update Objectives:
 
 Ideas:
 6. Pharaoh's Curse music box
-7. Roasted Peanuts item
+7. Roasted Peanuts item (use for the now farmable peanuts)
 8. EVEN more lines for the Archaeologist
 9. Bestiary for all enemies
 
@@ -53,6 +53,7 @@ Daily Log:
 	1. Needs: Multiplayer testing
 	2. Pondering whether it should be a void weapon... balancing will wait until Glowmoth
 2. Added glowmasks to more illuminant items
+3. If you are deranged, config allows you to disable starter house 
 
 5/20/23
 1. Added Kelp Whip to the amber chest loot pool!
