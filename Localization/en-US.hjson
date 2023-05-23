@@ -324,6 +324,7 @@ Mods: {
 					IlluminantLantern : Illuminant Lantern
 					IlluminantAxe: Illuminant Axe
 					IlluminantBow: Illuminant Bow
+					IlluminantStaff: Illuminant Staff
 					NightIlluminator: Night Illuminator
 					GlowmothBag: Place Cocoon
 				
@@ -1341,6 +1342,11 @@ Mods: {
 						'''
 						Summons three luminous moths to swarm your enemies
 						Right click to call the moths to your cursor
+						'''
+					IlluminantStaff:
+						'''
+						Launch a cluster of Illuminant Orbs
+						Illuminant Orbs launch shards at nearby enemies after expiring
 						'''
 						
 				Colossus: 
@@ -3777,6 +3783,9 @@ Mods: {
 			WormWoodCrusher : Wormwood Arm
 			WormWoodSpike : Wormwood Spike
 			Zeppelin : Zephyrous Zeppelin
+
+			IlluminantStaffOrb: Illuminant Orb
+			IlluminantStaffShard: Illuminant Shard
 		}
 	}
 }

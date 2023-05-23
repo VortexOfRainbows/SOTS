@@ -5,11 +5,18 @@ using SOTS.Void;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using SOTS.Projectiles.Earth.Glowmoth;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Earth.Glowmoth
 {
 	public class IlluminantBow : VoidItem
 	{
+		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/IlluminantBowGlow").Value;
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+		}
 		public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
@@ -32,6 +39,11 @@ namespace SOTS.Items.Earth.Glowmoth
             Item.shootSpeed = 14.5f;
 			Item.useAmmo = AmmoID.Arrow;
 			Item.noMelee = true;
+			if (!Main.dedServ)
+			{
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
+			}
 		}
 		public override int GetVoid(Player player)
 		{
