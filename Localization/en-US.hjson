@@ -328,6 +328,7 @@ Mods: {
 					IlluminantStaff: Illuminant Staff
 					NightIlluminator: Night Illuminator
 					GlowmothBag: Place Cocoon
+					TorchBomb : Torch Bomb
 				
 				BigCrystal: Big Crystal
 				Colossus: Colossus
@@ -1349,6 +1350,8 @@ Mods: {
 						Launch a cluster of Illuminant Orbs
 						Illuminant Orbs launch shards at nearby enemies after expiring
 						'''
+					TorchBomb: "'Illuminate the night with colorful explosives!'"
+
 						
 				Colossus: 
 					'''
@@ -3787,6 +3790,8 @@ Mods: {
 
 			IlluminantStaffOrb: Illuminant Orb
 			IlluminantStaffShard: Illuminant Shard
+			TorchBomb: Torch Bomb
+			TorchEmber: Torch Ember
 		}
 	}
 }
