@@ -446,7 +446,6 @@ Mods: {
 					EarthenPlatingBlastDoor: Earthen Plating Blast Door
 
 				# Nature
-					NatureHydroponics: Nature Plating Hydroponics
 					NaturePlatingBlastDoor: Nature Plating Blast Door
 					NaturePlatingCapsule: Nature Plating Capsule
 					NaturePlatingPlatform: Nature Plating Platform
@@ -455,6 +454,9 @@ Mods: {
 					PermafrostPlatingBlastDoor: Permafrost Plating Blast Door
 					PermafrostPlatingCapsule: Permafrost Plating Capsule
 					PermafrostPlatingPlatform: Permafrost Plating Platform
+
+				# Functional
+					NatureHydroponics: Nature Plating Hydroponics
 
 			# Gems
 				AmberRing: Asmodeus's Ring
@@ -1551,16 +1553,18 @@ Mods: {
 					EarthenPlatingWorkBench: Also functions as an anvil
 					
 				# Nature
+					NaturePlatingWorkBench: Also functions as an anvil
+
+				# Permafrost
+					PermafrostPlatingWorkBench: Also functions as an anvil
+
+				# Functional
 					NatureHydroponics: 
 						'''
 						Automatically grows an assortment of alchemical herbs
 						Right click to harvest all fully grown herbs
 						Plants can be harvested at any time or weather
 						'''
-					NaturePlatingWorkBench: Also functions as an anvil
-
-				# Permafrost
-					PermafrostPlatingWorkBench: Also functions as an anvil
 
 			# Gems
 				AmberRing: Getting hit grants a random buff for 30 seconds	

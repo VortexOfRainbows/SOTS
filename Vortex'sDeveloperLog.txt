@@ -48,7 +48,7 @@ Daily Log:
 
 5/26/23
 1. Added Torch BOMB
-	1. Needs Multiplayer Syncing testing
+	1. Works in multiplayer
 
 5/22/23 & 5/23/23
 1. Added Illuminant Staff

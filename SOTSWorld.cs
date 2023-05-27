@@ -48,6 +48,7 @@ using Terraria.GameContent.Biomes;
 using SOTS.Items.Slime;
 using SOTS.NPCs.Town;
 using Terraria.DataStructures;
+using SOTS.Items.Furniture.Functional;
 
 namespace SOTS
 {

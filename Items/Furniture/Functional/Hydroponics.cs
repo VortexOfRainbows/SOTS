@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Furniture.Nature
+namespace SOTS.Items.Furniture.Functional
 {
 	public class NatureHydroponics : ModItem
 	{

@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Tile_Entities;
 using SOTS.Items.Furniture.Nature;
 using SOTS.Items.Fragments;
+using SOTS.Items.Furniture.Functional;
 
 namespace SOTS.WorldgenHelpers
 {
