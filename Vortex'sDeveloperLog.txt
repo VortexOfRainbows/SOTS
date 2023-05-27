@@ -46,6 +46,9 @@ Ideas:
 
 Daily Log:
 
+5/27/23
+1. Increased likelihood of catching planet fish (1/9 to 1/29 -> 1/8 to 1/24)
+
 5/26/23
 1. Added Torch BOMB
 	1. Works in multiplayer

@@ -991,7 +991,7 @@ namespace SOTS
 			int power = attempt.playerFishingConditions.BaitPower + attempt.playerFishingConditions.PolePower;
 			int baitType = attempt.playerFishingConditions.BaitItemType;
 			int liquidType = attempt.inHoney ? 2 : attempt.inLava ? 1 : 0;
-			if (ScaleCatch2(power, 0, 100, 9, 29) && (Player.ZoneSkyHeight || Player.Center.Y < Main.worldSurface * 16 * 0.5f))
+			if (ScaleCatch2(power, 0, 100, 8, 24) && (Player.ZoneSkyHeight || Player.Center.Y < Main.worldSurface * 16 * 0.5f))
 				itemDrop = ModContent.ItemType<TinyPlanetFish>();
 			if(Player.ZoneBeach && liquidType == 0 && ScaleCatch2(power, 0, 100, 100, 200))
 				itemDrop = ModContent.ItemType<PistolShrimp>();
