@@ -282,7 +282,7 @@ namespace SOTS.Items.Furniture.Functional
 			{
 				//int highlightCapable = -1;
 				Texture2D texture = SOTSTile.GetTileDrawTexture(i, j); //hopefully should get paint properly
-				Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Furniture/Nature/HydroponicsGlow");
+				Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Furniture/Functional/HydroponicsGlow");
 				for (int layer = 0; layer < 2; layer ++)
 				{
 					for (int y = 0; y < 6; y++)

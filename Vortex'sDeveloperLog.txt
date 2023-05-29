@@ -43,6 +43,7 @@ Ideas:
 7. Roasted Peanuts item (use for the now farmable peanuts)
 8. EVEN more lines for the Archaeologist
 9. Bestiary for all enemies
+10. Make the rare reforge slightly less rare
 
 Daily Log:
 

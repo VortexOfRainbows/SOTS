@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 
 namespace SOTS.Items.Furniture.Functional
 {
-	public class Crystalarium : ModItem
+	public class Mineralarium : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

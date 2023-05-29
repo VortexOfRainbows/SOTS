@@ -457,6 +457,7 @@ Mods: {
 
 				# Functional
 					NatureHydroponics: Nature Plating Hydroponics
+					Mineralarium: Mineralarium
 
 			# Gems
 				AmberRing: Asmodeus's Ring
@@ -1564,6 +1565,14 @@ Mods: {
 						Automatically grows an assortment of alchemical herbs
 						Right click to harvest all fully grown herbs
 						Plants can be harvested at any time or weather
+						'''
+					Mineralarium: 
+						'''
+						Materializes ores using trace particles in the atmosphere and voidspace
+						Ores must be mined manually
+						If no ores are currently on the platform, a random ore will be materialized
+						If an ore is left on the platform, it will continue to materialize
+						If the platform is blocked, or a combination of ores in on the platform, no ores will materialize
 						'''
 
 			# Gems
