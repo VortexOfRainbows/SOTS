@@ -1572,7 +1572,7 @@ Mods: {
 						Ores must be mined manually
 						If no ores are currently on the platform, a random ore will be materialized
 						If an ore is left on the platform, it will continue to materialize
-						If the platform is blocked, or a combination of ores in on the platform, no ores will materialize
+						If the platform is blocked, or a combination of ores is on the platform, no ores will materialize
 						Can be stacked to hasten the production of the topmost Mineralarium
 						'''
 

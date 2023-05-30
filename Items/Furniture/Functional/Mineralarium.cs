@@ -18,6 +18,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.Utilities;
+using static SOTS.Items.Furniture.Functional.MineralariumTE;
 
 namespace SOTS.Items.Furniture.Functional
 {
@@ -47,7 +48,7 @@ namespace SOTS.Items.Furniture.Functional
 			Main.tileNoAttach[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
 			TileObjectData.newTile.Width = 7;
-			TileObjectData.newTile.Origin = new Point16(4, 0);
+			TileObjectData.newTile.Origin = new Point16(3, 0);
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<MineralariumTE>().Hook_AfterPlacement, -1, 0, true);
 			TileObjectData.newTile.StyleHorizontal = false;
 			TileObjectData.newTile.CoordinateHeights = new[] { 18 };
@@ -59,13 +60,52 @@ namespace SOTS.Items.Furniture.Functional
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.Iron;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CanPlace(int i, int j)
+        {
+			Tile tileBelow = Framing.GetTileSafely(i, j + 1);
+			if(tileBelow.TileType == Type)
+            {
+				if(tileBelow.TileFrameX != 54)
+                {
+					return false;
+                }
+            }
+			if(OreType.CountsAsOre(tileBelow.TileType))
+            {
+				return false;
+            }
+            return base.CanPlace(i, j);
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = ModContent.ItemType<Mineralarium>();
 			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 112, 16, drop);
 			ModContent.GetInstance<MineralariumTE>().Kill(i, j);
 		}
-		public override void MouseOver(int i, int j)
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+		{
+			Tile tile = Main.tile[i, j];
+			i -= tile.TileFrameX / 18;
+			i += 3;
+			j -= 1;
+			for (int k = -1; k <= 1; k++)
+			{
+				for (int h = 0; h >= -2; h--)
+				{
+					Point16 tilePos = new Point16(i + k, j + h);
+					tile = Framing.GetTileSafely(tilePos);
+					if (tile.HasTile)
+					{
+						if ((OreType.CountsAsOre(tile.TileType) && h >= -2))
+						{
+							WorldGen.KillTile(i + k, j + h, false, false, false);
+							NetMessage.SendData(MessageID.TileManipulation, Main.myPlayer, Main.myPlayer, null, 0, i + k, j + h, 0f, 0, 0, 0);
+						}
+					}
+				}
+			}
+		}
+        public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			player.cursorItemIconID = ModContent.ItemType<Mineralarium>();
@@ -119,12 +159,9 @@ namespace SOTS.Items.Furniture.Functional
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)
-				return;
-
-			r = 1.2f;
-			g = 1.2f;
-			b = 1.2f;
+			r = 0.5f;
+			g = 0.4f;
+			b = 0.3f;
 		}
 		public static void Draw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -452,12 +489,8 @@ namespace SOTS.Items.Furniture.Functional
 			int tileID = (int)Projectile.ai[1];
 			int i = (int)Projectile.Center.X / 16;
 			int j = (int)Projectile.Center.Y / 16;
-			Color white = Color.White;
-			white.A = 0;
-			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j + 1].TileColor);
+			Color color = ColorHelpers.EarthColor;
 			color.A = 0;
-
 			WorldGen.PlaceTile(i, j, tileID, false, true, -1, 0);
 			if (Main.netMode == NetmodeID.Server)
 				NetMessage.SendTileSquare(Main.myPlayer, i, j, 3);
@@ -467,13 +500,11 @@ namespace SOTS.Items.Furniture.Functional
 			{
 				Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(k));
 				circularLocation += new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
-				int type = DustID.Electric;
-				int type2 = 132;
-				if (white != color)
-					type = type2;
-				int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, type, 0, 0, 0, color);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity = circularLocation;
+				int type = ModContent.DustType<PixelDust>();
+				Dust dust = Dust.NewDustDirect(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, type, 0, 0, 0, color);
+				dust.noGravity = true;
+				dust.velocity = circularLocation;
+				dust.fadeIn = 5;
 			}
 		}
 	}

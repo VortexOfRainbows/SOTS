@@ -49,6 +49,7 @@ Daily Log:
 
 5/29/23 & 5/30/23
 1. WIP Mineralarium
+	1. Needs: More visuals, speed balancing, bug fixes (breaking weirdly)
 
 5/27/23
 1. Increased likelihood of catching planet fish (1/9 to 1/29 -> 1/8 to 1/24)
