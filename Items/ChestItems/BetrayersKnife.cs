@@ -20,7 +20,7 @@ namespace SOTS.Items.ChestItems
             Item.damage = 25;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 14;
-            Item.height = 54;  
+            Item.height = 62;  
             Item.useTime = 24; 
             Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Shoot;		

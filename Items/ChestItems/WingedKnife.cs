@@ -16,7 +16,7 @@ namespace SOTS.Items.ChestItems
 			Item.DamageType = DamageClass.Ranged;
 			Item.rare = ItemRarityID.Blue;
 			Item.width = 46;
-			Item.height = 36;
+			Item.height = 40;
 			Item.maxStack = 1;
 			Item.useTime = 24;
 			Item.useAnimation = 24;

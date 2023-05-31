@@ -20,7 +20,7 @@ namespace SOTS.Items.Celestial
 		{
 			Item.CloneDefaults(ItemID.ChainGun); //chaingun
 			Item.damage = 37;
-            Item.width = 100;   
+            Item.width = 94;   
             Item.height = 42;   
 			Item.rare = ItemRarityID.Yellow;
 			Item.useTime = 4;

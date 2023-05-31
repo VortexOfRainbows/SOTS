@@ -19,7 +19,7 @@ namespace SOTS.Projectiles
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
 			Projectile.width = 46;
-			Projectile.height = 36;
+			Projectile.height = 40;
 			Projectile.timeLeft = 6000;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = true;

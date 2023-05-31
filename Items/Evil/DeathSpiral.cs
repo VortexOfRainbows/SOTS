@@ -19,8 +19,8 @@ namespace SOTS.Items.Evil
 		public override void SetDefaults()
 		{
 			Item.damage = 50;
-			Item.width = 52;
-			Item.height = 52;
+			Item.width = 54;
+			Item.height = 54;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useAnimation = 36;
 			Item.useTime = 36;
