@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Chaos
 				float radius = (18 + j * 4) * (1f + radiusMult * 2.5f);
 				for (int i = 0; i < 360; i += 9)
 				{
-					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i));
+					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i));
 					Vector2 center = Projectile.Center;
 					Vector2 rotation = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.X *= compressions[j];
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Chaos
             {
 				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
 				dust2.noGravity = true;
-				dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
+				dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18));
 				dust2.noGravity = true;
 				dust2.fadeIn = 0.2f;
 				dust2.scale *= 2.4f;
@@ -114,7 +114,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
 					dust2.noGravity = true;
-					dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
+					dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18));
 					dust2.noGravity = true;
 					dust2.fadeIn = 0.2f;
 					dust2.scale *= 2.4f;
@@ -127,7 +127,7 @@ namespace SOTS.Projectiles.Chaos
 					Dust dust2 = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 120);
 					dust2.velocity *= 0.3f;
 					dust2.noGravity = true;
-					dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3.6f) + Main.GameUpdateCount * 2f);
+					dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 3.6f) + Main.GameUpdateCount * 2f);
 					dust2.fadeIn = 0.2f;
 					dust2.scale *= 0.5f;
 					dust2.scale += 1.8f;
@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>(), 0, 0, 100);
 				dust2.velocity *= 0.4f;
 				dust2.noGravity = true;
-				dust2.color = VoidPlayer.pastelRainbow;
+				dust2.color = ColorHelpers.pastelRainbow;
 				dust2.noGravity = true;
 				dust2.fadeIn = 0.2f;
 				dust2.scale *= 1.4f;

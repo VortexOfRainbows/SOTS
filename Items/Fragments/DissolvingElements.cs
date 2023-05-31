@@ -194,7 +194,7 @@ namespace SOTS.Items.Fragments
 		public override int FrameSpeed => 6;
         public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether;
-        public override Color glowColor => VoidPlayer.OtherworldColor;
+        public override Color glowColor => ColorHelpers.OtherworldColor;
         public override void SafeSetDefaults()
 		{
 			Item.width = 34;
@@ -210,7 +210,7 @@ namespace SOTS.Items.Fragments
 		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Umbra");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingUmbraNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingUmbraFlipped");
-		public override Color glowColor => VoidPlayer.EvilColor * 1.2f;
+		public override Color glowColor => ColorHelpers.EvilColor * 1.2f;
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 10;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra;

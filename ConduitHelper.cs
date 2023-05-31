@@ -92,7 +92,7 @@ namespace SOTS
 				float timer = player.buffTime[buffIndex] - 30; //starts at 60, goes to 0
 				if (timer > 0)
 				{
-					Color color = VoidPlayer.natureColor;
+					Color color = ColorHelpers.natureColor;
 					float percent = 1 - timer / 60f;
 					DrawConduitCircleFull(player.Center, percent, color);
 				}

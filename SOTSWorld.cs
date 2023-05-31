@@ -48,6 +48,7 @@ using Terraria.GameContent.Biomes;
 using SOTS.Items.Slime;
 using SOTS.NPCs.Town;
 using Terraria.DataStructures;
+using SOTS.Items.Furniture.Functional;
 
 namespace SOTS
 {
@@ -350,7 +351,7 @@ namespace SOTS
 			tasks.Insert(genIndexTraps + 1, new PassLegacy("SOTS: Structures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingSurfaceStructures");
-				//SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
+				SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
 				StarterHouseWorldgenHelper.GenerateStarterHouseFull();
 				int iceY = -1;
 				int iceX = -1;
@@ -1641,7 +1642,7 @@ namespace SOTS
 		}
 		public override void ModifyLightingBrightness(ref float scale)
 		{
-			scale *= lightingChange;
+			scale += lightingChange - 1;
 			lightingChange = 1;
 		}
 		public static float LuxLightingFadeIn = 0;

@@ -99,7 +99,7 @@ namespace SOTS.Void
 			int voidMax = voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption;
 			string voidManaMaxText = voidMax.ToString();
 			string voidSoulsText = voidPlayer.lootingSouls.ToString();
-			Color soulColor = VoidPlayer.soulLootingColor;
+			Color soulColor = ColorHelpers.soulLootingColor;
 			if (text != null)
 			{
 				if (player.dead)

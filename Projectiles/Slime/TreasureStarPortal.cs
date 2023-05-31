@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Slime
 				return new Color(123, 173, 75, 100);
 			if (type == 8)
             {
-				Color c = VoidPlayer.ChaosPink;
+				Color c = ColorHelpers.ChaosPink;
 				c.A = 100;
 				return c;
 			}

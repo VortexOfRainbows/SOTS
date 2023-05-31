@@ -352,12 +352,12 @@ namespace SOTS
 			}
 			if (dedicatedPurpleRed.Contains(item.type))
 			{
-				dedicatedColor = VoidPlayer.soulLootingColor;
+				dedicatedColor = ColorHelpers.soulLootingColor;
 				dedicated = true;
 			}
 			if (dedicatedRainbow.Contains(item.type) && (item.type != ItemType<DreamLamp>() || !DreamLamp.IsItemForgotten))
 			{
-				dedicatedColor = VoidPlayer.pastelRainbow;
+				dedicatedColor = ColorHelpers.pastelRainbow;
 				dedicated = true;
 			}
 			if (dedicatedPastelPink.Contains(item.type))

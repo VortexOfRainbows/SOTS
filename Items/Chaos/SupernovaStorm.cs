@@ -22,7 +22,7 @@ namespace SOTS.Items.Chaos
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(3 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 2));
-				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
+				color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
 				color.A = 0;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + circular, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}

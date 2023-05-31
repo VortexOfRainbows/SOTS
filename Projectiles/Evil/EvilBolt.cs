@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Evil
         public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = VoidPlayer.EvilColor;
+			Color color = ColorHelpers.EvilColor;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Evil
 				Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, Main.rand.NextVector2Circular(1, 1));
 				dust.velocity *= 0.5f;
 				dust.velocity -= Projectile.velocity * 0.05f;
-				dust.color = VoidPlayer.EvilColor;
+				dust.color = ColorHelpers.EvilColor;
 				dust.color.A = 100;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Evil
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = VoidPlayer.EvilColor;
+				dust.color = ColorHelpers.EvilColor;
 				dust.color.A = 100;
 				dust.noGravity = true;
 				dust.alpha = 100;

@@ -116,14 +116,14 @@ namespace SOTS.Projectiles.Inferno
 				dust.velocity *= 0.1f;
 				dust.scale = 0.5f;
 				dust.fadeIn = 0.1f;
-				dust.color = Void.VoidPlayer.InfernoColorAttemptDegrees(MathHelper.ToRadians(helixRot * 2));
+				dust.color = ColorHelpers.InfernoColorAttemptDegrees(MathHelper.ToRadians(helixRot * 2));
 
 				dust = Dust.NewDustDirect(new Vector2(helixPos2.X - 4, helixPos2.Y - 4), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
 				dust.scale = 0.5f;
 				dust.fadeIn = 0.1f;
-				dust.color = Void.VoidPlayer.InfernoColorAttemptDegrees(MathHelper.ToRadians(helixRot * 3));
+				dust.color = ColorHelpers.InfernoColorAttemptDegrees(MathHelper.ToRadians(helixRot * 3));
 			}
 		}
 	}

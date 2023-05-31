@@ -13,8 +13,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void SafeSetDefaults()
 		{
-
-			Item.damage = 18;
+			Item.damage = 17;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 30;
 			Item.height = 34;
@@ -30,7 +29,6 @@ namespace SOTS.Items.OreItems
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ores.GoldChakram>(); 
             Item.shootSpeed = 13.5f;
             Item.noUseGraphic = true; 
-
 		}
 		public override int GetVoid(Player player)
 		{

@@ -30,7 +30,6 @@ using SOTS.Items.Dyes;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.Furniture;
 using Terraria.Graphics.Effects;
-using Catalyst.Backgrounds;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items;
 using SOTS.Items.Chaos;

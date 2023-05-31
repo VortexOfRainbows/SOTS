@@ -96,7 +96,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					Vector2 fireFrom = NPC.Center + (aimTo - NPC.Center).SafeNormalize(Vector2.Zero) * 90;
 					Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
-					Color color = VoidPlayer.InfernoColorAttemptDegrees(attackTimer * 3);
+					Color color = ColorHelpers.InfernoColorAttemptDegrees(attackTimer * 3);
 					color.A = 0;
 					spriteBatch.End();
 					spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
@@ -109,9 +109,9 @@ namespace SOTS.NPCs.Constructs
 					spriteBatch.Draw(texture, fireFrom - screenPos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), percent * 2f, SpriteEffects.None, 0f);
 					spriteBatch.End();
 					spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-					Color inferno1 = VoidPlayer.Inferno1;
+					Color inferno1 = ColorHelpers.Inferno1;
 					inferno1.A = 0;
-					Color inferno2 = VoidPlayer.Inferno2;
+					Color inferno2 = ColorHelpers.Inferno2;
 					inferno2.A = 0;
 					for (int i = 0; i < 2; i++)
 						spriteBatch.Draw(texture, fireFrom - screenPos, null, i == 1 ? inferno1 : inferno2, 0f, new Vector2(texture.Width / 2, texture.Height / 2), percent * 1f, SpriteEffects.None, 0f);
@@ -157,7 +157,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Color color = VoidPlayer.Inferno1;
+				Color color = ColorHelpers.Inferno1;
 				color.A = 0;
 				Vector2 drawPos = particleList[i].position - screenPos;
 				color = NPC.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
@@ -337,7 +337,7 @@ namespace SOTS.NPCs.Constructs
 							Vector2 circular = new Vector2(90 * sizeMult, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 							int dust2 = Dust.NewDust(fireFrom - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
 							Dust dust = Main.dust[dust2];
-							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+							dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1));
 							dust.noGravity = true;
 							dust.fadeIn = 0.1f;
 							dust.scale *= 2.2f;
@@ -352,7 +352,7 @@ namespace SOTS.NPCs.Constructs
                     {
 						int dust2 = Dust.NewDust(fireFrom - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[dust2];
-						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+						dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1));
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 2.5f;
@@ -579,7 +579,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Color color = VoidPlayer.Inferno1;
+				Color color = ColorHelpers.Inferno1;
 				color.A = 0;
 				Vector2 drawPos = particleList[i].position - screenPos;
 				color *= (0.35f + 0.65f * particleList[i].scale);

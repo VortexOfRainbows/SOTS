@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					break;
 				}
-				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[1] + k * 2), true);
+				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[1] + k * 2), true);
 				color.A = 0;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Chaos
             {
 				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[1]), true);
+				dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[1]), true);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale = 1.3f;

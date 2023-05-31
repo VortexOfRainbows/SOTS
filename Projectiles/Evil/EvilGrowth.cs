@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Evil
 						dust.velocity += circularLocation;
 						dust.scale *= 1.25f;
 						dust.fadeIn = 0.2f;
-						dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+						dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 						dust.alpha = 40;
 						dust.noGravity = true;
 					}
@@ -140,7 +140,7 @@ namespace SOTS.Projectiles.Evil
 				dust.velocity += circularLocation;
 				dust.scale *= 1.25f;
 				dust.fadeIn = 0.2f;
-				dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+				dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 				dust.alpha = 40;
 				dust.noGravity = true; 
 				circularLocation = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -149,7 +149,7 @@ namespace SOTS.Projectiles.Evil
 				dust.velocity += circularLocation;
 				dust.scale *= 1.75f;
 				dust.fadeIn = 0.2f;
-				dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+				dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 				dust.alpha = 40;
 				dust.noGravity = true;
 			}
@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.Evil
 			Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(200, 50, 0) * 0.2f * (Projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(150, 30, 0) * 0.5f * (Projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
 			Vector2 drawOrigin = new Vector2(flower.Width * 0.5f, flower.Height * 0.5f);
-			Main.spriteBatch.Draw(flower, Projectile.Center - Main.screenPosition, null, new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B), Projectile.rotation, drawOrigin, Projectile.scale * 1.0f * (Projectile.timeLeft / (float)MaxTimeLeft) + 0.3f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(flower, Projectile.Center - Main.screenPosition, null, new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B), Projectile.rotation, drawOrigin, Projectile.scale * 1.0f * (Projectile.timeLeft / (float)MaxTimeLeft) + 0.3f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}

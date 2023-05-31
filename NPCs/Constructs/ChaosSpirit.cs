@@ -57,7 +57,7 @@ namespace SOTS.NPCs.Constructs
 					float rotation = (drawPos2 - drawPosNext).ToRotation();
 					for (int k = 0; k < 6; k++)
 					{
-						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f;
+						Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f;
 						color.A = 0;
 						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 						spriteBatch.Draw(texture, drawPos2 - screenPos + circular, null, color, rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
@@ -68,7 +68,7 @@ namespace SOTS.NPCs.Constructs
 					for (int k = 0; k < 10; k++)
 					{
 						Dust dust = Dust.NewDustDirect(drawPos2, 0, 0, DustID.RainbowMk2);
-						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.8f;
@@ -115,7 +115,7 @@ namespace SOTS.NPCs.Constructs
 					if (degreesCount < 0)
 						sinusoid = 0;
 					float radians = MathHelper.ToRadians(i * 360f / amtOfParticles);
-					Color c = VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount), overrideColor);
+					Color c = ColorHelpers.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount), overrideColor);
 					Vector2 circular = new Vector2(-1, 0).RotatedBy(radians);
 					float increaseAmount = 1f;
 					if (i < amtOfParticles / 2)
@@ -267,7 +267,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
-			dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+			dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
@@ -278,7 +278,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < NPC.oldPos.Length; k++) {
 				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
-				Color color = VoidPlayer.pastelRainbow * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				Color color = ColorHelpers.pastelRainbow * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				color.A = 0;
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
@@ -298,7 +298,7 @@ namespace SOTS.NPCs.Constructs
 					for (int i = 0; i < 50; i++)
 					{
 						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 2.2f;
@@ -318,7 +318,7 @@ namespace SOTS.NPCs.Constructs
 				Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
 					color.A = 0;
 				}
 				else

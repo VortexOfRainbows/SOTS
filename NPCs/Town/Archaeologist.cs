@@ -19,6 +19,7 @@ using SOTS.Items.Gems;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Secrets;
 using System.IO;
+using SOTS.Items.Whips;
 
 namespace SOTS.NPCs.Town
 {
@@ -509,6 +510,7 @@ namespace SOTS.NPCs.Town
 				{
 					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AmberRing>());
 				}
+				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<KelpWhip>());
 			}
 			if (currentLocationType == ImportantTileID.iceMonument)
 			{
@@ -542,6 +544,7 @@ namespace SOTS.NPCs.Town
 		public static int currentLocationType = -1;
 		public void FindALocationToGoTo()
         {
+			int olderLocationType = currentLocationType;
 			currentLocationType = 0;
 			int newDirection = 0;
 			Vector2? destination = ImportantTilesWorld.RandomImportantLocation(ref currentLocationType, ref newDirection);
@@ -556,7 +559,7 @@ namespace SOTS.NPCs.Town
 			}
 			else
             {
-				currentLocationType = -1;
+				currentLocationType = olderLocationType;
             }
 		}
 	}

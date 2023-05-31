@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Chaos
 					drawPos.Y += droop * (64 - dist * 0.1f);
 					for (int k = 0; k < 6; k++)
 					{
-						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f * ((float)i / max);
+						Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f * ((float)i / max);
 						color.A = 0;
 						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 						Main.spriteBatch.Draw(texture, drawPos + circular, null, color, 0, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Chaos
 					Dust dust2 = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<Dusts.CopyDust4>(), Main.rand.NextVector2Circular(2f, 2f));
 					dust2.velocity += Projectile.velocity * 0.4f;
 					dust2.noGravity = true;
-					dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Main.rand.NextFloat(360)), true);
+					dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Main.rand.NextFloat(360)), true);
 					dust2.noGravity = true;
 					dust2.fadeIn = 0.2f;
 					dust2.scale *= 2.5f;

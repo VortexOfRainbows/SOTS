@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Inferno
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Color color = VoidPlayer.Inferno1;
+				Color color = ColorHelpers.Inferno1;
 				color.A = 0;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition ;
 				color = Projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);

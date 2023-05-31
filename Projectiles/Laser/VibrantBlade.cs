@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Laser
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Color color = VoidPlayer.VibrantColorAttempt(k);
+				Color color = ColorHelpers.VibrantColorAttempt(k);
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
 				color = Projectile.GetAlpha(color) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
 				for (int j = 0; j < 7; j++)
@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Laser
 		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = VoidPlayer.VibrantColor;
+			Color color = ColorHelpers.VibrantColor;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{

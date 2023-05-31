@@ -31,7 +31,7 @@ namespace SOTS.Items.Earth.Glowmoth
         }
         public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
-			Vector3 vColor = VoidPlayer.VibrantColor.ToVector3() * 0.34f;
+			Vector3 vColor = ColorHelpers.VibrantColor.ToVector3() * 0.34f;
 			Lighting.AddLight(Item.position, vColor);
 		}
 	}
@@ -51,7 +51,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
-			Vector3 vColor = VoidPlayer.VibrantColor.ToVector3() * 0.5f;
+			Vector3 vColor = ColorHelpers.VibrantColor.ToVector3() * 0.5f;
 			Lighting.AddLight(Item.position, vColor);
 		}
 		public override void AddRecipes()
@@ -69,7 +69,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			{
 				int num2 = Dust.NewDust(new Vector2(i, j) * 16, 16, 16, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
-				dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
+				dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 0.9f;

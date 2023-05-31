@@ -11,8 +11,14 @@ using Terraria.ModLoader;
 namespace SOTS.Items.Earth.Glowmoth
 {
 	public class IlluminantAxe : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/IlluminantAxeGlow").Value;
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+            Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+        }
+        public override void SetStaticDefaults()
 		{
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             this.SetResearchCost(1);
@@ -37,7 +43,7 @@ namespace SOTS.Items.Earth.Glowmoth
             Item.shootSpeed = 12f;
             if (!Main.dedServ)
             {
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/IlluminantAxeGlow").Value;
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
             }
         }
         public override void MeleeEffects(Player player, Rectangle hitbox)
@@ -52,7 +58,7 @@ namespace SOTS.Items.Earth.Glowmoth
             {
                 int num2 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num2];
-                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+                dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.44f;

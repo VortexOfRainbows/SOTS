@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Chaos
                 if(d != 0)
                 {
                     drawPos = Projectile.Center;
-                    color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
+                    color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
                     color *= ((100f - Projectile.alpha) / 255f);
                     color.A = 0;
                     Vector2 dynamicAddition = new Vector2(Main.rand.NextFloat(2, 4) * (1 - 1f * compression), 0).RotatedBy(MathHelper.ToRadians(45f * i) + counter);
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Chaos
             for (i = 0; i < 8; i++)
             {
                 drawPos = Projectile.Center;
-                color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
+                color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
                 color *= ((100f - Projectile.alpha) / 255f);
                 color.A = 0;
                 Vector2 dynamicAddition = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * i) + counter);

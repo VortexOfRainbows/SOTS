@@ -991,7 +991,7 @@ namespace SOTS
 			int power = attempt.playerFishingConditions.BaitPower + attempt.playerFishingConditions.PolePower;
 			int baitType = attempt.playerFishingConditions.BaitItemType;
 			int liquidType = attempt.inHoney ? 2 : attempt.inLava ? 1 : 0;
-			if (ScaleCatch2(power, 0, 100, 9, 29) && (Player.ZoneSkyHeight || Player.Center.Y < Main.worldSurface * 16 * 0.5f))
+			if (ScaleCatch2(power, 0, 100, 8, 24) && (Player.ZoneSkyHeight || Player.Center.Y < Main.worldSurface * 16 * 0.5f))
 				itemDrop = ModContent.ItemType<TinyPlanetFish>();
 			if(Player.ZoneBeach && liquidType == 0 && ScaleCatch2(power, 0, 100, 100, 200))
 				itemDrop = ModContent.ItemType<PistolShrimp>();
@@ -1490,6 +1490,8 @@ namespace SOTS
 						percent = Math.Clamp(percent, 0, 1);
 						seenCamera = true;
 						Main.screenPosition = Vector2.Lerp(Main.screenPosition, new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2), 0.25f * (1 - percent));
+						Main.screenPosition.X = (int)Main.screenPosition.X;
+						Main.screenPosition.Y = (int)Main.screenPosition.Y;
 					}
 					else if (!seenCamera && projectile.type == ModContent.ProjectileType<FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
 					{

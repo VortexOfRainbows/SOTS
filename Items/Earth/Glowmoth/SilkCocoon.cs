@@ -115,7 +115,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			Vector3 vColor = VoidPlayer.VibrantColor.ToVector3() * 0.65f;
+			Vector3 vColor = ColorHelpers.VibrantColor.ToVector3() * 0.65f;
 			r = vColor.X;
 			g = vColor.Y;
 			b = vColor.Z;
@@ -147,7 +147,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			{
 				int num2 = Dust.NewDust(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[num2];
-				dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
+				dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.75f;

@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Chaos
 			Color blendColor = Color.White;
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians((VoidPlayer.soulColorCounter + k) * 6 + Projectile.whoAmI * 18), blendColor);
+				Color color2 = ColorHelpers.pastelAttempt(MathHelper.ToRadians((ColorHelpers.soulColorCounter + k) * 6 + Projectile.whoAmI * 18), blendColor);
 				color2.A = 0;
 				float scale = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Vector2 drawPos = Projectile.oldPos[k] + new Vector2(12, 12) - Main.screenPosition;
@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color blendColor = Color.White;
-			Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + Projectile.whoAmI * 18), blendColor);
+			Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18), blendColor);
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail(Main.spriteBatch, lightColor);
@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.7f;
 				dust.velocity += Projectile.velocity * 0.7f;
-				dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), blendColor);
+				dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), blendColor);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

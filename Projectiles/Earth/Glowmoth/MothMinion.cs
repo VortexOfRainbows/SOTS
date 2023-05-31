@@ -28,7 +28,6 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lumina Moth");
 			Main.projFrames[Projectile.type] = 3;
 			//ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true; //We don't want the special right click since the minions already special target with right click
 
@@ -73,7 +72,6 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		public override void AI()
 		{
 			Player owner = Main.player[Projectile.owner];
-
 			if(runOnce)
             {
 				Projectile.ai[0] = Main.rand.Next(36) * 10;
@@ -207,7 +205,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(7) * Math.Sin(MathHelper.ToRadians(Projectile.ai[0] * 4f)));
 					if (!Main.rand.NextBool(3))
 					{
-						Color color2 = VoidPlayer.VibrantColorAttempt(Projectile.ai[0] % 180, true);
+						Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.ai[0] % 180, true);
 						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 						dust.color = color2;
 						dust.noGravity = true;
@@ -269,7 +267,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			if(Main.rand.NextBool(10))
 			{
-				Color color2 = VoidPlayer.VibrantColorAttempt(Projectile.ai[0] % 180, true);
+				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.ai[0] % 180, true);
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.color = color2;
 				dust.noGravity = true;

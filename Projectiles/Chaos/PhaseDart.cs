@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Chaos
 			Vector2 from = Projectile.Center;
 			for (int i = 1; i < 10; i++)
 			{
-				Color color2 = VoidPlayer.ChaosPink;
+				Color color2 = ColorHelpers.ChaosPink;
 				color2.A = 0;
 				float alphaMult = (counter / 90f);
 				Vector2 to = Projectile.Center + Projectile.velocity * i * 10f * alphaMult;
@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Chaos
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Color color2 = VoidPlayer.ChaosPink;
+				Color color2 = ColorHelpers.ChaosPink;
 				color2.A = 0;
 				float scale = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + new Vector2(12, 12);
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			DrawTelegraph();
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = VoidPlayer.ChaosPink;
+			Color color = ColorHelpers.ChaosPink;
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail();
@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.9f;
-				dust.color = VoidPlayer.ChaosPink;
+				dust.color = ColorHelpers.ChaosPink;
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

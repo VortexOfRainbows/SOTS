@@ -350,7 +350,7 @@ namespace SOTS.NPCs.Boss.Curse
 							float reduction = shade / 255f;
 							Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
 							Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
-							color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Void.VoidPlayer.soulColorCounter * 2)));
+							color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 2)));
 							color = new Color((byte)(color.R * shadeAlpha), (byte)(color.G * shadeAlpha), (byte)(color.B * shadeAlpha));
 						}
 						Vector2 drawPos = dustList[i].position - screenPos;
@@ -385,7 +385,7 @@ namespace SOTS.NPCs.Boss.Curse
 								float reduction = shade / 255f;
 								Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
 								Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
-								color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Void.VoidPlayer.soulColorCounter * 2)));
+								color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 2)));
 								color = new Color((byte)(color.R * shadeAlpha), (byte)(color.G * shadeAlpha), (byte)(color.B * shadeAlpha));
 							}
 							Vector2 drawPos = dustList[i].position - screenPos;

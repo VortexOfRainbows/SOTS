@@ -230,7 +230,7 @@ namespace SOTS.NPCs.Constructs
 								for (int i = 0; i < 60; i++)
 								{
 									Dust dust3 = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-									dust3.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+									dust3.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 									dust3.noGravity = true;
 									dust3.fadeIn = 0.1f;
 									dust3.scale *= 2.25f;
@@ -304,7 +304,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
-			dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+			dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
@@ -328,7 +328,7 @@ namespace SOTS.NPCs.Constructs
 					for (int i = 0; i < 50; i ++)
 					{
 						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-						dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+						dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 2f;
@@ -356,7 +356,7 @@ namespace SOTS.NPCs.Constructs
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-			Color color = VoidPlayer.EvilColor * 1.3f;
+			Color color = ColorHelpers.EvilColor * 1.3f;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[NPC.type].Value.Width * 0.5f, NPC.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
@@ -438,7 +438,7 @@ namespace SOTS.NPCs.Constructs
 					for (int i = 0; i < 3; i++)
 					{
 						Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
-						dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B, 100);
+						dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B, 100);
 						dust.alpha = 100;
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
@@ -454,7 +454,7 @@ namespace SOTS.NPCs.Constructs
 				for (int i = 0; i < 5; i++)
 				{
 					Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
-					dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+					dust.color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.velocity *= 0.9f;
@@ -464,7 +464,7 @@ namespace SOTS.NPCs.Constructs
         }
 		public void Draw(Vector2 center, Vector2 screenPos, float rotation, float distMult, float alphaMult = 1f)
 		{
-			Color color = VoidPlayer.EvilColor;
+			Color color = ColorHelpers.EvilColor;
 			color.A = 50;
 			Vector2 drawPosition = center + offset.RotatedBy(rotation) * distMult - screenPos;
 			Vector2 origin = texture.Size() / 2;
@@ -483,7 +483,7 @@ namespace SOTS.NPCs.Constructs
 				Vector2 circular = new Vector2(length, 0).RotatedBy(i * MathHelper.Pi / 2f);
 				Main.spriteBatch.Draw(texture, drawPosition + circular, null, color * alpha * alphaMult, 0f, origin, mult, SpriteEffects.None, 0f);
 			}
-			color = VoidPlayer.EvilColor;
+			color = ColorHelpers.EvilColor;
 			color.A = 50;
 			for (int i = 0; i < 4; i++)
 			{

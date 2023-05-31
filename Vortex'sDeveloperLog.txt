@@ -1,3 +1,4 @@
+Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
 1. Might still have some bugs with Subspace Locket
 2. Combined Glowjelly, Lihzahrd Tail, Charm of Myths, and Ectoplasm (name in progress)
@@ -10,14 +11,12 @@ Tmodloader Bugs (some of these may be fixed, idk):
 
 Acknowledged But Likely Delayed:
 1. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
-2. Texture Pack ambient sounds to not stack in frequency with multiple tiles (instead should stack in strength)
-3. Texture Pack sounds to disable when block is broken (tied to specific blocks)
-4. Reimplement (older) Blade Items using the abstract class
-5. Earthen Plating starter house.
-6. Bosses HP is ludicrous for Master Mode
-7. Glowmasks for Corruption Trees in SOTSTP
-8. Wind mechanics for vines and banners
-9. Earth Conduit (abstract the conduit class)
+2. Reimplement (older) Blade Items using the abstract class
+3. Earthen Plating starter house.
+4. Bosses HP is ludicrous for Master Mode
+5. Glowmasks for Corruption Trees in SOTSTP
+6. Wind mechanics for vines and banners
+7. Earth Conduit (abstract the conduit class)
 
 Update Objectives:
 1. Ghost Town!
@@ -27,10 +26,8 @@ Update Objectives:
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-2. Glow Moth and Glow Silk to the glowing mushroom biome.
-	1. Glow Nylon
-		1. Can craft Torch Bomb
-	2. Glowjelly: glow spores + royal jelly
+2. Glow Moth
+	1. Glowjelly: glow spores + royal jelly
 3. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map
 4. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. 
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
@@ -42,27 +39,61 @@ Update Objectives:
 	2. Combine with Machina Booster + Soaring Insignia for new wings: Gilded Blade-Wings
 
 Ideas:
-6. Brachial Lance: upgrade to Geostorm + Cursed Spear Storm + Frigid Javelin at post-mech-HM-tier
-7. Pharaoh's Curse music box
-8. Roasted Peanuts item
-9. EVEN more lines for the Archaeologist + Less randomization for Archaeologist portal order
-
-Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
-
-3. Orange (Abandoned Aqueduct) - Luxuria, Kelp Whip (WIP)
-
-This is the plan currently
-
-Other 1.4 related objectives:
-1. Bestiary for all enemies
-2. Reorganize VoidPlayer Color helpers
-3. Hover icons for the Conduit Blocks (possibly?)
+6. Pharaoh's Curse music box
+7. Roasted Peanuts item (use for the now farmable peanuts)
+8. EVEN more lines for the Archaeologist
+9. Bestiary for all enemies
+10. Make the rare reforge slightly less rare
 
 Daily Log:
 
-5/3/23
+5/29/23 & 5/30/23 & 5/31/23
+1. Mineralarium + Mineralarium Visuals!
+	1. Needs: Speed balancing, bug fixes (breaking weirdly)
+
+5/27/23
+1. Increased likelihood of catching planet fish (1/9 to 1/29 -> 1/8 to 1/24)
+
+5/26/23
+1. Added Torch BOMB
+	1. Works in multiplayer
+
+5/22/23 & 5/23/23
+1. Added Illuminant Staff
+	1. Works in Multiplayer!
+	2. Pondering whether it should be a void weapon... balancing will wait until Glowmoth
+2. Added glowmasks to more illuminant items
+3. If you are deranged, config allows you to disable starter house 
+
+5/20/23
+1. Added Kelp Whip to the amber chest loot pool!
+2. Added config settings to select a starter house
+
+5/19/23
+1. Kelp Whip dust effects
+	1. Tested: Works in multiplayer!	
+	2. Needs: Add to Amber loot pool
+
+5/18/23
+1. Added Kelp Whip (should be fairly balanced. Roughly on tier with snapthorn (worse summon support, better whip))
+
+5/15/23
+1. Import kelp sprite
+
+5/13/23
+1. Illuminant Lantern accessory (should always work in multiplayer)
+2. Modified Some lighting items
+
+5/8/23 & 5/10/23 & 5/11/23
+1. Reorganized Color Helpers
+2. Archaeologist now attempts to avoid more recent teleport locations
+3. Illuminant Bow Added: should be balanced + works in multiplayer
+4. Buff Platinum Dart damage 15 -> 19, Gold Chakram Nerf damage 18 -> 17
+6. Fix illuminant axe not working in properly multiplayer.
+
+5/3/23 & 5/5/23
 1. Brachial Lance explosion, spears, and portal release; also balancing (should be on tier, if slightly strong but costly)
-	1. Still needs: server testing, more visual polish, balancing
+2. Tested in multiplayer! (it works)
 
 5/2/23
 1. More VERY WIP brachial lance

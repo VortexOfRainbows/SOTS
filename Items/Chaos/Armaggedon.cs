@@ -45,7 +45,8 @@ namespace SOTS.Items.Chaos
 		}
 		public override void UpdateInventory(Player player)
 		{
-			Lighting.AddLight(player.Center, 1.00f, 1.00f, 1.00f);
+			if (Item.favorited)
+				Lighting.AddLight(player.Center, 1.10f, 0.90f, 1.00f);
 		}
 		public override void AddRecipes()
 		{

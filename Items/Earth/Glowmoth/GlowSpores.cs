@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -5,8 +6,12 @@ using Terraria.ModLoader;
 namespace SOTS.Items.Earth.Glowmoth
 {
 	public class GlowSpores : ModItem
-	{	
-		public override void SetStaticDefaults()
+	{
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+        public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
 		}

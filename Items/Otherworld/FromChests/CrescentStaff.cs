@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using SOTS.Items.OreItems;
 using SOTS.Projectiles.Otherworld;
+using SOTS.Items.Earth.Glowmoth;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -69,7 +70,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<PlatinumSoulStaff>(1).AddIngredient<StarlightAlloy>(8).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
+			CreateRecipe(1).AddIngredient<IlluminantStaff>(1).AddIngredient<PlatinumSoulStaff>(1).AddIngredient<StarlightAlloy>(8).AddTile(ModContent.TileType<Furniture.HardlightFabricatorTile>()).Register();
 		}
 	}
 }

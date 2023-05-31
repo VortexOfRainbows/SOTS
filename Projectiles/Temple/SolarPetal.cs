@@ -142,7 +142,7 @@ namespace SOTS.Projectiles.Temple
         {
             get
             {
-				return Color.Lerp(VoidPlayer.InfernoColorAttempt(0.5f + Main.rand.NextFloat(0.5f)), new Color(190, 80, 60), 0.3f + Main.rand.NextFloat(0.3f));
+				return Color.Lerp(ColorHelpers.InfernoColorAttempt(0.5f + Main.rand.NextFloat(0.5f)), new Color(190, 80, 60), 0.3f + Main.rand.NextFloat(0.3f));
             }
         }
         public override bool PreAI()

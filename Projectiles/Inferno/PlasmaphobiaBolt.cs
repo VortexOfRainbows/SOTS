@@ -209,7 +209,7 @@ namespace SOTS.Projectiles.Inferno
                 dust.color = new Color(157, 93, 213, 40);
                 if (Projectile.ai[0] == -1)
                 {
-                    dust.color = Void.VoidPlayer.InfernoColorAttemptDegrees(Projectile.ai[1]);
+                    dust.color = ColorHelpers.InfernoColorAttemptDegrees(Projectile.ai[1]);
                     dust.color.A = 40;
                 }
                 dust.fadeIn = 0.1f;
@@ -263,7 +263,7 @@ namespace SOTS.Projectiles.Inferno
             Color color = new Color(157, 93, 213);
             if(Projectile.ai[0] == -1)
             {
-                color = Void.VoidPlayer.InfernoColorAttemptDegrees(Projectile.ai[1]);
+                color = ColorHelpers.InfernoColorAttemptDegrees(Projectile.ai[1]);
                 Color.Lerp(color, Color.Red, 0.4f);
             }
             color.A = 0; 

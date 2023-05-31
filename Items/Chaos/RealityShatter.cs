@@ -22,7 +22,7 @@ namespace SOTS.Items.Chaos
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(2 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+				color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
 				color.A = 0;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + circular, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
@@ -40,7 +40,7 @@ namespace SOTS.Items.Chaos
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(1 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
 				color.A = 0;
 				Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y) + circular, null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}

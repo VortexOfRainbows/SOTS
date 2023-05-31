@@ -23,7 +23,7 @@ namespace SOTS.Buffs.ConduitBoosts
                 SOTSUtils.PlaySound(SoundID.Item30, player.Center, 0.75f, 0.25f);
                 for(int i = 0; i < 24; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(player.Center, 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, VoidPlayer.natureColor, 1.1f);
+                    Dust dust = Dust.NewDustDirect(player.Center, 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, ColorHelpers.natureColor, 1.1f);
                     dust.scale *= 1.4f;
                     dust.velocity *= 0.6f;
                     dust.velocity += new Vector2(0, 9f).RotatedBy(MathHelper.TwoPi * i / 24f) / dust.scale;

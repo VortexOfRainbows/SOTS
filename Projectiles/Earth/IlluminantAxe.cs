@@ -138,7 +138,12 @@ namespace SOTS.Projectiles.Earth
                 if (counter % 2 != 0)
                     Projectile.soundDelay++;
                 if(counter % 15 == 0 && counter > 30 && counter < 70)
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - new Vector2(12, 0).RotatedBy(Projectile.rotation), Main.rand.NextVector2CircularEdge(2.75f, 2.75f), ModContent.ProjectileType<IlluminantBolt>(), (int)(Projectile.damage * 0.6f), Projectile.knockBack * 0.2f, Main.myPlayer, Main.rand.NextFloat(180, 360));
+                {
+                    if(Projectile.owner == Main.myPlayer)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - new Vector2(12, 0).RotatedBy(Projectile.rotation), Main.rand.NextVector2CircularEdge(2.75f, 2.75f), ModContent.ProjectileType<IlluminantBolt>(), (int)(Projectile.damage * 0.6f), Projectile.knockBack * 0.2f, Main.myPlayer, Main.rand.NextFloat(180, 360));
+                    }
+                }  
                 Projectile.rotation -= 0.1f * (float)Projectile.direction;
             }
             if (Main.rand.NextBool(12))
@@ -151,7 +156,7 @@ namespace SOTS.Projectiles.Earth
             {
                 int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num2];
-                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+                dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.44f;
@@ -175,7 +180,7 @@ namespace SOTS.Projectiles.Earth
                 Vector2 circular = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 12));
                 int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num2];
-                dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+                dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.5f;

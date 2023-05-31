@@ -38,6 +38,7 @@ Mods: {
 				UI: UI
 				GS: Graphics Settings
 				TPS: Texture Pack Settings
+				GPS: Gameplay Settings
 			}
 			Label: {
 				Config: Config
@@ -54,6 +55,7 @@ Mods: {
 				PM: Performance Mode
 				CTF: Colored Time Freeze
 				AVE: Additional Visual Effects
+				SHT: Starter House Type (Upon World Generation)
 			}
 			Tooltip: {
 				VBX: 
@@ -87,6 +89,32 @@ Mods: {
 					'''
 					Adds bonus visuals, such as dusts, to a handful of tiles
 					Only works with the SOTS Texture Pack enabled
+					'''
+				SHT: 
+					'''
+					-2 = No starter house (you are deranged)
+					-1 = Random starter house 
+					0 = Legacy House
+					1 = Legacy Angel
+					2 = Legacy Barrel
+					3 = Legacy BIG Hotel
+					4 = Legacy Origin
+					5 = Legacy Tower
+					6 = Legacy Sword
+					7 = Legacy Tree
+					8 = Legacy Library
+					9 = Legacy Crate
+					10 = Mushnib's
+					11 = Astrobit's
+					12 = Bloodmoon
+					13 = Bandit
+					14 = Boulder
+					15 = Mine
+					16 = Tavern
+					17 = Chaos
+					18 = Drowned
+					19 = Comfy
+					20 = Nature
 					'''
 			}
 		}
@@ -218,6 +246,7 @@ Mods: {
 				BetrayersKnife: Betrayer's Knife
 				CoconutGun: Coconut Gun
 				GlazeBow: Glaze Bow
+				KelpWhip : Kelp Whip
 				PathogenRegurgitator: Pathogen Regurgitator
 				PerfectStar: Perfect Star
 				RebarRifle: Rebar Rifle
@@ -293,9 +322,13 @@ Mods: {
 					GlowNylon: Glow Nylon
 					GlowSpores: Glow Spores
 					GuideToIllumination: Guide to Illumination
+					IlluminantLantern : Illuminant Lantern
 					IlluminantAxe: Illuminant Axe
+					IlluminantBow: Illuminant Bow
+					IlluminantStaff: Illuminant Staff
 					NightIlluminator: Night Illuminator
 					GlowmothBag: Place Cocoon
+					TorchBomb : Torch Bomb
 				
 				BigCrystal: Big Crystal
 				Colossus: Colossus
@@ -413,7 +446,6 @@ Mods: {
 					EarthenPlatingBlastDoor: Earthen Plating Blast Door
 
 				# Nature
-					NatureHydroponics: Nature Plating Hydroponics
 					NaturePlatingBlastDoor: Nature Plating Blast Door
 					NaturePlatingCapsule: Nature Plating Capsule
 					NaturePlatingPlatform: Nature Plating Platform
@@ -422,6 +454,10 @@ Mods: {
 					PermafrostPlatingBlastDoor: Permafrost Plating Blast Door
 					PermafrostPlatingCapsule: Permafrost Plating Capsule
 					PermafrostPlatingPlatform: Permafrost Plating Platform
+
+				# Functional
+					NatureHydroponics: Nature Plating Hydroponics
+					Mineralarium: Mineralarium
 
 			# Gems
 				AmberRing: Asmodeus's Ring
@@ -879,7 +915,7 @@ Mods: {
 					'''
 					Release green thunder towards your cursor
 					Green thunder chains off enemies for 90% damage
-					Provides a light source while in the inventory
+					Provides a light source while favorited in the inventory
 					'Power straight from the underworld'
 					'''
 				CataclysmSpheres: Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 100% damage
@@ -952,7 +988,7 @@ Mods: {
 				Armaggedon: 
 					'''
 					Unleash a flurry of punches
-					Provides a small light source
+					Provides a light source while favorited in the inventory
 					'Power from the heavens'
 					'''
 				ChaosChamber: 
@@ -1035,6 +1071,10 @@ Mods: {
 					Coalesces ice mist to power up your arrows
 					When briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage
 					When fully charged, arrows bloom into wisps of ice, dealing 600% damage
+					'''
+				KelpWhip:
+					'''
+					Minions critically strike the tagged enemy, but with a 2 second cooldown between critical strikes
 					'''
 				PathogenRegurgitator: 
 					'''
@@ -1288,17 +1328,33 @@ Mods: {
 						'''
 						The first time an enemy takes damage, they will sparkle, stunning them for 10 damage
 						'''
+					IlluminantLantern:
+						'''
+						Greatly increases the intensity of lighting
+						Increases void damage by 5%
+						'''
 					IlluminantAxe: 
 						'''
 						Releases wandering energy bolts for 60% damage
 						Right click to toss the axe, which sticks to walls
 						Right click again to recall the axe
 						'''
+					IlluminantBow: 
+						'''
+						Launches illuminant moths, which drop four arrows onto enemies
+						'''
 					NightIlluminator: 
 						'''
 						Summons three luminous moths to swarm your enemies
 						Right click to call the moths to your cursor
 						'''
+					IlluminantStaff:
+						'''
+						Launch a cluster of Illuminant Orbs
+						Illuminant Orbs launch shards at nearby enemies after expiring
+						'''
+					TorchBomb: "'Illuminate the night with colorful explosives!'"
+
 						
 				Colossus: 
 					'''
@@ -1498,16 +1554,27 @@ Mods: {
 					EarthenPlatingWorkBench: Also functions as an anvil
 					
 				# Nature
+					NaturePlatingWorkBench: Also functions as an anvil
+
+				# Permafrost
+					PermafrostPlatingWorkBench: Also functions as an anvil
+
+				# Functional
 					NatureHydroponics: 
 						'''
 						Automatically grows an assortment of alchemical herbs
 						Right click to harvest all fully grown herbs
 						Plants can be harvested at any time or weather
 						'''
-					NaturePlatingWorkBench: Also functions as an anvil
-
-				# Permafrost
-					PermafrostPlatingWorkBench: Also functions as an anvil
+					Mineralarium: 
+						'''
+						Materializes ores using trace particles in the atmosphere and voidspace
+						Ores must be mined manually
+						If no ores are currently on the platform, a random ore will be materialized
+						If an ore is left on the platform, it will continue to materialize
+						If the platform is blocked, or a combination of ores is on the platform, no ores will materialize
+						Can be stacked to hasten the production of the topmost Mineralarium
+						'''
 
 			# Gems
 				AmberRing: Getting hit grants a random buff for 30 seconds	
@@ -1777,7 +1844,7 @@ Mods: {
 					PotGenerator: 
 						'''
 						Generates pots on top of its surface
-						Can be stacked to increase production of the topmost generator
+						Can be stacked to hasten the production of the topmost generator
 						'No, not that type of pot'
 						'''
 					SkyChain: "'It anchors onto... somewhere'"
@@ -2306,7 +2373,7 @@ Mods: {
 					'''
 					Fires 2 green orbs that, upon detonation, release green thunder towards your cursor
 					Green thunder chains off enemies for 90% damage
-					Provides a light source while in the inventory
+					Provides a light source while favorited in the inventory
 					'''
 				HeartOfTheSea: 
 					'''
@@ -2347,7 +2414,7 @@ Mods: {
 					'''
 					Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor
 					Purple thunder chains off enemies for 70% damage
-					Provides a light source while in the inventory
+					Provides a light source while favorited in the inventory
 					'''
 				Riptide: 
 					'''
@@ -2606,6 +2673,7 @@ Mods: {
 		NatureSpiritAid : Spirit Aid
 		NatureBoosted : Nature Boosted
 		Nightmare : Nightmare
+		NightIlluminatorBuff : Illumination
 		OtherworldlySpiritAid : Spirit Aid
 		Overheat : Overheat
 		PermafrostSpiritAid : Spirit Aid
@@ -2667,6 +2735,7 @@ Mods: {
 		NatureSpiritAid : Nature Spirits assist you in combat
 		NatureBoosted : Increases max life by 20
 		Nightmare : Compress enemies together with critical strikes
+		NightIlluminatorBuff : Protected by glowing moths
 		OtherworldlySpiritAid : Otherworldly Spirits assist you in combat
 		Overheat : Movement speed and melee speed increased by 10%
 		PermafrostSpiritAid : Permafrost Spirits assist you in combat
@@ -3228,6 +3297,11 @@ Mods: {
 			1: Status: Complete
 			2: "Time left: {0}"
 		}
+		MineralariumTileText: {
+			0: Status: N/A
+			1: Status: Full or Obstructed
+			2: "Percent Completion: {0}%"
+		}
 
 		PyramidGenerator: {
 			Speed: "Generating with seed: {0}"
@@ -3251,6 +3325,8 @@ Mods: {
 			ArcLightningDamage : Arc Lightning
 			ArcLightningZap : Arc Lightning
 			ArkBolt : Ark Bolt
+			ArrowMoth : Arrow Moth
+			MothMinion : Lumina Moth
 			AtenProj : Aten
 			AtenStar : Aten Star
 			AtenStarExplosion : Aten Starsplosion
@@ -3730,6 +3806,11 @@ Mods: {
 			WormWoodCrusher : Wormwood Arm
 			WormWoodSpike : Wormwood Spike
 			Zeppelin : Zephyrous Zeppelin
+
+			IlluminantStaffOrb: Illuminant Orb
+			IlluminantStaffShard: Illuminant Shard
+			TorchBomb: Torch Bomb
+			TorchEmber: Torch Ember
 		}
 	}
 }

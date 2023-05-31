@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
                 else if(Projectile.ai[1] == -2)
                     SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.2f);
                 if (Main.netMode != NetmodeID.Server)
-                    SOTS.primitives.CreateTrail(new StarTrail(Projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
+                    SOTS.primitives.CreateTrail(new StarTrail(Projectile, ColorHelpers.InfernoColorAttempt(0.4f), ColorHelpers.InfernoColorAttempt(0.4f), 10));
                 runOnce = false;
                 for (int i = 0; i < 5; i++)
                 {
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Inferno
                     dust.velocity = dust.velocity * 0.8f + Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f) * (float)Math.Sqrt(Projectile.velocity.Length());
                     dust.noGravity = true;
                     dust.fadeIn = 0.2f;
-                    dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+                    dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1));
                     dust.scale *= 1.4f;
                 }
             }
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Inferno
                     dust.velocity = dust.velocity * 0.8f + Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f) * (float)Math.Sqrt(Projectile.velocity.Length());
                     dust.noGravity = true;
                     dust.fadeIn = 0.2f;
-                    dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+                    dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1));
                     dust.scale *= 1.4f;
                 }
             }
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Inferno
                 dust.velocity *= 0.5f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.2f;
-                dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+                dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1));
                 dust.scale *= 1.2f;
                 Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.36f;
             }

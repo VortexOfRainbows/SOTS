@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Chaos
 				if (trailPos[k] != Projectile.Center)
 				{
 					Vector2 drawPos = trailPos[k] - Main.screenPosition;
-					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + k * 2), false);
+					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + k * 2), false);
 					color = Projectile.GetAlpha(color);
 					color.A = 0; 
 					float max = betweenPositions.Length() / (texture.Width * 0.5f);
@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public Color color
         {
-			get => VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3), VoidPlayer.ChaosPink);
+			get => ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3), ColorHelpers.ChaosPink);
 		}
 		public override bool PreAI()
 		{

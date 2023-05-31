@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Chaos
 				int radius = 20 + j * 8;
 				for (int i = 0; i < 360; i += 6)
 				{
-					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i));
+					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i));
 					Vector2 center = Projectile.Center;
 					Vector2 rotation = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.X *= compressions[j];
@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
 				dust2.velocity += Projectile.velocity * 0.2f;
 				dust2.noGravity = true;
-				dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
+				dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18));
 				dust2.noGravity = true;
 				dust2.fadeIn = 0.2f;
 				dust2.scale *= 2.4f;
@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Chaos
 					Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
 					dust2.velocity += Projectile.velocity * 0.9f;
 					dust2.noGravity = true;
-					dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
+					dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18));
 					dust2.noGravity = true;
 					dust2.fadeIn = 0.2f;
 					dust2.scale *= 2.4f;
@@ -132,7 +132,7 @@ namespace SOTS.Projectiles.Chaos
 				dust2.velocity *= 0.2f;
 				dust2.velocity -= Projectile.velocity * 0.3f;
 				dust2.noGravity = true;
-				dust2.color = VoidPlayer.pastelRainbow;
+				dust2.color = ColorHelpers.pastelRainbow;
 				dust2.noGravity = true;
 				dust2.fadeIn = 0.2f;
 				dust2.scale *= 1.4f;

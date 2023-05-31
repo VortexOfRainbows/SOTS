@@ -12,7 +12,13 @@ using Microsoft.Xna.Framework.Graphics;
 namespace SOTS.Items.Earth.Glowmoth
 {
     public class NightIlluminator : ModItem
-    {
+	{
+		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/NightIlluminatorGlow").Value;
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(glowTexture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+		}
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -33,15 +39,13 @@ namespace SOTS.Items.Earth.Glowmoth
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
-
-			// These below are needed for a minion weapon
 			Item.noMelee = true;
 			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<NightIlluminatorBuff>();
 			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.Glowmoth.NightIlluminator>();
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Earth/Glowmoth/NightIlluminatorGlow").Value;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
 			}
 		}
         public override void ModifyManaCost(Player player, ref float reduce, ref float mult)

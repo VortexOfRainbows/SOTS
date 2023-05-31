@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Minions
 					Color color = Projectile.GetAlpha(color2) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 					Main.spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 				}
-				color2 = VoidPlayer.EvilColor * 1f;
+				color2 = ColorHelpers.EvilColor * 1f;
 			}
 			return false;
 		}
@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color = VoidPlayer.EvilColor * 1.0f;
+			Color color = ColorHelpers.EvilColor * 1.0f;
 			if (Main.netMode != NetmodeID.Server) //pretty sure drawcode doesn't run in multiplayer anyways but may as well
 				UpdateEyes(true, -2);
 			for (int k = 0; k < 7; k++)
@@ -375,7 +375,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			#endregion
 
-			Lighting.AddLight(Projectile.Center, VoidPlayer.EvilColor.ToVector3());
+			Lighting.AddLight(Projectile.Center, ColorHelpers.EvilColor.ToVector3());
 			MoveAwayFromOthers();
 			if (Main.myPlayer == player.whoAmI)
 			{

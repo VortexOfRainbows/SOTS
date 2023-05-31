@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color = VoidPlayer.ChaosPink;
+			Color color = ColorHelpers.ChaosPink;
 			color.A = 0;
 			for (int k = 0; k < 4; k++)
 			{
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Chaos
 			dust2.velocity *= 0;
 			dust2.velocity -= Projectile.velocity * 0.1f;
 			dust2.noGravity = true;
-			dust2.color = VoidPlayer.ChaosPink;
+			dust2.color = ColorHelpers.ChaosPink;
 			dust2.noGravity = true;
 			dust2.fadeIn = 0.2f;
 			dust2.scale = 1.8f;

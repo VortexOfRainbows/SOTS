@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Chaos
                     actualScale *= 1 - mult;
                 }
                 Vector2 drawPos = drawPositionList[i];
-                Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), false);
+                Color otherC = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 3), false);
                 otherC.A = 0;
                 Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 1.25f) * Projectile.scale, SpriteEffects.None, 0f);
                 if (i != drawPositionList.Count - 1)
@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Chaos
                     Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
                     dust2.velocity += Projectile.velocity * 0.8f;
                     dust2.noGravity = true;
-                    dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
+                    dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18));
                     dust2.noGravity = true;
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
@@ -158,7 +158,7 @@ namespace SOTS.Projectiles.Chaos
                         Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
                         dust2.velocity += Projectile.velocity * 0.1f;
                         dust2.noGravity = true;
-                        dust2.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(0, 6.28f));
+                        dust2.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(0, 6.28f));
                         dust2.noGravity = true;
                         dust2.fadeIn = 0.2f;
                         dust2.scale *= 2.2f;

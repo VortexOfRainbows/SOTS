@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Earth
 					for(int i=  0; i < (Projectile.width + Projectile.height) / 6; i++)
                     {
 						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
-						Color color2 = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
+						Color color2 = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
 						dust.color = color2;
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Earth
 			else if(Main.rand.NextBool(7) && Projectile.friendly && Projectile.alpha < 100)
 			{
 				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
-				Color color2 = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
+				Color color2 = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;

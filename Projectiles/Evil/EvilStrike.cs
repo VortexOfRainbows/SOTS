@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Evil
 				Main.dust[num1].velocity *= 0.75f;
 				Main.dust[num1].scale *= 1.45f;
 				Main.dust[num1].alpha = 100;
-				Main.dust[num1].color = VoidPlayer.EvilColor;
+				Main.dust[num1].color = ColorHelpers.EvilColor;
 				Main.dust[num1].fadeIn = 0.2f;
 			}
 		}

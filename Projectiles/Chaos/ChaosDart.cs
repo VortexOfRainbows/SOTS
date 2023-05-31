@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Chaos
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians((VoidPlayer.soulColorCounter + k) * 6 + Projectile.whoAmI * 18));
+				Color color2 = ColorHelpers.pastelAttempt(MathHelper.ToRadians((ColorHelpers.soulColorCounter + k) * 6 + Projectile.whoAmI * 18));
 				color2.A = 0;
 				float scale = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + new Vector2(12, 12);
@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Chaos
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + Projectile.whoAmI * 18));
+			Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18));
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail();
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust2 = Dust.NewDustPerfect(Projectile.Center - Projectile.velocity * i, ModContent.DustType<Dusts.CopyDust4>(), Main.rand.NextVector2Circular(0.2f, 0.2f));
 				dust2.velocity += Projectile.velocity * 0.1f;
 				dust2.noGravity = true;
-				dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + Projectile.whoAmI * 18), true);
+				dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18), true);
 				dust2.noGravity = true;
 				dust2.fadeIn = 0.2f;
 				dust2.scale *= 1.7f;
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+				dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

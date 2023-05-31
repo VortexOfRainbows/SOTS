@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Laser
 			for (int k = 0; k < 120; k++)
 			{
 				Vector2 circularPos = new Vector2(Projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(k * 3) + Projectile.rotation);
-				Color color = VoidPlayer.VibrantColorAttempt(3 * k);
+				Color color = ColorHelpers.VibrantColorAttempt(3 * k);
 				Vector2 drawPos = Projectile.Center + circularPos - Main.screenPosition;
 				color = Projectile.GetAlpha(color) * 0.1f;
 				for (int j = 0; j < 4; j++)

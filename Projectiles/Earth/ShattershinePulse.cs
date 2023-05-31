@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Earth
                     dust.scale = 1.4f + Main.rand.NextFloat(-0.1f, 0.1f);
                     dust.fadeIn = 0.1f;
                     dust.alpha = 100;
-                    dust.color = VoidPlayer.VibrantColorAttempt(degrees);
+                    dust.color = ColorHelpers.VibrantColorAttempt(degrees);
                     dust.velocity += velo * 0.12f;
                 }
             }

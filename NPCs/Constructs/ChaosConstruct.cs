@@ -116,7 +116,7 @@ namespace SOTS.NPCs.Constructs
 					if (degreesCount < 0)
 						sinusoid = 0;
 					float radians = MathHelper.ToRadians(i * 360f / amtOfParticles);
-					Color c = VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount));
+					Color c = ColorHelpers.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount));
 					Vector2 circular = new Vector2(-1, 0).RotatedBy(radians);
 					float increaseAmount = 1f;
 					if (i < amtOfParticles / 2)
