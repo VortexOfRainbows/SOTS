@@ -57,7 +57,7 @@ namespace SOTS.Items
             {
                 if (Main.tile[i, j].TileFrameY % 54 == 18 && Main.tile[i, j].TileFrameX % 54 != 18)
 				{
-					SOTSUtils.PlaySound(SoundID.Item53, i * 16 + 24, j * 16 + 8, 0.4f, -0.1f);
+					SOTSUtils.PlaySound(SoundID.Item53, i * 16 + 24, j * 16 + 8, 0.3f, 0.1f);
 					int direction = (int)(Main.tile[i, j].TileFrameX / 18 - 1);
 					for(int l = 0; l < 6; l++)
 					{

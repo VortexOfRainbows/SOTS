@@ -3297,6 +3297,11 @@ Mods: {
 			1: Status: Complete
 			2: "Time left: {0}"
 		}
+		MineralariumTileText: {
+			0: Status: N/A
+			1: Status: Full or Obstructed
+			2: "Percent Completion: {0}%"
+		}
 
 		PyramidGenerator: {
 			Speed: "Generating with seed: {0}"

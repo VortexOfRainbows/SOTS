@@ -1490,6 +1490,8 @@ namespace SOTS
 						percent = Math.Clamp(percent, 0, 1);
 						seenCamera = true;
 						Main.screenPosition = Vector2.Lerp(Main.screenPosition, new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2), 0.25f * (1 - percent));
+						Main.screenPosition.X = (int)Main.screenPosition.X;
+						Main.screenPosition.Y = (int)Main.screenPosition.Y;
 					}
 					else if (!seenCamera && projectile.type == ModContent.ProjectileType<FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
 					{
