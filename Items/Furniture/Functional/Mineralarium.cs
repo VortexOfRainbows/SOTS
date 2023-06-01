@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Chaos;
 using SOTS.Items.Earth;
+using SOTS.Items.Fragments;
 using SOTS.Items.Permafrost;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.Blades;
@@ -36,6 +37,14 @@ namespace SOTS.Items.Furniture.Functional
 			Item.height = 42;
 			Item.rare = ItemRarityID.Orange;
 			Item.createTile = ModContent.TileType<MineralariumTile>();
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1)
+				.AddRecipeGroup("SOTS:EvilBar", 20)
+				.AddRecipeGroup("SOTS:GoldBar", 20)
+				.AddIngredient(ModContent.ItemType<EarthenPlating>(), 80)
+				.AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class MineralariumTile : ModTile
@@ -567,55 +576,55 @@ namespace SOTS.Items.Furniture.Functional
 			public static int DurationBasedOnType(int oreID)
 			{
 				if (oreID == TileID.Copper)
-					return 300;
+					return 1200;  
 				if (oreID == TileID.Tin)
-					return 330;
+					return 1230;  
 				if (oreID == TileID.Iron)
-					return 360;
+					return 1230;  
 				if (oreID == TileID.Lead)
-					return 390;
+					return 1260;  
 				if (oreID == TileID.Silver)
-					return 420;
+					return 1260;
 				if (oreID == TileID.Tungsten)
-					return 450;
+					return 1300;
 				if (oreID == TileID.Gold)
-					return 500;
-				if (oreID == TileID.Platinum)
-					return 570;
-				if (oreID == TileID.Meteorite)
-					return 600;
-				if (oreID == TileID.Demonite)
-					return 650;
-				if (oreID == TileID.Crimtane)
-					return 666;
-				if (oreID == TileID.Obsidian)
-					return 600;
-				if (oreID == TileID.Hellstone)
-					return 800;
-				if (oreID == TileID.Cobalt)
-					return 1000;
-				if (oreID == TileID.Palladium)
-					return 1050;
-				if (oreID == TileID.Mythril)
-					return 1200;
-				if (oreID == TileID.Orichalcum)
-					return 1250;
-				if (oreID == TileID.Adamantite)
 					return 1400;
-				if (oreID == TileID.Titanium)
+				if (oreID == TileID.Platinum)
 					return 1450;
+				if (oreID == TileID.Meteorite)
+					return 1900;
+				if (oreID == TileID.Demonite)
+					return 2300;
+				if (oreID == TileID.Crimtane)
+					return 2360;
+				if (oreID == TileID.Obsidian)
+					return 1200;  
+				if (oreID == TileID.Hellstone)
+					return 2700;
+				if (oreID == TileID.Cobalt)
+					return 2700;
+				if (oreID == TileID.Palladium)
+					return 2800;
+				if (oreID == TileID.Mythril)
+					return 3000;
+				if (oreID == TileID.Orichalcum)
+					return 3100;
+				if (oreID == TileID.Adamantite)
+					return 3900;
+				if (oreID == TileID.Titanium)
+					return 4000;
 				if (oreID == TileID.Chlorophyte)
-					return 1150;
+					return 2100;
 				if (oreID == ModContent.TileType<FrigidIceTile>() || oreID == ModContent.TileType<FrigidIceTileSafe>())
 				{
-					return 525;
+					return 1600;
 				}
 				if (oreID == ModContent.TileType<VibrantOreTile>())
-					return 425;
+					return 1400;
 				if (oreID == ModContent.TileType<PhaseOreTile>())
-					return 1525;
+					return 5100;
 				if (oreID == TileID.LunarOre)
-					return 2000;
+					return 11100;
 				return -1;
 			}
 			public static int GetRandomType()
@@ -629,16 +638,22 @@ namespace SOTS.Items.Furniture.Functional
 				types.Add(TileID.Tungsten, 0.3);
 				types.Add(TileID.Gold, 0.35);
 				types.Add(TileID.Platinum, 0.35);
-				types.Add(TileID.Demonite, 0.5);
-				types.Add(TileID.Crimtane, 0.5);
-				types.Add(TileID.Obsidian, 0.2);
-				types.Add(TileID.Meteorite, 0.5);
 				if(NPC.downedBoss1)
+				{
+					types.Add(TileID.Demonite, 0.5);
+					types.Add(TileID.Crimtane, 0.5);
 					types.Add(ModContent.TileType<VibrantOreTile>(), 0.6);
+				}
 				if (NPC.downedBoss2)
+				{
+					types.Add(TileID.Obsidian, 0.2);
+					types.Add(TileID.Meteorite, 0.5);
 					types.Add(ModContent.TileType<FrigidIceTile>(), 0.75);
+				}
 				if (NPC.downedBoss3 || SOTSWorld.downedAdvisor)
+				{
 					types.Add(TileID.Hellstone, 1);
+				}
 				if(Main.hardMode)
                 {
 					types.Add(TileID.Cobalt, 0.6);
@@ -656,11 +671,11 @@ namespace SOTS.Items.Furniture.Functional
 					}
 					if(SOTSWorld.downedLux)
                     {
-						types.Add(ModContent.TileType<PhaseOreTile>(), 1.5);
+						types.Add(ModContent.TileType<PhaseOreTile>(), 1.25);
 					}
 					if (NPC.downedMoonlord)
 					{
-						types.Add(TileID.LunarOre, 2);
+						types.Add(TileID.LunarOre, 1.25);
 					}
 				}
 				return types.Get();
