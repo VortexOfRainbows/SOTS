@@ -34,7 +34,7 @@ namespace SOTS.Items.Furniture.Functional
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.width = 48;
 			Item.height = 42;
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Orange;
 			Item.createTile = ModContent.TileType<MineralariumTile>();
 		}
 	}
@@ -55,7 +55,6 @@ namespace SOTS.Items.Furniture.Functional
 			TileObjectData.newTile.CoordinateHeights = new[] { 18 };
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
@@ -75,7 +74,7 @@ namespace SOTS.Items.Furniture.Functional
             {
 				return false;
             }
-            return base.CanPlace(i, j);
+			return true;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
@@ -207,7 +206,7 @@ namespace SOTS.Items.Furniture.Functional
 					break;
 				}
 			}
-			if(tile.TileFrameX == 108 && (!hasOtherMineralarium || !entity.isObstructed || entity.fakeObstructed))
+			if(tile.TileFrameX == 108 && (!hasOtherMineralarium || !entity.isObstructed || entity.fakeObstructed) && !(Main.tile[i, j - 1].HasTile && Main.tile[i, j - 1].TileType == ModContent.TileType<MineralariumTile>()))
 			{
 				Color lightVisuals = ColorHelpers.EarthColor;
 				lightVisuals.A = 0;
@@ -226,6 +225,10 @@ namespace SOTS.Items.Furniture.Functional
 				{
 					bonusHeight = 0;
 					progress = 1 - entity.GenerationDuration / (float)entity.GenDurationMAX;
+					if(entity.GenDurationMAX < 0 || entity.GenerationDuration < 0)
+                    {
+						progress = 0;
+                    }
 					blockPosition = entity.genPos.Value.ToVector2() * 16 + new Vector2(8, 8);
 					firstProgress = (entity.GenDurationMAX - entity.GenerationDuration) / 120f;
 					firstProgress = MathHelper.Clamp(firstProgress, 0, 1);
@@ -288,14 +291,14 @@ namespace SOTS.Items.Furniture.Functional
 					//dust:
 					if(hasValue && !Main.gamePaused)
 					{
-						if(Main.rand.NextBool(8))
+						if(Main.rand.NextBool(7))
 						{
 							Dust dust = Dust.NewDustDirect(center - new Vector2(5 * direction, 0) - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, lightVisuals, Main.rand.NextFloat(0.7f, 0.9f));
 							dust.noGravity = true;
-							dust.velocity = new Vector2(direction * Main.rand.NextFloat(0.5f, 1.5f), Main.rand.NextFloat(-1, 1) * 0.7f) * 0.25f;
+							dust.velocity = new Vector2(direction * Main.rand.NextFloat(-0.5f, 1.5f), Main.rand.NextFloat(-1, 1) * 0.7f) * 0.25f;
 							dust.fadeIn = 10;
 						}
-						if(Main.rand.NextBool(5))
+						if(Main.rand.NextBool(4))
 						{
 							Dust dust = Dust.NewDustDirect(blockPosition - new Vector2((size / 2 + 5) * direction, 0) - new Vector2(5, 5 + Main.rand.NextFloat(-1, 1) * size / 2), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, lightVisuals, Main.rand.NextFloat(0.8f, 1f + size / 30f));
 							dust.noGravity = true;
@@ -338,23 +341,75 @@ namespace SOTS.Items.Furniture.Functional
 	}
 	public class MineralariumTE : ModTileEntity
 	{
-		internal int timer = -2;
+		public override void NetReceive(BinaryReader reader)
+		{
+			oreType = reader.ReadInt32();
+			GenerationDuration = reader.ReadInt32();
+			GenDurationMAX = reader.ReadInt32();
+			isObstructed = reader.ReadBoolean();
+			fakeObstructed = reader.ReadBoolean();
+
+			int x = reader.ReadInt32();
+			int y = reader.ReadInt32();
+			if(x != -1 && y != -1)
+            {
+				genPos = new Point16(x, y);
+            }
+		}
+		public override void NetSend(BinaryWriter writer)
+		{
+			writer.Write(oreType);
+			writer.Write(GenerationDuration);
+			writer.Write(GenDurationMAX);
+			writer.Write(isObstructed);
+			writer.Write(fakeObstructed);
+			if(genPos.HasValue)
+			{
+				writer.Write((int)genPos.Value.X);
+				writer.Write((int)genPos.Value.Y);
+			}
+			else
+			{
+				writer.Write(-1);
+				writer.Write(-1);
+			}
+		}
 		public int oreType = -1;
 		public int GenDurationMAX = -1;
 		public int GenerationDuration = -1;
-		public bool previousHasDetectedTile = false;
+		private bool previousIsObstructed = false;
+		private int prevOreType = -1;
+		private bool previousHasDetectedTile = false;
 		public bool isObstructed = false;
 		public bool fakeObstructed = false;
 		public Point16? genPos;
+		private bool netUpdate = false;
+		private bool prevNetUpdate = false;
+		private float PreviousRatio = 1;
+		private bool hasCheckedNearby = false;
+		public bool CheckPlayerNear()
+        {
+			hasCheckedNearby = true;
+			bool playerNear = true;
+			if (Main.player.Count(x => x.Distance(Position.ToVector2() * 16 + new Vector2(56, 8)) < 1280f) <= 0) //don't update unless a player is near
+			{
+				playerNear = false;
+			}
+			return playerNear;
+		}
 		public override void Update()
 		{
+			hasCheckedNearby = false;
 			int genSpeed = GetSpeedFromBelowGenerators();
 			int i = this.Position.X + 3;
 			int j = this.Position.Y - 1;
+			previousIsObstructed = isObstructed;
 			isObstructed = false;
 			fakeObstructed = false;
 			bool hasDetectedTile = false;
+			netUpdate = false;
 			int tempOreType = -1;
+			bool playerNear = true;
 			for(int k = -1; k <= 1; k++)
             {
 				for(int h = 0; h >= -2; h--)
@@ -384,6 +439,11 @@ namespace SOTS.Items.Furniture.Functional
 				oreType = tempOreType;
 			if (isObstructed)
 			{
+				if(isObstructed != previousIsObstructed)
+				{
+					netUpdate = true;
+				}
+				NetUpdate();
 				return;
 			}
 			if(!genPos.HasValue || (genPos.HasValue && (Framing.GetTileSafely(genPos.Value).HasTile || !Framing.GetTileSafely(genPos.Value.X, genPos.Value.Y + 1).HasTile)))
@@ -391,45 +451,81 @@ namespace SOTS.Items.Furniture.Functional
 				genPos = OreType.findPositionFrom3x3Square(new Point16(i, j));
             }
 			if(!genPos.HasValue)
-            {
+			{
+				if (!hasCheckedNearby)
+				{
+					playerNear = CheckPlayerNear();
+				}
 				fakeObstructed = true;
 				isObstructed = true;
+				if (isObstructed != previousIsObstructed || (playerNear && SOTSWorld.GlobalCounter % 30 == 0)) //The second part of this statement is basically a safety switch for visuals to act properly
+				{
+					netUpdate = true;
+				}
+				NetUpdate();
 				return;
             }
 			if(oreType == -1 && !previousHasDetectedTile && !hasDetectedTile && !isObstructed) //if no ore was detected, there is no current type, and there is no obstruction. Set the ore to a random type
             {
-				oreType = OreType.GetRandomType();
+				oreType = prevOreType = OreType.GetRandomType();
 				GenerationDuration = GenDurationMAX = OreType.DurationBasedOnType(oreType);
-            }
-			else if(oreType != -1 && hasDetectedTile && GenerationDuration == -1) //if it already detected an ore, use that ore
+				netUpdate = true;
+			}
+			else if((oreType != -1 && hasDetectedTile && GenerationDuration == -1) || (prevOreType != oreType && hasDetectedTile)) //if it already detected an ore, use that ore
             {
 				if (oreType == ModContent.TileType<FrigidIceTile>())
-					oreType = ModContent.TileType<FrigidIceTileSafe>();
+					oreType = prevOreType = ModContent.TileType<FrigidIceTileSafe>();
+				prevOreType = oreType;
 				GenerationDuration = GenDurationMAX = OreType.DurationBasedOnType(oreType);
+				netUpdate = true;
 			}
 			if(GenerationDuration <= 0 && genPos.HasValue)
 			{
 				Projectile.NewProjectile(new EntitySource_Misc("SOTS:Mineralarium"), new Vector2(genPos.Value.X * 16 + 8, genPos.Value.Y * 16 + 8), Vector2.Zero, ModContent.ProjectileType<MineralariumProjectile>(), 0, 0, Main.myPlayer, 0, oreType);
 				GenerationDuration = GenDurationMAX = - 1;
-				//this means it is ready to spawn a new ore
 			}
 			else
             {
 				GenerationDuration -= genSpeed;
 				if (GenerationDuration < 0)
 					GenerationDuration = 0;
-            }
+				float ratio = GenerationDuration / (float)GenDurationMAX;
+				if (SOTSWorld.GlobalCounter % 90 == 0 || Math.Abs(ratio - PreviousRatio) > 0.005f) //net update at 0.5% intervals of generation progress
+				{
+					if (!hasCheckedNearby)
+					{
+						playerNear = CheckPlayerNear();
+					}
+					if (playerNear)
+						netUpdate = true;
+					PreviousRatio = ratio;
+				}
+			}
 			if(previousHasDetectedTile && !hasDetectedTile && oreType != -1) //if there was a tile previously, but now there are none, and there was a previously saved type
             {
 				//this means that all tiles on the platform were broken
 				GenerationDuration = GenDurationMAX = - 1;
-				oreType = -1;
+				oreType = prevOreType = -1;
+				netUpdate = true;
             }
 			//if(SOTSWorld.GlobalCounter % 5 == 0)
 			//	Main.NewText(oreType + ": " + GenerationDuration + "-- " + isObstructed);
 			previousHasDetectedTile = hasDetectedTile;
+			NetUpdate();
 		}
-		public int GetSpeedFromBelowGenerators()
+        public void NetUpdate()
+		{
+			if (netUpdate && !prevNetUpdate)
+			{
+				prevNetUpdate = true;
+				//WorldGen.BroadcastText(NetworkText.FromLiteral("Tried Sending Packet"), Color.Red);
+				NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
+			}
+			else if(netUpdate && prevNetUpdate)
+				prevNetUpdate = false;
+			netUpdate = false;
+		}
+        public int GetSpeedFromBelowGenerators()
 		{
 			int i = this.Position.X + 3;
 			int amt = 0;
@@ -448,26 +544,11 @@ namespace SOTS.Items.Furniture.Functional
 			}
 			return amt;
 		}
-		public override void NetReceive(BinaryReader reader)
-		{
-			timer = reader.ReadInt32();
-		}
-		public override void NetSend(BinaryWriter writer)
-		{
-			writer.Write(timer);
-		}
-		public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
-		{
-			tag["timer"] = timer;
-		}
-		public override void LoadData(TagCompound tag)
-		{
-			timer = tag.Get<int>("timer");
-		}
 		public override bool IsTileValidForEntity(int i, int j)
 		{
-			Tile tile = Main.tile[i, j];
-			return tile.HasTile && tile.TileType == (ushort)ModContent.TileType<MineralariumTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
+			Tile tile = Framing.GetTileSafely(i, j);
+			//WorldGen.BroadcastText(NetworkText.FromLiteral("( " + i + ", " + j + " )/// " + tile.HasTile + "/ " + tile.TileType + "/ " + ModContent.TileType<MineralariumTile>()), Color.OrangeRed);
+			return tile.HasTile && tile.TileType == (ushort)ModContent.TileType<MineralariumTile>();
 		}
 
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
@@ -475,7 +556,7 @@ namespace SOTS.Items.Furniture.Functional
 			//Main.NewText("i " + i + " j " + j + " t " + type + " s " + style + " d " + direction);
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
-				NetMessage.SendTileSquare(Main.myPlayer, i, j, 3);
+				NetMessage.SendTileSquare(Main.myPlayer, i + 3, j, 7);
 				NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
 				return -1;
 			}

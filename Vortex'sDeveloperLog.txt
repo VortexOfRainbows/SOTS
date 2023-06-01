@@ -49,7 +49,8 @@ Daily Log:
 
 5/29/23 & 5/30/23 & 5/31/23
 1. Mineralarium + Mineralarium Visuals!
-	1. Needs: Speed balancing, bug fixes (breaking weirdly)
+	1. WORKS IN MULTIPLAYER :D (Somewhat choppy, but should cause NO bugs)
+	1. Needs: Speed balancing, Recipe
 
 5/27/23
 1. Increased likelihood of catching planet fish (1/9 to 1/29 -> 1/8 to 1/24)

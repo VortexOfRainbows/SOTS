@@ -25,11 +25,11 @@ namespace SOTS.Projectiles.Blades
 			Projectile.DamageType = DamageClass.Melee;
 			delayDeathTime = 8;
 		}
-		public override float HitboxWidth => 18;
-		public override float AdditionalTipLength => 18;
+		public override float HitboxWidth => 22;
+		public override float AdditionalTipLength => 34;
 		public override float handleOffset => 16;
-		public override float handleSize => 6;
-		public override Vector2 drawOrigin => new Vector2(7, 45);
+		public override float handleSize => 16;
+		public override Vector2 drawOrigin => new Vector2(7, 55);
 		public override bool isDiagonalSprite => false;
         public override void SwingSound(Player player)
 		{
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Blades
 				}
 			}
 		}
-		public override float ArmAngleOffset => -20; //hold it with a backwards grip because thats funny
+		public override float ArmAngleOffset => -15; //hold it with a backwards grip because thats funny
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
 		{
 			float amt = Main.rand.NextFloat(0.5f, 1.2f);
@@ -128,7 +128,7 @@ namespace SOTS.Projectiles.Blades
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, direction, ModContent.ProjectileType<BloodSplatter>(), 0, 0, Main.myPlayer);
             }
         }
-        public override float TrailDistanceFromHandle => 20f;
+        public override float TrailDistanceFromHandle => 38f;
 		public override float AddedTrailLength => 0f;
     }
 }
