@@ -47,6 +47,9 @@ Ideas:
 
 Daily Log:
 
+6/3/23
+1. Hydraulic Press Basics
+
 5/29/23 & 5/30/23 & 5/31/23 & 6/1/23
 1. Mineralarium + Mineralarium Visuals!
 	1. WORKS IN MULTIPLAYER :D (Somewhat choppy, but should cause NO bugs)
