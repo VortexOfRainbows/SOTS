@@ -114,10 +114,18 @@ namespace SOTS.Void
 		}
 		public override void ResetEffects()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			ResetVariables();
 		}
 		public override void UpdateDead()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			voidMeter = voidMeterMax2 / 2;
 			ResetVariables();
 		}
@@ -177,6 +185,10 @@ namespace SOTS.Void
 		public List<int> VoidMinions = new List<int>();
 		public override void UpdateBadLifeRegen()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(Player);
 			if (voidShock)
 			{
@@ -244,6 +256,10 @@ namespace SOTS.Void
 		}*/
 		public void UseSouls()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			if (Main.mouseRight && Main.mouseRightRelease && Player.ownedProjectileCounts[ProjectileType<HarvestingStrike>()] < 1)
 			{
 				if (Main.myPlayer == Player.whoAmI)
@@ -253,6 +269,10 @@ namespace SOTS.Void
 		public int VoidMinionConsumption = 0;
 		public int RegisterVoidMinions()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return 0;
+			}
 			VoidMinions = new List<int>();
 			List<int> whoAmI = new List<int>();
 			for (int i = 0; i < Main.projectile.Length; i++)
@@ -432,8 +452,12 @@ namespace SOTS.Void
 			local.voidDamageTimer = 60;
 		}
         public override void PostUpdateEquips()
-        {
-			for(int i = 0; i < Player.inventory.Length; i++)
+		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
+			for (int i = 0; i < Player.inventory.Length; i++)
             {
 				Item item = Player.inventory[i];
 				if(item.ModItem as VoidConsumable != null)
@@ -513,8 +537,12 @@ namespace SOTS.Void
 			base.PostUpdateEquips();
         }
 		bool isFull = false;
-        private void ResetVariables() 
+        private void ResetVariables()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			//Main.NewText("I think " + player.whoAmI + " has " + voidMeterMax2 + " meter max 2 and " + voidMeter + " void and " + voidMeterMax + " void meter max 1 and " + VoidMinionConsumption + " void minion consumption");
 			lastVoidMeter = voidMeter;
 			ColorHelpers.ColorUpdate();
@@ -657,6 +685,10 @@ namespace SOTS.Void
 		public int negativeVoidRegenPopupNumber = 1;
 		public void UpdateVoidRegen()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			if (Player.HasBuff(BuffType<DilationSickness>()))
 			{
 				voidRegenSpeed -= 0.9f;

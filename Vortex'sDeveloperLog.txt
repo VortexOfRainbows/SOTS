@@ -47,8 +47,10 @@ Ideas:
 
 Daily Log:
 
-6/3/23
+6/3/23 & 6/5/23
 1. Hydraulic Press Basics
+2. Fix mannequin related bugs
+3. Hydraulic Press HITBOX works in multiplayer
 
 5/29/23 & 5/30/23 & 5/31/23 & 6/1/23
 1. Mineralarium + Mineralarium Visuals!
@@ -364,7 +366,6 @@ Daily Log:
 1. Changed botanical symbiote to hopefull work with calamity symmons now..? Not actually tested.
 2. Foggy Clairvoyance optimizations + immune to time freeze. It should no longer lag nearly as much.
 3. Evil Spirit should no longer disappear in multiplayer
-
 
 12/23/22
 1. Vorpal Blade now works in multiplayer!

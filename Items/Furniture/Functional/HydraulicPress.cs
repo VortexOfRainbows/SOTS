@@ -53,6 +53,40 @@ namespace SOTS.Items.Furniture.Functional
 			DustType = DustID.Iron;
 			MineResist = 0.1f;
 		}
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+			if(closer)
+            {
+				Tile tile = Main.tile[i, j];
+				int left = i - tile.TileFrameX / 18;
+				int top = j - tile.TileFrameY / 18;
+				if((tile.TileFrameX == 0 || tile.TileFrameX == 6 * 18) && tile.TileFrameY == 0)
+                {
+					for(int k = 0; k < 6; k++)
+                    {
+						for(int h = 0; h < 8; h++)
+                        {
+							int trueI = left + k;
+							int trueJ = top + h;
+							tile = Main.tile[trueI, trueJ];
+							if(h >= 4 && h <= 6)
+                            {
+								if(!tile.IsActuated)
+                                {
+									tile.IsActuated = true;
+									NetMessage.SendTileSquare(Main.myPlayer, trueI, trueJ, 1);
+								}
+							}
+							else if(tile.IsActuated)
+                            {
+								tile.IsActuated = false;
+								NetMessage.SendTileSquare(Main.myPlayer, trueI, trueJ, 1);
+							}
+                        }
+                    }
+                }
+			}
+        }
         public override bool CanExplode(int i, int j)
         {
             return true;

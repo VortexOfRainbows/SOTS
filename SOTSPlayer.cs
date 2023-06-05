@@ -554,6 +554,10 @@ namespace SOTS
         }
         public override void PostUpdateMiscEffects()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			Vector2 detect = AncientGoldSpikeTile.HurtTiles(Player.position, Player.width, Player.height);
 			if(detect.Y != 0f)
 			{
@@ -574,6 +578,10 @@ namespace SOTS
 		}
         public override void PostUpdate()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			decrement(ref nightmareArmCD);
 			decrement(ref fireIcoCD);
 			decrement(ref iceIcoCD);
@@ -617,6 +625,10 @@ namespace SOTS
         }
 		public override void PreUpdate()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			if (UniqueVisionNumber == -1)
 				ResetVisionID();
 			base.PreUpdate();
@@ -634,6 +646,10 @@ namespace SOTS
 		}
         public override void PostUpdateEquips()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+            {
+				return;
+            }
 			TrailStuff();
 			doCurseAura();
 			if (petAdvisor)
@@ -685,6 +701,10 @@ namespace SOTS
 		}
         public override void ResetEffects()
 		{
+			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
+			{
+				return;
+			}
 			BlazingQuiver = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
