@@ -157,7 +157,7 @@ namespace SOTS.Common.PlayerDrawing
 							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, position, frame, rainbow ? color : glowColor, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
+								DrawData value = new DrawData(texture, new Vector2((int)position.X, (int)position.Y), frame, rainbow ? color : glowColor, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
 							}
 						}

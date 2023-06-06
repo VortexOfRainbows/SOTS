@@ -19,6 +19,7 @@ using SOTS.WorldgenHelpers;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -67,6 +68,9 @@ namespace SOTS
 
 			//Synthetic Liver
 			On.Terraria.Player.AddBuff += Player_AddBuff;
+
+			//Used for Turning Off hit sounds for certain weapons
+			On.Terraria.NPC.StrikeNPC += NPC_StrikeNPC;
 
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -488,6 +492,29 @@ namespace SOTS
 			}
 			orig(self, type, timeToAdd, quiet, foodHack);
         }
+		private static double NPC_StrikeNPC(On.Terraria.NPC.orig_StrikeNPC orig, NPC npc, int Damage, float knockBack, int hitDirection, bool crit = false, bool noEffect = false, bool fromNet = false)
+		{
+			SoundStyle? sound = null;
+			int hitDir = hitDirection;
+			bool doesEffectAnyway = false;
+			if(Math.Abs(hitDirection) == 8921) //checking if the hitdirection is equal to the special identifier for Pixel Laser
+			{
+				hitDir = Math.Sign(hitDirection);
+				doesEffectAnyway = Main.rand.NextBool(3); //only make the sound 1/3 of the time because it hits WAY too fast
+				if (!doesEffectAnyway)
+				{
+					sound = npc.HitSound;
+					npc.HitSound = null;
+					noEffect = true;
+				}
+			}
+			double double1 = orig(npc, Damage, knockBack, hitDir, crit, noEffect, fromNet);
+			if (Math.Abs(hitDirection) == 8921 && !doesEffectAnyway)
+			{
+				npc.HitSound = sound;
+			}
+			return double1;
+		}
 		/*Code I wrote for HeartPlusUp! Calamity Mod!
 		private static void GlassTileWallFraming(On.Terraria.Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
         {

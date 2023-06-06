@@ -44,13 +44,24 @@ Ideas:
 8. EVEN more lines for the Archaeologist
 9. Bestiary for all enemies
 10. Make the rare reforge slightly less rare
+11. Make Subspace Servant work with channel items:
+	1. Give projectiles created during Servant's update window a special update characteristic.
+	2. Make sure this characteristic is NETSYNCED as SOON as the PROJECTILE is created!!!
+	3. This will make them no longer update as part of Terraria's normal projectile update.
+	4. Now update as part of servant. Servant unequipped = projectile returns to normal
+	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 
 Daily Log:
+
+6/5/23 & 6/6/23
+1. Added Pixel Blaster (maybe a rare drop from the abandoned village earthen construct):
+	1. Needs: Channel hold, initial void cost, and held projectile
+	2. Also Needs: Server Syncing, Balancing, Damage class assignment (magic?)
 
 6/3/23 & 6/5/23
 1. Hydraulic Press Basics
 2. Fix mannequin related bugs
-3. Hydraulic Press HITBOX works in multiplayer
+3. Hydraulic Press TILE HITBOX works in multiplayer
 
 5/29/23 & 5/30/23 & 5/31/23 & 6/1/23
 1. Mineralarium + Mineralarium Visuals!

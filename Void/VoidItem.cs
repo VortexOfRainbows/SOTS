@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
 using SOTS.Items.Celestial;
+using SOTS.Items.Earth;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Secrets;
@@ -61,7 +62,7 @@ namespace SOTS.Void
 					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
 				finalCost = (int)(baseCost * voidPlayer.voidCost * voidCostMult);
-				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>())
+				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>() && Item.type != ModContent.ItemType<PixelBlaster>())
 				{
 					finalCost = 1;
 				}

@@ -354,6 +354,8 @@ Mods: {
 				VibrantChestplate: Vibrant Chestplate
 				VibrantHelmet: Vibrant Helmet
 				VibrantLeggings: Vibrant Leggings
+				
+				PixelBlaster: Pixel Blaster
 		
 			# Evil
 				AbyssalFury: Abyssal Fury
@@ -1393,6 +1395,7 @@ Mods: {
 					Increases ranged crit chance by 5%
 					'''
 				VibrantLeggings: Decreased void usage by 10%
+				PixelBlaster: Fires a beam that melts through enemies
 				
 			# Evil
 				AbyssalFury: Summons Shadow Blades from the sky to your cursor
@@ -3817,6 +3820,7 @@ Mods: {
 			IlluminantStaffShard: Illuminant Shard
 			TorchBomb: Torch Bomb
 			TorchEmber: Torch Ember
+			PixelLaser: Pixel Laser
 		}
 	}
 }
