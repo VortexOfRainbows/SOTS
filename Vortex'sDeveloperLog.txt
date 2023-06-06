@@ -55,8 +55,10 @@ Daily Log:
 
 6/5/23 & 6/6/23
 1. Added Pixel Blaster (maybe a rare drop from the abandoned village earthen construct):
-	1. Needs: Channel hold, initial void cost, and held projectile
-	2. Also Needs: Server Syncing, Balancing, Damage class assignment (magic?)
+	1. Works in multiplayer.
+	2. Deals 60 damage per second... Which means it is somewhat stronger than demonite bow, but weaker than other void weapons.
+	3. It's strenght will come from its utility, however
+	4. Looks to be a little buggy occassionally (laser doesn't line up due to projectile IDs). But this mostly does not happen.
 
 6/3/23 & 6/5/23
 1. Hydraulic Press Basics

@@ -1395,7 +1395,7 @@ Mods: {
 					Increases ranged crit chance by 5%
 					'''
 				VibrantLeggings: Decreased void usage by 10%
-				PixelBlaster: Fires a beam that melts through enemies
+				PixelBlaster: Fires a beam that melts through enemies, dealing damage 60 times per second
 				
 			# Evil
 				AbyssalFury: Summons Shadow Blades from the sky to your cursor
@@ -3821,6 +3821,7 @@ Mods: {
 			TorchBomb: Torch Bomb
 			TorchEmber: Torch Ember
 			PixelLaser: Pixel Laser
+			PixelBlaster: Pixel Blaster
 		}
 	}
 }

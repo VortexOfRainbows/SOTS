@@ -27,17 +27,19 @@ namespace SOTS.Items.Earth
             Item.DamageType = DamageClass.Generic;
             Item.width = 44;
             Item.height = 22;
-            Item.useTime = 1; 
-            Item.useAnimation = 2;
+            Item.useTime = 20; 
+            Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
 			Item.knockBack = 0.1f;  
             Item.value = Item.sellPrice(0, 2, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = null;
-            Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<PixelLaser>(); 
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<Projectiles.Earth.PixelBlaster>(); 
             Item.shootSpeed = 24f;
+			Item.channel = true;
+			Item.noUseGraphic = true;
 			if (!Main.dedServ)
 			{
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = glowTexture;
@@ -46,21 +48,26 @@ namespace SOTS.Items.Earth
         public override void ModifyWeaponCrit(Player player, ref float crit)
         {
 			crit *= 0.2f;
-			if (crit <= 0)
-				crit = 1;
+			crit += 1f;
+        }
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
+			if (damage.Multiplicative < 1)
+				damage *= 1 / damage.Multiplicative;
+			if (damage.Additive < 1)
+				damage += 1 - damage.Additive;
         }
         public override int GetVoid(Player player)
 		{
-			return 0;
+			return 20;
 		}
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        public override bool BeforeDrainMana(Player player)
         {
-			Vector2 origin = new Vector2(48, -2 * player.direction).RotatedBy(velocity.ToRotation());
-			position += origin;
+            return false;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			return true; 
+			return player.ownedProjectileCounts[type] <= 0; 
 		}
 	}
 }

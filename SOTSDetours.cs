@@ -494,25 +494,7 @@ namespace SOTS
         }
 		private static double NPC_StrikeNPC(On.Terraria.NPC.orig_StrikeNPC orig, NPC npc, int Damage, float knockBack, int hitDirection, bool crit = false, bool noEffect = false, bool fromNet = false)
 		{
-			SoundStyle? sound = null;
-			int hitDir = hitDirection;
-			bool doesEffectAnyway = false;
-			if(Math.Abs(hitDirection) == 8921) //checking if the hitdirection is equal to the special identifier for Pixel Laser
-			{
-				hitDir = Math.Sign(hitDirection);
-				doesEffectAnyway = Main.rand.NextBool(3); //only make the sound 1/3 of the time because it hits WAY too fast
-				if (!doesEffectAnyway)
-				{
-					sound = npc.HitSound;
-					npc.HitSound = null;
-					noEffect = true;
-				}
-			}
-			double double1 = orig(npc, Damage, knockBack, hitDir, crit, noEffect, fromNet);
-			if (Math.Abs(hitDirection) == 8921 && !doesEffectAnyway)
-			{
-				npc.HitSound = sound;
-			}
+			double double1 = orig(npc, Damage, knockBack, hitDirection, crit, noEffect, fromNet);
 			return double1;
 		}
 		/*Code I wrote for HeartPlusUp! Calamity Mod!
