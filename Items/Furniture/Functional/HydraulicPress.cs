@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Fragments;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.Blades;
 using System;
@@ -28,7 +29,25 @@ namespace SOTS.Items.Furniture.Functional
 			Item.rare = ItemRarityID.Orange;
 			Item.createTile = ModContent.TileType<HydraulicPressTile>();
 		}
-	}	
+        public override void AddRecipes()
+		{
+			Mod CALAMITY;
+			bool calamity = ModLoader.TryGetMod("CalamityMod", out CALAMITY);
+			if(calamity)
+			{
+				CreateRecipe(1).AddIngredient(CALAMITY, "MysteriousCircuitry", 10)
+					.AddIngredient(CALAMITY, "DubiousPlating", 10)
+					.AddIngredient(ModContent.ItemType<EarthenPlating>(), 10)
+					.AddTile(TileID.Anvils).Register();
+			}
+			else
+			{
+				CreateRecipe(1).AddRecipeGroup("SOTS:CrushingComponents", 1)
+					.AddIngredient(ModContent.ItemType<EarthenPlating>(), 20)
+					.AddTile(TileID.Anvils).Register();
+			}
+		}
+    }	
 	public class HydraulicPressTile : ModTile
 	{
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -49,11 +68,13 @@ namespace SOTS.Items.Furniture.Functional
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileObsidianKill[Type] = false;
-			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
-			Main.tileNoAttach[Type] = true;
+			Main.tileNoAttach[Type] = false;
 			Main.tileLavaDeath[Type] = false;
 			Main.tileWaterDeath[Type] = false;
+			Main.tileBlockLight[Type] = false;
+			Main.tileNoSunLight[Type] = false;
+			TileID.Sets.DrawsWalls[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
 			TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
 			TileObjectData.newTile.LavaDeath = false;
@@ -70,8 +91,8 @@ namespace SOTS.Items.Furniture.Functional
 			MineResist = 0.1f;
 		}
         public override void NearbyEffects(int i, int j, bool closer)
-        {
-			if(closer)
+		{
+			if (closer)
             {
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.TileFrameX % 108) / 18;
@@ -120,26 +141,26 @@ namespace SOTS.Items.Furniture.Functional
 		}
 		public static void LaunchHydraulic(NPC npc)
 		{
-			int i = (int)npc.Center.X / 16;
-			int j = (int)npc.Center.Y / 16;
-			Tile tile = Main.tile[i, j];
-			if (tile.TileFrameX < 108)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				int left = i - (tile.TileFrameX % 108) / 18;
-				int top = j - (tile.TileFrameY % 144) / 18;
-				for (int k = 0; k < 6; k++)
+				int i = (int)npc.Center.X / 16;
+				int j = (int)npc.Center.Y / 16;
+				Tile tile = Main.tile[i, j];
+				if (tile.TileFrameX < 108)
 				{
-					for (int h = 0; h < 8; h++)
+					int left = i - (tile.TileFrameX % 108) / 18;
+					int top = j - (tile.TileFrameY % 144) / 18;
+					for (int k = 0; k < 6; k++)
 					{
-						int trueI = left + k;
-						int trueJ = top + h;
-						tile = Main.tile[trueI, trueJ];
-						tile.TileFrameX += 108;
+						for (int h = 0; h < 8; h++)
+						{
+							int trueI = left + k;
+							int trueJ = top + h;
+							tile = Main.tile[trueI, trueJ];
+							tile.TileFrameX += 108;
+						}
 					}
-				}
-				NetMessage.SendTileSquare(Main.myPlayer, left + 3, top + 4, 9);
-				if (Main.netMode != NetmodeID.MultiplayerClient)
-				{
+					NetMessage.SendTileSquare(-1, left + 3, top + 4, 9);
 					Vector2 center = new Vector2(left * 16 + 48, top * 16 + 32);
 					Projectile.NewProjectile(new EntitySource_TileInteraction(npc, i, j, "SOTS:Hydraulic"), center, Vector2.Zero, ModContent.ProjectileType<PressProjectile>(), 200, 0, Main.myPlayer);
 					//spawn hydraulic projectile here
@@ -163,7 +184,7 @@ namespace SOTS.Items.Furniture.Functional
 						tile.TileFrameX -= 108;
 					}
 				}
-				NetMessage.SendTileSquare(Main.myPlayer, left + 3, top + 4, 9);
+				NetMessage.SendTileSquare(-1, left + 3, top + 4, 9);
 			}
 		}
         public override bool CanExplode(int i, int j)
@@ -198,9 +219,22 @@ namespace SOTS.Items.Furniture.Functional
 			Projectile.hide = false;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 60;
+			Projectile.netImportant = true;
 		}
+        public override bool CanHitPlayer(Player target)
+		{
+			return true;
+        }
+        Vector2 initialPosition = Vector2.Zero;
         public override bool PreDraw(ref Color lightColor)
-        {
+		{
+			if(initialPosition == Vector2.Zero)
+            {
+				initialPosition = Projectile.Center;
+            }
+			int i = (int)initialPosition.X / 16;
+			int j = (int)initialPosition.Y / 16;
+			lightColor = Lighting.GetColor(i, j);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, 28);
 			int height = 10 + (int)(48 - totalDistanceToTravel);
@@ -209,7 +243,7 @@ namespace SOTS.Items.Furniture.Functional
 			if (totalDistanceToTravel == 0)
 				height = 10;
 			Rectangle showPixels = new Rectangle(0, 0, texture.Width, height);
-			Main.spriteBatch.Draw(texture, new Vector2((int)Projectile.Center.X, (int)(Projectile.Center.Y + 2f + (58 - height))) - Main.screenPosition, showPixels, lightColor, 0f, origin, 1f, SpriteEffects.FlipVertically, 0f);
+			Main.spriteBatch.Draw(texture, new Vector2((int)Projectile.Center.X, (int)(Projectile.Center.Y + (58 - height)) + 2.5f) - Main.screenPosition, showPixels, lightColor, 0f, origin, 1f, SpriteEffects.FlipVertically, 0f);
 			return false;
         }
         float totalDistanceToTravel = 48f;
@@ -225,7 +259,7 @@ namespace SOTS.Items.Furniture.Functional
             }
 			if(totalDistanceToTravel > 0)
             {
-				float speed = Projectile.ai[0] / 1.75f;
+				float speed = Projectile.ai[0] * 1f;
 				if (speed > totalDistanceToTravel)
 					speed = totalDistanceToTravel;
 				totalDistanceToTravel -= speed;
@@ -235,18 +269,18 @@ namespace SOTS.Items.Furniture.Functional
 					Projectile.friendly = true;
 					Projectile.hostile = true;
 					totalDistanceToTravel = -48;
-					SOTSUtils.PlaySound(SoundID.Item53, Projectile.Center, 0.9f, -0.5f);
+					SOTSUtils.PlaySound(SoundID.Item53, Projectile.Center, 0.9f, -0.6f);
 					Color color = ColorHelpers.EarthColor;
 					color.A = 0;
-					for (int l = -10; l <= 10; l++)
+					for (int l = 0; l < 25; l++)
 					{
 						for(int z = 0; z <= 1; z++)
 						{
-							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - Projectile.width / 4 + l, Projectile.position.Y + Projectile.height - 2) - new Vector2(5, 5), Projectile.width / 2, 4, ModContent.DustType<PixelDust>(),
+							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - Projectile.width / 4, Projectile.position.Y + Projectile.height - 2) - new Vector2(5, 5), Projectile.width / 2, 4, ModContent.DustType<PixelDust>(),
 								0, -z * Main.rand.NextFloat(0.4f, 2.5f), 0, color, Main.rand.NextFloat(0.8f, 1.2f));
 							dust.noGravity = true;
 							dust.velocity.Y *= 0.2f;
-							dust.velocity.X = Math.Abs(dust.velocity.X) * (float)Math.Sqrt(Math.Abs(l) + 1) * Main.rand.NextFloat(-1f, 1f) * (2f - z);
+							dust.velocity.X = Math.Abs(dust.velocity.X) * (float)Math.Sqrt(l + 1) * Main.rand.NextFloat(-1f, 1f) * (2f - z);
 							dust.fadeIn = 6;
 						}
 					}
@@ -260,7 +294,7 @@ namespace SOTS.Items.Furniture.Functional
 			}
 			if(totalDistanceToTravel < 0)
 			{
-				float speed = -Projectile.ai[1] / 50f;
+				float speed = -0.1f -Projectile.ai[1] / 80f;
 				if (speed < totalDistanceToTravel)
 					speed = totalDistanceToTravel;
 				totalDistanceToTravel -= speed;
@@ -273,10 +307,10 @@ namespace SOTS.Items.Furniture.Functional
             }
 			if (totalDistanceToTravel == 0)
             {
-				if(Projectile.timeLeft > 2)
+				if(Projectile.timeLeft > 3)
                 {
 					ResetHydraulic();
-					Projectile.timeLeft = 2;
+					Projectile.timeLeft = 3;
                 }
             }
 		}

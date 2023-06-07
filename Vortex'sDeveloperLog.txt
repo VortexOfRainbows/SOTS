@@ -53,14 +53,15 @@ Ideas:
 
 Daily Log:
 
-6/5/23 & 6/6/23
+6/5/23 & 6/6/23 & 6/7/23
 1. Added Pixel Blaster (maybe a rare drop from the abandoned village earthen construct):
 	1. Works in multiplayer.
 	2. Deals 60 damage per second... Which means it is somewhat stronger than demonite bow, but weaker than other void weapons.
-	3. It's strenght will come from its utility, however
+	3. It's strenght will come from its utility, however (long range, instant, hitstun, low void cost when held)
 	4. Looks to be a little buggy occassionally (laser doesn't line up due to projectile IDs). But this mostly does not happen.
 2. Hydraulic Press can now damage enemies properly.
-	1. Needs: Multiplayer testing, balancing, particle effects, more visual IMPACT
+	1. Works in multiplayer!
+	2. Damage is locked at 200... This should work for now
 
 6/3/23 & 6/5/23
 1. Hydraulic Press Basics

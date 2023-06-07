@@ -1825,6 +1825,15 @@ namespace SOTS
 
 			});
 			RecipeGroup.RegisterGroup("SOTS:AlchSeeds", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.CC"), new int[]
+			{
+				ModContent.ItemType<CrushingTransformer>(),
+				ModContent.ItemType<CrushingAmplifier>(),
+				ModContent.ItemType<CrushingCapacitor>(),
+				ModContent.ItemType<CrushingResistor>()
+			});
+			RecipeGroup.RegisterGroup("SOTS:CrushingComponents", group);
 		}
 	}
 }

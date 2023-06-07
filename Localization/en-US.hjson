@@ -132,6 +132,7 @@ Mods: {
 			EF: " Elemental Fragment"
 			EP: " Elemental Plating"
 			AS: " Alchemical Seeds"
+			CC: " Circuit Component"
 		}
 
 		KeyBindName: {
@@ -1581,7 +1582,7 @@ Mods: {
 						'''
 					HydraulicPress:
 						'''
-						Automatically crushes enemies that walk into it
+						Automatically crushes enemies that walk inside
 						Players are not safe from taking damage
 						'''
 
