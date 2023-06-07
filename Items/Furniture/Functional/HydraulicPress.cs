@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.Blades;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -224,7 +225,7 @@ namespace SOTS.Items.Furniture.Functional
             }
 			if(totalDistanceToTravel > 0)
             {
-				float speed = Projectile.ai[0] / 2f;
+				float speed = Projectile.ai[0] / 1.75f;
 				if (speed > totalDistanceToTravel)
 					speed = totalDistanceToTravel;
 				totalDistanceToTravel -= speed;
@@ -234,7 +235,22 @@ namespace SOTS.Items.Furniture.Functional
 					Projectile.friendly = true;
 					Projectile.hostile = true;
 					totalDistanceToTravel = -48;
-                }
+					SOTSUtils.PlaySound(SoundID.Item53, Projectile.Center, 0.9f, -0.5f);
+					Color color = ColorHelpers.EarthColor;
+					color.A = 0;
+					for (int l = -10; l <= 10; l++)
+					{
+						for(int z = 0; z <= 1; z++)
+						{
+							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - Projectile.width / 4 + l, Projectile.position.Y + Projectile.height - 2) - new Vector2(5, 5), Projectile.width / 2, 4, ModContent.DustType<PixelDust>(),
+								0, -z * Main.rand.NextFloat(0.4f, 2.5f), 0, color, Main.rand.NextFloat(0.8f, 1.2f));
+							dust.noGravity = true;
+							dust.velocity.Y *= 0.2f;
+							dust.velocity.X = Math.Abs(dust.velocity.X) * (float)Math.Sqrt(Math.Abs(l) + 1) * Main.rand.NextFloat(-1f, 1f) * (2f - z);
+							dust.fadeIn = 6;
+						}
+					}
+				}
 				Projectile.ai[0]++;
             }
 			else
@@ -244,7 +260,7 @@ namespace SOTS.Items.Furniture.Functional
 			}
 			if(totalDistanceToTravel < 0)
 			{
-				float speed = -Projectile.ai[1] / 30f;
+				float speed = -Projectile.ai[1] / 50f;
 				if (speed < totalDistanceToTravel)
 					speed = totalDistanceToTravel;
 				totalDistanceToTravel -= speed;
