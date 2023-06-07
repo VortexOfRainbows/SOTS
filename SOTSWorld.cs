@@ -190,6 +190,15 @@ namespace SOTS
 		{
 			SOTSConfig.voidBarNeedsLoading = 0;
 			SOTSConfig.PreviousBarMode = 0;
+			for(int i = 0; i < 1000; i ++)
+            {
+				Projectile projectile = Main.projectile[i];
+				if(projectile.active && projectile.type == ModContent.ProjectileType<PressProjectile>())
+                {
+					PressProjectile press = projectile.ModProjectile as PressProjectile;
+					press.ResetHydraulic();
+                }
+            }
 			PreSaveAndQuit_AwaitThreadedTasks();
 		}
 		private void PreSaveAndQuit_AwaitThreadedTasks()

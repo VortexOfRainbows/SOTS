@@ -3822,6 +3822,7 @@ Mods: {
 			TorchEmber: Torch Ember
 			PixelLaser: Pixel Laser
 			PixelBlaster: Pixel Blaster
+			PressProjectile: Pancake Presser
 		}
 	}
 }

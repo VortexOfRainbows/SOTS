@@ -40,6 +40,7 @@ using Terraria.GameContent.Bestiary;
 using SOTS.Biomes;
 using SOTS.Items.Temple;
 using Terraria.Localization;
+using SOTS.Items.Furniture.Functional;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -120,6 +121,7 @@ namespace SOTS.Common.GlobalNPCs
 				npc.velocity *= 0.986f;
 				return false;
             }
+			HydraulicPressTile.CheckIfInsideHydraulic(npc);
 			SetDebuffImmunities(npc);
 			return base.PreAI(npc);
         }

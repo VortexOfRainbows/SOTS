@@ -59,6 +59,8 @@ Daily Log:
 	2. Deals 60 damage per second... Which means it is somewhat stronger than demonite bow, but weaker than other void weapons.
 	3. It's strenght will come from its utility, however
 	4. Looks to be a little buggy occassionally (laser doesn't line up due to projectile IDs). But this mostly does not happen.
+2. Hydraulic Press can now damage enemies properly.
+	1. Needs: Multiplayer testing, balancing, particle effects, more visual IMPACT
 
 6/3/23 & 6/5/23
 1. Hydraulic Press Basics
