@@ -145,6 +145,7 @@ Mods: {
 			Advisor: The Advisor has awoken!
 			PharaohsCurse: Pharaoh's Curse has awoken!
 			Lux: Lux has awoken!
+			Glowmoth: Glowmoth has awoken!
 		}
 
 
@@ -2979,6 +2980,9 @@ Mods: {
 					PolarisCannon: Polar Cannon
 					PolarisLaser: Polar Quad-Cannon
 					PolarisSpike: Polar Spike
+					
+				# Glowmoth
+					Glowmoth: Glowmoth
 
 				HookTurret: Putrid Turret
 				PutridHook: Putrid Hook

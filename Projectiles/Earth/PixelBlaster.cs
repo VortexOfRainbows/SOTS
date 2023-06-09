@@ -148,8 +148,8 @@ namespace SOTS.Projectiles.Earth
                         VoidItem vItem = item.ModItem as VoidItem;
                         if (vItem != null)
                             vItem.DrainMana(player);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), gunTip, Projectile.velocity, ModContent.ProjectileType<PixelLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.identity, -1);
                     }
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), gunTip, Projectile.velocity, ModContent.ProjectileType<PixelLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, (Projectile.ai[0] == 60 ? -1 : 0));
                 }
             }
         }

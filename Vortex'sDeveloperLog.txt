@@ -53,6 +53,11 @@ Ideas:
 
 Daily Log:
 
+6/8/23
+1. Pixel Blaster's laser projectile now makes more sense (no longer spams individual projectiles over and over)
+	1. (MOSTLY) Works in Multiplayer! Good enough!
+2. Glowmoth exists (has no AI yet)
+
 6/5/23 & 6/6/23 & 6/7/23
 1. Added Pixel Blaster (maybe a rare drop from the abandoned village earthen construct):
 	1. Works in multiplayer.

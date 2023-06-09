@@ -15,7 +15,6 @@ namespace SOTS.Projectiles.Earth
 		{
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
-
 		public override void SetDefaults() 
 		{
 			Projectile.width = 8;
@@ -28,7 +27,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.localNPCHitCooldown = 0;
 			Projectile.hide = true;
 		}
 		Vector2 finalPosition = Vector2.Zero;
@@ -36,12 +35,29 @@ namespace SOTS.Projectiles.Earth
         {
 			return false;
         }
-        public override bool PreAI()
-        {
-			if(!hasInit)
+		public override bool PreAI()
+		{
+			InitializeLaser();
+			Player player = Main.player[Projectile.owner];
+			if (player.channel || Main.myPlayer != Projectile.owner)
+				Projectile.timeLeft = 2;
+			else
             {
-				InitializeLaser();
+				Projectile.Kill();
             }
+			int GunID = (int)Projectile.ai[0];
+			for(int i = 0; i < 1000; i++)
+            {
+				Projectile proj = Main.projectile[i];
+				if(proj.identity == GunID && proj.active && proj.type == ModContent.ProjectileType<PixelBlaster>())
+                {
+					Projectile.velocity = proj.velocity;
+					Projectile.Center = proj.Center + new Vector2(22, -2 * proj.direction).RotatedBy(proj.velocity.ToRotation());
+					break;
+				}
+            }
+			if (Projectile.oldVelocity != Projectile.velocity || Projectile.oldPosition != Projectile.position)
+				Projectile.netUpdate = true;
             return true;
         }
         public override void AI() 
@@ -83,7 +99,7 @@ namespace SOTS.Projectiles.Earth
                 {
 					break;
                 }
-				bool extra = Projectile.ai[1] == -1;
+				bool extra = !hasInit;
 				int chance = SOTS.Config.lowFidelityMode ? 36 : 12;
 				if(Main.rand.NextBool(chance) || extra)
 				{
