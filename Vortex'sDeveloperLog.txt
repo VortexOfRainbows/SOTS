@@ -55,7 +55,7 @@ Daily Log:
 
 6/9/23
 1. Some glowmoth visuals and basic movements
-	1. No attacks yet
+	1. WIP Web (?) attack
 2. Fix strange bug with chest localizations
 
 6/8/23

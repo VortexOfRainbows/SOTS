@@ -5,6 +5,7 @@ using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.Items.Pyramid;
+using SOTS.Projectiles.Earth.Glowmoth;
 using SOTS.Projectiles.Pyramid;
 using SOTS.WorldgenHelpers;
 using System;
@@ -118,13 +119,17 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		{
 			NPC.TargetClosest(true);
 			Player player = Main.player[NPC.target];
+			Vector2 toPlayer = player.Center - NPC.Center;
+			float distToPlayer = toPlayer.Length();
 			if (AI0 == InitializationPhase)
 			{
 				NPC.alpha -= 4;
 				if(NPC.alpha <= 0)
                 {
 					NPC.alpha = 0;
-					SwapPhase(WanderPhase);
+					if(AI1 >= 60)
+						SwapPhase(WanderPhase);
+					AI1++;
 					return;
 				}
 				if(NPC.alpha <= 20)
@@ -133,8 +138,8 @@ namespace SOTS.NPCs.Boss.Glowmoth
                     {
 						if(Main.netMode != NetmodeID.MultiplayerClient)
                         {
-							//fire out projectile waves
-                        }
+							CircularBallBurst(24);
+						}
 						SOTSUtils.PlaySound(SoundID.Roar, NPC.Center, 1.0f, 0.3f);
                     }
 					AI2 = -1;
@@ -142,21 +147,61 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			}
 			if(AI0 == WanderPhase)
             {
-				Vector2 toPlayer = player.Center - NPC.Center;
-				float dist = toPlayer.Length();
-				toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * (6.5f + dist / 80f);
-				if(dist < 240)
+				toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * (6.5f + distToPlayer / 80f);
+				if(distToPlayer < 240)
                 {
 					toPlayer *= 0.25f;
                 }
-				NPC.velocity = Vector2.Lerp(NPC.velocity, toPlayer, 0.0425f + dist / 24000f);
+				NPC.velocity = Vector2.Lerp(NPC.velocity, toPlayer, 0.0425f + distToPlayer / 24000f);
 				if(AI1 >= 240)
 				{
-					//SwapPhase(ScatterShotPhase);
-					//return;
+					SwapPhase(ScatterShotPhase);
+					return;
 				}
 				AI1++;
 			}
+			if(AI0 == ScatterShotPhase)
+            {
+				if(AI1 < 60)
+                {
+					NPC.velocity = -toPlayer.SafeNormalize(Vector2.Zero) * 12f * (1 - AI1 / 60f);
+                }
+				NPC.velocity *= 0.5f;
+				if(AI1 >= 60)
+                {
+					int shotcount = 12;
+					int betweenShots = 140;
+					if (Main.expertMode)
+                    {
+						betweenShots = 120;
+						shotcount = 18;
+					}
+					if (Main.masterMode)
+						betweenShots = 100;
+					if(AI1 % betweenShots == 0)
+					{
+						if (AI2 == 4)
+						{
+							SwapPhase(WanderPhase);
+						}
+						else
+						{
+							float staggerAmount = 120;
+							if (AI2 == 1)
+							{
+								staggerAmount = 90;
+							}
+							if (AI2 == 2)
+								staggerAmount = 60;
+							if (AI2 == 3)
+								staggerAmount = 45;
+							CircularBallBurst(shotcount, staggerAmount + Main.rand.Next(-10, 11), AI2 + 2);
+							AI2++;
+						}
+                    }
+                }
+				AI1++;
+            }
 		}
         public override void PostAI()
         {
@@ -166,6 +211,8 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			float scalingFactor = 1 - NPC.alpha / 255f;
 			AI3 += scalingFactor * scalingFactor;
 			NPC.rotation = NPC.velocity.X * 0.05f;
+
+			NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(20, 20), NPC.velocity, NPC.width - 40, NPC.height - 40, true);
 		}
 		public void SwapPhase(int Phase)
         {
@@ -188,6 +235,26 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			AI0 = Phase;
 			NPC.netUpdate = true;
 		}
+		public void CircularBallBurst(int count = 0, float staggerAmount = 0, float staggerInterval = 1)
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+				return;
+			int damage = NPC.GetBaseDamage() / 2;
+			int previousIdentity = 0;
+			Projectile firstProjectile = null;
+			for (int i = 0; i < count; i++)
+            {
+				float radians = i / (float)count * MathHelper.TwoPi;
+				Vector2 circular = new Vector2(2f, 0).RotatedBy(radians);
+				float stagger = i % staggerInterval * staggerAmount;
+				Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + circular.SafeNormalize(Vector2.Zero) * 32, circular, ModContent.ProjectileType<WaveBall>(), damage, 1f, Main.myPlayer, previousIdentity, stagger);
+				previousIdentity = proj.identity;
+				if (firstProjectile == null)
+					firstProjectile = proj;
+            }
+			firstProjectile.ai[0] = previousIdentity;
+			firstProjectile.netUpdate = true;
+        }
         public override void FindFrame(int frameHeight) 
 		{
 			NPC.frameCounter++;

@@ -3829,6 +3829,7 @@ Mods: {
 			PixelLaser: Pixel Laser
 			PixelBlaster: Pixel Blaster
 			PressProjectile: Pancake Presser
+			WaveBall: Glow Ball
 		}
 	}
 }
