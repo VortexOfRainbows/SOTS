@@ -75,7 +75,10 @@ namespace SOTS.Items.Otherworld.Furniture
 
             }
 		}
-		protected override string ChestName => Language.GetTextValue("Mods.SOTS.ItemName.StrangeChest");
+		protected override string GetChestName()
+		{
+			return Language.GetTextValue("Mods.SOTS.MapObject.LockedStrangeChest");
+		}
 		protected override int ChestDrop => ModContent.ItemType<StrangeChest>();
 		protected override int ChestKey => ModContent.ItemType<StrangeKey>();
 		protected override int DustType => ModContent.DustType<AvaritianDust>();

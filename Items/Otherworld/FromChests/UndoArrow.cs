@@ -40,14 +40,15 @@ namespace SOTS.Items.Otherworld.FromChests
 					Main.npc[i].aiStyle = -420;
             }
 			Main.NewText(Main.invasionType);
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Ruby", Convert.ToString(SOTSWorld.RubyKeySlotted)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.MapObject.LockedStrangeChest"));
+			/*
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Sapphire", Convert.ToString(SOTSWorld.SapphireKeySlotted)));
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Emerald", Convert.ToString(SOTSWorld.EmeraldKeySlotted)));
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Topaz", Convert.ToString(SOTSWorld.TopazKeySlotted)));
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Amethyst", Convert.ToString(SOTSWorld.AmethystKeySlotted)));
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Diamond", Convert.ToString(SOTSWorld.DiamondKeySlotted)));
             Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Amber", Convert.ToString(SOTSWorld.AmberKeySlotted)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Pack", Convert.ToString(SOTS.SOTSTexturePackEnabled)));
+            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Pack", Convert.ToString(SOTS.SOTSTexturePackEnabled)));*/
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 32;

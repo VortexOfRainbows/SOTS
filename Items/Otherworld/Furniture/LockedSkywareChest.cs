@@ -8,7 +8,10 @@ namespace SOTS.Items.Otherworld.Furniture
 {
 	public class LockedSkywareChest : ContainerType
 	{
-		protected override string ChestName => Language.GetTextValue("Mods.SOTS.ItemName.LockedSkywareChest");
+		protected override string GetChestName()
+		{
+			return Language.GetTextValue("Mods.SOTS.MapObject.LockedSkywareChest");
+		}
 		protected override int ChestDrop => ItemID.SkywareChest;
 		protected override int ChestKey => ModContent.ItemType<Otherworld.SkywareKey>();
 		protected override int DustType => 116;

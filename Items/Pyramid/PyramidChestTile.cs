@@ -7,7 +7,10 @@ namespace SOTS.Items.Pyramid
 {
 	public class PyramidChestTile : ContainerType
 	{
-		protected override string ChestName => Language.GetTextValue("Mods.SOTS.MapObject.PyramidChestTile");
+		protected override string GetChestName()
+		{
+			return Language.GetTextValue("Mods.SOTS.MapObject.PyramidChestTile");
+		}
 		protected override int ChestDrop => ModContent.ItemType<PyramidChest>();
 		protected override int DustType => 7;
 		protected override void AddMapEntires()

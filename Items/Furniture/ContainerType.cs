@@ -34,10 +34,13 @@ namespace SOTS.Items.Furniture
 		protected virtual int ChestKey => ItemID.GoldenKey;
 		protected virtual int ChestDrop => ItemID.Chest;
         protected virtual int DustType => DustID.Dirt;
-        protected virtual string ChestName => "Chest";
+        protected virtual string GetChestName()
+        {
+			return "Chest";
+		}
         public override void SetStaticDefaults()
 		{
-			ContainerName.SetDefault(ChestName);
+			ContainerName.SetDefault(GetChestName());
 			ChestStatics();
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);

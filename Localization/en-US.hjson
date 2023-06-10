@@ -2840,6 +2840,7 @@ Mods: {
 			GoopwoodBarrelTile: Goopwood Barrel
 			NaturePlatingCapsuleTile: Nature Plating Capsule
 			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
+			GemChestTile: Gem Chest
 
 			AncientGoldDresserTile: Ancient Gold Dresser
 			EarthenPlatingDresserTile: Earthen Plating Dresser

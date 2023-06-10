@@ -132,7 +132,10 @@ namespace SOTS.Items.Gems
 			}
 			return true;
 		}
-        protected override string ChestName => "Gem Chest";
+		protected override string GetChestName()
+		{
+			return Language.GetTextValue("Mods.SOTS.ContainerName.GemChestTile");
+		}
 		public bool CanUnlockChest(int i, int j, ref int dustType)
 		{
 			Tile tile = Main.tile[i, j];

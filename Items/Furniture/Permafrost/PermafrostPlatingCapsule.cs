@@ -31,7 +31,10 @@ namespace SOTS.Items.Furniture.Permafrost
         {
             return false;
         }
-        protected override string ChestName => Language.GetTextValue("Mods.SOTS.ItemName.PermafrostPlatingCapsule");
+        protected override string GetChestName()
+        {
+            return Language.GetTextValue("Mods.SOTS.ContainerName.PermafrostPlatingCapsuleTile");
+        }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<PermafrostPlatingCapsule>();
         protected override int DustType => DustID.Silver;

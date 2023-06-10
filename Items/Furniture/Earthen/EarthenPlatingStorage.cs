@@ -36,7 +36,10 @@ namespace SOTS.Items.Furniture.Earthen
         {
             return false;
         }
-        protected override string ChestName => Language.GetTextValue("Mods.SOTS.ContainerName.EarthenPlatingStorageTile");
+        protected override string GetChestName()
+        {
+            return Language.GetTextValue("Mods.SOTS.ContainerName.EarthenPlatingStorageTile");
+        }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<EarthenPlatingStorage>();
         protected override int DustType => DustID.Iron;

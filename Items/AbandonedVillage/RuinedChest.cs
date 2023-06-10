@@ -27,7 +27,10 @@ namespace SOTS.Items.AbandonedVillage
 	}
 	public class RuinedChestTile : Furniture.ContainerType
 	{
-		protected override string ChestName => Language.GetTextValue("Mods.SOTS.ItemName.RuinedChest");
+		protected override string GetChestName()
+		{
+			return Language.GetTextValue("Mods.SOTS.ContainerName.RuinedChestTile");
+		}
 		protected override int ChestDrop => ModContent.ItemType<RuinedChest>();
 		protected override int ChestKey => ModContent.ItemType<OldKey>();
 		protected override int DustType => 122;

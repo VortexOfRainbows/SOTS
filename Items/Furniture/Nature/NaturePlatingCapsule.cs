@@ -31,7 +31,10 @@ namespace SOTS.Items.Furniture.Nature
         {
             return false;
         }
-        protected override string ChestName => Language.GetTextValue("Mods.SOTS.ItemName.NaturePlatingCapsule");
+        protected override string GetChestName()
+        {
+            return Language.GetTextValue("Mods.SOTS.ContainerName.NaturePlatingCapsuleTile");
+        }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<NaturePlatingCapsule>();
         protected override int DustType => DustID.Tungsten;

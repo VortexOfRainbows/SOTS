@@ -108,14 +108,14 @@ namespace SOTS.Items.Furniture.Functional
 							tile = Main.tile[trueI, trueJ];
 							if(h >= 4 && h <= 6)
                             {
-								if(!tile.IsActuated)
+								if(!tile.IsActuated && tile.TileType == Type)
                                 {
 									tile.IsActuated = true;
 									NetMessage.SendTileSquare(Main.myPlayer, trueI, trueJ, 1);
 								}
 							}
-							else if(tile.IsActuated)
-                            {
+							else if(tile.IsActuated && tile.TileType == Type)
+							{
 								tile.IsActuated = false;
 								NetMessage.SendTileSquare(Main.myPlayer, trueI, trueJ, 1);
 							}
@@ -126,7 +126,7 @@ namespace SOTS.Items.Furniture.Functional
         }
 		public static void CheckIfInsideHydraulic(NPC npc)
 		{
-			if (npc.friendly || !npc.active)
+			if (npc.friendly || !npc.active || npc.dontTakeDamage)
 				return;
 			int i = (int)npc.Center.X / 16;
 			int j = (int)npc.Center.Y / 16;
@@ -220,7 +220,12 @@ namespace SOTS.Items.Furniture.Functional
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 60;
 			Projectile.netImportant = true;
+			Projectile.hide = true;
 		}
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+			behindNPCs.Add(index);
+        }
         public override bool CanHitPlayer(Player target)
 		{
 			return true;
