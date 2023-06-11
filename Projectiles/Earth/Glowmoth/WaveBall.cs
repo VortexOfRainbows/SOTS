@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			DrawWebBetweenProjectile(false);
 			DrawWebBetweenProjectile(true);
 			DrawTrail();
-			float alphaMult = 0.5f + 0.5f * Projectile.ai[1];
+			float alphaMult = 0.35f + 0.65f * Projectile.ai[1];
 			for (int k = 0; k < 3; k++)
 			{
 				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(color) * alphaMult, Projectile.rotation + MathHelper.ToRadians(120f * k + Counter), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);

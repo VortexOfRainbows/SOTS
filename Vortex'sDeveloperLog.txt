@@ -53,10 +53,12 @@ Ideas:
 
 Daily Log:
 
-6/9/23
+6/9/23 & 6/10/23
 1. Some glowmoth visuals and basic movements
 	1. WIP Web (?) attack
+	2. WIP Glowmoth minion circle
 2. Fix strange bug with chest localizations
+
 
 6/8/23
 1. Pixel Blaster's laser projectile now makes more sense (no longer spams individual projectiles over and over)

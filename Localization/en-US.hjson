@@ -2984,6 +2984,7 @@ Mods: {
 					
 				# Glowmoth
 					Glowmoth: Glowmoth
+					GlowmothMinion: Illuminant Moth
 
 				HookTurret: Putrid Turret
 				PutridHook: Putrid Hook

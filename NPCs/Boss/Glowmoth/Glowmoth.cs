@@ -24,6 +24,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public const int InitializationPhase = -1;
 		public const int WanderPhase = 0;
 		public const int ScatterShotPhase = 1;
+		public const int MothAttackPhase = 2;
 		private float AI0
 		{
 			get => NPC.ai[0];
@@ -182,7 +183,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 					{
 						if (AI2 == 4)
 						{
-							SwapPhase(WanderPhase);
+							SwapPhase(MothAttackPhase);
 						}
 						else
 						{
@@ -199,6 +200,26 @@ namespace SOTS.NPCs.Boss.Glowmoth
 							AI2++;
 						}
                     }
+                }
+				AI1++;
+            }
+			if(AI0 == MothAttackPhase)
+			{
+				if (AI1 < 120)
+				{
+					NPC.velocity *= 0.8f;
+				}
+				else if (AI1 < 60)
+				{
+					NPC.velocity = toPlayer.SafeNormalize(Vector2.Zero) * 11f * (1.1f - AI1 / 60f);
+				}
+				if(AI1 == 120)
+                {
+					SummonMoths();
+                }
+				if(AI1 == 360)
+                {
+					SwapPhase(WanderPhase);
                 }
 				AI1++;
             }
@@ -224,14 +245,6 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			}
 			else
 				NPC.dontTakeDamage = false;
-			if (Phase == WanderPhase)
-			{
-
-			}
-			if (Phase == ScatterShotPhase)
-			{
-
-			}
 			AI0 = Phase;
 			NPC.netUpdate = true;
 		}
@@ -254,6 +267,22 @@ namespace SOTS.NPCs.Boss.Glowmoth
             }
 			firstProjectile.ai[0] = previousIdentity;
 			firstProjectile.netUpdate = true;
+        }
+		public void SummonMoths()
+		{
+			SOTSUtils.PlaySound(SoundID.Item44, (int)NPC.Center.X, (int)NPC.Center.Y, 1f, -0.3f);
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+				return;
+			for (int j = 0; j < 4; j++)
+            {
+				float orbitRing = 180 / 4 * j;
+				for (int i = 0; i < 4; i++)
+				{
+					float degreesRing = 360 / 4 * i + j * 15;
+					NPC moth = NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2CircularEdge(120, 120), ModContent.NPCType<GlowmothMinion>(), 0, NPC.whoAmI, degreesRing, orbitRing, Main.rand.NextBool(4) ? -1 : 0, 255);
+					moth.netUpdate = true;
+				}
+			}
         }
         public override void FindFrame(int frameHeight) 
 		{
