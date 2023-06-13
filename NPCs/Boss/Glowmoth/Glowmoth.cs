@@ -171,14 +171,14 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				if(AI1 >= 60)
                 {
 					int shotcount = 12;
-					int betweenShots = 140;
+					int betweenShots = 100;
 					if (Main.expertMode)
                     {
-						betweenShots = 120;
-						shotcount = 18;
+						betweenShots = 80;
+						shotcount = 18; //This will also be active in master mode
 					}
 					if (Main.masterMode)
-						betweenShots = 100;
+						betweenShots = 60;
 					if(AI1 % betweenShots == 0)
 					{
 						if (AI2 == 4)
@@ -217,7 +217,12 @@ namespace SOTS.NPCs.Boss.Glowmoth
                 {
 					SummonMoths();
                 }
-				if(AI1 == 360)
+				if(AI1 >= 120)
+                {
+					AI2++;
+					//Needs to dash here!
+                }
+				if(AI1 == 800)
                 {
 					SwapPhase(WanderPhase);
                 }
@@ -258,7 +263,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			for (int i = 0; i < count; i++)
             {
 				float radians = i / (float)count * MathHelper.TwoPi;
-				Vector2 circular = new Vector2(2f, 0).RotatedBy(radians);
+				Vector2 circular = new Vector2(2.2f, 0).RotatedBy(radians);
 				float stagger = i % staggerInterval * staggerAmount;
 				Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + circular.SafeNormalize(Vector2.Zero) * 32, circular, ModContent.ProjectileType<WaveBall>(), damage, 1f, Main.myPlayer, previousIdentity, stagger);
 				previousIdentity = proj.identity;

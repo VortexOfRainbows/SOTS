@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				Vector2 origin = new Vector2(0, texture.Height / 2);
 				float dist = toPartner.Length();
 				float xScale = dist / texture.Width;
-				float alphaMult = 0.025f + 0.975f * Projectile.ai[1];
+				float alphaMult = 0.2f + 0.8f * Projectile.ai[1];
 				for (int k = 0; k <= 1; k++)
 				{
 					Main.spriteBatch.Draw(texture, start - Main.screenPosition + Main.rand.NextVector2Circular(1, 1), null, new Color(100, 100, 100, 0) * alphaMult * 0.7f, toPartner.ToRotation(), origin, new Vector2(xScale, 0.25f + 0.75f * alphaMult), SpriteEffects.None, 0f);
@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			DrawWebBetweenProjectile(false);
 			DrawWebBetweenProjectile(true);
 			DrawTrail();
-			float alphaMult = 0.35f + 0.65f * Projectile.ai[1];
+			float alphaMult = 0.2f + 0.8f * Projectile.ai[1];
 			for (int k = 0; k < 3; k++)
 			{
 				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(color) * alphaMult, Projectile.rotation + MathHelper.ToRadians(120f * k + Counter), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);

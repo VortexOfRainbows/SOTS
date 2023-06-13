@@ -53,6 +53,9 @@ Ideas:
 
 Daily Log:
 
+6/12/23
+1. WIP glowmoth stuff
+
 6/9/23 & 6/10/23
 1. Some glowmoth visuals and basic movements
 	1. WIP Web (?) attack

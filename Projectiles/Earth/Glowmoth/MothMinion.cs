@@ -30,14 +30,12 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		{
 			Main.projFrames[Projectile.type] = 3;
 			//ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true; //We don't want the special right click since the minions already special target with right click
-
 			Main.projPet[Projectile.type] = true; 
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10; 
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0	; 
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true; 
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true; 
 		}
-
 		public sealed override void SetDefaults()
 		{
 			Projectile.width = 24;

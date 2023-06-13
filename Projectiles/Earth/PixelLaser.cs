@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Earth
 				for(int ID = 0; ID < Main.npc.Length; ID++)
 				{
 					NPC npc = Main.npc[ID];
-					if(npc.active && !npc.friendly)
+					if(npc.active && !npc.friendly && !npc.dontTakeDamage)
 					{
 						if (npc.Hitbox.Intersects(projHit))
 						{

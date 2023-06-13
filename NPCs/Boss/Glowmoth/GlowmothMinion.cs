@@ -30,8 +30,11 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			get => NPC.ai[2];
 			set => NPC.ai[2] = value;
 		}
+		public float deathCounter = 0;
 		public override void SetStaticDefaults()
 		{
+			NPCID.Sets.TrailCacheLength[Type] = 10;
+			NPCID.Sets.TrailingMode[Type] = 0;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true
@@ -64,14 +67,37 @@ namespace SOTS.NPCs.Boss.Glowmoth
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
 			return false;
-        }
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			Texture2D texture2 = ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/Glowmoth/ArrowMothTrail").Value;
+			Vector2 trailOrigin = new Vector2(texture2.Width - 6, texture2.Height * 0.5f);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 3 * 0.5f);
 			Vector2 drawPos = NPC.Center - screenPos;
+			float scaleOffSpeed = MathHelper.Clamp(NPC.velocity.Length() / 15f, 0, 1);
+			Color trailColor = new Color(60, 60, 70, 0);
 			if (!Blue)
+			{
+				trailColor = new Color(60, 70, 60, 0);
+				texture2 = ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/Glowmoth/MothMinionTrail").Value;
 				texture = (Texture2D)Request<Texture2D>("SOTS/Projectiles/Earth/Glowmoth/MothMinion");
+			}
+			for (int k = 1; k < NPC.oldPos.Length - 1; k++)
+			{
+                if (NPC.oldPos[k + 1].Distance(NPC.position) > 160)
+                {
+					break;
+                }
+				for (int j = 0; j < (SOTS.Config.lowFidelityMode ? 1 : 2); j++)
+				{
+					float scaleMult = ((NPC.oldPos.Length - k) / (float)NPC.oldPos.Length) * (1.0f - j * 0.2f);
+					Vector2 toNextPosition = NPC.oldPos[k] - NPC.oldPos[k + 1];
+					Vector2 drawPos2 = NPC.oldPos[k] + drawOrigin - Main.screenPosition;
+					Color color = trailColor * scaleMult * (0.5f + scaleOffSpeed * 0.5f);
+					spriteBatch.Draw(texture2, drawPos2 + toNextPosition.SafeNormalize(Vector2.Zero) * 3 * j, null, color * 0.9f, toNextPosition.ToRotation(), trailOrigin, new Vector2(toNextPosition.Length() / texture2.Width * 2, NPC.scale * (1.5f - 0.5f * scaleOffSpeed) * scaleMult), SpriteEffects.None, 0);
+				}
+			}
 			spriteBatch.Draw(texture, drawPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, NPC.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
@@ -81,22 +107,23 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		}
 		public override void AI()
 		{
+			deathCounter++;
 			NPC.TargetClosest(false);
 			NPC owner = Main.npc[(int)ownerID];
-			if (owner.type != ModContent.NPCType<Glowmoth>() || !owner.active)
+			if (owner.type != ModContent.NPCType<Glowmoth>() || !owner.active || deathCounter > 1100 + (NPC.whoAmI % 21 * 10))
 			{
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 					NPC.StrikeNPC(10, 0, Main.rand.Next(2) * 2 - 1, false, true, false);
 				return;
 			}
-			Vector2 circular = new Vector2(96, 0).RotatedBy(MathHelper.ToRadians(aiCounter));
-			circular.X *= 0.5f;
+			Vector2 circular = new Vector2(128, 0).RotatedBy(MathHelper.ToRadians(aiCounter));
+			circular.X *= 0.55f;
 			circular = circular.RotatedBy(MathHelper.ToRadians(aiCounter2));
 			Vector2 orbit = owner.Center + circular;
 			Vector2 toOrbit = orbit - NPC.Center;
 			float dist = toOrbit.Length();
 			Vector2 velocity = toOrbit.SafeNormalize(Vector2.Zero);
-			float speed = 6f + (NPC.whoAmI % 10 * 0.33f) + (float)Math.Sqrt(dist);
+			float speed = 5.5f + (NPC.whoAmI % 10 * 0.25f) + (float)Math.Sqrt(dist);
 			if(speed > dist)
             {
 				speed = dist + speed / 5f;
@@ -115,7 +142,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			{
 				NPC.dontTakeDamage = false;
 				NPC.alpha = 0;
-            }
+			}
 		}
         public override void FindFrame(int frameHeight)
         {
