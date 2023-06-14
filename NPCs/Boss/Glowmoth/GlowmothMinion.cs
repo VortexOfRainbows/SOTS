@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Projectiles.Earth.Glowmoth;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -95,7 +96,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 					Vector2 toNextPosition = NPC.oldPos[k] - NPC.oldPos[k + 1];
 					Vector2 drawPos2 = NPC.oldPos[k] + drawOrigin - Main.screenPosition;
 					Color color = trailColor * scaleMult * (0.5f + scaleOffSpeed * 0.5f);
-					spriteBatch.Draw(texture2, drawPos2 + toNextPosition.SafeNormalize(Vector2.Zero) * 3 * j, null, color * 0.9f, toNextPosition.ToRotation(), trailOrigin, new Vector2(toNextPosition.Length() / texture2.Width * 2, NPC.scale * (1.5f - 0.5f * scaleOffSpeed) * scaleMult), SpriteEffects.None, 0);
+					spriteBatch.Draw(texture2, drawPos2 + toNextPosition.SafeNormalize(Vector2.Zero) * 3 * j, null, color * 0.9f, toNextPosition.ToRotation(), trailOrigin, new Vector2(toNextPosition.Length() / texture2.Width * 2, NPC.scale * (1.0f - 0.25f * scaleOffSpeed) * scaleMult), SpriteEffects.None, 0);
 				}
 			}
 			spriteBatch.Draw(texture, drawPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, NPC.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
@@ -110,28 +111,30 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			deathCounter++;
 			NPC.TargetClosest(false);
 			NPC owner = Main.npc[(int)ownerID];
-			if (owner.type != ModContent.NPCType<Glowmoth>() || !owner.active || deathCounter > 1100 + (NPC.whoAmI % 21 * 10))
+			if (owner.type != ModContent.NPCType<Glowmoth>() || !owner.active || deathCounter > 1100 + (NPC.whoAmI % 21 * 4))
 			{
 				if(Main.netMode != NetmodeID.MultiplayerClient)
+				{
 					NPC.StrikeNPC(10, 0, Main.rand.Next(2) * 2 - 1, false, true, false);
+				}
 				return;
 			}
 			Vector2 circular = new Vector2(128, 0).RotatedBy(MathHelper.ToRadians(aiCounter));
-			circular.X *= 0.55f;
+			circular.X *= 0.35f;
 			circular = circular.RotatedBy(MathHelper.ToRadians(aiCounter2));
 			Vector2 orbit = owner.Center + circular;
 			Vector2 toOrbit = orbit - NPC.Center;
 			float dist = toOrbit.Length();
 			Vector2 velocity = toOrbit.SafeNormalize(Vector2.Zero);
-			float speed = 5.5f + (NPC.whoAmI % 10 * 0.25f) + (float)Math.Sqrt(dist);
+			float speed = 8f + (NPC.whoAmI % 10 * 0.3f) + (float)Math.Sqrt(dist);
 			if(speed > dist)
             {
-				speed = dist + speed / 5f;
+				speed = dist + speed / 20f;
             }
 			velocity *= speed * (1 - NPC.alpha / 255f);
-			NPC.velocity = Vector2.Lerp(NPC.velocity, velocity, 0.06f - (NPC.whoAmI % 6) / 300f);
-			aiCounter += 2;
-			aiCounter2 += 0.5f;
+			NPC.velocity = Vector2.Lerp(NPC.velocity, velocity, 0.075f - (NPC.whoAmI % 6) / 300f);
+			aiCounter += 1.5f;
+			aiCounter2 += 0.3f;
 			NPC.direction = NPC.velocity.X > 0 ? 1 : -1;
 			NPC.rotation = NPC.velocity.X * 0.05f;
 			if(NPC.alpha > 0)
@@ -162,7 +165,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			if (Main.netMode == NetmodeID.Server)
 				return;
 			Color color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180), true);
-			if(!Blue)
+			if(Blue)
 				color = ColorHelpers.VibrantColorAttempt(180 + Main.rand.NextFloat(180), true);
 			color.A = 0;
 			for (int k = 0; k < 15; k++)
@@ -172,9 +175,9 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				dust.noGravity = true;
 				dust.color = color;
 			}
-			for (int k = 0; k < 7; k++)
+			for (int k = 0; k < NPC.oldPos.Length; k++)
 			{
-				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CopyDust4>(), (float)(2 * hitDirection));
+				Dust dust = Dust.NewDustDirect(NPC.oldPos[k] + NPC.Size / 2 - new Vector2(5, 5), 0, 0, DustType<CopyDust4>(), (float)(2 * hitDirection));
 				dust.fadeIn = 0.2f;
 				dust.noGravity = true;
 				dust.velocity *= 0.8f;
@@ -183,8 +186,16 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				dust.color = color;
 			}
 		}
+        public override void OnKill()
+		{
+        }
         public override bool PreKill()
-        {
+		{
+			if (Main.netMode != NetmodeID.MultiplayerClient && Main.expertMode)
+			{
+				Vector2 toPlayer = Main.player[NPC.target].Center - NPC.Center;
+				Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, toPlayer.SafeNormalize(Vector2.Zero) * 2f, ModContent.ProjectileType<WaveBall>(), 10, 1f, Main.myPlayer, -0.75f, 0);
+			}
 			return false;
 		}
 	}

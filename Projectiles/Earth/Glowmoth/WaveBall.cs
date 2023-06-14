@@ -27,19 +27,25 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			Projectile.height = 22;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
-			Projectile.timeLeft = 1200;
+			Projectile.timeLeft = 900;
 			Projectile.alpha = 255;
 			Projectile.extraUpdates = 1;
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
 			int width = 20;
+			if (Projectile.ai[0] < 0)
+            {
+				width = (int)(width * Projectile.ai[0] * -1);
+            }
 			hitbox = new Rectangle((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width/2, width, width);
             base.ModifyDamageHitbox(ref hitbox);
 		}
 		Projectile partner = null;
 		public Projectile PartnerProjectile()
-        {
+		{
+			if (Projectile.ai[0] < 0)
+				return null;
 			int ID = (int)Projectile.ai[0];
 			for (int i = 0; i < 1000; i++)
 			{
@@ -53,14 +59,19 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		}
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-			if (partner != null)
+			if (Projectile.ai[0] >= 0)
 			{
-				float collisionPoint = 0;
-				Vector2 lineStart = Projectile.Center;
-				Vector2 lineEnd = partner.Center;
-				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), lineStart, lineEnd, 10f, ref collisionPoint))
-					return true;
+				if (partner != null)
+				{
+					float collisionPoint = 0;
+					Vector2 lineStart = Projectile.Center;
+					Vector2 lineEnd = partner.Center;
+					if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), lineStart, lineEnd, 10f, ref collisionPoint))
+						return true;
+				}
 			}
+			else
+				return null;
 			return false;
         }
         public void DrawWebBetweenProjectile(bool partnerDraw)
@@ -104,23 +115,30 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
+			bool alternating = (int)Projectile.ai[0] >= 0;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 18 + SOTSWorld.GlobalCounter);
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawWebBetweenProjectile(false);
 			DrawWebBetweenProjectile(true);
-			DrawTrail();
+			float scaleMult = -Projectile.ai[0];
+			if (alternating)
+            {
+				scaleMult = 1f;
+				DrawTrail();
+			}
 			float alphaMult = 0.2f + 0.8f * Projectile.ai[1];
 			for (int k = 0; k < 3; k++)
 			{
-				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(color) * alphaMult, Projectile.rotation + MathHelper.ToRadians(120f * k + Counter), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(color) * alphaMult, Projectile.rotation + MathHelper.ToRadians(120f * k + Counter), drawOrigin, scaleMult, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		bool runOnce = true;
 		public override void AI()
 		{
+			bool alternating = Projectile.ai[0] >= 0;
 			partner = PartnerProjectile();
 			if (runOnce)
 			{
@@ -146,9 +164,27 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			float sinusoid = (float)Math.Sin(Counter / 180f * MathHelper.Pi);
 			sinusoid = (float)Math.Pow(sinusoid, 12);
 			Counter += 0.9f;
-			Projectile.ai[1] = sinusoid;
-			Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.0025f;
-			Projectile.position += Projectile.velocity * (0.3f + 0.7f * Projectile.ai[1]);
+			if(alternating)
+			{
+				Projectile.ai[1] = sinusoid;
+				Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.0025f;
+				Projectile.position += Projectile.velocity * (0.3f + 0.7f * sinusoid);
+			}
+			else
+			{
+				if (Projectile.ai[1] < sinusoid)
+					Projectile.ai[1] = sinusoid;
+				if (Main.rand.NextBool(2))
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<Dusts.PixelDust>());
+					dust.color = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 18 + SOTSWorld.GlobalCounter) * Projectile.ai[1];
+					dust.fadeIn = 8;
+					dust.scale = 1f;
+					dust.velocity *= 0.2f + 1.25f * sinusoid;
+				}
+				Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.01f;
+				Projectile.position += Projectile.velocity * (0.4f + 0.6f * sinusoid);
+			}
 		}
         public override bool CanHitPlayer(Player target)
         {
@@ -164,7 +200,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		}
 		public void DustOut()
 		{
-			for (int i = 0; i < 360; i += 60)
+			for (int i = 0; i < 360; i += 40)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(5), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
 				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());

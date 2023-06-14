@@ -53,8 +53,9 @@ Ideas:
 
 Daily Log:
 
-6/12/23
+6/12/23 & 6/13/23
 1. WIP glowmoth stuff
+2. Finish GLOWMOTH DASH (MOTH SWARM) ATTACK
 
 6/9/23 & 6/10/23
 1. Some glowmoth visuals and basic movements

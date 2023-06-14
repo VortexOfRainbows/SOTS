@@ -3831,6 +3831,7 @@ Mods: {
 			PixelBlaster: Pixel Blaster
 			PressProjectile: Pancake Presser
 			WaveBall: Glow Ball
+			GlowBombOrb: Glow Bomb
 		}
 	}
 }

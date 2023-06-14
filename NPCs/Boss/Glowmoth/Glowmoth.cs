@@ -25,6 +25,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public const int WanderPhase = 0;
 		public const int ScatterShotPhase = 1;
 		public const int MothAttackPhase = 2;
+		public const int GlowBombPhase = 3;
 		private float AI0
 		{
 			get => NPC.ai[0];
@@ -53,7 +54,8 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		}
         public override void SetDefaults()
 		{
-			NPC.lifeMax = 2400;   
+			NPC.lifeMax = 2400;
+			NPC.aiStyle = -1;
             NPC.damage = 20; 
             NPC.defense = 10;  
             NPC.knockBackResist = 0f;
@@ -71,7 +73,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			NPC.boss = true;
 			NPC.dontTakeDamage = true;
 			NPC.alpha = 255;
-			Music = MusicID.Boss2; //MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PutridPinky");
+			Music = MusicID.Boss1; //MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PutridPinky");
 			SceneEffectPriority = SceneEffectPriority.BossLow;
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -211,7 +213,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				}
 				else if (AI1 < 60)
 				{
-					NPC.velocity = toPlayer.SafeNormalize(Vector2.Zero) * 11f * (1.1f - AI1 / 60f);
+					NPC.velocity = toPlayer.SafeNormalize(Vector2.Zero) * 9f * (1.1f - AI1 / 60f);
 				}
 				if(AI1 == 120)
                 {
@@ -220,13 +222,79 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				if(AI1 >= 120)
                 {
 					AI2++;
-					//Needs to dash here!
-                }
-				if(AI1 == 800)
-                {
-					SwapPhase(WanderPhase);
-                }
+					int totalCycles = 4;
+					float dashAI = AI2 % 140;
+					if (dashAI == 139)
+					{
+						SOTSUtils.PlaySound(SoundID.Item60, NPC.Center, 1.1f, -0.4f);
+						toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * 12f;
+						if (player.Center.Y > NPC.Center.Y)
+							toPlayer += new Vector2(0, 2);
+						else
+							toPlayer -= new Vector2(0, 2);
+						NPC.velocity *= 0.04f;
+						NPC.velocity += toPlayer;
+					}
+					else if (dashAI > 40 && dashAI <= 50 && AI1 - 120 > dashAI)
+					{
+						if(dashAI == 50)
+						{
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								int damage = NPC.GetBaseDamage() / 2;
+								int count = 8;
+								for (int i = 0; i < count; i++)
+								{
+									float radians = i / (float)count * MathHelper.TwoPi;
+									Vector2 circular = new Vector2(4f, 0).RotatedBy(radians + NPC.velocity.ToRotation());
+									Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + circular.SafeNormalize(Vector2.Zero) * 32, circular, ModContent.ProjectileType<WaveBall>(), damage, 1f, Main.myPlayer, -1.25f, 0);
+								}
+							}
+						}
+						NPC.velocity *= 0.94f;
+					}
+					else if (dashAI > 50 && dashAI < 65)
+					{
+						toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * (4.0f + distToPlayer / 80f);
+						if (distToPlayer < 270)
+						{
+							toPlayer *= 0.2f;
+						}
+						NPC.velocity = Vector2.Lerp(NPC.velocity, toPlayer, 0.04f + distToPlayer / 27000f);
+					}
+					else if(dashAI > 90)
+                    {
+						if(dashAI == 100)
+                        {
+							SOTSUtils.PlaySound(SoundID.Item15, NPC.Center, 1.0f, -0.3f, 0.01f);
+                        }
+						NPC.velocity *= 0.875f;
+						float sinusoidal = (float)Math.Sin((dashAI - 100) / 50f * MathHelper.TwoPi);
+						NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 1.6f * sinusoidal;
+					}
+					if (AI1 - 120 >= 140 * 6 && dashAI == 40)
+					{
+						SwapPhase(GlowBombPhase);
+							return;
+					}
+				}
 				AI1++;
+            }
+			if(AI0 == GlowBombPhase)
+            {
+				AI1++;
+				if (AI1 % 200 == 100)
+				{
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int damage = NPC.GetBaseDamage() / 2;
+						Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, new Vector2(0, -10), ModContent.ProjectileType<GlowBombOrb>(), damage, 1f, Main.myPlayer, player.Center.Y + 32, 4);
+					}
+				}
+				if(AI1 > 600)
+                {
+					//SwapPhase(WanderPhase);
+                }
             }
 		}
         public override void PostAI()
@@ -236,9 +304,14 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			NPC.alpha = Math.Clamp(NPC.alpha, 0, 255);
 			float scalingFactor = 1 - NPC.alpha / 255f;
 			AI3 += scalingFactor * scalingFactor;
-			NPC.rotation = NPC.velocity.X * 0.05f;
-
-			NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(20, 20), NPC.velocity, NPC.width - 40, NPC.height - 40, true);
+			NPC.rotation = NPC.velocity.X * 0.07f;
+			bool tileCollide = true;
+			if(AI0 == MothAttackPhase)
+            {
+				tileCollide = false;
+            }
+			if(tileCollide)
+				NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(20, 20), NPC.velocity, NPC.width - 40, NPC.height - 40, true, true);
 		}
 		public void SwapPhase(int Phase)
         {
@@ -278,13 +351,13 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			SOTSUtils.PlaySound(SoundID.Item44, (int)NPC.Center.X, (int)NPC.Center.Y, 1f, -0.3f);
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
-			for (int j = 0; j < 4; j++)
+			for (int j = 0; j < 2; j++)
             {
-				float orbitRing = 180 / 4 * j;
-				for (int i = 0; i < 4; i++)
+				float orbitRing = 180 / 2 * j;
+				for (int i = 0; i < 8; i++)
 				{
-					float degreesRing = 360 / 4 * i + j * 15;
-					NPC moth = NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2CircularEdge(120, 120), ModContent.NPCType<GlowmothMinion>(), 0, NPC.whoAmI, degreesRing, orbitRing, Main.rand.NextBool(4) ? -1 : 0, 255);
+					float degreesRing = 360 / 8 * i + j * 30;
+					NPC moth = NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2CircularEdge(120, 120), ModContent.NPCType<GlowmothMinion>(), 0, NPC.whoAmI, degreesRing, orbitRing, Main.rand.NextBool(3) ? -1 : 0, 255);
 					moth.netUpdate = true;
 				}
 			}
