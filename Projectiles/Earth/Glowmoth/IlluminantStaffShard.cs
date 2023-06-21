@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			Projectile.tileCollide = true;
 			Projectile.width = 14;
 			Projectile.height = 14;
-            Projectile.DamageType = DamageClass.Magic; //generic because multiple classes use this projectile
+            Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = 1;
 			Projectile.alpha = 0; 
 			Projectile.friendly = true;

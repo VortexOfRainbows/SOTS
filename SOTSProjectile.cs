@@ -291,8 +291,8 @@ namespace SOTS
 						}
 					}
 					float homingRange = (float)(180 + 64 * Math.Sqrt(counter));
-					if (homingRange > 640)
-						homingRange = 640;
+					if (homingRange > 480)
+						homingRange = 480;
 					int target = SOTSNPCs.FindTarget_Basic(projectile.Center, homingRange, this);
 					if (target >= 0)
 					{

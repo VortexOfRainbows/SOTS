@@ -28,6 +28,7 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Glow Moth
 	1. Glowjelly: glow spores + royal jelly
+	2. Needs: Multiplayer Testing, Balance Testing, Proper drop and spawn method, +Boss log entry
 3. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map
 4. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. 
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
@@ -50,12 +51,14 @@ Ideas:
 	3. This will make them no longer update as part of Terraria's normal projectile update.
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
-12. Nerf homing on Chaos Chamber, and firerate
 
 Daily Log:
 
-6/20/23
+6/20/23 & 6/21/23
 1. WIP glowmoth attacks
+	1. Orb bomb and Sparkle attacks
+2. Chaos Chamber usetime 7 -> 8
+	1. Homing max range 640 -> 480
 
 6/12/23 & 6/13/23
 1. WIP glowmoth stuff

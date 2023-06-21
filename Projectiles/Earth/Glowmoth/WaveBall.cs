@@ -16,6 +16,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = TrailLength;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2000;
 		}
         public override void SetDefaults()
         {
@@ -92,6 +93,10 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				float dist = toPartner.Length();
 				float xScale = dist / texture.Width;
 				float alphaMult = 0.2f + 0.8f * Projectile.ai[1];
+				if(Projectile.timeLeft < 60)
+                {
+					alphaMult *= Projectile.timeLeft / 60f;
+                }
 				for (int k = 0; k <= 1; k++)
 				{
 					Main.spriteBatch.Draw(texture, start - Main.screenPosition + Main.rand.NextVector2Circular(1, 1), null, new Color(100, 100, 100, 0) * alphaMult * 0.7f, toPartner.ToRotation(), origin, new Vector2(xScale, 0.25f + 0.75f * alphaMult), SpriteEffects.None, 0f);
@@ -188,7 +193,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		}
         public override bool CanHitPlayer(Player target)
         {
-			return Projectile.ai[1] > 0.5f;
+			return Projectile.ai[1] > 0.5f && Projectile.timeLeft > 60;
         }
         public override bool ShouldUpdatePosition()
         {

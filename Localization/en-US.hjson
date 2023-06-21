@@ -3832,6 +3832,8 @@ Mods: {
 			PressProjectile: Pancake Presser
 			WaveBall: Glow Ball
 			GlowBombOrb: Glow Bomb
+			GlowBombShard: Glow Shard
+			GlowSparkle: Glow Sparkle
 		}
 	}
 }

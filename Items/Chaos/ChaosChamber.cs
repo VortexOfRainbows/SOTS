@@ -22,8 +22,8 @@ namespace SOTS.Items.Chaos
             Item.DamageType = DamageClass.Ranged;   
             Item.width = 48;    
             Item.height = 26;  
-            Item.useTime = 7;  
-            Item.useAnimation = 7;
+            Item.useTime = 8;  
+            Item.useAnimation = 8;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true; 
             Item.knockBack = 1;
