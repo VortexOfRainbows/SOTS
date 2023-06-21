@@ -27,7 +27,7 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Glow Moth (need for update)
 	1. Glowjelly: glow spores + royal jelly
-	2. Needs: Multiplayer Testing, Balance Testing, Proper drop and spawn method, +Boss log entry
+	2. Needs: Multiplayer Testing, Balance Testing, Proper drops and spawn method, +Boss checklist entry
 3. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map (maybe need for update)
 4. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. (maybe need for update)
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
