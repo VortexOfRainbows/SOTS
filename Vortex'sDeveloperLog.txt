@@ -10,41 +10,38 @@ Tmodloader Bugs (some of these may be fixed, idk):
 4. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 
 Acknowledged But Likely Delayed:
-1. Magic storage may be bugging our void minions..? Mannequins are bugging out void minions (known)
-2. Reimplement (older) Blade Items using the abstract class
-3. Earthen Plating starter house.
-4. Bosses HP is ludicrous for Master Mode
-5. Glowmasks for Corruption Trees in SOTSTP
-6. Wind mechanics for vines and banners
-7. Earth Conduit (abstract the conduit class)
+1. Reimplement (older) Blade Items using the abstract class
+2. Earthen Plating starter house.
+3. Master mode go crazy. It's a bit unfair.
+4. Glowmasks for Corruption Trees in SOTSTP
+5. Wind mechanics for vines and banners
+6. Earth Conduit (abstract the conduit class)
 
 Update Objectives:
-1. Ghost Town!
+1. Ghost Town! (later)
 	1. Make it spawn
 	2. Cave that integrates into evil biome
 	3. Smart spawning houses and rubble
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-2. Glow Moth
+2. Glow Moth (need for update)
 	1. Glowjelly: glow spores + royal jelly
 	2. Needs: Multiplayer Testing, Balance Testing, Proper drop and spawn method, +Boss log entry
-3. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map
-4. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. 
+3. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map (maybe need for update)
+4. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. (maybe need for update)
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
 		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
 		If an item is teleported through, it will not be allowed to teleport back through,
 	2. Teleports you to the other point on the map when you travel through, granting increased Maximum void by 50 Permanently (plays a short animation to indicate this).
-5. New Lux expert drop: Spirit Symphony - Inceases void stats by varying amounts. Deal double damage to Spirit Enemies
+5. New Lux expert drop: Spirit Symphony - Inceases void stats by varying amounts. Deal double damage to Spirit Enemies (maybe need for update)
 	1. Nerf Soaring Insignia to no longer grant unlimited flight; grants unlimited flight when combined with Spirit Symphony.
 	2. Combine with Machina Booster + Soaring Insignia for new wings: Gilded Blade-Wings
-
-Ideas:
-6. Pharaoh's Curse music box
+6. Pharaoh's Curse music box (don't need for update)
 7. Roasted Peanuts item (use for the now farmable peanuts)
 8. EVEN more lines for the Archaeologist
 9. Bestiary for all enemies
-10. Make the rare reforge slightly less rare
+10. Make the rare reforges slightly less rare
 11. Make Subspace Servant work with channel items:
 	1. Give projectiles created during Servant's update window a special update characteristic.
 	2. Make sure this characteristic is NETSYNCED as SOON as the PROJECTILE is created!!!
