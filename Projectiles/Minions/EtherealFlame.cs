@@ -222,9 +222,10 @@ namespace SOTS.Projectiles.Minions
 							between = between2;
 							inRange = true;
 						}
-						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-
 						bool closeThroughWall = between < 400f;
+						bool lineOfSight = false;
+						if(!closeThroughWall) 
+							lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 						if (inRange && (lineOfSight || closeThroughWall))
 						{
 							distanceFromTarget = between;

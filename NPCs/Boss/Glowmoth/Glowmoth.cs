@@ -283,12 +283,60 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			if(AI0 == GlowBombPhase)
             {
 				AI1++;
-				if (AI1 % 200 == 100)
+				float aiCycle = AI1 % 200;
+				toPlayer += new Vector2(0, -96);
+				if(aiCycle < 60)
 				{
+					toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * (7.0f + distToPlayer / 160f);
+					if (distToPlayer < 360)
+					{
+						toPlayer *= 0.5f;
+					}
+					NPC.velocity = Vector2.Lerp(NPC.velocity, toPlayer, 0.05f + distToPlayer / 18000f);
+				}
+				if(aiCycle > 60 && aiCycle < 120)
+				{
+					float sinusoid = (float)Math.Sin(MathHelper.ToRadians((aiCycle - 60) * 6f)); //this should complete a full sinusoid
+					if (aiCycle == 65)
+                    {
+						SOTSUtils.PlaySound(SoundID.Item15, NPC.Center, 1.0f, -0.2f);
+					}
+					if(aiCycle >= 65 && aiCycle % 8 == 0)
+                    {
+						Vector2 center = NPC.Center + new Vector2(0, -64 + sinusoid * 48);
+						float offsetSize = (aiCycle - 65) / 55f;
+						for (int i = 0; i <= 360; i += 15)
+						{
+							Vector2 circularLocation = new Vector2(0, 48 * offsetSize).RotatedBy(MathHelper.ToRadians(i));
+							circularLocation.Y *= 1 - offsetSize * 0.5f;
+							int dust2 = Dust.NewDust(new Vector2(center.X + circularLocation.X - 5, center.Y + circularLocation.Y - 5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), Scale: 1 + offsetSize * 0.5f);
+							Dust dust = Main.dust[dust2];
+							dust.velocity = -circularLocation * 0.1f;
+							dust.velocity.Y += NPC.velocity.Y - 2;
+							dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180) + 180, true);
+							dust.noGravity = true;
+							dust.alpha = 100;
+						}
+					}
+					NPC.velocity *= 0.925f;
+					NPC.velocity.Y += sinusoid * (float)Math.Sqrt((aiCycle - 60) / 60f);
+                }
+				else if(aiCycle > 120)
+				{
+					toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * (1.0f + distToPlayer / 480f);
+					if (distToPlayer < 240)
+					{
+						toPlayer *= 0.25f;
+					}
+					NPC.velocity = Vector2.Lerp(NPC.velocity, toPlayer, 0.06f);
+				}
+				if (aiCycle == 120)
+				{
+					SOTSUtils.PlaySound(SoundID.Item94, NPC.Center, 0.75f, 0.1f);
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						int damage = NPC.GetBaseDamage() / 2;
-						Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, new Vector2(0, -10), ModContent.ProjectileType<GlowBombOrb>(), damage, 1f, Main.myPlayer, player.Center.Y + 32, 4);
+						Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, -48), new Vector2(0, -8), ProjectileType<GlowBombOrb>(), damage, 1f, Main.myPlayer, player.Center.Y - 40, 4);
 					}
 				}
 				if(AI1 > 600)
@@ -306,7 +354,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			AI3 += scalingFactor * scalingFactor;
 			NPC.rotation = NPC.velocity.X * 0.07f;
 			bool tileCollide = true;
-			if(AI0 == MothAttackPhase)
+			if(AI0 == MothAttackPhase || AI0 == GlowBombPhase)
             {
 				tileCollide = false;
             }
