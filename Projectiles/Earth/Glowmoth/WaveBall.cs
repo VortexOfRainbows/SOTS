@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +13,15 @@ namespace SOTS.Projectiles.Earth.Glowmoth
     {
 		public const int TrailLength = 10;
 		public float Counter = 0;
-		public override void SetStaticDefaults()
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(Counter);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			Counter = reader.ReadSingle();
+        }
+        public override void SetStaticDefaults()
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = TrailLength;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -156,6 +165,8 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				Projectile.scale = 0.1f;
 				Projectile.alpha = 0;
 				runOnce = false;
+				if (Main.netMode == NetmodeID.Server)
+					Projectile.netUpdate = true;
 			}
 			else if (Projectile.scale < 1f)
 				Projectile.scale += 0.1f;

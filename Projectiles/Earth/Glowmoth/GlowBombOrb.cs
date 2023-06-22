@@ -377,10 +377,6 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				if (distTo < 8)
 				{
 					Projectile.velocity *= 0.0f;
-					if (Projectile.ai[0] != -1)
-						SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f, -0.1f);
-					StarDust(Projectile.Center);
-					DustOut();
 					Projectile.ai[0] = -1;
 					Projectile.ai[1] = 0;
 					if (Main.netMode == NetmodeID.Server)
@@ -401,6 +397,12 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			else
             {
+                if(Projectile.ai[1] <= 0)
+				{
+					SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f, -0.1f);
+					StarDust(Projectile.Center);
+					DustOut();
+				}
 				Projectile.ai[1]++;
 				if (Projectile.ai[1] > 23)
 					Projectile.hostile = false;
