@@ -25,7 +25,6 @@ namespace SOTS.Items.Slime
 			Item.maxStack = 999;
 			Item.consumable = true;
 		}
-		public override int BossBagNPC => ModContent.NPCType<PutridPinkyPhase2>();
 		public override bool CanRightClick()
 		{
 			return true;
@@ -47,6 +46,7 @@ namespace SOTS.Items.Slime
 				ItemDropRule.Common(ModContent.ItemType<WormWoodStaff>())
 			};
 			itemLoot.Add(new OneFromRulesRule(1, oreTypes));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<PutridPinkyPhase2>()));
 		}
 	}
 }

@@ -65,7 +65,6 @@ namespace SOTS.Items.Otherworld
 				null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
-		public override int BossBagNPC => ModContent.NPCType<TheAdvisorHead>();
 		public override bool CanRightClick()
 		{
 			return true;
@@ -79,6 +78,7 @@ namespace SOTS.Items.Otherworld
 				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<SkywareKey>(), 1, 1, 1));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardlightAlloy>(), 3, 12, 18))
 				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<StrangeKey>(), 1, 1, 1));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<TheAdvisorHead>()));
 		}
 	}
 }

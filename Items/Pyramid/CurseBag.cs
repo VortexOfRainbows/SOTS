@@ -25,7 +25,6 @@ namespace SOTS.Items.Pyramid
 			Item.maxStack = 999;
 			Item.consumable = true;
 		}
-		public override int BossBagNPC => ModContent.NPCType<PharaohsCurse>();
 		public override bool CanRightClick()
 		{
 			return true;
@@ -34,6 +33,7 @@ namespace SOTS.Items.Pyramid
 		{
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartInAJar>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 1, 14, 24));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NPCs.Boss.Curse.PharaohsCurse>()));
 		}
 	}
 }

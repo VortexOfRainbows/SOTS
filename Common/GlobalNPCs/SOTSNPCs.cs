@@ -41,6 +41,8 @@ using SOTS.Biomes;
 using SOTS.Items.Temple;
 using Terraria.Localization;
 using SOTS.Items.Furniture.Functional;
+using SOTS.NPCs.Boss.Glowmoth;
+using SOTS.NPCs.Boss.Lux;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -754,11 +756,15 @@ namespace SOTS.Common.GlobalNPCs
 			SpawnConditionBestiaryInfoElement Jungle = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Jungle;
 			SpawnConditionBestiaryInfoElement UndergroundJungle = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle;
 			SpawnConditionBestiaryInfoElement TheUnderworld = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld;
+			SpawnConditionBestiaryInfoElement Desert = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert;
+			SpawnConditionBestiaryInfoElement UndergroundDesert = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundDesert;
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
-			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>())
+			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || 
+				npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() 
+				|| npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>() || npc.type == ModContent.NPCType<OtherworldlySpirit>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.HoloSlime");
 
 				if(npc.type == ModContent.NPCType<HoloBlade>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.HoloBlade");
@@ -770,6 +776,8 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TwilightDevil");
 				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlyConstructHead");
+				if (npc.type == ModContent.NPCType<OtherworldlySpirit>())
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlySpirit");
 
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Planetarium,
@@ -778,7 +786,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<PhaseSpeeder>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>() || npc.type == ModContent.NPCType<TwilightScouter>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing2");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PhaseSpeeder");
 				if (npc.type == ModContent.NPCType<TwilightScouter>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TwilightScouter");
 				if (npc.type == ModContent.NPCType<PhaseAssaulterHead>())
@@ -790,7 +798,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || npc.type == ModContent.NPCType<WallMimic>() || npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Ghast>() || npc.type == ModContent.NPCType<Maligmor>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing3");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.LostSoul");
 				if (npc.type == ModContent.NPCType<Snake>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Snake");
 				if (npc.type == ModContent.NPCType<SnakePot>())
@@ -808,11 +816,13 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>())
+			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<PermafrostConstruct>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing4");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ArcticGoblin");
 				if (npc.type == ModContent.NPCType<Polaris>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Polaris");
+				if (npc.type == ModContent.NPCType<PermafrostConstruct>())
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PermafrostConstruct");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					SurfaceSnow,
 					flavorText
@@ -830,7 +840,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>() || npc.type == ModContent.NPCType<NatureConstruct>())
 			{
-				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SomeThing5");
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PP");
 				if(npc.type == ModContent.NPCType<BlueSlimer>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.BlueSlimer");
 				if (npc.type == ModContent.NPCType<NatureConstruct>())
@@ -847,6 +857,34 @@ namespace SOTS.Common.GlobalNPCs
 					Underground,
 					Caverns,
 					UndergroundGlowingMushroom,
+					flavorText
+				});
+			}
+			if(npc.type == ModContent.NPCType<Glowmoth>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Glowmoth");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					UndergroundGlowingMushroom,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<Lux>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Lux");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					TheHallow,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<EarthenSpirit>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.EarthenConstruct");
+				if (npc.type == ModContent.NPCType<OtherworldlySpirit>())
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.EarthenSpirit");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Underground,
+					Desert,
+					UndergroundDesert,
 					flavorText
 				});
 			}

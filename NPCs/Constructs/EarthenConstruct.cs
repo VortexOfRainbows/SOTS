@@ -15,6 +15,25 @@ namespace SOTS.NPCs.Constructs
 {
     public class EarthenConstruct : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                CustomTexturePath = "SOTS/NPCs/Constructs/EarthenConstructHead",
+                PortraitScale = 1.1f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[]
+                {
+                    BuffID.Poisoned,
+                    BuffID.Frostburn,
+                    BuffID.OnFire
+                }
+            });
+        }
         public override void SetDefaults()
         {
             NPC.lifeMax = 200;      

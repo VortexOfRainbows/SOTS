@@ -12,7 +12,7 @@ namespace SOTS.Void
 	public class Awakened : ModPrefix
 	{
 		public override float RollChance(Item item)
-			=> 0.6f;
+			=> 0.75f;
 		public override bool CanRoll(Item item)
 			=> true;
 		public override PrefixCategory Category => PrefixCategory.Accessory;
@@ -26,7 +26,7 @@ namespace SOTS.Void
 	public class Omniscient : ModPrefix
 	{
 		public override float RollChance(Item item)
-			=> 0.3f;
+			=> 0.5f;
 		public override bool CanRoll(Item item)
 			=> true;
 		public override PrefixCategory Category => PrefixCategory.Accessory;
@@ -40,7 +40,7 @@ namespace SOTS.Void
 	public class Chained : ModPrefix
 	{
 		public override float RollChance(Item item)
-			=> 0.4f;
+			=> 0.5f;
 		public override bool CanRoll(Item item)
 			=> true;
 		public override PrefixCategory Category => PrefixCategory.Accessory;
@@ -54,7 +54,7 @@ namespace SOTS.Void
 	public class Soulbound : ModPrefix
 	{
 		public override float RollChance(Item item)
-			=> 0.2f;
+			=> 0.25f;
 		public override bool CanRoll(Item item)
 			=> true;
 		public override PrefixCategory Category => PrefixCategory.Accessory;
@@ -144,7 +144,7 @@ namespace SOTS.Void
 	public class Omnipotent : ModPrefix
 	{
 		public override float RollChance(Item item)
-			=> 0.5f;
+			=> 0.7f;
 		public override bool CanRoll(Item item)
 		{
 			return item.ModItem as VoidItem != null;

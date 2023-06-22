@@ -350,7 +350,6 @@ namespace SOTS.NPCs.Town
 			// We can use AddRange instead of calling Add multiple times in order to add multiple items at once
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				Planetarium,
-				new FlavorTextBestiaryInfoElement("WIP Bestiary Entry"),
 				new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ArchaeologistLore")
 			});
 		}

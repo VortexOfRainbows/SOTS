@@ -18,6 +18,15 @@ namespace SOTS.NPCs.Constructs
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[]
+                {
+                    BuffID.Poisoned,
+                    BuffID.Frostburn,
+                    BuffID.OnFire
+                }
+            });
         }
         public override void SetDefaults()
         {

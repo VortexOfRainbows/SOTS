@@ -24,13 +24,13 @@ namespace SOTS.Items.Permafrost
 			Item.maxStack = 999;
 			Item.consumable = true;
 		}
-		public override int BossBagNPC => ModContent.NPCType<Polaris>();
 		public override bool CanRightClick() { return true; }
 		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FrigidHourglass>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<AbsoluteBar>(), 1, 26, 42));
 			itemLoot.Add(ItemDropRule.Common(ItemID.FrostCore, 1, 1, 2));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Polaris>()));
 		}
 	}
 }

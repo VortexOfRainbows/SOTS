@@ -24,7 +24,7 @@ namespace SOTS.Items.Celestial
 			Item.consumable = true;
 			Item.expert = true;
 		}
-		public override int BossBagNPC => ModContent.NPCType<SubspaceSerpentHead>();
+		public int BossBagNPC => ModContent.NPCType<SubspaceSerpentHead>();
 		public override bool CanRightClick()
 		{
 			return true;
@@ -33,6 +33,7 @@ namespace SOTS.Items.Celestial
 		{
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SerpentSpine>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SanguiteBar>(), 1, 16, 29));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(BossBagNPC));
 		}
 	}
 }

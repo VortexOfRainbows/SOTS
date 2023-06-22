@@ -10,6 +10,7 @@ using SOTS.Projectiles.Pyramid;
 using SOTS.WorldgenHelpers;
 using System;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -67,7 +68,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			NPC.knockBackResist = 0f;
 			NPC.width = 62;
 			NPC.height = 94;
-			NPC.value = 3000;
+			NPC.value = Item.buyPrice(0, 1, 0, 0);
 			NPC.npcSlots = 5f;
 			NPC.lavaImmune = true;
 			NPC.noGravity = true;
@@ -89,6 +90,8 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
+			if (NPC.IsABestiaryIconDummy)
+				NPC.alpha = 0;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Texture2D textureG = (Texture2D)Request<Texture2D>("SOTS/NPCs/Boss/Glowmoth/GlowmothGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / Main.npcFrameCount[NPC.type] / 2);
@@ -129,7 +132,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			glowColor = ColorHelpers.VibrantColor;
 			return true;
 		}
-		public override void AI()
+        public override void AI()
 		{
 			NPC.TargetClosest(true);
 			Player player = Main.player[NPC.target];
@@ -137,7 +140,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			float distToPlayer = toPlayer.Length();
 			if (AI0 == InitializationPhase)
 			{
-				NPC.alpha -= 4;
+				NPC.alpha -= 3;
 				if (NPC.alpha <= 0)
 				{
 					NPC.alpha = 0;
@@ -528,6 +531,17 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.BossBag(ItemType<GlowmothBag>()));
+
+			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Earth.Glowmoth.TorchBomb>(), 1, 4, 8));
+			notExpertRule.OnSuccess(ItemDropRule.FewFromOptions(1, 1, new int[] {
+				ModContent.ItemType<IlluminantAxe>(),
+				ModContent.ItemType<GuideToIllumination>(),
+				ModContent.ItemType<IlluminantBow>(),
+				ModContent.ItemType<IlluminantStaff>(),
+				ModContent.ItemType<Items.Earth.Glowmoth.NightIlluminator>() }));
+			npcLoot.Add(notExpertRule);
+			//npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SubspaceSerpentRelic>()));
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

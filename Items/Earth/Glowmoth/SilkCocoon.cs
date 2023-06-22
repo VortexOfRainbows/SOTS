@@ -9,6 +9,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -19,22 +20,35 @@ namespace SOTS.Items.Earth.Glowmoth
 	{
 		public override void SetStaticDefaults()
 		{
-			//Tooltip.SetDefault("A slab from an ancient burial site, it may be hard to break");
-			this.SetResearchCost(1);
+			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
+			this.SetResearchCost(3);
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 16;
-			Item.height = 16;
+			Item.width = 30;
+			Item.height = 34;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Blue;
 			Item.maxStack = 999;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = ModContent.TileType<SilkCocoonTile>();
+			Item.expert = true;
+		}
+		public override bool CanRightClick()
+		{
+			return true;
+		}
+		public override void ModifyItemLoot(ItemLoot itemLoot)
+		{
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<IlluminantLantern>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TorchBomb>(), 1, 5, 12));
+			itemLoot.Add(ItemDropRule.FewFromOptions(1, 1, new int[] { 
+				ModContent.ItemType<IlluminantAxe>(), 
+				ModContent.ItemType<GuideToIllumination>(), 
+				ModContent.ItemType<IlluminantBow>(), 
+				ModContent.ItemType<IlluminantStaff>(),
+				ModContent.ItemType<NightIlluminator>() }));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NPCs.Boss.Glowmoth.Glowmoth>()));
 		}
 	}
 	public class SilkCocoonTile : ModTile
@@ -69,7 +83,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
         public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(21))
+			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(50)) //Low chance for regrowth over time
 			{
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.TileFrameX / 18) % 3;
@@ -188,6 +202,7 @@ namespace SOTS.Items.Earth.Glowmoth
 				}
 				int item = Item.NewItem(Projectile.GetSource_FromThis(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<GlowSilk>(), Main.rand.Next(25, 41), false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
+				NPC.NewNPCDirect(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(0, 48), ModContent.NPCType<NPCs.Boss.Glowmoth.Glowmoth>());
 			}
 			SOTSUtils.PlaySound(SoundID.NPCDeath1, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.10f, -0.2f);
 			Projectile.Kill();

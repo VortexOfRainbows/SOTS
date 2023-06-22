@@ -58,7 +58,6 @@ namespace SOTS.Items.Chaos
 			Item.consumable = true;
 			Item.expert = true;
 		}
-		public override int BossBagNPC => ModContent.NPCType<Lux>();
 		public override bool CanRightClick()
 		{
 			return true;
@@ -68,6 +67,7 @@ namespace SOTS.Items.Chaos
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VoidAnomaly>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PhaseOre>(), 1, 120, 180));
 			itemLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Lux>()));
 		}
 	}
 }

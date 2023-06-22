@@ -329,7 +329,7 @@ Mods: {
 					IlluminantBow: Illuminant Bow
 					IlluminantStaff: Illuminant Staff
 					NightIlluminator: Night Illuminator
-					GlowmothBag: Place Cocoon
+					GlowmothBag: Treasure Bag
 					TorchBomb : Torch Bomb
 				
 				BigCrystal: Big Crystal
@@ -1359,6 +1359,7 @@ Mods: {
 						Illuminant Orbs launch shards at nearby enemies after expiring
 						'''
 					TorchBomb: "'Illuminate the night with colorful explosives!'"
+					GlowmothBag: "{$CommonItemTooltip.RightClickToOpen}"
 
 						
 				Colossus: 
@@ -3088,30 +3089,40 @@ Mods: {
 		}
 
 		Bestiary: {
-		    SomeThing: A holographic mimic of an average slime. Its source of energy is unknown.
+		    HoloSlime: A holographic mimic of an average slime. Its source of energy is unknown.
 		    HoloBlade: A holographic mimic of a sword. Its source of energy is unknown.
 		    HoloEye: A holographic mimic of an eyeball. Its source of energy is unknown.
 		    PhaseEye: A mindless sphere of energy that protects the Planetarium, created with exclusively to be used as a puppet for The Advisor.
 		    TwilightDevil: A mindless drone that protects the Planetarium. It seems to be controlled centrally, as nothing hides behind its cloak.
-		    OtherworldlyConstructHead: Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.
-		    SomeThing2: It's fast. It's deadly. It's origin is unknown, but it certainly wants you dead. Uses the fabric of existence as its shield.
+		    PhaseSpeeder: It's fast. It's deadly. It's origin is unknown, but it certainly wants you dead. Uses the fabric of existence as its shield.
 		    TwilightScouter: A mindless drone that collects data for the Planetarium. Its internal circuitry is not particularly complex.
 		    PhaseAssaulterHead: Phase Assaulters make up the defensive core of Phase Ore nodes. They can be observed acting as shields for Phase Speeders, while also possessing a potent hyperlight laser.
-		    SomeThing3: A trapped soul that resides in the Pyramid. It has not come to rest, as it still seems to be searching for something.
+		    LostSoul: A trapped soul that resides in the Pyramid. It has not come to rest, as it still seems to be searching for something.
 		    Snake: A long limbless reptile that has no eyelids, a short tail, and jaws that are capable of considerable extension. This particular one has a venomous bite, and it calls the Pyramid home.
 		    SnakePot: A group of snakes that uses a pot for defense. When the pot breaks, the snakes inside are forced to scatter.
 		    WallMimic: The Curse housed within the Pyramid is more capable of corruption than the world evils. Under its influence, even the walls of the Pyramid turn into monsters!
 		    Teratoma: A cancerous protrusion of The Curse. Its cells are capable of rapid regrowth, and it will heal itself if not killed quickly.
 		    Ghast: As Lost Souls corrupted by The Curse, Ghasts are forced to guard keystones for the rest of the afterlife.
 		    Maligmor: Born from The Curse's will to consume all, Maligmors are protrusions of The Curse that are gifted with crystals as power sources. The crystals provide enhanced vision, helping Maligmors defend the Keystone from being reached by invaders.
-		    SomeThing4: An exiled goblin who has been left to freeze in the unforgiving tundra.
+		    ArcticGoblin: An exiled goblin who has been left to freeze in the unforgiving tundra.
 		    Polaris: A forgotten war machine. Made long after the original mechanical trio, Polaris was not built with the purpose of reviving Cthulhu, but rather to be the best possible weapon of mass destruction possible.
 		    FluxSlime: Created before Putrid Pinky, these gel menaces orginate from early pink slime experiments.
-		    SomeThing5: An abomination with an endless hunger for peanuts. Putrid Pinky was created in a failed experiment using pink slime.
+		    PP: An abomination with an endless hunger for peanuts. Putrid Pinky was created in a failed experiment using pink slime.
 		    BlueSlimer: A Blue Slime which became airborne by evolving crude wings. Its wings are easily knocked off with force, depriving it of its flight.
-		    NatureConstruct: An ancient machine originally created to advance spirit energy harvesting technology. Now, it serves as a protector of forests under the spirit's control
 		    SittingMushroom: Sitting mushrooms are spitting mushrooms.
 		    TreasureSlime: The nobility of slimes! Unlike the others, these slimes value their lives, and any attempts to steal their treasure will cause them to flee without a second thought.
+			
+		    NatureConstruct: An ancient machine originally created to advance spirit energy harvesting technology. Now, it serves as a protector of forests under the spirit's control
+			PermafrostConstruct: An ancient machine that uses spirit energy to allow easy traversal through deep snow. The spirit, now in control, uses the device to defend its cold home.
+			EarthenConstruct: As earthen spirits are known for traveling in groups, the chasis of the construct was designed to allow easy movement of the contained spirits within thin the chassis. Earlier, more compact designs proved too unstable for housing groups of spirits.
+		    OtherworldlyConstructHead: Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.
+			
+			EarthenSpirit: Forced into tight, underground spaces, these spirits have a built-in tolerance for cooperating with other spirits. Their cooperative nature is also useful for more labor-intensive tasks.
+			OtherworldlySpirit: Isolated in outer space, these spirits don't have much experience competing for land and resources. This makes them conveniently exploitable sources of energy for high-tech machines.
+			Lux: Chaos spirits have no equal. They are shoved into constructs for the sole purpose of containment. None have ever been sufficiently weakened for intelligent use.
+
+		    Glowmoth: An otherworldly creature that makes its home in glowing mushroom caves. Although one might assume that it lives there due the trait it shares with the mushrooms, bioluminescence, its main motive is the biome's relatively easy to access void energy.
+		    ArchaeologistLore: Merely a hologram. Move along. Nothing to learn here.
 		}
 
 		DeathMessage: {
