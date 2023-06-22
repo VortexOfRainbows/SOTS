@@ -92,7 +92,7 @@ namespace SOTS.Items.Earth.Glowmoth
             else
             {
                 counter++;
-                if (player.ItemUsesThisAnimation == 1 && counter % 2 == 1)
+                if (counter % 4 == 1)
                     Projectile.NewProjectile(source, position + velocity, 0.2f * velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-12, 12))), ModContent.ProjectileType<IlluminantBolt>(), (int)(damage * 0.6f), knockback * 0.2f, Main.myPlayer, Main.rand.NextFloat(180, 360));
             }
             return false;

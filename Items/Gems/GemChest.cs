@@ -261,7 +261,7 @@ namespace SOTS.Items.Gems
 			AddMapEntry(new Color(154, 197, 239), name, MapChestName);
 			name = CreateMapEntryName(Name + "D_Locked");
 			name.SetDefault("Locked Diamond Chest");
-			AddMapEntry(new Color(158, 0, 244), name, MapChestName);
+			AddMapEntry(new Color(154, 197, 239), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "Amber");
 			name.SetDefault("Amber Chest");

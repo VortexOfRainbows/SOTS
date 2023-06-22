@@ -2859,7 +2859,7 @@ Mods: {
 			EarthenPlatingStorageTile: Earthen Plating Storage
 			EarthenPlatingStorageTile_Locked: Locked Earthen Plating Storage
 			NaturePlatingCapsuleTile: Nature Plating Capsule
-			NaturePlatingCapsuleTilee_Locked: Locked Nature Plating Capsule
+			NaturePlatingCapsuleTile_Locked: Locked Nature Plating Capsule
 			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
 			PermafrostPlatingCapsuleTile_Locked: Locked Permafrost Plating Capsule
 			LockedMeteoriteChest: Meteorite Chest

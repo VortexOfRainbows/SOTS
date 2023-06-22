@@ -43,7 +43,8 @@ namespace SOTS
 				ModContent.ProjectileType<Projectiles.Blades.PyrocideSlash>(),
 				ModContent.ProjectileType<Projectiles.Blades.ToothAcheSlash>(),
 				ModContent.ProjectileType<Projectiles.Blades.VertebraekerSlash>(),
-				ModContent.ProjectileType<Projectiles.Celestial.ClairvoyanceShade>()
+				ModContent.ProjectileType<Projectiles.Celestial.ClairvoyanceShade>(),
+				ModContent.ProjectileType<Projectiles.Earth.PixelLaser>()
 			};
 			isChargeWeapon = new int[]
 			{

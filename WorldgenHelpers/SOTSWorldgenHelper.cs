@@ -4959,82 +4959,84 @@ namespace SOTS.WorldgenHelpers
 			{
 				int bestDistance = 0;
 				Vector2 position = mushroomBiomes[A];
-				Point16 pos = position.ToPoint16();
-				Point16 bestPoint = pos;
-				for (int i = -60; i <= 60; i++)
-				{
-					for (int j = -60; j <= 60; j++)
+				if(WorldGen.InWorld((int)position.X, (int)position.Y, 50))
+                {
+					Point16 pos = position.ToPoint16();
+					Point16 bestPoint = pos;
+					for (int i = -60; i <= 60; i++)
 					{
-						pos = position.ToPoint16() + new Point16(i, j);
-						int blocksL = CountBlocksInDirection(pos, new Point16(-1, 0), TileID.MushroomGrass, 60);
-						int blocksR = CountBlocksInDirection(pos, new Point16(1, 0), TileID.MushroomGrass, 60);
-						int blocksU = CountBlocksInDirection(pos, new Point16(0, -1), TileID.MushroomGrass, 60);
-						int blocksD = CountBlocksInDirection(pos, new Point16(0, 1), TileID.MushroomGrass, 60);
-						int totalBlocksChecked = blocksL + blocksR + blocksU + blocksD;
-						if (totalBlocksChecked > bestDistance)
+						for (int j = -60; j <= 60; j++)
 						{
-							bestDistance = totalBlocksChecked;
-							bestPoint = pos;
-						}
-					}
-				}
-
-				Point16 spawnTilePos = bestPoint;
-				Tile tile = Framing.GetTileSafely(spawnTilePos);
-				for (int j = 12; j >= -12; j--)
-				{
-					for (int i = -12; i <= 12; i++)
-					{
-						pos = spawnTilePos + new Point16(i, j);
-						float circularLength = new Point16(i, j).ToVector2().Length();
-						if (circularLength <= 5.0f)
-						{
-							tile = Framing.GetTileSafely(pos);
-							tile.HasTile = false;
-							tile.IsHalfBlock = false;
-							tile.Slope = 0;
-							if (j >= 2) //bottom layer
+							pos = position.ToPoint16() + new Point16(i, j);
+							int blocksL = CountBlocksInDirection(pos, new Point16(-1, 0), TileID.MushroomGrass, 60);
+							int blocksR = CountBlocksInDirection(pos, new Point16(1, 0), TileID.MushroomGrass, 60);
+							int blocksU = CountBlocksInDirection(pos, new Point16(0, -1), TileID.MushroomGrass, 60);
+							int blocksD = CountBlocksInDirection(pos, new Point16(0, 1), TileID.MushroomGrass, 60);
+							int totalBlocksChecked = blocksL + blocksR + blocksU + blocksD;
+							if (totalBlocksChecked > bestDistance)
 							{
-								tile.HasTile = true;
-								tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
-								tile.Slope = 0;
-								tile.IsHalfBlock = false;
+								bestDistance = totalBlocksChecked;
+								bestPoint = pos;
 							}
 						}
 					}
-				}
-				WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
-				GenerateSilkWeb(spawnTilePos.X, spawnTilePos.Y);
-				for (int j = 12; j >= -12; j--)
-				{
-					for (int i = -12; i <= 12; i++)
+					Point16 spawnTilePos = bestPoint;
+					Tile tile = Framing.GetTileSafely(spawnTilePos);
+					for (int j = 12; j >= -12; j--)
 					{
-						pos = spawnTilePos + new Point16(i, j);
-						float circularLength = new Point16(i, j).ToVector2().Length();
-						if (circularLength <= 11.0f + Main.rand.NextFloat(-1, 1))
+						for (int i = -12; i <= 12; i++)
 						{
-							tile = Framing.GetTileSafely(pos);
-							if ((tile.HasTile && TrueTileSolid(pos.X, pos.Y)) || (circularLength <= 4.0f + Main.rand.NextFloat(-1, 1) && !tile.HasTile))
+							pos = spawnTilePos + new Point16(i, j);
+							float circularLength = new Point16(i, j).ToVector2().Length();
+							if (circularLength <= 5.0f)
 							{
-								tile.HasTile = true;
-								tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
-								tile.Slope = 0;
+								tile = Framing.GetTileSafely(pos);
+								tile.HasTile = false;
 								tile.IsHalfBlock = false;
-							}
-							else
-							{
-								if (!tile.HasTile && !WorldGen.genRand.NextBool(10 - (int)circularLength / 2))
+								tile.Slope = 0;
+								if (j >= 2) //bottom layer
 								{
 									tile.HasTile = true;
-									tile.TileType = (ushort)ModContent.TileType<GlowWebTile>();
+									tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 								}
 							}
 						}
 					}
+					WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
+					GenerateSilkWeb(spawnTilePos.X, spawnTilePos.Y);
+					for (int j = 12; j >= -12; j--)
+					{
+						for (int i = -12; i <= 12; i++)
+						{
+							pos = spawnTilePos + new Point16(i, j);
+							float circularLength = new Point16(i, j).ToVector2().Length();
+							if (circularLength <= 11.0f + Main.rand.NextFloat(-1, 1))
+							{
+								tile = Framing.GetTileSafely(pos);
+								if ((tile.HasTile && TrueTileSolid(pos.X, pos.Y)) || (circularLength <= 4.0f + Main.rand.NextFloat(-1, 1) && !tile.HasTile))
+								{
+									tile.HasTile = true;
+									tile.TileType = (ushort)ModContent.TileType<GlowSilkTile>();
+									tile.Slope = 0;
+									tile.IsHalfBlock = false;
+								}
+								else
+								{
+									if (!tile.HasTile && !WorldGen.genRand.NextBool(10 - (int)circularLength / 2))
+									{
+										tile.HasTile = true;
+										tile.TileType = (ushort)ModContent.TileType<GlowWebTile>();
+										tile.Slope = 0;
+										tile.IsHalfBlock = false;
+									}
+								}
+							}
+						}
+					}
+					SmoothRegion(spawnTilePos.X, spawnTilePos.Y, 160, 160, ModContent.TileType<GlowSilkTile>());
 				}
-				SmoothRegion(spawnTilePos.X, spawnTilePos.Y, 160, 160, ModContent.TileType<GlowSilkTile>());
 			}
 		}
 		public static int CountBlocksInDirection(Point16 start, Point16 direction, int BlockType, int distance)
