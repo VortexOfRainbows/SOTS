@@ -243,6 +243,8 @@ Mods: {
 				VoidAnomaly: Void Anomaly
 				VoidmageIncubator: Voidmage Incubator
 
+				SpiritSymphony: Spirit Symphony
+
 			# ChestItems
 				BagOfAmmoGathering: Bag of Ammunition Gathering
 				BetrayersKnife: Betrayer's Knife
@@ -1053,6 +1055,12 @@ Mods: {
 					Getting hit will freeze time, converting void into life for the duration
 					Increases the potency of Void Shock and Void Recovery
 					'''
+				SpiritSymphony:
+					'''
+					Increases void gain by 1 and void regeneration speed by 25%
+					Doubles damage done to non-Lux spirit enemies
+					'''
+
 
 			# ChestItems
 				BagOfAmmoGathering: 

@@ -26,15 +26,15 @@ Update Objectives:
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Glow Moth (need for update)
-	1. Glowjelly: glow spores + royal jelly
-	2. Needs: Balance Testing, Boss checklist entry
+	1. Glowjelly: glow spores (needs a drop/obtain method) + royal jelly
+	2. Needs: Balance Testing, Boss checklist entry, Despawning method
 3. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map (maybe need for update)
 4. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. (maybe need for update)
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
 		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
 		If an item is teleported through, it will not be allowed to teleport back through,
 	2. Teleports you to the other point on the map when you travel through, granting increased Maximum void by 50 Permanently (plays a short animation to indicate this).
-5. New Lux expert drop: Spirit Symphony - Inceases void stats by varying amounts. Deal double damage to Spirit Enemies (maybe need for update)
+5. New Lux expert drop: Spirit Symphony
 	1. Nerf Soaring Insignia to no longer grant unlimited flight; grants unlimited flight when combined with Spirit Symphony.
 	2. Combine with Machina Booster + Soaring Insignia for new wings: Gilded Blade-Wings
 6. Pharaoh's Curse music box (don't need for update)
@@ -57,6 +57,8 @@ Daily Log:
 4. Glowmoth spawning + bestiary
 5. Earthen construct is now immune to: Poisoned, Frostburn, OnFire
 6. Glowmoth works properly in multiplayer!
+7. Fix some bugs with the beta content
+8. Added Spirit Symphony. Void anomaly will remain also an expert drop for now.
 
 6/20/23 & 6/21/23
 1. WIP glowmoth attacks

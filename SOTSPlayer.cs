@@ -314,6 +314,7 @@ namespace SOTS
 		public bool DrainDebuffs = false;
 		public bool SparkleDamage = false;
 		public bool ConduitBelt = false;
+		public bool SpiritSymphony = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -998,6 +999,7 @@ namespace SOTS
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
 			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = false;
+			SpiritSymphony = false;
 			if (AmmoRegatherDelay < 120)
 				AmmoRegatherDelay++;
 		}
@@ -1274,6 +1276,13 @@ namespace SOTS
 						{
 							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(1, 0) * direction, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 1f, Main.myPlayer, target.whoAmI, 4 + 6 * i);
 						}
+					}
+				}
+				if (ModPlayer(Player).SpiritSymphony)
+				{
+					if (target.type != ModContent.NPCType<Lux>() && DebuffNPC.spirits.Contains(target.type))
+					{
+						damage *= 2;
 					}
 				}
 				if (crit)
