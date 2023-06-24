@@ -23,7 +23,7 @@ namespace SOTS.NPCs.Constructs
                 PortraitScale = 1.1f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[]

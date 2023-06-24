@@ -13,6 +13,7 @@ using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -157,6 +158,8 @@ namespace SOTS.NPCs.Boss.Glowmoth
 						{
 							CircularBallBurst(24);
 						}
+						if (Main.netMode != NetmodeID.Server)
+							Main.NewText(Language.GetTextValue("Mods.SOTS.BossAwoken.Glowmoth"), 175, 75, byte.MaxValue);
 						SOTSUtils.PlaySound(SoundID.Roar, NPC.Center, 1.0f, 0.3f);
 					}
 					AI2 = -1;

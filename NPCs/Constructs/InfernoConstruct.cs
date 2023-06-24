@@ -37,8 +37,11 @@ namespace SOTS.NPCs.Constructs
 			get => NPC.ai[3];
 			set => NPC.ai[3] = value;
 		}
-
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+		{
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+		}
+        public override void SetDefaults()
 		{
 			NPC.aiStyle = 0;
 			NPC.lifeMax = 5000;  

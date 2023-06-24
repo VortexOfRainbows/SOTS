@@ -2937,6 +2937,9 @@ Mods: {
 			ElectromagneticDeterrentTile: D.E.F.E
 			EnchantedPickShrineTile: Pickaxe Shrine
 			EnchantedSwordShrineTile: Sword Shrine
+			
+			MineralariumTile: Mineralarium
+			HydraulicPressTile: Hydraulic Press
 		}
 
 		WorldGeneration: {

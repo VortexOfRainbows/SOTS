@@ -138,8 +138,20 @@ namespace SOTS.Items
 			int type = GetNPCType(CapableNPCS(player));
 			if (type == -1)
 				return false;
+			if (player.whoAmI == Main.myPlayer)
+			{
+				SOTSUtils.PlaySound(SoundID.Item122, (int)player.position.X, (int)player.position.Y, 0.8f, 0.1f);
+				SoundEngine.PlaySound(SoundID.Roar, player.position);
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					NPC.SpawnOnPlayer(player.whoAmI, type);
+				}
+				else
+				{
+					NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+				}
+			}
 			NPC.SpawnOnPlayer(player.whoAmI, type);
-			SOTSUtils.PlaySound(SoundID.Item122, (int)player.position.X, (int)player.position.Y, 0.8f, 0.1f);
 			return true;
 		}
 	}

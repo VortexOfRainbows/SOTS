@@ -18,6 +18,7 @@ namespace SOTS.NPCs.Boss
 			{
 				Hide = true
 			};
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()

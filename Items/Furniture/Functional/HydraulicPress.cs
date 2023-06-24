@@ -52,6 +52,8 @@ namespace SOTS.Items.Furniture.Functional
 	{
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
+			Main.tileBlockLight[Type] = false;
+			Main.tileNoSunLight[Type] = false;
 			Tile tile = Main.tile[i, j];
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)

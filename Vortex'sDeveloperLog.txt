@@ -50,6 +50,10 @@ Update Objectives:
 
 Daily Log:
 
+6/24/23
+1. Fixed Putrud pinky and Constructs not spawning from summon items in multiplayer
+2. Fixed bug where hydroponic blocked light
+
 6/22/23
 1. Increased the frequency of various void reforges
 2. Loot pool for Glowmoth + added coins to all boss bags (which were missing them previously)

@@ -32,7 +32,12 @@ namespace SOTS.NPCs.Constructs
         int timer = 0;
 		int ai1 = 0;
 		float dir = 0f;
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+		{
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			Main.npcFrameCount[NPC.type] = 12;
+		}
+        public override void SetDefaults()
 		{
 			NPC.aiStyle =0;
 			NPC.lifeMax = 750;
@@ -41,7 +46,6 @@ namespace SOTS.NPCs.Constructs
 			NPC.knockBackResist = 0f;
 			NPC.width = 68;
 			NPC.height = 62;
-			Main.npcFrameCount[NPC.type] = 12;
 			NPC.value = 12550;
 			NPC.npcSlots = 6f;
 			NPC.lavaImmune = true;

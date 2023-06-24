@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs.Boss;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -37,12 +38,19 @@ namespace SOTS.Items.Slime
 		}
 		public override bool? UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<PutridPinky1>());
-			//SOTSUtils.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);
-			//if(!NPC.AnyNPCs(ModContent.NPCType<PutridPinky1>()) && !NPC.AnyNPCs(Mod.Find<ModNPC>("PutridPinkyPhase2").Type))
-			//{
-			//		 NPC.NewNPC((int)player.Center.X, (int)player.Center.Y - 600, mod.NPCType("PutridPinky1"));	
-			//}
+			if (player.whoAmI == Main.myPlayer)
+			{
+				SoundEngine.PlaySound(SoundID.Roar, player.position);
+				int type = ModContent.NPCType<PutridPinky1>();
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					NPC.SpawnOnPlayer(player.whoAmI, type);
+				}
+				else
+				{
+					NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+				}
+			}
 			return true;
 		}
 	}

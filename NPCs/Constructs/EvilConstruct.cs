@@ -25,7 +25,11 @@ namespace SOTS.NPCs.Constructs
         {
 			writer.Write(currentArmID);
         }
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+		{
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+		}
+        public override void SetDefaults()
 		{
 			NPC.aiStyle =0;
 			NPC.lifeMax = 3500;  

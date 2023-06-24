@@ -31,7 +31,12 @@ namespace SOTS.NPCs.Constructs
 			dir = reader.ReadSingle();
 			canSpell = reader.ReadBoolean();
 		}
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+		{
+			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+		}
+        public override void SetDefaults()
 		{
 			NPC.aiStyle =0;
 			NPC.lifeMax = 125;  
@@ -40,7 +45,6 @@ namespace SOTS.NPCs.Constructs
 			NPC.knockBackResist = 0.1f;
 			NPC.width = 120;
 			NPC.height = 70;
-			Main.npcFrameCount[NPC.type] = 3;  
 			NPC.value = 3330;
 			NPC.npcSlots = 3f;
 			NPC.boss = false;
