@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Earth.Glowmoth;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,7 +36,7 @@ namespace SOTS.Items.Celestial
         }
         public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.Bomb, 5).AddIngredient(ItemID.Ectoplasm, 1).AddIngredient(ItemID.SoulofNight, 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<TorchBomb>(5).AddIngredient(ItemID.Ectoplasm, 1).AddIngredient(ItemID.SoulofNight, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

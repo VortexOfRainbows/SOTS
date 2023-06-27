@@ -43,6 +43,7 @@ using Terraria.Localization;
 using SOTS.Items.Furniture.Functional;
 using SOTS.NPCs.Boss.Glowmoth;
 using SOTS.NPCs.Boss.Lux;
+using SOTS.Items.Earth.Glowmoth;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -441,6 +442,13 @@ namespace SOTS.Common.GlobalNPCs
 			{
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 1));
 				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 20));
+				npcLoot.Add(postEoC);
+				npcLoot.Add(preEoC);
+			}
+			if (npc.type == ModContent.NPCType<Glowmoth>())
+			{
+				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GlowSpores>(), 1));
+				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GlowSpores>(), 20));
 				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
