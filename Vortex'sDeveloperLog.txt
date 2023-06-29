@@ -15,7 +15,7 @@ Acknowledged But Likely Delayed:
 3. Master mode go crazy. It's a bit unfair.
 4. Glowmasks for Corruption Trees in SOTSTP
 5. Wind mechanics for vines and banners
-6. Earth Conduit (abstract the conduit class)
+6. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
 
 Update Objectives:
 1. Ghost Town! (later)
@@ -51,6 +51,11 @@ Update Objectives:
 12. Glow Nylon Rope
 
 Daily Log:
+
+6/28/23 & 6/29/23
+1. Abstracted conduit class
+2. Added Earthen Conduit (since it's abstracted, it should still work in multiplayer and everything)
+	1. WIP Glow sprite
 
 6/24/23 & 6/26/23
 1. Fixed Putrid pinky and Constructs not spawning from summon items in multiplayer

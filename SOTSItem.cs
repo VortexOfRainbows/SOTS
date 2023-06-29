@@ -567,7 +567,7 @@ namespace SOTS
         }
         public override void GrabRange(Item item, Player player, ref int grabRange)
         {
-			if(item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() 
+			if(item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() || item.type == ItemType<EarthenConduit>()
 				|| item.type == ItemType<DissolvingNatureBlock>() || item.type == ItemType<DissolvingEarthBlock>() || item.type == ItemType<DissolvingAuroraBlock>() || item.type == ItemType<DissolvingAetherBlock>()
 				|| item.type == ItemType<DissolvingBrillianceBlock>() || item.type == ItemType<DissolvingNetherBlock>() || item.type == ItemType<DissolvingUmbraBlock>() || item.type == ItemType<DissolvingDelugeBlock>())
             {

@@ -499,18 +499,20 @@ namespace SOTS
         }
         public override bool CanPlace(int i, int j, int type)
         {
-            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<DissolvingNatureTile>(), 0))
+            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<DissolvingNatureTile>(), 0, ModContent.TileType<NatureConduitTile>()))
                 return false;
-            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<ConduitChassisTile>(), 82))
+            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<DissolvingEarthTile>(), 0, ModContent.TileType<EarthenConduitTile>()))
                 return false;
             return base.CanPlace(i, j, type);
         }
         public static bool DoNotPlaceNearConduit(int i, int j, int myType, int PlaceTile, int frameY, int PreventNearby = -1)
         {
-            if (PreventNearby == -1)
-                PreventNearby = ModContent.TileType<NatureConduitTile>();
-            if (myType == PlaceTile)
+            if (myType == PlaceTile || myType == ModContent.TileType<ConduitChassisTile>())
             {
+                if (myType == ModContent.TileType<ConduitChassisTile>())
+                    frameY = 82;
+                if (PreventNearby == -1)
+                    PreventNearby = ModContent.TileType<NatureConduitTile>();
                 for (int k = -2; k <= 2; k++)
                 {
                     for (int h = -2; h <= 2; h++)

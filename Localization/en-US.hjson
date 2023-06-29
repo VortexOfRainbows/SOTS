@@ -269,6 +269,7 @@ Mods: {
 				ArchaeologistToolbelt: Archaeologist's Toolbelt
 				ConduitChassis: Conduit Chassis
 				NatureConduit: Nature Conduit
+				EarthenConduit: Earth Conduit
 
 			# CritBonus
 				OtherworldlyAmplifier: Otherworldly Amplifier
@@ -1149,6 +1150,11 @@ Mods: {
 					''' 
 					An incomplete redirector of nature energy: it lacks a support chassis
 					When fully charged, it will focus nearby nature energy into valid repositories
+					'''
+				EarthenConduit:
+					''' 
+					An incomplete redirector of earth energy: it lacks a support chassis
+					When fully charged, it will focus nearby earth energy into valid repositories
 					'''
 
 			# CritBonus
@@ -2692,6 +2698,7 @@ Mods: {
 		IntimidatingPresence : Intimidating Presence
 		NatureSpiritAid : Spirit Aid
 		NatureBoosted : Nature Boosted
+		EarthBoosted : Earth Boosted
 		Nightmare : Nightmare
 		NightIlluminatorBuff : Illumination
 		OtherworldlySpiritAid : Spirit Aid
@@ -2753,7 +2760,6 @@ Mods: {
 		InfernoSpiritAid : Inferno Spirits assist you in combat
 		IntimidatingPresence : Drastically lowered enemy spawns
 		NatureSpiritAid : Nature Spirits assist you in combat
-		NatureBoosted : Increases max life by 20
 		Nightmare : Compress enemies together with critical strikes
 		NightIlluminatorBuff : Protected by glowing moths
 		OtherworldlySpiritAid : Otherworldly Spirits assist you in combat
@@ -2800,6 +2806,9 @@ Mods: {
 		VoidShock : Quickly losing life, increases damage taken by 200%
 		VoidSickness : Decreases void damage by 10%
 		WebbedNPC : Slowed, but only for enemies
+		
+		NatureBoosted : Increases max life by 20
+		EarthBoosted : Increases max life by 20
 		}
 
 		ArmorSetBonus: {
@@ -2860,6 +2869,7 @@ Mods: {
 
 		MapObject: {
 			NatureConduitTile: Nature Conduit
+			EarthenConduitTile: Earth Conduit
 			PeanutBushTile: Peanut Bush
 			PeanutOreTile: Peanut Ore
 			RuinedChestTile: Ruined Chest
