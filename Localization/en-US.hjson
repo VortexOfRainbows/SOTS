@@ -897,6 +897,8 @@ Mods: {
 			SpectreSpiritStorm: Spectre Spirit Storm
 			SubspaceBoosters: Subspace Boosters
 			ZombieHand: Zombie Hand
+			
+			GlowJelly: Glow Jelly
 		}
 
 		ItemTooltip: {
@@ -2681,6 +2683,10 @@ Mods: {
 				'''
 				Allows melee swings to harm Town NPCs
 				'Finally, I can kill the painter!'
+				'''
+			GlowJelly: 
+				'''
+				Increases healing and mana recieved from potions by 40
 				'''
 		}
 
