@@ -27,6 +27,12 @@ namespace SOTS.Items.Chaos
 			Item.accessory = true;
 			Item.expert = true;
 		}
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+			if (equippedItem.type == ModContent.ItemType<SpiritInsignia>() || incomingItem.type == ModContent.ItemType<SpiritInsignia>())
+				return false;
+            return true;
+        }
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

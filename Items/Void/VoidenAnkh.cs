@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
+using SOTS.Items.Invidia;
 
 namespace SOTS.Items.Void
 {
@@ -41,7 +42,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 15).AddIngredient(ModContent.ItemType<SoulResidue>(), 10).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<CursedMatter>(10).AddIngredient<SoulResidue>(10).AddIngredient<Evostone>(20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

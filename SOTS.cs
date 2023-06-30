@@ -78,7 +78,11 @@ namespace SOTS
 		public static SOTSConfig Config
         {
 			get => ModContent.GetInstance<SOTSConfig>();
-        }
+		}
+		public static SOTSServerConfig ServerConfig
+		{
+			get => ModContent.GetInstance<SOTSServerConfig>();
+		}
 		/*public SOTS()
 		{
 			Properties = new ModProperties() //This seems largely unused now
@@ -141,6 +145,7 @@ namespace SOTS
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Planetarium"), ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Lux"), ModContent.ItemType<LuxMusicBox>(), ModContent.TileType<LuxMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PharaohsCurse"), ModContent.ItemType<CurseMusicBox>(), ModContent.TileType<CurseMusicBoxTile>());
 			SOTSItem.LoadArrays();
 			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();

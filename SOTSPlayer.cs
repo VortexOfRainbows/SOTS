@@ -315,6 +315,7 @@ namespace SOTS
 		public bool SparkleDamage = false;
 		public bool ConduitBelt = false;
 		public bool SpiritSymphony = false;
+		public bool hasSoaringInsigniaFake = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -699,6 +700,24 @@ namespace SOTS
 			if (DevilRing)
 				Player.statDefense = (int)Math.Sqrt(previousDefense);
 			DevilRing = false;
+			hasSoaringInsigniaFake = false;
+			if (!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia)
+			{
+				if (Player.empressBrooch)
+				{
+					hasSoaringInsigniaFake = true;
+					Player.empressBrooch = false;
+					Player.rocketTimeMax = 11;
+				}
+				else
+                {
+					Player.rocketTimeMax = 7; //7 is the default found in Terraria's code
+                }
+			}
+            else
+			{
+				Player.rocketTimeMax = 7;
+			}
 		}
         public override void ResetEffects()
 		{

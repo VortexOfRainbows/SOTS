@@ -112,4 +112,17 @@ namespace SOTS
 		[DefaultValue(false)]
 		public bool playAmbientAudio = false;*/
 	}
+	[Label("$Mods.SOTS.Configuration.Label.SConfig")]
+	[BackgroundColor(45, 50, 65, 192)]
+	public class SOTSServerConfig : ModConfig
+	{
+		public override ConfigScope Mode => ConfigScope.ServerSide;
+
+		[Header("$Mods.SOTS.Configuration.Header.BAL")]
+		[Label("$Mods.SOTS.Configuration.Label.NINS")]
+		[Tooltip("$Mods.SOTS.Configuration.Tooltip.NINS")]
+		[BackgroundColor(110, 80, 150, 192)]
+		[DefaultValue(true)]
+		public bool NerfInsignia;
+	}
 }

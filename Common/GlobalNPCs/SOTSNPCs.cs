@@ -538,7 +538,9 @@ namespace SOTS.Common.GlobalNPCs
 			if(Main.eclipse || Main.pumpkinMoon || Main.snowMoon)
             {
 				constructRateMultiplier = 0f;
-            }
+			}
+			if (spawnInfo.PlayerInTown)
+				constructRateMultiplier *= 0.1f;
 			bool ZoneForest = SOTSPlayer.ZoneForest(player);
 			bool ZonePlanetarium = spawnInfo.Player.GetModPlayer<SOTSPlayer>().PlanetariumBiome;
 			if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().PyramidBiome)

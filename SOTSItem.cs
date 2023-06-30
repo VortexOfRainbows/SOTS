@@ -121,6 +121,14 @@ namespace SOTS
 					}
 				}
 			}
+			if(!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia && (item.type == ModContent.ItemType<SpiritInsignia>() || item.type == ItemID.EmpressFlightBooster))
+			{
+				TooltipLine line = new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.SOTS.Common.InsigniaNerf"))
+				{
+					OverrideColor = ColorHelpers.pastelRainbow
+				};
+				tooltips.Add(line);
+			}
 			/*if (originalOwner.Length > 0)
 			{
 				TooltipLine line = new TooltipLine(mod, "CraftedBy", "Crafted by: " + originalOwner)

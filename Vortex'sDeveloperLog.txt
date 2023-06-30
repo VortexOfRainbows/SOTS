@@ -34,21 +34,18 @@ Update Objectives:
 		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
 		If an item is teleported through, it will not be allowed to teleport back through,
 	2. Teleports you to the other point on the map when you travel through, granting increased Maximum void by 50 Permanently (plays a short animation to indicate this).
-5. New Lux expert drop: Spirit Symphony
-	1. Nerf Soaring Insignia to no longer grant unlimited flight; grants unlimited flight when combined with Spirit Symphony.
-	2. Combine with Machina Booster + Soaring Insignia for new wings: Gilded Blade-Wings
-6. Pharaoh's Curse music box (don't need for update)
-7. Roasted Peanuts item (use for the now farmable peanuts)
-8. More lines for the Archaeologist
-9. More Bestiary entries (and visual fixes)
-10. Make Subspace Servant work with channel items:
+5. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
+6. Roasted Peanuts item (use for the now farmable peanuts)
+7. More lines for the Archaeologist
+8. More Bestiary entries (and visual fixes)
+9. Make Subspace Servant work with channel items:
 	1. Give projectiles created during Servant's update window a special update characteristic.
 	2. Make sure this characteristic is NETSYNCED as SOON as the PROJECTILE is created!!!
 	3. This will make them no longer update as part of Terraria's normal projectile update.
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
-11. Glow Nylon Whip
-12. Glow Nylon Rope
+10. Glow Nylon Whip
+11. Glow Nylon Rope
 
 Daily Log:
 
@@ -56,6 +53,12 @@ Daily Log:
 1. Abstracted conduit class
 2. Added Earthen Conduit (since it's abstracted, it should still work in multiplayer and everything)
 	1. WIP Glow sprite
+3. Voiden Ankh recipe: 15 cursed matter -> 10, but now cost 20 evostone
+4. Added Pharaoh's Curse Music Box
+5. Added Spirit Insignia
+6. Infinite wing flight is now restricted to Post-LUX
+	1. For the Soaring Insignia
+7. Nerf spawn weighting of constructs when player is in Town: 100% -> 10%
 
 6/24/23 & 6/26/23
 1. Fixed Putrid pinky and Constructs not spawning from summon items in multiplayer

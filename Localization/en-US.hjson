@@ -19,6 +19,7 @@ Mods: {
 			CV: "Consumes {0} void"
 			GenSOTSOres: Generating SOTS Ores
 			GenSOTSGeodes: Generating Fancy Geodes
+			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
 		}
 
 		ModifyWorldGenTasks: {
@@ -39,9 +40,11 @@ Mods: {
 				GS: Graphics Settings
 				TPS: Texture Pack Settings
 				GPS: Gameplay Settings
+				BAL: Balance Changes
 			}
 			Label: {
 				Config: Config
+				SConfig: Server Config
 
 				VBX: Void Bar X
 				VBY: Void Bar Y
@@ -56,6 +59,7 @@ Mods: {
 				CTF: Colored Time Freeze
 				AVE: Additional Visual Effects
 				SHT: Starter House Type (Upon World Generation)
+				NINS: Nerf Soaring Insignia Before Lux
 			}
 			Tooltip: {
 				VBX: 
@@ -115,6 +119,12 @@ Mods: {
 					18 = Drowned
 					19 = Comfy
 					20 = Nature
+					'''
+				NINS:
+					'''
+					Nerfs Soaring Insignia, making it only grant infinite flight after Lux is defeated.
+					Before Lux is defeated, it will only double your flight time.
+					If you disagree with this change, you can disable it here.
 					'''
 			}
 		}
@@ -244,6 +254,7 @@ Mods: {
 				VoidmageIncubator: Voidmage Incubator
 
 				SpiritSymphony: Spirit Symphony
+				SpiritInsignia: Spirit Insignia
 
 			# ChestItems
 				BagOfAmmoGathering: Bag of Ammunition Gathering
@@ -516,7 +527,7 @@ Mods: {
 				PutridPinkyMusicBox: Music Box (Putrid Pinky)
 				PyramidBattleMusicBox: Music Box (Pyramid Battle)
 				SubspaceSerpentMusicBox: Music Box (Subspace Serpent)
-
+				CurseMusicBox: Music Box (Pharaoh's Curse)
 			# Nature
 				AcornBag: Acorn Bag
 				BerryBombs: Berry Bombs
@@ -1061,7 +1072,13 @@ Mods: {
 					Increases void gain by 1 and void regeneration speed by 25%
 					Doubles damage done to non-Lux spirit enemies
 					'''
-
+				SpiritInsignia:
+					'''
+					Grants infinite wing and rocket boot flight
+					Increases flight and jump mobility
+					Increases void gain by 1 and void regeneration speed by 25%
+					Doubles damage done to non-Lux spirit enemies
+					'''
 
 			# ChestItems
 				BagOfAmmoGathering: 
@@ -2917,6 +2934,7 @@ Mods: {
 			PutridPinkyMusicBoxTile: Music Box
 			PyramidBattleMusicBoxTile: Music Box
 			SubspaceSerpentMusicBoxTile: Music Box
+			CurseMusicBoxTile: Music Box
 			DigitalDisplayTile: Digital Display
 			HardlightFabricatorTile: Hardlight Fabricator
 			HardlightTableTile: Hardlight Table

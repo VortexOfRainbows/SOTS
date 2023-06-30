@@ -72,6 +72,9 @@ namespace SOTS
 			//Used for Turning Off hit sounds for certain weapons
 			On.Terraria.NPC.StrikeNPC += NPC_StrikeNPC;
 
+			//Used for Nerfing Soaring Insignia
+			On.Terraria.Player.WingMovement += Player_WingMovement;
+
 			if (!Main.dedServ)
 				ResizeTargets();
 		}
@@ -496,6 +499,17 @@ namespace SOTS
 		{
 			double double1 = orig(npc, Damage, knockBack, hitDirection, crit, noEffect, fromNet);
 			return double1;
+		}
+		private static void Player_WingMovement(On.Terraria.Player.orig_WingMovement orig, Player self)
+        {
+			float startingWingTime = self.wingTime;
+			orig(self);
+			float WingTimeDiff = startingWingTime - self.wingTime;
+			if (SOTSPlayer.ModPlayer(self).hasSoaringInsigniaFake)
+			{
+				if(WingTimeDiff > 0)
+					self.wingTime += WingTimeDiff / 3f;
+			}
 		}
 		/*Code I wrote for HeartPlusUp! Calamity Mod!
 		private static void GlassTileWallFraming(On.Terraria.Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
