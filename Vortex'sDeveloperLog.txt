@@ -24,26 +24,27 @@ Update Objectives:
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-2. Glow Moth (need for update)
-	1. Needs: Balance Testing
-3. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map (maybe need for update)
-4. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. (maybe need for update)
+2. Anomaly Locator - Sold by Archaeologist, displays several useful details on the Map (maybe need for update)
+3. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. (maybe need for update)
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
 		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
 		If an item is teleported through, it will not be allowed to teleport back through,
 	2. Teleports you to the other point on the map when you travel through, granting increased Maximum void by 50 Permanently (plays a short animation to indicate this).
-5. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
-6. Roasted Peanuts item (use for the now farmable peanuts)
-7. More lines for the Archaeologist
-8. More Bestiary entries (and visual fixes)
-9. Make Subspace Servant work with channel items:
+4. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
+5. Roasted Peanuts item (use for the now farmable peanuts)
+6. More lines for the Archaeologist
+	1. Remove debug lines and finalize position changing time/duration
+7. More Bestiary entries (and visual fixes)
+8. Make Subspace Servant work with channel items:
 	1. Give projectiles created during Servant's update window a special update characteristic.
 	2. Make sure this characteristic is NETSYNCED as SOON as the PROJECTILE is created!!!
 	3. This will make them no longer update as part of Terraria's normal projectile update.
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
-10. Glow Nylon Whip
-11. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
+9. Glow Nylon Whip
+10. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
+11. Golden Trowel (Sold by archaeologist)
+	1. Mining blocks has a chance to drop money
 
 Daily Log:
 
@@ -54,6 +55,8 @@ Daily Log:
 4. Glowmoth now despawns after 10 seconds
 5. Dream lamp no longer hits unhittable enemies
 6. Fix weird hydraulic press bug
+7. Inferno Construct bestiary entry
+8. Got some feedback for glowmoth --> Fairly Balanced
 
 6/28/23 & 6/29/23
 1. Abstracted conduit class
