@@ -132,6 +132,8 @@ namespace SOTS.Items.Furniture.Functional
 				return;
 			int i = (int)npc.Center.X / 16;
 			int j = (int)npc.Center.Y / 16;
+			if (!WorldGen.InWorld(i, j, 20))
+				return;
 			Tile tile = Main.tile[i, j];
 			if(tile.TileType == ModContent.TileType<HydraulicPressTile>() && tile.HasTile)
             {

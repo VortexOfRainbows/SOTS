@@ -30,6 +30,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public const int GlowBombPhase = 3;
 		public const int SparklePhase = 4;
 		public float SinusoidalCounter = 0;
+		int despawn = 0;
 		private float AI0
 		{
 			get => NPC.ai[0];
@@ -125,10 +126,24 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public bool RunOnce = true;
 		public override bool PreAI()
 		{
+			NPC.TargetClosest(true);
+			Player player = Main.player[NPC.target];
 			if (RunOnce)
 			{
 				SwapPhase(InitializationPhase);
 				RunOnce = false;
+			}
+			if (despawn >= 600)
+			{
+				despawn++;
+				NPC.velocity.Y -= 0.2f;
+				if (despawn >= 720)
+					NPC.active = false;
+				return false;
+			}
+			else if (player.dead)
+			{
+				despawn++;
 			}
 			glowColor = ColorHelpers.VibrantColor;
 			return true;

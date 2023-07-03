@@ -493,7 +493,7 @@ namespace SOTS.Projectiles.Camera
 		}
 		public bool isNPCValidTarget(NPC npc)
         {
-			return npc.active && !npc.friendly && !npc.immortal;
+			return npc.active && !npc.friendly && !npc.immortal && !npc.dontTakeDamage;
         }
 		public bool Vector2ListContainsX(List<Vector2> Vector2s, int x)
         {

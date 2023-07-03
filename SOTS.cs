@@ -37,6 +37,7 @@ using SOTS.Items.Otherworld.Blocks;
 using ReLogic.Content;
 using Terraria.GameContent;
 using System.Linq;
+using SOTS.NPCs.Boss.Glowmoth;
 
 namespace SOTS
 {
@@ -482,6 +483,24 @@ namespace SOTS
 					$"$Mods.SOTS.BossChecklist.BossDisappear.PutridPinky",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinky1_Display").Value;
+						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+						sb.Draw(texture, centered, color);
+					}
+					);
+				bossChecklist.Call(
+					"AddBoss",
+					this,
+					$"$Mods.SOTS.BossChecklist.BossName.Glowmoth",
+					new List<int>() { ModContent.NPCType<Glowmoth>() },
+					2.1f,
+					(Func<bool>)(() => SOTSWorld.downedGlowmoth),
+					() => true,
+					new List<int>() { },
+					-1,
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Glowmoth"),
+					$"$Mods.SOTS.BossChecklist.BossDisappear.Glowmoth",
+					(SpriteBatch sb, Rectangle rect, Color color) => {
+						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/GlowmothPortrait").Value;
 						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
 						sb.Draw(texture, centered, color);
 					}

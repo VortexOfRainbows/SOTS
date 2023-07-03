@@ -160,7 +160,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						counter = 100000;
 					}
-					if(head.lifeMax >= InitiateHealth && phase == 1)
+					if(head.lifeMax >= InitiateHealth * (Main.masterMode ? MasterHealthMult : Main.expertMode ? ExpertHealthMult : 1) && phase == 1)
 					{
 						phase = 2;
 						if (Main.netMode != NetmodeID.MultiplayerClient)

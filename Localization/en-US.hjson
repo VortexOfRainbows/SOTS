@@ -3186,6 +3186,7 @@ Mods: {
 				Polaris: Polaris
 				Lux: Lux
 				SubspaceSerpent: Subspace Serpent
+				Glowmoth: Glowmoth
 			}
 			BossDescription: {
 				PutridPinky: "Summon in any biome at any time using a {0}"
@@ -3194,6 +3195,7 @@ Mods: {
 				Polaris: "Activate the {0} of the snow biome using {1}"
 				Lux: Anger a Chaos Spirit
 				SubspaceSerpent: "Tear a dimensional rift in hell by detonating a {0}"
+				Glowmoth: "Disturb a glowsilk cacoon in a glowing mushroom biome"
 			}
 			BossDisappear: {
 				PutridPinky: Putrid Pinky has robbed everyone of their peanuts!
@@ -3202,6 +3204,7 @@ Mods: {
 				Polaris: ""
 				Lux: ""
 				SubspaceSerpent: ""
+				Glowmoth: ""
 			}
 		}
 

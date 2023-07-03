@@ -212,9 +212,10 @@ namespace SOTS
 		public static int pyramidBiome = 0;
 		public static int phaseBiome = 0;
 
+		public static bool downedGlowmoth = false;
 		public static bool downedPinky = false;
 		public static bool downedCurse = false;
-		
+
 		public static bool downedAmalgamation = false;
 		public static bool downedLux = false;
 		public static bool downedSubspace = false;
@@ -235,6 +236,7 @@ namespace SOTS
 			GlobalFrozen = false;
 			GlobalFreezeCounter = 0;
 			GlobalSpeedMultiplier = 1;
+			downedGlowmoth = false;
 			downedPinky = false;
 			downedAdvisor = false;
 			downedCurse = false;
@@ -263,6 +265,7 @@ namespace SOTS
 		}
 		public override void SaveWorldData(TagCompound tag)
 		{
+			tag["DownedGlowmoth"] = downedGlowmoth;
 			tag["DownedPinky"] = downedPinky;
 			tag["DownedCurse"] = downedCurse;
 			tag["DownedAdvisor"] = downedAdvisor;
@@ -281,6 +284,7 @@ namespace SOTS
 		}
         public override void LoadWorldData(TagCompound tag)
 		{
+			downedGlowmoth = tag.GetBool("DownedGlowmoth");
 			downedPinky = tag.GetBool("DownedPinky");
 			downedCurse = tag.GetBool("DownedCurse");
 			downedAdvisor = tag.GetBool("DownedAdvisor");
@@ -305,6 +309,7 @@ namespace SOTS
 			flags[3] = downedCurse;
 			flags[4] = downedLux;
 			flags[5] = downedSubspace;
+			flags[6] = downedGlowmoth;
 
 			BitsByte gemFlags = new BitsByte();
 			gemFlags[0] = RubyKeySlotted;
@@ -328,6 +333,7 @@ namespace SOTS
 			downedCurse = flags[3];
 			downedLux = flags[4];
 			downedSubspace = flags[5];
+			downedGlowmoth = flags[6];
 
 			BitsByte gemFlags = reader.ReadByte();
 			RubyKeySlotted = gemFlags[0];
