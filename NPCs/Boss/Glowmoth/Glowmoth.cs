@@ -551,7 +551,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			npcLoot.Add(ItemDropRule.BossBag(ItemType<GlowmothBag>()));
 
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Earth.Glowmoth.TorchBomb>(), 1, 4, 8));
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Earth.Glowmoth.TorchBomb>(), 1, 8, 16));
 			notExpertRule.OnSuccess(ItemDropRule.FewFromOptions(1, 1, new int[] {
 				ModContent.ItemType<IlluminantAxe>(),
 				ModContent.ItemType<GuideToIllumination>(),

@@ -22,6 +22,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		{
 			Item.CloneDefaults(ItemID.Bomb);
 			Item.value += Item.sellPrice(0, 0, 1, 0);
+			Item.maxStack = 999;
 			Item.rare = ItemRarityID.Blue;
 			Item.width = 22;
 			Item.height = 32;

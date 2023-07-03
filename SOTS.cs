@@ -551,7 +551,7 @@ namespace SOTS
 					() => true,
 					new List<int>() { ModContent.ItemType<PolarisMusicBox>() },
 					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.PharaohsCurse", "[i:" + ModContent.ItemType<FrostArtifact> () + "]", "[i:" + ModContent.ItemType<FrostedKey> () + "]"),
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Polaris", "[i:" + ModContent.ItemType<FrostArtifact> () + "]", "[i:" + ModContent.ItemType<FrostedKey> () + "]"),
 					$"$Mods.SOTS.BossChecklist.BossDisappear.Polaris",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PolarisPortrait").Value;

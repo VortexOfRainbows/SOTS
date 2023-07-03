@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System;
 using SOTS.WorldgenHelpers;
 using SOTS.Items.Earth.Glowmoth;
+using Terraria.GameContent.Bestiary;
 
 namespace SOTS.Items.Tools
 {
@@ -29,7 +30,13 @@ namespace SOTS.Items.Tools
 		int num = 0;
 		public override bool? UseItem(Player player)
 		{
-			SOTSWorldgenHelper.CleanUpFloatingTrees();
+			for(int i = 0; i < Main.npcFrameCount.Length; i++)
+			{
+				NPC npc = new NPC();
+				npc.SetDefaults(i);
+				Main.BestiaryTracker.Kills.RegisterKill(npc);
+			}
+			//SOTSWorldgenHelper.CleanUpFloatingTrees();
 			return true;
 		}
 	}

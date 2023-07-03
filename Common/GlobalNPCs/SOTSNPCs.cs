@@ -889,12 +889,20 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<EarthenSpirit>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.EarthenConstruct");
-				if (npc.type == ModContent.NPCType<OtherworldlySpirit>())
+				if (npc.type == ModContent.NPCType<EarthenSpirit>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.EarthenSpirit");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Underground,
 					Desert,
 					UndergroundDesert,
+					flavorText
+				});
+			}
+			if(npc.type == ModContent.NPCType<InfernoConstruct>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.InfernoConstruct");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					TheUnderworld,
 					flavorText
 				});
 			}

@@ -41,7 +41,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<IlluminantLantern>()));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TorchBomb>(), 1, 5, 12));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TorchBomb>(), 1, 12, 24));
 			itemLoot.Add(ItemDropRule.FewFromOptions(1, 1, new int[] { 
 				ModContent.ItemType<IlluminantAxe>(), 
 				ModContent.ItemType<GuideToIllumination>(), 
