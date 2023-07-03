@@ -15,7 +15,6 @@ Acknowledged But Likely Delayed:
 4. Glowmasks for Corruption Trees in SOTSTP
 5. Wind mechanics for vines and banners
 6. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
-7. Implement Resprited Pharaoh's Curse
 
 Update Objectives:
 1. Ghost Town! (later)
@@ -47,6 +46,9 @@ Update Objectives:
 11. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
 
 Daily Log:
+
+7/2/23
+1. Implemented Pharaoh's Curse related resprites... HitBox Size: (42, 54) -> (38, 58)
 
 6/28/23 & 6/29/23
 1. Abstracted conduit class

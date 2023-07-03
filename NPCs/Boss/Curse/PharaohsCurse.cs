@@ -88,8 +88,8 @@ namespace SOTS.NPCs.Boss.Curse
 			NPC.damage = 45;
 			NPC.defense = 13;
 			NPC.knockBackResist = 0f;
-			NPC.width = 42;
-			NPC.height = 54;
+			NPC.width = 48;
+			NPC.height = 58;
 			NPC.npcSlots = 20f;
 			NPC.value = Item.buyPrice(0, 7, 0, 0);
 			NPC.boss = true;
