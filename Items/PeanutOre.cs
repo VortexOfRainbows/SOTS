@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Invidia;
 using SOTS.Items.Permafrost;
+using SOTS.Items.Potions;
 using SOTS.Items.Slime;
 using SOTS.Items.Void;
 using SOTS.Projectiles.Permafrost;
@@ -57,13 +58,13 @@ namespace SOTS.Items
 				evostoneDropAmt++;
 			else if (Main.rand.NextBool(6))
 				peanutDropAmt++;
-			if(!Main.rand.NextBool(200))
+			if(!Main.rand.NextBool(100))
 			{
 				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Peanut>(), peanutDropAmt);
 			}
 			else
 			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<FoulConcoction>(), 1);
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<RoastedPeanuts>(), 1);
 			}
 			if (Main.rand.NextBool(100))
 				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Fragments.FragmentOfNature>(), 1);

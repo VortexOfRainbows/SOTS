@@ -31,22 +31,24 @@ Update Objectives:
 		If an item is teleported through, it will not be allowed to teleport back through,
 	2. Teleports you to the other point on the map when you travel through, granting increased Maximum void by 50 Permanently (plays a short animation to indicate this).
 4. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
-5. Roasted Peanuts item (use for the now farmable peanuts)
-6. More lines for the Archaeologist
+5. More lines for the Archaeologist
 	1. Remove debug lines and finalize position changing time/duration
-7. More Bestiary entries (and visual fixes)
-8. Make Subspace Servant work with channel items:
+6. More Bestiary entries (and visual fixes)
+7. Make Subspace Servant work with channel items:
 	1. Give projectiles created during Servant's update window a special update characteristic.
 	2. Make sure this characteristic is NETSYNCED as SOON as the PROJECTILE is created!!!
 	3. This will make them no longer update as part of Terraria's normal projectile update.
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
-9. Glow Nylon Whip
-10. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
-11. Golden Trowel (Sold by archaeologist)
+8. Glow Nylon Whip
+9. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
+10. Golden Trowel (Sold by archaeologist)
 	1. Mining blocks has a chance to drop money
 
 Daily Log:
+
+7/6/23
+1. Added roasted peanuts
 
 7/2/23 & 7/3/23
 1. Implemented Pharaoh's Curse related resprites... HitBox Size: (42, 54) -> (38, 58)
