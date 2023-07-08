@@ -281,6 +281,7 @@ Mods: {
 				ConduitChassis: Conduit Chassis
 				NatureConduit: Nature Conduit
 				EarthenConduit: Earth Conduit
+				GoldenTrowel: Golden Trowel
 
 			# CritBonus
 				OtherworldlyAmplifier: Otherworldly Amplifier
@@ -682,6 +683,8 @@ Mods: {
 				SoulAccessPotion: Soul Access Potion
 				StarlightTonic: Starlight Tonic
 				VibePotion: Vibe Potion
+
+				RoastedPeanuts: Roasted Peanuts
 
 			# Pyramid
 				# AltPyramidBlocks
@@ -1174,6 +1177,11 @@ Mods: {
 					''' 
 					An incomplete redirector of earth energy: it lacks a support chassis
 					When fully charged, it will focus nearby earth energy into valid repositories
+					'''
+				GoldenTrowel:
+					'''
+					Mining blocks has a chance to drop bonus resources, such as coins and silt
+					Increases mining speed by 5%
 					'''
 
 			# CritBonus
@@ -2113,6 +2121,7 @@ Mods: {
 					Increases attack speed by 20% while not moving and by 5% while moving
 					Increases life regeneration by 4 while not moving
 					'''
+				RoastedPeanuts: Medium improvements to all stats
 
 			# Pyramid
 				# AltPyramidBlocks

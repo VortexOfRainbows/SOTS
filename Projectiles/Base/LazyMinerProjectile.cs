@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using SOTS.Helpers;
 using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,8 @@ namespace SOTS.Projectiles.Base
                         int x = pt.X;
                         int y = pt.Y;
                         WorldGen.KillTile(x, y);
+                        if (SOTSPlayer.ModPlayer(player).GoldenTrowel)
+                            LazyMinerHelper.DropBonusItems(player, x, y);
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                         {
                             NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, y);

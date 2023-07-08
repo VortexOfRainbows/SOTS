@@ -42,13 +42,14 @@ Update Objectives:
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 8. Glow Nylon Whip
 9. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
-10. Golden Trowel (Sold by archaeologist)
-	1. Mining blocks has a chance to drop money
 
 Daily Log:
 
-7/6/23
+7/6/23 & 7/7/23
 1. Added roasted peanuts
+2. Added Golden Trowel
+	1. It should work in multiplayer
+	2. It currently feels super, duper underwhelming..?
 
 7/2/23 & 7/3/23
 1. Implemented Pharaoh's Curse related resprites... HitBox Size: (42, 54) -> (38, 58)

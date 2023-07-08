@@ -8,10 +8,10 @@ using System.Collections.Generic;
 
 namespace SOTS
 {
-    static partial class Helpers
+    static partial class ShaderHelpers
     {
        public static bool HasParameter(this Effect effect, string parameterName)
-        {
+       {
             foreach (EffectParameter parameter in effect.Parameters)
             {
                 if (parameter.Name == parameterName)

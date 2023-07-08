@@ -316,6 +316,7 @@ namespace SOTS
 		public bool ConduitBelt = false;
 		public bool SpiritSymphony = false;
 		public bool hasSoaringInsigniaFake = false;
+		public bool GoldenTrowel = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -1017,7 +1018,7 @@ namespace SOTS
 			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
-			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = false;
+			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = GoldenTrowel = false;
 			SpiritSymphony = false;
 			if (AmmoRegatherDelay < 120)
 				AmmoRegatherDelay++;

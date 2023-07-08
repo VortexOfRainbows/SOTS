@@ -1,34 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs.ConduitBoosts;
 using SOTS.Buffs.Debuffs;
 using SOTS.Common.GlobalNPCs;
-using SOTS.Common.Systems;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
-using SOTS.Items.Furniture.Earthen;
-using SOTS.Items.Furniture.Nature;
-using SOTS.Items.Pyramid;
 using SOTS.NPCs.Town;
-using SOTS.Projectiles.Camera;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
-using SOTS.WorldgenHelpers;
-using System;
-using System.Linq;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.Social;
+using static Terraria.HitTile;
 
 namespace SOTS
 {
-	public static class SOTSDetours
+    public static class SOTSDetours
 	{
 		public static RenderTarget2D TargetProj;
 		public static void Initialize()
@@ -196,12 +185,10 @@ namespace SOTS
 		}
 		private static void Player_PickTile(On.Terraria.Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
 		{
-			//Main.NewText("1"); //This does not even run at all after the second reload
 			if (self != null)
 			{
 				if (SOTSPlayer.ModPlayer(self).bonusPickaxePower > 0)
 					pickPower += SOTSPlayer.ModPlayer(self).bonusPickaxePower;
-				//Main.NewText("2 " + SOTSPlayer.ModPlayer(self).LazyMinerRing);
 				if (SOTSPlayer.ModPlayer(self).ConduitBelt)
 				{
 					Tile tile = Framing.GetTileSafely(x, y);
@@ -212,12 +199,33 @@ namespace SOTS
                 }
 				if (SOTSPlayer.ModPlayer(self).LazyMinerRing)
 				{
-					//Main.NewText("3");
-					bool DoNotMineNormally = LazyMinerHelper.FakePickTile(self, x, y, pickPower);
+					bool DoNotMineNormally = Helpers.LazyMinerHelper.FakePickTile(self, x, y, pickPower);
 					if (DoNotMineNormally)
 						return;
 				}
-				//Main.NewText("4");
+			}
+			if (self != null) //This code only runs on client
+			{
+				if (SOTSPlayer.ModPlayer(self).GoldenTrowel)
+				{
+					Tile tile = Framing.GetTileSafely(x, y);
+					int num = self.hitTile.HitObject(x, y, 1);
+					HitTileObject hitTileObject = self.hitTile.data[num];
+					int tileDamage = hitTileObject.damage;
+					int futureDamage = Helpers.LazyMinerHelper.RunGetPickaxeDamage(self, x, y, pickPower, num, tile);
+					if (!WorldGen.CanKillTile(x, y) || Helpers.LazyMinerHelper.RunDoesPickTargetTransformOnKill(self, self.hitTile, tileDamage, x, y, pickPower, num, tile))
+					{
+						tileDamage = 0;
+					}
+					if (Main.getGoodWorld)
+					{
+						tileDamage *= 2;
+					}
+					if (futureDamage + tileDamage >= 100) //Basically if the tile is broken
+					{
+						Helpers.LazyMinerHelper.DropBonusItems(self, x, y);
+					}
+				}
 			}
 			orig(self, x, y, pickPower);
 		}

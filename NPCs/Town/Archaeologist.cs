@@ -436,6 +436,7 @@ namespace SOTS.NPCs.Town
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ArchaeologistToolbelt>());
+			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<GoldenTrowel>());
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ConduitChassis>());
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<OldKey>());
 			if (currentLocationType == ImportantTileID.AcediaPortal)
