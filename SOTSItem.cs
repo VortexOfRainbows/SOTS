@@ -248,7 +248,7 @@ namespace SOTS
 		}
 		public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			if (item.type == ItemType<Items.Slime.PinkyBag>() || item.type == ItemType<TheAdvisorBossBag>() || item.type == ItemType<CurseBag>() || item.type == ItemType<Items.Permafrost.PolarisBossBag>() || item.type == ItemType<SubspaceBag>() || item.type == ItemType<LuxBag>())
+			if (item.type == ItemType<Items.Earth.Glowmoth.GlowmothBag>() || item.type == ItemType<Items.Slime.PinkyBag>() || item.type == ItemType<TheAdvisorBossBag>() || item.type == ItemType<CurseBag>() || item.type == ItemType<Items.Permafrost.PolarisBossBag>() || item.type == ItemType<SubspaceBag>() || item.type == ItemType<LuxBag>())
 			{
 				float alphaMult = 1f;
 				if (item.type == ItemType<LuxBag>())

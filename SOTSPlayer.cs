@@ -317,6 +317,7 @@ namespace SOTS
 		public bool SpiritSymphony = false;
 		public bool hasSoaringInsigniaFake = false;
 		public bool GoldenTrowel = false;
+		public bool AnomalyLocator = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -845,11 +846,13 @@ namespace SOTS
 			lastPlanetMax = tPlanetNum;
 			tPlanetNum = 0;
 			RubyMonolith = false;
-			RubyMonolithIsNOTVanity = false;
+			RubyMonolithIsNOTVanity = AnomalyLocator = false;
 			for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
             {
 				Item item = Player.armor[i];
-				if(item.type == ModContent.ItemType<CursedApple>())
+				if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
+					AnomalyLocator = true;
+				if (item.type == ModContent.ItemType<CursedApple>())
 				{
 					petPepper = true;
 				}
@@ -913,6 +916,8 @@ namespace SOTS
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
 				Item item = Player.armor[i];
+				if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
+					AnomalyLocator = true;
 				if (item.type == ModContent.ItemType<TheDarkEye>())
 				{
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);

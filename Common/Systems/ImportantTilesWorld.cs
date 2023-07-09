@@ -325,7 +325,7 @@ namespace SOTS.Common.Systems
                 {
                     Vector2 testDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
                     bool valid = false;
-                    int attempts = 30;
+                    int attempts = 50;
                     while(attempts > 0)
                     {
                         if(importantTileID == ImportantTileID.damoclesChain)
@@ -341,7 +341,7 @@ namespace SOTS.Common.Systems
                         int tileX = destination.Value.X + xOffset;
                         int tileY = destination.Value.Y + yOffset;
                         bool tileSpace = false;
-                        for (int j = -3; j <= 11; j++)
+                        for (int j = -4; j <= 12; j++)
                         {
                             if (WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j, false))
                             {

@@ -64,6 +64,8 @@ namespace SOTS
 			//Used for Nerfing Soaring Insignia
 			On.Terraria.Player.WingMovement += Player_WingMovement;
 
+			On.Terraria.Main.DrawMiscMapIcons += Main_DrawMiscMapIcons;
+
 			if (!Main.dedServ)
 				ResizeTargets();
 		}
@@ -377,7 +379,6 @@ namespace SOTS
 				orig(self, behindTiles);
 			}
 		}
-
 		private static void Main_DrawPlayers_AfterProjectiles(On.Terraria.Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
 		{
 			PreDrawPlayers();
@@ -517,6 +518,58 @@ namespace SOTS
 			{
 				if(WingTimeDiff > 0)
 					self.wingTime += WingTimeDiff / 3f;
+			}
+		}
+		private static void Main_DrawMiscMapIcons(On.Terraria.Main.orig_DrawMiscMapIcons orig, Main self, SpriteBatch spriteBatch, Vector2 mapTopLeft, Vector2 mapX2Y2AndOff, Rectangle? mapRect, float mapScale, float drawScale, ref string mouseTextString)
+        {
+			orig(self, spriteBatch, mapTopLeft, mapX2Y2AndOff, mapRect, mapScale, drawScale, ref mouseTextString);
+			DrawSOTSMapIcons(self, spriteBatch, mapTopLeft, mapX2Y2AndOff, mapRect, mapScale, drawScale, ref mouseTextString);
+		}
+		private static void DrawSOTSMapIcons(Main self, SpriteBatch spriteBatch, Vector2 mapTopLeft, Vector2 mapX2Y2AndOff, Rectangle? mapRect, float mapScale, float drawScale, ref string mouseTextString)
+		{
+			if(!SOTSPlayer.ModPlayer(Main.LocalPlayer).AnomalyLocator)
+            {
+				return;
+            }
+			Vector2 archPos = Archaeologist.AnomalyPosition;
+			float alphaMult = Archaeologist.FinalAnomalyAlphaMult;
+			if(archPos == Vector2.Zero)
+            {
+				return;
+            }
+			Vector2 vec = archPos / 16f - mapTopLeft;
+			vec *= mapScale;
+			vec += mapX2Y2AndOff;
+			vec = vec.Floor();
+			if (mapRect.HasValue)
+			{
+				Rectangle value2 = mapRect.Value;
+				if (!value2.Contains(vec.ToPoint()))
+				{
+					return;
+				}
+			}
+			Texture2D value = ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidAnomaly").Value;
+			Rectangle rectangle = value.Frame();
+			Color circleColor = new Color(130, 100, 110, 0);
+			for (int j = 2; j >= -1; j--)
+			{
+				if (j == 0)
+					circleColor = Color.Black * 0.75f;
+				if (j == -1)
+					circleColor = Color.Black * 0.35f;
+				for (int i = 0; i < 8; i++)
+				{
+					Vector2 circular = new Vector2(4 + 6 * j, 0).RotatedBy((SOTSWorld.GlobalCounter * (j % 2 * 2 - 1) + i * 45) * MathHelper.Pi / 180f);
+					spriteBatch.Draw(value, vec + circular, rectangle, circleColor * 0.825f * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
+				}
+			}
+			spriteBatch.Draw(value, vec, rectangle, Color.White * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
+			Rectangle rectangle2 = Utils.CenteredRectangle(vec, rectangle.Size() * drawScale);
+			if (rectangle2.Contains(Main.MouseScreen.ToPoint()))
+			{
+				mouseTextString = Language.GetTextValue("Mods.SOTS.Common.ArchaeologistMap");
+				//_ = Main.MouseScreen + new Vector2(-28f) + new Vector2(4f, 0f);
 			}
 		}
 		/*Code I wrote for HeartPlusUp! Calamity Mod!

@@ -20,29 +20,38 @@ using SOTS.Items.ChestItems;
 using SOTS.Items.Secrets;
 using System.IO;
 using SOTS.Items.Whips;
+using Terraria.Map;
 
 namespace SOTS.NPCs.Town
 {
 	public class Archaeologist : ModNPC
 	{
+		public static Vector2 AnomalyPosition = Vector2.Zero;
+		public static float AnomalyAlphaMult = 0f;
+		public static float FinalAnomalyAlphaMult = 0f;
 		public const int timeToGoToSetPiece = 600; //This is five minutes
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(locationTimer);
 			writer.Write(InitialDirection);
 			writer.Write(currentLocationType);
+			writer.Write(AnomalyAlphaMult);
+			writer.Write(AnomalyPosition.X);
+			writer.Write(AnomalyPosition.Y);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			locationTimer = reader.ReadInt32();
 			InitialDirection = reader.ReadInt32();
 			currentLocationType = reader.ReadInt32();
+			AnomalyAlphaMult = reader.ReadSingle();
+			AnomalyPosition.X = reader.ReadSingle();
+			AnomalyPosition.Y = reader.ReadSingle();
 		}
         //private static Profiles.StackedNPCProfile NPCProfile;
         public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[Type] = 5; // The amount of frames the NPC has
-
 			NPCID.Sets.ExtraFramesCount[Type] = 0; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
 			NPCID.Sets.AttackFrameCount[Type] = 0;
 			NPCID.Sets.DangerDetectRange[Type] = 0; // The amount of pixels away from the center of the npc that it tries to attack enemies.
@@ -259,7 +268,17 @@ namespace SOTS.NPCs.Town
 		}
         public override bool PreAI()
         {
-			if(InitialDirection == 0)
+			if(NPC.CountNPCS(Type) > 1)
+            {
+				NPC.active = false;
+				return false;
+            }
+			else
+			{
+				AnomalyAlphaMult += 1 / 60f;
+				AnomalyPosition = NPC.Center;
+			}
+			if (InitialDirection == 0)
             {
 				InitialDirection = 1;
             }
@@ -297,12 +316,15 @@ namespace SOTS.NPCs.Town
                 {
 					aiTimer = 0;
 					locationTimer = 0;
-					NPC.netUpdate = true;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						FindALocationToGoTo();
 						InitialDirection = NPC.direction;
 					}
+                }
+				else if(locationTimer > timeToGoToSetPiece - 60)
+                {
+					AnomalyAlphaMult = 1 - (locationTimer - timeToGoToSetPiece + 60) / 60f;
                 }
 				locationTimer++;
             }
@@ -329,8 +351,10 @@ namespace SOTS.NPCs.Town
             {
 				NPC.alpha = (int)(255 * (1f - aiTimer / 120f));
 				NPC.velocity.Y += 0.1f;
-            }
-            return base.PreAI();
+			}
+			AnomalyAlphaMult = MathHelper.Clamp(AnomalyAlphaMult, 0, 1);
+			FinalAnomalyAlphaMult = MathHelper.Clamp(AnomalyAlphaMult * 1.1f - 0.1f, 0, 1);
+			return base.PreAI();
         }
         public override void PostAI()
         {
@@ -343,7 +367,6 @@ namespace SOTS.NPCs.Town
 		{
 			return true;
 		}
-
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
@@ -435,10 +458,11 @@ namespace SOTS.NPCs.Town
 		}
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
+			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AnomalyLocator>());
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ArchaeologistToolbelt>());
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<GoldenTrowel>());
-			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ConduitChassis>());
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<OldKey>());
+			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ConduitChassis>());
 			if (currentLocationType == ImportantTileID.AcediaPortal)
 			{
 				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<NatureConduit>());
@@ -543,7 +567,8 @@ namespace SOTS.NPCs.Town
 		}
 		public static int currentLocationType = -1;
 		public void FindALocationToGoTo()
-        {
+		{
+			NPC.netUpdate = true;
 			int olderLocationType = currentLocationType;
 			currentLocationType = 0;
 			int newDirection = 0;
@@ -552,6 +577,7 @@ namespace SOTS.NPCs.Town
 			{
 				NPC.Center = destination.Value;
 				NPC.direction = newDirection;
+				AnomalyAlphaMult = 0;
 				if (Main.netMode == NetmodeID.Server)
 					Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The location is at: " + currentLocationType), Color.Gray);
 				else

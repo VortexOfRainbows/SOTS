@@ -20,6 +20,7 @@ Mods: {
 			GenSOTSOres: Generating SOTS Ores
 			GenSOTSGeodes: Generating Fancy Geodes
 			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
+			ArchaeologistMap: "Anomaly"
 		}
 
 		ModifyWorldGenTasks: {
@@ -282,6 +283,7 @@ Mods: {
 				NatureConduit: Nature Conduit
 				EarthenConduit: Earth Conduit
 				GoldenTrowel: Golden Trowel
+				AnomalyLocator: Anomaly Locator
 
 			# CritBonus
 				OtherworldlyAmplifier: Otherworldly Amplifier
@@ -1182,6 +1184,11 @@ Mods: {
 					'''
 					Mining blocks has a chance to drop bonus resources, such as coins and silt
 					Increases mining speed by 5%
+					'''
+				AnomalyLocator:
+					''' 
+					Displays the location of various anomalies, such as electromagnetic transmissions, on the Minimap
+					Functions while equipped as an accessory, favorited in the inventory, or worn as a vanity accessory
 					'''
 
 			# CritBonus
