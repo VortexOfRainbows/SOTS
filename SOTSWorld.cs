@@ -1623,6 +1623,7 @@ namespace SOTS
 				{
 					NPC npc = NPC.NewNPCDirect(new EntitySource_SpawnNPC(""), 3200, 3200, ModContent.NPCType<Archaeologist>());
 					npc.netUpdate = true;
+					Archaeologist.locationTimer = 1000000;
 				}
 		}
         public override void PostUpdateProjectiles()

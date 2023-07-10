@@ -64,7 +64,9 @@ namespace SOTS
 			//Used for Nerfing Soaring Insignia
 			On.Terraria.Player.WingMovement += Player_WingMovement;
 
+			//Used in Archaeologist + Void Anomaly
 			On.Terraria.Main.DrawMiscMapIcons += Main_DrawMiscMapIcons;
+			On.Terraria.Lighting.GetColor9Slice_int_int_refVector3Array += Lighting_GetColor9Slice_int_int_refVector3Array;
 
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -531,47 +533,65 @@ namespace SOTS
             {
 				return;
             }
-			Vector2 archPos = Archaeologist.AnomalyPosition;
-			float alphaMult = Archaeologist.FinalAnomalyAlphaMult;
-			if(archPos == Vector2.Zero)
-            {
-				return;
-            }
-			Vector2 vec = archPos / 16f - mapTopLeft;
-			vec *= mapScale;
-			vec += mapX2Y2AndOff;
-			vec = vec.Floor();
-			if (mapRect.HasValue)
+			for(int k = 0; k < 3; k++)
 			{
-				Rectangle value2 = mapRect.Value;
-				if (!value2.Contains(vec.ToPoint()))
+				Vector2 archPos = k == 0 ? Archaeologist.AnomalyPosition1 : (k == 1 ? Archaeologist.AnomalyPosition2 : Archaeologist.AnomalyPosition3);
+				if (archPos != Vector2.Zero)
 				{
-					return;
+					float alphaMult = Archaeologist.FinalAnomalyAlphaMult;
+					Vector2 vec = archPos / 16f - mapTopLeft;
+					vec *= mapScale;
+					vec += mapX2Y2AndOff;
+					vec = vec.Floor();
+					bool draw = true;
+					if (mapRect.HasValue)
+					{
+						Rectangle value2 = mapRect.Value;
+						if (!value2.Contains(vec.ToPoint()))
+						{
+							draw = false;
+						}
+					}
+					if(draw)
+					{
+						Texture2D value = ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidAnomaly").Value;
+						Rectangle rectangle = value.Frame();
+						Color circleColor = new Color(130, 100, 110, 0);
+						for (int j = 2; j >= -1; j--)
+						{
+							if (j == 0)
+								circleColor = Color.Black * 0.75f;
+							if (j == -1)
+								circleColor = Color.Black * 0.35f;
+							for (int i = 0; i < 8; i++)
+							{
+								Vector2 circular = new Vector2(4 + 6 * j, 0).RotatedBy((SOTSWorld.GlobalCounter * (j % 2 * 2 - 1) + i * 45) * MathHelper.Pi / 180f);
+								spriteBatch.Draw(value, vec + circular, rectangle, circleColor * 0.825f * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
+							}
+						}
+						spriteBatch.Draw(value, vec, rectangle, Color.White * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
+						Rectangle rectangle2 = Utils.CenteredRectangle(vec, rectangle.Size() * drawScale);
+						if (rectangle2.Contains(Main.MouseScreen.ToPoint()))
+						{
+							mouseTextString = Language.GetTextValue("Mods.SOTS.Common.ArchaeologistMap");
+							//_ = Main.MouseScreen + new Vector2(-28f) + new Vector2(4f, 0f);
+						}
+					}
 				}
-			}
-			Texture2D value = ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidAnomaly").Value;
-			Rectangle rectangle = value.Frame();
-			Color circleColor = new Color(130, 100, 110, 0);
-			for (int j = 2; j >= -1; j--)
-			{
-				if (j == 0)
-					circleColor = Color.Black * 0.75f;
-				if (j == -1)
-					circleColor = Color.Black * 0.35f;
-				for (int i = 0; i < 8; i++)
-				{
-					Vector2 circular = new Vector2(4 + 6 * j, 0).RotatedBy((SOTSWorld.GlobalCounter * (j % 2 * 2 - 1) + i * 45) * MathHelper.Pi / 180f);
-					spriteBatch.Draw(value, vec + circular, rectangle, circleColor * 0.825f * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
-				}
-			}
-			spriteBatch.Draw(value, vec, rectangle, Color.White * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
-			Rectangle rectangle2 = Utils.CenteredRectangle(vec, rectangle.Size() * drawScale);
-			if (rectangle2.Contains(Main.MouseScreen.ToPoint()))
-			{
-				mouseTextString = Language.GetTextValue("Mods.SOTS.Common.ArchaeologistMap");
-				//_ = Main.MouseScreen + new Vector2(-28f) + new Vector2(4f, 0f);
 			}
 		}
+		private static void Lighting_GetColor9Slice_int_int_refVector3Array(On.Terraria.Lighting.orig_GetColor9Slice_int_int_refVector3Array orig, int x, int y, ref Vector3[] slices)
+        {
+			if(Main.gameMenu) //Used in the Void Anomaly
+			{
+				for (int i = 0; i < slices.Length; i++)
+				{
+					slices[i] = new Vector3(1, 1, 1);
+				}
+			}
+			else
+				orig(x, y, ref slices);
+        }
 		/*Code I wrote for HeartPlusUp! Calamity Mod!
 		private static void GlassTileWallFraming(On.Terraria.Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
         {

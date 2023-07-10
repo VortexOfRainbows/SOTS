@@ -325,14 +325,14 @@ namespace SOTS.Common.Systems
                 {
                     Vector2 testDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
                     bool valid = false;
-                    int attempts = 50;
+                    int attempts = 55;
                     while(attempts > 0)
                     {
                         if(importantTileID == ImportantTileID.damoclesChain)
                         {
                             yOffset = 5;
                         }
-                        int xOffset = Main.rand.Next(-9, 10);
+                        int xOffset = Main.rand.Next(-10, 11);
                         if (xOffset == 0 || xOffset == -1)
                             xOffset = -2;
                         if (xOffset == 1)
@@ -341,12 +341,12 @@ namespace SOTS.Common.Systems
                         int tileX = destination.Value.X + xOffset;
                         int tileY = destination.Value.Y + yOffset;
                         bool tileSpace = false;
-                        for (int j = -4; j <= 12; j++)
+                        for (int j = -6; j <= 12; j++)
                         {
                             if (WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j, false))
                             {
                                 bool validLiquidAndClear = true;
-                                for(int i = -3; i >= -1; i--)
+                                for(int i = -4; i >= -1; i--)
                                 {
                                     if(WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(tileX, tileY + j + i, false) || 
                                         Framing.GetTileSafely(tileX, tileY + j + i).LiquidType == LiquidID.Lava || 

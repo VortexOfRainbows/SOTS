@@ -21,23 +21,36 @@ using SOTS.Items.Secrets;
 using System.IO;
 using SOTS.Items.Whips;
 using Terraria.Map;
+using Terraria.DataStructures;
+using System.Reflection;
+using Terraria.GameContent.Drawing;
+using Terraria.Graphics;
+using static SOTS.NPCs.Town.PortalDrawingHelper;
 
 namespace SOTS.NPCs.Town
 {
 	public class Archaeologist : ModNPC
 	{
-		public static Vector2 AnomalyPosition = Vector2.Zero;
+		public static Vector2 AnomalyPosition1 = Vector2.Zero;
+		public static Vector2 AnomalyPosition2 = Vector2.Zero;
+		public static Vector2 AnomalyPosition3 = Vector2.Zero;
 		public static float AnomalyAlphaMult = 0f;
 		public static float FinalAnomalyAlphaMult = 0f;
-		public const int timeToGoToSetPiece = 600; //This is five minutes
+		public static int locationTimer = 100000;
+		public const int timeToGoToSetPiece = 60000; //This is 1000 seconds
+		public bool hasTeleportedYet = false;
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(locationTimer);
 			writer.Write(InitialDirection);
 			writer.Write(currentLocationType);
 			writer.Write(AnomalyAlphaMult);
-			writer.Write(AnomalyPosition.X);
-			writer.Write(AnomalyPosition.Y);
+			writer.Write(AnomalyPosition1.X);
+			writer.Write(AnomalyPosition1.Y);
+			writer.Write(AnomalyPosition2.X);
+			writer.Write(AnomalyPosition2.Y);
+			writer.Write(AnomalyPosition3.X);
+			writer.Write(AnomalyPosition3.Y);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -45,8 +58,12 @@ namespace SOTS.NPCs.Town
 			InitialDirection = reader.ReadInt32();
 			currentLocationType = reader.ReadInt32();
 			AnomalyAlphaMult = reader.ReadSingle();
-			AnomalyPosition.X = reader.ReadSingle();
-			AnomalyPosition.Y = reader.ReadSingle();
+			AnomalyPosition1.X = reader.ReadSingle();
+			AnomalyPosition1.Y = reader.ReadSingle();
+			AnomalyPosition2.X = reader.ReadSingle();
+			AnomalyPosition2.Y = reader.ReadSingle();
+			AnomalyPosition3.X = reader.ReadSingle();
+			AnomalyPosition3.Y = reader.ReadSingle();
 		}
         //private static Profiles.StackedNPCProfile NPCProfile;
         public override void SetStaticDefaults()
@@ -110,7 +127,6 @@ namespace SOTS.NPCs.Town
 		public const int MaximumLookCycles = 14;
 		public int DrawTimer = 0;
 		public int aiTimer = 0;
-		public int locationTimer = 100000;
 		public int InitialDirection = 0;
         public override bool CheckActive()
         {
@@ -273,10 +289,10 @@ namespace SOTS.NPCs.Town
 				NPC.active = false;
 				return false;
             }
-			else
+			else if(hasTeleportedYet)
 			{
 				AnomalyAlphaMult += 1 / 60f;
-				AnomalyPosition = NPC.Center;
+				AnomalyPosition1 = NPC.Center;
 			}
 			if (InitialDirection == 0)
             {
@@ -312,7 +328,7 @@ namespace SOTS.NPCs.Town
             }
 			if(!playerWithinSecondRange)
             {
-				if(locationTimer > timeToGoToSetPiece)
+				if(locationTimer > timeToGoToSetPiece || !hasTeleportedYet)
                 {
 					aiTimer = 0;
 					locationTimer = 0;
@@ -321,7 +337,11 @@ namespace SOTS.NPCs.Town
 						FindALocationToGoTo();
 						InitialDirection = NPC.direction;
 					}
-                }
+					if (!hasTeleportedYet)
+					{
+						locationTimer = timeToGoToSetPiece - 120;
+					}
+				}
 				else if(locationTimer > timeToGoToSetPiece - 60)
                 {
 					AnomalyAlphaMult = 1 - (locationTimer - timeToGoToSetPiece + 60) / 60f;
@@ -575,8 +595,11 @@ namespace SOTS.NPCs.Town
 			Vector2? destination = ImportantTilesWorld.RandomImportantLocation(ref currentLocationType, ref newDirection);
 			if(destination.HasValue)
 			{
+				hasTeleportedYet = true;
 				NPC.Center = destination.Value;
 				NPC.direction = newDirection;
+				VoidAnomaly.KillOtherAnomalies();
+				VoidAnomaly.PlaceDownAnomalies();
 				AnomalyAlphaMult = 0;
 				if (Main.netMode == NetmodeID.Server)
 					Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The location is at: " + currentLocationType), Color.Gray);
@@ -589,4 +612,456 @@ namespace SOTS.NPCs.Town
             }
 		}
 	}
+	public class VoidAnomaly : ModProjectile
+	{
+		public const int Radius = 6;
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+			overWiresUI.Add(index);
+        }
+        public static TileDrawInfo RunGet_currentTileDrawInfo(TileDrawing tDrawer)
+		{
+			Type type = tDrawer.GetType();
+			FieldInfo field = type.GetField("_currentTileDrawInfoNonThreaded", BindingFlags.NonPublic | BindingFlags.Instance);
+			return (TileDrawInfo)field.GetValue(tDrawer);
+		}
+		public static void Run_DrawSingleTile(TileDrawing tDrawer, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY)
+		{
+			Type type = tDrawer.GetType();
+			MethodInfo method = type.GetMethod("DrawSingleTile", BindingFlags.NonPublic | BindingFlags.Instance);
+			if (method == null)
+				return;
+			method.Invoke(tDrawer, new object[] { drawData, solidLayer, waterStyleOverride, screenPosition, screenOffset, tileX, tileY });
+		}
+		public static void DrawWall(ref SaveTileData Data, int i, int j, int h, int k, Vector2 offset, int pass)
+		{
+			Tile otherTile = Main.tile[i, j];
+			Tile myTile = Main.tile[h, k];
+			int oType = otherTile.WallType;
+			if(pass == 2)
+			{
+				Data.OntoTileW(myTile);
+			}
+			else if(pass == 1)
+			{
+				if (otherTile.WallType != 0)
+				{
+					SpriteBatch spriteBatch = Main.spriteBatch;
+					if (WallLoader.PreDraw(h, k, oType, spriteBatch))
+					{
+						DrawWallM(spriteBatch, -offset, otherTile, i, j, oType);
+					}
+					WallLoader.PostDraw(h, k, oType, spriteBatch);
+				}
+			}
+			else
+			{
+				if (otherTile.WallType != 0)
+				{
+					if (!TextureAssets.Wall[oType].IsLoaded)
+					{
+						Main.instance.LoadWall(oType);
+					}
+				}
+				Data.IntoSaveW(myTile);
+				Data.CopyTileToTileW(otherTile, myTile);
+			}
+		}
+		public static void DrawTile(ref SaveTileData Data, TileDrawInfo info, int i, int j, int h, int k, Vector2 offset, int pass)
+		{
+			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
+			Tile otherTile = Main.tile[i, j];
+			Tile myTile = Main.tile[h, k];
+			int oType = otherTile.TileType;
+			if(pass == 2)
+			{
+				Data.OntoTile(myTile);
+			}
+			else if(pass == 1)
+			{
+				if (otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree)
+				{
+					if (TileLoader.PreDraw(h, k, oType, Main.spriteBatch))
+					{
+						Run_DrawSingleTile(Main.instance.TilesRenderer, info, true, -1, unscaledPosition + offset, Vector2.Zero, i, j);
+					}
+					TileLoader.PostDraw(h, k, oType, Main.spriteBatch);
+				}
+				else if(otherTile.LiquidAmount > 0)
+				{
+					int liquidType = 0;
+					bool water = false;
+					switch (otherTile.LiquidType)
+					{
+						case 0:
+							water = true;
+							break;
+						case 1:
+							liquidType = 1;
+							break;
+						case 2:
+							liquidType = 11;
+							break;
+					}
+					if (liquidType == 0)
+						liquidType = Main.waterStyle;
+					bool flag7 = false;
+					if (water)
+					{
+						for (int a = 0; a < 13; a++)
+						{
+							if (Main.IsLiquidStyleWater(a) && Main.liquidAlpha[a] > 0f && a != liquidType)
+							{
+								Main.spriteBatch.Draw(TextureAssets.Liquid[a].Value, new Vector2(h, k + 1) * 16 - Main.screenPosition, new Rectangle(0, 8, 16, 8), Color.White, 0f, new Vector2(0, 8), new Vector2(1, 2 * otherTile.LiquidAmount / 255f), 0, 0f);
+								flag7 = true;
+								break;
+							}
+						}
+					}
+					Main.spriteBatch.Draw(TextureAssets.Liquid[liquidType].Value, new Vector2(h, k + 1) * 16 - Main.screenPosition, new Rectangle(0, 8, 16, 8), Color.White * (flag7 ? Main.liquidAlpha[liquidType] : 1f), 0f, new Vector2(0, 8), new Vector2(1, 2 * otherTile.LiquidAmount / 255f), 0, 0f);
+				}
+			}
+			else
+			{
+				if (!TextureAssets.Tile[oType].IsLoaded)
+				{
+					Main.instance.LoadTiles(oType);
+				}
+				Data.IntoSave(myTile);
+				Data.CopyTileToTile(otherTile, myTile);
+			}
+		}
+		private bool canIMove = false;
+		private SaveTileData[] Data = null;
+		public void DrawTilesFromOtherPortal()
+        {
+			TileDrawInfo value = RunGet_currentTileDrawInfo(Main.instance.TilesRenderer);
+			int x = (int)(positionOfOtherPortal.X / 16);
+			int y = (int)(positionOfOtherPortal.Y / 16);
+			int x2 = (int)(Projectile.Center.X / 16);
+			int y2 = (int)(Projectile.Center.Y / 16);
+			Vector2 offset = positionOfOtherPortal - Projectile.Center;
+			int maxSize = (int)Math.Pow((Radius * 2 + 1), 2);
+			float currentRadius = Radius * alphaMult;
+			if (Data == null)
+				Data = new SaveTileData[maxSize];
+			if (WorldGen.InWorld(x, y, 40))
+			{
+				if (WorldGen.InWorld(x2, y2, 40))
+				{
+					Main.drawToScreen = true;
+					Main.gameMenu = true;
+					canIMove = false;
+					for (int k = 0; k < 4; k++)
+					{
+						int currentIndex = 0;
+						for (int j = Radius; j >= -Radius; j--)
+						{
+							for (int i = -Radius; i <= Radius; i++)
+							{
+								float dist = i * i + j * j;
+								if (dist < currentRadius * currentRadius)
+								{
+									if (k == 0)
+									{
+										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 0);
+										DrawWall(ref Data[currentIndex], x + i, y + j, x2 + i, y2 + j, offset, 0);
+									}
+									if (k == 1)
+									{
+										DrawWall(ref Data[currentIndex], x + i, y + j, x2 + i, y2 + j, offset, 1);
+									}
+									if (k == 2)
+									{
+										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 1);
+									}
+									if (k == 3)
+									{
+										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 2);
+										DrawWall(ref Data[currentIndex], x + i, y + j, x2 + i, y2 + j, offset, 2);
+									}
+								}
+								currentIndex++;
+							}
+						}
+					}
+					canIMove = true;
+					Main.gameMenu = false;
+					Main.drawToScreen = false;
+				}
+			}
+		}
+		public override bool PreDraw(ref Color lightColor)
+		{
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 drawPos = Projectile.Center;
+			Color color = Color.Lerp(new Color(120, 100, 140, 0), Color.Black, 0.76f);
+			for (int j = 1; j <= 4; j++)
+				for (int i = -1; i <= 1; i += 2)
+				{
+					float rotation = j * MathHelper.PiOver4 / 2f;
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color, i * Projectile.rotation + rotation, texture.Size() / 2, 3f, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
+				}
+			return false;
+        }
+        public override void PostDraw(Color lightColor)
+		{
+			if (Projectile.ai[0] == -1 || Projectile.ai[0] == -2)
+			{
+				DrawTilesFromOtherPortal();
+			}
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 drawPos = Projectile.Center;
+			Color color = Color.Lerp(new Color(160, 120, 180, 0), Color.Black, 0.15f);
+			for(int j = 1; j <= 2; j++)
+				for (int i = -1; i <= 1; i += 2)
+				{
+					float rotation = j * MathHelper.PiOver4;
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * 0.125f * j, i * Projectile.rotation * -1 + rotation, texture.Size() / 2, 1f + j, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
+				}
+		}
+		public static void PlaceDownAnomalies()
+        {
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+				return;
+			int padding = 50;
+			for(int i = 1;  i <= 2; i++)
+            {
+				float randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+				float randY = Main.rand.Next(padding, Main.maxTilesY - padding);
+				randX = 400 + i * 16;
+				randY = 400;
+				Vector2 randomPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+				Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), randomPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -i, -60);
+            }
+        }
+		public static void KillOtherAnomalies()
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+				return;
+			for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+				Projectile proj = Main.projectile[i];
+				if (proj.active && proj.type == ModContent.ProjectileType<VoidAnomaly>())
+                {
+					proj.ai[0] = -3;
+					proj.netUpdate = true;
+                }
+            }
+        }
+		public override void SetDefaults()
+		{
+			Projectile.height = 82;
+			Projectile.width = 82;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.timeLeft = 100000;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 255;
+			Projectile.hide = true;
+		}
+		public float alphaMult
+        {
+			get
+            {
+				float mult = (Projectile.ai[1] / 60f) * (Projectile.timeLeft) / 120f;
+				if (mult < 0)
+					return 0;
+				else
+					return mult;
+			}
+        }
+		public Vector2 positionOfOtherPortal
+        {
+			get
+            {
+				if(Projectile.ai[0] == -1)
+					return Archaeologist.AnomalyPosition3;
+				if (Projectile.ai[0] == -2)
+					return Archaeologist.AnomalyPosition2;
+				return Vector2.Zero;
+			}
+        }
+		public override void AI()
+		{
+			if (Projectile.ai[1] < 60)
+				Projectile.ai[1]++;
+			if (Projectile.ai[0] == -1)
+			{
+				if (Main.mouseMiddle && canIMove)
+				{
+					Projectile.Center = new Vector2((int)(Main.MouseWorld.X / 16) * 16 + 8, (int)(Main.MouseWorld.Y / 16) * 16 + 8);
+				}
+                if (Projectile.ai[1] >= 0 && Projectile.timeLeft >= 119)
+					Archaeologist.AnomalyPosition2 = Projectile.Center;
+			}
+			if (Projectile.ai[0] == -2)
+			{
+				if (Projectile.ai[1] >= 0 && Projectile.timeLeft >= 119)
+					Archaeologist.AnomalyPosition3 = Projectile.Center;
+			}
+			if (Projectile.ai[0] == -3) // start dying
+			{
+				if (Projectile.timeLeft > 120)
+					Projectile.timeLeft = 120;
+			}
+			else
+				Projectile.timeLeft = 120;
+			Projectile.alpha = (int)(255 * (1 - alphaMult));
+			Projectile.rotation += MathHelper.ToRadians(3.5f);
+		}
+    }
+	public static class PortalDrawingHelper
+	{
+		public struct SaveTileData
+		{
+			bool saveActive;
+			ushort saveTileType;
+			short saveTileFrameX;
+			short saveTileFrameY;
+			byte saveTileColor;
+			ushort saveWallType;
+			int saveWallFrameX;
+			int saveWallFrameY;
+			byte saveWallColor;
+			byte saveLiquid;
+			int saveLiquidT;
+			public void IntoSaveW(Tile data)
+			{
+				saveWallType = data.WallType;
+				saveWallFrameX = data.WallFrameX;
+				saveWallFrameY = data.WallFrameY;
+				saveWallColor = data.WallColor;
+			}
+			public void OntoTileW(Tile data)
+			{
+				data.WallType = saveWallType;
+				data.WallFrameX = saveWallFrameX;
+				data.WallFrameY = saveWallFrameY;
+				data.WallColor = saveWallColor;
+			}
+			public void CopyTileToTileW(Tile CopyFrom, Tile CopyOnto)
+			{
+				CopyOnto.WallType = CopyFrom.WallType;
+				CopyOnto.WallFrameX = CopyFrom.WallFrameX;
+				CopyOnto.WallFrameY = CopyFrom.WallFrameY;
+				CopyOnto.WallColor = CopyFrom.WallColor;
+			}
+			public void IntoSave(Tile data)
+			{
+				saveActive = data.HasTile;
+				saveTileType = data.TileType;
+				saveTileFrameX = data.TileFrameX;
+				saveTileFrameY = data.TileFrameY;
+				saveTileColor = data.TileColor;
+				saveLiquid = data.LiquidAmount;
+				saveLiquidT = data.LiquidType;
+			}
+			public void OntoTile(Tile data)
+            {
+				data.HasTile = saveActive;
+				data.TileType = saveTileType;
+				data.TileFrameX = saveTileFrameX;
+				data.TileFrameY = saveTileFrameY;
+				data.TileColor = saveTileColor;
+				data.LiquidAmount = saveLiquid;
+				data.LiquidType = saveLiquidT;
+			}
+			public void CopyTileToTile(Tile CopyFrom, Tile CopyOnto)
+			{
+				CopyOnto.HasTile = CopyFrom.HasTile;
+				CopyOnto.TileType = CopyFrom.TileType;
+				CopyOnto.TileFrameX = CopyFrom.TileFrameX;
+				CopyOnto.TileFrameY = CopyFrom.TileFrameY;
+				CopyOnto.TileColor = CopyFrom.TileColor;
+				CopyOnto.LiquidAmount = CopyFrom.LiquidAmount;
+				CopyOnto.LiquidType = CopyFrom.LiquidType;
+			}
+        }
+		public static Texture2D Run_GetTileDrawTexture(WallDrawing wDrawer, Tile tile, int tileX, int tileY)
+		{
+			Type type = wDrawer.GetType();
+			MethodInfo method = type.GetMethod("GetTileDrawTexture", BindingFlags.NonPublic | BindingFlags.Instance);
+			if (method == null)
+				return null;
+			return (Texture2D)method.Invoke(wDrawer, new object[] { tile, tileX, tileY });
+		}
+		public static void DrawWallM(SpriteBatch spriteBatch, Vector2 offset, Tile tile, int i, int j, int wall)
+		{
+			Vector2 value = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				value = Vector2.Zero;
+			}
+			value += offset;
+			float gfxQuality = Main.gfxQuality;
+			int num21 = (int)(120f * (1f - gfxQuality) + 40f * gfxQuality);
+			int num13 = (int)(num21 * 0.4f);
+			int num14 = (int)(num21 * 0.35f);
+			int num15 = (int)(num21 * 0.3f);
+			Color color = Lighting.GetColor(i, j);
+			if (tile.WallColor == 31)
+			{
+				color = Color.White;
+			}
+			if (color.R == 0 && color.G == 0 && color.B == 0 && j < Main.UnderworldLayer)
+			{
+				return;
+			}
+			Rectangle value2 = new Rectangle(0, 0, 32, 32);
+			value2.X = tile.WallFrameX;
+			value2.Y = tile.WallFrameY + Main.wallFrame[wall] * 180;
+			if ((uint)(tile.WallType - 242) <= 1u)
+			{
+				int num11 = 20;
+				int num12 = (Main.wallFrameCounter[wall] + i * 11 + j * 27) % (num11 * 8);
+				value2.Y = tile.WallFrameY + 180 * (num12 / num11);
+			}
+			if (Lighting.NotRetro && !Main.wallLight[wall] && tile.WallType != 241 && (tile.WallType < 88 || tile.WallType > 93) && !WorldGen.SolidTile(tile))
+			{
+				Texture2D tileDrawTexture = Run_GetTileDrawTexture(Main.instance.WallsRenderer, tile, i, j);
+				if (tile.WallType == 44)
+				{
+					color = new Color((int)(byte)Main.DiscoR, (int)(byte)Main.DiscoG, (int)(byte)Main.DiscoB);
+				}
+				Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X - 8), (float)(j * 16 - (int)Main.screenPosition.Y - 8));
+				spriteBatch.Draw(tileDrawTexture, pos + value, value2, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
+			else
+			{
+				Color color2 = color;
+				if (wall == 44)
+				{
+					color2 = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB);
+				}
+				Texture2D tileDrawTexture2 = Run_GetTileDrawTexture(Main.instance.WallsRenderer, tile, i, j);
+				Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X - 8), (float)(j * 16 - (int)Main.screenPosition.Y - 8));
+				spriteBatch.Draw(tileDrawTexture2, pos + value, value2, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
+			if (color.R > num13 || color.G > num14 || color.B > num15)
+			{
+				bool num22 = Main.tile[i - 1, j].WallType > 0 && Main.wallBlend[Main.tile[i - 1, j].WallType] != Main.wallBlend[tile.WallType];
+				bool flag = Main.tile[i + 1, j].WallType > 0 && Main.wallBlend[Main.tile[i + 1, j].WallType] != Main.wallBlend[tile.WallType];
+				bool flag2 = Main.tile[i, j - 1].WallType > 0 && Main.wallBlend[Main.tile[i, j - 1].WallType] != Main.wallBlend[tile.WallType];
+				bool flag3 = Main.tile[i, j + 1].WallType > 0 && Main.wallBlend[Main.tile[i, j + 1].WallType] != Main.wallBlend[tile.WallType];
+				if (num22)
+				{
+					spriteBatch.Draw(TextureAssets.WallOutline.Value, new Vector2((float)(i * 16 - (int)Main.screenPosition.X), (float)(j * 16 - (int)Main.screenPosition.Y)) + value, (Rectangle?)new Rectangle(0, 0, 2, 16), color, 0f, Vector2.Zero, 1f, (SpriteEffects)0, 0f);
+				}
+				if (flag)
+				{
+					spriteBatch.Draw(TextureAssets.WallOutline.Value, new Vector2((float)(i * 16 - (int)Main.screenPosition.X + 14), (float)(j * 16 - (int)Main.screenPosition.Y)) + value, (Rectangle?)new Rectangle(14, 0, 2, 16), color, 0f, Vector2.Zero, 1f, (SpriteEffects)0, 0f);
+				}
+				if (flag2)
+				{
+					spriteBatch.Draw(TextureAssets.WallOutline.Value, new Vector2((float)(i * 16 - (int)Main.screenPosition.X), (float)(j * 16 - (int)Main.screenPosition.Y)) + value, (Rectangle?)new Rectangle(0, 0, 16, 2), color, 0f, Vector2.Zero, 1f, (SpriteEffects)0, 0f);
+				}
+				if (flag3)
+				{
+					spriteBatch.Draw(TextureAssets.WallOutline.Value, new Vector2((float)(i * 16 - (int)Main.screenPosition.X), (float)(j * 16 - (int)Main.screenPosition.Y + 14)) + value, (Rectangle?)new Rectangle(0, 14, 16, 2), color, 0f, Vector2.Zero, 1f, (SpriteEffects)0, 0f);
+				}
+			}
+		}
+    }
 }
