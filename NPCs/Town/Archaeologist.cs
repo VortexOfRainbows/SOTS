@@ -816,26 +816,28 @@ namespace SOTS.NPCs.Town
 				Main.spriteBatch.Draw(auraTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * alphaMult, Projectile.rotation * (i % 2 * 2 - 1) + i * MathHelper.Pi / 3f, auraTexture.Size() / 2, size, (SpriteEffects)(i % 2), 0f);
 			}
 		}
-		public void DrawBarrier(Color barrierColor, ref float bonusWidth)
+		public void DrawBarrier(Color barrierColor, ref float bonusWidth, bool draw = true)
 		{
-			Texture2D BarrierTexture = TextureAssets.Extra[195].Value;
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(bonusWidth + SOTSWorld.GlobalCounter));
-			barrierColor.A = (byte)(barrierColor.A * 0.5f);
-			float barrierWidth = 256;
-			float scaleMult = (bonusWidth + sinusoidalBonus) / barrierWidth;
-			Main.spriteBatch.End();
-			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-			SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
-			SOTS.BarrierShader.Parameters["pixelSize"].SetValue(12);
-			SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
-			Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, barrierColor, Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
-			SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
-			SOTS.BarrierShader.Parameters["pixelSize"].SetValue(6);
-			SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
-			Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Color.Lerp(new Color(210, 202, 222, 0), barrierColor, 0.2f), Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
-			Main.spriteBatch.End();
-
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+			if(draw)
+			{
+				barrierColor.A = (byte)(barrierColor.A * 0.5f);
+				float barrierWidth = 256;
+				float scaleMult = (bonusWidth + sinusoidalBonus) / barrierWidth;
+				Texture2D BarrierTexture = TextureAssets.Extra[195].Value;
+				Main.spriteBatch.End();
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
+				SOTS.BarrierShader.Parameters["pixelSize"].SetValue(12);
+				SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
+				Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, barrierColor, Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
+				SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
+				SOTS.BarrierShader.Parameters["pixelSize"].SetValue(6);
+				SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
+				Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Color.Lerp(new Color(210, 202, 222, 0), barrierColor, 0.2f), Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
+				Main.spriteBatch.End();
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+			}
 			bonusWidth += 18 + sinusoidalBonus;
 		}
         public override void PostDraw(Color lightColor)
@@ -902,7 +904,7 @@ namespace SOTS.NPCs.Town
 				}
 				direction *= -1;
 			}
-			float barrierSize = Radius * 16 * alphaMult + 80;
+			float barrierSize = Radius * 16 * alphaMult * 2 + 80;
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(barrierSize + SOTSWorld.GlobalCounter));
 			barrierSize += sinusoidalBonus;
 			DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize);
@@ -1049,7 +1051,68 @@ namespace SOTS.NPCs.Town
 				dust.velocity *= 0.3f;
 				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2) * (2 * (alphaMult - 0.5f));
             }
+			EntityCollision();
 		}
+		public float GetBarrierWidth()
+		{
+			float barrierSize = Radius * 16 * alphaMult * 2 + 80;
+			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(barrierSize + SOTSWorld.GlobalCounter));
+			barrierSize += sinusoidalBonus;
+			DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize, false);
+			DrawBarrier(ColorHelpers.RubyColor, ref barrierSize, false);
+			DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize, false);
+			DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize, false);
+			DrawBarrier(ColorHelpers.TopazColor, ref barrierSize, false);
+			DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize, false);
+			DrawBarrier(ColorHelpers.AmberColor, ref barrierSize, false);
+			return barrierSize / 2;
+		}
+		public void EntityCollision()
+        {
+			for(int i = 0; i < Main.maxItems; i++)
+            {
+				Item item = Main.item[i];
+				if(item.active)
+                {
+					RejectEntity(item);
+                }
+				if(i < Main.maxNPCs)
+                {
+					NPC npc = Main.npc[i];
+					if (npc.active && !npc.noTileCollide)
+						RejectEntity(npc);
+				}
+				if (i < Main.maxPlayers)
+				{
+					Player p = Main.player[i];
+					if (p.active)
+						RejectEntity(p);
+				}
+			}
+        }
+		public void RejectEntity(Entity entity)
+        {
+			Vector2 awayFromCenter = entity.Center - Projectile.Center;
+			float dist = awayFromCenter.Length();
+			float barrierSize =	GetBarrierWidth();
+			Vector2 velocity = awayFromCenter.SafeNormalize(Vector2.Zero) * barrierSize;
+			Vector2 edgeOfCircle = Projectile.Center + velocity;
+			if (dist < barrierSize || entity.Hitbox.Contains(new Point((int)edgeOfCircle.X, (int)edgeOfCircle.Y)))
+			{
+				Vector2 edgeToCenter = (entity.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
+				velocity += new Vector2(entity.Hitbox.Width * edgeToCenter.X, entity.Hitbox.Height * edgeToCenter.Y) * 0.5f;
+				Vector2 finalPos = Projectile.Center + velocity;
+				if (Math.Abs(awayFromCenter.X) >= Math.Abs(velocity.X))
+				{
+					finalPos.X = entity.Center.X;
+				}
+				finalPos.X += Math.Sign(velocity.X);
+				finalPos.Y = entity.Center.Y - awayFromCenter.Y + velocity.Y;
+				Vector2 toFinal = finalPos - entity.Center;
+				toFinal = Collision.TileCollision(entity.position, toFinal, entity.width, entity.height, false, false, 1);
+				entity.Center = entity.Center + toFinal;
+            }
+        }
     }
 	public static class PortalDrawingHelper
 	{

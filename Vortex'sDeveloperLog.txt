@@ -50,8 +50,8 @@ Daily Log:
 2. Added Void Anomalies...
 	1. This shit is totally going to have bugs and be a pain in the ass to port
 	2. Why the fuck did I do this
-	3. Finished: Barrier Visuals... Needs functionality
-	3. Needs: Viewport border, teleportation, closing and opening visuals, multiplayer syncing, spawn location algorithm, Gem Barriers
+	3. Finished: Barrier Visuals. Works as good as its gonna get: Barrier Collision
+	3. Needs: Teleportation, closing and opening visuals, multiplayer syncing, spawn location algorithm, Gem Barriers
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts
