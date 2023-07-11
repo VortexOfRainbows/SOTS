@@ -26,6 +26,7 @@ using System.Reflection;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using static SOTS.NPCs.Town.PortalDrawingHelper;
+using SOTS.Dusts;
 
 namespace SOTS.NPCs.Town
 {
@@ -617,7 +618,7 @@ namespace SOTS.NPCs.Town
 		public const int Radius = 6;
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-			overWiresUI.Add(index);
+			behindNPCs.Add(index);
         }
         public static TileDrawInfo RunGet_currentTileDrawInfo(TileDrawing tDrawer)
 		{
@@ -679,7 +680,7 @@ namespace SOTS.NPCs.Town
 			}
 			else if(pass == 1)
 			{
-				if (otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree)
+				if (otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree && oType != ModContent.TileType<Items.Furniture.Functional.Hydroponics>())
 				{
 					if (TileLoader.PreDraw(h, k, oType, Main.spriteBatch))
 					{
@@ -733,7 +734,7 @@ namespace SOTS.NPCs.Town
 		}
 		private bool canIMove = false;
 		private SaveTileData[] Data = null;
-		public void DrawTilesFromOtherPortal()
+		public void DrawTilesFromOtherPortal(float currentRadius)
         {
 			TileDrawInfo value = RunGet_currentTileDrawInfo(Main.instance.TilesRenderer);
 			int x = (int)(positionOfOtherPortal.X / 16);
@@ -742,7 +743,6 @@ namespace SOTS.NPCs.Town
 			int y2 = (int)(Projectile.Center.Y / 16);
 			Vector2 offset = positionOfOtherPortal - Projectile.Center;
 			int maxSize = (int)Math.Pow((Radius * 2 + 1), 2);
-			float currentRadius = Radius * alphaMult;
 			if (Data == null)
 				Data = new SaveTileData[maxSize];
 			if (WorldGen.InWorld(x, y, 40))
@@ -793,6 +793,7 @@ namespace SOTS.NPCs.Town
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
+			DrawWaves();
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Vector2 drawPos = Projectile.Center;
 			Color color = Color.Lerp(new Color(120, 100, 140, 0), Color.Black, 0.76f);
@@ -800,25 +801,117 @@ namespace SOTS.NPCs.Town
 				for (int i = -1; i <= 1; i += 2)
 				{
 					float rotation = j * MathHelper.PiOver4 / 2f;
-					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color, i * Projectile.rotation + rotation, texture.Size() / 2, 3f, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
+					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color, i * Projectile.rotation + rotation, texture.Size() / 2, 2.5f * alphaMult, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
 				}
 			return false;
         }
+		public void DrawWaves()
+		{
+			float currentRadius = Radius * alphaMult;
+			Texture2D auraTexture = ModContent.Request<Texture2D>("SOTS/Common/GlobalNPCs/FreezeSpiral3").Value;
+			Color color = new Color(80, 35, 120, 0) * 2f;
+			float size = (currentRadius * 32f + 120) / auraTexture.Width;
+			for (int i = 0; i < 6; i++)
+			{
+				Main.spriteBatch.Draw(auraTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * alphaMult, Projectile.rotation * (i % 2 * 2 - 1) + i * MathHelper.Pi / 3f, auraTexture.Size() / 2, size, (SpriteEffects)(i % 2), 0f);
+			}
+		}
+		public void DrawBarrier(Color barrierColor, ref float bonusWidth)
+		{
+			Texture2D BarrierTexture = TextureAssets.Extra[195].Value;
+			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(bonusWidth + SOTSWorld.GlobalCounter));
+			barrierColor.A = (byte)(barrierColor.A * 0.5f);
+			float barrierWidth = 256;
+			float scaleMult = (bonusWidth + sinusoidalBonus) / barrierWidth;
+			Main.spriteBatch.End();
+			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+			SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
+			SOTS.BarrierShader.Parameters["pixelSize"].SetValue(12);
+			SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
+			Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, barrierColor, Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
+			SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
+			SOTS.BarrierShader.Parameters["pixelSize"].SetValue(6);
+			SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
+			Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Color.Lerp(new Color(210, 202, 222, 0), barrierColor, 0.2f), Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
+			Main.spriteBatch.End();
+
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+			bonusWidth += 18 + sinusoidalBonus;
+		}
         public override void PostDraw(Color lightColor)
 		{
-			if (Projectile.ai[0] == -1 || Projectile.ai[0] == -2)
+			float currentRadius = Radius * alphaMult;
+			if (Projectile.ai[0] == -1 || Projectile.ai[0] == -2 && Projectile.ai[1] > 8)
 			{
-				DrawTilesFromOtherPortal();
+				DrawTilesFromOtherPortal(currentRadius);
 			}
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Vector2 drawPos = Projectile.Center;
 			Color color = Color.Lerp(new Color(160, 120, 180, 0), Color.Black, 0.15f);
-			for(int j = 1; j <= 2; j++)
-				for (int i = -1; i <= 1; i += 2)
+			for(int k = 0; k < 2; k++)
+				for(int j = 1; j <= 2; j++)
+					for (int i = -1; i <= 1; i += 2)
+					{
+						float rotation = j * MathHelper.PiOver4;
+						Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * 0.125f * j, i * Projectile.rotation * -1 + rotation, texture.Size() / 2, (1.75f + j * 0.5f + k * 0.25f) * alphaMult, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
+                    }
+			Texture2D borderTexture = ModContent.Request<Texture2D>("SOTS/NPCs/Town/VoidAnomalyBorder").Value;
+			Texture2D borderTextureG = ModContent.Request<Texture2D>("SOTS/NPCs/Town/VoidAnomalyBorderGlow").Value;
+			Vector2 origin = borderTexture.Size() / 2;
+			int direction = 1;
+			for(int j = 0; j < 5; j++)
+			{
+				float total = 35;
+				color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.1f, 1f, 1 - alphaMult));
+				int sizeM = j;
+				if (j == 2)
 				{
-					float rotation = j * MathHelper.PiOver4;
-					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * 0.125f * j, i * Projectile.rotation * -1 + rotation, texture.Size() / 2, 1f + j, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
+					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.56f, 1f, 1 - alphaMult));
+					total = 40;
 				}
+				if (j == 3)
+                {
+					total = 45;
+					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.425f, 1f, 1 - alphaMult));
+				}
+				if (j == 4 || j == 0)
+                {
+					total = 50;
+					sizeM = 3;
+					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.21f, 1f, 1 - alphaMult));
+				}
+				total = 30 + (total - 30) * alphaMult;
+				float sinusoid = (float)(Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter + sizeM * 22.5f)));
+				for (int i = 0; i < total; i++)
+				{
+					float rotation = i / total * MathHelper.TwoPi + Projectile.rotation * ((float)Math.Sqrt(j) / 2f + 0.5f) * direction * 0.2f;
+					Vector2 circular = new Vector2((currentRadius + sizeM * 0.625f) * 16 + 8 / (sizeM + 1) * sinusoid * alphaMult - 20, 0).RotatedBy(rotation);
+					if (j == 0)
+					{
+						Main.spriteBatch.Draw(borderTextureG, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) + circular, null, new Color(160, 120, 180, 0), rotation + MathHelper.PiOver2, origin, new Vector2(1.65f, 1.0f * alphaMultRoot), SpriteEffects.None, 0f);
+						if(!SOTS.Config.lowFidelityMode)
+						{
+							Main.spriteBatch.Draw(borderTextureG, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) + circular, null, new Color(140, 100, 160, 0) * 0.4f, rotation + MathHelper.PiOver2, origin, new Vector2(2.45f, 1.125f * alphaMultRoot), SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(borderTextureG, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) + circular, null, new Color(120, 80, 140, 0) * 0.15f, rotation + MathHelper.PiOver2, origin, new Vector2(3.05f, 1.25f * alphaMultRoot), SpriteEffects.None, 0f);
+						}
+					}
+					else
+					{
+						Main.spriteBatch.Draw(borderTexture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) + circular, null, color, rotation + MathHelper.PiOver2, origin, new Vector2(1f, 0.675f * alphaMultRoot), SpriteEffects.None, 0f);
+					}
+				}
+				direction *= -1;
+			}
+			float barrierSize = Radius * 16 * alphaMult + 80;
+			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(barrierSize + SOTSWorld.GlobalCounter));
+			barrierSize += sinusoidalBonus;
+			DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize);
+			DrawBarrier(ColorHelpers.RubyColor, ref barrierSize);
+			DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize);
+			DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize);
+			DrawBarrier(ColorHelpers.TopazColor, ref barrierSize);
+			DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize);
+			DrawBarrier(ColorHelpers.AmberColor, ref barrierSize);
 		}
 		public static void PlaceDownAnomalies()
         {
@@ -860,18 +953,30 @@ namespace SOTS.NPCs.Town
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
 			Projectile.hide = true;
+			Projectile.netImportant = true;
 		}
-		public float alphaMult
-        {
+		public float alphaMultRoot
+		{
 			get
-            {
+			{
 				float mult = (Projectile.ai[1] / 60f) * (Projectile.timeLeft) / 120f;
 				if (mult < 0)
 					return 0;
 				else
 					return mult;
 			}
-        }
+		}
+		public float alphaMult
+		{
+			get
+			{
+				float mult = (Projectile.ai[1] / 60f) * (Projectile.timeLeft) / 120f;
+				if (mult < 0)
+					return 0;
+				else
+					return (float)Math.Pow(mult, 2);
+			}
+		}
 		public Vector2 positionOfOtherPortal
         {
 			get
@@ -885,8 +990,32 @@ namespace SOTS.NPCs.Town
         }
 		public override void AI()
 		{
+			Color color = ColorHelpers.VoidAnomaly;
+			color.A = 0;
 			if (Projectile.ai[1] < 60)
-				Projectile.ai[1]++;
+			{
+				if (Projectile.ai[1] < 8)
+				{
+					Projectile.ai[1]++;
+					if(Projectile.ai[1] >= 0)
+					{
+						for (int i = 0; i < 16; i++)
+						{
+							float radius = Radius * 16 * alphaMult;
+							Vector2 circular = new Vector2(radius + 12 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
+							Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(color, Color.Black, Main.rand.NextFloat(0.3f)), 1.1f);
+							dust.fadeIn = 1;
+							dust.noGravity = true;
+							dust.velocity *= 0.5f;
+							dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(5);
+						}
+					}
+                    if (Projectile.ai[1] == 8)
+                    {
+						SOTSUtils.PlaySound(SoundID.Item78, Projectile.Center, 1.5f, -0.8f, 0.1f);
+                    }
+				}
+			}
 			if (Projectile.ai[0] == -1)
 			{
 				if (Main.mouseMiddle && canIMove)
@@ -910,6 +1039,16 @@ namespace SOTS.NPCs.Town
 				Projectile.timeLeft = 120;
 			Projectile.alpha = (int)(255 * (1 - alphaMult));
 			Projectile.rotation += MathHelper.ToRadians(3.5f);
+			float count = Main.rand.NextFloat(4) * alphaMult + 1;
+			for (int i = 0; i < count; i++)
+            {
+				float radius = Radius * 16 * alphaMult;
+				Vector2 circular = new Vector2(radius + 16 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color * (0.5f + 0.5f * alphaMult), 1);
+				dust.fadeIn = 8;
+				dust.velocity *= 0.3f;
+				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2) * (2 * (alphaMult - 0.5f));
+            }
 		}
     }
 	public static class PortalDrawingHelper

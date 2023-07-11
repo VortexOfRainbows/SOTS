@@ -76,6 +76,7 @@ namespace SOTS
 		public static Effect FireballShader;
 		public static Effect GodrayShader;
 		public static Effect VisionShader;
+		public static Effect BarrierShader;
 		public static SOTSConfig Config
         {
 			get => ModContent.GetInstance<SOTSConfig>();
@@ -166,6 +167,7 @@ namespace SOTS
 				FireballShader = Instance.Assets.Request<Effect>("Effects/FireballShader", AssetRequestMode.ImmediateLoad).Value;
 				GodrayShader = Instance.Assets.Request<Effect>("Effects/GodrayShader", AssetRequestMode.ImmediateLoad).Value;
 				VisionShader = Instance.Assets.Request<Effect>("Effects/VisionShader", AssetRequestMode.ImmediateLoad).Value;
+				BarrierShader = Instance.Assets.Request<Effect>("Effects/BarrierShader", AssetRequestMode.ImmediateLoad).Value;
 				Main.QueueMainThreadAction(() => {
 					primitives = new PrimTrailManager();
 					primitives.LoadContent(Main.graphics.GraphicsDevice);

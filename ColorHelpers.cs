@@ -9,7 +9,6 @@ namespace SOTS
     {
         public static Color AcediaColor = new Color(213, 68, 255);
         public static Color DreamLampColor = DreamingFrame.Green1;
-
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static Color pastelRainbow = Color.White;
@@ -25,6 +24,7 @@ namespace SOTS
 		public static Color Inferno1 = new Color(213, 68, 13);
 		public static Color Inferno2 = new Color(255, 210, 155);
 		public static int soulColorCounter = 0;
+		public static Color VoidAnomaly = new Color(160, 120, 180);
 		public static void ColorUpdate()
         {
 			soulColorCounter++;
@@ -106,6 +106,69 @@ namespace SOTS
 				return new Color(red, grn, blu);
 			else
 				return new Color(red, grn, blu).MultiplyRGB(overrideColor);
+		}
+		public static Color DiamondColor
+		{
+			get
+			{
+				Color color = new Color(97, 112, 172);
+				Color other = new Color(227, 157, 206);
+				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
+			}
+		}
+		public static Color RubyColor
+		{
+			get
+			{
+				Color color = new Color(151, 15, 24);
+				Color other = new Color(212, 37, 24);
+				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
+			}
+		}
+		public static Color EmeraldColor
+		{
+			get
+			{
+				Color color = new Color(10, 143, 93);
+				Color other = new Color(33, 184, 115);
+				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
+			}
+		}
+		public static Color SapphireColor
+		{
+			get
+			{
+				Color color = new Color(0, 70, 174);
+				Color other = new Color(18, 116, 211);
+				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
+			}
+		}
+		public static Color TopazColor
+		{
+			get
+			{
+				Color color = new Color(171, 97, 5);
+				Color other = new Color(239, 167, 10);
+				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
+			}
+		}
+		public static Color AmethystColor
+		{
+			get
+			{
+				Color color = new Color(133, 13, 191);
+				Color other = new Color(158, 0, 244);
+				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
+			}
+		}
+		public static Color AmberColor
+		{
+			get
+			{
+				Color color = new Color(159, 67, 18);
+				Color other = new Color(225, 124, 30);
+				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
+			}
 		}
 	}
 }
