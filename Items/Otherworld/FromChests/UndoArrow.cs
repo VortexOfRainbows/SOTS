@@ -34,21 +34,43 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			for(int i = 0; i < 200; i ++)
+			//for(int i = 0; i < 200; i ++)
+			//{
+			//	if(Main.npc[i].active)
+			//		Main.npc[i].aiStyle = -420;
+			// }
+			//Main.NewText(Main.invasionType);
+			//Main.NewText(Language.GetTextValue("Mods.SOTS.MapObject.LockedStrangeChest"));
+			if (SOTSWorld.DiamondKeySlotted && SOTSWorld.RubyKeySlotted
+				&& SOTSWorld.EmeraldKeySlotted && SOTSWorld.SapphireKeySlotted
+				&& SOTSWorld.TopazKeySlotted && SOTSWorld.AmethystKeySlotted && SOTSWorld.AmberKeySlotted)
+			{
+				SOTSWorld.RubyKeySlotted = false;
+				SOTSWorld.EmeraldKeySlotted = false;
+				SOTSWorld.SapphireKeySlotted = false;
+				SOTSWorld.DiamondKeySlotted = false;
+				SOTSWorld.AmberKeySlotted = false;
+				SOTSWorld.TopazKeySlotted = false;
+				SOTSWorld.AmethystKeySlotted = false;
+			}
+			else
             {
-				if(Main.npc[i].active)
-					Main.npc[i].aiStyle = -420;
-            }
-			Main.NewText(Main.invasionType);
-            Main.NewText(Language.GetTextValue("Mods.SOTS.MapObject.LockedStrangeChest"));
-			/*
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Sapphire", Convert.ToString(SOTSWorld.SapphireKeySlotted)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Emerald", Convert.ToString(SOTSWorld.EmeraldKeySlotted)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Topaz", Convert.ToString(SOTSWorld.TopazKeySlotted)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Amethyst", Convert.ToString(SOTSWorld.AmethystKeySlotted)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Diamond", Convert.ToString(SOTSWorld.DiamondKeySlotted)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Amber", Convert.ToString(SOTSWorld.AmberKeySlotted)));
-            Main.NewText(Language.GetTextValue("Mods.SOTS.UndoArrow.Pack", Convert.ToString(SOTS.SOTSTexturePackEnabled)));*/
+				int next = Main.rand.Next(7);
+				if(next == 0)
+					SOTSWorld.RubyKeySlotted = true;
+				if (next == 1)
+					SOTSWorld.EmeraldKeySlotted = true;
+				if (next == 2)
+					SOTSWorld.SapphireKeySlotted = true;
+				if (next == 3)
+					SOTSWorld.DiamondKeySlotted = true;
+				if (next == 4)
+					SOTSWorld.TopazKeySlotted = true;
+				if (next == 5)
+					SOTSWorld.AmethystKeySlotted = true;
+				if (next == 6)
+					SOTSWorld.AmberKeySlotted = true;
+			}
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 32;

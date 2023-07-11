@@ -33,8 +33,10 @@ float4 BarrierShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : C
     float4 empty = float4(0, 0, 0, 0);
     float length = dist(coordsAsInt / defaultSize - centerCoords); //Distance from center
     float Pixels = (pixelSize / defaultSize);
-    if (length >= 0.5 || (length < 0.5 - Pixels))
+    if (length >= 0.5)
         return empty;
+    if (length < 0.5 - Pixels)
+        return color * sampleColor * 0.02;
     return color * sampleColor * pow((1 - 2 * abs(0.5 - Pixels / 2 - length) / Pixels), 2);
 }
 

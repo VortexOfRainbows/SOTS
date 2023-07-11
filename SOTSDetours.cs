@@ -563,9 +563,14 @@ namespace SOTS
 								circleColor = Color.Black * 0.75f;
 							if (j == -1)
 								circleColor = Color.Black * 0.35f;
-							for (int i = 0; i < 8; i++)
+							int radius = 4;
+							if (j == -1)
+								radius = 2;
+							if (j == 2)
+								radius = 8;
+							for (int i = 0; i < 12; i++)
 							{
-								Vector2 circular = new Vector2(4 + 6 * j, 0).RotatedBy((SOTSWorld.GlobalCounter * (j % 2 * 2 - 1) + i * 45) * MathHelper.Pi / 180f);
+								Vector2 circular = new Vector2(radius, 0).RotatedBy((SOTSWorld.GlobalCounter * (j % 2 * 2 - 1) + i * 30) * MathHelper.Pi / 180f);
 								spriteBatch.Draw(value, vec + circular, rectangle, circleColor * 0.825f * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
 							}
 						}
