@@ -53,6 +53,7 @@ Daily Log:
 	3. Finished: Barrier Visuals. Works as good as its gonna get: Barrier Collision
 		1. Some work on closing/opening visuals (WIP)
 		2. Somewhat better liquid drawing (Should be good enough)
+		3. Sucks in entities
 	3. Needs: Teleportation, closing and opening visuals, multiplayer syncing, spawn location algorithm, Gem Barriers
 
 7/6/23 & 7/7/23

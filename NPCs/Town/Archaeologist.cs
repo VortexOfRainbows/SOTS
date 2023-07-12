@@ -28,6 +28,7 @@ using Terraria.Graphics;
 using static SOTS.NPCs.Town.PortalDrawingHelper;
 using SOTS.Dusts;
 using SOTS.WorldgenHelpers;
+using SOTS.Common;
 
 namespace SOTS.NPCs.Town
 {
@@ -616,6 +617,8 @@ namespace SOTS.NPCs.Town
 	}
 	public class VoidAnomaly : ModProjectile
 	{
+		public static float APortalIsAccepting = 0f;
+		public const int CloseToSize = 20;
 		public const int Radius = 6;
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
@@ -1006,12 +1009,30 @@ namespace SOTS.NPCs.Town
 				return Vector2.Zero;
 			}
         }
+		public bool hasGrownToFull = false;
 		public override void AI()
 		{
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
-			if (Projectile.ai[1] < 60)
+			if(APortalIsAccepting > 0)
+            {
+                if (Projectile.ai[1] > CloseToSize)
+                {
+					Projectile.ai[1]--;
+					Projectile.ai[1] *= 0.87f;
+				}
+				if (Projectile.ai[1] < CloseToSize)
+					Projectile.ai[1] = CloseToSize;
+                if (Projectile.ai[0] == -1)
+					APortalIsAccepting--;
+				if (APortalIsAccepting <= 0)
+					APortalIsAccepting = 0;
+			}
+			else if (Projectile.ai[1] < 60)
 			{
+				float growthMult = 1f;
+				if (hasGrownToFull)
+					growthMult = 0.05f;
 				if (Projectile.ai[1] < 8)
 				{
 					if (Projectile.ai[1] >= 0)
@@ -1036,7 +1057,12 @@ namespace SOTS.NPCs.Town
 					}
 				}
 				else if (Projectile.ai[1] < 8 + (float)(Math.Pow(totalKeysSlotted / 7f, 0.4f) * 52))
-					Projectile.ai[1]++;
+					Projectile.ai[1] += growthMult;
+				if (Projectile.ai[1] >= 60)
+                {
+					Projectile.ai[1] = 60;
+					hasGrownToFull = true;
+				}
 			}
 			if (Projectile.ai[0] == -1)
 			{
@@ -1110,28 +1136,130 @@ namespace SOTS.NPCs.Town
 				allKeysSlotted = true;
 			float barrier = GetBarrierWidth();
 			if (allKeysSlotted)
-				barrier = 1;
+				barrier = -1;
 			for(int i = 0; i < Main.maxItems; i++)
             {
 				Item item = Main.item[i];
 				if(item.active)
-                {
-					RejectEntity(item, barrier);
+				{
+					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
+					if(!gen.RecentlyTeleported)
+					{
+						if (barrier == -1)
+							AcceptEntity(item);
+						else
+							RejectEntity(item, barrier);
+					}
                 }
 				if(i < Main.maxNPCs)
                 {
 					NPC npc = Main.npc[i];
 					if (npc.active && !npc.noTileCollide)
-						RejectEntity(npc, barrier);
+					{
+						GlobalEntityNPC gen = npc.GetGlobalNPC<GlobalEntityNPC>();
+						if (!gen.RecentlyTeleported)
+						{
+							if (barrier == -1)
+								AcceptEntity(npc);
+							else
+								RejectEntity(npc, barrier);
+						}
+					}
 				}
 				if (i < Main.maxPlayers)
 				{
 					Player p = Main.player[i];
 					if (p.active)
-						RejectEntity(p, barrier);
+                    {
+						if(!p.HasBuff(BuffID.ChaosState))
+						{
+							if (barrier == -1)
+								AcceptEntity(p);
+							else
+								RejectEntity(p, barrier);
+						}
+                    }
 				}
 			}
         }
+		public void TeleportEntity(Entity entity)
+		{
+			if(entity is NPC nPC)
+            {
+				GlobalEntityNPC gen = nPC.GetGlobalNPC<GlobalEntityNPC>();
+				if(gen.RecentlyTeleported)
+                {
+					return;
+                }
+				gen.RecentlyTeleported = true;
+				nPC.netUpdate = true;
+			}
+			if (entity is Item item)
+			{
+				GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
+				if(gen.RecentlyTeleported)
+				{
+					return;
+				}
+				gen.RecentlyTeleported = true;
+				gen.NetUpdate(item);
+			}
+			if(entity is Player player)
+            {
+				player.AddBuff(BuffID.ChaosState, 300);
+            }
+			SOTSUtils.PlaySound(SoundID.Item117, Projectile.Center, 1.5f, -0.8f, 0.1f);
+			entity.Center = positionOfOtherPortal;
+			entity.velocity *= 0.4f;
+			entity.velocity += new Vector2(Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-4f, -2f));
+		}
+		public void AcceptEntity(Entity entity)
+        {
+			Vector2 center = Projectile.Center;
+			Vector2 toCenter = center - entity.Center;
+			float dist = toCenter.Length();
+			float vacuumRadius = 640f;
+			float acceptRadius = 24;
+			if(dist < 12)
+            {
+				if(APortalIsAccepting <= 0 && Projectile.ai[1] >= 60)
+					APortalIsAccepting += 48;
+			}
+			if (dist < acceptRadius)
+			{
+				if (Projectile.ai[1] <= CloseToSize && APortalIsAccepting != 0)
+				{
+					TeleportEntity(entity);
+				}
+			}
+			if (dist < vacuumRadius)
+            {
+				float distancePercent = (vacuumRadius - dist) / vacuumRadius * (APortalIsAccepting > 0 ? 1 : alphaMult);
+				Vector2 outward = toCenter.SafeNormalize(Vector2.Zero) * (float)Math.Pow(distancePercent, 4) * 0.75f;
+				if (entity.velocity.Y != 0 || entity is Item || dist < 120)
+				{
+					entity.velocity.X += outward.X * 1.4f;
+					entity.position.X += outward.X * 0.25f;
+					entity.velocity.Y += outward.Y * 1.125f;
+					if(outward.Y < 0)
+                    {
+						if (entity.velocity.Y > 0)
+							entity.velocity.Y *= 1f - 0.9f * distancePercent;
+						entity.velocity.Y += outward.Y * 0.375f;
+                    }
+                }
+				else
+				{
+					entity.velocity.X += outward.X * 0.875f;
+					entity.position.X += outward.X * 0.35f;
+				}
+				float lengthForSuperSuck = 96f * alphaMultRoot;
+				if(dist < lengthForSuperSuck)
+                {
+					entity.velocity = Vector2.Lerp(entity.velocity, toCenter * 0.1f * alphaMult, 0.5f * (lengthForSuperSuck - dist) / lengthForSuperSuck * alphaMult);
+                }
+            }
+		}
 		public void RejectEntity(Entity entity, float barrierSize)
         {
 			Vector2 awayFromCenter = entity.Center - Projectile.Center;
