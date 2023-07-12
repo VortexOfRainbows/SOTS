@@ -2769,6 +2769,7 @@ Mods: {
 		VoidSickness : Void Sickness
 		WebbedNPC : Webbed
 		DendroChain: Dendro Chain
+		Skipped: Skipped
 		}
 
 		BuffDescription: {
@@ -2848,6 +2849,8 @@ Mods: {
 		
 		NatureBoosted : Increases max life by 20
 		EarthBoosted : Increases max life by 20
+		
+		Skipped: Recently warped through space
 		}
 
 		ArmorSetBonus: {

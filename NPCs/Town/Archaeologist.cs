@@ -29,6 +29,7 @@ using static SOTS.NPCs.Town.PortalDrawingHelper;
 using SOTS.Dusts;
 using SOTS.WorldgenHelpers;
 using SOTS.Common;
+using SOTS.Buffs.Debuffs;
 
 namespace SOTS.NPCs.Town
 {
@@ -1171,7 +1172,7 @@ namespace SOTS.NPCs.Town
 					Player p = Main.player[i];
 					if (p.active)
                     {
-						if(!p.HasBuff(BuffID.ChaosState))
+						if(!p.HasBuff(ModContent.BuffType<Skipped>()))
 						{
 							if (barrier == -1)
 								AcceptEntity(p);
@@ -1206,7 +1207,7 @@ namespace SOTS.NPCs.Town
 			}
 			if(entity is Player player)
             {
-				player.AddBuff(BuffID.ChaosState, 300);
+				player.AddBuff(ModContent.BuffType<Skipped>(), 300);
             }
 			SOTSUtils.PlaySound(SoundID.Item117, Projectile.Center, 1.5f, -0.8f, 0.1f);
 			entity.Center = positionOfOtherPortal;
@@ -1245,7 +1246,7 @@ namespace SOTS.NPCs.Town
                     {
 						if (entity.velocity.Y > 0)
 							entity.velocity.Y *= 1f - 0.9f * distancePercent;
-						entity.velocity.Y += outward.Y * 0.375f;
+						entity.velocity.Y += outward.Y * 0.375f * distancePercent;
                     }
                 }
 				else
