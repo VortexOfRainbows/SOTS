@@ -621,11 +621,11 @@ namespace SOTS.NPCs.Town
 		public static float APortalIsAccepting = 0f;
 		public const int CloseToSize = 20;
 		public const int Radius = 6;
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+		{
 			behindNPCs.Add(index);
-        }
-        public static TileDrawInfo RunGet_currentTileDrawInfo(TileDrawing tDrawer)
+		}
+		public static TileDrawInfo RunGet_currentTileDrawInfo(TileDrawing tDrawer)
 		{
 			Type type = tDrawer.GetType();
 			FieldInfo field = type.GetField("_currentTileDrawInfoNonThreaded", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -644,11 +644,11 @@ namespace SOTS.NPCs.Town
 			Tile otherTile = Main.tile[i, j];
 			Tile myTile = Main.tile[h, k];
 			int oType = otherTile.WallType;
-			if(pass == 2)
+			if (pass == 2)
 			{
 				Data.OntoTileW(myTile);
 			}
-			else if(pass == 1)
+			else if (pass == 1)
 			{
 				if (otherTile.WallType != 0)
 				{
@@ -740,7 +740,7 @@ namespace SOTS.NPCs.Town
 		private bool canIMove = false;
 		private SaveTileData[] Data = null;
 		public void DrawTilesFromOtherPortal(float currentRadius)
-        {
+		{
 			TileDrawInfo value = RunGet_currentTileDrawInfo(Main.instance.TilesRenderer);
 			int x = (int)(positionOfOtherPortal.X / 16);
 			int y = (int)(positionOfOtherPortal.Y / 16);
@@ -809,7 +809,7 @@ namespace SOTS.NPCs.Town
 					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Color.Black, i * Projectile.rotation + rotation, texture.Size() / 2, 0.25f * (Projectile.ai[1] > 0 ? 1 : 0) + 2.25f * alphaMult, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
 				}
 			return false;
-        }
+		}
 		public void DrawWaves()
 		{
 			float currentRadius = Radius * alphaMult;
@@ -824,7 +824,7 @@ namespace SOTS.NPCs.Town
 		public void DrawBarrier(Color barrierColor, ref float bonusWidth, bool draw = true)
 		{
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(bonusWidth + SOTSWorld.GlobalCounter));
-			if(draw)
+			if (draw)
 			{
 				barrierColor.A = (byte)(barrierColor.A * 0.5f);
 				float barrierWidth = 256;
@@ -845,7 +845,7 @@ namespace SOTS.NPCs.Town
 			}
 			bonusWidth += 18 + sinusoidalBonus;
 		}
-        public override void PostDraw(Color lightColor)
+		public override void PostDraw(Color lightColor)
 		{
 			float currentRadius = Radius * alphaMult;
 			if (Projectile.ai[0] == -1 || Projectile.ai[0] == -2 && Projectile.ai[1] > 8)
@@ -855,18 +855,18 @@ namespace SOTS.NPCs.Town
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Vector2 drawPos = Projectile.Center;
 			Color color = Color.Lerp(new Color(160, 120, 180, 0), Color.Black, 0.15f + 0.85f * (1 - alphaMult));
-			for(int k = 0; k < 2; k++)
-				for(int j = 1; j <= 2; j++)
+			for (int k = 0; k < 2; k++)
+				for (int j = 1; j <= 2; j++)
 					for (int i = -1; i <= 1; i += 2)
 					{
 						float rotation = j * MathHelper.PiOver4;
 						Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * 0.125f * j, i * Projectile.rotation * -1 + rotation, texture.Size() / 2, (1.75f + j * 0.5f + k * 0.25f) * alphaMult, i == -1 ? SpriteEffects.FlipHorizontally : 0, 0f);
-                    }
+					}
 			Texture2D borderTexture = ModContent.Request<Texture2D>("SOTS/NPCs/Town/VoidAnomalyBorder").Value;
 			Texture2D borderTextureG = ModContent.Request<Texture2D>("SOTS/NPCs/Town/VoidAnomalyBorderGlow").Value;
 			Vector2 origin = borderTexture.Size() / 2;
 			int direction = 1;
-			for(int j = 0; j < 5; j++)
+			for (int j = 0; j < 5; j++)
 			{
 				float total = 35;
 				color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.1f, 1f, 1 - alphaMult));
@@ -878,13 +878,13 @@ namespace SOTS.NPCs.Town
 					total = 40;
 				}
 				if (j == 3)
-                {
+				{
 					total = 45;
 					sizeM = 2.3f;
 					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.425f, 1f, 1 - alphaMult));
 				}
 				if (j == 4 || j == 0)
-                {
+				{
 					total = 50;
 					sizeM = 3f;
 					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.21f, 1f, 1 - alphaMult));
@@ -897,7 +897,7 @@ namespace SOTS.NPCs.Town
 					Vector2 circular = new Vector2((currentRadius + sizeM * 0.625f) * 16 + 7f / (sizeM + 1) * sinusoid * alphaMult - 20, 0).RotatedBy(rotation);
 					if (j == 0)
 					{
-						if(alphaMult > 0)
+						if (alphaMult > 0)
 						{
 							Main.spriteBatch.Draw(borderTextureG, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) + circular, null, new Color(160, 120, 180, 0), rotation + MathHelper.PiOver2, origin, new Vector2(1.65f, 1.0f * alphaMultRoot), SpriteEffects.None, 0f);
 							if (!SOTS.Config.lowFidelityMode)
@@ -920,7 +920,7 @@ namespace SOTS.NPCs.Town
 			float barrierSize = Radius * 16 * alphaMult * 2 + 80;
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(barrierSize + SOTSWorld.GlobalCounter));
 			barrierSize += sinusoidalBonus;
-			if(!SOTSWorld.DiamondKeySlotted)
+			if (!SOTSWorld.DiamondKeySlotted)
 				DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize);
 			if (!SOTSWorld.RubyKeySlotted)
 				DrawBarrier(ColorHelpers.RubyColor, ref barrierSize);
@@ -936,34 +936,34 @@ namespace SOTS.NPCs.Town
 				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize);
 		}
 		public static void PlaceDownAnomalies()
-        {
+		{
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
 			int padding = 50;
-			for(int i = 1;  i <= 2; i++)
-            {
+			for (int i = 1; i <= 2; i++)
+			{
 				float randX = Main.rand.Next(padding, Main.maxTilesX - padding);
 				float randY = Main.rand.Next(padding, Main.maxTilesY - padding);
 				randX = 400 + i * 16;
 				randY = 400;
 				Vector2 randomPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
 				Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), randomPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -i, -60);
-            }
-        }
+			}
+		}
 		public static void KillOtherAnomalies()
 		{
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
 			for (int i = 0; i < Main.maxProjectiles; i++)
-            {
+			{
 				Projectile proj = Main.projectile[i];
 				if (proj.active && proj.type == ModContent.ProjectileType<VoidAnomaly>())
-                {
+				{
 					proj.ai[0] = -3;
 					proj.netUpdate = true;
-                }
-            }
-        }
+				}
+			}
+		}
 		public override void SetDefaults()
 		{
 			Projectile.height = 82;
@@ -1000,31 +1000,31 @@ namespace SOTS.NPCs.Town
 			}
 		}
 		public Vector2 positionOfOtherPortal
-        {
+		{
 			get
-            {
-				if(Projectile.ai[0] == -1)
+			{
+				if (Projectile.ai[0] == -1)
 					return Archaeologist.AnomalyPosition3;
 				if (Projectile.ai[0] == -2)
 					return Archaeologist.AnomalyPosition2;
 				return Vector2.Zero;
 			}
-        }
+		}
 		public bool hasGrownToFull = false;
 		public override void AI()
 		{
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
-			if(APortalIsAccepting > 0)
-            {
-                if (Projectile.ai[1] > CloseToSize)
-                {
+			if (APortalIsAccepting > 0)
+			{
+				if (Projectile.ai[1] > CloseToSize)
+				{
 					Projectile.ai[1]--;
 					Projectile.ai[1] *= 0.87f;
 				}
 				if (Projectile.ai[1] < CloseToSize)
 					Projectile.ai[1] = CloseToSize;
-                if (Projectile.ai[0] == -1)
+				if (Projectile.ai[0] == -1)
 					APortalIsAccepting--;
 				if (APortalIsAccepting <= 0)
 					APortalIsAccepting = 0;
@@ -1060,7 +1060,7 @@ namespace SOTS.NPCs.Town
 				else if (Projectile.ai[1] < 8 + (float)(Math.Pow(totalKeysSlotted / 7f, 0.4f) * 52))
 					Projectile.ai[1] += growthMult;
 				if (Projectile.ai[1] >= 60)
-                {
+				{
 					Projectile.ai[1] = 60;
 					hasGrownToFull = true;
 				}
@@ -1071,7 +1071,7 @@ namespace SOTS.NPCs.Town
 				{
 					Projectile.Center = new Vector2((int)(Main.MouseWorld.X / 16) * 16 + 8, (int)(Main.MouseWorld.Y / 16) * 16 + 8);
 				}
-                if (Projectile.ai[1] >= 0 && Projectile.timeLeft >= 119)
+				if (Projectile.ai[1] >= 0 && Projectile.timeLeft >= 119)
 					Archaeologist.AnomalyPosition2 = Projectile.Center;
 			}
 			if (Projectile.ai[0] == -2)
@@ -1092,14 +1092,14 @@ namespace SOTS.NPCs.Town
 			Projectile.rotation += MathHelper.ToRadians(3.5f);
 			float count = Main.rand.NextFloat(4) * alphaMult + 1;
 			for (int i = 0; i < count; i++)
-            {
+			{
 				float radius = Radius * 16 * alphaMult;
 				Vector2 circular = new Vector2(radius + 16 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
 				Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color * (0.5f + 0.5f * alphaMult), 1);
 				dust.fadeIn = 8;
 				dust.velocity *= 0.3f;
 				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2) * (2 * (alphaMult - 0.5f));
-            }
+			}
 			EntityCollision();
 		}
 		public float GetBarrierWidth()
@@ -1124,36 +1124,36 @@ namespace SOTS.NPCs.Town
 			return barrierSize / 2;
 		}
 		public int totalKeysSlotted
-        {
+		{
 			get
-            {
+			{
 				return SOTSWorld.DiamondKeySlotted.ToInt() + SOTSWorld.RubyKeySlotted.ToInt() + SOTSWorld.EmeraldKeySlotted.ToInt() + SOTSWorld.SapphireKeySlotted.ToInt() + SOTSWorld.TopazKeySlotted.ToInt() + SOTSWorld.AmethystKeySlotted.ToInt() + SOTSWorld.AmberKeySlotted.ToInt();
 			}
-        }
+		}
 		public void EntityCollision()
-        {
+		{
 			bool allKeysSlotted = false;
 			if (totalKeysSlotted >= 7)
 				allKeysSlotted = true;
 			float barrier = GetBarrierWidth();
 			if (allKeysSlotted)
 				barrier = -1;
-			for(int i = 0; i < Main.maxItems; i++)
-            {
+			for (int i = 0; i < Main.maxItems; i++)
+			{
 				Item item = Main.item[i];
-				if(item.active)
+				if (item.active)
 				{
 					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
-					if(!gen.RecentlyTeleported)
+					if (!gen.RecentlyTeleported)
 					{
 						if (barrier == -1)
 							AcceptEntity(item);
 						else
 							RejectEntity(item, barrier);
 					}
-                }
-				if(i < Main.maxNPCs)
-                {
+				}
+				if (i < Main.maxNPCs)
+				{
 					NPC npc = Main.npc[i];
 					if (npc.active && !npc.noTileCollide)
 					{
@@ -1171,48 +1171,54 @@ namespace SOTS.NPCs.Town
 				{
 					Player p = Main.player[i];
 					if (p.active)
-                    {
-						if(!p.HasBuff(ModContent.BuffType<Skipped>()))
+					{
+						if (!p.HasBuff(ModContent.BuffType<Skipped>()))
 						{
 							if (barrier == -1)
 								AcceptEntity(p);
 							else
 								RejectEntity(p, barrier);
 						}
-                    }
+					}
 				}
 			}
-        }
+		}
 		public void TeleportEntity(Entity entity)
 		{
-			if(entity is NPC nPC)
-            {
+			if (entity is NPC nPC)
+			{
 				GlobalEntityNPC gen = nPC.GetGlobalNPC<GlobalEntityNPC>();
-				if(gen.RecentlyTeleported)
-                {
+				if (gen.RecentlyTeleported)
+				{
 					return;
-                }
+				}
 				gen.RecentlyTeleported = true;
 				nPC.netUpdate = true;
+				SpawnDust(nPC);
 			}
 			if (entity is Item item)
 			{
 				GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
-				if(gen.RecentlyTeleported)
+				if (gen.RecentlyTeleported)
 				{
 					return;
 				}
 				gen.RecentlyTeleported = true;
 				gen.NetUpdate(item);
+				SpawnDust(item);
 			}
-			if(entity is Player player)
-            {
+			if (entity is Player player)
+			{
 				player.AddBuff(ModContent.BuffType<Skipped>(), 300);
-            }
+			}
 			SOTSUtils.PlaySound(SoundID.Item117, Projectile.Center, 1.5f, -0.8f, 0.1f);
 			entity.Center = positionOfOtherPortal;
 			entity.velocity *= 0.4f;
 			entity.velocity += new Vector2(Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-4f, -2f));
+			if (entity is Item || entity is NPC)
+            {
+				SpawnDustEntity(entity);
+            }
 		}
 		public void AcceptEntity(Entity entity)
         {
@@ -1286,6 +1292,78 @@ namespace SOTS.NPCs.Town
     }
 	public static class PortalDrawingHelper
 	{
+		public static void SpawnDust(Item item)
+		{
+			SpawnDustEntity(item);
+		}
+		public static void SpawnDust(NPC npc)
+		{
+			SpawnDustEntity(npc);
+		}
+		public static void SpawnDustEntity(Entity ent)
+		{
+			Texture2D texture = null;
+			int frameCount = 1;
+			int spriteDirection = 1;
+			int frame = 0;
+			float rotation = 0;
+			Rectangle? frameRect = null;
+			if (ent is Item item)
+			{
+				texture = TextureAssets.Item[item.type].Value;
+				DrawAnimation anim = Main.itemAnimations[item.type];
+				if (anim != null)
+				{
+					frameCount = anim.FrameCount;
+					frame = anim.Frame;
+				}
+			}
+			if (ent is NPC npc)
+			{
+				texture = TextureAssets.Npc[npc.type].Value;
+				frameCount = Main.npcFrameCount[npc.type];
+				frameRect = npc.frame;
+				spriteDirection = npc.spriteDirection;
+				rotation = npc.rotation;
+			}
+			if(texture != null)
+			{
+				int width = texture.Width;
+				int height = texture.Height / frameCount;
+				Color[] data = new Color[texture.Width * texture.Height];
+				int startAt = width * height * frame;
+				if(frameRect != null)
+                {
+					startAt = frameRect.Value.X + frameRect.Value.Y * width;
+                }
+				texture.GetData(data);
+				int localX = 0;
+				int localY = 0;
+				for (int i = startAt; i < startAt + width * height; i++)
+				{
+					localX++;
+					if (localX > width)
+					{
+						localX -= width;
+						localY++;
+					}
+					if (data[i].A >= 255 && Main.rand.NextBool(4))
+					{
+						Vector2 offset = -new Vector2(width / 2, height / 2) + new Vector2(localX, localY);
+						offset.X *= spriteDirection;
+						offset = offset.RotatedBy(rotation);
+						Vector2 velocity = new Vector2(offset.X / width, offset.Y / height) * 2f;
+						velocity = velocity.RotatedBy(rotation);
+						Color color = data[i];
+						Dust dust = Dust.NewDustDirect(ent.Center + offset - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, color, 0.5f));
+						dust.velocity = velocity;
+						dust.fadeIn = 3;
+						dust.noGravity = true;
+						dust.color.A = 0;
+					}
+				}
+			}
+		}
 		public struct SaveTileData
 		{
 			bool saveActive;
