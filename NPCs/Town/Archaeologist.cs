@@ -1210,6 +1210,7 @@ namespace SOTS.NPCs.Town
 			if (entity is Player player)
 			{
 				player.AddBuff(ModContent.BuffType<Skipped>(), 300);
+				DustCircle(player.Center, player.width * 0.5f, player.height * 0.5f);
 			}
 			SOTSUtils.PlaySound(SoundID.Item117, Projectile.Center, 1.5f, -0.8f, 0.1f);
 			entity.Center = positionOfOtherPortal;
@@ -1219,6 +1220,10 @@ namespace SOTS.NPCs.Town
             {
 				SpawnDustEntity(entity);
             }
+			else
+			{
+				DustCircle(entity.Center, entity.width * 0.5f, entity.height * 0.5f);
+			}
 		}
 		public void AcceptEntity(Entity entity)
         {
@@ -1265,6 +1270,26 @@ namespace SOTS.NPCs.Town
                 {
 					entity.velocity = Vector2.Lerp(entity.velocity, toCenter * 0.1f * alphaMult, 0.5f * (lengthForSuperSuck - dist) / lengthForSuperSuck * alphaMult);
                 }
+				if(dist > 32)
+				{
+					for (int i = 0; i < 5 * alphaMult; i++)
+					{
+						if (Main.rand.NextBool(3 + (int)Math.Sqrt(dist)))
+						{
+							int type = ModContent.DustType<PixelDust>();
+							if(Main.rand.NextBool())
+                            {
+								type = ModContent.DustType<CopyDust4>();
+                            }
+							Dust dust = Dust.NewDustDirect(entity.position - new Vector2(5, 5), entity.width, entity.height, type, 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.3f)), 1.0f);
+							dust.fadeIn = type == ModContent.DustType<CopyDust4>() ? 0.2f : 7;
+							dust.noGravity = true;
+							dust.velocity *= Main.rand.NextFloat(1) * Main.rand.NextFloat(1) * 0.3f;
+							dust.velocity += toCenter.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4f, 5f) * distancePercent * dist / 120f;
+							dust.color.A = (byte)Main.rand.Next(200);
+						}
+					}
+				}
             }
 		}
 		public void RejectEntity(Entity entity, float barrierSize)
@@ -1295,10 +1320,33 @@ namespace SOTS.NPCs.Town
 		public static void SpawnDust(Item item)
 		{
 			SpawnDustEntity(item);
+			DustCircle(item.Center, item.width / 2f, item.height / 2f);
 		}
 		public static void SpawnDust(NPC npc)
 		{
 			SpawnDustEntity(npc);
+			DustCircle(npc.Center, npc.width / 2f, npc.height / 2f);
+		}
+		public static void DustCircle(Vector2 center, float radiusX, float radiusY)
+		{
+			Color color = ColorHelpers.VoidAnomaly;
+			for(int j = 0; j < 3; j++)
+			{
+				int type = ModContent.DustType<CopyDust4>();
+				if (j == 1)
+					type = ModContent.DustType<PixelDust>();
+				for (int i = 0; i < 40; i++)
+				{
+					Vector2 circular = new Vector2(Main.rand.NextFloat(1.2f, 1.5f), 0).RotatedBy(i * MathHelper.TwoPi / 40f + j);
+					circular.X *= radiusX;
+					circular.Y *= radiusY;
+					Dust dust = Dust.NewDustDirect(center + circular - new Vector2(5, 5), 0, 0, type, 0, 0, 0, Color.Lerp(color, Color.Black, Main.rand.NextFloat(0.3f)), j == 0 ? 2.2f : 1.5f);
+					dust.fadeIn = 1 + (j == 1 ? 5 : 0);
+					dust.noGravity = true;
+					dust.velocity *= 0.5f;
+					dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3, 4) * (j * 0.25f + 0.75f);
+				}
+			}
 		}
 		public static void SpawnDustEntity(Entity ent)
 		{
@@ -1347,7 +1395,7 @@ namespace SOTS.NPCs.Town
 						localX -= width;
 						localY++;
 					}
-					if (data[i].A >= 255 && Main.rand.NextBool(4))
+					if (data[i].A >= 255 && Main.rand.NextBool(5))
 					{
 						Vector2 offset = -new Vector2(width / 2, height / 2) + new Vector2(localX, localY);
 						offset.X *= spriteDirection;
