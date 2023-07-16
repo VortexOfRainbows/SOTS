@@ -620,7 +620,8 @@ namespace SOTS.NPCs.Town
 	{
 		public static float APortalIsAccepting = 0f;
 		public const int CloseToSize = 20;
-		public const int Radius = 6;
+		public const int Radius = 6; 
+		public float alphaBarrier = 0;
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
 		{
 			behindNPCs.Add(index);
@@ -821,9 +822,13 @@ namespace SOTS.NPCs.Town
 				Main.spriteBatch.Draw(auraTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * alphaMult, Projectile.rotation * (i % 2 * 2 - 1) + i * MathHelper.Pi / 3f, auraTexture.Size() / 2, size, (SpriteEffects)(i % 2), 0f);
 			}
 		}
-		public void DrawBarrier(Color barrierColor, ref float bonusWidth, bool draw = true)
+		public void DrawBarrier(Color barrierColor, ref float bonusWidth, ref float AlphaPercent, bool draw = true)
 		{
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(bonusWidth + SOTSWorld.GlobalCounter));
+			if (AlphaPercent <= 0.05f)
+            {
+				return;
+            }
 			if (draw)
 			{
 				barrierColor.A = (byte)(barrierColor.A * 0.5f);
@@ -835,20 +840,22 @@ namespace SOTS.NPCs.Town
 				SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
 				SOTS.BarrierShader.Parameters["pixelSize"].SetValue(12);
 				SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
-				Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, barrierColor, Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
+				Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, barrierColor * (AlphaPercent - 0.05f), Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
 				SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
 				SOTS.BarrierShader.Parameters["pixelSize"].SetValue(6);
 				SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();
-				Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Color.Lerp(new Color(210, 202, 222, 0), barrierColor, 0.2f), Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
+				Main.spriteBatch.Draw(BarrierTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, Color.Lerp(new Color(210, 202, 222, 0), barrierColor, 0.2f) * (AlphaPercent - 0.05f), Projectile.rotation, BarrierTexture.Size() / 2f, scaleMult, 0, 0f);
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			}
+			AlphaPercent *= 0.9f;
+			AlphaPercent -= 0.06f;
 			bonusWidth += 18 + sinusoidalBonus;
 		}
 		public override void PostDraw(Color lightColor)
 		{
 			float currentRadius = Radius * alphaMult;
-			if (Projectile.ai[0] == -1 || Projectile.ai[0] == -2 && Projectile.ai[1] > 8)
+			if ((Projectile.ai[0] == -1 || Projectile.ai[0] == -2) && Projectile.ai[1] > 8)
 			{
 				DrawTilesFromOtherPortal(currentRadius);
 			}
@@ -920,20 +927,21 @@ namespace SOTS.NPCs.Town
 			float barrierSize = Radius * 16 * alphaMult * 2 + 80;
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(barrierSize + SOTSWorld.GlobalCounter));
 			barrierSize += sinusoidalBonus;
+			float alphaMultBarrier = alphaBarrier * 1.05f * Projectile.timeLeft / 120f;
 			if (!SOTSWorld.DiamondKeySlotted)
-				DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize);
+				DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.RubyKeySlotted)
-				DrawBarrier(ColorHelpers.RubyColor, ref barrierSize);
+				DrawBarrier(ColorHelpers.RubyColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.EmeraldKeySlotted)
-				DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize);
+				DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.SapphireKeySlotted)
-				DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize);
+				DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.TopazKeySlotted)
-				DrawBarrier(ColorHelpers.TopazColor, ref barrierSize);
+				DrawBarrier(ColorHelpers.TopazColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.AmethystKeySlotted)
-				DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize);
+				DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.AmberKeySlotted)
-				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize);
+				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize, ref alphaMultBarrier);
 		}
 		public static void PlaceDownAnomalies()
 		{
@@ -981,7 +989,7 @@ namespace SOTS.NPCs.Town
 		{
 			get
 			{
-				float mult = (Projectile.ai[1] / 60f) * (Projectile.timeLeft) / 120f;
+				float mult = (Projectile.ai[1] / 60f);
 				if (mult < 0)
 					return 0;
 				else
@@ -992,7 +1000,7 @@ namespace SOTS.NPCs.Town
 		{
 			get
 			{
-				float mult = (Projectile.ai[1] / 60f) * (Projectile.timeLeft) / 120f;
+				float mult = (Projectile.ai[1] / 60f);
 				if (mult < 0)
 					return 0;
 				else
@@ -1011,10 +1019,15 @@ namespace SOTS.NPCs.Town
 			}
 		}
 		public bool hasGrownToFull = false;
+		public float growthTotal = 0f;
 		public override void AI()
 		{
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
+			if (alphaBarrier < 1)
+				alphaBarrier += 1f / 240f;
+			if (alphaBarrier > 1)
+				alphaBarrier = 1;
 			if (APortalIsAccepting > 0)
 			{
 				if (Projectile.ai[1] > CloseToSize)
@@ -1029,7 +1042,7 @@ namespace SOTS.NPCs.Town
 				if (APortalIsAccepting <= 0)
 					APortalIsAccepting = 0;
 			}
-			else if (Projectile.ai[1] < 60)
+			else if (Projectile.ai[1] < 60 && Projectile.ai[0] != -3)
 			{
 				float growthMult = 1f;
 				if (hasGrownToFull)
@@ -1064,6 +1077,7 @@ namespace SOTS.NPCs.Town
 					Projectile.ai[1] = 60;
 					hasGrownToFull = true;
 				}
+				growthTotal = Projectile.ai[1];
 			}
 			if (Projectile.ai[0] == -1)
 			{
@@ -1083,8 +1097,7 @@ namespace SOTS.NPCs.Town
 			{
 				if (Projectile.timeLeft > 120)
 					Projectile.timeLeft = 120;
-				if (Projectile.timeLeft < 20)
-					Projectile.Kill();
+				Projectile.ai[1] = MathHelper.Lerp(growthTotal, 7, 1 - Projectile.timeLeft / 120f);
 			}
 			else
 				Projectile.timeLeft = 120;
@@ -1104,23 +1117,24 @@ namespace SOTS.NPCs.Town
 		}
 		public float GetBarrierWidth()
 		{
+			float point = 1.05f * alphaBarrier * Projectile.timeLeft / 120f;
 			float barrierSize = Radius * 16 * alphaMult * 2 + 80;
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(barrierSize + SOTSWorld.GlobalCounter));
 			barrierSize += sinusoidalBonus;
 			if (!SOTSWorld.DiamondKeySlotted)
-				DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize, false);
+				DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.RubyKeySlotted)
-				DrawBarrier(ColorHelpers.RubyColor, ref barrierSize, false);
+				DrawBarrier(ColorHelpers.RubyColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.EmeraldKeySlotted)
-				DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize, false);
+				DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.SapphireKeySlotted)
-				DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize, false);
+				DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.TopazKeySlotted)
-				DrawBarrier(ColorHelpers.TopazColor, ref barrierSize, false);
+				DrawBarrier(ColorHelpers.TopazColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.AmethystKeySlotted)
-				DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize, false);
+				DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.AmberKeySlotted)
-				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize, false);
+				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize, ref point, false);
 			return barrierSize / 2;
 		}
 		public int totalKeysSlotted
@@ -1320,6 +1334,33 @@ namespace SOTS.NPCs.Town
 				entity.Center = entity.Center + toFinal;
             }
         }
+        public override void Kill(int timeLeft)
+		{
+			for (int i = 0; i < 32; i++)
+			{
+				float radius = Radius * 16 * alphaMult;
+				Vector2 circular = new Vector2(radius + 12 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circular * 0.5f - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.5f)), 1.5f);
+				dust.fadeIn = 0.4f;
+				dust.noGravity = true;
+				dust.velocity *= 0.5f;
+				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.4f, 3);
+				dust.color.A = (byte)Main.rand.Next(200);
+			}
+			Color c = ColorHelpers.VoidAnomaly;
+			c.A = 0;
+			for (int i = 0; i < 48; i++)
+			{
+				float radius = Radius * 16 * alphaMult;
+				Vector2 circular = new Vector2(radius + 14, 0).RotatedBy(i * MathHelper.TwoPi / 48f);
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(c, Color.Black, Main.rand.NextFloat(0.6f, 1f)), 1.0f);
+				dust.fadeIn = 6;
+				dust.noGravity = true;
+				dust.velocity *= 0.6f;
+				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 1.5f);
+			}
+			SOTSUtils.PlaySound(SoundID.Item74, Projectile.Center, 1.5f, -0.4f, 0.1f);
+		}
     }
 	public static class PortalDrawingHelper
 	{

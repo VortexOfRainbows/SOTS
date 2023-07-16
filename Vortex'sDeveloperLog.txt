@@ -48,15 +48,8 @@ Daily Log:
 1. Added Anomaly Locator
 	1. Needs multiplayer testing
 2. Added Void Anomalies...
-	1. This shit is totally going to have bugs and be a pain in the ass to port
-	2. Why the fuck did I do this
-	3. Finished: Barrier Visuals. Works as good as its gonna get: Barrier Collision
-		1. Some work on closing/opening visuals (WIP)
-		2. Somewhat better liquid drawing (Should be good enough)
-		3. Sucks in entities
-	3. Needs: Teleportation, closing and opening visuals, multiplayer syncing, spawn location algorithm, Gem Barriers
-3. WIP Void Anomaly teleporting visuals
-	1. Dusts don't spawn on the other side right now, since it counts as too far away to spawn the dusts. Could fix with globals + buff
+	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers
+	2. Needs: multiplayer syncing, spawn location algorithm
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts
