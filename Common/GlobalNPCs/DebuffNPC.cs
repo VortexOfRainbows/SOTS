@@ -287,26 +287,8 @@ namespace SOTS.Common.GlobalNPCs
         }
         public void DrawTimeFreeze(NPC npc, SpriteBatch spriteBatch)
         {
-            float alphaMult = 1 - aiSpeedMultiplier;
-            int type = npc.whoAmI % 3 + 1;
-            Texture2D ring1 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Common/GlobalNPCs/FreezeSpiral" + type);
-            Vector2 ringOrigin = new Vector2(ring1.Width / 2, ring1.Height / 2);
-            Vector2 drawPos = new Vector2(npc.Center.X, npc.Center.Y + npc.gfxOffY) + /*npc.VisualPosition*/ - Main.screenPosition;
-            Color color = new Color(70, 0, 105, 0);
-            float secondsHandMult = Main.GameUpdateCount / 90f;
-            float drawDimensions = npc.Size.Length();
-            float scale = 0.02f + 1.04f * (drawDimensions / 800f);
-            float rotation1 = secondsHandMult * MathHelper.TwoPi;
-            int direction = npc.direction;
-            if (direction == 0)
-                direction = 1;
-            for (int i = 0; i < 2; i++)
-            {
-                spriteBatch.Draw(ring1, drawPos, null, color * alphaMult, rotation1 * direction, ringOrigin, scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-                color = new Color(40, 0, 100, 0);
-                rotation1 = secondsHandMult * MathHelper.TwoPi * 0.5f;
-                scale *= 0.97f;
-            }
+            if(!npc.GetGlobalNPC<GlobalEntityNPC>().RecentlyTeleported)
+                GlobalEntity.DrawTimeFreeze(npc, spriteBatch, 1 - aiSpeedMultiplier);
         }
         public void DrawPermanentDebuffs(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Texture2D texture, ref int DebuffVariable, ref int Height)
         {

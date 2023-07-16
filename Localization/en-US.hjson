@@ -2850,7 +2850,7 @@ Mods: {
 		NatureBoosted : Increases max life by 20
 		EarthBoosted : Increases max life by 20
 		
-		Skipped: Recently warped through space
+		Skipped: Recently warped through space, immune to fall damage
 		}
 
 		ArmorSetBonus: {
