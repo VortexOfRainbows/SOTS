@@ -44,12 +44,12 @@ Update Objectives:
 
 Daily Log:
 
-7/9/23 & 7/10/23 & 7/11/23 & 7/14/23 & 7/15/23
+7/9/23 & 7/10/23 & 7/11/23 & 7/14/23 & 7/15/23 & 7/16/23
 1. Added Anomaly Locator
 	1. Needs multiplayer testing
 2. Added Void Anomalies...
-	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers
-	2. Needs: multiplayer syncing, spawn location algorithm
+	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers. Spawn Location Algorithm
+	2. Needs: multiplayer syncing, screen shader
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts

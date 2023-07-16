@@ -674,6 +674,43 @@ namespace SOTS.NPCs.Town
 				Data.CopyTileToTileW(otherTile, myTile);
 			}
 		}
+		public static float WaterAlphaMult(TileDrawInfo info, int i, int j, int liquidType)
+		{
+			float num6 = 0.5f;
+			switch (liquidType)
+			{
+				case 1:
+					num6 = 1f;
+					break;
+				case 11:
+					num6 = Math.Max(num6 * 1.7f, 1f);
+					break;
+			}
+			if (j <= Main.worldSurface || num6 > 1f)
+			{
+				num6 = 1f;
+				if (info.tileCache.WallType == 21)
+				{
+					num6 = 0.9f;
+				}
+				else if (info.tileCache.WallType > 0)
+				{
+					num6 = 0.6f;
+				}
+			}
+			Tile tile = Main.tile[i + 1, j];
+			Tile tile2 = Main.tile[i - 1, j];
+			Tile tile3 = Main.tile[i, j - 1];
+			if (info.tileCache.IsHalfBlock && tile3.LiquidAmount > 0 && info.tileCache.WallType > 0)
+			{
+				num6 = 0f;
+			}
+			if (info.tileCache.BottomSlope && ((tile2.LiquidAmount == 0 && !WorldGen.SolidTile(i - 1, j)) || (tile.LiquidAmount == 0 && !WorldGen.SolidTile(i + 1, j))))
+			{
+				num6 = 0f;
+			}
+			return num6;
+		}
 		public static void DrawTile(ref SaveTileData Data, TileDrawInfo info, int i, int j, int h, int k, Vector2 offset, int pass)
 		{
 			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
@@ -705,19 +742,26 @@ namespace SOTS.NPCs.Town
 					if (liquidType == 0)
 						liquidType = Main.waterStyle;
 					bool flag7 = false;
+					float waterAlpha = WaterAlphaMult(info, i, j, liquidType);
+					bool isTopLiquid = otherTile.LiquidAmount != 0 && Main.tile[i, j - 1].LiquidAmount == 0;
+					float liquidPercent = otherTile.LiquidAmount / 255f;
+					Rectangle frame = isTopLiquid ? new Rectangle(0, 0, 16, (int)(16 * liquidPercent)) : new Rectangle(0, 8, 16, 8);
+					float yScale = isTopLiquid ? 1 : 2 * liquidPercent;
+					Vector2 origin = isTopLiquid ? new Vector2(0, 0) : new Vector2(0, 8);
+					int tileOffset = isTopLiquid ? 16 - frame.Height : 16;
 					if (water)
 					{
 						for (int a = 0; a < 13; a++)
 						{
 							if (Main.IsLiquidStyleWater(a) && Main.liquidAlpha[a] > 0f && a != liquidType)
 							{
-								Main.spriteBatch.Draw(TextureAssets.Liquid[a].Value, new Vector2(h, k + 1) * 16 - Main.screenPosition, new Rectangle(0, 8, 16, 8), Color.White, 0f, new Vector2(0, 8), new Vector2(1, 2 * otherTile.LiquidAmount / 255f), 0, 0f);
+								Main.spriteBatch.Draw(TextureAssets.Liquid[a].Value, new Vector2(h * 16, k * 16 + tileOffset) - Main.screenPosition, frame, Color.White * waterAlpha, 0f, origin, new Vector2(1, yScale), 0, 0f);
 								flag7 = true;
 								break;
 							}
 						}
 					}
-					Main.spriteBatch.Draw(TextureAssets.Liquid[liquidType].Value, new Vector2(h, k + 1) * 16 - Main.screenPosition, new Rectangle(0, 8, 16, 8), Color.White * (flag7 ? Main.liquidAlpha[liquidType] : 1f), 0f, new Vector2(0, 8), new Vector2(1, 2 * otherTile.LiquidAmount / 255f), 0, 0f);
+					Main.spriteBatch.Draw(TextureAssets.Liquid[liquidType].Value, new Vector2(h * 16, k * 16 + tileOffset) - Main.screenPosition, frame, Color.White * waterAlpha * (flag7 ? Main.liquidAlpha[liquidType] : 1f), 0f, origin, new Vector2(1, yScale), 0, 0f);
 				}
 				else if (pass != 3 && otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree && oType != ModContent.TileType<Items.Furniture.Functional.Hydroponics>())
 				{
@@ -948,16 +992,71 @@ namespace SOTS.NPCs.Town
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
 			int padding = 50;
-			for (int i = 1; i <= 2; i++)
+			Vector2 firstPosition = Vector2.Zero;
+			int checks = 0;
+			bool valid = false;
+			while(checks < 120 && !valid)
 			{
-				float randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				float randY = Main.rand.Next(padding, Main.maxTilesY - padding);
-				randX = 400 + i * 16;
-				randY = 400;
-				Vector2 randomPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
-				Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), randomPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -i, -60);
+				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+				int randY = Main.rand.Next(padding, Main.maxTilesY - padding);
+				firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+				valid = isThisPlacementValid(new Point(randX, randY));
+				checks++;
 			}
+			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), firstPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -1, -60);
+			Vector2 secondPosition = Vector2.Zero;
+			checks = 0;
+			valid = false;
+			while (checks < 120 && !valid)
+			{
+				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+				int randY = Main.rand.Next(padding, Main.maxTilesY - padding);
+				secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+				if (Vector2.Distance(secondPosition, firstPosition) < 6400)
+					valid = false; //Not a valid spot unless the distances are far from each other
+				else
+					valid = isThisPlacementValid(new Point(randX, randY));
+				checks++;
+			}
+			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
 		}
+		public static bool isThisPlacementValid(Point point)
+		{
+			bool isAtLeastOneTileBelow = false;
+			int countOfValid = 0;
+			for (int j = -1; j <= 3; j++)
+			{
+				for (int i = -2; i <= 2; i++)
+				{
+					if (j <= 1 && i == 0)
+						if (SOTSWorldgenHelper.TrueTileSolid(point.X + i, point.Y + j))
+						{
+							return false;
+						}
+						else
+							countOfValid++;
+					else if (SOTSWorldgenHelper.TrueTileSolid(point.X + i, point.Y + j))
+					{
+						isAtLeastOneTileBelow = true;
+						if(countOfValid >= 3)
+                        {
+							return true;
+                        }
+					}
+				}
+			}
+			// x x o x x
+			// x x o x x
+			// x x o x x
+			// x x x x x
+			// x x x x x
+			// Looks for a tile in X and a lack of tile on O
+			if (isAtLeastOneTileBelow)
+            {
+				return true;
+            }
+			return false;
+        }
 		public static void KillOtherAnomalies()
 		{
 			if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -1020,10 +1119,22 @@ namespace SOTS.NPCs.Town
 		}
 		public bool hasGrownToFull = false;
 		public float growthTotal = 0f;
+		private bool runOnce = true;
+		public void FramePortalBlocks()
+        {
+			int i = (int)Projectile.Center.X / 16;
+			int j = (int)Projectile.Center.Y / 16;
+			WorldGen.SectionTileFrameWithCheck(i - 8, j - 8, i + 8, j + 8);
+		}
 		public override void AI()
 		{
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
+            if (runOnce)
+            {
+				FramePortalBlocks();
+				runOnce = false;
+			}
 			if (alphaBarrier < 1)
 				alphaBarrier += 1f / 240f;
 			if (alphaBarrier > 1)
@@ -1033,7 +1144,7 @@ namespace SOTS.NPCs.Town
 				if (Projectile.ai[1] > CloseToSize)
 				{
 					Projectile.ai[1]--;
-					Projectile.ai[1] *= 0.87f;
+					Projectile.ai[1] *= 0.85f;
 				}
 				if (Projectile.ai[1] < CloseToSize)
 					Projectile.ai[1] = CloseToSize;
@@ -1240,7 +1351,7 @@ namespace SOTS.NPCs.Town
 			if(dist < 12)
             {
 				if(APortalIsAccepting <= 0 && Projectile.ai[1] >= 60)
-					APortalIsAccepting += 48;
+					APortalIsAccepting += 40;
 			}
 			if (dist < acceptRadius)
 			{
