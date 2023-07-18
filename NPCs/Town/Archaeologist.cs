@@ -618,7 +618,10 @@ namespace SOTS.NPCs.Town
 	}
 	public class VoidAnomaly : ModProjectile
 	{
+		public static Vector2 AnomalyShaderPosition = Vector2.Zero;
+		public static float AnomalyShaderProgress = 0f;
 		public static float APortalIsAccepting = 0f;
+		public static float AnomalyIntesity = 0f;
 		public const int CloseToSize = 20;
 		public const int Radius = 6; 
 		public float alphaBarrier = 0;
@@ -743,7 +746,7 @@ namespace SOTS.NPCs.Town
 						liquidType = Main.waterStyle;
 					bool flag7 = false;
 					float waterAlpha = WaterAlphaMult(info, i, j, liquidType);
-					bool isTopLiquid = otherTile.LiquidAmount != 0 && Main.tile[i, j - 1].LiquidAmount == 0;
+					bool isTopLiquid = (otherTile.LiquidAmount != 0 && Main.tile[i, j - 1].LiquidAmount == 0) && (WorldGen.SolidTile(Main.tile[i, j - 1]) || otherTile.LiquidAmount > 240);
 					float liquidPercent = otherTile.LiquidAmount / 255f;
 					Rectangle frame = isTopLiquid ? new Rectangle(0, 0, 16, (int)(16 * liquidPercent)) : new Rectangle(0, 8, 16, 8);
 					float yScale = isTopLiquid ? 1 : 2 * liquidPercent;
@@ -1280,7 +1283,7 @@ namespace SOTS.NPCs.Town
 				if (i < Main.maxNPCs)
 				{
 					NPC npc = Main.npc[i];
-					if (npc.active && !npc.noTileCollide)
+					if (npc.active && !npc.noTileCollide && !npc.boss)
 					{
 						GlobalEntityNPC gen = npc.GetGlobalNPC<GlobalEntityNPC>();
 						if (!gen.RecentlyTeleported)
@@ -1304,6 +1307,69 @@ namespace SOTS.NPCs.Town
 							else
 								RejectEntity(p, barrier);
 						}
+					}
+				}
+			}
+		}
+		public static void PrepareLocalPlayerShader()
+		{
+			Player localPlayer = Main.LocalPlayer;
+			bool foundAnAnomaly = false;
+			float alphaMult = 0f;
+			Vector2 position = Vector2.Zero;
+			float maxDist = 1280f;
+			float dist = maxDist;
+			for(int i = 0; i < 1000; i++)
+            {
+				Projectile proj = Main.projectile[i];
+				if(proj.active && proj.type == ModContent.ProjectileType<VoidAnomaly>())
+                {
+					if (proj.ModProjectile is VoidAnomaly vAnom)
+					{
+						Vector2 toCenter = proj.Center - localPlayer.Center;
+						if(toCenter.Length() < dist)
+                        {
+							dist = toCenter.Length();
+							alphaMult = vAnom.alphaMult;
+							foundAnAnomaly = true;
+							position = proj.Center;
+						}
+					}
+                }
+            }
+			if(foundAnAnomaly)
+            {
+				float percent = (maxDist - dist) / maxDist;
+				percent *= alphaMult;
+				percent = (float)Math.Pow(percent, 4);
+				AnomalyShaderPosition = position;
+				if(AnomalyShaderProgress < percent)
+				{
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.5f);
+				}
+				else
+				{
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.0125f);
+				}
+				AnomalyIntesity = AnomalyShaderProgress;
+			}
+			else
+			{
+				if(Vector2.Distance(AnomalyShaderPosition, Main.LocalPlayer.Center) > dist * 2)
+				{
+					AnomalyShaderPosition = Vector2.Zero;
+					AnomalyShaderProgress = 0f;
+					AnomalyIntesity = 0f;
+				}
+				else
+				{
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, 0, 0.02f);
+					AnomalyIntesity = MathHelper.Lerp(AnomalyIntesity, 0, 0.02f);
+					if (AnomalyShaderProgress <= 0.001f && AnomalyIntesity <= 0.001f)
+					{
+						AnomalyShaderPosition = Vector2.Zero;
+						AnomalyShaderProgress = 0f;
+						AnomalyIntesity = 0f;
 					}
 				}
 			}
@@ -1360,7 +1426,13 @@ namespace SOTS.NPCs.Town
 					TeleportEntity(entity);
 				}
 			}
-			if (dist < vacuumRadius)
+			bool valid = true;
+			if(entity is Player p)
+            {
+				if (SOTSPlayer.ModPlayer(p).normalizedGravity)
+					valid = false;
+			}
+			if (dist < vacuumRadius && valid)
             {
 				float distancePercent = (vacuumRadius - dist) / vacuumRadius * (APortalIsAccepting > 0 ? 1 : alphaMult);
 				Vector2 outward = toCenter.SafeNormalize(Vector2.Zero) * (float)Math.Pow(distancePercent, 3) * 0.625f;

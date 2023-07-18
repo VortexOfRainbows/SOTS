@@ -41,15 +41,16 @@ Update Objectives:
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 7. Glow Nylon Whip
 8. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
+9. Glowmoth Mastermode Trophy
 
 Daily Log:
 
-7/9/23 & 7/10/23 & 7/11/23 & 7/14/23 & 7/15/23 & 7/16/23
+7/9/23 to 7/11/23 & 7/14 to 7/18
 1. Added Anomaly Locator
 	1. Needs multiplayer testing
 2. Added Void Anomalies...
-	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers. Spawn Location Algorithm
-	2. Needs: multiplayer syncing, screen shader
+	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers. Spawn Location Algorithm. Shaders for darkening the screen while nearby
+	2. Needs: multiplayer syncing, spawn location algorithm that tries to spawn in more varied Y-levels
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts

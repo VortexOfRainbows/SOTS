@@ -158,9 +158,12 @@ namespace SOTS
 			{
 				Ref<Effect> TPrismdyeRef = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/TPrismEffect", AssetRequestMode.ImmediateLoad));
 				Ref<Effect> voidMageShader = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/VMShader", AssetRequestMode.ImmediateLoad));
+				Ref<Effect> anomalyShader = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/AnomalyShader", AssetRequestMode.ImmediateLoad));
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
 				Filters.Scene["VMFilter"] = new Filter(new ScreenShaderData(voidMageShader, "VMShaderPass"), EffectPriority.VeryHigh);
 				Filters.Scene["VMFilter"].Load();
+				Filters.Scene["AnomalyFilter"] = new Filter(new ScreenShaderData(anomalyShader, "AnomalyShaderPass"), EffectPriority.VeryHigh);
+				Filters.Scene["AnomalyFilter"].Load();
 				AtenTrail = Instance.Assets.Request<Effect>("Effects/AtenTrail", AssetRequestMode.ImmediateLoad).Value;
 				WaterTrail = Instance.Assets.Request<Effect>("Effects/WaterTrail", AssetRequestMode.ImmediateLoad).Value;
 				FireTrail = Instance.Assets.Request<Effect>("Effects/FireTrail", AssetRequestMode.ImmediateLoad).Value;
