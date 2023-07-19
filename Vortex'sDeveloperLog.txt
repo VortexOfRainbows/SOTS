@@ -49,8 +49,8 @@ Daily Log:
 1. Added Anomaly Locator
 	1. Needs multiplayer testing
 2. Added Void Anomalies...
-	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers. Spawn Location Algorithm. Shaders for darkening the screen while nearby
-	2. Needs: multiplayer syncing, spawn location algorithm that tries to spawn in more varied Y-levels
+	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers. Spawn Location Algorithm. Shaders for darkening the screen while nearby.
+	2. Needs: multiplayer syncing
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts

@@ -1627,13 +1627,17 @@ namespace SOTS
 				}
 			if (Main.netMode != NetmodeID.Server)
 			{
+				NPCs.Town.VoidAnomaly.PrepareLocalPlayerShader();
 				Vector2 position = NPCs.Town.VoidAnomaly.AnomalyShaderPosition;
 				float progress = NPCs.Town.VoidAnomaly.AnomalyShaderProgress;
 				float intesity = NPCs.Town.VoidAnomaly.AnomalyIntesity;
-				NPCs.Town.VoidAnomaly.PrepareLocalPlayerShader();
 				if (position == Vector2.Zero)
 				{
-					if (Main.netMode != NetmodeID.Server && Filters.Scene["AnomalyFilter"].IsActive())
+					if (Filters.Scene["AnomalyFilter"].IsActive())
+					{
+						Filters.Scene["AnomalyFilter"].GetShader().UseProgress(progress).UseTargetPosition(position).UseColor(new Vector3(0f, 0f, 0f)).UseIntensity(intesity);
+					}
+					if (Filters.Scene["AnomalyFilter"].IsActive())
 					{
 						Filters.Scene["AnomalyFilter"].Deactivate();
 					}

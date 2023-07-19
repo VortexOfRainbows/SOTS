@@ -746,7 +746,7 @@ namespace SOTS.NPCs.Town
 						liquidType = Main.waterStyle;
 					bool flag7 = false;
 					float waterAlpha = WaterAlphaMult(info, i, j, liquidType);
-					bool isTopLiquid = (otherTile.LiquidAmount != 0 && Main.tile[i, j - 1].LiquidAmount == 0) && (WorldGen.SolidTile(Main.tile[i, j - 1]) || otherTile.LiquidAmount > 240);
+					bool isTopLiquid = (otherTile.LiquidAmount != 0 && Main.tile[i, j - 1].LiquidAmount == 0) && (!WorldGen.SolidTile(Main.tile[i, j - 1]) || otherTile.LiquidAmount > 240);
 					float liquidPercent = otherTile.LiquidAmount / 255f;
 					Rectangle frame = isTopLiquid ? new Rectangle(0, 0, 16, (int)(16 * liquidPercent)) : new Rectangle(0, 8, 16, 8);
 					float yScale = isTopLiquid ? 1 : 2 * liquidPercent;
@@ -998,10 +998,11 @@ namespace SOTS.NPCs.Town
 			Vector2 firstPosition = Vector2.Zero;
 			int checks = 0;
 			bool valid = false;
-			while(checks < 120 && !valid)
+			int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
+			while(checks < 160 && !valid)
 			{
 				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = Main.rand.Next(padding, Main.maxTilesY - padding);
+				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
 				firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
 				valid = isThisPlacementValid(new Point(randX, randY));
 				checks++;
@@ -1010,10 +1011,11 @@ namespace SOTS.NPCs.Town
 			Vector2 secondPosition = Vector2.Zero;
 			checks = 0;
 			valid = false;
-			while (checks < 120 && !valid)
+			AttemptedYLayer = Main.rand.Next(padding, Main.maxTilesY - padding);
+			while (checks < 160 && !valid)
 			{
 				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = Main.rand.Next(padding, Main.maxTilesY - padding);
+				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY - padding), Math.Clamp(checks / 120f, 0, 1));
 				secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
 				if (Vector2.Distance(secondPosition, firstPosition) < 6400)
 					valid = false; //Not a valid spot unless the distances are far from each other
@@ -1345,17 +1347,17 @@ namespace SOTS.NPCs.Town
 				AnomalyShaderPosition = position;
 				if(AnomalyShaderProgress < percent)
 				{
-					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.5f);
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.4f);
 				}
 				else
 				{
-					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.0125f);
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.01f);
 				}
 				AnomalyIntesity = AnomalyShaderProgress;
 			}
 			else
 			{
-				if(Vector2.Distance(AnomalyShaderPosition, Main.LocalPlayer.Center) > dist * 2)
+				if(Vector2.Distance(AnomalyShaderPosition, localPlayer.Center) > maxDist * 3)
 				{
 					AnomalyShaderPosition = Vector2.Zero;
 					AnomalyShaderProgress = 0f;
@@ -1363,8 +1365,8 @@ namespace SOTS.NPCs.Town
 				}
 				else
 				{
-					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, 0, 0.02f);
-					AnomalyIntesity = MathHelper.Lerp(AnomalyIntesity, 0, 0.02f);
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, 0, 0.045f);
+					AnomalyIntesity = MathHelper.Lerp(AnomalyIntesity, 0, 0.045f);
 					if (AnomalyShaderProgress <= 0.001f && AnomalyIntesity <= 0.001f)
 					{
 						AnomalyShaderPosition = Vector2.Zero;
@@ -1437,13 +1439,14 @@ namespace SOTS.NPCs.Town
 				float distancePercent = (vacuumRadius - dist) / vacuumRadius * (APortalIsAccepting > 0 ? 1 : alphaMult);
 				Vector2 outward = toCenter.SafeNormalize(Vector2.Zero) * (float)Math.Pow(distancePercent, 3) * 0.625f;
 				Vector2 pullVelocity = Vector2.Zero;
-				if (entity.velocity.Y != 0 || entity is Item || dist < 120)
+				if (entity.velocity.Y != 0 || entity is Item || dist < 160)
 				{
 					entity.velocity.X *= 1 - 0.3f * distancePercent;
 					entity.velocity.X += outward.X * 2.5f;
 					pullVelocity.X += outward.X * 3f;
-					entity.velocity.Y += outward.Y * 1.125f;
-					if(outward.Y < 0)
+					if(dist < 80)
+						entity.velocity.Y += outward.Y * 1.125f;
+					if (outward.Y < 0)
                     {
 						if (entity.velocity.Y > 0)
 							entity.velocity.Y *= 1f - 0.91f * distancePercent;
