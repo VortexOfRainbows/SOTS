@@ -290,6 +290,13 @@ namespace SOTS
 					}
 				}
 			}
+			if (self.ModNPC is Archaeologist arch)
+			{
+				VoidAnomaly.APortalIsAccepting--;
+				if (VoidAnomaly.APortalIsAccepting <= 0)
+					VoidAnomaly.APortalIsAccepting = 0;
+				arch.ArchAI();
+            }
 			orig(self, i);
 		}
 		private static void Gore_Update(On.Terraria.Gore.orig_Update orig, Gore self)

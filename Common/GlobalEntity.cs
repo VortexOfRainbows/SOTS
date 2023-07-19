@@ -48,11 +48,30 @@ using Terraria.ModLoader.IO;
 using Terraria.ID;
 using SOTS.NPCs.Town;
 using Microsoft.Xna.Framework.Graphics;
+using static SOTS.SOTS;
 
 namespace SOTS.Common
 {
     public static class GlobalEntity
     {
+        public static void SendServerChanges(Mod Mod, Item item, bool recentlyTeleported)
+        {
+            var packet = Mod.GetPacket();
+            packet.Write((byte)SOTSMessageType.SyncHasTeleported);
+            packet.Write(item.whoAmI);
+            packet.Write(true);
+            packet.Write(recentlyTeleported);
+            packet.Send();
+        }
+        public static void SendServerChanges(Mod Mod, Entity npc, bool recentlyTeleported)
+        {
+            var packet = Mod.GetPacket();
+            packet.Write((byte)SOTSMessageType.SyncHasTeleported);
+            packet.Write(npc.whoAmI);
+            packet.Write(false);
+            packet.Write(recentlyTeleported);
+            packet.Send();
+        }
         public static void DrawTimeFreeze(Entity ent, SpriteBatch spriteBatch, float percent, float sizeScale = 1f)
         {
             float alphaMult = percent;
@@ -95,17 +114,9 @@ namespace SOTS.Common
             }
             return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
-        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
-        {
-            bitWriter.WriteBit(RecentlyTeleported);
-        }
-        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
-        {
-            RecentlyTeleported = bitReader.ReadBit();
-        }
         public override bool InstancePerEntity => true;
         public bool RecentlyTeleported = false;
-        private int TeleportCounter = 0;
+        public int TeleportCounter = 0;
         public override void PostAI(NPC npc)
         {
             if (RecentlyTeleported)
@@ -121,6 +132,7 @@ namespace SOTS.Common
                     RecentlyTeleported = false;
                     if (Main.netMode == NetmodeID.Server)
                     {
+                        GlobalEntity.SendServerChanges(Mod, npc, false);
                         npc.netUpdate = true;
                     }
                 }
@@ -146,17 +158,9 @@ namespace SOTS.Common
             }
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
-        public override void NetSend(Item item, BinaryWriter writer)
-        {
-            writer.Write(RecentlyTeleported);
-        }
-        public override void NetReceive(Item item, BinaryReader reader)
-        {
-            RecentlyTeleported = reader.ReadBoolean();
-        }
         public override bool InstancePerEntity => true;
         public bool RecentlyTeleported = false;
-        private int TeleportCounter = 0;
+        public int TeleportCounter = 0;
         public override void PostUpdate(Item item)
         {
             if (RecentlyTeleported)
@@ -190,12 +194,12 @@ namespace SOTS.Common
         public override bool OnPickup(Item item, Player player)
         {
             RecentlyTeleported = false;
-            NetMessage.SendData(MessageID.SyncItem, -1, player.whoAmI, null, item.whoAmI);
             return base.OnPickup(item, player);
         }
         public void NetUpdate(Item item)
         {
             NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item.whoAmI);
+            //GlobalEntity.SendServerChanges(Mod, item, RecentlyTeleported);
         }
     }
 }

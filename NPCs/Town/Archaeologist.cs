@@ -40,34 +40,32 @@ namespace SOTS.NPCs.Town
 		public static Vector2 AnomalyPosition3 = Vector2.Zero;
 		public static float AnomalyAlphaMult = 0f;
 		public static float FinalAnomalyAlphaMult = 0f;
-		public static int locationTimer = 100000;
+		public static int locationTimer = 59960;
 		public const int timeToGoToSetPiece = 60000; //This is 1000 seconds
+		public const int MinimumIdleCycles = 6;
+		public const int MaximumIdleCycles = 22;
+		public const int MinimunLookCycles = 5;
+		public const int MaximumLookCycles = 14;
 		public bool hasTeleportedYet = false;
         public override void SendExtraAI(BinaryWriter writer)
-        {
+		{
+			writer.Write(hasTeleportedYet);
 			writer.Write(locationTimer);
 			writer.Write(InitialDirection);
 			writer.Write(currentLocationType);
 			writer.Write(AnomalyAlphaMult);
 			writer.Write(AnomalyPosition1.X);
 			writer.Write(AnomalyPosition1.Y);
-			writer.Write(AnomalyPosition2.X);
-			writer.Write(AnomalyPosition2.Y);
-			writer.Write(AnomalyPosition3.X);
-			writer.Write(AnomalyPosition3.Y);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
-        {
+		{
+			hasTeleportedYet = reader.ReadBoolean();
 			locationTimer = reader.ReadInt32();
 			InitialDirection = reader.ReadInt32();
 			currentLocationType = reader.ReadInt32();
 			AnomalyAlphaMult = reader.ReadSingle();
 			AnomalyPosition1.X = reader.ReadSingle();
 			AnomalyPosition1.Y = reader.ReadSingle();
-			AnomalyPosition2.X = reader.ReadSingle();
-			AnomalyPosition2.Y = reader.ReadSingle();
-			AnomalyPosition3.X = reader.ReadSingle();
-			AnomalyPosition3.Y = reader.ReadSingle();
 		}
         //private static Profiles.StackedNPCProfile NPCProfile;
         public override void SetStaticDefaults()
@@ -118,6 +116,7 @@ namespace SOTS.NPCs.Town
 			NPC.behindTiles = true;
 			NPC.noTileCollide = true;
 			NPC.noGravity = true;
+			NPC.netAlways = true;
 		}
 		public bool playerNearby = false;
 		public int AnimCycles = 0;
@@ -125,10 +124,6 @@ namespace SOTS.NPCs.Town
 		public int FrameSpeed = 5;
 		public int TotalIdleFrameCycles = 6;
 		public int TotalLookUpFrameCycles = 3;
-		public const int MinimumIdleCycles = 6;
-		public const int MaximumIdleCycles = 22;
-		public const int MinimunLookCycles = 5;
-		public const int MaximumLookCycles = 14;
 		public int DrawTimer = 0;
 		public int aiTimer = 0;
 		public int InitialDirection = 0;
@@ -286,32 +281,32 @@ namespace SOTS.NPCs.Town
 			NPC.frame.Y = frameHeight * FrameY;
 			DrawTimer++;
 		}
-        public override bool PreAI()
+		public void ArchAI()
         {
-			if(NPC.CountNPCS(Type) > 1)
-            {
+			if (NPC.CountNPCS(Type) > 1)
+			{
 				NPC.active = false;
-				return false;
-            }
-			else if(hasTeleportedYet)
+				return;
+			}
+			else if (hasTeleportedYet)
 			{
 				AnomalyAlphaMult += 1 / 60f;
 				AnomalyPosition1 = NPC.Center;
 			}
 			if (InitialDirection == 0)
-            {
+			{
 				InitialDirection = 1;
-            }
+			}
 			int directionToGoTo = InitialDirection;
 			playerNearby = false;
 			bool playerWithinSecondRange = false;
-			for(int i = 0; i < Main.player.Length; i++)
-            {
+			for (int i = 0; i < Main.player.Length; i++)
+			{
 				Player player = Main.player[i];
 				if (player.active)
-                {
-					if(player.Distance(NPC.Center) < 1600)
-                    {
+				{
+					if (player.Distance(NPC.Center) < 1600)
+					{
 						playerWithinSecondRange = true;
 
 						if (player.Distance(NPC.Center) < 120)
@@ -329,14 +324,14 @@ namespace SOTS.NPCs.Town
 						}
 					}
 				}
-            }
-			if(!playerWithinSecondRange)
-            {
-				if(locationTimer > timeToGoToSetPiece || !hasTeleportedYet)
-                {
+			}
+			if (!playerWithinSecondRange)
+			{
+				if (locationTimer > timeToGoToSetPiece || !hasTeleportedYet)
+				{
 					aiTimer = 0;
 					locationTimer = 0;
-					if(Main.netMode != NetmodeID.MultiplayerClient)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						FindALocationToGoTo();
 						InitialDirection = NPC.direction;
@@ -346,38 +341,41 @@ namespace SOTS.NPCs.Town
 						locationTimer = timeToGoToSetPiece - 120;
 					}
 				}
-				else if(locationTimer > timeToGoToSetPiece - 60)
-                {
+				else if (locationTimer > timeToGoToSetPiece - 60)
+				{
 					AnomalyAlphaMult = 1 - (locationTimer - timeToGoToSetPiece + 60) / 60f;
-                }
+				}
 				locationTimer++;
-            }
+			}
 			NPC.direction = NPC.spriteDirection = directionToGoTo;
 			if (playerNearby)
 			{
 				bonusAlphaFromBeingNear += 0.02f;
 			}
 			else
-            {
+			{
 				bonusAlphaFromBeingNear -= 0.02f;
-            }
+			}
 			bonusAlphaFromBeingNear = MathHelper.Clamp(bonusAlphaFromBeingNear, 0, 1);
 			NPC.dontTakeDamage = true;
 			NPC.dontTakeDamageFromHostiles = true;
 			NPC.velocity.X *= 0;
 			aiTimer++;
-            if (aiTimer > 120)
-            {
+			if (aiTimer > 120)
+			{
 				NPC.velocity.Y *= 0f;
 				NPC.alpha = 0;
-            }
+			}
 			else
-            {
+			{
 				NPC.alpha = (int)(255 * (1f - aiTimer / 120f));
 				NPC.velocity.Y += 0.1f;
 			}
 			AnomalyAlphaMult = MathHelper.Clamp(AnomalyAlphaMult, 0, 1);
 			FinalAnomalyAlphaMult = MathHelper.Clamp(AnomalyAlphaMult * 1.1f - 0.1f, 0, 1);
+		}
+        public override bool PreAI()
+        {
 			return base.PreAI();
         }
         public override void PostAI()
@@ -599,7 +597,6 @@ namespace SOTS.NPCs.Town
 			Vector2? destination = ImportantTilesWorld.RandomImportantLocation(ref currentLocationType, ref newDirection);
 			if(destination.HasValue)
 			{
-				hasTeleportedYet = true;
 				NPC.Center = destination.Value;
 				NPC.direction = newDirection;
 				VoidAnomaly.KillOtherAnomalies();
@@ -609,6 +606,7 @@ namespace SOTS.NPCs.Town
 					Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The location is at: " + currentLocationType), Color.Gray);
 				else
 					Main.NewText("The location is at: " + currentLocationType);
+				hasTeleportedYet = true;
 			}
 			else
             {
@@ -618,17 +616,6 @@ namespace SOTS.NPCs.Town
 	}
 	public class VoidAnomaly : ModProjectile
 	{
-		public static Vector2 AnomalyShaderPosition = Vector2.Zero;
-		public static float AnomalyShaderProgress = 0f;
-		public static float APortalIsAccepting = 0f;
-		public static float AnomalyIntesity = 0f;
-		public const int CloseToSize = 20;
-		public const int Radius = 6; 
-		public float alphaBarrier = 0;
-		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-		{
-			behindNPCs.Add(index);
-		}
 		public static TileDrawInfo RunGet_currentTileDrawInfo(TileDrawing tDrawer)
 		{
 			Type type = tDrawer.GetType();
@@ -785,8 +772,176 @@ namespace SOTS.NPCs.Town
 				Data.CopyTileToTile(otherTile, myTile);
 			}
 		}
+		public static void PlaceDownAnomalies()
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+				return;
+			int padding = 50;
+			Vector2 firstPosition = Vector2.Zero;
+			int checks = 0;
+			bool valid = false;
+			int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
+			while (checks < 160 && !valid)
+			{
+				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
+				firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+				valid = isThisPlacementValid(new Point(randX, randY));
+				checks++;
+			}
+			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), firstPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -1, -60);
+			Vector2 secondPosition = Vector2.Zero;
+			checks = 0;
+			valid = false;
+			AttemptedYLayer = Main.rand.Next(padding, Main.maxTilesY - padding);
+			while (checks < 160 && !valid)
+			{
+				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY - padding), Math.Clamp(checks / 120f, 0, 1));
+				secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+				if (Vector2.Distance(secondPosition, firstPosition) < 6400)
+					valid = false; //Not a valid spot unless the distances are far from each other
+				else
+					valid = isThisPlacementValid(new Point(randX, randY));
+				checks++;
+			}
+			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
+		}
+		public static bool isThisPlacementValid(Point point)
+		{
+			bool isAtLeastOneTileBelow = false;
+			int countOfValid = 0;
+			for (int j = -1; j <= 3; j++)
+			{
+				for (int i = -2; i <= 2; i++)
+				{
+					if (j <= 1 && i == 0)
+						if (SOTSWorldgenHelper.TrueTileSolid(point.X + i, point.Y + j))
+						{
+							return false;
+						}
+						else
+							countOfValid++;
+					else if (SOTSWorldgenHelper.TrueTileSolid(point.X + i, point.Y + j))
+					{
+						isAtLeastOneTileBelow = true;
+						if (countOfValid >= 3)
+						{
+							return true;
+						}
+					}
+				}
+			}
+			// x x o x x
+			// x x o x x
+			// x x o x x
+			// x x x x x
+			// x x x x x
+			// Looks for a tile in X and a lack of tile on O
+			if (isAtLeastOneTileBelow)
+			{
+				return true;
+			}
+			return false;
+		}
+		public static void KillOtherAnomalies()
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+				return;
+			for (int i = 0; i < Main.maxProjectiles; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				if (proj.active && proj.type == ModContent.ProjectileType<VoidAnomaly>())
+				{
+					proj.ai[0] = -3;
+					proj.netUpdate = true;
+				}
+			}
+		}
+		public static void PrepareLocalPlayerShader()
+		{
+			Player localPlayer = Main.LocalPlayer;
+			bool foundAnAnomaly = false;
+			float alphaMult = 0f;
+			Vector2 position = Vector2.Zero;
+			float maxDist = 1280f;
+			float dist = maxDist;
+			for (int i = 0; i < 1000; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				if (proj.active && proj.type == ModContent.ProjectileType<VoidAnomaly>())
+				{
+					if (proj.ModProjectile is VoidAnomaly vAnom)
+					{
+						Vector2 toCenter = proj.Center - localPlayer.Center;
+						if (toCenter.Length() < dist)
+						{
+							dist = toCenter.Length();
+							alphaMult = vAnom.alphaMult;
+							foundAnAnomaly = true;
+							position = proj.Center;
+						}
+					}
+				}
+			}
+			if (foundAnAnomaly)
+			{
+				float percent = (maxDist - dist) / maxDist;
+				percent *= alphaMult;
+				percent = (float)Math.Pow(percent, 4);
+				AnomalyShaderPosition = position;
+				if (AnomalyShaderProgress < percent)
+				{
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.4f);
+				}
+				else
+				{
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.01f);
+				}
+				AnomalyIntesity = AnomalyShaderProgress;
+			}
+			else
+			{
+				if (Vector2.Distance(AnomalyShaderPosition, localPlayer.Center) > maxDist * 3)
+				{
+					AnomalyShaderPosition = Vector2.Zero;
+					AnomalyShaderProgress = 0f;
+					AnomalyIntesity = 0f;
+				}
+				else
+				{
+					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, 0, 0.045f);
+					AnomalyIntesity = MathHelper.Lerp(AnomalyIntesity, 0, 0.045f);
+					if (AnomalyShaderProgress <= 0.001f && AnomalyIntesity <= 0.001f)
+					{
+						AnomalyShaderPosition = Vector2.Zero;
+						AnomalyShaderProgress = 0f;
+						AnomalyIntesity = 0f;
+					}
+				}
+			}
+		}
+		public static Vector2 AnomalyShaderPosition = Vector2.Zero;
+		public static float AnomalyShaderProgress = 0f;
+		public static float APortalIsAccepting = 0f;
+		public static float AnomalyIntesity = 0f;
+		public const int CloseToSize = 20;
+		public const int Radius = 6; 
+		public float alphaBarrier = 0;
 		private bool canIMove = false;
 		private SaveTileData[] Data = null;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(APortalIsAccepting);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			APortalIsAccepting = reader.ReadSingle();
+        }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+		{
+			behindNPCs.Add(index);
+		}
 		public void DrawTilesFromOtherPortal(float currentRadius)
 		{
 			TileDrawInfo value = RunGet_currentTileDrawInfo(Main.instance.TilesRenderer);
@@ -990,92 +1145,6 @@ namespace SOTS.NPCs.Town
 			if (!SOTSWorld.AmberKeySlotted)
 				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize, ref alphaMultBarrier);
 		}
-		public static void PlaceDownAnomalies()
-		{
-			if (Main.netMode == NetmodeID.MultiplayerClient)
-				return;
-			int padding = 50;
-			Vector2 firstPosition = Vector2.Zero;
-			int checks = 0;
-			bool valid = false;
-			int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
-			while(checks < 160 && !valid)
-			{
-				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
-				firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
-				valid = isThisPlacementValid(new Point(randX, randY));
-				checks++;
-			}
-			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), firstPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -1, -60);
-			Vector2 secondPosition = Vector2.Zero;
-			checks = 0;
-			valid = false;
-			AttemptedYLayer = Main.rand.Next(padding, Main.maxTilesY - padding);
-			while (checks < 160 && !valid)
-			{
-				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY - padding), Math.Clamp(checks / 120f, 0, 1));
-				secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
-				if (Vector2.Distance(secondPosition, firstPosition) < 6400)
-					valid = false; //Not a valid spot unless the distances are far from each other
-				else
-					valid = isThisPlacementValid(new Point(randX, randY));
-				checks++;
-			}
-			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
-		}
-		public static bool isThisPlacementValid(Point point)
-		{
-			bool isAtLeastOneTileBelow = false;
-			int countOfValid = 0;
-			for (int j = -1; j <= 3; j++)
-			{
-				for (int i = -2; i <= 2; i++)
-				{
-					if (j <= 1 && i == 0)
-						if (SOTSWorldgenHelper.TrueTileSolid(point.X + i, point.Y + j))
-						{
-							return false;
-						}
-						else
-							countOfValid++;
-					else if (SOTSWorldgenHelper.TrueTileSolid(point.X + i, point.Y + j))
-					{
-						isAtLeastOneTileBelow = true;
-						if(countOfValid >= 3)
-                        {
-							return true;
-                        }
-					}
-				}
-			}
-			// x x o x x
-			// x x o x x
-			// x x o x x
-			// x x x x x
-			// x x x x x
-			// Looks for a tile in X and a lack of tile on O
-			if (isAtLeastOneTileBelow)
-            {
-				return true;
-            }
-			return false;
-        }
-		public static void KillOtherAnomalies()
-		{
-			if (Main.netMode == NetmodeID.MultiplayerClient)
-				return;
-			for (int i = 0; i < Main.maxProjectiles; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (proj.active && proj.type == ModContent.ProjectileType<VoidAnomaly>())
-				{
-					proj.ai[0] = -3;
-					proj.netUpdate = true;
-				}
-			}
-		}
 		public override void SetDefaults()
 		{
 			Projectile.height = 82;
@@ -1136,8 +1205,16 @@ namespace SOTS.NPCs.Town
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
             if (runOnce)
-            {
-				FramePortalBlocks();
+			{
+				if (Main.netMode == NetmodeID.Server)
+				{
+					int i = (int)Projectile.Center.X / 16;
+					int j = (int)Projectile.Center.Y / 16;
+					NetMessage.SendTileSquare(-1, i, j, 17);
+					Projectile.netUpdate = true;
+				}
+				else
+					FramePortalBlocks();
 				runOnce = false;
 			}
 			if (alphaBarrier < 1)
@@ -1153,10 +1230,8 @@ namespace SOTS.NPCs.Town
 				}
 				if (Projectile.ai[1] < CloseToSize)
 					Projectile.ai[1] = CloseToSize;
-				if (Projectile.ai[0] == -1)
-					APortalIsAccepting--;
-				if (APortalIsAccepting <= 0)
-					APortalIsAccepting = 0;
+				if (Main.netMode == NetmodeID.Server)
+					Projectile.netUpdate = true;
 			}
 			else if (Projectile.ai[1] < 60 && Projectile.ai[0] != -3)
 			{
@@ -1187,7 +1262,11 @@ namespace SOTS.NPCs.Town
 					}
 				}
 				else if (Projectile.ai[1] < 8 + (float)(Math.Pow(totalKeysSlotted / 7f, 0.4f) * 52))
+                {
+					if (Main.netMode == NetmodeID.Server)
+						Projectile.netUpdate = true;
 					Projectile.ai[1] += growthMult;
+				}
 				if (Projectile.ai[1] >= 60)
 				{
 					Projectile.ai[1] = 60;
@@ -1197,10 +1276,6 @@ namespace SOTS.NPCs.Town
 			}
 			if (Projectile.ai[0] == -1)
 			{
-				if (Main.mouseMiddle && canIMove)
-				{
-					Projectile.Center = new Vector2((int)(Main.MouseWorld.X / 16) * 16 + 8, (int)(Main.MouseWorld.Y / 16) * 16 + 8);
-				}
 				if (Projectile.ai[1] >= 0 && Projectile.timeLeft >= 119)
 					Archaeologist.AnomalyPosition2 = Projectile.Center;
 			}
@@ -1211,6 +1286,7 @@ namespace SOTS.NPCs.Town
 			}
 			if (Projectile.ai[0] == -3) // start dying
 			{
+				Projectile.netUpdate = true;
 				if (Projectile.timeLeft > 120)
 					Projectile.timeLeft = 120;
 				Projectile.ai[1] = MathHelper.Lerp(growthTotal, 7, 1 - Projectile.timeLeft / 120f);
@@ -1313,81 +1389,30 @@ namespace SOTS.NPCs.Town
 				}
 			}
 		}
-		public static void PrepareLocalPlayerShader()
-		{
-			Player localPlayer = Main.LocalPlayer;
-			bool foundAnAnomaly = false;
-			float alphaMult = 0f;
-			Vector2 position = Vector2.Zero;
-			float maxDist = 1280f;
-			float dist = maxDist;
-			for(int i = 0; i < 1000; i++)
-            {
-				Projectile proj = Main.projectile[i];
-				if(proj.active && proj.type == ModContent.ProjectileType<VoidAnomaly>())
-                {
-					if (proj.ModProjectile is VoidAnomaly vAnom)
-					{
-						Vector2 toCenter = proj.Center - localPlayer.Center;
-						if(toCenter.Length() < dist)
-                        {
-							dist = toCenter.Length();
-							alphaMult = vAnom.alphaMult;
-							foundAnAnomaly = true;
-							position = proj.Center;
-						}
-					}
-                }
-            }
-			if(foundAnAnomaly)
-            {
-				float percent = (maxDist - dist) / maxDist;
-				percent *= alphaMult;
-				percent = (float)Math.Pow(percent, 4);
-				AnomalyShaderPosition = position;
-				if(AnomalyShaderProgress < percent)
-				{
-					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.4f);
-				}
-				else
-				{
-					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, percent, 0.01f);
-				}
-				AnomalyIntesity = AnomalyShaderProgress;
-			}
-			else
-			{
-				if(Vector2.Distance(AnomalyShaderPosition, localPlayer.Center) > maxDist * 3)
-				{
-					AnomalyShaderPosition = Vector2.Zero;
-					AnomalyShaderProgress = 0f;
-					AnomalyIntesity = 0f;
-				}
-				else
-				{
-					AnomalyShaderProgress = MathHelper.Lerp(AnomalyShaderProgress, 0, 0.045f);
-					AnomalyIntesity = MathHelper.Lerp(AnomalyIntesity, 0, 0.045f);
-					if (AnomalyShaderProgress <= 0.001f && AnomalyIntesity <= 0.001f)
-					{
-						AnomalyShaderPosition = Vector2.Zero;
-						AnomalyShaderProgress = 0f;
-						AnomalyIntesity = 0f;
-					}
-				}
-			}
-		}
 		public void TeleportEntity(Entity entity)
 		{
-			if (entity is NPC nPC)
+			if (entity is NPC npc)
 			{
-				GlobalEntityNPC gen = nPC.GetGlobalNPC<GlobalEntityNPC>();
+				GlobalEntityNPC gen = npc.GetGlobalNPC<GlobalEntityNPC>();
 				if (gen.RecentlyTeleported)
 				{
 					return;
 				}
-				gen.RecentlyTeleported = true;
-				nPC.netUpdate = true;
-				SpawnDust(nPC);
+				if(Main.netMode != NetmodeID.MultiplayerClient)
+					gen.RecentlyTeleported = true;
+				//SpawnDust(npc);
+				if (Main.netMode == NetmodeID.Server)
+				{
+					GlobalEntity.SendServerChanges(Mod, npc, true);
+					npc.netUpdate = true;
+				}
+			}
+			bool isPlayer = false;
+			if (entity is Player player)
+			{
+				player.AddBuff(ModContent.BuffType<Skipped>(), 300);
+				DustCircle(player.Center, player.width * 0.5f, player.height * 0.5f);
+				isPlayer = true;
 			}
 			if (entity is Item item)
 			{
@@ -1396,21 +1421,31 @@ namespace SOTS.NPCs.Town
 				{
 					return;
 				}
-				gen.RecentlyTeleported = true;
-				gen.NetUpdate(item);
-				SpawnDust(item);
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					gen.RecentlyTeleported = true;
+					//SpawnDust(item);
+					entity.Center = positionOfOtherPortal;
+					entity.velocity *= 0.5f;
+					entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
+				}
+				if (Main.netMode == NetmodeID.Server)
+				{
+					gen.NetUpdate(item);
+				}
 			}
-			if (entity is Player player)
+			else
 			{
-				player.AddBuff(ModContent.BuffType<Skipped>(), 300);
-				DustCircle(player.Center, player.width * 0.5f, player.height * 0.5f);
+				if (Main.netMode != NetmodeID.MultiplayerClient || isPlayer)
+				{
+					entity.Center = positionOfOtherPortal;
+					entity.velocity *= 0.5f;
+					entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
+				}
 			}
-			entity.Center = positionOfOtherPortal;
-			entity.velocity *= 0.5f;
-			entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
 		}
 		public void AcceptEntity(Entity entity)
-        {
+		{
 			Vector2 center = Projectile.Center;
 			Vector2 toCenter = center - entity.Center;
 			float dist = toCenter.Length();
@@ -1435,22 +1470,28 @@ namespace SOTS.NPCs.Town
 					valid = false;
 			}
 			if (dist < vacuumRadius && valid)
-            {
+			{
+				if (SOTSWorld.GlobalCounter % 10 == 0 && entity is Item item)
+				{
+					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
+					if (Main.netMode != NetmodeID.Server)
+						Main.NewText(entity.whoAmI + "-" + gen.RecentlyTeleported + ": " + gen.TeleportCounter);
+					if (Main.netMode == NetmodeID.Server)
+						WorldGen.BroadcastText(NetworkText.FromLiteral(entity.whoAmI + "-" + gen.RecentlyTeleported + ": " + gen.TeleportCounter), Color.Red);
+				}
 				float distancePercent = (vacuumRadius - dist) / vacuumRadius * (APortalIsAccepting > 0 ? 1 : alphaMult);
 				Vector2 outward = toCenter.SafeNormalize(Vector2.Zero) * (float)Math.Pow(distancePercent, 3) * 0.625f;
 				Vector2 pullVelocity = Vector2.Zero;
-				if (entity.velocity.Y != 0 || entity is Item || dist < 160)
+				if (entity.velocity.Y != 0 || entity is Item || dist < 80)
 				{
 					entity.velocity.X *= 1 - 0.3f * distancePercent;
 					entity.velocity.X += outward.X * 2.5f;
 					pullVelocity.X += outward.X * 3f;
-					if(dist < 80)
-						entity.velocity.Y += outward.Y * 1.125f;
 					if (outward.Y < 0)
-                    {
+					{
 						if (entity.velocity.Y > 0)
-							entity.velocity.Y *= 1f - 0.91f * distancePercent;
-						entity.velocity.Y += outward.Y * 0.375f * distancePercent;
+							entity.velocity.Y *= 1f - distancePercent;
+						entity.velocity.Y += outward.Y * 1.375f * distancePercent;
                     }
                 }
 				else
@@ -1547,6 +1588,10 @@ namespace SOTS.NPCs.Town
 			}
 			SOTSUtils.PlaySound(SoundID.Item74, Projectile.Center, 1.5f, -0.4f, 0.1f);
 		}
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
     }
 	public static class PortalDrawingHelper
 	{
