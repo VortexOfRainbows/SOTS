@@ -733,7 +733,7 @@ namespace SOTS.NPCs.Town
 						liquidType = Main.waterStyle;
 					bool flag7 = false;
 					float waterAlpha = WaterAlphaMult(info, i, j, liquidType);
-					bool isTopLiquid = (otherTile.LiquidAmount != 0 && Main.tile[i, j - 1].LiquidAmount == 0) && (!WorldGen.SolidTile(Main.tile[i, j - 1]) || otherTile.LiquidAmount > 240);
+					bool isTopLiquid = (otherTile.LiquidAmount != 0 && Main.tile[i, j - 1].LiquidAmount == 0) && (!SOTSWorldgenHelper.TrueTileSolid(i, j - 1, true) || otherTile.LiquidAmount < 250);
 					float liquidPercent = otherTile.LiquidAmount / 255f;
 					Rectangle frame = isTopLiquid ? new Rectangle(0, 0, 16, (int)(16 * liquidPercent)) : new Rectangle(0, 8, 16, 8);
 					float yScale = isTopLiquid ? 1 : 2 * liquidPercent;
@@ -933,11 +933,13 @@ namespace SOTS.NPCs.Town
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(APortalIsAccepting);
+			writer.Write(hasGrownToFull);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			APortalIsAccepting = reader.ReadSingle();
-        }
+			hasGrownToFull = reader.ReadBoolean();
+		}
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
 		{
 			behindNPCs.Add(index);
@@ -1204,11 +1206,15 @@ namespace SOTS.NPCs.Town
 			int endY = j + 8;
 			WorldGen.SectionTileFrameWithCheck(startX, startY, endX, endY);
 		}
-		public override void AI()
+        public override void AI()
+        {
+			Update();
+        }
+        public void Update()
 		{
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
-			if (Main.netMode == NetmodeID.Server)
+			if (Main.netMode == NetmodeID.Server && SOTSWorld.GlobalCounter % 10 == 0)
 			{
 				for (int k = 0; k < 255; k++)
 				{
@@ -1223,7 +1229,7 @@ namespace SOTS.NPCs.Town
 					runOnce = false;
 				}
 			}
-			else
+			else if(Main.netMode == NetmodeID.SinglePlayer)
 			{
 				if (runOnce)
 				{
@@ -1283,8 +1289,15 @@ namespace SOTS.NPCs.Town
 				}
 				if (Projectile.ai[1] >= 60)
 				{
+					if (Main.netMode == NetmodeID.Server && SOTSWorld.GlobalCounter % 150 == 0)
+						Projectile.netUpdate = true;
 					Projectile.ai[1] = 60;
-					hasGrownToFull = true;
+					if(!hasGrownToFull)
+					{
+						hasGrownToFull = true;
+						if (Main.netMode == NetmodeID.Server)
+							Projectile.netUpdate = true;
+					}
 				}
 				growthTotal = Projectile.ai[1];
 			}
@@ -1300,7 +1313,8 @@ namespace SOTS.NPCs.Town
 			}
 			if (Projectile.ai[0] == -3) // start dying
 			{
-				Projectile.netUpdate = true;
+				if (Main.netMode == NetmodeID.Server)
+					Projectile.netUpdate = true;
 				if (Projectile.timeLeft > 120)
 					Projectile.timeLeft = 120;
 				Projectile.ai[1] = MathHelper.Lerp(growthTotal, 7, 1 - Projectile.timeLeft / 120f);
@@ -1825,7 +1839,7 @@ namespace SOTS.NPCs.Town
 				texture = TextureAssets.Npc[npc.type].Value;
 				frameCount = Main.npcFrameCount[npc.type];
 				frameRect = npc.frame;
-				spriteDirection = npc.spriteDirection;
+				spriteDirection = -npc.spriteDirection;
 				rotation = npc.rotation;
 			}
 			if (texture != null)
