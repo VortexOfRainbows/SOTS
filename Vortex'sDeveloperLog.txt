@@ -50,11 +50,9 @@ Daily Log:
 	1. Needs multiplayer testing
 2. Added Void Anomalies...
 	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers. Spawn Location Algorithm. Shaders for darkening the screen while nearby.
-	2. Needs: multiplayer syncing
-	3. This is really fucking broken in multiplayer... Will needs tons upon tons of testing and fixes
-		1. Try passing indexes through all functions with "entity"
-		2. Try using GlobalItem's netsend and recieve functions
-		3. Look for a way to load chunks in Multiplayer
+	2. Needs: multiplayer syncing. Projectile should update even when not on screen... Try detouring the update function
+	3. Finished: Item and NPCs teleporting seems to work quite well.
+	4. Section loading seems to be working good in multiplayer (needs more testing).
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts

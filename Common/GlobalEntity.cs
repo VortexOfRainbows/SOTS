@@ -49,26 +49,26 @@ using Terraria.ID;
 using SOTS.NPCs.Town;
 using Microsoft.Xna.Framework.Graphics;
 using static SOTS.SOTS;
+using Terraria.DataStructures;
 
 namespace SOTS.Common
 {
     public static class GlobalEntity
     {
-        public static void SendServerChanges(Mod Mod, Item item, bool recentlyTeleported)
+        /// <summary>
+        /// Syncs the teleported status of a global NPC. Should only be called on servers
+        /// </summary>
+        /// <param name="Mod"></param>
+        /// <param name="npc"></param>
+        /// <param name="recentlyTeleported"></param>
+        /// <param name="whoAmI"></param>
+        public static void SendServerChanges(Mod Mod, NPC npc, bool recentlyTeleported, int whoAmI)
         {
             var packet = Mod.GetPacket();
             packet.Write((byte)SOTSMessageType.SyncHasTeleported);
-            packet.Write(item.whoAmI);
-            packet.Write(true);
-            packet.Write(recentlyTeleported);
-            packet.Send();
-        }
-        public static void SendServerChanges(Mod Mod, Entity npc, bool recentlyTeleported)
-        {
-            var packet = Mod.GetPacket();
-            packet.Write((byte)SOTSMessageType.SyncHasTeleported);
-            packet.Write(npc.whoAmI);
-            packet.Write(false);
+            packet.Write(whoAmI);
+            packet.WriteVector2(npc.Center);
+            packet.WriteVector2(npc.velocity);
             packet.Write(recentlyTeleported);
             packet.Send();
         }
@@ -106,9 +106,9 @@ namespace SOTS.Common
                 float multiplier = TeleportCounter / 60f;
                 if (multiplier > 1)
                     multiplier = 1;
-                if(TeleportCounter > 1140)
+                if(TeleportCounter > 3540)
                 {
-                    multiplier = (1200 - TeleportCounter) / 60f;
+                    multiplier = (3600 - TeleportCounter) / 60f;
                 }
                 GlobalEntity.DrawTimeFreeze(npc, spriteBatch, multiplier);
             }
@@ -124,15 +124,16 @@ namespace SOTS.Common
                 TeleportCounter++;
                 if (TeleportCounter == 3)
                 {
-                    PortalDrawingHelper.SpawnDust(npc);
+                    if(Main.netMode != NetmodeID.MultiplayerClient)
+                        Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), npc.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, npc.whoAmI, 1);
                 }
-                if (TeleportCounter >= 1200)
+                if (TeleportCounter >= 3600) //NPC Doesn't despawn after teleporting until a minute has passed
                 {
                     TeleportCounter = 0;
                     RecentlyTeleported = false;
                     if (Main.netMode == NetmodeID.Server)
                     {
-                        GlobalEntity.SendServerChanges(Mod, npc, false);
+                        GlobalEntity.SendServerChanges(Mod, npc, false, npc.whoAmI);
                         npc.netUpdate = true;
                     }
                 }
@@ -159,21 +160,31 @@ namespace SOTS.Common
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
         public override bool InstancePerEntity => true;
-        public bool RecentlyTeleported = false;
+        public bool RecentlyTeleported
+        { 
+            get
+            {
+                return TeleportCounter > 0;
+            }
+        }
         public int TeleportCounter = 0;
         public override void PostUpdate(Item item)
         {
             if (RecentlyTeleported)
             {
+                //if(SOTSWorld.GlobalCounter % 10 == 0)
+                //{
+                //    if(Main.netMode == NetmodeID.Server)
+                //        WorldGen.BroadcastText(NetworkText.FromLiteral(TeleportCounter.ToString()), Color.Red);
+                //    else
+                //        Main.NewText(TeleportCounter);
+                //}
                 TeleportCounter++;
                 if (TeleportCounter == 3)
                 {
-                    PortalDrawingHelper.SpawnDust(item);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), item.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, item.whoAmI, -1);
                 }
-            }
-            else
-            {
-                TeleportCounter = 0;
             }
         }
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
@@ -193,13 +204,23 @@ namespace SOTS.Common
         }
         public override bool OnPickup(Item item, Player player)
         {
-            RecentlyTeleported = false;
+            TeleportCounter = 0;
             return base.OnPickup(item, player);
         }
-        public void NetUpdate(Item item)
+        public void NetUpdate(int whoAmI)
         {
-            NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item.whoAmI);
+            NetMessage.SendData(MessageID.SyncItem, -1, -1, null, whoAmI);
             //GlobalEntity.SendServerChanges(Mod, item, RecentlyTeleported);
+        }
+        public override void NetSend(Item item, BinaryWriter writer)
+        {
+            //writer.Write(RecentlyTeleported);
+            writer.Write(TeleportCounter);
+        }
+        public override void NetReceive(Item item, BinaryReader reader)
+        {
+            //RecentlyTeleported = reader.ReadBoolean();
+            TeleportCounter = reader.ReadInt32();
         }
     }
 }

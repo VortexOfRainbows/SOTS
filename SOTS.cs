@@ -465,32 +465,16 @@ namespace SOTS
 				int whoAmItemOrNpc = reader.ReadInt32();
 				Vector2 cen = reader.ReadVector2();
 				Vector2 vel = reader.ReadVector2();
-				bool isAnItem = reader.ReadBoolean();
 				bool recentlyTeleported = reader.ReadBoolean();
-				if (isAnItem)
-                {
-					Item item = Main.item[whoAmItemOrNpc];
-					Common.GlobalEntityItem gInstance;
-					if(item.TryGetGlobalItem<Common.GlobalEntityItem>(out gInstance))
-					{
-						gInstance.RecentlyTeleported = recentlyTeleported;
-						//gInstance.PreviousTeleported = recentlyTeleported;
-					}
-					item.Center = cen;
-					item.velocity = vel;
+				NPC npc = Main.npc[whoAmItemOrNpc];
+				Common.GlobalEntityNPC gInstance;
+				if (npc.TryGetGlobalNPC<Common.GlobalEntityNPC>(out gInstance))
+				{
+					gInstance.RecentlyTeleported = recentlyTeleported;
+					//gInstance.PreviousTeleported = recentlyTeleported;
 				}
-				else
-                {
-					NPC npc = Main.npc[whoAmItemOrNpc];
-					Common.GlobalEntityNPC gInstance;
-					if (npc.TryGetGlobalNPC<Common.GlobalEntityNPC>(out gInstance))
-					{
-						gInstance.RecentlyTeleported = recentlyTeleported;
-						//gInstance.PreviousTeleported = recentlyTeleported;
-					}
-					npc.Center = cen;
-					npc.velocity = vel;
-				}
+				npc.Center = cen;
+				npc.velocity = vel;
 			}
 		}
 		public override void PostSetupContent()

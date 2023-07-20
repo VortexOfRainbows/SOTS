@@ -753,7 +753,7 @@ namespace SOTS.NPCs.Town
 					}
 					Main.spriteBatch.Draw(TextureAssets.Liquid[liquidType].Value, new Vector2(h * 16, k * 16 + tileOffset) - Main.screenPosition, frame, Color.White * waterAlpha * (flag7 ? Main.liquidAlpha[liquidType] : 1f), 0f, origin, new Vector2(1, yScale), 0, 0f);
 				}
-				else if (pass != 3 && otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree && oType != ModContent.TileType<Items.Furniture.Functional.Hydroponics>())
+				else if (pass != 3 && otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree && oType != ModContent.TileType<Items.Furniture.Functional.Hydroponics>() && oType != ModContent.TileType<Items.Otherworld.Furniture.SkyChainTile>())
 				{
 					if (TileLoader.PreDraw(h, k, oType, Main.spriteBatch))
 					{
@@ -1198,24 +1198,38 @@ namespace SOTS.NPCs.Town
         {
 			int i = (int)Projectile.Center.X / 16;
 			int j = (int)Projectile.Center.Y / 16;
-			WorldGen.SectionTileFrameWithCheck(i - 8, j - 8, i + 8, j + 8);
+			int startX = i - 8;
+			int startY = j - 8;
+			int endX = i + 8;
+			int endY = j + 8;
+			WorldGen.SectionTileFrameWithCheck(startX, startY, endX, endY);
 		}
 		public override void AI()
 		{
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
-            if (runOnce)
+			if (Main.netMode == NetmodeID.Server)
 			{
-				if (Main.netMode == NetmodeID.Server)
+				for (int k = 0; k < 255; k++)
 				{
-					int i = (int)Projectile.Center.X / 16;
-					int j = (int)Projectile.Center.Y / 16;
-					NetMessage.SendTileSquare(-1, i, j, 17);
-					Projectile.netUpdate = true;
+					if (Main.player[k].active)
+					{
+						RemoteClient.CheckSection(k, Projectile.Center);
+					}
 				}
-				else
+				if (runOnce)
+				{
+					Projectile.netUpdate = true;
+					runOnce = false;
+				}
+			}
+			else
+			{
+				if (runOnce)
+				{
 					FramePortalBlocks();
-				runOnce = false;
+					runOnce = false;
+				}
 			}
 			if (alphaBarrier < 1)
 				alphaBarrier += 1f / 240f;
@@ -1353,7 +1367,7 @@ namespace SOTS.NPCs.Town
 					if (!gen.RecentlyTeleported)
 					{
 						if (barrier == -1)
-							AcceptEntity(item);
+							AcceptEntity(item, i);
 						else
 							RejectEntity(item, barrier);
 					}
@@ -1367,7 +1381,7 @@ namespace SOTS.NPCs.Town
 						if (!gen.RecentlyTeleported)
 						{
 							if (barrier == -1)
-								AcceptEntity(npc);
+								AcceptEntity(npc, i);
 							else
 								RejectEntity(npc, barrier);
 						}
@@ -1381,7 +1395,7 @@ namespace SOTS.NPCs.Town
 						if (!p.HasBuff(ModContent.BuffType<Skipped>()))
 						{
 							if (barrier == -1)
-								AcceptEntity(p);
+								AcceptEntity(p, i);
 							else
 								RejectEntity(p, barrier);
 						}
@@ -1389,7 +1403,7 @@ namespace SOTS.NPCs.Town
 				}
 			}
 		}
-		public void TeleportEntity(Entity entity)
+		public void TeleportEntity(Entity entity, int whoAmI)
 		{
 			if (entity is NPC npc)
 			{
@@ -1399,52 +1413,53 @@ namespace SOTS.NPCs.Town
 					return;
 				}
 				if(Main.netMode != NetmodeID.MultiplayerClient)
-					gen.RecentlyTeleported = true;
-				//SpawnDust(npc);
-				if (Main.netMode == NetmodeID.Server)
-				{
-					GlobalEntity.SendServerChanges(Mod, npc, true);
-					npc.netUpdate = true;
-				}
-			}
-			bool isPlayer = false;
-			if (entity is Player player)
-			{
-				player.AddBuff(ModContent.BuffType<Skipped>(), 300);
-				DustCircle(player.Center, player.width * 0.5f, player.height * 0.5f);
-				isPlayer = true;
-			}
-			if (entity is Item item)
-			{
-				GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
-				if (gen.RecentlyTeleported)
-				{
-					return;
-				}
-				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					gen.RecentlyTeleported = true;
-					//SpawnDust(item);
+					Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), npc.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, whoAmI, 1);
 					entity.Center = positionOfOtherPortal;
 					entity.velocity *= 0.5f;
 					entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
-				}
-				if (Main.netMode == NetmodeID.Server)
-				{
-					gen.NetUpdate(item);
+					if (Main.netMode == NetmodeID.Server)
+					{
+						GlobalEntity.SendServerChanges(Mod, npc, true, whoAmI); //Packet must be sent after center is modified to send the correct position
+						npc.netUpdate = true;
+					}
 				}
 			}
 			else
 			{
-				if (Main.netMode != NetmodeID.MultiplayerClient || isPlayer)
+				if (entity is Item item)
 				{
+					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
+					if (gen.RecentlyTeleported)
+					{
+						return;
+					}
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						gen.TeleportCounter = 1;
+						Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), item.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, whoAmI, -1);
+						entity.Center = positionOfOtherPortal;
+						entity.velocity *= 0.5f;
+						entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
+						if (Main.netMode == NetmodeID.Server)
+						{
+							gen.NetUpdate(whoAmI);
+						}
+					}
+				}
+				else if (entity is Player player)
+				{
+					player.AddBuff(ModContent.BuffType<Skipped>(), 300);
+					if (Main.netMode != NetmodeID.Server)
+						DustCircle(player.Center, player.width * 0.5f, player.height * 0.5f);
 					entity.Center = positionOfOtherPortal;
 					entity.velocity *= 0.5f;
 					entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
 				}
 			}
 		}
-		public void AcceptEntity(Entity entity)
+		public void AcceptEntity(Entity entity, int whoAmI)
 		{
 			Vector2 center = Projectile.Center;
 			Vector2 toCenter = center - entity.Center;
@@ -1460,7 +1475,7 @@ namespace SOTS.NPCs.Town
 			{
 				if (Projectile.ai[1] <= CloseToSize && APortalIsAccepting != 0)
 				{
-					TeleportEntity(entity);
+					TeleportEntity(entity, whoAmI);
 				}
 			}
 			bool valid = true;
@@ -1471,14 +1486,14 @@ namespace SOTS.NPCs.Town
 			}
 			if (dist < vacuumRadius && valid)
 			{
-				if (SOTSWorld.GlobalCounter % 10 == 0 && entity is Item item)
-				{
-					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
-					if (Main.netMode != NetmodeID.Server)
-						Main.NewText(entity.whoAmI + "-" + gen.RecentlyTeleported + ": " + gen.TeleportCounter);
-					if (Main.netMode == NetmodeID.Server)
-						WorldGen.BroadcastText(NetworkText.FromLiteral(entity.whoAmI + "-" + gen.RecentlyTeleported + ": " + gen.TeleportCounter), Color.Red);
-				}
+				//if (SOTSWorld.GlobalCounter % 10 == 0 && entity is Item item)
+				//{
+				//	GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
+				//	if (Main.netMode != NetmodeID.Server)
+				//		Main.NewText(whoAmI + "-" + gen.RecentlyTeleported + ": " + gen.TeleportCounter);
+				//	if (Main.netMode == NetmodeID.Server)
+				//		WorldGen.BroadcastText(NetworkText.FromLiteral(whoAmI + "-" + gen.RecentlyTeleported + ": " + gen.TeleportCounter), Color.Red);
+				//}
 				float distancePercent = (vacuumRadius - dist) / vacuumRadius * (APortalIsAccepting > 0 ? 1 : alphaMult);
 				Vector2 outward = toCenter.SafeNormalize(Vector2.Zero) * (float)Math.Pow(distancePercent, 3) * 0.625f;
 				Vector2 pullVelocity = Vector2.Zero;
@@ -1595,25 +1610,11 @@ namespace SOTS.NPCs.Town
     }
 	public static class PortalDrawingHelper
 	{
-		public static void SpawnDust(Item item)
-		{
-			if (NetmodeID.Server == Main.netMode)
-				return;
-			SpawnDustEntity(item);
-			DustCircle(item.Center, item.width / 2f, item.height / 2f);
-		}
-		public static void SpawnDust(NPC npc)
-		{
-			if (NetmodeID.Server == Main.netMode)
-				return;
-			SpawnDustEntity(npc);
-			DustCircle(npc.Center, npc.width / 2f, npc.height / 2f);
-		}
 		public static void DustCircle(Vector2 center, float radiusX, float radiusY)
 		{
 			SOTSUtils.PlaySound(SoundID.Item117, center, 1.5f, -0.8f, 0.1f);
 			Color color = ColorHelpers.VoidAnomaly;
-			for(int j = 0; j < 3; j++)
+			for (int j = 0; j < 3; j++)
 			{
 				int type = ModContent.DustType<CopyDust4>();
 				if (j == 1)
@@ -1629,72 +1630,6 @@ namespace SOTS.NPCs.Town
 					dust.noGravity = true;
 					dust.velocity *= 0.5f;
 					dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3, 4) * (j * 0.25f + 0.75f);
-				}
-			}
-		}
-		public static void SpawnDustEntity(Entity ent)
-		{
-			if (NetmodeID.Server == Main.netMode)
-				return;
-			Texture2D texture = null;
-			int frameCount = 1;
-			int spriteDirection = 1;
-			int frame = 0;
-			float rotation = 0;
-			Rectangle? frameRect = null;
-			if (ent is Item item)
-			{
-				texture = TextureAssets.Item[item.type].Value;
-				DrawAnimation anim = Main.itemAnimations[item.type];
-				if (anim != null)
-				{
-					frameCount = anim.FrameCount;
-					frame = anim.Frame;
-				}
-			}
-			if (ent is NPC npc)
-			{
-				texture = TextureAssets.Npc[npc.type].Value;
-				frameCount = Main.npcFrameCount[npc.type];
-				frameRect = npc.frame;
-				spriteDirection = npc.spriteDirection;
-				rotation = npc.rotation;
-			}
-			if(texture != null)
-			{
-				int width = texture.Width;
-				int height = texture.Height / frameCount;
-				Color[] data = new Color[texture.Width * texture.Height];
-				int startAt = width * height * frame;
-				if(frameRect != null)
-                {
-					startAt = frameRect.Value.X + frameRect.Value.Y * width;
-                }
-				texture.GetData(data);
-				int localX = 0;
-				int localY = 0;
-				for (int i = startAt; i < startAt + width * height; i++)
-				{
-					localX++;
-					if (localX > width)
-					{
-						localX -= width;
-						localY++;
-					}
-					if (data[i].A >= 255 && Main.rand.NextBool(5))
-					{
-						Vector2 offset = -new Vector2(width / 2, height / 2) + new Vector2(localX, localY);
-						offset.X *= spriteDirection;
-						offset = offset.RotatedBy(rotation);
-						Vector2 velocity = new Vector2(offset.X / width, offset.Y / height) * 2f;
-						velocity = velocity.RotatedBy(rotation);
-						Color color = data[i];
-						Dust dust = Dust.NewDustDirect(ent.Center + offset - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, color, 0.5f));
-						dust.velocity = velocity;
-						dust.fadeIn = 3;
-						dust.noGravity = true;
-						dust.color.A = 0;
-					}
 				}
 			}
 		}
@@ -1848,4 +1783,127 @@ namespace SOTS.NPCs.Town
 			}
 		}
     }
+	public class PortalDustProjectile : ModProjectile
+	{
+        public override string Texture => "SOTS/Items/Chaos/VoidAnomaly";
+        public void SpawnDust(Item item)
+		{
+			if (NetmodeID.Server == Main.netMode)
+				return;
+			SpawnDustEntity(item);
+			DustCircle(Projectile.Center, item.width / 2f, item.height / 2f);
+		}
+		public void SpawnDust(NPC npc)
+		{
+			if (NetmodeID.Server == Main.netMode)
+				return;
+			SpawnDustEntity(npc);
+			DustCircle(Projectile.Center, npc.width / 2f, npc.height / 2f);
+		}
+		public void SpawnDustEntity(Entity ent)
+		{
+			if (NetmodeID.Server == Main.netMode)
+				return;
+			Texture2D texture = null;
+			int frameCount = 1;
+			int spriteDirection = 1;
+			int frame = 0;
+			float rotation = 0;
+			Rectangle? frameRect = null;
+			if (ent is Item item)
+			{
+				texture = TextureAssets.Item[item.type].Value;
+				DrawAnimation anim = Main.itemAnimations[item.type];
+				if (anim != null)
+				{
+					frameCount = anim.FrameCount;
+					frame = anim.Frame;
+				}
+			}
+			if (ent is NPC npc)
+			{
+				texture = TextureAssets.Npc[npc.type].Value;
+				frameCount = Main.npcFrameCount[npc.type];
+				frameRect = npc.frame;
+				spriteDirection = npc.spriteDirection;
+				rotation = npc.rotation;
+			}
+			if (texture != null)
+			{
+				int width = texture.Width;
+				int height = texture.Height / frameCount;
+				Color[] data = new Color[texture.Width * texture.Height];
+				int startAt = width * height * frame;
+				if (frameRect != null)
+				{
+					startAt = frameRect.Value.X + frameRect.Value.Y * width;
+				}
+				texture.GetData(data);
+				int localX = 0;
+				int localY = 0;
+				for (int i = startAt; i < startAt + width * height; i++)
+				{
+					localX++;
+					if (localX > width)
+					{
+						localX -= width;
+						localY++;
+					}
+					if (data[i].A >= 255 && Main.rand.NextBool(5))
+					{
+						Vector2 offset = -new Vector2(width / 2, height / 2) + new Vector2(localX, localY);
+						offset.X *= spriteDirection;
+						offset = offset.RotatedBy(rotation);
+						Vector2 velocity = new Vector2(offset.X / width, offset.Y / height) * 2f;
+						velocity = velocity.RotatedBy(rotation);
+						Color color = data[i];
+						Dust dust = Dust.NewDustDirect(Projectile.Center + offset - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, color, 0.5f));
+						dust.velocity = velocity;
+						dust.fadeIn = 3;
+						dust.noGravity = true;
+						dust.color.A = 0;
+					}
+				}
+			}
+		}
+		public override void SetDefaults() //Do you enjoy how all my net sycning is done via projectiles?
+		{
+			Projectile.alpha = 255;
+			Projectile.timeLeft = 24;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.ignoreWater = true;
+		}
+		public override bool? CanCutTiles()
+		{
+			return false;
+		}
+        public override bool ShouldUpdatePosition()
+        {
+			return false;
+        }
+        public override void AI()
+		{
+			Projectile.alpha = 255;
+			Projectile.Kill();
+		}
+		public override void Kill(int timeLeft)
+		{
+			int whoAmI = (int)Projectile.ai[0];
+			bool isAnItem = Projectile.ai[1] == -1;
+			if(isAnItem)
+            {
+				Item item = Main.item[whoAmI];
+				SpawnDust(item);
+            }
+			else
+			{
+				NPC npc = Main.npc[whoAmI];
+				SpawnDust(npc);
+			}
+		}
+	}
 }

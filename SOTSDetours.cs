@@ -10,6 +10,8 @@ using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -591,6 +593,53 @@ namespace SOTS
 					}
 				}
 			}
+			for(int i = 0; i < Main.item.Length; i++)
+            {
+				Item item = Main.item[i];
+				if(item.active)
+                {
+					Common.GlobalEntityItem gInstance;
+					if (item.TryGetGlobalItem<Common.GlobalEntityItem>(out gInstance))
+					{
+						if(gInstance.TeleportCounter > 0)
+                        {
+							Vector2 vec = item.Center / 16f - mapTopLeft;
+							vec *= mapScale;
+							vec += mapX2Y2AndOff;
+							vec = vec.Floor();
+							bool draw = true;
+							if (mapRect.HasValue)
+							{
+								Rectangle value2 = mapRect.Value;
+								if (!value2.Contains(vec.ToPoint()))
+								{
+									draw = false;
+								}
+							}
+							if(draw)
+							{
+								Texture2D texture = TextureAssets.Item[item.type].Value;
+								int frameCount = 1;
+								int frame = 0;
+								DrawAnimation anim = Main.itemAnimations[item.type];
+								if (anim != null)
+								{
+									frameCount = anim.FrameCount;
+									frame = anim.Frame;
+								}
+								Rectangle frameRect = new Rectangle(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount);
+								spriteBatch.Draw(texture, vec, frameRect, Color.White, 0f, frameRect.Size() / 2f, drawScale, 0, 0f);
+								Rectangle rectangle2 = Utils.CenteredRectangle(vec, frameRect.Size() * drawScale);
+								if (rectangle2.Contains(Main.MouseScreen.ToPoint()))
+								{
+									mouseTextString = Language.GetTextValue("Mods.SOTS.Common.ArchaeologistItemMap") + item.HoverName;
+									//_ = Main.MouseScreen + new Vector2(-28f) + new Vector2(4f, 0f);
+								}
+							}
+						}
+					}
+				}
+            }
 		}
 		private static void Lighting_GetColor9Slice_int_int_refVector3Array(On.Terraria.Lighting.orig_GetColor9Slice_int_int_refVector3Array orig, int x, int y, ref Vector3[] slices)
         {

@@ -21,6 +21,7 @@ Mods: {
 			GenSOTSGeodes: Generating Fancy Geodes
 			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
 			ArchaeologistMap: "Anomaly"
+			ArchaeologistItemMap: "Teleported "
 		}
 
 		ModifyWorldGenTasks: {
@@ -1187,7 +1188,7 @@ Mods: {
 					'''
 				AnomalyLocator:
 					''' 
-					Displays the location of various anomalies, such as electromagnetic transmissions and wormholes, on the Minimap
+					Displays the location of various anomalies, such as electromagnetic transmissions, wormholes, and teleported items, on the Minimap
 					Functions while equipped as an accessory, favorited in the inventory, or worn as a vanity accessory
 					'''
 
@@ -3915,6 +3916,7 @@ Mods: {
 			GlowSparkle: Glow Sparkle
 
 			VoidAnomaly: Void Anomaly
+			PortalDustProjectile: Portal Dust Projectile
 		}
 	}
 }
