@@ -538,7 +538,7 @@ namespace SOTS
 		}
 		private static void DrawSOTSMapIcons(Main self, SpriteBatch spriteBatch, Vector2 mapTopLeft, Vector2 mapX2Y2AndOff, Rectangle? mapRect, float mapScale, float drawScale, ref string mouseTextString)
 		{
-			if(!SOTSPlayer.ModPlayer(Main.LocalPlayer).AnomalyLocator)
+			if(!SOTSPlayer.ModPlayer(Main.LocalPlayer).AnomalyLocator || Main.gameMenu)
             {
 				return;
             }

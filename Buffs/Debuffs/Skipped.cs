@@ -21,7 +21,7 @@ namespace SOTS.Buffs.Debuffs
         public override void Update(Player p, ref int buffIndex)
         {
             p.noFallDmg = true;
-            if (p.buffTime[buffIndex] == 297)
+            if (p.buffTime[buffIndex] == 296)
                 PortalDrawingHelper.DustCircle(p.Center, p.width * 0.5f, p.height * 0.5f);
         }
     }

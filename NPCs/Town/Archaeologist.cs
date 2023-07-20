@@ -815,6 +815,10 @@ namespace SOTS.NPCs.Town
 			{
 				for (int i = -2; i <= 2; i++)
 				{
+					if (Main.tile[point.X + i, point.Y + j].WallType == WallID.LihzahrdBrickUnsafe)
+					{
+						return false;
+					}
 					if (j <= 1 && i == 0)
 						if (SOTSWorldgenHelper.TrueTileSolid(point.X + i, point.Y + j))
 						{
@@ -962,7 +966,7 @@ namespace SOTS.NPCs.Town
 					Main.drawToScreen = true;
 					Main.gameMenu = true;
 					canIMove = false;
-					for (int k = 0; k < 4; k++)
+					for (int k = 0; k <= 4; k++)
 					{
 						int currentIndex = 0;
 						for (int j = Radius; j >= -Radius; j--)
@@ -974,19 +978,22 @@ namespace SOTS.NPCs.Town
 								{
 									if (k == 0)
 									{
-										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 0);
+										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 0); //This saves the data onto the tiles and walls
 										DrawWall(ref Data[currentIndex], x + i, y + j, x2 + i, y2 + j, offset, 0);
 									}
-									if (k == 1)
+									if (k == 1) //This draws the background walls
 									{
 										DrawWall(ref Data[currentIndex], x + i, y + j, x2 + i, y2 + j, offset, 1);
+									}
+									if (k == 2) //This draws the liquid of the tiles
+									{
 										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 3);
 									}
-									if (k == 2)
-									{
+									if (k == 3) //this draws the tiles
+                                    {
 										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 1);
 									}
-									if (k == 3)
+									if (k == 4) //this returns the original data to how it is supposed to be
 									{
 										DrawTile(ref Data[currentIndex], value, x + i, y + j, x2 + i, y2 + j, offset, 2);
 										DrawWall(ref Data[currentIndex], x + i, y + j, x2 + i, y2 + j, offset, 2);
@@ -1214,13 +1221,13 @@ namespace SOTS.NPCs.Town
 		{
 			Color color = ColorHelpers.VoidAnomaly;
 			color.A = 0;
-			if (Main.netMode == NetmodeID.Server && SOTSWorld.GlobalCounter % 10 == 0)
+			if (Main.netMode == NetmodeID.Server && SOTSWorld.GlobalCounter % 120 == 0)
 			{
 				for (int k = 0; k < 255; k++)
 				{
 					if (Main.player[k].active)
 					{
-						RemoteClient.CheckSection(k, Projectile.Center);
+						RemoteClient.CheckSection(k, Projectile.Center, 1);
 					}
 				}
 				if (runOnce)

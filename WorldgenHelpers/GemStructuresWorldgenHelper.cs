@@ -651,7 +651,7 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 23:
 									tile.HasTile = true;
-									tile.TileType = 817;
+									tile.TileType = EvostoneBrick;
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 									break;
@@ -769,16 +769,16 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									break;
 								case 41:
-									if (confirmPlatforms == 1)
+									if (confirmPlatforms == 2)
 									{
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										WorldGen.PlaceTile(k, l, 79, true, true, -1, 22);
+										WorldGen.PlaceTile(k, l, TileID.Beds, true, true, -1, 22);
 									}
 									break;
 								case 42:
-									if (confirmPlatforms == 1)
+									if (confirmPlatforms == 2)
 									{
 										tile.HasTile = false;
 										tile.Slope = 0;
@@ -787,7 +787,7 @@ namespace SOTS.WorldgenHelpers
 									}
 									break;
 								case 43:
-									if (confirmPlatforms == 1)
+									if (confirmPlatforms == 2)
 									{
 										tile.HasTile = false;
 										tile.Slope = 0;
@@ -802,7 +802,7 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									break;
 								case 45:
-									if (confirmPlatforms == 1)
+									if (confirmPlatforms == 2)
 									{
 										tile.HasTile = false;
 										tile.Slope = 0;
