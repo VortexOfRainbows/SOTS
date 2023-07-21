@@ -408,6 +408,7 @@ namespace SOTS.NPCs.Town
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue4"), 0.5);
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue5"), 0.5);
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue6"), 0.5);
+				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue7"), 0.4);
 				if (currentLocationType == ImportantTileID.AcediaPortal || currentLocationType == ImportantTileID.AvaritiaPortal)
                 {
 					if(currentLocationType != ImportantTileID.AvaritiaPortal)
