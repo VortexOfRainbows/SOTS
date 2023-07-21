@@ -1917,7 +1917,8 @@ namespace SOTS.NPCs.Town
 			bool isAnItem = Projectile.ai[1] == -1;
 			if(isAnItem)
             {
-				Item item = Main.item[whoAmI];
+				Item item = new Item();
+				item.SetDefaults(whoAmI);
 				SpawnDust(item);
             }
 			else

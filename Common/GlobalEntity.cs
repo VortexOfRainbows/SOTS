@@ -180,10 +180,10 @@ namespace SOTS.Common
                 //        Main.NewText(TeleportCounter);
                 //}
                 TeleportCounter++;
-                if (TeleportCounter == 3)
+                if (TeleportCounter == 5)
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), item.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, item.whoAmI, -1);
+                        Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), item.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, item.type, -1);
                 }
             }
         }

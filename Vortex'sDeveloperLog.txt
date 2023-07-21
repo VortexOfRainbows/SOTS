@@ -45,16 +45,16 @@ Update Objectives:
 
 Daily Log:
 
-7/9/23 to 7/11/23 & 7/14 to 7/20
+7/9/23 to 7/11/23 & 7/14 to 7/21
 1. Added Anomaly Locator
-	1. Needs multiplayer testing
+	1. Works in multiplayer
 2. Added Void Anomalies...
 	1. Finished: Teleportation. Closing/Opening Visuals. Gem Barriers. Spawn Location Algorithm. Shaders for darkening the screen while nearby.
-	2. Needs: multiplayer syncing (Testing with multiple players now).
-	3. Finished: Item and NPCs teleporting seems to work quite well; 
+	2. Finished: Item and NPCs teleporting seems to work quite well; 
 		Section loading seems to be working good in multiplayer. The visuals, gem barriers, and spawn location algorithms are all working in multiplayer!
 		Might crash on certain worlds? Might've been a Amethyst Gem Structure Issue
 3. Fixed issues with Amethyst Gem Structure on worldgen
+4. Void Anomaly Seems to sync in multiplayer!!! Although it is not quite finished yet, so future features will also have to be tested.
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts
