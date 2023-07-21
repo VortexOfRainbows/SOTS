@@ -1,4 +1,4 @@
-Order Of Gems: Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
+Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
 1. Might still have some bugs with Subspace Locket
 
@@ -28,7 +28,6 @@ Update Objectives:
 	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Keystone, forming new item "Void Anomaly",
 		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
 		If an item is teleported through, it will not be allowed to teleport back through,
-	2. Teleports you to the other point on the map when you travel through, granting increased Maximum void by 50 Permanently (plays a short animation to indicate this).
 3. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
 4. More lines for the Archaeologist (NEED FOR UPDATE)
 	1. Remove debug lines and finalize position changing time/duration
@@ -53,8 +52,10 @@ Daily Log:
 	2. Finished: Item and NPCs teleporting seems to work quite well; 
 		Section loading seems to be working good in multiplayer. The visuals, gem barriers, and spawn location algorithms are all working in multiplayer!
 		Might crash on certain worlds? Might've been a Amethyst Gem Structure Issue
-3. Fixed issues with Amethyst Gem Structure on worldgen
+3. Fixed issues with Amethyst Gem Structure on worldgen (x2)... Hopefully.
 4. Void Anomaly Seems to sync in multiplayer!!! Although it is not quite finished yet, so future features will also have to be tested.
+5. Made some tooltips and crafting recipes more consistent
+6. 3 WIP items: Needs: Obtain methods, recipe (?) support, cooler visuals
 
 7/6/23 & 7/7/23
 1. Added roasted peanuts

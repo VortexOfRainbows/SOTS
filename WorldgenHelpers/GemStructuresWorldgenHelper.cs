@@ -280,6 +280,11 @@ namespace SOTS.WorldgenHelpers
 		{
 			int startingX = WorldGen.UndergroundDesertLocation.X;
 			int endingX = startingX + WorldGen.UndergroundDesertLocation.Width;
+			if(WorldGen.UndergroundDesertLocation.Width < 10) //Just in case the underground desert is broken, allow generating anywhere on the world except the edges
+            {
+				startingX = 500; //500 blocks from edge to avoid the ocean
+				endingX = Main.maxTilesX - 500;
+			}
 			int chosenX = Main.maxTilesX / 2;
 			int totalSpan = 0;
 			int heightToBeat = Main.maxTilesY;
@@ -304,7 +309,7 @@ namespace SOTS.WorldgenHelpers
 						{
 							if (heightToBeat == 0)
 								heightToBeat = j;
-							if (j == heightToBeat || j == heightToBeat + 1 || j == heightToBeat - 1)
+							if (j == heightToBeat || j == heightToBeat + 1 || j == heightToBeat - 1 || j == heightToBeat + 2 || j == heightToBeat - 2)
 							{
 								totalSpan++;
 							}

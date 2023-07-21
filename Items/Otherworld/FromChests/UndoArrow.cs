@@ -41,7 +41,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			// }
 			//Main.NewText(Main.invasionType);
 			//Main.NewText(Language.GetTextValue("Mods.SOTS.MapObject.LockedStrangeChest"));
-			if (SOTSWorld.DiamondKeySlotted && SOTSWorld.RubyKeySlotted
+			/*if (SOTSWorld.DiamondKeySlotted && SOTSWorld.RubyKeySlotted
 				&& SOTSWorld.EmeraldKeySlotted && SOTSWorld.SapphireKeySlotted
 				&& SOTSWorld.TopazKeySlotted && SOTSWorld.AmethystKeySlotted && SOTSWorld.AmberKeySlotted)
 			{
@@ -70,10 +70,11 @@ namespace SOTS.Items.Otherworld.FromChests
 					SOTSWorld.AmethystKeySlotted = true;
 				if (next == 6)
 					SOTSWorld.AmberKeySlotted = true;
-			}
-			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+			}*/
+			SOTSPlayer sPlayer = player.sotsPlayer();
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 32;
+			player.VoidPlayer().ResetAllVoidBonuses();
 			//Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
 			return false; 
 		}

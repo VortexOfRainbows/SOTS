@@ -6,6 +6,7 @@ using Terraria;
 using SOTS.Common.GlobalNPCs;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
+using SOTS.Void;
 
 namespace SOTS
 {
@@ -89,6 +90,14 @@ namespace SOTS
 				rect.Location = new Point((int)XAxis - overXAxis, rect.Location.Y);
 			}
 			return rect;
+		}
+		public static VoidPlayer VoidPlayer(this Player player)
+        {
+			return Void.VoidPlayer.ModPlayer(player);
+		}
+		public static SOTSPlayer sotsPlayer(this Player player)
+		{
+			return SOTSPlayer.ModPlayer(player);
 		}
 		/*public static void SetResearchCostAutomatically(this ModItem modItem)
 		{

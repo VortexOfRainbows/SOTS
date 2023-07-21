@@ -41,7 +41,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1).AddIngredient(ItemID.ManaCrystal, 1).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 5).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 5).AddIngredient(ItemID.ShadowScale, 15).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1).AddIngredient(ItemID.ManaCrystal, 1).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 5).AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 5).AddIngredient(ItemID.ShadowScale, 15).AddTile(TileID.DemonAltar).Register();
 		}
 	}
 }

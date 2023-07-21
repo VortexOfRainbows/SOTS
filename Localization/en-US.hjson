@@ -285,6 +285,8 @@ Mods: {
 				EarthenConduit: Earth Conduit
 				GoldenTrowel: Golden Trowel
 				AnomalyLocator: Anomaly Locator
+				SkipShard: Skip Shard
+				SkipSoul: Skip Soul
 
 			# CritBonus
 				OtherworldlyAmplifier: Otherworldly Amplifier
@@ -858,6 +860,7 @@ Mods: {
 			# Void
 				ScarletStar: Scarlet Crescent
 				VioletStar: Violet Crescent
+				SoulHeart: Soul Heart
 
 				AlmondMilk: Almond Milk
 				CoconutMilk: Coconut Milk
@@ -1131,13 +1134,13 @@ Mods: {
 				Sawflake: Throw a Sawflake that exudes a spiral of razor ice mist in every direction
 				ShieldofDesecar: 
 					'''
-					'Less is more'
 				Grants 1 defense for every 4 empty inventory slots
+					'Less is more'
 					'''
 				ShieldofStekpla: 
 					'''
-					'More is more'
 					Increases crit chance by 1% for every 4 full inventory slots
+					'More is more'
 					'''
 				SpikedClub: 
 					'''
@@ -1190,6 +1193,14 @@ Mods: {
 					''' 
 					Displays the location of various anomalies, such as electromagnetic transmissions, wormholes, and teleported items, on the Minimap
 					Functions while equipped as an accessory, favorited in the inventory, or worn as a vanity accessory
+					'''
+				SkipShard: 
+					'''
+					'A crystal with remarkable space-bending capacity'
+					'''
+				SkipSoul: 
+					'''
+					'A fragment of strange void energy'
 					'''
 
 			# CritBonus
@@ -2539,12 +2550,17 @@ Mods: {
 			# Void
 				ScarletStar: 
 					'''
-					Increases max void by 50 and void regeneration speed 5%
+					Permanently increases max void by 50 and void regeneration speed 5%
 					Can only be used once
 					'''
 				VioletStar: 
 					'''
-					Increases max void by 50 and void regeneration speed 5%
+					Permanently increases max void by 50 and void regeneration speed 5%
+					Can only be used once
+					'''
+				SoulHeart: 
+					'''
+					Permanently increases max void by 50 and void regeneration speed 5%
 					Can only be used once
 					'''
 				
@@ -2585,8 +2601,8 @@ Mods: {
 					'''
 				VoidenAnkh: 
 					'''
-					Increases max void by 20 and void regeneration speed by 2%
-					Caps out at 5
+					Permanently increases max void by 20 and void regeneration speed by 2%
+					Can be used 5 times
 					'''
 
 			ArcaneAqueduct: Surrounds you with 2 orbital projectiles

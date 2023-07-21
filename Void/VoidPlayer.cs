@@ -28,6 +28,7 @@ namespace SOTS.Void
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
 		public int voidStar = 0;
+		public int voidSoul = 0;
 		public int lootingSouls = 0;
 		public int soulsOnKill = 0;
 		public bool frozenVoid = false;
@@ -44,7 +45,6 @@ namespace SOTS.Void
 		public int BonusCrushRangeMin = 0;
 		public int BonusCrushRangeMax = 0;
 		public float VoidGenerateMoney = 0;
-
 		public static string GetVoidDeathMessage(int num)
         {
 			return Language.GetTextValue(("Mods.SOTS.DeathMessage.VD" + num));
@@ -55,6 +55,7 @@ namespace SOTS.Void
 			tag["voidMeterMax2"] = voidMeterMax2;
 			tag["voidAnkh"] = voidAnkh;
 			tag["voidStar"] = voidStar;
+			tag["voidSoul"] = voidSoul;
 			tag["voidMeter"] = voidMeter;
 			tag["lootingSouls"] = lootingSouls;
 			tag["voidBarPosX3"] = voidBarOffset.X;
@@ -66,7 +67,8 @@ namespace SOTS.Void
 			voidMeterMax2 = tag.GetInt("voidMeterMax2");
 			voidAnkh = tag.GetInt("voidAnkh");
 			voidStar = tag.GetInt("voidStar");
-			//if (tag.ContainsKey("voidMeter"))
+			if (tag.ContainsKey("voidSoul"))
+				voidSoul = tag.GetInt("voidSoul");
 			voidMeter = tag.GetFloat("voidMeter");
 			lootingSouls = tag.GetInt("lootingSouls");
 			if (tag.ContainsKey("voidBarPosX3"))
@@ -654,6 +656,7 @@ namespace SOTS.Void
 			}
 			UpdateVoidRegen();
 			voidMeterMax2 = voidMeterMax;
+			ApplyVoidMeterMax2Bonuses();
 			//maxStandingTimer = 2;
 			if (voidMeter != 0)
 			{
@@ -814,8 +817,7 @@ namespace SOTS.Void
 			#endregion
 
 			#region apply upgrade effects
-			voidRegenSpeed += 0.02f * voidAnkh;
-			voidRegenSpeed += 0.05f * voidStar;
+			ApplyRegenSpeedBonuses();
 			#endregion
 
 			lerpingVoidMeter = MathHelper.Lerp(lerpingVoidMeter, voidMeter, 0.08f);
@@ -837,5 +839,21 @@ namespace SOTS.Void
 			else
 				voidDamageTimer = 0;
 		}
+		public void ApplyRegenSpeedBonuses()
+		{
+			voidRegenSpeed += 0.02f * voidAnkh;
+			voidRegenSpeed += 0.05f * (voidStar + voidSoul);
+		}
+		public void ApplyVoidMeterMax2Bonuses()
+        {
+			return;
+        }
+		public void ResetAllVoidBonuses()
+        {
+			voidAnkh = 0;
+			voidStar = 0;
+			voidSoul = 0;
+			voidMeterMax = 100;
+        }
     }
 }

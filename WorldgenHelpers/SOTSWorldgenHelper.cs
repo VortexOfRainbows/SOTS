@@ -5121,6 +5121,10 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 		}
+		/// <summary>
+		/// Attempts to clean up floating trees by updating their tile frames.
+		/// Not sure if this works
+		/// </summary>
 		public static void CleanUpFloatingTrees()
 		{
 			WorldGen.skipFramingDuringGen = false;
@@ -5130,7 +5134,7 @@ namespace SOTS.WorldgenHelpers
 				{
 					Tile tile = Main.tile[i, j];
 					Tile tileD = Main.tile[i, j + 1];
-					if ((WorldGen.IsTreeType(tile.TileType) || tile.TileType == TileID.PalmTree) && tile.HasTile && !tileD.HasTile)
+					if (tile.HasTile && (WorldGen.IsTreeType(tile.TileType) || tile.TileType == TileID.PalmTree) && !tileD.HasTile)
 					{
 						WorldGen.SquareTileFrame(i, j);
 					}
