@@ -51,7 +51,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 80;
+			Item.damage = 75;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 90;
 			Item.height = 98;

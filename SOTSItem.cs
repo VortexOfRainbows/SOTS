@@ -554,6 +554,22 @@ namespace SOTS
 				if (!SOTSPlayer.ModPlayer(player).ConduitBelt)
 					return false;
 			}
+			if(player.sotsPlayer().PlasmaShrimp)
+			{
+				if (Main.myPlayer == player.whoAmI && player.statMana > player.statManaMax2 * 0.4f && item.CountsAsClass(DamageClass.Magic))
+				{
+					for (int i = 0; i < 1000; i++)
+					{
+						Projectile shrimp = Main.projectile[i];
+						if (shrimp.type == ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>() && shrimp.active && shrimp.owner == player.whoAmI)
+						{
+							Projectiles.Tide.PlasmaShrimp pShrimp = shrimp.ModProjectile as Projectiles.Tide.PlasmaShrimp;
+							pShrimp.FireTowards(Main.MouseWorld, (int)(item.damage * 0.5f) + 1);
+							break;
+						}
+					}
+				}
+			}
 			return base.CanUseItem(item, player);
         }
         public override bool? UseItem(Item item, Player player)

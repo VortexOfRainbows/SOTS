@@ -40,9 +40,35 @@ Update Objectives:
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 7. Glow Nylon Whip
 8. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
-9. Glowmoth Mastermode Trophy
 
 Daily Log:
+
+7/21
+1. Localization for Banners and Trophies
+2. Nerfs:
+	1. Armaggedon damage 270 -> 250
+	2. Chaos Chamber damage 90 -> 85
+	3. Ethereal Scepter damage 75 -> 70
+	4. Hyperlight Geyser damage 54 -> 50
+	5. Reality Shatter damage 80 -> 75
+	6. Rose Bow void cost 12 -> 15
+	7. Stellar Shot mana cost 3 -> 4, damage 53 -> 50
+	8. Supernova Storm mana cost 7 -> 10
+	9. Chaos Spirit Staff damage 60 -> 54
+3. Void Minion Costs (nerfed because void minions are OP and because of the new Max void consumable):
+	1. Chaos Spirit 150 -> 200 (nerfed the most)
+	2. Inferno Spirit 120 -> 150
+	3. Evil Spirit 100 -> 120
+	4. Cursed Blade stays at 100 (buffed)
+	5. Otherworld Spirit 75 -> 100 (nerfed the most)
+	6. TBethany Spirit 20 -> 25 (60 -> 75)
+	7. Nature Spirit, Tidal Spirit 40 -> 45 (nerfed the least)
+	8. Earthen Spirit 25 -> 30
+	9. Bethany Spirit 15 -> 20
+	10. Permafrost Spirit 54 -> 60 (nerfed the least)
+4. Added Glowmoth master mode trophy
+5. Plasma Shrimp reworked to fire alongside you instead of after you deal damage. This is mostly a lag prevention measure, however, it is a buff for single-target weapons as they no longer need to hit to deal extra damage, and also a nerf for multitarget weapons which no longer spam tons of lasers.
+6. Ripple waves from the potion and heart of sea no longer make annoying sounds
 
 7/9/23 to 7/11/23 & 7/14 to 7/21
 1. Added Anomaly Locator
@@ -393,10 +419,10 @@ Daily Log:
 2/7/23
 1. Added Dune Splicer (WIP. Needs feedback and Multiplayer Balancing, and proper spawning)
 
-
 2/5/23
 1. Stellar Serpent Launcher damage 60 -> 55
-	1. Durat 75% damage to Subspace Serpent
+	1. Duration nerfed 1500 -> 1200
+	2. 75% damage to Subspace Serpent
 	3. It's still really strong, but not as strong
 2. Dimension Shredder damage 42 -> 37 (slight adjustment to account for the buffs/rework)
 3. Plasma shrimp resprite!

@@ -218,6 +218,43 @@ Mods: {
 			# Banner
 				NatureSlimeBanner: Flowering Slime Banner
 				HoloSwordBanner: Holo Blade Banner
+				PutridPinkyRelic: Putrid Pinky Relic
+				PharaohsCurseRelic: Pharaoh's Curse Relic
+				AdvisorRelic: The Advisor Relic
+				PolarisRelic: Polaris Relic
+				LuxRelic: Lux Relic
+				SubspaceSerpentRelic: Subspace Serpent Relic
+				GlowmothRelic: Glowmoth Relic
+				BlueSlimerBanner: Blue Slimer Banner
+				TreasureSlimeBanner: Treasure Slime Banner
+				GoldenTreasureSlimeBanner: Golden Treasure Slime Banner
+				FrozenTreasureSlimeBanner: Frozen Treasure Slime Banner
+				ShadowTreasureSlimeBanner: Shadow Treasure Slime Banner
+				PyramidTreasureSlimeBanner: Pyramid Treasure Slime Banner
+				FlamingGhastBanner: Flaming Ghast Banner
+				BleedingGhastBanner: Bleeding Ghast Banner
+				ArcticGoblinBanner: Arctic Goblin Banner
+				LostSoulBanner: Lost Soul Banner
+				SnakeBanner: Snake Banner
+				SnakePotBanner: Snake Pot Banner
+				SittingMushroomBanner: Sitting Mushroom Banner
+				WallMimicBanner: Wall Mimic Banner
+				HoloSlimeBanner: Holo Slime Banner
+				HoloEyeBanner: Holo Eye Banner
+				TwilightDevilBanner: Twilight Devil Banner
+				FluxSlimeBanner: Flux Slime Banner
+				LesserWispBanner: Lesser Wisp Banner
+				GhastBanner: Ghast Banner
+				MaligmorBanner: Maligmor Banner
+				TeratomaBanner: Teratoma Banner
+				CorruptionTreasureSlimeBanner: Corruption Treasure Slime Banner
+				CrimsonTreasureSlimeBanner: Crimson Treasure Slime Banner
+				JungleTreasureSlimeBanner: Jungle Treasure Slime Banner
+				TwilightScouterBanner: Twilight Scouter Banner
+				HallowTreasureSlimeBanner: Hallow Treasure Slime Banner
+				DungeonTreasureSlimeBanner: Dungeon Treasure Slime Banner
+				PhaseSpeederBanner: Phase Speeder Banner
+				PhaseAssaulterBanner: Phase Assaulter Banner
 
 			# Celestial
 				Apocalypse: Apocalypse
@@ -913,7 +950,7 @@ Mods: {
 		ItemTooltip: {
 			# Abandoned Village
 				AncientSteelBar: "'An ancient proto-steel used by various civilizations... and goblins'"
-				AncientSteelHalberd: "Shatters enemies, making the next melee attack ignore defense and a guaranteed critical strike\nThough the Halberd cannot make use of the shattered effect"
+				AncientSteelHalberd: "Shatters enemies, making the next melee attack ignore defense and a guaranteed critical strike\nThe Halberd cannot make use of the shattered effect"
 				AncientSteelLongbow: 
 					'''
 					Has to windup before firing
@@ -2471,7 +2508,7 @@ Mods: {
 					'''
 				PlasmaShrimp: 
 					'''
-					When above 40% mana, magic hits fire hot, shrimpy plasma for 50% damage
+					When above 40% mana, magic weapons fire additional, hot, shrimpy plasma for 50% damage
 					Reduces mana cost by 5%
 					'Not so shrimple now'
 					'''

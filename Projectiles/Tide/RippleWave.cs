@@ -32,7 +32,6 @@ namespace SOTS.Projectiles.Tide
         {
 			return false;
         }
-        bool runOnce = true;
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
 			int defense = target.defense;
@@ -60,11 +59,11 @@ namespace SOTS.Projectiles.Tide
 			Projectile.position += Projectile.velocity;
 			Projectile.ai[1]++;
 			Projectile.alpha += 5;
-			if (runOnce)
-			{
-				SOTSUtils.PlaySound(SoundID.Item21, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
-				runOnce = false;
-            }
+			//if (runOnce)
+			//{
+			//	SOTSUtils.PlaySound(SoundID.Item21, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
+			//	runOnce = false;
+			//}
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
 			Projectile.rotation += 0.04f;
 		}

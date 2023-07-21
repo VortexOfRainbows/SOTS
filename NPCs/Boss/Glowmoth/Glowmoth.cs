@@ -559,7 +559,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				ModContent.ItemType<IlluminantStaff>(),
 				ModContent.ItemType<Items.Earth.Glowmoth.NightIlluminator>() }));
 			npcLoot.Add(notExpertRule);
-			//npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SubspaceSerpentRelic>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<GlowmothRelic>()));
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

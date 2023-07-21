@@ -55,7 +55,7 @@ namespace SOTS.Items.Chaos
             Item.autoReuse = true;
             Item.shootSpeed = 3f; 
 			Item.shoot = ModContent.ProjectileType<SupernovaLaser>();
-			Item.mana = 7;
+			Item.mana = 10;
 			if (!Main.dedServ)
 			{
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStormGlow").Value;

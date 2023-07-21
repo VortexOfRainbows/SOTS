@@ -18,18 +18,21 @@ namespace SOTS.Items.Banners
 		public const int FrameWidth = 18 * 3;
 		public const int FrameHeight = 18 * 4;
 		public Asset<Texture2D> RelicTexture;
+		public Asset<Texture2D> GlowmothRelicTexture;
 		public virtual string RelicTextureName => "SOTS/Items/Banners/Relic";
-
+		public virtual string GlowmothRelicTextureName => "SOTS/Items/Banners/GlowmothRelic2";
 		public override void Load()
 		{
 			if (!Main.dedServ)
 			{
 				RelicTexture = ModContent.Request<Texture2D>(RelicTextureName);
+				GlowmothRelicTexture = ModContent.Request<Texture2D>(GlowmothRelicTextureName);
 			}
 		}
 		public override void Unload()
 		{
 			RelicTexture = null;
+			GlowmothRelicTexture = null;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -76,7 +79,9 @@ namespace SOTS.Items.Banners
 				case 5:
 					itemType = ModContent.ItemType<SubspaceSerpentRelic>();
 					break;
-
+				case 6:
+					itemType = ModContent.ItemType<GlowmothRelic>();
+					break;
 			}
 
 			if (itemType > 0)
@@ -110,8 +115,12 @@ namespace SOTS.Items.Banners
 				return;
 
 			Texture2D texture = RelicTexture.Value;
-
 			int frameX = tile.TileFrameX / FrameWidth;
+			if (tile.TileFrameX / FrameWidth == 6)
+			{
+				texture = GlowmothRelicTexture.Value;
+				frameX = 0;
+			}
 			Rectangle frame = texture.Frame(texture.Width / texture.Height, 1, frameX, 0);
 
 			Vector2 origin = frame.Size() / 2f;
@@ -138,7 +147,6 @@ namespace SOTS.Items.Banners
 			}
 		}
 	}
-
 	public abstract class ModRelic : ModItem
 	{
 		public override void SetStaticDefaults() => this.SetResearchCost(1);
@@ -157,7 +165,6 @@ namespace SOTS.Items.Banners
 
         }
 	}
-
 	public class PutridPinkyRelic : ModRelic
 	{
 		public override void SafeSetDefaults()
@@ -167,14 +174,8 @@ namespace SOTS.Items.Banners
 			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 0);
 		}
 	}
-
 	public class PharaohsCurseRelic : ModRelic
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Pharaoh's Curse Relic");
-			this.SetResearchCost(1);
-		}
 		public override void SafeSetDefaults()
 		{
 			Item.width = 38;
@@ -182,7 +183,6 @@ namespace SOTS.Items.Banners
 			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 1);
 		}
 	}
-
 	public class AdvisorRelic : ModRelic
 	{
 		public override void SafeSetDefaults()
@@ -192,7 +192,6 @@ namespace SOTS.Items.Banners
 			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 2);
 		}
 	}
-
 	public class PolarisRelic : ModRelic
 	{
 		public override void SafeSetDefaults()
@@ -202,7 +201,6 @@ namespace SOTS.Items.Banners
 			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 3);
 		}
 	}
-
 	public class LuxRelic : ModRelic
 	{
 		public override void SafeSetDefaults()
@@ -212,7 +210,6 @@ namespace SOTS.Items.Banners
 			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 4);
 		}
 	}
-
 	public class SubspaceSerpentRelic : ModRelic
 	{
 		public override void SafeSetDefaults()
@@ -220,6 +217,15 @@ namespace SOTS.Items.Banners
 			Item.width = 30;
 			Item.height = 52;
 			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 5);
+		}
+	}
+	public class GlowmothRelic : ModRelic
+	{
+		public override void SafeSetDefaults()
+		{
+			Item.width = 30;
+			Item.height = 44;
+			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 6);
 		}
 	}
 }

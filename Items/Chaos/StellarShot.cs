@@ -18,7 +18,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 53;   
+            Item.damage = 50;   
             Item.DamageType = DamageClass.Magic;   
             Item.width = 102;    
             Item.height = 34;  
@@ -33,7 +33,7 @@ namespace SOTS.Items.Chaos
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<StarLaser>(); 
             Item.shootSpeed = 9f;
-			Item.mana = 3;
+			Item.mana = 4;
 			if (!Main.dedServ)
 			{
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/StellarShotGlow").Value;

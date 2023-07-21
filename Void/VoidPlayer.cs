@@ -316,23 +316,23 @@ namespace SOTS.Void
 		public static int minionVoidCost(int type)
 		{
 			if (type == (int)VoidMinionID.NatureSpirit || type == (int)VoidMinionID.TidalSpirit)
-				return 40;
+				return 45;
 			if (type == (int)VoidMinionID.ChaosSpirit)
-				return 150;
+				return 200;
 			if (type == (int)VoidMinionID.EarthenSpirit)
-				return 25;
-			if (type == (int)VoidMinionID.OtherworldSpirit)
-				return 75;
+				return 30;
 			if (type == (int)VoidMinionID.BethanySpirit)
-				return 15;
-			if (type == (int)VoidMinionID.TBethanySpirit)
 				return 20;
-			if (type == (int)VoidMinionID.CursedBlade || type == (int)VoidMinionID.EvilSpirit)
+			if (type == (int)VoidMinionID.TBethanySpirit)
+				return 25;
+			if (type == (int)VoidMinionID.CursedBlade || type == (int)VoidMinionID.OtherworldSpirit)
 				return 100;
 			if (type == (int)VoidMinionID.PermafrostSpirit)
-				return 54;
-			if(type == (int)VoidMinionID.InfernoSpirit)
+				return 60;
+			if(type == (int)VoidMinionID.EvilSpirit)
 				return 120;
+			if (type == (int)VoidMinionID.InfernoSpirit)
+				return 150;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)

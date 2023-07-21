@@ -19,6 +19,7 @@ using SOTS.Projectiles.Nature;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Projectiles.Permafrost;
 using SOTS.Projectiles.Temple;
+using SOTS.Projectiles.Tide;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
@@ -44,7 +45,8 @@ namespace SOTS
 				ModContent.ProjectileType<Projectiles.Blades.ToothAcheSlash>(),
 				ModContent.ProjectileType<Projectiles.Blades.VertebraekerSlash>(),
 				ModContent.ProjectileType<Projectiles.Celestial.ClairvoyanceShade>(),
-				ModContent.ProjectileType<Projectiles.Earth.PixelLaser>()
+				ModContent.ProjectileType<Projectiles.Earth.PixelLaser>(),
+				ModContent.ProjectileType<PlasmaShrimp>(),
 			};
 			isChargeWeapon = new int[]
 			{
