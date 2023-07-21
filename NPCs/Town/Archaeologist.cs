@@ -1459,7 +1459,7 @@ namespace SOTS.NPCs.Town
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						gen.TeleportCounter = 1;
-						Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), item.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, whoAmI, -1);
+						Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), item.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, item.type, -1);
 						entity.Center = positionOfOtherPortal;
 						entity.velocity *= 0.5f;
 						entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
