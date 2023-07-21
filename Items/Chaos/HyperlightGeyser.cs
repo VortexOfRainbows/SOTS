@@ -52,7 +52,7 @@ namespace SOTS.Items.Chaos
 		}
         public override void SetDefaults()
 		{
-			Item.damage = 50;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 78;
 			Item.height = 36;

@@ -49,7 +49,7 @@ Daily Log:
 	1. Armaggedon damage 270 -> 250
 	2. Chaos Chamber damage 90 -> 85
 	3. Ethereal Scepter damage 75 -> 70
-	4. Hyperlight Geyser damage 54 -> 50
+	4. Hyperlight Geyser damage 54 -> 48 (effectively reverted to pre-buff)
 	5. Reality Shatter damage 80 -> 75
 	6. Rose Bow void cost 12 -> 15
 	7. Stellar Shot mana cost 3 -> 4, damage 53 -> 50
