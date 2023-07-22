@@ -1725,6 +1725,7 @@ namespace SOTS
 		public override void AddRecipes()
 		{
 			Recipe.Create(ItemID.SlimeStaff, 1).AddIngredient(ModContent.ItemType<Wormwood>(), 30).AddTile(TileID.Anvils).Register();
+			ItemHelpers.InitializeWormholeRecipes();
 		}
 		public override void AddRecipeGroups()
 		{

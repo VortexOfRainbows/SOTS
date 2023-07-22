@@ -66,12 +66,6 @@ namespace SOTS.Items.Conduit
         {
             return Color.White;
 		}
-		public override void AddRecipes()
-		{
-			CreateRecipe(1)
-				.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly)
-				.AddIngredient<TaintedKeystoneShard>(1).Register();
-		}
 		public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
 			Vector3 vColor = ColorHelpers.VoidAnomaly.ToVector3() * 0.2f;
@@ -120,12 +114,6 @@ namespace SOTS.Items.Conduit
 		public override Color? GetAlpha(Color lightColor)
 		{
 			return Color.White;
-		}
-        public override void AddRecipes()
-        {
-			CreateRecipe(1)
-				.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly)
-				.AddRecipeGroup("SOTS:AnyGem", 1).Register();
 		}
         public override void Update(ref float gravity, ref float maxFallSpeed)
 		{

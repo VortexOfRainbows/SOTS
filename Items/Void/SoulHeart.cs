@@ -60,7 +60,6 @@ namespace SOTS.Items.Void
 			Item.maxStack = 999;
 			Item.autoReuse = false;
 			Item.consumable = true;
-			ItemID.Sets.ItemNoGravity[Item.type] = false;
 		}
 		public override bool? UseItem(Player player)
 		{

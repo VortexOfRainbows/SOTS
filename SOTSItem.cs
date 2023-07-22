@@ -37,6 +37,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent;
 using Terraria.Localization;
 using SOTS.Items.Conduit;
+using SOTS.Common;
 
 namespace SOTS
 {
@@ -728,6 +729,7 @@ namespace SOTS
     }
 	public static class ItemHelpers
 	{
+		public static HashSet<WormholeRecipe> WormholeRecipes;
 		public static void DrawInInventoryBobbing(SpriteBatch spriteBatch, Item item, Vector2 position, Rectangle frame, Color drawColor, float scale, float speedMultiplier = 1f, float sinMult = 1f)
 		{
 			Texture2D texture = TextureAssets.Item[item.type].Value;
@@ -748,11 +750,88 @@ namespace SOTS
 		}
 		public static void InitializeWormholeRecipes()
         {
-
+			WormholeRecipes = new HashSet<WormholeRecipe>() { 
+				new WormholeRecipe(ItemType<TaintedKeystoneShard>(), ItemType<SkipSoul>()), 
+				new WormholeRecipe("SOTS:AnyGem", ItemType<SkipShard>()),
+			};
+		}
+		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
+        {
+			foreach(WormholeRecipe wormRecipe in WormholeRecipes)
+            {
+				if(wormRecipe.ItemIsAnInput(item.type))
+                {
+					int newWhoAmI = Item.NewItem(new EntitySource_Misc("SOTS:Wormhole"), item.Hitbox, wormRecipe.ItemIDOutput, item.stack, false, item.prefix);
+					Item item2 = Main.item[newWhoAmI];
+					GlobalEntityItem gen = item2.GetGlobalItem<GlobalEntityItem>();
+					gen.TeleportCounter = 1;
+					item.active = false;
+					if (Main.netMode == NetmodeID.Server)
+					{
+						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, whoAmI);
+						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, newWhoAmI); //The new item should be shared anyway, but this should help it sync the global param
+					}
+                }
+            }
         }
 		public struct WormholeRecipe
         {
-
-        }
+			public string RecipeGroupInput;
+			public int ItemIDInput;
+			public int ItemIDOutput;
+			public void InitializeRecipe()
+            {
+				if(ItemIDInput != -20)
+				{
+					Recipe.Create(ItemIDOutput, 1)
+						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly)
+						.AddIngredient(ItemIDInput)
+						.Register();
+				}
+				else
+				{
+					Recipe.Create(ItemIDOutput, 1)
+						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly)
+						.AddRecipeGroup(RecipeGroupInput, 1).Register();
+				}
+			}
+			public bool ItemIsAnInput(int itemID)
+            {
+				List<int> items = new List<int>();
+				if(ItemIDInput != -20)
+					items.Add(ItemIDInput);
+				else
+                {
+					if(RecipeGroupInput.Equals("SOTS:AnyGem"))
+                    {
+						items = new List<int> {
+							ItemID.Ruby,
+							ItemID.Amethyst,
+							ItemID.Topaz,
+							ItemID.Sapphire,
+							ItemID.Emerald,
+							ItemID.Diamond,
+							ItemID.Amber,
+							ItemType<RoyalRubyShard>()
+						};
+                    }
+                }
+				return items.Contains(itemID);
+            }
+			public WormholeRecipe(int ItemInput, int ItemOutput)
+            {
+				ItemIDInput = ItemInput;
+				ItemIDOutput = ItemOutput;
+				RecipeGroupInput = "";
+				InitializeRecipe();
+			}
+			public WormholeRecipe(string RecipeGroup, int ItemOutput)
+			{
+				ItemIDInput = -20;
+				ItemIDOutput = ItemOutput;
+				RecipeGroupInput = RecipeGroup;
+				InitializeRecipe();
+			}
+		}
 	}
 }

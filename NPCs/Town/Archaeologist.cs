@@ -1468,6 +1468,7 @@ namespace SOTS.NPCs.Town
 						{
 							gen.NetUpdate(whoAmI);
 						}
+						ItemHelpers.ConvertItemUsingWormholeRecipe(item, whoAmI);
 					}
 				}
 				else if (entity is Player player)
