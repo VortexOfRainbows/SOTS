@@ -22,6 +22,7 @@ Mods: {
 			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
 			ArchaeologistMap: "Anomaly"
 			ArchaeologistItemMap: "Teleported "
+			VoidAnomalyCrafting: "Through wormhole conversion"
 		}
 
 		ModifyWorldGenTasks: {
@@ -132,6 +133,7 @@ Mods: {
 		}
 
 		AddRecipeGroups: {
+			AG: " Gem"
 			SB: " Silver Bar"
 			EM: " Evil Material"
 			EB: " Evil Bar"
@@ -1104,9 +1106,10 @@ Mods: {
 					'''
 				VoidAnomaly: 
 					'''
-					Increases void gain by 10 and void regeneration speed by 10%
+					Increases void gain by 1 and void regeneration speed by 5%
 					Getting hit will convert void into life for a duration
 					Increases the potency of Void Shock and Void Recovery
+					Allows access to wormhole crafting recipes
 					'''
 				VoidmageIncubator: 
 					'''

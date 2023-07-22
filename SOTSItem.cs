@@ -209,7 +209,7 @@ namespace SOTS
 		{
 			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() }; //Dark Blue
 			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() }; //Dark Red
-			rarities3 = new int[] { ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>() }; //Very Dark gray
+			rarities3 = new int[] { ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>(), ItemType<SkipShard>(), ItemType<SkipSoul>() }; //Very Dark gray
 			rarities4 = new int[] { ItemType<DreamLamp>() };
 
 			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
@@ -324,7 +324,7 @@ namespace SOTS
 			}
 			if (rarities3.Contains(item.type))
 			{
-				Color overrideColor = new Color(50, 50, 50);
+				Color overrideColor = new Color(60, 60, 60);
 				foreach (TooltipLine line2 in tooltips)
 				{
 					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
@@ -726,4 +726,33 @@ namespace SOTS
 			return myClone;
         }
     }
+	public static class ItemHelpers
+	{
+		public static void DrawInInventoryBobbing(SpriteBatch spriteBatch, Item item, Vector2 position, Rectangle frame, Color drawColor, float scale, float speedMultiplier = 1f, float sinMult = 1f)
+		{
+			Texture2D texture = TextureAssets.Item[item.type].Value;
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+			Vector2 inventoryBoxTextureCenter = origin * scale; //this puts the center in the box's usual position
+			Vector2 sinusoid = new Vector2(0, 3 * sinMult * scale * (float)Math.Cos(speedMultiplier * MathHelper.ToRadians(SOTSWorld.GlobalCounter)));
+			float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
+			spriteBatch.Draw(texture, position + inventoryBoxTextureCenter + sinusoid, frame, drawColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+		}
+		public static void DrawInWorldBobbing(SpriteBatch spriteBatch, Item item, Vector2 offset, Color color, ref float rotation, ref float scale, float speedMultiplier = 1f, float sinMult = 1f)
+		{
+			Texture2D texture = TextureAssets.Item[item.type].Value;
+			scale *= item.scale;
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+			Vector2 sinusoid = new Vector2(0, sinMult * 6 * scale * (float)Math.Cos(speedMultiplier * 2 * MathHelper.ToRadians(SOTSWorld.GlobalCounter))) + new Vector2(0, -3 * scale);
+			rotation = 15 * (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
+			spriteBatch.Draw(texture, item.position + offset + origin + sinusoid - Main.screenPosition, null, color, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+		}
+		public static void InitializeWormholeRecipes()
+        {
+
+        }
+		public struct WormholeRecipe
+        {
+
+        }
+	}
 }

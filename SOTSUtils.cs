@@ -7,11 +7,13 @@ using SOTS.Common.GlobalNPCs;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using SOTS.Void;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS
 {
 	public static class SOTSUtils
 	{
+		public static Texture2D inventoryBoxTexture => Terraria.GameContent.TextureAssets.InventoryBack.Value;
 		public static SlotId PlaySound(SoundStyle style, Vector2 position, float volume = 1f, float pitch = 0f, float pitchVariance = 0f)
 		{
 			style = style.WithVolumeScale(volume);

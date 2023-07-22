@@ -64,7 +64,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VoidAnomaly>()));
+			//itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VoidAnomaly>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpiritSymphony>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PhaseOre>(), 1, 120, 180));
 			itemLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));

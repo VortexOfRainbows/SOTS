@@ -135,7 +135,6 @@ namespace SOTS.Items.Secrets
 		}
 		public static bool IsItemForgotten => !SOTSWorld.DreamLampSolved;
         public static Texture2D texture => ModContent.Request<Texture2D>("SOTS/Items/Secrets/DreamingLamp").Value;
-		public Texture2D inventoryBoxTexture => Terraria.GameContent.TextureAssets.InventoryBack.Value;
 		public string appropriateNameRightNow => IsItemForgotten ? Language.GetTextValue("Mods.SOTS.ItemName.ForgottenLamp") : Language.GetTextValue("Mods.SOTS.ItemName.DreamingLamp");
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
@@ -158,8 +157,8 @@ namespace SOTS.Items.Secrets
 		{
 			Texture2D realTexture = texture;
 			origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 inventoryBoxTextureCenter = new Vector2(inventoryBoxTexture.Width / 2 - 5, inventoryBoxTexture.Height / 2 - 1) * scale; //this puts the center in the box's usual position
-			Vector2 sinusoid = new Vector2(0, 3 * scale * (float)Math.Cos(0.85f * MathHelper.ToRadians(SOTSWorld.GlobalCounter))) + new Vector2(0, -scale);
+			Vector2 inventoryBoxTextureCenter = origin * scale; //this puts the center in the box's usual position
+			Vector2 sinusoid = new Vector2(0, 3 * scale * (float)Math.Cos(0.85f * MathHelper.ToRadians(SOTSWorld.GlobalCounter)));
 			float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(SOTSWorld.GlobalCounter));
 			if (IsItemForgotten)
 			{
