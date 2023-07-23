@@ -99,7 +99,7 @@ namespace SOTS.Common
 
     public class GlobalEntityNPC : GlobalNPC
     {
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public void Draw(NPC npc, SpriteBatch spriteBatch)
         {
             if (RecentlyTeleported)
             {
@@ -112,7 +112,6 @@ namespace SOTS.Common
                 }
                 GlobalEntity.DrawTimeFreeze(npc, spriteBatch, multiplier);
             }
-            return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
         public override bool InstancePerEntity => true;
         public bool RecentlyTeleported = false;
@@ -148,7 +147,7 @@ namespace SOTS.Common
     }
     public class GlobalEntityItem : GlobalItem
     {
-        public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public void DrawInWorld(Item item, SpriteBatch spriteBatch)
         {
             if(RecentlyTeleported)
             {
@@ -157,7 +156,6 @@ namespace SOTS.Common
                     multiplier = 1;
                 GlobalEntity.DrawTimeFreeze(item, spriteBatch, multiplier);
             }
-            return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
         public override bool InstancePerEntity => true;
         public bool RecentlyTeleported

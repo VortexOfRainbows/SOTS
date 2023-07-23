@@ -44,7 +44,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<CursedMatter>(6).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<CursedMatter>(6).AddIngredient<RoyalRubyShard>(10).AddTile(TileID.Anvils).Register();
 		}
 		/*
 		int index1 = -1;

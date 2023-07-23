@@ -9,14 +9,13 @@ namespace SOTS.Buffs
         public override void SetStaticDefaults()
         {
             Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = false;
+            Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = false;
-		
         }
 		public override void Update(Player player, ref int buffIndex)
 		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
             player.GetDamage<VoidGeneric>() += 0.1f;
+            player.buffTime[buffIndex] = 3000;
 		}
     }
 }

@@ -6,6 +6,7 @@ using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Conduit;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS.Items.Void
 {
@@ -17,14 +18,14 @@ namespace SOTS.Items.Void
 			for (int k = 0; k < 8; k++)
 			{
 				Vector2 offset = new Vector2(4f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 45));
-				ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position + offset, frame, color * 1.2f * (1f - (Item.alpha / 255f)), scale, 0.25f);
+				ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position + offset, frame, color * 1.2f * (1f - (Item.alpha / 255f)), scale, 0.25f, 0.75f);
 			}
 			for (int k = 0; k < 10; k++)
 			{
 				Vector2 offset = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * -2 + k * 36));
-				ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position + offset, frame, Color.Lerp(color, Color.Black, 0.8f) * 0.75f * (1f - (Item.alpha / 255f)), scale, 0.25f);
+				ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position + offset, frame, Color.Lerp(color, Color.Black, 0.8f) * 0.75f * (1f - (Item.alpha / 255f)), scale, 0.25f, 0.75f);
 			}
-			ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position, frame, Color.White, scale, 0.25f);
+			ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position, frame, Color.White, scale, 0.25f, 0.75f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -33,14 +34,14 @@ namespace SOTS.Items.Void
 			for (int k = 0; k < 8; k++)
 			{
 				Vector2 offset = new Vector2(4f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 45));
-				ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, offset, color * 1.2f * (1f - (Item.alpha / 255f)), ref rotation, ref scale, 0.25f);
+				ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, offset, color * 1.2f * (1f - (Item.alpha / 255f)), ref rotation, ref scale, 0.25f, 0.75f);
 			}
 			for (int k = 0; k < 10; k++)
 			{
 				Vector2 offset = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * -2 + k * 36));
-				ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, offset, Color.Lerp(color, Color.Black, 0.8f) * 0.75f * (1f - (Item.alpha / 255f)), ref rotation, ref scale, 0.25f);
+				ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, offset, Color.Lerp(color, Color.Black, 0.8f) * 0.75f * (1f - (Item.alpha / 255f)), ref rotation, ref scale, 0.25f, 0.75f);
 			}
-			ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, Vector2.Zero, Color.White, ref rotation, ref scale, 0.25f);
+			ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, Vector2.Zero, Color.White, ref rotation, ref scale, 0.25f, 0.75f);
 			return false;
 		}
         public override void SetStaticDefaults()
@@ -76,7 +77,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.LifeCrystal, 1).AddIngredient(ModContent.ItemType<SkipSoul>(), 50).AddTile(TileID.DemonAltar).Register();
+			CreateRecipe(1).AddIngredient(ItemID.LifeCrystal, 1).AddIngredient(ModContent.ItemType<SkipSoul>(), 100).AddTile<TransmutationAltarTile>().Register();
 		}
 	}
 }

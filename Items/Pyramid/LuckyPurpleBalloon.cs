@@ -23,7 +23,7 @@ namespace SOTS.Items.Pyramid
         }
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<CursedMatter>(4).AddIngredient(ItemID.Sapphire, 1).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<CursedMatter>(4).AddIngredient(ItemID.Sapphire, 4).AddTile(TileID.Anvils).Register();
 		}
         public override void UseStyle(Player player, Rectangle heldItemFrame)
         {

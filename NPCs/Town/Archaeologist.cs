@@ -941,11 +941,15 @@ namespace SOTS.NPCs.Town
         {
 			writer.Write(APortalIsAccepting);
 			writer.Write(hasGrownToFull);
-        }
+			writer.WriteVector2(Archaeologist.AnomalyPosition2);
+			writer.WriteVector2(Archaeologist.AnomalyPosition3);
+		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			APortalIsAccepting = reader.ReadSingle();
 			hasGrownToFull = reader.ReadBoolean();
+			Archaeologist.AnomalyPosition2 = reader.ReadVector2();
+			Archaeologist.AnomalyPosition3 = reader.ReadVector2();
 		}
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
 		{
@@ -1374,6 +1378,7 @@ namespace SOTS.NPCs.Town
 				return SOTSWorld.DiamondKeySlotted.ToInt() + SOTSWorld.RubyKeySlotted.ToInt() + SOTSWorld.EmeraldKeySlotted.ToInt() + SOTSWorld.SapphireKeySlotted.ToInt() + SOTSWorld.TopazKeySlotted.ToInt() + SOTSWorld.AmethystKeySlotted.ToInt() + SOTSWorld.AmberKeySlotted.ToInt();
 			}
 		}
+		public bool isAcceptingATaintedKeystone = false;
 		public void EntityCollision()
 		{
 			bool allKeysSlotted = false;
@@ -1382,6 +1387,7 @@ namespace SOTS.NPCs.Town
 			float barrier = GetBarrierWidth();
 			if (allKeysSlotted)
 				barrier = -1;
+			bool foundOneKeystone = false;
 			for (int i = 0; i < Main.maxItems; i++)
 			{
 				Item item = Main.item[i];
@@ -1391,7 +1397,13 @@ namespace SOTS.NPCs.Town
 					if (!gen.RecentlyTeleported && !VoidAnomalyIsShattered)
 					{
 						if (barrier == -1)
+                        {
+							if(item.type == ModContent.ItemType<TaintedKeystone>())
+							{
+								foundOneKeystone = true;
+							}
 							AcceptEntity(item, i);
+						}
 						else
 							RejectEntity(item, barrier);
 					}
@@ -1426,10 +1438,18 @@ namespace SOTS.NPCs.Town
 					}
 				}
 			}
+			if(foundOneKeystone)
+			{
+				isAcceptingATaintedKeystone = true;
+			}
+			else
+			{
+				isAcceptingATaintedKeystone = false;
+			}
 		}
 		public void TeleportEntity(Entity entity, int whoAmI)
 		{
-			if (entity is NPC npc)
+			if (entity is NPC npc && !isAcceptingATaintedKeystone)
 			{
 				GlobalEntityNPC gen = npc.GetGlobalNPC<GlobalEntityNPC>();
 				if (gen.RecentlyTeleported)
@@ -1452,7 +1472,7 @@ namespace SOTS.NPCs.Town
 			}
 			else
 			{
-				if (entity is Item item)
+				if (entity is Item item && (!isAcceptingATaintedKeystone || item.type == ModContent.ItemType<TaintedKeystone>()))
 				{
 					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
 					if (gen.RecentlyTeleported)
@@ -1473,12 +1493,15 @@ namespace SOTS.NPCs.Town
 						{
 							if (Projectile.ai[0] == -1)
 							{
+								//WorldGen.BroadcastText(NetworkText.FromLiteral("Ran 1"), Color.Red);
 								Archaeologist.AnomalyPosition2 = finalPositionAfterShatter;
 							}
 							if (Projectile.ai[0] == -2)
 							{
-								Archaeologist.AnomalyPosition2 = finalPositionAfterShatter;
+								//WorldGen.BroadcastText(NetworkText.FromLiteral("Ran 2"), Color.Red);
+								Archaeologist.AnomalyPosition3 = finalPositionAfterShatter;
 							}
+							//WorldGen.BroadcastText(NetworkText.FromLiteral("Ran 3"), Color.Red);
 							Projectile.timeLeft = 3;
 							Projectile.ai[0] = -3;
 							Projectile.netUpdate = true;
@@ -1490,7 +1513,7 @@ namespace SOTS.NPCs.Town
 						ItemHelpers.ConvertItemUsingWormholeRecipe(item, whoAmI);
 					}
 				}
-				else if (entity is Player player)
+				else if (entity is Player player && !isAcceptingATaintedKeystone)
 				{
 					player.AddBuff(ModContent.BuffType<Skipped>(), 300);
 					if (Main.netMode != NetmodeID.Server)

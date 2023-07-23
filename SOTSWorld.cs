@@ -49,6 +49,7 @@ using SOTS.Items.Slime;
 using SOTS.NPCs.Town;
 using Terraria.DataStructures;
 using SOTS.Items.Furniture.Functional;
+using SOTS.Items.Conduit;
 
 namespace SOTS
 {
@@ -1724,7 +1725,8 @@ namespace SOTS
 		}
 		public override void AddRecipes()
 		{
-			Recipe.Create(ItemID.SlimeStaff, 1).AddIngredient(ModContent.ItemType<Wormwood>(), 30).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.SlimeStaff, 1).AddIngredient<Wormwood>(30).AddTile(TileID.Anvils).Register();
+			Recipe.Create(ItemID.TeleportationPotion, 1).AddIngredient(ItemID.BottledWater).AddIngredient<SkipSoul>(1).AddIngredient<SkipShard>(1).AddIngredient<FragmentOfOtherworld>(1).AddTile(TileID.Bottles).Register();
 			ItemHelpers.InitializeWormholeRecipes();
 		}
 		public override void AddRecipeGroups()

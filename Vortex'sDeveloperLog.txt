@@ -25,28 +25,30 @@ Update Objectives:
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-2. Void Anomaly, Spawns somewhere on the map randomly (2 positions), changing positions every day. Must be unlocked by releasing the 7 gem locks. (maybe need for update)
-	1. Can be extracted into an item form by throwing inside the Tainted Keystone, which will shatter the Anomaly, forming new item "Void Anomaly",
-		changing the position of the void anomaly. Other items sucked in will be transported slowly, one at a time. 
-		If an item is teleported through, it will not be allowed to teleport back through,
-3. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
-4. More lines for the Archaeologist (NEED FOR UPDATE)
+2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
+3. More lines for the Archaeologist (NEED FOR UPDATE)
 	1. Remove debug lines and finalize position changing time/duration
-5. More Bestiary entries (and visual fixes)
-6. Make Subspace Servant work with channel items:
+4. More Bestiary entries (and visual fixes)
+5. Make Subspace Servant work with channel items:
 	1. Give projectiles created during Servant's update window a special update characteristic.
 	2. Make sure this characteristic is NETSYNCED as SOON as the PROJECTILE is created!!!
 	3. This will make them no longer update as part of Terraria's normal projectile update.
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
-7. Glow Nylon Whip
-8. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
+6. Glow Nylon Whip
+7. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
+8. Torch Spewer (upgrade to flare gun using glow silk stuffs)
 
 Daily Log:
 
+7/23/23
+1. Completed the VOID ANOMALY!!!
+2. Next: Finish up Archaeologist timings
+
 7/22/23 - 7/23/23
 1. Added Wormhole Recipes:
-	1. Needs multiplayer testing
+	1. Normal Wormhole Recipes work in multiplayer!
+	2. Shattering Also seems to work in multiplayer!
 2. Reworked Tainted Keystone Shard crafting recipe, now uses wormhole conversion
 	1. Tainted Keystone (Complete) now requires less shards (100 -> 30)
 3. Tainted Keystone (Complete) now shatters the wormhole. Leaving the other wormhole unable to absorb items 
@@ -55,6 +57,12 @@ Daily Log:
 	1. Now uses a Terragrim in recipe + Terragrim is now hung in the damocles room
 	2. It is still *mostly* a dps increase from Terragrim, but the main benefit comes from the bonus range and utility
 5. Starshot Crossbow Damage 34 -> 32 (Since it fires 5 bullets, 170 -> 160)
+6. Voidmage Incubator now gives +2 void gain instead of +10 and 10% increased void regen speed
+	1. Now accessible in Normal Mode + recipe rework
+	2. Now has cooler visuals in item form
+7. Cybernetic Enhancements buff is now unlimited in duration (parity with 1.4.4)
+8. Post-Pharaoh Pyramid craftables now cost Keystone Shards instead of Rubies to craft, as well as costing more gems in general.
+9. Funny Teleportation Potion recipe using skip items
 
 7/21
 1. Localization for Banners and Trophies

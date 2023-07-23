@@ -50,7 +50,7 @@ namespace SOTS.Items.Pyramid
         }
         public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<SandstoneWarhammer>(), 1).AddIngredient(ModContent.ItemType<SpiritGlove>(), 1).AddIngredient(ModContent.ItemType<CursedMatter>(), 4).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SandstoneWarhammer>(), 1).AddIngredient(ModContent.ItemType<SpiritGlove>(), 1).AddIngredient(ModContent.ItemType<CursedMatter>(), 4).AddIngredient<RoyalRubyShard>(8).AddIngredient(ItemID.SoulofNight, 15).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

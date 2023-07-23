@@ -35,7 +35,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<CursedMatter>(10).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<CursedMatter>(10).AddIngredient(ItemID.Amethyst, 8).AddTile(TileID.Anvils).Register();
 		}
 		public override int GetVoid(Player player)
 		{

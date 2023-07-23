@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<CursedMatter>(7).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<CursedMatter>(7).AddIngredient<RoyalRubyShard>(10).AddTile(TileID.Anvils).Register();
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

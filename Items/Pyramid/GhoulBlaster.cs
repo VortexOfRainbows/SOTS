@@ -35,7 +35,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.PhoenixBlaster, 1).AddIngredient<RoyalMagnum>(1).AddIngredient<CursedMatter>(4).AddIngredient<SoulResidue>(12).AddIngredient(ItemID.SoulofNight, 15).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ItemID.PhoenixBlaster, 1).AddIngredient<RoyalMagnum>(1).AddIngredient<CursedMatter>(4).AddIngredient<RoyalRubyShard>(8).AddIngredient<SoulResidue>(12).AddIngredient(ItemID.SoulofNight, 15).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override Vector2? HoldoutOffset()
 		{

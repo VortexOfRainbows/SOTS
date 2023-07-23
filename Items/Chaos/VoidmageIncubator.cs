@@ -9,6 +9,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using Terraria.Localization;
 using SOTS.Items.Conduit;
+using System;
 
 namespace SOTS.Items.Chaos
 {
@@ -20,7 +21,14 @@ namespace SOTS.Items.Chaos
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidmageIncubatorSheet");
+			Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidmageIncubatorSheetGlow");
 			frame = new Rectangle(0, 48 * GetGem(unique) + 2, 24, 44);
+			for(int i = 0; i < 8; i++)
+            {
+				float sinusoid = 4f + 2f * (float)Math.Sin(SOTSWorld.GlobalCounter * MathHelper.Pi / 90f);
+				Vector2 circular = new Vector2(sinusoid * scale, 0).RotatedBy(i * MathHelper.TwoPi / 8f);
+				spriteBatch.Draw(textureG, position + circular, frame, new Color(120, 110, 130, 0), 0f, origin, scale, SpriteEffects.None, 0f);
+			}
 			spriteBatch.Draw(texture, position, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -30,9 +38,16 @@ namespace SOTS.Items.Chaos
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidmageIncubatorSheet");
+			Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidmageIncubatorSheetGlow");
 			Rectangle frame = new Rectangle(0, 48 * GetGem(unique) + 2, 24, 44);
 			Vector2 origin = Item.Size / 2;
-			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+			for (int i = 0; i < 8; i++)
+			{
+				float sinusoid = 4f + 2f * (float)Math.Sin(SOTSWorld.GlobalCounter * MathHelper.Pi / 90f);
+				Vector2 circular = new Vector2(sinusoid * scale, 0).RotatedBy(i * MathHelper.TwoPi / 8f);
+				spriteBatch.Draw(textureG, Item.Center - Main.screenPosition + circular, frame, new Color(120, 110, 130, 0), rotation, origin, scale, SpriteEffects.None, 0f);
+			}
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void SetStaticDefaults()
@@ -115,7 +130,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1).AddIngredient(ModContent.ItemType<SkipShard>(), 1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).AddIngredient(ModContent.ItemType<SkipShard>(), 100).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

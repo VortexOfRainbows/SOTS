@@ -57,7 +57,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<FrigidJavelin>(1).AddIngredient<CurseballTome>(1).AddIngredient<Geostorm>(1).AddIngredient<CursedMatter>(5).AddIngredient(ItemID.SoulofNight, 5).AddIngredient(ItemID.SoulofMight, 5).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<FrigidJavelin>(1).AddIngredient<CurseballTome>(1).AddIngredient<Geostorm>(1).AddIngredient<RubyKeystone>(1).AddIngredient<CursedMatter>(5).AddIngredient(ItemID.SoulofNight, 5).AddIngredient(ItemID.SoulofMight, 5).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

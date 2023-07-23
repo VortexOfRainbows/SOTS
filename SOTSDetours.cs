@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.Debuffs;
+using SOTS.Common;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
@@ -69,6 +70,7 @@ namespace SOTS
 			//Used in Archaeologist + Void Anomaly
 			On.Terraria.Main.DrawMiscMapIcons += Main_DrawMiscMapIcons;
 			On.Terraria.Lighting.GetColor9Slice_int_int_refVector3Array += Lighting_GetColor9Slice_int_int_refVector3Array;
+			On.Terraria.Main.DrawItem += Main_DrawItem;
 
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -430,9 +432,16 @@ namespace SOTS
 					NPC npc = Main.npc[i];
 					if (npc.active)
 					{
-						DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
-						if (instancedNPC.timeFrozen != 0)
-							instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch);
+						if (!npc.GetGlobalNPC<GlobalEntityNPC>().RecentlyTeleported)
+						{
+							DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
+							if (instancedNPC.timeFrozen != 0)
+								instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch);
+						}
+						else
+                        {
+							npc.GetGlobalNPC<GlobalEntityNPC>().Draw(npc, Main.spriteBatch);
+						}
 						if(npc.ModNPC is Archaeologist arch)
                         {
 							arch.Draw(Main.spriteBatch, Main.screenPosition, Lighting.GetColor((int)npc.Center.X / 16, (int)npc.Center.Y / 16));
@@ -652,6 +661,15 @@ namespace SOTS
 			}
 			else
 				orig(x, y, ref slices);
+        }
+		private static void Main_DrawItem(On.Terraria.Main.orig_DrawItem orig, Main self, Item item, int whoAmI)
+        {
+			GlobalEntityItem gen;
+			if (item.TryGetGlobalItem<GlobalEntityItem>(out gen))
+            {
+				gen.DrawInWorld(item, Main.spriteBatch);
+            }
+			orig(self, item, whoAmI);
         }
 		/*Code I wrote for HeartPlusUp! Calamity Mod!
 		private static void GlassTileWallFraming(On.Terraria.Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)

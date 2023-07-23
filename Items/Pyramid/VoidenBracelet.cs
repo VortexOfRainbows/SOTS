@@ -29,7 +29,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 4).AddIngredient(ItemID.Ruby, 1).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CursedMatter>(), 4).AddIngredient<RoyalRubyShard>(8).AddTile(TileID.Anvils).Register();
 		}
 	}
 }
