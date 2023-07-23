@@ -104,10 +104,10 @@ namespace SOTS.Items.Pyramid
 			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition, null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
-		public override void AddRecipes()
+		/*public override void AddRecipes()
 		{
 			Recipe.Create(ModContent.ItemType<RoyalRubyShard>()).AddIngredient(this, 1).AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1).AddTile(TileID.DemonAltar).Register();
-		}
+		}*/
 	}
 	public class TaintedKeystoneShardTile : ModTile
 	{

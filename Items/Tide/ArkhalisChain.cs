@@ -57,7 +57,7 @@ namespace SOTS.Items.Tide
 			Player player = Main.LocalPlayer;
 			if (Main.tile[i, j].TileFrameX >= 18)
 			{
-				player.cursorItemIconID = ItemID.Arkhalis;
+				player.cursorItemIconID = ItemID.Terragrim;
 				player.noThrow = 2;
 				player.cursorItemIconEnabled = true;
 			}
@@ -79,7 +79,7 @@ namespace SOTS.Items.Tide
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
 			Main.mouseRightRelease = false;
-			int key = ItemID.Arkhalis;
+			int key = ItemID.Terragrim;
 			if (Main.tile[i, j].TileFrameX < 18 && player.ConsumeItem(key))
 			{
 				SOTSUtils.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 1.1f, -0.2f);
@@ -89,7 +89,7 @@ namespace SOTS.Items.Tide
 			else if(Main.tile[i, j].TileFrameX >= 18)
 			{
 				SOTSUtils.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 1.1f, -0.2f);
-				int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1, false, 0, true);
+				int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 6) * 16, 16, 16, ItemID.Terragrim, 1, false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, player.whoAmI, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				tile.TileFrameX = 0;
 				NetMessage.SendTileSquare(-1, i, j, 2);
@@ -103,7 +103,7 @@ namespace SOTS.Items.Tide
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
 			if(Main.tile[i, j].TileFrameX >= 18 && !fail && !effectOnly)
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1);
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, (j + 6) * 16, 16, 16, ItemID.Terragrim, 1);
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
@@ -113,12 +113,12 @@ namespace SOTS.Items.Tide
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			if (!TextureAssets.Item[ItemID.Arkhalis].IsLoaded)
+			if (!TextureAssets.Item[ItemID.Terragrim].IsLoaded)
 			{
-				Main.instance.LoadItem(ItemID.Arkhalis);
+				Main.instance.LoadItem(ItemID.Terragrim);
 			}
 			Texture2D texture = TextureAssets.Tile[Type].Value;
-			Texture2D textureSword = TextureAssets.Item[ItemID.Arkhalis].Value;
+			Texture2D textureSword = TextureAssets.Item[ItemID.Terragrim].Value;
 			Vector2 origin = new Vector2(8, 10);
 			//float height = 16;
 			float timer = Main.GlobalTimeWrappedHourly * 40 + (i + j) * 4;

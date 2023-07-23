@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using SOTS.Void;
 
-namespace SOTS.Items.Chaos
+namespace SOTS.Items.Conduit
 {
 	public class VoidAnomaly : ModItem
 	{

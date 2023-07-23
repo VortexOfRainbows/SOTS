@@ -294,9 +294,9 @@ namespace SOTS
 			}
 			if (self.ModNPC is Archaeologist arch)
 			{
-				VoidAnomaly.APortalIsAccepting--;
-				if (VoidAnomaly.APortalIsAccepting <= 0)
-					VoidAnomaly.APortalIsAccepting = 0;
+                NPCs.Town.VoidAnomaly.APortalIsAccepting--;
+				if (NPCs.Town.VoidAnomaly.APortalIsAccepting <= 0)
+					NPCs.Town.VoidAnomaly.APortalIsAccepting = 0;
 				arch.ArchAI();
             }
 			orig(self, i);
@@ -545,7 +545,7 @@ namespace SOTS
 			for(int k = 0; k < 3; k++)
 			{
 				Vector2 archPos = k == 0 ? Archaeologist.AnomalyPosition1 : (k == 1 ? Archaeologist.AnomalyPosition2 : Archaeologist.AnomalyPosition3);
-				if (archPos != Vector2.Zero)
+				if (archPos != Vector2.Zero && archPos != NPCs.Town.VoidAnomaly.finalPositionAfterShatter)
 				{
 					float alphaMult = Archaeologist.FinalAnomalyAlphaMult;
 					Vector2 vec = archPos / 16f - mapTopLeft;
@@ -563,7 +563,7 @@ namespace SOTS
 					}
 					if(draw)
 					{
-						Texture2D value = ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidAnomaly").Value;
+						Texture2D value = ModContent.Request<Texture2D>("SOTS/Items/Conduit/VoidAnomaly").Value;
 						Rectangle rectangle = value.Frame();
 						Color circleColor = new Color(130, 100, 110, 0);
 						for (int j = 2; j >= -1; j--)

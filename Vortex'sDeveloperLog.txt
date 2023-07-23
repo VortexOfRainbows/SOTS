@@ -44,9 +44,17 @@ Update Objectives:
 
 Daily Log:
 
-7/22/23
+7/22/23 - 7/23/23
 1. Added Wormhole Recipes:
 	1. Needs multiplayer testing
+2. Reworked Tainted Keystone Shard crafting recipe, now uses wormhole conversion
+	1. Tainted Keystone (Complete) now requires less shards (100 -> 30)
+3. Tainted Keystone (Complete) now shatters the wormhole. Leaving the other wormhole unable to absorb items 
+	1. (and also leading to the top left of the map, which is temporary)
+4. Digital Daito damage 50 -> 40, hardlight alloy cost 30 -> 20
+	1. Now uses a Terragrim in recipe + Terragrim is now hung in the damocles room
+	2. It is still *mostly* a dps increase from Terragrim, but the main benefit comes from the bonus range and utility
+5. Starshot Crossbow Damage 34 -> 32 (Since it fires 5 bullets, 170 -> 160)
 
 7/21
 1. Localization for Banners and Trophies

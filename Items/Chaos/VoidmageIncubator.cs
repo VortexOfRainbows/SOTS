@@ -8,6 +8,7 @@ using SOTS.Void;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using Terraria.Localization;
+using SOTS.Items.Conduit;
 
 namespace SOTS.Items.Chaos
 {
@@ -45,7 +46,6 @@ namespace SOTS.Items.Chaos
             Item.value = Item.sellPrice(gold: 20);
             Item.rare = ItemRarityID.Yellow;
 			Item.accessory = true;
-			Item.expert = true;
 		}
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
@@ -67,8 +67,7 @@ namespace SOTS.Items.Chaos
 			int unique = modPlayer.UniqueVisionNumber;
 			GetBonuses(player, GetGem(unique));
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			vPlayer.bonusVoidGain += 10f;
-			vPlayer.voidRegenSpeed += 0.1f;
+			vPlayer.bonusVoidGain += 2f;
 			modPlayer.VMincubator = true;
 			modPlayer.TimeFreezeImmune = true;
 		}
@@ -116,7 +115,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).AddIngredient(ModContent.ItemType<TaintedKeystone>(), 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1).AddIngredient(ModContent.ItemType<SkipShard>(), 1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

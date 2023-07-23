@@ -22,7 +22,7 @@ Mods: {
 			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
 			ArchaeologistMap: "Anomaly"
 			ArchaeologistItemMap: "Teleported "
-			VoidAnomalyCrafting: "Through wormhole conversion"
+			VoidAnomalyCrafting: "Wormhole conversion"
 		}
 
 		ModifyWorldGenTasks: {
@@ -291,7 +291,6 @@ Mods: {
 				StellarSerpentLauncher: Stellar Serpent Launcher
 				StellarShot: Stellar Shot
 				SupernovaStorm: Supernova Storm
-				VoidAnomaly: Void Anomaly
 				VoidmageIncubator: Voidmage Incubator
 
 				SpiritSymphony: Spirit Symphony
@@ -326,6 +325,7 @@ Mods: {
 				AnomalyLocator: Anomaly Locator
 				SkipShard: Skip Shard
 				SkipSoul: Skip Soul
+				VoidAnomaly: Void Anomaly
 
 			# CritBonus
 				OtherworldlyAmplifier: Otherworldly Amplifier
@@ -1104,19 +1104,13 @@ Mods: {
 					Calls down a Supernova Beam from the sky
 					Causes enemies to rupture into homing bolts for 3x140% damage
 					'''
-				VoidAnomaly: 
-					'''
-					Increases void gain by 1 and void regeneration speed by 5%
-					Getting hit will convert void into life for a duration
-					Increases the potency of Void Shock and Void Recovery
-					Allows access to wormhole crafting recipes
-					'''
 				VoidmageIncubator: 
 					'''
 					Epic Gamer
-					Increases void gain by 10 and void regeneration speed by 10%
+					Increases void gain by 2
 					Getting hit will freeze time, converting void into life for the duration
 					Increases the potency of Void Shock and Void Recovery
+					Allows access to wormhole crafting recipes
 					'''
 				SpiritSymphony:
 					'''
@@ -1241,6 +1235,13 @@ Mods: {
 				SkipSoul: 
 					'''
 					'A fragment of strange void energy'
+					'''
+				VoidAnomaly: 
+					'''
+					Increases void gain by 1 and void regeneration speed by 5%
+					Getting hit will convert void into life for a duration
+					Increases the potency of Void Shock and Void Recovery
+					Allows access to wormhole crafting recipes
 					'''
 
 			# CritBonus

@@ -22,7 +22,7 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 50;
+            Item.damage = 40;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 62;
             Item.height = 66;  
@@ -48,7 +48,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.Arkhalis, 1).AddIngredient<HardlightAlloy>(30).AddIngredient<PrecariousCluster>(1).AddIngredient<TaintedKeystone>(1).AddTile<HardlightFabricatorTile>().Register();
+			CreateRecipe(1).AddIngredient(ItemID.Terragrim, 1).AddIngredient<HardlightAlloy>(20).AddIngredient<PrecariousCluster>(1).AddIngredient<TaintedKeystone>(1).AddTile<HardlightFabricatorTile>().Register();
 		}
 		/*public override int GetVoid(Player player)
 		{

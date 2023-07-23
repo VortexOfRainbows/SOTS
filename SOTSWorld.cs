@@ -1770,14 +1770,13 @@ namespace SOTS
 
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.AG"), new int[]
 			{
+				ItemID.Diamond,
 				ItemID.Ruby,
 				ItemID.Amethyst,
 				ItemID.Topaz,
 				ItemID.Sapphire,
 				ItemID.Emerald,
-				ItemID.Diamond,
-				ItemID.Amber,
-				ModContent.ItemType<RoyalRubyShard>()
+				ItemID.Amber
 			});
 			RecipeGroup.RegisterGroup("SOTS:AnyGem", group);
 

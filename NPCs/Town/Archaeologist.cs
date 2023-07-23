@@ -926,12 +926,14 @@ namespace SOTS.NPCs.Town
 				}
 			}
 		}
+		public static bool VoidAnomalyIsShattered => finalPositionAfterShatter == Archaeologist.AnomalyPosition2 || finalPositionAfterShatter == Archaeologist.AnomalyPosition3;
 		public static Vector2 AnomalyShaderPosition = Vector2.Zero;
 		public static float AnomalyShaderProgress = 0f;
 		public static float APortalIsAccepting = 0f;
 		public static float AnomalyIntesity = 0f;
 		public const int CloseToSize = 20;
-		public const int Radius = 6; 
+		public const int Radius = 6;
+		public static readonly Vector2 finalPositionAfterShatter = new Vector2(2328, 808);
 		public float alphaBarrier = 0;
 		private bool canIMove = false;
 		private SaveTileData[] Data = null;
@@ -1386,7 +1388,7 @@ namespace SOTS.NPCs.Town
 				if (item.active)
 				{
 					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
-					if (!gen.RecentlyTeleported)
+					if (!gen.RecentlyTeleported && !VoidAnomalyIsShattered)
 					{
 						if (barrier == -1)
 							AcceptEntity(item, i);
@@ -1397,7 +1399,7 @@ namespace SOTS.NPCs.Town
 				if (i < Main.maxNPCs)
 				{
 					NPC npc = Main.npc[i];
-					if (npc.active && !npc.noTileCollide && !npc.boss)
+					if (npc.active && !npc.noTileCollide && !npc.boss && !VoidAnomalyIsShattered)
 					{
 						GlobalEntityNPC gen = npc.GetGlobalNPC<GlobalEntityNPC>();
 						if (!gen.RecentlyTeleported)
@@ -1461,9 +1463,26 @@ namespace SOTS.NPCs.Town
 					{
 						gen.TeleportCounter = 1;
 						Projectile.NewProjectile(new EntitySource_Misc("SOTS:VoidAnomaly"), item.Center, Vector2.Zero, ModContent.ProjectileType<PortalDustProjectile>(), 0, 0, Main.myPlayer, item.type, -1);
-						entity.Center = positionOfOtherPortal;
-						entity.velocity *= 0.5f;
-						entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
+						if(item.type != ModContent.ItemType<TaintedKeystone>())
+						{
+							entity.Center = positionOfOtherPortal;
+							entity.velocity *= 0.5f;
+							entity.velocity += new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
+						}
+						else //If a tainted keystone is thrown into the portal, collapse it and create a "void anomaly" item.
+						{
+							if (Projectile.ai[0] == -1)
+							{
+								Archaeologist.AnomalyPosition2 = finalPositionAfterShatter;
+							}
+							if (Projectile.ai[0] == -2)
+							{
+								Archaeologist.AnomalyPosition2 = finalPositionAfterShatter;
+							}
+							Projectile.timeLeft = 3;
+							Projectile.ai[0] = -3;
+							Projectile.netUpdate = true;
+						}
 						if (Main.netMode == NetmodeID.Server)
 						{
 							gen.NetUpdate(whoAmI);
@@ -1808,7 +1827,7 @@ namespace SOTS.NPCs.Town
     }
 	public class PortalDustProjectile : ModProjectile
 	{
-        public override string Texture => "SOTS/Items/Chaos/VoidAnomaly";
+        public override string Texture => "SOTS/Items/Conduit/VoidAnomaly";
         public void SpawnDust(Item item)
 		{
 			if (NetmodeID.Server == Main.netMode)

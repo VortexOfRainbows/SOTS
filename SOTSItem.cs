@@ -751,8 +751,10 @@ namespace SOTS
 		public static void InitializeWormholeRecipes()
         {
 			WormholeRecipes = new HashSet<WormholeRecipe>() { 
-				new WormholeRecipe(ItemType<TaintedKeystoneShard>(), ItemType<SkipSoul>()), 
+				new WormholeRecipe(ItemType<TwilightGel>(), ItemType<SkipSoul>()), 
 				new WormholeRecipe("SOTS:AnyGem", ItemType<SkipShard>()),
+				new WormholeRecipe(ItemType<RoyalRubyShard>(), ItemType<TaintedKeystoneShard>()),
+				new WormholeRecipe(ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()),
 			};
 		}
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
@@ -781,17 +783,17 @@ namespace SOTS
 			public int ItemIDOutput;
 			public void InitializeRecipe()
             {
-				if(ItemIDInput != -20)
+				if (ItemIDInput != -20)
 				{
 					Recipe.Create(ItemIDOutput, 1)
-						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly)
+						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
 						.AddIngredient(ItemIDInput)
 						.Register();
 				}
 				else
 				{
 					Recipe.Create(ItemIDOutput, 1)
-						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly)
+						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
 						.AddRecipeGroup(RecipeGroupInput, 1).Register();
 				}
 			}
@@ -812,7 +814,6 @@ namespace SOTS
 							ItemID.Emerald,
 							ItemID.Diamond,
 							ItemID.Amber,
-							ItemType<RoyalRubyShard>()
 						};
                     }
                 }

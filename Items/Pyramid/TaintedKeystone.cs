@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS.Items.Pyramid
 {
@@ -100,7 +101,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 100).AddTile(TileID.DemonAltar).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 30).AddTile(ModContent.TileType<TransmutationAltarTile>()).Register();
 		}
 	}
 }
