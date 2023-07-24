@@ -390,6 +390,7 @@ Mods: {
 					NightIlluminator: Night Illuminator
 					GlowmothBag: Treasure Bag
 					TorchBomb : Torch Bomb
+					TorchGun: Torch Gun
 				
 				BigCrystal: Big Crystal
 				Colossus: Colossus
@@ -1461,6 +1462,11 @@ Mods: {
 						'''
 					TorchBomb: "'Illuminate the night with colorful explosives!'"
 					GlowmothBag: "{$CommonItemTooltip.RightClickToOpen}"
+					TorchGun:
+						'''
+						Right click to launch a torch bomb
+						Uses gel for ammo
+						'''
 
 						
 				Colossus: 
@@ -3964,6 +3970,7 @@ Mods: {
 			IlluminantStaffOrb: Illuminant Orb
 			IlluminantStaffShard: Illuminant Shard
 			TorchBomb: Torch Bomb
+			TorchBombWood: Torch Bomb
 			TorchEmber: Torch Ember
 			PixelLaser: Pixel Laser
 			PixelBlaster: Pixel Blaster

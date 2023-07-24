@@ -37,9 +37,11 @@ Update Objectives:
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 6. Glow Nylon Whip
 7. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
-8. Torch Spewer (upgrade to flare gun using glow silk stuffs)
 
 Daily Log:
+
+7/24/23
+1. Added Torch Gun (should be balanced + work in multiplayer)
 
 7/23/23
 1. Completed the VOID ANOMALY!!!
