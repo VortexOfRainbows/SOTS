@@ -3184,6 +3184,9 @@ Mods: {
 				Archaeologist : Strange Transmission 
 				ArchaeologistNearby : Archaeologist
 
+			# Anomaly
+				Ultracap: Ultracap
+
 			ArcticGoblin: Arctic Goblin
 			BloomingHook: Blooming Hook
 			BlueSlimer: Blue Slimer
@@ -3982,6 +3985,7 @@ Mods: {
 
 			VoidAnomaly: Void Anomaly
 			PortalDustProjectile: Portal Dust Projectile
+			UltraLaser: Ultra Laser
 		}
 	}
 }

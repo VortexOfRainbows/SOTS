@@ -40,8 +40,8 @@ namespace SOTS.NPCs.Town
 		public static Vector2 AnomalyPosition3 = Vector2.Zero;
 		public static float AnomalyAlphaMult = 0f;
 		public static float FinalAnomalyAlphaMult = 0f;
-		public static int locationTimer = 59960;
-		public const int timeToGoToSetPiece = 60000; //This is 1000 seconds
+		public static int locationTimer = 28700;
+		public const int timeToGoToSetPiece = 28800; //This is 480 seconds or 8 minutes
 		public const int MinimumIdleCycles = 6;
 		public const int MaximumIdleCycles = 22;
 		public const int MinimunLookCycles = 5;
@@ -603,10 +603,10 @@ namespace SOTS.NPCs.Town
 				VoidAnomaly.KillOtherAnomalies();
 				VoidAnomaly.PlaceDownAnomalies();
 				AnomalyAlphaMult = 0;
-				if (Main.netMode == NetmodeID.Server)
-					Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The location is at: " + currentLocationType), Color.Gray);
-				else
-					Main.NewText("The location is at: " + currentLocationType);
+				//if (Main.netMode == NetmodeID.Server)
+				//	Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The location is at: " + currentLocationType), Color.Gray);
+				//else
+				//	Main.NewText("The location is at: " + currentLocationType);
 				hasTeleportedYet = true;
 			}
 			else
