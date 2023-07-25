@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Anomaly
 		{
 			Projectile.width = 8;
 			Projectile.height = 8;
-			Projectile.timeLeft = 90;
+			Projectile.timeLeft = 60;
 			Projectile.penetrate = -1;
 			Projectile.hostile = true;
 			Projectile.friendly = false;
@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Anomaly
 		{
 			if(!hasInit)
 			{
-				SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.3f);
+				SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.4f);
 			}
 			InitializeLaser();
 		}
@@ -58,33 +58,42 @@ namespace SOTS.Projectiles.Anomaly
 					break;
 				}
 				bool extra = !hasInit;
-				int chance = SOTS.Config.lowFidelityMode ? 36 : 12;
-				if (Main.rand.NextBool(chance) || extra)
+				int chance = SOTS.Config.lowFidelityMode ? 100 : 70;
+				if (Main.rand.NextBool(chance) || extra && b > 10)
 				{
-					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 0.75f);
+					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 0.8f);
 					dust.noGravity = true;
 					if (!extra)
 					{
 						dust.velocity = dust.velocity * 0.25f;
-						dust.fadeIn = 17;
 					}
 					else
 					{
-						dust.velocity *= 1.25f;
-						dust.velocity += Projectile.velocity * Main.rand.NextFloat(5f, 8f);
-						dust.fadeIn = 12;
-						dust.scale *= 1.25f;
+						dust.velocity *= 1.2f;
+						dust.velocity += Projectile.velocity * Main.rand.NextFloat(4f, 7f);
+						dust.scale *= 1.4f;
 					}
+					dust.fadeIn = 0.2f;
 					dust.velocity.X += Main.rand.NextFloat(-3, 3f);
 				}
 			}
-			for (int i = 3; i > 0; i--)
+			if(!hasInit)
 			{
-				Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(16, 16), 26, 26, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.5f);
+				for (int i = 20; i > 0; i--)
+				{
+					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.5f);
+					dust.noGravity = true;
+					dust.velocity *= 1.0f;
+					if (i == 2)
+						dust.velocity += Projectile.velocity * Main.rand.NextFloat(4f, 7f);
+					dust.fadeIn = 0.2f;
+				}
+			}
+			else if(!Main.rand.NextBool(3))
+			{
+				Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.5f);
 				dust.noGravity = true;
 				dust.velocity = dust.velocity * 0.2f + Projectile.velocity * Main.rand.NextFloat(0.1f, 1.0f);
-				if (i == 2)
-					dust.velocity += new Vector2(0, -Main.rand.NextFloat(0.1f, 0.3f));
 				dust.fadeIn = 0.2f;
 			}
 			hasInit = true;
@@ -92,7 +101,7 @@ namespace SOTS.Projectiles.Anomaly
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;
-			if(Projectile.timeLeft > 20)
+			if(Projectile.timeLeft > 30)
 			{
 				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, finalPosition, 20f * scaleMult * Projectile.scale, ref point))
 				{
@@ -106,29 +115,22 @@ namespace SOTS.Projectiles.Anomaly
 		{
 			if (!hasInit)
 				return;
-			float alphaScale = 1f;
+			float alphaScale = Projectile.timeLeft / 60f;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 toEnd = finalPosition - Projectile.Center;
 			float maxLength = toEnd.Length() / texture.Height * 4;
 			Color color;
-			float width;
-			for (int j = 0; j <= 2; j++)
+			for (int j = 0; j < 12; j++)
 			{
+				Vector2 offset = Vector2.Zero;
 				float percent = 0f;
-				if (j == 0)
-				{
-					color = Color.Black;
-					width = 1f;
-				}
-				else
-                {
-					color = new Color(100, 100, 100, 0);
-					width = 1.0f + j * 0.25f;
-                }
+				color = new Color(120, 100, 130, 0);
 				for (float i = 0; i < maxLength; i++)
 				{
-					if(percent < 1)
+					if(j != 0)
+						offset = new Vector2(2 * (float)Math.Sin(MathHelper.ToRadians(i * 12)), 0).RotatedBy(j * MathHelper.TwoPi / 12f + MathHelper.ToRadians(SOTSWorld.GlobalCounter));
+					if (percent < 1)
 						percent += 0.1f;
 					if (!SOTS.Config.lowFidelityMode || (int)(i % 2) == 0)
 					{
@@ -140,7 +142,7 @@ namespace SOTS.Projectiles.Anomaly
 						//float sinusoid = 1.0f + (0.1f + 0.1f * (float)Math.Sin(MathHelper.ToRadians(Math.Abs(i) * 16 + ColorHelpers.soulColorCounter * 4f))) * Projectile.scale;
 						//float scale = Projectile.scale * scaleMult * sinusoid * (1 - 0.9f * (float)Math.Abs(i) / maxLength);
 						Vector2 drawPos = position - Main.screenPosition;
-						spriteBatch.Draw(texture, drawPos, null, color * alphaScale, Projectile.velocity.ToRotation() + MathHelper.PiOver2, origin, new Vector2(width * (float)Math.Sqrt(percent), 0.25f), SpriteEffects.None, 0f);
+						spriteBatch.Draw(texture, drawPos + offset, null, color * alphaScale * percent, Projectile.velocity.ToRotation() + MathHelper.PiOver2, origin, new Vector2(1.0f * (0.5f + (float)Math.Sqrt(percent)), 0.5f), SpriteEffects.None, 0f);
 					}
 				}
 			}

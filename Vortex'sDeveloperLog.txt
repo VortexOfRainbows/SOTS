@@ -41,7 +41,7 @@ Daily Log:
 7/24/23
 1. Added Torch Gun (should be balanced + work in multiplayer)
 2. Archaeologist will switch positions every 8 minutes
-3. 
+3. WIP Ultracap Enemy
 
 7/23/23
 1. Completed the VOID ANOMALY!!!

@@ -19,15 +19,15 @@ namespace SOTS.NPCs.Anomaly
 {
 	public class Ultracap : ModNPC
 	{
-		float ai1 = 600;
+		float ai1 = 60;
         public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 10;
 		}
         public override void SetDefaults()
 		{
-            NPC.lifeMax = 80;   
-            NPC.damage = 30; 
+            NPC.lifeMax = 100;   
+            NPC.damage = 40; 
             NPC.defense = 16;  
             NPC.knockBackResist = 0f;
             NPC.width = 36;
@@ -49,27 +49,103 @@ namespace SOTS.NPCs.Anomaly
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 20);
 			Vector2 drawPos = NPC.Center - screenPos;
+			if (NPC.ai[0] > 0)
+			{
+				DrawLaserTelegraph(spriteBatch, screenPos);
+			}
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
+		public void DrawLaserTelegraph(SpriteBatch spriteBatch, Vector2 screenPos)
+		{
+			Texture2D texture = ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/PixelLaser").Value;
+			Vector2 drawOrigin = new Vector2(0, 1);
+			Vector2 drawPos = NPC.Center - screenPos;
+			float percent = NPC.ai[0] / ai1;
+			if (percent > 1f)
+				percent = 1f;
+			for(int i = -4; i <= 4; i++)
+            {
+				Color color = Color.Lerp(new Color(213, 66, 232), new Color(191, 190, 238), 0.5f + i * 0.125f);
+				color.A = 0;
+				float degrees = i * 10f;
+				float antiDegrees = Math.Sign(i) * 40f * percent * percent;
+				if (Math.Abs(antiDegrees) > Math.Abs(degrees))
+				{
+					antiDegrees = degrees;
+				}
+				degrees -= antiDegrees;
+				float rotation = MathHelper.ToRadians(degrees);
+				Vector2 offset = new Vector2(-i * 0.75f, 0);
+				float size = SearchForTileLength(NPC.Center + offset, NPC.Center + new Vector2(0, 1200).RotatedBy(rotation));
+				spriteBatch.Draw(texture, drawPos + offset, null, color * (float)Math.Sqrt(percent) * (1 - Math.Abs(degrees) / 40f) * 0.75f, MathHelper.ToRadians(degrees + 90), drawOrigin, new Vector2(size / texture.Width, 1f), SpriteEffects.None, 0f);
+			}
+		}
+		public float SearchForTileLength(Vector2 start, Vector2 end)
+		{
+			Vector2 currentPosition = start;
+			float total = (start - end).Length();
+			float iterator = 2f / total;
+			for (float b = 0; b <= 1f; b += iterator)
+			{
+				currentPosition = Vector2.Lerp(start, end, b);
+				int i = (int)currentPosition.X / 16;
+				int j = (int)currentPosition.Y / 16;
+				if (WorldgenHelpers.SOTSWorldgenHelper.TrueTileSolid(i, j))
+				{
+					return (start - currentPosition).Length();
+				}
+			}
+			return (start - currentPosition).Length();
+		}
 		public override void AI()
 		{
-			NPC.TargetClosest(true);
+			ai1 = 80;
+			NPC.TargetClosest(false);
 			Player player = Main.player[NPC.target];
-			bool lineOfSight = Collision.CanHitLine(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height);
 			Vector2 toPlayer = player.Center + new Vector2(0, -128) - NPC.Center;
 			float length = toPlayer.Length();
-			float speed = 0.85f + 0.35f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[0] * 3)) + length * 0.01f;
-			if (lineOfSight || length <= 640)
+			float speed = 0.85f + 0.35f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[0] * 3)) + length * 0.0076f;
+			toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
+			if (NPC.ai[0] > 0)
 			{
-				if (length > 320 && !lineOfSight)
-					speed *= 0.5f;
-				toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
-				NPC.velocity.Y *= 0.9775f;
-				NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.1475f * speed;
+				NPC.velocity *= 0.9f;
+				if (NPC.ai[0] > ai1 + 10)
+				{
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+						Vector2 spawn = NPC.Center - new Vector2(0, 4);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, new Vector2(0, 4), ProjectileType<UltraLaser>(), damage2, 1f, Main.myPlayer, -3, -1f);
+					}
+					NPC.velocity.Y -= 4f;
+					NPC.ai[0] = 0;
+					if (Main.netMode == NetmodeID.Server)
+						NPC.netUpdate = true;
+				}
+				else
+					NPC.ai[0]++;
+				NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.05f * speed;
+				NPC.velocity.Y += 0.0025f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 6));
+				NPC.ai[1]++;
 			}
-			NPC.velocity.Y += 0.01f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[0] * 6));
-			if(!Main.rand.NextBool(3))
+			else 
+			{
+				if (length < 24f || Main.rand.NextBool(240))
+                {
+					NPC.ai[0]++;
+					if (Main.netMode == NetmodeID.Server)
+						NPC.netUpdate = true;
+                }
+				else
+				{
+					NPC.velocity.Y *= 0.9775f;
+					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.1475f * speed;
+					NPC.velocity.Y += 0.01f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 6));
+					NPC.ai[1]++;
+				}
+			}
+			if (!Main.rand.NextBool(3))
 			{
 				Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(-4, NPC.height - 17), NPC.width, 12, DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, Main.rand.NextFloat(1f)), 1f);
 				dust.color.A = 0;
@@ -78,20 +154,6 @@ namespace SOTS.NPCs.Anomaly
 				dust.velocity.Y += 2.5f;
 				dust.fadeIn = 8;
 			}
-			int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
-
-			NPC.ai[0]++;
-			if (NPC.ai[0] >= 600)
-			{
-				NPC.ai[0] = 0;
-			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.ai[0] % 60 == 0)
-			{
-				Vector2 spawn = NPC.Center + new Vector2(0, 16);
-				Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, new Vector2(0, 4), ProjectileType<UltraLaser>(), damage2, 1f, Main.myPlayer, -3, -1f);
-			}
-			//if(tileCollide)
-			//	NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);
 		}
 		public override void FindFrame(int frameHeight) 
 		{
