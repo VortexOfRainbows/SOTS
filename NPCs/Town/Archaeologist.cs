@@ -1914,19 +1914,22 @@ namespace SOTS.NPCs.Town
 						localX -= width;
 						localY++;
 					}
-					if (data[i].A >= 255 && Main.rand.NextBool(5))
+					if(i < data.Length)
 					{
-						Vector2 offset = -new Vector2(width / 2, height / 2) + new Vector2(localX, localY);
-						offset.X *= spriteDirection;
-						offset = offset.RotatedBy(rotation);
-						Vector2 velocity = new Vector2(offset.X / width, offset.Y / height) * 2f;
-						velocity = velocity.RotatedBy(rotation);
-						Color color = data[i];
-						Dust dust = Dust.NewDustDirect(Projectile.Center + offset - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, color, 0.5f));
-						dust.velocity = velocity;
-						dust.fadeIn = 3;
-						dust.noGravity = true;
-						dust.color.A = 0;
+						if (data[i].A >= 255 && Main.rand.NextBool(5))
+						{
+							Vector2 offset = -new Vector2(width / 2, height / 2) + new Vector2(localX, localY);
+							offset.X *= spriteDirection;
+							offset = offset.RotatedBy(rotation);
+							Vector2 velocity = new Vector2(offset.X / width, offset.Y / height) * 2f;
+							velocity = velocity.RotatedBy(rotation);
+							Color color = data[i];
+							Dust dust = Dust.NewDustDirect(Projectile.Center + offset - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, color, 0.5f));
+							dust.velocity = velocity;
+							dust.fadeIn = 3;
+							dust.noGravity = true;
+							dust.color.A = 0;
+						}
 					}
 				}
 			}

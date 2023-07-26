@@ -37,7 +37,17 @@ namespace SOTS.Projectiles.Anomaly
 		{
 			if(!hasInit)
 			{
+				Color color = ColorHelpers.VoidAnomaly;
+				color.A = 0;
 				SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.4f);
+				for (int i = 20; i > 0; i--)
+				{
+					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.4f);
+					dust.noGravity = true;
+					dust.velocity *= 1.5f;
+					dust.velocity -= Projectile.velocity * Main.rand.NextFloat(1f, 2f);
+					dust.fadeIn = 0.2f;
+				}
 			}
 			InitializeLaser();
 		}
@@ -47,7 +57,7 @@ namespace SOTS.Projectiles.Anomaly
 			color.A = 0;
 			Vector2 startingPosition = Projectile.Center;
 			Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero);
-			for (int b = 0; b < 640; b++)
+			for (int b = 0; b < 800; b++)
 			{
 				startingPosition += Projectile.velocity * 2.5f;
 				finalPosition = startingPosition;
@@ -84,8 +94,7 @@ namespace SOTS.Projectiles.Anomaly
 					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.5f);
 					dust.noGravity = true;
 					dust.velocity *= 1.0f;
-					if (i == 2)
-						dust.velocity += Projectile.velocity * Main.rand.NextFloat(4f, 7f);
+					dust.velocity += Projectile.velocity * Main.rand.NextFloat(4f, 7f);
 					dust.fadeIn = 0.2f;
 				}
 			}
@@ -153,5 +162,9 @@ namespace SOTS.Projectiles.Anomaly
 			Draw(Main.spriteBatch);
 			return false;
 		}
-	}
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+			VoidPlayer.VoidBurn(Mod, target, 10, 420);
+		}
+    }
 }

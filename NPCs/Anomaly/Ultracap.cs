@@ -19,7 +19,7 @@ namespace SOTS.NPCs.Anomaly
 {
 	public class Ultracap : ModNPC
 	{
-		float ai1 = 60;
+		public const float AttackWindup = 75;
         public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 10;
@@ -53,15 +53,30 @@ namespace SOTS.NPCs.Anomaly
 			{
 				DrawLaserTelegraph(spriteBatch, screenPos);
 			}
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			Color color = new Color(210, 50, 230, 0) * 0.6f;
+			color.A = 0;
+			if (NPC.ai[0] <= AttackWindup + 10)
+			{
+				float percent = NPC.ai[0] / AttackWindup;
+				if (percent > 1f)
+					percent = 1f;
+				for (int i = 0; i < 12; i++)
+				{
+					Vector2 offset = new Vector2(3f + 2 * percent, 0).RotatedBy(MathHelper.ToRadians(i * 30));
+					spriteBatch.Draw(texture, drawPos + offset, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(color) * (0.5f + 1f * percent), NPC.rotation, drawOrigin, 1.0f, SpriteEffects.None, 0f);
+				}
+			}
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, NPC.width, NPC.height), NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public void DrawLaserTelegraph(SpriteBatch spriteBatch, Vector2 screenPos)
 		{
+			if (NPC.ai[0] > AttackWindup + 10)
+				return;
 			Texture2D texture = ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/PixelLaser").Value;
 			Vector2 drawOrigin = new Vector2(0, 1);
 			Vector2 drawPos = NPC.Center - screenPos;
-			float percent = NPC.ai[0] / ai1;
+			float percent = NPC.ai[0] / AttackWindup;
 			if (percent > 1f)
 				percent = 1f;
 			for(int i = -4; i <= 4; i++)
@@ -75,10 +90,10 @@ namespace SOTS.NPCs.Anomaly
 					antiDegrees = degrees;
 				}
 				degrees -= antiDegrees;
-				float rotation = MathHelper.ToRadians(degrees);
+				float rotation = MathHelper.ToRadians(degrees) + NPC.rotation;
 				Vector2 offset = new Vector2(-i * 0.75f, 0);
-				float size = SearchForTileLength(NPC.Center + offset, NPC.Center + new Vector2(0, 1200).RotatedBy(rotation));
-				spriteBatch.Draw(texture, drawPos + offset, null, color * (float)Math.Sqrt(percent) * (1 - Math.Abs(degrees) / 40f) * 0.75f, MathHelper.ToRadians(degrees + 90), drawOrigin, new Vector2(size / texture.Width, 1f), SpriteEffects.None, 0f);
+				float size = SearchForTileLength(NPC.Center + offset, NPC.Center + new Vector2(0, 2000).RotatedBy(rotation));
+				spriteBatch.Draw(texture, drawPos + offset, null, color * (float)Math.Sqrt(percent) * (1 - Math.Abs(degrees) / 40f) * 0.75f, rotation + MathHelper.ToRadians(90), drawOrigin, new Vector2(size / texture.Width, 1f), SpriteEffects.None, 0f);
 			}
 		}
 		public float SearchForTileLength(Vector2 start, Vector2 end)
@@ -100,48 +115,64 @@ namespace SOTS.NPCs.Anomaly
 		}
 		public override void AI()
 		{
-			ai1 = 80;
 			NPC.TargetClosest(false);
 			Player player = Main.player[NPC.target];
-			Vector2 toPlayer = player.Center + new Vector2(0, -128) - NPC.Center;
+			Vector2 toPlayer = player.Center + new Vector2(0, -MathHelper.Lerp(64, 160, NPC.whoAmI % 11 * 0.1f)) - NPC.Center;
 			float length = toPlayer.Length();
 			float speed = 0.85f + 0.35f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[0] * 3)) + length * 0.0076f;
 			toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
 			if (NPC.ai[0] > 0)
 			{
 				NPC.velocity *= 0.9f;
-				if (NPC.ai[0] > ai1 + 10)
+				if (NPC.ai[0] == AttackWindup + 10)
 				{
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 						Vector2 spawn = NPC.Center - new Vector2(0, 4);
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, new Vector2(0, 4), ProjectileType<UltraLaser>(), damage2, 1f, Main.myPlayer, -3, -1f);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, new Vector2(0, 4).RotatedBy(NPC.rotation), ProjectileType<UltraLaser>(), damage2, 1f, Main.myPlayer, -3, -1f);
 					}
-					NPC.velocity.Y -= 4f;
-					NPC.ai[0] = 0;
+					NPC.velocity += new Vector2(0, -14).RotatedBy(NPC.rotation);
+					NPC.ai[0]++;
 					if (Main.netMode == NetmodeID.Server)
 						NPC.netUpdate = true;
 				}
+				else if (NPC.ai[0] > AttackWindup + 10)
+				{
+					if (NPC.ai[0] >= AttackWindup + 30)
+						NPC.ai[0] = 0;
+					else
+					{
+						NPC.ai[0]++;
+					}
+					NPC.velocity *= 0.985f;
+				}
 				else
+				{
 					NPC.ai[0]++;
-				NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.05f * speed;
-				NPC.velocity.Y += 0.0025f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 6));
-				NPC.ai[1]++;
+					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.05f * speed;
+					NPC.velocity.Y += 0.0025f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 6));
+					toPlayer = player.Center - NPC.Center;
+					NPC.rotation = MathHelper.Lerp(NPC.rotation, MathHelper.WrapAngle(toPlayer.ToRotation() - MathHelper.ToRadians(90)), MathHelper.Lerp(0.025f, 0.075f, (float)Math.Pow(NPC.whoAmI % 21 * 0.05f, 2)));
+					NPC.ai[1]++;
+				}
 			}
-			else 
+			else
 			{
-				if (length < 24f || Main.rand.NextBool(240))
+				NPC.rotation = MathHelper.Lerp(NPC.rotation, NPC.velocity.X * 0.05f, 0.07f);
+				if (length < 24f || NPC.ai[1] > 360 + (NPC.whoAmI % 21 * 20))
                 {
 					NPC.ai[0]++;
 					if (Main.netMode == NetmodeID.Server)
 						NPC.netUpdate = true;
+					NPC.ai[1] = 0;
                 }
 				else
 				{
-					NPC.velocity.Y *= 0.9775f;
-					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.1475f * speed;
-					NPC.velocity.Y += 0.01f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 6));
+					float additionalSpeedMult = NPC.whoAmI % 10 * 0.05f + 1;
+					NPC.velocity.Y *= 0.9775f / additionalSpeedMult;
+					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.16f * speed * additionalSpeedMult;
+					NPC.velocity.Y += 0.05f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[1] * 6));
 					NPC.ai[1]++;
 				}
 			}
@@ -154,7 +185,23 @@ namespace SOTS.NPCs.Anomaly
 				dust.velocity.Y += 2.5f;
 				dust.fadeIn = 8;
 			}
+				CheckOtherCollision();
+			NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);
 		}
+		public void CheckOtherCollision()
+        {
+			Vector2 nudge = Vector2.Zero;
+			for(int i = 0; i < Main.maxNPCs; i++)
+            {
+				NPC npc = Main.npc[i];
+				if (npc.active && npc.type == Type && npc.Hitbox.Intersects(NPC.Hitbox))
+                {
+					Vector2 away = NPC.Center - npc.Center;
+					nudge += away * 0.01f;
+                }
+            }
+			NPC.velocity += nudge;
+        }
 		public override void FindFrame(int frameHeight) 
 		{
 			NPC.frameCounter++;
