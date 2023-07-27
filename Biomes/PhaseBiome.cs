@@ -32,7 +32,7 @@ namespace SOTS.Biomes
 	{
 		public override SceneEffectPriority Priority => SceneEffectPriority.None;
 		public override string BestiaryIcon => base.BestiaryIcon; //default icon
-		public override string BackgroundPath => base.BackgroundPath; //default background
+		public override string BackgroundPath => "SOTS/Biomes/AnomalyBestiary"; //default background
 		public override Color? BackgroundColor => base.BackgroundColor; //default background color
 		public override bool IsBiomeActive(Player player)
 		{

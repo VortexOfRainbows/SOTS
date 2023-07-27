@@ -2,7 +2,7 @@ Mods: {
 	SOTS: {
 		Common: {
 			worldEnter: (SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.
-			worldEnterThanks: (SOTS): Thank you for using the SOTS texture pack! Please enjoy all the hard effort that went into it!
+			worldEnterThanks: (SOTS): Thank you for using the SOTS texture pack! Please enjoy all the effort that went into it!
 			Dedicated: Dedicated Item
 			BlastDoor: Blast Door
 			Dresser: Dresser
@@ -166,6 +166,7 @@ Mods: {
 		BiomeName: {
             PyramidBiome: Cursed Pyramid
             PhaseBiome: Phase Ore Clusters
+            AnomalyBiome: Wormhole Anomalies
             PlanetariumBiome: Planetarium
 		}
 
@@ -3256,6 +3257,8 @@ Mods: {
 
 		    Glowmoth: An otherworldly creature that makes its home in glowing mushroom caves. Although one might assume that it lives there due the trait it shares with the mushrooms, bioluminescence, its main motive is the biome's relatively easy to access void energy.
 		    ArchaeologistLore: Merely a hologram. Move along. Nothing to learn here.
+			
+			Ultracap: Origin - unknown. Purpose - unknown. Consciousness - affirmative.
 		}
 
 		DeathMessage: {

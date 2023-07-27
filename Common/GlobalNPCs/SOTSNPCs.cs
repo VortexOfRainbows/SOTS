@@ -355,7 +355,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (npc.type == ModContent.NPCType<TwilightScouter>())
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThundershockShortbow>(), 50, 1, 1));
-			if (npc.type == ModContent.NPCType<TwilightDevil>())
+			if (npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<Ultracap>())
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<GravityAnchor>(), 70, 50));
 			if (npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
 			{
@@ -776,6 +776,7 @@ namespace SOTS.Common.GlobalNPCs
 			SpawnConditionBestiaryInfoElement UndergroundDesert = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundDesert;
 			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
+			ModBiomeBestiaryInfoElement Anomaly = ModContent.GetInstance<AnomalyBiome>().ModBiomeBestiaryInfoElement;
 			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || 
 				npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() 
 				|| npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>() || npc.type == ModContent.NPCType<OtherworldlySpirit>())
@@ -909,6 +910,14 @@ namespace SOTS.Common.GlobalNPCs
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.InfernoConstruct");
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					TheUnderworld,
+					flavorText
+				});
+			}
+			if (npc.type == ModContent.NPCType<Ultracap>())
+			{
+				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Ultracap");
+				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+					Anomaly,
 					flavorText
 				});
 			}
