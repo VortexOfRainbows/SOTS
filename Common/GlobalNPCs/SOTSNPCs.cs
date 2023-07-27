@@ -44,6 +44,7 @@ using SOTS.Items.Furniture.Functional;
 using SOTS.NPCs.Boss.Glowmoth;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Earth.Glowmoth;
+using SOTS.NPCs.Anomaly;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -745,6 +746,11 @@ namespace SOTS.Common.GlobalNPCs
 				}
 				if(!ZonePlanetarium)
 					pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
+			}
+			if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().AnomalyBiome)
+			{
+				if (NPC.CountNPCS(ModContent.NPCType<Ultracap>()) < 5) //only five Utracaps max
+					pool.Add(ModContent.NPCType<Ultracap>(), 0.1f);
 			}
 		}
         public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)

@@ -41,8 +41,8 @@ Daily Log:
 7/24/23 - 7/25/23
 1. Added Torch Gun (should be balanced + work in multiplayer)
 2. Archaeologist will switch positions every 8 minutes
-3. Ultracap:
-	1. Needs: server syncing, banner, and balancing
+3. Ultracap (Non-worm) Finished! Works in Multiplayer + Has banner.
+	1. Ultracap naturally spawns
 
 7/23/23
 1. Completed the VOID ANOMALY!!!

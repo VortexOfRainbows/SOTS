@@ -26,9 +26,9 @@ namespace SOTS.NPCs.Anomaly
 		}
         public override void SetDefaults()
 		{
-            NPC.lifeMax = 100;   
-            NPC.damage = 40; 
-            NPC.defense = 16;  
+            NPC.lifeMax = 90;   
+            NPC.damage = 36; 
+            NPC.defense = 10;  
             NPC.knockBackResist = 0f;
             NPC.width = 36;
             NPC.height = 26;
@@ -41,8 +41,8 @@ namespace SOTS.NPCs.Anomaly
             NPC.HitSound = SoundID.NPCHit54;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.netAlways = true;
-			//Banner = NPC.type;
-			//BannerItem = ItemType<GhastBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<UltracapBanner>();
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -113,6 +113,7 @@ namespace SOTS.NPCs.Anomaly
 			}
 			return (start - currentPosition).Length();
 		}
+		public bool hasReachedPlayer = false;
 		public override void AI()
 		{
 			NPC.TargetClosest(false);
@@ -161,11 +162,13 @@ namespace SOTS.NPCs.Anomaly
 			{
 				NPC.rotation = MathHelper.Lerp(NPC.rotation, NPC.velocity.X * 0.05f, 0.07f);
 				if (length < 24f || NPC.ai[1] > 360 + (NPC.whoAmI % 21 * 20))
-                {
-					NPC.ai[0]++;
-					if (Main.netMode == NetmodeID.Server)
+				{
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
 						NPC.netUpdate = true;
-					NPC.ai[1] = 0;
+						NPC.ai[0]++;
+						NPC.ai[1] = 0;
+					}
                 }
 				else
 				{
@@ -176,6 +179,13 @@ namespace SOTS.NPCs.Anomaly
 					NPC.ai[1]++;
 				}
 			}
+			if (Main.netMode == NetmodeID.Server)
+            {
+				if(NPC.ai[1] % 10 == 0)
+				{
+					NPC.netUpdate = true;
+				}
+            }
 			if (!Main.rand.NextBool(3))
 			{
 				Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(-4, NPC.height - 17), NPC.width, 12, DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, Main.rand.NextFloat(1f)), 1f);
@@ -186,7 +196,12 @@ namespace SOTS.NPCs.Anomaly
 				dust.fadeIn = 8;
 			}
 				CheckOtherCollision();
-			NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);
+			if(length < 120)
+            {
+				hasReachedPlayer = true;
+			}
+			if(hasReachedPlayer) //Only collide with tiles after reaching the player
+				NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);
 		}
 		public void CheckOtherCollision()
         {
@@ -223,20 +238,16 @@ namespace SOTS.NPCs.Anomaly
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
-			if (NPC.life > 0)
-			{
-				int num = 0;
-				while (num < damage / NPC.lifeMax * 50.0)
-				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
-					num++;
-				}
-			}
-            else
+			if (NPC.life <= 0)
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CopyDust4>(), (float)(2 * hitDirection), -2f);
+					d.velocity *= 1.0f;
+					d.fadeIn = 0.2f;
+					d.noGravity = true;
+					d.scale *= 1.5f;
+					d.color = ColorHelpers.VoidAnomaly;
 				}
 			}		
 		}

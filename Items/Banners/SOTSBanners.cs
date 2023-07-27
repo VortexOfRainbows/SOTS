@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs;
+using SOTS.NPCs.Anomaly;
 using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Phase;
 using SOTS.NPCs.TreasureSlimes;
@@ -725,6 +726,9 @@ namespace SOTS.Items.Banners
 				case 13:
 					item = ItemType<PhaseAssaulterBanner>();
 					break;
+				case 14:
+					item = ItemType<UltracapBanner>();
+					break;
 				default:
 					return;
 			}
@@ -783,6 +787,9 @@ namespace SOTS.Items.Banners
 						type = NPCType<PhaseAssaulterHead>();
 						Main.SceneMetrics.NPCBannerBuff[NPCType<PhaseAssaulterBody>()] = true;
 						Main.SceneMetrics.NPCBannerBuff[NPCType<PhaseAssaulterTail>()] = true;
+						break;
+					case 14:
+						type = NPCType<Ultracap>();
 						break;
 					default:
 						return;
@@ -910,6 +917,14 @@ namespace SOTS.Items.Banners
 		{
 			Item.createTile = TileType<SOTSBanners2>();
 			Item.placeStyle = 13;
+		}
+	}
+	public class UltracapBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 14;
 		}
 	}
 }

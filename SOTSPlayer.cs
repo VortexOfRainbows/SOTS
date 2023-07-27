@@ -244,6 +244,7 @@ namespace SOTS
 
 		public bool PlanetariumBiome => Player.InModBiome<Biomes.PlanetariumBiome>();
 		public bool PhaseBiome => Player.InModBiome<Biomes.PhaseBiome>();
+		public bool AnomalyBiome => Player.InModBiome<Biomes.AnomalyBiome>();
 		public bool PyramidBiome => Player.InModBiome<Biomes.PyramidBiome>();
 		public bool backUpBow = false;
 		public bool backUpBowVisual = false;
