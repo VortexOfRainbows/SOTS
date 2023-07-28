@@ -73,6 +73,7 @@ namespace SOTS
 		public static Effect AtenTrail;
 		public static Effect WaterTrail;
 		public static Effect FireTrail;
+		public static Effect GridTrail;
 		public static Effect FireballShader;
 		public static Effect GodrayShader;
 		public static Effect VisionShader;
@@ -171,6 +172,7 @@ namespace SOTS
 				GodrayShader = Instance.Assets.Request<Effect>("Effects/GodrayShader", AssetRequestMode.ImmediateLoad).Value;
 				VisionShader = Instance.Assets.Request<Effect>("Effects/VisionShader", AssetRequestMode.ImmediateLoad).Value;
 				BarrierShader = Instance.Assets.Request<Effect>("Effects/BarrierShader", AssetRequestMode.ImmediateLoad).Value;
+				GridTrail = Instance.Assets.Request<Effect>("Effects/GridTrail", AssetRequestMode.ImmediateLoad).Value;
 				Main.QueueMainThreadAction(() => {
 					primitives = new PrimTrailManager();
 					primitives.LoadContent(Main.graphics.GraphicsDevice);

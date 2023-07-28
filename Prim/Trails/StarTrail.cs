@@ -60,11 +60,13 @@ namespace SOTS.Prim.Trails
 		public override void OnUpdate()
 		{
 			if (!(Entity is Projectile proj))
-            {
+			{
+				OnDestroy();
 				return;
 			}
 			else if(proj.type != initialProjType && initialProjType != -1)
-            {
+			{
+				OnDestroy();
 				return;
             }
 			Counter++;
