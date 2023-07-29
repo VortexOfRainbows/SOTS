@@ -93,11 +93,11 @@ namespace SOTS.NPCs.Anomaly
 			base.PostAI();
 		}
 		public bool drawNewLines = false;
-		public const float DurationFindLocation = 120f;
-		public const float FindTarget = 10f;
-		public const float PrepareSlingDuration = 25f;
-		public const float SlingDuration = 120f;
-		public const float PropellDuration = 50;
+		public float DurationFindLocation = 60f;
+		public float FindTarget = 10f;
+		public float PrepareSlingDuration = 20f;
+		public float SlingDuration = 60f;
+		public float PropellDuration = 50; 
 		public PlanetoidTrail primTrail;
 		public bool runOnce = true;
 		public override bool PreAI()
@@ -116,10 +116,8 @@ namespace SOTS.NPCs.Anomaly
 			NPC.ai[0]++;
 			if (NPC.ai[0] > 0 && NPC.ai[0] < FindTarget)
 			{
-				Vector2 goToPlayer = target.Center - NPC.Center;
-				goToPlayer = goToPlayer.SafeNormalize(Vector2.Zero) * 400;
-				NPC.ai[1] = NPC.Center.X + goToPlayer.X;
-				NPC.ai[2] = NPC.Center.Y + goToPlayer.Y;
+				NPC.ai[1] = target.Center.X;
+				NPC.ai[2] = target.Center.Y;
 				if (Main.netMode == NetmodeID.Server)
 					NPC.netUpdate = true;
 			}
@@ -128,31 +126,45 @@ namespace SOTS.NPCs.Anomaly
 			{
                 if (NPC.ai[0] > FindTarget)
 				{
-					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(75));
+					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(75 * direction)) * (2.5f + (NPC.whoAmI % 9) * 0.025f);
 					NPC.velocity *= 0.8f;
+                    if (NPC.ai[0] > FindTarget + 10)
 					drawNewLines = true;
+                    if (NPC.ai[3] <= 0 && NPC.ai[0] < 50)
+						NPC.ai[3] = 1;
 				}
+				else if(NPC.ai[0] > 0)
+                {
+					if(toPlayer.Length() < 240)
+                    {
+						NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(-30 * direction)) * 5.25f;
+						NPC.velocity *= 0.8775f;
+                    }
+                }
 			}
 			else
 			{
 				if (NPC.ai[0] < DurationFindLocation + PrepareSlingDuration)
 				{
-					NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90));
+					NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * direction)) * 2.5f;
 					NPC.velocity *= 0.825f;
 					drawNewLines = false;
 				}
                 else
 				{
 					float windUp = (NPC.ai[0] - DurationFindLocation - PrepareSlingDuration) / SlingDuration;
-					float sinusoid = (float)Math.Sin(MathHelper.ToRadians((NPC.ai[0] - DurationFindLocation - PrepareSlingDuration) * 2f)) * (1 - windUp) * 0.9f;
+					float sinusoid = (float)Math.Sin(MathHelper.ToRadians((NPC.ai[0] - DurationFindLocation - PrepareSlingDuration) / SlingDuration * 245f)) * (1 - windUp) * 2.25f;
 					NPC.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * sinusoid;
-					NPC.velocity *= 0.8f;
+					NPC.velocity *= 0.77f;
 				}
                 if(NPC.ai[0] > DurationFindLocation + PrepareSlingDuration + SlingDuration)
                 {
 					NPC.ai[0] = -PropellDuration;
-					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 12;
-                }
+					NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 15f;
+					NPC.ai[3] = -1f;
+					if (Main.netMode == NetmodeID.Server)
+						NPC.netUpdate = true;
+				}
 			}
 			if (NPC.velocity.X > 0)
 				NPC.spriteDirection = 1;
@@ -186,17 +198,47 @@ namespace SOTS.NPCs.Anomaly
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkipSoul>(), 1, 2, 2));
 		}
 		public List<GravityWellLine> GravityWell = new List<GravityWellLine>();
+		public float AlphaMultGravityWell = 1f;
+		public int direction => NPC.whoAmI % 2 * 2 - 1;
 		public void RegisterLines()
 		{
-			Player target = Main.player[NPC.target];
-			Vector2 toPlayer = target.Center - NPC.Center;
-			for(int a = 0; a < 2; a++)
+			if(AlphaMultGravityWell <= 0)
+            {
+				ResetGravityWell();
+            }
+            if (NPC.ai[3] < 0)
+            {
+				AlphaMultGravityWell = (float)(1 + NPC.ai[3] / 40f);
+				if(AlphaMultGravityWell <= 0)
+                {
+					AlphaMultGravityWell = 0;
+					NPC.ai[3] = 0;
+					if (Main.netMode == NetmodeID.Server)
+						NPC.netUpdate = true;
+				}
+				else
+					NPC.ai[3]--;
+			}
+			else if (NPC.ai[3] > 0)
 			{
-				Vector2 position = NPC.Center - new Vector2(42, 0).RotatedBy(toPlayer.ToRotation());
+				AlphaMultGravityWell = (float)(NPC.ai[3] / 60f);
+				if (AlphaMultGravityWell >= 1)
+				{
+					AlphaMultGravityWell = 1;
+					NPC.ai[3] = 0;
+					if (Main.netMode == NetmodeID.Server)
+						NPC.netUpdate = true;
+				}
+				else
+					NPC.ai[3]++;
+			}
+			for(int a = 0; a < 4; a++)
+			{
+				Vector2 position = NPC.Center - new Vector2(0, -42 * direction).RotatedBy(NPC.velocity.ToRotation());
 				if (drawNewLines)
 				{
 					GravityWell.Add(new GravityWellLine(position));
-					while (GravityWell.Count > 100)
+					while (GravityWell.Count > 500)
 					{
 						GravityWell.RemoveAt(0);
 					}
@@ -207,18 +249,18 @@ namespace SOTS.NPCs.Anomaly
 					for (int i = 0; i < GravityWell.Count; i++)
 					{
 						Vector2 vector = GravityWell[i].Position;
-						bool inRange = NPC.Distance(vector) < 160;
+						bool inRange = NPC.Distance(vector) < 200f;
 						if (inRange && NPC.ai[0] > DurationFindLocation + PrepareSlingDuration)
 						{
-							float stretch = (float)Math.Pow(1 - NPC.Distance(vector) / 160f, 4);
+							float stretch = (float)Math.Pow(1 - NPC.Distance(vector) / 200f, 4);
 							Vector2 awayFromNPC = vector - NPC.Center;
-							float stretchDist = 3f * stretch * (1 - windUp);
+							float stretchDist = 3.75f * stretch * (1 - windUp);
 							if (NPC.Distance(vector) < 40)
 							{
 								stretchDist += 40 - NPC.Distance(vector);
 								if (NPC.ai[0] < DurationFindLocation + PrepareSlingDuration + SlingDuration - 15 && NPC.ai[0] > DurationFindLocation + PrepareSlingDuration && i < GravityWell.Count - 1)
 								{
-									if (Vector2.Distance(GravityWell[i].Position, GravityWell[i + 1].Position) > 8)
+									if (Vector2.Distance(GravityWell[i].Position, GravityWell[i + 1].Position) > 4)
 									{
 										GravityWell.Insert(i + 1, new GravityWellLine(
 												Vector2.Lerp(GravityWell[i].Position, GravityWell[i + 1].Position, 0.5f),
@@ -233,21 +275,25 @@ namespace SOTS.NPCs.Anomaly
 						else
 						{
                             if (NPC.ai[0] < DurationFindLocation + PrepareSlingDuration + SlingDuration - 15 && NPC.ai[0] > DurationFindLocation + PrepareSlingDuration)
-								GravityWell[i].Position = Vector2.Lerp(vector, GravityWell[i].OriginalPosition, 0.004f);
+								GravityWell[i].Position = Vector2.Lerp(vector, GravityWell[i].OriginalPosition, 0.003f);
 							else if (NPC.ai[0] < 0 && inRange)
 							{
 								float stretch = (float)Math.Pow(1 - NPC.Distance(vector) / 160f, 4);
-								GravityWell[i].Position += NPC.velocity * 0.6f * stretch;
-								GravityWell[i].Position = Vector2.Lerp(GravityWell[i].Position, GravityWell[i].OriginalPosition, 0.0675f);
+								GravityWell[i].Position += NPC.velocity * 0.3f * stretch;
+								GravityWell[i].Position = Vector2.Lerp(GravityWell[i].Position, GravityWell[i].OriginalPosition, 0.05f);
 							}
 							else
-								GravityWell[i].Position = Vector2.Lerp(vector, GravityWell[i].OriginalPosition, 0.05f);
+								GravityWell[i].Position = Vector2.Lerp(vector, GravityWell[i].OriginalPosition, 0.04f);
 						}
 					}
 				}
-				NPC.position += NPC.velocity * 0.5f;
+				NPC.position += NPC.velocity * 0.25f;
 			}
-			primTrail.ConvertListToPoints(GravityWell);
+			primTrail.ConvertListToPoints(GravityWell, AlphaMultGravityWell);
+        }
+		public void ResetGravityWell()
+        {
+			GravityWell = new List<GravityWellLine>();
         }
 		public class GravityWellLine
         {

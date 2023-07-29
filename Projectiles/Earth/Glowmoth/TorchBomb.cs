@@ -9,8 +9,9 @@ namespace SOTS.Projectiles.Earth.Glowmoth
     public class TorchBomb : ModProjectile 
     {
         public override void SetDefaults()
-        {
-            Projectile.width = 22;
+		{
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 22;
             Projectile.height = 22; 
             Projectile.timeLeft = 90;
             Projectile.penetrate = 1; 

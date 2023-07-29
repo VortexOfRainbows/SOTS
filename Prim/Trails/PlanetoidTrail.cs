@@ -59,8 +59,12 @@ namespace SOTS.Prim.Trails
 			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().Assets.Request<Texture2D>("TrailTextures/WhiteBox").Value);
 			effect.Parameters["ColorTwo"].SetValue(new Color(213, 66, 232).ToVector4());
 			effect.Parameters["ColorOne"].SetValue(new Color(119, 190, 238).ToVector4());
-			effect.Parameters["pointCount"].SetValue(7 + PointCount / 90);
-			PrepareShader(effect, "MainPS", 1f);
+			int bonusPoints = (int)(PointCount / 6 / 8f);
+			bonusPoints -= 10;
+			if (bonusPoints < 0)
+				bonusPoints = 0;
+			effect.Parameters["pointCount"].SetValue(10 + bonusPoints);
+			PrepareShader(effect, "MainPS", AlphaMult);
 		}
 		public override void OnUpdate()
 		{
@@ -74,20 +78,23 @@ namespace SOTS.Prim.Trails
 			if ((!Entity.active && Entity != null) || Destroyed)
 				OnDestroy();
 		}
-		public void ConvertListToPoints(List<GravityWellLine> gwl)
+		public float AlphaMult = 0f;
+		public void ConvertListToPoints(List<GravityWellLine> gwl, float alphaMult)
         {
 			Points = new List<Vector2>();
 			foreach(GravityWellLine line in gwl)
             {
 				Points.Add(line.Position);
             }
-        }
+			AlphaMult = alphaMult;
+		}
 		public override void OnDestroy()
 		{
 			Destroyed = true;
-			Width *= 0.8f;
+			Width *= 0.9f;
 			Width += ((float)Math.Sin(Counter * 2) * 0.3f);
-			if (Width < 0.05f)
+			AlphaMult *= 0.85f;
+			if (Width < 0.05f || AlphaMult < 0.01f)
 				Dispose();
 		}
 	}
