@@ -38,13 +38,15 @@ Update Objectives:
 
 Daily Log:
 
-7/24/23 - 7/30/23
+7/24/23 - 7/31/23
 1. Added Torch Gun (should be balanced + work in multiplayer)
 2. Archaeologist will switch positions every 8 minutes
 3. Ultracap (Non-worm) Finished! Works in Multiplayer + Has banner.
 	1. Ultracap naturally spawns
 4. Planetoid (Finished visuals, banner, spawning mechanics)
 	1. Needs multiplayer testing
+5. WIP Wormhole Arrow, Bullet, Skip Shot (Bow)
+	1. All need: Finish. Implement. Server sync
 
 7/23/23
 1. Completed the VOID ANOMALY!!!

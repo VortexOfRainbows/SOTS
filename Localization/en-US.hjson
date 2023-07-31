@@ -326,6 +326,9 @@ Mods: {
 				AnomalyLocator: Anomaly Locator
 				SkipShard: Skip Shard
 				SkipSoul: Skip Soul
+				SkipShot: Skip Shot
+				SkipArrow: Wormhole Arrow
+				SkipBullet: Wormhole Bullet
 				VoidAnomaly: Void Anomaly
 
 			# CritBonus
@@ -1237,6 +1240,18 @@ Mods: {
 				SkipSoul: 
 					'''
 					'A fragment of strange void energy'
+					'''
+				SkipShot: 
+					'''
+					Converts wooden arrows into Wormhole Arrows
+					'''
+				SkipArrow: 
+					'''
+					Instantly travels to hit enemies below
+					'''
+				SkipBullet: 
+					'''
+					Instantly travels to hit enemies below
 					'''
 				VoidAnomaly: 
 					'''
@@ -3991,6 +4006,8 @@ Mods: {
 			VoidAnomaly: Void Anomaly
 			PortalDustProjectile: Portal Dust Projectile
 			UltraLaser: Ultra Laser
+			SkipArrow: Wormhole Arrow
+			SkipBullet: Wormhole Bullet
 		}
 	}
 }

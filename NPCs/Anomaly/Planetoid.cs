@@ -127,11 +127,11 @@ namespace SOTS.NPCs.Anomaly
 			base.PostAI();
 		}
 		public bool drawNewLines = false;
-		public float DurationFindLocation = 60f;
-		public float FindTarget = 10f;
-		public float PrepareSlingDuration = 20f;
-		public float SlingDuration = 60f;
-		public float PropellDuration = 50; 
+		public const float DurationFindLocation = 60f;
+		public const float FindTarget = 10f;
+		public const float PrepareSlingDuration = 20f;
+		public const float SlingDuration = 60f;
+		public const float PropellDuration = 50; 
 		public PlanetoidTrail primTrail;
 		public bool runOnce = true;
 		public override bool PreAI()
