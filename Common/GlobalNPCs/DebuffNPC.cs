@@ -34,6 +34,7 @@ using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Blades;
 using SOTS.Buffs.Debuffs;
 using SOTS.Projectiles.Pyramid.GhostPepper;
+using SOTS.NPCs.Anomaly;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -149,6 +150,11 @@ namespace SOTS.Common.GlobalNPCs
                 int vDamage = 8;
                 if (npc.type == NPCType<Teratoma>() || npc.type == NPCType<BleedingGhast>() || npc.type == NPCType<FlamingGhast>())
                     vDamage = 20;
+                VoidPlayer.VoidDamage(Mod, target, vDamage);
+            }
+            if (npc.type == NPCType<Planetoid>())
+            {
+                int vDamage = 15;
                 VoidPlayer.VoidDamage(Mod, target, vDamage);
             }
             base.OnHitPlayer(npc, target, damage, crit);

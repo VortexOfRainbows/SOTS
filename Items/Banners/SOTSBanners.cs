@@ -729,6 +729,9 @@ namespace SOTS.Items.Banners
 				case 14:
 					item = ItemType<UltracapBanner>();
 					break;
+				case 15:
+					item = ItemType<PlanetoidBanner>();
+					break;
 				default:
 					return;
 			}
@@ -790,6 +793,9 @@ namespace SOTS.Items.Banners
 						break;
 					case 14:
 						type = NPCType<Ultracap>();
+						break;
+					case 15:
+						type = NPCType<Planetoid>();
 						break;
 					default:
 						return;
@@ -925,6 +931,14 @@ namespace SOTS.Items.Banners
 		{
 			Item.createTile = TileType<SOTSBanners2>();
 			Item.placeStyle = 14;
+		}
+	}
+	public class PlanetoidBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 15;
 		}
 	}
 }

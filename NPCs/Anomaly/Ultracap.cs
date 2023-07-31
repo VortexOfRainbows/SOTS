@@ -198,7 +198,8 @@ namespace SOTS.NPCs.Anomaly
 				CheckOtherCollision();
 			if(length < 120)
             {
-				hasReachedPlayer = true;
+				if(!SOTSWorldgenHelper.TrueTileSolid((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16))
+					hasReachedPlayer = true;
 			}
 			if(hasReachedPlayer) //Only collide with tiles after reaching the player
 				NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);

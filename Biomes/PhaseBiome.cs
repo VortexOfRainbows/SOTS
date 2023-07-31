@@ -46,11 +46,11 @@ namespace SOTS.Biomes
             {
 				return false;
             }
-			if(player.Distance(Archaeologist.AnomalyPosition2) < 1280 && !Archaeologist.AnomalyPosition2.Equals(VoidAnomaly.finalPositionAfterShatter))
+			if(player.Distance(Archaeologist.AnomalyPosition2) < 1600 && !Archaeologist.AnomalyPosition2.Equals(VoidAnomaly.finalPositionAfterShatter))
             {
 				return true;
 			}
-			if (player.Distance(Archaeologist.AnomalyPosition3) < 1280 && !Archaeologist.AnomalyPosition3.Equals(VoidAnomaly.finalPositionAfterShatter))
+			if (player.Distance(Archaeologist.AnomalyPosition3) < 1600 && !Archaeologist.AnomalyPosition3.Equals(VoidAnomaly.finalPositionAfterShatter))
 			{
 				return true;
 			}

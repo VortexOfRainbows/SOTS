@@ -749,8 +749,14 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().AnomalyBiome)
 			{
-				if (NPC.CountNPCS(ModContent.NPCType<Ultracap>()) < 5) //only five Utracaps max
-					pool.Add(ModContent.NPCType<Ultracap>(), 0.1f);
+				if (NPC.CountNPCS(ModContent.NPCType<Ultracap>()) < 2) //First two to spawn are more common
+					pool.Add(ModContent.NPCType<Ultracap>(), 0.15f);
+				else if (NPC.CountNPCS(ModContent.NPCType<Ultracap>()) < 3) //only three Utracaps max
+					pool.Add(ModContent.NPCType<Ultracap>(), 0.10f);
+				if (NPC.CountNPCS(ModContent.NPCType<Planetoid>()) < 1) //First one to spawn is more common
+					pool.Add(ModContent.NPCType<Planetoid>(), 0.075f);
+				else if (NPC.CountNPCS(ModContent.NPCType<Planetoid>()) < 2) //only two Planetoid max
+					pool.Add(ModContent.NPCType<Planetoid>(), 0.035f);
 			}
 		}
         public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -913,9 +919,13 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<Ultracap>())
+			if (npc.type == ModContent.NPCType<Ultracap>() || npc.type == ModContent.NPCType<Planetoid>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Ultracap");
+				if (npc.type == ModContent.NPCType<Planetoid>())
+                {
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Planetoid");
+				}
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Anomaly,
 					flavorText
