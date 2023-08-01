@@ -137,10 +137,12 @@ namespace SOTS.NPCs.Anomaly
 		public override bool PreAI()
 		{
 			if(runOnce)
-            {
-				primTrail = new PlanetoidTrail(NPC, 14);
-				if(Main.netMode != NetmodeID.Server)
+			{
+				if (Main.netMode != NetmodeID.Server)
+				{
+					primTrail = new PlanetoidTrail(NPC, 14);
 					SOTS.primitives.CreateTrail(primTrail);
+				}
 				runOnce = false;
             }
 			NPC.TargetClosest(false);
@@ -260,6 +262,8 @@ namespace SOTS.NPCs.Anomaly
 			NPC.position -= NPC.velocity;
 			RegisterLines();
 			NPC.velocity.X /= 0.93f;
+			if (Main.netMode == NetmodeID.Server)
+				NPC.netUpdate = true;
 			return true;
 		}
         public override void FindFrame(int frameHeight)
@@ -282,7 +286,7 @@ namespace SOTS.NPCs.Anomaly
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkipSoul>(), 1, 2, 2));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkipSoul>(), 1, 2, 3));
 		}
 		public List<GravityWellLine> GravityWell = new List<GravityWellLine>();
 		public float AlphaMultGravityWell = 1f;
@@ -323,7 +327,7 @@ namespace SOTS.NPCs.Anomaly
 					NPC.ai[3]++;
 			}
 			if (Main.netMode != NetmodeID.Server)
-            {
+			{
 				for (int a = 0; a < 4; a++)
 				{
 					Vector2 position = NPC.Center - new Vector2(0, -42 * direction).RotatedBy(NPC.velocity.ToRotation());
@@ -346,7 +350,7 @@ namespace SOTS.NPCs.Anomaly
 							{
 								float stretch = (float)Math.Pow(1 - NPC.Distance(vector) / 200f, 4);
 								Vector2 awayFromNPC = vector - NPC.Center;
-								float stretchDist = 3.75f * stretch * (1 - windUp);
+								float stretchDist = 3.6f * stretch * (1 - windUp);
 								if (NPC.Distance(vector) < 40)
 								{
 									stretchDist += 40 - NPC.Distance(vector);
@@ -383,6 +387,8 @@ namespace SOTS.NPCs.Anomaly
 				}
 				primTrail.ConvertListToPoints(GravityWell, AlphaMultGravityWell);
 			}
+			else
+				NPC.position += NPC.velocity;
         }
 		public void ResetGravityWell(bool fakeReset = false)
         {

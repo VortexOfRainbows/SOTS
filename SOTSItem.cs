@@ -210,7 +210,7 @@ namespace SOTS
 		{
 			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() }; //Dark Blue
 			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() }; //Dark Red
-			rarities3 = new int[] { ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>(), ItemType<SkipShard>(), ItemType<SkipSoul>() }; //Very Dark gray
+			rarities3 = new int[] { ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>() }; //Very Dark gray
 			rarities4 = new int[] { ItemType<DreamLamp>() };
 
 			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
@@ -834,5 +834,13 @@ namespace SOTS
 				InitializeRecipe();
 			}
 		}
+		public class AnomalyRarity : ModRarity
+        {
+			public override Color RarityColor => ColorHelpers.VoidAnomaly;
+            public override int GetPrefixedRarity(int offset, float valueMult)
+            {
+                return Type;
+            }
+        }
 	}
 }

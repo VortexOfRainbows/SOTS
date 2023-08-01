@@ -233,7 +233,7 @@ namespace SOTS.NPCs.Anomaly
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			npcLoot.Add(ItemDropRule.Common(ItemType<SkipSoul>(), 1, 1, 1));
+			npcLoot.Add(ItemDropRule.Common(ItemType<SkipSoul>(), 1, 1, 2));
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Conduit
 {
@@ -59,7 +60,7 @@ namespace SOTS.Items.Conduit
 			Item.width = 18;
 			Item.height = 24;
 			Item.maxStack = 999;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.value = Item.sellPrice(0, 0, 75, 0);
 		}
         public override Color? GetAlpha(Color lightColor)
@@ -108,7 +109,7 @@ namespace SOTS.Items.Conduit
 			Item.width = 18;
 			Item.height = 30;
 			Item.maxStack = 999;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.value = Item.sellPrice(0, 0, 37, 50);
 		}
 		public override Color? GetAlpha(Color lightColor)

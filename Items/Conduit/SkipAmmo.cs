@@ -3,6 +3,7 @@ using SOTS.Items.Pyramid;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Conduit
 {
@@ -16,13 +17,13 @@ namespace SOTS.Items.Conduit
 		{
 			Item.damage = 8;
 			Item.DamageType = DamageClass.Ranged;
-			Item.width = 14;
+			Item.width = 16;
 			Item.height = 30;
 			Item.maxStack = 999;
 			Item.consumable = true;           
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(copper: 7);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.shoot = ModContent.ProjectileType<Projectiles.Anomaly.SkipBullet>(); 
 			Item.shootSpeed = 4f;             
 			Item.ammo = AmmoID.Bullet;   
@@ -47,13 +48,13 @@ namespace SOTS.Items.Conduit
 		{
 			Item.damage = 6;
 			Item.DamageType = DamageClass.Ranged;
-			Item.width = 14;
-			Item.height = 40;
+			Item.width = 18;
+			Item.height = 52;
 			Item.maxStack = 999;
 			Item.consumable = true;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(copper: 7);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.shoot = ModContent.ProjectileType<Projectiles.Anomaly.SkipArrow>();
 			Item.shootSpeed = 5f;
 			Item.ammo = AmmoID.Arrow;

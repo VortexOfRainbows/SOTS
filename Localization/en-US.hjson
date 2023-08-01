@@ -1243,6 +1243,7 @@ Mods: {
 					'''
 				SkipShot: 
 					'''
+					Fires 3 arrows
 					Converts wooden arrows into Wormhole Arrows
 					'''
 				SkipArrow: 

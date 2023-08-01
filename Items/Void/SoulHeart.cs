@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Conduit;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Otherworld.Furniture;
+using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Void
 {
@@ -57,7 +58,7 @@ namespace SOTS.Items.Void
 			Item.useTime = 12;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = 0;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.maxStack = 999;
 			Item.autoReuse = false;
 			Item.consumable = true;

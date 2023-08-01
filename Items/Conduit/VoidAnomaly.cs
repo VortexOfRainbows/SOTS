@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using SOTS.Void;
+using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Conduit
 {
@@ -52,7 +53,7 @@ namespace SOTS.Items.Conduit
             Item.width = 44;     
             Item.height = 26;   
             Item.value = Item.sellPrice(platinum: 1);
-            Item.rare = ItemRarityID.Yellow;
+			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.accessory = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)

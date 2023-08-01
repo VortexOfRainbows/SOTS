@@ -44,13 +44,13 @@ Daily Log:
 3. Ultracap (Non-worm) Finished! Works in Multiplayer + Has banner.
 	1. Ultracap naturally spawns
 4. Planetoid (Finished visuals, banner, spawning mechanics)
-	1. Needs multiplayer testing
-5. WIP Wormhole Arrow, Bullet, Skip Shot (Bow)
-	1. All need: Finish. Implement. Server sync
+	1. Works in Multiplayer!! (from what I can tell)
+5. Implemented Wormhole Arrow, Bullet, Skip Shot (Bow)
+	1. They should be powerful, yet somewhat balanced (works in multiplayer)
 
 7/23/23
 1. Completed the VOID ANOMALY!!!
-2. Next: Finish up Archaeologist timings
+2. Next: Finish up Archaeologist timings (Done)
 
 7/22/23 - 7/23/23
 1. Added Wormhole Recipes:
