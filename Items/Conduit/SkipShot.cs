@@ -18,7 +18,7 @@ namespace SOTS.Items.Conduit
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 16;
+			Item.damage = 20;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 34;
 			Item.height = 94;
