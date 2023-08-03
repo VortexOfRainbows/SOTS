@@ -550,7 +550,7 @@ namespace SOTS
 					player.velocity.X += player.direction * 7f * mult;
 				Projectile.NewProjectile(player.GetSource_Misc("SOTS:Accessory_EndothermicAfterburner"), player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(item.damage * 0.7f), 3f, player.whoAmI);
 			}
-			if (item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>())
+			if (item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() || item.type == ItemType<EarthenConduit>())
 			{
 				if (!SOTSPlayer.ModPlayer(player).ConduitBelt)
 					return false;

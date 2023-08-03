@@ -37,6 +37,9 @@ Update Objectives:
 
 Daily Log:
 
+8/3/23
+1. Fix bug where Earthen Conduit could be placed without belt
+
 
 -- Update 0.23.0 Released on 8/2/23 --
 
