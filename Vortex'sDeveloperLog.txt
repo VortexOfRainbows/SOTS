@@ -37,6 +37,10 @@ Update Objectives:
 
 Daily Log:
 
+
+-- Update 0.23.0 Released on 8/2/23 --
+
+
 7/24/23 - 8/2/23
 1. Added Torch Gun (should be balanced + work in multiplayer)
 2. Archaeologist will switch positions every 8 minutes
