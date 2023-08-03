@@ -1,0 +1,89 @@
+Version 0.23.0:
+
+1. Various visual improvements to items and enemies (sprites and programmed visuals)
+2. More configuration settings (such as the ability to chose certain starting houses)
+
+New Content!
+1. Around 80+ New items
+2. Elemental amulets has more variations
+3. New Secret items
+4. A new "Town" NPC
+5. 7 new Worldgen Structures
+6. 2 strange anomalies to discover
+7. New technological tiles
+8. New Pre-Hardmode Boss!
+9. New music for Pharaoh's Curse and Lux
+10. More bestiary entries
+11. A couple of new enemies
+
+Balance Changes:
+Buffs:
+1. Projectile hitbox size frorm Bulwark of the Ancients Crafting-Tree accessories are now bigger
+2. Cataclysm Spheres damage 40 -> 45, lightning damage 90% -> 100%
+3. Vibrant Blade damage 19 -> 23
+4. Ancient Steel longbow damage 15 -> 17
+5. Platinum Dart damage 15 -> 19
+6. Earthen construct is now immune to various debuffs
+7. Cybernetic Enhancements buff from Digital Display is now permanent
+8. Subspace Serpent now periodically removes stacking buffs
+
+Nerfs:
+1. Treasure slimes drop 50% less money
+2. Stellar Serpent use time 20 -> 24, damage 60 -> 55, duration 1500 -> 1200, deals 75% damage to subspace serpent
+3. Pyrocide damage 90 -> 84
+4. Golden glave damage 28 -> 26
+5. Photon Geyser damage 42 -> 34
+6. Gold Chakram damage 18 -> 17
+7. Chaos Chamber damage 90 -> 85, use time 7 -> 8, homing range 640 -> 480
+8. Armaggedon damage 270 -> 250
+9. Ethereal Scepter damage 75 -> 70
+10. Hyperlight Geyser damage 54 -> 48
+11. Reality Shatter damage 80 -> 75
+12. Rose Bow void cost 12 -> 15
+13. Stellar Shot mana cost 3 -> 4, damage 53 -> 50
+14. Supernova Storm mana cost 7 -> 10
+15. Chaos Spirit Staff damage 60 -> 54	
+16. Digital Daito damage 50 -> 40
+17. Starshot Crossbow 34 -> 32
+18. Voidmage Incubator void gain 10 -> 2, void regen speed 10% -> 0%, but is now obtainable in normal mode
+19. Void Minion Costs: 
+	1. Chaos Spirit 150 -> 200
+	2. Inferno Spirit 120 -> 150
+	3. Evil Spirit 100 -> 120
+	4. Otherworld Spirit 75 -> 100
+	5. TBethany Spirit 20 -> 25 (60 -> 75)
+	6. Nature Spirit, Tidal Spirit 40 -> 45
+	7. Earthen Spirit 25 -> 30
+	8. Bethany Spirit 15 -> 20
+	9. Permafrost Spirit 54 -> 60
+20. Nerfed the crit bonus damage and crit chance boosts of many accessories
+
+Reworked:
+1. Dimenson Shredder now functions differently
+2. Lux's Expert drop is now different
+3. Plasma Shrimp now has a different firing condition (to reduce lag)
+
+Other:
+1. Electromagnetic lure now shows constructs that are able to be spawned in the current biome
+2. Hellstone now has unique visuals when SOTS texturepack is enabled
+3. Adjusted volumes of various sound effects
+4. Old Keys can now be found in Normal and Golden treasure slime loot pools
+5. Modified the light given off by certain items in the inventory
+6. Planet fish is slightly more common to fish out now
+7. Increased frequency of various reforges
+8. Modified the recipes of various items
+9. Constructs have lower spawn rates in town (10%)
+10. No more infinite flight until Lux is defeated (configurable)
+11. Pharaoh's Curse is now bigger (due to being resprited)
+
+Bug Fixes:
+1. Pot generator now generates pots at the correct rate of 1 per second instead of 2 per second on a one-generator stack
+2. Otherworld Plating can be used in plating recipes
+3. Removed strange code involving unsafe walls that may have been causing certain load-time crashes
+4. Fix weird hitbox for shatter shine
+5. Subspace treads dashes in the correct direction when using held items
+6. Optimized various screen-darkening effects to hopefully halt memory leaks
+7. Evil spirit should no longer disappear in multiplayer
+8. Voidspace lamp no longer erroneously deals critical strikes
+9. Some unbreakable tiles are no longer broken by lava and obsidian
+10. Added coins to boss bags
