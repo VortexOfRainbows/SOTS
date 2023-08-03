@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -220,6 +221,17 @@ namespace SOTS.NPCs.Boss
             if (Main.netMode != 1)
             {
                 NPC.netUpdate = true;
+            }
+            DrainGlobalDebuffs();
+        }
+        public int CounterForDebuffs = 0;
+        public void DrainGlobalDebuffs()
+        {
+            CounterForDebuffs++;
+            if(CounterForDebuffs > 40)
+            {
+                CounterForDebuffs = 0;
+                NPC.GetGlobalNPC<DebuffNPC>().DrainPermanentDebuffs(NPC);
             }
         }
     }

@@ -82,6 +82,7 @@ namespace SOTS.Common.GlobalNPCs
         public int DestableCurse = 0;
         public int BleedingCurse = 0;
         public int BlazingCurse = 0;
+        public int AnomalyCurse = 0;
         public int timeFrozen = 0;
         public bool netUpdateTime = false;
         public bool frozen = false;
@@ -277,6 +278,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(DestableCurse);
                 packet.Write(BleedingCurse);
                 packet.Write(BlazingCurse);
+                packet.Write(AnomalyCurse);
                 packet.Send();
             }
             else if(type == 1) //can be called by server or player
@@ -332,6 +334,7 @@ namespace SOTS.Common.GlobalNPCs
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.destabilizeColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 0, 0), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref BleedingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
         {
@@ -378,6 +381,15 @@ namespace SOTS.Common.GlobalNPCs
             if (npc.immortal)
             {
                 return;
+            }
+            if (Main.myPlayer == player.whoAmI)
+            {
+                if (projectile.type == ProjectileType<SeleneSlash>() || (projectile.type == ProjectileType<SkipSlash>() && Main.rand.NextBool(5)))
+                {
+                    AnomalyCurse++;
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        SendClientChanges(player, npc);
+                }
             }
             if (projectile.type == ProjectileType<Projectiles.Temple.Helios>())
             {
@@ -507,9 +519,9 @@ namespace SOTS.Common.GlobalNPCs
                     damage = (int)(damage * 0.75f);
                 }
             }
-            if(BlazingCurse > 0)
+            if(BlazingCurse > 0 || AnomalyCurse > 0)
             {
-                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse));
+                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse));
             }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
@@ -561,9 +573,9 @@ namespace SOTS.Common.GlobalNPCs
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if (BlazingCurse > 0)
+            if (BlazingCurse > 0 || AnomalyCurse > 0)
             {
-                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse));
+                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse));
             }
             base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
         }
@@ -640,6 +652,25 @@ namespace SOTS.Common.GlobalNPCs
                     dust.noGravity = true;
                     dust.fadeIn = 0.1f;
                     dust.scale *= 1.5f;
+                }
+            }
+            if(AnomalyCurse > 0)
+            {
+                int capVisuals = AnomalyCurse;
+                if (capVisuals > 20)
+                    capVisuals = 20;
+                for (int i = 0; i < capVisuals; i++)
+                {
+                    if (Main.rand.NextBool(20 + i))
+                    {
+                        Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, DustType<PixelDust>());
+                        dust.velocity *= 0.5f;
+                        dust.color = ColorHelpers.VoidAnomaly;
+                        dust.color.A = 0;
+                        dust.noGravity = true;
+                        dust.fadeIn = 12f;
+                        dust.scale = 2.0f;
+                    }
                 }
             }
             for (int i = 0; i < DestableCurse; i++)
@@ -869,7 +900,12 @@ namespace SOTS.Common.GlobalNPCs
                 npc.lifeRegen -= BleedingCurse * 10;
                 damage += BleedingCurse;
             }
-            if(isFlowered)
+            if (AnomalyCurse > 0)
+            {
+                npc.lifeRegen -= AnomalyCurse * 4;
+                damage += (AnomalyCurse + 1) / 2;
+            }
+            if (isFlowered)
             {
                 npc.lifeRegen -= 8;
             }
@@ -1150,6 +1186,19 @@ namespace SOTS.Common.GlobalNPCs
                     }
                 }
             }
+        }
+        public void DrainPermanentDebuffs(NPC npc)
+        {
+            if(PlatinumCurse > 0)
+                PlatinumCurse--;
+            if (DestableCurse > 0)
+                DestableCurse--;
+            if (BleedingCurse > 0)
+                BleedingCurse--;
+            if (BlazingCurse > 0)
+                BlazingCurse--;
+            if (AnomalyCurse > 0)
+                AnomalyCurse--;
         }
     }
 }

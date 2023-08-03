@@ -87,9 +87,10 @@ namespace SOTS.Projectiles.Blades
 			return false;
 		}
 		public virtual float handleOffset => 24;
-		public virtual float handleSize => 24;
+		public virtual float handleSize => 0;
 		public virtual Vector2 drawOrigin => new Vector2(10, 52);
 		public virtual bool isDiagonalSprite => true;
+		public virtual float OffsetAngleIfNotDiagonal => 0;
 		public virtual Color? DrawColor => Color.White;
 		public void Draw(SpriteBatch spriteBatch, ref Color lightColor)
         {
@@ -116,8 +117,10 @@ namespace SOTS.Projectiles.Blades
 			if(direction == -1)
 				origin = new Vector2(texture.Width - drawOrigin.X, drawOrigin.Y);
 			float standardSwordLength = (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) - handleSize;
+			if (!isDiagonalSprite && Projectile.type != ModContent.ProjectileType<BetrayersSlash>())
+				standardSwordLength = texture.Height - handleSize;
 			float scaleMultiplier = length / standardSwordLength;
-			float rotation = toProjectile.ToRotation() + (isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : MathHelper.ToRadians(90));
+			float rotation = toProjectile.ToRotation() + (isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : MathHelper.ToRadians(90 + direction * OffsetAngleIfNotDiagonal));
 			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		float counter = 225;
@@ -142,12 +145,12 @@ namespace SOTS.Projectiles.Blades
 			}
 			Projectile.hide = false;
 		}
-		Vector2 dustAway = Vector2.Zero;
-		Vector2 cursorArea = Vector2.Zero;
+		public Vector2 dustAway = Vector2.Zero;
+		public Vector2 cursorArea = Vector2.Zero;
 		public Vector2 toCursor = Vector2.Zero;
-		bool runOnce = true;
+		public bool runOnce = true;
 		public float distance = 0;
-		float counterOffset;
+		public float counterOffset;
 		public float timeLeftCounter = 0;
 		public int GetArcLength()
 		{

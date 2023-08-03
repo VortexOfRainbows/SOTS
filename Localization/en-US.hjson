@@ -329,6 +329,7 @@ Mods: {
 				SkipShot: Skip Shot
 				SkipArrow: Wormhole Arrow
 				SkipBullet: Wormhole Bullet
+				SkipScythe: Selene
 				VoidAnomaly: Void Anomaly
 
 			# CritBonus
@@ -952,6 +953,7 @@ Mods: {
 			ZombieHand: Zombie Hand
 			
 			GlowJelly: Glow Jelly
+			AlchemistsCharm: "Alchemist's Charm"
 		}
 
 		ItemTooltip: {
@@ -1253,6 +1255,11 @@ Mods: {
 				SkipBullet: 
 					'''
 					Instantly travels to hit enemies below
+					'''
+				SkipScythe: 
+					'''
+					Applies a stacking, permanent curse that deals 2 damage per second and increases damage taken by enemies by 0.5%
+					Launches waves that deal 50% damage and have a 20% chance to apply the curse
 					'''
 				VoidAnomaly: 
 					'''
@@ -2785,6 +2792,12 @@ Mods: {
 				'''
 				Increases healing and mana recieved from potions by 40
 				'''
+			AlchemistsCharm: 
+				'''
+				Increases healing and mana recieved from potions by 100
+				Increases buff duration by 67%
+				Increases life regeneration by 2 and reduces the cooldown of healing potions by 25%
+				'''
 		}
 
 		BuffName: {
@@ -4009,6 +4022,8 @@ Mods: {
 			UltraLaser: Ultra Laser
 			SkipArrow: Wormhole Arrow
 			SkipBullet: Wormhole Bullet
+			SeleneSlash: Selene Slash
+			SkipSlash: Selene Slash
 		}
 	}
 }

@@ -34,11 +34,10 @@ Update Objectives:
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 5. Glow Nylon Whip
-6. Combined Glowjelly, Lihzahrd Tail, Charm of Myths (Vanilla Item), and Ectoplasm -> Alchemist's Charm
 
 Daily Log:
 
-7/24/23 - 7/31/23
+7/24/23 - 8/2/23
 1. Added Torch Gun (should be balanced + work in multiplayer)
 2. Archaeologist will switch positions every 8 minutes
 3. Ultracap (Non-worm) Finished! Works in Multiplayer + Has banner.
@@ -47,6 +46,10 @@ Daily Log:
 	1. Works in Multiplayer!! (from what I can tell)
 5. Implemented Wormhole Arrow, Bullet, Skip Shot (Bow)
 	1. They should be powerful, yet somewhat balanced (works in multiplayer)
+6. Added Skip Scythe AKA Selene
+	1. Balanced (?) + works in multiplayer.
+7. Subspace Serpent body segments now periodically remove stacking debuffs (works in multiplayer as expected)
+8. Added Alchemist's Charm
 
 7/23/23
 1. Completed the VOID ANOMALY!!!
