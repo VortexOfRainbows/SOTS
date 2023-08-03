@@ -1,6 +1,7 @@
 Secrets of the Shadows is a mod with a focus on exploring dungeons throughout your world! Many secrets can be found hidden in these long forgotten locations of old.
 
-[b]If you find any issues with SOTS, the Discord server is the best place to find help.[/b]
+[b]If you find any issues with SOTS, the Discord server is the best place to find help. 
+Seriously! I don't often check steam comments, so please find me here if you need anything![/b]
 [url=https://discord.gg/Dd8e9nw]Discord Server Invite Link[/url]
 [url=https://secretsoftheshadows.miraheze.org/wiki/Secrets_Of_The_Shadows_Wiki]Wiki (WIP)[/url]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843080273]SOTS Texture Pack[/url]
@@ -9,32 +10,30 @@ Secrets of the Shadows is a mod with a focus on exploring dungeons throughout yo
 [b]!! A large world is recommended to avoid major structures overlapping !![/b]
 
 This mod contains:
-6 entirely new bosses with unique attacks
-630+ new items with many interesting effects, and 3 new ores with unique mechanics
+7 entirely new bosses with unique attacks
+700+ new items with many interesting effects, and 3 new ores with unique mechanics
 2 new dungeons: the Planetarium and Pyramid with more planned!
-Several new mini structures that add life to Terraria
+Many new mini structures that add life to Terraria
 A new mechanic, Void, which lets you utilize the power of your soul
 Warriors, Rangers, Mages, and Summoners can all have void weapons at their disposal
 
 [b]~Developers~[/b]
-Code, Direction, Art: Vortex
-Code: Ramen
-Music: YuriO
+Code, Direction, Art: Vortex#6230
+Direction, Art: Taco
 Music, SFX, Direction, Art: Heart Plus Up!
-Code, Audio Engineering: apotofkoolaid
-Art: MrPetkins, Mochi, HugeKraken, Cloud, SpicySpaceSnake
+Music: YuriO
+Code, SFX: apotofkoolaid
+Art: MrPetkins, Cloud
 
-[b]~Past Developers~[/b]
-Direction, Art: Coolio
-Direction: FlameFreezer
-Art: Blasfah
-
-[b]~Major Contributors~[/b]
-Art: Pokerface, Lunatix
+[b]~Major Contributors and Past Developers~[/b]
+Art: Blasfah, Mochi, HugeKraken, Lunatix, SpicySpaceSnake, Pokerface
 Code: Moonseer
 Localization: Lacewing, Linnnnnna
+Misc, Direction: FlameFreezer
+Music: BananaLizard
 
 [b]~Minor Contributors~[/b]
 Art: Arcri, Naka, DeJuiceTD, Nomis
-Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
-Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
+Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR
+Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Ramen
+Art, Testing/Misc: Astrobit

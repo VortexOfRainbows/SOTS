@@ -1,42 +1,39 @@
-If you find any issues with SOTS, the Discord server is the best place to find help.
+Secrets of the Shadows is a mod with a focus on exploring dungeons throughout your world! Many secrets can be found hidden in these long forgotten locations of old.
 
-A mod which probably has something to do with Secrets and Shadows.
-This mod's main plan is to add structures and other unique generation to the world, which can act as dungeons or help spice up exploration.
+[b]If you find any issues with SOTS, the Discord server is the best place to find help. 
+Seriously! I don't often check steam comments, so please find me here if you need anything![/b]
+[url=https://discord.gg/Dd8e9nw]Discord Server Invite Link[/url]
+[url=https://secretsoftheshadows.miraheze.org/wiki/Secrets_Of_The_Shadows_Wiki]Wiki (WIP)[/url]
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843080273]SOTS Texture Pack[/url]
 
-!! This mod is early in development !!
-!! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
+[b]!! This mod is in development !![/b]
+[b]!! A large world is recommended to avoid major structures overlapping !![/b]
 
-Bosses -> Currently 6, all with original AI!
-Items -> Nearly 600, designed to be unique!
-Ores -> 3
+This mod contains:
+7 entirely new bosses with unique attacks
+700+ new items with many interesting effects, and 3 new ores with unique mechanics
+2 new dungeons: the Planetarium and Pyramid with more planned!
+Many new mini structures that add life to Terraria
+A new mechanic, Void, which lets you utilize the power of your soul
+Warriors, Rangers, Mages, and Summoners can all have void weapons at their disposal
 
-New Subclass: Void
--Unleash very powerful attacks, at a cost
--High risk, high reward
--Has melee, ranged, magic, and summon items
-
-Major Stuctures: 2
--Pyramid Dungeon Worldgen
--Planetarium Temple Worldgen
--A generous amount of smaller structures
-
-Credits:
-(Current Developers)
+[b]~Developers~[/b]
 Code, Direction, Art: Vortex#6230
-Code: Ramen
+Direction, Art: Taco
 Music, SFX, Direction, Art: Heart Plus Up!
-Code, Audio Engineering: apotofkoolaid
-Art: MrPetkins, Mochi, HugeKraken, Cloud
+Music: YuriO
+Code, SFX: apotofkoolaid
+Art: MrPetkins, Cloud
 
-(Contributors and Other Credits)
-Art: Arcri, Pokerface, Lunatix
-Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
-Code: Moonseer, Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
-Minor Art: Naka, DeJuiceTD, Nomis
+[b]~Major Contributors and Past Developers~[/b]
+Art: Blasfah, Mochi, HugeKraken, Lunatix, SpicySpaceSnake, Pokerface
+Code: Moonseer
 Localization: Lacewing, Linnnnnna
-
-(Past Developers)
-Emotional Support, Direction, Art: Coolio
 Misc, Direction: FlameFreezer
 Music: BananaLizard
-Art: Blasfah
+
+[b]~Minor Contributors~[/b]
+Art: Arcri, Naka, DeJuiceTD, Nomis
+Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR
+Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Ramen
+Art, Testing/Misc: Astrobit
