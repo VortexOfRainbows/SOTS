@@ -45,7 +45,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public override void SetDefaults()
 		{
             NPC.lifeMax = 1;  
-            NPC.damage = 20; 
+            NPC.damage = 28; 
             NPC.knockBackResist = 0.0f;
             NPC.width = 24;
             NPC.height = 20;

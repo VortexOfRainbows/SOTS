@@ -34,8 +34,18 @@ Update Objectives:
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 5. Glow Nylon Whip
+6. Way to speed up growth of gmoth cacoon
 
 Daily Log:
+
+8/4/23
+1. Buff Glowmoth damage 20 -> 28
+	1. Minions 20 -> 28
+2. Doubled regrowth rate of glowmoth's cacoon
+3. Glowmoth webs only spawn in every other mushroom biome now
+4. Glowmoth now spawns with a grown cacoon in the world
+5. Stats for Roasted Peanuts reduced from (Medium, 8 min) -> (Low, 10 min)
+6. Fixed DownedGlowmoth variable straight up not updating from downing GM
 
 8/3/23
 1. Fix bug where Earthen Conduit could be placed without belt

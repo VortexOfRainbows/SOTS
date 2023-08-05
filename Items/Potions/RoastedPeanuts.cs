@@ -15,7 +15,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(ItemID.FroggleBunwich);
+			Item.CloneDefaults(ItemID.GrilledSquirrel);
 			Item.width = 34;
 			Item.height = 22;
 			Item.value = Item.sellPrice(0, 0, 10, 0);

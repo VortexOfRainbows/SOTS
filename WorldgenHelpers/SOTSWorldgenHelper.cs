@@ -4959,7 +4959,7 @@ namespace SOTS.WorldgenHelpers
 			{
 				int bestDistance = 0;
 				Vector2 position = mushroomBiomes[A];
-				if(WorldGen.InWorld((int)position.X, (int)position.Y, 50))
+				if(WorldGen.InWorld((int)position.X, (int)position.Y, 50) && A % 2 == 0)
                 {
 					Point16 pos = position.ToPoint16();
 					Point16 bestPoint = pos;
@@ -5004,7 +5004,7 @@ namespace SOTS.WorldgenHelpers
 							}
 						}
 					}
-					WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
+					WorldGen.PlaceTile(spawnTilePos.X, spawnTilePos.Y + 1, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 2);
 					GenerateSilkWeb(spawnTilePos.X, spawnTilePos.Y);
 					for (int j = 12; j >= -12; j--)
 					{

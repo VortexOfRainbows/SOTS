@@ -83,7 +83,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
         public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(50)) //Low chance for regrowth over time
+			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(25))
 			{
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.TileFrameX / 18) % 3;

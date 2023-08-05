@@ -65,7 +65,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		{
 			NPC.lifeMax = 2400;
 			NPC.aiStyle = -1;
-			NPC.damage = 20;
+			NPC.damage = 28;
 			NPC.defense = 10;
 			NPC.knockBackResist = 0f;
 			NPC.width = 62;
@@ -580,7 +580,11 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silk, (float)(2 * hitDirection), -2f);
 				}
-			}		
+			}
+		}
+		public override void OnKill()
+		{
+			SOTSWorld.downedGlowmoth = true;
 		}
 	}
 }
