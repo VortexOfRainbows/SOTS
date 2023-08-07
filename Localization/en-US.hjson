@@ -2509,6 +2509,7 @@ Mods: {
 					50% of damage done ignores defense completely
 					Increases in speed after bouncing off walls
 					'''
+				SupernovaScatter: Launches small stars that explode into bullets
 		
 			# Tide
 				ArkhalisChain: "'It probably didn't come from here'"

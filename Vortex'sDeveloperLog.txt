@@ -46,6 +46,7 @@ Release Patch with Fixes:
 
 8/7/23
 1. More expensive archaeologist sells
+2. Fix supernova scatter tooltip
 
 8/6/23
 1. Trippy and Retro lighting no longer work with the wormhole. This is intentional, as they were previously causing crashes.
