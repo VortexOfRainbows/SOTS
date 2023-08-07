@@ -33,6 +33,7 @@ namespace SOTS.Items.ChestItems
             Item.shootSpeed = 16f;
             Item.noUseGraphic = true; 
             Item.noMelee = true;
+            Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

@@ -50,6 +50,7 @@ using SOTS.NPCs.Town;
 using Terraria.DataStructures;
 using SOTS.Items.Furniture.Functional;
 using SOTS.Items.Conduit;
+using Terraria.Graphics.Light;
 
 namespace SOTS
 {
@@ -62,6 +63,7 @@ namespace SOTS
 		public static float GlobalFreezeCounter = 0;
 		public static float GlobalSpeedMultiplier = 1;
 		public static bool IsFrozenThisFrame = false;
+		public static LightMode LastLightingMode;
 		public static void SyncGemLocks(Player clientSender)
 		{
 			int playerWhoAmI = clientSender != null ? clientSender.whoAmI : -1;
@@ -186,6 +188,7 @@ namespace SOTS
 				if (Main.netMode == NetmodeID.Server)
 					SyncGlobalCounter();
             }
+			LastLightingMode = Lighting.Mode;
 		}
 		public override void PreSaveAndQuit()
 		{

@@ -20,12 +20,13 @@ namespace SOTS.Items.Pyramid
 			Item.width = 26;
 			Item.height = 32;
 			Item.maxStack = 1;
-			Item.rare = 6;
+			Item.rare = ItemRarityID.LightPurple;
 			//Item.consumable = true;
 			//Item.createTile = mod.TileType("CursedAppleTile");
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.accessory = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
 		public override void EquipFrameEffects(Player player, EquipType type)
 		{

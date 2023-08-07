@@ -49,6 +49,7 @@ namespace SOTS.Items.Secrets
 			Item.maxStack = 1;
 			Item.autoReuse = false;
 			Item.useTurn = false;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 			if (!Main.dedServ)
 			{
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;

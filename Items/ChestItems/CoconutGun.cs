@@ -31,6 +31,7 @@ namespace SOTS.Items.ChestItems
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<Coconut>(); 
             Item.shootSpeed = 9.5f;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
 		public override int GetVoid(Player player)
 		{

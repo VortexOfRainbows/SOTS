@@ -25,6 +25,7 @@ namespace SOTS.Items.ChestItems
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Blue;
 			Item.accessory = true;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

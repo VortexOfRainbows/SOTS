@@ -957,6 +957,10 @@ namespace SOTS.NPCs.Town
 		}
 		public void DrawTilesFromOtherPortal(float currentRadius)
 		{
+			if(Lighting.Mode != SOTSWorld.LastLightingMode || !Lighting.NotRetro)
+            {
+				return;
+            }
 			TileDrawInfo value = RunGet_currentTileDrawInfo(Main.instance.TilesRenderer);
 			int x = (int)(positionOfOtherPortal.X / 16);
 			int y = (int)(positionOfOtherPortal.Y / 16);

@@ -24,6 +24,8 @@ namespace SOTS.Items.Whips
 			Item.DefaultToWhip(ModContent.ProjectileType<KelpWhipProjectile>(), 13, 4, 4, 30);
 			Item.shootSpeed = 4;
 			Item.rare = ItemRarityID.Blue;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
+			Item.value = Item.sellPrice(0, 1, 0, 0);
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{

@@ -44,6 +44,7 @@ namespace SOTS.Items.AbandonedVillage
             Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{

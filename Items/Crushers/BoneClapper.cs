@@ -33,6 +33,7 @@ namespace SOTS.Items.Crushers
 			Item.channel = true;
             Item.noUseGraphic = true; 
             Item.noMelee = true;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
 		public override bool CanShoot(Player player)
 		{

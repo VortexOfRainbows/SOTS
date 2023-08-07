@@ -34,6 +34,7 @@ namespace SOTS.Items.Invidia
 			Item.knockBack = 1.5f;
 			Item.shoot = ModContent.ProjectileType<VorpalThrow>();
 			Item.shootSpeed = 12;
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
         public override bool BeforeDrainMana(Player player)
         {

@@ -38,6 +38,18 @@ Update Objectives:
 
 Daily Log:
 
+Goals:
+Release Patch with Fixes:
+	1. Better biome music priority
+	2. Thicken Damocles room walls
+	3. Craftable Glow Silk and Glow moth summon
+
+8/7/23
+1. More expensive archaeologist sells
+
+8/6/23
+1. Trippy and Retro lighting no longer work with the wormhole. This is intentional, as they were previously causing crashes.
+
 8/4/23
 1. Buff Glowmoth damage 20 -> 28
 	1. Minions 20 -> 28

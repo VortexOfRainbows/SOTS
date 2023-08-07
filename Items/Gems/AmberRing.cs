@@ -56,6 +56,7 @@ namespace SOTS.Items.Gems
             Item.rare = ItemRarityID.Green;
 			Item.accessory = true;
 			Item.defense = 1;
+			Item.shopCustomPrice = Item.buyPrice(0, 25, 0, 0);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
