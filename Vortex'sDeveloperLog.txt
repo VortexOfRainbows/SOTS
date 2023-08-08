@@ -51,6 +51,7 @@ Release Patch with Fixes:
 6. Attempted fixing an issue where amber gem monument would spawn outside of the world
 7. Fixed bug where selene was useable without killing plantera
 8. Scene effect priority of pyramid should now surpass town
+9. No more blowing up gem lock
 
 8/6/23
 1. Trippy and Retro lighting no longer work with the wormhole. This is intentional, as they were previously causing crashes.

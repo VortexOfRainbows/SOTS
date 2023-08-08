@@ -34,7 +34,11 @@ namespace SOTS.Items.Gems
 		{
 			return false;
 		}
-		public override void NumDust(int i, int j, bool fail, ref int num)
+        public override bool CanExplode(int i, int j)
+        {
+            return false;
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num)
         {
 			num = 4;
         }

@@ -19,7 +19,7 @@ namespace SOTS
 		}
         public override bool CanExplode(int i, int j, int type)
         {
-            if (unsafePyramidWall.Contains(type))
+            if (unsafePyramidWall.Contains(type) || Framing.GetTileSafely(i, j).TileType == TileType<SOTSGemLockTiles>())
                 return false;
             return base.CanExplode(i, j, type);
         }
