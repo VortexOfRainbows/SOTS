@@ -34,6 +34,10 @@ namespace SOTS.Items.Earth.Glowmoth
 			Vector3 vColor = ColorHelpers.VibrantColor.ToVector3() * 0.34f;
 			Lighting.AddLight(Item.position, vColor);
 		}
+		public override void AddRecipes()
+		{
+			CreateRecipe(2).AddIngredient(ItemID.Cobweb, 1).AddIngredient(ItemID.GlowingMushroom, 1).AddTile(TileID.Loom).Register();
+		}
 	}
 	public class GlowNylon : ModItem
 	{

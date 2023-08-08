@@ -7,7 +7,6 @@ namespace SOTS.Projectiles
 {
     public class Zeppelin : ModProjectile 
     {	
-		int storeData = -1;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Zephyrous Zeppelin");
@@ -37,13 +36,15 @@ namespace SOTS.Projectiles
 			height = 14;
 			fallThrough = true;
 			return true;
-		}
+        }
+        bool runOnce = true;
         public override void PostAI()
         {
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1f / 255f, (255 - Projectile.alpha) * 1.45f / 255f);
-			if(storeData == -1 && Projectile.owner == Main.myPlayer)
+			if(runOnce && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Razorwater>(), (int)(Projectile.damage * 0.75f) + 1, 0, Main.myPlayer, 0, Projectile.whoAmI);
+                runOnce = false;
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Razorwater>(), (int)(Projectile.damage * 0.75f) + 1, 0, Main.myPlayer, 0, Projectile.whoAmI);
 			}
         }
     }

@@ -34,19 +34,23 @@ Update Objectives:
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 5. Glow Nylon Whip
-6. Way to speed up growth of gmoth cacoon
 
 Daily Log:
 
 Goals:
 Release Patch with Fixes:
-	1. Better biome music priority
-	2. Thicken Damocles room walls
-	3. Craftable Glow Silk and Glow moth summon
+	1. Craftable Glow Moth Summon
 
-8/7/23
+8/7/23 & 8/8/23
 1. More expensive archaeologist sells
 2. Fix supernova scatter tooltip
+3. Craftable glowsilk
+4. Extended the size of the damocles room
+5. Damocles and Gem rooms now spawn at the absolute end of worldgen (even after calamity)
+	1. This should help prevent them from being overriden
+6. Attempted fixing an issue where amber gem monument would spawn outside of the world
+7. Fixed bug where selene was useable without killing plantera
+8. Scene effect priority of pyramid should now surpass town
 
 8/6/23
 1. Trippy and Retro lighting no longer work with the wormhole. This is intentional, as they were previously causing crashes.

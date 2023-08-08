@@ -16,7 +16,7 @@ namespace SOTS.Biomes
 		//public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
 
 		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CursedPyramid");
-		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
 		// Populate the Bestiary Filter
 		//public override string BestiaryIcon => base.BestiaryIcon; //default icon

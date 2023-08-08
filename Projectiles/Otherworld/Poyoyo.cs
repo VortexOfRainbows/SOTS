@@ -49,12 +49,13 @@ namespace SOTS.Projectiles.Otherworld
 			fallThrough = true;
 			return true;
         }
-        int storeData = -1;
+        bool runOnce = true;
         public override void PostAI()
         {
-            if (storeData == -1 && Projectile.owner == Main.myPlayer)
+            if (runOnce && Projectile.owner == Main.myPlayer)
             {
-                storeData = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RainbowTrail>(), (int)(Projectile.damage * 0.6f) + 1, 0, Projectile.owner, 0, Projectile.whoAmI);
+                runOnce = false;
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RainbowTrail>(), (int)(Projectile.damage * 0.6f) + 1, 0, Projectile.owner, 0, Projectile.whoAmI);
             }
         }
     }

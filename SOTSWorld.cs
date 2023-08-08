@@ -442,7 +442,6 @@ namespace SOTS
 				{
 					dungeonSide = 1;
 				}
-				SOTSWorldgenHelper.FindAndGenerateDamocles(dungeonSide);
 				SOTSWorldgenHelper.SpamCrystals(true);
 				SOTSWorldgenHelper.FindAndGenerateBigGeode(-dungeonSide); //jungle is opp dungeon side
 				int pX = -1;
@@ -596,9 +595,15 @@ namespace SOTS
 				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
 				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
-			tasks.Insert(genIndexEnd + 7, new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Add(new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingGemStructures");
+				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
+				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
+				{
+					dungeonSide = 1;
+				}
+				SOTSWorldgenHelper.FindAndGenerateDamocles(dungeonSide);
 				GemStructureWorldgenHelper.GenerateGemStructures();
 				SOTSWorldgenHelper.CleanUpFloatingTrees(); //Updates tile frames for trees
 			}));

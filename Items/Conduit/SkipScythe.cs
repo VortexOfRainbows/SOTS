@@ -55,6 +55,10 @@ namespace SOTS.Items.Conduit
 		{
 			return Color.White * ((255 - Item.alpha) / 255f);
 		}
+        public override bool BeforeUseItem(Player player)
+        {
+			return NPC.downedPlantBoss;
+		}
 		public override int GetVoid(Player player)
 		{
 			return 15;

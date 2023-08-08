@@ -253,6 +253,10 @@ namespace SOTS.WorldgenHelpers
 					chosenX = i;
 				}
 			}
+			while(!WorldGen.InWorld(chosenX, chosenY, 50))
+			{
+				chosenX -= dungeonSide * 50;
+			}
 			GenerateAmberWaterVault(chosenX, chosenY);
 		}
 		private static void PlaceAndGenerateRuby()
