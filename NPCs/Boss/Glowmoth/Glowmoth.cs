@@ -60,6 +60,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			Main.npcFrameCount[Type] = 10;
 			NPCID.Sets.TrailCacheLength[Type] = 10;
 			NPCID.Sets.TrailingMode[Type] = 0;
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
 		}
 		public override void SetDefaults()
 		{
@@ -130,6 +131,14 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			Player player = Main.player[NPC.target];
 			if (RunOnce)
 			{
+				if(NPC.Distance(player.Center) > 640) //Basically teleport above the player when summoned with the candle
+                {
+					NPC.Center = player.Center + new Vector2(0, -120);
+					if(Main.netMode == NetmodeID.Server)
+                    {
+						NPC.netUpdate = true;
+                    }
+                }
 				SwapPhase(InitializationPhase);
 				RunOnce = false;
 			}

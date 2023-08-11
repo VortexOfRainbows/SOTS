@@ -396,6 +396,7 @@ Mods: {
 					GlowmothBag: Treasure Bag
 					TorchBomb : Torch Bomb
 					TorchGun: Torch Gun
+					SuspiciousLookingCandle: Suspicious Looking Candle
 				
 				BigCrystal: Big Crystal
 				Colossus: Colossus
@@ -1491,6 +1492,7 @@ Mods: {
 						Right click to launch a torch bomb
 						Uses gel for ammo
 						'''
+					SuspiciousLookingCandle: Summons Glowmoth when used in a glowing mushroom biome
 
 						
 				Colossus: 
@@ -3318,7 +3320,7 @@ Mods: {
 				Polaris: "Activate the {0} of the snow biome using {1}"
 				Lux: Anger a Chaos Spirit
 				SubspaceSerpent: "Tear a dimensional rift in hell by detonating a {0}"
-				Glowmoth: "Disturb a glowsilk cacoon in a glowing mushroom biome"
+				Glowmoth: "In a glowing mushroom biome, disturb a glowsilk cacoon or awaken manually using a {0}"
 			}
 			BossDisappear: {
 				PutridPinky: Putrid Pinky has robbed everyone of their peanuts!

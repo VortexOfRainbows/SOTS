@@ -523,7 +523,7 @@ namespace SOTS
 					() => true,
 					new List<int>() { },
 					-1,
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Glowmoth"),
+					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Glowmoth", "[i:" + ModContent.ItemType<Items.Earth.Glowmoth.SuspiciousLookingCandle>() + "]"),
 					$"$Mods.SOTS.BossChecklist.BossDisappear.Glowmoth",
 					(SpriteBatch sb, Rectangle rect, Color color) => {
 						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/GlowmothPortrait").Value;

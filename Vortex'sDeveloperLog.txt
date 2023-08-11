@@ -38,8 +38,10 @@ Update Objectives:
 Daily Log:
 
 Goals:
-Release Patch with Fixes:
-	1. Craftable Glow Moth Summon
+Release Patch, as it is now ready to go!
+
+8/11/23
+1. Glowmoth can now be summoned manually with the suspicious looking candle
 
 8/7/23 & 8/8/23
 1. More expensive archaeologist sells
@@ -54,7 +56,7 @@ Release Patch with Fixes:
 9. No more blowing up gem lock
 
 8/6/23
-1. Trippy and Retro lighting no longer work with the wormhole. This is intentional, as they were previously causing crashes.
+1. Trippy and Retro lighting no longer work with the wormhole. This is intentional, as they were previously causing crashes (bug fix).
 
 8/4/23
 1. Buff Glowmoth damage 20 -> 28
