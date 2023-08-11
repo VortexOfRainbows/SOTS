@@ -1,0 +1,23 @@
+Hotfix 0.23.1
+
+Additions: 
+1. Glowmoth can now be summoned manually in a glowing mushroom biome using a Suspicious Looking Candle
+
+Changes:
+1. Glowmoth damage 20 -> 28
+2. Glowmoth cacoon now begins fully grown on worldgen, also grows faster
+3. Glowmoth cacoon setpiece now only spawns in every other glowing mushroom biome
+4. Modified roasted peanuts buff strenght and duration
+5. Archaeologist's unique location equipment is now more expensive to purchase
+6. Certain worldgen pieces should now spawn last in worldgen order, even after calamity, which should help reduce overlap of structures
+7. Glowsilk can now be crafted
+8. Pyramid music now has a higher priority (should play over town music)
+
+Bug Fixes:
+1. Earthen conduit can no longer be placed without the proper equipment
+2. Glowmoth now shows up as defeated in boss checklist properly
+3. Trippy and Retro lighting now disable the unique draw effects of the void anomaly wormhole (this is to prevent crashing)
+4. Fix tooltip of supernova scatter before plantera is defeated
+5. Selene can no longer be used before plantera is defeated
+6. Modified generation of Amber Gem monument to hopefully prevent accidentally spawning outside of the world
+7. Gem Locks can no longer be destroyed by explosives

@@ -40,6 +40,10 @@ Daily Log:
 Goals:
 Release Patch, as it is now ready to go!
 
+
+-- Hotfix Released 0.23.1 on 8/11/23 --
+
+
 8/11/23
 1. Glowmoth can now be summoned manually with the suspicious looking candle
 
