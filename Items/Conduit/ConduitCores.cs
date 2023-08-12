@@ -7,6 +7,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Secrets;
 using SOTS.Void;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -42,7 +43,6 @@ namespace SOTS.Items.Conduit
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.NaturePlatingColor, name);
 			DustType = DustID.Tungsten;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NatureConduit>();
 		}
 	}
 	public class EarthenConduit : ModItem
@@ -71,7 +71,6 @@ namespace SOTS.Items.Conduit
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
 			DustType = DustID.Iron;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenConduit>();
 		}
 	}
 	public abstract class ConduitTile : ModTile
@@ -100,7 +99,6 @@ namespace SOTS.Items.Conduit
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(66, 93, 77), name);
 			DustType = DustID.Tungsten;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NatureConduit>();
 		}
 		public sealed override bool CreateDust(int i, int j, ref int type)
 		{
@@ -155,14 +153,14 @@ namespace SOTS.Items.Conduit
 		{
 			Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
 		}
-		public sealed override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
 		{
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (tile.TileFrameY == 82)
 			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<ConduitChassis>(), 20);
+				yield return new Item(ModContent.ItemType<ConduitChassis>(), 20);
 			}
-			return true;
+			yield return new Item(TileLoader.GetItemDropFromTypeAndStyle(Type, 0));
 		}
 		public sealed override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
 		{

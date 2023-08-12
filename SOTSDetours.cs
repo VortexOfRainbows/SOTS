@@ -61,9 +61,6 @@ namespace SOTS
 			//Synthetic Liver
 			Terraria.On_Player.AddBuff += Player_AddBuff;
 
-			//Used for Turning Off hit sounds for certain weapons
-			Terraria.On_NPC.StrikeNPC += NPC_StrikeNPC;
-
 			//Used for Nerfing Soaring Insignia
 			Terraria.On_Player.WingMovement += Player_WingMovement;
 
@@ -524,11 +521,6 @@ namespace SOTS
 			}
 			orig(self, type, timeToAdd, quiet, foodHack);
         }
-		private static double NPC_StrikeNPC(Terraria.On_NPC.orig_StrikeNPC orig, NPC npc, int Damage, float knockBack, int hitDirection, bool crit = false, bool noEffect = false, bool fromNet = false)
-		{
-			double double1 = orig(npc, Damage, knockBack, hitDirection, crit, noEffect, fromNet);
-			return double1;
-		}
 		private static void Player_WingMovement(Terraria.On_Player.orig_WingMovement orig, Player self)
         {
 			float startingWingTime = self.wingTime;
