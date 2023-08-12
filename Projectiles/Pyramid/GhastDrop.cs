@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ghast Drop");
+			// DisplayName.SetDefault("Ghast Drop");
 		}
         public override void SetDefaults()
         {
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			return false;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
 			if(type != -3)
 			{

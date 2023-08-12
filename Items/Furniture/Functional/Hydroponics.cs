@@ -8,6 +8,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -56,7 +57,7 @@ namespace SOTS.Items.Furniture.Functional
 			TileObjectData.newTile.Origin = new Point16(3, 5);
 			TileObjectData.addTile(Type);
 			DustType = DustID.Tungsten;
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.NaturePlatingColor, name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 		}

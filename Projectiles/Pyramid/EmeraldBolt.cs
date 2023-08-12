@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Pyramid
 		int bounceCount = -1;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Emerald Bolt");
+			// DisplayName.SetDefault("Emerald Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20 * (1 + Projectile.extraUpdates);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			bounceCount++;
 			if (bounceCount > 3)

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Permafrost
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shatter Fix");
+			// DisplayName.SetDefault("Shatter Fix");
 		}
         public override void SetDefaults()
         {

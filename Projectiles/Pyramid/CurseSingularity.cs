@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Singularity");
+			// DisplayName.SetDefault("Cursed Singularity");
 			Main.projFrames[Projectile.type] = 11;
 		}
         public override void SetDefaults()
@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Pyramid
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player owner = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)

@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Inferno
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Inferno Bolt");
+			// DisplayName.SetDefault("Inferno Bolt");
 		}
         public override void SetDefaults()
         {
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Inferno
                 }
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if(Main.rand.NextBool(3))
                 target.AddBuff(BuffID.OnFire, 180, false);

@@ -581,7 +581,7 @@ namespace SOTS
 				}
 			}
 		}
-        public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (!hasFrostBloomed && frostFlake >= 3)
 				FrostBloom(projectile);

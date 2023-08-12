@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Minions
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Evil");
+			// DisplayName.SetDefault("Evil");
 		}
 		public override void SetDefaults()
 		{
@@ -29,11 +29,11 @@ namespace SOTS.Projectiles.Minions
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.hide = true;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			crit = true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			//if (Main.myPlayer == Projectile.owner && !target.boss && !DebuffNPC.miniBosses.Contains(target.type))
 				//DebuffNPC.SetTimeFreeze(Main.player[Projectile.owner], target, 150);

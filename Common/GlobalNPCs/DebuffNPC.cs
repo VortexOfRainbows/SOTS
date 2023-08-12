@@ -93,7 +93,7 @@ namespace SOTS.Common.GlobalNPCs
         private int DendroDamage = 0;
         public List<int> ammoRegatherList = new List<int>();
         //public bool hasJustSpawned = true;
-        public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
+        public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
             if (spirits.Contains(npc.type) || npc.type == NPCType<NPCs.Constructs.OtherworldlySpirit>())
             {
@@ -336,7 +336,7 @@ namespace SOTS.Common.GlobalNPCs
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
         }
-        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             lastHitWasCrit = crit;
             if (npc.immortal)
@@ -356,7 +356,7 @@ namespace SOTS.Common.GlobalNPCs
                 }
             }
         }
-        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[projectile.owner];
             lastHitWasCrit = crit;
@@ -413,7 +413,7 @@ namespace SOTS.Common.GlobalNPCs
         }
         bool hitByRay = false;
         bool lastHitWasCrit = false;
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[projectile.owner];
             int ignoreDefense = ((npc.defense + 1) / 2);
@@ -525,7 +525,7 @@ namespace SOTS.Common.GlobalNPCs
             }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (npc.immortal)
             {
@@ -1016,7 +1016,7 @@ namespace SOTS.Common.GlobalNPCs
             }
             return true;
         }
-        public override void HitEffect(NPC npc, int hitDirection, double damageTaken)
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
         {
             if (npc.HasBuff(BuffType<Infected>()) && npc.life <= 0)
             {

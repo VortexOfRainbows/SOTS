@@ -12,7 +12,7 @@ namespace SOTS.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Doomstick");
+            // DisplayName.SetDefault("Doomstick");
         }
         public override void SetDefaults()
         {

@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Star");
+			// DisplayName.SetDefault("Chaos Star");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

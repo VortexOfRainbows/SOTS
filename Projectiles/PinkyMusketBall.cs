@@ -8,7 +8,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pinky Shot");
+			// DisplayName.SetDefault("Pinky Shot");
 		}
         public override void SetDefaults()
         {

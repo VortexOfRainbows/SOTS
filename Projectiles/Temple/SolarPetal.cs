@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Temple
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Solar Petal");
+			// DisplayName.SetDefault("Solar Petal");
 		}
         public override void SetDefaults()
         {

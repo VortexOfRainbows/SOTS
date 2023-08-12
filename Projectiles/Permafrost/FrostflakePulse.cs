@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Permafrost
 		bool runOnce = true;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frostflake Pulse");
+			// DisplayName.SetDefault("Frostflake Pulse");
 		}
         public override bool ShouldUpdatePosition()
         {
@@ -335,7 +335,7 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (!hasHit)
 			{

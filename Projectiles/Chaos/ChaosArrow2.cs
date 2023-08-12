@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Arrow");
+			// DisplayName.SetDefault("Chaos Arrow");
 		}
 		public override void SetDefaults()
 		{
@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			return -1;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.friendly = false;
 			Projectile.netUpdate = true;

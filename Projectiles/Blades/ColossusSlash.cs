@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Blades
 		public override Color color2 => new Color(51, 71, 3);
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Colossus Slash");
+			// DisplayName.SetDefault("Colossus Slash");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Blades
 			Projectile.DamageType = DamageClass.Melee;
 			delayDeathTime = 16;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			if (target.life > target.lifeMax * 0.85f)
 			{

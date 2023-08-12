@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Inferno
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blazing Arrow");
+			// DisplayName.SetDefault("Blazing Arrow");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}
@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Inferno
 			stop = true;
 			return false;
         }
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.AddBuff(BuffID.OnFire, 300, false);
 			if(Projectile.owner == Main.myPlayer && Projectile.penetrate != 3)

@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Chaos
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Phase Eraser");
+            // DisplayName.SetDefault("Phase Eraser");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()

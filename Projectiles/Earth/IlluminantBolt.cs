@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Earth
 		int helixRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Illuminant Bolt");
+			// DisplayName.SetDefault("Illuminant Bolt");
 		}
         public override void SetDefaults()
         {

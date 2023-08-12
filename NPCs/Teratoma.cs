@@ -46,14 +46,14 @@ namespace SOTS.NPCs
 			Banner = NPC.type;
 			BannerItem = ItemType<TeratomaBanner>();
 		}
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
 			NPC.lifeMax = NPC.lifeMax * 3 / 4; //240
 			if(Main.masterMode) //320
 			{
 				NPC.lifeMax = NPC.lifeMax * 8 / 9; //318
 			}
-            base.ScaleExpertStats(numPlayers, bossLifeScale);
+            base.ApplyDifficultyAndPlayerScaling(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -192,7 +192,7 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life > 0)
 			{

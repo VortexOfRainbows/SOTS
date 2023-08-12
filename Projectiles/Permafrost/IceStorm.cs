@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Permafrost
 		int size = 1;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ice Storm");
+			// DisplayName.SetDefault("Ice Storm");
 		}
         public override void SetDefaults()
         {
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			hitbox = new Rectangle((int)(Projectile.position.X - Projectile.width), (int)(Projectile.position.Y - Projectile.height), Projectile.width * 3, Projectile.height * 3);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.velocity *= 0.5f;
             target.immune[Projectile.owner] = 6;

@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -30,7 +31,7 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 5, 0); 
 			TileObjectData.newTile.Origin = new Point16(2, 4);
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(115, 0, 0), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
@@ -181,7 +182,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ruby Energy");
+			// DisplayName.SetDefault("Ruby Energy");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}

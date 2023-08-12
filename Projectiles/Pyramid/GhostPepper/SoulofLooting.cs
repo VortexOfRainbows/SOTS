@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sool of Looting");
+			// DisplayName.SetDefault("Sool of Looting");
 		}
         public override void SetDefaults()
 		{

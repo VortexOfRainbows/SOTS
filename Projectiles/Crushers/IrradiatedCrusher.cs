@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Irradiated Arm");
+			// DisplayName.SetDefault("Irradiated Arm");
 		}
 		public override void SafeSetDefaults()
 		{

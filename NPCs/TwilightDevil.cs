@@ -247,7 +247,7 @@ namespace SOTS.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightGel>(), 1, 1, 2));
 			npcLoot.Add(ItemDropRule.Common(ItemType<JarOfSouls>(), 4).OnFailedRoll(ItemDropRule.Common(ItemType<AvaritianPlating>(), 1, 4, 8)));
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

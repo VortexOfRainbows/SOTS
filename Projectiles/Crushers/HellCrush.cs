@@ -8,7 +8,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hell Crush");
+			// DisplayName.SetDefault("Hell Crush");
 		}
         public override void SetDefaults()
         {
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Crushers
                 Projectile.frame = (Projectile.frame + 1) % 5;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 10;
 			if(Main.rand.NextBool(3))

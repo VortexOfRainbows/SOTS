@@ -40,7 +40,7 @@ namespace SOTS.Items.Furniture
 		}
         public override void SetStaticDefaults()
 		{
-			ContainerName.SetDefault(GetChestName());
+			ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault(GetChestName());
 			ChestStatics();
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
@@ -56,7 +56,7 @@ namespace SOTS.Items.Furniture
 
             base.DustType = this.DustType;
             AdjTiles = new int[] { TileID.Containers };
-            base.ChestDrop = ChestDrop;
+            base.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ChestDrop;
 		}
 
 		public override ushort GetMapOption(int i, int j)
@@ -177,7 +177,7 @@ namespace SOTS.Items.Furniture
 					{
 						if (Main.netMode == NetmodeID.MultiplayerClient)
 						{
-							NetMessage.SendData(MessageID.Unlock, -1, -1, null, player.whoAmI, 1f, left, top);
+							NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, left, top);
 						}
 					}
 				}
@@ -230,7 +230,7 @@ namespace SOTS.Items.Furniture
 			}
 			else
 			{
-				string defaultName = TileLoader.ContainerName(tile.TileType); // This gets the ContainerName text for the currently selected language
+				string defaultName = TileLoader.DefaultContainerName(tile.TileType)/* tModPorter Note: new method takes in FrameX and FrameY */; // This gets the ContainerName text for the currently selected language
 				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : defaultName;
 				if (player.cursorItemIconText == defaultName)
 				{

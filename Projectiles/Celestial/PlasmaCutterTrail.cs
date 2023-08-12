@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Cutter Trail");
+			// DisplayName.SetDefault("Plasma Cutter Trail");
 		}
         public override void SetDefaults()
         {

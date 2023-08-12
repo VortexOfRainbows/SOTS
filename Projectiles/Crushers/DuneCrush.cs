@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dune Crush");
+			// DisplayName.SetDefault("Dune Crush");
 		}
         public override void SetDefaults()
         {

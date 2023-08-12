@@ -203,7 +203,7 @@ namespace SOTS.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightGel>(), 1, 1, 2));
 			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfOtherworld>()));
 		}
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

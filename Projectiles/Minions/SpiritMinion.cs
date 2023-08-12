@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit");
+			// DisplayName.SetDefault("Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public void SetSpiritMinionDefaults()
 		{
-			Projectile.ContinuouslyUpdateDamage = true;
+			Projectile.ContinuouslyUpdateDamageStats = true;
 			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 		}
 		public override bool PreDraw(ref Color lightColor)

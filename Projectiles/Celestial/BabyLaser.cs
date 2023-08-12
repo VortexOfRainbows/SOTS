@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Green Laser");
+			// DisplayName.SetDefault("Green Laser");
 		}
 		public override void SetDefaults()
 		{
@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
 		}

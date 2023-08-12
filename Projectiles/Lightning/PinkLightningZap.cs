@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Lightning
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pink Lightning");
+			// DisplayName.SetDefault("Pink Lightning");
 		}
 		public override void SetDefaults()
 		{

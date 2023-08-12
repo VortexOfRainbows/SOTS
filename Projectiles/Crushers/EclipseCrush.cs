@@ -8,7 +8,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Eclipse Crush");
+			// DisplayName.SetDefault("Eclipse Crush");
 		}
         public override void SetDefaults()
         {

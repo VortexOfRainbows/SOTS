@@ -38,7 +38,7 @@ namespace SOTS.NPCs
 			Banner = NPC.type;
 			BannerItem = ItemType<SnakePotBanner>();
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if(NPC.ai[0] >= 10 && NPC.ai[0] <= 59)
 				NPC.ai[0] = 0;
@@ -107,7 +107,7 @@ namespace SOTS.NPCs
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Snake");
+			// DisplayName.SetDefault("Snake");
 		}
 		public override void SetDefaults()
 		{
@@ -144,7 +144,7 @@ namespace SOTS.NPCs
 			spriteBatch.Draw(texture, drawPos, NPC.frame, Color.White, NPC.rotation, drawOrigin, NPC.scale * randMod, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
@@ -179,7 +179,7 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-		public override void OnHitPlayer(Player player, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
 		{
 			player.AddBuff(BuffID.Venom, 60, true);
 		}  

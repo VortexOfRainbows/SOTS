@@ -9,7 +9,7 @@ namespace SOTS.Void
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Heal Effect");
+			// DisplayName.SetDefault("Void Heal Effect");
 		}
         public override void SetDefaults()
         {

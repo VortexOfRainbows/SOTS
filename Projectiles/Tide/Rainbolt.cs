@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Tide
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Rain Bolt");
+			// DisplayName.SetDefault("Rain Bolt");
 		}
         public override void SetDefaults()
         {
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Tide
         {
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

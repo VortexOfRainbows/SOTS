@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bone Clapper Crusher");
+			// DisplayName.SetDefault("Bone Clapper Crusher");
 		}
 		public override void SafeSetDefaults()
 		{

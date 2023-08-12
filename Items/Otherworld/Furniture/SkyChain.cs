@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -44,10 +45,10 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.newTile.CoordinateHeights = new int[]{18};
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 255, 255), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			ItemDrop = ModContent.ItemType<SkyChain>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SkyChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

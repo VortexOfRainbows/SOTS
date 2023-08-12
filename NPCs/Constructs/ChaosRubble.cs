@@ -50,7 +50,7 @@ namespace SOTS.NPCs.Constructs
         {
             return false;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
@@ -67,7 +67,7 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
 			NPC.lifeMax = (int)(NPC.lifeMax * 3 / 5);
 			NPC.damage = 0;

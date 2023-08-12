@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Code Burst");
+			// DisplayName.SetDefault("Code Burst");
 		}
         public override void SetDefaults()
         {

@@ -270,7 +270,7 @@ namespace SOTS.NPCs.Phase
 			npcLoot.Add(ItemDropRule.Common(ItemType<TwilightShard>(), 12, 1, 1));
 			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfOtherworld>(), 20, 1, 1));
 		}
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

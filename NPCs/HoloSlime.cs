@@ -259,7 +259,7 @@ namespace SOTS.NPCs
 		{
 			return 0;
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

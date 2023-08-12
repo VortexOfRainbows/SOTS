@@ -21,7 +21,7 @@ namespace SOTS.Items.Conduit
 			Item.shopCustomPrice = Item.buyPrice(gold: 35);
 			Item.rare = ItemRarityID.Blue;
 			Item.accessory = true;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{

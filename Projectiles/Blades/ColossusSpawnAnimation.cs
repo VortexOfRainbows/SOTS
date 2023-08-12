@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Blades
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spawn Colossus");
+			// DisplayName.SetDefault("Spawn Colossus");
 		}
         public override void SetDefaults()
 		{

@@ -173,7 +173,7 @@ namespace SOTS.NPCs.Boss.Polaris
             scale = 1f;   //this make the NPC Health Bar biger
             return null;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);  //boss life scale in expertmode
             NPC.damage = (int)(NPC.damage * 0.75f);  //boss damage increase in expermode

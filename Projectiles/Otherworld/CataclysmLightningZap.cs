@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cataclysm Bullet");
+			// DisplayName.SetDefault("Cataclysm Bullet");
 		}
 		public override void SetDefaults()
 		{

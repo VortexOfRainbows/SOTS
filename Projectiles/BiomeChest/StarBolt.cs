@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.BiomeChest
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starlight Bolt");
+			// DisplayName.SetDefault("Starlight Bolt");
 		}
         public override void SetDefaults()
         {

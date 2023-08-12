@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Otherworld
         bool pull = false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Inferno Hook");
+            // DisplayName.SetDefault("Inferno Hook");
 
         }
         public override void SetDefaults()
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Otherworld
             height = 16;
             return true;
         }
-        public override bool? SingleGrappleHook(Player player)
+        public override bool? SingleGrappleHook(Player player)/* tModPorter Note: Removed. In SetStaticDefaults, use ProjectileID.Sets.SingleGrappleHook[Type] = true if you previously had this method return true */
         {
             return true;
         }

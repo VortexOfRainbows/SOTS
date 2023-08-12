@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Blade");
+			// DisplayName.SetDefault("Twilight Blade");
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Lightning
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pink Lightning");
+			// DisplayName.SetDefault("Pink Lightning");
 		}
         public override void SetDefaults()
         {
@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Lightning
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			TriggerStop();

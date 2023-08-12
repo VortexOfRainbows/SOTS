@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Minions
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Penguin Missile");
+			// DisplayName.SetDefault("Penguin Missile");
 			Main.projFrames[Projectile.type] = 18;
 		}
         public override void SetDefaults()
@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.Kill();
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 3;
 			target.AddBuff(BuffID.OnFire, 240, false);

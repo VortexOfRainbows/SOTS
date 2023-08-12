@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Lightning
 		public override void SetStaticDefaults()
 		{
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3200;
-			DisplayName.SetDefault("Vorpal Lightning");
+			// DisplayName.SetDefault("Vorpal Lightning");
 		}
 		public override void SetDefaults()
 		{

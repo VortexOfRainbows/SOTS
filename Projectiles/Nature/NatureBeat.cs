@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Nature
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Blast");
+			// DisplayName.SetDefault("Nature Blast");
 		}
         public override void SetDefaults()
         {
@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.tileCollide = false;
 			Projectile.alpha = 0;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			if(Main.rand.NextBool(3))
 				VoidPlayer.VoidBurn(Mod, target, 3, 90);

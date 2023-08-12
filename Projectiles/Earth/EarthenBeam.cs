@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Earth
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lightspeed Blade");
+			// DisplayName.SetDefault("Lightspeed Blade");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 180;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}

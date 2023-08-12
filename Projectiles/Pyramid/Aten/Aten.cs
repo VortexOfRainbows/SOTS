@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             Projectile.velocity *= 0.85f;
         }
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Aten");
+        // public override void SetStaticDefaults() => DisplayName.SetDefault("Aten");
         public override void SetDefaults()
         {
             SetFlailStats(new Vector2(0.5f, 1.5f), new Vector2(1f, 1f), 1.5f, 60, 10);
@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             Projectile.localNPCHitCooldown = 15;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0;
         }
@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             Projectile.idStaticNPCHitCooldown = 30;
             Projectile.usesIDStaticNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0;
         }

@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dune Spike");
+			// DisplayName.SetDefault("Dune Spike");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2; //also saves rotation and sprite direction  
 		}

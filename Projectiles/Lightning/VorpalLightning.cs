@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Lightning
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vorpal Thunder");
+			// DisplayName.SetDefault("Vorpal Thunder");
 		}
 		public override void SetDefaults()
 		{

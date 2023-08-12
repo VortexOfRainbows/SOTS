@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ruby Spawner");
+			// DisplayName.SetDefault("Ruby Spawner");
 		}
         public override void SetDefaults()
         {

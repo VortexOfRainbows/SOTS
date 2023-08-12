@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Blades
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Digital Trail");
+			// DisplayName.SetDefault("Digital Trail");
 		}
         public override void SetDefaults()
         {

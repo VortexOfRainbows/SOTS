@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Otherworld
     {	          
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("TwilightDart");
+			// DisplayName.SetDefault("TwilightDart");
 		}
 		
         public override void SetDefaults()

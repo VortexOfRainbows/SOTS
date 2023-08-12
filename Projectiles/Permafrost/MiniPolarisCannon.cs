@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Polar Cannon");
+			// DisplayName.SetDefault("Polar Cannon");
 		}
         public override void SetDefaults()
 		{

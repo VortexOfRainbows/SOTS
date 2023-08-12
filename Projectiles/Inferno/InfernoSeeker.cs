@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Inferno Seeker");
+			// DisplayName.SetDefault("Inferno Seeker");
 		}
         public override void SetDefaults()
         {
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Inferno
         {
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.AddBuff(BuffID.OnFire, 600, false);
         }

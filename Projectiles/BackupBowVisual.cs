@@ -16,7 +16,7 @@ namespace SOTS.Projectiles
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Backup Bow Visual");
+			// DisplayName.SetDefault("Backup Bow Visual");
 		}
 		public sealed override void SetDefaults()
 		{

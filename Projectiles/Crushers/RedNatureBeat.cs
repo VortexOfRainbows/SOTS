@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pulverizer Blast");
+			// DisplayName.SetDefault("Pulverizer Blast");
 		}
         public override void SetDefaults()
         {

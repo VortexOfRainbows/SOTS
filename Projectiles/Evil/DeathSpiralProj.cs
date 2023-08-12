@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Evil
         public float firingTime;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Death Spiral");
+            // DisplayName.SetDefault("Death Spiral");
         }
         public override void SetDefaults()
         {

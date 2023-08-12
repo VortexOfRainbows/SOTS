@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ghost Pepper");
+			// DisplayName.SetDefault("Ghost Pepper");
 			Main.projPet[Projectile.type] = true;
 			Main.projFrames[Projectile.type] = 7;
 		}

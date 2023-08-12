@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phase Spear");
+			// DisplayName.SetDefault("Phase Spear");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Otherworld
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Rainbow Trail");
+			// DisplayName.SetDefault("Rainbow Trail");
 		}
         public override void SetDefaults()
         {

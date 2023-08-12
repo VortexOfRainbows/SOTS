@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Holo Eye");
+			// DisplayName.SetDefault("Holo Eye");
 			Main.projFrames[Projectile.type] = 1;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

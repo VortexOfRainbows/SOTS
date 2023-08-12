@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Minions
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Turret");
+			// DisplayName.SetDefault("Wormwood Turret");
 			
 		}
         public override void SetDefaults()

@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Earth
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Miner's Pickaxe");
+			// DisplayName.SetDefault("Miner's Pickaxe");
 		}
         public override void SetDefaults()
         {

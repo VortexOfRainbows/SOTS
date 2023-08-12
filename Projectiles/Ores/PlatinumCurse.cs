@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Ores
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Platinum Curse");
+			// DisplayName.SetDefault("Platinum Curse");
 		}
         public override void SetDefaults()
         {

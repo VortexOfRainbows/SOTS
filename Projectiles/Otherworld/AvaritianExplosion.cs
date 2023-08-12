@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Avaritian Explosion");
+			// DisplayName.SetDefault("Avaritian Explosion");
 			Main.projFrames[Projectile.type] = 5;
 		}
         public override void SetDefaults()

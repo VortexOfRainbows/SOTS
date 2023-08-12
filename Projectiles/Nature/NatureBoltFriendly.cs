@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Nature
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Bolt");
+			// DisplayName.SetDefault("Nature Bolt");
 		}
         public override void SetDefaults()
         {

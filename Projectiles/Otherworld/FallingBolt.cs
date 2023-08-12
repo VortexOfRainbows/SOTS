@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Falling Bolt");
+			// DisplayName.SetDefault("Falling Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 60;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Minions
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Voidspace Explosion");
+			// DisplayName.SetDefault("Voidspace Explosion");
 		}
         public override void SetDefaults()
         {
@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.alpha = 255;
 			Projectile.DamageType = DamageClass.Summon;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			crit = false;
         }
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Minions
 				dust.color = new Color(33, 100, 33);
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0;
 			Projectile.friendly = false;

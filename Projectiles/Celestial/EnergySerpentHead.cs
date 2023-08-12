@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Celestial
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Energy Serpent");
+			// DisplayName.SetDefault("Energy Serpent");
 		}
 		public override void SetDefaults()
         {

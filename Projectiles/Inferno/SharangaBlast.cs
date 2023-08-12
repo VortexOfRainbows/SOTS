@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Inferno
 		bool runOnce = true;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sharanga Crush");
+			// DisplayName.SetDefault("Sharanga Crush");
 		}
         public override void SetDefaults()
         {
@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			hitbox = new Rectangle((int)(Projectile.position.X - Projectile.width), (int)(Projectile.position.Y - Projectile.height), Projectile.width * 3, Projectile.height * 3);
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 10;
 			target.AddBuff(BuffID.OnFire, 180, false);

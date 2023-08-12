@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Pyramid
     {	int wait = 0;       
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fallen Bricks");
+			// DisplayName.SetDefault("Fallen Bricks");
 			
 		}
 		

@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Thunder Ball");
+			// DisplayName.SetDefault("Chaos Thunder Ball");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Starshot");
+            // DisplayName.SetDefault("Starshot");
         }
         public override void SetDefaults()
         {
@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Otherworld
             Color color = Color.White;
             Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             damage /= 2;
             damage += 1;

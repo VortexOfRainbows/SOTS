@@ -130,7 +130,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			Music = -1;
 			SceneEffectPriority = (SceneEffectPriority)(-1);
 		}
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
 			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * ExpertLifeScale); //16000
 			NPC.damage = (int)(NPC.damage * 0.8f); //86
@@ -1140,7 +1140,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				}
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pulverizer Bolt");
+			// DisplayName.SetDefault("Pulverizer Bolt");
 		}
         public override void SetDefaults()
         {

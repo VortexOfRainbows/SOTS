@@ -69,7 +69,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
 			Main.tileNoSunLight[Type] = false;
-			ItemDrop = ModContent.ItemType<HardlightBlock>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<HardlightBlock>();
 			//AddMapEntry(new Color(0, 0, 0, 0));
 			MineResist = 1.0f;
 			MinPick = 0;

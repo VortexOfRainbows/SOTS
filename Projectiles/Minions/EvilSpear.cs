@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Minions
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Umbra Spear");
+			// DisplayName.SetDefault("Umbra Spear");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Projectile.ai[1] = -1;
 			Projectile.netUpdate = true;

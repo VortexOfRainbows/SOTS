@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Crushers
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dune Splicer");
+			// DisplayName.SetDefault("Dune Splicer");
 		}
 		public override void SafeSetDefaults()
 		{

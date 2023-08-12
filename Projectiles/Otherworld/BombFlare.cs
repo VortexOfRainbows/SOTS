@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bomb Flare");
+			// DisplayName.SetDefault("Bomb Flare");
             Main.projFrames[Projectile.type] = 3;
         }
         public override void SetDefaults()
@@ -163,7 +163,7 @@ namespace SOTS.Projectiles.Otherworld
             }
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.Next(3) == 0)
                target.AddBuff(24, 900, false);

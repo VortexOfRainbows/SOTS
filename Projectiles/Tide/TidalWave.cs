@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Tide
 		public override string Texture => "SOTS/Projectiles/Tide/RippleWave";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tidal Wave");
+			// DisplayName.SetDefault("Tidal Wave");
 		}
         public override void SetDefaults()
         {
@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Tide
 			}
 			return false;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			VoidPlayer.VoidBurn(Mod, target, 8, 210);
 		}

@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Earth
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Ball");
+			// DisplayName.SetDefault("Vibrant Ball");
 		}
         public override void SetDefaults()
         {
@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Earth
 			UpdateEnd();
 			return false;
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.immune[Projectile.owner] = 0;
 			UpdateEnd();

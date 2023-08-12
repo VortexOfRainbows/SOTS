@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crab Claw Crusher");
+			// DisplayName.SetDefault("Crab Claw Crusher");
 		}
 		public override void SafeSetDefaults()
 		{

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Ring");
+			// DisplayName.SetDefault("Void Ring");
 		}
 		public override void SetDefaults()
 		{
@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 		}

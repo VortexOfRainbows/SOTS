@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Chaos
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Relocator Beam");
+			// DisplayName.SetDefault("Relocator Beam");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
@@ -44,11 +44,11 @@ namespace SOTS.Projectiles.Chaos
         public const float SeekOutOthersRange = 96f;
         public int GrowthRange = 20;
         public int DegradeRange = 10;
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             knockback = 0;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.myPlayer == Projectile.owner)
                 DebuffNPC.SetTimeFreeze(Main.player[Projectile.owner], target, 90);

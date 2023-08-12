@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Star Laser");
+			// DisplayName.SetDefault("Star Laser");
 		}
 		public override void SetDefaults()
 		{

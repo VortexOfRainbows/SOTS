@@ -62,7 +62,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f + WidthOffset * NPC.spriteDirection, texture.Height * 0.5f);
 			spriteBatch.Draw(texture, NPC.Center - screenPos, null, Color.White * ((255 - NPC.alpha) / 255f), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
 			NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale); 
 			NPC.damage = (int)(NPC.damage * 0.75f); 

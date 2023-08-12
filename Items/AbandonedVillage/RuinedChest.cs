@@ -36,7 +36,7 @@ namespace SOTS.Items.AbandonedVillage
 		protected override int DustType => 122;
 		protected override void AddMapEntires()
 		{
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(180, 130, 100), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.

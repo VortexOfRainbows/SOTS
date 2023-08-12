@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Squirrel");
+			// DisplayName.SetDefault("Squirrel");
 			Main.projFrames[Projectile.type] = 6;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;
@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			return true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;

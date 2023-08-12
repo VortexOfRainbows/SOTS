@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Permafrost
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Permafrost Spike");
+			// DisplayName.SetDefault("Permafrost Spike");
 		}
         public override void SetDefaults()
         {
@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.friendly = false;
 			Projectile.tileCollide = true;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			VoidPlayer.VoidBurn(Mod, target, 5, 180);
 		}

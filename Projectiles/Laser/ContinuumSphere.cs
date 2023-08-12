@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Laser
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Continuum Sphere");
+			// DisplayName.SetDefault("Continuum Sphere");
 		}
 		
         public override void SetDefaults()

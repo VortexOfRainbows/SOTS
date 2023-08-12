@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public virtual float trailScale() => 1;
 		public bool off = false;
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (Projectile.type == ModContent.ProjectileType<VibrantArrow>())
 			{

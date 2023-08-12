@@ -206,7 +206,7 @@ namespace SOTS.Items.Secrets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Strange Keystone Explosion");
+			// DisplayName.SetDefault("Strange Keystone Explosion");
 		}
 		public override void SetDefaults()
 		{

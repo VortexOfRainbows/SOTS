@@ -11,7 +11,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Construct Finder");
+			// DisplayName.SetDefault("Construct Finder");
 		}
         public override void SetDefaults()
         {
@@ -24,7 +24,7 @@ namespace SOTS.Projectiles
 			Projectile.ignoreWater = true;
 			Projectile.extraUpdates = 3;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			crit = false;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

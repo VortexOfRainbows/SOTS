@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Pyramid
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phantom Fist");
+			// DisplayName.SetDefault("Phantom Fist");
 		}
         public override void SetDefaults()
         {
@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 25;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

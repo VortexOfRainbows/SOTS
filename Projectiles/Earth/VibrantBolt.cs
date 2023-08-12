@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Earth
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Bolt");
+			// DisplayName.SetDefault("Vibrant Bolt");
 		}
         public override void SetDefaults()
         {

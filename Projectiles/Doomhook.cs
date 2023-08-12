@@ -12,7 +12,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Doomhook");
+			// DisplayName.SetDefault("Doomhook");
 		}
         public override void SetDefaults()
 		{
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles
         {
             return !hasHit ? (bool?)null : false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			targetID = target.whoAmI;
 			hasHit = true;

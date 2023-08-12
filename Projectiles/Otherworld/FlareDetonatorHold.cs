@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flare Detonator");
+			// DisplayName.SetDefault("Flare Detonator");
 		}
 		public override void SetDefaults() 
 		{

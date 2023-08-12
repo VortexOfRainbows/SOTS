@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Black Flare");
+			// DisplayName.SetDefault("Black Flare");
 			
 		}
         public override void SetDefaults()
@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.alpha = (int)byte.MaxValue;
             Projectile.timeLeft = 36000;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             damage += (int)(target.defense * 0.5f);
         }
@@ -114,7 +114,7 @@ namespace SOTS.Projectiles.Otherworld
             }
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.Next(3) == 0)
                target.AddBuff(24, 900, false);

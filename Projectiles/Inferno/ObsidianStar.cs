@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hellfury Star");
+			// DisplayName.SetDefault("Hellfury Star");
 		}
         public override void SetDefaults()
         {

@@ -77,7 +77,7 @@ namespace SOTS.Void
 				voidBarOffset.Y = tag.GetFloat("voidBarPosY3");
 		}
         public bool netUpdate = false;
-        public override void clientClone(ModPlayer clientClone)
+        public override void CopyClientState(ModPlayer clientClone)/* tModPorter Suggestion: Replace Item.Clone usages with Item.CopyNetStateTo */
 		{
 			//will need to fix this later...
 		}

@@ -9,7 +9,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spore Cloud");
+			// DisplayName.SetDefault("Spore Cloud");
 		}
         public override void SetDefaults()
 		{
@@ -24,7 +24,7 @@ namespace SOTS.Projectiles
 			Projectile.tileCollide = false;
 			Projectile.DamageType = DamageClass.Ranged;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (Main.rand.NextBool(10))
 				target.AddBuff(BuffID.Confused, 120, false);

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Permafrost
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frost Spear");	
+			// DisplayName.SetDefault("Frost Spear");	
 		}
         public override void SetDefaults()
         {

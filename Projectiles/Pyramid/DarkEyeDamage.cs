@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("The Dark Eye");
+			// DisplayName.SetDefault("The Dark Eye");
 		}
         public override void SetDefaults()
         {

@@ -86,7 +86,7 @@ namespace SOTS
 				}
 			}
 		}
-        public override void OnEnterWorld(Player player)
+        public override void OnEnterWorld()
 		{
 			SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
 			if (Main.netMode != NetmodeID.Server)
@@ -330,7 +330,7 @@ namespace SOTS
 			packet.Write(voidPlayer.lootingSouls);
 			packet.Send(toWho, fromWho);
 		}
-        public override void clientClone(ModPlayer clientClone)
+        public override void CopyClientState(ModPlayer clientClone)/* tModPorter Suggestion: Replace Item.Clone usages with Item.CopyNetStateTo */
         {
 			//will need to fix this later...
         }
@@ -616,13 +616,13 @@ namespace SOTS
 			}
 			base.PostUpdate();
         }
-        public override bool? CanHitNPC(Item item, NPC target)
+        public override bool? CanHitNPCWithItem(Item item, NPC target)
         {
 			if(CanKillNPC && item.DamageType == DamageClass.Melee && target.townNPC)
 			{
 				return null;
             }
-            return base.CanHitNPC(item, target);
+            return base.CanHitNPCWithItem(item, target);
         }
 		public void ResetVisionID()
         {
@@ -1113,7 +1113,7 @@ namespace SOTS
 			}
 			return Main.rand.NextBool(rate);
 		}
-		public override void OnHitByNPC(NPC npc, int damage, bool crit)
+		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
 		{
 			if (PushBack)
 			{
@@ -1126,15 +1126,15 @@ namespace SOTS
 				}
 			}
 		}
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
 		{
 			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit, false);
 		}
-        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
 		{
 			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit, false);
 		}
-		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
 		{
 			if (Main.myPlayer == Player.whoAmI && OnHitCD <= 0)
 			{
@@ -1212,7 +1212,7 @@ namespace SOTS
 			}
 			if (MasochistRing && Main.myPlayer == Player.whoAmI)
 				GrantRandomRingBuff(Player);
-			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
+			return base.ModifyHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
 		}
 		int shotCounter = 0;
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -1272,11 +1272,11 @@ namespace SOTS
 				return 1f / standard;
 			return base.UseTimeMultiplier(item);
 		}
-		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */
 		{
 			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit, true);
 		}
-		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) 
+		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ 
 		{
 			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit, true);
 		}

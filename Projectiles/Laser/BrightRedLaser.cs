@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Artifact Laser");
+			// DisplayName.SetDefault("Artifact Laser");
 		}
 		public override void SetDefaults() 
 		{
@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Laser
 			}
 			Projectile.alpha += 10;
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 3;
 			if(Projectile.CountsAsClass(DamageClass.Melee)) 

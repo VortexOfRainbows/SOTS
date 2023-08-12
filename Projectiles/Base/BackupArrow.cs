@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Base
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Backup Arrow");
+			// DisplayName.SetDefault("Backup Arrow");
 		}
         public override void SetDefaults()
         {
@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Base
             Projectile.DamageType = DamageClass.Ranged; 
 		}
 		int bounceCounter = 0;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			if (Main.myPlayer == Projectile.owner)
 				DebuffNPC.SetTimeFreeze(Main.player[Projectile.owner], target, 60);

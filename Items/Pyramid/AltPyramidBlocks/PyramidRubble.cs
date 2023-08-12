@@ -40,7 +40,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<PyramidRubble>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PyramidRubble>();
 			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.15f));
 			MineResist = 1.5f;
 			MinPick = 0;
@@ -86,7 +86,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<RuinedPyramidBrick>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<RuinedPyramidBrick>();
 			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.08f));
 			MineResist = 2.0f;
 			MinPick = 110;

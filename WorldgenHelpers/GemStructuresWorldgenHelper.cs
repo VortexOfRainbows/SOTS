@@ -20,6 +20,7 @@ using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
 using SOTS.Items.Void;
 using SOTS.Items.Whips;
+using Terraria.WorldBuilding;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -282,9 +283,9 @@ namespace SOTS.WorldgenHelpers
 		}
 		private static void PlaceAndGenerateAmethyst()
 		{
-			int startingX = WorldGen.UndergroundDesertLocation.X;
-			int endingX = startingX + WorldGen.UndergroundDesertLocation.Width;
-			if(WorldGen.UndergroundDesertLocation.Width < 10) //Just in case the underground desert is broken, allow generating anywhere on the world except the edges
+			int startingX = GenVars.UndergroundDesertLocation.X;
+			int endingX = startingX + GenVars.UndergroundDesertLocation.Width;
+			if(GenVars.UndergroundDesertLocation.Width < 10) //Just in case the underground desert is broken, allow generating anywhere on the world except the edges
             {
 				startingX = 500; //500 blocks from edge to avoid the ocean
 				endingX = Main.maxTilesX - 500;

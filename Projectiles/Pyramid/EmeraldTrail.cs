@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Pyramid
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Emerald Trail");
+			// DisplayName.SetDefault("Emerald Trail");
 		}
         public override void SetDefaults()
         {
@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.localNPCHitCooldown = 15;
 			Projectile.ownerHitCheck = true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vision Flare");
+			// DisplayName.SetDefault("Vision Flare");
 		}
         public override void SetDefaults()
         {

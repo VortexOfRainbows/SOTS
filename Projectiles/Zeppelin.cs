@@ -9,7 +9,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Zephyrous Zeppelin");
+			// DisplayName.SetDefault("Zephyrous Zeppelin");
             ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 11f;
 			// YoyosLifeTimeMultiplier is how long in seconds the yoyo will stay out before automatically returning to the player. 
 			// Vanilla values range from 3f(Wood) to 16f(Chik), and defaults to -1f. Leaving as -1 will make the time infinite.

@@ -60,7 +60,7 @@ namespace SOTS.NPCs.Inferno
             return false;
         }
         public bool sans = false;
-		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
 		{
 			if(sans)
 			{
@@ -307,7 +307,7 @@ namespace SOTS.NPCs.Inferno
 			npcLoot.Add(notSans);
 			npcLoot.Add(isSans);
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hellfury Crush");
+			// DisplayName.SetDefault("Hellfury Crush");
 		}
         public override void SetDefaults()
         {
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
                 Projectile.frame = (Projectile.frame + 1) % 5;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 10;
 			target.AddBuff(BuffID.OnFire, 180, false);

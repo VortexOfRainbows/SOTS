@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Spirit");
+			// DisplayName.SetDefault("Chaos Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

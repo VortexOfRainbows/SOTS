@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Aten Starsplosion");
+			// DisplayName.SetDefault("Aten Starsplosion");
 		}
         public override void SetDefaults()
         {
@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             Projectile.localNPCHitCooldown = 10;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0;
             if (Main.rand.NextBool(5))

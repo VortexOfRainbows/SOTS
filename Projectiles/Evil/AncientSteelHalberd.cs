@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Evil
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Steel Halberd");
+			// DisplayName.SetDefault("Ancient Steel Halberd");
 		}
 		public override void SetDefaults()
 		{
@@ -32,11 +32,11 @@ namespace SOTS.Projectiles.Evil
 			Projectile.localNPCHitCooldown = 60;
 			Projectile.timeLeft = 300;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			crit = false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

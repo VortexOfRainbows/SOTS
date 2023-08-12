@@ -17,7 +17,7 @@ namespace SOTS.Projectiles
 		float oldVelocityX = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Putrid Bullet");
+			// DisplayName.SetDefault("Putrid Bullet");
 		}
         public override void SetDefaults()
         {

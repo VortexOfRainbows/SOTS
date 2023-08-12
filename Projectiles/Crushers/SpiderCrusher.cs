@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spider Arm");
+			// DisplayName.SetDefault("Spider Arm");
 		}
         public override void SafeSetDefaults()
         {

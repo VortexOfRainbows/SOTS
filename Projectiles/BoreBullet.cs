@@ -49,12 +49,12 @@ namespace SOTS.Projectiles
 			height = 8;
             return true;
         }
-        public override void OnHitNPC(NPC n, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.ai[0] = -2;
 			Projectile.netUpdate = true;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			int ignoreDefense = ((target.defense + 1) / 2);
 			int flatAdded = 10;

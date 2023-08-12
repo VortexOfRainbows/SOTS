@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         {
             Projectile.velocity *= 0.85f;
         }
-        public override void SetStaticDefaults() => DisplayName.SetDefault("North Star");
+        // public override void SetStaticDefaults() => DisplayName.SetDefault("North Star");
         public override void SetDefaults()
         {
             SetFlailStats(new Vector2(0.2f, 2.1f), new Vector2(1f, 1f), 2f, 80, 12);
@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             Projectile.localNPCHitCooldown = 15;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0;
         }
@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             Projectile.localNPCHitCooldown = 100; //actually 50 because of extraupdates
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0;
             if(released)

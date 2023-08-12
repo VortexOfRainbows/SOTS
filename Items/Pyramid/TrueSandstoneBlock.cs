@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<TrueSandstoneBlock>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<TrueSandstoneBlock>();
 			AddMapEntry(new Color(210, 160, 95));
 			MineResist = 5.0f;
 			MinPick = 250;

@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -104,7 +105,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			TileObjectData.newTile.StyleHorizontal = false;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(125, 55, 55), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustType<AvaritianDust>();
@@ -321,7 +322,7 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Undo"); //Do you enjoy how all my net sycning is done via projectiles?
+			// DisplayName.SetDefault("Undo"); //Do you enjoy how all my net sycning is done via projectiles?
 		}
 		public override void SetDefaults()
 		{

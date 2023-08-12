@@ -10,6 +10,7 @@ using SOTS.Projectiles.Permafrost;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace SOTS.Items
@@ -28,8 +29,8 @@ namespace SOTS.Items
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			MineResist = 1f;
 			DustType = DustID.Dirt;
-			ItemDrop = ModContent.ItemType<Peanut>();
-			ModTranslation name = CreateMapEntryName();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Peanut>();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(154, 78, 15), name);
 			HitSound = SoundID.Dig;
 		}
@@ -50,7 +51,7 @@ namespace SOTS.Items
 			SOTSTile.DrawSlopedGlowMask(i, j, Type, Terraria.GameContent.TextureAssets.Tile[TileID.Dirt].Value, Lighting.GetColor(i, j, WorldGen.paintColor(Main.tile[i, j].TileColor)), Vector2.Zero, false);
             return true;
         }
-        public override bool Drop(int i, int j)
+        public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
 		{
 			int peanutDropAmt = 1;
 			int evostoneDropAmt = 1;

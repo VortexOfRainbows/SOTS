@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Permafrost
 		int count = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shardstorm");
+			// DisplayName.SetDefault("Shardstorm");
 		}
         public override void SetDefaults()
         {
@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Permafrost
 			if (iterator >= trailPos.Length)
 				Projectile.Kill();
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0; 
 			triggerStop();

@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Genesis Core");
+			// DisplayName.SetDefault("Genesis Core");
 		}
         public override void SetDefaults()
         {
@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.tileCollide = false;
 			Projectile.alpha = 100;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			crit = false;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

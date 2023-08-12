@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Earth
 		int count = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Geostorm Crystal");
+			// DisplayName.SetDefault("Geostorm Crystal");
 			Main.projFrames[Projectile.type] = 8;
 		}
         public override void SetDefaults()

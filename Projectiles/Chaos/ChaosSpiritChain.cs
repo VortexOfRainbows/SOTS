@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Chain");
+			// DisplayName.SetDefault("Chaos Chain");
 		}
 		public sealed override void SetDefaults()
 		{

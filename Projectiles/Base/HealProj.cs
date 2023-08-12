@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Base
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Heal Proj");
+			// DisplayName.SetDefault("Heal Proj");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

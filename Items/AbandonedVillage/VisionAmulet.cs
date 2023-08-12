@@ -43,7 +43,7 @@ namespace SOTS.Items.AbandonedVillage
             Item.value = Item.sellPrice(gold: 10);
             Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -113,7 +113,7 @@ namespace SOTS.Items.AbandonedVillage
 			switch(frame)
             {
 				case 0: //liyue
-					player.discount = true;
+					player.discountAvailable = true;
 					break;
 				case 1: //inazuma
 					modPlayer.PotionBuffDegradeRate -= 0.2f;

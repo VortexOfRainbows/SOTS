@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Ores
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gold Bolt");
+			// DisplayName.SetDefault("Gold Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;    
 		}
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Ores
 				
 			if(Projectile.timeLeft == 192) Projectile.tileCollide = true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 0;

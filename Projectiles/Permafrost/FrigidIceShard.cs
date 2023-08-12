@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ice Shard");
+			// DisplayName.SetDefault("Ice Shard");
 			Main.projFrames[Projectile.type] = 3;
 		}
         public override void SetDefaults()

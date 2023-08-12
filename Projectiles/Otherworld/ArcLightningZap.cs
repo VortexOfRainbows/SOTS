@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Arc Lightning");
+			// DisplayName.SetDefault("Arc Lightning");
 		}
 		public override void SetDefaults()
 		{

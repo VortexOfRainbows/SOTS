@@ -35,7 +35,7 @@ namespace SOTS.Items.Pyramid
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<AcedianDust>(); 
-			ItemDrop = ModContent.ItemType<AcediaPlatingWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AcediaPlatingWall>();
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}
@@ -46,7 +46,7 @@ namespace SOTS.Items.Pyramid
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<AcedianDust>();
-			ItemDrop = ModContent.ItemType<AcediaPlatingWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AcediaPlatingWall>();
 			AddMapEntry(new Color(180, 64, 170));
 		}
 	}

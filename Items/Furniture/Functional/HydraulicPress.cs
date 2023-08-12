@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -87,7 +88,7 @@ namespace SOTS.Items.Furniture.Functional
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 6, 0);
 			TileObjectData.newTile.Origin = new Point16(3, 7);
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
 			DustType = DustID.Iron;
 			MineResist = 0.1f;

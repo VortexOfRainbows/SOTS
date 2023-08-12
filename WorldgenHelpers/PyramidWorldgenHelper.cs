@@ -14,6 +14,7 @@ using SOTS.Items.Pyramid.AltPyramidBlocks;
 using SOTS.Items.Secrets;
 using SOTS.Items.Fishing;
 using SOTS.Items.Furniture.AncientGold;
+using Terraria.WorldBuilding;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -430,7 +431,7 @@ namespace SOTS.WorldgenHelpers
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
 						if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 400) || checks > 1000))
 						{
-							if ((!WorldGen.UndergroundDesertLocation.Intersects(CheckInteract)) || checks > 800)
+							if ((!GenVars.UndergroundDesertLocation.Intersects(CheckInteract)) || checks > 800)
 							{
 								pyramidY = ydown;
 							}

@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Base
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Voiden Collapse");
+			// DisplayName.SetDefault("Voiden Collapse");
 		}
         public override void SetDefaults()
         {

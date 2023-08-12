@@ -64,7 +64,7 @@ namespace SOTS.Items.Furniture
                 AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
                 TileID.Sets.DisableSmartCursor[Type] = true;
                 AdjTiles = new int[] { TileID.OpenDoor };
-                CloseDoorID = ModContent.TileType<TClosed>();
+                CloseDoorID/* tModPorter Note: Removed. Use TileID.Sets.CloseDoorID instead */ = ModContent.TileType<TClosed>();
             }
             public override void NumDust(int i, int j, bool fail, ref int num)
             {
@@ -117,7 +117,7 @@ namespace SOTS.Items.Furniture
             AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
             TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.ClosedDoor };
-            OpenDoorID = ModContent.TileType<TOpen>();
+            OpenDoorID/* tModPorter Note: Removed. Use TileID.Sets.OpenDoorID instead */ = ModContent.TileType<TOpen>();
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {

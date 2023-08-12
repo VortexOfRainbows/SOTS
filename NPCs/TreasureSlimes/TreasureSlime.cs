@@ -237,7 +237,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				treasure = 0;
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

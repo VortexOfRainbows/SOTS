@@ -11,7 +11,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spiky Pufferfish");
+			// DisplayName.SetDefault("Spiky Pufferfish");
 		}
         public override void SetDefaults()
         {

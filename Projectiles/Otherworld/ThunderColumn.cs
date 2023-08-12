@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thunder Column");
+			// DisplayName.SetDefault("Thunder Column");
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

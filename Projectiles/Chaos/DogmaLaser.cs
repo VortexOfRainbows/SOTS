@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Hyperlight Beam");
+			// DisplayName.SetDefault("Hyperlight Beam");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
 

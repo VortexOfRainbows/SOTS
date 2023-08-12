@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Chaos
 		float deathTime = -1;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Arrow Bloom");
+			// DisplayName.SetDefault("Chaos Arrow Bloom");
 		}
 		public override void SetDefaults()
 		{

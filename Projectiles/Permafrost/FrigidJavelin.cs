@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Permafrost
 		float storeRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frigid Javelin");
+			// DisplayName.SetDefault("Frigid Javelin");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 120;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2; //also saves rotation and spritedriection  
 		}
@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 3;
 			base.OnHitNPC(target, damage, knockback, crit);

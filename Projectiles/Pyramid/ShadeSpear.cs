@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Pyramid
     {	          
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Curse");
+            // DisplayName.SetDefault("Curse");
 			Main.projFrames[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;

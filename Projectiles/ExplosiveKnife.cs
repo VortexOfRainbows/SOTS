@@ -8,7 +8,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Explosive Knife");
+			// DisplayName.SetDefault("Explosive Knife");
 		}
         public override void SetDefaults()
         {

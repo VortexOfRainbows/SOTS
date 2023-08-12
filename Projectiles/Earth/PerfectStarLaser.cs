@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Star Laser");
+			// DisplayName.SetDefault("Star Laser");
 		}
         public override void SetDefaults()
         {
@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Earth
 			height = 12;
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			TriggerStop();
         }

@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Inferno
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Orange Wisp Laser");
+			// DisplayName.SetDefault("Orange Wisp Laser");
 		}
 		public override void SetDefaults() 
 		{
@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.minion = false;
 			Projectile.DamageType = DamageClass.Summon;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

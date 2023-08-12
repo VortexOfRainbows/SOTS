@@ -44,7 +44,7 @@ namespace SOTS.NPCs.Boss
         {
             return !NPC.dontTakeDamage;
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (damage - (defense / 2) > currentDPS)
             {
@@ -177,7 +177,7 @@ namespace SOTS.NPCs.Boss
         {
             return false;   //this make that the npc does not have a health bar
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
             NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
             DPSregenRate += 0.15f * numPlayers;

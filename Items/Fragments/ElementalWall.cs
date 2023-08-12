@@ -35,7 +35,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<NatureWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NatureWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -77,7 +77,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<EarthWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -119,7 +119,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<DelugeWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<DelugeWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -161,7 +161,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<AetherWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AetherWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -203,7 +203,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<AuroraWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AuroraWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -233,7 +233,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<UmbraWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<UmbraWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -275,7 +275,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<NetherWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NetherWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -329,7 +329,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<BrillianceWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<BrillianceWall>();
 			AddMapEntry(color);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)

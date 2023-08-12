@@ -27,7 +27,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
-			ItemDrop = ModContent.ItemType<DullPlatingWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<DullPlatingWall>();
 			AddMapEntry(new Color(44, 44, 44));
 		}
 	}
@@ -37,7 +37,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<AvaritianDust>();
-			ItemDrop = ModContent.ItemType<DullPlatingWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<DullPlatingWall>();
 			AddMapEntry(new Color(44, 44, 44));
 		}
 		public override bool CanExplode(int i, int j)

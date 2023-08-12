@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phase Ball");
+			// DisplayName.SetDefault("Phase Ball");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

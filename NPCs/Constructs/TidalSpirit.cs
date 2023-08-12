@@ -52,7 +52,7 @@ namespace SOTS.NPCs.Constructs
             NPC.netAlways = false;
 			NPC.rarity = 2;
 		}
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
 			NPC.damage = NPC.damage * 2 / 3;
 			NPC.lifeMax = NPC.lifeMax * 25 / 32;
@@ -244,7 +244,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			return false;
 		}	
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life <= 0)
 			{

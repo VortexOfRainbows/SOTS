@@ -205,7 +205,7 @@ namespace SOTS.Items.Flails
 		public virtual void FallingTileCollide(Vector2 oldVelocity) { }
 		#endregion
 
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			Player Owner = Main.player[Projectile.owner];
 			if (ChargeTime > 0)

@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Chaos
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redlight Eraser");
+            // DisplayName.SetDefault("Redlight Eraser");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()

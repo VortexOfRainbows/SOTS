@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Ball");
+			// DisplayName.SetDefault("Plasma Ball");
             Main.projFrames[Projectile.type] = 8;
         }
         public override void SetDefaults()
@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Otherworld
                 Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), new Rectangle(0, 30 * Projectile.frame, Projectile.width, Projectile.height), color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             target.immune[player.whoAmI] = 14;

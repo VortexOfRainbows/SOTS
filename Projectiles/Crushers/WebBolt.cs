@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Web Bolt");	
+			// DisplayName.SetDefault("Web Bolt");	
 		}
         public override void SetDefaults()
         {

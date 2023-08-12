@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Minions
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Voidspace Cell");
+			// DisplayName.SetDefault("Voidspace Cell");
 		}
         public override void SetDefaults()
         {

@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Nature
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spore Bomb");
+			// DisplayName.SetDefault("Spore Bomb");
 			Main.projFrames[Projectile.type] = 3;
 		}
         public override void SetDefaults()

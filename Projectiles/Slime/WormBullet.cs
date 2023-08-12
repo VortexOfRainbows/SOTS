@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Slime
 		int bounceCount = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Bullet");
+			// DisplayName.SetDefault("Wormwood Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

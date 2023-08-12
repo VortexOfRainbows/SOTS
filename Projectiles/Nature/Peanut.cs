@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Nature
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Peanut");
+			// DisplayName.SetDefault("Peanut");
 		}
         public override void SetDefaults()
         {

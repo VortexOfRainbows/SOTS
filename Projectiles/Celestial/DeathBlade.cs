@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Death's Touch");
+			// DisplayName.SetDefault("Death's Touch");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;    
 		}
@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;

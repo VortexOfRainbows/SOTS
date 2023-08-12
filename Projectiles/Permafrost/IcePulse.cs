@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Permafrost
 		bool runOnce = true;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ice Pulse");
+			// DisplayName.SetDefault("Ice Pulse");
 		}
         public override void SetDefaults()
         {
@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			hitbox = new Rectangle((int)(Projectile.position.X - Projectile.width/2), (int)(Projectile.position.Y - Projectile.height/2), Projectile.width * 2, Projectile.height * 2);
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 10;

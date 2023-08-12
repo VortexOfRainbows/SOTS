@@ -46,7 +46,7 @@ namespace SOTS.Items.Furniture.Earthen
         protected override void AddMapEntires()
         {
             Color color = Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.17f);
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(color, name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.

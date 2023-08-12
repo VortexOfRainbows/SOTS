@@ -3,6 +3,7 @@ using SOTS.NPCs.Boss.Curse;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -22,7 +23,7 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = 10;
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 215, 10), name);
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;

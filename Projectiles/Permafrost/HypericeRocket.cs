@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hyperice Rocket");
+			// DisplayName.SetDefault("Hyperice Rocket");
 		}
         public override void SetDefaults()
         {

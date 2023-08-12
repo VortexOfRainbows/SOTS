@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Anomaly
 			Draw(Main.spriteBatch);
 			return false;
 		}
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
 			VoidPlayer.VoidBurn(Mod, target, 10, 420);
 		}

@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shattershine Pulse");
+			// DisplayName.SetDefault("Shattershine Pulse");
 		}
         public override void SetDefaults()
         {

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Evil
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nightmare Strike");
+			// DisplayName.SetDefault("Nightmare Strike");
 		}
         public override void SetDefaults()
 		{
@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Evil
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			crit = false;
         }

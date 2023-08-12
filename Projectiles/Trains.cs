@@ -11,7 +11,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Train Snake");
+			// DisplayName.SetDefault("Train Snake");
 		}
         public override void SetDefaults()
         {
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles
 			}
 			return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			if(!targetIDs.Contains(target.whoAmI))
 				targetIDs.Add(target.whoAmI);

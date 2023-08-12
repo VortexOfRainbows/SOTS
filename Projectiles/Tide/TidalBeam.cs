@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Tide
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tidal Beam");
+			// DisplayName.SetDefault("Tidal Beam");
 		}
 		public override void SetDefaults()
 		{
@@ -25,13 +25,13 @@ namespace SOTS.Projectiles.Tide
 			Projectile.tileCollide = true;
 			Projectile.penetrate = -1;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			damage *= 2;
 			if (target.type == ModContent.NPCType<TidalConstruct>())
 				damage *= 7;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, target.Center);
         }
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Tide
 			}
 			return base.Colliding(projHitbox, targetHitbox);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, target.Center);
 			for (int i = 0; i < 20; i++)

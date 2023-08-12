@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Base
         }
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("belphagor");
+			// DisplayName.SetDefault("belphagor");
 		}
         public override void SetDefaults()
         {

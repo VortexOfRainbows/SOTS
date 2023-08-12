@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.BiomeChest
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flowering Bud");
+			// DisplayName.SetDefault("Flowering Bud");
 		}
         public override void SetDefaults()
         {
@@ -204,7 +204,7 @@ namespace SOTS.Projectiles.BiomeChest
 				hitbox = new Rectangle((int)(Projectile.position.X), (int)(Projectile.position.Y), Projectile.width, Projectile.height);
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
 			Projectile.friendly = false;

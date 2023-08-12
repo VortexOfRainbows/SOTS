@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.BiomeChest
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pathogen Cloud");
+			// DisplayName.SetDefault("Pathogen Cloud");
 		}
 		public override void SetDefaults()
 		{
@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.penetrate = -1;
 			Projectile.ai[0] = 32;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 		}

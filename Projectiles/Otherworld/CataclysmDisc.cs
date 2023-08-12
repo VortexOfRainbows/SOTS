@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cataclysm Disc");
+			// DisplayName.SetDefault("Cataclysm Disc");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;    
 		}
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Otherworld
 			dust.velocity = helixPos4 * 0.065f + Projectile.velocity * 0.35f;
 			dust.alpha = Projectile.alpha;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = 21;
 			if (Projectile.timeLeft < 690)

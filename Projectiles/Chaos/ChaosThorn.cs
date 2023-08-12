@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Thorn");
+			// DisplayName.SetDefault("Chaos Thorn");
 		} 
 		public override void SetDefaults()
 		{
@@ -232,7 +232,7 @@ namespace SOTS.Projectiles.Chaos
 				triggerUpdate();
 			runOnce = false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			triggerUpdate();

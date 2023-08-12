@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Polar Bullet");
+			// DisplayName.SetDefault("Polar Bullet");
 		}
         public override void SetDefaults()
         {
@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.hostile = false;
 		}
 		Vector2[] trailPos = new Vector2[8];
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			//target.immune[Projectile.owner] = 0;
 			triggerStop();

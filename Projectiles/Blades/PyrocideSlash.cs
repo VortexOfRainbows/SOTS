@@ -13,14 +13,14 @@ namespace SOTS.Projectiles.Blades
 {    
     public class PyrocideSlash : ModProjectile //, IPixellated
     {
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.AddBuff(BuffID.OnFire3, 900);
             base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrocide Slash");
+			// DisplayName.SetDefault("Pyrocide Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        

@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Temple
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Helios");
+			// DisplayName.SetDefault("Helios");
 		}
 		public override void SetDefaults()
 		{
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Temple
 			Projectile.localNPCHitCooldown = 20;
 			Projectile.timeLeft = 300;
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

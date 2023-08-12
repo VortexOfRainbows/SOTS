@@ -351,7 +351,7 @@ namespace SOTS
 
 			GlobalCounter = reader.ReadInt32();
 		}
-		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
+		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
 			int desert = tasks.FindIndex(genpass => genpass.Name.Equals("Full Desert"));
 			tasks.Insert(desert + 1, new PassLegacy("SOTS: Additional Desert", AdjacentDesertGeneration));
@@ -611,8 +611,8 @@ namespace SOTS
 		private void AdjacentDesertGeneration(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = Language.GetTextValue("Mods.SOTS.AdjacentDesertGeneration.SEverywhere");
-			int centerX = WorldGen.UndergroundDesertLocation.X + WorldGen.UndergroundDesertLocation.Width / 2;
-			int widthX = WorldGen.UndergroundDesertLocation.Width / 2;
+			int centerX = GenVars.UndergroundDesertLocation.X + GenVars.UndergroundDesertLocation.Width / 2;
+			int widthX = GenVars.UndergroundDesertLocation.Width / 2;
 			int centerY = 0;
 			int direction = (centerX > Main.maxTilesX / 2) ? 1 : -1;
 			for(int j = 0; j < Main.maxTilesY; j++)
@@ -629,8 +629,8 @@ namespace SOTS
 		}
 		private void Desertify(Point origin)
 		{
-			DunesBiome dunesBiome = WorldGen.configuration.CreateBiome<DunesBiome>();
-			dunesBiome.Place(origin, WorldGen.structures);
+			DunesBiome dunesBiome = GenVars.configuration.CreateBiome<DunesBiome>();
+			dunesBiome.Place(origin, GenVars.structures);
 		}
 		private void OceanCaveGeneration(GenerationProgress progress, GameConfiguration configuration)
 		{
@@ -673,7 +673,7 @@ namespace SOTS
 			for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 0.2f); k++)
 			{
 				int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-				int y = WorldGen.genRand.Next((int)WorldGen.rockLayerLow, (int)(WorldGen.rockLayer + Main.maxTilesY - 200) / 2);
+				int y = WorldGen.genRand.Next((int)GenVars.rockLayerLow, (int)(GenVars.rockLayer + Main.maxTilesY - 200) / 2);
 				if (SOTSWorldgenHelper.GenerateFrigidIceOre(x, y))
 				{
 					max--;
@@ -690,7 +690,7 @@ namespace SOTS
 				max = 90;
 			if (Main.maxTilesX > 8000) //big worlds
 				max = 120;
-			int top = (int)WorldGen.rockLayerLow;
+			int top = (int)GenVars.rockLayerLow;
 			int bottom = (int)(Main.maxTilesY - 240);
 			float range = bottom - top;
 			for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 0.2f); k++)

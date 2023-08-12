@@ -18,7 +18,7 @@ namespace SOTS.Items.Conduit
             Item.value = Item.buyPrice(2, 0, 0, 0);
             Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 		}
         public override void UpdateInventory(Player player)
 		{

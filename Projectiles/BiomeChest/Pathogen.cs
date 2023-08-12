@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.BiomeChest
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pathogen Ball");
+			// DisplayName.SetDefault("Pathogen Ball");
 		}
         public override void SetDefaults()
         {
@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

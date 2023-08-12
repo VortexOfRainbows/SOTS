@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Time to die");
+			// DisplayName.SetDefault("Time to die");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        
@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 40;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			int iFrame = (int)(28f - spinSpeed);
 			if (iFrame < 4)

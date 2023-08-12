@@ -221,53 +221,53 @@ namespace SOTS.Items.Gems
 		protected override int DustType => 122;
 		protected override void AddMapEntires()
 		{
-			ModTranslation name = CreateMapEntryName(Name + "R");
-			name.SetDefault("Ruby Chest");
+			LocalizedText name = CreateMapEntryName(Name + "R");
+			// name.SetDefault("Ruby Chest");
 			AddMapEntry(new Color(212, 37, 24), name, MapChestName);
 			name = CreateMapEntryName(Name + "R_Locked");
-			name.SetDefault("Locked Ruby Chest");
+			// name.SetDefault("Locked Ruby Chest");
 			AddMapEntry(new Color(212, 37, 24), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "S");
-			name.SetDefault("Sapphire Chest");
+			// name.SetDefault("Sapphire Chest");
 			AddMapEntry(new Color(18, 116, 211), name, MapChestName);
 			name = CreateMapEntryName(Name + "S_Locked");
-			name.SetDefault("Locked Sapphire Chest");
+			// name.SetDefault("Locked Sapphire Chest");
 			AddMapEntry(new Color(18, 116, 211), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "E");
-			name.SetDefault("Emerald Chest");
+			// name.SetDefault("Emerald Chest");
 			AddMapEntry(new Color(33, 184, 115), name, MapChestName);
 			name = CreateMapEntryName(Name + "E_Locked");
-			name.SetDefault("Locked Emerald Chest");
+			// name.SetDefault("Locked Emerald Chest");
 			AddMapEntry(new Color(33, 184, 115), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "T");
-			name.SetDefault("Topaz Chest");
+			// name.SetDefault("Topaz Chest");
 			AddMapEntry(new Color(239, 167, 10), name, MapChestName);
 			name = CreateMapEntryName(Name + "T_Locked");
-			name.SetDefault("Locked Topaz Chest");
+			// name.SetDefault("Locked Topaz Chest");
 			AddMapEntry(new Color(239, 167, 10), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "A");
-			name.SetDefault("Amethyst Chest");
+			// name.SetDefault("Amethyst Chest");
 			AddMapEntry(new Color(158, 0, 244), name, MapChestName);
 			name = CreateMapEntryName(Name + "A_Locked");
-			name.SetDefault("Locked Amethyst Chest");
+			// name.SetDefault("Locked Amethyst Chest");
 			AddMapEntry(new Color(158, 0, 244), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "D");
-			name.SetDefault("Diamond Chest");
+			// name.SetDefault("Diamond Chest");
 			AddMapEntry(new Color(154, 197, 239), name, MapChestName);
 			name = CreateMapEntryName(Name + "D_Locked");
-			name.SetDefault("Locked Diamond Chest");
+			// name.SetDefault("Locked Diamond Chest");
 			AddMapEntry(new Color(154, 197, 239), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "Amber");
-			name.SetDefault("Amber Chest");
+			// name.SetDefault("Amber Chest");
 			AddMapEntry(new Color(225, 124, 30), name, MapChestName);
 			name = CreateMapEntryName(Name + "Amber_Locked");
-			name.SetDefault("Locked Amber Chest");
+			// name.SetDefault("Locked Amber Chest");
 			AddMapEntry(new Color(225, 124, 30), name, MapChestName);
 		}
 		public override bool IsLockedChest(int i, int j)
@@ -303,7 +303,7 @@ namespace SOTS.Items.Gems
 			}
 			else
 			{
-				string defaultName = TileLoader.ContainerName(tile.TileType); // This gets the ContainerName text for the currently selected language
+				string defaultName = TileLoader.DefaultContainerName(tile.TileType)/* tModPorter Note: new method takes in FrameX and FrameY */; // This gets the ContainerName text for the currently selected language
 				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : defaultName;
 				if (player.cursorItemIconText == defaultName)
 				{

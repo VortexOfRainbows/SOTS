@@ -15,14 +15,14 @@ namespace SOTS.Projectiles.Blades
     {
 		public static Color toothAcheLime = new Color(174, 213, 56);
 		public static Color toothAcheGreen = new Color(110, 132, 22);
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.AddBuff(BuffID.Poisoned, 180);
             base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tooth Ache Slash");
+			// DisplayName.SetDefault("Tooth Ache Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        

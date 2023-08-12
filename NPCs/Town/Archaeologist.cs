@@ -467,7 +467,7 @@ namespace SOTS.NPCs.Town
 		{ 
 			button = Language.GetTextValue("LegacyInterface.28"); //This is the key to the word "Shop"
 		}
-		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+		public override void OnChatButtonClicked(bool firstButton, ref string shopName)
 		{
 			if (firstButton)
 			{
@@ -479,7 +479,7 @@ namespace SOTS.NPCs.Town
 			shop.item[nextSlot].SetDefaults(itemID);
 			nextSlot++;
 		}
-		public override void SetupShop(Chest shop, ref int nextSlot)
+		public override void ModifyActiveShop(string shopName, Item[] items)
 		{
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AnomalyLocator>());
 			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ArchaeologistToolbelt>());

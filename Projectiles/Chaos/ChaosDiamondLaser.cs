@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Shattering Laser");
+			// DisplayName.SetDefault("Shattering Laser");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 6000;
 		}
 

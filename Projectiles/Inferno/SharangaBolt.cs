@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Inferno
 		int helixRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sharanga Bolt");
+			// DisplayName.SetDefault("Sharanga Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}
@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlast>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 10;

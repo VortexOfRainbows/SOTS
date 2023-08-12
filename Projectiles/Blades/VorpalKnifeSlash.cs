@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Blades
 		public override Color color2 => VorpalThrow.VorpalColor2;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vorpal Slash");
+			// DisplayName.SetDefault("Vorpal Slash");
 		}
 		public override void SafeSetDefaults()
 		{

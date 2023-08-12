@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Tide
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Shrimp");
+			// DisplayName.SetDefault("Plasma Shrimp");
 		}
 		public sealed override void SetDefaults()
 		{

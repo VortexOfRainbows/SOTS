@@ -62,7 +62,7 @@ namespace SOTS.Items.Otherworld.FromChests
         {
 			knockback *= 3;
         }
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
 		{
 			if(crit)
 			{

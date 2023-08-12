@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Pinky Laser");
+			// DisplayName.SetDefault("Pinky Laser");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
 

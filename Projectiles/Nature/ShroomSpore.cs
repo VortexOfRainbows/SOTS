@@ -8,7 +8,7 @@ namespace SOTS.Projectiles.Nature
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spore");
+			// DisplayName.SetDefault("Spore");
 		}
         public override void SetDefaults()
         {
@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			Projectile.alpha = 260 - Projectile.timeLeft;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if(Main.rand.NextBool(7))
 				target.AddBuff(BuffID.Confused, 90, false);

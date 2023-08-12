@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Lightning
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dimension Shredder Lightning");
+			// DisplayName.SetDefault("Dimension Shredder Lightning");
 		}
 		public override void SetDefaults()
 		{

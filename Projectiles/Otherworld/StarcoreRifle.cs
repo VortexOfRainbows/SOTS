@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starcore Rifle");
+			// DisplayName.SetDefault("Starcore Rifle");
 		}
 		public override void SetDefaults() 
 		{

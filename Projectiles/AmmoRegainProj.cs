@@ -64,7 +64,7 @@ namespace SOTS.Projectiles
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 27;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-			DisplayName.SetDefault("Ammo Regain proj");
+			// DisplayName.SetDefault("Ammo Regain proj");
 		}
         public override void SetDefaults()
         {

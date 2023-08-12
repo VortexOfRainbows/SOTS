@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Earth
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Earthen Ring");
+			// DisplayName.SetDefault("Earthen Ring");
 		}
 		public override void SetDefaults()
 		{

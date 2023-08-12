@@ -1,0 +1,4032 @@
+Mods: {
+	SOTS: {
+		Common: {
+			worldEnter: (SOTS): Thank you for playing Secrets of the Shadows! Please consider trying out the accompanying SOTS Texture Pack, if you haven't already.
+			worldEnterThanks: (SOTS): Thank you for using the SOTS texture pack! Please enjoy all the effort that went into it!
+			Dedicated: Dedicated Item
+			BlastDoor: Blast Door
+			Dresser: Dresser
+			Unbound: Unbound
+			ACZV: Automatically consumed when void drops below zero
+			SOTSTexturePackName: Secrets of the Shadows Texture Pack
+			Void: "Void: "
+			Damage: damage
+			Void2: "{0} void {1}"
+			VoidM: "{0} void + melee {1}"
+			VoidR: "{0} void + ranged {1}"
+			VoidM2: "{0} void + magic {1}"
+			VoidS: "{0} void + summon {1}"
+			CV: "Consumes {0} void"
+			GenSOTSOres: Generating SOTS Ores
+			GenSOTSGeodes: Generating Fancy Geodes
+			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
+			ArchaeologistMap: "Anomaly"
+			ArchaeologistItemMap: "Teleported "
+			VoidAnomalyCrafting: "Wormhole conversion"
+		}
+
+		ModifyWorldGenTasks: {
+			GeneratingSurfaceStructures: Generating Surface Structures
+			GeneratingAbandonedVillage: Generating Abandoned Village
+			GeneratingSkyArtifacts: Generating Sky Artifacts
+			GeneratingAPyramid: Generating A Pyramid
+			GeneratingGemStructures: Generating Gem Structures
+		}
+
+		AdjacentDesertGeneration: {
+			SEverywhere: Sand is irritating and gets everywhere!
+		}
+
+		Configuration: {
+			Header: {
+				UI: UI
+				GS: Graphics Settings
+				TPS: Texture Pack Settings
+				GPS: Gameplay Settings
+				BAL: Balance Changes
+			}
+			Label: {
+				Config: Config
+				SConfig: Server Config
+
+				VBX: Void Bar X
+				VBY: Void Bar Y
+				LVB: Lock Void Bar
+				AVBD: Alternative Void Bar Direction
+				AVBS: Alternative Void Bar Style
+				VBTT: Void Bar Top Text
+				VBHT: Void Bar Hover Text
+				SVBT: Simple Void Bar Text
+				SVBF: Simple Void Bar Fill
+				PM: Performance Mode
+				CTF: Colored Time Freeze
+				AVE: Additional Visual Effects
+				SHT: Starter House Type (Upon World Generation)
+				NINS: Nerf Soaring Insignia Before Lux
+			}
+			Tooltip: {
+				VBX: 
+					'''
+					The Void Bar's horizontal position on the screen
+					Measured in pixels from left
+					'''
+				VBY: 
+					'''
+					The Void Bar's vertical position on the screen
+					Measured in pixels from top
+					'''
+				LVB: 
+					'''
+					Prevents the Void Bar from being moved by your cursor
+					Also prevents the Void Bar from automatically switching positions when using the 'Bars' Health and Mana Style interface setting
+					'''
+				AVBD: Changes the Void Bar's roll down direction
+				AVBS: Modifies the Void Bar's visuals slightly
+				VBTT: Enable/disable the text above the Void Bar
+				VBHT: Enable/disable the text that appears when you hover over the Void Bar
+				SVBT: Removes Void Minion quantity indicators from the Void Bar text
+				SVBF: Removes the division lines between inner fill Void Bar elements
+				PM: 
+					'''
+					Reduces various visual effects in order to increase framerate
+					Mostly affects boss-related visuals and projectile trails
+					'''
+				CTF: Whether the color of the screen during time freeze is tinted or black and white
+				AVE: 
+					'''
+					Adds bonus visuals, such as dusts, to a handful of tiles
+					Only works with the SOTS Texture Pack enabled
+					'''
+				SHT: 
+					'''
+					-2 = No starter house (you are deranged)
+					-1 = Random starter house 
+					0 = Legacy House
+					1 = Legacy Angel
+					2 = Legacy Barrel
+					3 = Legacy BIG Hotel
+					4 = Legacy Origin
+					5 = Legacy Tower
+					6 = Legacy Sword
+					7 = Legacy Tree
+					8 = Legacy Library
+					9 = Legacy Crate
+					10 = Mushnib's
+					11 = Astrobit's
+					12 = Bloodmoon
+					13 = Bandit
+					14 = Boulder
+					15 = Mine
+					16 = Tavern
+					17 = Chaos
+					18 = Drowned
+					19 = Comfy
+					20 = Nature
+					'''
+				NINS:
+					'''
+					Nerfs Soaring Insignia, making it only grant infinite flight after Lux is defeated.
+					Before Lux is defeated, it will only double your flight time.
+					If you disagree with this change, you can disable it here.
+					'''
+			}
+		}
+
+		AddRecipeGroups: {
+			AG: " Gem"
+			SB: " Silver Bar"
+			EM: " Evil Material"
+			EB: " Evil Bar"
+			GB: " Gold Bar"
+			GR: " Gem Robe"
+			PHO: " Pre-Hardmode Ore"
+			T2D2A: " Tier 2 DD2 Armor"
+			T2Dd2A: " Tier 2 DD2 Accessory"
+			DE: " Dissolving Element"
+			EF: " Elemental Fragment"
+			EP: " Elemental Plating"
+			AS: " Alchemical Seeds"
+			CC: " Circuit Component"
+		}
+
+		KeyBindName: {
+			Blink: Blink
+			ArmorSet: Armor Set
+			MFM: Modify Flight Mode
+		}
+
+		BossAwoken: {
+			Advisor: The Advisor has awoken!
+			PharaohsCurse: Pharaoh's Curse has awoken!
+			Lux: Lux has awoken!
+			Glowmoth: Glowmoth has awoken!
+		}
+
+
+		BiomeName: {
+            PyramidBiome: Cursed Pyramid
+            PhaseBiome: Phase Ore Clusters
+            AnomalyBiome: Wormhole Anomalies
+            PlanetariumBiome: Planetarium
+		}
+
+		DropCondition: {
+		    DefeatSubspaceSerpent: Drops if Subspace Serpent has been defeated
+		    DefeatAdvisor: Drops if Advisor has been defeated
+		    DefeatPharaohsCurseBefor: Before Pharaoh's Curse has been defeated
+		    DefeatPharaohsCurse: After Pharaoh's Curse has been defeated
+		    DefeatEyeofCthulhuBefor: Before the Eye of Cthulhu has been defeated
+		    DefeatEyeofCthulhu: After the Eye of Cthulhu has been defeated
+		    Killedfully: Drops when killed fully
+		    SansUndertale: Sans Undertale
+		    OrangeLesserWisps: Orange Lesser Wisps
+
+		    ForestAndJungleBiomes: Drops in forest and jungle biomes
+		    PyramidAndDesertAndUndergroundBiomes: Drops in Pyramid, desert, and underground biomes
+		    ColdBiomes: Drops in cold biomes
+		    SkyAndMeteorBiomes: Drops in sky and meteor biomes
+		    BeachAndDungeonBiomes: Drops in beach and dungeon biomes
+		    Underworld: Drops in the underworld
+		    EvilBiome: Drops in the evil biome
+		    HallowBiome: Drops in the hallow biome
+		    BeachBiome: Drops in the beach biome
+		    Dungeon: Drops in the dungeon
+		    PlanetariumBiome: Drops in Planetarium biome
+		    OnFire: Drops if on fire
+		}
+
+		Prefix: {
+			MaxVoid: " max void"
+			RegVoid: " void gain"
+			CosVoid: "% void cost"
+		}
+
+		ItemName: {
+			# Abandoned Village
+				AncientSteelBar: Ancient Steel Bar
+				AncientSteelHalberd: Ancient Steel Halberd
+				AncientSteelLongbow: Ancient Steel Longbow
+				AncientSteelSword: Ancient Steel Sword
+
+				CharredWood: Charred Wood
+				CharredWoodWall: Charred Wood Wall
+				OldKey: Old Key
+				RuinedChest: Ruined Chest
+
+				SootBlock: Soot Block
+				SootWall: Soot Wall
+
+				VisionAmulet: Elemental Amulet
+
+			# Banner
+				NatureSlimeBanner: Flowering Slime Banner
+				HoloSwordBanner: Holo Blade Banner
+				PutridPinkyRelic: Putrid Pinky Relic
+				PharaohsCurseRelic: Pharaoh's Curse Relic
+				AdvisorRelic: The Advisor Relic
+				PolarisRelic: Polaris Relic
+				LuxRelic: Lux Relic
+				SubspaceSerpentRelic: Subspace Serpent Relic
+				GlowmothRelic: Glowmoth Relic
+				BlueSlimerBanner: Blue Slimer Banner
+				TreasureSlimeBanner: Treasure Slime Banner
+				GoldenTreasureSlimeBanner: Golden Treasure Slime Banner
+				FrozenTreasureSlimeBanner: Frozen Treasure Slime Banner
+				ShadowTreasureSlimeBanner: Shadow Treasure Slime Banner
+				PyramidTreasureSlimeBanner: Pyramid Treasure Slime Banner
+				FlamingGhastBanner: Flaming Ghast Banner
+				BleedingGhastBanner: Bleeding Ghast Banner
+				ArcticGoblinBanner: Arctic Goblin Banner
+				LostSoulBanner: Lost Soul Banner
+				SnakeBanner: Snake Banner
+				SnakePotBanner: Snake Pot Banner
+				SittingMushroomBanner: Sitting Mushroom Banner
+				WallMimicBanner: Wall Mimic Banner
+				HoloSlimeBanner: Holo Slime Banner
+				HoloEyeBanner: Holo Eye Banner
+				TwilightDevilBanner: Twilight Devil Banner
+				FluxSlimeBanner: Flux Slime Banner
+				LesserWispBanner: Lesser Wisp Banner
+				GhastBanner: Ghast Banner
+				MaligmorBanner: Maligmor Banner
+				TeratomaBanner: Teratoma Banner
+				CorruptionTreasureSlimeBanner: Corruption Treasure Slime Banner
+				CrimsonTreasureSlimeBanner: Crimson Treasure Slime Banner
+				JungleTreasureSlimeBanner: Jungle Treasure Slime Banner
+				TwilightScouterBanner: Twilight Scouter Banner
+				HallowTreasureSlimeBanner: Hallow Treasure Slime Banner
+				DungeonTreasureSlimeBanner: Dungeon Treasure Slime Banner
+				PhaseSpeederBanner: Phase Speeder Banner
+				PhaseAssaulterBanner: Phase Assaulter Banner
+
+			# Celestial
+				Apocalypse: Apocalypse
+				CataclysmSpheres: Cataclysm Spheres
+				CatalystBomb: Catalyst Bomb
+				ContinuumCollapse: Continuum Collapse
+				DanceOfDeath: Dance Of Death
+				DimensionShredder: Dimension Shredder
+				FoggyClairvoyance: Foggy Clairvoyance
+				Lemegeton: Lemegeton
+				PlasmaCutterButOnAChain: Plasma Cutter on a Chain
+				SanguiteBar: Sanguite Scales
+				SerpentSpine: Serpent Spine
+				SubspaceBag: Treasure Bag
+				SubspaceLocket: Subspace Locket
+				SubspaceScissors: Spirit Scissors
+				VoidspaceAuraStaff: Voidspace Aura Staff
+				VoidspaceEmblem: Voidspace Emblem
+
+			# Chaos
+				Armaggedon: Armageddon
+				ChaosChamber: Chaos Chamber
+				EtherealScepter: Ethereal Scepter
+				Hyperdrive: Hyperdrive
+				HyperlightGeyser: Hyperlight Geyser
+				LuxBag: Treasure Bag
+				ParticleRelocator: Particle Relocator
+				PhaseBar: Phase Bar
+				PhaseOre: Phase Ore
+				RealityShatter: Reality Shatter
+				RoseBow: Rose Bow
+				StellarSerpentLauncher: Stellar Serpent Launcher
+				StellarShot: Stellar Shot
+				SupernovaStorm: Supernova Storm
+				VoidmageIncubator: Voidmage Incubator
+
+				SpiritSymphony: Spirit Symphony
+				SpiritInsignia: Spirit Insignia
+
+			# ChestItems
+				BagOfAmmoGathering: Bag of Ammunition Gathering
+				BetrayersKnife: Betrayer's Knife
+				CoconutGun: Coconut Gun
+				GlazeBow: Glaze Bow
+				KelpWhip : Kelp Whip
+				PathogenRegurgitator: Pathogen Regurgitator
+				PerfectStar: Perfect Star
+				RebarRifle: Rebar Rifle
+				RockCandy: Rock Candy
+				Sawflake: Sawflake
+				ShieldofDesecar: Shield of Desecar
+				ShieldofStekpla: Shield of Stekpla
+				SpikedClub: Spiked Club
+				StarcallerStaff: Starcaller Staff
+				SyntheticLiver: Synthetic Liver
+				TangleStaff: Tangle Staff
+				TinyPlanet: Tiny Planet
+				WingedKnife: Winged Knife
+				
+			# Conduit
+				ArchaeologistToolbelt: Archaeologist's Toolbelt
+				ConduitChassis: Conduit Chassis
+				NatureConduit: Nature Conduit
+				EarthenConduit: Earth Conduit
+				GoldenTrowel: Golden Trowel
+				AnomalyLocator: Anomaly Locator
+				SkipShard: Skip Shard
+				SkipSoul: Skip Soul
+				SkipShot: Skip Shot
+				SkipArrow: Wormhole Arrow
+				SkipBullet: Wormhole Bullet
+				SkipScythe: Selene
+				VoidAnomaly: Void Anomaly
+
+			# CritBonus
+				OtherworldlyAmplifier: Otherworldly Amplifier
+				BloodstainedCoin: Bloodstained Coin
+				PutridCoin: Putrid Coin
+				PolishedCoin: Polished Coin
+				FocusCrystal: Focus Crystal
+				ChaosBadge: Chaos Badge
+
+				CloverCharm: Clover Charm
+				VoidCharm: Void Charm
+				SoulCharm: Soul Charm
+				BagOfCharms: Bag of Charms
+
+				EyeOfChaos: Eye of Chaos
+				FocusReticle: Focus Reticle
+
+				BorealisIcosahedron: Borealis Icosahedron
+				CursedIcosahedron: Cursed Icosahedron
+				HellfireIcosahedron: Hellfire Icosahedron
+
+				SnakeEyes: Snake Eyes
+
+			# Crushers
+				AquaticEclipse: Eclipse
+				BoneClapper: Bone Clapper
+				CardiacCollapse: Cardiac Collapse
+				CircuitBoard: Circuit Board
+				CrabClaw: Crab Claw
+
+				CrushingAmplifier: Crushing Amplifier
+				CrushingCapacitor: Crushing Capacitor
+				CrushingResistor: Crushing Resistor
+				CrushingTransformer: Crushing Transformer
+
+				DuneSplicer: Dune Splicer
+				Hellbreaker: Hellbreaker
+				IrradiatedChainReactor: Irradiated Chain-Reactor
+				MantisGrip: Mantis Grip
+				Pulverizer: Pulverizer
+				SoulEater: Soul Eater
+				SpiderCrusher: Fly Catcher
+				WormWoodCollapse: Goopwood Collapse
+		
+			# DoorItems
+				DoorPants: Door Pants
+				BandOfDoor: Band of Door
+
+			# Dyes
+				TaintedPrismDye: Tainted Prism Dye
+		
+			# Earth
+				# Glowmoth
+					GlowSilk: Glow Web
+					GlowNylon: Glow Nylon
+					GlowSpores: Glow Spores
+					GuideToIllumination: Guide to Illumination
+					IlluminantLantern : Illuminant Lantern
+					IlluminantAxe: Illuminant Axe
+					IlluminantBow: Illuminant Bow
+					IlluminantStaff: Illuminant Staff
+					NightIlluminator: Night Illuminator
+					GlowmothBag: Treasure Bag
+					TorchBomb : Torch Bomb
+					TorchGun: Torch Gun
+					SuspiciousLookingCandle: Suspicious Looking Candle
+				
+				BigCrystal: Big Crystal
+				Colossus: Colossus
+				EchoDisk: Echo Disc
+				Geostorm: Geostorm
+				GraniteProtector: Granite Protector
+				HarvestersScythe: Harvester's Scythe
+				MarbleDefender: Marble Defender
+				SporeSprayer: Spore Sprayer
+
+				VibrantOre: Vibrant Shard
+				VibrantBar: Vibrant Alloy
+				VibrantBrick: Vibrant Brick
+				VibrantWall: Unsafe Vibrant Ore Wall
+
+				VibrantBullet: Vibrant Bullet
+				VibrantArrow: Vibrant Arrow
+				VibrantBlade: Vibrant Blade
+				VibrantCannon: Vibrant Cannon
+				VibrantPistol: Vibrant Pistol
+				VibrantStaff: Vibrant Staff
+
+				VibrantChestplate: Vibrant Chestplate
+				VibrantHelmet: Vibrant Helmet
+				VibrantLeggings: Vibrant Leggings
+				
+				PixelBlaster: Pixel Blaster
+		
+			# Evil
+				AbyssalFury: Abyssal Fury
+				DeathSpiral: Death Spiral
+				MidnightPrism: Midnight Prism
+				TomeOfTheReaper: Tome of the Reaper
+				ToothAche: Tooth Ache
+				Vertebraeker: Vertebraeker
+				WitchHeart: Witch's Heart
+		
+			# Fishing
+				Curgeon: Curgeon
+				PhantomFish: Phantom Fish
+				SeaSnake: Water Snake
+				TinyPlanetFish: Planet Fish
+				ZephyrousZeppelin: Zephyrous Zeppelin
+
+				PyramidCrate: Pyramid Crate
+
+			# Flails
+				Aten: Aten
+				NorthStar: North Star
+				Shattershine: Shattershine
+
+			# Fragments
+				DissolvingAetherBlock: Purple Aether Block
+				DissolvingAuroraBlock: Aurora Block
+				DissolvingBrillianceBlock: Brilliance Block
+				DissolvingDelugeBlock: Deluge Block
+				DissolvingEarthBlock: Earth Block
+
+				DissolvingElement: Dissolving Nature
+
+				DissolvingNature: Dissolving Nature
+				DissolvingEarth: Dissolving Earth
+				DissolvingAurora: Dissolving Aurora
+				DissolvingDeluge: Dissolving Deluge
+				DissolvingAether: Dissolving Aether
+				DissolvingUmbra: Dissolving Umbra
+				DissolvingNether: Dissolving Nether
+				DissolvingBrilliance: Dissolving Brilliance
+
+				DissolvingNatureBlock: Nature Block
+				DissolvingNetherBlock: Nether Block
+				DissolvingUmbraBlock: Umbra Block
+
+				FragmentOfNature: Fragment of Nature
+				FragmentOfEarth: Fragment of Earth
+				FragmentOfPermafrost: Fragment of Permafrost
+				FragmentOfTide: Fragment of Tide
+				FragmentOfOtherworld: Fragment of Otherworld
+				FragmentOfEvil: Fragment of Evil
+				FragmentOfChaos: Fragment of Chaos
+				FragmentOfInferno: Fragment of Inferno
+
+				NaturePlating: Nature Plating
+				EarthenPlating: Earthen Plating
+				PermafrostPlating: Permafrost Plating
+				OtherworldPlating: Otherworld Plating
+				TidePlating: Tide Plating
+				EvilPlating: Evil Plating
+				ChaosPlating: Chaos Plating
+				InfernoPlating: Inferno Plating
+				UltimatePlating: Ultimate Plating
+
+				WorldlyPolarizer: Worldly Polarizer
+				ThermalPolarizer: Thermal Polarizer
+				ExoticPolarizer: Exotic Polarizer
+				UltimatePolarizer: Ultimate Polarizer
+
+				PrecariousCluster: Primordial Cluster
+				TerminalCluster: Terminal Cluster
+		
+			# Furniture
+				# AncientGold
+					AncientGoldBed: Ancient Gold Bed
+					AncientGoldCampfire: Eternal Fireplace
+					AncientGoldCandelabra: Ancient Gold Lamp
+					AncientGoldCandle: Ancient Gold Candle
+					AncientGoldChair: Ancient Gold Chair
+					AncientGoldCouch: Ancient Gold Sofa
+					AncientGoldDoor: Ancient Gold Door
+					AncientGoldDresser: Ancient Gold Dresser
+					AncientGoldPlatform: Ancient Gold Platform
+					AncientGoldTable: Ancient Gold Table
+					AncientGoldThrone: Ancient Gold Throne
+					AncientGoldWorkbench: Ancient Gold Work Bench
+
+				# Earthen
+					EarthenPlatingBlastDoor: Earthen Plating Blast Door
+
+				# Nature
+					NaturePlatingBlastDoor: Nature Plating Blast Door
+					NaturePlatingCapsule: Nature Plating Capsule
+					NaturePlatingPlatform: Nature Plating Platform
+
+				# Permafrost
+					PermafrostPlatingBlastDoor: Permafrost Plating Blast Door
+					PermafrostPlatingCapsule: Permafrost Plating Capsule
+					PermafrostPlatingPlatform: Permafrost Plating Platform
+
+				# Functional
+					NatureHydroponics: Nature Plating Hydroponics
+					Mineralarium: Mineralarium
+					HydraulicPress: Hydraulic Press
+
+			# Gems
+				AmberRing: Asmodeus's Ring
+				AmethystRing: Belphegor's Ring
+				DiamondRing: Light-Bringer's Ring
+				EmeraldRing: Leviathan's Ring
+				RubyRing: Beelzebub's Ring
+				SapphireRing: Mammon's Ring
+				TopazRing: Accuser's Ring
+
+				SOTSRubyGemLock: Vespera Ruby Gem Lock
+				SOTSSapphireGemLock: Vespera Sapphire Gem Lock
+				SOTSEmeraldGemLock: Vespera Emerald Gem Lock
+				SOTSTopazGemLock: Vespera Topaz Gem Lock
+				SOTSAmethystGemLock: Vespera Amethyst Gem Lock
+				SOTSDiamondGemLock: Vespera Diamond Gem Lock
+				SOTSAmberGemLock: Vespera Amber Gem Lock
+
+			# Inferno
+				BlazingClub: Blazing Club
+				BlazingQuiver: Blazing Quiver
+				BookOfVirtues: Book of Virtues
+				IncineratorGlove: Incinerator Glove
+				ObsidianEruption: Obsidian Eruption
+				PlasmaAccelerator: Plasma Accelerator
+				Sharanga: Sharanga
+				TheBlaspha: Blaspha
+				WispInAJar: Wisp in a Jar
+
+			# Invidia
+				VesperaMask: Vespera Mask
+				VesperaLeggings: Vespera Leggings
+				VesperaBreastplate: Vespera Breastplate
+				VesperaFishingRod: Vespera Fishing Rod
+				VesperaLongbow: Vespera Longbow
+				VesperaNanDao: Vespera NanDao
+
+				VoidTablet: Void Tablet
+				VorpalKnife: Vorpal Knife
+		
+			# MusicBoxes
+				AdvisorMusicBox: Music Box (Advisor)
+				AncientPyramidMusicBox: Music Box (Cursed Pyramid)
+				KnucklesMusicBox: Music Box (Knuckles)
+				LuxMusicBox: Music Box (Lux)
+				PlanetariumMusicBox: Music Box (Planetarium)
+				PolarisMusicBox: Music Box (Polaris)
+				PutridPinkyMusicBox: Music Box (Putrid Pinky)
+				PyramidBattleMusicBox: Music Box (Pyramid Battle)
+				SubspaceSerpentMusicBox: Music Box (Subspace Serpent)
+				CurseMusicBox: Music Box (Pharaoh's Curse)
+			# Nature
+				AcornBag: Acorn Bag
+				BerryBombs: Berry Bombs
+				BiomassBarrage: Biomass Bloom
+				BiomassBlast: Biomass Blast
+				BotanicalSymbiote: Botanical Symbiote
+				NatureWreath: Wormwood Wreath
+				NatureLeggings: Wormwood Leggings
+				NatureShirt: Wormwood Shirt
+				NatureSpell: Flower Spell
+				PricklyPearShield: Prickly Pear Shield
+				Scatterseed: Scatterseed
+				SporeBombs: Spore Bombs
+				SporeClub: Spore Club
+		
+			# OreItems
+				GoldArkStaff: Gold Arc Staff
+				GoldBattery: Gold Battery
+				GoldChakram: Gold Chakram
+				GoldGlaive: Gold Glaive
+
+				PlatinumBattery: Platinum Battery
+				PlatinumDart: Platinum Dart
+				PlatinumScythe: Platinum Scythe
+				PlatinumSoulStaff: Platinum Soul Staff
+
+				WardingCharm: Warding Charm
+		
+			# Otherworld
+				# Blocks
+					AvaritianPlating: Avaritia Plating
+					HologlassWall: Hardlight Wall
+					PortalPlating: Avaritia Portal Plating
+					PortalPlatingWall: Avaritia Plating Wall
+				
+				# EpicWings
+					TestWings: Machina Booster
+					TwilightGyroscope: Twilight Gyroscope
+				
+				# FromChests
+					ArclightOrbs: Arclight Orbs
+					ArcStaffMk2: Arc Staff Mk2
+					Calculator: Calculator
+					CataclysmDisc: Cataclysm Disc
+					CataclysmMusketPouch: Cataclysm Musket Pouch
+					ChainedPlasma: Chained Plasma
+					CodeCorrupter: Code Corrupter
+					CrescentStaff: Crescent Staff
+					FlareDetonator: Flare Detonator
+					HardlightGlaive: Hardlight Glaive
+					HardlightQuiver: Hardlight Quiver
+					InfernoHook: Inferno Hook
+					LashesOfLightning: Lashes of Lightning
+					PlatformGenerator: Platform Generator
+					Poyoyo: Poyo-yo
+					SectionChiefsScythe: Section Chief's Scythe
+					SkywardBlades: Skyward Blades
+					SkywareBattery: Skyware Battery
+					Starbelt: Starbelt
+					StarcoreAssaultRifle: Starcore Assault Rifle
+					StarshotCrossbow: Starshot Crossbow
+					SupernovaHammer: Supernova Hammer
+					TerminatorAcorns: Terminator Acorns
+					TwilightAssassinsCirclet: Twilight Assassin Circlet
+					TwilightAssassinsChestplate: Twilight Assassin Chestplate
+					TwilightAssassinsLeggings: Twilight Assassin Leggings
+					TwilightFishingPole: Twilight Fishing Pole
+					TwilightShard: Twilight Plate
+					OtherworldlyAlloy: Twilight Alloy
+					UndoArrow: Developer Test Item
+					VibrancyModule: Vibrancy Module
+
+				# Furniture
+					DigitalDisplay: Digital Display
+					HardlightFabricator: Hardlight Fabricator
+					LockedMeteoriteChest: Meteorite Chest
+					LockedSkywareChest: Skyware Chest
+					StrangeChest: Planetarium Chest
+
+					PotGenerator: Pot Generator
+					SkyChain: Sky Chain
+					TransmutationAltar: Transmutation Altar
+
+				AvaritianGateway: Avaritia Gateway
+				BladeGenerator: Blade Generator
+				BladeNecklace: Blade Necklace
+				GravityAnchor: Gravity Anchor
+				JarOfSouls: Jar of Souls
+				MeteoriteKey: Meteorite Key
+				PhaseCannon: Phase Cannon
+				SkywareKey: Skyware Key
+				StrangeKey: Strange Key
+				TheAdvisorBossBag: Treasure Bag
+				ThundershockShortbow: Thundershock Shortbow
+				TwilightBeads: Twilight Beads
+				TwilightGel: Twilight Gel
+
+			# Permafrost
+				AbsoluteBar: Absolute Alloy
+				CruiseCaller: Cruise Caller
+				CryoCannon: Cryo Cannon
+				EndothermicAfterburner: Endothermic Afterburner
+
+				FrigidCrown: Frigid Crown
+				FrigidGreaves: Frigid Greaves
+				FrigidHourglass: Frigid Hourglass
+				FrigidIce: Frigid Ore
+				FrigidJavelin: Frigid Javelin
+				FrigidRobe: Frigid Robe
+
+				FrostArtifact: Frost Artifact
+				FrostArtifactChestplate: Frost Artifact Breastplate
+				FrostArtifactHelmet: Frost Artifact Helmet
+				FrostArtifactTrousers: Frost Artifact Trousers
+				FrostedKey: Frost Key
+
+				HypericeClusterCannon: Hyperice Cluster Cannon
+
+				IceDeployer: Snow Crystal
+				IcicleImpale: Icicle Impale
+				Metalmalgamation: Metalmalgamation
+				PermafrostMedallion: Permafrost Medallion
+				PolarisBossBag: Treasure Bag
+
+				ShardGuard: Shard Guard
+				ShardStaff: Shard Staff
+				ShardstormSpell: Azure Bombardment
+
+				ShatterBlade: Shatter Blade
+				ShatterHeartShield: Shatter Heart Shield
+				ShatterShardChestplate: Shatter Shard Chestplate
+				
+				ShoeIce: Shoe Ice
+				StormSpell: Storm Spell
+
+			# Potions
+				AbyssalTonic: Abyssal Tonic
+				AssassinationPotion: Assassination Potion
+				BlazingTonic: Blazing Tonic
+				BlightfulTonic: Blightful Tonic
+				BluefirePotion: Bluefire Potion
+				BrittlePotion: Brittle Potion
+				DoubleVisionPotion: Double Vision Potion
+				EtherealTonic: Ethereal Tonic
+				GlacialTonic: Glacial Tonic
+				HarmonyPotion: Harmony Potion
+				HereticTonic: Heretic Tonic
+				NightmarePotion: Nightmare Potion
+				RipplePotion: Ripple Potion
+				RoughskinPotion: Roughskin Potion
+				SeismicTonic: Seismic Tonic
+				SoulAccessPotion: Soul Access Potion
+				StarlightTonic: Starlight Tonic
+				VibePotion: Vibe Potion
+
+				RoastedPeanuts: Roasted Peanuts
+
+			# Pyramid
+				# AltPyramidBlocks
+					PyramidAmbient: Pyramid Ambient
+					PyramidRubble: Pyramid Rubble
+
+				# PyramidWalls
+					AncientGoldBeam: Ancient Gold Beam (Wall)
+					AncientGoldBrickWall: Ancient Gold Brick Wall
+
+				AcediaGateway: Acedia Gateway
+				AcediaPlating: Acedia Portal Plating
+
+				AncientGoldGate: Ancient Gold Pillar
+				AncientGoldGateGems: Gems
+				BrachialLance : Brachial Lance
+				CursedRobe: Cursed Robe
+				CursedHood: Cursed Hood
+
+				CurseBag: Treasure Bag
+
+				CurseballTome: Cursed Spear Storm
+				CursedApple: Cursed Apple
+				CursedBlade: Cursed Blade
+				CursedImpale: Cursed Impale
+				CurseWard: Curse Ward
+
+				CursedHiveBlock: Infected Pyramid Brick
+				CursedTumor: Cursed Tumor Block
+
+				EmeraldBracelet: Emerald Bracelet
+				GhoulBlaster: Ghoul Blaster
+				HeartInAJar: Heart in a Jar
+				ImperialPike: Imperial Pike
+				JeweledGauntlet: Cursed Gauntlet
+				JuryRiggedDrill: Jury Rigged Drill
+				LuckyPurpleBalloon: Lucky Purple Balloon
+				OvergrownPyramidBlock: Overgrown Pyramid Brick
+
+				PatchLeatherHat: Patch Leather Hat
+				PatchLeatherPants: Patch Leather Boots
+				PatchLeatherTunic: Patch Leather Tunic
+
+				PharaohsCane: Pharaoh's Cane
+				PitatiLongbow: Pitati Longbow
+
+				PyramidBrick: Pyramid Brick
+				PyramidKey: Mysterious Key
+				PyramidPot: Pyramid Pot
+				PyramidSlab: Pyramid Slab
+				RoyalGoldBrick: Ancient Gold Brick
+				RoyalMagnum: Royal Magnum
+				RoyalRubyShard: Keystone Shard
+				RubyKeystone: Ruby Keystone
+
+				SandstoneEdge: Sandstone Edge
+				SandstoneWarhammer: Sandstone Warhammer
+
+				ShiftingSands: Shifting Sands
+
+				SnakeBow: Snake Bow
+				Snakeskin: Snakeskin
+
+				SpiritGlove: Spirit Glove
+				SpiritShield: Spirit Shield
+				SpiritSurfer: Spirit Surfer
+				SpiritTracer: Spirit Tracer
+
+				SunlightAmulet: Sunlight Amulet
+
+				TaintedKeystone: Tainted Keystone
+				TheDarkEye: The Dark Eye
+
+				TrueSandstoneBlock: True Sandstone Block
+				TrueSandstoneWall: True Sandstone Wall
+
+				VoidenBracelet: Voiden Bracelet
+
+			# Secrets
+				PhotonGeyser: Photon Geyser
+				RefractingCrystalBlock: Weird Crystal Block
+				StrangeKeystone: Strange Obelisk
+				StrangeKeystoneBroken: Broken Obelisk
+				DreamLamp: Dreaming Lamp
+				DreamingLamp: Dreaming Lamp
+				ForgottenLamp: Forgotten Lamp
+
+			# Slime
+				FireSpitter: Fire Spitter
+
+				GelAxe: Gel Throwing Axe
+				GelWings: Gel Wings
+
+				JarOfPeanuts: Jar Of Peanuts
+				Peanut: Peanut
+				PeanutRepeater: Peanut Repeater
+				PinkyBag: Treasure Bag
+
+				PutridEye: Putrid Eye
+
+				VialofAcid: Vial of Acid
+				CorrosiveGel: Corrosive Gel
+
+				Wormwood: Goopwood
+				WormWoodHelix: Goopwood Helix
+				WormWoodHook: Goopwood Hook
+				WormWoodParasite: Goopwood Parasite
+				WormWoodScepter: Goopwood Scepter
+				WormWoodStaff: Goopwood Staff
+
+			# SoldStuff
+				BoreBullet: Bore Bullet
+				RecursiveBow: Recursive Bow
+				SafetySwitch: Safety Switch
+				SupremSticker: Suprem
+				Traingun: Train Gun
+
+			# SpiritStaves
+				ChaosSpiritStaff: Chaos Spirit Staff
+				EarthenSpiritStaff: Earthen Spirit Staff
+				EvilSpiritStaff: Evil Spirit Staff
+				InfernoSpiritStaff: Inferno Spirit Staff
+				NatureSpiritStaff: Nature Spirit Staff
+				OtherworldlySpiritStaff: Otherworldly Spirit Staff
+				PermafrostSpiritStaff: Permafrost Spirit Staff
+				TidalSpiritStaff: Tidal Spirit Staff
+		
+			# Temple
+				Helios: Helios
+				LihzahrdTail: Lihzahrd Tail
+				Pyrocide: Pyrocide
+				Revolution: Revolution
+				SolarBullet: Solar Bullet
+				SupernovaScatter: Supernova Scatter
+
+			# Tide
+				ArkhalisChain: Lost Chain
+				BlueJellyfishStaff: Blue Jellyfish Staff
+				GreenJellyfishStaff: Green Jellyfish Staff
+				HeartOfTheSea: Heart of the Sea
+				PinkJellyfishStaff: Pink Jellyfish Staff
+				PiscesPuncher: Pisces Puncher
+				PistolShrimp: Pistol Shrimp
+				PlasmaShrimp: Plasma Shrimp
+				PrismarineNecklace: Prismarine Necklace
+				PurpleJellyfishStaff: Purple Jellyfish Staff
+				Riptide: Riptide
+
+			# Tools
+				AncientSteelGreatHamaxe: Ancient Steel Great Hamaxe
+				AncientSteelGreatPickaxe: Ancient Steel Great Pickaxe
+
+				Earthshaker: Earthshaker
+
+				FrigidPickaxe: Frigid Pickaxe
+
+				ManicMiner: Manic Miner
+				MinersPickaxe: Miner's Pickaxe
+
+				PyramidGenerator: Pyramid Generation Demonstrator
+
+				WallCapture: Wall Capture
+				WorldgenCapture: Worldgen Capture
+				WorldgenFail: Worldgen Paste 2
+				WorldgenPaste: Worldgen Paste
+				WorldgenScanner: Planetary Analyzer
+
+			# Void
+				ScarletStar: Scarlet Crescent
+				VioletStar: Violet Crescent
+				SoulHeart: Soul Heart
+
+				AlmondMilk: Almond Milk
+				CoconutMilk: Coconut Milk
+
+				CookedMushroom: Cooked Mushroom
+				DigitalCornSyrup: Digital Corn Syrup
+				Chocolate: Chocolate
+				CursedCaviar: Cursed Caviar
+				FoulConcoction: Foul Concoction
+				StrawberryIcecream: Strawberry Icecream
+				AvocadoSoup: Avocado Soup
+				VoidenAnkh: Voiden Ankh
+
+			ArcaneAqueduct: Arcane Aqueduct
+			BackupBow: Backup Bow
+			Baguette: Crusty Baguette
+			BaguetteCrumb: Baguette Crumb
+			BulwarkOfTheAncients: Bulwark of the Ancients
+			ChiseledBarrier: Chiseled Barrier
+			CrestofDasuver: Crest of Dasuver
+			DigitalDaito: Digital Daito
+			Doomstick: Doomstick
+
+			ElectromagneticDeterrent: Disruptive Electromagnetic Field Emitter
+			ElectromagneticLure: Electromagnetic Lure
+
+			ExplosiveKnife: Explosive Knife
+			FlashsparkBoots: Flashspark Boots
+			FortressGenerator: Fortress Generator
+
+			HealPack: Heal Pack
+			ManaPack: Mana Pack
+
+			HelicopterParts: Helicopter Parts
+			MinersSword: Miner's Sword
+
+			OlympianAegis: Olympian Aegis
+			OlympianAxe: Olympian Waraxe
+
+			PeanutButter: Peanut Butter
+			RoyalJelly: Royal Jelly
+			Sandwich: Sandwich
+			SpectreSpiritStorm: Spectre Spirit Storm
+			SubspaceBoosters: Subspace Boosters
+			ZombieHand: Zombie Hand
+			
+			GlowJelly: Glow Jelly
+			AlchemistsCharm: "Alchemist's Charm"
+		}
+
+		ItemTooltip: {
+			# Abandoned Village
+				AncientSteelBar: "'An ancient proto-steel used by various civilizations... and goblins'"
+				AncientSteelHalberd: "Shatters enemies, making the next melee attack ignore defense and a guaranteed critical strike\nThe Halberd cannot make use of the shattered effect"
+				AncientSteelLongbow: 
+					'''
+					Has to windup before firing
+					Arrows travel fast and explode into piercing shrapnel for 100% damage upon hitting enemies
+					'''
+				AncientSteelSword: 
+					'''
+					Does area damage on hit for 80% damage
+					Critical strikes deal 50% more damage and may also apply a stacking, permanent bleed for 5 damage per second
+					'''
+				
+				CharredWood: "'Too burnt to be used'"
+				OldKey: "'It's starting to show signs of rusting'"
+
+				SootBlock: 
+					'''
+					Contains remnants of burned material inside
+					Can be used in an Extractinator"
+					'''
+
+				VisionAmulet: 
+					'''
+					Epic Gamer
+					'Resonates with your ambitions'
+					'''
+
+			# Celestial
+				Apocalypse: 
+					'''
+					Release green thunder towards your cursor
+					Green thunder chains off enemies for 90% damage
+					Provides a light source while favorited in the inventory
+					'Power straight from the underworld'
+					'''
+				CataclysmSpheres: Throw a cluster of charged bombs that explodes into homing cataclysm lightning for 100% damage
+				CatalystBomb: "'It's almost strong enough to tear a hole between dimensions, if only it were used in the right place'"
+				ContinuumCollapse: 
+					'''
+					'Devour all that is infinite, including your system's memory'
+					Can hit up to 15 enemies at a time
+					Will not hurt players
+					'''
+				DanceOfDeath: Cast many demon scythes around you
+				DimensionShredder: 
+					'''
+					Summons dimensional wisps around you that fire towards your cursor
+					Right click to summon a cluster of dimensional wisps
+					Bullets travel through blocks and release lightning for 50% damage
+					66% chance to not consume ammo
+					'Tear a rift through your enemies'
+					'''
+				FoggyClairvoyance: 
+					'''
+					Increases damage by 15% and grants immunity to almost every debuff
+					'Cursed'
+					'''
+				Lemegeton: 
+					'''
+					Summons a horde of Wisps to defend you from nearby enemies
+					Red wisps will attack closer enemies and steal life for 100% damage
+					Green wisps will fire short-ranged blasts for 200% damage
+					Purple wisps launch a cluster of homing bolts for 75% damage each
+					'''
+				PlasmaCutterButOnAChain: "'This is utmost wonderful idea'"
+				SanguiteBar: "'It smells of sulfur and blood'"
+				SerpentSpine: 
+					'''
+					Increases melee weapon size by 40% and whip length by 40%
+					Increases melee speed by 10%
+					Melee and whip attacks may scorch enemies, increasing damage dealt by 3% permanently
+					'''
+				SubspaceBag: "{$CommonItemTooltip.RightClickToOpen}"
+				SubspaceLocket: 
+					'''
+					Summons a Subspace Servant to assist in combat
+					Uses the item in your last inventory slot for you (bottom right inventory slot)
+					Doesn't work with all items
+					Decreases damage by 25% multiplicatively
+					Increases max void by 50, but reduces healing recieved from potions by 40
+					'''
+				SubspaceScissors: "'Assistance from purgatory'"
+				VoidspaceAuraStaff: 
+					'''
+					Summons a voidspace cell on your cursor that releases flames at nearby enemies
+					Grants stat boosts while in the radius of the cell
+					Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
+					Damages all enemies within range
+					Range scales with summon damage
+					'''
+				VoidspaceEmblem: 
+					'''
+					Increases void damage and magic damage by 10%
+					Increases void crit by 10%
+					Critical strikes heal small amounts of void
+					Reduces void cost by 8%
+					Increases void gain by 4 and max void by 50
+					Regenerate void when hit
+					Immunity to broken armor and ichor
+					'''
+
+			# Chaos
+				Armaggedon: 
+					'''
+					Unleash a flurry of punches
+					Provides a light source while favorited in the inventory
+					'Power from the heavens'
+					'''
+				ChaosChamber: 
+					'''
+					Unloads almost as fast as the trigger is pulled
+					Bullets gain homing capabilities
+					Transforms bullets into laser balls every 6th shot
+					'''
+				EtherealScepter: 
+					'''
+					Summons an Ethereal Flame to fight for you
+					Ethereal Flames attack enemies by rapidly dashing through them
+					'''
+				Hyperdrive: 
+					'''
+					The second charge of a Crusher has a 33% chance to not consume void
+					The fourth charge of Crushers no longer consumes void
+					Extends the range of Crushers by 1
+					Increases attack speed by 25% and melee damage by 5%
+					Reduces void cost by 10%
+					'''
+				HyperlightGeyser: Launches 4 beams of light which each home at up to 10 enemies
+				LuxBag: "{$CommonItemTooltip.RightClickToOpen}"
+				ParticleRelocator: 
+					'''
+					When an enemy hits you, you will be teleported behind them, avoiding damage and stunning them temporarily
+					16 second cooldown, but increases melee damage by 50% for 7 seconds after teleporting
+					Does damage equal to your defense
+					'''
+				PhaseBar: "'It borders on the edge of reality'"
+				RealityShatter: Enemies recieve an additional flurry of slashes that do 4x50% damage
+				RoseBow: 
+					'''
+					Transforms arrows into spears of light that can travel through walls
+					When briefly charged, arrows explode for 600% damage
+					When fully charged, arrows bloom for 1500% damage
+					Charging will also conjure thorns, which are launched for 2x100% damage each
+					Only consumes void when charged
+					'''
+				StellarSerpentLauncher: Launches a Starlight Serpent which homes on enemys and attacks them repeatedly
+				StellarShot: Rapidly fires piercing lasers
+				SupernovaStorm: 
+					'''
+					Calls down a Supernova Beam from the sky
+					Causes enemies to rupture into homing bolts for 3x140% damage
+					'''
+				VoidmageIncubator: 
+					'''
+					Epic Gamer
+					Increases void gain by 2
+					Getting hit will freeze time, converting void into life for the duration
+					Increases the potency of Void Shock and Void Recovery
+					Allows access to wormhole crafting recipes
+					'''
+				SpiritSymphony:
+					'''
+					Increases void gain by 1 and void regeneration speed by 25%
+					Doubles damage done to non-Lux spirit enemies
+					'''
+				SpiritInsignia:
+					'''
+					Grants infinite wing and rocket boot flight
+					Increases flight and jump mobility
+					Increases void gain by 1 and void regeneration speed by 25%
+					Doubles damage done to non-Lux spirit enemies
+					'''
+
+			# ChestItems
+				BagOfAmmoGathering: 
+					'''
+					20% chance not to consume ammo
+					Striking enemies has a chance to refund ammo
+					Landing the killing blow on enemies may also refund ammo
+					'''
+				BetrayersKnife: 
+					'''
+					Strike with 2 slashes, which always bleed enemies on the first hit
+					The second slash does 150% damage
+					'''
+				CoconutGun: 
+					'''
+					Launches coconut cluster bombs with homing coconut milk shrapnel
+					'It fires in spurts'
+					'''
+				GlazeBow: 
+					'''
+					Coalesces ice mist to power up your arrows
+					When briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage
+					When fully charged, arrows bloom into wisps of ice, dealing 600% damage
+					'''
+				KelpWhip:
+					'''
+					Minions critically strike the tagged enemy, but with a 2 second cooldown between critical strikes
+					'''
+				PathogenRegurgitator: 
+					'''
+					Fire pathogen balls
+					Hits may infect enemies for 12 damage per second
+					When an infected enemy is killed, it releases more pathogen balls
+					'''
+				PerfectStar: "'The perfect weapon'"
+				RebarRifle: Shoots a powerful, high velocity rebar that applies a stacking, permanent bleed to hit enemies for 5 damage per second
+				RockCandy: 
+					'''
+					Increases pickaxe power by 5
+					Increases mining speed, melee speed, and movement speed by 5%
+					'''
+				Sawflake: Throw a Sawflake that exudes a spiral of razor ice mist in every direction
+				ShieldofDesecar: 
+					'''
+				Grants 1 defense for every 4 empty inventory slots
+					'Less is more'
+					'''
+				ShieldofStekpla: 
+					'''
+					Increases crit chance by 1% for every 4 full inventory slots
+					'More is more'
+					'''
+				SpikedClub: 
+					'''
+					Lays down spike traps
+					Lays down more traps when wearing climbing related accessories
+					'''
+				StarcallerStaff: 
+					'''
+					Summons a Crystal Serpent to fight for you
+					The Crystal Serpent circles around enemies and fires stars at them
+					'''
+				SyntheticLiver:
+					'''
+					Increases void recieved from food by 25%
+					Consuming potions multiple times will increase buff duration instead of resetting it
+					Debuff durations are drained faster, increasing the duration of all active buffs
+					'''
+				TangleStaff: 
+					'''
+					Fire a flower that ensnares enemies
+					Ensnared enemies are slowed and have their life drained
+					Increases life regeneration for each ensnared enemy
+					'''
+				TinyPlanet: Surrounds you with 2 orbital projectiles
+				
+			# Conduit
+				ArchaeologistToolbelt:
+					'''
+					Increases block placement and tool range by 3
+					Allows the placement and destruction of conduits
+					Extends the pickup range for conduit items
+					'''
+				ConduitChassis: Completes the carapace of a conduit, allowing for energy redirection
+				NatureConduit:
+					''' 
+					An incomplete redirector of nature energy: it lacks a support chassis
+					When fully charged, it will focus nearby nature energy into valid repositories
+					'''
+				EarthenConduit:
+					''' 
+					An incomplete redirector of earth energy: it lacks a support chassis
+					When fully charged, it will focus nearby earth energy into valid repositories
+					'''
+				GoldenTrowel:
+					'''
+					Mining blocks has a chance to drop bonus resources, such as coins and silt
+					Increases mining speed by 5%
+					'''
+				AnomalyLocator:
+					''' 
+					Displays the location of various anomalies, such as electromagnetic transmissions, wormholes, and teleported items, on the Minimap
+					Functions while equipped as an accessory, favorited in the inventory, or worn as a vanity accessory
+					'''
+				SkipShard: 
+					'''
+					'A crystal with remarkable space-bending capacity'
+					'''
+				SkipSoul: 
+					'''
+					'A fragment of strange void energy'
+					'''
+				SkipShot: 
+					'''
+					Fires 3 arrows
+					Converts wooden arrows into Wormhole Arrows
+					'''
+				SkipArrow: 
+					'''
+					Instantly travels to hit enemies below
+					'''
+				SkipBullet: 
+					'''
+					Instantly travels to hit enemies below
+					'''
+				SkipScythe: 
+					'''
+					Applies a stacking, permanent curse that deals 2 damage per second and increases damage taken by enemies by 0.5%
+					Launches waves that deal 50% damage and have a 20% chance to apply the curse
+					'''
+				VoidAnomaly: 
+					'''
+					Increases void gain by 1 and void regeneration speed by 5%
+					Getting hit will convert void into life for a duration
+					Increases the potency of Void Shock and Void Recovery
+					Allows access to wormhole crafting recipes
+					'''
+
+			# CritBonus
+				OtherworldlyAmplifier: Critical strikes deal 8 more damage
+				BloodstainedCoin: 
+					'''
+					Critical strikes have a 50% chance to deal 20 more damage
+					Receiving damage has a 50% chance to bleed you
+					'''
+				PutridCoin: 
+					'''
+					Critical strikes have a 50% chance to deal 20 more damage
+					Receiving damage has a 50% chance to poison you
+					'''
+				PolishedCoin: 
+					'''
+					Critical strikes have a 50% chance to deal 30 more damage
+					Increases crit chance by 2%
+					Immunity to bleeding and poisoned
+					'''
+				FocusCrystal: 
+					'''
+					Critical strikes deal 40 more damage
+					Increases crit chance by 4%
+					Immunity to bleeding and poisoned debuffs
+					'''
+				ChaosBadge: Increases crit chance by 10%
+
+				CloverCharm: 
+					'''
+					Critical strikes have a 50% chance to steal life
+					Increases crit chance by 2%
+					'''
+				VoidCharm: 
+					'''
+					Critical strikes have a 50% chance to regenerate void
+					Increases crit chance by 2%
+					'''
+				SoulCharm: 
+					'''
+					Critical strikes steal life, regenerate void, and recover mana
+					Increases crit chance by 2%
+					'''
+				BagOfCharms: 
+					'''
+					5% increased critical strike chance
+					Critical strikes may detonate enemies for 50% critical damage
+					Critical strikes steal life, regenerate void, and recover mana
+					'''
+					
+				EyeOfChaos: Increases crit chance by 18%
+				FocusReticle: 
+					'''
+					Increases crit chance by 20%
+					Critical strikes deal 40 more damage
+					Immunity to bleeding and poisoned debuffs
+					'''
+
+				BorealisIcosahedron: 
+					'''
+					Critical strikes may cause a frostburn explosion, dealing 100% critical damage
+					Increases crit chance by 2%
+					'''
+				CursedIcosahedron: 
+					'''
+					Critical strikes may cause a release of cursed thunder, dealing 50% critical damage
+					Critical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage
+					Increases crit chance by 2%
+					'''
+				HellfireIcosahedron: 
+					'''
+					Critical strikes may cause a flaming explosion, dealing 50% critical damage
+					Increases crit chance by 2%
+					'''
+
+					SnakeEyes: Increases crit chance by 8%
+				
+			# Crushers
+				AquaticEclipse: 
+					'''
+					Charge to increase damage up to 700%
+					Takes 3 seconds to reach max charge
+					Can strike through walls
+					Releases bubbles that do 10% damage
+					'''
+				BoneClapper: 
+					'''
+					Charge to increase damage up to 450%
+					Takes 2 seconds to reach max charge
+					'''
+				CardiacCollapse: 
+					'''
+					Charge to increase damage up to 800%
+					Takes 3.5 seconds to reach max charge
+					Killed enemies regenerate health
+					'''
+				CircuitBoard: 
+					'''
+					The second charge of a Crusher has a 33% chance to not consume void
+					The fourth charge of Crushers no longer consumes void
+					Extends the range of Crushers by 1
+					Increases melee speed and melee damage by 5%
+					Increases Crusher charge speed by 10%
+					'''
+				CrabClaw: 
+					'''
+					Charge to increase damage up to 800%
+					Takes 4 seconds to reach max charge
+					'''
+
+				CrushingAmplifier: 
+					'''
+					Extends the range of Crushers by 1
+					Also increases melee damage by 5%
+					'''
+				CrushingCapacitor: Makes the fourth charge of Crushers no longer consumes void
+				CrushingResistor: The second charge of a Crusher has a 33% chance to not consume void
+				CrushingTransformer: 
+					'''
+					Increases melee speed by 8%
+					Increases Crusher charge speed by 12%
+					'''
+
+				DuneSplicer: 
+					'''
+					Launches out a swarm of short-range, homing spikes
+					Charge to increase damage up to 350%
+					Takes 4 seconds to reach max charge
+					'''
+				Hellbreaker: 
+					'''
+					Charge to increase damage up to 600%
+					Takes 4.5 seconds to reach max charge
+					'''
+				IrradiatedChainReactor: 
+					'''
+					Charge to increase damage up to 500%
+					Launches out spores that deal 50% damage
+					Takes 1.66 seconds to reach max charge
+					'''
+				MantisGrip: 
+					'''
+					Charge to increase damage up to 500%
+					The initial charge consumes no void
+					Takes 4 seconds to reach max charge
+					'''
+				Pulverizer: 
+					'''
+					Charge to increase damage up to 500%
+					The initial charge consumes no void
+					Takes 3 seconds to reach max charge
+					Laser deals 60% of the total damage
+					'''
+				SoulEater: 
+					'''
+					Charge to increase damage up to 1000%
+					Takes 2.5 seconds to reach max charge
+					Killed enemies regenerate mana and void
+					'''
+				SpiderCrusher: 
+					'''
+					Charge to increase damage up to 180%
+					Releases spider webs that slow hit enemies
+					Releases more when charged
+					Takes 2.5 seconds to reach max charge
+					'That's really clever actually'
+					'''
+				WormWoodCollapse: 
+					'''
+					Charge to increase damage up to 500%
+					Takes 3 seconds to reach max charge
+					'''
+
+			# DoorItems
+				DoorPants: 
+					'''
+					Accelerates horizontal movement when going through doors
+					Builds up speed while standing in doors
+					'''
+				BandOfDoor: "'Open the door to the ultimate form of travel'"
+
+			# Earth
+				# Glowmoth
+					GlowSpores: 
+						'''
+						Increases mana recieved from potions by 40
+						Increases magic crit chance by 5%
+						'''
+					GuideToIllumination:
+						'''
+						The first time an enemy takes damage, they will sparkle, stunning them for 10 damage
+						'''
+					IlluminantLantern:
+						'''
+						Greatly increases the intensity of lighting
+						Increases void damage by 5%
+						'''
+					IlluminantAxe: 
+						'''
+						Releases wandering energy bolts for 60% damage
+						Right click to toss the axe, which sticks to walls
+						Right click again to recall the axe
+						'''
+					IlluminantBow: 
+						'''
+						Launches illuminant moths, which drop four arrows onto enemies
+						'''
+					NightIlluminator: 
+						'''
+						Summons three luminous moths to swarm your enemies
+						Right click to call the moths to your cursor
+						'''
+					IlluminantStaff:
+						'''
+						Launch a cluster of Illuminant Orbs
+						Illuminant Orbs launch shards at nearby enemies after expiring
+						'''
+					TorchBomb: "'Illuminate the night with colorful explosives!'"
+					GlowmothBag: "{$CommonItemTooltip.RightClickToOpen}"
+					TorchGun:
+						'''
+						Right click to launch a torch bomb
+						Uses gel for ammo
+						'''
+					SuspiciousLookingCandle: Summons Glowmoth when used in a glowing mushroom biome
+
+						
+				Colossus: 
+					'''
+					Strike with 3 slashes
+					The final slash deals 120%
+					All slashes deal triple damage to healthy foes
+					'''
+				Geostorm: Bombards your cursor with crystals
+				GraniteProtector: Reduces damage taken by 6%
+				HarvestersScythe: 
+					'''
+					Increases critical strike damage by 20%
+					Enemies have a 10% chance to drop double the loot, or 20% when killed by critical strike
+					'''
+				MarbleDefender: Launches attackers away from you with javelins
+				SporeSprayer: Fires a burst of Spore Clouds that do 66% damage whenever an arrow is launched
+
+				VibrantBullet: 
+					'''
+					Splits into 3 shards
+					One shard flies straight for 100% damage
+					The other shards deal 25% damage
+					'''
+				VibrantArrow: 
+					'''
+					Scatters 3 shards below the area of impact for 120% damage
+					'''
+				VibrantPistol: Fires almost as fast as you can pull the trigger
+				VibrantStaff: Fires a homing bolt
+
+				VibrantChestplate: Increases void damage by 10% and ranged damage by 5%
+				VibrantHelmet: 
+					'''
+					Increases max void by 50
+					Increases ranged crit chance by 5%
+					'''
+				VibrantLeggings: Decreased void usage by 10%
+				PixelBlaster: Fires a beam that melts through enemies, dealing damage 60 times per second
+				
+			# Evil
+				AbyssalFury: Summons Shadow Blades from the sky to your cursor
+				DeathSpiral: 
+					'''
+					Surrounds you with lightning tentacles
+					Has a chance to apply a stacking, permanent bleed to hit enemies for 5 damage per second
+					'''
+				MidnightPrism: 
+					'''
+					Increases armor penetration by 8, critical strike chance by 5%, and max life by 40
+					Release waves of damage periodically that ignore up to 16 defense total
+					Release more waves at lower health
+					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+					Has a 6 second cooldown
+					Waves disabled when hidden
+					'''
+				TomeOfTheReaper: Cast three scythes that move towards your cursor
+					ToothAche: Strike with 3 slashes, then toss a spinning blade for 80% damage
+					Vertebraeker: Strike with a flurry of slashes, then toss a spinning blade for 120% damage
+				WitchHeart: 
+					'''
+					Increases critical strike chance by 5%
+					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+					Has a 6 second cooldown
+					Increases max life by 20
+					'''
+
+			# Fishing
+				Curgeon: Has valuable eggs that can only be harvested by disection
+				PhantomFish: "'Feeds off of energy within voidspace'"
+				SeaSnake: "'Not actually venomous'"
+				ZephyrousZeppelin: Surrounded by a ring of razorwater that deals 75% damage
+
+				PyramidCrate: "{$CommonItemTooltip.RightClickToOpen}"
+
+			# Flails
+				Aten: 
+					'''
+					Conjures stars that do 70% damage and explode for 140% damage
+					'The defunct god... now in flail form'
+					'''
+				NorthStar: 
+					'''
+					Conjures polar stars that do 70% damage and explode for 210% damage
+					'''
+				Shattershine: 
+					'''
+					Releases a cluster of sparkles upon hitting an enemy, each doing 60% damage
+					Doesn't release sparkles while charging
+					'''
+
+			# Fragments
+				DissolvingElement: Temporary Tooltip
+				DissolvingNature:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingEarth:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingAurora:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingDeluge:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingAether:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingUmbra:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingNether:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingBrilliance:
+					'''
+					Temporary Tooltip
+					'''
+				DissolvingElements: {
+					DissolvingNatureNormal: Reduces damage dealt by 10% while in the inventory
+					DissolvingNatureFlipped: Increases life regeneration by 1 while in the inventory, up to 4 total
+
+					DissolvingEarthNormal: Reduces endurance by 10% while in the inventory
+					DissolvingEarthFlipped: Increases defense by 2 while in the inventory, up to 8 total
+
+					DissolvingAuroraNormal: Reduces movement speed by 20% while in the inventory
+					DissolvingAuroraFlipped: Increases movement speed by 5% while in the inventory, up to 20% total
+
+					DissolvingDelugeNormal: Decreases max life and mana by 10 while in the inventory
+					DissolvingDelugeFlipped: Increases ranged damage by 3% while in the inventory, up to 12% total
+
+					DissolvingAetherNormal: Reduces gravity while in the inventory
+					DissolvingAetherFlipped: Increases magic damage by 3% while in the inventory, up to 12% total
+
+					DissolvingUmbraNormal: Reduces max void by 20 while in the inventory
+					DissolvingUmbraFlipped: Increases void damage by 3% while in the inventory, up to 12% total
+
+					DissolvingNetherNormal: Decreases life regeneration by 2 while in the inventory
+					DissolvingNetherFlipped: Increases melee damage by 3% while in the inventory, up to 12% total
+
+					DissolvingBrillianceNormal: Increases void drain by 0.5 while in the inventory
+					DissolvingBrillianceFlipped: Increases summon damage by 3% while in the inventory, up to 12% total
+				}
+
+				WorldlyPolarizer: 
+					'''
+					Increases damage, endurance, and movement speed by 3%
+					Changes the effects of worldly dissolving elements in your inventory
+					'''
+				ThermalPolarizer: 
+					'''
+					Increases max life, mana, and void by 20
+					Changes the effects of thermal dissolving elements in your inventory
+					'''
+				ExoticPolarizer: 
+					'''
+					Increases jump speed, life regen, and void gain by 2
+					Changes the effects of exotic dissolving elements in your inventory
+					'''
+				UltimatePolarizer: 
+					'''
+					Increases damage, endurance, and movement speed by 3%
+					Increases max life, mana, and void by 20
+					Increases jump speed, life regen, and void gain by 2
+					Changes the effects of all dissolving elements in your inventory
+					'''
+
+				PrecariousCluster: 
+					'''
+					Does the following while in your inventory:
+					Nature
+					Earth
+					Aurora
+					Aether
+					'A great gift for your friend's inventory!'
+					'''
+				TerminalCluster: 
+					'''
+					Does the following while in your inventory:
+					Deluge
+					Umbra
+					Nether
+					Brilliance
+					'''
+
+			# Furniture
+				# AncientGold
+					AncientGoldBed: "'For naps fit for a king'"
+					AncientGoldThrone: "'A throne fit for a very old king'"
+
+				# Earthen
+					EarthenPlatingWorkBench: Also functions as an anvil
+					
+				# Nature
+					NaturePlatingWorkBench: Also functions as an anvil
+
+				# Permafrost
+					PermafrostPlatingWorkBench: Also functions as an anvil
+
+				# Functional
+					NatureHydroponics: 
+						'''
+						Automatically grows an assortment of alchemical herbs
+						Right click to harvest all fully grown herbs
+						Plants can be harvested at any time or weather
+						'''
+					Mineralarium: 
+						'''
+						Materializes ores using trace particles in the atmosphere and voidspace
+						Ores must be mined manually
+						If no ores are currently on the platform, a random ore will be materialized
+						If an ore is left on the platform, it will continue to materialize
+						If the platform is blocked, or a combination of ores is on the platform, no ores will materialize
+						Can be stacked to hasten the production of the topmost Mineralarium
+						'''
+					HydraulicPress:
+						'''
+						Automatically crushes enemies that walk inside
+						Players are not safe from taking damage
+						'''
+
+			# Gems
+				AmberRing: Getting hit grants a random buff for 30 seconds	
+				AmethystRing: Chain together blocks when mining, breaking up to 50 blocks at once
+				DiamondRing: Increases damage by (defense)%
+				EmeraldRing: Enemies have a 14.3% chance to drop double the loot
+				RubyRing: 
+					'''
+					Killed enemies has a 50% chance to drop additional hearts
+					This chance increases to 100% with critical strikes
+					Collecting hearts lengthens the duration of active buffs
+					'''
+				SapphireRing: Generate income when void is gained
+				TopazRing: Killing enemies grants a random buff for 30 seconds
+				
+			# Inferno
+				BlazingClub: 
+					'''
+					Deploys spiked mines in the air
+					Right click to launch them instead
+					Mines linger and explode into shrapnel for 10% damage
+					Deploys and launches more mines when wearing climbing related accessories
+					'''
+				BlazingQuiver: 
+					'''
+					Increases ranged damage by 10% and greatly increases arrow speed
+					20% chance not to consume arrows
+					Converts wooden arrows into Blazing Arrows
+					Blazing Arrows ignore gravity, pierce once, and explode for 15% damage
+					'''
+				BookOfVirtues: 
+					'''
+					Summons a Spectral Wisp that defends you from nearby enemies
+					The wisp does 75% damage on contact with enemies, and 100% with its laser
+					'''
+				IncineratorGlove: 
+					'''
+					Charge up a short-ranged ball of hot plasma
+					Gains 40% additional damage each charge
+					Maxes out at 80 charges
+					Only does half damage prior to firing
+					'''
+				PlasmaAccelerator: Fires supercharged plasma arrows
+				Sharanga: Fires supercharged hellfire arrows
+				TheBlaspha: Launch a scatter of inferno-infused bullets which release homings embers for 50% damage
+				WispInAJar: 
+					'''
+					Summons a Inferno Wisp that assists in combat
+					Killed enemies explode into flames for 30% of the damage dealt to them on the killing blow
+					'''
+
+			# Invidia
+				VesperaMask: Increases max void by 25 and void gain by 1
+				VesperaLeggings: Increases max void by 25 and movement speed by 5%
+				VesperaBreastplate: Increases max void by 25 and void damage by 5%
+				VesperaFishingRod: Casts five lines at once
+				VesperaLongbow: 
+					'''
+					Has to windup before firing
+					Arrows travel fast and scatter into rock shrapnel for 70% damage
+					'''
+				VesperaNanDao: 
+					'''
+					Strike with 2 slashes
+					The second slash scatters rocks for 70% damage
+					'''
+
+				VoidTablet: 
+					'''
+					Increases void gain by 1 and max void by 50
+					Reduces healing recieved from potions by 20
+					'''
+				VorpalKnife: 
+					'''
+					Toss a blade that lingers in the air
+					Detonate with left click, dealing 300% damage
+					Teleport with right click, slashing for 200% damage
+					Drains more void to detonate or teleport the farther away the blade is
+					'''
+
+			# MusicBoxes
+				KnucklesMusicBox: "'Can I put my...'"
+				
+			# Nature
+				AcornBag: Summons a squirrel to fight for you
+				BerryBombs: Throw a cluster of explosive berries
+				BiomassBarrage: Launches a cluster of acorns
+				BiomassBlast: Launches an acorn that rapidly accelerates its growth upon hitting an enemy or tile
+				BotanicalSymbiote: 
+					'''
+					Increases life regeneration by 1 during the day
+					Grants a Blooming Hook to all minions
+					'''
+				NatureWreath: Increased max minions
+				NatureLeggings: 5% increased minion damage and movement speed
+				NatureShirt: Increased defense for every active minion
+				NatureSpell: 
+					'''
+					Launches a seed that latches onto enemies
+					When the seed blooms, it does 500% damage
+					'''
+				PricklyPearShield: Getting hit releases Cactus Spines that poison nearby enemies
+				Scatterseed: 
+					'''
+					Scatters seeds that latch onto enemies
+					When the seeds bloom, they do 125% damage
+					'''
+				SporeBombs: 
+					'''
+					Throw a cluster of explosive spore sacks
+					Released spores deal 50% damage
+					'The toxic grenades look almost edible'
+					'''
+				SporeClub: Launch a spore that may confuse enemies
+
+			# OreItems
+				GoldArkStaff: Deal 150% damage to up to 2 enemies surrounding the initially hit enemy
+				GoldBattery: 
+					'''
+					Increases void gain by 1 and max void by 20
+					Regenerate void when hit, but also have a 10% chance to recieve ichor when near max void
+					'''
+				GoldChakram: Deals more damage at the peak of its trajectory
+				GoldGlaive: Fires 3 bolts at your cursor, each dealing 75% damage
+
+				PlatinumBattery: 
+					'''
+					Increases void gain by 1 and max void by 20
+					Regenerate void when hit, but also have a 10% chance to recieve broken armor when near max void
+					'''
+				PlatinumDart: A heavy dart that sticks to enemies, slowing them down drastically
+				PlatinumScythe: Attacks permanently curse enemies for 4 damage per second, stacking up to 10 times
+				PlatinumSoulStaff: Absorb life from up to 3 enemies at a time
+				
+			# Otherworld
+				# EpicWings
+					TestWings: Allows flight and slow fall
+					TwilightGyroscope: 
+						'''
+						Increases jump height and flight speed
+						Increases movement speed by 20%
+						Hold down to fall quickly to the floor
+						Provides immunity to fall damage
+						'''
+
+				# FromChests
+					ArclightOrbs: Throw a cluster of thunder orbs that explode into chain lightning for 80% damage
+					ArcStaffMk2: 
+						'''
+						Launch a massive sphere of lightning
+						Detonates at the end of its lifespan, doing 250% damage to low health, non-boss enemies, but only 100% to bosses
+						'''
+					Calculator: 
+						'''
+						Summons a pet Advisor to assist in combat
+						Instead of attacking enemies directly, the Advisor assists with your aim
+						'He really wants to help!'
+						'''
+					CataclysmDisc: 
+						'''
+						Deals more damage at the peak of its trajectory and explodes for 300% damage
+						'''
+					CataclysmMusketPouch: 
+						'''
+						Grants access to infinite cataclysm bullets
+						Cataclysm bullets travel faster and more erratically than normal bullets
+						They will also incur 20% damage to an enemy surrounding the initially hit enemy
+						When favorited, bullets will be supercharged at the cost of some void
+						Supercharged bullets travel instantly, and gain increased arcing capabilies
+						'''
+					ChainedPlasma: 
+						'''
+						Chains between enemies for 70% damage
+						Tries to move towards your cursor
+						'''
+					CodeCorrupter: 
+						'''
+						Fires a short ranged and a long ranged blast
+						The short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabalize enemies
+						Destabilized enemies gain a 5% flat chance to be critically striked
+						This is calculated after normal crits, allowing some attacks to double crit
+						Destabilization is permanent and can stack, but the chance of applying it gets lower with each level already applied
+						'''
+					CrescentStaff: Cast a wave of Crescents that each lock onto an enemy, and then steal life and mana from them
+					FlareDetonator: Fire an explosive flare that detonates upon releasing the trigger
+					HardlightGlaive: Unleash a burst of lightning that deals 160% damage
+					HardlightQuiver: 
+						'''
+						Grants access to infinite hardlight arrows
+						Hardlight arrows travel faster and are not affected by gravity
+						When favorited, arrows will be supercharged at the cost of some void
+						Supercharged arrows travel instantly, and gain slight homing at longer ranges
+						'''
+					InfernoHook: A very fast hook that strikes enemies as it travels
+					LashesOfLightning: 
+						'''
+						Unleash rapid strikes of lightning in a small area in front of you
+						Deals slightly more damage and can hit through walls at the tip
+						'''
+					PlatformGenerator: 
+						'''
+						10% increased minion damage
+						Generates 2 platforms to the left and right of you
+						You can right click to drag the platforms, but they will always remain symmetrical
+						Sentries can be summoned on top of the platforms
+						'Bring your sentries with you!'
+						'''
+					Poyoyo: Leaves behind a rainbow trail that does 60% damage
+					SectionChiefsScythe: 
+						'''
+						Critical hits summon a Soul of Retaliation into the air
+						Every 10th void attack will release the soul in the form of a powerful laser
+						Direct melee hits permanently curse enemies for 4 damage per second, stacking up to 10 times
+						'''
+					SkywardBlades: 
+						'''
+						Arm yourself with several deadly throwing knives
+						Scoring a hit restores a dagger
+						'Watch this!'
+						'''
+					SkywareBattery: 
+						'''
+						Increases void gain by 2 and max void by 50
+						Regenerate void when hit
+						Immunity to broken armor and ichor
+						'''
+					Starbelt: 
+						'''
+						Critical strikes recover mana
+						Increased max mana by 40
+						Increases magic crit chance by 10%
+						'''
+					StarcoreAssaultRifle: Fires a stream of bouncy, colorful projectiles
+					StarshotCrossbow: Fire a star that scatters arrows in every direction
+					SupernovaHammer: 
+						'''
+						Critical strikes release 3 seekers that do 50% critical damage
+						Killing enemies releases 3 seekers that do 70% damage
+						Enemies killed by seekers release 2 more seekers, each doing 75% damage
+						Seekers home onto enemies, but do not attack the enemies they are released from
+						'''
+					TerminatorAcorns: Summons a Mechanically Modified Squirrel to fight for you
+					TwilightAssassinsCirclet: Gamer
+					TwilightAssassinsChestplate: 
+						'''
+						Increased your max number of minions by 1
+						Increased melee and void critical strike chance by 10%
+						Increased life regeneration by 2 and void regeneration speed by 10%
+						'''
+					TwilightAssassinsLeggings: 
+						'''
+						Increased movement speed by 15%
+						Blink Pack decreased cooldown by 20%
+						Slightly increased jump speed
+						'''
+					TwilightFishingPole: Casts two lines at once
+					UndoArrow: Makes all NPC have zero epicness
+					VibrancyModule: 
+						'''
+						Increases void attack speed by 10%
+						Reduces void cost by 10%
+						'''
+					
+				# Furniture
+					DigitalDisplay: Right click to increase void damage by 10%
+					HardlightFabricator: Used to craft otherworldly objects and gear
+					PotGenerator: 
+						'''
+						Generates pots on top of its surface
+						Can be stacked to hasten the production of the topmost generator
+						'No, not that type of pot'
+						'''
+					SkyChain: "'It anchors onto... somewhere'"
+					TransmutationAltar: 
+						'''
+						Used for crafting
+						Allows the conversion of material and equipment to equivalent but different forms
+						Also counts as a demon altar for crafting
+						Crafting using the altar can be undone
+						'''
+
+					AvaritianGateway: 
+						'''
+						'A strange portal that leads nowhere'
+						Serves as the spawning location for the Advisor
+						'''
+					BladeGenerator: 
+						'''
+						Periodically accumulate up to 9 swords that rotate around you
+						Every 10th melee attack will launch forth the swords
+						'''
+					BladeNecklace: 
+						'''
+						Increases void gain by 1
+						Periodically accumulate up to 9 swords that rotate around you
+						Every 10th melee attack will launch forth the swords
+						Getting hit summons 5 Souls of Retaliation into the air
+						Every 10th void attack will release the souls in the form of a powerful laser
+						'''
+					GravityAnchor: Normalizes gravity and grants immunity to knockback
+					JarOfSouls: "{$CommonItemTooltip.RightClickToOpen}"
+					MeteoriteKey: Opens one locked Meteorite Chest
+					PhaseCannon: Fires a supercharged ball of plasma that can travel through walls
+					SkywareKey: Opens one locked Skyware Chest
+					StrangeKey: Opens one locked Strange Chest
+					TheAdvisorBossBag: "{$CommonItemTooltip.RightClickToOpen}"
+					ThundershockShortbow: Fires powerful bolts of lightning instead of arrows
+					TwilightBeads: 
+						'''
+						Increases void gain by 1
+						Getting hit summons 5 Souls of Retaliation into the air, assuming you have less than 5 Souls active already
+						Every 10th void attack will release the souls in the form of a powerful laser
+						'''
+
+				# Permafrost
+					AbsoluteBar: "'It burns to touch'"
+					CruiseCaller: Summons a fleet of Penguin Copters to fight for you
+					CryoCannon: Uses snowballs as ammo
+					EndothermicAfterburner: 
+						'''
+						Melee attacks send a Frost Burst behind you, dealing 70% damage and inflicting Frostburn
+						Hitting an enemy with the Frost Burst will increase movement speed and melee speed by 10% for 10 seconds
+						'''
+
+					FrigidCrown: Adds an additional burst to the Shard Staff and Storm Spell
+					FrigidGreaves: 
+						'''
+						Grants Ice Skates effect
+						10% increased movement and void attack speed
+						'''
+					FrigidHourglass: 
+						'''
+						Freezes your void meter for 15 seconds every minute
+						Provides immunity to Slow, Chilled, Frozen, and Frostburn
+						Increases movement speed by 10%
+						'''
+					FrigidJavelin: Throw a powerful, fast traveling javelin that ricochets of surfaces
+					FrigidRobe: Frigid Javelin gains better bouncing capabilities
+
+					FrostArtifact: Has a slot for a key
+					FrostArtifactChestplate: 16% increased melee and ranged critical strike chance
+					FrostArtifactHelmet: 14% increased melee and ranged damage
+					FrostArtifactTrousers: 10% increased melee and movement speed
+					FrostedKey: "'Cold to the touch'"
+
+					IceDeployer: 
+						'''
+						Summons the snow-shield mount
+						While mounted, gain 8 defense
+						'''
+					IcicleImpale: 
+						'''
+						Launches large icicles
+						Regenerates void upon hit
+						'''
+					Metalmalgamation: 
+						'''
+						Rapidly sprays out bullets in a radius around it that deal 35% damage
+						'Guns on MY children's toy!?'
+						'''
+					PermafrostMedallion: Surrounds you with a blizzard of artifact probes
+					PolarisBossBag: "{$CommonItemTooltip.RightClickToOpen}"
+
+					ShardGuard: 
+						'''
+						Puts a shell around the owner when below 50% life that reduces damage by 25%
+						Surrounds you with a blizzard of artifact probes
+						Getting hit surrounds you with ice shards
+						Increases max life by 20
+						'''
+					ShardStaff: Summons shards around the player
+					ShardstormSpell: Create an area of arctic obliteration targeted on your cursor
+
+					ShatterBlade: 
+						'''
+						Shatters on critical strike, surrounding you with 3 ice shards
+						Repairs itself after shattering
+						'Don't worry, it's not a durability system'
+						'''
+					ShatterHeartShield: 
+						'''
+						Getting hit surrounds you with ice shards
+						Increases max life by 20
+						'''
+					ShatterShardChestplate: Getting hit surrounds you with ice shards
+					
+					ShoeIce: 
+						'''
+						Allows the ability to slide down walls
+						Improved ability if combined with Climbing Claws or Shoe Spikes
+						40% increased movement speed
+						'Ice physics, everyone's favorite!'
+						'''
+				StormSpell: Create an arctic storm targeted on your cursor
+				
+			# Potions
+				AbyssalTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Gills for 15 minutes
+					Flipper for 13 minutes
+					Ripple for 11 minutes
+					Calm for 9 minutes
+					'''
+				AssassinationPotion: Execute enemies below 20 health or 10% health
+				BlazingTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Bluefire for 15 minutes
+					Inferno for 13 minutes
+					Obsidian Skin for 11 minutes
+					Magic Power for 9 minutes
+					'Is this really safe to drink?'
+					'''
+				BlightfulTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Ironskin for 15 minutes
+					Good Vibes for 13 minutes
+					Swiftness for 11 minutes
+					Regeneration for 9 minutes
+					'''
+				BluefirePotion: Killed enemies explode into flames for 40% of the damage dealt to them on the killing blow
+				BrittlePotion: Getting hit surrounds you with ice shards
+				DoubleVisionPotion: 
+					'''
+					Adds additional lines to your fishing rod, stacks with itself
+					Maxes out at 6 additional lines
+					'''
+				EtherealTonic: 
+					'''
+					Receive the following:
+					Harmony for 15 minutes
+					Lifeforce for 13 minutes
+					Regeneration for 11 minutes
+					Magic Power for 9 minutes
+					'''
+				GlacialTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Warmth for 15 minutes
+					Brittle for 13 minutes
+					Titan for 11 minutes
+					Mana Regeneration for 9 minutes
+					'''
+				HarmonyPotion: 
+					'''
+					Prevents other buffs from decaying while active
+					Doesn't work on most buffs with below 30 seconds remaining
+					'''
+				HereticTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Nightmare for 15 minutes
+					Wrath for 13 minutes
+					Rage for 13 minutes
+					Ammo Reservation for 9 minutes
+					'The world around you follows your example'
+					'''
+				NightmarePotion: 
+					'''
+					Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together
+					Has a 6 second cooldown
+					'''
+				RipplePotion: 
+					'''
+					Release waves of damaging water periodically
+					Release more waves at lower health
+					Waves ignore up to 8 defense
+					'''
+				RoughskinPotion: Increases defense by 4 and damage by 4%
+				SeismicTonic: 
+					'''
+					Randomly receive 2 of the following:
+					Ironskin for 15 minutes
+					Soul Access for 13 minutes
+					Endurance for 11 minutes
+					Roughskin for 9 minutes
+					'''
+				SoulAccessPotion: Increases void regeneration speed by 10%
+				StarlightTonic: 
+					'''
+					Receive the following:
+					Assassination for 15 minutes
+					Magic Power for 13 minutes
+					Heartreach for 11 minutes
+					Mana Regeneration for 9 minutes
+					'''
+				VibePotion: 
+					'''
+					Increases attack speed by 20% while not moving and by 5% while moving
+					Increases life regeneration by 4 while not moving
+					'''
+				RoastedPeanuts: Medium improvements to all stats
+
+			# Pyramid
+				# AltPyramidBlocks
+					PyramidRubble: "'It's much less a brick than just a collection of rocks'"
+
+				# PyramidWalls
+					UnsafeCursedTumorWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+					UnsafeOvergrownPyramidWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+					UnsafePyramidBrickWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+					UnsafePyramidWall: 
+						'''
+						Changes the biome to pyramid when in front of
+						Also envokes the Pharaoh's Curse
+						'''
+
+				AcediaGateway: "'A strange portal that leads nowhere'"
+				AcediaPlating: "'It bares striking resemblance to luminite'"
+
+				BrachialLance:
+					'''
+					Throw a powerful, fast traveling lance that unleashes cursed spears for 3x50% damage
+					Charge to increase damage up to 160% and the number of spears unleashed upon hitting an enemy
+					Guaranteed to critically strike at full charge
+					'''
+
+				CursedRobe: 
+					'''
+					Increased maximum mana and void by 80
+					Reduces mana and void usage by 15%
+					Summons a Ruby Monolith to your side
+					The Ruby Monolith increases your void regeneration speed by 10%
+					'''
+				CursedHood: 
+					'''
+					Increases magic damage and void damage by 8%
+					Also increases magic crit chance and void crit chance by 5%
+					The closest enemy to you is afflicted with a curse
+					Upon taking damage, cursed enemies will Flare, taking 140% additional damage and dealing 140% damage to other nearby enemies
+					This effect has a 2 second cooldown
+					'''
+
+				CurseBag: "{$CommonItemTooltip.RightClickToOpen}"
+				CurseballTome: Unleashes a flurry of highly potent but inaccurate Cursed Spears
+				CursedApple: 
+					'''
+					Summons a pet Ghost Pepper to assist after combat
+					Plunder 2 Souls of Looting from every killed enemy, and store them inside your void meter
+					Right click on an enemy to mark it for harvesting, consuming 10 souls
+					Marked enemies drop extra loot
+					Enemies can be marked multiple times
+					Requires 100 souls to mark a boss
+					Some rare enemies will also require more souls to mark
+					'''
+				CursedBlade: 
+					'''
+					Summons a Cursed Blade to assist in combat
+					Hit enemies receive a storm of sword strikes, dealing 50% damage each, and ending in an explosion
+					The explosion deals 100% damage and always critical strikes
+					'''
+				CursedImpale: Releases a short ranged burst of energy
+				CurseWard: 
+					'''
+					Weakens the pyramid's curse while in the inventory
+					No longer needed, as the curse will weaken automatically after killing the BoC or EoW
+					'''
+
+				CursedTumor: "'Baked beans'"
+
+				EmeraldBracelet: Increases void gain by 2
+				GhoulBlaster: 
+					'''
+					Unloads almost as fast as the trigger is pulled
+					Transforms bullets into cursed singularities every 6th shot
+					'''
+				HeartInAJar: 
+					'''
+					Curses enemies within a small radius around you, draining 10 life per second
+					Cursed enemies release a Curse Fragment upon death, which seeks out other enemies
+					Curse fragments deal damage equivalent to 10% of the killed enemies max health plus an additional 10 damage
+					Increases max life by 20
+					'''
+				ImperialPike: Leaves behind a trail that continues to damage enemies
+				JuryRiggedDrill: 
+					'''
+					Can break the walls of the pyramid
+					Breaks after some usage
+					'''
+				LuckyPurpleBalloon: 
+					'''
+					Grants an additional fishing line
+					Counts as a light pet
+					'''
+
+				PatchLeatherHat: Increases max minions by 1
+				PatchLeatherPants: Increases minion damage by 10%
+				PatchLeatherTunic: 
+					'''
+					Increases minion damage by 10%
+					Grants immunity to venom and poison debuffs
+					'''
+
+				PharaohsCane: 
+					'''
+					Terrible for combat, but makes enemies drop more gold
+					'Who would ever want such a thing?'
+					'''
+				PitatiLongbow: Fires an additional bouncing emerald bolt with each shot
+
+				PyramidBrick: A slab from an ancient burial site, it may be hard to break
+				PyramidSlab: A slab from an ancient burial site, it may be hard to break
+				RoyalGoldBrick: "'You can feel the regalness'"
+				RoyalMagnum: Releases golden light upon hitting the ground or an enemy
+
+				SandstoneEdge: Critical hits release a torrent of homing emerald bolts that do 50% damage
+				SandstoneWarhammer: Launches homing hammers
+
+				ShiftingSands: Pushes back nearby enemies with a wave of sand
+
+				SnakeBow: Launches snakes that latch on to enemies
+				Snakeskin: Slick and durable
+
+				SpiritGlove: Increases void regeneration speed by 5% and melee crit chance by 8%
+				SpiritShield: Increases void gain by 2, life regen by 1, and reduces damage taken by 2%
+				SpiritSurfer: 
+					'''
+					Summons an extremely fast spirit board mount
+					Increases void drain by 6 while active
+					'''
+				SpiritTracer: 
+					'''
+					Fires phantom arrows
+					Can hit up to 3 enemies at a time
+					'''
+
+				SunlightAmulet: Grants permanent hunter and dangersense effects
+
+				TaintedKeystone: "'What a regal crystallization of void energy!'"
+				TheDarkEye: 
+					'''
+					Allows the ability to perform an instant dash to the left or right at the cost of 5 void
+					Also allows the ability to dash through walls
+					Dashing into enemies will strike them, but consumes more void
+					'''
+
+				TrueSandstoneBlock: The ultimate sandstone
+				TrueSandstoneWall: "'Only the gods could've forged a wall with such power'"
+
+				VoidenBracelet: 
+					'''
+					Increases void damage and magic damage by 8%
+					Reduces void cost by 8%
+					'''
+
+			# Secrets
+				PhotonGeyser: Unleash a helix of homing rainbow light
+				RefractingCrystalBlock: "'You shouldn't have this'"
+				StrangeKeystone: 
+					'''
+					It suffers from small cracks under intense sunlight
+					'Feels hollow'
+					'''
+				DreamLamp: 
+					'''
+					'What do you wish for?'
+					'''
+				DreamingLamp: 
+					'''
+					Chain together up to 10 enemies, decreasing their speed and defense
+					Chain together items to grab them
+					Right click to launch a floral ball that deals damage to nearby chained enemies and resets their chain durations
+					When a chained enemy is killed, nearby chained enemies will take additional damage
+					Right clicking does not consume void
+					'What do you wish for?'
+					'''
+				FalseLamp: 
+					'''
+					Right click to launch a mist orb that releases short-range homing bolts for 50% damage
+					'''
+
+			# Slime
+				FireSpitter: Uses gel for ammo
+
+				GelWings: 
+					'''
+					Allows flight and slow fall
+					'It really shouldn't hold up well'
+					'''
+
+				JarOfPeanuts: Summons the Putrid Pinky
+				Peanut: "'The favorite snack of a devilish slime'"
+				PeanutRepeater: 
+					'''
+					Launches tasty peanuts that attract Pinky Air Raids
+					20% chance to not consume ammo
+					'''
+				PinkyBag: "{$CommonItemTooltip.RightClickToOpen}"
+
+				PutridEye: "'You want deathray? We have deathray'"
+
+				VialofAcid: "'A gooey corrosive substance that excels at dissolving organic compounds'"
+				CorrosiveGel: "'It's like pink gel except it'll melt your fingers if you're not careful'"
+
+				WormWoodHelix: Converts musket balls into helix shots
+				WormWoodHook: Retracts upon hitting an enemy
+				WormWoodParasite: 
+					'''
+					Increases void gain by 2 and void critical strike chance by 8%
+					Critical strikes heal small amounts of void
+					Decreases max void by 20
+					'''
+				WormWoodScepter: Summons a Wormwood Turret to fire upon up to 4 enemies at a time
+				WormWoodStaff: Fires 3 bouncy, erratic, lingering pink projectiles
+
+			# SoldStuff
+				BoreBullet: 
+					'''
+					20% of damage done ignores defense completely
+					In addition, a flat 10 damage will also completely ignore defense
+					'''
+				RecursiveBow: 
+					'''
+					Has a 50% chance to fire an additional arrow
+					Additional arrows also activate this ability
+					'''
+				SafetySwitch: Prevents you from using void weapons if doing so would drop your void below zero
+
+			# SpiritStaves
+				ChaosSpiritStaff: 
+					'''
+					Summons a Chaos Spirit to fight for you
+					Locks onto one enemy at a time
+					'''
+				EarthenSpiritStaff: Summons an Earthen Spirit to fight for you
+				EvilSpiritStaff: 
+					'''
+					Summons an Evil Spirit to fight for you
+					Attacks with a flurry of Evil Bolts, dealing 50% damage each
+					Ends in an explosion that deals 100% damage, always critical strikes
+					'''
+				InfernoSpiritStaff: 
+					'''
+					Summons an Inferno Spirit to fight for you
+					Attacks up to 7 enemies at a time
+					'''
+				NatureSpiritStaff: 
+					'''
+					Summons an Nature Spirit to fight for you
+					Attacks the closest enemy visible to you
+					Heals health upon dealing damage
+					'''
+				OtherworldlySpiritStaff: 
+					'''
+					Summons an Otherworldly Spirit to fight for you
+					Accumulates up to 4 thunder charges that are launched at enemies in quick succession
+					'''
+				PermafrostSpiritStaff: 
+					'''
+					Summons an Permafrost Spirit to fight for you
+					Launches 3 permafrost spears downwards at enemies
+					'''
+				TidalSpiritStaff: Summons an Tidal Spirit to fight for you
+
+			# Temple
+				Helios: 
+					'''
+					Attacks scorch with each hit, increasing damage done by 3% permanently
+					Stacks up to 5 times
+					Launches waves that deal 40% damage
+					'''
+				LihzahrdTail: 
+					'''
+					Increases buff duration by 67%
+					Increases healing and mana recieved from potions by 50
+					'''
+				Pyrocide: 
+					'''
+					Strike with 5 slashes
+					The final slash does 150% damage
+					'''
+				Revolution: Does not consume void during the night
+				SolarBullet: 
+					'''
+					50% of damage done ignores defense completely
+					Increases in speed after bouncing off walls
+					'''
+				SupernovaScatter: Launches small stars that explode into bullets
+		
+			# Tide
+				ArkhalisChain: "'It probably didn't come from here'"
+				BlueJellyfishStaff: Fires an energy ball that detonates into blue lighting after traveling forward
+				GreenJellyfishStaff: 
+					'''
+					Fires 2 green orbs that, upon detonation, release green thunder towards your cursor
+					Green thunder chains off enemies for 90% damage
+					Provides a light source while favorited in the inventory
+					'''
+				HeartOfTheSea: 
+					'''
+					Release waves of damage periodically
+					Release more waves at lower health
+					Waves ignore up to 8 defense
+					Increases max life by 20
+					Waves disabled when hidden
+					'Death by heartbeat'
+					'''
+				PinkJellyfishStaff: Fires pink lightning which chains off enemies for 60% damage
+				PiscesPuncher: 
+					'''
+					'fish'
+					'noun'
+					'a limbless cold-blooded vertebrate animal with gills and fins and living wholly in water'
+					'''
+				PistolShrimp: 
+					'''
+					Fires hot, shrimpy plasma that homes on close enemies
+					'Teamwork makes the dream work'
+					'''
+				PlasmaShrimp: 
+					'''
+					When above 40% mana, magic weapons fire additional, hot, shrimpy plasma for 50% damage
+					Reduces mana cost by 5%
+					'Not so shrimple now'
+					'''
+				PrismarineNecklace: 
+					'''
+					Increases armor penetration by 8 and max life by 20
+					Release waves of damage periodically
+					Release more waves at lower health
+					Waves ignore up to 16 defense total
+					Waves disabled when hidden
+					'''
+				PurpleJellyfishStaff: 
+					'''
+					Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor
+					Purple thunder chains off enemies for 70% damage
+					Provides a light source while favorited in the inventory
+					'''
+				Riptide: 
+					'''
+					Right click while in water or rain to launch yourself forward, doing 120% damage
+					Immunity to fall damage while held
+					'''
+			# Tools
+				AncientSteelGreatHamaxe: Critical strikes deal 50% more damage and may also apply a stacking, permanent bleed for 5 damage per second
+				AncientSteelGreatPickaxe: 
+					'''
+					Able to mine Meteorite
+					Critical strikes deal 50% more damage and may also apply a stacking, permanent bleed for 5 damage per second
+					'''
+
+				Earthshaker: Launch a long ranged pickaxe which is capable of breaking many blocks at a time
+
+				FrigidPickaxe: Able to mine Hellstone
+
+				ManicMiner: Converts void into short-ranged mining lasers
+				MinersPickaxe: 'Finally, throwing pickaxe'
+
+				PyramidGenerator: 
+					'''
+					Development tool, NOT MEANT FOR GAMEPLAY
+					Using this may generate a whole pyramid on your cursor, step-by-step
+					Right clicking will literally make your world vanish
+					Whatever the case, it's probably best not to use it
+					'''
+
+				WallCapture: 
+					'''
+					Development tool, NOT MEANT FOR GAMEPLAY
+					Has many errors that I'm too lazy to fix currently
+					Don't bother using this item
+					'''
+				WorldgenCapture: 
+					'''
+					Development tool, NOT MEANT FOR GAMEPLAY
+					Has many errors that I'm too lazy to fix currently
+					Don't bother using this item
+					'''
+				WorldgenFail: 
+					'''
+					Development tool, NOT MEANT FOR GAMEPLAY
+					Using this may break your world, or spawn a ton of ore, or generate a whole pyramid
+					Whatever the case, it's probably best not to use it
+					'''
+				WorldgenPaste: 
+					'''
+					Development tool, NOT MEANT FOR GAMEPLAY
+					Using this may break your world, or spawn a ton of ore, or generate a whole pyramid
+					Whatever the case, it's probably best not to use it
+					'''
+				WorldgenScanner: 
+					'''
+					Displays some worldgen info that may be useful
+					'Calls down the protector of that palace in the sky'
+					'''
+
+			# Void
+				ScarletStar: 
+					'''
+					Permanently increases max void by 50 and void regeneration speed 5%
+					Can only be used once
+					'''
+				VioletStar: 
+					'''
+					Permanently increases max void by 50 and void regeneration speed 5%
+					Can only be used once
+					'''
+				SoulHeart: 
+					'''
+					Permanently increases max void by 50 and void regeneration speed 5%
+					Can only be used once
+					'''
+				
+				AlmondMilk: Refills 20 void
+				CoconutMilk: Refills 30 void
+
+				CookedMushroom: 
+					'''
+					Refills 13 void
+					Causes temporary poison
+					'''
+				DigitalCornSyrup: 
+					'''
+					Refills 15 void
+					'Yes, really'
+					'''
+				Chocolate: 
+					'''
+					Refills 15 void
+					'The number one thing to bring on pirating adventures'
+					'''
+				CursedCaviar: 
+					'''
+					40% chance to refill 20 void and receive Well Fed for 90 seconds
+					35% chance to refill 15 void and receive Mana Regeneration for 90 seconds
+					25% chance to refill 10 void and receive Battle for 90 seconds
+					'''
+				FoulConcoction: Refills 4 void
+				StrawberryIcecream: 
+					'''
+					50% chance to refill 10 void and surround you with an ice shard
+					50% chance to refill 6 void and surround you with 2 ice shards
+					'''
+				AvocadoSoup: 
+					'''
+					Refills 24 void and recieve Regeneration for 60 seconds
+					'Finally some good soup!'
+					'''
+				VoidenAnkh: 
+					'''
+					Permanently increases max void by 20 and void regeneration speed by 2%
+					Can be used 5 times
+					'''
+
+			ArcaneAqueduct: Surrounds you with 2 orbital projectiles
+			BackupBow: Attaches a bow to your back which fires arrows behind you for 50% damage
+			Baguette: 
+				'''
+				Killing enemies will drop baguette crumbs
+				Pickup baguette crumbs to increase the range and damage of your baguette, and heal lost life
+				'Surrender is not an option'
+				'''
+			BulwarkOfTheAncients: 
+				'''
+				Grants immunity to knockback and fire blocks
+				Grants immunity to most debuffs
+				Increases void gain by 2, life regen by 1, reduces damage taken by 5%, and increases crit chance by 4%
+				Surrounds you with 4 orbital projectiles
+				Projectiles disabled when hidden
+				'''
+			ChiseledBarrier: 
+				'''
+				Surrounds you with 4 orbital projectiles
+				Launches attackers away from you with javelins
+				Projectiles disabled when hidden
+				'''
+			CrestofDasuver: Increases crit chance by 6%
+			Doomstick: 
+				'''
+				Fires two shotgun blasts in quick succession
+				Right click to launch a 250% damage hook that pulls in enemies
+				Pulls you toward bosses instead
+				Killed enemies drop packs of health and mana
+				'''
+
+			ElectromagneticDeterrent: Prevents constructs from spawning while favorited in the inventory or when placed
+			ElectromagneticLure: Attracts a single biome construct
+
+			ExplosiveKnife: "'Quite a deadly combination'"
+			FlashsparkBoots: 
+				'''
+				Provides tremendous acceleration while running
+				Also provides flight and extra mobility on ice
+				Increases movement speed greatly
+				Provides the ability to walk on water and lava
+				Grants immunity to fire blocks and 10 seconds of immunity to lava
+                Running causes you to blast forward, granting higher speed and acceleration
+				This blast cannot be controlled
+				'Recipro Burst!'
+				'''
+			FortressGenerator: 
+				'''
+				Increases max minions and max sentries by 1
+				Increases damage by 10% and life regeneration by 2
+				Generates 4 platforms to the left and right of you
+				You can right click to drag the platforms, but they will always remain symmetrical
+				Sentries can be summoned on top of the platforms
+				Absorbs 25% of damage done to players on your team when above 25% life and grants immunity to knockback
+				'''
+			
+			MinersSword: Critically strikes while falling
+
+			OlympianAegis: 
+				'''
+				Increases void gain by 2 and life regen by 1
+				Reduces damage taken by 7% and increases crit chance by 4%
+				'''
+			OlympianAxe: 
+				'''
+				Enter a 3 second Frenzy after killing an enemy, massively increasing melee attack speed
+				Right click to toss the axe for 60% damage
+				Can toss two axes when under Frenzy
+				'''
+				
+			PeanutBush: 
+				'''
+				Grows peanuts in the dirt underneath
+				'''
+			PeanutButter: 
+				'''
+				Summons a pet Putrid Pinky to assist in combat
+				Latches onto enemies, slowing them down and draining life
+				Increases life regeneration by 1
+				'''
+			RoyalJelly: 
+				'''
+				Increases healing recieved from potions by 40
+				'I could make a very, very bad joke right now...'
+				'''
+			Sandwich: 
+				'''
+				Increases healing recieved from potions by 40
+				Killing enemies will drop baguette crumbs
+				Summons a pet Putrid Pinky to assist in combat
+				Latches onto enemies, slowing them down and draining life
+				Increases life regeneration by 1
+				'''
+			SpectreSpiritStorm: 
+				'''
+				Fires phantom arrows
+				Can hit up to 4 enemies at a time
+				'''
+			SubspaceBoosters: 
+				'''
+				Provides tremendous acceleration while running
+				Also provides flight and extra mobility on ice
+				Increases movement speed greatly
+				Provides the ability to walk on water and lava
+				Grants immunity to fire blocks and 10 seconds of immunity to lava
+				Double tap dash while on the ground to blast forward, granting higher speed and acceleration
+				'''
+			ZombieHand: 
+				'''
+				Allows melee swings to harm Town NPCs
+				'Finally, I can kill the painter!'
+				'''
+			GlowJelly: 
+				'''
+				Increases healing and mana recieved from potions by 40
+				'''
+			AlchemistsCharm: 
+				'''
+				Increases healing and mana recieved from potions by 100
+				Increases buff duration by 67%
+				Increases life regeneration by 2 and reduces the cooldown of healing potions by 25%
+				'''
+		}
+
+		BuffName: {
+		AbyssalInferno : Abyssal Inferno
+		AerialAssistance : Aerial Assistance
+		Assassination : Assassination
+		AuraBoost : Aura Boost
+		Bluefire : Bluefire
+		Brittle : Brittle
+		ChaosSpiritAid : Spirit Aid
+		CreativeShock2 : Creative Shock
+		CursedBlade : Cursed Blade
+		CurseVision : Curse Vision
+		CyberneticEnhancements : Cybernetic Enhancements
+		DEFEBuff : Electromagnetic Interference
+		DiamondSkin : Diamond Skin
+		DilationSickness : Dilation Sickness
+		DoubleVision : Double Vision
+		EarthenSpiritAid : Spirit Aid
+		Ethereal : Ethereal
+		EvilSpiritAid : Spirit Aid
+		Fat : Fat
+		FluidCurse : Fluid Curse
+		Frenzy : Frenzy
+		GoodVibes : Good Vibes
+		Harmony : Harmony
+		IceShield : Ice Shield
+		Infected : Infected
+		InfernalDefense : Infernal Defense
+		InfernoSpiritAid : Spirit Aid
+		IntimidatingPresence : Intimidating Presence
+		NatureSpiritAid : Spirit Aid
+		NatureBoosted : Nature Boosted
+		EarthBoosted : Earth Boosted
+		Nightmare : Nightmare
+		NightIlluminatorBuff : Illumination
+		OtherworldlySpiritAid : Spirit Aid
+		Overheat : Overheat
+		PermafrostSpiritAid : Spirit Aid
+		PharaohsCurse : Pharaoh's Curse
+		PurpleBalloon : Purple Balloon
+		RippleBuff : Ripple
+		Roughskin : Roughskin
+		RubyMonolithAttack : Ruby Monolith Attack
+		RubyMonolithDefense : Ruby Monolith Defense
+		Satiated : Satiated
+		Shattered : Shattered
+		SoulAccess : Soul Access
+		SpawnBossCurse : Debug
+		SpawnBossIce : Debug
+		SpiritSurfer : Spirit Surfer
+		SquirrelBuff : Squirrel
+		StarlightSerpent : Crystal Serpent
+		SulfurBurn : Sulfur Burn
+		SurpriseAttack : Surprise Attack
+		TerminatorSquirrelBuff : Mechanical Squirrel
+		TidalSpiritAid : Spirit Aid
+		Virtuous : Virtuous
+		VoidBurn : Void Burn
+		VoidMetamorphosis : Void Metamorphosis
+		VoidRecovery : Void Recovery
+		VoidShock : Void Shock
+		VoidSickness : Void Sickness
+		WebbedNPC : Webbed
+		DendroChain: Dendro Chain
+		Skipped: Skipped
+		}
+
+		BuffDescription: {
+		AbyssalInferno : "'No more skin!'"
+		AerialAssistance : Penguins assist you in combat
+		Assassination : Execute enemies below 10% health
+		AuraBoost : Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
+		Bluefire : Killed enemies explode into flames
+		Brittle : Getting hit surrounds you with ice shards
+		ChaosSpiritAid : Chaos Spirits assist you in combat
+		CreativeShock2 : You have lost the power of creation!
+		CursedBlade : Cursed Blades assist you in combat
+		CurseVision : Afflicted?
+		CyberneticEnhancements : Increased void damage by 10%
+		DEFEBuff : "'No more constructs!'"
+		DiamondSkin : 15 increased defense, 15% reduced damage taken, and 15% increased movement speed
+		DilationSickness : Decreases void regeneration speed by 90%
+		DoubleVision : Extra fishing lines
+		EarthenSpiritAid : Earthen Spirits assist you in combat
+		Ethereal : Ethereal Flames assist you in combat
+		EvilSpiritAid : Evil Spirits assist you in combat
+		Fat : Speed decreased, endurance increased
+		Frenzy : Melee Speed increased by 100%
+		GoodVibes : Increased stats while not moving
+		Harmony : Buff companionship
+		IceShield : A holy levitating ice shield surrounds you
+		InfernalDefense : "'Wisp Summoner'"
+		InfernoSpiritAid : Inferno Spirits assist you in combat
+		IntimidatingPresence : Drastically lowered enemy spawns
+		NatureSpiritAid : Nature Spirits assist you in combat
+		Nightmare : Compress enemies together with critical strikes
+		NightIlluminatorBuff : Protected by glowing moths
+		OtherworldlySpiritAid : Otherworldly Spirits assist you in combat
+		Overheat : Movement speed and melee speed increased by 10%
+		PermafrostSpiritAid : Permafrost Spirits assist you in combat
+		PharaohsCurse : Something is watching you, spawn rates increased
+		PurpleBalloon : Fishing friend
+		RippleBuff : Release waves of damage periodically
+		Roughskin : 4 increased defense and 4% increased damage
+		RubyMonolithAttack : 
+		  '''
+		  Increases void drain by 6
+		  Increases void damage by 10%
+		  '''
+		RubyMonolithDefense : 
+		  '''
+		  Increases void regeneration speed by 10%
+		  Reduces damage taken by 5%
+		  '''
+		Satiated : No more eating!
+		Shattered : Next hit will hurt a lot!
+		SoulAccess : Increases void regeneration speed by 10%
+		SpawnBossCurse : This is a work around since I don't know how to program multiplayer
+		SpawnBossIce : This is a work around since I don't know how to program multiplayer
+		SpiritSurfer : Surf across the interdimensional plane!
+		SquirrelBuff : Squirrels assist you in combat
+		StarlightSerpent : A Crystal Serpent assists with combat
+		SulfurBurn : Soul power draining
+		SurpriseAttack : 
+		  '''
+		  Melee damage increased by 50%
+		  '*Teleports behind you*'
+		  '''
+		TerminatorSquirrelBuff : Squirrels assist you in combat
+		TidalSpiritAid : Tidal Spirits assist you in combat
+		Virtuous : "'Spiritual Companionship'"
+		VoidBurn : Increases void drain by 2
+		VoidMetamorphosis : 
+		  '''
+		  Increases void drain by 6
+		  Losing void to void drain will recover life
+		  '''
+		VoidRecovery : Soul returning
+		VoidShock : Quickly losing life, increases damage taken by 200%
+		VoidSickness : Decreases void damage by 10%
+		WebbedNPC : Slowed, but only for enemies
+		
+		NatureBoosted : Increases max life by 20
+		EarthBoosted : Increases max life by 20
+		
+		Skipped: Recently warped through space, immune to fall damage
+		}
+
+		ArmorSetBonus: {
+            DoorItems: 
+                '''
+                Acceleration lasts longer
+                Build up speed faster
+                '''
+            Vibrant: 
+                '''
+                Increases void gain by 2
+                Grants autofire to the Vibrant Pistol at the cost of accuracy
+                '''
+            Vespera: Increases max void by 25 and void gain by 50%
+            NatureWreath: Summons three Blooming Hooks to assist in combat
+            TwilightAssassins: 
+                '''
+                The Holo Eye now automatically attacks for you
+                Automatic attacks have a 25% chance to destabilize enemies, but the chance of applying it gets lower with each level already applied
+                '''
+			Frigid: 
+                '''
+                Frigid Javelin no longer costs void
+                Decreases void damage by 15%
+                '''
+			FrostArtifact: Most melee and ranged attacks summon a handful of Polar Cannons that each deal 25% damage
+			ShatterShard: 
+                '''
+                Increases life regen by 2
+                Immunity to Chilled, Frozen, and Frostburn
+                '''
+			Cursed: 
+                '''
+                Press the '{0}' key to change the Ruby Monolith into an offensive stance
+				While in offensive stance, decreases the cooldown of Curse Flaring by 80%
+				However, increases void drain by 6 instead of increasing void regeneration speed by 10%
+				'''
+			PatchLeather: 
+				'''
+				Summons a flock of flying snakes to assist in combat
+				'''
+		}
+
+		ContainerName: {
+			RuinedChestTile: Ruined Chest
+			EarthenPlatingStorageTile: Earthen Plating Storage
+			GoopwoodBarrelTile: Goopwood Barrel
+			NaturePlatingCapsuleTile: Nature Plating Capsule
+			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
+			GemChestTile: Gem Chest
+
+			AncientGoldDresserTile: Ancient Gold Dresser
+			EarthenPlatingDresserTile: Earthen Plating Dresser
+			NaturePlatingDresserTile: Nature Plating Dresser
+			PermafrostPlatingDresserTile: Permafrost Plating Dresser
+			Dresser: Dresser
+		}
+
+		MapObject: {
+			NatureConduitTile: Nature Conduit
+			EarthenConduitTile: Earth Conduit
+			PeanutBushTile: Peanut Bush
+			PeanutOreTile: Peanut Ore
+			RuinedChestTile: Ruined Chest
+			RuinedChestTile_Locked: Locked Ruined Chest
+			EarthenPlatingStorageTile: Earthen Plating Storage
+			EarthenPlatingStorageTile_Locked: Locked Earthen Plating Storage
+			NaturePlatingCapsuleTile: Nature Plating Capsule
+			NaturePlatingCapsuleTile_Locked: Locked Nature Plating Capsule
+			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
+			PermafrostPlatingCapsuleTile_Locked: Locked Permafrost Plating Capsule
+			LockedMeteoriteChest: Meteorite Chest
+			LockedMeteoriteChest_Locked: Locked Meteorite Chest
+			LockedSkywareChest: Skyware Chest
+			LockedSkywareChest_Locked: Locked Skyware Chest
+			LockedStrangeChest: Planetarium Chest
+			LockedStrangeChest_Locked: Locked Planetarium Chest
+			HoloEyeBannerTile: Banner
+			HoloSlimeBannerTile: Banner
+			HoloSwordBannerTile: Banner
+			SOTSBanners: Banner
+			SOTSBanners2: Banner
+			SOTSTrophies: Trophy
+			SilkCocoonTile: Glow Cocoon
+			BigCrystalTile: Giant Crystal
+			VibrantOreTile: Vibrant Ore
+			VibrantCrystalTile: Vibrant Shard
+			VibrantBrickTile: Vibrant Brick
+			VibrantCrystalLargeTile: Large Vibrant Shard
+			PyramidCrateTile: Pyramid Crate
+			AncientGoldCampfireTile: Eternal Fireplace
+			AncientGoldThroneTile: Ancient Gold Throne
+			AncientGoldTorchTile: Ancient Gold Torch
+			EarthenPlatingTorchTile: Earthen Plating Torch
+			GoopwoodBarrelTile: Goopwood Barrel
+			Hydroponics: Hydroponics
+			NaturePlatingTorchTile: Nature Plating Torch
+			PermafrostPlatingTorchTile: Permafrost Plating Torch
+			SOTSGemLockTiles: Mysterious Switch
+			AdvisorMusicBoxTile: Music Box
+			AncientPyramidMusicBoxTile: Music Box
+			KnucklesMusicBoxTile: Music Box
+			LuxMusicBoxTile: Music Box
+			PlanetariumMusicBoxTile: Music Box
+			PolarisMusicBoxTile: Music Box
+			PutridPinkyMusicBoxTile: Music Box
+			PyramidBattleMusicBoxTile: Music Box
+			SubspaceSerpentMusicBoxTile: Music Box
+			CurseMusicBoxTile: Music Box
+			DigitalDisplayTile: Digital Display
+			HardlightFabricatorTile: Hardlight Fabricator
+			HardlightTableTile: Hardlight Table
+			PotGeneratorTile: Pot Generator
+			SkyPots: Pot
+			SkyChainTile: Sky Chain
+			TransmutationAltarTile: Transmutation Altar
+			AvaritianGatewayTile: Strange Gateway
+			FrigidIceTile: Frigid Ore
+			FrigidIceTileSafe: Frigid Ore
+			FrostArtifactTile: Frost Artifact
+			AcediaGatewayTile: Strange Gateway
+			AncientGoldGateTile: Strange Pillar
+			CrystalStatue: Crystal Statue
+			CursedAppleTile: Strange Fruit
+			CursedGrowthTile: Cursed Growth
+			ManaStatue: Mana Statue
+			PyramidChestTile: Pyramid Chest
+			PyramidGateTile: Pyramid Gate
+			PyramidPots: Pot
+			RoyalRubyShardTile: Keystone Shard
+			RubyKeystoneTile: Strange Keystone
+			SarcophagusTile: Sarcophagus
+			TaintedKeystoneShardTile: Tainted Keystone Shard
+			StrangeKeystoneTile: Strange Keystone
+			ForgottenLampTile: False Lamp
+			ArkhalisChainTile: Lost Chain
+			ElectromagneticDeterrentTile: D.E.F.E
+			EnchantedPickShrineTile: Pickaxe Shrine
+			EnchantedSwordShrineTile: Sword Shrine
+			
+			MineralariumTile: Mineralarium
+			HydraulicPressTile: Hydraulic Press
+		}
+
+		WorldGeneration: {
+			GetStatus: Generating starlight...
+			Atmosphere: Starlight solidifies in the upper atmosphere!
+		}
+
+		Dialogue: {
+			ArchaeologistDialogue1 : Oh. Hey traveler, don't mind me, I'm just an Archaeologist passing by.
+			ArchaeologistDialogue2 : Oh. Hey traveler... have we met before..? I'm just an Archaeologist passing by.
+			ArchaeologistDialogue3 : This planet has quite a unique topography.
+			ArchaeologistDialogue4 : Is there anything I can do help you?
+			ArchaeologistDialogue5 : Compared to my home, there is quite a concentration of ancient artifacts here.
+			ArchaeologistDialogue6 : The place I come from is rather dark. It's nice to observe a planet that still gets a fair amount of sunlight.
+			ArchaeologistDialogue7 : How can you purchase an Anomaly Detector from me when I am a mere hologram? Don't sweat the small stuff... just buy it!
+			ArchaeologistDialogueGemlockNotDiamond : This locking mechanism is quite ancient, but the developments that surround it are relatively new. Perhaps they were manmade?
+			ArchaeologistDialogueGemlockDiamond : Strange, this lock is the only one without signs of prior discovery, yet it is still missing a key?
+			ArchaeologistDialoguePortalNotAvaritia : Yet another gateway... I wonder where this one leads.
+			ArchaeologistDialoguePortal1 : This gateway looks remarkably similar to the rest of them.
+			ArchaeologistDialoguePortal2 : It's strange that this planet is so littered with gateways... even mine leads here.
+			ArchaeologistDialogueAcedia1 : Despite the vines that have grown on this gateway, it shows remarkable integrity.
+			ArchaeologistDialogueAcedia2 : I believe this gateway resonates with nature and earth energy... unfortunately, I am unable to experiment with it myself.
+			ArchaeologistDialogueAvaritia1 : As to be expected of The Advisor's gateway: it is in pristine condition.
+			ArchaeologistDialogueAvaritia2 : I believe this gateway resonates with otherworldly and chaotic energy... unfortunately, I am unable to experiment with it myself.
+			ArchaeologistDialogueBigCrystal : I can feel strong energy radiating from this formation.
+			ArchaeologistDialogueCoconutMonument : This tablet is composed of highly light-reactive material. If you could find an object to focus light on it, I wonder what secrets it might reveal?
+			ArchaeologistDialogueCoconutBroken : Very clever traveler... perhaps you have a bright destiny ahead of you.
+			ArchaeologistDialogueDamocles : Hmm... was this a room for a prisoner or for a king?
+			ArchaeologistDialogueIceMonument : This keyhole is deceiving. I doubt this structure actually serves as a vessel for anything.
+		}
+
+		NPCName: {
+			# Boss
+				# Advisor
+					TheAdvisorHead: The Advisor
+
+				# Curse
+					PharaohsCurse: Pharaoh's Curse
+					SmallGas: Pharaoh's Curse
+
+				# Lux
+					Lux: Lux
+					FakeLux: Chaos Illusion
+
+				# Polaris
+					BulletSnakeHead: Bullet Snake
+					BulletSnakeBody: Bullet Snake
+					BulletSnakeEnd: Bullet Snake
+					BulletSnakeWing: Bullet Snake
+
+					Polaris: Polaris
+					PolarisCannon: Polar Cannon
+					PolarisLaser: Polar Quad-Cannon
+					PolarisSpike: Polar Spike
+					
+				# Glowmoth
+					Glowmoth: Glowmoth
+					GlowmothMinion: Illuminant Moth
+
+				HookTurret: Putrid Turret
+				PutridHook: Putrid Hook
+				PutridPinky1: Putrid Pinky
+				PutridPinkyPhase2: Putrid Pinky
+
+				SubspaceEye: Subspace Gaze
+				SubspaceSerpentHead: Subspace Serpent
+				SubspaceSerpentBody: Subspace Serpent
+				SubspaceSerpentTail: Subspace Serpent
+
+			# Constructs
+				ChaosConstruct: Chaos Construct
+				ChaosRubble: Chaos Construct Chassis
+				ChaosSpirit: Chaos Spirit
+
+				Collector: Collector
+				Collector2: Collector
+
+				EarthenConstruct: Earthen Construct
+				EarthenConstructTail: Earthen Construct
+				EarthenSpirit: Earthen Spirit
+
+				EvilConstruct: Evil Construct
+				EvilSpirit: Evil Spirit
+
+				InfernoConstruct: Inferno Construct
+				InfernoSpirit: Inferno Spirit
+
+				NatureConstruct: Nature Construct
+				NatureSpirit: Nature Spirit
+
+				OtherworldlyConstructHead: Otherworldly Construct
+				OtherworldlyConstructHead2: Otherworldly Construct
+				OtherworldlySpirit: Otherworldly Spirit
+
+				PermafrostConstruct: Permafrost Construct
+				PermafrostSpirit: Permafrost Spirit
+
+				TidalConstruct: Tidal Construct
+				TidalSpirit: Tidal Spirit
+
+			# Inferno
+				LesserWisp: Lesser Wisp
+
+			# Phase
+				PhaseAssaulterHead: Phase Assaulter
+				PhaseAssaulterBody: Phase Assaulter
+				PhaseAssaulterTail: Phase Assaulter
+
+				PhaseSpeeder: Phase Speeder
+
+			# TreasureSlimes
+				TreasureSlimes: Treasure Slime
+				BasicTreasureSlime: Treasure Slime
+				CorruptionTreasureSlime: Corruption Treasure Slime
+				CrimsonTreasureSlime: Crimson Treasure Slime
+				DungeonTreasureSlime: Dungeon Treasure Slime
+				GoldenTreasureSlime: Golden Treasure Slime
+				HallowTreasureSlime: Hallowed Treasure Slime
+				IceTreasureSlime: Frozen Treasure Slime
+				JungleTreasureSlime: Jungle Treasure Slime
+				PyramidTreasureSlime: Pyramid Treasure Slime
+				ShadowTreasureSlime: Shadow Treasure Slime
+
+			# Town
+				Archaeologist : Strange Transmission 
+				ArchaeologistNearby : Archaeologist
+
+			# Anomaly
+				Ultracap: Ultracap
+				Planetoid: Planetoid
+
+			ArcticGoblin: Arctic Goblin
+			BloomingHook: Blooming Hook
+			BlueSlimer: Blue Slimer
+
+			FluxSlime: Flux Slime
+			FluxSlimeBall: Flux Slime Hook
+
+			Ghast: Ghast
+			FlamingGhast: Flaming Ghast
+			BleedingGhast: Bleeding Ghast
+
+			HoloBlade: Holo Blade
+			HoloEye: Holo Eye
+			HoloSlime: Holo Slime
+
+			knuckles: Knuckles
+			LostSoul: Lost Soul
+
+			Maligmor: Maligmor
+			MaligmorChild: Maligmor
+
+			NatureSlime: Flowering Slime
+			PhaseEye: Phase Eye
+			SittingMushroom: Sitting Mushroom
+			SnakePot: Snake Pot
+			Teratoma: Teratoma
+
+			TwilightDevil: Twilight Devil
+			TwilightScouter: Twilight Scouter
+
+			WallMimic: Wall Mimic
+		}
+
+		Bestiary: {
+		    HoloSlime: A holographic mimic of an average slime. Its source of energy is unknown.
+		    HoloBlade: A holographic mimic of a sword. Its source of energy is unknown.
+		    HoloEye: A holographic mimic of an eyeball. Its source of energy is unknown.
+		    PhaseEye: A mindless sphere of energy that protects the Planetarium, created with exclusively to be used as a puppet for The Advisor.
+		    TwilightDevil: A mindless drone that protects the Planetarium. It seems to be controlled centrally, as nothing hides behind its cloak.
+		    PhaseSpeeder: It's fast. It's deadly. It's origin is unknown, but it certainly wants you dead. Uses the fabric of existence as its shield.
+		    TwilightScouter: A mindless drone that collects data for the Planetarium. Its internal circuitry is not particularly complex.
+		    PhaseAssaulterHead: Phase Assaulters make up the defensive core of Phase Ore nodes. They can be observed acting as shields for Phase Speeders, while also possessing a potent hyperlight laser.
+		    LostSoul: A trapped soul that resides in the Pyramid. It has not come to rest, as it still seems to be searching for something.
+		    Snake: A long limbless reptile that has no eyelids, a short tail, and jaws that are capable of considerable extension. This particular one has a venomous bite, and it calls the Pyramid home.
+		    SnakePot: A group of snakes that uses a pot for defense. When the pot breaks, the snakes inside are forced to scatter.
+		    WallMimic: The Curse housed within the Pyramid is more capable of corruption than the world evils. Under its influence, even the walls of the Pyramid turn into monsters!
+		    Teratoma: A cancerous protrusion of The Curse. Its cells are capable of rapid regrowth, and it will heal itself if not killed quickly.
+		    Ghast: As Lost Souls corrupted by The Curse, Ghasts are forced to guard keystones for the rest of the afterlife.
+		    Maligmor: Born from The Curse's will to consume all, Maligmors are protrusions of The Curse that are gifted with crystals as power sources. The crystals provide enhanced vision, helping Maligmors defend the Keystone from being reached by invaders.
+		    ArcticGoblin: An exiled goblin who has been left to freeze in the unforgiving tundra.
+		    Polaris: A forgotten war machine. Made long before the mechanical trio, Polaris was not built with the purpose of reviving Cthulhu, but rather to be the best possible weapon of mass destruction possible.
+		    FluxSlime: Created before Putrid Pinky, these gel menaces orginate from early pink slime experiments.
+		    PP: An abomination with an endless hunger for peanuts. Putrid Pinky was created in a failed experiment using pink slime.
+		    BlueSlimer: A Blue Slime which became airborne by evolving crude wings. Its wings are easily knocked off with force, depriving it of its flight.
+		    SittingMushroom: Sitting mushrooms are spitting mushrooms.
+		    TreasureSlime: The nobility of slimes! Unlike the others, these slimes value their lives, and any attempts to steal their treasure will cause them to flee without a second thought.
+			
+		    NatureConstruct: An ancient machine originally created to advance spirit energy harvesting technology. Now, it serves as a protector of forests under the spirit's control
+			PermafrostConstruct: An ancient machine that uses spirit energy to allow easy traversal through deep snow. The spirit, now in control, uses the device to defend its cold home.
+			EarthenConstruct: As earthen spirits are known for traveling in groups, the chasis of the construct was designed to allow easy movement of the contained spirits within thin the chassis. Earlier, more compact designs proved too unstable for housing groups of spirits.
+		    OtherworldlyConstructHead: Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.
+			InfernoConstruct: Once used as a living flame to heat ancient forges, it is no longer distinguishable from a weapon of mass destruction.
+			
+			EarthenSpirit: Forced into tight, underground spaces, these spirits have a built-in tolerance for cooperating with other spirits. Their cooperative nature is also useful for more labor-intensive tasks.
+			OtherworldlySpirit: Isolated in outer space, these spirits don't have much experience competing for land and resources. This makes them conveniently exploitable sources of energy for high-tech machines.
+			Lux: Chaos spirits have no equal. They are shoved into constructs for the sole purpose of containment. None have ever been sufficiently weakened for intelligent use.
+
+		    Glowmoth: An otherworldly creature that makes its home in glowing mushroom caves. Although one might assume that it lives there due the trait it shares with the mushrooms, bioluminescence, its main motive is the biome's relatively easy to access void energy.
+		    ArchaeologistLore: Merely a hologram. Move along. Nothing to learn here.
+			
+			Ultracap: Origin - unknown. Purpose - unknown. Consciousness - affirmative.
+			Planetoid: A cluster of strange mass with localized gravity. It moves by manipulating the space around it.
+		}
+
+		DeathMessage: {
+			VD1: " was extremely careless."
+			VD2: " was consumed by the void."
+			VD3: " was devoured by the darkness."
+			VD4: " doesn't understand void mechanics."
+			VD5: " died."
+		}
+
+		BossChecklist: {
+			BossName: {
+				PutridPinky: Putrid Pinky
+				PharaohsCurse: Pharaoh's Curse
+				TheAdvisor: The Advisor
+				Polaris: Polaris
+				Lux: Lux
+				SubspaceSerpent: Subspace Serpent
+				Glowmoth: Glowmoth
+			}
+			BossDescription: {
+				PutridPinky: "Summon in any biome at any time using a {0}"
+				PharaohsCurse: "Activate the {0} in the pyramid"
+				TheAdvisor: Destroy the 4 tethered Otherworldly Constructs of the Planetarium
+				Polaris: "Activate the {0} of the snow biome using {1}"
+				Lux: Anger a Chaos Spirit
+				SubspaceSerpent: "Tear a dimensional rift in hell by detonating a {0}"
+				Glowmoth: "In a glowing mushroom biome, disturb a glowsilk cacoon or awaken manually using a {0}"
+			}
+			BossDisappear: {
+				PutridPinky: Putrid Pinky has robbed everyone of their peanuts!
+				PharaohsCurse: ""
+				TheAdvisor: ""
+				Polaris: ""
+				Lux: ""
+				SubspaceSerpent: ""
+				Glowmoth: ""
+			}
+		}
+
+		VisionAmuletTextList: {
+		    0: Reduces damage taken by 10%
+		    1: 
+		        '''
+                Increases max minions and sentries by 1
+                Increases damage by 10%
+                '''
+		    2: Increases attack speed by 12%
+		    3: Increases critical strike chance by 10%
+		    4: Increases critical strike damage by 30%
+		    5: 
+                '''
+                Increases healing recieved from potions by 40
+                Increases life regeneration by 2 
+                '''
+		    6: Increases max life by 80
+		    7: Increases void regeneration speed by 20%      
+		}
+
+		VisionAmuletTextList2: {
+		    0: 
+                '''
+
+                Shops prices lowered by 20%
+                '''
+		    1: 
+                '''
+
+                Increases buff duration by 25%
+                Decreases mana cost by 10% 
+                '''
+		    2: 
+                '''
+
+                Increases melee speed and movement speed by 10%
+                Increases jump speed
+                '''
+		    3: 
+                '''
+
+                Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
+                Increases max mana and mana recieved from potions by 40
+                '''
+		}
+
+        VoidmageIncubatorTextList: {
+		    0: Reduces damage taken by 5%
+		    1: Increases damage by 8%
+		    2: 
+                '''
+                Increases movement speed by 10%
+                Increases jump speed
+                '''
+		    3: Increases critical strike damage by 20%
+		    4: Increases critical strike chance by 6%
+		    5: Increases max life by 40
+		    6: Increases life regeneration by 2
+		    7: Increases max void by 40
+		}
+
+		DiamondRingText: "Increases damage by {0}%"
+
+		DiamondRingText2: 
+			'''
+
+			Defense is set to {0}
+			'''
+
+		PrecariousClusterTextList: {
+			0: Reduces damage dealt by 10%
+			1: Increases life regeneration by 1, up to 4 total
+			2: Reduces endurance by 10%
+			3: Increases defense by 2, up to 8 total
+			4: Reduces movespeed by 20%
+			5: Increases movement speed by 5%, up to 20% total
+			6: Reduces gravity
+			7: Increases magic damage by 3%, up to 12% total
+		}
+
+		TerminalClusterTextList: {
+			0: Reduces max life and mana by 10
+			1: Increases ranged damage by 3%, up to 12% total
+			2: Reduces max void by 20 while in the inventory
+			3: Increases void damage by 3%, up to 12% total
+			4: Reduces life regeneration by 2
+			5: Increases melee damage by 3%, up to 12% total
+			6: Increases void drain by 0.5 while in the inventory
+			7: Increases summon damage by 3%, up to 12% total
+		}
+
+		TestWingsText: 
+			'''
+			Allows flight and slow fall
+			Increases void gain by 1
+			Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
+			Increases void drain by 3 while active
+			'''
+
+		TestWingsText2: 
+			'''
+			Allows flight and slow fall
+			Increases void gain by 1
+			Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
+			Increases void drain by 3 while active
+			'''
+		
+		BlinkPackText: 
+			'''
+			Press the '{0}' key to blink towards your cursor
+			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
+			Provides some immunity after dashing
+			Negates fall damage
+			'''
+
+		BlinkPackText2: 
+			'''
+			Press the '{0}' key to blink towards your cursor
+			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
+			Provides some immunity after dashing
+			Negates fall damage
+			'''
+
+		TwilightAssassinsCircletText: 
+			'''
+			Increases your max number of minions and sentries by 1
+			Increases minion and melee damage by 7%
+			Increased max void by 50
+			Provides a Holo Eye minion to assist in combat
+			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Destabilized enemies gain a 5% flat chance to be critically striked
+			This is calculated after normal crits, allowing some attacks to double crit
+			Costs 6 void to launch
+			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
+			'''
+
+		TwilightAssassinsCircletText2: 
+			'''
+			Increases your max number of minions and sentries by 1
+			Increases minion and melee damage by 7%
+			Increased max void by 50
+			Provides a Holo Eye minion to assist in combat
+			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Destabilized enemies gain a 5% flat chance to be critically striked
+			This is calculated after normal crits, allowing some attacks to double crit
+			Costs 6 void to launch
+			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
+			'''
+
+		UndoArrow: {
+			Ruby: "Ruby: {0}"
+			Sapphire: "Sapphire: {0}"
+			Emerald: "Emerald: {0}"
+			Topaz: "Topaz: {0}"
+			Amethyst: "Amethyst: {0}"
+			Diamond: "Diamond: {0}"
+			Amber: "Amber: {0}"
+			Pack: "Is Texture Pack On: {0}"
+		}
+
+		PotGeneratorTileText: {
+			0: Status: N/A
+			1: Status: Complete
+			2: "Time left: {0}"
+		}
+		MineralariumTileText: {
+			0: Status: N/A
+			1: Status: Full or Obstructed
+			2: "Percent Completion: {0}%"
+		}
+
+		PyramidGenerator: {
+			Speed: "Generating with seed: {0}"
+			StepNumber: "Generated Pyramid Step {0}"
+			Warning0: Don't right click this. Your world will be gone
+			Warning1: Seriously. I'm warning you
+			Warning2: If anything goes wrong, it's because YOU asked for it
+			Warning3: Here comes NOTHING!!!
+		}
+
+		ProjectileName : {
+			AcornOfJustice : Acorn Of Justice
+			AcornsOfJustice : Acorns Of Justice
+			AdvisorPet : Advisor Pet
+			AncientGoldGateGems : Gems
+			AncientSteelHalberd : Ancient Steel Halberd
+			AncientSteelLongbow : Ancient Steel Bow
+			ArcColumn : Arc Thunder
+			ArclightBomb : Arclight Bomb
+			ArcLightning : Thundershock Lightning
+			ArcLightningDamage : Arc Lightning
+			ArcLightningZap : Arc Lightning
+			ArkBolt : Ark Bolt
+			ArrowMoth : Arrow Moth
+			MothMinion : Lumina Moth
+			AtenProj : Aten
+			AtenStar : Aten Star
+			AtenStarExplosion : Aten Starsplosion
+			AvaritianExplosion : Avaritian Explosion
+			BabyLaser : Green Laser
+			BackupArrow : Backup Arrow
+			BackupBowVisual : Backup Bow Visual
+			BerryBomb : Berry Bomb
+			BlackFlareShot : Black Flare
+			Blaspha : Blaspha
+			BlastDoorProj : Blast Door Proj
+			BlazingArrow : Blazing Arrow
+			BlazingMine : Spike Trap
+			BlazingSpike : Blazing Spike
+			Blink1 : Blinding Assault
+			BlinkDamage1 : Blinding Assault
+			BlizzardProbe : Blizzard Probe
+			Bloodaxe : Bloody Hammer
+			BloodSpark : Blood Spark
+			BloomingHook : Blooming Hook
+			BloomingHookMinion : Blooming Hook
+			BluefireCrush : Bluefire Crush
+			BlueLightning : Blue Lightning
+			BlueThunderCluster : Thunder Cluster
+			BombFlare : Bomb Flare
+			BoneClapperCrusher : Bone Clapper Crusher
+			BoneCrush : Bone Crush
+			BoreBullet : Bore Bullet
+			BossBabyLaser : Red Laser
+			BrachialLance : Brachial Lance
+			BrachialPortal : Brachial Portal
+			BrightRedLaser : Artifact Laser
+			BubbleCrush : Bubble Crush
+			CactusSpine : Cactus Spine
+			CardiacCollapseCrusher : Cardiac Collapse Arm
+			CataclysmBullet : Cataclysm Bullet
+			CataclysmBulletDamage : Cataclysm Bullet
+			CataclysmDamage : Cataclysm Collapse
+			CataclysmDisc : Cataclysm Disc
+			CataclysmLightning : Cataclysm Lightning
+			CataclysmLightningZap : Cataclysm Bullet
+			CataclysmOrb : Cataclysm Bomb
+			CatalystBomb : Catalyst Bomb
+			CelestialLightning : Subspace Thunder
+			CellBlast : Cursespire
+			ChaosArrow1 : Chaos Arrow
+			ChaosArrow2 : Chaos Arrow
+			ChaosArrowBloom : Chaos Arrow Bloom
+			ChaosBall : Chaos Ball
+			ChaosBallFriendly : Chaos Ball
+			ChaosBeam : Chaos Beam
+			ChaosBloomExplosion : Chaos Bloom
+			ChaosCircle : Chaos Ring
+			ChaosDart : Chaos Dart
+			ChaosDart2 : Chaos Dart
+			ChaosDiamond : Chaos Diamond
+			ChaosDiamondLaser : Shattering Laser
+			ChaosEraser : Hyperlight Eraser
+			ChaosEraser2 : Redlight Eraser
+			ChaosHelixLaser : Chaos Helix Laser
+			ChaosPunch : Bizarre Adventure Fist
+			ChaosSnake : Chaos Snake
+			ChaosSphere : Chaos Ring
+			ChaosSpirit : Chaos Spirit
+			ChaosSpiritChain : Chaos Chain
+			ChaosStar : Chaos Star
+			ChaosThorn : Chaos Thorn
+			ChaosWave : Chaos Wave
+			ChargeBeam : Charge Ball
+			ChargedCataclysmBullet : Charged Cataclysm Bullet
+			ChargedHardlightArrow : Charged Hardlight Arrow
+			ClairvoyanceShade : Clairvoyance Shade
+			Coconut : Coconut
+			CoconutShrapnel : Coconut Shrapnel
+			CodeBurst : Code Burst
+			CodeVolley : Code Burst
+			CollapseLaser : Continuum Collapse
+			ColossusSpawnAnimation: Colossus Spawn
+			ConstructFinder : Construct Finder
+			ContinuumExplosion : Collapse Laser
+			ContinuumSphere : Continuum Sphere
+			ColossusSlash : Colossus Slash
+			CrabCrusher : Crab Claw Crusher
+			CrossLaser : Unholy Light
+			CrystalSerpentBody : Crystal Serpent Counter
+			CrystalSerpentHead : Crystal Serpent
+			CurseArm : Curse
+			CurseBall : Curse
+			CursedBlade : Cursed Blade
+			CursedStab : Gas Slash
+			CursedThunder : Thunder Column
+			CurseExplosion : Curse
+			CurseExtension : Curse
+			CurseGhost : Curse Ghost
+			CurseRing : Curse
+			CurseSingularity : Cursed Singularity
+			CurseSpear : Cursed Impale
+			CurseSpike : Curse Spike
+			CurseWave : Curse
+			CurveBolt : Curve Bolt
+			DarkEyeDamage : The Dark Eye
+			DarkLight : Dark Light
+			DashIndicator : Cursespire
+			DashIndicator2 : Cursespire
+			DataTransferProj : Data Transfer Proj
+			DeathBlade : Death's Touch
+			DeathSpiralProj : Death Spiral
+			DestabilizingBeam : Destabilizing Beam
+			DigitalSlash : Digital Slash
+			DigitalTrail : Digital Trail
+			DimensionalFlame : Dimensional Flame
+			DogmaLaser : Hyperlight Beam
+			DogmaSphere : Chaos Ball
+			Doomhook : Doomhook
+			DoomstickHoldOut : Doomstick
+			DoubleLaser : Double Laser
+			DoubleLaserExplosion : Double Laser
+			DreamLaser: Dream Laser
+			DreamingSmog: Dream Smog
+			DreamBolt: Dream Bolt
+			EarthenBeam : Lightspeed Blade
+			EarthenBolt : Earthen Bolt
+			EarthenRing : Earthen Ring
+			EarthenShot : Lightspeed Blade
+			EarthenSpirit : Earthen Spirit
+			Earthshaker : Earthshaker
+			EarthshakerPickaxe : Earthshaker Pickaxe
+			EchoDisk : Echo Disc
+			EclipseBubble : Eclipse Bubble
+			EclipseCrush : Eclipse Crush
+			EclipseCrusher : Eclipse Arm
+			EmeraldBolt : Emerald Bolt
+			EmeraldBoltHoming : Emerald Bolt
+			EmeraldTrail : Emerald Trail
+			EndoBurst : Endo Burst
+			EnergySerpentHead : Energy Serpent
+			EnergySerpentHead2 : Energy Serpent
+			EtherealFlame : Ethereal Flame
+			EvilArm : Evil Construct Arm
+			EvilBolt : Umbra Ball
+			EvilExplosion : Evil
+			EvilGrowth : Nightmare Arms
+			EvilSpear : Umbra Spear
+			EvilSpirit : Evil Spirit
+			EvilStrike : Nightmare Strike
+			EvilWave : Umbra Bolt
+			ExplosiveKnife : Explosive Knife
+			ExtendoBaguette : Extendo Baguette
+			FallingBolt : Falling Bolt
+			FishBullet : Fish
+			FlareDetonatorHold : Flare Detonator
+			FlowerBolt : Flower Bolt
+			FloweringBud : Flowering Bud
+			FlowerSeed : Flower Seed
+			FlowerStrike : Flower Strike
+			FluidFollower : my curse behind me
+			FluxSlimeBall : Flux Slime Ball
+			FlyingSnake : Snakey Boi
+			FriendlyChaosEraser : Hyperlight Eraser
+			FriendlyCurseBall : Curse
+			FriendlyFlowerBolt : Flower Bolt
+			FriendlyOtherworldlyBall : Phase Ball
+			FriendlyOtherworldlyBolt : Phase Bolt
+			FriendlyPinkLaser : Pinky Laser
+			FriendlyPolarBullet : Polar Bullet
+			FrigidIceShard : Ice Shard
+			FrigidJavelin : Frigid Javelin
+			FrostflakePulse : Frostflake Pulse
+			FrostSpear : Frost Spear
+			ForgottenLampProjectile : Forgotten Lamp Timer
+			Fusion1 : Helix Bolt
+			Fusion2 : Helix Bolt
+			GasBlast : Gas Blast
+			GelAxe : Gel Axe
+			GenesisArc : Genesis Arc
+			GenesisCore : Genesis Core
+			GeostormCrystal : Geostorm Crystal
+			GhastDrop : Ghast Drop
+			GhostPepper : Ghost Pepper
+			GlazeBow : Glaze Bow
+			GoldBolt : Gold Bolt
+			GoldChakram : Gold Chakram
+			GoldLight : Gold Light
+			GoldSpear : Gold Glaive
+			GreaterCellBlast : Firespire
+			GreenExplosion : Green Lightning
+			GreenLightning : Green Lightning
+			GreenLightning2 : Green Lightning
+			GreenLightningZap : Green Lightning
+			GreenThunderCluster : Thunder Cluster
+			GrowTree : Tree Grow
+			HardlightArrow : Hardlight Arrow
+			HardlightArrowDamage : Hardlight Arrow
+			HardlightColumn : Hardlight Column
+			HardlightGlaive : Hardlight Glaive
+			HardlightTrail : Hardlight Trail
+			HarvestingStrike : Harvesting Strike
+			HarvestLock : Harvest Lock
+			HealLock : Heal Lock
+			HealProj : Heal Proj
+			HeartCrush : Heart Crush
+			Helios : Helios
+			HeliosSlash : Helios Slash
+			HellbreakerCrusher : Hellbreaker Crusher
+			HellCrush : Hell Crush
+			HellfuryCrush : Hellfury Crush
+			HoloEye : Holo Eye
+			HoloMissile : Holo Missile
+			HoloPlatform : Holo Platform
+			HostileJavelin : Ice Spear
+			HungryHunter : Hungry Hunter
+			HypericeRocket : Hyperice Rocket
+			HyperlightGeyser : Hyperlight Geyser
+			HyperlightLaser : Hyperlight Laser
+			HyperlightOrb : Hyperlight Orb
+			IceCluster : Ice Cluster
+			IceImpale : IceImpale
+			IcePulse : Ice Pulse
+			IcePulseSummon : Ice Pulse
+			IceShard : Ice Shard
+			IceStorm : Ice Storm
+			IncineratorGloveProjectile : Incinerator Glove
+			InfernoBolt : Inferno Bolt
+			InfernoHook : Inferno Hook
+			InfernoLaser : Lava Laser
+			InfernoPhaseBolt : Phase Bolt
+			InfernoSeeker : Inferno Seeker
+			InfernoSpirit : Inferno Spirit
+			InfernoTrail : Inferno Trail
+			IrradiatedCrush : Irradiated Crush
+			IrradiatedCrusher : Irradiated Arm
+			IlluminationSparkle : Sparkle
+			JuryRiggedDrill : Jury Rigged Drill
+			LavaLaser : Lava Laser
+			LemegetonWispGreen : Lemegeton Wisp
+			LemegetonWispPurple : Lemegeton Wisp
+			LemegetonWispRed : Lemegeton Wisp
+			LesserWispLaser : Lesser Wisp Laser
+			LightningLash : Lightning Lash
+			LightningLashTrail : Lightning Trail
+			LightspeedBlade : Shadow Blade
+			LingeringFlame : Fire Bolt
+			LuckyPurpleBalloon : Lucky Purple Balloon
+			LuxRelocatorBeam : Relocator Beam
+			MacaroniBeam : Crescent Beam
+			MacaroniMoon : Macaroni Moon
+			ManaLock : Mana Lock
+			ManicMiner : Void Mining Laser
+			MantisGripCrusher : Mantis Grip Crusher
+			Metalmalgamation : Metalmalgamation
+			MinersPickaxe : Miner's Pickaxe
+			MiniPolarisCannon : Polar Cannon
+			multiplayerDarkEye : multiplayer Dark Eye
+			NatureBeam : Nature Beam
+			NatureBeat : Nature Blast
+			NatureBeatFriendly : Nature Blast
+			NatureBolt : Nature Bolt
+			NatureBoltFriendly : Nature Bolt
+			NatureSpirit : Nature Spirit
+			NorthStar : North Star
+			NorthStarExplosion : North Starsplosion
+			NorthStarStar : North Star Star
+			ObsidianStar : Hellfury Star
+			OlympianAxe : Olympian Axe
+			OrangeWispLaser : Orange Wisp Laser
+			OriginLightningDamage : Origin Thunder
+			OriginLightningZap : Origin Thunder
+			OtherworldLightning : Otherworld Lightning
+			OtherworldlyBall : Phase Ball
+			OtherworldlyBolt : Phase Bolt
+			OtherworldlySpirit : Otherworldly Spirit
+			OtherworldlyTracer : Otherworldly Tracer
+			Pathogen : Pathogen Ball
+			Peanut : Peanut
+			PeanutBomb : Peanut Bomb
+			PeanutExplosion : Peanut Bomb
+			PenguinCopter : Penguin Copter
+			PenguinMissile : Penguin Missile
+			PerfectStar : Perfect Star
+			PerfectStarLaser : Star Laser
+			PerfectStarLaser2 : Star Laser
+			PermafrostLinger : Lingering Permafrost
+			PermafrostSpike : Permafrost Spike
+			PermafrostSpirit : Permafrost Spirit
+			PetPutridPinkyCrystal : Pinky Pet
+			PhantomFist : Phantom Fist
+			PharaohShade : Pharaoh Shade
+			PhaseColumn : Phase Thunder
+			PhaseDart : Phase Dart
+			PhaseEraser : Phase Eraser
+			PhaseSpear : Phase Spear
+			PhotonGeyser : Photon Geyser
+			PinkBubble : Pink Bubble Stream
+			PinkBullet : Putrid Bullet
+			PinkCrush : Putrid Collapse
+			PinkExplosion : Pink Explosion
+			PinkLaser : Pinky Laser
+			PinkLightning : Pink Lightning
+			PinkLightningDamage : Pink Lightning
+			PinkLightningZap : Pink Lightning
+			PinkTracer : Putrid Tracer
+			PinkyBomber : Pinky Bomber
+			PinkyHook : Wormwood Hook
+			PinkyMusketBall : Pinky Shot
+			PinkyTurret : Wormwood Turret
+			PlasmaBall : Plasma Ball
+			PlasmaCrush : Plasma Crush
+			PlasmaCutter : Time to die
+			PlasmaCutterTrail : Plasma Cutter Trail
+			PlasmaLightningDamage : Plasma Lightning
+			PlasmaLightningZap : Plasma Lightning
+			PlasmaphobiaBolt : Plasma Bolt
+			PlasmaShrimp : Plasma Shrimp
+			PlasmaSphere : Plasma Sphere
+			PlasmaStar : Plasma Star
+			PlatinumCurse : Platinum Curse
+			PlatinumDart : Platinum Dart
+			PolarBullet : Polar Bullet
+			PolarMortar : Polar Mortar
+			PotProjectile : Pot Projectile
+			Poyoyo : Poyo-yo
+			PrismLaser : Photon Laser
+			PrismOrb : Starshot
+			PulverizerCrusher : Pulverizer Arm
+			PulverizerLaser : Pulverizer Laser
+			PurgatoryGhost : Purgatory Ghost
+			PurgatoryLightning : Purgatory Column
+			PurpleBobber : Purple Bobber
+			PurpleHomingBolt : Purple Homing Bolt
+			PurpleLightning : Purple Lightning
+			PurpleLightningDamage : Purple Lightning
+			PurpleLightningZap : Purple Lightning
+			PurpleThunderCluster : Thunder Cluster
+			PutridEye : Putrid Eye
+			PyramidCollapse : Fallen Bricks
+			PyramidGateProj : Multiplayer Code 5000
+			PyramidSpear : Imperial Pike
+			PyrocideSlash : Pyrocide Slash
+			Rainbolt : Rain Bolt
+			RainbowTrail : Rainbow Trail
+			Razorwater : Razorwater
+			RealityShatter : Shattering Laser
+			ReaperScythe : Reaper Scythe
+			Rebar : Rebar
+			RecollectHook : Recollect Hook
+			RedLaser : Ceremonial Laser
+			RedNatureBeat : Pulverizer Blast
+			RedNatureBolt : Pulverizer Bolt
+			RefractingCrystalProj : Refracting Crystal Counter
+			ReleaseWallMimic : Release Wall Mimic
+			RelocatorBeam : Relocator Beam
+			RevolutionBolt : Revolution Bolt
+			RevolutionBoltDay : Revolution Bolt Day
+			RevolutionBoltNight : Revolution Bolt Night
+			RippleWave : Ripple Wave
+			RippleWaveSummon : Ripple Wave
+			Riptide : Riptide
+			RoseBow : Rose Bow
+			RubyBurst : Ruby Burst
+			RubyKeystoneIndicator : Ruby Energy
+			RubyMonolith : Ruby Monolith
+			RubySpawner : Ruby Spawner
+			RubySpawnerFinder : Ruby Spawner Finder
+			SandBullet : Sand Bullet
+			SandPuff : Sandy Puff
+			Sawflake : Sawflake
+			ScytheSlash : Scythe Slash
+			Seeker : Critical Seeker
+			SilkCocoonProjectile: silk Cocoon sync projectile
+			ShadeSpear : Curse
+			FriendlyShadeSpear : Shade Spear
+			SharangaBlast : Sharanga Crush
+			SharangaBlastSummon : Sharanga Crush
+			SharangaBolt : Sharanga Bolt
+			Shardstorm : Shardstorm
+			ShatterFix : Shatter Fix
+			ShatterShard : Shatter Shard
+			Shattershine : Shattershine
+			ShattershinePulse : Shattershine Pulse
+			ShrimpLaser : Shrimp Laser
+			ShroomSpore : Spore
+			SilkCocoonProjectile : silk Cocoon sync projectile
+			SkywardBladeBeam : Skyward Blade
+			SmallCollapseLaser : Continuum Collapse
+			SmallStellarHitbox : Starsplosion
+			SmokePixel : Pathogen Cloud
+			Snake : Snakey Boi
+			SolarBullet : Solar Bullet
+			SolarPetal : Solar Petal
+			SoulCrush : Soul Crush
+			SoulEaterCrusher : Soul Eater Crusher
+			SoulLock : Soul Lock
+			SoulofLooting : Sool of Looting
+			SoulofRetaliation : Soul of Retaliation
+			SpawnGoldGate : Spawn Gold Gate
+			SpectralWisp : Spectral Wisp
+			SpectralWispLaser : Spectral Wisp Laser
+			SpiderCrusher : Spider Arm
+			SpikeTrap : Spike Trap
+			SpikyPufferfish : Spiky Pufferfish
+			SpiralDeathBeam : Spiral Death Beam
+			SporeBomb : Spore Bomb
+			SporeCloud : Spore Cloud
+			SporeCloudFriendly : Spore Cloud
+			SquirrelMinion : Squirrel
+			StarBolt : Starlight Bolt
+			StarcoreBullet : Starcore Bullet
+			StarcoreRifle : Starcore Rifle
+			StarLaser : Star Laser
+			Starshot : Starshot
+			StarshotCrossbow : Starshot Crossbow
+			SteelShrapnel : Steel Shrapnel
+			StormArrow : Tracer Arrow
+			StrangeKeystoneExplosion : Strange Keystone Explosion
+			SubspaceBoosterProj : Subspace Booster Proj
+			SubspaceCrusher : Spirit Arm
+			SubspaceDeathAnimation : Subspace Death Animation
+			SubspaceEye : Subspace Eye
+			SubspaceEyeWall : Subspace Eye Wall
+			SubspaceLingeringFlame : Fire Bolt
+			SubspaceServant : Subspace Servant
+			SupernovaHammer : Supernova Hammer
+			SupernovaLaser : Supernova Laser
+			SupernovaScatter : Supernova Scatter
+			SupernovaSmash : Supernova Hammer
+			TerminatorAcorn : Terminator Acorn
+			TerminatorSquirrel : Terminator Squirrel
+			TestFireball : Accursed Bolt
+			ThunderBall : Chaos Thunder Ball
+			ThunderColumn : Thunder Column
+			ThunderColumnBlue : Thunder Column
+			ThunderColumnFast : Thunder Column
+			ThunderRing : Thunder Ring
+			ThundershockShortbow : Thundershock Crossbow
+			ThunderSpawnBeam : Thunder Beam
+			TidalBeam : Tidal Beam
+			TidalConstructTrail : Hardlight Trail
+			TidalSpirit : Tidal Spirit
+			TidalWave : Tidal Wave
+			TinyPlanetTear : Tiny Planet Tear
+			ToothAcheSlash : Tooth Ache Slash
+			ToothAcheThrow : Tooth Ache
+			TracerArrow : Tracer Arrow
+			Trains : Train Snake
+			TravelingFlareFlame : Flare Flame
+			TreasureStarPortal : Treasure Star Portal
+			TwilightBlade : Twilight Blade
+			TwilightBobber : Twilight Bobber
+			TwilightDart : TwilightDart
+			UndoParticles : Undo
+			VertebraekerSlash : Vertebraeker Slash
+			VertebraekerThrow : Vertebraeker
+			VibrantArc : Vibrant Arc
+			VibrantArrow : Vibrant Arrow
+			VibrantBall : Vibrant Ball
+			VibrantBlade : Lightspeed Blade
+			VibrantBolt : Vibrant Bolt
+			VibrantBullet : Vibrant Bullet
+			VibrantRifle : Vibrant Rifle
+			VibrantRing : Vibrant Ring
+			VibrantShard : Vibrant Shard
+			VisionFlare : Vision Flare
+			VisionWeapon : Vision Weapon
+			VoidDeath : Voiden Collapse
+			VoidHealEffect : Void Heal Effect
+			VoidLock : Void Lock
+			VoidRing : Void Ring
+			VoidspaceCell : Voidspace Cell
+			VoidspaceExplosion : Voidspace Explosion
+			WaveBlast : Wave Blast
+			Webbing : Webbing
+			WebBolt : Web Bolt
+			WingedKnife : Winged Knife
+			WispOrange : Will o'
+			WorldgenCapture_Highlight : Worldgen Capture Visual
+			WormBullet : Wormwood Bullet
+			WormWoodCrusher : Wormwood Arm
+			WormWoodSpike : Wormwood Spike
+			Zeppelin : Zephyrous Zeppelin
+
+			IlluminantStaffOrb: Illuminant Orb
+			IlluminantStaffShard: Illuminant Shard
+			TorchBomb: Torch Bomb
+			TorchBombWood: Torch Bomb
+			TorchEmber: Torch Ember
+			PixelLaser: Pixel Laser
+			PixelBlaster: Pixel Blaster
+			PressProjectile: Pancake Presser
+			WaveBall: Glow Ball
+			GlowBombOrb: Glow Bomb
+			GlowBombShard: Glow Shard
+			GlowSparkle: Glow Sparkle
+
+			VoidAnomaly: Void Anomaly
+			PortalDustProjectile: Portal Dust Projectile
+			UltraLaser: Ultra Laser
+			SkipArrow: Wormhole Arrow
+			SkipBullet: Wormhole Bullet
+			SeleneSlash: Selene Slash
+			SkipSlash: Selene Slash
+		}
+	}
+}

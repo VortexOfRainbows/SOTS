@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blazing Spike");
+			// DisplayName.SetDefault("Blazing Spike");
 		}
         public override void SetDefaults()
         {

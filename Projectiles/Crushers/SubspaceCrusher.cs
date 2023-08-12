@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spirit Arm");
+			// DisplayName.SetDefault("Spirit Arm");
 		}
         public override void SafeSetDefaults()
 		{

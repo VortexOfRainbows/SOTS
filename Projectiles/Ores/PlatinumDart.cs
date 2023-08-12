@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Ores
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Platinum Dart");
+			// DisplayName.SetDefault("Platinum Dart");
 		}
         public override void SetDefaults()
         {
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Ores
 			height = 12;
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
 			Projectile.friendly = false;

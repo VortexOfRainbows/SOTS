@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Pyramid
     {	          
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gas Slash");
+			// DisplayName.SetDefault("Gas Slash");
 		}
         public override void SetDefaults()
         {
@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Pyramid
 			bool canHit = target.whoAmI == (int)Projectile.ai[1] || Projectile.timeLeft <= 5;
 			return canHit ? base.CanHitNPC(target) : false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			target.immune[Projectile.owner] = 0;
@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.netUpdate = true;
             }
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			int life = target.life - (damage / 2 - (target.defense + 1) / 2);
 			if (life > 0 && Projectile.timeLeft > 5)

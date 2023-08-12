@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Harvesting Strike");
+			// DisplayName.SetDefault("Harvesting Strike");
 		}
 		public override void SetDefaults()
 		{

@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Tide
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hardlight Trail");
+			// DisplayName.SetDefault("Hardlight Trail");
 		}
 		public override void SetDefaults()
 		{

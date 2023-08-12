@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Nature
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pinky Bomber");
+			// DisplayName.SetDefault("Pinky Bomber");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 			Main.projFrames[Projectile.type] = 4;

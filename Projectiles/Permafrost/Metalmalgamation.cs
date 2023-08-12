@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Permafrost
     {	int counter = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Metalmalgamation");
+			// DisplayName.SetDefault("Metalmalgamation");
 		}
         public override void SetDefaults()
         {

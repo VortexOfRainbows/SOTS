@@ -148,7 +148,7 @@ namespace SOTS.Items
 				}
 				else
 				{
-					NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+					NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
 				}
 			}
 			NPC.SpawnOnPlayer(player.whoAmI, type);

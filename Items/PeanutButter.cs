@@ -20,7 +20,7 @@ namespace SOTS.Items
             Item.value = Item.sellPrice(0, 3, 0, 0);
 			Item.rare = ItemRarityID.LightRed;
 			Item.accessory = true;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{

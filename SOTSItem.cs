@@ -463,9 +463,9 @@ namespace SOTS
 			}
 			return bestTile;
 		}
-        public override void OnCreate(Item item, ItemCreationContext context)
+        public override void OnCreated(Item item, ItemCreationContext context)
         {
-			if(context is RecipeCreationContext r)
+			if(context is RecipeItemCreationContext r)
 			{
 				Recipe recipe = r.recipe;
 				Player player = Main.LocalPlayer;
@@ -637,7 +637,7 @@ namespace SOTS
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Data Transfer Proj"); //Do you enjoy how all my net sycning is done via projectiles?
+			// DisplayName.SetDefault("Data Transfer Proj"); //Do you enjoy how all my net sycning is done via projectiles?
 		}
 		public override void SetDefaults()
 		{

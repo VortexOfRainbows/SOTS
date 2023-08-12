@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cataclysm Bullet");
+			// DisplayName.SetDefault("Cataclysm Bullet");
 		}
 		public override void SetDefaults()
 		{
@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.extraUpdates = 3;
 			Projectile.scale = 0.75f;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			triggerStop();
 			Player player = Main.player[Projectile.owner];

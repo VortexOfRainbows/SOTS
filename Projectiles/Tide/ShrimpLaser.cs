@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Tide
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shrimp Laser");
+			// DisplayName.SetDefault("Shrimp Laser");
 		}
 		public override void SetDefaults()
 		{
@@ -177,12 +177,12 @@ namespace SOTS.Projectiles.Tide
 				}
 			}
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			if (Projectile.ai[0] != -1)
 				target.AddBuff(BuffID.OnFire, 600, false);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			triggerUpdate();

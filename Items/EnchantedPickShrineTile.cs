@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Tools;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -22,7 +23,7 @@ namespace SOTS.Items
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 36;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
 		    AddMapEntry(new Color(170, 150, 85), name);
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1200;

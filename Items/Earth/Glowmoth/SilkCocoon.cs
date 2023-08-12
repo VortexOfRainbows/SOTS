@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -68,7 +69,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.WaterDeath = false;
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(30, 90, 180), name);
 			DustType = DustID.Silk;
 			HitSound = SoundID.NPCHit18;

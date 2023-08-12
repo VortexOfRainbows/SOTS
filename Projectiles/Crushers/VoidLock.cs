@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Crushers
 		int rotation = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Lock");
+			// DisplayName.SetDefault("Void Lock");
 			
 		}
 		

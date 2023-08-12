@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Soul Eater Crusher");
+			// DisplayName.SetDefault("Soul Eater Crusher");
 		}
 		public override void SafeSetDefaults()
         {

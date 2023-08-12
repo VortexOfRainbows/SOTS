@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lightning Trail");
+			// DisplayName.SetDefault("Lightning Trail");
 		}
         public override void SetDefaults()
         {

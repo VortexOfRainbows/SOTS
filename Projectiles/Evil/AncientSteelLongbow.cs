@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Evil
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ancient Steel Bow");
+            // DisplayName.SetDefault("Ancient Steel Bow");
         }
         public override void SetDefaults()
         {

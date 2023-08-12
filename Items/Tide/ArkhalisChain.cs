@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -46,10 +47,10 @@ namespace SOTS.Items.Tide
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(127, 127, 127), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			ItemDrop = ModContent.ItemType<ArkhalisChain>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ArkhalisChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void MouseOver(int i, int j)

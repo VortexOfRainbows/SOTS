@@ -68,7 +68,7 @@ namespace SOTS.NPCs.Phase
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
             NPC.lifeMax = NPC.lifeMax * 15 / 19;
         }
@@ -325,7 +325,7 @@ namespace SOTS.NPCs.Phase
         {
             return NPC.alpha <= 205;
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             damage *= 0.5f;
             return true;

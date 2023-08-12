@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Earth
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Echo Disc");
+			// DisplayName.SetDefault("Echo Disc");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Main.projFrames[Projectile.type] = 2;
@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Earth
 			}
 			Lighting.AddLight(Projectile.Center, color.R / 255f, color.G / 255f, color.B * 1.75f / 255f);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if(Projectile.ai[0] != -1)
 				Projectile.ai[0] = 1;

@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wave Blast");
+			// DisplayName.SetDefault("Wave Blast");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 18;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Celestial
         {
 			return false;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
 		}

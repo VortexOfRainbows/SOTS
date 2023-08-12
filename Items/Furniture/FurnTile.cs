@@ -21,7 +21,7 @@ namespace SOTS.Items.Furniture
             AddMapEntry(MapColor, LocalizedText.Empty, (s, i, j) => (string)Lang.GetItemName(item));
             if (!Multi)
             {
-                ItemDrop = item;
+                ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = item;
             }
         }
         protected abstract void SetStaticDefaults(TileObjectData t);

@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Permafrost
 		float storeRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ice Spear");
+			// DisplayName.SetDefault("Ice Spear");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}

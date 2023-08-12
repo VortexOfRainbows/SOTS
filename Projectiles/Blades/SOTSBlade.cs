@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Blades
 		public virtual Color color2 => new Color(209, 117, 61);
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Some Slash");
+			// DisplayName.SetDefault("Some Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        

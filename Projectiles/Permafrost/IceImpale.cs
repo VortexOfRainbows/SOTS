@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("IceImpale");
+			// DisplayName.SetDefault("IceImpale");
 		}
         public override void SetDefaults()
         {
@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.timeLeft = 640;
 		}
 		bool hasHit = false;
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);

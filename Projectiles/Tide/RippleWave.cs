@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Tide
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ripple Wave");
+			// DisplayName.SetDefault("Ripple Wave");
 		}
         public override void SetDefaults()
         {
@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Tide
         {
 			return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			int defense = target.defense;
 			int extra = defense / 2;
@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Tide
 				extra = 4;
 			damage += extra;
 		}
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
 			int defense = target.statDefense;
 			int extra = defense / 2;
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Tide
 		public override string Texture => "SOTS/Projectiles/Tide/RippleWave";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ripple Wave");
+			// DisplayName.SetDefault("Ripple Wave");
 		}
 		public override void SetDefaults()
 		{

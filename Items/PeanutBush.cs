@@ -11,6 +11,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -52,9 +53,9 @@ namespace SOTS.Items
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.addTile(Type);
 			DustType = DustID.WoodFurniture;
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(113, 173, 37), name);
-			ItemDrop = ModContent.ItemType<PeanutBush>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PeanutBush>();
 		}
         public override bool CanPlace(int i, int j)
         {

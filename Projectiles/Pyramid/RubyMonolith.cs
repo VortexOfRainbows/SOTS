@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Pyramid
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ruby Monolith");
+			// DisplayName.SetDefault("Ruby Monolith");
 			Main.projFrames[Projectile.type] = 2;
 		}
 		public sealed override void SetDefaults()

@@ -6,7 +6,7 @@ namespace SOTS.Projectiles.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jury Rigged Drill");
+			// DisplayName.SetDefault("Jury Rigged Drill");
 		}
 		public override void SetDefaults() 
 		{

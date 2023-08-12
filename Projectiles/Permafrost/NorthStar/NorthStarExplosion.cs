@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("North Starsplosion");
+			// DisplayName.SetDefault("North Starsplosion");
 		}
         public override void SetDefaults()
         {
@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             Projectile.localNPCHitCooldown = 10;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 0;
             target.AddBuff(BuffID.Frostburn, 300);

@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Holo Missile");
+			// DisplayName.SetDefault("Holo Missile");
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(Projectile.timeLeft < 30)
 			hitbox = new Rectangle((int)(Projectile.Center.X - 48), (int)(Projectile.Center.Y - 48), 96, 96);
 		}
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			if (Projectile.timeLeft >= 30)
 				Projectile.timeLeft = 31;

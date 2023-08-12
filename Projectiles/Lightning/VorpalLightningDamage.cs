@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Lightning
 		public override string Texture => "SOTS/Projectiles/Lightning/PurpleLightningDamage";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Origin Thunder");
+			// DisplayName.SetDefault("Origin Thunder");
 		}
         public override void SetDefaults()
 		{

@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Origin Thunder");
+			// DisplayName.SetDefault("Origin Thunder");
 		}
 		public override void SetDefaults()
 		{

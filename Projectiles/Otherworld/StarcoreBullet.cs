@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Otherworld
 		int bounceCount = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starcore Bullet");
+			// DisplayName.SetDefault("Starcore Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 32;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 24 * (1 + Projectile.extraUpdates);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			bounceCount++;
 			if (bounceCount > 3)

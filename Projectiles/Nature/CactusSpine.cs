@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Nature
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cactus Spine");
+			// DisplayName.SetDefault("Cactus Spine");
 		}
         public override void SetDefaults()
         {
@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Nature
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.AddBuff(BuffID.Poisoned, 720, false);
 		}

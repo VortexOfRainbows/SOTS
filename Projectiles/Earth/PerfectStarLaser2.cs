@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Star Laser");
+			// DisplayName.SetDefault("Star Laser");
 		}
         public override void SetDefaults()
         {
@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Earth
 			return true;
 		}
 		int pierceCount = 0;
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			pierceCount++;
 			int maxPierce = -10 * (int)Projectile.ai[1];

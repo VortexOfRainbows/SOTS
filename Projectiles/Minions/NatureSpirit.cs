@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Spirit");
+			// DisplayName.SetDefault("Nature Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;   

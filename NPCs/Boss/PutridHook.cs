@@ -150,11 +150,11 @@ namespace SOTS.NPCs.Boss
 			if(NPC.scale == 1)
 				spriteBatch.Draw(texture, drawPos, null, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 		}
-		public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+		public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
 		{
 			base.ModifyHitByItem(player, item, ref damage, ref knockback, ref crit);
 		}
-		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
 		{
 			if (projectile.active && (projectile.ModProjectile == null || projectile.ModProjectile.ShouldUpdatePosition()))
 			{
@@ -163,7 +163,7 @@ namespace SOTS.NPCs.Boss
 				projectile.netUpdate = true;
 			}
 		}
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
 		{
 			if (NPC.defense > 1000)
 			{
@@ -173,7 +173,7 @@ namespace SOTS.NPCs.Boss
 			}
 			return true;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
 			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);
 			NPC.damage = NPC.damage * 3 / 4;  
@@ -287,7 +287,7 @@ namespace SOTS.NPCs.Boss
 				NPC.damage = storeDamage;
 			}
 		}
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

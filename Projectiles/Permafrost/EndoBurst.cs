@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Endo Burst");
+			// DisplayName.SetDefault("Endo Burst");
 		}
 		public override void SetDefaults()
 		{
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
 			player.AddBuff(ModContent.BuffType<Overheat>(), 630);

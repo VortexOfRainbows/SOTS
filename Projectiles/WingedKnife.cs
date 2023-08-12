@@ -11,7 +11,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Winged Knife");
+			// DisplayName.SetDefault("Winged Knife");
 		}
         public override void SetDefaults()
         {
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles
 				}
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Projectile.timeLeft -= 1000;
         }

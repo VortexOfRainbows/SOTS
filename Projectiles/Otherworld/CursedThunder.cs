@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thunder Column");
+			// DisplayName.SetDefault("Thunder Column");
 		}
 		public override void SetDefaults()
 		{
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.velocity *= 0f;
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 6;
 			target.AddBuff(BuffID.CursedInferno, 1200, false);

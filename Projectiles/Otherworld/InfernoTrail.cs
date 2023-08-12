@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Inferno Trail");
+			// DisplayName.SetDefault("Inferno Trail");
 		}
         public override void SetDefaults()
         {

@@ -41,7 +41,7 @@ namespace SOTS.Items.Furniture.Permafrost
         protected override void AddMapEntires()
         {
             Color color = Color.Lerp(SOTSTile.PermafrostPlatingColor, Color.Black, 0.17f);
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(color, name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.

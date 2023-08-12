@@ -28,7 +28,7 @@ namespace SOTS.NPCs
 		{
 			NPC.TargetClosest(true);
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

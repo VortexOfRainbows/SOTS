@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Permafrost
 		int rotation = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shatter Shard");
+			// DisplayName.SetDefault("Shatter Shard");
 			
 		}
 		
@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.hostile = false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (Projectile.timeLeft < 1740)
 				Projectile.timeLeft -= 360;

@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hyperlight Laser");
+			// DisplayName.SetDefault("Hyperlight Laser");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
 		public override void SetDefaults()

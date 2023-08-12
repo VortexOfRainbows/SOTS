@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Nature
         public override string Texture => "SOTS/Projectiles/Nature/NatureBolt";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flower Bolt");
+			// DisplayName.SetDefault("Flower Bolt");
 		}
         public override void SetDefaults()
 		{
@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.localNPCHitCooldown = 60;
 			Projectile.extraUpdates = 4;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

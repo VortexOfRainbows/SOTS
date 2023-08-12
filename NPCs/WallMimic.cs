@@ -304,7 +304,7 @@ namespace SOTS.NPCs
 			if (dropSpecial || Main.rand.NextBool(200))
 				Item.NewItem(NPC.GetSource_Loot("SOTS:DarkEyeDrop"), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<TheDarkEye>(), 1);
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

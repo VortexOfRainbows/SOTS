@@ -57,7 +57,7 @@ namespace SOTS.NPCs.Constructs
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.rarity = 5;
 		}
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
 			NPC.damage = NPC.damage * 3 / 4;
 			NPC.lifeMax = NPC.lifeMax * 5 / 6;
@@ -185,7 +185,7 @@ namespace SOTS.NPCs.Constructs
 			spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, rotation, new Vector2(NPC.width / 2, NPC.height / 2), NPC.scale, NPC.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			spriteBatch.Draw(texture2, NPC.Center - screenPos, NPC.frame, Color.White, rotation, new Vector2(NPC.width / 2, NPC.height / 2), NPC.scale, NPC.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

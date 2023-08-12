@@ -300,7 +300,7 @@ namespace SOTS.NPCs.Boss.Lux
 					break;
 			}
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
 		{
 			if (projectile.CountsAsClass(DamageClass.Melee))
 			{
@@ -379,7 +379,7 @@ namespace SOTS.NPCs.Boss.Lux
         {
             return attackPhase != -1 && !NPC.dontTakeDamage;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
 			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f); //90000 hp
 			NPC.damage = (int)(NPC.damage * 0.75f); //150 damage
@@ -1312,7 +1312,7 @@ namespace SOTS.NPCs.Boss.Lux
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life <= 0)
 			{

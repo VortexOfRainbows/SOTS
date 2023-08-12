@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Inferno
 		public bool useBoth = false;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bluefire Crush");
+			// DisplayName.SetDefault("Bluefire Crush");
 		}
         public override void SetDefaults()
         {

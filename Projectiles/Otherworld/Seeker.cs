@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Critical Seeker");
+			// DisplayName.SetDefault("Critical Seeker");
 		}
         public override void SetDefaults()
         {
@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.hostile = false;
 			Projectile.tileCollide = false;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			crit = false;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Otherworld
         {
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (target.life <= 0)
 			{

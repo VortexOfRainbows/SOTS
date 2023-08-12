@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Temple
             }
 			Projectile.rotation = Projectile.velocity.ToRotation();
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			int ignoreDefense = ((target.defense + 1) / 2);
 			int baseDamage = (int)(damage * 0.5) - ignoreDefense;
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Temple
         {
             return Projectile.ai[0] == -1 ? false : base.CanHitNPC(target);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Projectile.ai[0] = -1;
 			Projectile.netUpdate = true;

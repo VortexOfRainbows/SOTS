@@ -39,7 +39,7 @@ namespace SOTS.Items
                 Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/MinersSwordGlow").Value;
             }
         }
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (player.velocity.Y > 0)
                 crit = true;

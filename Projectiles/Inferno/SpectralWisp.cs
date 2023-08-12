@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Inferno
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spectral Wisp");
+			// DisplayName.SetDefault("Spectral Wisp");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			damage = (int)(damage * 0.75f);
 		}
@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Inferno
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spectral Wisp");
+			// DisplayName.SetDefault("Spectral Wisp");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.localNPCHitCooldown = 30;
 			Projectile.ignoreWater = true;
 			Projectile.minion = false;
-			Projectile.ContinuouslyUpdateDamage = true;
+			Projectile.ContinuouslyUpdateDamageStats = true;
 			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 			SafeSetDefaults();
 		}
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Inferno
         {
 
         }
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;
@@ -398,7 +398,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lemegeton Wisp");
+			// DisplayName.SetDefault("Lemegeton Wisp");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -412,7 +412,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			int heal = 1;
@@ -422,7 +422,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			damage = (int)(damage * 1.0f);
 		}
@@ -497,7 +497,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lemegeton Wisp");
+			// DisplayName.SetDefault("Lemegeton Wisp");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -525,7 +525,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			damage = (int)(damage * 0.5f);
 		}
@@ -586,7 +586,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lemegeton Wisp");
+			// DisplayName.SetDefault("Lemegeton Wisp");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -614,7 +614,7 @@ namespace SOTS.Projectiles.Inferno
 			goTo = toLocation - Projectile.Center;
 			return toNPC;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			damage = (int)(damage * 0.5f);
 		}
@@ -680,7 +680,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Will o'");
+			// DisplayName.SetDefault("Will o'");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -706,10 +706,10 @@ namespace SOTS.Projectiles.Inferno
 		public override void SafeSetDefaults()
 		{
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.ContinuouslyUpdateDamage = false;
+			Projectile.ContinuouslyUpdateDamageStats = false;
 			Projectile.localNPCHitCooldown = 30;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			damage = (int)(damage * 0.5f);
 		}

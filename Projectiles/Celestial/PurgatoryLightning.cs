@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Purgatory Column");
+			// DisplayName.SetDefault("Purgatory Column");
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

@@ -11,7 +11,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Hook");
+			// DisplayName.SetDefault("Wormwood Hook");
 			
 		}
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace SOTS.Projectiles
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
         } 
-        public override bool? SingleGrappleHook(Player player)
+        public override bool? SingleGrappleHook(Player player)/* tModPorter Note: Removed. In SetStaticDefaults, use ProjectileID.Sets.SingleGrappleHook[Type] = true if you previously had this method return true */
         {
 			return true;
         }   

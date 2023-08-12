@@ -32,7 +32,7 @@ namespace SOTS.Items.Conduit
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = false; //sunlight passes through these pipes
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<ConduitChassis>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ConduitChassis>();
 			AddMapEntry(new Color(66, 77, 93));
 			MineResist = 15f;
 			MinPick = 300;

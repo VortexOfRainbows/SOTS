@@ -15,7 +15,7 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("temp"); //this is needed for the tooltip to be modified later.
+			// Tooltip.SetDefault("temp"); //this is needed for the tooltip to be modified later.
 			this.SetResearchCost(1);
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)

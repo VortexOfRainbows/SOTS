@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Ring");
+			// DisplayName.SetDefault("Chaos Ring");
 		}
 		public override void SetDefaults()
 		{

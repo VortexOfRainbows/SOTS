@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using SOTS.Items.Earth.Glowmoth;
 using Terraria.DataStructures;
 using SOTS.Items.Conduit;
+using Terraria.WorldBuilding;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -4672,7 +4673,7 @@ namespace SOTS.WorldgenHelpers
 		{
 			for (int k = 100; k < Main.maxTilesX - 100; k++)
 			{
-				for (int l = (int)WorldGen.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
+				for (int l = (int)GenVars.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
 				{
 					if (Main.tile[k, l].WallType == ModContent.WallType<VibrantWallWall>())
 					{
@@ -4700,7 +4701,7 @@ namespace SOTS.WorldgenHelpers
 		{
 			for (int k = 100; k < Main.maxTilesX - 100; k++)
 			{
-				for (int l = (int)WorldGen.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
+				for (int l = (int)GenVars.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
 				{
 					Tile tile = Main.tile[k, l];
 					if (tile.TileType == TileID.MushroomGrass)
@@ -4961,7 +4962,7 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void PlaceSetpiecesInMushroomBiome()
         {
-			Vector2[] mushroomBiomes = WorldGen.mushroomBiomesPosition;
+			Vector2[] mushroomBiomes = GenVars.mushroomBiomesPosition;
 			int total = mushroomBiomes.Length;
 			for (int A = 0; A < total; A++)
 			{
@@ -5138,7 +5139,7 @@ namespace SOTS.WorldgenHelpers
 			WorldGen.skipFramingDuringGen = false;
 			for (int i = 50; i < Main.maxTilesX - 50; i++)
 			{
-				for (int j = (int)WorldGen.worldSurface; j > 50; j--)
+				for (int j = (int)GenVars.worldSurface; j > 50; j--)
 				{
 					Tile tile = Main.tile[i, j];
 					Tile tileD = Main.tile[i, j + 1];
@@ -5154,7 +5155,7 @@ namespace SOTS.WorldgenHelpers
 		{
 			for (int i = 50; i < Main.maxTilesX - 50; i++)
 			{
-				for (int j = (int)WorldGen.worldSurface; j > 50; j--)
+				for (int j = (int)GenVars.worldSurface; j > 50; j--)
 				{
 					Tile tile = Main.tile[i, j];
 					if (tile.Slope == 0 && !tile.IsHalfBlock && tile.HasUnactuatedTile && WorldGen.genRand.NextBool(36) && tile.TileType == TileID.Grass && tile.WallType == 0)

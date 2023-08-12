@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crescent Beam");
+			// DisplayName.SetDefault("Crescent Beam");
 		}
 		public override void SetDefaults()
         {
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Otherworld
 				dust.fadeIn = 0.2f;
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			int heal = 2;

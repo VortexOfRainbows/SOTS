@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Supernova Scatter");
+			// DisplayName.SetDefault("Supernova Scatter");
 		} 
 		public override void SetDefaults()
 		{
@@ -136,7 +136,7 @@ namespace SOTS.Projectiles.Chaos
 			if (Projectile.timeLeft < 60 && !hasHit) 
 				triggerUpdate();
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			triggerUpdate();

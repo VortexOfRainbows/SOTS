@@ -9,7 +9,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spore Cloud");
+			// DisplayName.SetDefault("Spore Cloud");
 		}
         public override void SetDefaults()
 		{

@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Permafrost
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ice Cluster");
+			// DisplayName.SetDefault("Ice Cluster");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

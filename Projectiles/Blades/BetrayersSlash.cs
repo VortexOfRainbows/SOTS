@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Blades
 		public override Color color2 => new Color(151, 176, 218);
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Betrayer's Slash");
+			// DisplayName.SetDefault("Betrayer's Slash");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Blades
 				}
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			if(Main.myPlayer == Projectile.owner)
             {

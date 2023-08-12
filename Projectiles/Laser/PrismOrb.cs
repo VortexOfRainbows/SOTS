@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Laser
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Starshot");
+            // DisplayName.SetDefault("Starshot");
         }
         public override void SetDefaults()
         {

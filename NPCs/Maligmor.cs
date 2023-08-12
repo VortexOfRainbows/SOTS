@@ -35,7 +35,7 @@ namespace SOTS.NPCs
 			Banner = NPC.type;
 			BannerItem = ItemType<MaligmorBanner>();
 		}
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
 			NPC.lifeMax = NPC.lifeMax * 9 / 10;
 			NPC.damage = NPC.damage * 7 / 8;
@@ -201,7 +201,7 @@ namespace SOTS.NPCs
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemType<CursedTumor>(), 1, 5, 10));
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life > 0)
 			{

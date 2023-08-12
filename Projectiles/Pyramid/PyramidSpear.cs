@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Imperial Pike");
+			// DisplayName.SetDefault("Imperial Pike");
 		}
         public override void SetDefaults()
         {

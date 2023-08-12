@@ -50,7 +50,7 @@ namespace SOTS.Items.Earth
 			TileObjectData.addTile(Type);
 
 
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(156, 209, 46), name);
 			DustType = ModContent.DustType<VibrantDust>();
 			//TileID.Sets.DisableSmartCursor[Type] = true;

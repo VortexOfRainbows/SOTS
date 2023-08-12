@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Rifle");
+			// DisplayName.SetDefault("Vibrant Rifle");
 		}
 		public override void SetDefaults() 
 		{

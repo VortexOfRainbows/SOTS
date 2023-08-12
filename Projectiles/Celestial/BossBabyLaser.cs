@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Red Laser");
+			// DisplayName.SetDefault("Red Laser");
 		}
 		public override void SetDefaults()
 		{
@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(BuffID.OnFire, 360, false);
 		}

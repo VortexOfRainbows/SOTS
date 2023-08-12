@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Unholy Light");
+			// DisplayName.SetDefault("Unholy Light");
 		}
         public override void SetDefaults()
         {

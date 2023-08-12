@@ -12,7 +12,7 @@ namespace SOTS.Projectiles
 		bool latch;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Spike");
+			// DisplayName.SetDefault("Wormwood Spike");
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 15;

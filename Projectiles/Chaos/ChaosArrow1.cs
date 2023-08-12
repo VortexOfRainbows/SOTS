@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Arrow");
+			// DisplayName.SetDefault("Chaos Arrow");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			if(Projectile.penetrate >= -1)
 			{

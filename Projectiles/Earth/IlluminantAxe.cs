@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Illuminant Axe");
+			// DisplayName.SetDefault("Illuminant Axe");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}

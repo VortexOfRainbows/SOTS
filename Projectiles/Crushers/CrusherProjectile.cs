@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crusher Arm");
+			// DisplayName.SetDefault("Crusher Arm");
 		}
 		public sealed override void SetDefaults()
 		{

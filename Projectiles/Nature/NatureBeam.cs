@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Nature
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Beam");
+			// DisplayName.SetDefault("Nature Beam");
 		}
 		public override void SetDefaults()
         {
@@ -165,7 +165,7 @@ namespace SOTS.Projectiles.Nature
 			}
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			target.immune[player.whoAmI] = 0;

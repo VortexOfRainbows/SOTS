@@ -24,7 +24,7 @@ namespace SOTS.Items.Celestial
             Item.value = Item.sellPrice(0, 20, 0, 0);
             Item.rare = ItemRarityID.Red;
             Item.accessory = true;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
         }
         bool accessory = true;
         public override void UpdateAccessory(Player player, bool hideVisual)

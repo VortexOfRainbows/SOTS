@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Earth
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Evostone Longbow");
+            // DisplayName.SetDefault("Evostone Longbow");
         }
         public override void SetDefaults()
         {

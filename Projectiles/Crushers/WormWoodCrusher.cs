@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Arm");
+			// DisplayName.SetDefault("Wormwood Arm");
 		}
         public override void SafeSetDefaults()
         {

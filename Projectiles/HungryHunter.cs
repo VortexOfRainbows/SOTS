@@ -13,7 +13,7 @@ namespace SOTS.Projectiles
 		bool latch;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hungry Hunter");
+			// DisplayName.SetDefault("Hungry Hunter");
 		}
         public override void SetDefaults()
 		{
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

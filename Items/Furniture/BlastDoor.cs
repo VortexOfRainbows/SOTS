@@ -51,12 +51,12 @@ namespace SOTS.Items.Furniture
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-			name.SetDefault(GetName());
+			// name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
 			DustType = -1;
-			OpenDoorID = OpenDoorTile;
+			OpenDoorID/* tModPorter Note: Removed. Use TileID.Sets.OpenDoorID instead */ = OpenDoorTile;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.ClosedDoor };
 			SafeSetDefaults();
@@ -132,16 +132,16 @@ namespace SOTS.Items.Furniture
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-			name.SetDefault(GetName());
+			// name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
 			DustType = -1;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HousingWalls[Type] = true;
-			CloseDoorID = ClosedDoorTile;
+			CloseDoorID/* tModPorter Note: Removed. Use TileID.Sets.CloseDoorID instead */ = ClosedDoorTile;
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()

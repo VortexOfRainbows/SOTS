@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Minions
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pink Bubble Stream");
+			// DisplayName.SetDefault("Pink Bubble Stream");
 		}
         public override void SetDefaults()
         {

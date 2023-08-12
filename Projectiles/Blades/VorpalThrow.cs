@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vertebraeker");
+			// DisplayName.SetDefault("Vertebraeker");
 		}
         public override void SetDefaults()
         {
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Blades
 			height = 24;
             return true;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			hitDirection = initialDirection;
         }

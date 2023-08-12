@@ -33,7 +33,7 @@ namespace SOTS.Items
             Item.shoot = ModContent.ProjectileType<Projectiles.OlympianAxe>();
             Item.shootSpeed = 8.5f;
         }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (target.life <= 0)
             {

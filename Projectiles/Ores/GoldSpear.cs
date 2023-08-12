@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Ores
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gold Glaive");
+			// DisplayName.SetDefault("Gold Glaive");
 		}
         public override void SetDefaults()
         {

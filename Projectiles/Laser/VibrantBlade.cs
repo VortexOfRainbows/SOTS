@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lightspeed Blade");
+			// DisplayName.SetDefault("Lightspeed Blade");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 180;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
@@ -105,7 +105,7 @@ namespace SOTS.Projectiles.Laser
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			triggerUpdate();

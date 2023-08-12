@@ -33,8 +33,8 @@ namespace SOTS.Items.Furniture.Goopwood
         protected override void AddMapEntires()
         {
             Color color = Color.Lerp(new Color(191, 142, 111, 255), Color.Black, 0.17f);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault(GetChestName());
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault(GetChestName());
             AddMapEntry(color, name, MapChestName);
         }
     }

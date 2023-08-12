@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ruby Spawner Finder");
+			// DisplayName.SetDefault("Ruby Spawner Finder");
 		}
         public override void SetDefaults()
         {

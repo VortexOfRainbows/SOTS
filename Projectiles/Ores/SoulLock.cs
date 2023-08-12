@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Ores
 		int rotation = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Soul Lock");
+			// DisplayName.SetDefault("Soul Lock");
 			
 		}
 		
@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Ores
 				Projectile.friendly = true;
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 0;

@@ -20,7 +20,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.accessory = true;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 		}
 		public override void AddRecipes()
 		{

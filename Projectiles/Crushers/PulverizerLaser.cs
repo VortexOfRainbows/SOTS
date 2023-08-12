@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Crushers
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Pulverizer Laser");
+			// DisplayName.SetDefault("Pulverizer Laser");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 4800;
 		}
 		public override void SetDefaults() 

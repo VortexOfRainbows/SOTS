@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Genesis Arc");
+			// DisplayName.SetDefault("Genesis Arc");
 		}
 		public override void SetDefaults()
 		{

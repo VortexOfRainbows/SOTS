@@ -231,7 +231,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			PlaceTile();
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.AddBuff(BuffID.OnFire, 600); //adds 10 seconds of fire
         }

@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Pyramid
 		int bounce = 999;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Curse");
+			// DisplayName.SetDefault("Curse");
 		}
         public override void SetDefaults()
         {

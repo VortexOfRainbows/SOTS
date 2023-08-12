@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Soul of Retaliation");
+			// DisplayName.SetDefault("Soul of Retaliation");
 		}
         public override void SetDefaults()
         {

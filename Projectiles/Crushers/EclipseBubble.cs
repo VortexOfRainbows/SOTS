@@ -8,7 +8,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Eclipse Bubble");
+			// DisplayName.SetDefault("Eclipse Bubble");
 		}
         public override void SetDefaults()
         {
@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Crushers
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 255;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

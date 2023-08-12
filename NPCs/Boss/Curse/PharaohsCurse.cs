@@ -108,7 +108,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			return NPC.alpha == 0 && !NPC.dontTakeDamage;
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life > 0)
 			{
@@ -173,7 +173,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			potionType = ItemID.HealingPotion;
 		}
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
 			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.625f);
 			NPC.damage = (int)(NPC.damage * 0.75f);

@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Skyward Blade");
+			// DisplayName.SetDefault("Skyward Blade");
 		}
 		public override void SetDefaults()
         {
@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Otherworld
 				dust.alpha = Projectile.alpha;
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

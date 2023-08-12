@@ -20,7 +20,7 @@ namespace SOTS.Projectiles
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vision Weapon");
+			// DisplayName.SetDefault("Vision Weapon");
 		}
 		public sealed override void SetDefaults()
 		{

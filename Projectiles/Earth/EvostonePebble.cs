@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Earth
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Evostone Pebble");
+			// DisplayName.SetDefault("Evostone Pebble");
 		}
         public override void SetDefaults()
         {

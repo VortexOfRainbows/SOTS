@@ -1,6 +1,7 @@
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -25,7 +26,7 @@ namespace SOTS.Items.Secrets
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.Cloud;
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
 		    AddMapEntry(new Color(255, 255, 239), name);
         }
         public override bool CreateDust(int i, int j, ref int type)

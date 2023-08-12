@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Subspace Thunder");
+			// DisplayName.SetDefault("Subspace Thunder");
 		}
 		public override void SetDefaults()
 		{
@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.alpha = 55;
 			Projectile.scale = 1f;
 		}
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
 		}

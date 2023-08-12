@@ -64,7 +64,7 @@ namespace SOTS.Items.Furniture.Functional
 			TileObjectData.newTile.CoordinateHeights = new[] { 18 };
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.Iron;

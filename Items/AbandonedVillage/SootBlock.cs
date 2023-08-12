@@ -17,7 +17,7 @@ namespace SOTS.Items.AbandonedVillage
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 38; //mud
-			ItemDrop = ModContent.ItemType<SootBlock>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SootBlock>();
 			AddMapEntry(new Color(57, 50, 44));
 		}
 	}
@@ -33,7 +33,7 @@ namespace SOTS.Items.AbandonedVillage
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.createTile = ModContent.TileType<SootBlockTile>();
 		}
-        public override void ExtractinatorUse(ref int resultType, ref int resultStack)
+        public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
         {
 			if(resultType == ItemID.CopperCoin || resultType == ItemID.SilverCoin || resultType == ItemID.GoldCoin || resultType == ItemID.PlatinumCoin
 				|| resultType == ItemID.CopperOre || resultType == ItemID.TinOre || resultType == ItemID.IronOre || resultType == ItemID.LeadOre || resultType == ItemID.SilverOre || resultType == ItemID.TungstenOre || resultType == ItemID.AmberMosquito)
@@ -91,7 +91,7 @@ namespace SOTS.Items.AbandonedVillage
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 38;
-			ItemDrop = ModContent.ItemType<SootWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SootWall>();
 			AddMapEntry(new Color(34, 29, 24));
 		}
 	}

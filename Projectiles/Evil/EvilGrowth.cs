@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Evil
 		public const int MaxTimeLeft = 150;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nightmare Arms");
+			// DisplayName.SetDefault("Nightmare Arms");
 		}
         public override void SetDefaults()
         {

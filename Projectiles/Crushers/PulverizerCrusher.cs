@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pulverizer Arm");
+			// DisplayName.SetDefault("Pulverizer Arm");
 		}
         public override void SafeSetDefaults()
         {

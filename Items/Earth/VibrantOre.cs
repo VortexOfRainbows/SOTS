@@ -7,6 +7,7 @@ using SOTS.Items.Otherworld.Furniture;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using SOTS.Items.Pyramid;
 
@@ -44,8 +45,8 @@ namespace SOTS.Items.Earth
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<VibrantOre>();
-			ModTranslation name = CreateMapEntryName();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<VibrantOre>();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(123, 166, 36), name);
 			MineResist = 1.0f;
 			MinPick = 40; //no copper/tin pickaxe!
@@ -77,12 +78,12 @@ namespace SOTS.Items.Earth
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(156, 209, 46), name);
 			HitSound = SoundID.Item27;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
-        public override bool Drop(int i, int j)
+        public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
         {
             return false;
         }

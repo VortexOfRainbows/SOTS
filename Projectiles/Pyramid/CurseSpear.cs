@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Impale");
+			// DisplayName.SetDefault("Cursed Impale");
 		}
         public override void SetDefaults()
         {

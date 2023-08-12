@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phase Bolt");
+			// DisplayName.SetDefault("Phase Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 18;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Celestial
 				dust.velocity -= Projectile.velocity * 1.5f;
 			}
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
 		}

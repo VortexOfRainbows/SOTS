@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Continuum Collapse");
+			// DisplayName.SetDefault("Continuum Collapse");
 		}
 		public override bool ShouldUpdatePosition() 
 		{

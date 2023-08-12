@@ -16,7 +16,7 @@ namespace SOTS.Items.AbandonedVillage
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 122; //boreal wood
-			ItemDrop = ModContent.ItemType<CharredWood>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CharredWood>();
 			AddMapEntry(new Color(105, 82, 61));
 		}
 	}
@@ -40,7 +40,7 @@ namespace SOTS.Items.AbandonedVillage
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 122;
-			ItemDrop = ModContent.ItemType<CharredWoodWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CharredWoodWall>();
 			AddMapEntry(new Color(67, 49, 34));
 		}
 	}

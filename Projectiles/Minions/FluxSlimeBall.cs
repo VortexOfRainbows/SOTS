@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Minions
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flux Slime Ball");
+			// DisplayName.SetDefault("Flux Slime Ball");
 		}
         public override void SetDefaults()
 		{
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Minions
         {
             return !hasHit && target.whoAmI == targetID ? (bool?)null : false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			hasHit = true;
 		}

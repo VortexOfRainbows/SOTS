@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Earth
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Earthen Bolt");
+			// DisplayName.SetDefault("Earthen Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 80;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(1));
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			VoidPlayer.VoidBurn(Mod, target, 5, 150);
 		}

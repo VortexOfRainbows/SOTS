@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hardlight Column");
+			// DisplayName.SetDefault("Hardlight Column");
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

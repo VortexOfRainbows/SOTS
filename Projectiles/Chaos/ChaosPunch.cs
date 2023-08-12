@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bizarre Adventure Fist");
+			// DisplayName.SetDefault("Bizarre Adventure Fist");
 			Main.projFrames[Projectile.type] = 5;
 		}
 		public override void SetDefaults()
@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.localNPCHitCooldown = 15;
 			Projectile.extraUpdates = 1;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.ai[0] = 200;
 			Projectile.netUpdate = true;

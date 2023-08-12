@@ -5,6 +5,7 @@ using SOTS.Projectiles.Permafrost;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace SOTS.Items.Permafrost
@@ -24,8 +25,8 @@ namespace SOTS.Items.Permafrost
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
-			ItemDrop = ModContent.ItemType<FrigidIce>();
-			ModTranslation name = CreateMapEntryName();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<FrigidIce>();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(100, 173, 232), name);
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
@@ -69,8 +70,8 @@ namespace SOTS.Items.Permafrost
 			MinPick = 45; //requires silver to mine
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
-			ItemDrop = ModContent.ItemType<FrigidIce>();
-			ModTranslation name = CreateMapEntryName();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<FrigidIce>();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(96, 111, 215), name);
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
@@ -113,7 +114,7 @@ namespace SOTS.Items.Permafrost
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = ModContent.DustType<ModIceDust>();
-			ItemDrop = ModContent.ItemType<FrigidBrick>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<FrigidBrick>();
 			AddMapEntry(new Color(96, 111, 215));
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
@@ -145,7 +146,7 @@ namespace SOTS.Items.Permafrost
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 122;
-			ItemDrop = ModContent.ItemType<FrigidBrickWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<FrigidBrickWall>();
 			AddMapEntry(new Color(74, 85, 160));
 		}
 	}

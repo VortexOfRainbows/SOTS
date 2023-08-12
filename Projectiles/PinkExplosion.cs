@@ -7,7 +7,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pink Explosion");
+			// DisplayName.SetDefault("Pink Explosion");
 		}
         public override void SetDefaults()
         {

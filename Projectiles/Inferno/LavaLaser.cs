@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Inferno
         }
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lava Laser");
+			// DisplayName.SetDefault("Lava Laser");
 		}
 		public override void SetDefaults()
 		{
@@ -123,11 +123,11 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.ai[1]++;
 			}
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(BuffID.OnFire, 600, false);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			triggerUpdate();

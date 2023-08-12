@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hellbreaker Crusher");
+			// DisplayName.SetDefault("Hellbreaker Crusher");
 		}
         public override void SafeSetDefaults()
         {

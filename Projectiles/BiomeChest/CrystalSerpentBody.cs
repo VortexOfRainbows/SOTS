@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.BiomeChest
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crystal Serpent Counter");
+			// DisplayName.SetDefault("Crystal Serpent Counter");
 			Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

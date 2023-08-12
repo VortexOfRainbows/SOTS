@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
@@ -54,7 +55,7 @@ namespace SOTS.Items.Secrets
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
             TileObjectData.addTile(Type);
             DustType = 32;
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
 		    AddMapEntry(new Color(90, 80, 45), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

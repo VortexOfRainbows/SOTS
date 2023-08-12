@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Tide
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fish");
+			// DisplayName.SetDefault("Fish");
 		}
         public override void SetDefaults()
         {

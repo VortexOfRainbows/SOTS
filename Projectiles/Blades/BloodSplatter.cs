@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Blades
     {	       
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blood Splatter");
+			// DisplayName.SetDefault("Blood Splatter");
 		}
         public override void SetDefaults()
         {

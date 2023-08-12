@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Evil
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Umbra Bolt");	
+			// DisplayName.SetDefault("Umbra Bolt");	
 		}
         public override void SetDefaults()
         {

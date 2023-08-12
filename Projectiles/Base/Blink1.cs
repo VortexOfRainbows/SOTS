@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Base
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blinding Assault");
+			// DisplayName.SetDefault("Blinding Assault");
 		}
         public override void SetDefaults()
         {

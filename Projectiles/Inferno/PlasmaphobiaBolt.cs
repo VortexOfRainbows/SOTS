@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Inferno
         public const int trailLength = 20;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plasma Bolt");
+            // DisplayName.SetDefault("Plasma Bolt");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = trailLength;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Inferno
             }
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.penetrate > 2)
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), Projectile.damage, 0, Projectile.owner);
@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Inferno
     }
     public class PlasmaStar : ModProjectile
     {
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if(Projectile.ai[0] == -1)
             {
@@ -179,7 +179,7 @@ namespace SOTS.Projectiles.Inferno
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plasma Star");
+            // DisplayName.SetDefault("Plasma Star");
             //ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
             //ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             //Main.projFrames[Projectile.type] = 6;

@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Permafrost
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Glaze Bow");
+            // DisplayName.SetDefault("Glaze Bow");
         }
         public override void SetDefaults()
         {

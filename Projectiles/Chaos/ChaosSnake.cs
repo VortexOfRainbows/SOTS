@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Chaos
 		int bounceCount = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Snake");
+			// DisplayName.SetDefault("Chaos Snake");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

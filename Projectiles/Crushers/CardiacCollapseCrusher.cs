@@ -7,7 +7,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cardiac Collapse Arm");
+			// DisplayName.SetDefault("Cardiac Collapse Arm");
 		}
         public override void SafeSetDefaults()
         {

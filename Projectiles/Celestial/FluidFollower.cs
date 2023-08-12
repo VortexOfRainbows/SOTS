@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("my curse behind me");
+			// DisplayName.SetDefault("my curse behind me");
 		}
         public override void SetDefaults()
         {

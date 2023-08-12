@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Origin Thunder");
+			// DisplayName.SetDefault("Origin Thunder");
 		}
         public override void SetDefaults()
 		{
@@ -22,13 +22,13 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			if (!target.boss && target.lifeMax <= 3600)
 				damage = (int)(damage * 2.5f);
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if(Projectile.ai[1] <= 0)
             {

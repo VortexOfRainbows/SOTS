@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Purple Homing Bolt");
+			// DisplayName.SetDefault("Purple Homing Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.extraUpdates = 3;
 		}
 		bool runOnce = true;
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			UpdateEnd();
 			target.immune[Projectile.owner] = 0;

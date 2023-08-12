@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Laser
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Photon Geyser");
+            // DisplayName.SetDefault("Photon Geyser");
         }
         public override void SetDefaults()
         {

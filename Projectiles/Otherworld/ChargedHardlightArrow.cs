@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Charged Hardlight Arrow");
+			// DisplayName.SetDefault("Charged Hardlight Arrow");
 		}
 		public override void SetDefaults() 
 		{

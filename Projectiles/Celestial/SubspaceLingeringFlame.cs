@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fire Bolt");
+			// DisplayName.SetDefault("Fire Bolt");
 		}
 		public override void SetDefaults()
 		{
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Celestial
 				dust.alpha = 125;
 			}
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(BuffID.OnFire, 360, false);
 		}
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dimensional Flame");
+			// DisplayName.SetDefault("Dimensional Flame");
 		}
 		public override void SetDefaults()
 		{

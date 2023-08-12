@@ -52,7 +52,7 @@ namespace SOTS.Items.Furniture
             //name.SetDefault(DresserName)s;
             AddMapEntry(MapColor, LocalizedText.Empty, (s, i, j) => DresserName);
             AdjTiles = new int[] { TileID.Dressers };
-            base.DresserDrop = DresserDrop;
+            base.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = DresserDrop;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

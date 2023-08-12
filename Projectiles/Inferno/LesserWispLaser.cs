@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Inferno
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Lesser Wisp Laser");
+			// DisplayName.SetDefault("Lesser Wisp Laser");
 		}
 		public override void SetDefaults() 
 		{
@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Inferno
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f);
 			cataloguePos();
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 6;
         }

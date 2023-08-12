@@ -117,7 +117,7 @@ namespace SOTS.Items.Permafrost
 			SOTSUtils.PlaySound(SoundID.Item1, position);
 			return false;
 		}
-		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (crit && player.whoAmI == Main.myPlayer)

@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Thundershock Crossbow");
+            // DisplayName.SetDefault("Thundershock Crossbow");
         }
         public override void SetDefaults()
         {

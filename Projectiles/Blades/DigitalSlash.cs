@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Blades
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Digital Slash");
+			// DisplayName.SetDefault("Digital Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        
@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Blades
 			Projectile.localNPCHitCooldown = 5;
 			Projectile.ownerHitCheck = true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

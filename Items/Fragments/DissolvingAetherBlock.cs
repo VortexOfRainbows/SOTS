@@ -39,7 +39,7 @@ namespace SOTS.Items.Fragments
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<DissolvingAetherBlock>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<DissolvingAetherBlock>();
 			AddMapEntry(new Color(164, 45, 225));
 			MineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;

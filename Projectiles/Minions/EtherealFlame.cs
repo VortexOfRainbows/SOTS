@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Minions
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ethereal Flame");
+			// DisplayName.SetDefault("Ethereal Flame");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.Draw(texture, drawPos, null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Projectile.ai[0] = 1;
 			Projectile.netUpdate = true;

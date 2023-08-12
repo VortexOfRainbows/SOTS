@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Polar Mortar");
+			// DisplayName.SetDefault("Polar Mortar");
 		}
         public override void SetDefaults()
         {

@@ -30,7 +30,7 @@ namespace SOTS.Items.AbandonedVillage
             Item.useTurn = true;
             Item.crit = 4;
 		}
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if(player.whoAmI == Main.myPlayer)
             {

@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop = ModContent.ItemType<CursedTumor>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CursedTumor>();
 			AddMapEntry(new Color(105, 75, 146));
 			MineResist = 1.5f;
 			HitSound = SoundID.NPCHit1;

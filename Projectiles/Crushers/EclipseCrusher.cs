@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Eclipse Arm");
+			// DisplayName.SetDefault("Eclipse Arm");
 		}
         public override void SafeSetDefaults()
         {

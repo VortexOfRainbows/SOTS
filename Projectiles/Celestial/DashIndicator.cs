@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursespire");
+			// DisplayName.SetDefault("Cursespire");
 		}
         public override bool PreDraw(ref Color lightColor)
         {

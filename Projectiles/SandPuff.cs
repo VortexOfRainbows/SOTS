@@ -9,7 +9,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sandy Puff");
+			// DisplayName.SetDefault("Sandy Puff");
 		}
         public override void SetDefaults()
         {

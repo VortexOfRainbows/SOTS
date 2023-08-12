@@ -8,7 +8,7 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bubble Crush");
+			// DisplayName.SetDefault("Bubble Crush");
 		}
         public override void SetDefaults()
         {
@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Crushers
         {
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 10;
         }

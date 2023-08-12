@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Ring");
+			// DisplayName.SetDefault("Vibrant Ring");
 		}
 		public override void SetDefaults()
 		{
@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

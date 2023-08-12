@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursespire");
+			// DisplayName.SetDefault("Cursespire");
 		}
         public override void SetDefaults()
         {
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Celestial
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<BabyLaser>(), Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
 			}
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) 
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) 
 		{
 			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
 		}

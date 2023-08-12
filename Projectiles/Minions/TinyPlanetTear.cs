@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Minions
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tiny Planet Tear");
+			// DisplayName.SetDefault("Tiny Planet Tear");
 		}
         public override void SetDefaults()
         {
@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

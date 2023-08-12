@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Permafrost
 		bool crit = false;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ice Shard");
+			// DisplayName.SetDefault("Ice Shard");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			return true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if(Projectile.penetrate != 1)
 			{
@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Permafrost
 				target.immune[Projectile.owner] = 0;
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			Player player = Main.player[Projectile.owner];
 			Projectile.ai[1] = 1;

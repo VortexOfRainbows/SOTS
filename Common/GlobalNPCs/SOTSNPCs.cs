@@ -129,7 +129,7 @@ namespace SOTS.Common.GlobalNPCs
 			SetDebuffImmunities(npc);
 			return base.PreAI(npc);
         }
-        public override void HitEffect(NPC npc, int hitDirection, double damage)
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
@@ -219,12 +219,12 @@ namespace SOTS.Common.GlobalNPCs
 				npc.buffImmune[ModContent.BuffType<WebbedNPC>()] = true;
             }
         }
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
 		{
 			hitBy(npc, player, null, item, ref damage, ref knockback, ref crit);
 			base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
 		}
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
 		{
 			hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
 			base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);

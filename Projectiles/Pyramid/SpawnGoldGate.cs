@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spawn Gold Gate"); //Do you (source code reader) enjoy how all my net sycning is done via projectiles?
+			// DisplayName.SetDefault("Spawn Gold Gate"); //Do you (source code reader) enjoy how all my net sycning is done via projectiles?
 		}
 		public override void SetDefaults()
 		{

@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Evil
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Umbra Ball");	
+			// DisplayName.SetDefault("Umbra Ball");	
 		}
         public override void SetDefaults()
         {
@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Evil
 			hitbox = new Rectangle((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width/2, width, width);
             base.ModifyDamageHitbox(ref hitbox);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			VoidPlayer.VoidBurn(Mod, target, 10, 240);
 		}

@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cataclysm Bomb");
+			// DisplayName.SetDefault("Cataclysm Bomb");
 		}
         public override void SetDefaults()
         {

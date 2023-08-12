@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Phase Thunder");
+			// DisplayName.SetDefault("Phase Thunder");
 		}
 		public override void SetDefaults()
 		{

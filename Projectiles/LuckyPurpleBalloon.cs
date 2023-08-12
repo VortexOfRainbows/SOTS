@@ -14,7 +14,7 @@ namespace SOTS.Projectiles
 		int plusY = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lucky Purple Balloon");
+			// DisplayName.SetDefault("Lucky Purple Balloon");
 			Main.projFrames[Projectile.type] = 1;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.LightPet[Projectile.type] = true;

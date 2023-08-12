@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
@@ -173,7 +174,7 @@ namespace SOTS.Items.Fishing
 			Main.tileTable[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(200, 180, 100), name);
 			TileObjectData.addTile(Type);
 		}

@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Earth
 		int helixRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Arc");
+			// DisplayName.SetDefault("Vibrant Arc");
 		}
         public override void SetDefaults()
         {

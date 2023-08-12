@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Inferno
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Incinerator Glove");
+            // DisplayName.SetDefault("Incinerator Glove");
         }
         public override void SetDefaults()
         {

@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Arc Lightning");
+			// DisplayName.SetDefault("Arc Lightning");
 		}
         public override void SetDefaults()
 		{
@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Otherworld
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if(Projectile.ai[1] <= 0)
             {

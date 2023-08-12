@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flare Flame");
+			// DisplayName.SetDefault("Flare Flame");
 		}
         public override void SetDefaults()
         {
@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Otherworld
 			height = 4;
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.AddBuff(BuffID.OnFire, 3600, false);
 		}

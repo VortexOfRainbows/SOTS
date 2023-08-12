@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 		int rotation = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Harvest Lock");
+			// DisplayName.SetDefault("Harvest Lock");
 		}
         public override void SetDefaults()
         {

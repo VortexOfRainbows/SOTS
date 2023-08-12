@@ -10,6 +10,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -38,10 +39,10 @@ namespace SOTS.Items.Conduit
 		public override int BuffType => ModContent.BuffType<NatureBoosted>();
 		public override void SafeSetStaticDefaults()
 		{
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.NaturePlatingColor, name);
 			DustType = DustID.Tungsten;
-			ItemDrop = ModContent.ItemType<NatureConduit>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NatureConduit>();
 		}
 	}
 	public class EarthenConduit : ModItem
@@ -67,10 +68,10 @@ namespace SOTS.Items.Conduit
 		public override int BuffType => ModContent.BuffType<EarthBoosted>();
 		public override void SafeSetStaticDefaults()
 		{
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
 			DustType = DustID.Iron;
-			ItemDrop = ModContent.ItemType<EarthenConduit>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenConduit>();
 		}
 	}
 	public abstract class ConduitTile : ModTile
@@ -96,10 +97,10 @@ namespace SOTS.Items.Conduit
 		}
 		public virtual void SafeSetStaticDefaults()
 		{
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(66, 93, 77), name);
 			DustType = DustID.Tungsten;
-			ItemDrop = ModContent.ItemType<NatureConduit>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NatureConduit>();
 		}
 		public sealed override bool CreateDust(int i, int j, ref int type)
 		{
@@ -154,7 +155,7 @@ namespace SOTS.Items.Conduit
 		{
 			Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
 		}
-		public sealed override bool Drop(int i, int j)
+		public sealed override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
 		{
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (tile.TileFrameY == 82)

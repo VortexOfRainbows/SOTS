@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spike Trap");
+			// DisplayName.SetDefault("Spike Trap");
 		}
         public override void SetDefaults()
         {

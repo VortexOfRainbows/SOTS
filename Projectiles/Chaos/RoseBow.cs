@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Chaos
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rose Bow");
+            // DisplayName.SetDefault("Rose Bow");
         }
         public override void SetDefaults()
         {

@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Pinky Laser");
+			// DisplayName.SetDefault("Pinky Laser");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
 
@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Laser
 				Projectile.Kill();
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 6;
         }

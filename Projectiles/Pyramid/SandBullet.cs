@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Pyramid
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sand Bullet");
+			// DisplayName.SetDefault("Sand Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.extraUpdates = 4;
 			Projectile.penetrate = -1;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player owner = Main.player[Projectile.owner];
 			if (owner.whoAmI == Main.myPlayer)

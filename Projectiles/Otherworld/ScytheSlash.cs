@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Otherworld
 		int helixRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Scythe Slash");
+			// DisplayName.SetDefault("Scythe Slash");
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Otherworld
 				dust.velocity = Projectile.velocity * 0.5f;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 10;

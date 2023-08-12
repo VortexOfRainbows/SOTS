@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Ores
 		int helixRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ark Bolt");
+			// DisplayName.SetDefault("Ark Bolt");
 		}
         public override void SetDefaults()
         {
@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Ores
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.2f;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 10;

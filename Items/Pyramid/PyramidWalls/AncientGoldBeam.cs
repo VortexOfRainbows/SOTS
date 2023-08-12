@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			ItemDrop = ModContent.ItemType<AncientGoldBeam>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AncientGoldBeam>();
 			AddMapEntry(new Color(170, 144, 18));
 		}
 	}
@@ -69,7 +69,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			ItemDrop = ModContent.ItemType<AncientGoldBrickWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AncientGoldBrickWall>();
 			AddMapEntry(new Color(150, 130, 15));
 		}
 	}

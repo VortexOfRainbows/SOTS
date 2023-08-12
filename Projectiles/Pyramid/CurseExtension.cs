@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Curse");
+			// DisplayName.SetDefault("Curse");
 		}
 		public override void SetDefaults()
 		{

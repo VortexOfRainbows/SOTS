@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Blades
 		public override Color color2 => new Color(46, 63, 77);
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vespera Slash");
+			// DisplayName.SetDefault("Vespera Slash");
 		}
 		public override void SafeSetDefaults()
 		{

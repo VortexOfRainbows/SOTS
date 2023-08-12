@@ -204,7 +204,7 @@ namespace SOTS.Projectiles.Celestial
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Ceremonial Laser");
+			// DisplayName.SetDefault("Ceremonial Laser");
 		}
 
 		public override void SetDefaults() 
@@ -232,7 +232,7 @@ namespace SOTS.Projectiles.Celestial
 				Projectile.Kill();
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 4;
         }

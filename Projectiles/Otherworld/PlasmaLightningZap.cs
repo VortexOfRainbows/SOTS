@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Lightning");
+			// DisplayName.SetDefault("Plasma Lightning");
 		}
 		public override void SetDefaults()
 		{

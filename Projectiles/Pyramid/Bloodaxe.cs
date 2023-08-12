@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bloody Hammer");
+			// DisplayName.SetDefault("Bloody Hammer");
 		}
         public override void SetDefaults()
         {

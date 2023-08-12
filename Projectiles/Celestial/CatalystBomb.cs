@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Catalyst Bomb");
+			// DisplayName.SetDefault("Catalyst Bomb");
 			Main.projFrames[Projectile.type] = 2;
 		}
         public override void SetDefaults()
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 5;
         }

@@ -10,7 +10,7 @@ namespace SOTS.Items.Tools
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worldgen Capture Visual");
+			// DisplayName.SetDefault("Worldgen Capture Visual");
 		}
 		
         public override void SetDefaults()

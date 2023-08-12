@@ -9,7 +9,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Crush");
+			// DisplayName.SetDefault("Plasma Crush");
 		}
         public override void SetDefaults()
         {

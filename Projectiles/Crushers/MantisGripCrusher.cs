@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Crushers
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Mantis Grip Crusher");
+			// DisplayName.SetDefault("Mantis Grip Crusher");
 		}
         public override void SafeSetDefaults()
         {

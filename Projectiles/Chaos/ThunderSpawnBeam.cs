@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Chaos
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thunder Beam");
+			// DisplayName.SetDefault("Thunder Beam");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()

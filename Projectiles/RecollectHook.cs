@@ -12,7 +12,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Recollect Hook");
+			// DisplayName.SetDefault("Recollect Hook");
 		}
         public override void SetDefaults()
         {

@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.BiomeChest
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sawflake");
+			// DisplayName.SetDefault("Sawflake");
 		}
         public override void SetDefaults()
         {
@@ -58,11 +58,11 @@ namespace SOTS.Projectiles.BiomeChest
 			height = 32;
             return true;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			hitDirection = initialDirection;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;

@@ -100,10 +100,10 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			string blinkKeyBind = LocalizationLoader.GetOrCreateTranslation("Mods.SOTS.KeyBindName.Blink").GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
-            string armorSetKeyBind = LocalizationLoader.GetOrCreateTranslation("Mods.SOTS.KeyBindName.ArmorSet").GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
-            string mfmKeyBind = LocalizationLoader.GetOrCreateTranslation("Mods.SOTS.KeyBindName.MFM").GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
-            BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue(blinkKeyBind), "V");//TODO: Localize it when 1.4.4 comes
+			string blinkKeyBind = Language.GetOrRegister("Mods.SOTS.KeyBindName.Blink").ToString(); //.GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
+            string armorSetKeyBind = Language.GetOrRegister("Mods.SOTS.KeyBindName.ArmorSet").ToString(); //.GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
+			string mfmKeyBind = Language.GetOrRegister("Mods.SOTS.KeyBindName.MFM").ToString(); //.GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
+			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue(blinkKeyBind), "V");//TODO: Localize it when 1.4.4 comes
 			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, armorSetKeyBind, "F");
 			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, mfmKeyBind, "C");
 			SOTSWorld.LoadUI();

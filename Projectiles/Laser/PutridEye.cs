@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Putrid Eye");
+			// DisplayName.SetDefault("Putrid Eye");
 		}
 		
         public override void SetDefaults()

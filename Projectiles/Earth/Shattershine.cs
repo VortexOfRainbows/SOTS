@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Earth
         {
             Projectile.velocity *= 1.2f;
         }
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Shattershine");
+        // public override void SetStaticDefaults() => DisplayName.SetDefault("Shattershine");
         public override void SetDefaults()
         {
             SetFlailStats(new Vector2(0.5f, 1.5f), new Vector2(1f, 1f), 2f, 50, 11);
@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Earth
             Projectile.localNPCHitCooldown = 15;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if(Main.myPlayer == Projectile.owner && released)
             {

@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Celestial
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Subspace Death Animation");
+			// DisplayName.SetDefault("Subspace Death Animation");
 		}
 		public List<Vector2> segments = new List<Vector2>();
 		public List<float> segmentsRotation = new List<float>();

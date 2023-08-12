@@ -181,7 +181,7 @@ namespace SOTS.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfOtherworld>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BladeGenerator>(), 75));
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Chaos
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hyperlight Geyser");
+            // DisplayName.SetDefault("Hyperlight Geyser");
         }
         public override void SetDefaults()
         {

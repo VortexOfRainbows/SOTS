@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Pyramid
     {	          
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gas Blast");
+			// DisplayName.SetDefault("Gas Blast");
 		}
         public override void SetDefaults()
         {
@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 80 * (Projectile.extraUpdates + 1); //nerf immunity ignoring to make it less overpowered on single target
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			target.immune[player.whoAmI] = 0;

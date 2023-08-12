@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Nature
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tree Grow");
+			// DisplayName.SetDefault("Tree Grow");
 		}
         public override void SetDefaults()
         {
@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			return true;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) 
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) 
 		{
 			Vector2 direction = new Vector2(24,0).RotatedBy(Projectile.rotation - MathHelper.ToRadians(90));
 			if(direction.X > 0)

@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Terminator Acorn");
+			// DisplayName.SetDefault("Terminator Acorn");
 		}
 		public override void SetDefaults()
 		{
@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Minions
 			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.friendly = true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.AddBuff(BuffID.OnFire, 360);
 			target.immune[Projectile.owner] = 0;

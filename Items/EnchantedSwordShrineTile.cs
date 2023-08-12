@@ -1,6 +1,7 @@
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -22,7 +23,7 @@ namespace SOTS.Items
             TileObjectData.newTile.StyleWrapLimit = 36;
             TileObjectData.addTile(Type);
             DustType = 32;
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
 		    AddMapEntry(new Color(170, 150, 85), name);
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1200;

@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Poyo-yo");
+			// DisplayName.SetDefault("Poyo-yo");
             ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 15f;
 			// YoyosLifeTimeMultiplier is how long in seconds the yoyo will stay out before automatically returning to the player. 
 			// Vanilla values range from 3f(Wood) to 16f(Chik), and defaults to -1f. Leaving as -1 will make the time infinite.

@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Earth
             Projectile.Center += Projectile.velocity;
             SetUpTrails();
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[Projectile.owner];
             hitDirection = player.direction;

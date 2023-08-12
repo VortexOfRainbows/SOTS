@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Minions
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blizzard Probe");
+			// DisplayName.SetDefault("Blizzard Probe");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 			Main.projPet[Projectile.type] = false;

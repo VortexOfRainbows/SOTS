@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Photon Laser");
+			// DisplayName.SetDefault("Photon Laser");
 		}
 
 		public override void SetDefaults() 
@@ -227,7 +227,7 @@ namespace SOTS.Projectiles.Laser
 			}
 			return target2;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 5;
         }

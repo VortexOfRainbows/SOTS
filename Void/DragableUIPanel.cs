@@ -16,17 +16,17 @@ namespace SOTS.Void
         {
             base.Draw(spriteBatch);
         }
-        public override void MouseDown(UIMouseEvent evt)
+        public override void LeftMouseDown(UIMouseEvent evt)
 		{
-			base.MouseDown(evt);
+			base.LeftMouseDown(evt);
 			if (!SOTS.Config.lockVoidBar)
 			{
 				DragStart(evt);
 			}
 		}
 
-		public override void MouseUp(UIMouseEvent evt) {
-			base.MouseUp(evt);
+		public override void LeftMouseUp(UIMouseEvent evt) {
+			base.LeftMouseUp(evt);
 			if (!SOTS.Config.lockVoidBar)
 			{
 				DragEnd(evt);

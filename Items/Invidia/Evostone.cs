@@ -22,7 +22,7 @@ namespace SOTS.Items.Invidia
 			Main.tileMerge[Type][ModContent.TileType<EvostoneBrickTile>()] = true;
 			Main.tileMerge[ModContent.TileType<EvostoneBrickTile>()][Type] = true;
 			DustType = 37; //obsidian
-			ItemDrop = ModContent.ItemType<Evostone>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Evostone>();
 			AddMapEntry(new Color(31, 39, 57));
 			HitSound = SoundID.Tink;
 		}
@@ -52,7 +52,7 @@ namespace SOTS.Items.Invidia
 			Main.tileBlendAll[Type] = true;
 			Main.tileBrick[Type] = true;
 			DustType = 37; //obsidian
-			ItemDrop = ModContent.ItemType<EvostoneBrick>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EvostoneBrick>();
 			AddMapEntry(new Color(46, 63, 77));
 			HitSound = SoundID.Tink;
 		}
@@ -77,7 +77,7 @@ namespace SOTS.Items.Invidia
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 37;
-			ItemDrop = ModContent.ItemType<EvostoneBrickWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EvostoneBrickWall>();
 			AddMapEntry(new Color(25, 38, 49));
 			HitSound = SoundID.Tink;
 		}
@@ -108,7 +108,7 @@ namespace SOTS.Items.Invidia
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 37; //obsidian
-			ItemDrop = ModContent.ItemType<DarkShingles>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<DarkShingles>();
 			AddMapEntry(new Color(82, 56, 103));
 			HitSound = SoundID.Tink;
 		}

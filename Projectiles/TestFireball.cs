@@ -12,7 +12,7 @@ namespace SOTS.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Accursed Bolt");
+            // DisplayName.SetDefault("Accursed Bolt");
             //ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
             //ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             //Main.projFrames[Projectile.type] = 6;

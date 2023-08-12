@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.scale = 1.4f;
 		}
-		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
 		{
 			if (crit && player.whoAmI == Main.myPlayer && !target.friendly && !target.immortal)
 			{

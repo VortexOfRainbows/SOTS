@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Chaos
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hyperlight Orb");
+            // DisplayName.SetDefault("Hyperlight Orb");
         }
         public override void SetDefaults()
         {

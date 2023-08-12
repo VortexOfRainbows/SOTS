@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Tide
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Riptide");
+			// DisplayName.SetDefault("Riptide");
 		}
         public override void SetDefaults()
         {

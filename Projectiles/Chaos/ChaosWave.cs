@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Chaos
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chaos Wave");
+			// DisplayName.SetDefault("Chaos Wave");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}

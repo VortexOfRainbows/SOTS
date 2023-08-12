@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Otherworld
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Arclight Bomb");
+			// DisplayName.SetDefault("Arclight Bomb");
 		}
         public override void SetDefaults()
         {
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.owner == Main.myPlayer)

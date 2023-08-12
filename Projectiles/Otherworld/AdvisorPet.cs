@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Otherworld
 		public float glow = 14f;
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Advisor Pet");
+			// DisplayName.SetDefault("Advisor Pet");
 			Main.projFrames[Projectile.type] = 1;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.LightPet[Projectile.type] = true;

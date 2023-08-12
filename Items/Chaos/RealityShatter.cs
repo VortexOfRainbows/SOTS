@@ -73,7 +73,7 @@ namespace SOTS.Items.Chaos
 				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterEffect").Value;
 			}
 		}
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			int amt = 3;
 			Projectile.NewProjectile(player.GetSource_OnHit(target), target.Center, new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), Item.shoot, (int)(damage * 0.5f), knockBack, player.whoAmI, amt, target.whoAmI);

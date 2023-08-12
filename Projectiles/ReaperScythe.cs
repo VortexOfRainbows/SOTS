@@ -44,7 +44,7 @@ namespace SOTS.Projectiles
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10 * (Projectile.extraUpdates + 1); //nerf immunity ignoring to make it less overpowered on single target
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
 			target.immune[player.whoAmI] = 0;

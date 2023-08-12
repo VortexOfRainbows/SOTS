@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -54,7 +55,7 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 0);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(220, 180, 25), name);
 			DustType = DustID.GoldCoin;
 		}
@@ -136,7 +137,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Multiplayer Code 5000");
+			// DisplayName.SetDefault("Multiplayer Code 5000");
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Mining Laser");
+			// DisplayName.SetDefault("Void Mining Laser");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}

@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Tide
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Extendo Baguette");
+            // DisplayName.SetDefault("Extendo Baguette");
         }
         public override void SetDefaults()
         {
@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Tide
         }
         float segmentDist = 16f;
         int length = 4;
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

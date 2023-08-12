@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Minions
     {
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pinky Pet");
+			// DisplayName.SetDefault("Pinky Pet");
 			Main.projFrames[Projectile.type] = 1;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.LightPet[Projectile.type] = false;

@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
 			//Item.createTile = mod.TileType("CursedAppleTile");
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.accessory = true;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
 		public override void EquipFrameEffects(Player player, EquipType type)
@@ -51,7 +51,7 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(185, 20, 40), name);
 			TileObjectData.addTile(Type);
 			HitSound = SoundID.Grass;

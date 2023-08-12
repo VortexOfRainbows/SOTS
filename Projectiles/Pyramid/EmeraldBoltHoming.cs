@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Pyramid
 		bool end = false;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Emerald Bolt");
+			// DisplayName.SetDefault("Emerald Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.extraUpdates = 3;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			UpdateEnd();
 			target.immune[Projectile.owner] = 0;

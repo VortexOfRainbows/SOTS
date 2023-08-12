@@ -17,7 +17,7 @@ namespace SOTS.Items.Otherworld.Furniture
         protected override int DustType => -1;
 		protected override void AddMapEntires()
 		{
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(174, 129, 92), name, MapChestName);
 
 			name = CreateMapEntryName(Name + "_Locked"); 

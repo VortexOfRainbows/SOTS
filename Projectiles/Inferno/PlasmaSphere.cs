@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Sphere");
+			// DisplayName.SetDefault("Plasma Sphere");
 		}
         public override void SetDefaults()
         {
@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			return Projectile.ai[0] < 0;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			float damageMult = 1f;
 			if (!ended)

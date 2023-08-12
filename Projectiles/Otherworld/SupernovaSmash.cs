@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Supernova Hammer");
+			// DisplayName.SetDefault("Supernova Hammer");
 		}
 		public override void SetDefaults()
         {
@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.localNPCHitCooldown = -1;
             Projectile.DamageType = DamageClass.Melee;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if ((double)Projectile.ai[0] >= 42.0)
                 Projectile.localAI[1] = 1f;
@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Otherworld
             }
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (target.life <= 0)
             {

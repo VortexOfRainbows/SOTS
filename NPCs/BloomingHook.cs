@@ -173,7 +173,7 @@ namespace SOTS.NPCs
 			}
 			NPC.frame = new Rectangle(0, NPC.height * frame, NPC.width, NPC.height);
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

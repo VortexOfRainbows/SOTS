@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Celestial
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starsplosion");
+			// DisplayName.SetDefault("Starsplosion");
 		}
         public override void SetDefaults()
         {

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Nature
 		public override string Texture => "SOTS/Projectiles/Nature/NatureBeat";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Blast");
+			// DisplayName.SetDefault("Nature Blast");
 		}
         public override void SetDefaults()
         {

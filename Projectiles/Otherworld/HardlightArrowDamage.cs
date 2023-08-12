@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Otherworld
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hardlight Arrow");
+			// DisplayName.SetDefault("Hardlight Arrow");
 		}
         public override void SetDefaults()
 		{

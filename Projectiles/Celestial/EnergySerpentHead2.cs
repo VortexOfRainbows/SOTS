@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Celestial
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Energy Serpent");
+			// DisplayName.SetDefault("Energy Serpent");
 		}
 		List<Vector2> segments = new List<Vector2>();
 		List<float> segmentsRotation = new List<float>();

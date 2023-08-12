@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Otherworld Lightning");
+			// DisplayName.SetDefault("Otherworld Lightning");
 		}
 		public override void SetDefaults()
 		{

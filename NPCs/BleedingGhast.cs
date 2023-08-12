@@ -117,7 +117,7 @@ namespace SOTS.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemID.Ichor, 1, 2, 5));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedCaviar>(), 10, 1, 1));
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

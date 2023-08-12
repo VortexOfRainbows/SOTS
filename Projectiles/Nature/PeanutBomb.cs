@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Nature
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Peanut Bomb");
+			// DisplayName.SetDefault("Peanut Bomb");
 		}
 		public override void SetDefaults()
         {
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Nature
 		bool runOnce = true;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Peanut Bomb");
+			// DisplayName.SetDefault("Peanut Bomb");
 		}
 		public override void SetDefaults()
 		{
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			hitbox = new Rectangle((int)(Projectile.position.X - Projectile.width/2), (int)(Projectile.position.Y - Projectile.height/2), Projectile.width * 2, Projectile.height * 2);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 5;
 			target.AddBuff(BuffID.OnFire, 120, false);

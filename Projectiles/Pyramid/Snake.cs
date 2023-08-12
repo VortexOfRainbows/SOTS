@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Pyramid
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Snakey Boi");
+			// DisplayName.SetDefault("Snakey Boi");
 		}
         public override void SetDefaults()
         {
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.Kill();
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			Player player = Main.player[Projectile.owner];
 			Projectile.friendly = false;

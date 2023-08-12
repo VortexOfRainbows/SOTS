@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Holo Platform");
+			// DisplayName.SetDefault("Holo Platform");
 		}
 		public sealed override void SetDefaults()
 		{

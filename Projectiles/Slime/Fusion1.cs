@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Slime
 		Vector2 oldVelocity;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Helix Bolt");
+			// DisplayName.SetDefault("Helix Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Slime
 			end = reader.ReadBoolean();
 		}
 		bool end = false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			end = true;

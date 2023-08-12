@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lingering Permafrost");
+			// DisplayName.SetDefault("Lingering Permafrost");
 		}
         public override void SetDefaults()
         {
@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.hostile = true;
 			Projectile.alpha = 0;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			VoidPlayer.VoidBurn(Mod, target, 10, 180);
 		}

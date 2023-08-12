@@ -126,7 +126,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.wallHouse[Type] = true;
 			Main.wallLight[Type] = true;
 			DustType = DustID.Electric;
-			ItemDrop = ModContent.ItemType<HologlassWall>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<HologlassWall>();
 			AddMapEntry(new Color(25, 120, 170));
 		}
 		public override bool KillSound(int i, int j, bool fail)

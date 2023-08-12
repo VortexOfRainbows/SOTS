@@ -49,7 +49,7 @@ namespace SOTS.NPCs.Constructs
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.rarity = 5;
 		}
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
 			NPC.damage = (int)(NPC.damage * 5 / 6);
 			NPC.lifeMax = (int)(NPC.lifeMax * 6 / 7);
@@ -187,7 +187,7 @@ namespace SOTS.NPCs.Constructs
 				}
             }
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
 			{
@@ -624,7 +624,7 @@ namespace SOTS.NPCs.Constructs
         }
         public override void SetStaticDefaults()
         {
-			DisplayName.SetDefault("Evil Construct Arm");
+			// DisplayName.SetDefault("Evil Construct Arm");
 		}
 		public bool stuck = false;
 		public int stabbyCounter = 0;

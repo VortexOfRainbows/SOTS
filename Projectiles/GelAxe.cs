@@ -9,7 +9,7 @@ namespace SOTS.Projectiles
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gel Axe");
+			// DisplayName.SetDefault("Gel Axe");
 		}
         public override void SetDefaults()
         {

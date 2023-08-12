@@ -77,7 +77,7 @@ namespace SOTS.NPCs.Constructs
 			spriteBatch.Draw(texture, drawPos, null, drawColor, dir - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			spriteBatch.Draw(texture2, drawPos, null, Color.White, dir - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

@@ -19,7 +19,7 @@ namespace SOTS.Items.Pyramid
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(0, 0, 155), name);
             HitSound = SoundID.Tink;
 			MineResist = 2.5f;

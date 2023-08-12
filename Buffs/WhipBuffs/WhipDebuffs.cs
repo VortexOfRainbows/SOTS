@@ -33,7 +33,7 @@ namespace SOTS.Buffs.WhipBuffs
 			if (!npc.HasBuff<KelpWhipCooldown>())
 				RunOnceKelpWhip = false;
 		}
-        public override void HitEffect(NPC npc, int hitDirection, double damage)
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
 		{
 			if (npc.HasBuff<KelpWhipCooldown>())
 			{
@@ -57,7 +57,7 @@ namespace SOTS.Buffs.WhipBuffs
 			}
 		}
         // Inconsistent with vanilla, increasing damage AFTER it is randomised, not before. Change to a different hook in the future.
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
 		{
 			// Only player attacks should benefit from this buff, hence the NPC and trap checks.
 			if (!projectile.npcProj && !projectile.trap && (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]))
