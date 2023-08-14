@@ -5136,7 +5136,7 @@ namespace SOTS.WorldgenHelpers
 		/// </summary>
 		public static void CleanUpFloatingTrees()
 		{
-			WorldGen.skipFramingDuringGen = false;
+			//WorldGen.SkipFramingBecauseOfGen = false;
 			for (int i = 50; i < Main.maxTilesX - 50; i++)
 			{
 				for (int j = (int)GenVars.worldSurface; j > 50; j--)
@@ -5149,7 +5149,7 @@ namespace SOTS.WorldgenHelpers
 					}
                 }
 			}
-			WorldGen.skipFramingDuringGen = true;
+			//WorldGen.SkipFramingBecauseOfGen = true;
 		}
 		public static void PlacePeanuts()
 		{

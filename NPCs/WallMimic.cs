@@ -147,9 +147,12 @@ namespace SOTS.NPCs
 				eyeSpeed += 2;
 				if(eyeSpeed >= 9000)
 				{
-					NPC.StrikeNPC(666676, 1, 0);
+					NPC.HitInfo hitInfo = new NPC.HitInfo();
+					hitInfo.InstantKill = true;
+					hitInfo.HideCombatText = true;
+					NPC.StrikeNPC(hitInfo, false, true);
 					if (Main.netMode != NetmodeID.SinglePlayer)
-						NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, 666676, 1, 0, 0, 0, 0);
+						NetMessage.SendStrikeNPC(NPC, hitInfo, Main.myPlayer);
 				}
 			}
 			return !dropSpecial;
@@ -311,9 +314,9 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 40.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 40.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Sand, (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Sand, (float)(2 * hit.HitDirection), -2f);
 					num++;
 				}
 			}
@@ -321,7 +324,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 60; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Sand, (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Sand, (float)(2 * hit.HitDirection), -2f);
 				}
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore1"), 1f);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/WallMimicGore2"), 1f);

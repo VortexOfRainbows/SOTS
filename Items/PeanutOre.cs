@@ -7,6 +7,7 @@ using SOTS.Items.Potions;
 using SOTS.Items.Slime;
 using SOTS.Items.Void;
 using SOTS.Projectiles.Permafrost;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -29,7 +30,6 @@ namespace SOTS.Items
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			MineResist = 1f;
 			DustType = DustID.Dirt;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Peanut>();
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(154, 78, 15), name);
 			HitSound = SoundID.Dig;
@@ -51,7 +51,7 @@ namespace SOTS.Items
 			SOTSTile.DrawSlopedGlowMask(i, j, Type, Terraria.GameContent.TextureAssets.Tile[TileID.Dirt].Value, Lighting.GetColor(i, j, WorldGen.paintColor(Main.tile[i, j].TileColor)), Vector2.Zero, false);
             return true;
         }
-        public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
 		{
 			int peanutDropAmt = 1;
 			int evostoneDropAmt = 1;
@@ -59,19 +59,18 @@ namespace SOTS.Items
 				evostoneDropAmt++;
 			else if (Main.rand.NextBool(6))
 				peanutDropAmt++;
-			if(!Main.rand.NextBool(100))
+			if (!Main.rand.NextBool(100))
 			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Peanut>(), peanutDropAmt);
+				yield return new Item(ModContent.ItemType<Peanut>(), peanutDropAmt);
 			}
 			else
 			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<RoastedPeanuts>(), 1);
+				yield return new Item(ModContent.ItemType<RoastedPeanuts>(), 1);
 			}
 			if (Main.rand.NextBool(100))
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Fragments.FragmentOfNature>(), 1);
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Evostone>(), evostoneDropAmt);
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.DirtBlock, 1);
-			return false;
+				yield return new Item(ModContent.ItemType<Fragments.FragmentOfNature>(), 1);
+			yield return new Item(ModContent.ItemType<Evostone>(), evostoneDropAmt);
+			yield return new Item(ItemID.DirtBlock, 1);
         }
     }
 	/*public class PeanutOre : ModItem

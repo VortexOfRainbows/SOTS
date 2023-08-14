@@ -14,7 +14,11 @@ namespace SOTS.Items.Furniture.AncientGold
 {
 	public class AncientGoldTorch : ModItem
 	{
-		public override void SetStaticDefaults() => this.SetResearchCost(100);
+		public override void SetStaticDefaults()
+		{
+			this.SetResearchCost(100);
+			ItemID.Sets.Torches[Type] = true;
+		}
 		public override void SetDefaults()
 		{
 			Item.width = 14;
@@ -48,10 +52,6 @@ namespace SOTS.Items.Furniture.AncientGold
 			{
 				Lighting.AddLight((int)((Item.position.X + Item.width / 2) / 16f), (int)((Item.position.Y + Item.height / 2) / 16f), 1.1f, 0.9f, 0.9f);
 			}
-		}
-		public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)/* tModPorter Note: Removed. Use ItemID.Sets.Torches[Type], ItemID.Sets.WaterTorches[Type], and ItemID.Sets.Glowsticks[Type] in SetStaticDefaults */
-		{
-			dryTorch = true;
 		}
 		public override void AddRecipes()
 		{
@@ -87,7 +87,6 @@ namespace SOTS.Items.Furniture.AncientGold
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 220, 100), name);
 			DustType = DustID.GoldCoin;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<AncientGoldTorch>();
 			AdjTiles = new int[] { TileID.Torches };
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;

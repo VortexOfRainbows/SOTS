@@ -36,9 +36,9 @@ namespace SOTS.Items.Furniture.Earthen
         {
             return false;
         }
-        protected override string GetChestName()
+        protected override LocalizedText GetChestName()
         {
-            return Language.GetTextValue("Mods.SOTS.ContainerName.EarthenPlatingStorageTile");
+            return Language.GetText("Mods.SOTS.ContainerName.EarthenPlatingStorageTile");
         }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<EarthenPlatingStorage>();

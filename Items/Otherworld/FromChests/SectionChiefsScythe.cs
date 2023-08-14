@@ -62,20 +62,20 @@ namespace SOTS.Items.Otherworld.FromChests
         {
 			knockback *= 3;
         }
-        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			if(crit)
+			if (hit.Crit)
 			{
 				BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
-				if (crit && Main.myPlayer == player.whoAmI)
+				if (hit.Crit && Main.myPlayer == player.whoAmI)
 				{
-					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), damage + modPlayer.soulDamage, 1f, player.whoAmI);
+					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), damageDone + modPlayer.soulDamage, 1f, player.whoAmI);
 				}
 			}
 		}
-		public override int GetVoid(Player player)
+        public override int GetVoid(Player player)
 		{
-			return  10;
+			return 10;
 		}
 		public override void AddRecipes()
 		{

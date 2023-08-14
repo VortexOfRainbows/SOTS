@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Void;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -135,16 +136,14 @@ namespace SOTS.Items.Earth.Glowmoth
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<GlowSilk>();
 			AddMapEntry(new Color(93, 99, 144));
 			MineResist = 1.0f;
 			HitSound = SoundID.Dig;
 			DustType = DustID.Silk;
 		}
-        public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */, 1 + Main.rand.Next(3));
-			return false;
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<GlowSilk>(), 1 + Main.rand.Next(3));
         }
     }
 }

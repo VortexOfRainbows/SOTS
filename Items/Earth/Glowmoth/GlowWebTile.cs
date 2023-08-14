@@ -29,7 +29,6 @@ namespace SOTS.Items.Earth.Glowmoth
 			AddMapEntry(new Color(30, 120, 170));
 			HitSound = SoundID.Grass;
 			DustType = DustID.Silk;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<GlowSilk>();
 		}
         public override bool CreateDust(int i, int j, ref int type)
         {
@@ -57,10 +56,6 @@ namespace SOTS.Items.Earth.Glowmoth
 			Texture2D texture = TextureAssets.Tile[Type].Value;
 			SOTSTile.DrawSlopedGlowMask(i, j, Type, texture, Color.Lerp(Lighting.GetColor(i, j), Color.White, 0.2f) * 0.6f, Vector2.Zero, false);
 			return false;
-        }
-        public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
-		{
-			return true;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{

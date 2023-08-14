@@ -35,10 +35,16 @@ Update Objectives:
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 5. Glow Nylon Whip
 
+Needed After Porting:
+1. Make sure wall mimic secret works (strike npc stuff)
+
+
 Daily Log:
 
-Goals:
-Release Patch, as it is now ready to go!
+8/13/23
+1. Porting and consequences:
+	1. Ancient steel melee weapons no longer to bonus bonus knockback on crit
+2. Certain on death and on hit effects that were previously projectile only now occur with melee hits
 
 
 -- Hotfix Released 0.23.1 on 8/11/23 --

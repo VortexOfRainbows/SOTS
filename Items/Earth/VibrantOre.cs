@@ -45,7 +45,6 @@ namespace SOTS.Items.Earth
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<VibrantOre>();
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(123, 166, 36), name);
 			MineResist = 1.0f;
@@ -83,11 +82,11 @@ namespace SOTS.Items.Earth
 			HitSound = SoundID.Item27;
 			DustType = ModContent.DustType<VibrantDust>();
 		}
-        public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
+        public override bool CanDrop(int i, int j)
         {
-            return false;
+			return false;
         }
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
 			bool canLive = ModifyFrames(i, j);
 			if (!canLive)

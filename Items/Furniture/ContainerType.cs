@@ -34,13 +34,16 @@ namespace SOTS.Items.Furniture
 		protected virtual int ChestKey => ItemID.GoldenKey;
 		protected virtual int ChestDrop => ItemID.Chest;
         protected virtual int DustType => DustID.Dirt;
-        protected virtual string GetChestName()
+        protected virtual LocalizedText GetChestName()
         {
-			return "Chest";
+			return LocalizedText.Empty;
 		}
+        public override LocalizedText DefaultContainerName(int frameX, int frameY)
+        {
+            return GetChestName();
+        }
         public override void SetStaticDefaults()
 		{
-			ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault(GetChestName());
 			ChestStatics();
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
@@ -56,7 +59,6 @@ namespace SOTS.Items.Furniture
 
             base.DustType = this.DustType;
             AdjTiles = new int[] { TileID.Containers };
-            base.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ChestDrop;
 		}
 
 		public override ushort GetMapOption(int i, int j)

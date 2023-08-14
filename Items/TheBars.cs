@@ -182,7 +182,7 @@ namespace SOTS.Items
 				Main.spriteBatch.Draw(texture, tilePosition, frame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
-		public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */
+		/* public override bool Drop(int i, int j)tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether.
 		{
 			Tile tile = Main.tile[i, j];
 			int style = tile.TileFrameX / 18;
@@ -223,8 +223,8 @@ namespace SOTS.Items
 			{
 				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
 			}
-			return base.Drop(i, j);
-		}
+			return base.Drop(i, j); 
+	}*/
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];

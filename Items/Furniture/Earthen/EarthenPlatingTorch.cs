@@ -13,7 +13,11 @@ namespace SOTS.Items.Furniture.Earthen
 {
 	public class EarthenPlatingTorch : ModItem
 	{
-		public override void SetStaticDefaults() => this.SetResearchCost(100);
+		public override void SetStaticDefaults()
+		{
+			this.SetResearchCost(100);
+			ItemID.Sets.Torches[Type] = true;
+		}
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.Torch);
@@ -32,10 +36,6 @@ namespace SOTS.Items.Furniture.Earthen
 			{
 				Lighting.AddLight(new Vector2((Item.position.X + Item.width / 2) / 16f, (Item.position.Y + Item.height / 2) / 16f), SOTSTile.EarthenPlatingLight * 2.7f);
 			}
-		}
-		public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)/* tModPorter Note: Removed. Use ItemID.Sets.Torches[Type], ItemID.Sets.WaterTorches[Type], and ItemID.Sets.Glowsticks[Type] in SetStaticDefaults */
-		{
-			dryTorch = true;
 		}
 		public override void AddRecipes()
 		{
@@ -85,7 +85,6 @@ namespace SOTS.Items.Furniture.Earthen
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
 			DustType = DustID.GoldCoin;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlatingTorch>();
 			AdjTiles = new int[] { TileID.Torches };
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;

@@ -567,7 +567,7 @@ namespace SOTS
 			if(detect.Y != 0f)
 			{
 				int damage3 = Main.DamageVar(50);
-				Player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, false, 0);
+				Player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, -1, false, knockback: 3.0f);
 			}
 		}
 		int fireIcoCD = 0;
@@ -701,7 +701,10 @@ namespace SOTS
 				Player.GetDamage(DamageClass.Generic) += Player.statDefense * 0.01f;
 			previousDefense = Player.statDefense;
 			if (DevilRing)
-				Player.statDefense = (int)Math.Sqrt(previousDefense);
+			{
+				Player.statDefense *= 0;
+				Player.statDefense += (int)Math.Sqrt(previousDefense);
+			}
 			DevilRing = false;
 			hasSoaringInsigniaFake = false;
 			if (!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia)
@@ -1126,45 +1129,84 @@ namespace SOTS
 				}
 			}
 		}
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
+		public override void OnHitNPCWithProj(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
 		{
-			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit, false);
+			if (hit.Crit && CritNightmare && projectile != null && projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())
+			{
+				if (nightmareArmCD <= 0)
+				{
+					nightmareArmCD = 360;
+					if (Main.myPlayer == Player.whoAmI)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilGrowth>(), (int)(hit.Damage * 0.1f), 0, Player.whoAmI, 0, target.whoAmI);
+					}
+				}
+			}
+			DebuffNPC instancedTarget = target.GetGlobalNPC<DebuffNPC>();
+			if (target.life <= 0)
+			{
+				if (AmmoRegather && projectile != null)
+				{
+					if (projectile.owner == Main.myPlayer)
+						instancedTarget.AddAmmoToList(projectile); //since the ammo adding happens soley on clientn, and the kill function is called on player, ammo regathering only occurs to the player who gets the final kill
+					List<int> localizedAmmoList = instancedTarget.ammoRegatherList;
+					for (int i = 0; i < localizedAmmoList.Count; i++)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
+					}
+				}
+			}
+			if (Main.myPlayer == Player.whoAmI && AmmoRegather && !target.immortal && projectile != null)
+			{
+				if (projectile.CountsAsClass(DamageClass.Ranged))
+				{
+					SOTSProjectile instancedProj = projectile.GetGlobalProjectile<SOTSProjectile>();
+					int ammoType = instancedProj.AmmoUsedID;
+					if (instancedProj.AmmoUsedID >= 0)
+					{
+						float chance = AmmoRegatherDelay / 120f * 0.12f; //12% base chance to regather ammo, but decreases every successful regather to 0%, linearly coming back to 12% after 2 seconds
+						if (Main.rand.NextFloat(1) < chance)
+						{
+							Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(5f, 7f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, ammoType);
+							AmmoRegatherDelay = 0;
+						}
+						else //only add to NPC ammo count if missed initial chance of regather
+						{
+							instancedTarget.AddAmmoToList(projectile);
+						}
+					}
+				}
+			}
 		}
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
 		{
-			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit, false);
+			if (hit.Crit && CritNightmare)
+			{
+				if (nightmareArmCD <= 0)
+				{
+					nightmareArmCD = 360;
+					if (Main.myPlayer == Player.whoAmI)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilGrowth>(), (int)(hit.Damage * 0.1f), 0, Player.whoAmI, 0, target.whoAmI);
+					}
+				}
+			}
+			DebuffNPC instancedTarget = target.GetGlobalNPC<DebuffNPC>();
+			if (target.life <= 0)
+			{
+				if (AmmoRegather)
+				{
+					//since the ammo adding happens soley on clientn, and the kill function is called on player, ammo regathering only occurs to the player who gets the final kill
+					List<int> localizedAmmoList = instancedTarget.ammoRegatherList;
+					for (int i = 0; i < localizedAmmoList.Count; i++)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
+					}
+				}
+			}
 		}
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
 		{
-			if (Main.myPlayer == Player.whoAmI && OnHitCD <= 0)
-			{
-				if(damage > 5)
-				{
-					if (shardOnHit > 0)
-					{
-						for (int i = 0; i < shardOnHit; i++)
-						{
-							Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f / shardOnHit)));
-							Projectile.NewProjectile(Player.GetSource_Misc("PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, Player.whoAmI);
-						}
-					}
-					if (CactusSpineDamage > 0)
-					{
-						int amt = Main.rand.Next(14, 24);
-						for (int i = 0; i < 18; i++)
-						{
-							Vector2 circularSpeed = new Vector2(0, -Main.rand.NextFloat(1.6f, 2.8f)).RotatedBy(MathHelper.ToRadians(i * (360f / amt)) + Main.rand.NextFloat(-5, 5));
-							Projectile.NewProjectile(Player.GetSource_Misc("PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<CactusSpine>(), CactusSpineDamage, 1.5f, Player.whoAmI);
-						}
-					}
-				}
-				if (OnHitCD <= 0)
-				{
-					onhitdamage = damage;
-					onhit = 2;
-				}
-				OnHitCD = 15;
-			}
 			if (ParticleRelocator)
 			{
 				NPC collidingNPC = null;
@@ -1186,35 +1228,65 @@ namespace SOTS
 					Vector2 otherSide = new Vector2(collidingNPC.Center.X + (collidingNPC.width / 2 + 96) * direction, Player.Center.Y - 16 + toNPC.X * 0.1f);
 					Projectile.NewProjectile(new EntitySource_OnHit(collidingNPC, Player), Player.Center, toNPC.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<RelocatorBeam>(), Player.statDefense + 1, collidingNPC.whoAmI, Player.whoAmI, otherSide.X, otherSide.Y);
 					Player.AddBuff(BuffID.ChaosState, 20);
-					damage = 0;
+					modifiers.FinalDamage *= 0; //Take no damage from colliding
 					Player.immuneTime = 4;
 					Player.immune = true;
-					return false;
 				}
 			}
-			if(Main.myPlayer == Player.whoAmI)
+		}
+        public override void OnHurt(Player.HurtInfo info)
+		{
+			if (Main.myPlayer == Player.whoAmI)
 			{
-				int finalDamage = (int)Main.CalculateDamagePlayersTake(damage, Player.statDefense);
+				int finalDamage = (int)info.Damage;
 				if (VMincubator && finalDamage < Player.statLife && !Player.HasBuff(ModContent.BuffType<DilationSickness>()))
 				{
-					if (!pvp)
+					if (!info.PvP)
 					{
 						SOTSWorld.SetTimeFreeze(Player, 240 + finalDamage);
 					}
 				}
 				else if (VoidAnomaly)
 				{
-					if (!pvp)
+					if (!info.PvP)
 					{
 						Player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 240 + finalDamage, true);
 					}
 				}
 			}
+			if (Main.myPlayer == Player.whoAmI && OnHitCD <= 0)
+			{
+				if (info.Damage > 5)
+				{
+					if (shardOnHit > 0)
+					{
+						for (int i = 0; i < shardOnHit; i++)
+						{
+							Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f / shardOnHit)));
+							Projectile.NewProjectile(Player.GetSource_Misc("PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, Player.whoAmI);
+						}
+					}
+					if (CactusSpineDamage > 0)
+					{
+						int amt = Main.rand.Next(14, 24);
+						for (int i = 0; i < 18; i++)
+						{
+							Vector2 circularSpeed = new Vector2(0, -Main.rand.NextFloat(1.6f, 2.8f)).RotatedBy(MathHelper.ToRadians(i * (360f / amt)) + Main.rand.NextFloat(-5, 5));
+							Projectile.NewProjectile(Player.GetSource_Misc("PreHurt by anything"), Player.Center, circularSpeed, ModContent.ProjectileType<CactusSpine>(), CactusSpineDamage, 1.5f, Player.whoAmI);
+						}
+					}
+				}
+				if (OnHitCD <= 0)
+				{
+					onhitdamage = info.Damage;
+					onhit = 2;
+				}
+				OnHitCD = 15;
+			}
 			if (MasochistRing && Main.myPlayer == Player.whoAmI)
 				GrantRandomRingBuff(Player);
-			return base.ModifyHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
 		}
-		int shotCounter = 0;
+        int shotCounter = 0;
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			shotCounter++;
@@ -1272,214 +1344,152 @@ namespace SOTS
 				return 1f / standard;
 			return base.UseTimeMultiplier(item);
 		}
-		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */
+		public override void ModifyHitNPCWithProj(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */
 		{
-			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit, true);
-		}
-		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ 
-		{
-			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit, true);
-		}
-		public void ModifyHitNPCGeneral(NPC target, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit, bool isModify = false)
-		{
-			Entity hitter = Player;
-			if (projectile != null)
+			if (SparkleDamage && !target.immortal)
 			{
-				hitter = projectile;
+				if (Main.myPlayer == Player.whoAmI && (target.lifeMax <= target.life) && (projectile == null || projectile.type != ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>()))
+				{
+					float direction = Player.direction;
+					if (projectile != null)
+						direction = Math.Sign(projectile.velocity.X);
+					for (int i = 0; i < 10; i++)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(projectile, target), target.Center, new Vector2(1, 0) * direction, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 1f, Main.myPlayer, target.whoAmI, 4 + 6 * i);
+					}
+				}
 			}
-			else if (item == null)
-				return;
-			if(isModify)
+		}
+		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */
+		{
+			float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
+			if (item.type == ModContent.ItemType<AncientSteelSword>() || item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
 			{
-				if (SparkleDamage && !target.immortal)
+				damageMultiplier += 0.5f;
+			}
+			modifiers.CritDamage *= damageMultiplier;
+		}
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+		{
+			if (ModPlayer(Player).SpiritSymphony)
+			{
+				if (target.type != ModContent.NPCType<Lux>() && DebuffNPC.spirits.Contains(target.type))
 				{
-					if (Main.myPlayer == Player.whoAmI && (target.lifeMax <= target.life) && (projectile == null || projectile.type != ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>()))
+					modifiers.FinalDamage *= 2;
+				}
+			}
+			modifiers.CritDamage.Flat += CritBonusDamage;
+		}
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			if (curseVisionCounter >= 60)
+			{
+				if (target.HasBuff(ModContent.BuffType<CurseVision>()))
+				{
+					curseVisionCounter = -60;
+					if (Main.myPlayer == Player.whoAmI)
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<VisionFlare>(), (int)(hit.Damage * 1.4f), 0, Player.whoAmI);
+				}
+			}
+			if(hit.Crit)
+			{
+				if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
+				{
+					maxCritManastealPerSecondTimer -= CritManasteal;
+					if (Main.myPlayer == Player.whoAmI)
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 1, 0, Player.whoAmI, CritManasteal, 3);
+				}
+				if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
+				{
+					maxCritLifestealPerSecondTimer -= CritLifesteal;
+					if (Main.myPlayer == Player.whoAmI)
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 0, 0, Player.whoAmI, CritLifesteal, 6);
+				}
+				if (CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
+				{
+					maxCritVoidStealPerSecondTimer -= CritVoidsteal;
+					if (Main.myPlayer == Player.whoAmI)
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 2, 0, Player.whoAmI, CritVoidsteal, 5);
+				}
+				int randBuff = Main.rand.Next(3);
+				if (randBuff == 2 && CritCurseFire)
+				{
+					bool canTrigger = Main.rand.NextFloat(1) >= 1 * (cursedIcoCD / 120f);
+					if (canTrigger)
 					{
-						float direction = Player.direction;
-						if (projectile != null)
-							direction = Math.Sign(projectile.velocity.X);
-						for (int i = 0; i < 10; i++)
+						cursedIcoCD = 180;
+						SOTSUtils.PlaySound(SoundID.Item93, (int)target.Center.X, (int)target.Center.Y, 0.9f);
+						target.AddBuff(BuffID.CursedInferno, 900, false);
+						int numberProjectiles = 4;
+						int rand = Main.rand.Next(360);
+						if (Main.myPlayer == Player.whoAmI)
 						{
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(1, 0) * direction, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 1f, Main.myPlayer, target.whoAmI, 4 + 6 * i);
+							for (int i = 0; i < numberProjectiles; i++)
+							{
+								Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), hit.Damage, 0, Player.whoAmI, 2);
+							}
 						}
 					}
 				}
-				if (ModPlayer(Player).SpiritSymphony)
+				else if (randBuff == 1 && (CritFrost || CritCurseFire))
 				{
-					if (target.type != ModContent.NPCType<Lux>() && DebuffNPC.spirits.Contains(target.type))
+					bool canTrigger = Main.rand.NextFloat(1) >= 1 * (iceIcoCD / 120f);
+					if (canTrigger)
 					{
-						damage *= 2;
+						iceIcoCD = 180;
+						target.AddBuff(BuffID.Frostburn, 900, false);
+						if (Main.myPlayer == Player.whoAmI)
+						{
+							if (CritFrost)
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), hit.Damage * 2, 0, Player.whoAmI, 3);
+							else
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), hit.Damage, 0, Player.whoAmI, 3);
+						}
 					}
 				}
-				if (crit)
-                {
-					float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
-					if(item != null)
-                    {
-						if(item.type == ModContent.ItemType<AncientSteelSword>() || item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
-                        {
-							knockback += 2f;
-							damageMultiplier += 0.5f;
-                        }
-                    }
-					damage = (int)(damage * damageMultiplier);
-                }
-				if (curseVisionCounter >= 60)
+				else if (randBuff == 0 && (CritFire || CritCurseFire))
 				{
-					if (target.HasBuff(ModContent.BuffType<CurseVision>()))
+					bool canTrigger = Main.rand.NextFloat(1) >= 1 * (fireIcoCD / 120f);
+					if (canTrigger)
 					{
-						curseVisionCounter = -60;
+						fireIcoCD = 180;
+						target.AddBuff(BuffID.OnFire, 900, false);
 						if (Main.myPlayer == Player.whoAmI)
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<VisionFlare>(), (int)(damage * 1.4f), 0, Player.whoAmI);
-					}
-				}
-				if (crit)
-				{
-					if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
-					{
-						maxCritManastealPerSecondTimer -= CritManasteal;
-						if (Main.myPlayer == Player.whoAmI)
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 1, 0, Player.whoAmI, CritManasteal, 3);
-					}
-					if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
-					{
-						maxCritLifestealPerSecondTimer -= CritLifesteal;
-						if (Main.myPlayer == Player.whoAmI)
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 0, 0, Player.whoAmI, CritLifesteal, 6);
-					}
-					if (CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
-					{
-						maxCritVoidStealPerSecondTimer -= CritVoidsteal;
-						if (Main.myPlayer == Player.whoAmI)
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 2, 0, Player.whoAmI, CritVoidsteal, 5);
-					}
-					damage += CritBonusDamage;
-					int randBuff = Main.rand.Next(3);
-					if (randBuff == 2 && CritCurseFire)
-					{
-						bool canTrigger = Main.rand.NextFloat(1) >= 1 * (cursedIcoCD / 120f);
-						if(canTrigger)
 						{
-							cursedIcoCD = 180;
-							SOTSUtils.PlaySound(SoundID.Item93, (int)target.Center.X, (int)target.Center.Y, 0.9f);
-							target.AddBuff(BuffID.CursedInferno, 900, false);
-							int numberProjectiles = 4;
-							int rand = Main.rand.Next(360);
-							if (Main.myPlayer == Player.whoAmI)
+							if (CritCurseFire && CritFire)
 							{
-								for (int i = 0; i < numberProjectiles; i++)
-								{
-									Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
-									Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), damage, 0, Player.whoAmI, 2);
-								}
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), hit.Damage * 2, 0, Player.whoAmI, 3);
 							}
-						}
-					}
-					else if (randBuff == 1 && (CritFrost || CritCurseFire))
-					{
-						bool canTrigger = Main.rand.NextFloat(1) >= 1 * (iceIcoCD / 120f);
-						if (canTrigger)
-						{
-							iceIcoCD = 180;
-							target.AddBuff(BuffID.Frostburn, 900, false);
-							if (Main.myPlayer == Player.whoAmI)
-							{
-								if (CritFrost)
-									Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), damage * 2, 0, Player.whoAmI, 3);
-								else
-									Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), damage, 0, Player.whoAmI, 3);
-							}
-						}
-					}
-					else if (randBuff == 0 && (CritFire || CritCurseFire))
-					{
-						bool canTrigger = Main.rand.NextFloat(1) >= 1 * (fireIcoCD / 120f);
-						if (canTrigger)
-						{
-							fireIcoCD = 180;
-							target.AddBuff(BuffID.OnFire, 900, false);
-							if (Main.myPlayer == Player.whoAmI)
-							{
-								if (CritCurseFire && CritFire)
-								{
-									Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), damage * 2, 0, Player.whoAmI, 3);
-								}
-								else
-									Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), damage, 0, Player.whoAmI, 3);
-							}
-						}
-					}
-					if (CritNightmare && projectile != null && projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())
-					{
-						if (nightmareArmCD <= 0)
-						{
-							nightmareArmCD = 360;
-							if (Main.myPlayer == Player.whoAmI)
-							{
-								Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilGrowth>(), (int)(damage * 0.1f), 0, Player.whoAmI, 0, target.whoAmI);
-							}
+							else
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), hit.Damage, 0, Player.whoAmI, 3);
 						}
 					}
 				}
 			}
-			else
+			if (target.life <= 0)
 			{
-				DebuffNPC instancedTarget = target.GetGlobalNPC<DebuffNPC>();
-				if (target.life <= 0)
+				if (Main.myPlayer == Player.whoAmI)
+				{
+					if (BlueFireOrange && BlueFire)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.Damage * 0.7f), 0, Main.myPlayer, 2);
+					}
+					else if (BlueFire)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.Damage * 0.4f), 0, Main.myPlayer);
+					}
+					else if (BlueFireOrange)
+					{
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.Damage * 0.3f), 0, Main.myPlayer, 1);
+					}
+				}
+				if (SadistRing)
 				{
 					if (Main.myPlayer == Player.whoAmI)
-					{
-						if(BlueFireOrange && BlueFire)
-						{
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.7f), 0, Main.myPlayer, 2);
-						}
-						else if (BlueFire)
-						{
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.4f), 0, Main.myPlayer);
-						}
-						else if (BlueFireOrange)
-						{
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.3f), 0, Main.myPlayer, 1);
-						}
-					}
-					if (SadistRing)
-					{
-						if (Main.myPlayer == Player.whoAmI)
-							GrantRandomRingBuff(Player);
-					}
-					if(AmmoRegather && projectile != null)
-                    {
-						if (projectile.owner == Main.myPlayer)
-							instancedTarget.AddAmmoToList(projectile); //since the ammo adding happens soley on clientn, and the kill function is called on player, ammo regathering only occurs to the player who gets the final kill
-						List<int> localizedAmmoList = instancedTarget.ammoRegatherList;
-						for(int i = 0; i < localizedAmmoList.Count; i++)
-						{
-							Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
-						}
-                    }
+						GrantRandomRingBuff(Player);
 				}
-				if(Main.myPlayer == Player.whoAmI && AmmoRegather && !target.immortal && projectile != null)
-                {
-					if(projectile.CountsAsClass(DamageClass.Ranged))
-					{
-						SOTSProjectile instancedProj = projectile.GetGlobalProjectile<SOTSProjectile>();
-						int ammoType = instancedProj.AmmoUsedID;
-						if(instancedProj.AmmoUsedID >= 0)
-						{
-							float chance = AmmoRegatherDelay / 120f * 0.12f; //12% base chance to regather ammo, but decreases every successful regather to 0%, linearly coming back to 12% after 2 seconds
-							if(Main.rand.NextFloat(1) < chance)
-							{
-								Projectile.NewProjectile(new EntitySource_OnHit(hitter, target), target.Center, new Vector2(Main.rand.NextFloat(5f, 7f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, ammoType);
-								AmmoRegatherDelay = 0;
-							}
-							else //only add to NPC ammo count if missed initial chance of regather
-							{
-								instancedTarget.AddAmmoToList(projectile);
-							}
-						}
-					}
-                }
-            }
+			}
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {
