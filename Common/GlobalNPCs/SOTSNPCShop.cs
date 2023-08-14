@@ -43,21 +43,15 @@ namespace SOTS.Common.GlobalNPCs
 				nextSlot++;
 			}
 		}
-		public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
-		{	
-            switch (type)
-            {
-                case NPCID.Merchant: 
-					if (Main.LocalPlayer.HasItem(ModContent.ItemType<FlareDetonator>()))
-					{
-						shop.item[nextSlot].SetDefaults(ModContent.ItemType<BlackFlare>());
-						nextSlot++;
-					}
-                    break;
-				case NPCID.Mechanic:
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<CrushingTransformer>());
-					nextSlot++;
-					break;
+        public override void ModifyShop(NPCShop shop)
+        {
+			if(shop.NpcType == NPCID.Mechanic)
+			{
+				shop.Add(ModContent.ItemType<CrushingTransformer>());
+			}
+			if (shop.NpcType == NPCID.Merchant)
+			{
+				shop.Add(ModContent.ItemType<BlackFlare>(), Condition.PlayerCarriesItem(ModContent.ItemType<FlareDetonator>()));
 			}
 		}
     }

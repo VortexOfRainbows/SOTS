@@ -83,7 +83,6 @@ namespace SOTS.Items.Otherworld
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
 		{
 			SpawnSouls();
-			return base.ModifyHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
 		}
 	}
 }

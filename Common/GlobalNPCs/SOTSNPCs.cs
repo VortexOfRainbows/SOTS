@@ -161,13 +161,13 @@ namespace SOTS.Common.GlobalNPCs
 				if (npc.life > 0)
 				{
 					int num = 0;
-					while (num < damage / npc.lifeMax * 40.0)
+					while (num < hit.Damage / npc.lifeMax * 40.0)
 					{
 						if (Main.rand.NextBool(3))
-							Dust.NewDust(npc.position, npc.width, npc.height, DustID.Gold, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+							Dust.NewDust(npc.position, npc.width, npc.height, DustID.Gold, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 						else
 						{
-							Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+							Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 						}
 						num++;
 					}
@@ -179,13 +179,13 @@ namespace SOTS.Common.GlobalNPCs
 						{
 							if (k % 4 == 0)
 							{
-								Dust.NewDust(npc.position, npc.width, npc.height, 242, (float)(2 * hitDirection), -2f, 0, default, 2f);
+								Dust.NewDust(npc.position, npc.width, npc.height, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 							}
 							if (Main.rand.NextBool(3))
-								Dust.NewDust(npc.position, npc.width, npc.height, DustID.Gold, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+								Dust.NewDust(npc.position, npc.width, npc.height, DustID.Gold, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 							else
 							{
-								Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+								Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 							}
 						}
 						if(npc.type == ModContent.NPCType<PhaseAssaulterHead>())
@@ -201,7 +201,7 @@ namespace SOTS.Common.GlobalNPCs
                                 {
 									if(Main.rand.NextBool(3))
 									{
-										Dust.NewDust(tail.trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hitDirection), -2f, 0, default, 2f);
+										Dust.NewDust(tail.trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 									}
                                 }
                             }
@@ -210,7 +210,6 @@ namespace SOTS.Common.GlobalNPCs
 					}
 				}
 			}
-            base.HitEffect(npc, hitDirection, damage);
         }
         public void SetDebuffImmunities(NPC npc)
         {
@@ -221,31 +220,32 @@ namespace SOTS.Common.GlobalNPCs
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
 		{
-			hitBy(npc, player, null, item, ref damage, ref knockback, ref crit);
-			base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
+			Assassinate(npc, player, ref modifiers);
 		}
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
 		{
-			hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
-			base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
+			Assassinate(npc, Main.player[projectile.owner], ref modifiers);
         }
-		public void hitBy(NPC npc, Player player, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyIncomingHit(npc, ref modifiers);
+        }
+        public void Assassinate(NPC npc, Player player, ref NPC.HitModifiers modifiers)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			//VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (modPlayer.assassinate && !npc.boss)
 			{
 				npc.AddBuff(ModContent.BuffType<Assassination>(), 30 * modPlayer.assassinateFlat);
 				float mult = 1 - modPlayer.assassinateNum;
-				int life = npc.life - (damage - (npc.defense + 1) / 2);
-				if ((life < npc.lifeMax * mult || life <= modPlayer.assassinateFlat) && npc.HasBuff(ModContent.BuffType<Assassination>()))
+				int life = npc.life;
+				if (life < npc.lifeMax * mult && npc.HasBuff(ModContent.BuffType<Assassination>()))
 				{
-					damage += 2 * (life + modPlayer.assassinateFlat + ((npc.defense + 1) / 2));
-					//crit = true;
+					modifiers.SetInstantKill();
 					for (int i = 0; i < 60; i++)
 					{
 						Vector2 rotate = new Vector2(npc.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 120 + npc.whoAmI * 7 + 120 * i));
-						int num1 = Dust.NewDust(new Vector2(npc.Center.X + rotate.X - 4, npc.Center.Y + rotate.Y - 4), 0, 0, 235);
+						int num1 = Dust.NewDust(new Vector2(npc.Center.X + rotate.X - 4, npc.Center.Y + rotate.Y - 4), 0, 0, DustID.LifeDrain);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].scale *= 2f;
 						Main.dust[num1].velocity *= 1.5f;

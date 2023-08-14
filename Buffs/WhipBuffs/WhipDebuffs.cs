@@ -64,7 +64,7 @@ namespace SOTS.Buffs.WhipBuffs
 			{
 				if(npc.HasBuff<KelpWhipBuff>() && !npc.HasBuff<KelpWhipCooldown>())
 				{
-					crit = true;
+					modifiers.SetCrit();
 					npc.DelBuff(npc.FindBuffIndex(ModContent.BuffType<KelpWhipBuff>()));
 					npc.AddBuff(ModContent.BuffType<KelpWhipCooldown>(), 120, false);
 				}

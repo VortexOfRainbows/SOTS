@@ -2074,7 +2074,6 @@ Mods: {
 					Fires a short ranged and a long ranged blast
 					The short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabalize enemies
 					Destabilized enemies gain a 5% flat chance to be critically striked
-					This is calculated after normal crits, allowing some attacks to double crit
 					Destabilization is permanent and can stack, but the chance of applying it gets lower with each level already applied
 					'''
 			}
@@ -2576,7 +2575,7 @@ Mods: {
 
 			AssassinationPotion: {
 				DisplayName: Assassination Potion
-				Tooltip: Execute enemies below 20 health or 10% health
+				Tooltip: Execute enemies below 10% health
 			}
 
 			BlazingTonic: {
@@ -4946,7 +4945,6 @@ Mods: {
 			Provides a Holo Eye minion to assist in combat
 			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked
-			This is calculated after normal crits, allowing some attacks to double crit
 			Costs 6 void to launch
 			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
 			'''
@@ -4958,7 +4956,6 @@ Mods: {
 			Provides a Holo Eye minion to assist in combat
 			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked
-			This is calculated after normal crits, allowing some attacks to double crit
 			Costs 6 void to launch
 			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
 			'''

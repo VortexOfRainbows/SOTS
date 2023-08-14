@@ -158,7 +158,6 @@ namespace SOTS.Common.GlobalNPCs
                 int vDamage = 15;
                 VoidPlayer.VoidDamage(Mod, target, vDamage);
             }
-            base.OnHitPlayer(npc, target, damage, crit);
         }
         public override bool PreAI(NPC npc)
         {
@@ -416,18 +415,14 @@ namespace SOTS.Common.GlobalNPCs
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[projectile.owner];
-            int ignoreDefense = ((npc.defense + 1) / 2);
             if (npc.HasBuff(BuffType<Shattered>()) && projectile.CountsAsClass(DamageClass.Melee) && projectile.type != ProjectileType<Projectiles.Evil.AncientSteelHalberd>())
             {
-                damage += ignoreDefense;
-                crit = true;
+                modifiers.Defense *= 0;
                 npc.DelBuff(npc.FindBuffIndex(BuffType<Shattered>()));
             }
             else if(npc.HasBuff<DendroChain>())
             {
-                if (ignoreDefense > 20)
-                    ignoreDefense = 20;
-                damage += ignoreDefense;
+                modifiers.Defense.Flat -= 20;
             }
             if (npc.immortal)
             {
@@ -435,10 +430,7 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(Main.rand.NextFloat(100f) < 5f * DestableCurse)
             {
-                if (!crit)
-                    crit = true;
-                else
-                    damage *= 2;
+                modifiers.SetCrit();
             }
             if (projectile.type == ProjectileType<CodeVolley>() || projectile.type == ProjectileType<CodeBurst>())
             {

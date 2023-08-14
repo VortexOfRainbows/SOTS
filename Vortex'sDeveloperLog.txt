@@ -44,6 +44,8 @@ Daily Log:
 8/13/23
 1. Porting and consequences:
 	1. Ancient steel melee weapons no longer to bonus bonus knockback on crit
+	2. Adjusted formula for Assassination potion effect. Only executes at 10% now
+	3. Adjusted formula for Destabilization -- no more double criting (more of a limitation with tmod)
 2. Certain on death and on hit effects that were previously projectile only now occur with melee hits
 
 
