@@ -34,7 +34,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.GoldenCandle).AddIngredient<GlowNylon>(5).AddIngredient(ItemID.GlowingMushroom, 10).AddTile(TileID.DemonAltar).Register();
+			CreateRecipe(1).AddIngredient(ItemID.Candle).AddIngredient<GlowNylon>(5).AddIngredient(ItemID.GlowingMushroom, 10).AddTile(TileID.DemonAltar).Register();
 			CreateRecipe(1).AddIngredient(ItemID.PlatinumCandle).AddIngredient<GlowNylon>(5).AddIngredient(ItemID.GlowingMushroom, 10).AddTile(TileID.DemonAltar).Register();
 		}
 		public override bool CanUseItem(Player player)
