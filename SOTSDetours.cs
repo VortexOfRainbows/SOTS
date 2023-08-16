@@ -25,79 +25,82 @@ namespace SOTS
 		public static RenderTarget2D TargetProj;
 		public static void Initialize()
 		{
-			Terraria.On_NetMessage.SendData += NetMessage_SendData;
+			On_NetMessage.SendData += NetMessage_SendData;
 
-			Terraria.On_Main.DrawProjectiles += Main_DrawProjectiles;
-			Terraria.On_Main.DrawNPCs += Main_DrawNPCs;
-			Terraria.On_Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
+			On_Main.DrawProjectiles += Main_DrawProjectiles;
+			On_Main.DrawNPCs += Main_DrawNPCs;
+			On_Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
 			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
-			Terraria.On_Player.Update += Player_Update;
-			Terraria.On_NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
-			Terraria.On_Gore.Update += Gore_Update;
-            Terraria.On_Projectile.Update += Projectile_Update;
-			Terraria.On_Item.UpdateItem += Item_UpdateItem;
-			Terraria.On_Dust.UpdateDust += Dust_UpdateDust;
-			Terraria.On_Main.UpdateTime += Main_UpdateTime;
-			//On.Terraria.NPC.UpdateCollision += NPC_UpdateCollision;
+			On_Player.Update += Player_Update;
+			On_NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
+			On_Gore.Update += Gore_Update;
+            On_Projectile.Update += Projectile_Update;
+			On_Item.UpdateItem += Item_UpdateItem;
+			On_Dust.UpdateDust += Dust_UpdateDust;
+			On_Main.UpdateTime += Main_UpdateTime;
+			//On_NPC.UpdateCollision += NPC_UpdateCollision;
 
 			//The following is to allow Plating Doors to function as tiles for housing (in conjuction with Tmodloader stuff)
-			Terraria.On_WorldGen.CloseDoor += Worldgen_CloseDoor;
-			Terraria.On_WorldGen.OpenDoor += Worldgen_OpenDoor;
+			On_WorldGen.CloseDoor += Worldgen_CloseDoor;
+			On_WorldGen.OpenDoor += Worldgen_OpenDoor;
 
 			//1.4 worldgen fix
-			Terraria.On_WorldGen.FillWallHolesInSpot += Worldgen_FillWallHolesInSpot;
+			On_WorldGen.FillWallHolesInSpot += Worldgen_FillWallHolesInSpot;
 
 			//1.4 ZombieHand
-			Terraria.On_Player.ItemCheck_MeleeHitNPCs += Player_ItemCheck_MeleeHitNPCs;
+			On_Player.ItemCheck_MeleeHitNPCs += Player_ItemCheck_MeleeHitNPCs;
 			Main.OnPreDraw += Main_OnPreDraw;
 
 			//Belpohegor Ring
-			Terraria.On_Player.PickTile += Player_PickTile;
+			On_Player.PickTile += Player_PickTile;
 
 			//Crafting Stations carry with you (elemental amulet)
-			Terraria.On_Recipe.FindRecipes += Recipe_FindRecipes;
+			On_Recipe.FindRecipes += Recipe_FindRecipes;
 
 			//Synthetic Liver
-			Terraria.On_Player.AddBuff += Player_AddBuff;
+			On_Player.AddBuff += Player_AddBuff;
+
+			//Used for Turning Off hit sounds for certain weapons
+			//On_NPC.StrikeNPC += NPC_StrikeNPC;
 
 			//Used for Nerfing Soaring Insignia
-			Terraria.On_Player.WingMovement += Player_WingMovement;
+			On_Player.WingMovement += Player_WingMovement;
 
 			//Used in Archaeologist + Void Anomaly
-			Terraria.On_Main.DrawMiscMapIcons += Main_DrawMiscMapIcons;
-			Terraria.On_Lighting.GetColor9Slice_int_int_refVector3Array += Lighting_GetColor9Slice_int_int_refVector3Array;
-			Terraria.On_Main.DrawItem += Main_DrawItem;
+			On_Main.DrawMiscMapIcons += Main_DrawMiscMapIcons;
+			On_Lighting.GetColor9Slice_int_int_refVector3Array += Lighting_GetColor9Slice_int_int_refVector3Array;
+			On_Main.DrawItem += Main_DrawItem;
 
 			if (!Main.dedServ)
 				ResizeTargets();
 		}
 		public static void Unload() //Apparently unloading Detours is handled automatically now..?
 		{
-			/*On.Terraria.NetMessage.SendData -= NetMessage_SendData;
+			/*On_NetMessage.SendData -= NetMessage_SendData;
 
-			On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
-			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
-			On.Terraria.Main.DrawPlayers_AfterProjectiles -= Main_DrawPlayers_AfterProjectiles;
+			On_Main.DrawProjectiles -= Main_DrawProjectiles;
+			On_Main.DrawNPCs -= Main_DrawNPCs;
+			On_Main.DrawPlayers_AfterProjectiles -= Main_DrawPlayers_AfterProjectiles;
 
 			//order of updates: player, NPC, gore, projectile, item, dust, time
-			On.Terraria.Player.Update -= Player_Update;
-			On.Terraria.NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
-			On.Terraria.Gore.Update -= Gore_Update;
-			On.Terraria.Projectile.Update -= Projectile_Update;
-			On.Terraria.Item.UpdateItem -= Item_UpdateItem;
-			On.Terraria.Dust.UpdateDust -= Dust_UpdateDust;
-			On.Terraria.Main.UpdateTime -= Main_UpdateTime;
+			On_Player.Update -= Player_Update;
+			On_NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
+			On_Gore.Update -= Gore_Update;
+			On_Projectile.Update -= Projectile_Update;
+			On_Item.UpdateItem -= Item_UpdateItem;
+			On_Dust.UpdateDust -= Dust_UpdateDust;
+			On_Main.UpdateTime -= Main_UpdateTime;
 
-			On.Terraria.WorldGen.CloseDoor -= Worldgen_CloseDoor;
-			On.Terraria.WorldGen.OpenDoor -= Worldgen_OpenDoor;
-			On.Terraria.WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
+			On_WorldGen.CloseDoor -= Worldgen_CloseDoor;
+			On_WorldGen.OpenDoor -= Worldgen_OpenDoor;
+			On_WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
 
 			//1.4 ZombieHand
-			On.Terraria.Player.ItemCheck_MeleeHitNPCs -= Player_ItemCheck_MeleeHitNPCs;
+			On_Player.ItemCheck_MeleeHitNPCs -= Player_ItemCheck_MeleeHitNPCs;
 
 			Main.OnPreDraw -= Main_OnPreDraw;
-			On.Terraria.Player.PickTile -= Player_PickTile;*/
+			On_Player.PickTile -= Player_PickTile;*/
 		}
 		public static void ResizeTargets()
 		{
@@ -106,7 +109,7 @@ namespace SOTS
 				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
 			});
 		}
-		public static void Recipe_FindRecipes(Terraria.On_Recipe.orig_FindRecipes orig, bool canDelayCheck = false)
+		public static void Recipe_FindRecipes(On_Recipe.orig_FindRecipes orig, bool canDelayCheck = false)
         {
 			if(SOTSPlayer.ModPlayer(Main.LocalPlayer).LazyCrafterAmulet)
             {
@@ -122,7 +125,7 @@ namespace SOTS
 			}
 			orig(canDelayCheck);
         }
-		private static void NetMessage_SendData(Terraria.On_NetMessage.orig_SendData orig, int msgType, int remoteClient = -1, int ignoreClient = -1, NetworkText text = null, int number = 0, float number2 = 0f, float number3 = 0f, float number4 = 0f, int number5 = 0, int number6 = 0, int number7 = 0)
+		private static void NetMessage_SendData(On_NetMessage.orig_SendData orig, int msgType, int remoteClient = -1, int ignoreClient = -1, NetworkText text = null, int number = 0, float number2 = 0f, float number3 = 0f, float number4 = 0f, int number5 = 0, int number6 = 0, int number7 = 0)
         {
 			if(FakePlayer.FakePlayer.SupressNetMessage13and41)
             {
@@ -133,7 +136,7 @@ namespace SOTS
 			}
 			orig(msgType, remoteClient, ignoreClient, text, number, number2, number3, number4, number5, number6, number7);
 		}
-		private static bool Worldgen_CloseDoor(Terraria.On_WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
+		private static bool Worldgen_CloseDoor(On_WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{
 			if (Framing.GetTileSafely(i, j).HasTile)
 			{
@@ -146,7 +149,7 @@ namespace SOTS
 			}
 			return orig(i, j, forced);
 		}
-		private static bool Worldgen_OpenDoor(Terraria.On_WorldGen.orig_OpenDoor orig, int i, int j, int direction)
+		private static bool Worldgen_OpenDoor(On_WorldGen.orig_OpenDoor orig, int i, int j, int direction)
 		{
 			if (Framing.GetTileSafely(i, j).HasTile)
 			{
@@ -159,7 +162,7 @@ namespace SOTS
 			}
 			return orig(i, j, direction);
 		}
-		private static bool Worldgen_FillWallHolesInSpot(Terraria.On_WorldGen.orig_FillWallHolesInSpot orig, int originX, int originY, int maxWallsThreshold)
+		private static bool Worldgen_FillWallHolesInSpot(On_WorldGen.orig_FillWallHolesInSpot orig, int originX, int originY, int maxWallsThreshold)
 		{
 			if(Main.wallHouse[Main.tile[originX - 1, originY].WallType] || Main.wallHouse[Main.tile[originX + 1, originY].WallType] || Main.wallHouse[Main.tile[originX, originY - 1].WallType] || Main.wallHouse[Main.tile[originX, originY + 1].WallType])
 			{
@@ -167,7 +170,7 @@ namespace SOTS
 			}
 			return orig(originX, originY, maxWallsThreshold);
 		}
-		private static void Player_Update(Terraria.On_Player.orig_Update orig, Player self, int i)
+		private static void Player_Update(On_Player.orig_Update orig, Player self, int i)
         {
 			if(self != null)
 			{
@@ -188,7 +191,7 @@ namespace SOTS
 			}
 			orig(self, i);
 		}
-		private static void Player_PickTile(Terraria.On_Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
+		private static void Player_PickTile(On_Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
 		{
 			if (self != null)
 			{
@@ -234,7 +237,7 @@ namespace SOTS
 			}
 			orig(self, x, y, pickPower);
 		}
-		private static void Player_ItemCheck_MeleeHitNPCs(Terraria.On_Player.orig_ItemCheck_MeleeHitNPCs orig, Player self, Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack)
+		private static void Player_ItemCheck_MeleeHitNPCs(On_Player.orig_ItemCheck_MeleeHitNPCs orig, Player self, Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack)
 		{
 			bool zombieHand = SOTSPlayer.ModPlayer(self).CanKillNPC;
 			bool[] saveFriendly = new bool[200];
@@ -258,7 +261,7 @@ namespace SOTS
 				}
 			}
 		}
-		/*private static void NPC_UpdateCollision(On.Terraria.NPC.orig_UpdateCollision orig, NPC self)
+		/*private static void NPC_UpdateCollision(On_NPC.orig_UpdateCollision orig, NPC self)
 		{
 			if (self.active)
 			{
@@ -269,7 +272,7 @@ namespace SOTS
 			}
 			orig(self);
 		}*/
-		private static void NPC_UpdateNPC_Inner(Terraria.On_NPC.orig_UpdateNPC_Inner orig, NPC self, int i)
+		private static void NPC_UpdateNPC_Inner(On_NPC.orig_UpdateNPC_Inner orig, NPC self, int i)
 		{
 			if (self.active)
 			{
@@ -300,7 +303,7 @@ namespace SOTS
             }
 			orig(self, i);
 		}
-		private static void Gore_Update(Terraria.On_Gore.orig_Update orig, Gore self)
+		private static void Gore_Update(On_Gore.orig_Update orig, Gore self)
 		{
 			if (SOTSWorld.IsFrozenThisFrame && self.active)
 			{
@@ -308,7 +311,7 @@ namespace SOTS
 			}
 			orig(self);
 		}
-		private static void Projectile_Update(Terraria.On_Projectile.orig_Update orig, Projectile self, int i)
+		private static void Projectile_Update(On_Projectile.orig_Update orig, Projectile self, int i)
 		{
 			if(self.active)
 			{
@@ -330,7 +333,7 @@ namespace SOTS
 			}
 			orig(self, i);
 		}
-		private static void Item_UpdateItem(Terraria.On_Item.orig_UpdateItem orig, Item self, int i)
+		private static void Item_UpdateItem(On_Item.orig_UpdateItem orig, Item self, int i)
 		{
 			if (SOTSWorld.IsFrozenThisFrame && self.active)
 			{
@@ -338,7 +341,7 @@ namespace SOTS
 			}
 			orig(self, i);
 		}
-		private static void Dust_UpdateDust(Terraria.On_Dust.orig_UpdateDust orig)
+		private static void Dust_UpdateDust(On_Dust.orig_UpdateDust orig)
 		{
 			if (SOTSWorld.IsFrozenThisFrame)
 			{
@@ -346,7 +349,7 @@ namespace SOTS
 			}
 			orig();
 		}
-		private static void Main_UpdateTime(Terraria.On_Main.orig_UpdateTime orig)
+		private static void Main_UpdateTime(On_Main.orig_UpdateTime orig)
 		{
 			if (SOTSWorld.IsFrozenThisFrame)
 			{
@@ -365,7 +368,7 @@ namespace SOTS
 				}
 			}
 		}
-		private static void Main_DrawProjectiles(Terraria.On_Main.orig_DrawProjectiles orig, Main self)
+		private static void Main_DrawProjectiles(On_Main.orig_DrawProjectiles orig, Main self)
 		{
 			if (SOTS.primitives != null && Main.spriteBatch != null)
 			{
@@ -377,7 +380,7 @@ namespace SOTS
 				PostDrawProjectiles();
 			}
 		}
-		private static void Main_DrawNPCs(Terraria.On_Main.orig_DrawNPCs orig, Main self, bool behindTiles)
+		private static void Main_DrawNPCs(On_Main.orig_DrawNPCs orig, Main self, bool behindTiles)
 		{
 			if (SOTS.primitives != null && Main.spriteBatch != null)
 			{
@@ -389,7 +392,7 @@ namespace SOTS
 				orig(self, behindTiles);
 			}
 		}
-		private static void Main_DrawPlayers_AfterProjectiles(Terraria.On_Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
+		private static void Main_DrawPlayers_AfterProjectiles(On_Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
 		{
 			PreDrawPlayers();
 			orig(self);
@@ -496,7 +499,7 @@ namespace SOTS
 				Main.spriteBatch.End();
 			}
 		}
-		private static void Player_AddBuff(Terraria.On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet = true, bool foodHack = false)
+		private static void Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet = true, bool foodHack = false)
 		{
 			if (SOTSPlayer.ModPlayer(self).PotionStacking && self.whoAmI == Main.myPlayer && (!quiet || Main.netMode == NetmodeID.SinglePlayer))
 			{
@@ -521,7 +524,7 @@ namespace SOTS
 			}
 			orig(self, type, timeToAdd, quiet, foodHack);
         }
-		private static void Player_WingMovement(Terraria.On_Player.orig_WingMovement orig, Player self)
+		private static void Player_WingMovement(On_Player.orig_WingMovement orig, Player self)
         {
 			float startingWingTime = self.wingTime;
 			orig(self);
@@ -532,7 +535,7 @@ namespace SOTS
 					self.wingTime += WingTimeDiff / 3f;
 			}
 		}
-		private static void Main_DrawMiscMapIcons(Terraria.On_Main.orig_DrawMiscMapIcons orig, Main self, SpriteBatch spriteBatch, Vector2 mapTopLeft, Vector2 mapX2Y2AndOff, Rectangle? mapRect, float mapScale, float drawScale, ref string mouseTextString)
+		private static void Main_DrawMiscMapIcons(On_Main.orig_DrawMiscMapIcons orig, Main self, SpriteBatch spriteBatch, Vector2 mapTopLeft, Vector2 mapX2Y2AndOff, Rectangle? mapRect, float mapScale, float drawScale, ref string mouseTextString)
         {
 			orig(self, spriteBatch, mapTopLeft, mapX2Y2AndOff, mapRect, mapScale, drawScale, ref mouseTextString);
 			DrawSOTSMapIcons(self, spriteBatch, mapTopLeft, mapX2Y2AndOff, mapRect, mapScale, drawScale, ref mouseTextString);
@@ -642,7 +645,7 @@ namespace SOTS
 				}
             }
 		}
-		private static void Lighting_GetColor9Slice_int_int_refVector3Array(Terraria.On_Lighting.orig_GetColor9Slice_int_int_refVector3Array orig, int x, int y, ref Vector3[] slices)
+		private static void Lighting_GetColor9Slice_int_int_refVector3Array(On_Lighting.orig_GetColor9Slice_int_int_refVector3Array orig, int x, int y, ref Vector3[] slices)
         {
 			if(Main.gameMenu) //Used in the Void Anomaly
 			{
@@ -654,7 +657,7 @@ namespace SOTS
 			else
 				orig(x, y, ref slices);
         }
-		private static void Main_DrawItem(Terraria.On_Main.orig_DrawItem orig, Main self, Item item, int whoAmI)
+		private static void Main_DrawItem(On_Main.orig_DrawItem orig, Main self, Item item, int whoAmI)
         {
 			GlobalEntityItem gen;
 			if (item.TryGetGlobalItem<GlobalEntityItem>(out gen))
@@ -664,7 +667,7 @@ namespace SOTS
 			orig(self, item, whoAmI);
         }
 		/*Code I wrote for HeartPlusUp! Calamity Mod!
-		private static void GlassTileWallFraming(On.Terraria.Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
+		private static void GlassTileWallFraming(On_Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
         {
 			Tile tileU = Framing.GetTileSafely(i, j - 1);
 			Tile tileR = Framing.GetTileSafely(i + 1, j);

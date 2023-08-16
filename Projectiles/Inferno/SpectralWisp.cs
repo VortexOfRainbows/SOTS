@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
-			damage = (int)(damage * 0.75f);
+			modifiers.SourceDamage *= 0.75f;
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -420,11 +420,6 @@ namespace SOTS.Projectiles.Inferno
 			{
 				Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, heal, -1);
 			}
-			base.OnHitNPC(target, damage, knockback, crit);
-		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-		{
-			damage = (int)(damage * 1.0f);
 		}
         public override void DoAttack(Vector2 toNPC)
         {
@@ -527,7 +522,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
-			damage = (int)(damage * 0.5f);
+			modifiers.SourceDamage *= 0.5f;
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
@@ -616,7 +611,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
-			damage = (int)(damage * 0.5f);
+			modifiers.SourceDamage *= 0.5f;
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
@@ -711,7 +706,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
-			damage = (int)(damage * 0.5f);
+			modifiers.SourceDamage *= 0.5f;
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
