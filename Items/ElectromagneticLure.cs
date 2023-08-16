@@ -151,7 +151,6 @@ namespace SOTS.Items
 					NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
 				}
 			}
-			NPC.SpawnOnPlayer(player.whoAmI, type);
 			return true;
 		}
 	}
