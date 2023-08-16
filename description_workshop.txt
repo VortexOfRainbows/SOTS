@@ -1,3 +1,5 @@
+CURRENTLY NOT WORKING IN TMODLOADER 1.4.4. I HAVE NOT PORTED YET. I DON'T KNOW WHY WORKSHOP SAYS SOTS IS UPDATED FOR 1.4.4!
+
 Secrets of the Shadows is a mod with a focus on exploring dungeons throughout your world! Many secrets can be found hidden in these long forgotten locations of old.
 
 [b]If you find any issues with SOTS, the Discord server is the best place to find help. 
