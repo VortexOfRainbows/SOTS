@@ -236,9 +236,9 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				SOTSUtils.PlaySound(SoundID.NPCHit54, (int)NPC.Center.X, (int)NPC.Center.Y, 1.2f, -0.25f);
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 60.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 60.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hit.HitDirection), -2f);
 					num++;											  
 				}													  
 			}														  
@@ -246,7 +246,7 @@ namespace SOTS.NPCs.Boss.Curse
 			{														  
 				for (int k = 0; k < 50; k++)						  
 				{													  
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hit.HitDirection), -2f);
 				}
 			}
 		}

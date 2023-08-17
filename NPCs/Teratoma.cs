@@ -53,7 +53,6 @@ namespace SOTS.NPCs
 			{
 				NPC.lifeMax = NPC.lifeMax * 8 / 9; //318
 			}
-            base.ApplyDifficultyAndPlayerScaling(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -198,9 +197,9 @@ namespace SOTS.NPCs
 			{
 				int num = 0;
 				if (Main.netMode != NetmodeID.Server)
-					while (num < damage / NPC.lifeMax * 40.0)
+					while (num < hit.Damage / NPC.lifeMax * 40.0)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2f, 0, default, 1.6f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hit.HitDirection), -2f, 0, default, 1.6f);
 						num++;
 					}
 			}
@@ -216,7 +215,7 @@ namespace SOTS.NPCs
 					if (Main.netMode != NetmodeID.Server)
 						for (int k = 0; k < 45; k++)
 						{
-							Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(3f * hitDirection), -2.4f, 0, default, 1.6f);
+							Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(3f * hit.HitDirection), -2.4f, 0, default, 1.6f);
 						}
 				}
 				else
@@ -224,7 +223,7 @@ namespace SOTS.NPCs
 					if (Main.netMode != NetmodeID.Server)
 						for (int k = 0; k < 45; k++)
 						{
-							Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2.1f, 0, default, 1.6f);
+							Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2.4f * hit.HitDirection), -2.1f, 0, default, 1.6f);
 						}
 				}
 			}

@@ -171,7 +171,7 @@ namespace SOTS.NPCs.Boss
 		}
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 7 / 10);  
+            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 7 / 10);  
             NPC.damage = (int)(NPC.damage * 0.8f);  
         }
 		public override bool PreAI()
@@ -643,7 +643,7 @@ namespace SOTS.NPCs.Boss
 			{
 				for (int i = 0; i < 10; i++) 
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, hitDirection * 2, 0, 120);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, hit.HitDirection * 2, 0, 120);
 					dust.scale *= 1.5f;
 				}
 				return;
@@ -652,7 +652,7 @@ namespace SOTS.NPCs.Boss
 			{
 				for (int i = 0; i < 55; i++)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, hitDirection * 1, 0, 120);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, hit.HitDirection * 1, 0, 120);
 					dust.noGravity = false;
 					dust.scale *= 2.3f;
 					dust.velocity *= 2;

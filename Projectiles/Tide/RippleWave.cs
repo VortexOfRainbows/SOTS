@@ -34,19 +34,11 @@ namespace SOTS.Projectiles.Tide
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			int defense = target.defense;
-			int extra = defense / 2;
-			if (extra > 4)
-				extra = 4;
-			damage += extra;
+			modifiers.ArmorPenetration += 8;
 		}
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
-        {
-			int defense = target.statDefense;
-			int extra = defense / 2;
-			if (extra > 4)
-				extra = 4;
-			damage += extra;
+		{
+			modifiers.ArmorPenetration += 8;
 		}
 		public override bool ShouldUpdatePosition()
         {

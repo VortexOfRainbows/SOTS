@@ -45,10 +45,10 @@ namespace SOTS.Projectiles.Otherworld
             Projectile.localNPCHitCooldown = 12;
             Projectile.ownerHitCheck = true;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if ((double)Projectile.ai[0] >= 36f) Projectile.localAI[1] = 1.0f;
-            if (crit)
+            if (hit.Crit)
             {
                 SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
                 if (Projectile.owner == Main.myPlayer)
@@ -60,10 +60,6 @@ namespace SOTS.Projectiles.Otherworld
                     }
                 }
             }
-            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-        }
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
             if (target.life <= 0)
             {
                 SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
@@ -76,7 +72,6 @@ namespace SOTS.Projectiles.Otherworld
                     }
                 }
             }
-            base.OnHitNPC(target, damage, knockback, crit);
         }
         public override bool? CanCutTiles()
         {

@@ -60,7 +60,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					for (int k = 0; k < 30; k++)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 1.3f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 1.3f);
 					}
 					for (int i = 0; i < 10; i++)
 						Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.NextFloat(50), Main.rand.NextFloat(50)), NPC.velocity, Main.rand.Next(61, 64), 1f);

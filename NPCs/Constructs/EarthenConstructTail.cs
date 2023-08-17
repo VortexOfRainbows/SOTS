@@ -63,7 +63,7 @@ namespace SOTS.NPCs.Constructs
             {
                 for (int k = 0; k < 10; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
                 }
                 if(Main.rand.NextBool(3))
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);

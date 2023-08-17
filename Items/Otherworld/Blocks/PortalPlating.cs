@@ -59,7 +59,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PortalPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PortalPlating>();
 			AddMapEntry(new Color(122, 243, 255));
 			MineResist = 2f;
 			MinPick = 250;

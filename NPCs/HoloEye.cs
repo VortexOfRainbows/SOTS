@@ -297,7 +297,7 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 40.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 40.0)
 				{
 					float scale = 1f;
 					int type = DustID.Electric;
@@ -306,7 +306,7 @@ namespace SOTS.NPCs
 						type = ModContent.DustType<Dusts.CodeDust2>();
 						scale = 2f;
 					}
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, (float)(2 * hitDirection), -2f, 0, default, 0.6f * scale);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, (float)(2 * hit.HitDirection), -2f, 0, default, 0.6f * scale);
 					num++;
 				}
 			}
@@ -321,9 +321,9 @@ namespace SOTS.NPCs
 						type = ModContent.DustType<Dusts.CodeDust2>();
 						scale = 2f;
 					}
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, (float)(2 * hitDirection), -2f, 0, default, scale);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, (float)(2 * hit.HitDirection), -2f, 0, default, scale);
 					if (k % 2 == 0)
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hit.HitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/HoloEyeGore1"), 1f);
 			}

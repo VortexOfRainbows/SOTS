@@ -118,7 +118,6 @@ namespace SOTS.Items.Pyramid
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<TaintedKeystoneShard>();
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(24, 24, 24), name);
 			HitSound = SoundID.Item27;

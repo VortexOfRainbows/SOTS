@@ -210,9 +210,9 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 40.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 40.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, default, 0.5f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hit.HitDirection), -2f, 0, default, 0.5f);
 					num++;
 				}
 			}
@@ -221,8 +221,8 @@ namespace SOTS.NPCs
 				for (int k = 0; k < 50; k++)
 				{
 					if (k % 5 == 0)
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric, (float)(2 * hitDirection), -2f, 0, default, 1f);
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric, (float)(2 * hit.HitDirection), -2f, 0, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<AvaritianDust>(), (float)(2 * hit.HitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
 				for (int i = 1; i <= 3; i++)
 					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/TwilightScouter/TwilightScouterGore" + i), 1f);

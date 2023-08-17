@@ -140,7 +140,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				for (int k = 0; k < 20; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);

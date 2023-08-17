@@ -59,16 +59,16 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
-			int life = target.life - (damage / 2 - (target.defense + 1) / 2);
-			if (life > 0 && Projectile.timeLeft > 5)
+			int forceDamage = modifiers.GetDamage(Projectile.damage, false, false, 0);
+			int life = target.life - forceDamage;
+			if (life > 0 && Projectile.timeLeft > 5) //If the npc would still live a full damage attack
 			{
-				damage = (int)(damage * 0.5f);
-				crit = false;
+				modifiers.SourceDamage *= 0.5f;
+				modifiers.DisableCrit();
 			}
-			else
-				crit = true;
-            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-        }
+			else //If the npc would die to the attack, make that attack a crit (for synergy purposes)
+				modifiers.SetCrit();
+		}
         bool runOnce = true;
         public override bool ShouldUpdatePosition()
         {

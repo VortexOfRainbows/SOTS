@@ -65,9 +65,9 @@ namespace SOTS.Projectiles.Blades
             return true;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-			hitDirection = initialDirection;
-        }
+		{
+			modifiers.HitDirectionOverride = initialDirection;
+		}
 		bool runOnce = true;
 		Vector2 initialVelo;
 		Vector2 initialCenter;

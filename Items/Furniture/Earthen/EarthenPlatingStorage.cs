@@ -36,21 +36,14 @@ namespace SOTS.Items.Furniture.Earthen
         {
             return false;
         }
-        protected override LocalizedText GetChestName()
-        {
-            return Language.GetText("Mods.SOTS.ContainerName.EarthenPlatingStorageTile");
-        }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<EarthenPlatingStorage>();
         protected override int DustType => DustID.Iron;
         protected override void AddMapEntires()
         {
             Color color = Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.17f);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(color, name, MapChestName);
-
-            name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-            AddMapEntry(color, name, MapChestName);
+            AddMapEntry(color, this.GetLocalization("MapEntry0"), MapChestName);
+            AddMapEntry(color, this.GetLocalization("MapEntry1"), MapChestName);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

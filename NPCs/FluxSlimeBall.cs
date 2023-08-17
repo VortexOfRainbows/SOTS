@@ -154,7 +154,7 @@ namespace SOTS.NPCs
 			if (owner.type != ModContent.NPCType<FluxSlime>() || !owner.active)
 			{
 				NPC.life = 0;
-				HitEffect(NPC.direction, NPC.life);
+				HitEffect(new NPC.HitInfo() { Damage = NPC.life, HitDirection = NPC.direction });
 				NPC.active = false;
 			}
 			ownerCenter = new Vector2(owner.Center.X, owner.position.Y + 6);
@@ -214,9 +214,9 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 30.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 30.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)hitDirection * 0.75f, -1f, NPC.alpha, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)hit.HitDirection * 0.75f, -1f, NPC.alpha, default, 1f);
 					num++;
 				}
 			}
@@ -224,7 +224,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 15; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)(1.5f * hitDirection), -2f, NPC.alpha, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)(1.5f * hit.HitDirection), -2f, NPC.alpha, default, 1f);
 				}
 				NPC owner = Main.npc[(int)ownerID];
 				Vector2 dynamicScaling = new Vector2(40, 0).RotatedBy(MathHelper.ToRadians(aiCounter * 1.1f));
@@ -241,7 +241,7 @@ namespace SOTS.NPCs
 
 					for (int k = 0; k < Main.rand.Next(1, 3); k++)
 					{
-						Dust.NewDust(drawPos2 - new Vector2(5), 0, 0, DustID.PinkSlime, (float)(1.5f * hitDirection), -2f, NPC.alpha, default, 1f);
+						Dust.NewDust(drawPos2 - new Vector2(5), 0, 0, DustID.PinkSlime, (float)(1.5f * hit.HitDirection), -2f, NPC.alpha, default, 1f);
 					}
 				}
 			}

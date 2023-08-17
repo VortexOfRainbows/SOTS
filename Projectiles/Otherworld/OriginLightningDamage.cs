@@ -25,8 +25,7 @@ namespace SOTS.Projectiles.Otherworld
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 			if (!target.boss && target.lifeMax <= 3600)
-				damage = (int)(damage * 2.5f);
-            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+				modifiers.SourceDamage *= 2.5f;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{

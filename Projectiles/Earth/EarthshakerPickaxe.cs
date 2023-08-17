@@ -138,7 +138,7 @@ namespace SOTS.Projectiles.Earth
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[Projectile.owner];
-            hitDirection = player.direction;
+            modifiers.HitDirectionOverride = player.direction;
         }
         public override bool PreDraw(ref Color lightColor)
         {

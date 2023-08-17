@@ -207,9 +207,9 @@ namespace SOTS.NPCs
 			{
 				int num = 0;
 				if (Main.netMode != NetmodeID.Server)
-					while (num < damage / NPC.lifeMax * 50.0)
+					while (num < hit.Damage / NPC.lifeMax * 50.0)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hit.HitDirection), -2f, 0, default, 1.5f);
 						num++;
 					}
 			}
@@ -249,7 +249,7 @@ namespace SOTS.NPCs
 					}
 					for (int k = 0; k < 50; k++)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hit.HitDirection), -2f, 0, default, 1.5f);
 					}
 				}
 			}		

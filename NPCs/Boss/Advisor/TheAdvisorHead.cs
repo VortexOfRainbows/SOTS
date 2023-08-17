@@ -132,7 +132,7 @@ namespace SOTS.NPCs.Boss.Advisor
 		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
-			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * ExpertLifeScale); //16000
+			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * ExpertLifeScale); //16000
 			NPC.damage = (int)(NPC.damage * 0.8f); //86
 		}
 		public static int[] ConstructIds = { -1, -1, -1, -1 };
@@ -1148,7 +1148,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			{
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore1"), 1f);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore2"), 1f);

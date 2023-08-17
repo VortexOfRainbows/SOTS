@@ -209,8 +209,8 @@ namespace SOTS.Items.Flails
 		{
 			Player Owner = Main.player[Projectile.owner];
 			if (ChargeTime > 0)
-				damage = (int)(damage * MathHelper.Lerp(DamageMult.X, DamageMult.Y, ChargeTime / MaxChargeTime));
-			hitDirection = Owner.direction;
+				modifiers.SourceDamage *= MathHelper.Lerp(DamageMult.X, DamageMult.Y, ChargeTime / MaxChargeTime);
+			modifiers.HitDirectionOverride = Owner.direction;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)

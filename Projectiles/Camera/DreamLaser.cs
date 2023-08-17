@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Camera
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			crit = false; //This projectile will only have an owner in singleplayer, due to the nature of spawning projectiles from NPC death.
+			modifiers.DisableCrit(); //This projectile will only have an owner in singleplayer, due to the nature of spawning projectiles from NPC death.
         }
         public override bool PreDraw(ref Color lightColor)
 		{

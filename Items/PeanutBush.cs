@@ -55,7 +55,7 @@ namespace SOTS.Items
 			DustType = DustID.WoodFurniture;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(113, 173, 37), name);
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PeanutBush>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PeanutBush>();
 		}
         public override bool CanPlace(int i, int j)
         {

@@ -31,21 +31,14 @@ namespace SOTS.Items.Furniture.Permafrost
         {
             return false;
         }
-        protected override string GetChestName()
-        {
-            return Language.GetTextValue("Mods.SOTS.ContainerName.PermafrostPlatingCapsuleTile");
-        }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<PermafrostPlatingCapsule>();
         protected override int DustType => DustID.Silver;
         protected override void AddMapEntires()
         {
             Color color = Color.Lerp(SOTSTile.PermafrostPlatingColor, Color.Black, 0.17f);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(color, name, MapChestName);
-
-            name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-            AddMapEntry(color, name, MapChestName);
+            AddMapEntry(color, this.GetLocalization("MapEntry0"), MapChestName);
+            AddMapEntry(color, this.GetLocalization("MapEntry1"), MapChestName);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

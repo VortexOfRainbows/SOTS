@@ -50,7 +50,7 @@ namespace SOTS.Items.Tide
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(127, 127, 127), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ArkhalisChain>();
+			////ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ArkhalisChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void MouseOver(int i, int j)

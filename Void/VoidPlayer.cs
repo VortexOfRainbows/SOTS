@@ -162,7 +162,7 @@ namespace SOTS.Void
 				//NetMessage.SendData(43, -1, -1, "", player.whoAmI, (float)voidAmount, 0f, 0f, 0);
 			}
 		}
-		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		public override bool PreKill(double damage, int HitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
 			if (voidShock || voidRecovery)
 			{
@@ -182,7 +182,7 @@ namespace SOTS.Void
 				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
 				return true;
 			}
-			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+			return base.PreKill(damage, HitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}
 		public List<int> VoidMinions = new List<int>();
 		public override void UpdateBadLifeRegen()

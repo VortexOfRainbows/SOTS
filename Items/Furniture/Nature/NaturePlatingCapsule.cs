@@ -31,21 +31,14 @@ namespace SOTS.Items.Furniture.Nature
         {
             return false;
         }
-        protected override string GetChestName()
-        {
-            return Language.GetTextValue("Mods.SOTS.ContainerName.NaturePlatingCapsuleTile");
-        }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
         protected override int ChestDrop => ModContent.ItemType<NaturePlatingCapsule>();
         protected override int DustType => DustID.Tungsten;
         protected override void AddMapEntires()
         {
             Color color = Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.17f);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(color, name, MapChestName);
-
-            name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-            AddMapEntry(color, name, MapChestName);
+            AddMapEntry(color, this.GetLocalization("MapEntry0"), MapChestName);
+            AddMapEntry(color, this.GetLocalization("MapEntry1"), MapChestName);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

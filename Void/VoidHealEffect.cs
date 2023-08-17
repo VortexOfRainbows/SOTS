@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Void
 {    
@@ -47,7 +48,7 @@ namespace SOTS.Void
 				CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(125, 35, 35, 255), string.Concat((int)Projectile.ai[1]), false, dot);
 				for (int i = 0; i < (int)(Math.Sqrt(-2 * (int)Projectile.ai[1])); i++)
 				{
-					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.FireflyHit);
 					dust.noGravity = true;
 					dust.scale *= 2.0f;
 					dust.velocity *= 1.3f;

@@ -33,9 +33,8 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage /= 2;
-            damage += 1;
-            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+            modifiers.SourceDamage *= 0.5f;
+            modifiers.FinalDamage += 1;
         }
         public override bool ShouldUpdatePosition()
         {

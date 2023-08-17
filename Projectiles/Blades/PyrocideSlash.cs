@@ -16,7 +16,6 @@ namespace SOTS.Projectiles.Blades
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.AddBuff(BuffID.OnFire3, 900);
-            base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void SetStaticDefaults()
 		{

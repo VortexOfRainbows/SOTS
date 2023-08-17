@@ -31,14 +31,14 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.scale = 1.4f;
 		}
-		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			if (crit && player.whoAmI == Main.myPlayer && !target.friendly && !target.immortal)
+			if (hit.Crit && player.whoAmI == Main.myPlayer && !target.friendly && !target.immortal)
 			{
 				for (int i = 0; i < 3 + Main.rand.Next(3); i++)
 				{
 					Vector2 circularSpeed = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(120) + 30));
-					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, -circularSpeed.X, -circularSpeed.Y, ModContent.ProjectileType<EmeraldBoltHoming>(), (int)(damage * 0.5f) + 1, 3f, player.whoAmI);
+					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, -circularSpeed.X, -circularSpeed.Y, ModContent.ProjectileType<EmeraldBoltHoming>(), (int)(hit.SourceDamage * 0.5f) + 1, 3f, player.whoAmI);
 				}
 			}
 		}

@@ -8,20 +8,13 @@ namespace SOTS.Items.Otherworld.Furniture
 {
 	public class LockedSkywareChest : ContainerType
 	{
-		protected override string GetChestName()
-		{
-			return Language.GetTextValue("Mods.SOTS.MapObject.LockedSkywareChest");
-		}
 		protected override int ChestDrop => ItemID.SkywareChest;
 		protected override int ChestKey => ModContent.ItemType<Otherworld.SkywareKey>();
 		protected override int DustType => 116;
 		protected override void AddMapEntires()
 		{
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(233, 207, 94), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "_Locked");
-			AddMapEntry(new Color(233, 207, 94), name, MapChestName);
+			AddMapEntry(new Color(233, 207, 94), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(233, 207, 94), this.GetLocalization("MapEntry1"), MapChestName);
 		}
 	}
 }

@@ -44,7 +44,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 32;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PyramidBrickWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PyramidBrickWall>();
 			AddMapEntry(new Color(75, 69, 27));
 		}
 	}
@@ -55,7 +55,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = false;
 			DustType = 32;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PyramidBrickWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PyramidBrickWall>();
 			AddMapEntry(new Color(75, 69, 27));
 		}
 	}

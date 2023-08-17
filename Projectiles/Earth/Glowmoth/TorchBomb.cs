@@ -185,10 +185,12 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			int j = (int)Projectile.Center.Y / 16;
 			if (Projectile.owner == Main.myPlayer)
 			{
+				int startingTorchType = TileID.Torches;
+				int startingTorchStyle = TileID.Torches;
 				Player player = Main.player[Projectile.owner];
 				if(!Framing.GetTileSafely(i, j).HasTile)
 				{
-					bool hasPlaceTorch = WorldGen.PlaceTile(i, j, TileID.Torches, false, false, Projectile.owner, player.BiomeTorchPlaceStyle(0));
+					bool hasPlaceTorch = WorldGen.PlaceTile(i, j, TileID.Torches, false, false, Projectile.owner, player.BiomeTorchPlaceStyle(ref startingTorchType, ref startingTorchStyle));
 					if(!hasPlaceTorch)
 					{
 						for (int k = -1; k <= 1; k++)
@@ -198,8 +200,8 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 								int i2 = i + k;
 								int j2 = j + h; 
 								if (!Framing.GetTileSafely(i2, j2).HasTile)
-									hasPlaceTorch = WorldGen.PlaceTile(i2, j2, TileID.Torches, false, false, Projectile.owner, player.BiomeTorchPlaceStyle(0));
-								if(hasPlaceTorch)
+									hasPlaceTorch = WorldGen.PlaceTile(i2, j2, TileID.Torches, false, false, Projectile.owner, player.BiomeTorchPlaceStyle(ref startingTorchType, ref startingTorchStyle));
+								if (hasPlaceTorch)
 								{
 									NetMessage.SendTileSquare(Projectile.owner, i2, j2);
 									break;

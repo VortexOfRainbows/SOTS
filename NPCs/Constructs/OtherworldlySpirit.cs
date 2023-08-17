@@ -105,9 +105,8 @@ namespace SOTS.NPCs.Constructs
 						}
 						if(ai3 >= 100)
 						{
-							NPC.StrikeNPC(10000, 0, 0);
-							if (Main.netMode != 0)
-								NetMessage.SendData(28, -1, -1, null, NPC.whoAmI, 10000, 0, 0, 0, 0, 0);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+								NPC.StrikeInstantKill();
 						}
 					}
                 }

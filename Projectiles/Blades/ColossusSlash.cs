@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Blades
         {
 			if (target.life > target.lifeMax * 0.85f)
 			{
-				damage *= 3;
+				modifiers.SourceDamage *= 3;
             }
         }
         public override float HitboxWidth => 80;

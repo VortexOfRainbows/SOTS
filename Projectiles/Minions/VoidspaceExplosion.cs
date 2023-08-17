@@ -7,10 +7,6 @@ namespace SOTS.Projectiles.Minions
 {    
     public class VoidspaceExplosion : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Voidspace Explosion");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 24;
@@ -25,7 +21,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			crit = false;
+			modifiers.DisableCrit();
         }
         public override void Kill(int timeLeft)
 		{

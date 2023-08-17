@@ -19,7 +19,7 @@ namespace SOTS.Items.Permafrost
 			MinPick = 100;
 			MineResist = 2.0f;
 			DustType = ModContent.DustType<ModIceDust>();
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<HardIceBrick>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<HardIceBrick>();
 			AddMapEntry(new Color(67, 139, 228));
 			HitSound = SoundID.Tink;
 		}
@@ -48,7 +48,7 @@ namespace SOTS.Items.Permafrost
 			Main.wallHouse[Type] = true;
 			AddMapEntry(new Color(80, 35, 180));
 			DustType = ModContent.DustType<ModIceDust>();
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<HardIceBrickWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<HardIceBrickWall>();
 		}
         public override void KillWall(int i, int j, ref bool fail)
         {

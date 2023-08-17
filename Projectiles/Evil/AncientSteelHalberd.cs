@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Evil
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			crit = false;
+			modifiers.DisableCrit();
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{

@@ -42,8 +42,7 @@ namespace SOTS.Items
         public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (player.velocity.Y > 0)
-                crit = true;
-            base.ModifyHitNPC(player, target, ref damage, ref knockBack, ref crit);
+                modifiers.SetCrit();
         }
     }
 }

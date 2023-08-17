@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Chaos
         public int DegradeRange = 10;
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            knockback = 0;
+            modifiers.Knockback *= 0;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

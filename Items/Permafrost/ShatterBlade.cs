@@ -117,15 +117,15 @@ namespace SOTS.Items.Permafrost
 			SOTSUtils.PlaySound(SoundID.Item1, position);
 			return false;
 		}
-		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if (crit && player.whoAmI == Main.myPlayer)
+			if (hit.Crit && player.whoAmI == Main.myPlayer)
 			{
-				for(int i = 0; i < 4; i++)
+				for (int i = 0; i < 4; i++)
 				{
 					Vector2 circularSpeed = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(i * 90));
-					int calc = damage + modPlayer.bonusShardDamage;		
+					int calc = hit.Damage + modPlayer.bonusShardDamage;
 					if (calc <= 0) calc = 1;
 					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), calc, 3f, player.whoAmI);
 				}

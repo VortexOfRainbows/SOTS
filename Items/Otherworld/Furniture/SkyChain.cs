@@ -48,7 +48,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 255, 255), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SkyChain>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SkyChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

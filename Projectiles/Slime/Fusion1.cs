@@ -70,7 +70,6 @@ namespace SOTS.Projectiles.Slime
 			Projectile.velocity *= 0;
 			if(Projectile.owner == Main.myPlayer)
 				Projectile.netUpdate = true;
-			base.OnHitNPC(target, damage, knockback, crit);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{

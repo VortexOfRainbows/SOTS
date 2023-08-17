@@ -66,20 +66,18 @@ namespace SOTS.NPCs.Inferno
 			{
 				if (NPC.ai[3] >= 24)
 				{
-					damage = 999999 + defense / 2;
-					crit = false;
-					return true;
+					modifiers.SetInstantKill();
+					return;
 				}
 				else
 				{
 					CombatText.NewText(new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height), new Color(125, 125, 125, 125), "MISS", false, false);
-					damage = 0;
+					modifiers.TargetDamageMultiplier *= 0;
+					modifiers.FinalDamage *= 0;
 					NPC.ai[3]++;
 					NPC.netUpdate = true;
 				}
-				return false;
 			}
-			return true;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -314,9 +312,9 @@ namespace SOTS.NPCs.Inferno
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 20.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 20.0)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Torch, (float)(2 * hitDirection), -2f, 0, default, 0.5f);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Torch, (float)(2 * hit.HitDirection), -2f, 0, default, 0.5f);
 					dust.scale *= sans? 1.1f : 1.75f;
 					num++;
 				}
@@ -338,7 +336,7 @@ namespace SOTS.NPCs.Inferno
 				}
 				for (int k = 0; k < 30; k++)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Torch, (float)(2 * hitDirection), -2f, 0, default, 1f);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, sans ? 26 : DustID.Torch, (float)(2 * hit.HitDirection), -2f, 0, default, 1f);
 					dust.scale *= sans ? 1.25f : 2.5f;
 				}
 			}

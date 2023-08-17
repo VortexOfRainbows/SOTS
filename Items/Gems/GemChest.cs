@@ -132,10 +132,6 @@ namespace SOTS.Items.Gems
 			}
 			return true;
 		}
-		protected override string GetChestName()
-		{
-			return Language.GetTextValue("Mods.SOTS.ContainerName.GemChestTile");
-		}
 		public bool CanUnlockChest(int i, int j, ref int dustType)
 		{
 			Tile tile = Main.tile[i, j];
@@ -221,54 +217,20 @@ namespace SOTS.Items.Gems
 		protected override int DustType => 122;
 		protected override void AddMapEntires()
 		{
-			LocalizedText name = CreateMapEntryName(Name + "R");
-			// name.SetDefault("Ruby Chest");
-			AddMapEntry(new Color(212, 37, 24), name, MapChestName);
-			name = CreateMapEntryName(Name + "R_Locked");
-			// name.SetDefault("Locked Ruby Chest");
-			AddMapEntry(new Color(212, 37, 24), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "S");
-			// name.SetDefault("Sapphire Chest");
-			AddMapEntry(new Color(18, 116, 211), name, MapChestName);
-			name = CreateMapEntryName(Name + "S_Locked");
-			// name.SetDefault("Locked Sapphire Chest");
-			AddMapEntry(new Color(18, 116, 211), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "E");
-			// name.SetDefault("Emerald Chest");
-			AddMapEntry(new Color(33, 184, 115), name, MapChestName);
-			name = CreateMapEntryName(Name + "E_Locked");
-			// name.SetDefault("Locked Emerald Chest");
-			AddMapEntry(new Color(33, 184, 115), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "T");
-			// name.SetDefault("Topaz Chest");
-			AddMapEntry(new Color(239, 167, 10), name, MapChestName);
-			name = CreateMapEntryName(Name + "T_Locked");
-			// name.SetDefault("Locked Topaz Chest");
-			AddMapEntry(new Color(239, 167, 10), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "A");
-			// name.SetDefault("Amethyst Chest");
-			AddMapEntry(new Color(158, 0, 244), name, MapChestName);
-			name = CreateMapEntryName(Name + "A_Locked");
-			// name.SetDefault("Locked Amethyst Chest");
-			AddMapEntry(new Color(158, 0, 244), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "D");
-			// name.SetDefault("Diamond Chest");
-			AddMapEntry(new Color(154, 197, 239), name, MapChestName);
-			name = CreateMapEntryName(Name + "D_Locked");
-			// name.SetDefault("Locked Diamond Chest");
-			AddMapEntry(new Color(154, 197, 239), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "Amber");
-			// name.SetDefault("Amber Chest");
-			AddMapEntry(new Color(225, 124, 30), name, MapChestName);
-			name = CreateMapEntryName(Name + "Amber_Locked");
-			// name.SetDefault("Locked Amber Chest");
-			AddMapEntry(new Color(225, 124, 30), name, MapChestName);
+			AddMapEntry(new Color(212, 37, 24), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(212, 37, 24), this.GetLocalization("MapEntry1"), MapChestName);
+			AddMapEntry(new Color(18, 116, 211), this.GetLocalization("MapEntry2"), MapChestName);
+			AddMapEntry(new Color(18, 116, 211), this.GetLocalization("MapEntry3"), MapChestName);
+			AddMapEntry(new Color(33, 184, 115), this.GetLocalization("MapEntry4"), MapChestName);
+			AddMapEntry(new Color(33, 184, 115), this.GetLocalization("MapEntry5"), MapChestName);
+			AddMapEntry(new Color(239, 167, 10), this.GetLocalization("MapEntry6"), MapChestName);
+			AddMapEntry(new Color(239, 167, 10), this.GetLocalization("MapEntry7"), MapChestName);
+			AddMapEntry(new Color(158, 0, 244), this.GetLocalization("MapEntry8"), MapChestName);
+			AddMapEntry(new Color(158, 0, 244), this.GetLocalization("MapEntry9"), MapChestName);
+			AddMapEntry(new Color(154, 197, 239), this.GetLocalization("MapEntry10"), MapChestName);
+			AddMapEntry(new Color(154, 197, 239), this.GetLocalization("MapEntry11"), MapChestName);
+			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry12"), MapChestName);
+			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry13"), MapChestName);
 		}
 		public override bool IsLockedChest(int i, int j)
 		{
@@ -303,7 +265,7 @@ namespace SOTS.Items.Gems
 			}
 			else
 			{
-				string defaultName = TileLoader.DefaultContainerName(tile.TileType)/* tModPorter Note: new method takes in FrameX and FrameY */; // This gets the ContainerName text for the currently selected language
+				string defaultName = TileLoader.DefaultContainerName(tile.TileType, tile.TileFrameX, tile.TileFrameY)/* tModPorter Note: new method takes in FrameX and FrameY */; // This gets the ContainerName text for the currently selected language
 				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : defaultName;
 				if (player.cursorItemIconText == defaultName)
 				{

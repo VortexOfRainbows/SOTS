@@ -37,16 +37,32 @@ Update Objectives:
 
 Needed After Porting:
 1. Make sure wall mimic secret works (strike npc stuff)
+2. Check localization of containers (chests and dressers), and of doors/blast doors
+3. Test out Torch Bombs
+4. Test archaeologist shop
+5. Test out Cursed Blade critical strike and damage mechanics
+6. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
+7. Test Ghost pepper
+8. Test Subservant
+9. Pharaoh's Curse death anim
+10. Advisor and Lux death anim
+11. Make sure all furniture and tiles drop the correct items
 
+TODO for PORTING:
+1. Fix doors localization issues
 
 Daily Log:
 
-8/13/23
+8/13/23 - 8/16/23
 1. Porting and consequences:
 	1. Ancient steel melee weapons no longer to bonus bonus knockback on crit
 	2. Adjusted formula for Assassination potion effect. Only executes at 10% now
 	3. Adjusted formula for Destabilization -- no more double criting (more of a limitation with tmod)
+	4. Phase Assaulter now halves FINAL DAMAGE instead of SOURCE DAMAGE (nerf)
+	5. Armor penetration weapons are now less unique due to limitations... :(
+	6. A handful of item on hit effects erroneously us "hit.damage" instead of "hit.sourcedamage", double dipping with DEFENSE
 2. Certain on death and on hit effects that were previously projectile only now occur with melee hits
+3. Bone clapper requires skeletron to be killed to be bought instead of EOC
 
 
 -- Hotfix Released 0.23.1 on 8/11/23 --

@@ -27,6 +27,7 @@ namespace SOTS.Items.Furniture
 		}
 		public override void SetStaticDefaults()
 		{
+			TileID.Sets.OpenDoorID[Type] = OpenDoorTile;
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileLighted[Type] = true;
@@ -56,7 +57,6 @@ namespace SOTS.Items.Furniture
 			// name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
 			DustType = -1;
-			OpenDoorID/* tModPorter Note: Removed. Use TileID.Sets.OpenDoorID instead */ = OpenDoorTile;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.ClosedDoor };
 			SafeSetDefaults();
@@ -111,6 +111,7 @@ namespace SOTS.Items.Furniture
 		}
 		public override void SetStaticDefaults()
 		{
+			TileID.Sets.CloseDoorID[Type] = ClosedDoorTile;
 			Main.tileSolid[Type] = false;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -141,7 +142,6 @@ namespace SOTS.Items.Furniture
 			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HousingWalls[Type] = true;
-			CloseDoorID/* tModPorter Note: Removed. Use TileID.Sets.CloseDoorID instead */ = ClosedDoorTile;
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()

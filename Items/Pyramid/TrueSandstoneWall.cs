@@ -33,7 +33,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.wallHouse[Type] = false;
 			DustType = 32;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<TrueSandstoneWall>();
+			////ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<TrueSandstoneWall>();
 			AddMapEntry(new Color(155, 110, 55));
 		}
 		public override bool CanExplode(int i, int j)

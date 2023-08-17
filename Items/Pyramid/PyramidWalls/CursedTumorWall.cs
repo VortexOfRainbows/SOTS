@@ -45,7 +45,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<CurseDust3>();
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CursedTumorWall>();
+			////ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CursedTumorWall>();
 			HitSound = SoundID.NPCHit1;
 			AddMapEntry(new Color(49, 33, 75));
 		}
@@ -57,7 +57,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<CurseDust3>();
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CursedTumorWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CursedTumorWall>();
 			HitSound = SoundID.NPCHit1;
 			AddMapEntry(new Color(49, 33, 75));
 		}

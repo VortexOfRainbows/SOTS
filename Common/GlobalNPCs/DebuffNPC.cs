@@ -337,7 +337,7 @@ namespace SOTS.Common.GlobalNPCs
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
-            lastHitWasCrit = crit;
+            lastHitWasCrit = hit.Crit;
             if (npc.immortal)
             {
                 return;
@@ -354,11 +354,26 @@ namespace SOTS.Common.GlobalNPCs
                     }
                 }
             }
+            if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>() || item.type == ItemType<AncientSteelGreatHamaxe>()) && hit.Crit)
+            {
+                bool worm = npc.realLife != -1;
+                float baseChance = 1f;
+                int baseStacks = 1;
+                if (worm)
+                {
+                    baseStacks = 2;
+                    baseChance = 0.1f;
+                }
+                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 0.7f)) //1 in 1, drops lower ever time
+                    BleedingCurse++;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                    SendClientChanges(player, npc);
+            }
         }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[projectile.owner];
-            lastHitWasCrit = crit;
+            lastHitWasCrit = hit.Crit;
             if (projectile.type == ProjectileType<HarvestLock>())
             {
                 VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -409,6 +424,21 @@ namespace SOTS.Common.GlobalNPCs
                     }
                 }
             }
+            if (projectile.type == ProjectileType<DeathSpiralProj>() || (projectile.type == ProjectileType<BloodSpark>() && hit.Crit))
+            {
+                bool worm = npc.realLife != -1;
+                float baseChance = projectile.type == ProjectileType<BloodSpark>() ? 1.1f : 0.2f;
+                int baseStacks = 1;
+                if (worm)
+                {
+                    baseStacks = 2;
+                    baseChance = 0.1f;
+                }
+                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
+                    BleedingCurse++;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                    SendClientChanges(player, npc);
+            }
         }
         bool hitByRay = false;
         bool lastHitWasCrit = false;
@@ -419,6 +449,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 modifiers.Defense *= 0;
                 npc.DelBuff(npc.FindBuffIndex(BuffType<Shattered>()));
+                modifiers.SetCrit();
             }
             else if(npc.HasBuff<DendroChain>())
             {
@@ -457,21 +488,6 @@ namespace SOTS.Common.GlobalNPCs
                         SendClientChanges(player, npc);
                 }
             }
-            if(projectile.type == ProjectileType<DeathSpiralProj>() || (projectile.type == ProjectileType<BloodSpark>() && crit))
-            {
-                bool worm = npc.realLife != -1;
-                float baseChance = projectile.type == ProjectileType<BloodSpark>() ? 1.1f : 0.2f;
-                int baseStacks = 1;
-                if (worm)
-                {
-                    baseStacks = 2;
-                    baseChance = 0.1f;
-                }
-                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
-                    BleedingCurse++;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                    SendClientChanges(player, npc);
-            }
             if (projectile.type == ProjectileType<DestabilizingBeam>() && !hitByRay)
             {
                 hitByRay = true;
@@ -491,31 +507,30 @@ namespace SOTS.Common.GlobalNPCs
             if (nerfBeeProj.Contains(projectile.type))
             {
                 if (nerfBeeBoss.Contains(npc.type))
-                    damage = (int)(damage * 0.8f);
+                    modifiers.SourceDamage *= 0.8f;
                 if (nerfBeeNPC.Contains(npc.type))
-                    damage = (int)(damage * 0.6f);
+                    modifiers.SourceDamage *= 0.6f;
             }
             if(projectile.type == ProjectileType<RealityShatter>())
             {
                 if (isSubspaceSerpent.Contains(npc.type))
-                    damage = (int)(damage * 0.3f);
+                    modifiers.SourceDamage *= 0.3f;
                 else if(npc.boss)
                 {
-                    damage = (int)(damage * 0.8f);
+                    modifiers.SourceDamage *= 0.8f;
                 }
             }
             if(isSubspaceSerpent.Contains(npc.type))
             {
                 if(projectile.type == ProjectileType<ChaosSnake>())
                 {
-                    damage = (int)(damage * 0.75f);
+                    modifiers.SourceDamage *= 0.75f;
                 }
             }
             if(BlazingCurse > 0 || AnomalyCurse > 0)
             {
-                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse));
+                modifiers.SourceDamage *= (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse);
             }
-            base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
@@ -523,25 +538,19 @@ namespace SOTS.Common.GlobalNPCs
             {
                 return;
             }
-            int ignoreDefense = ((npc.defense + 1) / 2);
             if (npc.HasBuff(BuffType<Shattered>()) && item.CountsAsClass(DamageClass.Melee))
             {
-                damage += ignoreDefense;
-                crit = true;
+                modifiers.Defense *= 0;
                 npc.DelBuff(npc.FindBuffIndex(BuffType<Shattered>()));
+                modifiers.SetCrit();
             }
             else if (npc.HasBuff<DendroChain>())
             {
-                if (ignoreDefense > 20)
-                    ignoreDefense = 20;
-                damage += ignoreDefense;
+                modifiers.Defense.Flat -= 20;
             }
             if (Main.rand.NextFloat(100f) < 5f * DestableCurse)
             {
-                if (!crit)
-                    crit = true;
-                else
-                    damage *= 2;
+                modifiers.SetCrit();
             }
             if (item.type == ItemType<PlatinumScythe>() || item.type == ItemType<SectionChiefsScythe>())
             {
@@ -550,26 +559,10 @@ namespace SOTS.Common.GlobalNPCs
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>() || item.type == ItemType<AncientSteelGreatHamaxe>()) && crit)
-            {
-                bool worm = npc.realLife != -1;
-                float baseChance = 1f;
-                int baseStacks = 1;
-                if (worm)
-                {
-                    baseStacks = 2;
-                    baseChance = 0.1f;
-                }
-                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 0.7f)) //1 in 1, drops lower ever time
-                    BleedingCurse++;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                    SendClientChanges(player, npc);
-            }
             if (BlazingCurse > 0 || AnomalyCurse > 0)
             {
-                damage = (int)(damage * (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse));
+                modifiers.SourceDamage *= (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse);
             }
-            base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
         }
         public static int HarvestCost(NPC npc)
         {
@@ -1052,7 +1045,6 @@ namespace SOTS.Common.GlobalNPCs
                     }
                 }
             }
-            base.HitEffect(npc, hitDirection, damageTaken);
         }
         public override void OnKill(NPC npc)
         {

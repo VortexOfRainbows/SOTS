@@ -38,8 +38,8 @@ namespace SOTS.Projectiles.Earth.Glowmoth
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            crit = false;
-            damage = 1;
+            modifiers.DisableCrit();
+            modifiers.SetMaxDamage(1);
         }
         public override bool ShouldUpdatePosition()
         {

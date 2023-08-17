@@ -34,15 +34,12 @@ namespace SOTS.Items.Furniture
 		protected virtual int ChestKey => ItemID.GoldenKey;
 		protected virtual int ChestDrop => ItemID.Chest;
         protected virtual int DustType => DustID.Dirt;
-        protected virtual LocalizedText GetChestName()
-        {
-			return LocalizedText.Empty;
+		public override LocalizedText DefaultContainerName(int frameX, int frameY)
+		{
+			int option = frameX / 36;
+			return this.GetLocalization("MapEntry" + option);
 		}
-        public override LocalizedText DefaultContainerName(int frameX, int frameY)
-        {
-            return GetChestName();
-        }
-        public override void SetStaticDefaults()
+		public override void SetStaticDefaults()
 		{
 			ChestStatics();
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -65,22 +62,18 @@ namespace SOTS.Items.Furniture
 		{
 			return (ushort)(Main.tile[i, j].TileFrameX / 36);
 		}
-
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
 			return true;
 		}
-
 		public override bool IsLockedChest(int i, int j)
 		{
 			return Main.tile[i, j].TileFrameX / 36 == 1;
 		}
-
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
 		{
 			return true;
 		}
-
 		public static string MapChestName(string name, int i, int j)
 		{
 			int left = i;
@@ -109,18 +102,15 @@ namespace SOTS.Items.Furniture
 
 			return name + ": " + Main.chest[chest].name;
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 10;
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
 			Chest.DestroyChest(i, j);
 		}
-
 		public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -207,7 +197,6 @@ namespace SOTS.Items.Furniture
 
 			return true;
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -232,7 +221,7 @@ namespace SOTS.Items.Furniture
 			}
 			else
 			{
-				string defaultName = TileLoader.DefaultContainerName(tile.TileType)/* tModPorter Note: new method takes in FrameX and FrameY */; // This gets the ContainerName text for the currently selected language
+				string defaultName = TileLoader.DefaultContainerName(tile.TileType, tile.TileFrameX, tile.TileFrameY)/* tModPorter Note: new method takes in FrameX and FrameY */; // This gets the ContainerName text for the currently selected language
 				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : defaultName;
 				if (player.cursorItemIconText == defaultName)
 				{
@@ -249,7 +238,6 @@ namespace SOTS.Items.Furniture
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
 		}
-
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);

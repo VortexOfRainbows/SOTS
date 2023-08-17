@@ -29,7 +29,10 @@ namespace SOTS.Projectiles.Evil
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			crit = Projectile.ai[1] == -1;
+			if (Projectile.ai[1] == -1)
+				modifiers.SetCrit();
+			else
+				modifiers.DisableCrit();
         }
         public override bool ShouldUpdatePosition()
         {

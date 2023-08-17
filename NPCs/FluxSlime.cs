@@ -152,9 +152,9 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 110.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 110.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)hitDirection, -1f, NPC.alpha);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)hit.HitDirection, -1f, NPC.alpha);
 					num++;
 				}
 			}
@@ -162,7 +162,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 45; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)(2 * hitDirection), -2f, NPC.alpha);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)(2 * hit.HitDirection), -2f, NPC.alpha);
 				}
 			}
 		}

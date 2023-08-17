@@ -23,7 +23,7 @@ namespace SOTS.Items.Fragments
 			Main.tileLighted[Type] = true; 
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlating>();
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
@@ -92,7 +92,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/NaturePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NaturePlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NaturePlating>();
 			AddMapEntry(SOTSTile.NaturePlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -149,7 +149,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/EarthenPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlating>();
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -208,7 +208,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/PermafrostPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlating>();
 			AddMapEntry(SOTSTile.PermafrostPlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -271,7 +271,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/OtherworldPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<OtherworldPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<OtherworldPlating>();
 			AddMapEntry(new Color(48, 57, 70));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -328,7 +328,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/TidePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<TidePlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<TidePlating>();
 			AddMapEntry(new Color(35, 37, 52));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -389,7 +389,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/EvilPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EvilPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EvilPlating>();
 			AddMapEntry(new Color(98, 47, 126));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -448,7 +448,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/ChaosPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ChaosPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ChaosPlating>();
 			AddMapEntry(new Color(82, 85, 123));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -512,7 +512,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/InfernoPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<InfernoPlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<InfernoPlating>();
 			AddMapEntry(new Color(73, 35, 59));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -590,7 +590,7 @@ namespace SOTS.Items.Fragments
 		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/UltimatePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<UltimatePlating>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<UltimatePlating>();
 			AddMapEntry(new Color(82, 85, 123));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;

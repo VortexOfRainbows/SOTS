@@ -58,12 +58,7 @@ namespace SOTS.Projectiles.Temple
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
-			int ignoreDefense = ((target.defense + 1) / 2);
-			int baseDamage = (int)(damage * 0.5) - ignoreDefense;
-			baseDamage = (int)MathHelper.Clamp(baseDamage, 0, damage);
-			baseDamage += (int)(damage * 0.5f);
-			damage = baseDamage + ignoreDefense;
-			//Main.NewText(baseDamage);
+			modifiers.ScalingArmorPenetration += 0.5f;
 		}
         public override bool? CanHitNPC(NPC target)
         {

@@ -75,20 +75,13 @@ namespace SOTS.Items.Otherworld.Furniture
 
             }
 		}
-		protected override string GetChestName()
-		{
-			return Language.GetTextValue("Mods.SOTS.MapObject.LockedStrangeChest");
-		}
 		protected override int ChestDrop => ModContent.ItemType<StrangeChest>();
 		protected override int ChestKey => ModContent.ItemType<StrangeKey>();
 		protected override int DustType => ModContent.DustType<AvaritianDust>();
 		protected override void AddMapEntires()
 		{
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "_Locked");
-			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
+			AddMapEntry(new Color(200, 200, 200), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(200, 200, 200), this.GetLocalization("MapEntry1"), MapChestName);
 		}
 	}
 }

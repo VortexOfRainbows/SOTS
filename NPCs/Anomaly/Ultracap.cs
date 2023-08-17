@@ -243,7 +243,7 @@ namespace SOTS.NPCs.Anomaly
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CopyDust4>(), (float)(2 * hitDirection), -2f);
+					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
 					d.velocity *= 1.0f;
 					d.fadeIn = 0.2f;
 					d.noGravity = true;

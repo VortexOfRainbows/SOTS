@@ -44,18 +44,20 @@ namespace SOTS.NPCs.Boss
         {
             return !NPC.dontTakeDamage;
         }
-        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        public override void HitEffect(NPC.HitInfo hit)
         {
-            if (damage - (defense / 2) > currentDPS)
+            if (hit.Damage > currentDPS)
             {
-                damage = currentDPS + (defense / 2);
                 currentDPS = 0;
             }
             else
             {
-                currentDPS -= (float)damage - (defense / 2);
+                currentDPS -= hit.Damage;
             }
-            return true;
+        }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            modifiers.SetMaxDamage((int)currentDPS);
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -179,7 +181,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
+            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f);  //boss life scale in expertmode
             DPSregenRate += 0.15f * numPlayers;
         }
         public override bool CheckActive()

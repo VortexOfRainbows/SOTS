@@ -115,7 +115,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			{
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					NPC.StrikeNPC(10, 0, Main.rand.Next(2) * 2 - 1, false, true, false);
+					NPC.StrikeInstantKill();
 				}
 				return;
 			}
@@ -170,14 +170,14 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			color.A = 0;
 			for (int k = 0; k < 15; k++)
 			{
-				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<PixelDust>(), (float)(2 * hitDirection), 0f, 0, default, 1.2f);
+				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<PixelDust>(), (float)(2 * hit.HitDirection), 0f, 0, default, 1.2f);
 				dust.fadeIn = 6;
 				dust.noGravity = true;
 				dust.color = color;
 			}
 			for (int k = 0; k < NPC.oldPos.Length; k++)
 			{
-				Dust dust = Dust.NewDustDirect(NPC.oldPos[k] + NPC.Size / 2 - new Vector2(5, 5), 0, 0, DustType<CopyDust4>(), (float)(2 * hitDirection));
+				Dust dust = Dust.NewDustDirect(NPC.oldPos[k] + NPC.Size / 2 - new Vector2(5, 5), 0, 0, DustType<CopyDust4>(), (float)(2 * hit.HitDirection));
 				dust.fadeIn = 0.2f;
 				dust.noGravity = true;
 				dust.velocity *= 0.8f;

@@ -180,11 +180,11 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 30.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 30.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)hitDirection * 0.75f, -1f, NPC.alpha, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)hit.HitDirection * 0.75f, -1f, NPC.alpha, default, 1f);
 					if(Main.rand.NextBool(4))
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hitDirection, -1f, NPC.alpha, default, 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hit.HitDirection, -1f, NPC.alpha, default, 1f);
 					num++;
 				}
 			}
@@ -192,9 +192,9 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 15; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)(1.5f * hitDirection), -2f, NPC.alpha, default, 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)(1.5f * hit.HitDirection), -2f, NPC.alpha, default, 1f);
 					if (Main.rand.NextBool(2))
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hitDirection, -1f, NPC.alpha, default, 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hit.HitDirection, -1f, NPC.alpha, default, 1f);
 				}
 			}
 		}

@@ -65,9 +65,9 @@ namespace SOTS.Projectiles.Blades
             return true;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-			hitDirection = initialDirection;
-        }
+		{
+			modifiers.HitDirectionOverride = initialDirection;
+		}
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;

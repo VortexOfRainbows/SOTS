@@ -20,7 +20,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
+            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f);  //boss life scale in expertmode
         }
         public override void SetDefaults()
         {

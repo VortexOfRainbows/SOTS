@@ -46,9 +46,9 @@ namespace SOTS.Projectiles.Nature
 		{
 			Vector2 direction = new Vector2(24,0).RotatedBy(Projectile.rotation - MathHelper.ToRadians(90));
 			if(direction.X > 0)
-				hitDirection = 1;
+				modifiers.HitDirectionOverride = 1;
 			if(direction.X < 0)
-				hitDirection = -1;
+				modifiers.HitDirectionOverride = -1;
 		}
 		private bool loaded = false;
 		public override bool PreAI()

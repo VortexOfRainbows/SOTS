@@ -327,8 +327,7 @@ namespace SOTS.NPCs.Phase
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            damage *= 0.5f;
-            return true;
+            modifiers.FinalDamage *= 0.5f;
         }
         public override bool PreAI()
         {

@@ -88,7 +88,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
-			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 14 / 20); //140%, 210%
+			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 14 / 20); //140%, 210%
 			NPC.damage = (int)(NPC.damage * 0.75f); //150%, 225%
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -577,9 +577,9 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while (num < damage / NPC.lifeMax * 50.0)
+				while (num < hit.Damage / NPC.lifeMax * 50.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silk, (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silk, (float)(2 * hit.HitDirection), -2f);
 					num++;
 				}
 			}
@@ -587,7 +587,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silk, (float)(2 * hitDirection), -2f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silk, (float)(2 * hit.HitDirection), -2f);
 				}
 			}
 		}

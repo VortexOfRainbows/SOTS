@@ -30,11 +30,13 @@ using SOTS.Dusts;
 using SOTS.WorldgenHelpers;
 using SOTS.Common;
 using SOTS.Buffs.Debuffs;
+using SOTS.Items.Crushers;
 
 namespace SOTS.NPCs.Town
 {
 	public class Archaeologist : ModNPC
 	{
+		public const string ShopName = "Shop";
 		public static Vector2 AnomalyPosition1 = Vector2.Zero;
 		public static Vector2 AnomalyPosition2 = Vector2.Zero;
 		public static Vector2 AnomalyPosition3 = Vector2.Zero;
@@ -471,7 +473,7 @@ namespace SOTS.NPCs.Town
 		{
 			if (firstButton)
 			{
-				shop = true;
+				shopName = "Shop";
 			}
 		}
 		private static void AddItemToShop(Chest shop, ref int nextSlot, int itemID)
@@ -479,114 +481,43 @@ namespace SOTS.NPCs.Town
 			shop.item[nextSlot].SetDefaults(itemID);
 			nextSlot++;
 		}
-		public override void ModifyActiveShop(string shopName, Item[] items)
+		public const string ShopKey = "Mods.SOTS.Common.ArchaeologistShopCondition";
+		public override void AddShops()
 		{
-			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AnomalyLocator>());
-			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ArchaeologistToolbelt>());
-			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<GoldenTrowel>());
-			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<OldKey>());
-			AddItemToShop(shop, ref nextSlot, ModContent.ItemType<ConduitChassis>());
-			if (currentLocationType == ImportantTileID.AcediaPortal)
-			{
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<NatureConduit>());
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<CursedApple>());
-				if(SOTSWorld.DreamLampSolved)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<DreamLamp>());
-				}
-			}
-			if (currentLocationType == ImportantTileID.AvaritiaPortal)
-            {
-				if(SOTSWorld.downedAdvisor)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Otherworld.MeteoriteKey>());
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Otherworld.SkywareKey>());
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Otherworld.StrangeKey>());
-				}
-			}
-			if (currentLocationType == ImportantTileID.gemlockAmethyst)
-			{
-				if(SOTSWorld.AmethystKeySlotted)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AmethystRing>());
-				}
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<RockCandy>());
-			}
-			if (currentLocationType == ImportantTileID.gemlockTopaz)
-			{
-				if (SOTSWorld.TopazKeySlotted)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<TopazRing>());
-				}
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<BetrayersKnife>());
-			}
-			if (currentLocationType == ImportantTileID.gemlockSapphire)
-			{
-				if (SOTSWorld.SapphireKeySlotted)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<SapphireRing>());
-				}
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<BagOfAmmoGathering>());
-			}
-			if (currentLocationType == ImportantTileID.gemlockEmerald)
-			{
-				if (SOTSWorld.EmeraldKeySlotted)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<EmeraldRing>());
-				}
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Invidia.VorpalKnife>());
-			}
-			if (currentLocationType == ImportantTileID.gemlockRuby)
-			{
-				if (SOTSWorld.RubyKeySlotted)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<RubyRing>());
-				}
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<SyntheticLiver>());
-			}
-			if (currentLocationType == ImportantTileID.gemlockDiamond)
-			{
-				if (SOTSWorld.DiamondKeySlotted)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<DiamondRing>());
-				}
-			}
-			if (currentLocationType == ImportantTileID.gemlockAmber)
-			{
-				if (SOTSWorld.AmberKeySlotted)
-				{
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<AmberRing>());
-				}
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<KelpWhip>());
-			}
-			if (currentLocationType == ImportantTileID.iceMonument)
-			{
-				if (NPC.downedBoss1)
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<GlazeBow>());
-			}
-			if (currentLocationType == ImportantTileID.coconutIslandMonument)
-			{
-				if (NPC.downedBoss1)
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<CoconutGun>());
-			}
-			if (currentLocationType == ImportantTileID.coconutIslandMonumentBroken)
-			{
-				if (NPC.downedBoss1)
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<CoconutGun>());
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<PhotonGeyser>());
-			}
-			if (currentLocationType == ImportantTileID.damoclesChain)
-			{
-				if (NPC.downedBoss1)
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<Items.Crushers.BoneClapper>());
-				AddItemToShop(shop, ref nextSlot, ItemID.Terragrim);
-			}
-			if (currentLocationType == ImportantTileID.bigCrystal)
-			{
-				if (NPC.downedBoss1)
-					AddItemToShop(shop, ref nextSlot, ModContent.ItemType<PerfectStar>());
-				AddItemToShop(shop, ref nextSlot, ModContent.ItemType<VisionAmulet>());
-			}
+			var npcShop = new NPCShop(Type, ShopName)
+				.Add<AnomalyLocator>()
+				.Add<ArchaeologistToolbelt>()
+				.Add<GoldenTrowel>()
+				.Add<OldKey>()
+				.Add<ConduitChassis>()
+				.Add<NatureConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal))
+				.Add<CursedApple>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal))
+				.Add<DreamLamp>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal && SOTSWorld.DreamLampSolved))
+				.Add<Items.Otherworld.MeteoriteKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
+				.Add<Items.Otherworld.SkywareKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
+				.Add<Items.Otherworld.StrangeKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
+				.Add<AmethystRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockAmethyst && SOTSWorld.AmethystKeySlotted))
+				.Add<RockCandy>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockAmethyst))
+				.Add<TopazRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockTopaz && SOTSWorld.TopazKeySlotted))
+				.Add<BetrayersKnife>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockTopaz))
+				.Add<SapphireRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockSapphire && SOTSWorld.SapphireKeySlotted))
+				.Add<BagOfAmmoGathering>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockSapphire))
+				.Add<EmeraldRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockEmerald && SOTSWorld.EmeraldKeySlotted))
+				.Add<Items.Invidia.VorpalKnife>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockEmerald))
+				.Add<RubyRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockRuby && SOTSWorld.RubyKeySlotted))
+				.Add<SyntheticLiver>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockRuby))
+				.Add<DiamondRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockDiamond && SOTSWorld.DiamondKeySlotted))
+				.Add<AmberRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockAmber && SOTSWorld.AmberKeySlotted))
+				.Add<KelpWhip>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockAmber))
+				.Add<GlazeBow>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.iceMonument && NPC.downedBoss1))
+				.Add<CoconutGun>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonument && NPC.downedBoss1))
+				.Add<CoconutGun>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonumentBroken && NPC.downedBoss1))
+				.Add<PhotonGeyser>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonumentBroken))
+				.Add<BoneClapper>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain && NPC.downedBoss3))
+				.Add(new Item(ItemID.Terragrim), new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain))
+				.Add<PerfectStar>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal && NPC.downedBoss1))
+				.Add<VisionAmulet>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal));
+			npcShop.Register(); // Name of this shop tab
 		}
 		public static int currentLocationType = -1;
 		public void FindALocationToGoTo()

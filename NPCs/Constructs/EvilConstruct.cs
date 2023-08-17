@@ -193,7 +193,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				for (int k = 0; k < 20; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				for(int i = 1; i <= 5; i++) 
 					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("SOTS/Gores/EvilConstruct/EvilConstructGore" + i), 1f);

@@ -8,7 +8,6 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.ChestItems;
 using System;
 using SOTS.Items;
-using SOTS.Items.Pyramid;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Pyramid.AltPyramidBlocks;
 using SOTS.Items.Secrets;

@@ -467,7 +467,7 @@ namespace SOTS
         {
 			if(context is RecipeItemCreationContext r)
 			{
-				Recipe recipe = r.recipe;
+				Recipe recipe = r.Recipe;
 				Player player = Main.LocalPlayer;
 				if (recipe.requiredTile.Contains(TileID.DemonAltar)|| recipe.requiredTile.Contains(TileType<TransmutationAltarTile>()))
 				{
@@ -786,14 +786,14 @@ namespace SOTS
 				if (ItemIDInput != -20)
 				{
 					Recipe.Create(ItemIDOutput, 1)
-						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
+						.AddCondition(Language.GetText("Mods.SOTS.Common.VoidAnomalyCrafting"), () => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
 						.AddIngredient(ItemIDInput)
 						.Register();
 				}
 				else
 				{
 					Recipe.Create(ItemIDOutput, 1)
-						.AddCondition(NetworkText.FromKey("Mods.SOTS.Common.VoidAnomalyCrafting"), r => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
+						.AddCondition(Language.GetText("Mods.SOTS.Common.VoidAnomalyCrafting"), () => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
 						.AddRecipeGroup(RecipeGroupInput, 1).Register();
 				}
 			}

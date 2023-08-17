@@ -129,9 +129,9 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 20.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 20.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 41, (float)(2 * hitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 41, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
 					num++;
 				}
 			}
@@ -139,7 +139,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 10; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 41, (float)(2 * hitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, 41, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
 				}
 				SOTSUtils.PlaySound(SoundID.Item34, NPC.Center);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore1"), 1f);

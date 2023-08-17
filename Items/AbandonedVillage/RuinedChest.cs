@@ -27,20 +27,13 @@ namespace SOTS.Items.AbandonedVillage
 	}
 	public class RuinedChestTile : Furniture.ContainerType
 	{
-		protected override string GetChestName()
-		{
-			return Language.GetTextValue("Mods.SOTS.ContainerName.RuinedChestTile");
-		}
 		protected override int ChestDrop => ModContent.ItemType<RuinedChest>();
 		protected override int ChestKey => ModContent.ItemType<OldKey>();
 		protected override int DustType => 122;
 		protected override void AddMapEntires()
 		{
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(180, 130, 100), name, MapChestName);
-
-			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-			AddMapEntry(new Color(180, 130, 100), name, MapChestName);
+			AddMapEntry(new Color(180, 130, 100), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(180, 130, 100), this.GetLocalization("MapEntry1"), MapChestName);
 		}
 	}
 }

@@ -104,7 +104,6 @@ namespace SOTS.Projectiles.Otherworld
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.skywardBlades++;
 			modPlayer.SendClientChanges(modPlayer);
-			base.OnHitNPC(target, damage, knockback, crit);
         }
     }
 }

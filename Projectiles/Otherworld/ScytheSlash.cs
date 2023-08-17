@@ -93,9 +93,9 @@ namespace SOTS.Projectiles.Otherworld
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 10;
 			BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
-			if (crit && Main.myPlayer == Projectile.owner)
+			if (hit.Crit && Main.myPlayer == Projectile.owner)
 			{
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), damage + modPlayer.soulDamage, 1f, player.whoAmI);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), Projectile.damage + modPlayer.soulDamage, 1f, player.whoAmI);
 			}
 		}
 		public override void AI()

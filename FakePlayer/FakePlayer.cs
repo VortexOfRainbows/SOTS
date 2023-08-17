@@ -202,7 +202,7 @@ namespace SOTS.FakePlayer
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             if(canUseItem)
-                player.ItemCheck(whoAmI); //Run the actual item use code
+                player.ItemCheck(); //Run the actual item use code
             SetupBodyFrame(player); //run code to get frame after
             CopyRealToFake(player);
             LoadRealPlayerValues(player);

@@ -36,9 +36,9 @@ namespace SOTS.Projectiles.BiomeChest
 			target.immune[Projectile.owner] = 0;
 			if(Main.rand.NextBool(7))
             {
-				if (crit)
-					damage /= 2;
-				target.AddBuff(ModContent.BuffType<Infected>(), damage * 60);
+				if (hit.Crit)
+					damageDone /= 2;
+				target.AddBuff(ModContent.BuffType<Infected>(), damageDone * 60);
             }
 		}
 		public override bool PreDraw(ref Color lightColor)

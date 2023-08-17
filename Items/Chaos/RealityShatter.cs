@@ -76,7 +76,7 @@ namespace SOTS.Items.Chaos
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			int amt = 3;
-			Projectile.NewProjectile(player.GetSource_OnHit(target), target.Center, new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), Item.shoot, (int)(damage * 0.5f), knockBack, player.whoAmI, amt, target.whoAmI);
+			Projectile.NewProjectile(player.GetSource_OnHit(target), target.Center, new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), Item.shoot, (int)(hit.SourceDamage * 0.5f), hit.Knockback, player.whoAmI, amt, target.whoAmI);
 		}
         public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox)
 		{

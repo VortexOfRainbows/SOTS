@@ -8,10 +8,6 @@ namespace SOTS.Projectiles.Evil
 {    
     public class EvilStrike : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Nightmare Strike");
-		}
         public override void SetDefaults()
 		{
 			Projectile.height = 48;
@@ -27,7 +23,7 @@ namespace SOTS.Projectiles.Evil
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			crit = false;
+			modifiers.DisableCrit();
         }
         public override bool? CanHitNPC(NPC target)
         {

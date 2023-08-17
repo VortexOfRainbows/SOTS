@@ -508,11 +508,11 @@ namespace SOTS.NPCs.Constructs
             return null;
         }
         bool gennedGore = false;
-        public void genGore(int hitDirection)
+        public void genGore(int HitDirection)
         {
             for (int k = 0; k < 20; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)HitDirection, -2.5f, 0, default(Color), 0.7f);
             }
             Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
             Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore2"), 1f);
@@ -527,7 +527,7 @@ namespace SOTS.NPCs.Constructs
         {
             if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
             {
-                if (!gennedGore) genGore(hitDirection);
+                if (!gennedGore) genGore(hit.HitDirection);
             }
         }
         public override void OnKill()

@@ -61,7 +61,6 @@ namespace SOTS.Projectiles
 			if(!targetIDs.Contains(target.whoAmI))
 				targetIDs.Add(target.whoAmI);
 			Projectile.netUpdate = true;
-            base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

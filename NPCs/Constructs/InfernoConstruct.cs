@@ -180,8 +180,8 @@ namespace SOTS.NPCs.Constructs
 				{
 					for (int k = 0; k < 30; k++)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
-						Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Torch, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
+						Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Torch, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 2.2f);
 					}
 					for (int i = 1; i <= 7; i++)
 						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);

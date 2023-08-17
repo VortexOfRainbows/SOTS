@@ -27,9 +27,9 @@ namespace SOTS.Projectiles.Tide
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			damage *= 2;
+			modifiers.SourceDamage *= 2;
 			if (target.type == ModContent.NPCType<TidalConstruct>())
-				damage *= 7;
+				modifiers.SourceDamage *= 7;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
@@ -131,7 +131,6 @@ namespace SOTS.Projectiles.Tide
 				Main.dust[dust].velocity -= target.velocity;
 				Main.dust[dust].noGravity = true;
 			}
-			base.OnHitPlayer(target, damage, crit);
         }
         bool runOnce = true;
 		public override bool ShouldUpdatePosition()

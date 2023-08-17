@@ -31,7 +31,7 @@ namespace SOTS.Items.Fragments
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<DissolvingUmbraBlock>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<DissolvingUmbraBlock>();
 			AddMapEntry(new Color(251, 32, 0));
 			MineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;

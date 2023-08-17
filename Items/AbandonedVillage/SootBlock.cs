@@ -17,7 +17,6 @@ namespace SOTS.Items.AbandonedVillage
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			DustType = 38; //mud
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SootBlock>();
 			AddMapEntry(new Color(57, 50, 44));
 		}
 	}
@@ -91,7 +90,6 @@ namespace SOTS.Items.AbandonedVillage
 		{
 			Main.wallHouse[Type] = true;
 			DustType = 38;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SootWall>();
 			AddMapEntry(new Color(34, 29, 24));
 		}
 	}

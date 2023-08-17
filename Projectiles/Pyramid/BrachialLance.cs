@@ -40,11 +40,12 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.tileCollide = false;
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-			damage = (int)(damage * (1 + chargeProgress * 0.6f));
+		{
+			modifiers.SourceDamage *= (1 + chargeProgress * 0.6f);
 			if (chargeProgress >= 1)
-				crit = true;
-        }
+				modifiers.SetCrit();
+
+		}
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 4;

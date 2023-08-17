@@ -23,6 +23,7 @@ Mods: {
 			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
 			ArchaeologistMap: Anomaly
 			ArchaeologistItemMap: "Teleported "
+			ArchaeologistShopCondition: "In a certain location"
 			VoidAnomalyCrafting: Wormhole conversion
 		}
 
@@ -3192,8 +3193,7 @@ Mods: {
 				# SoldStuff
 				Tooltip:
 					'''
-					20% of damage done ignores defense completely
-					In addition, a flat 10 damage will also completely ignore defense
+					Penetrates 20% of enemy defense plus 10 defense
 					'''
 			}
 
@@ -3321,7 +3321,7 @@ Mods: {
 				DisplayName: Solar Bullet
 				Tooltip:
 					'''
-					50% of damage done ignores defense completely
+					Penetrates 50% of enemy defense
 					Increases in speed after bouncing off walls
 					'''
 			}
@@ -4441,20 +4441,6 @@ Mods: {
 			PatchLeather: Summons a flock of flying snakes to assist in combat
 		}
 
-		ContainerName: {
-			RuinedChestTile: Ruined Chest
-			EarthenPlatingStorageTile: Earthen Plating Storage
-			GoopwoodBarrelTile: Goopwood Barrel
-			NaturePlatingCapsuleTile: Nature Plating Capsule
-			PermafrostPlatingCapsuleTile: Permafrost Plating Capsule
-			GemChestTile: Gem Chest
-			AncientGoldDresserTile: Ancient Gold Dresser
-			EarthenPlatingDresserTile: Earthen Plating Dresser
-			NaturePlatingDresserTile: Nature Plating Dresser
-			PermafrostPlatingDresserTile: Permafrost Plating Dresser
-			Dresser: Dresser
-		}
-
 		Tiles: {
 			NatureConduitTile.MapEntry: Nature Conduit
 			EarthenConduitTile.MapEntry: Earth Conduit
@@ -4462,53 +4448,44 @@ Mods: {
 			PeanutOreTile.MapEntry: Peanut Ore
 
 			RuinedChestTile: {
-				MapEntry: Ruined Chest
-				ContainerName: Mods.SOTS.ContainerName.RuinedChestTile
+				MapEntry0: Ruined Chest
+				MapEntry1: Locked Ruined Chest
 			}
-
-			RuinedChestTile_Locked.MapEntry: Locked Ruined Chest
 
 			EarthenPlatingStorageTile: {
-				MapEntry: Earthen Plating Storage
-				ContainerName: Mods.SOTS.ContainerName.EarthenPlatingStorageTile
+				MapEntry0: Earthen Plating Storage
+				MapEntry1: Locked Earthen Plating Storage
 			}
 
-			EarthenPlatingStorageTile_Locked.MapEntry: Locked Earthen Plating Storage
 
 			NaturePlatingCapsuleTile: {
-				MapEntry: Nature Plating Capsule
-				ContainerName: Mods.SOTS.ContainerName.NaturePlatingCapsuleTile
+				MapEntry0: Nature Plating Capsule
+				MapEntry1: Locked Nature Plating Capsule
 			}
 
-			NaturePlatingCapsuleTile_Locked.MapEntry: Locked Nature Plating Capsule
 
 			PermafrostPlatingCapsuleTile: {
-				MapEntry: Permafrost Plating Capsule
-				ContainerName: Mods.SOTS.ContainerName.PermafrostPlatingCapsuleTile
+				MapEntry0: Permafrost Plating Capsule
+				MapEntry1: Locked Permafrost Plating Capsule
 			}
 
-			PermafrostPlatingCapsuleTile_Locked.MapEntry: Locked Permafrost Plating Capsule
 
 			LockedMeteoriteChest: {
-				MapEntry: Meteorite Chest
-				ContainerName: Mods.SOTS.MapObject.LockedMeteoriteChest
+				MapEntry0: Meteorite Chest
+				MapEntry1: Locked Meteorite Chest
 			}
 
-			LockedMeteoriteChest_Locked.MapEntry: Locked Meteorite Chest
 
 			LockedSkywareChest: {
-				MapEntry: Skyware Chest
-				ContainerName: Mods.SOTS.MapObject.LockedSkywareChest
+				MapEntry0: Skyware Chest
+				MapEntry1: Locked Skyware Chest
 			}
-
-			LockedSkywareChest_Locked.MapEntry: Locked Skyware Chest
 
 			LockedStrangeChest: {
-				MapEntry: Planetarium Chest
-				ContainerName: Mods.SOTS.MapObject.LockedStrangeChest
+				MapEntry0: Planetarium Chest
+				MapEntry1: Locked Planetarium Chest
 			}
 
-			LockedStrangeChest_Locked.MapEntry: Locked Planetarium Chest
 			HoloEyeBannerTile.MapEntry: Banner
 			HoloSlimeBannerTile.MapEntry: Banner
 			HoloSwordBannerTile.MapEntry: Banner
@@ -4528,8 +4505,7 @@ Mods: {
 			EarthenPlatingTorchTile.MapEntry: Earthen Plating Torch
 
 			GoopwoodBarrelTile: {
-				MapEntry: Mods.SOTS.ContainerName.GoopwoodBarrelTile
-				ContainerName: Mods.SOTS.ContainerName.GoopwoodBarrelTile
+				MapEntry0: Goopwood Barrel
 			}
 
 			Hydroponics.MapEntry: Hydroponics
@@ -4565,8 +4541,7 @@ Mods: {
 			ManaStatue.MapEntry: Mana Statue
 
 			PyramidChestTile: {
-				MapEntry: Pyramid Chest
-				ContainerName: Mods.SOTS.MapObject.PyramidChestTile
+				MapEntry0: Pyramid Chest
 			}
 
 			PyramidGateTile.MapEntry: Pyramid Gate
@@ -4593,21 +4568,22 @@ Mods: {
 			NaturePlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.NaturePlatingBlastDoor
 			PermafrostPlatingBlastDoorTileClosed.MapEntry: Mods.SOTS.ItemName.PermafrostPlatingBlastDoor
 			PermafrostPlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.PermafrostPlatingBlastDoor
-			GemChestTileR.MapEntry: Ruby Chest
-			GemChestTileR_Locked.MapEntry: Locked Ruby Chest
-			GemChestTileS.MapEntry: Sapphire Chest
-			GemChestTileS_Locked.MapEntry: Locked Sapphire Chest
-			GemChestTileE.MapEntry: Emerald Chest
-			GemChestTileE_Locked.MapEntry: Locked Emerald Chest
-			GemChestTileT.MapEntry: Topaz Chest
-			GemChestTileT_Locked.MapEntry: Locked Topaz Chest
-			GemChestTileA.MapEntry: Amethyst Chest
-			GemChestTileA_Locked.MapEntry: Locked Amethyst Chest
-			GemChestTileD.MapEntry: Diamond Chest
-			GemChestTileD_Locked.MapEntry: Locked Diamond Chest
-			GemChestTileAmber.MapEntry: Amber Chest
-			GemChestTileAmber_Locked.MapEntry: Locked Amber Chest
-			GemChestTile.ContainerName: Mods.SOTS.ContainerName.GemChestTile
+			GemChestTile: {
+				MapEntry0: Ruby Chest 
+				MapEntry1: Locked Ruby Chest
+				MapEntry2: Sapphire Chest
+				MapEntry3: Locked Sapphire Chest
+				MapEntry4: Emerald Chest
+				MapEntry5: Locked Emerald Chest
+				MapEntry6: Topaz Chest
+				MapEntry7: Locked Topaz Chest
+				MapEntry8: Amethyst Chest
+				MapEntry9: Locked Amethyst Chest
+				MapEntry10: Diamond Chest
+				MapEntry11: Locked Diamond Chest
+				MapEntry12: Amber Chest
+				MapEntry13: Locked Amber Chest
+			}
 		}
 
 		WorldGeneration: {

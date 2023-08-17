@@ -277,13 +277,13 @@ namespace SOTS.NPCs.Phase
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while (num < damage / NPC.lifeMax * 60.0)
+				while (num < hit.Damage / NPC.lifeMax * 60.0)
 				{
 					if(Main.rand.NextBool(3))
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Gold, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Gold, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 					else
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 					}
 					num++;
 				}
@@ -296,7 +296,7 @@ namespace SOTS.NPCs.Phase
 					{
 						if (Main.rand.NextBool(3))
 						{
-							Dust.NewDust(trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hitDirection), -2f, 0, default, 2f);
+							Dust.NewDust(trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 						}
 					}
 				}
@@ -304,13 +304,13 @@ namespace SOTS.NPCs.Phase
 				{
 					if (k % 4 == 0)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hitDirection), -2f, 0, default, 2f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 					}
 					if (Main.rand.NextBool(3))
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Gold, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Gold, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 					else
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Platinum, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
 					}
 				}
 				for (int i = 1; i <= 3; i++)

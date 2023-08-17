@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Inferno
         {
             if(Projectile.ai[0] == -1)
             {
-                damage += target.defense / 2;
+                modifiers.ScalingArmorPenetration += 1f;
             }
         }
         public override void SetStaticDefaults()

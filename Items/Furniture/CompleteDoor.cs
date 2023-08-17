@@ -17,6 +17,7 @@ namespace SOTS.Items.Furniture
             protected virtual Color MapColor => new Color(191, 142, 111, 255);
             public override void SetStaticDefaults()
             {
+                TileID.Sets.CloseDoorID[Type] = ModContent.TileType<TClosed>();
                 Main.tileFrameImportant[Type] = true;
                 Main.tileSolid[Type] = false;
                 Main.tileNoSunLight[Type] = true;
@@ -61,10 +62,9 @@ namespace SOTS.Items.Furniture
                 AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
                 TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
                 TileID.Sets.HasOutlines[Type] = true;
-                AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
+                AddMapEntry(MapColor, GetType().Name);
                 TileID.Sets.DisableSmartCursor[Type] = true;
                 AdjTiles = new int[] { TileID.OpenDoor };
-                CloseDoorID/* tModPorter Note: Removed. Use TileID.Sets.CloseDoorID instead */ = ModContent.TileType<TClosed>();
             }
             public override void NumDust(int i, int j, bool fail, ref int num)
             {
@@ -88,6 +88,7 @@ namespace SOTS.Items.Furniture
         }
         public override void SetStaticDefaults()
         {
+            TileID.Sets.OpenDoorID[Type] = ModContent.TileType<TOpen>();
             Main.tileFrameImportant[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileSolid[Type] = true;
@@ -114,10 +115,9 @@ namespace SOTS.Items.Furniture
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
+            AddMapEntry(MapColor, GetType().Name);
             TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.ClosedDoor };
-            OpenDoorID/* tModPorter Note: Removed. Use TileID.Sets.OpenDoorID instead */ = ModContent.TileType<TOpen>();
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {

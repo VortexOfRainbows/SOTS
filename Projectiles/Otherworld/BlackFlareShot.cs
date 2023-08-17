@@ -7,11 +7,6 @@ namespace SOTS.Projectiles.Otherworld
 {    
     public class BlackFlareShot : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Black Flare");
-			
-		}
         public override void SetDefaults()
         {
             Projectile.tileCollide = true;
@@ -25,7 +20,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage += (int)(target.defense * 0.5f);
+            modifiers.ScalingArmorPenetration += 1f;
         }
         int counter = 0;
         public override void AI() //adapted directly from terraria source

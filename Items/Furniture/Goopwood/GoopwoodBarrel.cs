@@ -24,18 +24,12 @@ namespace SOTS.Items.Furniture.Goopwood
 	}
 	public class GoopwoodBarrelTile : ContainerType
     {
-        protected override string GetChestName()
-        {
-            return Language.GetTextValue("Mods.SOTS.ContainerName.GoopwoodBarrelTile");
-        }
         protected override int ChestDrop => ModContent.ItemType<GoopwoodBarrel>();
         protected override int DustType => 7; //wood
         protected override void AddMapEntires()
         {
             Color color = Color.Lerp(new Color(191, 142, 111, 255), Color.Black, 0.17f);
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault(GetChestName());
-            AddMapEntry(color, name, MapChestName);
+            AddMapEntry(color, this.GetLocalization("MapEntry0"), MapChestName);
         }
     }
 }

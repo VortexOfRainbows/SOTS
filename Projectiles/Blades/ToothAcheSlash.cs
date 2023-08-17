@@ -18,11 +18,9 @@ namespace SOTS.Projectiles.Blades
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.AddBuff(BuffID.Poisoned, 180);
-            base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Tooth Ache Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        

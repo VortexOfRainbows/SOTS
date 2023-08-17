@@ -23,7 +23,7 @@ namespace SOTS.Void
 
 		}
 		public sealed override void SetDefaults() {
-			Item.shoot = 10; 
+			Item.shoot = ProjectileID.PurificationPowder; 
 			SafeSetDefaults();
 			if (Item.DamageType == DamageClass.Melee)
 				Item.DamageType = ModContent.GetInstance<VoidMelee>();

@@ -304,24 +304,24 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			if (projectile.CountsAsClass(DamageClass.Melee))
 			{
-				damage = (int)(damage * 1.08f);
+				modifiers.SourceDamage *= 1.08f;
 			}
 			if (projectile.CountsAsClass(DamageClass.Magic))
 			{
 				if(projectile.type == ProjectileID.Blizzard)
 				{
-					damage = (int)(damage * 0.8f);
+					modifiers.SourceDamage *= 0.8f;
 				}
 				else
-					damage = (int)(damage * 0.95f);
+					modifiers.SourceDamage *= 0.95f;
 			}
 			else if (projectile.CountsAsClass(DamageClass.Ranged))
 			{
-				damage = (int)(damage * 0.88f);
+				modifiers.SourceDamage *= 0.88f;
 			}
 			if(projectile.type == ProjectileID.UFOLaser)
 			{
-				damage = (int)(damage * 0.9f);
+				modifiers.SourceDamage *= 0.9f;
 			}
 			float damageMult = 1;
 			switch(attackPhase)
@@ -337,7 +337,7 @@ namespace SOTS.NPCs.Boss.Lux
 					break;
 			}
 			if (damageMult != 1)
-				damage = (int)(damage * damageMult);
+				modifiers.SourceDamage *= damageMult;
 		}
         public void SetupDebuffImmunities()
         {
@@ -381,7 +381,7 @@ namespace SOTS.NPCs.Boss.Lux
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
-			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f); //90000 hp
+			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f); //90000 hp
 			NPC.damage = (int)(NPC.damage * 0.75f); //150 damage
 		}
 		bool runOnce = true;
@@ -546,9 +546,8 @@ namespace SOTS.NPCs.Boss.Lux
 							}
 							if (ai3 >= 90)
 							{
-								NPC.StrikeNPC(10000, 0, 0);
-								if (Main.netMode == NetmodeID.Server)
-									NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, 10000, 0, 0, 0, 0, 0);
+								if (Main.netMode != NetmodeID.MultiplayerClient)
+									NPC.StrikeInstantKill();
 							}
 						}
 					}

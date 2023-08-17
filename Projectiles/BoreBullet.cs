@@ -56,15 +56,8 @@ namespace SOTS.Projectiles
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			int ignoreDefense = ((target.defense + 1) / 2);
-			int flatAdded = 10;
-			if (flatAdded > damage)
-				flatAdded = damage;
-			int baseDamage = (int)(damage * 0.8) - flatAdded - ignoreDefense;
-			baseDamage = (int) MathHelper.Clamp(baseDamage, 0, damage);
-			baseDamage += (int)(damage * 0.2f);
-			damage = baseDamage + ignoreDefense + flatAdded;
-			//Main.NewText(baseDamage);
+			modifiers.ScalingArmorPenetration += 0.2f;
+			modifiers.ArmorPenetration += 10;
 		}
         public override void Kill(int timeLeft)
 		{

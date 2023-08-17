@@ -176,7 +176,6 @@ namespace SOTS.Projectiles.Nature
 			{
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), ogPos.X, ogPos.Y, 0, 0, ModContent.ProjectileType<Base.HealProj>(), 0, 0, player.whoAmI, heal, 9);
 			}
-			base.OnHitNPC(target, damage, knockback, crit);
         }
     }
 }

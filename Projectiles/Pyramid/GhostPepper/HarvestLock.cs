@@ -74,7 +74,8 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 						DebuffNPC debuffNPC = npc.GetGlobalNPC<DebuffNPC>();
 						if (debuffNPC.HarvestCurse < 99 && Main.myPlayer == Projectile.owner)
 						{
-							debuffNPC.OnHitByProjectile(npc, Projectile, 0, 0, false);
+							NPC.HitInfo hitInfo = new NPC.HitInfo();
+							debuffNPC.OnHitByProjectile(npc, Projectile, hitInfo, 0);
 						}
 						runOnce2 = false;
 						for (int i = 0; i < 360; i += 4)

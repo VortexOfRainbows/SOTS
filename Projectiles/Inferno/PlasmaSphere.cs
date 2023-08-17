@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Inferno
 			float damageMult = 1f;
 			if (!ended)
 				damageMult = 0.5f;
-			damage = (int)(damage * (0.6f + totalCharges * 0.4f) * damageMult);
+			modifiers.SourceDamage *= (0.6f + totalCharges * 0.4f) * damageMult;
         }
         int counter = 0;
 		int totalCharges = 1;

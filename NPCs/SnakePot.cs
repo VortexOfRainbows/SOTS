@@ -152,7 +152,7 @@ namespace SOTS.NPCs
 			{
 				for (int i = 0; i < 30; i++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * (float)hitDirection, -2.5f, 0, new Color(), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * (float)hit.HitDirection, -2.5f, 0, new Color(), 1f);
 				}
 				int rand = Main.rand.Next(3);
 				if (rand == 0)
@@ -173,15 +173,15 @@ namespace SOTS.NPCs
 			}
 			else
 			{
-				for (int i = 0; i < damage / (float)NPC.lifeMax * 50.0; i++)
+				for (int i = 0; i < hit.Damage / (float)NPC.lifeMax * 50.0; i++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, (float)hitDirection, -1f, 0, new Color(), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, (float)hit.HitDirection, -1f, 0, new Color(), 0.8f);
 				}
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
 		{
-			player.AddBuff(BuffID.Venom, 60, true);
+			target.AddBuff(BuffID.Venom, 60, true);
 		}  
 		public override void FindFrame(int frameHeight) 
 		{

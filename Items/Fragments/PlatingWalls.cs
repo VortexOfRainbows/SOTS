@@ -28,7 +28,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Tungsten;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NaturePlatingWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NaturePlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.2f));
 		}
 	}
@@ -55,7 +55,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Tungsten;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NaturePlatingPanelWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<NaturePlatingPanelWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.3f));
 		}
 	}
@@ -82,7 +82,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlatingWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.2f));
 		}
 	}
@@ -109,7 +109,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlatingPanelWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlatingPanelWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.3f));
 		}
 	}
@@ -136,7 +136,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Iron;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlatingBeam>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EarthenPlatingBeam>();
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
 		}
 	}
@@ -163,7 +163,7 @@ namespace SOTS.Items.Fragments
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.Silver;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlatingWall>();
+			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.PermafrostPlatingColor, Color.Black, 0.2f));
 		}
 	}

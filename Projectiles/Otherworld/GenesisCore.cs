@@ -30,8 +30,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-			crit = false;
-            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+			modifiers.DisableCrit();
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

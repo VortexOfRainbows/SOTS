@@ -150,10 +150,6 @@ namespace SOTS.NPCs.Boss
 			if(NPC.scale == 1)
 				spriteBatch.Draw(texture, drawPos, null, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 		}
-		public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
-		{
-			base.ModifyHitByItem(player, item, ref damage, ref knockback, ref crit);
-		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
 		{
 			if (projectile.active && (projectile.ModProjectile == null || projectile.ModProjectile.ShouldUpdatePosition()))
@@ -167,15 +163,13 @@ namespace SOTS.NPCs.Boss
 		{
 			if (NPC.defense > 1000)
 			{
-				damage = 0;
-				crit = false;
-				return false;
+				modifiers.FinalDamage *= 0;
+				modifiers.DisableCrit();
 			}
-			return true;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-			NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale * 0.75f);
+			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f);
 			NPC.damage = NPC.damage * 3 / 4;  
         }
         public override void OnKill()
@@ -295,12 +289,11 @@ namespace SOTS.NPCs.Boss
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, hitDirection * 2, 0, 120);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, hit.HitDirection * 2, 0, 120);
 					dust.scale *= 1.5f;
 				}
 				return;
 			}
-			base.HitEffect(hitDirection, damage);
         }
     }
 }

@@ -1238,9 +1238,9 @@ namespace SOTS.NPCs.Boss.Curse
 				else
                 {
 					startParticles = 0.5f;
-					if(ai2 > 180)
+					if(ai2 > 180 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
-						NPC.StrikeNPC(667 + NPC.defense / 2, 0, 0);
+						NPC.StrikeInstantKill();
                     }
 				}
             }

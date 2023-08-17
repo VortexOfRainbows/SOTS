@@ -281,9 +281,9 @@ namespace SOTS.NPCs
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)NPC.lifeMax * 40.0)
+				while ((double)num < hit.Damage / (double)NPC.lifeMax * 40.0)
 				{
-					int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hitDirection), -2f, 0, default);
+					int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hit.HitDirection), -2f, 0, default);
 					Main.dust[dust].velocity *= 2f;
 					Main.dust[dust].scale *= 4f;
 					Main.dust[dust].noGravity = true;
@@ -294,7 +294,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hitDirection), -2f, 0, default);
+					int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hit.HitDirection), -2f, 0, default);
 					Main.dust[dust].velocity *= 2f;
 					Main.dust[dust].scale *= 5f;
 					Main.dust[dust].noGravity = true;

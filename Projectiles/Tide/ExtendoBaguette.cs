@@ -34,18 +34,17 @@ namespace SOTS.Projectiles.Tide
         {
             Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-            damage += modPlayer.baguetteLength;
+            modifiers.SourceDamage += modPlayer.baguetteLength;
             float mult = rotationDifference / MathHelper.ToRadians(20f);
             if (mult > 1)
                 mult = 1;
-            if(mult < 0)
+            modifiers.FinalDamage *= mult;
+            modifiers.Knockback *= mult;
+            if (mult < 0)
             {
-                knockback *= 0.1f;
-                damage = 1;
+                modifiers.FinalDamage.Flat += 1;
                 return;
             }
-            damage = (int)(damage * mult);
-            knockback *= mult;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

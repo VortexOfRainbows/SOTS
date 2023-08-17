@@ -70,7 +70,7 @@ namespace SOTS.NPCs.Anomaly
 		public void DrawLines(SpriteBatch spriteBatch, Vector2 screenPos)
 		{
 			return;
-			Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Anomaly/PlanetoidGridLine").Value;
+			/*Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Anomaly/PlanetoidGridLine").Value;
 			Vector2 drawOrigin = new Vector2(0, 1);
 			if(GravityWell.Count > 1)
 			{
@@ -95,7 +95,7 @@ namespace SOTS.NPCs.Anomaly
 						firstPosition = GravityWell[i].Position;
 					}
 				}
-			}
+			}*/
         }
 		public override void HitEffect(NPC.HitInfo hit)
 		{
@@ -105,14 +105,14 @@ namespace SOTS.NPCs.Anomaly
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), (float)(2 * hitDirection), -2f);
+					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
 					d.velocity *= 1.0f;
 					d.fadeIn = 0.2f;
 					d.noGravity = true;
 					d.scale *= 1.5f;
 					d.color = ColorHelpers.VoidAnomaly;
 					Vector2 circular = new Vector2(32, 0).RotatedBy(k / 30f * MathHelper.TwoPi);
-					d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), (float)(2 * hitDirection), -2f);
+					d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
 					d.velocity *= 0.4f;
 					d.velocity += circular.SafeNormalize(Vector2.Zero) * 4;
 					d.fadeIn = 0.2f;

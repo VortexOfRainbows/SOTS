@@ -7,7 +7,6 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.ChestItems;
 using System;
 using SOTS.Items;
-using SOTS.Items.Pyramid;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Furniture.AncientGold;
 using SOTS.Items.Tide;
@@ -4962,21 +4961,21 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void PlaceSetpiecesInMushroomBiome()
         {
-			Vector2[] mushroomBiomes = GenVars.mushroomBiomesPosition;
+			Point[] mushroomBiomes = GenVars.mushroomBiomesPosition;
 			int total = mushroomBiomes.Length;
 			for (int A = 0; A < total; A++)
 			{
 				int bestDistance = 0;
-				Vector2 position = mushroomBiomes[A];
+				Point position = mushroomBiomes[A];
 				if(WorldGen.InWorld((int)position.X, (int)position.Y, 50) && A % 2 == 0)
                 {
-					Point16 pos = position.ToPoint16();
+					Point16 pos = new Point16(position);
 					Point16 bestPoint = pos;
 					for (int i = -60; i <= 60; i++)
 					{
 						for (int j = -60; j <= 60; j++)
 						{
-							pos = position.ToPoint16() + new Point16(i, j);
+							pos = new Point16(position) + new Point16(i, j);
 							int blocksL = CountBlocksInDirection(pos, new Point16(-1, 0), TileID.MushroomGrass, 60);
 							int blocksR = CountBlocksInDirection(pos, new Point16(1, 0), TileID.MushroomGrass, 60);
 							int blocksU = CountBlocksInDirection(pos, new Point16(0, -1), TileID.MushroomGrass, 60);
