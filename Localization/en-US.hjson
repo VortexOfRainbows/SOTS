@@ -3614,11 +3614,9 @@ Mods: {
 			DreamLamp: {
 				DisplayName: Dreaming Lamp
 				Tooltip: "'What do you wish for?'"
-			}
-
-			DreamingLamp: {
-				DisplayName: Dreaming Lamp
-				Tooltip:
+				DisplayName1: Dreaming Lamp
+				DisplayName2: Forgotten Lamp
+				Tooltip1:
 					'''
 					Chain together up to 10 enemies, decreasing their speed and defense
 					Chain together items to grab them
@@ -3627,6 +3625,7 @@ Mods: {
 					Right clicking does not consume void
 					'What do you wish for?'
 					'''
+				Tooltip2: Right click to launch a mist orb that releases short-range homing bolts for 50% damage
 			}
 
 			ForgottenLamp.DisplayName: Forgotten Lamp
@@ -5069,8 +5068,6 @@ Mods: {
 				DisplayName: Frigid Hamaxe
 				Tooltip: ""
 			}
-
-			FalseLamp.Tooltip: Right click to launch a mist orb that releases short-range homing bolts for 50% damage
 		}
 
 		ItemTooltip: {
@@ -6628,9 +6625,9 @@ Mods: {
 			Mods: {
 				SOTS: {
 					KeyBindName: {
-						Blink.DisplayName: Mods. S O T S. Key Bind Name. Blink
-						ArmorSet.DisplayName: Mods. S O T S. Key Bind Name. Armor Set
-						MFM.DisplayName: Mods. S O T S. Key Bind Name. M F M
+						Blink.DisplayName: Blink
+						ArmorSet.DisplayName: Armor Set
+						MFM.DisplayName: Switch Flight Mode
 					}
 				}
 			}

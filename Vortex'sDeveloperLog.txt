@@ -55,6 +55,10 @@ TODO for PORTING:
 
 Daily Log:
 
+8/17/23
+1. Ported to 1.4.4!
+2. Fixed some drawing and localization issues
+
 8/13/23 - 8/16/23
 1. Porting and consequences:
 	1. Ancient steel melee weapons no longer to bonus bonus knockback on crit

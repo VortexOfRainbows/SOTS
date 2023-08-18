@@ -21,9 +21,9 @@ namespace SOTS.Items.Secrets
 			{
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
-					string NewName = Language.GetTextValue("Mods.SOTS.ItemTooltip.DreamingLamp");
+					string NewName = this.GetLocalizedValue("Tooltip1");
 					if (IsItemForgotten)
-						NewName = Language.GetTextValue("Mods.SOTS.ItemTooltip.FalseLamp");
+						NewName = this.GetLocalizedValue("Tooltip2");
 					line.Text = NewName;
 				}
 			}
@@ -136,7 +136,7 @@ namespace SOTS.Items.Secrets
 		}
 		public static bool IsItemForgotten => !SOTSWorld.DreamLampSolved;
         public static Texture2D texture => ModContent.Request<Texture2D>("SOTS/Items/Secrets/DreamingLamp").Value;
-		public string appropriateNameRightNow => IsItemForgotten ? Language.GetTextValue("Mods.SOTS.ItemName.ForgottenLamp") : Language.GetTextValue("Mods.SOTS.ItemName.DreamingLamp");
+		public string appropriateNameRightNow => IsItemForgotten ? this.GetLocalizedValue("DisplayName2") : this.GetLocalizedValue("DisplayName1");
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D realTexture = Terraria.GameContent.TextureAssets.Item[Type].Value;
@@ -158,7 +158,6 @@ namespace SOTS.Items.Secrets
 		{
 			Texture2D realTexture = texture;
 			origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 inventoryBoxTextureCenter = origin * scale; //this puts the center in the box's usual position
 			Vector2 sinusoid = new Vector2(0, 3 * scale * (float)Math.Cos(0.85f * MathHelper.ToRadians(SOTSWorld.GlobalCounter)));
 			float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(SOTSWorld.GlobalCounter));
 			if (IsItemForgotten)
@@ -167,9 +166,9 @@ namespace SOTS.Items.Secrets
 				scale *= 1.2f;
 				sinusoid = Vector2.Zero;
 				rotation = 0;
-				position -= new Vector2(0, 6 * scale);
+				position -= new Vector2(0, 8 * scale);
 			}
-			spriteBatch.Draw(realTexture, position + inventoryBoxTextureCenter + sinusoid, frame, drawColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(realTexture, position + sinusoid, frame, drawColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
         public override void SafeSetDefaults()

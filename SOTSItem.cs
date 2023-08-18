@@ -734,10 +734,9 @@ namespace SOTS
 		{
 			Texture2D texture = TextureAssets.Item[item.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 inventoryBoxTextureCenter = origin * scale; //this puts the center in the box's usual position
 			Vector2 sinusoid = new Vector2(0, 3 * sinMult * scale * (float)Math.Cos(speedMultiplier * MathHelper.ToRadians(SOTSWorld.GlobalCounter)));
 			float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
-			spriteBatch.Draw(texture, position + inventoryBoxTextureCenter + sinusoid, frame, drawColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, position + sinusoid, frame, drawColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
 		}
 		public static void DrawInWorldBobbing(SpriteBatch spriteBatch, Item item, Vector2 offset, Color color, ref float rotation, ref float scale, float speedMultiplier = 1f, float sinMult = 1f)
 		{
