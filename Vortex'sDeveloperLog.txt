@@ -36,28 +36,28 @@ Update Objectives:
 5. Glow Nylon Whip
 
 Needed After Porting:
-1. Make sure wall mimic secret works (strike npc stuff)
-2. Check localization of containers (chests and dressers), and of doors/blast doors
-3. Test out Torch Bombs
-4. Test archaeologist shop
-5. Test out Cursed Blade critical strike and damage mechanics
-6. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
-7. Test Ghost pepper
-8. Test Subservant
-9. Pharaoh's Curse death anim
-10. Advisor and Lux death anim
-11. Make sure all furniture and tiles drop the correct items
+1. Check localization of chests and of doors/blast doors
+2. Test out Cursed Blade critical strike and damage mechanics
+3. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
+4. Test Ghost pepper
+5. Test Subservant
+6. Make sure all furniture and tiles drop the correct items
 
 TODO for PORTING:
 1. Fix doors localization issues
 2. Fix glowmoth multiplayer doNotTakeDamage
 3. Fix refracting crystal pathway not syncing
+4. Fix certain bosses and enemies using multiplayer smoothing not looking good...
+	1. NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true; (already did LUX)
 
 Daily Log:
 
 8/17/23
 1. Ported to 1.4.4!
 2. Fixed some drawing and localization issues
+3. Fixed Archaeologist localization issues + shop
+4. Fixed obscure issue with unique wing ending effect when mounted
+5. Fixed localization of dressers
 
 8/13/23 - 8/16/23
 1. Porting and consequences:

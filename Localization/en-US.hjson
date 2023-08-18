@@ -26,6 +26,13 @@ Mods: {
 			VoidAnomalyCrafting: Wormhole conversion
 		}
 
+		ContainerName: {
+			NaturePlatingDresserTile: Nature Plating Dresser
+			EarthenPlatingDresserTile: Earthen Plating Dresser
+			PermafrostPlatingDresserTile: Permafrost Plating Dresser
+			AncientGoldDresser: Ancient Gold Dresser
+		}
+
 		ModifyWorldGenTasks: {
 			GeneratingSurfaceStructures: Generating Surface Structures
 			GeneratingAbandonedVillage: Generating Abandoned Village
@@ -5792,9 +5799,14 @@ Mods: {
 			JungleTreasureSlime.DisplayName: Jungle Treasure Slime
 			PyramidTreasureSlime.DisplayName: Pyramid Treasure Slime
 			ShadowTreasureSlime.DisplayName: Shadow Treasure Slime
+
 			# Town
-			Archaeologist.DisplayName: Strange Transmission
-			ArchaeologistNearby.DisplayName: Archaeologist
+			Archaeologist: {
+				DisplayName1: Strange Transmission
+				DisplayName2: Archaeologist
+				DisplayName: Archaeologist
+			}
+
 			# Anomaly
 			Ultracap.DisplayName: Ultracap
 			Planetoid.DisplayName: Planetoid

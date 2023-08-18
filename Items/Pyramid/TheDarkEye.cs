@@ -57,7 +57,7 @@ namespace SOTS.Items.Pyramid
 				waitTime--;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TheDarkEyePupil").Value;
 			spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture2, position + new Vector2(19 * scale, 20 * scale) + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
+			spriteBatch.Draw(texture2, position + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)

@@ -73,6 +73,7 @@ namespace SOTS.NPCs.Town
         public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[Type] = 5; // The amount of frames the NPC has
+			NPCID.Sets.NoTownNPCHappiness[Type] = true;
 			NPCID.Sets.ExtraFramesCount[Type] = 0; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
 			NPCID.Sets.AttackFrameCount[Type] = 0;
 			NPCID.Sets.DangerDetectRange[Type] = 0; // The amount of pixels away from the center of the npc that it tries to attack enemies.
@@ -135,10 +136,10 @@ namespace SOTS.NPCs.Town
         }
         public override void ModifyTypeName(ref string typeName)
         {
-			typeName = Language.GetTextValue("Mods.SOTS.NPCName.Archaeologist");
+			typeName = this.GetLocalizedValue("DisplayName1");
 			if(hasPlayerChattedBefore)
 			{
-				typeName = Language.GetTextValue("Mods.SOTS.NPCName.ArchaeologistNearby");
+				typeName = this.GetLocalizedValue("DisplayName2");
 			}
 		}
 		public void DrawHoverPlatforms(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

@@ -31,7 +31,11 @@ namespace SOTS.Items.Furniture.Permafrost
 		}
 		protected override int DresserDrop => ModContent.ItemType<PermafrostPlatingDresser>();
         protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.PermafrostPlatingDresserTile");
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		public override LocalizedText DefaultContainerName(int frameX, int frameY)
+		{
+			return Language.GetText("Mods.SOTS.ContainerName.PermafrostPlatingDresserTile");
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);

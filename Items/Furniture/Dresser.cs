@@ -19,6 +19,10 @@ namespace SOTS.Items.Furniture
         protected virtual int DresserDrop => ItemID.Dresser;
         protected virtual int DustType => DustID.Dirt;
         protected virtual string DresserName => Language.GetTextValue("Mods.SOTS.Common.Dresser");
+        public override LocalizedText DefaultContainerName(int frameX, int frameY)
+        {
+            return Language.GetText("Mods.SOTS.Common.Dresser");
+        }
         public override void SetStaticDefaults()
         {
             // Properties

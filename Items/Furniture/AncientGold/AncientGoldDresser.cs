@@ -30,5 +30,9 @@ namespace SOTS.Items.Furniture.AncientGold
         }
         protected override int DresserDrop => ModContent.ItemType<AncientGoldDresser>();
         protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.AncientGoldDresser");
+        public override LocalizedText DefaultContainerName(int frameX, int frameY)
+        {
+            return Language.GetText("Mods.SOTS.ContainerName.AncientGoldDresser");
+        }
     }
 }

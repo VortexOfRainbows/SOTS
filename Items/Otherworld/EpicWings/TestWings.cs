@@ -412,6 +412,11 @@ namespace SOTS.Items.Otherworld.EpicWings
 				canCreativeFlight = false;
 				wingSpeed = wingSpeedMax;
 				creativeFlight = false;
+				if (!runOnce)
+				{
+					DustExplosion();
+					runOnce = true;
+				}
 				return;
 			}
 			if (canCreativeFlight)
