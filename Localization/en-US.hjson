@@ -1,4 +1,3 @@
-
 Mods: {
 	SOTS: {
 		Common: {
@@ -23,7 +22,7 @@ Mods: {
 			InsigniaNerf: "[SOTS]: Until Lux is defeated, has limited effects on flight duration and mobility"
 			ArchaeologistMap: Anomaly
 			ArchaeologistItemMap: "Teleported "
-			ArchaeologistShopCondition: "In a certain location"
+			ArchaeologistShopCondition: In a certain location
 			VoidAnomalyCrafting: Wormhole conversion
 		}
 
@@ -164,10 +163,25 @@ Mods: {
 		}
 
 		Biomes: {
-			PyramidBiome.DisplayName: Cursed Pyramid
-			PhaseBiome.DisplayName: Phase Ore Clusters
-			AnomalyBiome.DisplayName: Wormhole Anomalies
-			PlanetariumBiome.DisplayName: Planetarium
+			PyramidBiome: {
+				DisplayName: Cursed Pyramid
+				TownNPCDialogueName: the Pyramid Biome
+			}
+
+			PhaseBiome: {
+				DisplayName: Phase Ore Clusters
+				TownNPCDialogueName: the Phase Biome
+			}
+
+			AnomalyBiome: {
+				DisplayName: Wormhole Anomalies
+				TownNPCDialogueName: the Anomaly Biome
+			}
+
+			PlanetariumBiome: {
+				DisplayName: Planetarium
+				TownNPCDialogueName: the Planetarium Biome
+			}
 		}
 
 		DropCondition: {
@@ -249,14 +263,20 @@ Mods: {
 				Tooltip: "'Too burnt to be used'"
 			}
 
-			CharredWoodWall.DisplayName: Charred Wood Wall
+			CharredWoodWall: {
+				DisplayName: Charred Wood Wall
+				Tooltip: ""
+			}
 
 			OldKey: {
 				DisplayName: Old Key
 				Tooltip: "'It's starting to show signs of rusting'"
 			}
 
-			RuinedChest.DisplayName: Ruined Chest
+			RuinedChest: {
+				DisplayName: Ruined Chest
+				Tooltip: ""
+			}
 
 			SootBlock: {
 				DisplayName: Soot Block
@@ -267,7 +287,10 @@ Mods: {
 					'''
 			}
 
-			SootWall.DisplayName: Soot Wall
+			SootWall: {
+				DisplayName: Soot Wall
+				Tooltip: ""
+			}
 
 			VisionAmulet: {
 				DisplayName: Elemental Amulet
@@ -278,46 +301,201 @@ Mods: {
 					'''
 			}
 
-			# Banner
-			NatureSlimeBanner.DisplayName: Flowering Slime Banner
-			HoloSwordBanner.DisplayName: Holo Blade Banner
-			PutridPinkyRelic.DisplayName: Putrid Pinky Relic
-			PharaohsCurseRelic.DisplayName: Pharaoh's Curse Relic
-			AdvisorRelic.DisplayName: The Advisor Relic
-			PolarisRelic.DisplayName: Polaris Relic
-			LuxRelic.DisplayName: Lux Relic
-			SubspaceSerpentRelic.DisplayName: Subspace Serpent Relic
-			GlowmothRelic.DisplayName: Glowmoth Relic
-			BlueSlimerBanner.DisplayName: Blue Slimer Banner
-			TreasureSlimeBanner.DisplayName: Treasure Slime Banner
-			GoldenTreasureSlimeBanner.DisplayName: Golden Treasure Slime Banner
-			FrozenTreasureSlimeBanner.DisplayName: Frozen Treasure Slime Banner
-			ShadowTreasureSlimeBanner.DisplayName: Shadow Treasure Slime Banner
-			PyramidTreasureSlimeBanner.DisplayName: Pyramid Treasure Slime Banner
-			FlamingGhastBanner.DisplayName: Flaming Ghast Banner
-			BleedingGhastBanner.DisplayName: Bleeding Ghast Banner
-			ArcticGoblinBanner.DisplayName: Arctic Goblin Banner
-			LostSoulBanner.DisplayName: Lost Soul Banner
-			SnakeBanner.DisplayName: Snake Banner
-			SnakePotBanner.DisplayName: Snake Pot Banner
-			SittingMushroomBanner.DisplayName: Sitting Mushroom Banner
-			WallMimicBanner.DisplayName: Wall Mimic Banner
-			HoloSlimeBanner.DisplayName: Holo Slime Banner
-			HoloEyeBanner.DisplayName: Holo Eye Banner
-			TwilightDevilBanner.DisplayName: Twilight Devil Banner
-			FluxSlimeBanner.DisplayName: Flux Slime Banner
-			LesserWispBanner.DisplayName: Lesser Wisp Banner
-			GhastBanner.DisplayName: Ghast Banner
-			MaligmorBanner.DisplayName: Maligmor Banner
-			TeratomaBanner.DisplayName: Teratoma Banner
-			CorruptionTreasureSlimeBanner.DisplayName: Corruption Treasure Slime Banner
-			CrimsonTreasureSlimeBanner.DisplayName: Crimson Treasure Slime Banner
-			JungleTreasureSlimeBanner.DisplayName: Jungle Treasure Slime Banner
-			TwilightScouterBanner.DisplayName: Twilight Scouter Banner
-			HallowTreasureSlimeBanner.DisplayName: Hallow Treasure Slime Banner
-			DungeonTreasureSlimeBanner.DisplayName: Dungeon Treasure Slime Banner
-			PhaseSpeederBanner.DisplayName: Phase Speeder Banner
-			PhaseAssaulterBanner.DisplayName: Phase Assaulter Banner
+			NatureSlimeBanner: {
+				# Banner
+				DisplayName: Flowering Slime Banner
+				Tooltip: ""
+			}
+
+			HoloSwordBanner: {
+				DisplayName: Holo Blade Banner
+				Tooltip: ""
+			}
+
+			PutridPinkyRelic: {
+				DisplayName: Putrid Pinky Relic
+				Tooltip: ""
+			}
+
+			PharaohsCurseRelic: {
+				DisplayName: Pharaoh's Curse Relic
+				Tooltip: ""
+			}
+
+			AdvisorRelic: {
+				DisplayName: The Advisor Relic
+				Tooltip: ""
+			}
+
+			PolarisRelic: {
+				DisplayName: Polaris Relic
+				Tooltip: ""
+			}
+
+			LuxRelic: {
+				DisplayName: Lux Relic
+				Tooltip: ""
+			}
+
+			SubspaceSerpentRelic: {
+				DisplayName: Subspace Serpent Relic
+				Tooltip: ""
+			}
+
+			GlowmothRelic: {
+				DisplayName: Glowmoth Relic
+				Tooltip: ""
+			}
+
+			BlueSlimerBanner: {
+				DisplayName: Blue Slimer Banner
+				Tooltip: ""
+			}
+
+			TreasureSlimeBanner: {
+				DisplayName: Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			GoldenTreasureSlimeBanner: {
+				DisplayName: Golden Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			FrozenTreasureSlimeBanner: {
+				DisplayName: Frozen Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			ShadowTreasureSlimeBanner: {
+				DisplayName: Shadow Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			PyramidTreasureSlimeBanner: {
+				DisplayName: Pyramid Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			FlamingGhastBanner: {
+				DisplayName: Flaming Ghast Banner
+				Tooltip: ""
+			}
+
+			BleedingGhastBanner: {
+				DisplayName: Bleeding Ghast Banner
+				Tooltip: ""
+			}
+
+			ArcticGoblinBanner: {
+				DisplayName: Arctic Goblin Banner
+				Tooltip: ""
+			}
+
+			LostSoulBanner: {
+				DisplayName: Lost Soul Banner
+				Tooltip: ""
+			}
+
+			SnakeBanner: {
+				DisplayName: Snake Banner
+				Tooltip: ""
+			}
+
+			SnakePotBanner: {
+				DisplayName: Snake Pot Banner
+				Tooltip: ""
+			}
+
+			SittingMushroomBanner: {
+				DisplayName: Sitting Mushroom Banner
+				Tooltip: ""
+			}
+
+			WallMimicBanner: {
+				DisplayName: Wall Mimic Banner
+				Tooltip: ""
+			}
+
+			HoloSlimeBanner: {
+				DisplayName: Holo Slime Banner
+				Tooltip: ""
+			}
+
+			HoloEyeBanner: {
+				DisplayName: Holo Eye Banner
+				Tooltip: ""
+			}
+
+			TwilightDevilBanner: {
+				DisplayName: Twilight Devil Banner
+				Tooltip: ""
+			}
+
+			FluxSlimeBanner: {
+				DisplayName: Flux Slime Banner
+				Tooltip: ""
+			}
+
+			LesserWispBanner: {
+				DisplayName: Lesser Wisp Banner
+				Tooltip: ""
+			}
+
+			GhastBanner: {
+				DisplayName: Ghast Banner
+				Tooltip: ""
+			}
+
+			MaligmorBanner: {
+				DisplayName: Maligmor Banner
+				Tooltip: ""
+			}
+
+			TeratomaBanner: {
+				DisplayName: Teratoma Banner
+				Tooltip: ""
+			}
+
+			CorruptionTreasureSlimeBanner: {
+				DisplayName: Corruption Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			CrimsonTreasureSlimeBanner: {
+				DisplayName: Crimson Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			JungleTreasureSlimeBanner: {
+				DisplayName: Jungle Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			TwilightScouterBanner: {
+				DisplayName: Twilight Scouter Banner
+				Tooltip: ""
+			}
+
+			HallowTreasureSlimeBanner: {
+				DisplayName: Hallow Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			DungeonTreasureSlimeBanner: {
+				DisplayName: Dungeon Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			PhaseSpeederBanner: {
+				DisplayName: Phase Speeder Banner
+				Tooltip: ""
+			}
+
+			PhaseAssaulterBanner: {
+				DisplayName: Phase Assaulter Banner
+				Tooltip: ""
+			}
 
 			Apocalypse: {
 				# Celestial
@@ -525,7 +703,10 @@ Mods: {
 				Tooltip: "'It borders on the edge of reality'"
 			}
 
-			PhaseOre.DisplayName: Phase Ore
+			PhaseOre: {
+				DisplayName: Phase Ore
+				Tooltip: ""
+			}
 
 			RealityShatter: {
 				DisplayName: Reality Shatter
@@ -735,7 +916,10 @@ Mods: {
 				Tooltip: Surrounds you with 2 orbital projectiles
 			}
 
-			WingedKnife.DisplayName: Winged Knife
+			WingedKnife: {
+				DisplayName: Winged Knife
+				Tooltip: ""
+			}
 
 			ArchaeologistToolbelt: {
 				# Conduit
@@ -1152,12 +1336,23 @@ Mods: {
 				Tooltip: "'Open the door to the ultimate form of travel'"
 			}
 
-			# Dyes
-			TaintedPrismDye.DisplayName: Tainted Prism Dye
-			# Earth
+			TaintedPrismDye: {
+				# Dyes
+				DisplayName: Tainted Prism Dye
+				Tooltip: ""
+			}
+
+			GlowSilk: {
+				# Earth
 				# Glowmoth
-			GlowSilk.DisplayName: Glow Web
-			GlowNylon.DisplayName: Glow Nylon
+				DisplayName: Glow Web
+				Tooltip: ""
+			}
+
+			GlowNylon: {
+				DisplayName: Glow Nylon
+				Tooltip: ""
+			}
 
 			GlowSpores: {
 				DisplayName: Glow Spores
@@ -1241,7 +1436,10 @@ Mods: {
 				Tooltip: Summons Glowmoth when used in a glowing mushroom biome
 			}
 
-			BigCrystal.DisplayName: Big Crystal
+			BigCrystal: {
+				DisplayName: Big Crystal
+				Tooltip: ""
+			}
 
 			Colossus: {
 				DisplayName: Colossus
@@ -1253,7 +1451,10 @@ Mods: {
 					'''
 			}
 
-			EchoDisk.DisplayName: Echo Disc
+			EchoDisk: {
+				DisplayName: Echo Disc
+				Tooltip: ""
+			}
 
 			Geostorm: {
 				DisplayName: Geostorm
@@ -1284,10 +1485,25 @@ Mods: {
 				Tooltip: Fires a burst of Spore Clouds that do 66% damage whenever an arrow is launched
 			}
 
-			VibrantOre.DisplayName: Vibrant Shard
-			VibrantBar.DisplayName: Vibrant Alloy
-			VibrantBrick.DisplayName: Vibrant Brick
-			VibrantWall.DisplayName: Unsafe Vibrant Ore Wall
+			VibrantOre: {
+				DisplayName: Vibrant Shard
+				Tooltip: ""
+			}
+
+			VibrantBar: {
+				DisplayName: Vibrant Alloy
+				Tooltip: ""
+			}
+
+			VibrantBrick: {
+				DisplayName: Vibrant Brick
+				Tooltip: ""
+			}
+
+			VibrantWall: {
+				DisplayName: Unsafe Vibrant Ore Wall
+				Tooltip: ""
+			}
 
 			VibrantBullet: {
 				DisplayName: Vibrant Bullet
@@ -1304,8 +1520,15 @@ Mods: {
 				Tooltip: Scatters 3 shards below the area of impact for 120% damage
 			}
 
-			VibrantBlade.DisplayName: Vibrant Blade
-			VibrantCannon.DisplayName: Vibrant Cannon
+			VibrantBlade: {
+				DisplayName: Vibrant Blade
+				Tooltip: ""
+			}
+
+			VibrantCannon: {
+				DisplayName: Vibrant Cannon
+				Tooltip: ""
+			}
 
 			VibrantPistol: {
 				DisplayName: Vibrant Pistol
@@ -1413,7 +1636,10 @@ Mods: {
 				Tooltip: "'Not actually venomous'"
 			}
 
-			TinyPlanetFish.DisplayName: Planet Fish
+			TinyPlanetFish: {
+				DisplayName: Planet Fish
+				Tooltip: ""
+			}
 
 			ZephyrousZeppelin: {
 				DisplayName: Zephyrous Zeppelin
@@ -1450,12 +1676,31 @@ Mods: {
 					'''
 			}
 
-			# Fragments
-			DissolvingAetherBlock.DisplayName: Purple Aether Block
-			DissolvingAuroraBlock.DisplayName: Aurora Block
-			DissolvingBrillianceBlock.DisplayName: Brilliance Block
-			DissolvingDelugeBlock.DisplayName: Deluge Block
-			DissolvingEarthBlock.DisplayName: Earth Block
+			DissolvingAetherBlock: {
+				# Fragments
+				DisplayName: Purple Aether Block
+				Tooltip: ""
+			}
+
+			DissolvingAuroraBlock: {
+				DisplayName: Aurora Block
+				Tooltip: ""
+			}
+
+			DissolvingBrillianceBlock: {
+				DisplayName: Brilliance Block
+				Tooltip: ""
+			}
+
+			DissolvingDelugeBlock: {
+				DisplayName: Deluge Block
+				Tooltip: ""
+			}
+
+			DissolvingEarthBlock: {
+				DisplayName: Earth Block
+				Tooltip: ""
+			}
 
 			DissolvingElement: {
 				DisplayName: Dissolving Nature
@@ -1503,26 +1748,105 @@ Mods: {
 				Tooltip: Temporary Tooltip
 			}
 
-			DissolvingNatureBlock.DisplayName: Nature Block
-			DissolvingNetherBlock.DisplayName: Nether Block
-			DissolvingUmbraBlock.DisplayName: Umbra Block
-			FragmentOfNature.DisplayName: Fragment of Nature
-			FragmentOfEarth.DisplayName: Fragment of Earth
-			FragmentOfPermafrost.DisplayName: Fragment of Permafrost
-			FragmentOfTide.DisplayName: Fragment of Tide
-			FragmentOfOtherworld.DisplayName: Fragment of Otherworld
-			FragmentOfEvil.DisplayName: Fragment of Evil
-			FragmentOfChaos.DisplayName: Fragment of Chaos
-			FragmentOfInferno.DisplayName: Fragment of Inferno
-			NaturePlating.DisplayName: Nature Plating
-			EarthenPlating.DisplayName: Earthen Plating
-			PermafrostPlating.DisplayName: Permafrost Plating
-			OtherworldPlating.DisplayName: Otherworld Plating
-			TidePlating.DisplayName: Tide Plating
-			EvilPlating.DisplayName: Evil Plating
-			ChaosPlating.DisplayName: Chaos Plating
-			InfernoPlating.DisplayName: Inferno Plating
-			UltimatePlating.DisplayName: Ultimate Plating
+			DissolvingNatureBlock: {
+				DisplayName: Nature Block
+				Tooltip: ""
+			}
+
+			DissolvingNetherBlock: {
+				DisplayName: Nether Block
+				Tooltip: ""
+			}
+
+			DissolvingUmbraBlock: {
+				DisplayName: Umbra Block
+				Tooltip: ""
+			}
+
+			FragmentOfNature: {
+				DisplayName: Fragment of Nature
+				Tooltip: ""
+			}
+
+			FragmentOfEarth: {
+				DisplayName: Fragment of Earth
+				Tooltip: ""
+			}
+
+			FragmentOfPermafrost: {
+				DisplayName: Fragment of Permafrost
+				Tooltip: ""
+			}
+
+			FragmentOfTide: {
+				DisplayName: Fragment of Tide
+				Tooltip: ""
+			}
+
+			FragmentOfOtherworld: {
+				DisplayName: Fragment of Otherworld
+				Tooltip: ""
+			}
+
+			FragmentOfEvil: {
+				DisplayName: Fragment of Evil
+				Tooltip: ""
+			}
+
+			FragmentOfChaos: {
+				DisplayName: Fragment of Chaos
+				Tooltip: ""
+			}
+
+			FragmentOfInferno: {
+				DisplayName: Fragment of Inferno
+				Tooltip: ""
+			}
+
+			NaturePlating: {
+				DisplayName: Nature Plating
+				Tooltip: ""
+			}
+
+			EarthenPlating: {
+				DisplayName: Earthen Plating
+				Tooltip: ""
+			}
+
+			PermafrostPlating: {
+				DisplayName: Permafrost Plating
+				Tooltip: ""
+			}
+
+			OtherworldPlating: {
+				DisplayName: Otherworld Plating
+				Tooltip: ""
+			}
+
+			TidePlating: {
+				DisplayName: Tide Plating
+				Tooltip: ""
+			}
+
+			EvilPlating: {
+				DisplayName: Evil Plating
+				Tooltip: ""
+			}
+
+			ChaosPlating: {
+				DisplayName: Chaos Plating
+				Tooltip: ""
+			}
+
+			InfernoPlating: {
+				DisplayName: Inferno Plating
+				Tooltip: ""
+			}
+
+			UltimatePlating: {
+				DisplayName: Ultimate Plating
+				Tooltip: ""
+			}
 
 			WorldlyPolarizer: {
 				DisplayName: Worldly Polarizer
@@ -1596,32 +1920,98 @@ Mods: {
 				Tooltip: "'For naps fit for a king'"
 			}
 
-			AncientGoldCampfire.DisplayName: Eternal Fireplace
-			AncientGoldCandelabra.DisplayName: Ancient Gold Lamp
-			AncientGoldCandle.DisplayName: Ancient Gold Candle
-			AncientGoldChair.DisplayName: Ancient Gold Chair
-			AncientGoldCouch.DisplayName: Ancient Gold Sofa
-			AncientGoldDoor.DisplayName: Ancient Gold Door
-			AncientGoldDresser.DisplayName: Ancient Gold Dresser
-			AncientGoldPlatform.DisplayName: Ancient Gold Platform
-			AncientGoldTable.DisplayName: Ancient Gold Table
+			AncientGoldCampfire: {
+				DisplayName: Eternal Fireplace
+				Tooltip: ""
+			}
+
+			AncientGoldCandelabra: {
+				DisplayName: Ancient Gold Lamp
+				Tooltip: ""
+			}
+
+			AncientGoldCandle: {
+				DisplayName: Ancient Gold Candle
+				Tooltip: ""
+			}
+
+			AncientGoldChair: {
+				DisplayName: Ancient Gold Chair
+				Tooltip: ""
+			}
+
+			AncientGoldCouch: {
+				DisplayName: Ancient Gold Sofa
+				Tooltip: ""
+			}
+
+			AncientGoldDoor: {
+				DisplayName: Ancient Gold Door
+				Tooltip: ""
+			}
+
+			AncientGoldDresser: {
+				DisplayName: Ancient Gold Dresser
+				Tooltip: ""
+			}
+
+			AncientGoldPlatform: {
+				DisplayName: Ancient Gold Platform
+				Tooltip: ""
+			}
+
+			AncientGoldTable: {
+				DisplayName: Ancient Gold Table
+				Tooltip: ""
+			}
 
 			AncientGoldThrone: {
 				DisplayName: Ancient Gold Throne
 				Tooltip: "'A throne fit for a very old king'"
 			}
 
-			AncientGoldWorkbench.DisplayName: Ancient Gold Work Bench
-			# Earthen
-			EarthenPlatingBlastDoor.DisplayName: Earthen Plating Blast Door
-			# Nature
-			NaturePlatingBlastDoor.DisplayName: Nature Plating Blast Door
-			NaturePlatingCapsule.DisplayName: Nature Plating Capsule
-			NaturePlatingPlatform.DisplayName: Nature Plating Platform
-			# Permafrost
-			PermafrostPlatingBlastDoor.DisplayName: Permafrost Plating Blast Door
-			PermafrostPlatingCapsule.DisplayName: Permafrost Plating Capsule
-			PermafrostPlatingPlatform.DisplayName: Permafrost Plating Platform
+			AncientGoldWorkbench: {
+				DisplayName: Ancient Gold Work Bench
+				Tooltip: ""
+			}
+
+			EarthenPlatingBlastDoor: {
+				# Earthen
+				DisplayName: Earthen Plating Blast Door
+				Tooltip: ""
+			}
+
+			NaturePlatingBlastDoor: {
+				# Nature
+				DisplayName: Nature Plating Blast Door
+				Tooltip: ""
+			}
+
+			NaturePlatingCapsule: {
+				DisplayName: Nature Plating Capsule
+				Tooltip: ""
+			}
+
+			NaturePlatingPlatform: {
+				DisplayName: Nature Plating Platform
+				Tooltip: ""
+			}
+
+			PermafrostPlatingBlastDoor: {
+				# Permafrost
+				DisplayName: Permafrost Plating Blast Door
+				Tooltip: ""
+			}
+
+			PermafrostPlatingCapsule: {
+				DisplayName: Permafrost Plating Capsule
+				Tooltip: ""
+			}
+
+			PermafrostPlatingPlatform: {
+				DisplayName: Permafrost Plating Platform
+				Tooltip: ""
+			}
 
 			NatureHydroponics: {
 				# Functional
@@ -1699,13 +2089,40 @@ Mods: {
 				Tooltip: Killing enemies grants a random buff for 30 seconds
 			}
 
-			SOTSRubyGemLock.DisplayName: Vespera Ruby Gem Lock
-			SOTSSapphireGemLock.DisplayName: Vespera Sapphire Gem Lock
-			SOTSEmeraldGemLock.DisplayName: Vespera Emerald Gem Lock
-			SOTSTopazGemLock.DisplayName: Vespera Topaz Gem Lock
-			SOTSAmethystGemLock.DisplayName: Vespera Amethyst Gem Lock
-			SOTSDiamondGemLock.DisplayName: Vespera Diamond Gem Lock
-			SOTSAmberGemLock.DisplayName: Vespera Amber Gem Lock
+			SOTSRubyGemLock: {
+				DisplayName: Vespera Ruby Gem Lock
+				Tooltip: ""
+			}
+
+			SOTSSapphireGemLock: {
+				DisplayName: Vespera Sapphire Gem Lock
+				Tooltip: ""
+			}
+
+			SOTSEmeraldGemLock: {
+				DisplayName: Vespera Emerald Gem Lock
+				Tooltip: ""
+			}
+
+			SOTSTopazGemLock: {
+				DisplayName: Vespera Topaz Gem Lock
+				Tooltip: ""
+			}
+
+			SOTSAmethystGemLock: {
+				DisplayName: Vespera Amethyst Gem Lock
+				Tooltip: ""
+			}
+
+			SOTSDiamondGemLock: {
+				DisplayName: Vespera Diamond Gem Lock
+				Tooltip: ""
+			}
+
+			SOTSAmberGemLock: {
+				DisplayName: Vespera Amber Gem Lock
+				Tooltip: ""
+			}
 
 			BlazingClub: {
 				# Inferno
@@ -1751,7 +2168,10 @@ Mods: {
 					'''
 			}
 
-			ObsidianEruption.DisplayName: Obsidian Eruption
+			ObsidianEruption: {
+				DisplayName: Obsidian Eruption
+				Tooltip: ""
+			}
 
 			PlasmaAccelerator: {
 				DisplayName: Plasma Accelerator
@@ -1837,9 +2257,16 @@ Mods: {
 					'''
 			}
 
-			# MusicBoxes
-			AdvisorMusicBox.DisplayName: Music Box (Advisor)
-			AncientPyramidMusicBox.DisplayName: Music Box (Cursed Pyramid)
+			AdvisorMusicBox: {
+				# MusicBoxes
+				DisplayName: Music Box (Advisor)
+				Tooltip: ""
+			}
+
+			AncientPyramidMusicBox: {
+				DisplayName: Music Box (Cursed Pyramid)
+				Tooltip: ""
+			}
 
 			KnucklesMusicBox: {
 				DisplayName: Music Box (Knuckles)
@@ -1847,13 +2274,40 @@ Mods: {
 				Tooltip: "'Can I put my...'"
 			}
 
-			LuxMusicBox.DisplayName: Music Box (Lux)
-			PlanetariumMusicBox.DisplayName: Music Box (Planetarium)
-			PolarisMusicBox.DisplayName: Music Box (Polaris)
-			PutridPinkyMusicBox.DisplayName: Music Box (Putrid Pinky)
-			PyramidBattleMusicBox.DisplayName: Music Box (Pyramid Battle)
-			SubspaceSerpentMusicBox.DisplayName: Music Box (Subspace Serpent)
-			CurseMusicBox.DisplayName: Music Box (Pharaoh's Curse)
+			LuxMusicBox: {
+				DisplayName: Music Box (Lux)
+				Tooltip: ""
+			}
+
+			PlanetariumMusicBox: {
+				DisplayName: Music Box (Planetarium)
+				Tooltip: ""
+			}
+
+			PolarisMusicBox: {
+				DisplayName: Music Box (Polaris)
+				Tooltip: ""
+			}
+
+			PutridPinkyMusicBox: {
+				DisplayName: Music Box (Putrid Pinky)
+				Tooltip: ""
+			}
+
+			PyramidBattleMusicBox: {
+				DisplayName: Music Box (Pyramid Battle)
+				Tooltip: ""
+			}
+
+			SubspaceSerpentMusicBox: {
+				DisplayName: Music Box (Subspace Serpent)
+				Tooltip: ""
+			}
+
+			CurseMusicBox: {
+				DisplayName: Music Box (Pharaoh's Curse)
+				Tooltip: ""
+			}
 
 			AcornBag: {
 				# Nature
@@ -1989,13 +2443,32 @@ Mods: {
 				Tooltip: Absorb life from up to 3 enemies at a time
 			}
 
-			WardingCharm.DisplayName: Warding Charm
-			# Otherworld
+			WardingCharm: {
+				DisplayName: Warding Charm
+				Tooltip: ""
+			}
+
+			AvaritianPlating: {
+				# Otherworld
 				# Blocks
-			AvaritianPlating.DisplayName: Avaritia Plating
-			HologlassWall.DisplayName: Hardlight Wall
-			PortalPlating.DisplayName: Avaritia Portal Plating
-			PortalPlatingWall.DisplayName: Avaritia Plating Wall
+				DisplayName: Avaritia Plating
+				Tooltip: ""
+			}
+
+			HologlassWall: {
+				DisplayName: Hardlight Wall
+				Tooltip: ""
+			}
+
+			PortalPlating: {
+				DisplayName: Avaritia Portal Plating
+				Tooltip: ""
+			}
+
+			PortalPlatingWall: {
+				DisplayName: Avaritia Plating Wall
+				Tooltip: ""
+			}
 
 			TestWings: {
 				# EpicWings
@@ -2232,8 +2705,15 @@ Mods: {
 				Tooltip: Casts two lines at once
 			}
 
-			TwilightShard.DisplayName: Twilight Plate
-			OtherworldlyAlloy.DisplayName: Twilight Alloy
+			TwilightShard: {
+				DisplayName: Twilight Plate
+				Tooltip: ""
+			}
+
+			OtherworldlyAlloy: {
+				DisplayName: Twilight Alloy
+				Tooltip: ""
+			}
 
 			UndoArrow: {
 				DisplayName: Developer Test Item
@@ -2263,7 +2743,11 @@ Mods: {
 
 			LockedMeteoriteChest.DisplayName: Meteorite Chest
 			LockedSkywareChest.DisplayName: Skyware Chest
-			StrangeChest.DisplayName: Planetarium Chest
+
+			StrangeChest: {
+				DisplayName: Planetarium Chest
+				Tooltip: ""
+			}
 
 			PotGenerator: {
 				DisplayName: Pot Generator
@@ -2371,7 +2855,10 @@ Mods: {
 					'''
 			}
 
-			TwilightGel.DisplayName: Twilight Gel
+			TwilightGel: {
+				DisplayName: Twilight Gel
+				Tooltip: ""
+			}
 
 			AbsoluteBar: {
 				# Permafrost
@@ -2423,7 +2910,10 @@ Mods: {
 					'''
 			}
 
-			FrigidIce.DisplayName: Frigid Ore
+			FrigidIce: {
+				DisplayName: Frigid Ore
+				Tooltip: ""
+			}
 
 			FrigidJavelin: {
 				DisplayName: Frigid Javelin
@@ -2460,7 +2950,10 @@ Mods: {
 				Tooltip: "'Cold to the touch'"
 			}
 
-			HypericeClusterCannon.DisplayName: Hyperice Cluster Cannon
+			HypericeClusterCannon: {
+				DisplayName: Hyperice Cluster Cannon
+				Tooltip: ""
+			}
 
 			IceDeployer: {
 				DisplayName: Snow Crystal
@@ -2736,9 +3229,12 @@ Mods: {
 				Tooltip: Medium improvements to all stats
 			}
 
-			# Pyramid
+			PyramidAmbient: {
+				# Pyramid
 				# AltPyramidBlocks
-			PyramidAmbient.DisplayName: Pyramid Ambient
+				DisplayName: Pyramid Ambient
+				Tooltip: ""
+			}
 
 			PyramidRubble: {
 				DisplayName: Pyramid Rubble
@@ -2747,9 +3243,16 @@ Mods: {
 				Tooltip: "'It's much less a brick than just a collection of rocks'"
 			}
 
-			# PyramidWalls
-			AncientGoldBeam.DisplayName: Ancient Gold Beam (Wall)
-			AncientGoldBrickWall.DisplayName: Ancient Gold Brick Wall
+			AncientGoldBeam: {
+				# PyramidWalls
+				DisplayName: Ancient Gold Beam (Wall)
+				Tooltip: ""
+			}
+
+			AncientGoldBrickWall: {
+				DisplayName: Ancient Gold Brick Wall
+				Tooltip: ""
+			}
 
 			AcediaGateway: {
 				DisplayName: Acedia Gateway
@@ -2761,7 +3264,11 @@ Mods: {
 				Tooltip: "'It bares striking resemblance to luminite'"
 			}
 
-			AncientGoldGate.DisplayName: Ancient Gold Pillar
+			AncientGoldGate: {
+				DisplayName: Ancient Gold Pillar
+				Tooltip: ""
+			}
+
 			AncientGoldGateGems.DisplayName: Gems
 
 			BrachialLance: {
@@ -2845,7 +3352,10 @@ Mods: {
 					'''
 			}
 
-			CursedHiveBlock.DisplayName: Infected Pyramid Brick
+			CursedHiveBlock: {
+				DisplayName: Infected Pyramid Brick
+				Tooltip: ""
+			}
 
 			CursedTumor: {
 				DisplayName: Cursed Tumor Block
@@ -2882,7 +3392,10 @@ Mods: {
 				Tooltip: Leaves behind a trail that continues to damage enemies
 			}
 
-			JeweledGauntlet.DisplayName: Cursed Gauntlet
+			JeweledGauntlet: {
+				DisplayName: Cursed Gauntlet
+				Tooltip: ""
+			}
 
 			JuryRiggedDrill: {
 				DisplayName: Jury Rigged Drill
@@ -2902,7 +3415,10 @@ Mods: {
 					'''
 			}
 
-			OvergrownPyramidBlock.DisplayName: Overgrown Pyramid Brick
+			OvergrownPyramidBlock: {
+				DisplayName: Overgrown Pyramid Brick
+				Tooltip: ""
+			}
 
 			PatchLeatherHat: {
 				DisplayName: Patch Leather Hat
@@ -2942,8 +3458,15 @@ Mods: {
 				Tooltip: A slab from an ancient burial site, it may be hard to break
 			}
 
-			PyramidKey.DisplayName: Mysterious Key
-			PyramidPot.DisplayName: Pyramid Pot
+			PyramidKey: {
+				DisplayName: Mysterious Key
+				Tooltip: ""
+			}
+
+			PyramidPot: {
+				DisplayName: Pyramid Pot
+				Tooltip: ""
+			}
 
 			PyramidSlab: {
 				DisplayName: Pyramid Slab
@@ -2960,8 +3483,15 @@ Mods: {
 				Tooltip: Releases golden light upon hitting the ground or an enemy
 			}
 
-			RoyalRubyShard.DisplayName: Keystone Shard
-			RubyKeystone.DisplayName: Ruby Keystone
+			RoyalRubyShard: {
+				DisplayName: Keystone Shard
+				Tooltip: ""
+			}
+
+			RubyKeystone: {
+				DisplayName: Ruby Keystone
+				Tooltip: ""
+			}
 
 			SandstoneEdge: {
 				DisplayName: Sandstone Edge
@@ -3076,7 +3606,10 @@ Mods: {
 					'''
 			}
 
-			StrangeKeystoneBroken.DisplayName: Broken Obelisk
+			StrangeKeystoneBroken: {
+				DisplayName: Broken Obelisk
+				Tooltip: ""
+			}
 
 			DreamLamp: {
 				DisplayName: Dreaming Lamp
@@ -3105,7 +3638,10 @@ Mods: {
 				Tooltip: Uses gel for ammo
 			}
 
-			GelAxe.DisplayName: Gel Throwing Axe
+			GelAxe: {
+				DisplayName: Gel Throwing Axe
+				Tooltip: ""
+			}
 
 			GelWings: {
 				DisplayName: Gel Wings
@@ -3155,7 +3691,10 @@ Mods: {
 				Tooltip: "'It's like pink gel except it'll melt your fingers if you're not careful'"
 			}
 
-			Wormwood.DisplayName: Goopwood
+			Wormwood: {
+				DisplayName: Goopwood
+				Tooltip: ""
+			}
 
 			WormWoodHelix: {
 				DisplayName: Goopwood Helix
@@ -3191,10 +3730,7 @@ Mods: {
 				# SoldStuff
 				DisplayName: Bore Bullet
 				# SoldStuff
-				Tooltip:
-					'''
-					Penetrates 20% of enemy defense plus 10 defense
-					'''
+				Tooltip: Penetrates 20% of enemy defense plus 10 defense
 			}
 
 			RecursiveBow: {
@@ -3211,8 +3747,15 @@ Mods: {
 				Tooltip: Prevents you from using void weapons if doing so would drop your void below zero
 			}
 
-			SupremSticker.DisplayName: Suprem
-			Traingun.DisplayName: Train Gun
+			SupremSticker: {
+				DisplayName: Suprem
+				Tooltip: ""
+			}
+
+			Traingun: {
+				DisplayName: Train Gun
+				Tooltip: ""
+			}
 
 			ChaosSpiritStaff: {
 				# SpiritStaves
@@ -3655,7 +4198,10 @@ Mods: {
 					'''
 			}
 
-			BaguetteCrumb.DisplayName: Baguette Crumb
+			BaguetteCrumb: {
+				DisplayName: Baguette Crumb
+				Tooltip: ""
+			}
 
 			BulwarkOfTheAncients: {
 				DisplayName: Bulwark of the Ancients
@@ -3684,7 +4230,10 @@ Mods: {
 				Tooltip: Increases crit chance by 6%
 			}
 
-			DigitalDaito.DisplayName: Digital Daito
+			DigitalDaito: {
+				DisplayName: Digital Daito
+				Tooltip: ""
+			}
 
 			Doomstick: {
 				DisplayName: Doomstick
@@ -3740,9 +4289,20 @@ Mods: {
 					'''
 			}
 
-			HealPack.DisplayName: Heal Pack
-			ManaPack.DisplayName: Mana Pack
-			HelicopterParts.DisplayName: Helicopter Parts
+			HealPack: {
+				DisplayName: Heal Pack
+				Tooltip: ""
+			}
+
+			ManaPack: {
+				DisplayName: Mana Pack
+				Tooltip: ""
+			}
+
+			HelicopterParts: {
+				DisplayName: Helicopter Parts
+				Tooltip: ""
+			}
 
 			MinersSword: {
 				DisplayName: Miner's Sword
@@ -3845,42 +4405,185 @@ Mods: {
 					'''
 			}
 
-			PlanetoidBanner.DisplayName: Planetoid Banner
-			PutridPinkyTrophy.DisplayName: Putrid Pinky Trophy
-			UltracapBanner.DisplayName: Ultracap Banner
-			AetherWall.DisplayName: Aether Wall
-			AuroraWall.DisplayName: Aurora Wall
-			BrillianceWall.DisplayName: Brilliance Wall
-			DelugeWall.DisplayName: Deluge Wall
-			EarthenPlatingBeam.DisplayName: Earthen Plating Beam
-			EarthenPlatingPanelWall.DisplayName: Earthen Plating Panel Wall
-			EarthenPlatingWall.DisplayName: Earthen Plating Wall
-			EarthWall.DisplayName: Earth Wall
-			NaturePlatingPanelWall.DisplayName: Nature Plating Panel Wall
-			NaturePlatingWall.DisplayName: Nature Plating Wall
-			NatureWall.DisplayName: Nature Wall
-			NetherWall.DisplayName: Nether Wall
-			PermafrostPlatingWall.DisplayName: Permafrost Plating Wall
-			UmbraWall.DisplayName: Umbra Wall
-			AncientGoldTorch.DisplayName: Ancient Gold Torch
-			EarthenPlatingBathtub.DisplayName: Earthen Plating Bathtub
-			EarthenPlatingBed.DisplayName: Earthen Plating Bed
-			EarthenPlatingBookcase.DisplayName: Earthen Plating Bookcase
-			EarthenPlatingBulb.DisplayName: Earthen Plating Bulb
-			EarthenPlatingChair.DisplayName: Earthen Plating Chair
-			EarthenPlatingChandelier.DisplayName: Earthen Plating Chandelier
-			EarthenPlatingClock.DisplayName: Earthen Plating Clock
-			EarthenPlatingDresser.DisplayName: Earthen Plating Dresser
-			EarthenPlatingLamp.DisplayName: Earthen Plating Lamp
-			EarthenPlatingLantern.DisplayName: Earthen Plating Lantern
-			EarthenPlatingPiano.DisplayName: Earthen Plating Piano
-			EarthenPlatingPlatform.DisplayName: Earthen Plating Platform
-			EarthenPlatingSink.DisplayName: Earthen Plating Sink
-			EarthenPlatingSofa.DisplayName: Earthen Plating Sofa
-			EarthenPlatingStorage.DisplayName: Earthen Plating Storage
-			EarthenPlatingTable.DisplayName: Earthen Plating Table
-			EarthenPlatingToilet.DisplayName: Earthen Plating Toilet
-			EarthenPlatingTorch.DisplayName: Earthen Plating Torch
+			PlanetoidBanner: {
+				DisplayName: Planetoid Banner
+				Tooltip: ""
+			}
+
+			PutridPinkyTrophy: {
+				DisplayName: Putrid Pinky Trophy
+				Tooltip: ""
+			}
+
+			UltracapBanner: {
+				DisplayName: Ultracap Banner
+				Tooltip: ""
+			}
+
+			AetherWall: {
+				DisplayName: Aether Wall
+				Tooltip: ""
+			}
+
+			AuroraWall: {
+				DisplayName: Aurora Wall
+				Tooltip: ""
+			}
+
+			BrillianceWall: {
+				DisplayName: Brilliance Wall
+				Tooltip: ""
+			}
+
+			DelugeWall: {
+				DisplayName: Deluge Wall
+				Tooltip: ""
+			}
+
+			EarthenPlatingBeam: {
+				DisplayName: Earthen Plating Beam
+				Tooltip: ""
+			}
+
+			EarthenPlatingPanelWall: {
+				DisplayName: Earthen Plating Panel Wall
+				Tooltip: ""
+			}
+
+			EarthenPlatingWall: {
+				DisplayName: Earthen Plating Wall
+				Tooltip: ""
+			}
+
+			EarthWall: {
+				DisplayName: Earth Wall
+				Tooltip: ""
+			}
+
+			NaturePlatingPanelWall: {
+				DisplayName: Nature Plating Panel Wall
+				Tooltip: ""
+			}
+
+			NaturePlatingWall: {
+				DisplayName: Nature Plating Wall
+				Tooltip: ""
+			}
+
+			NatureWall: {
+				DisplayName: Nature Wall
+				Tooltip: ""
+			}
+
+			NetherWall: {
+				DisplayName: Nether Wall
+				Tooltip: ""
+			}
+
+			PermafrostPlatingWall: {
+				DisplayName: Permafrost Plating Wall
+				Tooltip: ""
+			}
+
+			UmbraWall: {
+				DisplayName: Umbra Wall
+				Tooltip: ""
+			}
+
+			AncientGoldTorch: {
+				DisplayName: Ancient Gold Torch
+				Tooltip: ""
+			}
+
+			EarthenPlatingBathtub: {
+				DisplayName: Earthen Plating Bathtub
+				Tooltip: ""
+			}
+
+			EarthenPlatingBed: {
+				DisplayName: Earthen Plating Bed
+				Tooltip: ""
+			}
+
+			EarthenPlatingBookcase: {
+				DisplayName: Earthen Plating Bookcase
+				Tooltip: ""
+			}
+
+			EarthenPlatingBulb: {
+				DisplayName: Earthen Plating Bulb
+				Tooltip: ""
+			}
+
+			EarthenPlatingChair: {
+				DisplayName: Earthen Plating Chair
+				Tooltip: ""
+			}
+
+			EarthenPlatingChandelier: {
+				DisplayName: Earthen Plating Chandelier
+				Tooltip: ""
+			}
+
+			EarthenPlatingClock: {
+				DisplayName: Earthen Plating Clock
+				Tooltip: ""
+			}
+
+			EarthenPlatingDresser: {
+				DisplayName: Earthen Plating Dresser
+				Tooltip: ""
+			}
+
+			EarthenPlatingLamp: {
+				DisplayName: Earthen Plating Lamp
+				Tooltip: ""
+			}
+
+			EarthenPlatingLantern: {
+				DisplayName: Earthen Plating Lantern
+				Tooltip: ""
+			}
+
+			EarthenPlatingPiano: {
+				DisplayName: Earthen Plating Piano
+				Tooltip: ""
+			}
+
+			EarthenPlatingPlatform: {
+				DisplayName: Earthen Plating Platform
+				Tooltip: ""
+			}
+
+			EarthenPlatingSink: {
+				DisplayName: Earthen Plating Sink
+				Tooltip: ""
+			}
+
+			EarthenPlatingSofa: {
+				DisplayName: Earthen Plating Sofa
+				Tooltip: ""
+			}
+
+			EarthenPlatingStorage: {
+				DisplayName: Earthen Plating Storage
+				Tooltip: ""
+			}
+
+			EarthenPlatingTable: {
+				DisplayName: Earthen Plating Table
+				Tooltip: ""
+			}
+
+			EarthenPlatingToilet: {
+				DisplayName: Earthen Plating Toilet
+				Tooltip: ""
+			}
+
+			EarthenPlatingTorch: {
+				DisplayName: Earthen Plating Torch
+				Tooltip: ""
+			}
 
 			EarthenPlatingWorkBench: {
 				DisplayName: Earthen Plating Work Bench
@@ -3888,31 +4591,130 @@ Mods: {
 				Tooltip: Also functions as an anvil
 			}
 
-			GoopwoodBarrel.DisplayName: Goopwood Barrel
-			GoopwoodBed.DisplayName: Goopwood Bed
-			GoopwoodCandle.DisplayName: Goopwood Candle
-			GoopwoodChair.DisplayName: Goopwood Chair
-			GoopwoodChandelier.DisplayName: Goopwood Chandelier
-			GoopwoodDoor.DisplayName: Goopwood Door
-			GoopwoodPlatform.DisplayName: Goopwood Platform
-			GoopwoodTable.DisplayName: Goopwood Table
-			GoopwoodWorkBench.DisplayName: Goopwood Work Bench
-			NaturePlatingBathtub.DisplayName: Nature Plating Bathtub
-			NaturePlatingBed.DisplayName: Nature Plating Bed
-			NaturePlatingBookcase.DisplayName: Nature Plating Bookcase
-			NaturePlatingBulb.DisplayName: Nature Plating Bulb
-			NaturePlatingChair.DisplayName: Nature Plating Chair
-			NaturePlatingChandelier.DisplayName: Nature Plating Chandelier
-			NaturePlatingClock.DisplayName: Nature Plating Clock
-			NaturePlatingDresser.DisplayName: Nature Plating Dresser
-			NaturePlatingLamp.DisplayName: Nature Plating Lamp
-			NaturePlatingLantern.DisplayName: Nature Plating Lantern
-			NaturePlatingPiano.DisplayName: Nature Plating Piano
-			NaturePlatingSink.DisplayName: Nature Plating Sink
-			NaturePlatingSofa.DisplayName: Nature Plating Sofa
-			NaturePlatingTable.DisplayName: Nature Plating Table
-			NaturePlatingToilet.DisplayName: Nature Plating Toilet
-			NaturePlatingTorch.DisplayName: Nature Plating Torch
+			GoopwoodBarrel: {
+				DisplayName: Goopwood Barrel
+				Tooltip: ""
+			}
+
+			GoopwoodBed: {
+				DisplayName: Goopwood Bed
+				Tooltip: ""
+			}
+
+			GoopwoodCandle: {
+				DisplayName: Goopwood Candle
+				Tooltip: ""
+			}
+
+			GoopwoodChair: {
+				DisplayName: Goopwood Chair
+				Tooltip: ""
+			}
+
+			GoopwoodChandelier: {
+				DisplayName: Goopwood Chandelier
+				Tooltip: ""
+			}
+
+			GoopwoodDoor: {
+				DisplayName: Goopwood Door
+				Tooltip: ""
+			}
+
+			GoopwoodPlatform: {
+				DisplayName: Goopwood Platform
+				Tooltip: ""
+			}
+
+			GoopwoodTable: {
+				DisplayName: Goopwood Table
+				Tooltip: ""
+			}
+
+			GoopwoodWorkBench: {
+				DisplayName: Goopwood Work Bench
+				Tooltip: ""
+			}
+
+			NaturePlatingBathtub: {
+				DisplayName: Nature Plating Bathtub
+				Tooltip: ""
+			}
+
+			NaturePlatingBed: {
+				DisplayName: Nature Plating Bed
+				Tooltip: ""
+			}
+
+			NaturePlatingBookcase: {
+				DisplayName: Nature Plating Bookcase
+				Tooltip: ""
+			}
+
+			NaturePlatingBulb: {
+				DisplayName: Nature Plating Bulb
+				Tooltip: ""
+			}
+
+			NaturePlatingChair: {
+				DisplayName: Nature Plating Chair
+				Tooltip: ""
+			}
+
+			NaturePlatingChandelier: {
+				DisplayName: Nature Plating Chandelier
+				Tooltip: ""
+			}
+
+			NaturePlatingClock: {
+				DisplayName: Nature Plating Clock
+				Tooltip: ""
+			}
+
+			NaturePlatingDresser: {
+				DisplayName: Nature Plating Dresser
+				Tooltip: ""
+			}
+
+			NaturePlatingLamp: {
+				DisplayName: Nature Plating Lamp
+				Tooltip: ""
+			}
+
+			NaturePlatingLantern: {
+				DisplayName: Nature Plating Lantern
+				Tooltip: ""
+			}
+
+			NaturePlatingPiano: {
+				DisplayName: Nature Plating Piano
+				Tooltip: ""
+			}
+
+			NaturePlatingSink: {
+				DisplayName: Nature Plating Sink
+				Tooltip: ""
+			}
+
+			NaturePlatingSofa: {
+				DisplayName: Nature Plating Sofa
+				Tooltip: ""
+			}
+
+			NaturePlatingTable: {
+				DisplayName: Nature Plating Table
+				Tooltip: ""
+			}
+
+			NaturePlatingToilet: {
+				DisplayName: Nature Plating Toilet
+				Tooltip: ""
+			}
+
+			NaturePlatingTorch: {
+				DisplayName: Nature Plating Torch
+				Tooltip: ""
+			}
 
 			NaturePlatingWorkBench: {
 				DisplayName: Nature Plating Work Bench
@@ -3920,22 +4722,85 @@ Mods: {
 				Tooltip: Also functions as an anvil
 			}
 
-			PermafrostPlatingBathtub.DisplayName: Permafrost Plating Bathtub
-			PermafrostPlatingBed.DisplayName: Permafrost Plating Bed
-			PermafrostPlatingBench.DisplayName: Permafrost Plating Bench
-			PermafrostPlatingBookcase.DisplayName: Permafrost Plating Bookcase
-			PermafrostPlatingBulb.DisplayName: Permafrost Plating Bulb
-			PermafrostPlatingChair.DisplayName: Permafrost Plating Chair
-			PermafrostPlatingChandelier.DisplayName: Permafrost Plating Chandelier
-			PermafrostPlatingClock.DisplayName: Permafrost Plating Clock
-			PermafrostPlatingDresser.DisplayName: Permafrost Plating Dresser
-			PermafrostPlatingLamp.DisplayName: Permafrost Plating Lamp
-			PermafrostPlatingLantern.DisplayName: Permafrost Plating Lantern
-			PermafrostPlatingPiano.DisplayName: Permafrost Plating Piano
-			PermafrostPlatingSink.DisplayName: Permafrost Plating Sink
-			PermafrostPlatingTable.DisplayName: Permafrost Plating Table
-			PermafrostPlatingToilet.DisplayName: Permafrost Plating Toilet
-			PermafrostPlatingTorch.DisplayName: Permafrost Plating Torch
+			PermafrostPlatingBathtub: {
+				DisplayName: Permafrost Plating Bathtub
+				Tooltip: ""
+			}
+
+			PermafrostPlatingBed: {
+				DisplayName: Permafrost Plating Bed
+				Tooltip: ""
+			}
+
+			PermafrostPlatingBench: {
+				DisplayName: Permafrost Plating Bench
+				Tooltip: ""
+			}
+
+			PermafrostPlatingBookcase: {
+				DisplayName: Permafrost Plating Bookcase
+				Tooltip: ""
+			}
+
+			PermafrostPlatingBulb: {
+				DisplayName: Permafrost Plating Bulb
+				Tooltip: ""
+			}
+
+			PermafrostPlatingChair: {
+				DisplayName: Permafrost Plating Chair
+				Tooltip: ""
+			}
+
+			PermafrostPlatingChandelier: {
+				DisplayName: Permafrost Plating Chandelier
+				Tooltip: ""
+			}
+
+			PermafrostPlatingClock: {
+				DisplayName: Permafrost Plating Clock
+				Tooltip: ""
+			}
+
+			PermafrostPlatingDresser: {
+				DisplayName: Permafrost Plating Dresser
+				Tooltip: ""
+			}
+
+			PermafrostPlatingLamp: {
+				DisplayName: Permafrost Plating Lamp
+				Tooltip: ""
+			}
+
+			PermafrostPlatingLantern: {
+				DisplayName: Permafrost Plating Lantern
+				Tooltip: ""
+			}
+
+			PermafrostPlatingPiano: {
+				DisplayName: Permafrost Plating Piano
+				Tooltip: ""
+			}
+
+			PermafrostPlatingSink: {
+				DisplayName: Permafrost Plating Sink
+				Tooltip: ""
+			}
+
+			PermafrostPlatingTable: {
+				DisplayName: Permafrost Plating Table
+				Tooltip: ""
+			}
+
+			PermafrostPlatingToilet: {
+				DisplayName: Permafrost Plating Toilet
+				Tooltip: ""
+			}
+
+			PermafrostPlatingTorch: {
+				DisplayName: Permafrost Plating Torch
+				Tooltip: ""
+			}
 
 			PermafrostPlatingWorkBench: {
 				DisplayName: Permafrost Plating Work Bench
@@ -3943,52 +4808,185 @@ Mods: {
 				Tooltip: Also functions as an anvil
 			}
 
-			AmberChest.DisplayName: Amber Chest
-			AmethystChest.DisplayName: Amethyst Chest
-			DiamondChest.DisplayName: Diamond Chest
-			EmeraldChest.DisplayName: Emerald Chest
-			RubyChest.DisplayName: Ruby Chest
-			SapphireChest.DisplayName: Sapphire Chest
-			TopazChest.DisplayName: Topaz Chest
-			DarkShingles.DisplayName: Dark Shingles
-			Evostone.DisplayName: Evostone
-			EvostoneBrick.DisplayName: Evostone Brick
-			EvostoneBrickWall.DisplayName: Evostone Brick Wall
-			DullPlating.DisplayName: Dull Plating
-			DullPlatingWall.DisplayName: Dull Plating Wall
-			HardlightBlock.DisplayName: Hardlight Block
+			AmberChest: {
+				DisplayName: Amber Chest
+				Tooltip: ""
+			}
+
+			AmethystChest: {
+				DisplayName: Amethyst Chest
+				Tooltip: ""
+			}
+
+			DiamondChest: {
+				DisplayName: Diamond Chest
+				Tooltip: ""
+			}
+
+			EmeraldChest: {
+				DisplayName: Emerald Chest
+				Tooltip: ""
+			}
+
+			RubyChest: {
+				DisplayName: Ruby Chest
+				Tooltip: ""
+			}
+
+			SapphireChest: {
+				DisplayName: Sapphire Chest
+				Tooltip: ""
+			}
+
+			TopazChest: {
+				DisplayName: Topaz Chest
+				Tooltip: ""
+			}
+
+			DarkShingles: {
+				DisplayName: Dark Shingles
+				Tooltip: ""
+			}
+
+			Evostone: {
+				DisplayName: Evostone
+				Tooltip: ""
+			}
+
+			EvostoneBrick: {
+				DisplayName: Evostone Brick
+				Tooltip: ""
+			}
+
+			EvostoneBrickWall: {
+				DisplayName: Evostone Brick Wall
+				Tooltip: ""
+			}
+
+			DullPlating: {
+				DisplayName: Dull Plating
+				Tooltip: ""
+			}
+
+			DullPlatingWall: {
+				DisplayName: Dull Plating Wall
+				Tooltip: ""
+			}
+
+			HardlightBlock: {
+				DisplayName: Hardlight Block
+				Tooltip: ""
+			}
 
 			BlinkPack: {
 				DisplayName: Blink Pack
 				Tooltip: temp
 			}
 
-			HardlightAlloy.DisplayName: Hardlight Alloy
-			StarlightAlloy.DisplayName: Starlight Alloy
-			HardlightChair.DisplayName: Hardlight Chair
-			HardlightTable.DisplayName: Hardlight Table
+			HardlightAlloy: {
+				DisplayName: Hardlight Alloy
+				Tooltip: ""
+			}
+
+			StarlightAlloy: {
+				DisplayName: Starlight Alloy
+				Tooltip: ""
+			}
+
+			HardlightChair: {
+				DisplayName: Hardlight Chair
+				Tooltip: ""
+			}
+
+			HardlightTable: {
+				DisplayName: Hardlight Table
+				Tooltip: ""
+			}
 
 			PeanutBush: {
 				DisplayName: Peanut Bush
 				Tooltip: Grows peanuts in the dirt underneath
 			}
 
-			FrigidBar.DisplayName: Frigid Bar
-			FrigidBrick.DisplayName: Frigid Brick
-			FrigidBrickWall.DisplayName: Frigid Brick Wall
-			HardIceBrick.DisplayName: Hard Ice Brick
-			HardIceBrickWall.DisplayName: Hard Ice Brick Wall
-			AcediaPlatingWall.DisplayName: Acedia Plating Wall
-			RuinedPyramidBrick.DisplayName: Ruined Pyramid Brick
-			AncientGoldSpike.DisplayName: Ancient Gold Spike
-			AnubisHat.DisplayName: Anubis Hat
-			CursedMatter.DisplayName: Cursed Matter
-			PyramidChest.DisplayName: Pyramid Chest
-			PyramidGate.DisplayName: Pyramid Gate
-			CursedTumorWall.DisplayName: Cursed Tumor Wall
-			OvergrownPyramidWall.DisplayName: Overgrown Pyramid Wall
-			PyramidBrickWall.DisplayName: Pyramid Brick Wall
-			PyramidWall.DisplayName: Pyramid Wall
+			FrigidBar: {
+				DisplayName: Frigid Bar
+				Tooltip: ""
+			}
+
+			FrigidBrick: {
+				DisplayName: Frigid Brick
+				Tooltip: ""
+			}
+
+			FrigidBrickWall: {
+				DisplayName: Frigid Brick Wall
+				Tooltip: ""
+			}
+
+			HardIceBrick: {
+				DisplayName: Hard Ice Brick
+				Tooltip: ""
+			}
+
+			HardIceBrickWall: {
+				DisplayName: Hard Ice Brick Wall
+				Tooltip: ""
+			}
+
+			AcediaPlatingWall: {
+				DisplayName: Acedia Plating Wall
+				Tooltip: ""
+			}
+
+			RuinedPyramidBrick: {
+				DisplayName: Ruined Pyramid Brick
+				Tooltip: ""
+			}
+
+			AncientGoldSpike: {
+				DisplayName: Ancient Gold Spike
+				Tooltip: ""
+			}
+
+			AnubisHat: {
+				DisplayName: Anubis Hat
+				Tooltip: ""
+			}
+
+			CursedMatter: {
+				DisplayName: Cursed Matter
+				Tooltip: ""
+			}
+
+			PyramidChest: {
+				DisplayName: Pyramid Chest
+				Tooltip: ""
+			}
+
+			PyramidGate: {
+				DisplayName: Pyramid Gate
+				Tooltip: ""
+			}
+
+			CursedTumorWall: {
+				DisplayName: Cursed Tumor Wall
+				Tooltip: ""
+			}
+
+			OvergrownPyramidWall: {
+				DisplayName: Overgrown Pyramid Wall
+				Tooltip: ""
+			}
+
+			PyramidBrickWall: {
+				DisplayName: Pyramid Brick Wall
+				Tooltip: ""
+			}
+
+			PyramidWall: {
+				DisplayName: Pyramid Wall
+				Tooltip: ""
+			}
 
 			UnsafeCursedTumorWall: {
 				DisplayName: Unsafe Cursed Tumor Wall
@@ -4027,15 +5025,51 @@ Mods: {
 					'''
 			}
 
-			Sarcophagus.DisplayName: Sarcophagus
-			SoulResidue.DisplayName: Soul Residue
-			TaintedKeystoneShard.DisplayName: Tainted Keystone Shard
-			RefractingCrystal.DisplayName: Refracting Crystal
-			GoopwoodWall.DisplayName: Goopwood Wall
-			PutridPinkyMask.DisplayName: Putrid Pinky Mask
-			BlackFlare.DisplayName: Black Flare
-			EnchantedPickaxe.DisplayName: Enchanted Pickaxe
-			FrigidHamaxe.DisplayName: Frigid Hamaxe
+			Sarcophagus: {
+				DisplayName: Sarcophagus
+				Tooltip: ""
+			}
+
+			SoulResidue: {
+				DisplayName: Soul Residue
+				Tooltip: ""
+			}
+
+			TaintedKeystoneShard: {
+				DisplayName: Tainted Keystone Shard
+				Tooltip: ""
+			}
+
+			RefractingCrystal: {
+				DisplayName: Refracting Crystal
+				Tooltip: ""
+			}
+
+			GoopwoodWall: {
+				DisplayName: Goopwood Wall
+				Tooltip: ""
+			}
+
+			PutridPinkyMask: {
+				DisplayName: Putrid Pinky Mask
+				Tooltip: ""
+			}
+
+			BlackFlare: {
+				DisplayName: Black Flare
+				Tooltip: ""
+			}
+
+			EnchantedPickaxe: {
+				DisplayName: Enchanted Pickaxe
+				Tooltip: ""
+			}
+
+			FrigidHamaxe: {
+				DisplayName: Frigid Hamaxe
+				Tooltip: ""
+			}
+
 			FalseLamp.Tooltip: Right click to launch a mist orb that releases short-range homing bolts for 50% damage
 		}
 
@@ -4457,24 +5491,20 @@ Mods: {
 				MapEntry1: Locked Earthen Plating Storage
 			}
 
-
 			NaturePlatingCapsuleTile: {
 				MapEntry0: Nature Plating Capsule
 				MapEntry1: Locked Nature Plating Capsule
 			}
-
 
 			PermafrostPlatingCapsuleTile: {
 				MapEntry0: Permafrost Plating Capsule
 				MapEntry1: Locked Permafrost Plating Capsule
 			}
 
-
 			LockedMeteoriteChest: {
 				MapEntry0: Meteorite Chest
 				MapEntry1: Locked Meteorite Chest
 			}
-
 
 			LockedSkywareChest: {
 				MapEntry0: Skyware Chest
@@ -4503,11 +5533,7 @@ Mods: {
 			AncientGoldThroneTile.MapEntry: Ancient Gold Throne
 			AncientGoldTorchTile.MapEntry: Ancient Gold Torch
 			EarthenPlatingTorchTile.MapEntry: Earthen Plating Torch
-
-			GoopwoodBarrelTile: {
-				MapEntry0: Goopwood Barrel
-			}
-
+			GoopwoodBarrelTile.MapEntry0: Goopwood Barrel
 			Hydroponics.MapEntry: Hydroponics
 			NaturePlatingTorchTile.MapEntry: Nature Plating Torch
 			PermafrostPlatingTorchTile.MapEntry: Permafrost Plating Torch
@@ -4539,11 +5565,7 @@ Mods: {
 			CursedAppleTile.MapEntry: Strange Fruit
 			CursedGrowthTile.MapEntry: Cursed Growth
 			ManaStatue.MapEntry: Mana Statue
-
-			PyramidChestTile: {
-				MapEntry0: Pyramid Chest
-			}
-
+			PyramidChestTile.MapEntry0: Pyramid Chest
 			PyramidGateTile.MapEntry: Pyramid Gate
 			PyramidPots.MapEntry: Pot
 			RoyalRubyShardTile.MapEntry: Keystone Shard
@@ -4558,18 +5580,37 @@ Mods: {
 			EnchantedSwordShrineTile.MapEntry: Sword Shrine
 			MineralariumTile.MapEntry: Mineralarium
 			HydraulicPressTile.MapEntry: Hydraulic Press
-			AncientGoldDoorClosed.MapEntry: Mods.SOTS.MapObject.AncientGoldDoorClosed
-			AncientGoldDoorOpen.MapEntry: Mods.SOTS.MapObject.AncientGoldDoorOpen
+
+			AncientGoldDoorClosed: {
+				MapEntry: Mods.SOTS.MapObject.AncientGoldDoorClosed
+				DisplayName: Mods.SOTS.Tiles.AncientGoldDoorClosed.DisplayName
+			}
+
+			AncientGoldDoorOpen: {
+				MapEntry: Mods.SOTS.MapObject.AncientGoldDoorOpen
+				DisplayName: Mods.SOTS.Tiles.AncientGoldDoorOpen.DisplayName
+			}
+
 			EarthenPlatingBlastDoorTileClosed.MapEntry: Mods.SOTS.ItemName.EarthenPlatingBlastDoor
 			EarthenPlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.EarthenPlatingBlastDoor
-			GoopwoodDoorClosed.MapEntry: Mods.SOTS.MapObject.GoopwoodDoorClosed
-			GoopwoodDoorOpen.MapEntry: Mods.SOTS.MapObject.GoopwoodDoorOpen
+
+			GoopwoodDoorClosed: {
+				MapEntry: Mods.SOTS.MapObject.GoopwoodDoorClosed
+				DisplayName: Mods.SOTS.Tiles.GoopwoodDoorClosed.DisplayName
+			}
+
+			GoopwoodDoorOpen: {
+				MapEntry: Mods.SOTS.MapObject.GoopwoodDoorOpen
+				DisplayName: Mods.SOTS.Tiles.GoopwoodDoorOpen.DisplayName
+			}
+
 			NaturePlatingBlastDoorTileClosed.MapEntry: Mods.SOTS.ItemName.NaturePlatingBlastDoor
 			NaturePlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.NaturePlatingBlastDoor
 			PermafrostPlatingBlastDoorTileClosed.MapEntry: Mods.SOTS.ItemName.PermafrostPlatingBlastDoor
 			PermafrostPlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.PermafrostPlatingBlastDoor
+
 			GemChestTile: {
-				MapEntry0: Ruby Chest 
+				MapEntry0: Ruby Chest
 				MapEntry1: Locked Ruby Chest
 				MapEntry2: Sapphire Chest
 				MapEntry3: Locked Sapphire Chest
@@ -4616,33 +5657,101 @@ Mods: {
 		}
 
 		NPCs: {
-			# Boss
+			TheAdvisorHead: {
+				# Boss
 				# Advisor
-			TheAdvisorHead.DisplayName: The Advisor
-			# Curse
-			PharaohsCurse.DisplayName: Pharaoh's Curse
+				DisplayName: The Advisor
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.SOTS.BossChecklist.BossName.TheAdvisor}"
+					SpawnInfo: Destroy the 4 tethered Otherworldly Constructs of the Planetarium
+					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.TheAdvisor}"
+				}
+			}
+
+			PharaohsCurse: {
+				# Curse
+				DisplayName: Pharaoh's Curse
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.SOTS.BossChecklist.BossName.PharaohsCurse}"
+					SpawnInfo: Activate the [i:6150] in the pyramid
+					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.PharaohsCurse}"
+				}
+			}
+
 			SmallGas.DisplayName: Pharaoh's Curse
-			# Lux
-			Lux.DisplayName: Lux
+
+			Lux: {
+				# Lux
+				DisplayName: Lux
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.SOTS.BossChecklist.BossName.Lux}"
+					SpawnInfo: Anger a Chaos Spirit
+					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.Lux}"
+				}
+			}
+
 			FakeLux.DisplayName: Chaos Illusion
 			# Polaris
 			BulletSnakeHead.DisplayName: Bullet Snake
 			BulletSnakeBody.DisplayName: Bullet Snake
 			BulletSnakeEnd.DisplayName: Bullet Snake
 			BulletSnakeWing.DisplayName: Bullet Snake
-			Polaris.DisplayName: Polaris
+
+			Polaris: {
+				DisplayName: Polaris
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.SOTS.BossChecklist.BossName.Polaris}"
+					SpawnInfo: Activate the [i:6054] of the snow biome using [i:6058]
+					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.Polaris}"
+				}
+			}
+
 			PolarisCannon.DisplayName: Polar Cannon
 			PolarisLaser.DisplayName: Polar Quad-Cannon
 			PolarisSpike.DisplayName: Polar Spike
-			# Glowmoth
-			Glowmoth.DisplayName: Glowmoth
+
+			Glowmoth: {
+				# Glowmoth
+				DisplayName: Glowmoth
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.SOTS.BossChecklist.BossName.Glowmoth}"
+					SpawnInfo: In a glowing mushroom biome, disturb a glowsilk cacoon or awaken manually using a [i:5714]
+					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.Glowmoth}"
+				}
+			}
+
 			GlowmothMinion.DisplayName: Illuminant Moth
 			HookTurret.DisplayName: Putrid Turret
 			PutridHook.DisplayName: Putrid Hook
 			PutridPinky1.DisplayName: Putrid Pinky
-			PutridPinkyPhase2.DisplayName: Putrid Pinky
+
+			PutridPinkyPhase2: {
+				DisplayName: Putrid Pinky
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.SOTS.BossChecklist.BossName.PutridPinky}"
+					SpawnInfo: Summon in any biome at any time using a [i:6179]
+					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.PutridPinky}"
+				}
+			}
+
 			SubspaceEye.DisplayName: Subspace Gaze
-			SubspaceSerpentHead.DisplayName: Subspace Serpent
+
+			SubspaceSerpentHead: {
+				DisplayName: Subspace Serpent
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.SOTS.BossChecklist.BossName.SubspaceSerpent}"
+					SpawnInfo: Tear a dimensional rift in hell by detonating a [i:5599]
+					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.SubspaceSerpent}"
+				}
+			}
+
 			SubspaceSerpentBody.DisplayName: Subspace Serpent
 			SubspaceSerpentTail.DisplayName: Subspace Serpent
 			# Constructs
@@ -5513,6 +6622,98 @@ Mods: {
 			VoidMelee.DisplayName: Mods.SOTS.DamageClassName.VoidMelee
 			VoidRanged.DisplayName: Mods.SOTS.DamageClassName.VoidRanged
 			VoidSummon.DisplayName: Mods.SOTS.DamageClassName.VoidSummon
+		}
+
+		Keybinds: {
+			Mods: {
+				SOTS: {
+					KeyBindName: {
+						Blink.DisplayName: Mods. S O T S. Key Bind Name. Blink
+						ArmorSet.DisplayName: Mods. S O T S. Key Bind Name. Armor Set
+						MFM.DisplayName: Mods. S O T S. Key Bind Name. M F M
+					}
+				}
+			}
+		}
+
+		Configs: {
+			SOTSConfig: {
+				DisplayName: "{$Mods.SOTS.Configuration.Label.Config}"
+
+				StarterHouseType: {
+					Label: "{$Mods.SOTS.Configuration.Label.SHT}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.SHT}"
+				}
+
+				voidBarPointX: {
+					Label: "{$Mods.SOTS.Configuration.Label.VBX}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.VBX}"
+				}
+
+				voidBarPointY: {
+					Label: "{$Mods.SOTS.Configuration.Label.VBY}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.VBY}"
+				}
+
+				lockVoidBar: {
+					Label: "{$Mods.SOTS.Configuration.Label.LVB}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.LVB}"
+				}
+
+				alternateVoidBarDirection: {
+					Label: "{$Mods.SOTS.Configuration.Label.AVBD}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.AVBD}"
+				}
+
+				alternateVoidBarStyle: {
+					Label: "{$Mods.SOTS.Configuration.Label.AVBS}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.AVBS}"
+				}
+
+				voidBarTextOn: {
+					Label: "{$Mods.SOTS.Configuration.Label.VBTT}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.VBTT}"
+				}
+
+				voidBarHoverTextOn: {
+					Label: "{$Mods.SOTS.Configuration.Label.VBHT}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.VBHT}"
+				}
+
+				simpleVoidText: {
+					Label: "{$Mods.SOTS.Configuration.Label.SVBT}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.SVBT}"
+				}
+
+				simpleVoidFill: {
+					Label: "{$Mods.SOTS.Configuration.Label.SVBF}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.SVBF}"
+				}
+
+				lowFidelityMode: {
+					Label: "{$Mods.SOTS.Configuration.Label.PM}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.PM}"
+				}
+
+				coloredTimeFreeze: {
+					Label: "{$Mods.SOTS.Configuration.Label.CTF}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.CTF}"
+				}
+
+				additionalTexturePackVisuals: {
+					Label: "{$Mods.SOTS.Configuration.Label.AVE}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.AVE}"
+				}
+			}
+
+			SOTSServerConfig: {
+				DisplayName: "{$Mods.SOTS.Configuration.Label.SConfig}"
+
+				NerfInsignia: {
+					Label: "{$Mods.SOTS.Configuration.Label.NINS}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.NINS}"
+				}
+			}
 		}
 	}
 }

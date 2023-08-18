@@ -62,7 +62,7 @@ namespace SOTS.Items.Furniture
                 AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
                 TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
                 TileID.Sets.HasOutlines[Type] = true;
-                AddMapEntry(MapColor, GetType().Name);
+                AddMapEntry(MapColor, this.GetLocalization("DisplayName"));
                 TileID.Sets.DisableSmartCursor[Type] = true;
                 AdjTiles = new int[] { TileID.OpenDoor };
             }
@@ -115,7 +115,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            AddMapEntry(MapColor, GetType().Name);
+            AddMapEntry(MapColor, this.GetLocalization("DisplayName"));
             TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.ClosedDoor };
         }

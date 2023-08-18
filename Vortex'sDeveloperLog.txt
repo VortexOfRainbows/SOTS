@@ -50,6 +50,8 @@ Needed After Porting:
 
 TODO for PORTING:
 1. Fix doors localization issues
+2. Fix glowmoth multiplayer doNotTakeDamage
+3. Fix refracting crystal pathway not syncing
 
 Daily Log:
 
