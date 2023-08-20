@@ -49,6 +49,7 @@ TODO for PORTING:
 	1. NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true; (already did LUX)
 3. Fix problem with godray effect somehow effecting the entire screen (for the conduit tiles)
 	1. Probably related to not clearing the shader... It's effecting water..?
+	2. Probably has something to do with ending and beginning spritebatch
 
 Daily Log:
 
