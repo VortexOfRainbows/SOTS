@@ -38,6 +38,8 @@ using ReLogic.Content;
 using Terraria.GameContent;
 using System.Linq;
 using SOTS.NPCs.Boss.Glowmoth;
+using SOTS.Items.Earth.Glowmoth;
+using SOTS.Items.Tools;
 
 namespace SOTS
 {
@@ -487,155 +489,185 @@ namespace SOTS
 			bool available = ModLoader.TryGetMod("BossChecklist", out bossChecklist);
 			if (available)
             {
-				// AddBoss, bossname, order or value in terms of vanilla bosses, inline method for retrieving downed value.
-				//bossChecklist.Call(....
-				// To include a description:
-				//bossChecklist.Call("AddBoss", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky));
-				//bossChecklist.Call("AddBossWithInfo", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky), "Use [i:" + ItemType("JarOfPeanuts") + "]");	
-				//bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
-
-				///The following is a PUTRID PINKY template that should work for boss checklist!
-				bossChecklist.Call( 
-					"AddBoss",
+                /*KingSlime = 1f;
+				EyeOfCthulhu = 2f;
+				EaterOfWorlds = 3f; // and Brain of Cthulhu
+				QueenBee = 4f;
+				Skeletron = 5f;
+				DeerClops = 6f;
+				WallOfFlesh = 7f;
+				QueenSlime = 8f;
+				TheTwins = 9f;
+				TheDestroyer = 10f;
+				SkeletronPrime = 11f;
+				Plantera = 12f;
+				Golem = 13f;
+				DukeFishron = 14f;
+				EmpressOfLight = 15f;
+				Betsy = 16f;
+				LunaticCultist = 17f;
+				Moonlord = 18f; */
+                bossChecklist.Call(
+					"LogBoss",
 					this,
-					$"$Mods.SOTS.BossChecklist.BossName.PutridPinky",
-					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() },
+					nameof(PutridPinkyPhase2),
 					4.25f,
 					(Func<bool>)(() => SOTSWorld.downedPinky),
-					() => true,
-					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
-					ModContent.ItemType<JarOfPeanuts>(),
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.PutridPinky", "[i:" + ModContent.ItemType<JarOfPeanuts> () + "]"),
-					$"$Mods.SOTS.BossChecklist.BossDisappear.PutridPinky",
-					(SpriteBatch sb, Rectangle rect, Color color) => {
-						Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinky1_Display").Value;
-						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-						sb.Draw(texture, centered, color);
-					}
-					);
-				bossChecklist.Call(
-					"AddBoss",
-					this,
-					$"$Mods.SOTS.BossChecklist.BossName.Glowmoth",
-					new List<int>() { ModContent.NPCType<Glowmoth>() },
-					2.1f,
-					(Func<bool>)(() => SOTSWorld.downedGlowmoth),
-					() => true,
-					new List<int>() { },
-					-1,
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Glowmoth", "[i:" + ModContent.ItemType<Items.Earth.Glowmoth.SuspiciousLookingCandle>() + "]"),
-					$"$Mods.SOTS.BossChecklist.BossDisappear.Glowmoth",
-					(SpriteBatch sb, Rectangle rect, Color color) => {
-						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/GlowmothPortrait").Value;
-						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-						sb.Draw(texture, centered, color);
-					}
-					);
-				bossChecklist.Call(
-					"AddBoss",
-					this,
-					$"$Mods.SOTS.BossChecklist.BossName.PharaohsCurse",
-					new List<int>() { ModContent.NPCType<PharaohsCurse>() },
-					4.5f,
-					(Func<bool>)(() => SOTSWorld.downedCurse),
-					() => true,
-					new List<int>() { },
-					ModContent.ItemType<Sarcophagus>(),
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.PharaohsCurse", "[i:" + ModContent.ItemType<Sarcophagus> () + "]"),
-					$"$Mods.SOTS.BossChecklist.BossDisappear.PharaohsCurse",
-					(SpriteBatch sb, Rectangle rect, Color color) => {
-						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PharaohPortrait").Value;
-						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-						sb.Draw(texture, centered, color);
-					}
-					);
-				bossChecklist.Call(
-					"AddBoss",
-					this,
-					$"$Mods.SOTS.BossChecklist.BossName.TheAdvisor",
-					new List<int>() { ModContent.NPCType<TheAdvisorHead>() },
-					5.9f,
-					(Func<bool>)(() => SOTSWorld.downedAdvisor),
-					() => true,
-					new List<int>() { ModContent.ItemType<AdvisorMusicBox>() },
-					ModContent.ItemType<AvaritianGateway>(),
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.TheAdvisor"),
-					$"$Mods.SOTS.BossChecklist.BossDisappear.TheAdvisor",
-					(SpriteBatch sb, Rectangle rect, Color color) => {
-						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/AdvisorPortrait").Value;
-						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-						sb.Draw(texture, centered, color);
-					}
-					);
-				bossChecklist.Call(
-					"AddBoss",
-					this,
-					$"$Mods.SOTS.BossChecklist.BossName.Polaris",
-					new List<int>() { ModContent.NPCType<Polaris>() },
-					9.05f,
-					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
-					() => true,
-					new List<int>() { ModContent.ItemType<PolarisMusicBox>() },
-					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Polaris", "[i:" + ModContent.ItemType<FrostArtifact> () + "]", "[i:" + ModContent.ItemType<FrostedKey> () + "]"),
-					$"$Mods.SOTS.BossChecklist.BossDisappear.Polaris",
-					(SpriteBatch sb, Rectangle rect, Color color) => {
-						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PolarisPortrait").Value;
-						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-						sb.Draw(texture, centered, color);
-					}
-					);
-				bossChecklist.Call(
-					"AddBoss",
-					this,
-					$"$Mods.SOTS.BossChecklist.BossName.Lux",
-					new List<int>() { ModContent.NPCType<Lux>() },
-					12.5f,
-					(Func<bool>)(() => SOTSWorld.downedLux),
-					() => true,
-					new List<int>() { },
-					new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.Lux"),
-					$"$Mods.SOTS.BossChecklist.BossDisappear.Lux",
-					(SpriteBatch sb, Rectangle rect, Color color) => {
-						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/LuxBossLog").Value;
-						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-						sb.Draw(texture, centered, color);
-					}
-					);
-				bossChecklist.Call(
-					"AddBoss",
-					this,
-					$"$Mods.SOTS.BossChecklist.BossName.SubspaceSerpent",
-					new List<int>() { ModContent.NPCType<SubspaceSerpentHead>(), ModContent.NPCType<SubspaceSerpentBody>(), ModContent.NPCType<SubspaceSerpentTail>() },
-					12.9f,
-					(Func<bool>)(() => SOTSWorld.downedSubspace),
-					() => true,
-					new List<int>() { ModContent.ItemType<SubspaceSerpentMusicBox>() },
-					new List<int>() { ModContent.ItemType<CatalystBomb>() },
-					Language.GetTextValue("Mods.SOTS.BossChecklist.BossDescription.SubspaceSerpent", "[i:" + ModContent.ItemType<CatalystBomb>() + "]"),
-					$"$Mods.SOTS.BossChecklist.BossDisappear.SubspaceSerpent",
-					(SpriteBatch sb, Rectangle rect, Color color) => {
-						Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/SubspaceSerpentPortrait").Value;
-						Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-						sb.Draw(texture, centered, color);
-					}
-					);
-
-				//bossChecklist.Call("AddBossWithInfo", "The Advisor", 5.9f, (Func<bool>)(() => SOTSWorld.downedAdvisor), "Destroy the 4 tethered Otherworldly Constructs on the Planetarium");
-				//bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
-				//bossChecklist.Call("AddBossWithInfo", "Ethereal Entity", 6.5f, (Func<bool>)(() => SOTSWorld.downedEntity), "Use [i:" + ItemType("PlanetariumDiamond") + "] in a planetarium biome");
-
-				//bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
-				//bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
-				//bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 11.1f, (Func<bool>)(() => SOTSWorld.downedLux), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
-				// bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
-
-			}
-			/*for(int i = Main.maxItems; i < ItemLoader.ItemCount; i++)
-            {
-				SOTSUtils.SetResearchCost(i, 1);
-            }*/
+					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() },
+					new Dictionary<string, object>()
+                    {
+                        ["displayName"] = Language.GetText("Mods.SOTS.NPCs.PutridPinkyPhase2.DisplayName"),
+                        ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.PutridPinkyPhase2.BossChecklistIntegration.SpawnInfo"),
+						["spawnItems"] = ModContent.ItemType<JarOfPeanuts>(),
+						["collectibles"] = new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
+						["availability"] = (Func<bool>)(() => true),
+                        //["overrideHeadTextures"] = ,
+                        ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.PutridPinkyPhase2.BossChecklistIntegration.DespawnMessage"),
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) => {
+							Texture2D texture = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinky1_Display").Value;
+							Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+							sb.Draw(texture, centered, color);
+						}
+                    }
+				);
+                bossChecklist.Call(
+                    "LogBoss",
+                    this,
+                    nameof(Glowmoth),
+                    2.1f,
+                    (Func<bool>)(() => SOTSWorld.downedGlowmoth),
+                    new List<int>() { ModContent.NPCType<Glowmoth>() },
+                    new Dictionary<string, object>()
+                    {
+                        ["displayName"] = Language.GetText("Mods.SOTS.NPCs.Glowmoth.DisplayName"),
+                        ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Glowmoth.BossChecklistIntegration.SpawnInfo"),
+                        ["spawnItems"] = ModContent.ItemType<SuspiciousLookingCandle>(),
+                        //["collectibles"] = new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
+                        ["availability"] = (Func<bool>)(() => true),
+                        //["overrideHeadTextures"] = ,
+                        ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Glowmoth.BossChecklistIntegration.DespawnMessage"),
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) => {
+                            Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/GlowmothPortrait").Value;
+                            Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        }
+                    }
+                );
+                bossChecklist.Call(
+                    "LogBoss",
+                    this,
+                    nameof(PharaohsCurse),
+                    4.5f,
+                    (Func<bool>)(() => SOTSWorld.downedCurse),
+                    new List<int>() { ModContent.NPCType<PharaohsCurse>() },
+                    new Dictionary<string, object>()
+                    {
+                        ["displayName"] = Language.GetText("Mods.SOTS.NPCs.PharaohsCurse.DisplayName"),
+                        ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.PharaohsCurse.BossChecklistIntegration.SpawnInfo"),
+                        ["spawnItems"] = ModContent.ItemType<Sarcophagus>(),
+                        ["collectibles"] = new List<int>() { ModContent.ItemType<CurseMusicBox>() },
+                        ["availability"] = (Func<bool>)(() => true),
+                        //["overrideHeadTextures"] = ,
+                        ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.PharaohsCurse.BossChecklistIntegration.DespawnMessage"),
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) => {
+                            Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PharaohPortrait").Value;
+                            Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        }
+                    }
+                );
+                bossChecklist.Call(
+                    "LogBoss",
+                    this,
+                    nameof(TheAdvisorHead),
+                    6.9f,
+                    (Func<bool>)(() => SOTSWorld.downedAdvisor),
+                    new List<int>() { ModContent.NPCType<TheAdvisorHead>() },
+                    new Dictionary<string, object>()
+                    {
+                        ["displayName"] = Language.GetText("Mods.SOTS.NPCs.TheAdvisorHead.DisplayName"),
+                        ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.TheAdvisorHead.BossChecklistIntegration.SpawnInfo"),
+                        ["spawnItems"] = ModContent.ItemType<WorldgenScanner>(),
+						["collectibles"] = new List<int>() { ModContent.ItemType<AdvisorMusicBox>() },
+                        ["availability"] = (Func<bool>)(() => true),
+                        //["overrideHeadTextures"] = ,
+                        ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.TheAdvisorHead.BossChecklistIntegration.DespawnMessage"),
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) => {
+                            Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/AdvisorPortrait").Value;
+                            Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        }
+                    }
+                );
+                bossChecklist.Call(
+                    "LogBoss",
+                    this,
+                    nameof(Polaris),
+                    10.05f,
+                    (Func<bool>)(() => SOTSWorld.downedAmalgamation),
+                    new List<int>() { ModContent.NPCType<Polaris>() },
+                    new Dictionary<string, object>()
+                    {
+                        ["displayName"] = Language.GetText("Mods.SOTS.NPCs.Polaris.DisplayName"),
+                        ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Polaris.BossChecklistIntegration.SpawnInfo"),
+                        ["spawnItems"] = new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
+                        ["collectibles"] = new List<int>() { ModContent.ItemType<PolarisMusicBox>() },
+                        ["availability"] = (Func<bool>)(() => true),
+                        //["overrideHeadTextures"] = ,
+                        ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Polaris.BossChecklistIntegration.DespawnMessage"),
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) => {
+                            Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/PolarisPortrait").Value;
+                            Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        }
+                    }
+                );
+                bossChecklist.Call(
+                    "LogBoss",
+                    this,
+                    nameof(Lux),
+                    16.5f,
+                    (Func<bool>)(() => SOTSWorld.downedLux),
+                    new List<int>() { ModContent.NPCType<Lux>() },
+                    new Dictionary<string, object>()
+                    {
+                        ["displayName"] = Language.GetText("Mods.SOTS.NPCs.Lux.DisplayName"),
+                        ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Lux.BossChecklistIntegration.SpawnInfo"),
+                        ["spawnItems"] = new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
+                        ["collectibles"] = new List<int>() { ModContent.ItemType<LuxMusicBox>() },
+                        ["availability"] = (Func<bool>)(() => true),
+                        //["overrideHeadTextures"] = ,
+                        ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Lux.BossChecklistIntegration.DespawnMessage"),
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) => {
+                            Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/LuxBossLog").Value;
+                            Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        }
+                    }
+                );
+                bossChecklist.Call(
+                    "LogBoss",
+                    this,
+                    nameof(SubspaceSerpentHead),
+                    17.9f,
+                    (Func<bool>)(() => SOTSWorld.downedSubspace),
+                    new List<int>() { ModContent.NPCType<SubspaceSerpentHead>(), ModContent.NPCType<SubspaceSerpentBody>(), ModContent.NPCType<SubspaceSerpentTail>() },
+                    new Dictionary<string, object>()
+                    {
+                        ["displayName"] = Language.GetText("Mods.SOTS.NPCs.SubspaceSerpentHead.DisplayName"),
+                        ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.SubspaceSerpentHead.BossChecklistIntegration.SpawnInfo"),
+                        ["spawnItems"] = new List<int>() { ModContent.ItemType<CatalystBomb>() },
+                        ["collectibles"] = new List<int>() { ModContent.ItemType<SubspaceSerpentMusicBox>() },
+                        ["availability"] = (Func<bool>)(() => true),
+                        //["overrideHeadTextures"] = ,
+                        ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.SubspaceSerpentHead.BossChecklistIntegration.DespawnMessage"),
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) => {
+                            Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/SubspaceSerpentPortrait").Value;
+                            Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        }
+                    }
+                );
         }
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;

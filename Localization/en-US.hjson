@@ -5667,9 +5667,9 @@ Mods: {
 				DisplayName: The Advisor
 
 				BossChecklistIntegration: {
-					EntryName: "{$Mods.SOTS.BossChecklist.BossName.TheAdvisor}"
+					EntryName: The Advisor
 					SpawnInfo: Destroy the 4 tethered Otherworldly Constructs of the Planetarium
-					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.TheAdvisor}"
+					DespawnMessage: The Advisor is no longer after you
 				}
 			}
 
@@ -5678,9 +5678,9 @@ Mods: {
 				DisplayName: Pharaoh's Curse
 
 				BossChecklistIntegration: {
-					EntryName: "{$Mods.SOTS.BossChecklist.BossName.PharaohsCurse}"
-					SpawnInfo: Activate the [i:6150] in the pyramid
-					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.PharaohsCurse}"
+					EntryName: Pharaoh's Curse
+					SpawnInfo: Activate the [i:SOTS/Sarcophagus] in the pyramid
+					DespawnMessage: Pharaoh's Curse is no longer after you
 				}
 			}
 
@@ -5691,9 +5691,9 @@ Mods: {
 				DisplayName: Lux
 
 				BossChecklistIntegration: {
-					EntryName: "{$Mods.SOTS.BossChecklist.BossName.Lux}"
+					EntryName: Lux
 					SpawnInfo: Anger a Chaos Spirit
-					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.Lux}"
+					DespawnMessage: Lux is no longer after you
 				}
 			}
 
@@ -5708,9 +5708,9 @@ Mods: {
 				DisplayName: Polaris
 
 				BossChecklistIntegration: {
-					EntryName: "{$Mods.SOTS.BossChecklist.BossName.Polaris}"
-					SpawnInfo: Activate the [i:6054] of the snow biome using [i:6058]
-					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.Polaris}"
+					EntryName: Polaris
+					SpawnInfo: Activate the [i:SOTS/FrostArtifact] of the snow biome using [i:SOTS/FrostedKey]
+					DespawnMessage: Polaris is no longer after you
 				}
 			}
 
@@ -5723,9 +5723,9 @@ Mods: {
 				DisplayName: Glowmoth
 
 				BossChecklistIntegration: {
-					EntryName: "{$Mods.SOTS.BossChecklist.BossName.Glowmoth}"
-					SpawnInfo: In a glowing mushroom biome, disturb a glowsilk cacoon or awaken manually using a [i:5714]
-					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.Glowmoth}"
+					EntryName: Glowmoth
+					SpawnInfo: In a glowing mushroom biome, disturb a glowsilk cacoon or awaken manually using a [i:SOTS/SuspiciousLookingCandle]
+					DespawnMessage: Glowmoth is no longer after you
 				}
 			}
 
@@ -5738,9 +5738,9 @@ Mods: {
 				DisplayName: Putrid Pinky
 
 				BossChecklistIntegration: {
-					EntryName: "{$Mods.SOTS.BossChecklist.BossName.PutridPinky}"
-					SpawnInfo: Summon in any biome at any time using a [i:6179]
-					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.PutridPinky}"
+					EntryName: Putrid Pinky
+					SpawnInfo: Summon in any biome at any time using a [i:SOTS/JarOfPeanuts]
+					DespawnMessage: Putrid Pinky is no longer after you
 				}
 			}
 
@@ -5750,9 +5750,9 @@ Mods: {
 				DisplayName: Subspace Serpent
 
 				BossChecklistIntegration: {
-					EntryName: "{$Mods.SOTS.BossChecklist.BossName.SubspaceSerpent}"
-					SpawnInfo: Tear a dimensional rift in hell by detonating a [i:5599]
-					DespawnMessage: "{$Mods.SOTS.BossChecklist.BossDisappear.SubspaceSerpent}"
+					EntryName: Subspace Serpent
+					SpawnInfo: Tear a dimensional rift in hell by detonating a [i:SOTS/CatalystBomb]
+					DespawnMessage: Subspace Serpent is no longer after you
 				}
 			}
 

@@ -13,6 +13,7 @@ using SOTS.Items.Earth;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Chaos;
 using Terraria.DataStructures;
+using System.Collections.Generic;
 
 namespace SOTS.Items
 {
@@ -182,49 +183,48 @@ namespace SOTS.Items
 				Main.spriteBatch.Draw(texture, tilePosition, frame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
-		/* public override bool Drop(int i, int j)tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether.
-		{
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
 			Tile tile = Main.tile[i, j];
 			int style = tile.TileFrameX / 18;
 			EntitySource_TileBreak source = new EntitySource_TileBreak(i, j);
 			if (style == 0) 
 			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
+				yield return new Item(ModContent.ItemType<AncientSteelBar>());
 			}
-			if (style == 1 || style == 2) 
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<HardlightAlloy>());
+			if (style == 1 || style == 2)
+            {
+                yield return new Item(ModContent.ItemType<HardlightAlloy>());
 			}
-			if (style == 3 || style == 4) 
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<StarlightAlloy>());
+			if (style == 3 || style == 4)
+            {
+                yield return new Item(ModContent.ItemType<StarlightAlloy>());
 			}
 			if (style == 5 || style == 6)
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<OtherworldlyAlloy>());
+            {
+                yield return new Item(ModContent.ItemType<OtherworldlyAlloy>());
 			}
 			if (style == 7)
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<AbsoluteBar>());
+            {
+                yield return new Item(ModContent.ItemType<AbsoluteBar>());
 			}
 			if (style == 8)
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<FrigidBar>());
+            {
+                yield return new Item(ModContent.ItemType<FrigidBar>());
 			}
 			if (style == 9)
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<VibrantBar>());
+            {
+                yield return new Item(ModContent.ItemType<VibrantBar>());
 			}
 			if (style == 10)
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<PhaseBar>());
+            {
+                yield return new Item(ModContent.ItemType<PhaseBar>());
 			}
 			if (style == 11)
-			{
-				Item.NewItem(source, i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
+            {
+                yield return new Item(ModContent.ItemType<AncientSteelBar>());
 			}
-			return base.Drop(i, j); 
-	}*/
+		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];

@@ -110,6 +110,10 @@ namespace SOTS.Items.Pyramid
         {
             return false;
         }
+        public override bool CanDrop(int i, int j)
+        {
+			return false;
+        }
         public override bool Slope(int i, int j)
         {
             return false;

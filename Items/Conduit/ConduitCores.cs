@@ -182,7 +182,6 @@ namespace SOTS.Items.Conduit
 			DrawGlowingParts(i, j, spriteBatch, 1);
 			spriteBatch.Draw(texture, location + zero - Main.screenPosition, new Rectangle(16 + tile.TileFrameX, tile.TileFrameY, 80, 80), color, 0f, origin, 1f, SpriteEffects.None, 0f);
 			DrawGlowingParts(i, j, spriteBatch, 0);
-			DrawGlowingParts(i, j, spriteBatch, 2);
 		}
 		public sealed override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
@@ -218,7 +217,7 @@ namespace SOTS.Items.Conduit
 		{
 			Tile tile = Main.tile[i, j];
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
-			if (Main.drawToScreen)
+			if (Main.drawToScreen || type == 2)
 			{
 				zero = Vector2.Zero;
 			}
@@ -267,7 +266,7 @@ namespace SOTS.Items.Conduit
 				Color color = elementalColor;
 				color.A = 0;
 				Main.spriteBatch.End();
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Matrix.Identity);
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Camera.GameViewMatrix.TransformationMatrix);
 				SOTS.GodrayShader.Parameters["distance"].SetValue(4);
 				SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
 				SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
@@ -282,7 +281,7 @@ namespace SOTS.Items.Conduit
                 desiredWidth = 18f;
                 sizeMult = desiredWidth / texture.Width;
 				for (int k = 0; k <= 2; k++)
-					Main.spriteBatch.Draw(texture, location - Main.screenPosition, null, colorGlow, 0f, origin, sizeMult * colorMultiplier, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, location - Main.screenPosition, null, colorGlow, 0f, origin, sizeMult * colorMultiplier * 1.5f, SpriteEffects.None, 0f);
 			}
 		}
 		public virtual int DissolvingTileType => ModContent.TileType<DissolvingBrillianceTile>();
@@ -362,6 +361,10 @@ namespace SOTS.Items.Conduit
 		public ConduitTile ConduitTile => CTile == null ? ModContent.GetInstance<ConduitTile>() : CTile;
 		public int tileCountDissolving = -1;
 		public int tileCountChassis = -1;
+		public void DrawConduitAura(int i, int j)
+        {
+            CTile.DrawGlowingParts(i, j, Main.spriteBatch, 2);
+        }
 		public bool DrawConduitToLocation(int i, int j, Vector2 destination, float alphaScale = 1f, Color lerpColor = default)
 		{
 			if (Main.netMode == NetmodeID.Server || tileCountDissolving <= 0)
@@ -510,5 +513,5 @@ namespace SOTS.Items.Conduit
 			}
 			return Place(i, j);
 		}
-	}
+    }
 }

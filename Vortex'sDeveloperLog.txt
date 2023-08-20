@@ -36,27 +36,25 @@ Update Objectives:
 5. Glow Nylon Whip
 
 Needed After Porting:
-1. Test out Cursed Blade critical strike and damage mechanics
-2. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
-3. Test Subservant
-4. Make sure all furniture and tiles drop the correct items
-5. Fix PreDrawInInventory and related issues
-6. Test out pots item drops (in multiplayer)
+1. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
+2. Test Subservant
+3. Fix PreDrawInInventory and related issues
+4. Test out pots item drops (in multiplayer)
 
 TODO for PORTING:
 1. Fix refracting crystal pathway not syncing
 2. Fix certain bosses and enemies using multiplayer smoothing not looking good...
 	1. NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true; (already did LUX)
-3. Fix problem with godray effect somehow effecting the entire screen (for the conduit tiles)
-	1. Probably related to not clearing the shader... It's effecting water..?
-	2. Probably has something to do with ending and beginning spritebatch
 
 Daily Log:
 
-8/19/23
-1. Attempted fixing various tile drop issues
+8/19/23 to 8/20/23
+1. Attempted fixing various tile drop issues. They should be all fixed
 2. fixed door and chest localization
 3. Attempted fix at glowmoth not taking damage in certain multiplayer scenarios (should be fixed)
+4. Fixed conduit drawing errors that were occuring due to shaders
+5. Cursed blade critical strike mechanics seem to work still
+6. Now works with 1.4.4 BossCL... Also adjusted the progression numbers to make more sense
 
 8/17/23 & 8/19/23
 1. Ported to 1.4.4!

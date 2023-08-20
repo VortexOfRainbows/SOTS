@@ -85,7 +85,8 @@ namespace SOTS
 							tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, dreamLamp, 1f, ColorHelpers.DreamLampColor);
 						}
 					}
-				}
+					tileEntity.DrawConduitAura(tileEntity.Position.X, tileEntity.Position.Y);
+                }
 			}
 			if (ImportantTilesWorld.AcediaPortal.HasValue && (hasDrawnToAcediaPortalNature || hasDrawnToAcediaPortalEarth))
 			{
