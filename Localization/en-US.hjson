@@ -5586,32 +5586,32 @@ Mods: {
 			HydraulicPressTile.MapEntry: Hydraulic Press
 
 			AncientGoldDoorClosed: {
-				MapEntry: Mods.SOTS.MapObject.AncientGoldDoorClosed
-				DisplayName: Mods.SOTS.Tiles.AncientGoldDoorClosed.DisplayName
+				MapEntry: Ancient Gold Door
+				DisplayName: Ancient Gold Door
 			}
 
 			AncientGoldDoorOpen: {
-				MapEntry: Mods.SOTS.MapObject.AncientGoldDoorOpen
-				DisplayName: Mods.SOTS.Tiles.AncientGoldDoorOpen.DisplayName
+				MapEntry: Ancient Gold Door
+				DisplayName: Ancient Gold Door
 			}
 
-			EarthenPlatingBlastDoorTileClosed.MapEntry: Mods.SOTS.ItemName.EarthenPlatingBlastDoor
-			EarthenPlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.EarthenPlatingBlastDoor
+			EarthenPlatingBlastDoorTileClosed.MapEntry: Earthen Plating Blast Door
+			EarthenPlatingBlastDoorTileOpen.MapEntry: Earthen Plating Blast Door
 
 			GoopwoodDoorClosed: {
-				MapEntry: Mods.SOTS.MapObject.GoopwoodDoorClosed
-				DisplayName: Mods.SOTS.Tiles.GoopwoodDoorClosed.DisplayName
+				MapEntry: Goopwood Door
+				DisplayName: Goopwood Door
 			}
 
 			GoopwoodDoorOpen: {
-				MapEntry: Mods.SOTS.MapObject.GoopwoodDoorOpen
-				DisplayName: Mods.SOTS.Tiles.GoopwoodDoorOpen.DisplayName
+				MapEntry: Goopwood Door
+				DisplayName: Goopwood Door
 			}
 
-			NaturePlatingBlastDoorTileClosed.MapEntry: Mods.SOTS.ItemName.NaturePlatingBlastDoor
-			NaturePlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.NaturePlatingBlastDoor
-			PermafrostPlatingBlastDoorTileClosed.MapEntry: Mods.SOTS.ItemName.PermafrostPlatingBlastDoor
-			PermafrostPlatingBlastDoorTileOpen.MapEntry: Mods.SOTS.ItemName.PermafrostPlatingBlastDoor
+			NaturePlatingBlastDoorTileClosed.MapEntry: Nature Plating Blast Door
+			NaturePlatingBlastDoorTileOpen.MapEntry: Nature Plating Blast Door
+			PermafrostPlatingBlastDoorTileClosed.MapEntry: Permafrost Plating Blast Door
+			PermafrostPlatingBlastDoorTileOpen.MapEntry: Permafrost Plating Blast Door
 
 			GemChestTile: {
 				MapEntry0: Ruby Chest

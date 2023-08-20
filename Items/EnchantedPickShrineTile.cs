@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Pyramid;
 using SOTS.Items.Tools;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -28,14 +30,11 @@ namespace SOTS.Items
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1200;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-             if(frameX == 0)
-             {
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<EnchantedPickaxe>());
-             }
+            yield return new Item(ModContent.ItemType<EnchantedPickaxe>());
         }
-	    public override bool CanExplode(int i, int j)
+        public override bool CanExplode(int i, int j)
 		{
 			return true;
 		}

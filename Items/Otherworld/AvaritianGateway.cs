@@ -73,11 +73,6 @@ namespace SOTS.Items.Otherworld
 		{
 			num = 2;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int drop = ModContent.ItemType<AvaritianGateway>();
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 144, 144, drop);
-		}
         public override void RandomUpdate(int i, int j)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)

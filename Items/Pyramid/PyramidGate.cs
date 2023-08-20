@@ -122,11 +122,6 @@ namespace SOTS.Items.Pyramid
 		{
 			num = 9;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			//Item.NewItem(i * 16, j * 16, 80, 16, ModContent.ItemType<TaintedKeystoneShard>(), 1);
-			//Item.NewItem(i * 16, j * 16, 80, 16, ModContent.ItemType<PyramidGate>());
-		}
 	}
 	public class PyramidGateProj : ModProjectile
 	{

@@ -85,10 +85,6 @@ namespace SOTS.Items.Furniture
         {
 			return true;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, DoorItemID);
-		}
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -135,7 +131,6 @@ namespace SOTS.Items.Furniture
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-			// name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
 			DustType = -1;
 			TileID.Sets.DisableSmartCursor[Type] = true;
@@ -167,10 +162,6 @@ namespace SOTS.Items.Furniture
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
 			return true;
-		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, DoorItemID);
 		}
 		public override void MouseOver(int i, int j)
 		{

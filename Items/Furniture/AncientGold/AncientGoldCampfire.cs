@@ -92,11 +92,6 @@ namespace SOTS.Items.Furniture.AncientGold
 				}
 			}
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int drop = Mod.Find<ModItem>("AncientGoldCampfire").Type;
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, drop);
-		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));

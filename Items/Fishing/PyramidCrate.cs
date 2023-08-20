@@ -178,9 +178,5 @@ namespace SOTS.Items.Fishing
 			AddMapEntry(new Color(200, 180, 100), name);
 			TileObjectData.addTile(Type);
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<PyramidCrate>()); //this defines what to drop when this tile is destroyed
-		}
 	}
 }

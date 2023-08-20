@@ -133,11 +133,6 @@ namespace SOTS.Items.Pyramid
 		{
 			num = 2;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int drop = ModContent.ItemType<AcediaGateway>();
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 144, 144, drop);
-		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			int type = Main.tile[i, j].TileFrameX / 18 + (Main.tile[i, j].TileFrameY / 18 * 9);

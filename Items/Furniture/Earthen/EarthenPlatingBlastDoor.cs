@@ -33,7 +33,7 @@ namespace SOTS.Items.Furniture.Earthen
 		public override int OpenDoorTile => ModContent.TileType<Earthen.EarthenPlatingBlastDoorTileOpen>();
 		public override string GetName()
 		{
-			return Language.GetTextValue("Mods.SOTS.ItemName.EarthenPlatingBlastDoor");
+			return this.GetLocalizedValue("MapEntry");
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -46,9 +46,9 @@ namespace SOTS.Items.Furniture.Earthen
 		public override int DoorItemID => ModContent.ItemType<Earthen.EarthenPlatingBlastDoor>();
 		public override int ClosedDoorTile => ModContent.TileType<Earthen.EarthenPlatingBlastDoorTileClosed>();
 		public override string GetName()
-		{
-			return Language.GetTextValue("Mods.SOTS.ItemName.EarthenPlatingBlastDoor");
-		}
+        {
+            return this.GetLocalizedValue("MapEntry");
+        }
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));

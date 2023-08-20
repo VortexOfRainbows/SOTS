@@ -7,6 +7,8 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using SOTS.Void;
+using SOTS.Items.Tools;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Secrets
 {
@@ -33,12 +35,9 @@ namespace SOTS.Items.Secrets
         {
             return false;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-             if(frameX == 0)
-             {
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<DreamLamp>(), noGrabDelay: true);
-             }
+            yield return new Item(ModContent.ItemType<DreamLamp>());
         }
 	    public override bool CanExplode(int i, int j)
 		{

@@ -87,8 +87,6 @@ namespace SOTS.Items.Furniture.Functional
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = ModContent.ItemType<Mineralarium>();
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 112, 16, drop);
 			ModContent.GetInstance<MineralariumTE>().Kill(i, j);
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

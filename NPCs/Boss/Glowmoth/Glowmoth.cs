@@ -9,6 +9,7 @@ using SOTS.Projectiles.Earth.Glowmoth;
 using SOTS.Projectiles.Pyramid;
 using SOTS.WorldgenHelpers;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -31,7 +32,15 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public const int SparklePhase = 4;
 		public float SinusoidalCounter = 0;
 		int despawn = 0;
-		private float AI0
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(NPC.dontTakeDamage);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			NPC.dontTakeDamage = reader.ReadBoolean();
+        }
+        private float AI0
 		{
 			get => NPC.ai[0];
 			set => NPC.ai[0] = value;

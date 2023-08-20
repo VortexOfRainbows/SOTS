@@ -214,7 +214,6 @@ namespace SOTS.Items.Gems
 			return chestDrop;
 		}
 		protected override int ChestKey => ModContent.ItemType<SOTSRubyGemLock>();
-		protected override int DustType => 122;
 		protected override void AddMapEntires()
 		{
 			AddMapEntry(new Color(212, 37, 24), this.GetLocalization("MapEntry0"), MapChestName);
@@ -232,13 +231,36 @@ namespace SOTS.Items.Gems
 			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry12"), MapChestName);
 			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry13"), MapChestName);
 		}
-		public override bool IsLockedChest(int i, int j)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            Tile tile = Main.tile[i, j];
+			type = DustType(tile.TileFrameX);
+            return true;
+        }
+        public int DustType(int frameX)
+        {
+            int chestDrop = DustID.GemRuby;
+            int chestType = frameX / 72;
+            if (chestType == 1)
+                chestDrop = DustID.GemSapphire;
+            if (chestType == 2)
+                chestDrop = DustID.GemEmerald;
+            if (chestType == 3)
+                chestDrop = DustID.GemTopaz;
+            if (chestType == 4)
+                chestDrop = DustID.GemAmethyst;
+            if (chestType == 5)
+                chestDrop = DustID.GemDiamond;
+            if (chestType == 6)
+                chestDrop = DustID.GemAmber;
+            return chestDrop;
+        }
+        public override bool IsLockedChest(int i, int j)
 		{
 			return (Main.tile[i, j].TileFrameX % 72) / 36 == 1;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop(frameX));
 			Chest.DestroyChest(i, j);
 		}
 		public override void MouseOver(int i, int j)

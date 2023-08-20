@@ -58,16 +58,16 @@ namespace SOTS.Items.Otherworld.Furniture
         {
             num = 8;
         }
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CanDrop(int i, int j)
+        {
+            return false;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			//Projectile.NewProjectile((float)(k * 16) + 15.5f, (float)(num4 * 16 + 16), 0f, 0f, 99, 70, 10f, Main.myPlayer, 0f, 0f);
 			if (!WorldGen.gen)
 			{
-                //Projectile.NewProjectile((i + 1.5f) * 16f, (j + 1.5f) * 16f, 0f, 0f, ProjectileID.Boulder, 70, 10f, Main.myPlayer, 0f, 0f);
                 PotDrops(i, j, frameX, frameY);
-                //Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemType<Pots>());
             }
-
 		}
         public void PotDrops(int i, int j, int frameX, int frameY)
         {

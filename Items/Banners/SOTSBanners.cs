@@ -37,62 +37,6 @@ namespace SOTS.Items.Banners
         {
             return false;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int style = frameX / 18;
-			int item;
-			switch (style)
-			{
-				case 0:
-					item = ItemType<BlueSlimerBanner>();
-					break;
-				case 1:
-					item = ItemType<TreasureSlimeBanner>();
-					break;
-				case 2:
-					item = ItemType<GoldenTreasureSlimeBanner>();
-					break;
-				case 3:
-					item = ItemType<FrozenTreasureSlimeBanner>();
-					break;
-				case 4:
-					item = ItemType<ShadowTreasureSlimeBanner>();
-					break;
-				case 5:
-					item = ItemType<PyramidTreasureSlimeBanner>();
-					break;
-				case 6:
-					item = ItemType<NatureSlimeBanner>();
-					break;
-				case 7:
-					item = ItemType<FlamingGhastBanner>();
-					break;
-				case 8:
-					item = ItemType<BleedingGhastBanner>();
-					break;
-				case 9:
-					item = ItemType<ArcticGoblinBanner>();
-					break;
-				case 10:
-					item = ItemType<LostSoulBanner>();
-					break;
-				case 11:
-					item = ItemType<SnakeBanner>();
-					break;
-				case 12:
-					item = ItemType<SnakePotBanner>();
-					break;
-				case 13:
-					item = ItemType<SittingMushroomBanner>();
-					break;
-				case 14:
-					item = ItemType<WallMimicBanner>();
-					break;
-				default:
-					return;
-			}
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, item);
-		}
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
@@ -460,10 +404,6 @@ namespace SOTS.Items.Banners
         {
             return false;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<HoloSlimeBanner>());
-		}
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
@@ -530,10 +470,6 @@ namespace SOTS.Items.Banners
         {
             return false;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 16, 48, ModContent.ItemType<HoloSwordBanner>());
-		}
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
@@ -600,10 +536,6 @@ namespace SOTS.Items.Banners
         {
 			return false;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 16, 48, ModContent.ItemType<HoloEyeBanner>());
-		}
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
@@ -679,66 +611,6 @@ namespace SOTS.Items.Banners
         {
             return false;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int style = frameX / 18;
-			int item;
-			switch (style)
-			{
-				case 0:
-					item = ItemType<TwilightDevilBanner>();
-					break;
-				case 1:
-					item = ItemType<FluxSlimeBanner>();
-					break;
-				case 2:
-					item = ItemType<LesserWispBanner>();
-					break;
-				case 3:
-					item = ItemType<GhastBanner>();
-					break;
-				case 4:
-					item = ItemType<MaligmorBanner>();
-					break;
-				case 5:
-					item = ItemType<TeratomaBanner>();
-					break;
-				case 6:
-					item = ItemType<CorruptionTreasureSlimeBanner>();
-					break;
-				case 7:
-					item = ItemType<CrimsonTreasureSlimeBanner>();
-					break;
-				case 8:
-					item = ItemType<JungleTreasureSlimeBanner>();
-					break;
-				case 9:
-					item = ItemType<TwilightScouterBanner>();
-					break;
-				case 10:
-					item = ItemType<HallowTreasureSlimeBanner>();
-					break;
-				case 11:
-					item = ItemType<DungeonTreasureSlimeBanner>();
-					break;
-				case 12:
-					item = ItemType<PhaseSpeederBanner>();
-					break;
-				case 13:
-					item = ItemType<PhaseAssaulterBanner>();
-					break;
-				case 14:
-					item = ItemType<UltracapBanner>();
-					break;
-				case 15:
-					item = ItemType<PlanetoidBanner>();
-					break;
-				default:
-					return;
-			}
-			Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 16, 48, item);
-		}
-
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)

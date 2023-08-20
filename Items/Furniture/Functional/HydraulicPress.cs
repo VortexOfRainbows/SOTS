@@ -204,10 +204,6 @@ namespace SOTS.Items.Furniture.Functional
 		{
 			num = 2;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16 + 16, j * 16 + 16, 64, 96, ModContent.ItemType<HydraulicPress>());
-		}
     }
 	public class PressProjectile : ModProjectile
     {

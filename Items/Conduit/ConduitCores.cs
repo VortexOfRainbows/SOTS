@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -165,6 +166,10 @@ namespace SOTS.Items.Conduit
 		public sealed override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
+			if(!(ModContent.GetModTile(tile.TileType) is ConduitTile))
+			{
+				return;
+			}
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -270,12 +275,12 @@ namespace SOTS.Items.Conduit
 				SOTS.GodrayShader.Parameters["opacity2"].SetValue(colorMultiplier * colorMultiplier);
 				SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
 				Main.spriteBatch.Draw(texture, location - Main.screenPosition, null, Color.White, 0f, origin, sizeMult * colorMultiplier, SpriteEffects.None, 0f);
-				Main.spriteBatch.End();
-				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.Identity);
-				colorGlow = elementalColor * colorMultiplier;
-				colorGlow.A = 0;
-				desiredWidth = 18f;
-				sizeMult = desiredWidth / texture.Width;
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Camera.Rasterizer, null, Main.Camera.GameViewMatrix.TransformationMatrix);
+                colorGlow = elementalColor * colorMultiplier;
+                colorGlow.A = 0;
+                desiredWidth = 18f;
+                sizeMult = desiredWidth / texture.Width;
 				for (int k = 0; k <= 2; k++)
 					Main.spriteBatch.Draw(texture, location - Main.screenPosition, null, colorGlow, 0f, origin, sizeMult * colorMultiplier, SpriteEffects.None, 0f);
 			}

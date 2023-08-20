@@ -54,39 +54,6 @@ namespace SOTS.Items.Banners
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(233, 207, 94), Language.GetText("MapObject.Relic"));
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int placeStyle = frameX / FrameWidth;
-
-			int itemType = 0;
-			switch (placeStyle)
-			{
-				case 0:
-					itemType = ModContent.ItemType<PutridPinkyRelic>();
-					break;
-				case 1:
-					itemType = ModContent.ItemType<PharaohsCurseRelic>();
-					break;
-				case 2:
-					itemType = ModContent.ItemType<AdvisorRelic>();
-					break;
-				case 3:
-					itemType = ModContent.ItemType<PolarisRelic>();
-					break;
-				case 4:
-					itemType = ModContent.ItemType<LuxRelic>();
-					break;
-				case 5:
-					itemType = ModContent.ItemType<SubspaceSerpentRelic>();
-					break;
-				case 6:
-					itemType = ModContent.ItemType<GlowmothRelic>();
-					break;
-			}
-
-			if (itemType > 0)
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, itemType);
-		}
 		public override bool CreateDust(int i, int j, ref int type)
 		{
 			return false;

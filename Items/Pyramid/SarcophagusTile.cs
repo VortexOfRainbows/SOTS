@@ -28,13 +28,6 @@ namespace SOTS.Items.Pyramid
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			if(frameX == 0)
-			{
-			   Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 96, 48, ModContent.ItemType<Sarcophagus>());
-			}
-		}
 		public override bool CanExplode(int i, int j)
 		{
 			return false;

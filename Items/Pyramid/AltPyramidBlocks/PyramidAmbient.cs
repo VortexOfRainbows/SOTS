@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -28,8 +30,6 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
-			Item.createTile = ModContent.TileType<PyramidAmbientTile1x1>();
-			Item.placeStyle = 0;
 		}
 		int type = 0;
         public override bool? UseItem(Player player)
@@ -331,13 +331,14 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		{
 			num = 3;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			if(frameX == 54)
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<RoyalRubyShard>(), 3);
-			if (frameX == 108)
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<RoyalRubyShard>(), 4);
-		}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX == 54)
+				yield return new Item(ModContent.ItemType<RoyalRubyShard>(), 3);
+            if (tile.TileFrameX == 108)
+                yield return new Item(ModContent.ItemType<RoyalRubyShard>(), 4);
+        }
         public override bool KillSound(int i, int j, bool fail)
 		{
 			Tile tile = Main.tile[i, j];

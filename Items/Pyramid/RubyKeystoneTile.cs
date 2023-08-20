@@ -4,6 +4,7 @@ using SOTS.Buffs;
 using SOTS.Dusts;
 using SOTS.Projectiles.Pyramid;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -163,11 +164,10 @@ namespace SOTS.Items.Pyramid
 		{
 			num = 2;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int drop = ModContent.ItemType<RubyKeystone>();
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 80, 80, drop);
-		}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<RubyKeystone>(), 1);
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			int type = Main.tile[i, j].TileFrameX / 18 + (Main.tile[i, j].TileFrameY % 90 / 18 * 5);

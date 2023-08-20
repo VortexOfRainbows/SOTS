@@ -7,6 +7,7 @@ using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Dusts;
 using SOTS.Items.Pyramid;
 using Terraria.DataStructures;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Secrets
 {
@@ -39,7 +40,11 @@ namespace SOTS.Items.Secrets
 			HitSound = SoundID.Tink;
 			DustType = 32;
 		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<RefractingCrystal>());
+        }
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient && fail && Main.rand.NextBool(15))
 				Projectile.NewProjectile(new EntitySource_Misc("SOTS:RefractingCrystalBlock"), new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RefractingCrystalProj>(), 0, 0, Main.myPlayer);
@@ -47,11 +52,6 @@ namespace SOTS.Items.Secrets
 			{
 				SOTSWorld.SecretFoundMusicTimer = 720;
 			}
-			base.KillTile(i, j, ref fail, ref effectOnly, ref noItem);
-		}
-		public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			base.NumDust(i, j, fail, ref num);
 		}
 		public override bool CanExplode(int i, int j)
 		{

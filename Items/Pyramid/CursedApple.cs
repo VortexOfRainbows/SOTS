@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using SOTS.Void;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Pyramid
 {
@@ -57,11 +58,10 @@ namespace SOTS.Items.Pyramid
 			HitSound = SoundID.Grass;
 			MineResist = 0.5f;
 			DustType = DustID.Grass;
-
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<CursedApple>());//this defines what to drop when this tile is destroyed
-		}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<CursedApple>());
+        }
 	}
 }

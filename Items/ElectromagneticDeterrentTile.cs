@@ -91,10 +91,6 @@ namespace SOTS.Items
 				}
 			}
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<ElectromagneticDeterrent>());
-		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Color color = new Color(80, 80, 80, 0);

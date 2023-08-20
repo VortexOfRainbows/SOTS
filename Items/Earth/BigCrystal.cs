@@ -68,12 +68,6 @@ namespace SOTS.Items.Earth
 		{
 			num = 2;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int width = 6 * 16;
-			int height = 7 * 16;
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16 + width, j * 16 + height, 16, 16, ModContent.ItemType<BigCrystal>());
-		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			/*Tile tile = Main.tile[i, j];

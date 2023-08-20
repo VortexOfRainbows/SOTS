@@ -134,8 +134,6 @@ namespace SOTS.Items.Otherworld.Furniture
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = ItemType<PotGenerator>();
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, drop);
 			GetInstance<PotTimer>().Kill(i, j);
 		}
 		public override void MouseOver(int i, int j)

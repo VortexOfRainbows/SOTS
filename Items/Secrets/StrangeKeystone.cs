@@ -58,17 +58,6 @@ namespace SOTS.Items.Secrets
             LocalizedText name = CreateMapEntryName();
 		    AddMapEntry(new Color(90, 80, 45), name);
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-			if(frameX == 0)
-			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 64, ModContent.ItemType<StrangeKeystone>());
-			}
-			if(frameX >= 32)
-			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 64, ModContent.ItemType<StrangeKeystoneBroken>());
-			}
-        }
 	    public override bool CanExplode(int i, int j)
 		{
 			return true;

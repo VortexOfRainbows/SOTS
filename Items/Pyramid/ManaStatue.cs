@@ -8,7 +8,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
- 
+using System.Collections.Generic;
+
 namespace SOTS.Items.Pyramid        
 {
     public class ManaStatue : ModTile
@@ -42,9 +43,9 @@ namespace SOTS.Items.Pyramid
             }
             return false;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.ManaCrystal);//this defines what to drop when this tile is destroyed
+            yield return new Item(ItemID.ManaCrystal);
         }
     }
 }

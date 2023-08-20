@@ -29,6 +29,7 @@ namespace SOTS.Items.Permafrost
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(100, 173, 232), name);
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
+			RegisterItemDrop(ModContent.ItemType<FrigidIce>());
 		}
 		public override bool KillSound(int i, int j, bool fail)
 		{

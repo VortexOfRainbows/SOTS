@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -43,40 +44,41 @@ namespace SOTS.Items.Gems
         {
 			num = 4;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int item = 0;
-			switch (frameX / 54)
-			{
-				case 0:
-					item = ItemType<SOTSRubyGemLock>();
-					break;
-				case 1:
-					item = ItemType<SOTSSapphireGemLock>();
-					break;
-				case 2:
-					item = ItemType<SOTSEmeraldGemLock>();
-					break;
-				case 3:
-					item = ItemType<SOTSTopazGemLock>();
-					break;
-				case 4:
-					item = ItemType<SOTSAmethystGemLock>();
-					break;
-				case 5:
-					item = ItemType<SOTSDiamondGemLock>();
-					break;
-				case 6:
-					item = ItemType<SOTSAmberGemLock>();
-					break;
-			}
-			if (item > 0)
-			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, item);
-				if(frameY >= 54)
-					Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, KeyType(i, j, frameX));
-			}
-		}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			Tile tile = Main.tile[i, j];
+            int item = 0;
+            switch (tile.TileFrameX / 54)
+            {
+                case 0:
+                    item = ItemType<SOTSRubyGemLock>();
+                    break;
+                case 1:
+                    item = ItemType<SOTSSapphireGemLock>();
+                    break;
+                case 2:
+                    item = ItemType<SOTSEmeraldGemLock>();
+                    break;
+                case 3:
+                    item = ItemType<SOTSTopazGemLock>();
+                    break;
+                case 4:
+                    item = ItemType<SOTSAmethystGemLock>();
+                    break;
+                case 5:
+                    item = ItemType<SOTSDiamondGemLock>();
+                    break;
+                case 6:
+                    item = ItemType<SOTSAmberGemLock>();
+                    break;
+            }
+            if (item > 0)
+            {
+				yield return new Item(item);
+                if (tile.TileFrameY >= 54)
+                    yield return new Item(KeyType(i, j, tile.TileFrameX));
+            }
+        }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];

@@ -7,15 +7,15 @@ Tmodloader Bugs (some of these may be fixed, idk):
 1. Chest Swapping doesn't drop item.
 2. Chests crash when platforms are swapped below them.
 3. Block swap is not prevented for pyramid tiles pre EoW (don't think there is support for this in TMOD)
-4. (Waiting for Example Mod) Smart cursor doesn't work with dressers.
 
 Acknowledged But Likely Delayed:
 1. Reimplement (older) Blade Items using the abstract class
 2. Earthen Plating starter house.
 3. Master mode go crazy. It's a bit unfair.
 4. Glowmasks for Corruption Trees in SOTSTP
-5. Wind mechanics for vines and banners
+5. Wind mechanics for vines and banners + banners to be placeable on platforms
 6. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
+7. Smart cursor doesn't work with dressers.
 
 Update Objectives:
 1. Ghost Town! (later)
@@ -36,28 +36,34 @@ Update Objectives:
 5. Glow Nylon Whip
 
 Needed After Porting:
-1. Check localization of chests and of doors/blast doors
-2. Test out Cursed Blade critical strike and damage mechanics
-3. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
-4. Test Ghost pepper
-5. Test Subservant
-6. Make sure all furniture and tiles drop the correct items
+1. Test out Cursed Blade critical strike and damage mechanics
+2. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
+3. Test Subservant
+4. Make sure all furniture and tiles drop the correct items
+5. Fix PreDrawInInventory and related issues
+6. Test out pots item drops (in multiplayer)
 
 TODO for PORTING:
-1. Fix doors localization issues
-2. Fix glowmoth multiplayer doNotTakeDamage
-3. Fix refracting crystal pathway not syncing
-4. Fix certain bosses and enemies using multiplayer smoothing not looking good...
+1. Fix refracting crystal pathway not syncing
+2. Fix certain bosses and enemies using multiplayer smoothing not looking good...
 	1. NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true; (already did LUX)
+3. Fix problem with godray effect somehow effecting the entire screen (for the conduit tiles)
+	1. Probably related to not clearing the shader... It's effecting water..?
 
 Daily Log:
 
-8/17/23
+8/19/23
+1. Attempted fixing various tile drop issues
+2. fixed door and chest localization
+3. Attempted fix at glowmoth not taking damage in certain multiplayer scenarios (should be fixed)
+
+8/17/23 & 8/19/23
 1. Ported to 1.4.4!
 2. Fixed some drawing and localization issues
 3. Fixed Archaeologist localization issues + shop
 4. Fixed obscure issue with unique wing ending effect when mounted
 5. Fixed localization of dressers
+6. Tested ghost pepper - looks like it works
 
 8/13/23 - 8/16/23
 1. Porting and consequences:

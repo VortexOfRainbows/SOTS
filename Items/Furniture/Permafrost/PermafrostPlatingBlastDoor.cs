@@ -11,7 +11,6 @@ namespace SOTS.Items.Furniture.Permafrost
 	{
 		public override void SetStaticDefaults()
 		{
-			//Tooltip.SetDefault("Cannot be opened by NPCs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
@@ -33,7 +32,7 @@ namespace SOTS.Items.Furniture.Permafrost
 		public override int OpenDoorTile => ModContent.TileType<Permafrost.PermafrostPlatingBlastDoorTileOpen>();
 		public override string GetName()
         {
-			return Language.GetTextValue("Mods.SOTS.ItemName.PermafrostPlatingBlastDoor");
+            return this.GetLocalizedValue("MapEntry");
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -46,9 +45,9 @@ namespace SOTS.Items.Furniture.Permafrost
 		public override int DoorItemID => ModContent.ItemType<Permafrost.PermafrostPlatingBlastDoor>();
 		public override int ClosedDoorTile => ModContent.TileType<Permafrost.PermafrostPlatingBlastDoorTileClosed>();
 		public override string GetName()
-		{
-			return Language.GetTextValue("Mods.SOTS.ItemName.PermafrostPlatingBlastDoor");
-		}
+        {
+            return this.GetLocalizedValue("MapEntry");
+        }
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -39,9 +40,9 @@ namespace SOTS.Items.Pyramid
                 }
             }
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.LifeCrystal);//this defines what to drop when this tile is destroyed
+            yield return new Item(ItemID.LifeCrystal);
         }
     }
 }

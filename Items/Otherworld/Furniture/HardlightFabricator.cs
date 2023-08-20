@@ -93,10 +93,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			DustType = ModContent.DustType<AvaritianDust>();
 			AdjTiles = new int[] { TileID.WorkBenches };
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<HardlightFabricator>());
-		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)

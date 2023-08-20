@@ -28,10 +28,6 @@ namespace SOTS.Items.Furniture
         {
             num = 0;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<TDrop>());
-        }
         public override void HitWire(int i, int j)
         {
             Tile tile = Main.tile[i, j];

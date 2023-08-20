@@ -7,6 +7,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Pyramid;
 using SOTS.NPCs;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -40,7 +41,11 @@ namespace SOTS.Items.Pyramid
         {
             num = 8;
         }
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CanDrop(int i, int j)
+        {
+            return false;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			if (!WorldGen.gen)
 			{
@@ -140,8 +145,6 @@ namespace SOTS.Items.Pyramid
                 else if (Main.rand.NextBool(5))
                     Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore16"), 1f);
             }
-
-
 
             int chanceForPortal = 1000;
             if(num == 1)

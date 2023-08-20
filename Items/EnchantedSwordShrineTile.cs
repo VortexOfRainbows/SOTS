@@ -5,6 +5,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using SOTS.Items.Tools;
+using System.Collections.Generic;
 
 namespace SOTS.Items
 {
@@ -28,14 +30,11 @@ namespace SOTS.Items
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1200;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-             if(frameX == 0)
-             {
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ItemID.EnchantedSword);
-             }
+            yield return new Item(ItemID.EnchantedSword);
         }
-	    public override bool CanExplode(int i, int j)
+        public override bool CanExplode(int i, int j)
 		{
 			return true;
 		}

@@ -113,9 +113,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = ItemType<TransmutationAltar>();
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, drop);
-			ModContent.GetInstance<TransmutationAltarStorage>().Kill(i, j);
+			GetInstance<TransmutationAltarStorage>().Kill(i, j);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

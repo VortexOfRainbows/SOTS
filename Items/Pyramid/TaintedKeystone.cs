@@ -30,7 +30,6 @@ namespace SOTS.Items.Pyramid
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			position += drawOrigin * scale;
 			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)

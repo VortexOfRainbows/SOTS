@@ -256,16 +256,16 @@ namespace SOTS.Items.Pyramid
 		{
 			num = 3;
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
 			Tile tile = Main.tile[i, j];
-			if (frameY < 360)
+			if(tile.TileFrameY < 360)
 			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 80, ModContent.ItemType<TaintedKeystoneShard>(), 3);
-			}
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 80, ModContent.ItemType<AncientGoldGate>());
-		}
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+				yield return new Item(ModContent.ItemType<TaintedKeystoneShard>(), 3);
+            }
+            yield return new Item(ModContent.ItemType<AncientGoldGate>(), 1);
+        }
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];
 			if((tile.TileFrameY == 144 || tile.TileFrameY == 234 || tile.TileFrameY == 216 || tile.TileFrameY == 324 || tile.TileFrameY == 306 || tile.TileFrameY == 288) && (tile.TileFrameX == 0 || tile.TileFrameX == 54))
