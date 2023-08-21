@@ -7,6 +7,7 @@ using Terraria.ObjectData;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Pyramid;
+using System.Collections.Generic;
 
 namespace SOTS.Items.MusicBoxes
 {
@@ -42,8 +43,12 @@ namespace SOTS.Items.MusicBoxes
 		public override bool CreateDust(int i, int j, ref int type)
 		{
 			return false;
-		}
-		public override void SetStaticDefaults()
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<AncientPyramidMusicBox>());
+        }
+        public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

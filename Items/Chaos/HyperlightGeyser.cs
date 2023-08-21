@@ -18,7 +18,6 @@ namespace SOTS.Items.Chaos
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/HyperlightGeyserGlow").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Rectangle frame = new Rectangle(0, 0, 78, 36);
-			position += new Vector2(39 * scale, 18 * scale);
 			for (int i = 0; i < 6; i++)
 			{
 				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
@@ -40,11 +39,12 @@ namespace SOTS.Items.Chaos
 				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
 				color.A = 0;
 				Vector2 rotationAround = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + SOTSWorld.GlobalCounter));
-				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition + new Vector2(0, 2), frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			texture = Mod.Assets.Request<Texture2D>("Items/Chaos/HyperlightGeyserGlow").Value;
+				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition, frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+            }
+            Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+            texture = Mod.Assets.Request<Texture2D>("Items/Chaos/HyperlightGeyserGlow").Value;
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			return true;
+			return false;
 		}
 		public override void SetStaticDefaults()
 		{

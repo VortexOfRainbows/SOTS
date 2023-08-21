@@ -126,7 +126,8 @@ namespace SOTS.Items.Secrets
 		public void SetOverridenName()
 		{
 			ItemID.Sets.ItemNoGravity[Type] = !IsItemForgotten;
-			Item.SetNameOverride(appropriateNameRightNow);
+			if(Item.type == ModContent.ItemType<DreamLamp>())
+				Item.SetNameOverride(appropriateNameRightNow);
 		}
 		public override void SetStaticDefaults()
 		{

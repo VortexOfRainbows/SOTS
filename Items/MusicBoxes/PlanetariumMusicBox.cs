@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Otherworld;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Otherworld.Blocks;
+using System.Collections.Generic;
 
 namespace SOTS.Items.MusicBoxes
 {
@@ -40,8 +41,12 @@ namespace SOTS.Items.MusicBoxes
 		}
 	}
 	public class PlanetariumMusicBoxTile : ModTile
-	{
-		public override bool CreateDust(int i, int j, ref int type)
+    {
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<PlanetariumMusicBox>());
+        }
+        public override bool CreateDust(int i, int j, ref int type)
 		{
 			return false;
 		}

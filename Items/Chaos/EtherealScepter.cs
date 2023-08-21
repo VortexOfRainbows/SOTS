@@ -18,7 +18,7 @@ namespace SOTS.Items.Chaos
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterEffect").Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			Color color = Color.White;
+			Color color;
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 2));

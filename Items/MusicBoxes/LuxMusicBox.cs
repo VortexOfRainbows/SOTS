@@ -11,6 +11,7 @@ using SOTS.Void;
 using SOTS.Projectiles.Chaos;
 using Terraria.Audio;
 using System;
+using System.Collections.Generic;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -42,8 +43,12 @@ namespace SOTS.Items.MusicBoxes
 		}*/
 	}
 	public class LuxMusicBoxTile : ModTile
-	{
-		public override void SetStaticDefaults()
+    {
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<LuxMusicBox>());
+        }
+        public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

@@ -7,6 +7,8 @@ using Terraria.ObjectData;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using rail;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -57,7 +59,11 @@ namespace SOTS.Items.MusicBoxes
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(191, 142, 111), name);
 		}
-		public override void MouseOver(int i, int j)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<AdvisorMusicBox>());
+        }
+        public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;

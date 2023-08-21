@@ -36,14 +36,9 @@ Update Objectives:
 5. Glow Nylon Whip
 
 Needed After Porting:
-1. The way defense is factored into subspace serpent's DPS limit is different now. Needs testing.
-2. Test Subservant
-3. Fix PreDrawInInventory and related issues
-4. Test out pots item drops (in multiplayer)
-
-TODO for PORTING:
-1. Fix refracting crystal pathway not syncing
-
+1. Rework light-bringer's
+2. Test out pots item drops (in multiplayer)
+ 
 Daily Log:
 
 8/19/23 to 8/20/23
@@ -54,6 +49,8 @@ Daily Log:
 5. Cursed blade critical strike mechanics seem to work still
 6. Now works with 1.4.4 BossCL... Also adjusted the progression numbers to make more sense
 7. Changed multiplayer smoothing for a ton of enemies (should work for now)
+8. Fixed predrawiteminventory issues
+9. Fix netmessage for refracting crystal secret
 
 8/17/23 & 8/19/23
 1. Ported to 1.4.4!

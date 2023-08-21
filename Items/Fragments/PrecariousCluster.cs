@@ -68,7 +68,6 @@ namespace SOTS.Items.Fragments
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/PrecariousClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
-			position += new Vector2(33 * scale, 33 * scale);
 			float counter = Main.GlobalTimeWrappedHourly * 160;
 			int bonus = (int)(counter / 360f);
 			float mult = new Vector2(-11f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
@@ -227,7 +226,6 @@ namespace SOTS.Items.Fragments
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/TerminalClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
-			position += new Vector2(33 * scale, 33 * scale);
 			float counter = Main.GlobalTimeWrappedHourly * 160;
 			int bonus = (int)(counter / 360f);
 			float mult = -12f * (float)Math.Cos(MathHelper.ToRadians(counter));

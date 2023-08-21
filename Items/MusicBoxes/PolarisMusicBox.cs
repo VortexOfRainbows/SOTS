@@ -7,6 +7,7 @@ using Terraria.ObjectData;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Permafrost;
+using System.Collections.Generic;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -38,8 +39,12 @@ namespace SOTS.Items.MusicBoxes
 		}
 	}
 	public class PolarisMusicBoxTile : ModTile
-	{
-		public override bool CreateDust(int i, int j, ref int type)
+    {
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<PolarisMusicBox>());
+        }
+        public override bool CreateDust(int i, int j, ref int type)
 		{
 			return false;
 		}
