@@ -23,7 +23,8 @@ namespace SOTS.NPCs.Anomaly
 			Main.npcFrameCount[NPC.type] = 17;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 10;
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
-		}
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+        }
         public override void SetDefaults()
 		{
 			NPC.lifeMax = 250;  

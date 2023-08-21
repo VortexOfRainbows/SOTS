@@ -37,8 +37,10 @@ namespace SOTS.NPCs
 			NPC.frame.Y = reader.ReadInt32();
 		}
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        {
+            Main.npcFrameCount[NPC.type] = 3;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true
 			};
@@ -52,7 +54,6 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0.6f;
             NPC.width = 16;
             NPC.height = 16;
-			Main.npcFrameCount[NPC.type] = 3;  
             NPC.value = 0;
             NPC.npcSlots = 0f;
 			NPC.noGravity = true;

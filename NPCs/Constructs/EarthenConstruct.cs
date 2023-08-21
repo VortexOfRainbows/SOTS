@@ -17,6 +17,7 @@ namespace SOTS.NPCs.Constructs
     {
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 CustomTexturePath = "SOTS/NPCs/Constructs/EarthenConstructHead",

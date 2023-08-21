@@ -26,7 +26,8 @@ namespace SOTS.NPCs.Boss.Lux
 				Hide = true
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-		}
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+        }
 		public override void SetDefaults()
 		{
             NPC.aiStyle =0; 

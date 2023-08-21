@@ -43,8 +43,10 @@ namespace SOTS.NPCs.Boss.Polaris
             return Color.White;
         }
         public override void SetStaticDefaults()
-		{
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+        {
+            Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]
 				{
@@ -62,7 +64,6 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.knockBackResist = 0f;
             NPC.width = 162;
             NPC.height = 162;
-            Main.npcFrameCount[NPC.type] = 1;
             NPC.value = 100000;
             NPC.npcSlots = 1f;
             NPC.boss = true;

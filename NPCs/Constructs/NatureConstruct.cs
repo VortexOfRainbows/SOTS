@@ -34,7 +34,8 @@ namespace SOTS.NPCs.Constructs
         public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 3;
-			NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
 		}
         public override void SetDefaults()
 		{

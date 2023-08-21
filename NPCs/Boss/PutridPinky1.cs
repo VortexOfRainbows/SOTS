@@ -13,8 +13,10 @@ namespace SOTS.NPCs.Boss
 	public class PutridPinky1 : ModNPC
 	{	int despawn = 0;
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        {
+            Main.npcFrameCount[NPC.type] = 2;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true
 			};
@@ -31,7 +33,6 @@ namespace SOTS.NPCs.Boss
             NPC.width = 62;
             NPC.height = 42;
             AnimationType = NPCID.BlueSlime;  
-            Main.npcFrameCount[NPC.type] = 2; 
             NPC.value = 0;
             NPC.npcSlots = 1f;
             NPC.boss = false;

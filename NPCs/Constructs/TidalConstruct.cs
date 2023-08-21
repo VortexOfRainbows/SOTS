@@ -33,13 +33,14 @@ namespace SOTS.NPCs.Constructs
 		int ai1 = 0;
 		float dir = 0f;
         public override void SetStaticDefaults()
-		{
-			NPCID.Sets.MPAllowedEnemies[Type] = true;
+        {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
 			Main.npcFrameCount[NPC.type] = 12;
 		}
         public override void SetDefaults()
 		{
-			NPC.aiStyle =0;
+			NPC.aiStyle = 0;
 			NPC.lifeMax = 750;
 			NPC.damage = 40;
 			NPC.defense = 16;

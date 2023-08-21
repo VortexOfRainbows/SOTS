@@ -70,7 +70,8 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			NPCID.Sets.TrailCacheLength[Type] = 10;
 			NPCID.Sets.TrailingMode[Type] = 0;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
-		}
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+        }
 		public override void SetDefaults()
 		{
 			NPC.lifeMax = 2400;

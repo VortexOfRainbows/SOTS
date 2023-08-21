@@ -9,8 +9,10 @@ namespace SOTS.NPCs.Constructs
 	public class Collector : ModNPC
 	{
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        {
+            Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true
 			};
@@ -37,7 +39,6 @@ namespace SOTS.NPCs.Constructs
 			NPC.knockBackResist = 0.1f;
 			NPC.width = 102;
 			NPC.height = 58;
-			Main.npcFrameCount[NPC.type] = 1;  
 			NPC.value = 7075;
 			NPC.npcSlots = 3f;
 			NPC.noGravity = true;

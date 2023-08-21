@@ -55,8 +55,9 @@ namespace SOTS.NPCs.Boss
 		private int storeDamage = -1;
 		private int counter = 0;
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+        {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]
 				{

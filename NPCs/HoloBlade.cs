@@ -20,8 +20,10 @@ namespace SOTS.NPCs
 		private float direction => NPC.whoAmI % 2 * 2 - 1;
 		bool drawTrail = false;
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.TrailCacheLength[NPC.type] = 8;
+        {
+            Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 8;
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
 			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
@@ -44,7 +46,6 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0.5f;
             NPC.width = 30;
             NPC.height = 54;
-			Main.npcFrameCount[NPC.type] = 1;  
             NPC.value = 200;
             NPC.npcSlots = 2f;
             NPC.HitSound = SoundID.NPCHit53;

@@ -36,8 +36,9 @@ namespace SOTS.NPCs.Phase
 			set => NPC.ai[3] = value;
 		}
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+        {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]
 				{

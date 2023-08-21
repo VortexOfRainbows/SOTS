@@ -18,7 +18,9 @@ namespace SOTS.NPCs.Constructs
         public override void SetStaticDefaults()
 		{
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
-		}
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            Main.npcFrameCount[NPC.type] = 1;
+        }
         public override void SetDefaults()
 		{
 			NPC.aiStyle =0;
@@ -27,8 +29,7 @@ namespace SOTS.NPCs.Constructs
 			NPC.defense = 14;  
 			NPC.knockBackResist = 0.1f;
 			NPC.width = 72;
-			NPC.height = 74;
-			Main.npcFrameCount[NPC.type] = 1;  
+			NPC.height = 74; 
 			NPC.value = 9550;
 			NPC.npcSlots = 4f;
 			NPC.lavaImmune = true;

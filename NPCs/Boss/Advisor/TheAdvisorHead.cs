@@ -51,8 +51,9 @@ namespace SOTS.NPCs.Boss.Advisor
 		Vector2[] hookPos = {new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) };
 		Vector2[] hookPosTrue = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
 		public override void SetStaticDefaults()
-		{
-			Main.npcFrameCount[NPC.type] = 2;
+        {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            Main.npcFrameCount[NPC.type] = 2;
 			NPCID.Sets.ShouldBeCountedAsBoss[NPC.type] = true;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{

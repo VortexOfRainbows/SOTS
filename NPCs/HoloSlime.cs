@@ -23,8 +23,10 @@ namespace SOTS.NPCs
 			justWarped = reader.ReadInt32();
 		}
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+        {
+            Main.npcFrameCount[NPC.type] = 2;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]
 				{
@@ -46,8 +48,7 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 1.25f;
             NPC.width = 36;
             NPC.height = 32;
-            AnimationType = NPCID.BlueSlime;
-			Main.npcFrameCount[NPC.type] = 2;  
+            AnimationType = NPCID.BlueSlime; 
             NPC.value = 200;
             NPC.npcSlots = 1.25f;
             NPC.lavaImmune = true;

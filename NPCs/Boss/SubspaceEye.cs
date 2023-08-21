@@ -11,6 +11,7 @@ namespace SOTS.NPCs.Boss
 		public override void SetStaticDefaults()
 		{
             Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 Hide = true

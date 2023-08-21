@@ -26,8 +26,10 @@ namespace SOTS.NPCs.Constructs
 			writer.Write(currentArmID);
         }
         public override void SetStaticDefaults()
-		{
-			NPCID.Sets.MPAllowedEnemies[Type] = true;
+        {
+            Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
 		}
         public override void SetDefaults()
 		{
@@ -37,8 +39,7 @@ namespace SOTS.NPCs.Constructs
 			NPC.defense = 34;  
 			NPC.knockBackResist = 0.1f;
 			NPC.width = 86;
-			NPC.height = 82;
-			Main.npcFrameCount[NPC.type] = 1;  
+			NPC.height = 82; 
 			NPC.value = Item.buyPrice(0, 5, 0, 0);
 			NPC.npcSlots = 4f;
 			NPC.lavaImmune = true;

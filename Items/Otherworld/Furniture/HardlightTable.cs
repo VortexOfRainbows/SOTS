@@ -40,7 +40,6 @@ namespace SOTS.Items.Otherworld.Furniture
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				if(k == 0)
 					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
-
 				Main.spriteBatch.Draw(texture,new Vector2(position.X + x, position.Y + y),null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 		}

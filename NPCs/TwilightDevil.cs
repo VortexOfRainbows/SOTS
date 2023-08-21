@@ -48,8 +48,10 @@ namespace SOTS.NPCs
 			}
 		}
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+        {
+            Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]
 				{
@@ -69,7 +71,6 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0f;
             NPC.width = 50;
             NPC.height = 52;
-			Main.npcFrameCount[NPC.type] = 4;  
             NPC.value = 10000;
             NPC.npcSlots = 5f;
             NPC.lavaImmune = true;

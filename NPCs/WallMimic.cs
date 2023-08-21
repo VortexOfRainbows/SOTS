@@ -42,7 +42,12 @@ namespace SOTS.NPCs
 			get => NPC.localAI[0];
 			set => NPC.localAI[0] = value;
 		}
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+        }
+        public override void SetDefaults()
 		{
             NPC.aiStyle =0; 
             NPC.lifeMax = 150;   
@@ -51,7 +56,6 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0f;
             NPC.width = 40;
             NPC.height = 40;
-			Main.npcFrameCount[NPC.type] = 4;  
             NPC.value = 1500;
             NPC.npcSlots = 1f;
             NPC.HitSound = SoundID.NPCHit7;

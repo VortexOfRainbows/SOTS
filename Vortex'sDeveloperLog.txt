@@ -43,8 +43,6 @@ Needed After Porting:
 
 TODO for PORTING:
 1. Fix refracting crystal pathway not syncing
-2. Fix certain bosses and enemies using multiplayer smoothing not looking good...
-	1. NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true; (already did LUX)
 
 Daily Log:
 
@@ -55,6 +53,7 @@ Daily Log:
 4. Fixed conduit drawing errors that were occuring due to shaders
 5. Cursed blade critical strike mechanics seem to work still
 6. Now works with 1.4.4 BossCL... Also adjusted the progression numbers to make more sense
+7. Changed multiplayer smoothing for a ton of enemies (should work for now)
 
 8/17/23 & 8/19/23
 1. Ported to 1.4.4!

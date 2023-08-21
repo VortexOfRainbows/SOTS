@@ -17,6 +17,8 @@ namespace SOTS.NPCs.Boss
             {
                 Hide = true
             };
+            Main.npcFrameCount[NPC.type] = 8;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
         }
@@ -35,7 +37,6 @@ namespace SOTS.NPCs.Boss
             NPC.value = 10000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath32;
-            Main.npcFrameCount[NPC.type] = 8;
         }
         float currentDPS = -1;
         private float DPSregenRate = 0.1f;

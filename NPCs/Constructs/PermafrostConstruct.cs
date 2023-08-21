@@ -19,7 +19,9 @@ namespace SOTS.NPCs.Constructs
         public override void SetStaticDefaults()
 		{
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
-		}
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            Main.npcFrameCount[NPC.type] = 1;
+        }
         public override void SetDefaults()
 		{
 			NPC.aiStyle =26; //unicorn AI
@@ -29,7 +31,6 @@ namespace SOTS.NPCs.Constructs
 			NPC.knockBackResist = 0.1f;
 			NPC.width = 90;
 			NPC.height = 90;
-			Main.npcFrameCount[NPC.type] = 1;  
 			NPC.value = Item.buyPrice(0, 1, 0, 0);
 			NPC.npcSlots = 3f;
 			NPC.boss = false;

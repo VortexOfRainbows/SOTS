@@ -62,8 +62,10 @@ namespace SOTS.NPCs.Boss
 			rotateDir = reader.ReadInt32();
 		}
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
+        {
+            Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]
 				{
@@ -79,8 +81,7 @@ namespace SOTS.NPCs.Boss
             NPC.defense = 0;   
             NPC.knockBackResist = 0f;
             NPC.width = 50;
-            NPC.height = 120;
-            Main.npcFrameCount[NPC.type] = 1;   
+            NPC.height = 120; 
             NPC.value = 150000;
             NPC.npcSlots = 10f;
             NPC.boss = true;

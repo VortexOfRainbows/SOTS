@@ -20,6 +20,7 @@ namespace SOTS.NPCs.Phase
     {
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[]
@@ -270,6 +271,7 @@ namespace SOTS.NPCs.Phase
     {
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 Hide = true
@@ -406,6 +408,7 @@ namespace SOTS.NPCs.Phase
     {
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 Hide = true

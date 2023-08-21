@@ -23,7 +23,8 @@ namespace SOTS.NPCs.Constructs
 			Main.npcFrameCount[NPC.type] = 1;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
-		}
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+        }
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(phase);

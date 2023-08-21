@@ -15,10 +15,12 @@ namespace SOTS.NPCs.Constructs
 	public class EarthenSpirit : ModNPC
 	{	
 		public override void SetStaticDefaults()
-		{
-			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
-			NPCID.Sets.TrailingMode[NPC.type] = 0;   
-		}
+        {
+            Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
+			NPCID.Sets.TrailingMode[NPC.type] = 0;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+        }
 		public override void SetDefaults()
 		{
 			NPC.aiStyle =10;
@@ -28,7 +30,6 @@ namespace SOTS.NPCs.Constructs
             NPC.knockBackResist = 0f;
             NPC.width = 58;
             NPC.height = 58;
-			Main.npcFrameCount[NPC.type] = 1;   
             NPC.value = 32500;
             NPC.npcSlots = 4f;
             NPC.boss = false;

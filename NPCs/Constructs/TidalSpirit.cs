@@ -18,7 +18,9 @@ namespace SOTS.NPCs.Constructs
 		{
 			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
-		}
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            Main.npcFrameCount[NPC.type] = 1;
+        }
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(phase);
@@ -39,8 +41,7 @@ namespace SOTS.NPCs.Constructs
             NPC.defense = 0;   
             NPC.knockBackResist = 0f;
             NPC.width = 58;
-            NPC.height = 58;
-			Main.npcFrameCount[NPC.type] = 1;   
+            NPC.height = 58;  
             NPC.value = 35075;
             NPC.npcSlots = 7f;
             NPC.boss = false;

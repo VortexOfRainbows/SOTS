@@ -55,7 +55,8 @@ namespace SOTS.NPCs
 					BuffID.OnFire
 				}
 			});
-		}
+            Main.npcFrameCount[NPC.type] = 1;
+        }
 		public override void SetDefaults()
 		{
             NPC.aiStyle =0; 
@@ -65,7 +66,6 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0f;
             NPC.width = 36;
             NPC.height = 46;
-			Main.npcFrameCount[NPC.type] = 1;  
             NPC.value = 275;
             NPC.npcSlots = 2.5f;
             NPC.HitSound = SoundID.NPCHit53;

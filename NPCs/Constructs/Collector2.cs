@@ -24,9 +24,10 @@ namespace SOTS.NPCs.Constructs
 			toPos.Y = reader.ReadSingle();
 		}
 		public override void SetStaticDefaults()
-		{
-			//mr steal yo kill is back!
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        {
+            Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true
 			};
@@ -41,7 +42,6 @@ namespace SOTS.NPCs.Constructs
 			NPC.knockBackResist = 0.1f;
 			NPC.width = 86;
 			NPC.height = 64;
-			Main.npcFrameCount[NPC.type] = 1;  
 			NPC.value = 0;
 			NPC.npcSlots = 3f;
 			NPC.noGravity = true;

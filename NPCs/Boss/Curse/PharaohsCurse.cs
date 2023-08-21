@@ -67,8 +67,8 @@ namespace SOTS.NPCs.Boss.Curse
 				PortraitPositionYOverride = 0f,
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
 			{
 				SpecificallyImmuneTo = new int[]
 				{
