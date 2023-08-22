@@ -73,11 +73,7 @@ namespace SOTS
 		/// </summary>
 		public static void SetResearchCost(this ModItem modItem, int amt)
 		{
-			SetResearchCost(modItem.Type, amt);
-		}
-		public static void SetResearchCost(int type, int amt)
-		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[type] = amt;
+			modItem.Item.ResearchUnlockCount = amt;
 		}
 		/// <summary>
 		/// Flips the void bar rectangles horizontally. Only runs if alternative void bar style is on
