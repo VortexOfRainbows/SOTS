@@ -34,14 +34,10 @@ Update Objectives:
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 5. Glow Nylon Whip
-
-Needed After Porting:
-1. Rework light-bringer's
-2. Test out pots item drops (in multiplayer)
  
 Daily Log:
 
-8/19/23 to 8/20/23
+8/19/23 to 8/21/23
 1. Attempted fixing various tile drop issues. They should be all fixed
 2. fixed door and chest localization
 3. Attempted fix at glowmoth not taking damage in certain multiplayer scenarios (should be fixed)

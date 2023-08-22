@@ -649,6 +649,21 @@ namespace SOTS
 			float AndGeneric = player.GetTotalAttackSpeed(damageClass);
 			return (int)(startingUseTime / (AndGeneric + ModPlayer(player).attackSpeedMod - 1));
 		}
+        public override void UpdateEquips()
+        {
+            int defenseToConvert = Player.statDefense;
+            if (defenseToConvert > 30)
+            {
+                defenseToConvert = 30;
+            }
+            previousDefense = defenseToConvert;
+            if (DevilRing)
+            {
+                Player.statDefense -= defenseToConvert / 3;
+                Player.GetDamage(DamageClass.Generic) += defenseToConvert * 0.01f;
+            }
+            DevilRing = false;
+        }
         public override void PostUpdateEquips()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
@@ -697,15 +712,6 @@ namespace SOTS
 			{
 				rippleTimer = 0;
 			}
-			if(DevilRing)
-				Player.GetDamage(DamageClass.Generic) += Player.statDefense * 0.01f;
-			previousDefense = Player.statDefense;
-			if (DevilRing)
-			{
-				Player.statDefense *= 0;
-				Player.statDefense += (int)Math.Sqrt(previousDefense);
-			}
-			DevilRing = false;
 			hasSoaringInsigniaFake = false;
 			if (!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia)
 			{

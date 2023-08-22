@@ -5974,11 +5974,12 @@ Mods: {
 			7: Increases max void by 40
 		}
 
-		DiamondRingText: Increases damage by {0}%
+		DiamondRingText: Increase damage based on defense, then decreases defense by a third of the damage buff
 		DiamondRingText2:
 			'''
 
-			Defense is set to {0}
+			Increases damage by {0}%
+			Decreases defense by {1}
 			'''
 
 		PrecariousClusterTextList: {

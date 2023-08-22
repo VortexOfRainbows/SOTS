@@ -57,8 +57,8 @@ namespace SOTS.Items.Gems
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 				{
 					int defenseStat = SOTSPlayer.ModPlayer(Main.LocalPlayer).previousDefense;
-					line.Text = Language.GetTextValue("Mods.SOTS.DiamondRingText", Convert.ToString(defenseStat));
-                    line.Text += Language.GetTextValue("Mods.SOTS.DiamondRingText2", Convert.ToString((int)Math.Sqrt(defenseStat)));
+					line.Text = Language.GetTextValue("Mods.SOTS.DiamondRingText");
+                    line.Text += Language.GetTextValue("Mods.SOTS.DiamondRingText2", Convert.ToString(defenseStat), Convert.ToString(defenseStat / 3));
 					return;
 				}
 			}
