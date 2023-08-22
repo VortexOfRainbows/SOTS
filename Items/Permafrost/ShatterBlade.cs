@@ -125,7 +125,7 @@ namespace SOTS.Items.Permafrost
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 circularSpeed = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(i * 90));
-					int calc = hit.Damage + modPlayer.bonusShardDamage;
+					int calc = hit.SourceDamage + modPlayer.bonusShardDamage;
 					if (calc <= 0) calc = 1;
 					Projectile.NewProjectile(player.GetSource_OnHit(target), player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), calc, 3f, player.whoAmI);
 				}

@@ -36,7 +36,7 @@ namespace SOTS.Items.AbandonedVillage
             {
                 float ToPlayer = (player.Center - target.Center).ToRotation();
                 Vector2 position = target.Hitbox.TopLeft() + EdgeOfRect(target.Hitbox, ToPlayer);
-                Projectile.NewProjectile(player.GetSource_OnHit(target), position, new Vector2(player.direction, 0), ModContent.ProjectileType<BloodSpark>(), (int)(hit.Damage * 0.8f), hit.Knockback, Main.myPlayer, (ToPlayer + MathHelper.PiOver2) * 180f / MathHelper.Pi, hit.Crit ? -1 : 0) ;
+                Projectile.NewProjectile(player.GetSource_OnHit(target), position, new Vector2(player.direction, 0), ModContent.ProjectileType<BloodSpark>(), (int)(hit.SourceDamage * 0.8f), hit.Knockback, Main.myPlayer, (ToPlayer + MathHelper.PiOver2) * 180f / MathHelper.Pi, hit.Crit ? -1 : 0) ;
             }
         }
         public override void AddRecipes()

@@ -68,7 +68,6 @@ Daily Log:
 	3. Adjusted formula for Destabilization -- no more double criting (more of a limitation with tmod)
 	4. Phase Assaulter now halves FINAL DAMAGE instead of SOURCE DAMAGE (nerf)
 	5. Armor penetration weapons are now less unique due to limitations... :(
-	6. A handful of item on hit effects erroneously us "hit.damage" instead of "hit.sourcedamage", double dipping with DEFENSE
 2. Certain on death and on hit effects that were previously projectile only now occur with melee hits
 3. Bone clapper requires skeletron to be killed to be bought instead of EOC
 

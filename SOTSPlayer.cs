@@ -1144,7 +1144,7 @@ namespace SOTS
 					nightmareArmCD = 360;
 					if (Main.myPlayer == Player.whoAmI)
 					{
-						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilGrowth>(), (int)(hit.Damage * 0.1f), 0, Player.whoAmI, 0, target.whoAmI);
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilGrowth>(), (int)(hit.SourceDamage * 0.1f), 0, Player.whoAmI, 0, target.whoAmI);
 					}
 				}
 			}
@@ -1193,7 +1193,7 @@ namespace SOTS
 					nightmareArmCD = 360;
 					if (Main.myPlayer == Player.whoAmI)
 					{
-						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilGrowth>(), (int)(hit.Damage * 0.1f), 0, Player.whoAmI, 0, target.whoAmI);
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<EvilGrowth>(), (int)(hit.SourceDamage * 0.1f), 0, Player.whoAmI, 0, target.whoAmI);
 					}
 				}
 			}
@@ -1394,7 +1394,7 @@ namespace SOTS
 				{
 					curseVisionCounter = -60;
 					if (Main.myPlayer == Player.whoAmI)
-						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<VisionFlare>(), (int)(hit.Damage * 1.4f), 0, Player.whoAmI);
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<VisionFlare>(), (int)(hit.SourceDamage * 1.4f), 0, Player.whoAmI);
 				}
 			}
 			if(hit.Crit)
@@ -1433,7 +1433,7 @@ namespace SOTS
 							for (int i = 0; i < numberProjectiles; i++)
 							{
 								Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
-								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), hit.Damage, 0, Player.whoAmI, 2);
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), hit.SourceDamage, 0, Player.whoAmI, 2);
 							}
 						}
 					}
@@ -1448,9 +1448,9 @@ namespace SOTS
 						if (Main.myPlayer == Player.whoAmI)
 						{
 							if (CritFrost)
-								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), hit.Damage * 2, 0, Player.whoAmI, 3);
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), hit.SourceDamage * 2, 0, Player.whoAmI, 3);
 							else
-								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), hit.Damage, 0, Player.whoAmI, 3);
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<IcePulseSummon>(), hit.SourceDamage, 0, Player.whoAmI, 3);
 						}
 					}
 				}
@@ -1465,10 +1465,10 @@ namespace SOTS
 						{
 							if (CritCurseFire && CritFire)
 							{
-								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), hit.Damage * 2, 0, Player.whoAmI, 3);
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), hit.SourceDamage * 2, 0, Player.whoAmI, 3);
 							}
 							else
-								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), hit.Damage, 0, Player.whoAmI, 3);
+								Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<SharangaBlastSummon>(), hit.SourceDamage, 0, Player.whoAmI, 3);
 						}
 					}
 				}
@@ -1479,15 +1479,15 @@ namespace SOTS
 				{
 					if (BlueFireOrange && BlueFire)
 					{
-						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.Damage * 0.7f), 0, Main.myPlayer, 2);
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.SourceDamage * 0.7f), 0, Main.myPlayer, 2);
 					}
 					else if (BlueFire)
 					{
-						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.Damage * 0.4f), 0, Main.myPlayer);
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.SourceDamage * 0.4f), 0, Main.myPlayer);
 					}
 					else if (BlueFireOrange)
 					{
-						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.Damage * 0.3f), 0, Main.myPlayer, 1);
+						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.SourceDamage * 0.3f), 0, Main.myPlayer, 1);
 					}
 				}
 				if (SadistRing)
