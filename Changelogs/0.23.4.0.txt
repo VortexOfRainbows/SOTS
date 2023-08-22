@@ -1,0 +1,16 @@
+Update 0.23.4.0
+
+Ported SOTS to 1.4.4.9!
+
+Changes:
+1. Assassination potion no longer has a flat damage threshold for execution=
+2. Bone clapper is sold by the Archaeologist after Skeletron instead of after EoC
+3. Phase Assaulter body segments now halve damage after defense instead of before defense (takes more damage now)
+4. Destabilization no longer allows critical strike double dipping
+5. Certain defense penetration weapons no longer ignore defense completely
+6. Boss Checklist progression adjusted to make more sense
+7. Light-Bringer's Ring (Diamond Ring) now has a limit to its effectiveness, and no longer decreases defense as much
+
+Fixes:
+1. Refracting Crystal Secret should now sync the hallway in multiplayer
+2. Glowmoth's invulnerability state should now sync in multiplayer
