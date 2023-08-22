@@ -217,7 +217,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		{
 			Player player = Main.player[NPC.target];
 			SOTSUtils.PlaySound(SoundID.Item119, (int)NPC.Center.X, (int)NPC.Center.Y);
-			if (Main.netMode != 1)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Vector2 vectorToPlayer = player.Center - NPC.Center;
 				vectorToPlayer = vectorToPlayer.SafeNormalize(Vector2.Zero) * -1200;
@@ -295,7 +295,7 @@ namespace SOTS.NPCs.Boss.Polaris
 				if(transition % 30 == 0)
 				{
 					int index = (int)(transition / 30);
-					if(Main.netMode != 1)
+					if(Main.netMode != NetmodeID.MultiplayerClient)
 						NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisSpike>(), 0, index, NPC.whoAmI);
 					SOTSUtils.PlaySound(SoundID.Item50, (int)(NPC.Center.X), (int)(NPC.Center.Y));
 				}
@@ -361,7 +361,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			}
 			if(AICycle2 == 900)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 					NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PolarisLaser>(), 0, 0, NPC.whoAmI);
 			}
 			if(AICycle2 == 1200)

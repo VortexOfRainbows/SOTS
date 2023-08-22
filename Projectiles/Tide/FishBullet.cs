@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Tide
 							Vector2 circular = new Vector2(8 + 4 * j, 0).RotatedBy(MathHelper.ToRadians(i));
 							circular.X *= 0.5f;
 							circular = circular.RotatedBy(Projectile.velocity.ToRotation());
-							Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (28 + j * 12) + circular - new Vector2(5), 0, 0, 172);
+							Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (28 + j * 12) + circular - new Vector2(5), 0, 0, DustID.DungeonWater);
 							dust.scale = dust.scale * 0.7f + 1.1f - j * 0.2f;
 							dust.noGravity = true;
 							dust.velocity = Vector2.Zero + 0.6f * circular;

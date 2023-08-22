@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Pyramid
 			if (Projectile.penetrate <= 2)
 				Projectile.friendly = false;
 			lockedVelo = true;
-			if (Main.netMode != 1)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Projectile.netUpdate = true;
 			}
@@ -141,7 +141,7 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				if (target2 != -1)
 				{
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						Projectile.netUpdate = true;
 					}
@@ -189,7 +189,7 @@ namespace SOTS.Projectiles.Pyramid
 				runOnce = false;
 				Projectile.velocity = Projectile.velocity * -2f;
 				initialSpeed = Projectile.velocity.Length();
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					Projectile.netUpdate = true;
 				}

@@ -108,7 +108,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != 1 && Main.rand.NextBool(20))
+			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(20))
 			{
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.TileFrameX / 18) % 5;
@@ -327,7 +327,7 @@ namespace SOTS.Items.Pyramid
 				if (total >= 6)
 				{
 					int range = 2;
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						for (int x = -range; x <= range; x++)
 						{

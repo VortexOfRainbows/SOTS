@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -52,7 +53,7 @@ namespace SOTS.Mounts
 			MountData.swimFrameCount = MountData.inAirFrameCount;
 			MountData.swimFrameDelay = MountData.inAirFrameDelay;
 			MountData.swimFrameStart = MountData.inAirFrameStart;
-			if (Main.netMode != 2)
+			if (Main.netMode != NetmodeID.Server)
 			{
 				MountData.textureWidth = MountData.backTexture.Width();
 				MountData.textureHeight = MountData.backTexture.Height();

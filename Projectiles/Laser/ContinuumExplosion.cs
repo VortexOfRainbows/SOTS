@@ -1,10 +1,5 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -12,9 +7,7 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Laser
 {    
     public class ContinuumExplosion : ModProjectile 
-    {	int expand = -1;
-		            
-		
+    {
 		public override void SetStaticDefaults()
 		{
 			// DisplayName.SetDefault("Collapse Laser");
@@ -43,7 +36,7 @@ namespace SOTS.Projectiles.Laser
 				{
 					Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i + Projectile.ai[1]));
 					
-					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 66);
+					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowTorch);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = circularLocation * 0.35f;
 					

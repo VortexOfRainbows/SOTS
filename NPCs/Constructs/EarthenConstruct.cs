@@ -317,7 +317,7 @@ namespace SOTS.NPCs.Constructs
                 NPC.active = false;
                 return false;
             }
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (NPC.ai[0] == 0)
                 {
@@ -513,7 +513,7 @@ namespace SOTS.NPCs.Constructs
         {
             for (int k = 0; k < 20; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)HitDirection, -2.5f, 0, default(Color), 0.7f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)HitDirection, -2.5f, 0, default(Color), 0.7f);
             }
             Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
             Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore2"), 1f);

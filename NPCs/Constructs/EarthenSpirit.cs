@@ -201,7 +201,7 @@ namespace SOTS.NPCs.Constructs
 						NPC.alpha = 255;
 						reticleAlpha += 0.007f;
 
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 							NPC.position = reticlePos - new Vector2(NPC.width / 2, NPC.height / 2);
 
 						if (reticleAlpha >= 1)
@@ -215,13 +215,13 @@ namespace SOTS.NPCs.Constructs
 							{
 								Vector2 circularLocation = new Vector2(16 - NPC.width, 0).RotatedBy(MathHelper.ToRadians(i));
 
-								int num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, 222);
+								int num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, DustID.FireworkFountain_Yellow);
 								Main.dust[num1].noGravity = true;
 								Main.dust[num1].scale = 1.2f;
 								Main.dust[num1].velocity = circularLocation * 0.25f + new Vector2(Main.rand.Next(-20,21), Main.rand.Next(-20, 21)) * 0.1f;
 
 
-								num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, 222);
+								num1 = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 4), 4, 4, DustID.FireworkFountain_Yellow);
 								Main.dust[num1].noGravity = true;
 								Main.dust[num1].scale = 1.5f;
 								Main.dust[num1].velocity = circularLocation * 0.45f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.2f;
@@ -288,7 +288,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(counter >= 1200)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.netUpdate = true;
 				}
@@ -323,7 +323,7 @@ namespace SOTS.NPCs.Constructs
 				if (Main.netMode != NetmodeID.Server)
 					for (int i = 0; i < 50; i++)
 					{
-						int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
+						int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 						Dust dust4 = Main.dust[dust3];
 						dust4.velocity *= 2.5f;
 						dust4.color = new Color(255, 191, 0);

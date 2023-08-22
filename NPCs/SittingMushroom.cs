@@ -38,7 +38,7 @@ namespace SOTS.NPCs
 			NPC.velocity.X *= 0.9f;
 			if(Main.rand.NextBool(40))
 			{
-				Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), 28, 10, 41, 0, -2f, 250, new Color(100, 100, 100, 250), 0.8f);
+				Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), 28, 10, DustID.GlowingMushroom, 0, -2f, 250, new Color(100, 100, 100, 250), 0.8f);
 			}
 			NPC.ai[0]++;
 			if(NPC.ai[0] >= 180)
@@ -131,7 +131,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while ((double)num < hit.Damage / (double)NPC.lifeMax * 20.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 41, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
 					num++;
 				}
 			}
@@ -139,7 +139,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 10; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 41, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
 				}
 				SOTSUtils.PlaySound(SoundID.Item34, NPC.Center);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore1"), 1f);

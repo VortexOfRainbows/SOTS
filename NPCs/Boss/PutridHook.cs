@@ -175,7 +175,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void OnKill()
         {
-			if(Main.netMode != 1)
+			if(Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				int num1 = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<HookTurret>(), 0, NPC.ai[0], NPC.ai[1], NPC.ai[2], NPC.ai[3]);	
 				NPC newNpc = Main.npc[num1];
@@ -193,7 +193,7 @@ namespace SOTS.NPCs.Boss
 			if (runOnce)
             {
 				randMult = Main.rand.NextFloat(0.8f, 1.2f) * (Main.rand.Next(2) * 2 - 1);
-				if(Main.netMode != 1)
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 					NPC.netUpdate = true;
 				for (int i = 0; i < 12; i++)
                 {
@@ -253,7 +253,7 @@ namespace SOTS.NPCs.Boss
 			rotationArea += putridPinky.Center + new Vector2(0, 3.5f);
 			NPC.Center = rotationArea;
 			counter++;
-			if(Main.netMode != 1 && counter % 15 == 0)
+			if(Main.netMode != NetmodeID.MultiplayerClient && counter % 15 == 0)
 			{
 				NPC.netUpdate = true;
 			}

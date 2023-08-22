@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Inferno
 				for(int i = 0; i < 360; i += 10)
 				{
 					Vector2 circularLocation = new Vector2(-14, 0).RotatedBy(MathHelper.ToRadians(i));
-					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 6);
+					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.Torch);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].scale = 1.75f;
 					Main.dust[num1].velocity = circularLocation * 0.35f;

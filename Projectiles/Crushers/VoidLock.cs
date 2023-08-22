@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Crushers
 			
 			Player player  = Main.player[Projectile.owner];
 			
-			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 62);
+			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.PurpleTorch);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 			Main.dust[num1].scale = 1.5f;
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Crushers
 			}
 			for(int i = 5; i > 0; i --)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 62);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.PurpleTorch);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 1.5f;
 				Main.dust[num1].velocity *= 1.5f;

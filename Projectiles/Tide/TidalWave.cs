@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Tide
 {    
@@ -47,7 +48,7 @@ namespace SOTS.Projectiles.Tide
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 267);
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.RainbowMk2);
 					dust.color = new Color(64, 72, 178);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;

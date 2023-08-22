@@ -25,7 +25,7 @@ namespace SOTS.Items.Slime
             Item.noMelee = true;
             Item.knockBack = 0;  
             Item.value = Item.sellPrice(0, 2, 0, 0);
-            Item.rare = 4;  
+            Item.rare = ItemRarityID.LightRed;  
             Item.UseSound = SoundID.Item44; 
             Item.autoReuse = true;   
             Item.shoot = ModContent.ProjectileType<PinkyTurret>();  

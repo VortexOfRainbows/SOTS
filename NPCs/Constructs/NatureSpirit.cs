@@ -112,7 +112,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(phase == 2)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.netUpdate = true;
 				}
@@ -132,7 +132,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(counter >= 1020)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.netUpdate = true;
 				}
@@ -141,7 +141,7 @@ namespace SOTS.NPCs.Constructs
 				NPC.velocity.Y -= 0.014f;
 				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(64, 178, 77);
 			dust.noGravity = true;
@@ -166,7 +166,7 @@ namespace SOTS.NPCs.Constructs
 				if (Main.netMode != NetmodeID.Server)
 					for (int i = 0; i < 50; i++)
 					{
-						int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
+						int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 						Dust dust4 = Main.dust[dust3];
 						dust4.velocity *= 2.5f;
 						dust4.color = new Color(64, 178, 77);

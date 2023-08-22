@@ -37,7 +37,7 @@ namespace SOTS.Void
 				CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(110, 90, 125, 255), string.Concat((int)Projectile.ai[1]), false, dot);
 				for (int i = 0; i < (int)(2 * Math.Sqrt((int)Projectile.ai[1])); i++)
 				{
-					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 37);
+					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Obsidian);
 					dust.noGravity = true;
 					dust.scale *= 1.5f;
 					dust.velocity *= 1.2f;

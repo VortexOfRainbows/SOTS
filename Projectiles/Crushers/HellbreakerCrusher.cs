@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Crushers
 {    
@@ -34,7 +35,7 @@ namespace SOTS.Projectiles.Crushers
 				arm += player.Center;
 				if (Main.rand.NextBool(3))
 				{
-					int num1 = Dust.NewDust(new Vector2(arm.X - Projectile.width / 2, arm.Y - Projectile.height / 2) - new Vector2(5), Projectile.width, Projectile.height, 6);
+					int num1 = Dust.NewDust(new Vector2(arm.X - Projectile.width / 2, arm.Y - Projectile.height / 2) - new Vector2(5), Projectile.width, Projectile.height, DustID.Torch);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].scale *= 2.75f;
 					Main.dust[num1].velocity *= 0.35f;
@@ -42,7 +43,7 @@ namespace SOTS.Projectiles.Crushers
 			}
 			if (Main.rand.NextBool(3))
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, 6);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.Torch);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale *= 2.75f;
 				Main.dust[num1].velocity *= 0.15f;

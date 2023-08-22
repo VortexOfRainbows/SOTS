@@ -201,7 +201,7 @@ namespace SOTS.NPCs
 		bool runOnce2 = true;
 		public override bool PreAI()
 		{
-			if(runOnce2 && Main.netMode != 1)
+			if(runOnce2 && Main.netMode != NetmodeID.MultiplayerClient)
             {
 				randMod = Main.rand.NextFloat(0.85f, 1.125f);
 				runOnce2 = false;

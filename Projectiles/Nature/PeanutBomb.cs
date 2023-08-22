@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Nature
 			}
 			for (int i = 0; i < 5 + RandMod; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, 7);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.WoodFurniture);
 				Main.dust[num1].velocity *= 1.4f * (0.2f + 0.6f * Projectile.scale);
 				Main.dust[num1].velocity.Y -= 1.5f;
 				Main.dust[num1].scale = Projectile.scale * 0.8f + 0.5f;
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Nature
 				for (int i = 0; i < 360; i += 15)
 				{
 					Vector2 circularLocation = new Vector2(-Main.rand.NextFloat(8, 14), 0).RotatedBy(MathHelper.ToRadians(i));
-					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 6);
+					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.Torch);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].scale *= 1.75f;
 					Main.dust[num1].velocity = circularLocation * 0.35f;

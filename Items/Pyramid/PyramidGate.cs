@@ -196,7 +196,7 @@ namespace SOTS.Items.Pyramid
 				Main.dust[num1].velocity.X *= 1.5f;
 				Main.dust[num1].scale = 1.15f; 
 
-				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
+				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, DustID.FireflyHit);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 1.15f;
 				Main.dust[num1].velocity += direction;
@@ -204,7 +204,7 @@ namespace SOTS.Items.Pyramid
 				Main.dust[num1].velocity.X *= 2.0f;
 				Main.dust[num1].scale = 1.2f;
 
-				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 91);
+				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, DustID.GemDiamond);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.9f;
 				Main.dust[num1].velocity += direction;
@@ -212,7 +212,7 @@ namespace SOTS.Items.Pyramid
 				Main.dust[num1].velocity.X *= 1.5f;
 				Main.dust[num1].scale = 1.65f;
 
-				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
+				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, DustID.FireflyHit);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.75f;
 				Main.dust[num1].velocity += direction;

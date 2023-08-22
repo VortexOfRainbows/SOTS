@@ -2749,20 +2749,20 @@ namespace SOTS.WorldgenHelpers
 					Tile tile3 = Framing.GetTileSafely(i + 2, j);
 					if (SkytileValid(tile, mod) && WorldGen.InWorld(i, j, 20))
 					{
-						if (Main.rand.Next(ratePots) == 0 && Empty(i, j - 2, 2, 2) && SkytileValid(tile2, mod))
+						if (Main.rand.NextBool(ratePots)&& Empty(i, j - 2, 2, 2) && SkytileValid(tile2, mod))
 						{
 							WorldGen.PlaceTile(i, j - 1, (ushort)ModContent.TileType<SkyPots>(), true, true, -1, Main.rand.Next(9)); //pots
 						}
-						else if (Main.rand.Next(rateDecor) == 0 && Empty(i - 1, j - 2, 3, 2))
+						else if (Main.rand.NextBool(rateDecor)&& Empty(i - 1, j - 2, 3, 2))
 						{
 							tile2 = Framing.GetTileSafely(i - 2, j);
 							tile3 = Framing.GetTileSafely(i + 2, j);
 							WorldGen.PlaceTile(i, j - 1, (ushort)ModContent.TileType<HardlightTableTile>(), true, true, -1, 0);
-							if (Main.rand.Next(2) == 0 && SkytileValid(tile2, mod) && Empty(i - 2, j - 2, 1, 2))
+							if (Main.rand.NextBool(2) && SkytileValid(tile2, mod) && Empty(i - 2, j - 2, 1, 2))
 							{
 								WorldGen.PlaceTile(i - 2, j - 1, (ushort)ModContent.TileType<HardlightChairTile>(), true, true, -1, 1);
 							}
-							if (Main.rand.Next(2) == 0 && SkytileValid(tile2, mod) && Empty(i + 2, j - 2, 1, 2))
+							if (Main.rand.NextBool(2) && SkytileValid(tile2, mod) && Empty(i + 2, j - 2, 1, 2))
 							{
 								WorldGen.PlaceTile(i + 2, j - 1, (ushort)ModContent.TileType<HardlightChairTile>(), true, true, -1, 0);
 							}
@@ -2869,7 +2869,7 @@ namespace SOTS.WorldgenHelpers
 			for (int r = 0; r < 30; r++)
 			{
 				tileLocation = new Vector2(i, j);
-				if (Main.rand.Next(2) == 0)
+				if (Main.rand.NextBool(2))
 				{
 					tileLocation.X += Main.rand.Next(300);
 				}
@@ -2878,7 +2878,7 @@ namespace SOTS.WorldgenHelpers
 					tileLocation.X -= Main.rand.Next(300);
 				}
 
-				if (Main.rand.Next(2) == 0)
+				if (Main.rand.NextBool(2))
 				{
 					tileLocation.Y += Main.rand.Next(50);
 				}
@@ -2891,7 +2891,7 @@ namespace SOTS.WorldgenHelpers
 				while (!SOTSWorldgenHelper.GenerateArtifactIslands((int)tileLocation.X, (int)tileLocation.Y, r % 10, mod))
 				{
 					tileLocation = new Vector2(i, j);
-					if (Main.rand.Next(2) == 0)
+					if (Main.rand.NextBool(2))
 					{
 						tileLocation.X += Main.rand.Next(300 + extend);
 					}
@@ -2900,7 +2900,7 @@ namespace SOTS.WorldgenHelpers
 						tileLocation.X -= Main.rand.Next(300 + extend);
 					}
 
-					if (Main.rand.Next(2) == 0)
+					if (Main.rand.NextBool(2))
 					{
 						tileLocation.Y += Main.rand.Next(50);
 					}
@@ -4757,7 +4757,7 @@ namespace SOTS.WorldgenHelpers
 											WorldGen.SolidTile(i - 1, j + 1) && WorldGen.SolidTile(i + 1, j) &&
 											!Main.tile[i + 1, j - 1].HasTile)
 										{
-											if (WorldGen.genRand.Next(2) == 0)
+											if (WorldGen.genRand.NextBool(2))
 											{
 												WorldGen.SlopeTile(i, j, 2);
 											}
@@ -4771,7 +4771,7 @@ namespace SOTS.WorldgenHelpers
 												 WorldGen.SolidTile(i + 1, j + 1) && WorldGen.SolidTile(i - 1, j) &&
 												 !Main.tile[i - 1, j - 1].HasTile)
 										{
-											if (WorldGen.genRand.Next(2) == 0)
+											if (WorldGen.genRand.NextBool(2))
 											{
 												WorldGen.SlopeTile(i, j, 1);
 											}
@@ -4809,11 +4809,11 @@ namespace SOTS.WorldgenHelpers
 													 !Main.tile[i - 1, j].HasTile &&
 													 WorldGen.SolidTile(i + 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
-												if (WorldGen.genRand.Next(5) == 0)
+												if (WorldGen.genRand.NextBool(5))
 												{
 													DespawnTile(i, j);
 												}
-												else if (WorldGen.genRand.Next(5) == 0)
+												else if (WorldGen.genRand.NextBool(5))
 												{
 													WorldGen.PoundTile(i, j);
 												}
@@ -4826,11 +4826,11 @@ namespace SOTS.WorldgenHelpers
 													 !Main.tile[i + 1, j].HasTile &&
 													 WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
-												if (WorldGen.genRand.Next(5) == 0)
+												if (WorldGen.genRand.NextBool(5))
 												{
 													DespawnTile(i, j);
 												}
-												else if (WorldGen.genRand.Next(5) == 0)
+												else if (WorldGen.genRand.NextBool(5))
 												{
 													WorldGen.PoundTile(i, j);
 												}
@@ -4859,7 +4859,7 @@ namespace SOTS.WorldgenHelpers
 									!Main.tile[i + 1, j - 1].HasTile)
 								{
 									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
-									if (WorldGen.genRand.Next(2) == 0)
+									if (WorldGen.genRand.NextBool(2))
 									{
 										WorldGen.SlopeTile(i, j, 2);
 									}
@@ -4876,7 +4876,7 @@ namespace SOTS.WorldgenHelpers
 									!Main.tile[i - 1, j - 1].HasTile)
 								{
 									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
-									if (WorldGen.genRand.Next(2) == 0)
+									if (WorldGen.genRand.NextBool(2))
 									{
 										WorldGen.SlopeTile(i, j, 1);
 									}
@@ -4887,7 +4887,7 @@ namespace SOTS.WorldgenHelpers
 								}
 							}
 						}
-						else if (!Main.tile[i, j + 1].HasTile && WorldGen.genRand.Next(2) == 0 &&
+						else if (!Main.tile[i, j + 1].HasTile && WorldGen.genRand.NextBool(2) &&
 								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].IsHalfBlock &&
 								 !Main.tile[i + 1, j].IsHalfBlock &&
 								 Main.tile[i - 1, j].Slope == 0 &&
@@ -4916,7 +4916,7 @@ namespace SOTS.WorldgenHelpers
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
+					bool canRun = WorldGen.genRand.NextBool(2) && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
 					if (canRun && ((whitelist == Main.tile[i, j].TileType) ||
 						(whitelist == -1 && Main.tile[i, j].TileType != 137 &&
 						Main.tile[i, j].TileType != 48 &&

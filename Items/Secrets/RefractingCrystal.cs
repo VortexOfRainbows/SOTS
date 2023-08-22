@@ -154,7 +154,7 @@ namespace SOTS.Items.Secrets
 										if(h == 2 && k == 1)
 										{
 											Vector2 middlePos = new Vector2(i2 * 16 + 8, j2 * 16 + 8);
-											if (Main.netMode != 1)
+											if (Main.netMode != NetmodeID.MultiplayerClient)
 											{
 												Projectile.NewProjectile(Item.GetSource_Misc("SOTS:StrangeKeystoneRefractingCrystalInteraction"), middlePos, Vector2.Zero, ModContent.ProjectileType<StrangeKeystoneExplosion>(), 0, 0, Main.myPlayer);
 												int item = Item.NewItem(Item.GetSource_Misc("SOTS:StrangeKeystoneRefractingCrystalInteraction"), (int)middlePos.X, (int)middlePos.Y, 0, 0, ModContent.ItemType<PhotonGeyser>(), 1);
@@ -224,7 +224,7 @@ namespace SOTS.Items.Secrets
 			if (runOnce)
 			{
 				runOnce = false;
-				if (Main.netMode != 2)
+				if (Main.netMode != NetmodeID.Server)
 				{
 					SOTSWorld.SecretFoundMusicTimer = 720;
 				}

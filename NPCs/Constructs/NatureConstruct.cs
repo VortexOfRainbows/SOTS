@@ -87,7 +87,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				for (int k = 0; k < 20; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				for(int i = 1; i < 8; i++)
 					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/NatureConstructGore" + i), 1f);
@@ -123,7 +123,7 @@ namespace SOTS.NPCs.Constructs
 			if(delay <= (Main.expertMode ? 30 : 0) && !canSpell)
 			{
 				delay = 270 + Main.rand.Next(120);
-				if(Main.netMode != 1)
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 					NPC.netUpdate = true;
 				canSpell = true;
 			}
@@ -136,7 +136,7 @@ namespace SOTS.NPCs.Constructs
 					Vector2 circular2 = new Vector2(40, 0).RotatedBy(dir);
 					for (int i = 0; i < 20; i++)
 					{
-						int dust3 = Dust.NewDust(NPC.Center + circular2 * 0.6f, 0, 0, 267);
+						int dust3 = Dust.NewDust(NPC.Center + circular2 * 0.6f, 0, 0, DustID.RainbowMk2);
 						Dust dust4 = Main.dust[dust3];
 						dust4.velocity *= 1.2f;
 						dust4.velocity += circular2 * Main.rand.NextFloat(0.1f, 0.2f);
@@ -145,7 +145,7 @@ namespace SOTS.NPCs.Constructs
 						dust4.fadeIn = 0.1f;
 						dust4.scale *= 2.0f;
 					}
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						int damage = NPC.GetBaseDamage() / 2;
 						for (int i = 0; i < 5; i++)

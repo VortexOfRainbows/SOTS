@@ -297,7 +297,7 @@ namespace SOTS.NPCs.Phase
 					{
 						if (Main.rand.NextBool(3))
 						{
-							Dust.NewDust(trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
+							Dust.NewDust(trailPos[i] - new Vector2(8, 8), 8, 8, DustID.PinkTorch, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 						}
 					}
 				}
@@ -305,7 +305,7 @@ namespace SOTS.NPCs.Phase
 				{
 					if (k % 4 == 0)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkTorch, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 					}
 					if (Main.rand.NextBool(3))
 						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Gold, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);

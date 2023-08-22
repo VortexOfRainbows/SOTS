@@ -4,7 +4,6 @@ using SOTS.Dusts;
 using SOTS.Items.Furniture.AncientGold;
 using SOTS.Items.Potions;
 using SOTS.Items.Pyramid;
-using SOTS.Items.Pyramid;
 using SOTS.NPCs;
 using System;
 using System.Collections.Generic;

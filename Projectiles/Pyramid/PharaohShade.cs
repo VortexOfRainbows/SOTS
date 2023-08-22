@@ -120,13 +120,13 @@ namespace SOTS.Projectiles.Pyramid
                 }
             }
         }
-        Vector2 oldPos;
+        Vector2 oldPos = Vector2.Zero;
         Texture2D TheShadow;
         public override bool PreDraw(ref Color lightColor)
         {
             if (!Projectile.active || Main.LocalPlayer.Distance(Projectile.Center) > 3200)
                 return false;
-            if(oldPos == null)
+            if(oldPos == Vector2.Zero)
             {
                 oldPos = Main.LocalPlayer.Center - Main.screenPosition;
             }

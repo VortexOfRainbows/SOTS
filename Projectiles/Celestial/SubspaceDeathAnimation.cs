@@ -264,7 +264,7 @@ namespace SOTS.Projectiles.Celestial
 						SOTSUtils.PlaySound(SoundID.NPCDeath39, (int)atLoc.X, (int)atLoc.Y, 0.95f, -0.3f);
 					else
 						SOTSUtils.PlaySound(SoundID.Item62, (int)atLoc.X, (int)atLoc.Y, 1.25f, -0.3f);
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
 						Projectile.NewProjectile(Projectile.GetSource_FromThis(), atLoc, new Vector2(0, -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer);
 						Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));

@@ -100,10 +100,10 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 				voidPlayer.lootingSouls++;
 				voidPlayer.SendClientChanges(voidPlayer);
 				var index = CombatText.NewText(Projectile.Hitbox, ColorHelpers.soulLootingColor.MultiplyRGB(Color.White), 1);
-				if (Main.netMode == 2 && index != 100)
+				if (Main.netMode == NetmodeID.Server && index != 100)
 				{
 					var combatText = Main.combatText[index];
-					NetMessage.SendData(81, -1, -1, null, (int)combatText.color.PackedValue, combatText.position.X, combatText.position.Y, (float)1, 0, 0, 0);
+					NetMessage.SendData(MessageID.CombatTextInt, -1, -1, null, (int)combatText.color.PackedValue, combatText.position.X, combatText.position.Y, (float)1, 0, 0, 0);
 				}
 				particlesR = 20;
 			}

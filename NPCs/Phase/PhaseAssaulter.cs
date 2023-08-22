@@ -528,14 +528,14 @@ namespace SOTS.NPCs.Phase
             }
             else
                 NPC.dontTakeDamage = false;
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!Main.npc[(int)NPC.ai[1]].active)
                 {
                     NPC.life = 0;
                     NPC.HitEffect(0, 10.0);
                     NPC.active = false;
-                    NetMessage.SendData(28, -1, -1, null, NPC.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
                 }
             }
             NPC.alpha = Main.npc[(int)NPC.ai[1]].alpha;

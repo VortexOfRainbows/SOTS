@@ -36,7 +36,7 @@ namespace SOTS.NPCs
 			{
 				for (var i = 0; i < 30; ++i)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 53, 2.5f * (float)hit.HitDirection, -2.5f, 0, new Color(), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silt, 2.5f * (float)hit.HitDirection, -2.5f, 0, new Color(), 1f);
 				}
 				NPC.DeathGore("Gores/GoblinEskimoGore1");
 				NPC.DeathGore("Gores/GoblinEskimoGore2");
@@ -48,7 +48,7 @@ namespace SOTS.NPCs
 			{
 				for (int i = 0; i < hit.Damage / (float)NPC.lifeMax * 50.0; i++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 53, (float)hit.HitDirection, -1f, 0, new Color(), 0.8f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silt, (float)hit.HitDirection, -1f, 0, new Color(), 0.8f);
 				}
 			}
 		}

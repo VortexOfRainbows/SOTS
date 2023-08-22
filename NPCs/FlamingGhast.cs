@@ -83,7 +83,7 @@ namespace SOTS.NPCs
 			/*if ((int)ai1 % 600 == 480 && (lineOfSight || length <= 320))
 			{
 				//Main.NewText("bruh");
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 					for (int i = 0; i < 8; i ++)
 					{
 						Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, i * 45f, npc.whoAmI);

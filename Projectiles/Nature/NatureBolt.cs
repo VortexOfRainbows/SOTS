@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.velocity *= 0.97f;
 			Projectile.rotation += 0.3f;
 			Player player = Main.player[(int)Projectile.ai[1]];
-			if(Projectile.ai[0] > 0 && Main.netMode != 1)
+			if(Projectile.ai[0] > 0 && Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Vector2 targetPos = new Vector2(Projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
 				Projectile.ai[0] = 0;

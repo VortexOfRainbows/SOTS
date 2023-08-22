@@ -84,7 +84,7 @@ namespace SOTS.NPCs
 		bool fallen = false;
 		public override bool PreAI()
 		{
-			if(runOnce && Main.netMode != 1)
+			if(runOnce && Main.netMode != NetmodeID.MultiplayerClient)
             {
 				NPC.frame.Y = Main.rand.Next(3) * 26;
 				NPC.netUpdate = true;

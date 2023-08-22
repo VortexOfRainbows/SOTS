@@ -192,7 +192,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 			else if (counter >= -2)
 			{
-				if (Main.netMode != 1 || Main.myPlayer == Projectile.owner)
+				if (Main.netMode != NetmodeID.MultiplayerClient || Main.myPlayer == Projectile.owner)
 				{
 					Projectile.ai[1] = Main.rand.Next(-45, 46);
 					Projectile.netUpdate = true;

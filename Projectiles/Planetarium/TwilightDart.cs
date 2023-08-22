@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Planetarium
 			{
 				Vector2 newVelocity = new Vector2(9.5f, 0).RotatedBy(Projectile.rotation - MathHelper.ToRadians(90));
 				Projectile.velocity = newVelocity;
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					Projectile.netUpdate = true;
 				}

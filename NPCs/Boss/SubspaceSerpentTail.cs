@@ -92,14 +92,14 @@ namespace SOTS.NPCs.Boss
             if (NPC.target < 0 || NPC.target == byte.MaxValue || Main.player[NPC.target].dead)
                 NPC.TargetClosest(true);
  
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!Main.npc[(int)NPC.ai[1]].active)
                 {
                     NPC.life = 0;
                     NPC.HitEffect(0, 10.0);
                     NPC.active = false;
-                    NetMessage.SendData(28, -1, -1, null, NPC.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
                 }
             }
  
@@ -118,7 +118,7 @@ namespace SOTS.NPCs.Boss
                 NPC.position.Y = NPC.position.Y + posY;
             }
             cataloguePos();
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.netUpdate = true;
             }
@@ -221,7 +221,6 @@ namespace SOTS.NPCs.Boss
             }
         }
         int counter = 0;
-        float ai1 = 0;
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
             return false;       //this make that the npc does not have a health bar

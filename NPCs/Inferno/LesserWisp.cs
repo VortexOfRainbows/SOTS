@@ -115,7 +115,7 @@ namespace SOTS.NPCs.Inferno
         {
 			if(NPC.ai[0] == 0)
             {
-				if(Main.netMode != 1)
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.ai[1] = -240;
 					if (Main.rand.NextBool(100))
@@ -158,7 +158,7 @@ namespace SOTS.NPCs.Inferno
 				Color color = new Color(155, 69, 0, 0);
 				if (sans)
 					color = new Color(80, 150, 200, 0);
-				int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y) - new Vector2(5), NPC.width, NPC.height, 267);
+				int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y) - new Vector2(5), NPC.width, NPC.height, DustID.RainbowMk2);
 				Dust dust = Main.dust[dust2];
 				dust.color = color;
 				dust.noGravity = true;
@@ -234,7 +234,7 @@ namespace SOTS.NPCs.Inferno
 				NPC.velocity *= chargeMult;
 				if (NPC.ai[1] == 40 || (sans && NPC.ai[1] > 40 && NPC.ai[1] % 8 == 0))
                 {
-					if(Main.netMode != 1)
+					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						toPlayer = player.Center - NPC.Center;
 						toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
@@ -284,7 +284,7 @@ namespace SOTS.NPCs.Inferno
 						NPC.ai[1] = -120;
 					else
 						NPC.ai[1] = -(Main.rand.Next(35, 80 + 20 * total) + total * 10);
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 						NPC.netUpdate = true;
 				}
             }

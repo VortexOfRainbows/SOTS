@@ -74,34 +74,34 @@ namespace SOTS.Projectiles.Base
 		{
 			if((int)type == 0) //platinum staff
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 16);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.Cloud);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
 			if((int)type == 1 || (int)type == -1) //crimson heal
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 60);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.RedTorch);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				Main.dust[num1].scale = 1.5f;
 			}
 			if((int)type == 2) //corruption void heal
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 62);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.PurpleTorch);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				Main.dust[num1].scale = 1.5f;
 			}
 			if((int)type == 3) //corruption mana heal
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 15);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.MagicMirror);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				Main.dust[num1].scale = 1.5f;
 			}
 			if((int)type == 4) //ice
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 67);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.IceRod);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				if(Projectile.timeLeft % 12 == 0)
@@ -111,13 +111,13 @@ namespace SOTS.Projectiles.Base
 			}
 			if((int)type == 5) //Hungry Hunter / default
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 37);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.Obsidian);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
 			if((int)type == 6) //Clover Charm
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, 2);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.Grass);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
@@ -188,7 +188,7 @@ namespace SOTS.Projectiles.Base
 				for(int i = 0; i < 360; i += 30)
 				{
 					Vector2 circularLocation = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(i));
-					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.IceRod);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = -Projectile.velocity;
 				}
@@ -208,7 +208,7 @@ namespace SOTS.Projectiles.Base
 					for (int i = 0; i < 40; i++)
 					{
 						Vector2 circularLocation = new Vector2(Main.rand.NextFloat(6f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 60);
+						int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, DustID.RedTorch);
 						Main.dust[dust].velocity = circularLocation;
 						Main.dust[dust].scale *= 1.5f;
 						Main.dust[dust].noGravity = true;

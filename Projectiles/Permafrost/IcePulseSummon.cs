@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Permafrost
 				{
 					Vector2 circularLocation = new Vector2(-14, 0).RotatedBy(MathHelper.ToRadians(i));
 					
-					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.IceRod);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].scale = 1.75f;
 					Main.dust[num1].velocity = circularLocation * 0.35f;

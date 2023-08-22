@@ -98,7 +98,7 @@ namespace SOTS.NPCs.Constructs
 									Vector2 circleGen = new Vector2(spread, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[2] * 2.0f));
 									Vector2 velo = projectileVelo.RotatedBy(MathHelper.ToRadians(circleGen.X - (i * 2 - 1) * 11.5f));
 									float speed = 7f;
-									if (Main.netMode != 1)
+									if (Main.netMode != NetmodeID.MultiplayerClient)
 									{
 										int temp = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velo * speed, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
 										last = temp;
@@ -129,7 +129,7 @@ namespace SOTS.NPCs.Constructs
 					}
 					else
 					{
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 							NPC.netUpdate = true;
 						NPC.ai[0] += Main.rand.Next(180);
 						NPC.ai[1] = 0;
@@ -161,7 +161,7 @@ namespace SOTS.NPCs.Constructs
 							{
 								Vector2 velo = projectileVelo.RotatedBy(MathHelper.ToRadians((i * 2 - 1) * -11.5f));
 								float speed2 = 5.7f;
-								if (Main.netMode != 1)
+								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int temp = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velo * speed2, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
 									last = temp;
@@ -170,7 +170,7 @@ namespace SOTS.NPCs.Constructs
 						}
 						else if(NPC.ai[2] > 600) //6 * 72
 						{
-							if (Main.netMode != 1)
+							if (Main.netMode != NetmodeID.MultiplayerClient)
 								NPC.netUpdate = true;
 							NPC.ai[0] += Main.rand.Next(180);
 							NPC.ai[1] = 0;
@@ -197,7 +197,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if (phase == 2)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 					NPC.netUpdate = true;
 				direction = Main.rand.Next(2) * 2 - 1;
 				NPC.dontTakeDamage = false;
@@ -218,7 +218,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(counter >= 1440)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.netUpdate = true;
 				}
@@ -227,7 +227,7 @@ namespace SOTS.NPCs.Constructs
 				NPC.velocity.Y -= 0.014f;
 				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(64, 72, 178);
 			dust.noGravity = true;
@@ -252,7 +252,7 @@ namespace SOTS.NPCs.Constructs
 				if (Main.netMode != NetmodeID.Server)
 					for (int i = 0; i < 50; i ++)
 					{
-						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 267);
+						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
 						dust.color = new Color(64, 72, 178);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;

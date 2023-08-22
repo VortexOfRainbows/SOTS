@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Planetarium
             {
 				for(int i = 0; i < 3; i += 2)
 				{
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 5.5f));
 						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, Projectile.type, Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0] - 1);
@@ -186,7 +186,7 @@ namespace SOTS.Projectiles.Planetarium
 			{
 				cataloguePos();
 				counter = -14;
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					if (Projectile.velocity.Length() != 0f)
 					{

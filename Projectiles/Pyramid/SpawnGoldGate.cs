@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Pyramid
 				Main.dust[num1].velocity = circularLocation + new Vector2(0, -1);
 				Main.dust[num1].scale *= 1.5f;
 			}
-			if (Main.netMode == 1)
+			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
 			int i = (int)Projectile.Center.X / 16 + 1;
 			int j = (int)Projectile.Center.Y / 16;

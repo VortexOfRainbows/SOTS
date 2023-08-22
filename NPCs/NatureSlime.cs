@@ -90,7 +90,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while ((double)num < hit.Damage / (double)NPC.lifeMax * 100.0)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)hit.HitDirection, -1f, NPC.alpha, new Color(102, 202, 71, 100), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.TintableDust, (float)hit.HitDirection, -1f, NPC.alpha, new Color(102, 202, 71, 100), 1f);
 					num++;
 				}
 			}
@@ -98,7 +98,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 4, (float)(2 * hit.HitDirection), -2f, NPC.alpha, new Color(102, 202, 71, 100), 1f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.TintableDust, (float)(2 * hit.HitDirection), -2f, NPC.alpha, new Color(102, 202, 71, 100), 1f);
 				}
 			}
 		}

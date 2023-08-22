@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Lightning
 			{
 				Vector2 circularLocation = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(i));
 			
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 56);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.BlueFairy);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				Main.dust[num1].alpha = Projectile.alpha;

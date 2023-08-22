@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Crushers
 				Projectile.netUpdate = true;
 			}
 			Vector2 prev = storage[storage.Count - 1];
-			if(current != null && Vector2.Distance(current, prev) > 24f)
+			if(Vector2.Distance(current, prev) > 24f)
             {
 				storage.Add(current);
 				return true;

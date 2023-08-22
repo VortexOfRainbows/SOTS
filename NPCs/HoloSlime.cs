@@ -149,14 +149,13 @@ namespace SOTS.NPCs
 			Player player = Main.player[NPC.target];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			float distX = NPC.Center.X - to.X;
-			bool left = distX > 0;
+			//bool left = distX > 0;
 			float distY = NPC.Center.Y - to.Y;
 			Vector2 toPlayer = new Vector2(-distX, -distY);
 			float length = toPlayer.Length() + 0.1f;
 			Vector2 checkPos = NPC.Center;
 			if (length >= 1.1f)
 			{
-				int valid = 0;
 				int autoOverride = 0;
 				int distance = 8;
 				toPlayer.Normalize();
@@ -165,7 +164,6 @@ namespace SOTS.NPCs
 				{
 					autoOverride += 4;
 					checkPos += toPlayer;
-
 					int dust = Dust.NewDust(checkPos, 0, 0, DustID.Electric, 0, 0, NPC.alpha, default, 1f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 0.1f;
@@ -204,7 +202,7 @@ namespace SOTS.NPCs
 				{
 					WarpToLocation((Vector2)travelTo);
 					justWarped = 60;
-					if(Main.netMode != 1)
+					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						NPC.netUpdate = true;
 					}
@@ -214,7 +212,7 @@ namespace SOTS.NPCs
 				{
 					WarpToPlayer();
 					justWarped = 60;
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						NPC.netUpdate = true;
 					}
@@ -226,7 +224,7 @@ namespace SOTS.NPCs
 			{
 				WarpToPlayer();
 				justWarped = 120;
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.netUpdate = true;
 				}

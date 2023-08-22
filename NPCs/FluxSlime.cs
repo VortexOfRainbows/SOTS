@@ -99,7 +99,7 @@ namespace SOTS.NPCs
 			NPC.TargetClosest(true);
 			if(initiateSize == 1)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 					NPC.netUpdate = true;
 				for (int i = 0; i < counterArr.Length; i++)
 				{

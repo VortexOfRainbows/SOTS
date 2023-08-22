@@ -98,7 +98,7 @@ namespace SOTS.NPCs
 			/*if ((int)ai1 % 600 == 480 && (lineOfSight || length <= 320))
 			{
 				//Main.NewText("bruh");
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 					for (int i = 0; i < 8; i ++)
 					{
 						Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, i * 45f, npc.whoAmI);
@@ -107,7 +107,7 @@ namespace SOTS.NPCs
 			else 
 			{
 			}*/
-			if (Main.netMode != 1 && Main.rand.NextBool(75))
+			if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(75))
 			{
 				Vector2 spawn = (NPC.position + new Vector2(4, 4) + new Vector2(Main.rand.Next(NPC.width - 8), Main.rand.Next(NPC.height - 8)));
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, NPC.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, -3, -1f);

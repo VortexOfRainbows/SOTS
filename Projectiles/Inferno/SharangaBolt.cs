@@ -87,12 +87,12 @@ namespace SOTS.Projectiles.Inferno
 			//Main.dust[num1].velocity *= 0.15f;
 			//Main.dust[num1].scale = 1.5f
 			*/
-			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, 6);
+			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, DustID.Torch);
 			Main.dust[num2].noGravity = true;
 			Main.dust[num2].velocity = helixPos3 * 0.125f;
 			Main.dust[num2].scale = 2;
 			
-			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, 6);
+			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, DustID.Torch);
 			Main.dust[num2].noGravity = true;
 			Main.dust[num2].velocity = helixPos4 * 0.125f;
 			Main.dust[num2].scale = 2;

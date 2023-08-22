@@ -14,7 +14,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.CloneDefaults(279);
+			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 19;
 			Item.useTime = 15;
 			Item.useAnimation = 15;

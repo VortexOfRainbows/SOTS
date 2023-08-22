@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Laser
 					Lighting.AddLight(position, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.3f / 255f);
 					if(dust)
 					{
-						int num1 = Dust.NewDust(new Vector2(position.X, position.Y), 0, 0, 72);
+						int num1 = Dust.NewDust(new Vector2(position.X, position.Y), 0, 0, DustID.Gastropod);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 2.5f;
 						Main.dust[num1].scale = 2f;

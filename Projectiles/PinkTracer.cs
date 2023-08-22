@@ -41,14 +41,14 @@ namespace SOTS.Projectiles
 			{
 				Vector2 circularLocation = new Vector2(-8, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(Projectile.Center + circularLocation - new Vector2(5), 0, 0, 72);
+				int num1 = Dust.NewDust(Projectile.Center + circularLocation - new Vector2(5), 0, 0, DustID.Gastropod);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity = circularLocation * 0.45f;
 			}
 		}
 		public override void AI()
 		{
-			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 1, Projectile.Center.Y - 1), 2, 2, 72);
+			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 1, Projectile.Center.Y - 1), 2, 2, DustID.Gastropod);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 			

@@ -183,7 +183,7 @@ namespace SOTS.NPCs.Boss.Curse
 					if (NPC.velocity != temp)
 					{
 						ParticleExplosion();
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage = Common.GlobalNPCs.SOTSNPCs.GetBaseDamage(NPC) / 2;
 							for (int i = 0; i < 6; i++)

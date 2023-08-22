@@ -1175,7 +1175,7 @@ namespace SOTS.WorldgenHelpers
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidPots>(), true, true, -1, WorldGen.genRand.Next(9)); //pots
 						}
-						else if (WorldGen.genRand.Next(size / 2) == 0)
+						else if (WorldGen.genRand.NextBool(size / 2))
 						{
 							if (WorldGen.genRand.NextBool(2))
 							{

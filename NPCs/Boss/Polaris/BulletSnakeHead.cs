@@ -125,7 +125,7 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override bool PreAI()
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (NPC.ai[0] == 0)
                 {

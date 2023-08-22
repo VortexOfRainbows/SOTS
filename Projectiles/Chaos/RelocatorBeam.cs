@@ -68,7 +68,6 @@ namespace SOTS.Projectiles.Chaos
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
             Color color = new Color(140, 140, 140, 0);
-            int alpha = 0;
             float endPercent = Projectile.timeLeft / 60f;
             float rotation = Projectile.velocity.ToRotation();
             int max = drawPositionList.Count;

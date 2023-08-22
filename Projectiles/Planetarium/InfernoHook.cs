@@ -10,7 +10,6 @@ namespace SOTS.Projectiles.Planetarium
 {
     public class InfernoHook : ModProjectile
     {
-        bool pull = false;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Inferno Hook");
@@ -47,7 +46,7 @@ namespace SOTS.Projectiles.Planetarium
             }
             if(Projectile.velocity.Length() > 1)
             {
-                int num1 = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, 6);
+                int num1 = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, DustID.Torch);
                 Main.dust[num1].noGravity = true;
                 Main.dust[num1].scale = 1.55f;
                 Main.dust[num1].velocity *= 0.2f;

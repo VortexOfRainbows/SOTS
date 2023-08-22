@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Celestial
                     fadeInTimer = 255;
             }
             Projectile.alpha = fadeInTimer;
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.netUpdate = true;
             }

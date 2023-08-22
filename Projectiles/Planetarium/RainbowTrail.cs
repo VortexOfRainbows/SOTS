@@ -143,7 +143,6 @@ namespace SOTS.Projectiles.Planetarium
 			//if (iterator >= trailPos.Length)
 			//	Projectile.Kill();
 		}
-		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;

@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Planetarium
 			{
 				for (int i = 0; i < 20; i++)
 				{
-					int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 91, 0, 0, Projectile.alpha, default, 1.25f);
+					int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GemDiamond, 0, 0, Projectile.alpha, default, 1.25f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 1.5f;
 				}

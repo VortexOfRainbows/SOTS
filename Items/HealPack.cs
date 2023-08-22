@@ -69,7 +69,7 @@ namespace SOTS.Items
 			Item.velocity.X *= 1.02f;
 			if (Item.velocity.Length() > 0.3f)
 			{
-				Dust dust = Dust.NewDustDirect(Item.Center + new Vector2(8 * Item.direction, 0).RotatedBy(rotation) - new Vector2(5), 0, 0, 61);
+				Dust dust = Dust.NewDustDirect(Item.Center + new Vector2(8 * Item.direction, 0).RotatedBy(rotation) - new Vector2(5), 0, 0, DustID.GreenTorch);
 				dust.velocity *= 0.1f;
 				dust.scale *= 1.33f;
 				dust.noGravity = true;
@@ -155,7 +155,7 @@ namespace SOTS.Items
 			Item.velocity.X *= 1.02f;
 			if (Item.velocity.Length() > 0.3f)
 			{
-				Dust dust = Dust.NewDustDirect(Item.Center + new Vector2(0, -8 * Item.direction).RotatedBy(rotation) - new Vector2(5), 0, 0, 15);
+				Dust dust = Dust.NewDustDirect(Item.Center + new Vector2(0, -8 * Item.direction).RotatedBy(rotation) - new Vector2(5), 0, 0, DustID.MagicMirror);
 				dust.velocity *= 0.1f;
 				dust.scale *= 1.33f;
 				dust.noGravity = true;

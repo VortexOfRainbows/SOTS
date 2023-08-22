@@ -12,10 +12,8 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults() 
 		{
-			// DisplayName.SetDefault("Shattering Laser");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 6000;
 		}
-
 		public override void SetDefaults() 
 		{
 			Projectile.width = 8;
@@ -27,7 +25,6 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 		}
-		float counter = 0;
         public override bool ShouldUpdatePosition()
         {
 			return false;

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Celestial
@@ -78,7 +79,7 @@ namespace SOTS.Projectiles.Celestial
 			if(Projectile.timeLeft == 26)
 			{
 				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					Vector2 center = Projectile.Center - Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 1500 * Projectile.ai[0];
 					Vector2 velo = Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 56 * Projectile.ai[0];

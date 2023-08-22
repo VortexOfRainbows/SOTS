@@ -58,7 +58,7 @@ namespace SOTS.Items.Pyramid
 					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, Main.projectile[index].Center);
 					for (int i = 0; i < 15; i++)
 					{
-						int num1 = Dust.NewDust(new Vector2(Main.projectile[index].position.X, Main.projectile[index].position.Y), 20, 34, 32);
+						int num1 = Dust.NewDust(new Vector2(Main.projectile[index].position.X, Main.projectile[index].position.Y), 20, 34, DustID.Sand);
 						Main.dust[num1].noGravity = false;
 						Main.dust[num1].velocity *= 1.5f;
 						Main.dust[num1].scale *= 1.3f;

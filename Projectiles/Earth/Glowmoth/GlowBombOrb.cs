@@ -363,7 +363,6 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			return false;
 		}
-		bool runOnce = true;
 		public override void AI()
 		{
 			Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);

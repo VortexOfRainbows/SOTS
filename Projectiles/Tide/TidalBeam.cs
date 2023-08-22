@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Tide
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 221);
+				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.FireworkFountain_Blue);
 				Main.dust[dust].velocity *= 3f;
 				Main.dust[dust].scale *= 1f;
 				Main.dust[dust].velocity += Projectile.velocity;
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Tide
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, target.Center);
 			for (int i = 0; i < 20; i++)
 			{
-				int dust = Dust.NewDust(new Vector2(target.position.X, target.position.Y), target.width, target.height, 221);
+				int dust = Dust.NewDust(new Vector2(target.position.X, target.position.Y), target.width, target.height, DustID.FireworkFountain_Blue);
 				Main.dust[dust].velocity *= 3f;
 				Main.dust[dust].scale *= 1f;
 				Main.dust[dust].velocity -= target.velocity;
@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Tide
 						{
 							if(Main.rand.NextBool(2))
 							{
-								int dust = Dust.NewDust(TrailPositions[i][0] - new Vector2(5), 0, 0, 221);
+								int dust = Dust.NewDust(TrailPositions[i][0] - new Vector2(5), 0, 0, DustID.FireworkFountain_Blue);
 								Main.dust[dust].velocity *= 1.4f;
 								Main.dust[dust].scale *= 0.9f;
 								Main.dust[dust].noGravity = true;
@@ -200,7 +200,7 @@ namespace SOTS.Projectiles.Tide
 					{
 						if (TrailPositions[i].Count > 1)
 						{ 
-							int dust = Dust.NewDust(TrailPositions[i][Main.rand.Next(0, trail.Count - 1)] - new Vector2(5), 0, 0, 221);
+							int dust = Dust.NewDust(TrailPositions[i][Main.rand.Next(0, trail.Count - 1)] - new Vector2(5), 0, 0, DustID.FireworkFountain_Blue);
 							Main.dust[dust].velocity *= 2f;
 							Main.dust[dust].scale *= 0.7f;
 							Main.dust[dust].noGravity = true;

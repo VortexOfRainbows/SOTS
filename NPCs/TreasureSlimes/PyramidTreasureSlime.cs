@@ -8,7 +8,6 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Items;
-using SOTS.Items.Pyramid;
 using SOTS.Items.Flails;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;

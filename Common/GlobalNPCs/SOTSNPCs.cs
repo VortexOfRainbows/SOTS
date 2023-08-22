@@ -179,7 +179,7 @@ namespace SOTS.Common.GlobalNPCs
 						{
 							if (k % 4 == 0)
 							{
-								Dust.NewDust(npc.position, npc.width, npc.height, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
+								Dust.NewDust(npc.position, npc.width, npc.height, DustID.PinkTorch, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 							}
 							if (Main.rand.NextBool(3))
 								Dust.NewDust(npc.position, npc.width, npc.height, DustID.Gold, (float)(2 * hit.HitDirection), -2f, 0, default, 0.9f);
@@ -201,7 +201,7 @@ namespace SOTS.Common.GlobalNPCs
                                 {
 									if(Main.rand.NextBool(3))
 									{
-										Dust.NewDust(tail.trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
+										Dust.NewDust(tail.trailPos[i] - new Vector2(8, 8), 8, 8, DustID.PinkTorch, (float)(2 * hit.HitDirection), -2f, 0, default, 2f);
 									}
                                 }
                             }

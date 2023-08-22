@@ -69,7 +69,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				for (int k = 0; k < 20; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore1"), 1f);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
@@ -115,7 +115,7 @@ namespace SOTS.NPCs.Constructs
 			rotateVector += distanceToTarget * 1;
 			rotateVector = new Vector2(12, 0).RotatedBy(rotateVector.ToRotation());
 			int maxDistPlayer = 96;
-			int maxDistNPC = 512;
+			//int maxDistNPC = 512;
 			Vector2 added = new Vector2(3f, 0).RotatedBy(rotateVector.ToRotation());
 			if (distanceToTarget2.Length() > 800f)
 			{
@@ -215,7 +215,7 @@ namespace SOTS.NPCs.Constructs
 			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OtherworldlySpirit>());
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].localAI[1] = -1;
-			if (Main.netMode != 1)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot)

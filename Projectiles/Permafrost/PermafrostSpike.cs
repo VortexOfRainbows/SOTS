@@ -4,6 +4,7 @@ using SOTS.Buffs;
 using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -37,7 +38,7 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			if(Main.rand.NextBool(72))
 			{
-				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, 267);
+				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.RainbowMk2);
 				Dust dust = Main.dust[dust2];
 				dust.color = new Color(65, 136, 164);
 				dust.noGravity = true;

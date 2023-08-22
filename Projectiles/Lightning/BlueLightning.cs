@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Lightning
 {
@@ -89,7 +90,7 @@ namespace SOTS.Projectiles.Lightning
 			}
 			if (flag || endHow == 1)
 			{
-				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 56);
+				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.BlueFairy);
 				Main.dust[dust].scale *= 1.2f * (trailPos.Length - iterator) / (float)trailPos.Length;
 				Main.dust[dust].velocity *= 1.2f;
 				Main.dust[dust].noGravity = true;

@@ -53,7 +53,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			Item.useAnimation = 15;
 			Item.useTime = 7;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = 5;
+			Item.rare = ItemRarityID.Pink;
 			Item.consumable = true;
 			Item.createWall = ModContent.WallType<AncientGoldBrickWallTile>();
 		}

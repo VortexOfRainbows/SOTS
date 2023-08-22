@@ -580,7 +580,7 @@ namespace SOTS.NPCs.Boss
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, worldSide);
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, 1000 * worldSide);
                 }
-                if(ai1 < 1800 && ai2 % 20 <= 1 && Main.netMode != 1)
+                if(ai1 < 1800 && ai2 % 20 <= 1 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < Main.maxPlayers; i++)
                     {
@@ -685,14 +685,14 @@ namespace SOTS.NPCs.Boss
                                 Vector2 spawnPos = new Vector2((250 - ai3 + 650) * 1.5f * worldSide, 75 * i);
                                 spawnPos.X += NPC.Center.X;
                                 spawnPos.Y += ai4;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     int damage2 = NPC.GetBaseDamage() / 2;
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPos, new Vector2(worldSide * 4, 0), ModContent.ProjectileType<GreaterCellBlast>(), (int)(damage2 * 1.1f), 0, Main.myPlayer, 0, NPC.whoAmI);
                                 }
                             }
                         }
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, NPC.whoAmI, (250 - ai3 + 700) * 1.5f * worldSide);
                     }
                     if (ai3 <= 380)
@@ -740,7 +740,7 @@ namespace SOTS.NPCs.Boss
                     if ((int)ai1 == 255)
                     {
                         NPC.dontTakeDamage = true;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             ai4 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)playerCenter.X, (int)playerCenter.Y + (int)player.height, ModContent.NPCType<SubspaceEye>());
                             NPC eye = Main.npc[(int)ai4];
@@ -774,7 +774,7 @@ namespace SOTS.NPCs.Boss
                         }
                         if ((int)ai3 == 1)
                         {
-                            if (ai1 % 5 == 0 && Main.netMode != 1)
+                            if (ai1 % 5 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 6; i++)
                                 {
@@ -801,7 +801,7 @@ namespace SOTS.NPCs.Boss
                             /*
                             SubspaceEye subEye = eye.modNPC as SubspaceEye;
                             Vector2 fromEye = player.Center - eye.Center;
-                            if(ai1 % 120 == 0 && Main.netMode != 1 && ai1 < 720)
+                            if(ai1 % 120 == 0 && Main.netMode != NetmodeID.MultiplayerClient && ai1 < 720)
                             {
                                 for (int i = 0; i < 2; i++)
                                 {
@@ -865,7 +865,7 @@ namespace SOTS.NPCs.Boss
                 NPC.active = false;
             }
             NPC.timeLeft = 10000;
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.netUpdate = true;
             }
@@ -917,7 +917,7 @@ namespace SOTS.NPCs.Boss
                 {
                     Vector2 offset = prevdir * 360f * rand1;
                     int damage2 = NPC.GetBaseDamage() / 2;
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), prevLocation + offset, prevdir.RotatedBy(MathHelper.ToRadians(rand2 + 90)), ModContent.ProjectileType<DashIndicator2>(), (int)(damage2 * 0.75f), 0, Main.myPlayer, rand1);
                     }
@@ -930,7 +930,7 @@ namespace SOTS.NPCs.Boss
                 if((int)rand3 == ModContent.ProjectileType<EnergySerpentHead>())
                 {
                    SOTSUtils.PlaySound(SoundID.Item119, (int)(selectArea + prevLocation).X, (int)(selectArea + prevLocation).Y);
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int damage2 = NPC.GetBaseDamage() / 2;
                         if(hasEnteredSecondPhase)
@@ -939,7 +939,7 @@ namespace SOTS.NPCs.Boss
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), damage2 * 2, 0, Main.myPlayer, 32, NPC.whoAmI);
                     }
                 }
-                else if (Main.netMode != 1)
+                else if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     if (redIndicator)
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer, 0, -1);
@@ -960,7 +960,7 @@ namespace SOTS.NPCs.Boss
         }
         public void SerpentRing(Vector2 area)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int damage2 = NPC.GetBaseDamage() / 2;
                 for (int i = 0; i < 180; i += 30)
@@ -972,7 +972,7 @@ namespace SOTS.NPCs.Boss
         }
         public void SerpentRing()
         {
-            if(Main.netMode != 1)
+            if(Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Vector2 velo = prevdir;
                 Vector2 area = prevLocation - velo * 1500;
@@ -1002,7 +1002,7 @@ namespace SOTS.NPCs.Boss
             }
             if(phase == 1 && amt > 0)
             {
-                if (ai1 % 120 == 0 && Main.netMode != 1)
+                if (ai1 % 120 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     if (amt > 8)
                         amt = 8;

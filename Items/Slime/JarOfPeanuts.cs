@@ -25,7 +25,7 @@ namespace SOTS.Items.Slime
 			Item.maxStack = 30;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
-			Item.useStyle = 4;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.consumable = true;
 		}
 		public override void AddRecipes()

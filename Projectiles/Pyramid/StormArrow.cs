@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -74,7 +75,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				for(int i = 0; i < 25; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, 16);
+					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, DustID.Cloud);
 					Main.dust[num2].noGravity = true;
 					Main.dust[num2].alpha = 125;
 					Main.dust[num2].scale = 1.75f;
@@ -93,7 +94,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				for(int i = 0; i < 25; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, 16);
+					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, DustID.Cloud);
 					Main.dust[num2].noGravity = true;
 					Main.dust[num2].alpha = 125;
 					Main.dust[num2].scale = 1.75f;
@@ -112,7 +113,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				for(int i = 0; i < 25; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, 16);
+					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, DustID.Cloud);
 					Main.dust[num2].noGravity = true;
 					Main.dust[num2].alpha = 125;
 					Main.dust[num2].scale = 1.75f;
@@ -131,7 +132,7 @@ namespace SOTS.Projectiles.Pyramid
 				
 				for(int i = 0; i < 25; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, 16);
+					int num2 = Dust.NewDust(new Vector2(spawnPosX - 10, spawnPosY - 10), 20, 20, DustID.Cloud);
 					Main.dust[num2].noGravity = true;
 					Main.dust[num2].alpha = 125;
 					Main.dust[num2].scale = 1.75f;
@@ -154,12 +155,12 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				for(int i = 0; i < 20; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 18, 38, 16);
+					int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 18, 38, DustID.Cloud);
 					Main.dust[num2].noGravity = true;
 					Main.dust[num2].alpha = 200;
 				}
 			}
-			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 2, Projectile.Center.Y - 2), 4, 4, 16);
+			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 2, Projectile.Center.Y - 2), 4, 4, DustID.Cloud);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 			Main.dust[num1].alpha = Projectile.alpha;

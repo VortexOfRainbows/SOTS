@@ -27,7 +27,6 @@ namespace SOTS.Items.Tools
 		{
 			player.rulerGrid = true;
 		}
-		int num = 0;
 		public override bool? UseItem(Player player)
 		{
 			for(int i = 0; i < Main.npcFrameCount.Length; i++)

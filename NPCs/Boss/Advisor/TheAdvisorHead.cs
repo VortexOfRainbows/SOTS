@@ -769,14 +769,14 @@ namespace SOTS.NPCs.Boss.Advisor
 						if (!NPC.AnyNPCs(ModContent.NPCType<PhaseEye>()))
 							for (int i = 0; i < 4; i++)
 							{
-								if (Main.netMode != 1)
+								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int npc1 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)(hookPos[i].X + NPC.Center.X), (int)(hookPos[i].Y + NPC.Center.Y - 20), Mod.Find<ModNPC>("PhaseEye").Type);
 									Main.npc[npc1].netUpdate = true;
 								}
 								for (int j = 0; j < 20; j++)
 								{
-									int dust = Dust.NewDust(new Vector2((hookPos[i].X + NPC.Center.X) - 8, (int)(hookPos[i].Y + NPC.Center.Y) - 8), 4, 4, 242);
+									int dust = Dust.NewDust(new Vector2((hookPos[i].X + NPC.Center.X) - 8, (int)(hookPos[i].Y + NPC.Center.Y) - 8), 4, 4, DustID.PinkTorch);
 									Main.dust[dust].velocity *= 2f;
 									Main.dust[dust].scale *= 4f;
 									Main.dust[dust].velocity += new Vector2(0, -5);
@@ -876,7 +876,7 @@ namespace SOTS.NPCs.Boss.Advisor
 						if (attackTimer1 % 10 == 0)
 						{
 							eyeReset = -3f;
-							if (Main.netMode != 1)
+							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 								damage2 = (int)(damage2 * 1.75f);
@@ -1000,7 +1000,7 @@ namespace SOTS.NPCs.Boss.Advisor
 						FasterRate = 1.25f;
 					if(attackTimer2 % (int)(60 / FasterRate) == 0)
 					{
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 							damage2 = (int)(damage2 * 0.8f);
@@ -1126,7 +1126,7 @@ namespace SOTS.NPCs.Boss.Advisor
 					fromCenter = fromCenter.SafeNormalize(Vector2.Zero);
 					fromCenter *= 72f;
 					float velocityA = 3.55f;
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
 						damage2 = (int)(damage2 * 0.8f);
@@ -1149,7 +1149,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			{
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore1"), 1f);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Advisor/TheAdvisorGore2"), 1f);

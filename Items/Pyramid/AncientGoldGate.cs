@@ -323,7 +323,7 @@ namespace SOTS.Items.Pyramid
 					for (j = 0; j < 40 - k * 5; j++)
 					{
 						Vector2 direction = new Vector2(Main.rand.NextFloat(1, 2) * k * uniqueC, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45)));
-						int num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
+						int num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, DustID.FireflyHit);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 1.15f;
 						Main.dust[num1].velocity += direction;
@@ -331,7 +331,7 @@ namespace SOTS.Items.Pyramid
 						Main.dust[num1].velocity.Y *= 1.0f;
 						Main.dust[num1].scale = 1.5f;
 
-						num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 91);
+						num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, DustID.GemDiamond);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 0.9f;
 						Main.dust[num1].velocity += direction;
@@ -339,7 +339,7 @@ namespace SOTS.Items.Pyramid
 						Main.dust[num1].velocity.Y *= 0.75f;
 						Main.dust[num1].scale = 2.25f;
 
-						num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
+						num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, DustID.FireflyHit);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 0.75f;
 						Main.dust[num1].velocity += direction;

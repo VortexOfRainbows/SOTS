@@ -72,7 +72,6 @@ namespace SOTS.Projectiles.Tide
 				float rotation = Projectile.velocity.ToRotation();
 				float C = 2 * (float)Math.PI * length;
 				float oneLength = 360f / C * 10;
-				float mult = 0f;
 				for (float i = 0; i < 360; i += oneLength)
 				{
 					float waveValue = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 8 + Projectile.ai[1])).X;

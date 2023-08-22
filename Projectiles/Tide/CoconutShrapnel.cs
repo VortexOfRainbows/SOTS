@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Tide
 				AIType = 0;
 			Projectile.velocity.Y += 0.09f;
 			Projectile.alpha = 255;
-			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 212);
+			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, DustID.BubbleBurst_White);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 			if(Main.rand.NextBool(3))
@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Tide
 		{
 			for(int i = 0; i < 10; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 212);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, DustID.BubbleBurst_White);
 				Main.dust[num1].noGravity = false;
 				Main.dust[num1].velocity += -2f * Projectile.velocity.SafeNormalize(Vector2.Zero);
 			}

@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Planetarium
 				if(Projectile.timeLeft == 200)
 				{
 					SOTSUtils.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
 						int numberProjectiles = 3;
 						for (int i = 0; i < numberProjectiles; i++)

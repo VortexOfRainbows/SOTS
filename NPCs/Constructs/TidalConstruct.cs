@@ -29,7 +29,6 @@ namespace SOTS.NPCs.Constructs
 			projectiles[2] = reader.ReadInt32();
 			projectiles[3] = reader.ReadInt32();
 		}
-        int timer = 0;
 		int ai1 = 0;
 		float dir = 0f;
         public override void SetStaticDefaults()
@@ -194,7 +193,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, 82, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore1"), 1f);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/TidalConstructGore2"), 1f);
@@ -291,7 +290,7 @@ namespace SOTS.NPCs.Constructs
 					NPC.ai[1]++;
 					if (NPC.ai[1] == 10)
 					{
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage2 = NPC.GetBaseDamage() / 2;
 							Projectile.NewProjectile(NPC.GetSource_FromAI(), inFront, toPlayer.SafeNormalize(new Vector2(1, 0)) * 3.5f, ModContent.ProjectileType<TidalBeam>(), damage2, 5, Main.myPlayer, NPC.target, NPC.whoAmI);

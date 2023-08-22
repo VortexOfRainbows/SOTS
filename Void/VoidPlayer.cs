@@ -434,15 +434,15 @@ namespace SOTS.Void
 				SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Damage"), (int)player.Center.X, (int)player.Center.Y, 1.1f);
 			for (int i = 0; i < (int)(4 + 0.5f * Math.Sqrt(damage)); i++)
 			{
-				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.FireflyHit);
 				dust.noGravity = true;
 				dust.velocity *= 4;
 				dust.scale = 2.2f;
-				dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+				dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.FireflyHit);
 				dust.noGravity = true;
 				dust.velocity *= 3.5f;
 				dust.scale = 2.7f;
-				dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+				dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.FireflyHit);
 				dust.noGravity = true;
 				dust.velocity *= 3;
 				dust.scale = 3.2f;
@@ -498,21 +498,21 @@ namespace SOTS.Void
 					chance = 10;
 				if (Main.rand.NextBool(chance))
 				{
-					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 198);
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.FireflyHit);
 					dust.noGravity = true;
 					dust.velocity *= 4;
 					dust.scale = 2.2f;
 				}
 				if (Main.rand.NextBool(chance))
 				{
-					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 198);
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.FireflyHit);
 					dust.noGravity = true;
 					dust.velocity *= 3.5f;
 					dust.scale = 2.7f;
 				}
 				if (Main.rand.NextBool(chance))
 				{
-					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 198);
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.FireflyHit);
 					dust.noGravity = true;
 					dust.velocity *= 3f;
 					dust.scale = 3.2f;

@@ -64,7 +64,7 @@ namespace SOTS.Items.Permafrost
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (broken == 1 || modPlayer.brokenFrigidSword >= 1)
 			{
-				Item.useStyle = 4;
+				Item.useStyle = ItemUseStyleID.HoldUp;
 				Item.noMelee = true;
 				Item.noUseGraphic = true;
 			}
@@ -85,7 +85,7 @@ namespace SOTS.Items.Permafrost
 			}
 			if (broken == 1)
 			{
-				Item.useStyle = 4;
+				Item.useStyle = ItemUseStyleID.HoldUp;
 				Item.noMelee = true;
 				Item.noUseGraphic = true;
 			}

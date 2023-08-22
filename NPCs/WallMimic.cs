@@ -210,7 +210,7 @@ namespace SOTS.NPCs
 					{
 						for (int k = 0; k < 60; k++)
 						{
-							Dust.NewDust(NPC.position, NPC.width, NPC.height, 32, Main.rand.Next(-7, 8), Main.rand.Next(-7, 8));
+							Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Sand, Main.rand.Next(-7, 8), Main.rand.Next(-7, 8));
 						}
 						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, NPC.Center);
 						aiCounter = 0;

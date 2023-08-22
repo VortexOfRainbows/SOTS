@@ -143,7 +143,7 @@ namespace SOTS.NPCs.Boss
 		public override void AI()
 		{
 			NPC.dontTakeDamage = true;
-			if(initiate == -1 && Main.netMode != 1)
+			if(initiate == -1 && Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				rotationAmtStorage = rotationAmt;
 				NPC.velocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(rotationAmt + hookID));
@@ -167,7 +167,7 @@ namespace SOTS.NPCs.Boss
 			{
 				eyeReset = 0.3f;
 				fireRate = 0;
-				if(Main.netMode != 1)
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					NPC.netUpdate = true;
 					float shootToX = aimToX - NPC.Center.X;
@@ -180,7 +180,7 @@ namespace SOTS.NPCs.Boss
 					shootToY *= distance;
 
 					int damage = NPC.GetBaseDamage() / 2;
-					if(Main.netMode != 1)
+					if(Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, shootToX, shootToY, ModContent.ProjectileType<PinkBullet>(), damage, 0, Main.myPlayer);
 				}
 			}

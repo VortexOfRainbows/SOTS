@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Planetarium
 					currentPos += additional;
 					for (int k = 0; k < 10f - (8f * (255 - Projectile.alpha) / 255f); k++)
 					{
-						int dust1 = Dust.NewDust(position + new Vector2(-4, -4), 0, 0, 91, 0, 0, Projectile.alpha, default, 1.25f);
+						int dust1 = Dust.NewDust(position + new Vector2(-4, -4), 0, 0, DustID.GemDiamond, 0, 0, Projectile.alpha, default, 1.25f);
 						Main.dust[dust1].noGravity = true;
 						Main.dust[dust1].velocity *= 1.5f;
 						Main.dust[dust1].alpha = Projectile.alpha;
@@ -138,7 +138,7 @@ namespace SOTS.Projectiles.Planetarium
 				}
 				if(dust || Main.rand.NextBool(40))
 				{
-					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, 91);
+					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, DustID.GemDiamond);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 1.75f;
 					Main.dust[num1].scale = 1.1f;

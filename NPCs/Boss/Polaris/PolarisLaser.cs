@@ -72,7 +72,7 @@ namespace SOTS.NPCs.Boss.Polaris
 					NPC.ai[0] = 0;
 					NPC.rotation += MathHelper.ToRadians(9);
 					NPC.ai[2] += 9;
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
 						int damage = NPC.GetBaseDamage();
 						for (int i = 0; i < 4; i++)

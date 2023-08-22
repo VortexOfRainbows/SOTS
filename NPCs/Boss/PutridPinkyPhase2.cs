@@ -15,7 +15,6 @@ namespace SOTS.NPCs.Boss
 {	[AutoloadBossHead]
 	public class PutridPinkyPhase2 : ModNPC
 	{
-		private int expertModifier = 1;
 		private float attackPhase {
 			get => NPC.ai[0];
 			set => NPC.ai[0] = value;
@@ -177,10 +176,6 @@ namespace SOTS.NPCs.Boss
         }
 		public override bool PreAI()
 		{
-			if(Main.expertMode)
-			{
-				expertModifier = 2;
-			}
 			return true;
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -217,7 +212,7 @@ namespace SOTS.NPCs.Boss
 			{
 				Vector2 circularLocation = new Vector2(-dist, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(new Vector2(x - 4, y - 4), 4, 4, 72);
+				int num1 = Dust.NewDust(new Vector2(x - 4, y - 4), 4, 4, DustID.Gastropod);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity = circularLocation * 0.08f;
 				//Main.dust[num1].alpha = 0;
@@ -552,7 +547,7 @@ namespace SOTS.NPCs.Boss
 				NPC.active = false;
 			}
 			
-			if(Main.netMode != 1)
+			if(Main.netMode != NetmodeID.MultiplayerClient)
 			NPC.netUpdate = true;
 		}
 		private void BurstSpiral()
@@ -616,7 +611,7 @@ namespace SOTS.NPCs.Boss
 			Vector2 direction = fromArea - toArea;
 			direction.Normalize();
 			direction *= 1500;
-			if(Main.netMode != 1)
+			if(Main.netMode != NetmodeID.MultiplayerClient)
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), fromArea.X, fromArea.Y, 0, 0, ModContent.ProjectileType<PinkLaser>(), damage, 0, Main.myPlayer, toArea.X - direction.X, toArea.Y - direction.Y);
 			//NetMessage.SendData(27, -1, -1, null, Probe);
 			eyeReset = -0.8f;
@@ -626,7 +621,7 @@ namespace SOTS.NPCs.Boss
 		private void InitiateHooks()
 		{
 			Player player  = Main.player[NPC.target];
-			if(Main.netMode != 1)
+			if(Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				for(int i = 0; i < 12; i++)
 				{

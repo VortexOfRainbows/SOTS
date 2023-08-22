@@ -154,7 +154,7 @@ namespace SOTS.NPCs
 				if(NPC.alpha >= 255)
 				{
 					while (teleport()) { };
-					if(Main.netMode != 1)
+					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						NPC.netUpdate = true;
 					}

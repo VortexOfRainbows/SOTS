@@ -39,6 +39,8 @@ Daily Log:
 
 8/21/23
 1. Renamed Otherworld folder to Planetarium Folder
+2. Fixes Light-Bringer's Ring (now maxes out at 30% damage, -10 defense)
+3. Fixed various warnings in MVS (Better readability)
 
 8/19/23 to 8/21/23
 1. Attempted fixing various tile drop issues. They should be all fixed

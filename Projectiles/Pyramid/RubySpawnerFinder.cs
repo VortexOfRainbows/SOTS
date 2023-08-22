@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				else
 				{
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						findTravelTo();
 						if (findLocationX == 0 && findLocationY == 0)
@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Pyramid
 					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<BrachialPortal>(), (int)(Projectile.damage * 1f), -Projectile.knockBack, Main.myPlayer);
 				}
 			}
-			else if(Main.netMode != 1)
+			else if(Main.netMode != NetmodeID.MultiplayerClient)
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RubySpawner>(), (int)(Projectile.damage * 1f), 0, Main.myPlayer);
         }
         public override bool PreDraw(ref Color lightColor)

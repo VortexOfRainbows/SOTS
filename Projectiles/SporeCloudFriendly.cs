@@ -52,7 +52,7 @@ namespace SOTS.Projectiles
 				Projectile.scale += 0.02f * randMod;
 			if (Main.rand.NextBool(140))
 			{
-				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 41, 0, 0, 250, new Color(100, 100, 100, 250), 0.8f);
+				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.GlowingMushroom, 0, 0, 250, new Color(100, 100, 100, 250), 0.8f);
 			}
 			return true;
 		}

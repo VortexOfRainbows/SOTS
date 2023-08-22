@@ -105,7 +105,7 @@ namespace SOTS.NPCs.Boss
             if (NPC.target < 0 || NPC.target == byte.MaxValue || Main.player[NPC.target].dead)
                 NPC.TargetClosest(true);
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!Main.npc[(int)NPC.ai[1]].active)
                 {
@@ -221,7 +221,7 @@ namespace SOTS.NPCs.Boss
             {
                 currentDPS = maxDPS;
             }
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.netUpdate = true;
             }

@@ -493,7 +493,7 @@ namespace SOTS
 						int amountOfUniqueItems = 0;
 						for (int l = 0; l < recipe.requiredItem.Count; l++)
 						{
-							if (recipe.requiredItem[l].type > 0)
+							if (recipe.requiredItem[l].type > ItemID.None)
 							{
 								amountOfUniqueItems++;
 							}
@@ -687,7 +687,7 @@ namespace SOTS
 		public override void Kill(int timeLeft)
 		{
 			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[(int)Projectile.ai[0]];
-			if(Main.netMode != 1)
+			if(Main.netMode != NetmodeID.MultiplayerClient)
             {
 				if (!checkArraySame(entity.itemAmountsArray, itemAmountsArray) || !checkArraySame(entity.itemsArray, itemsArray))
 				{

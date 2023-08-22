@@ -167,10 +167,10 @@ namespace SOTS.Helpers
 			else
 			{
 				WorldGen.KillTile(x, y, fail: true);
-				if (Main.netMode == 1)
+				if (Main.netMode == NetmodeID.MultiplayerClient)
 				{
-					NetMessage.SendData(17, -1, -1, null, 0, x, y, 1f);
-					NetMessage.SendData(125, -1, -1, null, Main.myPlayer, x, y, num2);
+					NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, y, 1f);
+					NetMessage.SendData(MessageID.SyncTilePicking, -1, -1, null, Main.myPlayer, x, y, num2);
 				}
 			}
 			if (num2 != 0)

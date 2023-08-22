@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Nature
 			SoundEngine.PlaySound(SoundID.NPCHit1, position);  
 			for(int i = 0; i < 12; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 33);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Water);
 				Main.dust[num1].noGravity = true;
 			}
 			if(Projectile.owner == Main.myPlayer)

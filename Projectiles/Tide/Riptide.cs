@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Tide
                             float playerW = ent.width * circular.X;
                             float playerH = ent.height * circular.Y;
                             Vector2 newCircular = new Vector2(playerW, playerH) * 0.7f;
-                            Dust dust = Dust.NewDustDirect(ent.Center - ent.velocity * j + newCircular - new Vector2(5), 0, 0, 33, 0, 0, 0, new Color(Main.rand.Next(90, 120), Main.rand.Next(90 + (int)(j * 100), 255), (int)(Main.rand.Next(140, 255) * (1 - j * 0.15f)), 100 + Main.rand.Next(100)));
+                            Dust dust = Dust.NewDustDirect(ent.Center - ent.velocity * j + newCircular - new Vector2(5), 0, 0, DustID.Water, 0, 0, 0, new Color(Main.rand.Next(90, 120), Main.rand.Next(90 + (int)(j * 100), 255), (int)(Main.rand.Next(140, 255) * (1 - j * 0.15f)), 100 + Main.rand.Next(100)));
                             dust.noGravity = true;
                             dust.scale *= 1.2f;
                             dust.velocity *= 0.5f;

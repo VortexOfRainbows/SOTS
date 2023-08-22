@@ -99,7 +99,7 @@ namespace SOTS.Items.Planetarium
 				{
 					if (!NPC.AnyNPCs(ModContent.NPCType<TheAdvisorHead>()))
 					{
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int npc = NPC.NewNPC(new EntitySource_TileUpdate(i, j),i * 16 + 8, j * 16 + 8 - 240, ModContent.NPCType<TheAdvisorHead>());
 							Main.npc[npc].netUpdate = true;

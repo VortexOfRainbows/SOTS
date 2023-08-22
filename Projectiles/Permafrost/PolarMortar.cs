@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Permafrost
 				{
 					trailPos[i] = Vector2.Zero;
 				}
-				if(Main.netMode != 1)
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 					randIncrement = Main.rand.NextFloat(1.5f, 4.5f);
 				Projectile.netUpdate = true;
 				runOnce = false;

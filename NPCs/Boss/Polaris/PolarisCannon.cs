@@ -84,7 +84,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			{
 				if (NPC.ai[0] % 35 == 0 && NPC.ai[0] <= 330)
 				{
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, rotateVelocity, ModContent.ProjectileType<PolarBullet>(), damage, 0, Main.myPlayer, 0f, 0f);
 						if (Main.expertMode && NPC.ai[0] % 70 == 0)
@@ -98,7 +98,7 @@ namespace SOTS.NPCs.Boss.Polaris
 					NPC.ai[3] += 3f;
 					if(NPC.ai[0] % 3 == 0)
 					{
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							float speed = 0.5f;
 							if (NPC.ai[0] >= 380)

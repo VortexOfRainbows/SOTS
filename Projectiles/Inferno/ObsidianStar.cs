@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Inferno
 				runOnce = false;
             }
 			//Projectile.rotation += 1f;
-			Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 32, 32, 6);
+			Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 32, 32, DustID.Torch);
 			if(Projectile.Center.Y < Projectile.ai[1])
 			{
 				Projectile.tileCollide = true;
@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Inferno
 			for(int i = 0; i < 360; i += 8)
 			{
 				Vector2 circularLocation = new Vector2(-20, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 6);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.Torch);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 2.25f;
 				Main.dust[num1].velocity = circularLocation * 0.35f;

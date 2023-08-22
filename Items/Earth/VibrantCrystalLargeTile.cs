@@ -167,7 +167,7 @@ namespace SOTS.Items.Earth
 			{
 				top--;
 			}
-			bool flag = true;
+			//bool flag = true;
 			if (RoyalRubyShardTile.TileIsCapable(left, top + 2) && RoyalRubyShardTile.TileIsCapable(left + 1, top + 2)) //checks if below tile is active
 			{
 				if (Main.tile[left, top].TileFrameY != 0)
@@ -177,8 +177,8 @@ namespace SOTS.Items.Earth
 					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36);
 					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36);
 				}
-				else
-					flag = false;
+				//else
+				//	flag = false;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(left - 1, top) && RoyalRubyShardTile.TileIsCapable(left - 1, top + 1)) //checks if left tile is active
 			{
@@ -189,8 +189,8 @@ namespace SOTS.Items.Earth
 					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36 + 108);
 					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36 + 108);
 				}
-				else
-					flag = false;
+				//else
+				//	flag = false;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(left + 2, top) && RoyalRubyShardTile.TileIsCapable(left + 2, top + 1)) //checks if right tile is active
 			{
@@ -201,8 +201,8 @@ namespace SOTS.Items.Earth
 					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36 + 36);
 					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36 + 36);
 				}
-				else
-					flag = false;
+				//else
+				//	flag = false;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(left, top - 1) && RoyalRubyShardTile.TileIsCapable(left + 1, top - 1)) //checks if above tile is active
 			{
@@ -213,11 +213,11 @@ namespace SOTS.Items.Earth
 					Main.tile[left + 1, top + 1].TileFrameY = (short)(Main.tile[left + 1, top + 1].TileFrameY % 36 + 72);
 					Main.tile[left, top + 1].TileFrameY = (short)(Main.tile[left, top + 1].TileFrameY % 36 + 72);
 				}
-				else
-					flag = false;
+				//else
+				//	flag = false;
 			}
-			else
-				flag = false;
+			//else
+			//	flag = false;
 			//if (flag)
 			//{
 				//WorldGen.TileFrame(i, j, true);

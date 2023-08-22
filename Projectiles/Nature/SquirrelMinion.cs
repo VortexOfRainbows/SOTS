@@ -66,7 +66,6 @@ namespace SOTS.Projectiles.Nature
 		}
 		int frame = 0;
 		int counter = 0;
-		int ai1 = 0;
 		public override void AI() 
 		{
 			Projectile.netUpdate = true;

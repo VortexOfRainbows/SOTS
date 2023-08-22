@@ -80,7 +80,6 @@ namespace SOTS.Projectiles.Chaos
 			return false;
         }
 		bool runOnce = true;
-		float bonusRotation = 90;
         public override void AI()
 		{
 			float finalRotation = Projectile.ai[0];

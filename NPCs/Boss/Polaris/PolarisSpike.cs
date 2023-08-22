@@ -78,7 +78,7 @@ namespace SOTS.NPCs.Boss.Polaris
 			if (NPC.ai[2] < 0)
 			{
 				NPC.ai[2] = 180;
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					thrusterDistance = Main.rand.Next(0, 301);
 					NPC.netUpdate = true;

@@ -79,7 +79,6 @@ namespace SOTS.Projectiles.Planetarium
         }
 		public void checkPos()
 		{
-			bool flag = false;
 			float iterator = 0f;
 			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
@@ -92,7 +91,7 @@ namespace SOTS.Projectiles.Planetarium
 			}
 			if(endHow == 1 && endHow != 2 && Main.rand.NextBool(3))
 			{
-				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 75);
+				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch);
 				Main.dust[dust].scale *= 1f * (10f - iterator)/10f;
 				Main.dust[dust].velocity *= 1f;
 				Main.dust[dust].noGravity = true;

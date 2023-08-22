@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Base
                 for(int i = 0; i < 20; i ++)
                 {
                     Vector2 loc = new Vector2(player.Center.X - 14 * player.direction, player.Center.Y + player.gfxOffY) - new Vector2(5);
-                    int num1 = Dust.NewDust(new Vector2(loc.X, loc.Y), 2, 2, 235);
+                    int num1 = Dust.NewDust(new Vector2(loc.X, loc.Y), 2, 2, DustID.LifeDrain);
                     Main.dust[num1].noGravity = true;
                     Main.dust[num1].velocity *= 1.75f;
                     Main.dust[num1].scale = 2.25f;
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Base
                     }
                     player.position += Projectile.velocity * 2;
                     Vector2 loc = new Vector2(player.Center.X - 12 * player.direction, player.Center.Y + player.gfxOffY) - new Vector2(5);
-                    int num1 = Dust.NewDust(new Vector2(loc.X, loc.Y), 2, 2, 235);
+                    int num1 = Dust.NewDust(new Vector2(loc.X, loc.Y), 2, 2, DustID.LifeDrain);
                     Main.dust[num1].noGravity = true;
                     Main.dust[num1].velocity *= 0.75f / (1 + SOTSPlayer.ModPlayer(player).BlinkedAmount);
                     Main.dust[num1].scale = 1.75f;
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Base
                 for (int i = 0; i < 20; i++)
                 {
                     Vector2 loc = new Vector2(player.Center.X - 12 * player.direction, player.Center.Y + player.gfxOffY) - new Vector2(5);
-                    int num1 = Dust.NewDust(new Vector2(loc.X, loc.Y), 2, 2, 235);
+                    int num1 = Dust.NewDust(new Vector2(loc.X, loc.Y), 2, 2, DustID.LifeDrain);
                     Main.dust[num1].noGravity = true;
                     Main.dust[num1].velocity *= 1.75f;
                     Main.dust[num1].scale = 2.25f;

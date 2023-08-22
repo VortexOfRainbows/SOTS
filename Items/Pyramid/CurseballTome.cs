@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
             Item.noMelee = true;  
             Item.knockBack = 2.5f;
             Item.value = Item.sellPrice(0, 2, 25, 0);
-            Item.rare = 5;
+            Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.Item8;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<GasBlast>(); 

@@ -103,7 +103,7 @@ namespace SOTS.NPCs
 				if((int)NPC.ai[0] == (int)firstInterval - 4)
 				{
 					toPlayerTrue = toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(15f, 25f) * NPC.ai[1]));
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						if ((Main.rand.Next(5) <= 1 && length <= 640) || (!lineOfSight && length <= 480))
 						{

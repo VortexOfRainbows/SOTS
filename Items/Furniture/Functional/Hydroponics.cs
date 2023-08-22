@@ -343,34 +343,34 @@ namespace SOTS.Items.Furniture.Functional
         }
 		public void DoDust(int i, int j, int type, ref Color color1) 
 		{
-			if (type == 0 && Main.rand.Next(100) == 0)
+			if (type == 0 && Main.rand.NextBool(100))
 			{
-				int dust = Dust.NewDust(new Vector2(i * 16, (float)(j * 16 - 4)), 16, 16, 19, 0.0f, 0.0f, 160, new Color(), 0.1f);
+				int dust = Dust.NewDust(new Vector2(i * 16, (float)(j * 16 - 4)), 16, 16, DustID.Sunflower, 0.0f, 0.0f, 160, new Color(), 0.1f);
 				Main.dust[dust].velocity.X /= 2f;
 				Main.dust[dust].velocity.Y /= 2f;
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].fadeIn = 1f;
 			}
-			if (type == 1 && Main.rand.Next(100) == 0)
-				Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, 41, 0.0f, 0.0f, 250, new Color(), 0.8f);
+			if (type == 1 && Main.rand.NextBool(100))
+				Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.GlowingMushroom, 0.0f, 0.0f, 250, new Color(), 0.8f);
 			if (type == 3)
 			{
-				if (Main.rand.Next(200) == 0)
+				if (Main.rand.NextBool(200))
 				{
-					int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, 14, 0.0f, 0.0f, 100, new Color(), 0.2f);
+					int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite, 0.0f, 0.0f, 100, new Color(), 0.2f);
 					Main.dust[dust].fadeIn = 1.2f;
 				}
 
-				if (Main.rand.Next(75) == 0)
+				if (Main.rand.NextBool(75))
 				{
-					int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, 27);
+					int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Shadowflame);
 					Main.dust[dust].velocity.X /= 2f;
 					Main.dust[dust].velocity.Y /= 2f;
 				}
 			}
-			if (type == 4 && Main.rand.Next(150) == 0)
+			if (type == 4 && Main.rand.NextBool(150))
 			{
-				int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 8, 16);
+				int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 8, DustID.Cloud);
 				Main.dust[dust].velocity.X /= 3f;
 				Main.dust[dust].velocity.Y /= 3f;
 				Main.dust[dust].velocity.Y -= 0.7f;
@@ -381,7 +381,7 @@ namespace SOTS.Items.Furniture.Functional
 			}
 			if (type == 5)
 			{
-				if (Main.rand.Next(40) == 0)
+				if (Main.rand.NextBool(40))
 				{
 					int dust = Dust.NewDust(new Vector2(i * 16, (float)(j * 16 - 6)), 16, 16, DustID.Torch, 0.0f, 0.0f, 0, new Color(), 1.5f);
 					Main.dust[dust].velocity.Y -= 2f;
@@ -393,10 +393,10 @@ namespace SOTS.Items.Furniture.Functional
 			}
 			if (type == 6)
 			{
-				if (Main.rand.Next(30) == 0)
+				if (Main.rand.NextBool(30))
 				{
 					var newColor = new Color(50, byte.MaxValue, byte.MaxValue, byte.MaxValue); 
-					int dust = Dust.NewDust(new Vector2((i * 16), (j * 16)), 16, 16,43, 0.0f, 0.0f, 254, newColor, 0.5f);
+					int dust = Dust.NewDust(new Vector2((i * 16), (j * 16)), 16, 16, DustID.TintableDustLighted, 0.0f, 0.0f, 254, newColor, 0.5f);
 					Main.dust[dust].velocity *= 0.0f;
 				}
 				var num9 = (byte)((Main.mouseTextColor + color1.G * 2) / 3);

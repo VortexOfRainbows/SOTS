@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Dusts;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -41,7 +42,7 @@ namespace SOTS.Projectiles.Minions
 				Main.dust[num1].velocity = circularLocation * 0.45f;
 
 				circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i + 10));
-				num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 72);
+				num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.Gastropod);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 1.25f;
 				Main.dust[num1].velocity = circularLocation * 0.45f;
@@ -54,7 +55,7 @@ namespace SOTS.Projectiles.Minions
 			Main.dust[num1].scale = 0.75f;
 			Main.dust[num1].velocity *= 0.7f;
 
-			num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 72);
+			num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Gastropod);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].scale = 1.25f;
 			Main.dust[num1].velocity *= 0.7f;
