@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
-using SOTS.Items.Otherworld;
+using SOTS.Items.Planetarium;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Otherworld.Blocks;
+using SOTS.Items.Planetarium.Blocks;
 using System.Collections.Generic;
 
 namespace SOTS.Items.MusicBoxes

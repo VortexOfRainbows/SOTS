@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Planetarium.Furniture;
 using SOTS.Void;
 using System;
 using Terraria;

@@ -130,7 +130,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			if (runOnce)
 				return;
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/ThunderColumn").Value;
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Planetarium/ThunderColumn").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2[] trailPos = this.trailPos[id];
 			Vector2 previousPosition = trailPos[0];

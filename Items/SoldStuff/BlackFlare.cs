@@ -1,4 +1,4 @@
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

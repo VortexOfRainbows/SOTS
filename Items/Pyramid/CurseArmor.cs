@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Otherworld.EpicWings;
+using SOTS.Items.Planetarium.EpicWings;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;

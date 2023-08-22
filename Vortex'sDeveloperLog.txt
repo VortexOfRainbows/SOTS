@@ -37,6 +37,9 @@ Update Objectives:
  
 Daily Log:
 
+8/21/23
+1. Renamed Otherworld folder to Planetarium Folder
+
 8/19/23 to 8/21/23
 1. Attempted fixing various tile drop issues. They should be all fixed
 2. fixed door and chest localization

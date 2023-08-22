@@ -6,7 +6,7 @@ using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Conduit;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Planetarium.Furniture;
 using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Void

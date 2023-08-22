@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
 using SOTS.Void;
-using SOTS.Items.Otherworld;
+using SOTS.Items.Planetarium;
 using SOTS.Items.Pyramid;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;

@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 using SOTS.Void;
 using System;
 using Terraria;

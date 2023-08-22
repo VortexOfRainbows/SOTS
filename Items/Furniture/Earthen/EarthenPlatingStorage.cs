@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using SOTS.Items.AbandonedVillage;
-using SOTS.Items.Otherworld;
+using SOTS.Items.Planetarium;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

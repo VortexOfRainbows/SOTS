@@ -2,7 +2,7 @@ using Terraria.ID;
 using System.Diagnostics;
 using Terraria;
 using Terraria.ModLoader;
-using SOTS.Items.Otherworld;
+using SOTS.Items.Planetarium;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Pyramid;
 using SOTS.Items.ChestItems;

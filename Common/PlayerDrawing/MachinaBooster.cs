@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.Otherworld.EpicWings;
+using SOTS.Items.Planetarium.EpicWings;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -79,21 +79,21 @@ namespace SOTS.Common.PlayerDrawing
 			if(wingAssets == null)
             {
 				wingAssets = new Texture2D[11];
-				wingAssets[0] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[1] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[2] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[3] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[4] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5_2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[5] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[6] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[7] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[8] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Effect", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[9] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[10] = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[0] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[1] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4Base", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[2] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4Base2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[3] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart5", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[4] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart5_2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[5] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingBooster2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[6] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4EffectFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[7] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4EffectOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[8] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingBooster2Effect", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[9] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingBooster2Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[10] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			}
 			Player drawPlayer = drawInfo.drawPlayer;
 			TestWingsPlayer testWingsPlayer = drawPlayer.GetModPlayer<TestWingsPlayer>();
-			//Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWings_Wings_Glow").Value;
+			//Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWings_Wings_Glow").Value;
 			Texture2D smallPiece = wingAssets[0];
 			Texture2D bigPiece = wingAssets[1];
 			Texture2D bigPieceAlt = wingAssets[2];

@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Items.Fragments;
 using SOTS.Items.Void;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.FromChests;
 
 namespace SOTS.Items.CritBonus
 {

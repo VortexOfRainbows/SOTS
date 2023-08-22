@@ -1,4 +1,4 @@
-using SOTS.Items.Otherworld;
+using SOTS.Items.Planetarium;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

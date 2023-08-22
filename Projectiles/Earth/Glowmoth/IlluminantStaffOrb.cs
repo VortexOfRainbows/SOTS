@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 
 namespace SOTS.Projectiles.Earth.Glowmoth
 {    

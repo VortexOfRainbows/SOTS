@@ -1,5 +1,5 @@
 using SOTS.Items.Fragments;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.FromChests;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

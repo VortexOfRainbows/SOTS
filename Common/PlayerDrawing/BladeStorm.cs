@@ -28,9 +28,9 @@ namespace SOTS.Common.PlayerDrawing
 			if (drawInfo.shadow != 0)
 				return;
 			if(bladeTexture == null)
-				bladeTexture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/SkywardBladeBeam").Value;
+				bladeTexture = Mod.Assets.Request<Texture2D>("Projectiles/Planetarium/SkywardBladeBeam").Value;
 			if (bladeGlowTexture == null)
-				bladeGlowTexture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/SkywardBladeGlowmask").Value;
+				bladeGlowTexture = Mod.Assets.Request<Texture2D>("Projectiles/Planetarium/SkywardBladeGlowmask").Value;
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer; 
 			bool flag = drawPlayer.TryGetModPlayer<SOTSPlayer>(out modPlayer);

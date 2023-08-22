@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.RuntimeDetour;
 using SOTS.Items.Fragments;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 using SOTS.Projectiles.Tide;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

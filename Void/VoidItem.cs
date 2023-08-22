@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Buffs;
 using SOTS.Items.Celestial;
 using SOTS.Items.Earth;
-using SOTS.Items.Otherworld;
+using SOTS.Items.Planetarium;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Secrets;
 using System.Collections.Generic;

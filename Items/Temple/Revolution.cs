@@ -6,7 +6,7 @@ using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using SOTS.Items.OreItems;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 using SOTS.Projectiles.Temple;
 using System;
 

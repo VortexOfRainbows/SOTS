@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.DataStructures;
 using SOTS.Projectiles.Blades;
-using SOTS.Items.Otherworld.Furniture;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.Furniture;
+using SOTS.Items.Planetarium.FromChests;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 

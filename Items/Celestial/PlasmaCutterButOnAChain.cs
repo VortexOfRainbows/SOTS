@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.DataStructures;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.FromChests;
 using SOTS.Projectiles.Celestial;
 
 namespace SOTS.Items.Celestial

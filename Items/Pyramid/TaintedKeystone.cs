@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Planetarium.Furniture;
 
 namespace SOTS.Items.Pyramid
 {

@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.FromChests;
 using SOTS.Projectiles.Celestial;
 using Terraria.DataStructures;
 

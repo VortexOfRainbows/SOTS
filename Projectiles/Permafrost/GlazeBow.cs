@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Permafrost
                 Texture2D texture = TextureAssets.Projectile[arrowType].Value;
                 if (arrowType == ModContent.ProjectileType<HardlightArrow>() || arrowType == ModContent.ProjectileType<ChargedHardlightArrow>())
                 {
-                    texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowShaft").Value;
+                    texture = Mod.Assets.Request<Texture2D>("Projectiles/Planetarium/HardlightArrowShaft").Value;
                 }
                 textureHeight = texture.Height / 2 + 2;
                 float additionalAlphaMult = 1;

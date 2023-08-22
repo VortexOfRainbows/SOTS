@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.FromChests;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;

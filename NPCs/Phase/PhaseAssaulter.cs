@@ -6,7 +6,7 @@ using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.FromChests;
 using SOTS.Projectiles.Chaos;
 using SOTS.Void;
 using Terraria;

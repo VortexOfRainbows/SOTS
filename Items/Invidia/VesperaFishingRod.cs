@@ -4,7 +4,7 @@ using SOTS.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using SOTS.Items.Fragments;

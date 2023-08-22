@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Temple
 				int baseTotal = 30;
 				if (projectileType == ProjectileID.ChlorophyteBullet)
 					baseTotal = 18;
-				if (projectileType == ModContent.ProjectileType<Otherworld.ChargedCataclysmBullet>())
+				if (projectileType == ModContent.ProjectileType<Planetarium.ChargedCataclysmBullet>())
 				{
 					baseTotal = 15;
 					Projectile.damage *= 2;

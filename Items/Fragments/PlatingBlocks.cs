@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.Otherworld.Blocks;
-using SOTS.Items.Otherworld.FromChests;
-using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Planetarium.Blocks;
+using SOTS.Items.Planetarium.FromChests;
+using SOTS.Items.Planetarium.Furniture;
 using System;
 using Terraria;
 using Terraria.ID;

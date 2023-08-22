@@ -23,7 +23,7 @@ namespace SOTS.Common.PlayerDrawing
 				return;
 			}
 			if (starbeltGlowmaskTexture == null)
-				starbeltGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/Starbelt_WaistGlow");
+				starbeltGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Planetarium/FromChests/Starbelt_WaistGlow");
 			float alpha = 1 - drawInfo.shadow;
 			Player drawPlayer = drawInfo.drawPlayer;
 			float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;

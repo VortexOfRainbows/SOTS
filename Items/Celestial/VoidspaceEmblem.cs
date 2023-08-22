@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Items.Slime;
 using SOTS.Items.Pyramid;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium.FromChests;
 
 namespace SOTS.Items.Celestial
 {

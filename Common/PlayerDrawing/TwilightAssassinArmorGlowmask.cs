@@ -24,7 +24,7 @@ namespace SOTS.Common.PlayerDrawing
 			}
 			if (circletGlowmaskTexture == null)
 			{
-				circletGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/TwilightAssassinsCirclet_HeadGlow");
+				circletGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Planetarium/FromChests/TwilightAssassinsCirclet_HeadGlow");
 			}
 			Player drawPlayer = drawInfo.drawPlayer;
 			float alpha = 1 - drawInfo.shadow;
@@ -63,7 +63,7 @@ namespace SOTS.Common.PlayerDrawing
 			}
 			if (glowmaskTexture == null)
 			{
-				glowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/TwilightAssassinsChestplate_BodyGlow");
+				glowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Planetarium/FromChests/TwilightAssassinsChestplate_BodyGlow");
 			}
 			Vector2 bobbingOffset = Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height];
 			bobbingOffset.Y -= 2f;
@@ -110,7 +110,7 @@ namespace SOTS.Common.PlayerDrawing
 			}
 			if (glowmaskTexture == null)
 			{
-				glowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/TwilightAssassinsChestplate_BodyGlow");
+				glowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Planetarium/FromChests/TwilightAssassinsChestplate_BodyGlow");
 			}
 			float alpha = 1 - drawInfo.shadow;
 			Vector2 vector = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - (float)(drawInfo.drawPlayer.bodyFrame.Width / 2) + (float)(drawInfo.drawPlayer.width / 2)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + (float)drawInfo.drawPlayer.height - (float)drawInfo.drawPlayer.bodyFrame.Height + 4f)) + drawInfo.drawPlayer.bodyPosition + new Vector2(drawInfo.drawPlayer.bodyFrame.Width / 2, drawInfo.drawPlayer.bodyFrame.Height / 2);
@@ -155,7 +155,7 @@ namespace SOTS.Common.PlayerDrawing
 			}
 			if (glowmaskTexture == null)
 			{
-				glowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/TwilightAssassinsChestplate_BodyGlow");
+				glowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Planetarium/FromChests/TwilightAssassinsChestplate_BodyGlow");
 			}
 			SpriteEffects spriteEffects = drawInfo.playerEffect;
 			Player drawPlayer = drawInfo.drawPlayer;
@@ -201,7 +201,7 @@ namespace SOTS.Common.PlayerDrawing
 			}
 			if (leggingsGlowmaskTexture == null)
 			{
-				leggingsGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Otherworld/FromChests/TwilightAssassinsLeggings_LegsGlow");
+				leggingsGlowmaskTexture = ModContent.Request<Texture2D>("SOTS/Items/Planetarium/FromChests/TwilightAssassinsLeggings_LegsGlow");
 			}
 			Player drawPlayer = drawInfo.drawPlayer;
 			float alpha = 1 - drawInfo.shadow;

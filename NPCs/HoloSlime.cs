@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
-using SOTS.Items.Otherworld;
-using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Planetarium;
+using SOTS.Items.Planetarium.FromChests;
 using System.IO;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

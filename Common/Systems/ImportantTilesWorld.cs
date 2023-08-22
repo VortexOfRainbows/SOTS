@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Items.Gems;
-using SOTS.Items.Otherworld;
+using SOTS.Items.Planetarium;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Secrets;

@@ -494,9 +494,9 @@ namespace SOTS.NPCs.Town
 				.Add<NatureConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal))
 				.Add<CursedApple>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal))
 				.Add<DreamLamp>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal && SOTSWorld.DreamLampSolved))
-				.Add<Items.Otherworld.MeteoriteKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
-				.Add<Items.Otherworld.SkywareKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
-				.Add<Items.Otherworld.StrangeKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
+				.Add<Items.Planetarium.MeteoriteKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
+				.Add<Items.Planetarium.SkywareKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
+				.Add<Items.Planetarium.StrangeKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
 				.Add<AmethystRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockAmethyst && SOTSWorld.AmethystKeySlotted))
 				.Add<RockCandy>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockAmethyst))
 				.Add<TopazRing>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.gemlockTopaz && SOTSWorld.TopazKeySlotted))
@@ -686,7 +686,7 @@ namespace SOTS.NPCs.Town
 					}
 					Main.spriteBatch.Draw(TextureAssets.Liquid[liquidType].Value, new Vector2(h * 16, k * 16 + tileOffset) - Main.screenPosition, frame, Color.White * waterAlpha * (flag7 ? Main.liquidAlpha[liquidType] : 1f), 0f, origin, new Vector2(1, yScale), 0, 0f);
 				}
-				else if (pass != 3 && otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree && oType != ModContent.TileType<Items.Furniture.Functional.Hydroponics>() && oType != ModContent.TileType<Items.Otherworld.Furniture.SkyChainTile>())
+				else if (pass != 3 && otherTile.HasTile && !TileID.Sets.IsATreeTrunk[otherTile.TileType] && !TileID.Sets.CountsAsGemTree[otherTile.TileType] && oType != TileID.PalmTree && oType != ModContent.TileType<Items.Furniture.Functional.Hydroponics>() && oType != ModContent.TileType<Items.Planetarium.Furniture.SkyChainTile>())
 				{
 					if (TileLoader.PreDraw(h, k, oType, Main.spriteBatch))
 					{

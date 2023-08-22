@@ -8,7 +8,7 @@ using Terraria.ID;
 using SOTS.Projectiles.Celestial;
 using System.Collections.Generic;
 using SOTS.Buffs;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Planetarium;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs.MinionBuffs;
 

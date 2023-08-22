@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
-using SOTS.Items.Otherworld.Blocks;
-using SOTS.Projectiles.Otherworld;
+using SOTS.Items.Planetarium.Blocks;
+using SOTS.Projectiles.Planetarium;
 using System;
 using System.IO;
 using Terraria;
