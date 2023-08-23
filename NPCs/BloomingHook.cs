@@ -184,7 +184,7 @@ namespace SOTS.NPCs
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)hit.HitDirection * 0.75f, -1f, NPC.alpha, default, 1f);
 					if(Main.rand.NextBool(4))
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hit.HitDirection, -1f, NPC.alpha, default, 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.ViciousPowder, (float)hit.HitDirection, -1f, NPC.alpha, default, 1f);
 					num++;
 				}
 			}
@@ -194,7 +194,7 @@ namespace SOTS.NPCs
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Grass, (float)(1.5f * hit.HitDirection), -2f, NPC.alpha, default, 1f);
 					if (Main.rand.NextBool(2))
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, 231, (float)hit.HitDirection, -1f, NPC.alpha, default, 1f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.ViciousPowder, (float)hit.HitDirection, -1f, NPC.alpha, default, 1f);
 				}
 			}
 		}

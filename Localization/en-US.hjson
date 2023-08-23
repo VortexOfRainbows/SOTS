@@ -5075,6 +5075,14 @@ Mods: {
 				DisplayName: Frigid Hamaxe
 				Tooltip: ""
 			}
+
+			SharkPog: {
+				DisplayName: Pog Shark
+				Tooltip:
+				'''
+				Launches bubbles that rise quickly
+				'''
+			}
 		}
 
 		ItemTooltip: {
@@ -6624,6 +6632,7 @@ Mods: {
 			VorpalLightning.DisplayName: Vorpal Thunder
 			VorpalLightning2.DisplayName: Vorpal Lightning
 			VorpalLightningDamage.DisplayName: Origin Thunder
+			PogBubble.DisplayName: Pog Bubble
 		}
 
 		DamageClasses: {

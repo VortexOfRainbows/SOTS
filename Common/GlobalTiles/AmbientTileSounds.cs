@@ -87,11 +87,11 @@ namespace SOTS.Common.GlobalTiles
         }
         public void TurnOffSound(SoundStyle sound)
         {
-            ActiveSound? snd = SoundEngine.FindActiveSound(sound);
+            /*ActiveSound? snd = SoundEngine.FindActiveSound(sound);
             if (snd != null)
             {
                 snd.Sound.Stop(true);
-            }
+            }*/
         }
         public void TurnOnSound(SoundStyle sound, int i, int j)
         {

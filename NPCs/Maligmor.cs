@@ -225,12 +225,12 @@ namespace SOTS.NPCs
 					for (int i = 0; i < 72; i++)
 					{
 						Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 5));
-						Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
+						Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, DustID.ViciousPowder, 0, 0, NPC.alpha, default, 1f);
 						dust.velocity *= 0.5f;
 						dust.velocity += circular * 0.75f;
 						dust.scale = 2.5f;
 						dust.noGravity = true;
-						dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
+						dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, DustID.ViciousPowder, 0, 0, NPC.alpha, default, 1f);
 						dust.velocity *= 0.5f;
 						dust.velocity += circular * 0.25f;
 						dust.scale = 1.25f;
@@ -239,7 +239,7 @@ namespace SOTS.NPCs
 						{
 							for (int l = 0; l < 10; l++)
 							{
-								dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, 231, 0, 0, NPC.alpha, default, 1f);
+								dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, DustID.ViciousPowder, 0, 0, NPC.alpha, default, 1f);
 								dust.velocity *= 0.5f;
 								dust.velocity += circular * (0.25f + l * 0.05f);
 								dust.scale = 1.25f + (1.25f * l * 0.1f);

@@ -20,7 +20,7 @@ A new mechanic, Void, which lets you utilize the power of your soul
 Warriors, Rangers, Mages, and Summoners can all have void weapons at their disposal
 
 [b]~Developers~[/b]
-Code, Direction, Art: Vortex#6230
+Code, Direction, Art: Vortex
 Direction, Art: Taco
 Music, SFX, Direction, Art: Heart Plus Up!
 Music: YuriO
