@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.Debuffs;
 using SOTS.Common;
 using SOTS.Common.GlobalNPCs;
+using SOTS.FakePlayer;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
 using SOTS.NPCs.Town;
@@ -329,6 +330,16 @@ namespace SOTS
 					bool freeze = SOTSProjectile.UpdateWhileFrozen(self, i);
 					if (freeze)
 						return;
+                }
+				FakePlayerProjectile fPPInstance;
+                bool canGetGlobal = self.TryGetGlobalProjectile(out fPPInstance);
+				if(canGetGlobal)
+                {
+                    fPPInstance.UpdateFakeOwner(self);
+                    if (fPPInstance.FakeOwnerIdentity != -1)
+					{
+						return;
+					}
 				}
 			}
 			orig(self, i);

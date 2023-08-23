@@ -57,6 +57,7 @@ using SOTS.Items.Evil;
 using SOTS.Items.Temple;
 using SOTS.Items.ChestItems;
 using SOTS.Common.Systems;
+using SOTS.FakePlayer;
 
 namespace SOTS
 {

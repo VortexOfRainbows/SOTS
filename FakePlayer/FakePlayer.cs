@@ -142,6 +142,7 @@ namespace SOTS.FakePlayer
         public Item heldItem;                        
         Item lastUsedItem;
         private int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
+        private int FakePlayerID = 0;
         public int UseItemSlot => 49; //it should always use the last slot. Maybe add a config to this later, or an individual slot.
         public bool compositeFrontArmEnabled = false;
         public bool compositeBackArmEnabled = false;
@@ -184,10 +185,11 @@ namespace SOTS.FakePlayer
             ItemUsesThisAnimation = 0;
             BoneGloveTimer = 0;
         }
-        public FakePlayer(int type = 0)
+        public FakePlayer(int type = 0, int identity = -1)
         {
             FakePlayerType = type;
             PlayerSavedProperties = new SavedPlayerValues();
+            FakePlayerID = identity;
         }
         public void Update()
         {
@@ -201,9 +203,11 @@ namespace SOTS.FakePlayer
             int whoAmI = player.whoAmI;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
-            if(canUseItem)
+            FakePlayerProjectile.OwnerOfThisUpdateCycle = FakePlayerID; //Temporarily assign the owner of the update cycle, which will make any projectile spawned during the update cycle a child of the fake player
+            if (canUseItem)
                 player.ItemCheck(); //Run the actual item use code
             SetupBodyFrame(player); //run code to get frame after
+            FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
         }

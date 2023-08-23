@@ -39,7 +39,7 @@ namespace SOTS.FakePlayer
 				runOnce = false;
 			}
 			if (FakePlayer == null)
-				FakePlayer = new FakePlayer(0);
+				FakePlayer = new FakePlayer(0, Projectile.identity);
 			return base.PreAI();
 		}
         public override bool? CanCutTiles() => false;

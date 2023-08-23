@@ -5078,10 +5078,7 @@ Mods: {
 
 			SharkPog: {
 				DisplayName: Pog Shark
-				Tooltip:
-				'''
-				Launches bubbles that rise quickly
-				'''
+				Tooltip: Launches bubbles that rise quickly
 			}
 		}
 
