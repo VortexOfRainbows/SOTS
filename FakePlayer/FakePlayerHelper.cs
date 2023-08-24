@@ -18,6 +18,15 @@ using System.Linq;
 
 namespace SOTS.FakePlayer
 {
+    public abstract class FakePlayerPossessingProjectile : ModProjectile
+    {
+        public FakePlayer FakePlayer = null;
+        public sealed override void SetStaticDefaults()
+        {
+            FakePlayerHelper.FakePlayerPossessingProjectile.Add(Type);
+            Main.projPet[Projectile.type] = true;
+        }
+    }
     public static class FakePlayerHelper
     {
         public static HashSet<int> FakePlayerPossessingProjectile;
@@ -25,11 +34,11 @@ namespace SOTS.FakePlayer
         public static int[] FakePlayerItemWhitelist;
         public static void Initialize()
         {
+            FakePlayerPossessingProjectile = new HashSet<int>();
             FakePlayerItemBlacklist = new int[] { //Items that are disallowed, despite naturally working (because they have various bugs in actual execution)
                 ModContent.ItemType<LashesOfLightning>(),
                 ModContent.ItemType<SkywardBlades>(),
                 ItemID.GolemFist,
-                ItemID.Flairon,
                 ModContent.ItemType<PhaseCannon>(),
                 ModContent.ItemType<HardlightGlaive>(),
                 ModContent.ItemType<StarcoreAssaultRifle>(),
@@ -56,15 +65,12 @@ namespace SOTS.FakePlayer
                 ItemID.Harp,
                 ItemID.Bell 
             };
-            FakePlayerPossessingProjectile = new HashSet<int>
-            {
-                ModContent.ProjectileType<SubspaceServant>()
-            };
         }
     }
     public class FakePlayerProjectile : GlobalProjectile
     {
         public static int OwnerOfThisUpdateCycle = -1;
+        public static int OwnerOfThisDrawCycle = -1;
         public override bool InstancePerEntity => true;
         public int FakeOwnerIdentity = -1;
         public override void SetDefaults(Projectile entity)
@@ -95,12 +101,32 @@ namespace SOTS.FakePlayer
                 FakeOwnerIdentity = -1;
             }
         }
+        public FakePlayerPossessingProjectile WhoOwnsMe(Projectile projectile)
+        {
+            if (FakeOwnerIdentity == -1)
+                return null;
+            int whoAmIOfIdentity = Projectile.GetByUUID(projectile.owner, FakeOwnerIdentity);
+            if (whoAmIOfIdentity != -1)
+            {
+                Projectile fakePlayer = Main.projectile[whoAmIOfIdentity];
+                if (FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) && fakePlayer.active)
+                {
+                    if (fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
+                    {
+                        return fppp;
+                    }
+                }
+            }
+            return null;
+        }
         public override void OnSpawn(Projectile projectile, IEntitySource source) //OnSpawn happens before the netmessage that syncs projectiles is sent, so it should be safe to not run projectile.netUpdate = true; here!
         {
             if (OwnerOfThisUpdateCycle == -1 || projectile.owner != Main.myPlayer)
-                return;
-            FakeOwnerIdentity = OwnerOfThisUpdateCycle;
-            //projectile.netUpdate = true;
+            {
+                FakeOwnerIdentity = -1;
+            }
+            else
+                FakeOwnerIdentity = OwnerOfThisUpdateCycle;
         }
     }
 }

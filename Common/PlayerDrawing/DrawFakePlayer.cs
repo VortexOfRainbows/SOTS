@@ -20,7 +20,7 @@ namespace SOTS.Common.PlayerDrawing
 		public override Position GetDefaultPosition() => new BeforeParent(PlayerDrawLayers.JimsCloak); //this would be the very first layer... Hopefully this works
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
-			if (drawInfo.drawPlayer.dead)
+			if (drawInfo.drawPlayer.dead || drawInfo.shadow != 0)
 			{
 				return;
 			}

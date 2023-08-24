@@ -11,6 +11,8 @@ using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -23,12 +25,15 @@ namespace SOTS
 {
     public static class SOTSDetours
 	{
+		public static bool DrawingProjectileFromCache = false;
 		public static RenderTarget2D TargetProj;
 		public static void Initialize()
 		{
 			On_NetMessage.SendData += NetMessage_SendData;
 
 			On_Main.DrawProjectiles += Main_DrawProjectiles;
+			On_Main.DrawProj += Main_DrawProj;
+			On_Main.DrawCachedProjs += Main_DrawCachedProjs;
 			On_Main.DrawNPCs += Main_DrawNPCs;
 			On_Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
 			//The following is for Time Freeze
@@ -336,7 +341,7 @@ namespace SOTS
 				if(canGetGlobal)
                 {
                     fPPInstance.UpdateFakeOwner(self);
-                    if (fPPInstance.FakeOwnerIdentity != -1)
+                    if (fPPInstance.FakeOwnerIdentity != -1 && fPPInstance.FakeOwnerIdentity != FakePlayerProjectile.OwnerOfThisUpdateCycle) //Don't update this projectile here if it is owned by a fake player. instead, update it when fakeplayer updates
 					{
 						return;
 					}
@@ -344,7 +349,45 @@ namespace SOTS
 			}
 			orig(self, i);
 		}
-		private static void Item_UpdateItem(On_Item.orig_UpdateItem orig, Item self, int i)
+		private static void Main_DrawProj(On_Main.orig_DrawProj orig, Main self, int i)
+        {
+            if (i >= 0)
+            {
+				Projectile proj = Main.projectile[i];
+                if (proj.active)
+                {
+                    FakePlayerProjectile fPPInstance;
+                    bool canGetGlobal = proj.TryGetGlobalProjectile(out fPPInstance);
+                    if (canGetGlobal)
+                    {
+                        fPPInstance.UpdateFakeOwner(proj);
+                        if (fPPInstance.FakeOwnerIdentity != -1 && fPPInstance.FakeOwnerIdentity != FakePlayerProjectile.OwnerOfThisDrawCycle)
+                        {
+                            //Main.NewText(proj.ToString());
+							if(DrawingProjectileFromCache)
+							{
+								FakePlayerPossessingProjectile fPPP = fPPInstance.WhoOwnsMe(proj);
+								if(fPPP != null && fPPP.FakePlayer != null)
+								{
+                                    fPPP.FakePlayer.LoadValuesForCachedProjectileDraw(Main.player[proj.owner], true);
+                                    orig(self, i);
+                                    fPPP.FakePlayer.LoadValuesForCachedProjectileDraw(Main.player[proj.owner], false);
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+            orig(self, i);
+		}
+		private static void Main_DrawCachedProjs(On_Main.orig_DrawCachedProjs orig, Main self, List<int> projCache, bool startSpriteBatch)
+		{
+			DrawingProjectileFromCache = true;
+            orig(self, projCache, startSpriteBatch);
+			DrawingProjectileFromCache = false;
+        }
+        private static void Item_UpdateItem(On_Item.orig_UpdateItem orig, Item self, int i)
 		{
 			if (SOTSWorld.IsFrozenThisFrame && self.active)
 			{
@@ -498,14 +541,24 @@ namespace SOTS
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.active && proj.ModProjectile is IOrbitingProj modProj && modProj.inFront)
-					{
-						modProj.Draw(Main.spriteBatch, Color.White);
-					}
-					if (proj.active && proj.ModProjectile is IncineratorGloveProjectile modProj2)
-					{
-						modProj2.Draw(Main.spriteBatch, Color.White); 
-					}
+					if(proj.active)
+                    {
+                        if (proj.ModProjectile is IOrbitingProj modProj && modProj.inFront)
+                        {
+                            modProj.Draw(Main.spriteBatch, Color.White);
+                        }
+                        if (proj.ModProjectile is IncineratorGloveProjectile modProj2)
+                        {
+                            modProj2.Draw(Main.spriteBatch, Color.White);
+                        }
+						if(proj.ModProjectile is FakePlayerPossessingProjectile fPPP)
+						{
+							if(fPPP.FakePlayer != null)
+							{
+								fPPP.FakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, Main.player[proj.owner]);
+							}
+						}
+                    }
 				}
 				Main.spriteBatch.End();
 			}

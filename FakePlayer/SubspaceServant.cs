@@ -6,17 +6,10 @@ using System.IO;
 
 namespace SOTS.FakePlayer
 {
-	public class SubspaceServant : ModProjectile
+	public class SubspaceServant : FakePlayerPossessingProjectile
 	{
-		public FakePlayer FakePlayer;
 		public Vector2 ItemLocation;
 		public float ItemRotation;
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Subspace Servant");
-			Main.projPet[Projectile.type] = true;
-			//Main.vanityPet[Projectile.type] = true;
-		}
 		public sealed override void SetDefaults()
 		{
 			Projectile.width = 20;

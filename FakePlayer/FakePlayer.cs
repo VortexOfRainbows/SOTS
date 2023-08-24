@@ -1,11 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using SOTS.Projectiles.Base;
 using SOTS.Projectiles.Celestial;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -43,11 +47,11 @@ namespace SOTS.FakePlayer
             {
                 Projectile proj = new Projectile();
                 proj.SetDefaults(item.shoot);
-                if (FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type) || item.damage <= 0)
+                if ((FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type) && item.type != ItemID.Flairon) || item.damage <= 0)
                 {
                     canUseItem = false;
                 }
-                else if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.channel || item.consumable || lastUsedItem == null || item.mountType != -1)
+                else if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.consumable || lastUsedItem == null || item.mountType != -1)
                 {
                     canUseItem = false;
                 }
@@ -137,6 +141,9 @@ namespace SOTS.FakePlayer
         public CompositeArmData compositeBackArm;
         public float compositeFrontArmRotation;
         public float compositeBackArmRotation;
+        public int projectileDrawPosition;
+        public bool heldProjOverHand;
+        public Vector2 bodyVect;
         public Rectangle compFrontArmFrame = Rectangle.Empty;
         public Rectangle compBackArmFrame = Rectangle.Empty;
         public Item heldItem;                        
@@ -165,6 +172,8 @@ namespace SOTS.FakePlayer
         public int AttackCD;
         public int ItemUsesThisAnimation;
         public int BoneGloveTimer;
+        public bool Channel;
+        public int HeldProj = -1;
         public void ResetVariables()
         {
             lastUsedItem = null;
@@ -191,25 +200,28 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties = new SavedPlayerValues();
             FakePlayerID = identity;
         }
-        public void Update()
+        public void Update(Player player)
         {
-            if (BoneGloveTimer > 0)
+            if (player.boneGloveTimer > 0)
             {
-                BoneGloveTimer--;
+                player.boneGloveTimer--;
             }
+            HeldProj = -1;
         }
         public void RunItemCheck(Player player, bool canUseItem = false)
         {
+            FakePlayerProjectile.OwnerOfThisUpdateCycle = FakePlayerID; //Temporarily assign the owner of the update cycle, which will make any projectile spawned during the update cycle a child of the fake player
             int whoAmI = player.whoAmI;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
-            FakePlayerProjectile.OwnerOfThisUpdateCycle = FakePlayerID; //Temporarily assign the owner of the update cycle, which will make any projectile spawned during the update cycle a child of the fake player
-            if (canUseItem)
+            Update(player);
+            if (canUseItem || player.channel)
                 player.ItemCheck(); //Run the actual item use code
+            UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
-            FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
+            FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
         }
         public void SaveRealPlayerValues(Player player)
         {
@@ -260,13 +272,13 @@ namespace SOTS.FakePlayer
             //Set default values (ones that aren't used/modified by FakePlayer)
             player.selectedItem = UseItemSlot;
             player.lastVisualizedSelectedItem = lastUsedItem;
-            player.channel = false;
+            player.channel = Channel;
             player.frozen = player.stoned = player.webbed = player.wet = false;
             player.mount._active = false;
             player.altFunctionUse = 0;
             player.pulley = false;
             player.isPettingAnimal = false;
-            player.heldProj = -1;
+            player.heldProj = HeldProj;
             player.stealth = 1f;
             player.gravDir = 1f;
             player.invis = false;
@@ -299,6 +311,8 @@ namespace SOTS.FakePlayer
         public void CopyRealToFake(Player player)
         {
             //Run using FakePlayer values, then set FakePlayer values to the newly updated ones
+            HeldProj = player.heldProj;
+            Channel = player.channel;
             Position = player.position;
             Velocity = player.velocity;
             compositeFrontArmEnabled = player.compositeFrontArm.enabled;
@@ -372,8 +386,8 @@ namespace SOTS.FakePlayer
             PropertyInfo prop = type.GetProperty("ItemUsesThisAnimation");
             prop.SetValue(player, setUses, null);
         }
-        SpriteEffects playerEffect;
-        SpriteEffects itemEffect;
+        public SpriteEffects playerEffect;
+        public SpriteEffects itemEffect;
         public void HijackItemDrawing(ref PlayerDrawSet drawInfo, bool green)
         {
             if(green)
@@ -410,6 +424,7 @@ namespace SOTS.FakePlayer
         }
         public void DrawFakePlayer(ref PlayerDrawSet drawInfo)
         {
+            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             float savegfxOffY = drawInfo.drawPlayer.gfxOffY;
             drawInfo.drawPlayer.gfxOffY = 0;
             if (bodyFrame.IsEmpty)
@@ -434,23 +449,29 @@ namespace SOTS.FakePlayer
             drawInfo.Position = Position;
 
             //Save Arm Data
-            CompositeArmData saveFrontArm = drawInfo.drawPlayer.compositeFrontArm;
-            CompositeArmData saveBackArm = drawInfo.drawPlayer.compositeBackArm;
+             //CompositeArmData saveFrontArm = drawInfo.drawPlayer.compositeFrontArm;
+             //CompositeArmData saveBackArm = drawInfo.drawPlayer.compositeBackArm;
             Rectangle saveFrontArmFrame = drawInfo.compFrontArmFrame;
             Rectangle saveBackArmFrame = drawInfo.compBackArmFrame;
             float saveFrontArmRotation = drawInfo.compositeFrontArmRotation;
             float saveBackArmRotation = drawInfo.compositeBackArmRotation;
+            int saveProjectileDrawPosition = drawInfo.projectileDrawPosition;
+            bool saveHeldProjOverHand = drawInfo.heldProjOverHand;
+            Vector2 saveBodyVect = drawInfo.bodyVect;
 
             SetupSpriteDirection(ref drawInfo, player);
 
             //Copy this arm data
             SetupCompositeDrawing(player);
-            drawInfo.drawPlayer.compositeFrontArm = this.compositeFrontArm;
-            drawInfo.drawPlayer.compositeBackArm = this.compositeBackArm;
+            //drawInfo.drawPlayer.compositeFrontArm = this.compositeFrontArm;
+            //drawInfo.drawPlayer.compositeBackArm = this.compositeBackArm;
             drawInfo.compFrontArmFrame = this.compFrontArmFrame;
             drawInfo.compBackArmFrame = this.compBackArmFrame;
             drawInfo.compositeFrontArmRotation = this.compositeFrontArmRotation;
             drawInfo.compositeBackArmRotation = this.compositeBackArmRotation;
+            drawInfo.projectileDrawPosition = this.projectileDrawPosition;
+            drawInfo.heldProjOverHand = this.heldProjOverHand;
+            drawInfo.bodyVect = this.bodyVect;
 
             DrawTail(ref drawInfo, true);
             HijackItemDrawing(ref drawInfo, true);
@@ -466,25 +487,33 @@ namespace SOTS.FakePlayer
             FakePlayerDrawing.DrawBody(ref drawInfo, false);
             if(weaponDrawOrder == 1)
                 HijackItemDrawing(ref drawInfo, false);
-            FakePlayerDrawing.DrawFrontArm(ref drawInfo, false);
+            if (player.heldProj == -1 || heldProjOverHand)
+            {
+                FakePlayerDrawing.DrawFrontArm(ref drawInfo, false);
+            }
             if (weaponDrawOrder == 2)
                 HijackItemDrawing(ref drawInfo, false);
-
             //Save this arm data
-            compositeFrontArm = drawInfo.drawPlayer.compositeFrontArm;
-            compositeBackArm = drawInfo.drawPlayer.compositeBackArm;
+            //compositeFrontArm = drawInfo.drawPlayer.compositeFrontArm;
+            //compositeBackArm = drawInfo.drawPlayer.compositeBackArm;
             compFrontArmFrame = drawInfo.compFrontArmFrame;
             compBackArmFrame = drawInfo.compBackArmFrame;
             compositeFrontArmRotation = drawInfo.compositeFrontArmRotation;
             compositeBackArmRotation = drawInfo.compositeBackArmRotation;
+            projectileDrawPosition = drawInfo.projectileDrawPosition;
+            heldProjOverHand = drawInfo.heldProjOverHand;
+            bodyVect = drawInfo.bodyVect;
 
             //Reload Arm Data
-            drawInfo.drawPlayer.compositeFrontArm = saveFrontArm;
-            drawInfo.drawPlayer.compositeBackArm = saveBackArm;
+            //drawInfo.drawPlayer.compositeFrontArm = saveFrontArm;
+            //drawInfo.drawPlayer.compositeBackArm = saveBackArm;
             drawInfo.compFrontArmFrame = saveFrontArmFrame;
             drawInfo.compBackArmFrame = saveBackArmFrame;
             drawInfo.compositeFrontArmRotation = saveFrontArmRotation;
             drawInfo.compositeBackArmRotation = saveBackArmRotation;
+            drawInfo.projectileDrawPosition = saveProjectileDrawPosition;
+            drawInfo.heldProjOverHand = saveHeldProjOverHand;
+            drawInfo.bodyVect = saveBodyVect;
 
             drawInfo.drawPlayer.gfxOffY = savegfxOffY;
 
@@ -501,8 +530,25 @@ namespace SOTS.FakePlayer
             drawInfo.itemEffect = saveItemEffect;
             drawInfo.Position = savePosition;
 
+            DrawMyProjectiles(player); //Doesn't matter where in the order this is called... as drawInfoDrawing will happen later anyway
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
+            FakePlayerProjectile.OwnerOfThisDrawCycle = -1;
+        }
+        public void SecondaryFakePlayerDrawing(SpriteBatch spriteBatch, Player player)
+        {
+            if (HeldProj != -1)
+            {
+                SaveRealPlayerValues(player);
+                CopyFakeToReal(player);
+                DrawMyHeldProjectile(player);
+                if(!heldProjOverHand)
+                {
+                    FakePlayerDrawing.DrawFrontArm(this, spriteBatch);
+                }
+                CopyRealToFake(player);
+                LoadRealPlayerValues(player);
+            }
         }
         public Texture2D saveGreenTexture;
         public Texture2D saveNormalTexture;
@@ -628,6 +674,7 @@ namespace SOTS.FakePlayer
             compositeFrontArmRotation = DrawInfoDummy.compositeFrontArmRotation;
             compositeBackArmRotation = DrawInfoDummy.compositeBackArmRotation;
             weaponDrawOrder = (int)DrawInfoDummy.weaponDrawOrder;
+            bodyVect = DrawInfoDummy.bodyVect;
         }
         public void DrawTail(ref PlayerDrawSet drawInfo, bool outLine = false)
         {
@@ -673,6 +720,75 @@ namespace SOTS.FakePlayer
                 {
                     drawInfo.DrawDataCache.Add(new DrawData(texture2, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
                 }
+            }
+        }
+        public void UpdateMyProjectiles(Player player)
+        {
+            for(int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile projectile = Main.projectile[i];
+                if(projectile.active && projectile.owner == player.whoAmI)
+                {
+                    FakePlayerProjectile fPPInstance;
+                    bool canGetGlobal = projectile.TryGetGlobalProjectile(out fPPInstance);
+                    if (canGetGlobal)
+                    {
+                        if (fPPInstance.FakeOwnerIdentity == FakePlayerID)
+                        {
+                            projectile.Update(i);
+                        }
+                    }
+                }
+            }
+        }
+        public void DrawMyProjectiles(Player player)
+        {
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile projectile = Main.projectile[i];
+                if (projectile.active && projectile.owner == player.whoAmI && projectile.type > 0 && !projectile.hide)
+                {
+                    FakePlayerProjectile fPPInstance;
+                    bool canGetGlobal = projectile.TryGetGlobalProjectile(out fPPInstance);
+                    if (canGetGlobal)
+                    {
+                        if (fPPInstance.FakeOwnerIdentity == FakePlayerID)
+                        {
+                            Main.instance.DrawProj(i);
+                        }
+                    }
+                }
+            }
+        }
+        public void DrawMyHeldProjectile(Player player)
+        {
+            DrawHeldProj(Main.projectile[player.heldProj]);
+        }
+        public static void DrawHeldProj(Projectile proj)
+        {
+            if (!proj.active)
+                return;
+            proj.gfxOffY = 0;
+            try
+            {
+                Main.instance.DrawProjDirect(proj);
+            }
+            catch
+            {
+                proj.active = false;
+            }
+        }
+        public void LoadValuesForCachedProjectileDraw(Player player, bool load)
+        {
+            if(load)
+            {
+                SaveRealPlayerValues(player);
+                CopyFakeToReal(player);
+            }
+            else
+            {
+                CopyRealToFake(player);
+                LoadRealPlayerValues(player);
             }
         }
     }
@@ -744,6 +860,22 @@ namespace SOTS.FakePlayer
     }
     public static class FakePlayerDrawing
     {
+        public static void DrawFrontArm(FakePlayer fakePlayer, SpriteBatch spriteBatch)
+        {
+            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
+            SpriteEffects spriteEffects = fakePlayer.playerEffect;
+            Vector2 vector = new Vector2((int)fakePlayer.Position.X, (int)fakePlayer.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
+            if (fakePlayer.compFrontArmFrame.X / fakePlayer.compFrontArmFrame.Width >= 7)
+            {
+                vector += new Vector2((!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1), (!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipVertically)) ? 1 : (-1));
+            }
+            Vector2 origin = fakePlayer.bodyVect;
+            Vector2 position = vector + GetCompositeOffset_FrontArm(fakePlayer);
+            Color color = Color.White;
+            Rectangle frame = fakePlayer.compFrontArmFrame;
+            float rotation = fakePlayer.compositeFrontArmRotation;
+            spriteBatch.Draw(texture, position, frame, color, rotation, origin + GetCompositeOffset_FrontArm(fakePlayer), 1f, spriteEffects, 0);
+        }
         public static Vector2 GetCompositeOffset_BackArm(ref PlayerDrawSet drawInfo)
         {
             return new Vector2(6 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 2 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically)) ? 1 : (-1)));
@@ -777,6 +909,10 @@ namespace SOTS.FakePlayer
         public static Vector2 GetCompositeOffset_FrontArm(ref PlayerDrawSet drawInfo)
         {
             return new Vector2(-5 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 0f);
+        }
+        public static Vector2 GetCompositeOffset_FrontArm(FakePlayer fakePlayer)
+        {
+            return new Vector2(-5 * ((!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 0f);
         }
         public static void DrawFrontArm(ref PlayerDrawSet drawInfo, bool green)
         {
