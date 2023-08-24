@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using SOTS.Items.Planetarium.FromChests;
 using SOTS.Projectiles.Base;
 using SOTS.Projectiles.Celestial;
 using SOTS.Void;
@@ -32,6 +33,7 @@ namespace SOTS.FakePlayer
         public int weaponDrawOrder = 0;
         public Vector2 Position = Vector2.Zero;
         public Vector2 Velocity = Vector2.Zero;
+        public Vector2 SecondPosition = Vector2.Zero;
         public Vector2 OldPosition = Vector2.Zero;
         public Rectangle bodyFrame = Rectangle.Empty;
         public static bool IsValidUseStyle(Item item)
@@ -47,11 +49,11 @@ namespace SOTS.FakePlayer
             {
                 Projectile proj = new Projectile();
                 proj.SetDefaults(item.shoot);
-                if ((FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type) && item.type != ItemID.Flairon) || item.damage <= 0)
+                if (item.damage <= 0 || FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type))
                 {
                     canUseItem = false;
                 }
-                else if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.consumable || lastUsedItem == null || item.mountType != -1)
+                else if (item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.consumable || lastUsedItem == null || item.mountType != -1)
                 {
                     canUseItem = false;
                 }
@@ -105,7 +107,7 @@ namespace SOTS.FakePlayer
             if (itemAnimation > 0)
             {
                 ShouldUseWingsArmPosition = false;
-                if (item.CountsAsClass(DamageClass.Melee) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower)
+                if (item.CountsAsClass(DamageClass.Melee) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>())
                 {
                     if (item.noMelee)
                         TrailingType = 4;
@@ -120,6 +122,8 @@ namespace SOTS.FakePlayer
                 {
                     TrailingType = 1;
                 }
+                else
+                    TrailingType = 2;
             }
             else
             {
@@ -206,6 +210,7 @@ namespace SOTS.FakePlayer
             {
                 player.boneGloveTimer--;
             }
+            player.heldProj = -1;
             HeldProj = -1;
         }
         public void RunItemCheck(Player player, bool canUseItem = false)
@@ -217,6 +222,7 @@ namespace SOTS.FakePlayer
             Update(player);
             if (canUseItem || player.channel)
                 player.ItemCheck(); //Run the actual item use code
+            player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
             CopyRealToFake(player);
@@ -227,6 +233,7 @@ namespace SOTS.FakePlayer
         {
             //Save Player original values
             PlayerSavedProperties.SavePosition = player.position;
+            PlayerSavedProperties.SaveOldPos = player.oldPosition;
             PlayerSavedProperties.SaveVelocity = player.velocity;
             PlayerSavedProperties.SavedSelectedItem = player.selectedItem;
             PlayerSavedProperties.PlayerOwnedLastVisualizedSelectedItem = player.lastVisualizedSelectedItem.Clone();
@@ -243,6 +250,7 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties.saveStealth = player.stealth;
             PlayerSavedProperties.saveGravDir = player.gravDir;
             PlayerSavedProperties.saveInvis = player.invis;
+            PlayerSavedProperties.saveGFXOffY = player.gfxOffY;
 
             //Save Player original values that have corresponding fakeplayer values
             PlayerSavedProperties.savecompositeFrontArmEnabled = player.compositeFrontArm.enabled;
@@ -283,9 +291,11 @@ namespace SOTS.FakePlayer
             player.gravDir = 1f;
             player.invis = false;
             player.bodyFrame = bodyFrame;
+            player.gfxOffY = 0;
 
             //Set values that player uses to the FakePlayer's values
             player.position = Position;
+            player.oldPosition = OldPosition;
             player.velocity = Velocity;
             player.compositeFrontArm.enabled = compositeFrontArmEnabled;
             player.compositeBackArm.enabled = compositeBackArmEnabled;
@@ -314,6 +324,7 @@ namespace SOTS.FakePlayer
             HeldProj = player.heldProj;
             Channel = player.channel;
             Position = player.position;
+            OldPosition = player.oldPosition;
             Velocity = player.velocity;
             compositeFrontArmEnabled = player.compositeFrontArm.enabled;
             compositeBackArmEnabled = player.compositeBackArm.enabled;
@@ -340,6 +351,7 @@ namespace SOTS.FakePlayer
         {
             //Reset player values back to normal
             player.position = PlayerSavedProperties.SavePosition;
+            player.oldPosition = PlayerSavedProperties.SaveOldPos;
             player.velocity = PlayerSavedProperties.SaveVelocity;
             player.selectedItem = PlayerSavedProperties.SavedSelectedItem;
             player.lastVisualizedSelectedItem = PlayerSavedProperties.PlayerOwnedLastVisualizedSelectedItem;
@@ -356,6 +368,7 @@ namespace SOTS.FakePlayer
             player.stealth = PlayerSavedProperties.saveStealth;
             player.gravDir = PlayerSavedProperties.saveGravDir;
             player.invis = PlayerSavedProperties.saveInvis;
+            player.gfxOffY = PlayerSavedProperties.saveGFXOffY;
 
             //Reset other player values back to normal
             player.compositeFrontArm.enabled = PlayerSavedProperties.savecompositeFrontArmEnabled;
@@ -425,8 +438,6 @@ namespace SOTS.FakePlayer
         public void DrawFakePlayer(ref PlayerDrawSet drawInfo)
         {
             FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
-            float savegfxOffY = drawInfo.drawPlayer.gfxOffY;
-            drawInfo.drawPlayer.gfxOffY = 0;
             if (bodyFrame.IsEmpty)
                 return;
             Player player = drawInfo.drawPlayer;
@@ -514,8 +525,6 @@ namespace SOTS.FakePlayer
             drawInfo.projectileDrawPosition = saveProjectileDrawPosition;
             drawInfo.heldProjOverHand = saveHeldProjOverHand;
             drawInfo.bodyVect = saveBodyVect;
-
-            drawInfo.drawPlayer.gfxOffY = savegfxOffY;
 
             itemLocation = drawInfo.ItemLocation;
             heldItem = drawInfo.heldItem;
@@ -689,7 +698,7 @@ namespace SOTS.FakePlayer
             List<float> rotations = new List<float>();
             for (int i = 0; i < 9; i++)
             {
-                Vector2 toOldPosition = OldPosition - drawInfo.Position;
+                Vector2 toOldPosition = SecondPosition - drawInfo.Position;
                 toOldPosition.SafeNormalize(Vector2.Zero);
                 velo += toOldPosition * 0.333f;
                 velo = velo.SafeNormalize(Vector2.Zero) * scale * 4;
@@ -762,12 +771,14 @@ namespace SOTS.FakePlayer
         }
         public void DrawMyHeldProjectile(Player player)
         {
-            DrawHeldProj(Main.projectile[player.heldProj]);
+            DrawHeldProj(player, Main.projectile[player.heldProj]);
         }
-        public static void DrawHeldProj(Projectile proj)
+        public static void DrawHeldProj(Player player, Projectile proj)
         {
             if (!proj.active)
                 return;
+            float saveGFX = player.gfxOffY;
+            player.gfxOffY = 0;
             proj.gfxOffY = 0;
             try
             {
@@ -777,6 +788,7 @@ namespace SOTS.FakePlayer
             {
                 proj.active = false;
             }
+            player.gfxOffY = saveGFX;
         }
         public void LoadValuesForCachedProjectileDraw(Player player, bool load)
         {
@@ -795,6 +807,7 @@ namespace SOTS.FakePlayer
     public class SavedPlayerValues
     {
         public Vector2 SavePosition;
+        public Vector2 SaveOldPos;
         public Vector2 SaveVelocity;
         public int SavedSelectedItem;
         public Item PlayerOwnedLastVisualizedSelectedItem;
@@ -833,6 +846,7 @@ namespace SOTS.FakePlayer
         public CompositeArmData saveFrontArm;
         public CompositeArmData saveBackArm;
         public Rectangle saveBodyFrame;
+        public float saveGFXOffY;
     }
     public class FakeItem : GlobalItem
     {

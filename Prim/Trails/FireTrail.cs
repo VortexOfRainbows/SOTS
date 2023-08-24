@@ -8,6 +8,7 @@ using SOTS.Projectiles.Temple;
 using System.Collections.Generic;
 using SOTS.Projectiles.Evil;
 using SOTS.Projectiles.Blades;
+using SOTS.FakePlayer;
 
 namespace SOTS.Prim.Trails
 {
@@ -95,8 +96,18 @@ namespace SOTS.Prim.Trails
 			if (Entity is Projectile proj && !Destroyed)
 			{
 				Player projOwner = Main.player[proj.owner];
+				FakePlayerProjectile fPP;
+				bool hasModProj = proj.TryGetGlobalProjectile(out fPP);
+				Vector2 savePlayerPosition = projOwner.Center;
+                if (hasModProj)
+				{
+					if(fPP.FakeOwnerIdentity != -1)
+					{
+						FakePlayerPossessingProjectile FPPP = fPP.WhoOwnsMe(proj);
+						projOwner.Center = FPPP.Projectile.Center;
+					}
+				}
 				PointCount = Points.Count() * 6;
-
 				if (Cap < PointCount / 6)
 				{
 					Points.RemoveAt(0);
@@ -168,7 +179,8 @@ namespace SOTS.Prim.Trails
 				}
 				else
 					OnDestroy();
-			}
+				projOwner.Center = savePlayerPosition;
+            }
 			else
 			{
 				OnDestroy();

@@ -18,7 +18,6 @@ namespace SOTS.Items.Secrets
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Secrets/PhotonGeyser_Glow").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			position += new Vector2(37 * scale, 18 * scale);
 			float counter = Main.GlobalTimeWrappedHourly * 160;
 			//int bonus = (int)(counter / 360f);
 			for (int i = 0; i < 6; i++)
@@ -83,7 +82,7 @@ namespace SOTS.Items.Secrets
 				}
 				Rectangle frame = new Rectangle(0, 0, 74, 36);
 				Vector2 rotationAround = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition + new Vector2(0, 2), frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition, frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}

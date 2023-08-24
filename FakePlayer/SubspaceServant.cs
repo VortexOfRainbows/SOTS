@@ -110,22 +110,26 @@ namespace SOTS.FakePlayer
 					idlePosition += toCursor;
 				}
 				if (TrailingType == 3) //melee
-				{
-					//idlePosition.Y += 8f + (float)Math.Sqrt(Item.width * Item.height) * 0.5f;
-					Vector2 toCursor = cursorArea - player.Center;
-					float lengthToCursor = -32 + toCursor.Length();
+                {
+                    Vector2 toCursor = cursorArea - player.Center;
+                    float length = toCursor.Length();
+                    if (length > 720)
+                        length = 720;
+					float lengthToCursor = -32 + length;
 					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
 					idlePosition += toCursor;
 				}
-				if (TrailingType == 4) //melee, but no melee ?
-				{
-					idlePosition.Y += 32f;
-					Vector2 toCursor = cursorArea - player.Center;
-					float lengthToCursor = -32 + toCursor.Length() * 0.66f;
-					toCursor.Y *= 0.7f;
-					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
-					idlePosition += toCursor;
-				}
+				if (TrailingType == 4) //melee, but limitted range
+                {
+                    Vector2 toCursor = cursorArea - player.Center;
+                    float length = toCursor.Length();
+					if (length > 480)
+						length = 480;
+                    idlePosition.Y += 8f;
+                    float lengthToCursor = -64 + length;
+                    toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
+                    idlePosition += toCursor;
+                }
 				Vector2 toIdle = idlePosition - Projectile.Center;
 				float dist = toIdle.Length();
 				float speed = 3 + (float)Math.Pow(dist, 1.45) * 0.002f;
@@ -157,7 +161,7 @@ namespace SOTS.FakePlayer
 				FakePlayer.itemLocation = ItemLocation;
 				FakePlayer.itemRotation = ItemRotation;
 				FakePlayer.WingFrame = (int)(Projectile.ai[1] / 4);
-				FakePlayer.OldPosition = Projectile.position + new Vector2(-5 * Projectile.ai[0], 2);
+				FakePlayer.SecondPosition = Projectile.position + new Vector2(-5 * Projectile.ai[0], 2);
 				Projectile.position += Projectile.velocity;
 				FakePlayer.direction = Direction;
 				FakePlayer.Position = Projectile.position;
