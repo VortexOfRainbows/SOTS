@@ -46,18 +46,5 @@ namespace SOTS.FakePlayer
             int type = ModContent.ProjectileType<SubspaceServant>();
             SOTSPlayer.ModPlayer(Player).runPets(ref Probe, type, 0, 0, false);
         }
-        public static List<FakePlayer> GetServantFakePlayers(Player player)
-        {
-            List<FakePlayer> ret = new List<FakePlayer>();
-            for (int i = 0; i < Main.projectile.Length; i++)
-            {
-                Projectile proj = Main.projectile[i];
-                if (proj.ModProjectile is SubspaceServant subServ && proj.owner == player.whoAmI && proj.active)
-                {
-                    ret.Add(subServ.FakePlayer);
-                }
-            }
-            return ret;
-        }
     }
 }

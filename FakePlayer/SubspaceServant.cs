@@ -173,10 +173,12 @@ namespace SOTS.FakePlayer
 					ItemLocation = FakePlayer.itemLocation;
 					ItemRotation = FakePlayer.itemRotation;
 				}
+				Projectile.position = FakePlayer.Position;
+				//Projectile.velocity = FakePlayer.Velocity;
 			}
 			if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
 				Projectile.netUpdate = true;
-			Lighting.AddLight(Projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
+			Lighting.AddLight(Projectile.Center, new Vector3(0.65f, 0.8f, 0.75f));
 		}
         public override bool PreDraw(ref Color lightColor)
 		{

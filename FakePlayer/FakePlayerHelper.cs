@@ -52,6 +52,7 @@ namespace SOTS.FakePlayer
     {
         public static int OwnerOfThisUpdateCycle = -1;
         public static int OwnerOfThisDrawCycle = -1;
+        public static bool FullBrightThisDrawCycle = false;
         public override bool InstancePerEntity => true;
         public int FakeOwnerIdentity = -1;
         public override void SetDefaults(Projectile entity)

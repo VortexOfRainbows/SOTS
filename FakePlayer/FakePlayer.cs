@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using SOTS.Items.Planetarium.FromChests;
+using SOTS.Items.Tide;
 using SOTS.Projectiles.Base;
 using SOTS.Projectiles.Celestial;
 using SOTS.Void;
@@ -40,6 +41,10 @@ namespace SOTS.FakePlayer
         {
             return item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot || item.useStyle == ItemUseStyleID.MowTheLawn || item.useStyle == ItemUseStyleID.RaiseLamp || item.useStyle == ItemUseStyleID.HoldUp || item.useStyle == ItemUseStyleID.Guitar;
         }
+        public static bool IsPlaceable(Item item)
+        {
+            return item.createTile != -1 && item.favorited;
+        }
         public bool CheckItemValidityFull(Player player, Item item)
         {
             SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
@@ -49,11 +54,15 @@ namespace SOTS.FakePlayer
             {
                 Projectile proj = new Projectile();
                 proj.SetDefaults(item.shoot);
-                if (item.damage <= 0 || FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type))
+                if (FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type))
                 {
                     canUseItem = false;
                 }
-                else if (item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || item.consumable || lastUsedItem == null || item.mountType != -1)
+                else if (item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || lastUsedItem == null || item.mountType != -1)
+                {
+                    canUseItem = false;
+                }
+                else if(item.consumable && !IsPlaceable(item) && item.damage <= 0)
                 {
                     canUseItem = false;
                 }
@@ -69,7 +78,7 @@ namespace SOTS.FakePlayer
             SupressNetMessage13and41 = true;
             SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
             Item item = player.inventory[UseItemSlot];
-            if(Main.netMode != NetmodeID.Server)
+            if (Main.netMode != NetmodeID.Server)
             {
                 if (!TextureAssets.Item[item.type].IsLoaded)
                     Main.instance.LoadItem(item.type);
@@ -95,21 +104,22 @@ namespace SOTS.FakePlayer
             }
             else
             {
-                if(lastUsedItem != null && lastUsedItem.type != item.type && !subspacePlayer.servantIsVanity)
+                if (lastUsedItem != null && lastUsedItem.type != item.type && !subspacePlayer.servantIsVanity)
                 {
                     lastUsedItem = heldItem.Clone();
                     RunItemCheck(player, true);
                 }
-                else 
+                else
                     RunItemCheck(player, false);
                 ResetVariables();
             }
             if (itemAnimation > 0)
             {
                 ShouldUseWingsArmPosition = false;
-                if (item.CountsAsClass(DamageClass.Melee) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>())
+                if (item.CountsAsClass(DamageClass.Melee) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
+                    || item.consumable)
                 {
-                    if (item.noMelee)
+                    if (item.noMelee && !IsPlaceable(item))
                         TrailingType = 4;
                     else
                         TrailingType = 3;
@@ -158,6 +168,7 @@ namespace SOTS.FakePlayer
         public bool compositeFrontArmEnabled = false;
         public bool compositeBackArmEnabled = false;
 
+        public int AltFunctionUse;
         public int toolTime;
         public int itemAnimation;
         public int itemAnimationMax;
@@ -221,7 +232,10 @@ namespace SOTS.FakePlayer
             CopyFakeToReal(player);
             Update(player);
             if (canUseItem || player.channel)
+            {
+                player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
                 player.ItemCheck(); //Run the actual item use code
+            }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
@@ -283,7 +297,6 @@ namespace SOTS.FakePlayer
             player.channel = Channel;
             player.frozen = player.stoned = player.webbed = player.wet = false;
             player.mount._active = false;
-            player.altFunctionUse = 0;
             player.pulley = false;
             player.isPettingAnimal = false;
             player.heldProj = HeldProj;
@@ -313,6 +326,7 @@ namespace SOTS.FakePlayer
             player.itemRotation = itemRotation;
             player.itemLocation = itemLocation;
             player.attackCD = AttackCD;
+            player.altFunctionUse = AltFunctionUse;
             player.boneGloveTimer = BoneGloveTimer;
             player.compositeFrontArm = compositeFrontArm;
             player.compositeBackArm = compositeBackArm;
@@ -342,6 +356,7 @@ namespace SOTS.FakePlayer
             releaseUseItem = player.releaseUseItem;
             justDroppedAnItem = player.JustDroppedAnItem;
             AttackCD = player.attackCD;
+            AltFunctionUse = player.altFunctionUse;
             ItemUsesThisAnimation = player.ItemUsesThisAnimation;
             BoneGloveTimer = player.boneGloveTimer;
             compositeFrontArm = player.compositeFrontArm;
@@ -435,23 +450,14 @@ namespace SOTS.FakePlayer
             player.itemLocation = savePlayerPos;    
             drawInfo.ItemLocation = saveDrawinfoPos;
         }
-        public void DrawFakePlayer(ref PlayerDrawSet drawInfo)
+        public void DrawFakePlayer(ref PlayerDrawSet drawInfo, Player player)
         {
             FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             if (bodyFrame.IsEmpty)
                 return;
-            Player player = drawInfo.drawPlayer;
-            SubspacePlayer sPlayer = SubspacePlayer.ModPlayer(player);
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
-
-            SpriteEffects savePlayerEffect = drawInfo.playerEffect;
-            SpriteEffects saveItemEffect = drawInfo.itemEffect;
-            float saveShadow = drawInfo.shadow;
-            Item saveHeldItem = drawInfo.heldItem;
-            Vector2 saveLocation = drawInfo.ItemLocation;
-            Vector2 savePosition = drawInfo.Position;
-
+            FakePlayerDrawing.SetupCompositeDrawing(ref drawInfo, this, player);
             drawInfo.shadow = 0f; //shadow should be 1f for this draw.
             drawInfo.heldItem = heldItem;
             drawInfo.ItemLocation = itemLocation;
@@ -459,21 +465,8 @@ namespace SOTS.FakePlayer
             drawInfo.itemEffect = itemEffect;
             drawInfo.Position = Position;
 
-            //Save Arm Data
-             //CompositeArmData saveFrontArm = drawInfo.drawPlayer.compositeFrontArm;
-             //CompositeArmData saveBackArm = drawInfo.drawPlayer.compositeBackArm;
-            Rectangle saveFrontArmFrame = drawInfo.compFrontArmFrame;
-            Rectangle saveBackArmFrame = drawInfo.compBackArmFrame;
-            float saveFrontArmRotation = drawInfo.compositeFrontArmRotation;
-            float saveBackArmRotation = drawInfo.compositeBackArmRotation;
-            int saveProjectileDrawPosition = drawInfo.projectileDrawPosition;
-            bool saveHeldProjOverHand = drawInfo.heldProjOverHand;
-            Vector2 saveBodyVect = drawInfo.bodyVect;
-
             SetupSpriteDirection(ref drawInfo, player);
-
             //Copy this arm data
-            SetupCompositeDrawing(player);
             //drawInfo.drawPlayer.compositeFrontArm = this.compositeFrontArm;
             //drawInfo.drawPlayer.compositeBackArm = this.compositeBackArm;
             drawInfo.compFrontArmFrame = this.compFrontArmFrame;
@@ -504,6 +497,7 @@ namespace SOTS.FakePlayer
             }
             if (weaponDrawOrder == 2)
                 HijackItemDrawing(ref drawInfo, false);
+
             //Save this arm data
             //compositeFrontArm = drawInfo.drawPlayer.compositeFrontArm;
             //compositeBackArm = drawInfo.drawPlayer.compositeBackArm;
@@ -514,30 +508,11 @@ namespace SOTS.FakePlayer
             projectileDrawPosition = drawInfo.projectileDrawPosition;
             heldProjOverHand = drawInfo.heldProjOverHand;
             bodyVect = drawInfo.bodyVect;
-
-            //Reload Arm Data
-            //drawInfo.drawPlayer.compositeFrontArm = saveFrontArm;
-            //drawInfo.drawPlayer.compositeBackArm = saveBackArm;
-            drawInfo.compFrontArmFrame = saveFrontArmFrame;
-            drawInfo.compBackArmFrame = saveBackArmFrame;
-            drawInfo.compositeFrontArmRotation = saveFrontArmRotation;
-            drawInfo.compositeBackArmRotation = saveBackArmRotation;
-            drawInfo.projectileDrawPosition = saveProjectileDrawPosition;
-            drawInfo.heldProjOverHand = saveHeldProjOverHand;
-            drawInfo.bodyVect = saveBodyVect;
-
             itemLocation = drawInfo.ItemLocation;
             heldItem = drawInfo.heldItem;
             playerEffect = drawInfo.playerEffect;
             itemEffect = drawInfo.itemEffect;
             Position = drawInfo.Position;
-
-            drawInfo.heldItem = saveHeldItem;
-            drawInfo.shadow = saveShadow;
-            drawInfo.ItemLocation = saveLocation;
-            drawInfo.playerEffect = savePlayerEffect;
-            drawInfo.itemEffect = saveItemEffect;
-            drawInfo.Position = savePosition;
 
             DrawMyProjectiles(player); //Doesn't matter where in the order this is called... as drawInfoDrawing will happen later anyway
             CopyRealToFake(player);
@@ -662,28 +637,6 @@ namespace SOTS.FakePlayer
                 bodyFrame.Y = bodyFrame.Height * 6;
             }
             PlayerToFrame = null;
-        }
-        public void SetupCompositeDrawing(Player player)
-        {
-            Player PlayerDummy = new Player();
-            PlayerDrawSet DrawInfoDummy = new PlayerDrawSet();
-            DrawInfoDummy.drawPlayer = PlayerDummy;
-            DrawInfoDummy.drawPlayer.compositeBackArm = compositeBackArm;
-            DrawInfoDummy.drawPlayer.compositeFrontArm = compositeFrontArm;
-            DrawInfoDummy.drawPlayer.bodyFrame = bodyFrame;
-            DrawInfoDummy.drawPlayer.body = 0;
-            DrawInfoDummy.drawPlayer.Male = true;
-            DrawInfoDummy.drawPlayer.selectedItem = UseItemSlot;
-            DrawInfoDummy.drawPlayer.lastVisualizedSelectedItem = player.inventory[UseItemSlot];
-            //Main.NewText(DrawInfoDummy.compFrontArmFrame.ToString() + " : " + DrawInfoDummy.usesCompositeTorso + " : " + DrawInfoDummy.drawPlayer.body);
-            DrawInfoDummy.BoringSetup(PlayerDummy, new List<DrawData>(), new List<int>(), new List<int>(), Vector2.Zero, 0f, 0f, Vector2.Zero);
-            //Main.NewText(DrawInfoDummy.compFrontArmFrame.ToString() + " : " + DrawInfoDummy.usesCompositeTorso + " : " + DrawInfoDummy.drawPlayer.body);
-            compFrontArmFrame = DrawInfoDummy.compFrontArmFrame;
-            compBackArmFrame = DrawInfoDummy.compBackArmFrame;
-            compositeFrontArmRotation = DrawInfoDummy.compositeFrontArmRotation;
-            compositeBackArmRotation = DrawInfoDummy.compositeBackArmRotation;
-            weaponDrawOrder = (int)DrawInfoDummy.weaponDrawOrder;
-            bodyVect = DrawInfoDummy.bodyVect;
         }
         public void DrawTail(ref PlayerDrawSet drawInfo, bool outLine = false)
         {
@@ -870,146 +823,6 @@ namespace SOTS.FakePlayer
                 }
             }
             return base.GetAlpha(item, lightColor);
-        }
-    }
-    public static class FakePlayerDrawing
-    {
-        public static void DrawFrontArm(FakePlayer fakePlayer, SpriteBatch spriteBatch)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
-            SpriteEffects spriteEffects = fakePlayer.playerEffect;
-            Vector2 vector = new Vector2((int)fakePlayer.Position.X, (int)fakePlayer.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
-            if (fakePlayer.compFrontArmFrame.X / fakePlayer.compFrontArmFrame.Width >= 7)
-            {
-                vector += new Vector2((!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1), (!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipVertically)) ? 1 : (-1));
-            }
-            Vector2 origin = fakePlayer.bodyVect;
-            Vector2 position = vector + GetCompositeOffset_FrontArm(fakePlayer);
-            Color color = Color.White;
-            Rectangle frame = fakePlayer.compFrontArmFrame;
-            float rotation = fakePlayer.compositeFrontArmRotation;
-            spriteBatch.Draw(texture, position, frame, color, rotation, origin + GetCompositeOffset_FrontArm(fakePlayer), 1f, spriteEffects, 0);
-        }
-        public static Vector2 GetCompositeOffset_BackArm(ref PlayerDrawSet drawInfo)
-        {
-            return new Vector2(6 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 2 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically)) ? 1 : (-1)));
-        }
-        public static void DrawBackArm(ref PlayerDrawSet drawInfo, bool green)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
-            Texture2D textureGreen = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
-            Vector2 vector = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
-            Vector2 vector3 = vector;
-            Vector2 compositeOffset_BackArm = GetCompositeOffset_BackArm(ref drawInfo);
-            vector3 += compositeOffset_BackArm;
-            float rotation = drawInfo.compositeBackArmRotation;
-            Color color = Color.White;
-            if (green)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(textureGreen, vector3 + circular, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0));
-                }
-            }
-            else
-            {
-                PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(texture, vector3, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0)
-                {
-                    //shader = drawInfo.cBody
-                });
-            }
-        }
-        public static Vector2 GetCompositeOffset_FrontArm(ref PlayerDrawSet drawInfo)
-        {
-            return new Vector2(-5 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 0f);
-        }
-        public static Vector2 GetCompositeOffset_FrontArm(FakePlayer fakePlayer)
-        {
-            return new Vector2(-5 * ((!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 0f);
-        }
-        public static void DrawFrontArm(ref PlayerDrawSet drawInfo, bool green)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
-            Texture2D textureGreen = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
-            SpriteEffects spriteEffects = drawInfo.playerEffect;
-            Vector2 vector = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
-            if (drawInfo.compFrontArmFrame.X / drawInfo.compFrontArmFrame.Width >= 7)
-            {
-                vector += new Vector2((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1), (!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically)) ? 1 : (-1));
-            }
-            Vector2 origin = drawInfo.bodyVect;
-            Vector2 position = vector + GetCompositeOffset_FrontArm(ref drawInfo);
-            Color color = Color.White;
-            Rectangle frame = drawInfo.compFrontArmFrame;
-            float rotation = drawInfo.compositeFrontArmRotation;
-            if(green)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
-                    //drawData.shader = drawInfo.cBody;
-                    drawInfo.DrawDataCache.Add(drawData2);
-                }
-            }
-            else
-            {
-                DrawData drawData = new DrawData(texture, position, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
-                //drawData.shader = drawInfo.cBody;
-                drawInfo.DrawDataCache.Add(drawData);
-            }
-        }
-        public static void DrawBody(ref PlayerDrawSet drawInfo, bool green)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
-            Texture2D textureGreen = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
-            Player drawPlayer = drawInfo.drawPlayer;
-            float drawX = (int)drawInfo.Position.X + FakePlayer.Width / 2;
-            float drawY = (int)drawInfo.Position.Y + FakePlayer.Height - drawPlayer.bodyFrame.Height / 2 + 4f;
-            Vector2 origin = drawInfo.bodyVect;
-            Vector2 position = new Vector2(drawX, drawY) - Main.screenPosition;
-            Color color = Color.White;
-            Rectangle frame = new Rectangle(0, 0, 40, 56); //very first box
-            SpriteEffects spriteEffects = drawInfo.playerEffect;
-            if (green)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, 0f, origin, 1f, spriteEffects, 0);
-                    drawInfo.DrawDataCache.Add(drawData2);
-                }
-            }
-            else
-            {
-                DrawData drawData = new DrawData(texture, position, frame, color, 0f, origin, 1f, spriteEffects, 0);
-                drawInfo.DrawDataCache.Add(drawData);
-            }
-        }
-        public static void DrawWings(ref PlayerDrawSet drawInfo, int Frame)
-        {
-            int Direction = drawInfo.drawPlayer.direction;
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWings").Value;
-            Texture2D textureOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWingsOutline").Value;
-            Vector2 drawPos = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2) - Main.screenPosition + new Vector2(-8 * Direction, -5);
-            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
-            if (Frame < 0)
-            {
-                Frame = 0;
-            }
-            if (Frame > 5)
-            {
-                Frame = 5;
-            }
-            for (int k = 0; k < 4; k++)
-            {
-                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-                drawInfo.DrawDataCache.Add(drawData2);
-            }
-            DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-            drawInfo.DrawDataCache.Add(drawData);
         }
     }
 }

@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -36,9 +37,11 @@ namespace SOTS
 			On_Main.DrawCachedProjs += Main_DrawCachedProjs;
 			On_Main.DrawNPCs += Main_DrawNPCs;
 			On_Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
-			//The following is for Time Freeze
-			//order of updates: player, NPC, gore, projectile, item, dust, time
-			On_Player.Update += Player_Update;
+			On_LightingEngine.GetColor += LightingEngine_GetColor;
+			On_Player.ItemCheck_ManageRightClickFeatures_ShieldRaise += Player_ItemCheck_ManageRightClickFeatures_ShieldRaise;
+            //The following is for Time Freeze
+            //order of updates: player, NPC, gore, projectile, item, dust, time
+            On_Player.Update += Player_Update;
 			On_NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
 			On_Gore.Update += Gore_Update;
             On_Projectile.Update += Projectile_Update;
@@ -528,9 +531,10 @@ namespace SOTS
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
 						if(i == Main.myPlayer)
 							ConduitHelper.DrawPlayerEffectOutline(Main.spriteBatch, player);
-					}
-				}
-				Main.spriteBatch.End();
+                        FakePlayerDrawing.DrawMyFakePlayers(player);
+                    }
+                }
+                Main.spriteBatch.End();
 			}
 		}
 		private static void PostDrawPlayers()
@@ -551,13 +555,6 @@ namespace SOTS
                         {
                             modProj2.Draw(Main.spriteBatch, Color.White);
                         }
-						if(proj.ModProjectile is FakePlayerPossessingProjectile fPPP)
-						{
-							if(fPPP.FakePlayer != null)
-							{
-								fPPP.FakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, Main.player[proj.owner]);
-							}
-						}
                     }
 				}
 				Main.spriteBatch.End();
@@ -730,47 +727,18 @@ namespace SOTS
             }
 			orig(self, item, whoAmI);
         }
-		/*Code I wrote for HeartPlusUp! Calamity Mod!
-		private static void GlassTileWallFraming(On_Framing.orig_WallFrame orig, int i, int j, bool resetFrame = false)
-        {
-			Tile tileU = Framing.GetTileSafely(i, j - 1);
-			Tile tileR = Framing.GetTileSafely(i + 1, j);
-			Tile tileD = Framing.GetTileSafely(i, j + 1);
-			Tile tileL = Framing.GetTileSafely(i - 1, j);
-			int saveTileTypeU = -1;
-			int saveTileTypeR = -1;
-			int saveTileTypeD = -1;
-			int saveTileTypeL = -1;
-			int TileType = ModContent.TileType<EutrophicGlass>();
-			if (tileU != null && tileU.HasTile && tileU.TileType == TileType)
-            {
-				saveTileTypeU = tileU.TileType;
-				tileU.TileType = 54;
-			}
-			if (tileR != null && tileR.HasTile && tileR.TileType == TileType)
+		private static Vector3 LightingEngine_GetColor(On_LightingEngine.orig_GetColor orig, LightingEngine self, int x, int y)
+		{
+			if (FakePlayerProjectile.FullBrightThisDrawCycle)
 			{
-				saveTileTypeR = tileR.TileType;
-				tileR.TileType = 54;
-			}
-			if (tileD != null && tileD.HasTile && tileD.TileType == TileType)
-			{
-				saveTileTypeD = tileD.TileType;
-				tileD.TileType = 54;
-			}
-			if (tileL != null && tileL.HasTile && tileL.TileType == TileType)
-			{
-				saveTileTypeL = tileL.TileType;
-				tileL.TileType = 54;
-			}
-			orig(i, j, resetFrame);
-			if(saveTileTypeU != -1)
-				tileU.TileType = (ushort)saveTileTypeU;
-			if (saveTileTypeR!= -1)
-				tileR.TileType = (ushort)saveTileTypeU;
-			if (saveTileTypeD != -1)
-				tileD.TileType = (ushort)saveTileTypeU;
-			if (saveTileTypeL != -1)
-				tileL.TileType = (ushort)saveTileTypeU;
-		}*/
-	}
+                return new Vector3(1, 1, 1);
+            }
+			return orig(self, x, y);
+		}
+		private static void Player_ItemCheck_ManageRightClickFeatures_ShieldRaise(On_Player.orig_ItemCheck_ManageRightClickFeatures_ShieldRaise orig, Player self, bool generalCheck)
+		{
+			if(FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
+				orig(self, generalCheck);
+		}
+    }
 }

@@ -39,14 +39,15 @@ Daily Log:
 
 8/22/23 to 8/24/23
 1. Added Pog Shark
-2. WIP Subspace Servant upgrade, Now has more limited range with melee weapons
+2. WIP Subspace Servant upgrade
+	1. Now has more limited range with melee weapons
+	2. Subspace Servant is now properly drawn behind the player and its player layers
+	3. Subspace Servant now has a brighter, less colored glow
+	4. Subspace Servant now works with right-click weapons
 	Needs: 
 	1. New visual for when an item is selected, to account for situations such as Forgotten Lamp's inventory animations
 	2. More testing with channel based weapons
 	3. Multiplayer testing and syncing
-	4. Right click compatability
-	5. Make the channeled projectile draw with full color (full bright)
-	6. Attempt fixing draw order: make own drawing class with drawDataCache...
 
 
 -- Update 0.23.4.0 Released! on 8/22/23 --
