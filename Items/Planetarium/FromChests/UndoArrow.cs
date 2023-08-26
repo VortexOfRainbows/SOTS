@@ -20,7 +20,13 @@ namespace SOTS.Items.Planetarium.FromChests
 {
 	public class UndoArrow : ModItem
 	{
-		public override void SetDefaults()
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
+            spriteBatch.Draw(texture, position, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+            return false;
+        }
+        public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 17;

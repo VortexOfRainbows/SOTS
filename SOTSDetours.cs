@@ -4,8 +4,10 @@ using SOTS.Buffs.Debuffs;
 using SOTS.Common;
 using SOTS.Common.GlobalNPCs;
 using SOTS.FakePlayer;
+using SOTS.Items.Celestial;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
+using SOTS.Items.Planetarium.FromChests;
 using SOTS.NPCs.Town;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
@@ -20,6 +22,7 @@ using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 using static Terraria.HitTile;
 
 namespace SOTS
@@ -39,6 +42,8 @@ namespace SOTS
 			On_Main.DrawPlayers_AfterProjectiles += Main_DrawPlayers_AfterProjectiles;
 			On_LightingEngine.GetColor += LightingEngine_GetColor;
 			On_Player.ItemCheck_ManageRightClickFeatures_ShieldRaise += Player_ItemCheck_ManageRightClickFeatures_ShieldRaise;
+			On_ItemSlot.Draw_SpriteBatch_ItemArray_int_int_Vector2_Color += ItemSlot_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color;
+			On_ItemSlot.DrawItemIcon += ItemSlot_DrawItemIcon;
             //The following is for Time Freeze
             //order of updates: player, NPC, gore, projectile, item, dust, time
             On_Player.Update += Player_Update;
@@ -739,6 +744,45 @@ namespace SOTS
 		{
 			if(FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
 				orig(self, generalCheck);
+		}
+		private static void ItemSlot_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color(On_ItemSlot.orig_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color orig, SpriteBatch spriteBatch, Item[] inv, int context, int slot, Vector2 position, Color lightColor = default(Color))
+        {
+            PlayerInventorySlotsManager.SavedInventoryColor = Main.inventoryBack;
+            Player player = Main.player[Main.myPlayer];
+            Item item = inv[slot];
+            if (PlayerInventorySlotsManager.DrawSubspaceSlot(item))
+                Main.inventoryBack = Color.Transparent;
+            if (slot == 49)
+            {
+				SubspacePlayer subPlayer = SubspacePlayer.ModPlayer(player);
+				if(subPlayer.servantActive && !subPlayer.servantIsVanity)
+				{
+					if(item.type <= ItemID.None || item.stack <= 0)
+					{
+						int saveItemType = item.type;
+						int saveItemStack = item.stack;
+						item.type = ModContent.ItemType<SubspaceLocket>();
+						item.stack = 1;
+						PlayerInventorySlotsManager.FakeBorderDrawCycle = true;
+                        orig(spriteBatch, inv, context, slot, position, lightColor);
+                        PlayerInventorySlotsManager.FakeBorderDrawCycle = false;
+                        item.type = saveItemType;
+						item.stack = saveItemStack;
+                        return;
+					}
+				}
+            }
+            orig(spriteBatch, inv, context, slot, position, lightColor);
+		}
+		private static float ItemSlot_DrawItemIcon(On_ItemSlot.orig_DrawItemIcon orig, Item item, int context, SpriteBatch spriteBatch, Vector2 screenPositionForItemCenter, float scale, float sizeLimit, Color environmentColor)
+        {
+            PlayerInventorySlotsManager.PreDrawSlots(item, spriteBatch, screenPositionForItemCenter, Color.White);
+            Main.inventoryBack = PlayerInventorySlotsManager.SavedInventoryColor;
+            if (!PlayerInventorySlotsManager.FakeBorderDrawCycle)
+            {
+                return orig(item, context, spriteBatch, screenPositionForItemCenter, scale, sizeLimit, environmentColor);
+            }
+			return 0f;
 		}
     }
 }

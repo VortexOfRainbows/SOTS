@@ -34,6 +34,7 @@ Update Objectives:
 	4. Now update as part of servant. Servant unequipped = projectile returns to normal
 	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
 5. Glow Nylon Whip
+6. the illumanant axe doesnt work with smart cursor or the auto select correct tool buttons on the 1.4 version 
  
 Daily Log:
 
@@ -43,11 +44,12 @@ Daily Log:
 	1. Now has more limited range with melee weapons
 	2. Subspace Servant is now properly drawn behind the player and its player layers
 	3. Subspace Servant now has a brighter, less colored glow
-	4. Subspace Servant now works with right-click weapons
+	4. Subspace Servant now works with right-click weapons	
+	5. Now has a custom inventory slot sprite
 	Needs: 
-	1. New visual for when an item is selected, to account for situations such as Forgotten Lamp's inventory animations
-	2. More testing with channel based weapons
-	3. Multiplayer testing and syncing
+	1. More testing with channel based weapons
+	2. Multiplayer testing and syncing
+	3. Compatability with: Charged Blaster Cannon. Wielding multiple items (owned projectile count)
 
 
 -- Update 0.23.4.0 Released! on 8/22/23 --

@@ -48,57 +48,25 @@ namespace SOTS.Items.Celestial
         {
             accessory = false;
         }
-        Texture2D itemTextureOutline;
+        public override string Texture => "SOTS/Items/Celestial/SubspaceLocket";
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Player player = Main.LocalPlayer;
             SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
-            Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-            if (itemTextureOutline == null)
-            {
-                Color[] data = SOTSItem.ConvertToSingleColor(texture, new Color(0, 255, 0));
-                itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
-                itemTextureOutline.SetData(0, null, data, 0, texture.Width * texture.Height);
-            }
+            Texture2D texture = ModContent.Request<Texture2D>("SOTS/Items/Celestial/SubspaceLocket").Value;
+            Texture2D itemTextureOutline = ModContent.Request<Texture2D>("SOTS/Items/Celestial/GreenSubspaceLocket").Value;
             if (modPlayer.foundItem && accessory)
                 for (int i = 0; i < 4; i++)
                 {
                     Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
                     spriteBatch.Draw(itemTextureOutline, position + circular, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
                 }
-            return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+            spriteBatch.Draw(texture, position, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+            return false;
         }
         public override void AddRecipes()
         {
             CreateRecipe(1).AddIngredient<TerminalCluster>(1).AddIngredient<PrecariousCluster>(1).AddIngredient<Invidia.VoidTablet>(1).AddIngredient<SanguiteBar>(15).AddTile(TileID.MythrilAnvil).Register();
-        }
-    }
-    public class SubspaceItem : GlobalItem
-    {
-        public static int itemID = -1;
-        public static Texture2D itemTextureOutline;
-        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            Player player = Main.LocalPlayer;
-            if (player.inventory[49] == item)
-            {
-                SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
-                Texture2D texture = Terraria.GameContent.TextureAssets.Item[item.type].Value;
-                if (itemID != item.type || itemTextureOutline == null)
-                {
-                    Color[] data = SOTSItem.ConvertToSingleColor(texture, new Color(0, 255, 0));
-                    itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
-                    itemTextureOutline.SetData(0, null, data, 0, texture.Width * texture.Height);
-                    itemID = item.type;
-                }
-                if (modPlayer.foundItem)
-                    for (int i = 0; i < 4; i++)
-                    {
-                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-                        spriteBatch.Draw(itemTextureOutline, position + circular, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
-                    }
-            }
-            return true;
         }
     }
 }

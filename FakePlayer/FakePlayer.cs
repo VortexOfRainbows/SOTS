@@ -39,7 +39,7 @@ namespace SOTS.FakePlayer
         public Rectangle bodyFrame = Rectangle.Empty;
         public static bool IsValidUseStyle(Item item)
         {
-            return item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot || item.useStyle == ItemUseStyleID.MowTheLawn || item.useStyle == ItemUseStyleID.RaiseLamp || item.useStyle == ItemUseStyleID.HoldUp || item.useStyle == ItemUseStyleID.Guitar;
+            return item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot || item.useStyle == ItemUseStyleID.MowTheLawn || item.useStyle == ItemUseStyleID.RaiseLamp || item.useStyle == ItemUseStyleID.HoldUp || item.useStyle == ItemUseStyleID.Guitar || item.useStyle == ItemUseStyleID.HiddenAnimation;
         }
         public static bool IsPlaceable(Item item)
         {
@@ -62,7 +62,7 @@ namespace SOTS.FakePlayer
                 {
                     canUseItem = false;
                 }
-                else if(item.consumable && !IsPlaceable(item) && item.damage <= 0)
+                else if((item.consumable || item.damage <= 0) && !IsPlaceable(item))
                 {
                     canUseItem = false;
                 }

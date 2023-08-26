@@ -158,6 +158,8 @@ namespace SOTS.FakePlayer
                 FakePlayer fakePlayer = fakePlayers[i];
                 PlayerDrawSet drawInfo = new PlayerDrawSet();
                 fakePlayer.DrawFakePlayer(ref drawInfo, player);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
                 DrawFakePlayer(ref drawInfo);
                 fakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, player);
             }

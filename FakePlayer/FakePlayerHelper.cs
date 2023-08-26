@@ -15,6 +15,11 @@ using System.IO;
 using Terraria.DataStructures;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Terraria.UI;
+using SOTS.Items.Celestial;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace SOTS.FakePlayer
 {
@@ -109,6 +114,63 @@ namespace SOTS.FakePlayer
             }
             else
                 FakeOwnerIdentity = OwnerOfThisUpdateCycle;
+        }
+    }
+    public class PlayerInventorySlotsManager
+    {
+        public static Texture2D locket => ModContent.Request<Texture2D>("SOTS/Items/Celestial/SubspaceLocket").Value;
+        public static Texture2D grayscaleLocket => ModContent.Request<Texture2D>("SOTS/FakePlayer/GraySubspaceLocket").Value;
+        public static Texture2D grayLocketBox => ModContent.Request<Texture2D>("SOTS/FakePlayer/GraySubspaceInventoryBox").Value;
+        public static Texture2D locketBox => ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceInventoryBox").Value;
+        public static Texture2D favoritedBox => ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceInventoryBoxFavorited").Value;
+        public static Texture2D grayFavoritedBox => ModContent.Request<Texture2D>("SOTS/FakePlayer/GraySubspaceInventoryBoxFavorited").Value;
+        public static bool FakeBorderDrawCycle = false;
+        public static Color SavedInventoryColor;
+        public static bool DrawSubspaceSlot(Item item)
+        {
+            Player player = Main.LocalPlayer;
+            bool correctSlot = player.inventory[49] == item;
+            bool correctItem = item.type == ModContent.ItemType<SubspaceLocket>() && (player.inventory.Contains(item) || player.armor.Contains(item));
+            if ((correctSlot && SubspacePlayer.ModPlayer(player).servantActive && !SubspacePlayer.ModPlayer(player).servantIsVanity) || correctItem)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static Color InventoryBoxStandard => new Color(200, 200, 200, 200);
+        public static void PreDrawSlots(Item item, SpriteBatch spriteBatch, Vector2 position, Color drawColor)
+        {
+            Player player = Main.LocalPlayer;
+            bool correctItem = item.type == ModContent.ItemType<SubspaceLocket>() && (player.inventory.Contains(item) || player.armor.Contains(item));
+            if (DrawSubspaceSlot(item))
+            {
+                Color color = Color.White;
+                Rectangle frame2 = new Rectangle(0, 0, 40, 50);
+                Item dummyItem = new Item(ModContent.ItemType<SubspaceLocket>());
+                dummyItem.width = 52;
+                dummyItem.height = 52;
+                ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 52f, ref frame2, out var itemLight, out var finalDrawScale);
+                Texture2D textureOfBox = grayLocketBox;
+                if((correctItem || SubspacePlayer.ModPlayer(player).foundItem) && !FakeBorderDrawCycle)
+                {
+                    textureOfBox = locketBox;
+                    if (item.favorited)
+                        textureOfBox = favoritedBox;
+                }
+                else
+                {
+                    if (item.favorited)
+                        textureOfBox = grayFavoritedBox;
+                }
+                spriteBatch.Draw(textureOfBox, position, null, InventoryBoxStandard, 0f, locketBox.Size() / 2, finalDrawScale, SpriteEffects.None, 0f);
+                dummyItem.width = 40;
+                dummyItem.headSlot = 50;
+                if (!correctItem || FakeBorderDrawCycle)
+                {
+                    ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 28f, ref frame2, out var itemLight2, out var finalDrawScale2);
+                    spriteBatch.Draw(SubspacePlayer.ModPlayer(player).foundItem ? locket : grayscaleLocket, position, null, InventoryBoxStandard, 0f, grayscaleLocket.Size() / 2, finalDrawScale2, SpriteEffects.None, 0f);
+                }
+            }
         }
     }
 }
