@@ -31,8 +31,9 @@ using static SOTS.SOTS;
 namespace SOTS
 {
 	public class SOTSProjectile : GlobalProjectile
-	{
-		public static int[] immuneToTimeFreeze;
+    {
+        public override bool InstancePerEntity => true;
+        public static int[] immuneToTimeFreeze;
 		public static int[] isChargeWeapon;
 		public static void LoadArrays()
 		{
@@ -87,7 +88,6 @@ namespace SOTS
 			}
 			return true;
         }
-		public override bool InstancePerEntity => true;
 		public override void PostAI(Projectile projectile)
 		{
 			NatureSlimeUnit(projectile);
@@ -129,9 +129,11 @@ namespace SOTS
 				instancedProjectile.SendClientChanges(player, proj, 1);
 		}
 		public static bool GlobalFreezeSlowdown(Projectile proj)
-		{
-			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
-			float percent = 1 - instancedProjectile.counter / GlobalFreezeSlowdownDuration;
+        {
+            bool success = proj.TryGetGlobalProjectile<SOTSProjectile>(out SOTSProjectile instancedProjectile);
+            if (!success)
+                return true;
+            float percent = 1 - instancedProjectile.counter / GlobalFreezeSlowdownDuration;
 			instancedProjectile.GlobalFreezeSlowdownCounter += percent;
 			if(instancedProjectile.GlobalFreezeSlowdownCounter >= 1)
             {
@@ -142,7 +144,9 @@ namespace SOTS
 		}
 		public static bool UpdateWhileFrozen(Projectile proj, int i)
 		{
-			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
+			bool success = proj.TryGetGlobalProjectile<SOTSProjectile>(out SOTSProjectile instancedProjectile);
+			if (!success)
+				return true;
 			if (instancedProjectile.timeFrozen > 0 || instancedProjectile.frozen)
 			{
 				if (!instancedProjectile.frozen)

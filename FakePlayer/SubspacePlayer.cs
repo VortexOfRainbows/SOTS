@@ -46,5 +46,18 @@ namespace SOTS.FakePlayer
             int type = ModContent.ProjectileType<SubspaceServant>();
             SOTSPlayer.ModPlayer(Player).runPets(ref Probe, type, 0, 0, false);
         }
+        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (FakePlayerProjectile.OwnerOfThisUpdateCycle != -1)
+            {
+                Projectile dummyProj = new Projectile();
+                dummyProj.SetDefaults(item.shoot);
+                if(dummyProj.aiStyle == ProjAIStyleID.Yoyo && Player.ownedProjectileCounts[item.shoot] > 1)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

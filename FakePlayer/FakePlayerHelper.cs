@@ -41,7 +41,7 @@ namespace SOTS.FakePlayer
         {
             FakePlayerPossessingProjectile = new HashSet<int>();
             FakePlayerItemBlacklist = new int[] { //Items that are disallowed, despite naturally working (because they have various bugs in actual execution)
-                ItemID.ChargedBlasterCannon
+                //Will add items into here when needed
             };
             FakePlayerItemWhitelist = new int[] { //Items that, despite being utterly useless, I thought were cool for the Servant to use!
                 ItemID.LawnMower,
@@ -137,7 +137,7 @@ namespace SOTS.FakePlayer
             }
             return false;
         }
-        public static Color InventoryBoxStandard => new Color(200, 200, 200, 200);
+        public static Color InventoryBoxStandard => new Color(210, 210, 210, 210);
         public static void PreDrawSlots(Item item, SpriteBatch spriteBatch, Vector2 position, Color drawColor)
         {
             Player player = Main.LocalPlayer;
@@ -167,8 +167,8 @@ namespace SOTS.FakePlayer
                 dummyItem.headSlot = 50;
                 if (!correctItem || FakeBorderDrawCycle)
                 {
-                    ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 28f, ref frame2, out var itemLight2, out var finalDrawScale2);
-                    spriteBatch.Draw(SubspacePlayer.ModPlayer(player).foundItem ? locket : grayscaleLocket, position, null, InventoryBoxStandard, 0f, grayscaleLocket.Size() / 2, finalDrawScale2, SpriteEffects.None, 0f);
+                    ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 32f, ref frame2, out var itemLight2, out var finalDrawScale2);
+                    spriteBatch.Draw(SubspacePlayer.ModPlayer(player).foundItem ? locket : grayscaleLocket, position, null, InventoryBoxStandard * 0.5f, 0f, grayscaleLocket.Size() / 2, finalDrawScale2 * 0.85f, SpriteEffects.None, 0f);
                 }
             }
         }

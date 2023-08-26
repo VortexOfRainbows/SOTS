@@ -58,7 +58,7 @@ namespace SOTS.FakePlayer
                 {
                     canUseItem = false;
                 }
-                else if (item.ammo > 0 || item.fishingPole > 0 || item.CountsAsClass(DamageClass.Summon) || lastUsedItem == null || item.mountType != -1)
+                else if (item.ammo > 0 || item.fishingPole > 0 || (item.CountsAsClass(DamageClass.Summon) && !item.CountsAsClass(DamageClass.SummonMeleeSpeed)) || lastUsedItem == null || item.mountType != -1)
                 {
                     canUseItem = false;
                 }
@@ -116,7 +116,7 @@ namespace SOTS.FakePlayer
             if (itemAnimation > 0)
             {
                 ShouldUseWingsArmPosition = false;
-                if (item.CountsAsClass(DamageClass.Melee) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
+                if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
                     || item.consumable)
                 {
                     if (item.noMelee && !IsPlaceable(item))
@@ -724,7 +724,9 @@ namespace SOTS.FakePlayer
         }
         public void DrawMyHeldProjectile(Player player)
         {
+            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             DrawHeldProj(player, Main.projectile[player.heldProj]);
+            FakePlayerProjectile.OwnerOfThisDrawCycle = -1;
         }
         public static void DrawHeldProj(Player player, Projectile proj)
         {
@@ -756,6 +758,25 @@ namespace SOTS.FakePlayer
                 LoadRealPlayerValues(player);
             }
         }
+        //public int[] OwnedProjectileCounts = new int[ProjectileID.Count];
+        /*private void UpdateProjectileCaches(int i) //Was originally going to allow fake players to modify owned projectile counts, so you could double wield certain modded items. This was deemed to be a bad idea because of various runtime issues loading massive arrays would cause :)... Also, balance.
+        {
+            for (int j = 0; j < 1000; j++)
+            {
+                if (!Main.projectile[j].active || Main.projectile[j].owner != i)
+                {
+                    continue;
+                }
+                OwnedProjectileCounts[Main.projectile[j].type]++;
+            }
+        }
+        private void ResetProjectileCaches()
+        {
+            for (int i = 0; i < OwnedProjectileCounts.Length; i++)
+            {
+                OwnedProjectileCounts[i] = 0;
+            }
+        }*/
     }
     public class SavedPlayerValues
     {

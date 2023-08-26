@@ -604,7 +604,7 @@ Mods: {
 				Tooltip:
 					'''
 					Summons a Subspace Servant to assist in combat
-					Uses the item in your last inventory slot for you (bottom right inventory slot)
+					Uses the item in your last inventory slot for you
 					Decreases damage by 25% multiplicatively
 					Increases max void by 50, but reduces healing recieved from potions by 40
 					'''
