@@ -27,12 +27,8 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
 3. More Bestiary entries (and visual fixes)
-4. Make Subspace Servant work with channel items:
-	1. Give projectiles created during Servant's update window a special update characteristic.
-	2. Make sure this characteristic is NETSYNCED as SOON as the PROJECTILE is created!!!
-	3. This will make them no longer update as part of Terraria's normal projectile update.
-	4. Now update as part of servant. Servant unequipped = projectile returns to normal
-	5. Add support for MULTIPLE servants (including with the new system). Test using an item that gives a second servant
+4. Heart Swapper / Hydrokinetic Antennae
+	1. Grants close ranged weapons the ability to be used at range through Hydrokinesis (fake player item)
 5. Glow Nylon Whip
  
 Daily Log:
@@ -43,6 +39,7 @@ Daily Log:
 	2. However, more thorough testing in both multiplayer and singleplayer is probably still needed...
 	3. For now, the item is complete, though
 	4. More items can now be used with it
+	5. Projectiles now die when the servant is killed, instead of returning to the owner. This prevents certain bugs and exploits.
 
 8/22/23 to 8/27/23
 1. Added Pog Shark
