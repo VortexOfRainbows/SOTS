@@ -686,6 +686,7 @@ namespace SOTS.FakePlayer
         }
         public void UpdateMyProjectiles(Player player)
         {
+            bool hasFoundYOYO = false;
             for(int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];
@@ -698,6 +699,14 @@ namespace SOTS.FakePlayer
                         if (fPPInstance.FakeOwnerIdentity == FakePlayerID)
                         {
                             projectile.Update(i);
+                            if(projectile.aiStyle == ProjAIStyleID.Yoyo && !hasFoundYOYO)
+                            {
+                                hasFoundYOYO = true;
+                                if(player.direction == 1)
+                                    player.itemRotation = MathHelper.WrapAngle((projectile.Center - player.Center).ToRotation());
+                                else
+                                    player.itemRotation = MathHelper.WrapAngle((player.Center - projectile.Center).ToRotation());
+                            }
                         }
                     }
                 }

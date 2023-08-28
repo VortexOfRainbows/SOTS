@@ -86,7 +86,7 @@ namespace SOTS
 				int voidTooltip = extraVoid;
 				if (extraVoid > 0 && (item.prefix == PrefixType<Awakened>() || item.prefix == PrefixType<Omniscient>()))
 				{
-					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + Language.GetTextValue("Mods.SOTS.Prefix.MaxVoid"))
+					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + Language.GetTextValue("Mods.SOTS.Prefixes.MaxVoid.DisplayName"))
 					{
 						IsModifier = true
 					};
@@ -95,7 +95,7 @@ namespace SOTS
 				if (extraVoidGain > 0 && (item.prefix == PrefixType<Chained>() || item.prefix == PrefixType<Soulbound>()))
 				{
 					voidTooltip = extraVoidGain;
-					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + Language.GetTextValue("Mods.SOTS.Prefix.RegVoid"))
+					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + Language.GetTextValue("Mods.SOTS.Prefixes.RegVoid.DisplayName"))
 					{
 						IsModifier = true
 					};
@@ -113,7 +113,7 @@ namespace SOTS
 						{
 							string sign = (voidCostTooltip > 0 ? "+" : "");
 							Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
-							TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", sign + voidCostTooltip + Language.GetTextValue("Mods.SOTS.Prefix.CosVoid"))
+							TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", sign + voidCostTooltip + Language.GetTextValue("Mods.SOTS.Prefixes.CosVoid.DisplayName"))
 							{
 								OverrideColor = baseColor
 							};
