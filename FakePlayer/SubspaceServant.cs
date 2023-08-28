@@ -48,7 +48,6 @@ namespace SOTS.FakePlayer
 			writer.Write(ItemLocation.Y);
 			writer.Write(ItemRotation);
 			writer.Write(Direction);
-			base.SendExtraAI(writer);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
 		{
@@ -58,7 +57,6 @@ namespace SOTS.FakePlayer
 			ItemLocation.Y = reader.ReadSingle();
 			ItemRotation = reader.ReadSingle();
 			Direction = reader.ReadInt32();
-			base.ReceiveExtraAI(reader);
         }
 		bool isVanity = true;
         public override void AI()

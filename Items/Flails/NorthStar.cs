@@ -23,6 +23,7 @@ namespace SOTS.Items.Flails
             Item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.NorthStar.NorthStar>();
             Item.shootSpeed = 15;
             Item.knockBack = 5;
+            Item.channel = true;
         }
         public override void AddRecipes()
         {

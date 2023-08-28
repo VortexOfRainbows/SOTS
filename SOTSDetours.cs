@@ -15,6 +15,7 @@ using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -44,6 +45,8 @@ namespace SOTS
 			On_Player.ItemCheck_ManageRightClickFeatures_ShieldRaise += Player_ItemCheck_ManageRightClickFeatures_ShieldRaise;
 			On_ItemSlot.Draw_SpriteBatch_ItemArray_int_int_Vector2_Color += ItemSlot_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color;
 			On_ItemSlot.DrawItemIcon += ItemSlot_DrawItemIcon;
+			On_Player.TryUpdateChannel += Player_TryUpdateChannel;
+			On_Player.TryCancelChannel += Player_TryCancelChannel;
             //The following is for Time Freeze
             //order of updates: player, NPC, gore, projectile, item, dust, time
             On_Player.Update += Player_Update;
@@ -348,6 +351,8 @@ namespace SOTS
                 bool canGetGlobal = self.TryGetGlobalProjectile(out fPPInstance);
 				if(canGetGlobal)
                 {
+					//if(self.owner >= 0)
+					//	Main.NewText(i + " : " + fPPInstance.FakeOwnerIdentity + " : " + Main.player[self.owner].channel);
                     fPPInstance.UpdateFakeOwner(self);
                     if (fPPInstance.FakeOwnerIdentity != -1 && fPPInstance.FakeOwnerIdentity != FakePlayerProjectile.OwnerOfThisUpdateCycle) //Don't update this projectile here if it is owned by a fake player. instead, update it when fakeplayer updates
 					{
@@ -783,6 +788,14 @@ namespace SOTS
                 return orig(item, context, spriteBatch, screenPositionForItemCenter, scale, sizeLimit, environmentColor);
             }
 			return 0f;
-		}
+        }
+        private static void Player_TryUpdateChannel(On_Player.orig_TryUpdateChannel orig, Player self, Projectile projectile)
+        {
+            orig(self, projectile);
+        }
+        private static void Player_TryCancelChannel(On_Player.orig_TryCancelChannel orig, Player self, Projectile projectile)
+        {
+			orig(self, projectile);
+        }
     }
 }

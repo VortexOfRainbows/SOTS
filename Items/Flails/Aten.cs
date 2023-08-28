@@ -23,6 +23,7 @@ namespace SOTS.Items.Flails
             Item.shoot = ModContent.ProjectileType<AtenProj>();
             Item.shootSpeed = 14;
             Item.knockBack = 4;
+            Item.channel = true;
         }
     }
 }

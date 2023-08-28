@@ -18,12 +18,11 @@ namespace SOTS.Items.Flails
 			Item.DamageType = DamageClass.Melee;
 			Item.channel = true;
 			Item.UseSound = SoundID.Item19;
+			Item.noMelee = true;
 			SafeSetDefaults();
 		}
-
 		public virtual void SafeSetDefaults() { }
-
-		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] == 0;
+		public override bool CanUseItem(Player player) => true;
 	}
 
 	public abstract class BaseFlailProj : ModProjectile
@@ -85,23 +84,25 @@ namespace SOTS.Items.Flails
 		public int Timer2 = 0;
 		public override void AI()
 		{
-			Player Owner = Main.player[Projectile.owner];
-			Owner.itemTime = 2;
-			Owner.itemAnimation = 2;
-			Owner.heldProj = Projectile.whoAmI;
-			if (!Owner.channel && !released) //check to see if player stops channelling
+			Player player = Main.player[Projectile.owner];
+			player.heldProj = Projectile.whoAmI;
+			if(Projectile.owner == Main.myPlayer)
+            {
+                if (!player.channel && !released && player.itemTime <= 2 && player.itemAnimation <= 2) //check to see if player stops channelling
+                {
+                    released = true;
+                    Timer = 0;
+                    Projectile.netUpdate = true;
+                }
+            }
+            player.itemTime = 2;
+            player.itemAnimation = 2;
+            if (!released) //spinning around the player
 			{
-				released = true;
-				Timer = 0;
-				Projectile.netUpdate = true;
-			}
-
-			if (Owner.channel && !released) //spinning around the player
-			{
-				Owner.itemRotation = 0;
+				player.itemRotation = 0;
 				Projectile.velocity = Vector2.Zero;
 				Projectile.tileCollide = false;
-				Timer2 += 1 * Owner.direction; //spin in direction of player
+				Timer2 += 1 * player.direction; //spin in direction of player
 				Timer++;
 				soundTimer += 1f + ChargeTime / MaxChargeTime;
 				if (soundTimer >= 30)
@@ -116,56 +117,49 @@ namespace SOTS.Items.Flails
 				float radians = MathHelper.ToRadians(degreespertick * Timer2 * (1 + ChargeTime/MaxChargeTime)) ;
 				float distfromplayer = exitPercent * spinningdistance * ((float)Math.Abs(Math.Cos(radians) / 5) + 0.8f); //use a cosine function based on the amount of rotation the flail has gone through to create an ellipse-like pattern
 				Vector2 spinningoffset = new Vector2(distfromplayer, 0).RotatedBy(radians);
-				Projectile.Center = Owner.MountedCenter + spinningoffset;
-				if (Owner.whoAmI == Main.myPlayer)
-					Owner.ChangeDir(Math.Sign(Main.MouseWorld.X - Owner.Center.X));
-				Projectile.rotation = Projectile.AngleFrom(Owner.MountedCenter) - 1.57f; //update rotation last so it is most accurate
+				Projectile.Center = player.MountedCenter + spinningoffset;
+				if (player.whoAmI == Main.myPlayer)
+					player.ChangeDir(Math.Sign(Main.MouseWorld.X - player.Center.X));
+				Projectile.rotation = Projectile.AngleFrom(player.MountedCenter) - 1.57f; //update rotation last so it is most accurate
 
-				SpinExtras(Owner);
+				SpinExtras(player);
 			}
-
 			else
 			{
-				Projectile.rotation = Projectile.AngleFrom(Owner.MountedCenter) - 1.57f;
-				Owner.ChangeDir(Math.Sign(Projectile.Center.X - Owner.Center.X));
-				Owner.itemRotation = MathHelper.WrapAngle(Projectile.AngleFrom(Owner.MountedCenter) - ((Owner.direction < 0) ? MathHelper.Pi : 0));
+				Projectile.rotation = Projectile.AngleFrom(player.MountedCenter) - 1.57f;
+				player.ChangeDir(Math.Sign(Projectile.Center.X - player.Center.X));
+				player.itemRotation = MathHelper.WrapAngle(Projectile.AngleFrom(player.MountedCenter) - ((player.direction < 0) ? MathHelper.Pi : 0));
 			}
-
-			float launchspeed = Owner.HeldItem.shootSpeed * MathHelper.Lerp(SpeedMult.X, SpeedMult.Y, ChargeTime / MaxChargeTime);
+			float shootSpeed = player.HeldItem.shootSpeed;
+			if (shootSpeed <= 0)
+				shootSpeed = 12;
+            float launchspeed = shootSpeed * MathHelper.Lerp(SpeedMult.X, SpeedMult.Y, ChargeTime / MaxChargeTime);
 			if (released && !falling) //basic flail launch, returns after a while
 			{
 				Projectile.tileCollide = true;
-				if(++Timer == 1 && Owner.whoAmI == Main.myPlayer)
+				if(++Timer == 1 && player.whoAmI == Main.myPlayer)
 				{
 					if(Timer > 8)
 						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item19, Projectile.Center);
-					Projectile.Center = Owner.MountedCenter;
-					Projectile.velocity = Owner.DirectionTo(Main.MouseWorld) * launchspeed;
-					OnLaunch(Owner);
+					Projectile.Center = player.MountedCenter;
+					Projectile.velocity = player.DirectionTo(Main.MouseWorld) * launchspeed;
+					OnLaunch(player);
 				}
 
 				if (Timer >= MathHelper.Min(60 * (ChargeTime / MaxChargeTime), 30)) //max out on time halfway through charge
-					Return(launchspeed, Owner);
+					Return(launchspeed, player);
 
 				else
-					LaunchExtras(Owner);
-
-				//if (Owner.controlUseItem)
-				//{
-				//	Projectile.netUpdate = true;
-				//	falling = true;
-				//	Timer = 0;
-				//}
+					LaunchExtras(player);
 			}
 
-			if(falling) //falling towards ground, returns after hitting ground
+			if(falling)
 			{
 				if(strucktile || ++Timer >= 180)
-					Return(launchspeed, Owner);
-
+					Return(launchspeed, player);
 				else
 				{
-					FallingExtras(Owner);
+					FallingExtras(player);
 					Projectile.tileCollide = true;
 					if(Projectile.velocity.Y < 16f)
 						Projectile.velocity.Y += 0.5f;
@@ -186,7 +180,6 @@ namespace SOTS.Items.Flails
 				Projectile.Kill();
 			ReturnExtras(Owner);
 		}
-
         #region extra hooks
         public virtual void SpinExtras(Player player) { }
 

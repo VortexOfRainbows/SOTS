@@ -20,6 +20,7 @@ using Microsoft.Xna.Framework;
 using Terraria.UI;
 using SOTS.Items.Celestial;
 using static Terraria.ModLoader.PlayerDrawLayer;
+using Microsoft.CodeAnalysis;
 
 namespace SOTS.FakePlayer
 {
@@ -58,6 +59,7 @@ namespace SOTS.FakePlayer
         public static int OwnerOfThisUpdateCycle = -1;
         public static int OwnerOfThisDrawCycle = -1;
         public static bool FullBrightThisDrawCycle = false;
+        public static int BeginStartNetUpdate = 0;
         public override bool InstancePerEntity => true;
         public int FakeOwnerIdentity = -1;
         public override void SetDefaults(Projectile entity)
@@ -72,36 +74,41 @@ namespace SOTS.FakePlayer
         {
             FakeOwnerIdentity = binaryReader.ReadInt32();
         }
+        public override void PostAI(Projectile projectile)
+        {
+            if (FakeOwnerIdentity == -1)
+                return;
+            if (BeginStartNetUpdate % 5 == 0 && BeginStartNetUpdate < 20)
+            {
+                projectile.netUpdate = true;
+            }
+            BeginStartNetUpdate++;
+        }
         public void UpdateFakeOwner(Projectile projectile)
         {
             if (FakeOwnerIdentity == -1)
                 return;
-            int whoAmIOfIdentity = Projectile.GetByUUID(projectile.owner, FakeOwnerIdentity);
-            if (whoAmIOfIdentity == -1)
-            {
-                FakeOwnerIdentity = -1;
+            Projectile fakePlayer = Main.projectile.Where(x => x.identity == FakeOwnerIdentity).First();
+            if(fakePlayer == null) 
                 return;
-            }
-            Projectile fakePlayer = Main.projectile[whoAmIOfIdentity];
             if(!FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) || !fakePlayer.active || fakePlayer.owner != projectile.owner)
             {
                 FakeOwnerIdentity = -1;
+                projectile.Kill(); //Kill the projectile when the minion can no longer be found
             }
         }
         public FakePlayerPossessingProjectile WhoOwnsMe(Projectile projectile)
         {
             if (FakeOwnerIdentity == -1)
                 return null;
-            int whoAmIOfIdentity = Projectile.GetByUUID(projectile.owner, FakeOwnerIdentity);
-            if (whoAmIOfIdentity != -1)
+            Projectile fakePlayer = Main.projectile.Where(x => x.identity == FakeOwnerIdentity).First();
+            if (fakePlayer == null) 
+                return null;
+            if (FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) && fakePlayer.active)
             {
-                Projectile fakePlayer = Main.projectile[whoAmIOfIdentity];
-                if (FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) && fakePlayer.active)
+                if (fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
                 {
-                    if (fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
-                    {
-                        return fppp;
-                    }
+                    return fppp;
                 }
             }
             return null;

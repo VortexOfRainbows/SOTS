@@ -39,11 +39,19 @@ namespace SOTS.FakePlayer
         public Rectangle bodyFrame = Rectangle.Empty;
         public static bool IsValidUseStyle(Item item)
         {
-            return item.useStyle == ItemUseStyleID.Swing || item.useStyle == ItemUseStyleID.Shoot || item.useStyle == ItemUseStyleID.MowTheLawn || item.useStyle == ItemUseStyleID.RaiseLamp || item.useStyle == ItemUseStyleID.HoldUp || item.useStyle == ItemUseStyleID.Guitar || item.useStyle == ItemUseStyleID.HiddenAnimation;
+            return item.useStyle == ItemUseStyleID.Swing ||
+                item.useStyle == ItemUseStyleID.Shoot || 
+                item.useStyle == ItemUseStyleID.MowTheLawn || 
+                item.useStyle == ItemUseStyleID.RaiseLamp || 
+                item.useStyle == ItemUseStyleID.HoldUp || 
+                item.useStyle == ItemUseStyleID.Guitar || 
+                item.useStyle == ItemUseStyleID.HiddenAnimation ||
+                item.useStyle == ItemUseStyleID.Rapier ||
+                item.useStyle == ItemUseStyleID.Thrust;
         }
         public static bool IsPlaceable(Item item)
         {
-            return item.createTile != -1 && item.favorited;
+            return item.createTile != -1;
         }
         public bool CheckItemValidityFull(Player player, Item item)
         {
@@ -234,6 +242,8 @@ namespace SOTS.FakePlayer
             if (canUseItem || player.channel)
             {
                 player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
+                if(!player.HeldItem.IsAir)
+                    player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items
                 player.ItemCheck(); //Run the actual item use code
             }
             player.oldPosition = Position;
@@ -450,11 +460,11 @@ namespace SOTS.FakePlayer
             player.itemLocation = savePlayerPos;    
             drawInfo.ItemLocation = saveDrawinfoPos;
         }
-        public void DrawFakePlayer(ref PlayerDrawSet drawInfo, Player player)
+        public bool DrawFakePlayer(ref PlayerDrawSet drawInfo, Player player)
         {
             FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             if (bodyFrame.IsEmpty)
-                return;
+                return false;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             FakePlayerDrawing.SetupCompositeDrawing(ref drawInfo, this, player);
@@ -518,6 +528,7 @@ namespace SOTS.FakePlayer
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             FakePlayerProjectile.OwnerOfThisDrawCycle = -1;
+            return true;
         }
         public void SecondaryFakePlayerDrawing(SpriteBatch spriteBatch, Player player)
         {
@@ -636,7 +647,6 @@ namespace SOTS.FakePlayer
             {
                 bodyFrame.Y = bodyFrame.Height * 6;
             }
-            PlayerToFrame = null;
         }
         public void DrawTail(ref PlayerDrawSet drawInfo, bool outLine = false)
         {

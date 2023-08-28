@@ -25,6 +25,7 @@ namespace SOTS.Items.Flails
             Item.shootSpeed = 10f;
             Item.knockBack = 4f;
             Item.noMelee = true;
+            Item.channel = true;
         }
         public override void AddRecipes()
         {
