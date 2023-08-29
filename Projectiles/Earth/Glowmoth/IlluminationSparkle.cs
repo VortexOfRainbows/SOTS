@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
         {
             if(timeLeft <= 1)
             {
-                SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f, -0.25f);
+                SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.3f, -0.25f);
                 StarDust(Projectile.Center + Main.rand.NextVector2Circular(48, 48));
             }
         }

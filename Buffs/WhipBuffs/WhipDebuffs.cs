@@ -1,11 +1,20 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 
 namespace SOTS.Buffs.WhipBuffs
 {
-	public class KelpWhipBuff : ModBuff
+    public class GlowWhipDebuff : ModBuff
+    {
+        public override void SetStaticDefaults()
+        {
+            BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
+        }
+    }
+    public class KelpWhipBuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{
@@ -67,8 +76,25 @@ namespace SOTS.Buffs.WhipBuffs
 					modifiers.SetCrit();
 					npc.DelBuff(npc.FindBuffIndex(ModContent.BuffType<KelpWhipBuff>()));
 					npc.AddBuff(ModContent.BuffType<KelpWhipCooldown>(), 120, false);
-				}
-			}
+                }
+            }
 		}
-	}
+        public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            // Only player attacks should benefit from this buff, hence the NPC and trap checks.
+            if (!projectile.npcProj && !projectile.trap && (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]))
+            {
+                if (npc.HasBuff<GlowWhipDebuff>())
+                {
+					int count = 4;
+					if (projectile.type == ProjectileID.Smolstar)
+                        count = 2;
+                    for (int i = 0; i < count; i++)
+                    {
+						Projectile.NewProjectile(new EntitySource_OnHit(projectile, npc), npc.Center, new Vector2(1, 0) * hit.HitDirection, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 1f, Main.myPlayer, npc.whoAmI, 3 + 4 * i);
+                    }
+                }
+            }
+        }
+    }
 }

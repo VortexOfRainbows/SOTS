@@ -78,9 +78,9 @@ namespace SOTS
 		{
 			return InfernoColorAttempt(0.5f * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 3f + degrees)));
 		}
-		public static Color VibrantColorAttempt(float degrees, bool AlternateColors = false)
+		public static Color VibrantColorAttempt(float degrees, bool avoidColorCycling = false)
 		{
-			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians((!AlternateColors ? soulColorCounter * 2.5f : 0) + degrees)));
+			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians((!avoidColorCycling ? soulColorCounter * 2.5f : 0) + degrees)));
 		}
 		public static Color pastelAttempt(float radians, bool pinkify = false)
 		{

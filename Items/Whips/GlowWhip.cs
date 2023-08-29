@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.WhipBuffs;
+using SOTS.Dusts;
+using SOTS.Items.Earth.Glowmoth;
+using SOTS.Items.Slime;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Whips
 {
-	public class KelpWhip : ModItem
+	public class GlowWhip : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -21,27 +24,26 @@ namespace SOTS.Items.Whips
 		{
 			// This method quickly sets the whip's properties.
 			// Mouse over to see its parameters.
-			Item.DefaultToWhip(ModContent.ProjectileType<KelpWhipProjectile>(), 13, 4, 4, 30);
+			Item.DefaultToWhip(ModContent.ProjectileType<GlowWhipProjectile>(), 16, 2.5f, 5, 36);
 			Item.shootSpeed = 4;
 			Item.rare = ItemRarityID.Blue;
-			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
-			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.value = Item.sellPrice(0, 2, 0, 0);
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			float sizeDifference = Main.rand.NextFloat(0.85f, 1.15f);
-			float randMult = Main.rand.NextFloat(0.25f, 1.5f);
-			Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.ToRadians(-15 * randMult)), type, damage, knockback, player.whoAmI, ai1: 1 - sizeDifference);
-			randMult = Main.rand.NextFloat(0.25f, 1.5f);
-			Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.ToRadians(15 * randMult)), type, damage, knockback, player.whoAmI, ai1: sizeDifference - 1);
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: 0.25f);
 			return false;
         }
         public override bool MeleePrefix()
 		{
 			return true;
 		}
-	}
-	public class KelpWhipProjectile : ModProjectile
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddRecipeGroup("SOTS:SilverBar", 12).AddIngredient<GlowNylon>(30).AddTile(TileID.Anvils).Register();
+        }
+    }
+	public class GlowWhipProjectile : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -50,12 +52,12 @@ namespace SOTS.Items.Whips
 		public override void SetDefaults()
 		{
 			Projectile.DefaultToWhip();
-			Projectile.WhipSettings.Segments = 16;
-			Projectile.WhipSettings.RangeMultiplier = 1.1f + Projectile.ai[1];
+			Projectile.WhipSettings.Segments = 17;
+			Projectile.WhipSettings.RangeMultiplier = 1.0f + Projectile.ai[1];
 		}
         public override bool PreAI()
 		{
-			Projectile.WhipSettings.RangeMultiplier = 1.1f + Projectile.ai[1];
+			Projectile.WhipSettings.RangeMultiplier = 1.0f + Projectile.ai[1];
 			List<Vector2> list = new List<Vector2>();
 			Projectile.FillWhipControlPoints(Projectile, list);
 			if(Timer > 18)
@@ -64,12 +66,13 @@ namespace SOTS.Items.Whips
 					if(Main.rand.NextBool((int)(70 - i * 2.4f)))
 					{
 						Vector2 pos = list[i];
-						Dust dust = Dust.NewDustDirect(pos - new Vector2(6, 6), 4, 4, DustID.Grass);
+						Dust dust = Dust.NewDustDirect(pos - new Vector2(6, 6), 4, 4, ModContent.DustType<CopyDust4>());
 						dust.velocity *= 0.5f;
 						dust.noGravity = true;
-						dust.scale *= 0.3f;
-						dust.scale += 1.2f;
-						dust.color = new Color(83, 113, 14) * 1.5f;
+						dust.scale *= 0.1f;
+						dust.scale += 1.25f;
+						dust.fadeIn = 0.2f;
+						dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360), true);
 					}
 				}
 			return base.PreAI();
@@ -81,7 +84,7 @@ namespace SOTS.Items.Whips
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			target.AddBuff(ModContent.BuffType<KelpWhipBuff>(), 240);
+			target.AddBuff(ModContent.BuffType<GlowWhipDebuff>(), 120);
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}
 
@@ -93,14 +96,14 @@ namespace SOTS.Items.Whips
 			Vector2 origin = new Vector2(frame.Width / 2, 2);
 
 			Vector2 pos = list[0];
-			for (int i = 0; i < list.Count - 1; i++)
+			for (int i = 0; i < list.Count - 2; i++)
 			{
 				Vector2 element = list[i];
 				Vector2 diff = list[i + 1] - element;
 
 				float rotation = diff.ToRotation() - MathHelper.PiOver2;
-				Color color = Lighting.GetColor(element.ToTileCoordinates(), new Color(83, 113, 14));
-				Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
+                Color color = Lighting.GetColor(element.ToTileCoordinates(), new Color(53, 60, 100));
+                Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
 
 				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
 
@@ -130,28 +133,31 @@ namespace SOTS.Items.Whips
 			{
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
-				Rectangle frame = new Rectangle(0, 0, 18, 18);
-				Vector2 origin = new Vector2(9, 8);
+				Rectangle frame = new Rectangle(0, 0, 22, 16);
+				Vector2 origin = new Vector2(11, 8);
 				float scale = 1.1f;
 
 				// These statements determine what part of the spritesheet to draw for the current segment.
 				// They can also be changed to suit your sprite.
 				if (i == list.Count - 2)
 				{
-					scale = 0.9f;
-					frame.Y = 48;
-					frame.Height = 26;
-
-					// For a more impactful look, this scales the tip of the whip up when fully extended, and down when curled up.
-					Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out int _, out float _);
+					scale = 1f;
+					frame.Y = 38;
+					frame.Height = 14;
+                    origin = new Vector2(11, 4);
+                    // For a more impactful look, this scales the tip of the whip up when fully extended, and down when curled up.
+                    Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out int _, out float _);
 					float t = Timer / timeToFlyOut;
-					scale *= MathHelper.Lerp(0.5f, 1.5f, Utils.GetLerpValue(0.1f, 0.7f, t, true) * Utils.GetLerpValue(0.9f, 0.7f, t, true));
+					scale *= MathHelper.Lerp(1f, 1.25f, Utils.GetLerpValue(0.1f, 0.7f, t, true) * Utils.GetLerpValue(0.9f, 0.7f, t, true));
 				}
 				else if (i > 0)
 				{
-					scale = 0.7f;
-					frame.Y = 20;
-					frame.Height = 26;
+                    origin = new Vector2(11, 4);
+                    scale = 1f;
+					frame.Y = 18;
+					if (i % 2 == 0)
+						frame.Y += 10;
+					frame.Height = 8;
 				}
 
 				Vector2 element = list[i];

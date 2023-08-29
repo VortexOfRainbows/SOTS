@@ -70,7 +70,7 @@ namespace SOTS.Items.Earth.Glowmoth
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<FireSpitter>(1).AddIngredient(ItemID.FlareGun, 1).AddRecipeGroup("SOTS:SilverBar", 10).AddIngredient<GlowNylon>(100).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient<FireSpitter>(1).AddIngredient(ItemID.FlareGun, 1).AddRecipeGroup("SOTS:SilverBar", 10).AddIngredient<GlowNylon>(50).AddTile(TileID.Anvils).Register();
         }
     }
 }

@@ -824,7 +824,11 @@ Mods: {
 
 			KelpWhip: {
 				DisplayName: Kelp Whip
-				Tooltip: Minions critically strike the tagged enemy, but with a 2 second cooldown between critical strikes
+				Tooltip:
+					'''
+					Minions critically strike the tagged enemy, but with a 2 second cooldown between critical strikes
+					Your summons will focus struck enemies
+					'''
 			}
 
 			PathogenRegurgitator: {
@@ -5079,6 +5083,15 @@ Mods: {
 				DisplayName: Pog Shark
 				Tooltip: Launches bubbles that rise quickly
 			}
+
+			GlowWhip: {
+				DisplayName: Glow Whip
+				Tooltip:
+					'''
+					Minions cause tagged enemies to sparkle on hit for 4 damage
+					Your summons will focus struck enemies
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -5435,13 +5448,18 @@ Mods: {
 			}
 
 			KelpWhipBuff: {
-				DisplayName: Mods.SOTS.BuffName.KelpWhipBuff
-				Description: Mods.SOTS.BuffDescription.KelpWhipBuff
+				DisplayName: Kelp Whip Hit Buff
+				Description: Critical strike on next hit
 			}
 
 			KelpWhipCooldown: {
-				DisplayName: Mods.SOTS.BuffName.KelpWhipCooldown
-				Description: Mods.SOTS.BuffDescription.KelpWhipCooldown
+				DisplayName: Kelp Whip Cooldown
+				Description: No more crit
+			}
+
+			GlowWhipDebuff: {
+				DisplayName: Glow Whip Debuff
+				Description: Sparkle sparkle!
 			}
 		}
 
@@ -6629,6 +6647,7 @@ Mods: {
 			VorpalLightning2.DisplayName: Vorpal Lightning
 			VorpalLightningDamage.DisplayName: Origin Thunder
 			PogBubble.DisplayName: Pog Bubble
+			GlowWhipProjectile.DisplayName: Glow Whip Projectile
 		}
 
 		DamageClasses: {
