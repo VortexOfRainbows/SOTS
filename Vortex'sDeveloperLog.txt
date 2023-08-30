@@ -39,6 +39,7 @@ Daily Log:
 	1. Is roughly as strong as the normal whip, but has more range (most in phm) and penetrates armor with the sparkle. Should be decent.
 	2. Should work in multiplayer (no reason not to)
 2. Decrease glow nylon cost for Torch Gun (100 -> 50)
+3. WIP Phantaray
 
 8/27/23
 1. Multiplayer synced Subspace Servant

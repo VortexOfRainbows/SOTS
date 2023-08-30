@@ -5856,6 +5856,7 @@ Mods: {
 			TwilightScouter.DisplayName: Twilight Scouter
 			WallMimic.DisplayName: Wall Mimic
 			Snake.DisplayName: Snake
+			PhantarayBig.DisplayName: Phantaray
 		}
 
 		Bestiary: {
