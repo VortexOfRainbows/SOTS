@@ -6649,6 +6649,7 @@ Mods: {
 			VorpalLightningDamage.DisplayName: Origin Thunder
 			PogBubble.DisplayName: Pog Bubble
 			GlowWhipProjectile.DisplayName: Glow Whip Projectile
+			PhantarayBall.DisplayName: Phantaray Ball
 		}
 
 		DamageClasses: {
