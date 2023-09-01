@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using SOTS.NPCs.Tide;
 
 namespace SOTS.Common.ItemDropConditions
 {
@@ -250,5 +251,51 @@ namespace SOTS.Common.ItemDropConditions
 		{
 			return Language.GetTextValue("Mods.SOTS.DropCondition.DefeatEyeofCthulhu");
 		}
-	}
+    }
+    public class IsCore : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation)
+            {
+                if (info.npc.ModNPC is PhantarayCore c)
+                {
+                    if (c.isCore)
+                        return true;
+                }
+            }
+            return false;
+        }
+        public bool CanShowItemDropInUI()
+        {
+            return true;
+        }
+        public string GetConditionDescription()
+        {
+            return Language.GetTextValue("Mods.SOTS.DropCondition.PhantarayCore1");
+        }
+    }
+    public class IsNotCore : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation)
+            {
+                if (info.npc.ModNPC is PhantarayCore c)
+                {
+                    if (!c.isCore)
+                        return true;
+                }
+            }
+            return false;
+        }
+        public bool CanShowItemDropInUI()
+        {
+            return true;
+        }
+        public string GetConditionDescription()
+        {
+            return Language.GetTextValue("Mods.SOTS.DropCondition.PhantarayCore2");
+        }
+    }
 }

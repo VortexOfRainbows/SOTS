@@ -34,7 +34,7 @@ namespace SOTS.NPCs.Inferno
 		}
 		public override void SetDefaults()
 		{
-            NPC.aiStyle =0; 
+            NPC.aiStyle = 0; 
             NPC.lifeMax = 35;   
             NPC.damage = 35; 
             NPC.defense = 16;  

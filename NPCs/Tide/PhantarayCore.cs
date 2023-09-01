@@ -20,33 +20,37 @@ using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs.Tide
 {
-	public class PhantarayBig : ModNPC
+	public class PhantarayCore : ModNPC
 	{
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.WriteVector2(wanderDirection);
+			writer.Write(isCore);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             wanderDirection = reader.ReadVector2();
+			isCore = reader.ReadBoolean();
         }
         public const float AttackWindup = 75;
+		public bool isCore = true;
+		public bool runOnce = true;
         Vector2 wanderDirection = Vector2.Zero;
         bool previousWet;
         public override void SetStaticDefaults()
 		{
-			Main.npcFrameCount[NPC.type] = 11;
+			Main.npcFrameCount[NPC.type] = 3;
 		}
         public override void SetDefaults()
 		{
-            NPC.lifeMax = 500;   
-            NPC.damage = 78; 
-            NPC.defense = 22;  
+            NPC.lifeMax = 80;   
+            NPC.damage = 32; 
+            NPC.defense = 8;  
             NPC.knockBackResist = 0f;
-            NPC.width = 100;
-            NPC.height = 100;
-            NPC.value = Item.buyPrice(0, 1, 0, 0);
-            NPC.npcSlots = 2f;
+            NPC.width = 34;
+            NPC.height = 34;
+            NPC.value = Item.buyPrice(0, 0, 1, 50);
+            NPC.npcSlots = 0.5f;
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -59,37 +63,77 @@ namespace SOTS.NPCs.Tide
 		}
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.damage = (int)(NPC.damage * 5 / 6);
-            NPC.lifeMax = (int)(NPC.lifeMax * 3 / 5);
+            NPC.damage = (int)(NPC.damage * 4 / 5);
+            NPC.lifeMax = (int)(NPC.lifeMax * 4 / 5);
+			if(Main.hardMode)
+			{
+				NPC.damage *= 2;
+				NPC.lifeMax *= 2;
+			}
+        }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if(!isCore)
+            {
+                modifiers.Defense *= 0;
+                modifiers.SourceDamage *= 2;
+            }
         }
         public override void UpdateLifeRegen(ref int damage)
         {
-			if(!NPC.wet && NPC.ai[1] <= -60)
-			{
-				int lossPerSecond = (int)(NPC.ai[1] / 12f);
+            if (!NPC.wet && NPC.ai[1] <= -120)
+            {
+                int lossPerSecond = (int)(NPC.ai[1] / 24f);
                 NPC.lifeRegen += lossPerSecond;
-				damage -= (int)(lossPerSecond / 8f);
+                damage -= (int)(lossPerSecond / 8f);
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Tide/PhantarayBigGlow").Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / (2 * Main.npcFrameCount[NPC.type]));
 			Vector2 drawPos = NPC.Center - screenPos;
-            spriteBatch.Draw(textureGlow, drawPos, NPC.frame, Color.White * (1f - (NPC.alpha / 255f) * 0.5f), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			float percentCharged = NPC.ai[3] / 120f;
-			if (percentCharged > 1)
-				percentCharged = 1;
-			for(int i = 0; i < 6; i++)
-			{
-				Vector2 circular = new Vector2(24 * (1 - percentCharged), 0).RotatedBy(percentCharged * MathHelper.TwoPi + MathHelper.TwoPi * i / 6f);
-				spriteBatch.Draw(textureGlow, drawPos + circular, NPC.frame, new Color(200, 100, 100, 0) * (1f - (NPC.alpha / 255f) * 0.5f * percentCharged) * percentCharged, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			if(isCore && !runOnce)
+            {
+                Texture2D textureGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Tide/PhantarayCoreGlow").Value;
+                spriteBatch.Draw(textureGlow, drawPos, NPC.frame, Color.White * (1f - (NPC.alpha / 255f) * 0.5f), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+                float percentCharged = NPC.ai[3] / 120f;
+                if (percentCharged > 1)
+                    percentCharged = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2 circular = new Vector2(12 * (1 - percentCharged), 0).RotatedBy(percentCharged * MathHelper.TwoPi + MathHelper.TwoPi * i / 6f);
+                    spriteBatch.Draw(textureGlow, drawPos + circular, NPC.frame, new Color(200, 100, 100, 0) * (1f - (NPC.alpha / 255f) * 0.25f * percentCharged) * percentCharged, NPC.rotation, drawOrigin, 0.85f, SpriteEffects.None, 0f);
+                }
+            }
+			else
+            {
+                texture = ModContent.Request<Texture2D>("SOTS/NPCs/Tide/PhantaraySmall").Value;
             }
             spriteBatch.Draw(texture, drawPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
         }
-		public override void AI()
+        public override bool PreAI()
+        {
+			if (runOnce)
+			{
+				if (NPC.ai[0] == -1)
+				{
+					isCore = false;
+                }
+                if (NPC.ai[1] != 0)
+                    NPC.velocity += Main.rand.NextVector2CircularEdge(2.5f, 1.5f);
+                NPC.ai[0] = Main.rand.Next(60);
+                NPC.ai[1] -= Main.rand.Next(60);
+				if(Main.netMode == NetmodeID.Server)
+				{
+					NPC.netUpdate = true;
+                }
+                runOnce = false;
+            }
+			return true;
+        }
+        public override void AI()
 		{
 			bool canSeePlayer;
 			NPC.TargetClosest(false);
@@ -102,7 +146,7 @@ namespace SOTS.NPCs.Tide
 				canSeePlayer = false;
             Vector2 toPlayer = player.Center - NPC.Center;
 			float length = toPlayer.Length();
-			float speed = 3f + length * 0.00002f;
+			float speed = 2.3f + length * 0.00001f;
 			if (length < 360)
 				speed *= 0.2f + 0.8f * length / 360f;
 			toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
@@ -118,17 +162,17 @@ namespace SOTS.NPCs.Tide
 			}
 			else
 				NPC.wet = false;
-			if (NPC.ai[3] > 0)
+			if (NPC.ai[3] > 0 && isCore)
 			{
 				NPC.ai[3]++;
-				float speedSh = 2f;
+				float speedSh = 1.5f;
 				if (!NPC.wet && NPC.ai[1] <= 0)
                 {
-					float bonus = NPC.ai[1] / -60f;
-					if (bonus > 5)
-						bonus = 5;
+					float bonus = NPC.ai[1] / -90f;
+					if (bonus > 3)
+						bonus = 3;
                     NPC.ai[3] += bonus;
-                    speedSh += bonus / 4.5f;
+                    speedSh += bonus / 6f;
                 }
                 if (NPC.ai[3] > 120)
 				{
@@ -137,7 +181,7 @@ namespace SOTS.NPCs.Tide
                         NPC.netUpdate = true;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, -22).RotatedBy(NPC.rotation), toPlayer.SafeNormalize(Vector2.Zero) * speedSh + Main.rand.NextVector2Circular(1, 1) * 0.1f * speedSh * speedSh, ModContent.ProjectileType<PhantarayBall>(), (int)(NPC.GetBaseDamage() / 2 * 0.75f), 2f, Main.myPlayer);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, -1).RotatedBy(NPC.rotation), toPlayer.SafeNormalize(Vector2.Zero) * speedSh + Main.rand.NextVector2Circular(1, 1) * 0.075f * speedSh * speedSh, ModContent.ProjectileType<PhantarayBall>(), (int)(NPC.GetBaseDamage() / 2 * 0.75f), 2f, Main.myPlayer);
 					}
                 }
 			}
@@ -161,17 +205,17 @@ namespace SOTS.NPCs.Tide
                         if (Main.netMode == NetmodeID.Server)
                             NPC.netUpdate = true;
                     }
+                    NPC.velocity.X *= 0.96f;
 				}
             }
             if (!NPC.wet)
             {
-                NPC.velocity.Y += 0.1575f; //gravity when out of water
-                if (NPC.velocity.Y < 0)
-                    NPC.velocity.Y *= 0.978f;
                 if (NPC.ai[1] < -180)
-				{
-					NPC.velocity.X *= 0.95f;
-				}
+                    NPC.velocity.Y += 0.215f;
+                else
+                    NPC.velocity.Y += 0.085f; //gravity when out of water
+                if (NPC.velocity.Y < 0)
+                    NPC.velocity.Y *= 0.985f;
             }
             if (canSeePlayer)
             {
@@ -179,7 +223,7 @@ namespace SOTS.NPCs.Tide
 				{
 					if (previousWet != NPC.wet)
 					{
-						NPC.velocity += toPlayer * speed * 2.5f;
+						NPC.velocity += toPlayer * speed * 3f;
 						NPC.ai[1] = 60;
 						if (Main.netMode == NetmodeID.Server)
 							NPC.netUpdate = true;
@@ -205,7 +249,7 @@ namespace SOTS.NPCs.Tide
                     {
                         if (NPC.velocity.Y > 5)
                             NPC.velocity.Y *= 0.978f;
-                        NPC.velocity.Y += 0.04f;
+                        NPC.velocity.Y += 0.05f;
                         NPC.velocity.X *= 0.9f;
                         NPC.velocity += new Vector2(toPlayer.X * 0.45f, 0.12f) * 0.35f * sinusoid * (NPC.ai[2] / 30f);
                     }
@@ -231,7 +275,7 @@ namespace SOTS.NPCs.Tide
                     if (Main.netMode == NetmodeID.Server)
                         NPC.netUpdate = true;
                 }
-                NPC.velocity += wanderDirection * speed * sinusoid * 0.3f;
+                NPC.velocity += wanderDirection * speed * sinusoid * 0.35f;
                 NPC.velocity *= 0.875f;
             }
 			if(previousWet != NPC.wet)
@@ -239,7 +283,7 @@ namespace SOTS.NPCs.Tide
             previousWet = NPC.wet;
             NPC.velocity.X /= 0.93f;
             CheckOtherCollision();
-            NPC.alpha = (int)MathHelper.Lerp(195, 50, sinusoid);
+            NPC.alpha = (int)MathHelper.Lerp(165, 50, sinusoid);
 			if(NPC.wet)
 			{
 				NPC.ai[2]++;
@@ -249,9 +293,9 @@ namespace SOTS.NPCs.Tide
 				NPC.ai[2]--;
 			}
 			NPC.ai[2] = MathHelper.Clamp(NPC.ai[2], 0, 30);
-			int alphaToGo = 235;
+			int alphaToGo = 225;
 			if (player.wet)
-				alphaToGo = 205;
+				alphaToGo = 155;
 			NPC.alpha = (int)MathHelper.Lerp(NPC.alpha, alphaToGo, NPC.ai[2] / 30f);
 			if (NPC.alpha > 200)
 				NPC.dontTakeDamage = !player.wet;
@@ -262,33 +306,36 @@ namespace SOTS.NPCs.Tide
         }
         public override void PostAI()
         {
-            int textureWidth = 148;
-            Color dustcolor = Color.Lerp(new Color(2, 91, 138), new Color(95, 171, 192), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[0])));
+			int textureWidth = 52;
+			Color dustcolor = Color.Lerp(new Color(2, 91, 138), new Color(95, 171, 192), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(NPC.ai[0])));
             dustcolor.A = 0;
             if (NPC.velocity.Length() > 1)
             {
-                for (float j = 0; j < 1f; j += 0.25f)
+                for (float j = 0; j < 1f; j += 0.34f)
                 {
-                    for (int i = -1; i <= 1; i ++)
+                    for (int i = -1; i <= 1; i++)
                     {
-						float modifier = i;
-						if (i == 0)
-							modifier = Main.rand.NextFloat(-1, 1);
-                        Dust d = Dust.NewDustDirect(NPC.Center + NPC.velocity * j + new Vector2(textureWidth / 2 * modifier, -4).RotatedBy(NPC.rotation) - new Vector2(5, 5), 0, 0, DustType<PixelDust>());
-                        d.velocity *= 0.2f;
-                        d.noGravity = true;
-                        d.scale = 1.0f;
-                        d.color = dustcolor;
-                        d.alpha = NPC.alpha;
-                        d.fadeIn = 10;
+						if(!Main.rand.NextBool(3))
+                        {
+                            float modifier = i;
+                            if (i == 0)
+                                modifier = Main.rand.NextFloat(-1, 1);
+                            Dust d = Dust.NewDustDirect(NPC.Center + NPC.velocity * j + new Vector2(textureWidth / 2 * modifier, -4).RotatedBy(NPC.rotation) - new Vector2(5, 5), 0, 0, DustType<PixelDust>());
+                            d.velocity *= 0.2f;
+                            d.noGravity = true;
+                            d.scale = 1.0f;
+                            d.color = dustcolor;
+                            d.alpha = NPC.alpha;
+                            d.fadeIn = 11;
+                        }
                     }
                 }
             }
-			if(NPC.lifeRegen < 0)
+            if (NPC.lifeRegen < 0)
             {
                 for (int i = 0; i <= -NPC.lifeRegen; i++)
                 {
-					if(Main.rand.NextBool(10 + i))
+                    if (Main.rand.NextBool(10 + i))
                     {
                         Dust d = Dust.NewDustDirect(NPC.position - new Vector2(5, 5), NPC.width, NPC.height, DustType<PixelDust>());
                         d.velocity *= 1f;
@@ -336,47 +383,48 @@ namespace SOTS.NPCs.Tide
                 ai1 = -180;
             if (ai1 == 0)
                 ai1 = -1;
-            NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<PhantarayCore>(), 0, 0, ai1);
-			int residual = 3;
-			if (Main.expertMode)
-				residual++;
-			for(int i = 0; i < residual; i++)
-				NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<PhantarayCore>(), 0, -1, ai1);
+            if (!isCore)
+				return;
+            int residual = 2;
+            if (Main.expertMode)
+                residual++;
+            for (int i = 0; i < residual; i++)
+                NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<PhantarayCore>(), 0, -1, ai1);
         }
         public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
-            if (NPC.life <= 0)
+			if (NPC.life <= 0)
             {
                 Color dustcolor = Color.Lerp(new Color(2, 91, 138), new Color(95, 171, 192), Main.rand.NextFloat(1));
-                for (int k = 0; k < 45; k++)
-                {
-                    Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
-                    d.velocity *= 2.25f;
-                    d.fadeIn = 0.2f;
-                    d.noGravity = true;
-                    d.scale *= 1.76f;
-                    d.color = dustcolor;
-                }
-            }
+                for (int k = 0; k < 20; k++)
+				{
+					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
+					d.velocity *= 1.5f;
+					d.fadeIn = 0.2f;
+					d.noGravity = true;
+					d.scale *= 1.64f;
+					d.color = dustcolor;
+				}
+			}		
             else
             {
                 Color dustcolor = Color.Lerp(new Color(2, 91, 138), new Color(95, 171, 192), Main.rand.NextFloat(1));
-                float dCount = 300f * hit.Damage / NPC.lifeMax;
-                if (dCount > 16)
-                    dCount = 16;
+                float dCount = 200f * hit.Damage / NPC.lifeMax;
+                if (dCount > 8)
+                    dCount = 8;
                 for (int k = 0; k < dCount; k++)
                 {
                     Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
                     d.velocity *= 1.5f;
                     d.fadeIn = 0.2f;
                     d.noGravity = true;
-                    d.scale *= 1.5f;
+                    d.scale *= 1.33f;
                     d.color = dustcolor;
                 }
             }
-        }
+		}
 	}
 }
 

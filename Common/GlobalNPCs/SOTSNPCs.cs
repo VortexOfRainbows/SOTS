@@ -45,6 +45,7 @@ using SOTS.NPCs.Boss.Glowmoth;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.NPCs.Anomaly;
+using SOTS.NPCs.Tide;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -476,6 +477,25 @@ namespace SOTS.Common.GlobalNPCs
 				npcLoot.Add(postPharaoh);
 				npcLoot.Add(prePharaoh);
 			}
+			if(npc.type == ModContent.NPCType<PhantarayCore>())
+            {
+                LeadingConditionRule Core = new LeadingConditionRule(new ItemDropConditions.IsCore());
+                LeadingConditionRule NotCore = new LeadingConditionRule(new ItemDropConditions.IsNotCore());
+                Core.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfTide>(), 2));
+                Core.OnSuccess(ItemDropRule.Common(ItemID.Coral, 5));
+                Core.OnSuccess(ItemDropRule.Common(ItemID.OceanCrate, 50));
+                Core.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SharkPog>(), 50));
+                NotCore.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfTide>(), 20));
+                NotCore.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SharkPog>(), 250));
+                npcLoot.Add(Core);
+                npcLoot.Add(NotCore);
+            }
+			if(npc.type == ModContent.NPCType<PhantarayBig>())
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfTide>(), 1, 1, 2));
+                npcLoot.Add(ItemDropRule.Common(ItemID.LifeCrystal, 5));
+                npcLoot.Add(ItemDropRule.Common(ItemID.OceanCrateHard, 5));
+            }
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
 		{
@@ -656,9 +676,34 @@ namespace SOTS.Common.GlobalNPCs
 						}
 					}
 					else
-						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.005f * constructRateMultiplier);
-				}
-			}
+						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0075f * constructRateMultiplier);
+                }
+				if(!Main.hardMode)
+                {
+                    if (NPC.CountNPCS(ModContent.NPCType<PhantarayCore>()) < 2)
+                    {
+                        if (NPC.downedBoss1)
+                            pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.225f);
+                        else
+                            pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.125f);
+                    }
+					else
+                    {
+                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.05f);
+                    }
+                }
+				else
+                {
+                    if (NPC.CountNPCS(ModContent.NPCType<PhantarayBig>()) < 1) //can only spawn one big boy
+                        pool.Add(ModContent.NPCType<PhantarayBig>(), SpawnCondition.OceanMonster.Chance * 0.1f);
+                    if (NPC.CountNPCS(ModContent.NPCType<PhantarayCore>()) < 2)
+                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.125f);
+					else
+                    {
+                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.05f);
+                    }
+                }
+            }
 			else if (!player.ZoneBeach)
 			{
 				if (player.ZoneDesert || player.ZoneUndergroundDesert || (player.ZoneRockLayerHeight && !player.ZoneDungeon && !player.ZoneJungle && !player.ZoneSnow))
@@ -780,7 +825,8 @@ namespace SOTS.Common.GlobalNPCs
 			SpawnConditionBestiaryInfoElement TheUnderworld = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld;
 			SpawnConditionBestiaryInfoElement Desert = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert;
 			SpawnConditionBestiaryInfoElement UndergroundDesert = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundDesert;
-			ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
+			SpawnConditionBestiaryInfoElement Ocean = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean;
+            ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Anomaly = ModContent.GetInstance<AnomalyBiome>().ModBiomeBestiaryInfoElement;
 			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || 
@@ -798,9 +844,9 @@ namespace SOTS.Common.GlobalNPCs
 				if (npc.type == ModContent.NPCType<TwilightDevil>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TwilightDevil");
 				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
-					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PlanetariumlyConstructHead");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlyConstructHead");
 				if (npc.type == ModContent.NPCType<OtherworldlySpirit>())
-					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PlanetariumlySpirit");
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlySpirit");
 
 				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Planetarium,
@@ -930,8 +976,14 @@ namespace SOTS.Common.GlobalNPCs
 					Anomaly,
 					flavorText
 				});
-			}
-			if (npc.ModNPC is TreasureSlime)
+            }
+            if (npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<PhantarayBig>() || npc.type == ModContent.NPCType<PhantarayCore>())
+            {
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                    Ocean
+                });
+            }
+            if (npc.ModNPC is TreasureSlime)
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.TreasureSlime");
 				if(npc.type == ModContent.NPCType<BasicTreasureSlime>())

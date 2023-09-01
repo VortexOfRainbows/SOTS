@@ -213,6 +213,8 @@ Mods: {
 			Dungeon: Drops in the dungeon
 			PlanetariumBiome: Drops in Planetarium biome
 			OnFire: Drops if on fire
+			PhantarayCore1: With a core
+			PhantarayCore2: Without a core
 		}
 
 		Prefixes: {
@@ -5857,6 +5859,7 @@ Mods: {
 			WallMimic.DisplayName: Wall Mimic
 			Snake.DisplayName: Snake
 			PhantarayBig.DisplayName: Phantaray
+			PhantarayCore.DisplayName: Phantaray
 		}
 
 		Bestiary: {
