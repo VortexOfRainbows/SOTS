@@ -29,7 +29,7 @@ namespace SOTS.Items.Celestial
         bool accessory = true;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
+            FakeModPlayer modPlayer = FakeModPlayer.ModPlayer(player);
             modPlayer.servantActive = true;
             player.GetDamage(DamageClass.Generic) *= 0.75f;
 
@@ -40,7 +40,7 @@ namespace SOTS.Items.Celestial
         }
         public override void UpdateVanity(Player player)
         {
-            SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
+            FakeModPlayer modPlayer = FakeModPlayer.ModPlayer(player);
             modPlayer.servantActive = true;
             modPlayer.servantIsVanity = true;
         }
@@ -52,7 +52,7 @@ namespace SOTS.Items.Celestial
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Player player = Main.LocalPlayer;
-            SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
+            FakeModPlayer modPlayer = FakeModPlayer.ModPlayer(player);
             Texture2D texture = ModContent.Request<Texture2D>("SOTS/Items/Celestial/SubspaceLocket").Value;
             Texture2D itemTextureOutline = ModContent.Request<Texture2D>("SOTS/Items/Celestial/GreenSubspaceLocket").Value;
             if (modPlayer.foundItem && accessory)

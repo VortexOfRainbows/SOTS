@@ -759,7 +759,7 @@ namespace SOTS
                 Main.inventoryBack = Color.Transparent;
             if (slot == 49)
             {
-				SubspacePlayer subPlayer = SubspacePlayer.ModPlayer(player);
+				FakeModPlayer subPlayer = FakeModPlayer.ModPlayer(player);
 				if(subPlayer.servantActive && !subPlayer.servantIsVanity)
 				{
 					if(item.type <= ItemID.None || item.stack <= 0)

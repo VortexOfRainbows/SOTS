@@ -31,13 +31,13 @@ Update Objectives:
 4. Heart Swapper / Hydrokinetic Antennae
 	1. Grants close ranged weapons the ability to be used at range through Hydrokinesis (fake player item)
 5. Phantaray: Multiplayer Syncing, Banner
-6. Digital display not dropping
-7. Fix botanical symbiote (and potentially other accessories) getting weapon reforges
+6. Fix botanical symbiote (and potentially other accessories) getting weapon reforges
  
 Daily Log:
 
 9/3/23
 1. WIP Heart Swapper
+2. Digital display drops properly
 
 8/29/23 to 9/1/23
 1. Added Glow Whip

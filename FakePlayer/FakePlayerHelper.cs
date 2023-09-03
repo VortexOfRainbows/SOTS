@@ -182,7 +182,7 @@ namespace SOTS.FakePlayer
             Player player = Main.LocalPlayer;
             bool correctSlot = player.inventory[49] == item;
             bool correctItem = item.type == ModContent.ItemType<SubspaceLocket>() && (player.inventory.Contains(item) || player.armor.Contains(item));
-            if ((correctSlot && SubspacePlayer.ModPlayer(player).servantActive && !SubspacePlayer.ModPlayer(player).servantIsVanity) || correctItem)
+            if ((correctSlot && FakeModPlayer.ModPlayer(player).servantActive && !FakeModPlayer.ModPlayer(player).servantIsVanity) || correctItem)
             {
                 return true;
             }
@@ -202,7 +202,7 @@ namespace SOTS.FakePlayer
                 dummyItem.height = 52;
                 ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 52f, ref frame2, out var itemLight, out var finalDrawScale);
                 Texture2D textureOfBox = grayLocketBox;
-                if((correctItem || SubspacePlayer.ModPlayer(player).foundItem) && !FakeBorderDrawCycle)
+                if((correctItem || FakeModPlayer.ModPlayer(player).foundItem) && !FakeBorderDrawCycle)
                 {
                     textureOfBox = locketBox;
                     if (item.favorited)
@@ -219,7 +219,7 @@ namespace SOTS.FakePlayer
                 if (!correctItem || FakeBorderDrawCycle)
                 {
                     ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 32f, ref frame2, out var itemLight2, out var finalDrawScale2);
-                    spriteBatch.Draw(SubspacePlayer.ModPlayer(player).foundItem ? locket : grayscaleLocket, position, null, InventoryBoxStandard * 0.5f, 0f, grayscaleLocket.Size() / 2, finalDrawScale2 * 0.85f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(FakeModPlayer.ModPlayer(player).foundItem ? locket : grayscaleLocket, position, null, InventoryBoxStandard * 0.5f, 0f, grayscaleLocket.Size() / 2, finalDrawScale2 * 0.85f, SpriteEffects.None, 0f);
                 }
             }
         }

@@ -4,6 +4,7 @@ using SOTS.Buffs;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Items.Planetarium.FromChests;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -105,6 +106,10 @@ namespace SOTS.Items.Planetarium.Furniture
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<DigitalDisplay>());
+        }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
             return true;

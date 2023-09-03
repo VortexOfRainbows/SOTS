@@ -13,9 +13,41 @@ namespace SOTS.FakePlayer
 {
     public static class FakePlayerDrawing
     {
+        public static Texture2D WingTexture(int type, bool outLine)
+        {
+            if (outLine)
+            {
+                if(type == 1)
+                {
+                    return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWingsOutline").Value;
+                }
+                return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWingsOutline").Value;
+            }
+            if (type == 1)
+            {
+                return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWings").Value;
+            }
+            return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWings").Value;
+        }
+        public static Texture2D FakePlayerTexture(int type, bool outLine)
+        {
+            if(outLine)
+            {
+                if (type == 1)
+                {
+                    return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantSheetOutline").Value;
+                }
+                return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
+            }
+            if(type == 1)
+            {
+                return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantSheet").Value;
+            }
+            return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
+        }
         public static void DrawFrontArm(FakePlayer fakePlayer, SpriteBatch spriteBatch)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
             SpriteEffects spriteEffects = fakePlayer.playerEffect;
             Vector2 vector = new Vector2((int)fakePlayer.Position.X, (int)fakePlayer.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
             if (fakePlayer.compFrontArmFrame.X / fakePlayer.compFrontArmFrame.Width >= 7)
@@ -33,10 +65,10 @@ namespace SOTS.FakePlayer
         {
             return new Vector2(6 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 2 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically)) ? 1 : (-1)));
         }
-        public static void DrawBackArm(ref PlayerDrawSet drawInfo, bool green)
+        public static void DrawBackArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool green)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
-            Texture2D textureGreen = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
+            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
             Vector2 vector = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
             Vector2 vector3 = vector;
             Vector2 compositeOffset_BackArm = GetCompositeOffset_BackArm(ref drawInfo);
@@ -45,10 +77,17 @@ namespace SOTS.FakePlayer
             Color color = Color.White;
             if (green)
             {
-                for (int k = 0; k < 4; k++)
+                if (fakePlayer.FakePlayerType == 0)
                 {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(textureGreen, vector3 + circular, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0));
+                    for (int k = 0; k < 4; k++)
+                    {
+                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                        PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(textureGreen, vector3 + circular, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0));
+                    }
+                }
+                else
+                {
+                    PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(textureGreen, vector3, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0));
                 }
             }
             else
@@ -59,6 +98,55 @@ namespace SOTS.FakePlayer
                 });
             }
         }
+        public static void DrawTail(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outLine = false)
+        {
+            if (fakePlayer.FakePlayerType == 0)
+            {
+                Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTail").Value;
+                Texture2D textureOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailOutline").Value;
+                Texture2D texture2 = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailScales").Value;
+                Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+                Vector2 center = drawInfo.Position + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 + 2);
+                Vector2 velo = new Vector2(0, 4f);
+                float scale = 1f;
+                List<Vector2> positions = new List<Vector2>();
+                List<float> rotations = new List<float>();
+                for (int i = 0; i < 9; i++)
+                {
+                    Vector2 toOldPosition = fakePlayer.SecondPosition - drawInfo.Position;
+                    toOldPosition.SafeNormalize(Vector2.Zero);
+                    velo += toOldPosition * 0.333f;
+                    velo = velo.SafeNormalize(Vector2.Zero) * scale * 4;
+                    center += velo;
+                    Vector2 drawPos = center - Main.screenPosition + new Vector2(0, -16 + FakePlayer.Height / 2);
+                    positions.Add(drawPos);
+                    rotations.Add(velo.ToRotation() - MathHelper.ToRadians(90));
+                    scale -= 0.0725f;
+                }
+                if (outLine)
+                {
+                    for (int i = 8; i >= 0; i--)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                            drawInfo.DrawDataCache.Add(new DrawData(textureOutline, positions[i] + circular, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 8; i >= 0; i--)
+                    {
+                        drawInfo.DrawDataCache.Add(new DrawData(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                    }
+                    for (int i = 8; i >= 0; i--)
+                    {
+                        drawInfo.DrawDataCache.Add(new DrawData(texture2, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                    }
+                }
+            }
+        }
         public static Vector2 GetCompositeOffset_FrontArm(ref PlayerDrawSet drawInfo)
         {
             return new Vector2(-5 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 0f);
@@ -67,10 +155,10 @@ namespace SOTS.FakePlayer
         {
             return new Vector2(-5 * ((!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 0f);
         }
-        public static void DrawFrontArm(ref PlayerDrawSet drawInfo, bool green)
+        public static void DrawFrontArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool green)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
-            Texture2D textureGreen = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
+            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
             SpriteEffects spriteEffects = drawInfo.playerEffect;
             Vector2 vector = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
             if (drawInfo.compFrontArmFrame.X / drawInfo.compFrontArmFrame.Width >= 7)
@@ -84,11 +172,18 @@ namespace SOTS.FakePlayer
             float rotation = drawInfo.compositeFrontArmRotation;
             if (green)
             {
-                for (int k = 0; k < 4; k++)
+                if (fakePlayer.FakePlayerType == 0)
                 {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
-                    //drawData.shader = drawInfo.cBody;
+                    for (int k = 0; k < 4; k++)
+                    {
+                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                        DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
+                        drawInfo.DrawDataCache.Add(drawData2);
+                    }
+                }
+                else
+                {
+                    DrawData drawData2 = new DrawData(textureGreen, position, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
                     drawInfo.DrawDataCache.Add(drawData2);
                 }
             }
@@ -99,10 +194,10 @@ namespace SOTS.FakePlayer
                 drawInfo.DrawDataCache.Add(drawData);
             }
         }
-        public static void DrawBody(ref PlayerDrawSet drawInfo, bool green)
+        public static void DrawBody(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool green)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheet").Value;
-            Texture2D textureGreen = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
+            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
             Player drawPlayer = drawInfo.drawPlayer;
             float drawX = (int)drawInfo.Position.X + FakePlayer.Width / 2;
             float drawY = (int)drawInfo.Position.Y + FakePlayer.Height - drawPlayer.bodyFrame.Height / 2 + 4f;
@@ -113,10 +208,18 @@ namespace SOTS.FakePlayer
             SpriteEffects spriteEffects = drawInfo.playerEffect;
             if (green)
             {
-                for (int k = 0; k < 4; k++)
+                if (fakePlayer.FakePlayerType == 0)
                 {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, 0f, origin, 1f, spriteEffects, 0);
+                    for (int k = 0; k < 4; k++)
+                    {
+                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                        DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, 0f, origin, 1f, spriteEffects, 0);
+                        drawInfo.DrawDataCache.Add(drawData2);
+                    }
+                }
+                else
+                {
+                    DrawData drawData2 = new DrawData(textureGreen, position, frame, color, 0f, origin, 1f, spriteEffects, 0);
                     drawInfo.DrawDataCache.Add(drawData2);
                 }
             }
@@ -126,11 +229,11 @@ namespace SOTS.FakePlayer
                 drawInfo.DrawDataCache.Add(drawData);
             }
         }
-        public static void DrawWings(ref PlayerDrawSet drawInfo, int Frame)
+        public static void DrawWings(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, int Frame)
         {
             int Direction = drawInfo.drawPlayer.direction;
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWings").Value;
-            Texture2D textureOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWingsOutline").Value;
+            Texture2D texture = WingTexture(fakePlayer.FakePlayerType, false);
+            Texture2D textureOutline = WingTexture(fakePlayer.FakePlayerType, true);
             Vector2 drawPos = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2) - Main.screenPosition + new Vector2(-8 * Direction, -5);
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
             if (Frame < 0)
@@ -141,10 +244,18 @@ namespace SOTS.FakePlayer
             {
                 Frame = 5;
             }
-            for (int k = 0; k < 4; k++)
+            if(fakePlayer.FakePlayerType == 0)
             {
-                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                for (int k = 0; k < 4; k++)
+                {
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                    DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                    drawInfo.DrawDataCache.Add(drawData2);
+                }
+            }
+            else
+            {
+                DrawData drawData2 = new DrawData(textureOutline, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
                 drawInfo.DrawDataCache.Add(drawData2);
             }
             DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);

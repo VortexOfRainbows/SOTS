@@ -37,11 +37,11 @@ namespace SOTS.FakePlayer
         public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			if(!isVanity && SubspacePlayer.ModPlayer(player).servantIsVanity)
+			if(!isVanity && FakeModPlayer.ModPlayer(player).servantIsVanity)
             {
 				Projectile.Kill();
             }
-			if (!SubspacePlayer.ModPlayer(player).servantIsVanity)
+			if (!FakeModPlayer.ModPlayer(player).servantIsVanity)
             {
 				isVanity = false;
             }
@@ -54,7 +54,7 @@ namespace SOTS.FakePlayer
 				{
 					Direction = player.direction;
 				}
-				if(FakePlayer.itemAnimation == FakePlayer.itemAnimationMax && !SubspacePlayer.ModPlayer(player).servantIsVanity && FakePlayer.itemAnimationMax != 0)
+				if(FakePlayer.itemAnimation == FakePlayer.itemAnimationMax && !FakeModPlayer.ModPlayer(player).servantIsVanity && FakePlayer.itemAnimationMax != 0)
                 {
 					Direction = Math.Sign(cursorArea.X - Projectile.Center.X);
                 }

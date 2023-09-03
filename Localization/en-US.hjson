@@ -5094,6 +5094,11 @@ Mods: {
 					Your summons will focus struck enemies
 					'''
 			}
+
+			HydrokineticAntennae: {
+				DisplayName: Hydrokinetic Antennae
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6653,6 +6658,7 @@ Mods: {
 			PogBubble.DisplayName: Pog Bubble
 			GlowWhipProjectile.DisplayName: Glow Whip Projectile
 			PhantarayBall.DisplayName: Phantaray Ball
+			HydroServant.DisplayName: Hydro Servant
 		}
 
 		DamageClasses: {

@@ -23,7 +23,7 @@ namespace SOTS.Items.Tide
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
+			FakeModPlayer modPlayer = FakeModPlayer.ModPlayer(player);
             modPlayer.hasHydroFakePlayer = true;
         }
 		public override void AddRecipes()

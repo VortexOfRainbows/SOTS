@@ -37,7 +37,7 @@ namespace SOTS.FakePlayer
         public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			if(!SubspacePlayer.ModPlayer(player).hasHydroFakePlayer)
+			if(!FakeModPlayer.ModPlayer(player).hasHydroFakePlayer)
             {
 				Projectile.Kill();
             }

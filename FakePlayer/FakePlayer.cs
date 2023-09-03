@@ -63,7 +63,7 @@ namespace SOTS.FakePlayer
         }
         public bool CheckItemValidityFull(Player player, Item item)
         {
-            SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
+            FakeModPlayer subspacePlayer = FakeModPlayer.ModPlayer(player);
             bool canUseItem = true;
             #region check if item is useable
             if (!FakePlayerHelper.FakePlayerItemWhitelist.Contains(item.type) || lastUsedItem == null)
@@ -92,7 +92,7 @@ namespace SOTS.FakePlayer
         public void ItemCheckHack(Player player)
         {
             SupressNetMessage13and41 = true;
-            SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
+            FakeModPlayer subspacePlayer = FakeModPlayer.ModPlayer(player);
             Item item = player.inventory[UseItemSlot];
             if (Main.netMode != NetmodeID.Server)
             {
@@ -178,7 +178,7 @@ namespace SOTS.FakePlayer
         public Rectangle compBackArmFrame = Rectangle.Empty;
         public Item heldItem;                        
         Item lastUsedItem;
-        private int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
+        public int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
         private int FakePlayerID = 0;
         public int UseItemSlot => 49; //it should always use the last slot. Maybe add a config to this later, or an individual slot.
         public bool compositeFrontArmEnabled = false;
@@ -495,23 +495,23 @@ namespace SOTS.FakePlayer
             drawInfo.heldProjOverHand = this.heldProjOverHand;
             drawInfo.bodyVect = this.bodyVect;
 
-            DrawTail(ref drawInfo, true);
+            FakePlayerDrawing.DrawTail(this, ref drawInfo, true);
             HijackItemDrawing(ref drawInfo, true);
-            FakePlayerDrawing.DrawBackArm(ref drawInfo, true);
-            FakePlayerDrawing.DrawBody(ref drawInfo, true);
-            FakePlayerDrawing.DrawFrontArm(ref drawInfo, true);
-            FakePlayerDrawing.DrawWings(ref drawInfo, WingFrame);
+            FakePlayerDrawing.DrawBackArm(this, ref drawInfo, true);
+            FakePlayerDrawing.DrawBody(this, ref drawInfo, true);
+            FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, true);
+            FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame);
 
             if (weaponDrawOrder == 0)
                 HijackItemDrawing(ref drawInfo, false);
-            FakePlayerDrawing.DrawBackArm(ref drawInfo, false);
-            DrawTail(ref drawInfo, false);
-            FakePlayerDrawing.DrawBody(ref drawInfo, false);
+            FakePlayerDrawing.DrawBackArm(this, ref drawInfo, false);
+            FakePlayerDrawing.DrawTail(this, ref drawInfo, false);
+            FakePlayerDrawing.DrawBody(this, ref drawInfo, false);
             if(weaponDrawOrder == 1)
                 HijackItemDrawing(ref drawInfo, false);
             if (player.heldProj == -1 || heldProjOverHand)
             {
-                FakePlayerDrawing.DrawFrontArm(ref drawInfo, false);
+                FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, false);
             }
             if (weaponDrawOrder == 2)
                 HijackItemDrawing(ref drawInfo, false);
@@ -654,52 +654,6 @@ namespace SOTS.FakePlayer
             if (ShouldUseWingsArmPosition)
             {
                 bodyFrame.Y = bodyFrame.Height * 6;
-            }
-        }
-        public void DrawTail(ref PlayerDrawSet drawInfo, bool outLine = false)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTail").Value;
-            Texture2D textureOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailOutline").Value;
-            Texture2D texture2 = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailScales").Value;
-            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-            Vector2 center = drawInfo.Position + new Vector2(Width / 2, Height / 2 + 2);
-            Vector2 velo = new Vector2(0, 4f);
-            float scale = 1f;
-            List<Vector2> positions = new List<Vector2>();
-            List<float> rotations = new List<float>();
-            for (int i = 0; i < 9; i++)
-            {
-                Vector2 toOldPosition = SecondPosition - drawInfo.Position;
-                toOldPosition.SafeNormalize(Vector2.Zero);
-                velo += toOldPosition * 0.333f;
-                velo = velo.SafeNormalize(Vector2.Zero) * scale * 4;
-                center += velo;
-                Vector2 drawPos = center - Main.screenPosition + new Vector2(0, -16 + Height / 2);
-                positions.Add(drawPos);
-                rotations.Add(velo.ToRotation() - MathHelper.ToRadians(90));
-                scale -= 0.0725f;
-            }
-            if (outLine)
-            {
-                for (int i = 8; i >= 0; i--)
-                {
-                    for (int k = 0; k < 4; k++)
-                    {
-                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                        drawInfo.DrawDataCache.Add(new DrawData(textureOutline, positions[i] + circular, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 8; i >= 0; i--)
-                {
-                    drawInfo.DrawDataCache.Add(new DrawData(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
-                }
-                for (int i = 8; i >= 0; i--)
-                {
-                    drawInfo.DrawDataCache.Add(new DrawData(texture2, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
-                }
             }
         }
         public void UpdateMyProjectiles(Player player)
