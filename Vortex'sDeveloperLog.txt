@@ -30,9 +30,14 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Heart Swapper / Hydrokinetic Antennae
 	1. Grants close ranged weapons the ability to be used at range through Hydrokinesis (fake player item)
-5. Phantaray
+5. Phantaray: Multiplayer Syncing, Banner
+6. Digital display not dropping
+7. Fix botanical symbiote (and potentially other accessories) getting weapon reforges
  
 Daily Log:
+
+9/3/23
+1. WIP Heart Swapper
 
 8/29/23 to 9/1/23
 1. Added Glow Whip
@@ -41,7 +46,6 @@ Daily Log:
 2. Decrease glow nylon cost for Torch Gun (100 -> 50)
 3. Phantaray
 	1. Finished attacks, visuals, loot, and spawning
-	2. Needs: Multiplayer Syncing, Banner
 
 8/27/23
 1. Multiplayer synced Subspace Servant

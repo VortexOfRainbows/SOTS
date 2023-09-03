@@ -6,9 +6,10 @@ using System.IO;
 
 namespace SOTS.FakePlayer
 {
-	public class SubspaceServant : FakePlayerPossessingProjectile
+	public class HydroServant : FakePlayerPossessingProjectile
 	{
-		public sealed override void SetDefaults()
+		public override string Texture => "SOTS/FakePlayer/SubspaceServant";
+        public sealed override void SetDefaults()
 		{
 			Projectile.width = 20;
 			Projectile.height = 42;
@@ -30,20 +31,15 @@ namespace SOTS.FakePlayer
 				runOnce = false;
 			}
 			if (FakePlayer == null)
-				FakePlayer = new FakePlayer(0, Projectile.identity);
+				FakePlayer = new FakePlayer(1, Projectile.identity);
 			return base.PreAI();
 		}
-		bool isVanity = true;
         public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			if(!isVanity && SubspacePlayer.ModPlayer(player).servantIsVanity)
+			if(!SubspacePlayer.ModPlayer(player).hasHydroFakePlayer)
             {
 				Projectile.Kill();
-            }
-			if (!SubspacePlayer.ModPlayer(player).servantIsVanity)
-            {
-				isVanity = false;
             }
 			int TrailingType = FakePlayer.TrailingType;
 			Vector2 idlePosition = player.Center;
@@ -54,7 +50,7 @@ namespace SOTS.FakePlayer
 				{
 					Direction = player.direction;
 				}
-				if(FakePlayer.itemAnimation == FakePlayer.itemAnimationMax && !SubspacePlayer.ModPlayer(player).servantIsVanity && FakePlayer.itemAnimationMax != 0)
+				if(FakePlayer.itemAnimation == FakePlayer.itemAnimationMax && FakePlayer.itemAnimationMax != 0)
                 {
 					Direction = Math.Sign(cursorArea.X - Projectile.Center.X);
                 }
@@ -130,9 +126,9 @@ namespace SOTS.FakePlayer
 				if (circular.Y > 0)
 					circular.Y *= 0.5f;
 				Projectile.velocity.Y += circular.Y;
-                UpdateItems(player);
-                //Projectile.velocity = FakePlayer.Velocity;
-            }
+				UpdateItems(player);
+				//Projectile.velocity = FakePlayer.Velocity;
+			}
 			if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
 				Projectile.netUpdate = true;
 			Lighting.AddLight(Projectile.Center, new Vector3(0.65f, 0.8f, 0.75f));

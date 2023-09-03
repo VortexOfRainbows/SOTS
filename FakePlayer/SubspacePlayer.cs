@@ -21,6 +21,7 @@ namespace SOTS.FakePlayer
         public bool foundItem = false;
         public bool servantActive = false;
         public bool servantIsVanity = false;
+        public bool hasHydroFakePlayer = false;
         public static SubspacePlayer ModPlayer(Player player)
         {
             return player.GetModPlayer<SubspacePlayer>();
@@ -29,7 +30,13 @@ namespace SOTS.FakePlayer
         {
             if(servantActive)
             {
-                Summon();
+                int type = ModContent.ProjectileType<SubspaceServant>();
+                SOTSPlayer.ModPlayer(Player).runPets(ref Probe, type, 0, 0, false);
+            }
+            if (hasHydroFakePlayer)
+            {
+                int type = ModContent.ProjectileType<SubspaceServant>();
+                SOTSPlayer.ModPlayer(Player).runPets(ref Probe, type, 0, 0, false);
             }
         }
         public int subspaceServantShader = 0;
@@ -38,14 +45,10 @@ namespace SOTS.FakePlayer
             subspaceServantShader = 0;
             servantIsVanity = false;
             servantActive = false;
+            hasHydroFakePlayer = false;
             foundItem = false;
         }
         public int Probe = -1;
-        public void Summon()
-        {
-            int type = ModContent.ProjectileType<SubspaceServant>();
-            SOTSPlayer.ModPlayer(Player).runPets(ref Probe, type, 0, 0, false);
-        }
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (FakePlayerProjectile.OwnerOfThisUpdateCycle != -1)

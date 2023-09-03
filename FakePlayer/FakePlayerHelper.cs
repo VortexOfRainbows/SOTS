@@ -26,11 +26,55 @@ namespace SOTS.FakePlayer
 {
     public abstract class FakePlayerPossessingProjectile : ModProjectile
     {
+        public Vector2 ItemLocation;
+        public float ItemRotation;
         public FakePlayer FakePlayer = null;
+        public Vector2 cursorArea;
+        public int Direction = 1;
         public sealed override void SetStaticDefaults()
         {
             FakePlayerHelper.FakePlayerPossessingProjectile.Add(Type);
             Main.projPet[Projectile.type] = true;
+        }
+        public sealed override bool? CanCutTiles() => false;
+        public sealed override bool MinionContactDamage() => false;
+        public sealed override bool ShouldUpdatePosition() => false;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(cursorArea.X);
+            writer.Write(cursorArea.Y);
+            writer.Write(ItemLocation.X);
+            writer.Write(ItemLocation.Y);
+            writer.Write(ItemRotation);
+            writer.Write(Direction);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            cursorArea.X = reader.ReadSingle();
+            cursorArea.Y = reader.ReadSingle();
+            ItemLocation.X = reader.ReadSingle();
+            ItemLocation.Y = reader.ReadSingle();
+            ItemRotation = reader.ReadSingle();
+            Direction = reader.ReadInt32();
+        }
+        public void UpdateItems(Player player)
+        {
+            FakePlayer.itemLocation = ItemLocation;
+            FakePlayer.itemRotation = ItemRotation;
+            FakePlayer.WingFrame = (int)(Projectile.ai[1] / 4);
+            FakePlayer.SecondPosition = Projectile.position + new Vector2(-5 * Projectile.ai[0], 2);
+            Projectile.position += Projectile.velocity;
+            FakePlayer.direction = Direction;
+            FakePlayer.Position = Projectile.position;
+            FakePlayer.Velocity = Projectile.velocity; //this is only used for wing drawing
+            FakePlayer.ItemCheckHack(player);
+            Direction = FakePlayer.direction;
+            if (Main.myPlayer == player.whoAmI)
+            {
+                ItemLocation = FakePlayer.itemLocation;
+                ItemRotation = FakePlayer.itemRotation;
+            }
+            Projectile.position = FakePlayer.Position;
         }
     }
     public static class FakePlayerHelper

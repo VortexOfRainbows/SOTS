@@ -25,6 +25,14 @@ namespace SOTS.FakePlayer
 {
     public class FakePlayer
     {
+        public struct TrailingID
+        {
+            public static int IDLE = 0;
+            public static int MAGIC = 1;
+            public static int RANGED = 2;
+            public static int MELEE = 3;
+            public static int CLOSERANGE = 4;
+        }
         public static bool SupressNetMessage13and41 = false;
         public bool ShouldUseWingsArmPosition = false;
         public int WingFrame = 0;
@@ -128,20 +136,20 @@ namespace SOTS.FakePlayer
                     || item.consumable)
                 {
                     if (item.noMelee && !IsPlaceable(item))
-                        TrailingType = 4;
+                        TrailingType = TrailingID.CLOSERANGE;
                     else
-                        TrailingType = 3;
+                        TrailingType = TrailingID.MELEE;
                 }
                 else if (item.CountsAsClass(DamageClass.Ranged))
                 {
-                    TrailingType = 2;
+                    TrailingType = TrailingID.RANGED;
                 }
                 else if (item.CountsAsClass(DamageClass.Magic))
                 {
-                    TrailingType = 1;
+                    TrailingType = TrailingID.MAGIC;
                 }
                 else
-                    TrailingType = 2;
+                    TrailingType = TrailingID.RANGED;
             }
             else
             {
