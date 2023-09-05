@@ -8,6 +8,8 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.ModBrowser;
 using Terraria.GameContent.UI.Elements;
+using SOTS.Common;
+using static Terraria.GameContent.TextureAssets;
 
 namespace SOTS.FakePlayer
 {
@@ -261,20 +263,23 @@ namespace SOTS.FakePlayer
             DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             drawInfo.DrawDataCache.Add(drawData);
         }
-        public static void DrawMyFakePlayers(Player player)
+        public static void DrawMyFakePlayers(Player player, int drawType)
         {
             List<FakePlayer> fakePlayers = GetFakePlayers(player);
             for(int i = 0; i < fakePlayers.Count; i++)
             {
                 FakePlayer fakePlayer = fakePlayers[i];
                 PlayerDrawSet drawInfo = new PlayerDrawSet();
-                bool MayCommitToDraw = fakePlayer.DrawFakePlayer(ref drawInfo, player);
-                if(MayCommitToDraw)
+                if(fakePlayer.FakePlayerType == drawType)
                 {
-                    Main.spriteBatch.End();
-                    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-                    DrawFakePlayer(ref drawInfo);
-                    fakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, player);
+                    bool canIDraw = fakePlayer.DrawFakePlayer(ref drawInfo, player);
+                    if (canIDraw)
+                    {
+                        Main.spriteBatch.End();
+                        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                        DrawFakePlayer(ref drawInfo);
+                        fakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, player);
+                    }
                 }
             }
         }
@@ -289,6 +294,7 @@ namespace SOTS.FakePlayer
             drawInfo.drawPlayer.lastVisualizedSelectedItem = player.inventory[fakePlayer.UseItemSlot];
             //Main.NewText(DrawInfoDummy.compFrontArmFrame.ToString() + " : " + DrawInfoDummy.usesCompositeTorso + " : " + DrawInfoDummy.drawPlayer.body);
             drawInfo.drawPlayer.heldProj = fakePlayer.HeldProj;
+            drawInfo.Position = fakePlayer.Position;
             drawInfo.BoringSetup(player, new List<DrawData>(), new List<int>(), new List<int>(), Vector2.Zero, 0f, 0f, Vector2.Zero);
             //Main.NewText(DrawInfoDummy.compFrontArmFrame.ToString() + " : " + DrawInfoDummy.usesCompositeTorso + " : " + DrawInfoDummy.drawPlayer.body);
             fakePlayer.heldProjOverHand = drawInfo.heldProjOverHand;

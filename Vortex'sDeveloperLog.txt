@@ -35,6 +35,12 @@ Update Objectives:
  
 Daily Log:
 
+3/4/23 to 3/5/23
+1. LOTS OF WORK IN PROGRESS WATER AND SHADERS
+2. Stuff broken before this commit: Dreaming lamp doesn't work with the fake players (channel unchannel)
+	1. Test if player rechannel is allowed after breaking vs fakeplayer rechannel
+3. Stuff broken after this commit: HUGE memory leaks from zooming in and out, or moving around too much
+
 9/3/23
 1. WIP Heart Swapper
 2. Digital display drops properly

@@ -137,7 +137,8 @@ namespace SOTS.NPCs.Tide
                         NPC.netUpdate = true;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, -22).RotatedBy(NPC.rotation), toPlayer.SafeNormalize(Vector2.Zero) * speedSh + Main.rand.NextVector2Circular(1, 1) * 0.1f * speedSh * speedSh, ModContent.ProjectileType<PhantarayBall>(), (int)(NPC.GetBaseDamage() / 2 * 0.75f), 2f, Main.myPlayer);
+                        for(int i = -1; i <= 1; i++)
+						    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, -22).RotatedBy(NPC.rotation), toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(i * 15)) * speedSh + Main.rand.NextVector2Circular(1, 1) * 0.1f * speedSh * speedSh, ModContent.ProjectileType<PhantarayBall>(), (int)(NPC.GetBaseDamage() / 2 * 0.75f), 2f, Main.myPlayer);
 					}
                 }
 			}

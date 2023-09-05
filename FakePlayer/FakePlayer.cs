@@ -545,7 +545,7 @@ namespace SOTS.FakePlayer
                 SaveRealPlayerValues(player);
                 CopyFakeToReal(player);
                 DrawMyHeldProjectile(player);
-                if(!heldProjOverHand)
+                if (!heldProjOverHand)
                 {
                     FakePlayerDrawing.DrawFrontArm(this, spriteBatch);
                 }
@@ -689,7 +689,7 @@ namespace SOTS.FakePlayer
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.owner == player.whoAmI && projectile.type > 0 && !projectile.hide)
+                if (projectile.active && projectile.owner == player.whoAmI && projectile.type > 0 && !projectile.hide && projectile.whoAmI != HeldProj)
                 {
                     FakePlayerProjectile fPPInstance;
                     bool canGetGlobal = projectile.TryGetGlobalProjectile(out fPPInstance);

@@ -22,6 +22,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Terraria.HitTile;
@@ -121,12 +122,14 @@ namespace SOTS
 		}
 		public static void ResizeTargets()
 		{
+			Main.NewText("resized");
 			Main.QueueMainThreadAction(() =>
 			{
-				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
+				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight);
 			});
-		}
-		public static void Recipe_FindRecipes(On_Recipe.orig_FindRecipes orig, bool canDelayCheck = false)
+			GreenScreenManager.UpdateWindowSize(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight);
+        }
+        public static void Recipe_FindRecipes(On_Recipe.orig_FindRecipes orig, bool canDelayCheck = false)
         {
 			if(SOTSPlayer.ModPlayer(Main.LocalPlayer).LazyCrafterAmulet)
             {
@@ -427,13 +430,18 @@ namespace SOTS
 		private static void Main_OnPreDraw(GameTime obj)
 		{
 			if (Main.spriteBatch != null && !Main.dedServ)
-			{
-				if (SOTS.primitives != null && Main.spriteBatch != null)
+            {
+                if (!Main.gameMenu && Main.graphics.GraphicsDevice != null)
+                {
+					//GreenScreenManager.SetupGreenscreens(Main.spriteBatch, Main.graphics.GraphicsDevice);
+					//// THIS MAY BE CAUSING THE LEAK BUT PROBABLY NOT. WILL NEED TO RE-ENABLE IN ORDER TO WORK ON SHADERS
+                }
+                if (SOTS.primitives != null && Main.spriteBatch != null)
 				{
 					SOTS.primitives.DrawTrailsProj(Main.spriteBatch, Main.graphics.GraphicsDevice);
 					SOTS.primitives.DrawTrailsNPC(Main.spriteBatch, Main.graphics.GraphicsDevice);
-				}
-			}
+                }
+            }
 		}
 		private static void Main_DrawProjectiles(On_Main.orig_DrawProjectiles orig, Main self)
 		{
@@ -521,19 +529,10 @@ namespace SOTS
 		private static void PreDrawPlayers()
 		{
 			if (!Main.dedServ)
-			{
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-				/*for (int i = 0; i < Main.projectile.Length; i++)
-				{
-					Projectile proj = Main.projectile[i];
-					if (proj.active && proj.ModProjectile is DreamingFrame modProj)
-					{
-						Color color = Color.White;
-						modProj.PreDraw(ref color);
-					}
-				}*/
-				ConduitHelper.preDrawBeforePlayers();
-				for (int i = 0; i < Main.player.Length; i++)
+            {
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                ConduitHelper.preDrawBeforePlayers();
+                for (int i = 0; i < Main.player.Length; i++)
 				{
 					Player player = Main.player[i];
 					if (player.active)
@@ -541,9 +540,15 @@ namespace SOTS
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
 						if(i == Main.myPlayer)
 							ConduitHelper.DrawPlayerEffectOutline(Main.spriteBatch, player);
-                        FakePlayerDrawing.DrawMyFakePlayers(player);
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 0);
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 1);
                     }
                 }
+                if (GreenScreenManager.TempTarget.Width != TargetProj.Width || GreenScreenManager.TempTarget.Height != TargetProj.Height)
+                {
+                    ResizeTargets();
+                }
+                GreenScreenManager.DrawWaterLayer(Main.spriteBatch);
                 Main.spriteBatch.End();
 			}
 		}
