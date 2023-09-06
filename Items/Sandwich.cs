@@ -32,6 +32,10 @@ namespace SOTS.Items
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient<Baguette>(1).AddIngredient<RoyalJelly>(1).AddIngredient<PeanutButter>(1).AddTile(TileID.CookingPots).Register();
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

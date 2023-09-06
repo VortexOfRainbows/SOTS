@@ -28,5 +28,9 @@ namespace SOTS.Items.Nature
 				player.lifeRegen += 1;
 			modPlayer.symbioteDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, Item.damage);
 		}
-	}
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

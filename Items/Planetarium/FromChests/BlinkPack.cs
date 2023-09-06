@@ -73,6 +73,10 @@ namespace SOTS.Items.Planetarium.FromChests
         public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient<FragmentOfChaos>(5).AddIngredient<OtherworldlyAlloy>(12).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

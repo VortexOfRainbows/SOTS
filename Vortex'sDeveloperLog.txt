@@ -31,7 +31,6 @@ Update Objectives:
 4. Heart Swapper / Hydrokinetic Antennae
 	1. Grants close ranged weapons the ability to be used at range through Hydrokinesis (fake player item)
 5. Phantaray: Multiplayer Syncing, Banner
-6. Fix botanical symbiote (and potentially other accessories) getting weapon reforges
  
 Daily Log:
 
@@ -43,6 +42,9 @@ Daily Log:
 5. Fixed zooming and unzooming on water shader having incorrect scale.
 6. Fixed drawing of tainted prism dye
 7. Water shader works in multiplayer
+8. Fixed obscure issue where water fake player would disown projectiles weirdly, teleporting them to her before killing them.
+	1. Now projectiles just despawn, instead of being Kill() (this despawning works in multiplayer)
+9. Fix accessory prefix issue (damage accessories got weapon prefixes)
 
 9/3/23
 1. WIP Heart Swapper

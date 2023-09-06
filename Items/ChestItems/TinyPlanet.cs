@@ -35,6 +35,10 @@ namespace SOTS.Items.ChestItems
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 			}
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

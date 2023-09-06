@@ -29,6 +29,10 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Marble, 50).AddIngredient<FragmentOfEarth>(4).AddTile(TileID.Anvils).Register();
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

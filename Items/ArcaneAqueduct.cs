@@ -33,6 +33,10 @@ namespace SOTS.Items
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.aqueductDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Magic, Item.damage);
 			modPlayer.aqueductNum += 2;
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

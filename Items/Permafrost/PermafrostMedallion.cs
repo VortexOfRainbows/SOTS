@@ -44,6 +44,10 @@ namespace SOTS.Items.Permafrost
 					Main.projectile[Probes[i]].timeLeft = 6;
 				}
 			}
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

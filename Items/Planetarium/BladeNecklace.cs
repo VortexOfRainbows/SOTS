@@ -87,6 +87,10 @@ namespace SOTS.Items.Planetarium
 			bladePlayer.bladeGeneration++;
 			beadPlayer.soulDamage += damage;
 			beadPlayer.RetaliationSouls = true;
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

@@ -7,9 +7,13 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Planetarium
 {
-	public class BladeGenerator : ModItem	
-	{	
-		public override void SetStaticDefaults()
+	public class BladeGenerator : ModItem
+    {
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+        public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
 		}
@@ -124,6 +128,6 @@ namespace SOTS.Items.Planetarium
 			}
 			bladeDamage = 0;
 			maxBlades = 0;
-		}
-	}
+        }
+    }
 }

@@ -32,6 +32,10 @@ namespace SOTS.Items.Inferno
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Glass, 20).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddIngredient(ModContent.ItemType<BluefirePotion>(), 8).AddTile(TileID.MythrilAnvil).Register();
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

@@ -64,6 +64,10 @@ namespace SOTS.Items
 				modPlayer.aqueductDamage += damage;
 				modPlayer.aqueductNum += 2;
 			}
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

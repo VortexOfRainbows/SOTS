@@ -138,7 +138,7 @@ namespace SOTS.FakePlayer
             if(!FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) || !fakePlayer.active || fakePlayer.owner != projectile.owner)
             {
                 FakeOwnerIdentity = -1; //This adds it back to the normal update queue... However, this causes bugs... Therefore I have decided to make it... (next line)
-                projectile.Kill(); //Kill the projectile when the fake player can no longer be found
+                projectile.active = false;
             }
         }
         public FakePlayerPossessingProjectile WhoOwnsMe(Projectile projectile)

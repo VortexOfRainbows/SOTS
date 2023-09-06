@@ -27,6 +27,10 @@ namespace SOTS.Items
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 1;
 			modPlayer.petPinky += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
-		}
-	}
+        }
+        public override bool WeaponPrefix()
+        {
+            return false;
+        }
+    }
 }

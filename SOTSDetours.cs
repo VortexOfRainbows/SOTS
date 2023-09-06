@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Security.Permissions;
 using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
@@ -59,6 +60,7 @@ namespace SOTS
 			On_Item.UpdateItem += Item_UpdateItem;
 			On_Dust.UpdateDust += Dust_UpdateDust;
 			On_Main.UpdateTime += Main_UpdateTime;
+			On_Item.GetPrefixCategory += Item_GetPrefixCategory;
 			//On_NPC.UpdateCollision += NPC_UpdateCollision;
 
 			//The following is to allow Plating Doors to function as tiles for housing (in conjuction with Tmodloader stuff)
@@ -830,5 +832,19 @@ namespace SOTS
         {
 			orig(self, projectile);
         }
+		private static PrefixCategory? Item_GetPrefixCategory(On_Item.orig_GetPrefixCategory orig, Item self)
+		{
+			if(self.IsAPrefixableAccessory())
+			{
+				if(self.ModItem != null && self.ModItem.Mod != null)
+                {
+                    if (self.ModItem.Mod is SOTS)
+                    {
+                        return PrefixCategory.Accessory;
+                    }
+                }
+			}
+			return orig(self);
+		}
     }
 }
