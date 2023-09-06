@@ -557,6 +557,10 @@ namespace SOTS
 			if (!Main.dedServ)
             {
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+
+                FakePlayerDrawing.DrawHydroFakePlayersFull(); //Hydro servant has a totally unique shader, so it must be drawn in different steps... The particle layer will be drawn before this 
+                FakePlayerDrawing.DrawFakePlayers(0, DrawStateID.All); //Subspace servant has no shader, and thus can be drawn in its entirety right away
+
                 ConduitHelper.preDrawBeforePlayers();
                 for (int i = 0; i < Main.player.Length; i++)
 				{
@@ -566,19 +570,8 @@ namespace SOTS
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
 						if(i == Main.myPlayer)
 							ConduitHelper.DrawPlayerEffectOutline(Main.spriteBatch, player);
-                        FakePlayerDrawing.DrawMyFakePlayers(player, 0, DrawStateID.All);
                     }
                 }
-                GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget1); //Draws the water player body sprites
-                for (int i = 0; i < Main.player.Length; i++)
-                {
-                    Player player = Main.player[i];
-                    if (player.active)
-                    {
-                        FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawStateID.HeldItemAndProjectiles); //Draws the items and projectiles from the water player
-                    }
-                }
-                GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget2); //Draws the front arm of the water player
                 Main.spriteBatch.End();
 			}
 		}

@@ -70,7 +70,8 @@ namespace SOTS.Common
         public static void SetupGreenscreens(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             RenderTargetBinding[] prevTarget = graphicsDevice.GetRenderTargets();
-            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget1, DrawStateID.BorderAndBody);
+            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget0, DrawStateID.Wings);
+            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget1, DrawStateID.Body);
             MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget2, DrawStateID.FrontArm);
             graphicsDevice.SetRenderTargets(prevTarget);
         }
@@ -93,6 +94,7 @@ namespace SOTS.Common
     {
         public static Color BorderColor;
         public static List<IWaterSprite> MaskedEntities;
+        public static RenderTarget2D RenderTarget0;
         public static RenderTarget2D RenderTarget1;
         public static RenderTarget2D RenderTarget2;
         public static Texture2D LiquidNoise;
@@ -103,6 +105,7 @@ namespace SOTS.Common
         }
         public static void UpdateWindowSize(GraphicsDevice graphicsDevice, int width, int height)
         {
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget0, graphicsDevice, width, height));
             Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget1, graphicsDevice, width, height));
             Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget2, graphicsDevice, width, height));
         }

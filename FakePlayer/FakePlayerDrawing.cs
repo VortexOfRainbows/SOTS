@@ -208,13 +208,17 @@ namespace SOTS.FakePlayer
                 drawInfo.DrawDataCache.Add(drawData);
             }
         }
-        public static void DrawWings(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, int Frame)
+        public static void DrawWings(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, int Frame, bool outline)
         {
             int Direction = drawInfo.drawPlayer.direction;
             Texture2D texture = WingTexture(fakePlayer.FakePlayerType, false);
             Texture2D textureOutline = WingTexture(fakePlayer.FakePlayerType, true);
             Vector2 drawPos = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2) - Main.screenPosition + new Vector2(-8 * Direction, -5);
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
+            if(fakePlayer.FakePlayerType == 1)
+            {
+                drawPos += new Vector2(1 * Direction, 3);
+            }
             if (Frame < 0)
             {
                 Frame = 0;
@@ -223,14 +227,41 @@ namespace SOTS.FakePlayer
             {
                 Frame = 5;
             }
-            for (int k = 0; k < 4; k++)
+            if(outline)
             {
-                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-                drawInfo.DrawDataCache.Add(drawData2);
+                for (int k = 0; k < 4; k++)
+                {
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                    DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                    drawInfo.DrawDataCache.Add(drawData2);
+                }
             }
-            DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-            drawInfo.DrawDataCache.Add(drawData);
+            else
+            {
+                DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                drawInfo.DrawDataCache.Add(drawData);
+            }
+        }
+        public static void DrawHydroFakePlayersFull()
+        {
+            DrawFakePlayers(1, DrawStateID.Border);
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget0); //Draws the water player wings sprites
+            DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeBackArm);
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget1); //Draws the water player body sprites
+            DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeFrontArm);
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget2); //Draws the front arm of the water player
+            DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesAfterFrontArm);
+        }
+        public static void DrawFakePlayers(int fakePlayerType, int DrawState)
+        {
+            for (int i = 0; i < Main.player.Length; i++)
+            {
+                Player player = Main.player[i];
+                if (player.active)
+                {
+                    DrawMyFakePlayers(player, fakePlayerType, DrawState); //Draws the items and projectiles from the water player
+                }
+            }
         }
         public static void DrawMyFakePlayers(Player player, int drawType, int drawState)
         {
