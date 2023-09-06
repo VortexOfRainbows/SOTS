@@ -35,11 +35,13 @@ Update Objectives:
  
 Daily Log:
 
-9/4/23 to 9/5/23
+9/4/23 to 9/6/23
 1. LOTS OF WORK IN PROGRESS WATER AND SHADERS
-2. Stuff broken before this commit: Dreaming lamp doesn't work with the fake players (channel unchannel)
-	1. Test if player rechannel is allowed after breaking vs fakeplayer rechannel
+2. Dreaming Lamp now works with Fake Player correctly. So should other items...
 3. Fixed render target memory leak!
+4. Hydroservant now draws water shaders in the correct order!
+5. Fixed zooming and unzooming on water shader having incorrect scale.
+6. Fixed drawing of tainted prism dye
 
 9/3/23
 1. WIP Heart Swapper

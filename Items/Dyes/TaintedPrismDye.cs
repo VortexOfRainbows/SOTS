@@ -28,7 +28,6 @@ namespace SOTS.Items.Dyes
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Dyes/TaintedPrismDyeGlow").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			position += drawOrigin * scale;
 			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
@@ -56,11 +55,11 @@ namespace SOTS.Items.Dyes
 						break;
 				}
 				Vector2 rotationAround = new Vector2((3 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y) + rotationAround, null, color, 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, position + rotationAround, null, color, 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, Color.Lerp(drawColor, Color.Black, 0.1f), 0f, drawOrigin, scale * 1.0f, SpriteEffects.None, 0f);
-			return true;
+			Main.spriteBatch.Draw(texture, position, null, Color.Lerp(drawColor, Color.Black, 0.1f), 0f, drawOrigin, scale * 1.0f, SpriteEffects.None, 0f);
+			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{

@@ -564,18 +564,19 @@ namespace SOTS
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
 						if(i == Main.myPlayer)
 							ConduitHelper.DrawPlayerEffectOutline(Main.spriteBatch, player);
-                        FakePlayerDrawing.DrawMyFakePlayers(player, 0, -1);
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 0, DrawStateID.All);
                     }
                 }
-                GreenScreenManager.DrawWaterLayer(Main.spriteBatch);
+                GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget1); //Draws the water player body sprites
                 for (int i = 0; i < Main.player.Length; i++)
                 {
                     Player player = Main.player[i];
                     if (player.active)
                     {
-                        FakePlayerDrawing.DrawMyFakePlayers(player, 1, 1);
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawStateID.HeldItemAndProjectiles); //Draws the items and projectiles from the water player
                     }
                 }
+                GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget2); //Draws the front arm of the water player
                 Main.spriteBatch.End();
 			}
 		}

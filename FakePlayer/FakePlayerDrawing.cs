@@ -21,13 +21,13 @@ namespace SOTS.FakePlayer
             {
                 if(type == 1)
                 {
-                    return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWingsOutline").Value;
+                    return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantWingsOutline").Value;
                 }
                 return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWingsOutline").Value;
             }
             if (type == 1)
             {
-                return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWings").Value;
+                return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantWings").Value;
             }
             return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWings").Value;
         }
@@ -67,7 +67,7 @@ namespace SOTS.FakePlayer
         {
             return new Vector2(6 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 2 * ((!drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically)) ? 1 : (-1)));
         }
-        public static void DrawBackArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool green)
+        public static void DrawBackArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outline)
         {
             Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
             Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
@@ -77,19 +77,12 @@ namespace SOTS.FakePlayer
             vector3 += compositeOffset_BackArm;
             float rotation = drawInfo.compositeBackArmRotation;
             Color color = Color.White;
-            if (green)
+            if (outline)
             {
-                if (fakePlayer.FakePlayerType == 0)
+                for (int k = 0; k < 4; k++)
                 {
-                    for (int k = 0; k < 4; k++)
-                    {
-                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                        PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(textureGreen, vector3 + circular, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0));
-                    }
-                }
-                else
-                {
-                    PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(textureGreen, vector3, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0));
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                    PlayerDrawLayers.DrawCompositeArmorPiece(ref drawInfo, CompositePlayerDrawContext.BackArm, new DrawData(textureGreen, vector3 + circular, drawInfo.compBackArmFrame, color, rotation, drawInfo.bodyVect + compositeOffset_BackArm, 1f, drawInfo.playerEffect, 0));
                 }
             }
             else
@@ -157,7 +150,7 @@ namespace SOTS.FakePlayer
         {
             return new Vector2(-5 * ((!fakePlayer.playerEffect.HasFlag(SpriteEffects.FlipHorizontally)) ? 1 : (-1)), 0f);
         }
-        public static void DrawFrontArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool green)
+        public static void DrawFrontArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outline)
         {
             Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
             Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
@@ -172,20 +165,12 @@ namespace SOTS.FakePlayer
             Color color = Color.White;
             Rectangle frame = drawInfo.compFrontArmFrame;
             float rotation = drawInfo.compositeFrontArmRotation;
-            if (green)
+            if (outline)
             {
-                if (fakePlayer.FakePlayerType == 0)
+                for (int k = 0; k < 4; k++)
                 {
-                    for (int k = 0; k < 4; k++)
-                    {
-                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                        DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
-                        drawInfo.DrawDataCache.Add(drawData2);
-                    }
-                }
-                else
-                {
-                    DrawData drawData2 = new DrawData(textureGreen, position, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                    DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, rotation, origin + GetCompositeOffset_FrontArm(ref drawInfo), 1f, spriteEffects, 0);
                     drawInfo.DrawDataCache.Add(drawData2);
                 }
             }
@@ -196,7 +181,7 @@ namespace SOTS.FakePlayer
                 drawInfo.DrawDataCache.Add(drawData);
             }
         }
-        public static void DrawBody(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool green)
+        public static void DrawBody(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outline)
         {
             Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
             Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
@@ -208,20 +193,12 @@ namespace SOTS.FakePlayer
             Color color = Color.White;
             Rectangle frame = new Rectangle(0, 0, 40, 56); //very first box
             SpriteEffects spriteEffects = drawInfo.playerEffect;
-            if (green)
+            if (outline)
             {
-                if (fakePlayer.FakePlayerType == 0)
+                for (int k = 0; k < 4; k++)
                 {
-                    for (int k = 0; k < 4; k++)
-                    {
-                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                        DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, 0f, origin, 1f, spriteEffects, 0);
-                        drawInfo.DrawDataCache.Add(drawData2);
-                    }
-                }
-                else
-                {
-                    DrawData drawData2 = new DrawData(textureGreen, position, frame, color, 0f, origin, 1f, spriteEffects, 0);
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                    DrawData drawData2 = new DrawData(textureGreen, position + circular, frame, color, 0f, origin, 1f, spriteEffects, 0);
                     drawInfo.DrawDataCache.Add(drawData2);
                 }
             }
@@ -246,18 +223,10 @@ namespace SOTS.FakePlayer
             {
                 Frame = 5;
             }
-            if(fakePlayer.FakePlayerType == 0)
+            for (int k = 0; k < 4; k++)
             {
-                for (int k = 0; k < 4; k++)
-                {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-                    drawInfo.DrawDataCache.Add(drawData2);
-                }
-            }
-            else
-            {
-                DrawData drawData2 = new DrawData(textureOutline, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
                 drawInfo.DrawDataCache.Add(drawData2);
             }
             DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
@@ -278,8 +247,7 @@ namespace SOTS.FakePlayer
                         Main.spriteBatch.End();
                         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
                         DrawFromCache(ref drawInfo);
-                        if(drawState == 1)
-                            fakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, player);
+                        fakePlayer.DrawFrontHandAndHeldProj(Main.spriteBatch, player, drawState);
                     }
                 }
             }

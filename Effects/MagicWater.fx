@@ -41,7 +41,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR
     float4 color1 = tex2D(SpriteTextureSampler, input.TextureCoordinates);
     if (color1.r <= greenScreenColor.r && color1.g == greenScreenColor.g && color1.b == greenScreenColor.b && color1.a == greenScreenColor.a)
     {
-        float2 coords = input.TextureCoordinates;
+        float2 coords = input.TextureCoordinates - float2(0.5, 0.5);
         coords.x *= screenWidth / width;
         coords.y *= screenHeight / height;
         float2 newOffset = offset;

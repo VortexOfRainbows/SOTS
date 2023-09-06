@@ -67,13 +67,14 @@ namespace SOTS.Common
         public static void SetupGreenscreens(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             RenderTargetBinding[] prevTarget = graphicsDevice.GetRenderTargets();
-            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice);
+            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget1, DrawStateID.BorderAndBody);
+            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget2, DrawStateID.FrontArm);
             graphicsDevice.SetRenderTargets(prevTarget);
         }
-        public static void DrawWaterLayer(SpriteBatch spriteBatch)
+        public static void DrawWaterLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget)
         {
             spriteBatch.End();
-            MagicWaterLayer.DrawLayer(spriteBatch);
+            MagicWaterLayer.DrawLayer(spriteBatch, ref RenderTarget);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
@@ -89,7 +90,8 @@ namespace SOTS.Common
     {
         public static Color BorderColor;
         public static List<IWaterSprite> MaskedEntities;
-        public static RenderTarget2D RenderTarget;
+        public static RenderTarget2D RenderTarget1;
+        public static RenderTarget2D RenderTarget2;
         public static Texture2D LiquidNoise;
         public static void Initialize()
         {
@@ -98,9 +100,10 @@ namespace SOTS.Common
         }
         public static void UpdateWindowSize(GraphicsDevice graphicsDevice, int width, int height)
         {
-            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget, graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget1, graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget2, graphicsDevice, width, height));
         }
-        public static void DrawGreenscreenOnInterfaces(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+        public static void DrawGreenscreenOnInterfaces(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, ref RenderTarget2D RenderTarget, int DrawState)
         {
             if (RenderTarget == null)
             {
@@ -130,20 +133,20 @@ namespace SOTS.Common
                 Player player = Main.player[i];
                 if (player.active)
                 {
-                    FakePlayerDrawing.DrawMyFakePlayers(player, 1, 0);
+                    FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawState);
                 }
             }
             spriteBatch.End();
             AddEffect(spriteBatch, graphicsDevice, RenderTarget, GreenScreenManager.greenScreenColor.Value);
         }
-        public static void DrawLayer(SpriteBatch spriteBatch)
+        public static void DrawLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget)
         {
             if (RenderTarget == null)
                 return;
             LiquidNoise = GreenScreenManager.WaterNoise.Value;
             Effect WaterParallax = GreenScreenManager.magicWater.Value;
-            WaterParallax.Parameters["screenWidth"].SetValue((float)Main.screenWidth / 2);
-            WaterParallax.Parameters["screenHeight"].SetValue((float)Main.screenHeight / 2);
+            WaterParallax.Parameters["screenWidth"].SetValue((float)Main.screenWidth / Main.GameViewMatrix.Zoom.X);
+            WaterParallax.Parameters["screenHeight"].SetValue((float)Main.screenHeight / Main.GameViewMatrix.Zoom.Y);
             WaterParallax.Parameters["width"].SetValue(256);
             WaterParallax.Parameters["height"].SetValue(256);
             WaterParallax.Parameters["scale"].SetValue(new Vector2(Main.screenHeight / 4, Main.screenHeight / 4));
@@ -158,7 +161,7 @@ namespace SOTS.Common
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.EffectMatrix);
 
             WaterParallax.CurrentTechnique.Passes[0].Apply();
-            Vector2 offset = Vector2.Zero;
+            Vector2 offset = new Vector2((float)Main.screenWidth / 2, (float)Main.screenHeight / 2);
             spriteBatch.Draw(RenderTarget, offset, null, Color.White, 0, offset, 1f, SpriteEffects.None, 0);
 
             spriteBatch.End();

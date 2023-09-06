@@ -23,16 +23,23 @@ using static Terraria.Player;
 
 namespace SOTS.FakePlayer
 {
+    public static class TrailingID
+    {
+        public static int IDLE = 0;
+        public static int MAGIC = 1;
+        public static int RANGED = 2;
+        public static int MELEE = 3;
+        public static int CLOSERANGE = 4;
+    }
+    public static class DrawStateID
+    {
+        public static int All = -1;
+        public static int BorderAndBody = 0;
+        public static int HeldItemAndProjectiles = 1;
+        public static int FrontArm = 2;
+    }
     public class FakePlayer
     {
-        public struct TrailingID
-        {
-            public static int IDLE = 0;
-            public static int MAGIC = 1;
-            public static int RANGED = 2;
-            public static int MELEE = 3;
-            public static int CLOSERANGE = 4;
-        }
         public static bool SupressNetMessage13and41 = false;
         public bool ShouldUseWingsArmPosition = false;
         public int WingFrame = 0;
@@ -250,9 +257,10 @@ namespace SOTS.FakePlayer
             if (canUseItem || player.channel)
             {
                 player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
-                if(!player.HeldItem.IsAir)
+                if(!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
                     player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items
                 player.ItemCheck(); //Run the actual item use code
+                //Main.NewText(player.channel);
             }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
@@ -495,40 +503,45 @@ namespace SOTS.FakePlayer
             drawInfo.heldProjOverHand = this.heldProjOverHand;
             drawInfo.bodyVect = this.bodyVect;
 
-            if(DrawState == -1 || DrawState == 1)
+            if(DrawState == DrawStateID.All || DrawState == DrawStateID.BorderAndBody)
             {
                 FakePlayerDrawing.DrawTail(this, ref drawInfo, true);
+            }
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectiles)
+            {
                 HijackItemDrawing(ref drawInfo, true);
+            }
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.BorderAndBody)
+            {
                 FakePlayerDrawing.DrawBackArm(this, ref drawInfo, true);
                 FakePlayerDrawing.DrawBody(this, ref drawInfo, true);
                 FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, true);
                 FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame);
             }
-
-            if (DrawState == -1 || DrawState == 1)
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectiles)
             {
                 if (weaponDrawOrder == 0)
                     HijackItemDrawing(ref drawInfo, false);
             }
-            if (DrawState == -1 || DrawState == 0)
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.BorderAndBody)
             {
                 FakePlayerDrawing.DrawBackArm(this, ref drawInfo, false);
                 FakePlayerDrawing.DrawTail(this, ref drawInfo, false);
                 FakePlayerDrawing.DrawBody(this, ref drawInfo, false);
             }
-            if (DrawState == -1 || DrawState == 1)
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectiles)
             {
                 if (weaponDrawOrder == 1)
                     HijackItemDrawing(ref drawInfo, false);
             }
-            if (DrawState == -1 || DrawState == 0)
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.FrontArm)
             {
                 if (player.heldProj == -1 || heldProjOverHand)
                 {
                     FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, false);
                 }
             }
-            if (DrawState == -1 || DrawState == 1)
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectiles)
             {
                 if (weaponDrawOrder == 2)
                     HijackItemDrawing(ref drawInfo, false);
@@ -550,7 +563,7 @@ namespace SOTS.FakePlayer
             itemEffect = drawInfo.itemEffect;
             Position = drawInfo.Position;
 
-            if (DrawState == -1 || DrawState == 1)
+            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectiles)
             {
                 DrawMyProjectiles(player); //Doesn't matter where in the order this is called... as drawInfoDrawing will happen later anyway
             }
@@ -559,14 +572,17 @@ namespace SOTS.FakePlayer
             FakePlayerProjectile.OwnerOfThisDrawCycle = -1;
             return true;
         }
-        public void SecondaryFakePlayerDrawing(SpriteBatch spriteBatch, Player player)
+        public void DrawFrontHandAndHeldProj(SpriteBatch spriteBatch, Player player, int DrawState)
         {
             if (HeldProj != -1)
             {
                 SaveRealPlayerValues(player);
                 CopyFakeToReal(player);
-                DrawMyHeldProjectile(player);
-                if (!heldProjOverHand)
+                if(DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectiles)
+                {
+                    DrawMyHeldProjectile(player);
+                }
+                if (!heldProjOverHand && DrawState == DrawStateID.FrontArm)
                 {
                     FakePlayerDrawing.DrawFrontArm(this, spriteBatch);
                 }
@@ -584,11 +600,15 @@ namespace SOTS.FakePlayer
             {
                 Texture2D itemTexture = TextureAssets.Item[item.type].Value;
                 lastItemID = item.type;
-                Color[] colors = SOTSItem.ConvertToSingleColor(itemTexture, new Color(0, 255, 0));
+                Color[] colors = SOTSItem.ConvertToSingleColor(itemTexture, MyBorderColor());
                 saveGreenTexture = new Texture2D(Main.graphics.GraphicsDevice, itemTexture.Width, itemTexture.Height);
                 saveGreenTexture.SetData(0, null, colors, 0, itemTexture.Width * itemTexture.Height);
             }
             SetTextureValueViaReflection(TextureAssets.Item[item.type], saveGreenTexture);
+        }
+        public Color MyBorderColor()
+        {
+            return FakePlayerType == 0 ? new Color(0, 255, 0) : new Color(255, 255, 0);
         }
         public void ConvertItemTextureBackToNormal(Item item)
         {
