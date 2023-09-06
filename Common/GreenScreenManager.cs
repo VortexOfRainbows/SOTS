@@ -14,8 +14,11 @@ namespace SOTS.Common
     {
         public override void Load()
         {
-            GreenScreenManager.Initialize(Main.graphics.GraphicsDevice);
-            GreenScreenManager.LoadContent();
+            if (Main.netMode != NetmodeID.Server)
+            {
+                GreenScreenManager.Initialize(Main.graphics.GraphicsDevice);
+                GreenScreenManager.LoadContent();
+            }
         }
         public static Vector2 lastScreenSize;
         public static Vector2 lastViewSize;

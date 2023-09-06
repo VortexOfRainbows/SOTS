@@ -37,11 +37,12 @@ Daily Log:
 
 9/4/23 to 9/6/23
 1. LOTS OF WORK IN PROGRESS WATER AND SHADERS
-2. Dreaming Lamp now works with Fake Player correctly. So should other items...
+2. Dreaming Lamp now works with Fake Player correctly. So should other items (including in multiplayer)...
 3. Fixed render target memory leak!
 4. Hydroservant now draws water shaders in the correct order!
 5. Fixed zooming and unzooming on water shader having incorrect scale.
 6. Fixed drawing of tainted prism dye
+7. Water shader works in multiplayer
 
 9/3/23
 1. WIP Heart Swapper

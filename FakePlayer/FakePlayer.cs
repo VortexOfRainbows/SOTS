@@ -258,7 +258,7 @@ namespace SOTS.FakePlayer
             {
                 player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
                 if(!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
-                    player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items
+                    player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
                 player.ItemCheck(); //Run the actual item use code
                 //Main.NewText(player.channel);
             }
