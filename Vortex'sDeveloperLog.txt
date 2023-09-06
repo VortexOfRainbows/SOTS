@@ -28,9 +28,11 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
 3. More Bestiary entries (and visual fixes)
-4. Heart Swapper / Hydrokinetic Antennae
+4. Heart Swapper / Hydrokinetic Antennae (in progress)
 	1. Grants close ranged weapons the ability to be used at range through Hydrokinesis (fake player item)
-5. Phantaray: Multiplayer Syncing, Banner
+5. Phantaray: Multiplayer Syncing, Banner (pending)
+6. Unique Archaeologist tooltips for items (pending)
+7. Polaris Rework (pending)
  
 Daily Log:
 
