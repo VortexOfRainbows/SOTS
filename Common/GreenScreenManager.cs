@@ -24,9 +24,8 @@ namespace SOTS.Common
             if (Main.netMode != NetmodeID.Server)
             {
                 /// Something in this region is causing the memory leak. probably calling UPDATEWINDOWSIZE too fast
-                if (lastViewSize != Main.ViewSize || lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+                if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
                 {
-                    Main.NewText("new zoon!?");
                     GreenScreenManager.UpdateWindowSize(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                 }
                 /// Something in this region is causing the memory leak. probably calling UPDATEWINDOWSIZE too fast
@@ -50,7 +49,13 @@ namespace SOTS.Common
         public static void UpdateWindowSize(GraphicsDevice graphicsDevice, int width, int height)
         {
             MagicWaterLayer.UpdateWindowSize(graphicsDevice, width, height);
-            Main.QueueMainThreadAction(() => TempTarget = new RenderTarget2D(graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => ResetRenderTarget2D(ref TempTarget, graphicsDevice, width, height));
+        }
+        public static void ResetRenderTarget2D(ref RenderTarget2D target, GraphicsDevice graphicsDevice, int width, int height)
+        {
+            if(target != null)
+                target.Dispose();
+            target = new RenderTarget2D(graphicsDevice, width, height);
         }
         public static void LoadContent()
         {
@@ -72,7 +77,7 @@ namespace SOTS.Common
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
-    public interface IGalaxySprite
+    public interface IWaterSprite
     {
         /// <summary>
         /// Draw parts of sprite that are color coded, and should be drawn with the metaball layer (green screened). Water shader is activated on this sprite later.
@@ -83,17 +88,17 @@ namespace SOTS.Common
     public static class MagicWaterLayer
     {
         public static Color BorderColor;
-        public static List<IGalaxySprite> MaskedEntities;
+        public static List<IWaterSprite> MaskedEntities;
         public static RenderTarget2D RenderTarget;
         public static Texture2D LiquidNoise;
         public static void Initialize()
         {
-            MaskedEntities = new List<IGalaxySprite>();
+            MaskedEntities = new List<IWaterSprite>();
             BorderColor = new Color(255, 233, 20);
         }
         public static void UpdateWindowSize(GraphicsDevice graphicsDevice, int width, int height)
         {
-            Main.QueueMainThreadAction(() => RenderTarget = new RenderTarget2D(graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget, graphicsDevice, width, height));
         }
         public static void DrawGreenscreenOnInterfaces(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
@@ -150,7 +155,7 @@ namespace SOTS.Common
             WaterParallax.Parameters["twoPi"].SetValue(MathHelper.TwoPi);
             WaterParallax.Parameters["time"].SetValue(SOTSWorld.GlobalCounter / 1200f * MathHelper.TwoPi);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Matrix.Identity);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.EffectMatrix);
 
             WaterParallax.CurrentTechnique.Passes[0].Apply();
             Vector2 offset = Vector2.Zero;

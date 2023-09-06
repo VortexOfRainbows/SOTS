@@ -13,8 +13,10 @@ using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
@@ -89,6 +91,7 @@ namespace SOTS
 			On_Main.DrawMiscMapIcons += Main_DrawMiscMapIcons;
 			On_Lighting.GetColor9Slice_int_int_refVector3Array += Lighting_GetColor9Slice_int_int_refVector3Array;
 			On_Main.DrawItem += Main_DrawItem;
+			On_Main.CheckMonoliths += Main_CheckMonoliths;
 
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -431,11 +434,6 @@ namespace SOTS
 		{
 			if (Main.spriteBatch != null && !Main.dedServ)
             {
-                if (!Main.gameMenu && Main.graphics.GraphicsDevice != null)
-                {
-					//GreenScreenManager.SetupGreenscreens(Main.spriteBatch, Main.graphics.GraphicsDevice);
-					//// THIS MAY BE CAUSING THE LEAK BUT PROBABLY NOT. WILL NEED TO RE-ENABLE IN ORDER TO WORK ON SHADERS
-                }
                 if (SOTS.primitives != null && Main.spriteBatch != null)
 				{
 					SOTS.primitives.DrawTrailsProj(Main.spriteBatch, Main.graphics.GraphicsDevice);
@@ -443,7 +441,33 @@ namespace SOTS
                 }
             }
 		}
-		private static void Main_DrawProjectiles(On_Main.orig_DrawProjectiles orig, Main self)
+		private static void Main_CheckMonoliths(On_Main.orig_CheckMonoliths orig)
+        {
+			if (Main.spriteBatch != null && !Main.dedServ)
+			{
+				if (!Main.gameMenu && Main.graphics.GraphicsDevice != null)
+                {
+					bool minZoom = Get_Terraria_ModLoader_ModLoader_removeForcedMinimumZoom();
+                    float val = Main.screenWidth / (minZoom ? 8192f : Main.MinimumZoomComparerX);
+                    float val2 = Main.screenHeight / (minZoom ? 8192f : Main.MinimumZoomComparerY);
+                    Main.ForcedMinimumZoom = Math.Max(Math.Max(1f, val), val2);
+                    Main.GameViewMatrix.Effects = (SpriteEffects)((!Main.gameMenu && Main.player[Main.myPlayer].gravDir != 1f) ? 2 : 0);
+                    Main.BackgroundViewMatrix.Effects = Main.GameViewMatrix.Effects;
+                    Main.BackgroundViewMatrix.Zoom = new Vector2(Main.ForcedMinimumZoom);
+                    Main.GameViewMatrix.Zoom = new Vector2(Main.ForcedMinimumZoom * MathHelper.Clamp(Main.GameZoomTarget, 1f, 2f));
+                    SystemLoader.ModifyTransformMatrix(ref Main.GameViewMatrix);
+                    GreenScreenManager.SetupGreenscreens(Main.spriteBatch, Main.graphics.GraphicsDevice);
+				}
+			}
+            orig();
+		}
+		public static bool Get_Terraria_ModLoader_ModLoader_removeForcedMinimumZoom()
+        {
+            Type type = typeof(ModLoader);
+            FieldInfo field = type.GetField("removeForcedMinimumZoom", BindingFlags.NonPublic | BindingFlags.Static);
+            return (bool)field.GetValue(null);
+        }
+        private static void Main_DrawProjectiles(On_Main.orig_DrawProjectiles orig, Main self)
 		{
 			if (SOTS.primitives != null && Main.spriteBatch != null)
 			{
@@ -543,10 +567,6 @@ namespace SOTS
                         FakePlayerDrawing.DrawMyFakePlayers(player, 0);
                         FakePlayerDrawing.DrawMyFakePlayers(player, 1);
                     }
-                }
-                if (GreenScreenManager.TempTarget.Width != TargetProj.Width || GreenScreenManager.TempTarget.Height != TargetProj.Height)
-                {
-                    ResizeTargets();
                 }
                 GreenScreenManager.DrawWaterLayer(Main.spriteBatch);
                 Main.spriteBatch.End();

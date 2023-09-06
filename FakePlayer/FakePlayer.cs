@@ -78,7 +78,7 @@ namespace SOTS.FakePlayer
                 {
                     canUseItem = false;
                 }
-                else if(item.consumable && item.damage <= 0 && !IsPlaceable(item))
+                else if(item.damage <= 0 && !IsPlaceable(item))
                 {
                     canUseItem = false;
                 }
