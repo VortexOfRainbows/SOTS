@@ -468,7 +468,7 @@ namespace SOTS.FakePlayer
             player.itemLocation = savePlayerPos;    
             drawInfo.ItemLocation = saveDrawinfoPos;
         }
-        public bool DrawFakePlayer(ref PlayerDrawSet drawInfo, Player player)
+        public bool PrepareDrawing(ref PlayerDrawSet drawInfo, Player player, int DrawState)
         {
             FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             if (bodyFrame.IsEmpty)
@@ -495,26 +495,44 @@ namespace SOTS.FakePlayer
             drawInfo.heldProjOverHand = this.heldProjOverHand;
             drawInfo.bodyVect = this.bodyVect;
 
-            FakePlayerDrawing.DrawTail(this, ref drawInfo, true);
-            HijackItemDrawing(ref drawInfo, true);
-            FakePlayerDrawing.DrawBackArm(this, ref drawInfo, true);
-            FakePlayerDrawing.DrawBody(this, ref drawInfo, true);
-            FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, true);
-            FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame);
-
-            if (weaponDrawOrder == 0)
-                HijackItemDrawing(ref drawInfo, false);
-            FakePlayerDrawing.DrawBackArm(this, ref drawInfo, false);
-            FakePlayerDrawing.DrawTail(this, ref drawInfo, false);
-            FakePlayerDrawing.DrawBody(this, ref drawInfo, false);
-            if(weaponDrawOrder == 1)
-                HijackItemDrawing(ref drawInfo, false);
-            if (player.heldProj == -1 || heldProjOverHand)
+            if(DrawState == -1 || DrawState == 1)
             {
-                FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, false);
+                FakePlayerDrawing.DrawTail(this, ref drawInfo, true);
+                HijackItemDrawing(ref drawInfo, true);
+                FakePlayerDrawing.DrawBackArm(this, ref drawInfo, true);
+                FakePlayerDrawing.DrawBody(this, ref drawInfo, true);
+                FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, true);
+                FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame);
             }
-            if (weaponDrawOrder == 2)
-                HijackItemDrawing(ref drawInfo, false);
+
+            if (DrawState == -1 || DrawState == 1)
+            {
+                if (weaponDrawOrder == 0)
+                    HijackItemDrawing(ref drawInfo, false);
+            }
+            if (DrawState == -1 || DrawState == 0)
+            {
+                FakePlayerDrawing.DrawBackArm(this, ref drawInfo, false);
+                FakePlayerDrawing.DrawTail(this, ref drawInfo, false);
+                FakePlayerDrawing.DrawBody(this, ref drawInfo, false);
+            }
+            if (DrawState == -1 || DrawState == 1)
+            {
+                if (weaponDrawOrder == 1)
+                    HijackItemDrawing(ref drawInfo, false);
+            }
+            if (DrawState == -1 || DrawState == 0)
+            {
+                if (player.heldProj == -1 || heldProjOverHand)
+                {
+                    FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, false);
+                }
+            }
+            if (DrawState == -1 || DrawState == 1)
+            {
+                if (weaponDrawOrder == 2)
+                    HijackItemDrawing(ref drawInfo, false);
+            }
 
             //Save this arm data
             //compositeFrontArm = drawInfo.drawPlayer.compositeFrontArm;
@@ -532,7 +550,10 @@ namespace SOTS.FakePlayer
             itemEffect = drawInfo.itemEffect;
             Position = drawInfo.Position;
 
-            DrawMyProjectiles(player); //Doesn't matter where in the order this is called... as drawInfoDrawing will happen later anyway
+            if (DrawState == -1 || DrawState == 1)
+            {
+                DrawMyProjectiles(player); //Doesn't matter where in the order this is called... as drawInfoDrawing will happen later anyway
+            }
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             FakePlayerProjectile.OwnerOfThisDrawCycle = -1;

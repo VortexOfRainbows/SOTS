@@ -564,11 +564,18 @@ namespace SOTS
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
 						if(i == Main.myPlayer)
 							ConduitHelper.DrawPlayerEffectOutline(Main.spriteBatch, player);
-                        FakePlayerDrawing.DrawMyFakePlayers(player, 0);
-                        FakePlayerDrawing.DrawMyFakePlayers(player, 1);
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 0, -1);
                     }
                 }
                 GreenScreenManager.DrawWaterLayer(Main.spriteBatch);
+                for (int i = 0; i < Main.player.Length; i++)
+                {
+                    Player player = Main.player[i];
+                    if (player.active)
+                    {
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 1, 1);
+                    }
+                }
                 Main.spriteBatch.End();
 			}
 		}

@@ -263,7 +263,7 @@ namespace SOTS.FakePlayer
             DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             drawInfo.DrawDataCache.Add(drawData);
         }
-        public static void DrawMyFakePlayers(Player player, int drawType)
+        public static void DrawMyFakePlayers(Player player, int drawType, int drawState)
         {
             List<FakePlayer> fakePlayers = GetFakePlayers(player);
             for(int i = 0; i < fakePlayers.Count; i++)
@@ -272,13 +272,14 @@ namespace SOTS.FakePlayer
                 PlayerDrawSet drawInfo = new PlayerDrawSet();
                 if(fakePlayer.FakePlayerType == drawType)
                 {
-                    bool canIDraw = fakePlayer.DrawFakePlayer(ref drawInfo, player);
+                    bool canIDraw = fakePlayer.PrepareDrawing(ref drawInfo, player, drawState);
                     if (canIDraw)
                     {
                         Main.spriteBatch.End();
                         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-                        DrawFakePlayer(ref drawInfo);
-                        fakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, player);
+                        DrawFromCache(ref drawInfo);
+                        if(drawState == 1)
+                            fakePlayer.SecondaryFakePlayerDrawing(Main.spriteBatch, player);
                     }
                 }
             }
@@ -306,7 +307,7 @@ namespace SOTS.FakePlayer
             fakePlayer.bodyVect = drawInfo.bodyVect;
         }
         private static SpriteDrawBuffer spriteBuffer;
-        public static void DrawFakePlayer(ref PlayerDrawSet drawinfo)
+        public static void DrawFromCache(ref PlayerDrawSet drawinfo)
         {
             //IL_0124: Unknown result type (might be due to invalid IL or missing references)
             List<DrawData> drawDataCache = drawinfo.DrawDataCache;

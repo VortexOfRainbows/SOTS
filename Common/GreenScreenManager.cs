@@ -130,7 +130,7 @@ namespace SOTS.Common
                 Player player = Main.player[i];
                 if (player.active)
                 {
-                    FakePlayerDrawing.DrawMyFakePlayers(player, 1);
+                    FakePlayerDrawing.DrawMyFakePlayers(player, 1, 0);
                 }
             }
             spriteBatch.End();
