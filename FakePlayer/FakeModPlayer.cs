@@ -4,6 +4,7 @@ using SOTS.Items.Celestial;
 using SOTS.Projectiles.Celestial;
 using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -38,6 +39,20 @@ namespace SOTS.FakePlayer
                 int type = ModContent.ProjectileType<HydroServant>();
                 SOTSPlayer.ModPlayer(Player).runPets(ref Probe2, type, 0, 0, false);
             }
+        }
+        public override bool CanUseItem(Item item)
+        {
+            if(hasHydroFakePlayer)
+            {
+                bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(Player, item, item, 1);
+                if (isHydroPlayerUsingAnItem && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1) //and update id is not hydroplayer
+                {
+                    Player.SetDummyItemTime(2); //This is necessary to prevent the owner from switching items mid-use
+                    Player.itemTimeMax--;
+                    return false;
+                }
+            }
+            return true;
         }
         public int subspaceServantShader = 0;
         public override void ResetEffects()

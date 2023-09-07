@@ -72,9 +72,13 @@ namespace SOTS.FakePlayer
         {
             return item.createTile != -1;
         }
-        public bool CheckItemValidityFull(Player player, Item item)
+        public static bool CheckItemValidityFull(Player player, Item item, Item lastUsedItem, int fakePlayerType)
         {
             FakeModPlayer subspacePlayer = FakeModPlayer.ModPlayer(player);
+            if(!item.active || item.IsAir)
+            {
+                return false;
+            }
             bool canUseItem = true;
             #region check if item is useable
             if (!FakePlayerHelper.FakePlayerItemWhitelist.Contains(item.type) || lastUsedItem == null)
@@ -96,15 +100,45 @@ namespace SOTS.FakePlayer
                 proj.active = false;
                 proj.Kill();
             }
-            bool validItem = canUseItem && lastUsedItem.type == item.type && item.active && !item.IsAir && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity;
+            bool uniqueUseConditions = true;
+            if(fakePlayerType == 1)
+            {
+                uniqueUseConditions = false;
+                if(ItemTrailingType(item) == TrailingID.CLOSERANGE || ItemTrailingType(item) == TrailingID.MELEE)
+                {
+                    uniqueUseConditions = true;
+                }
+            }
+            bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity && uniqueUseConditions;
             return validItem;
             #endregion
+        }
+        public static int ItemTrailingType(Item item)
+        {
+            int returnType = TrailingID.RANGED;
+            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
+                || item.consumable)
+            {
+                if (item.noMelee && !IsPlaceable(item))
+                    returnType = TrailingID.CLOSERANGE;
+                else
+                    returnType = TrailingID.MELEE;
+            }
+            else if (item.CountsAsClass(DamageClass.Ranged))
+            {
+                returnType = TrailingID.RANGED;
+            }
+            else if (item.CountsAsClass(DamageClass.Magic))
+            {
+                returnType = TrailingID.MAGIC;
+            }
+            return returnType;
         }
         public void ItemCheckHack(Player player)
         {
             SupressNetMessage13and41 = true;
             FakeModPlayer subspacePlayer = FakeModPlayer.ModPlayer(player);
-            Item item = player.inventory[UseItemSlot];
+            Item item = player.inventory[UseItemSlot(player)];
             if (Main.netMode != NetmodeID.Server)
             {
                 if (!TextureAssets.Item[item.type].IsLoaded)
@@ -118,7 +152,7 @@ namespace SOTS.FakePlayer
             bool saveUseTurn = item.useTurn;
             item.autoReuse = true;
             item.useTurn = true;
-            bool valid = CheckItemValidityFull(player, item);
+            bool valid = CheckItemValidityFull(player, item, lastUsedItem, FakePlayerType);
             if (item.IsAir)
             {
                 RunItemCheck(player, true);
@@ -131,10 +165,17 @@ namespace SOTS.FakePlayer
             }
             else
             {
-                if (lastUsedItem != null && lastUsedItem.type != item.type && !subspacePlayer.servantIsVanity)
+                if (lastUsedItem != null && !lastUsedItem.IsAir && lastUsedItem.type != item.type && (!subspacePlayer.servantIsVanity || FakePlayerType != 0)) //reload the item check if the item is different
                 {
                     lastUsedItem = heldItem.Clone();
-                    RunItemCheck(player, true);
+                    if(FakePlayerType != 1)
+                    {
+                        RunItemCheck(player, true);
+                    }
+                    else
+                    {
+                        RunItemCheck(player, false);
+                    }
                 }
                 else
                     RunItemCheck(player, false);
@@ -143,24 +184,7 @@ namespace SOTS.FakePlayer
             if (itemAnimation > 0)
             {
                 ShouldUseWingsArmPosition = false;
-                if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
-                    || item.consumable)
-                {
-                    if (item.noMelee && !IsPlaceable(item))
-                        TrailingType = TrailingID.CLOSERANGE;
-                    else
-                        TrailingType = TrailingID.MELEE;
-                }
-                else if (item.CountsAsClass(DamageClass.Ranged))
-                {
-                    TrailingType = TrailingID.RANGED;
-                }
-                else if (item.CountsAsClass(DamageClass.Magic))
-                {
-                    TrailingType = TrailingID.MAGIC;
-                }
-                else
-                    TrailingType = TrailingID.RANGED;
+                TrailingType = ItemTrailingType(item);
             }
             else
             {
@@ -191,7 +215,14 @@ namespace SOTS.FakePlayer
         Item lastUsedItem;
         public int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
         private int FakePlayerID = 0;
-        public int UseItemSlot => 49; //it should always use the last slot. Maybe add a config to this later, or an individual slot.
+        public int UseItemSlot(Player player)
+        {
+            if (FakePlayerType == 1)
+            {
+                return player.selectedItem;
+            }
+            return 49;
+        }
         public bool compositeFrontArmEnabled = false;
         public bool compositeBackArmEnabled = false;
 
@@ -258,8 +289,10 @@ namespace SOTS.FakePlayer
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             Update(player);
+            bool valid = CheckItemValidityFull(player, player.HeldItem, lastUsedItem, FakePlayerType);
             if (canUseItem || player.channel)
             {
+                //player.controlUseItem = false; //For some reason, hydro servant is unable to continually right click. This is probably because player.controlUseItem needs to be FALSE before this function begins, but is true due to something happening in the REAL player's code for the held item
                 player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
                 if(!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
                     player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
@@ -271,6 +304,13 @@ namespace SOTS.FakePlayer
             SetupBodyFrame(player); //run code to get frame after
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
+            if (valid && FakePlayerType == 1)
+            {
+                player.SetDummyItemTime(itemTime); //This is necessary to prevent the owner from switching items mid-use
+                player.itemTimeMax--;
+                player.reuseDelay = itemTime;
+                player.direction = direction;
+            }
             FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
         }
         public void SaveRealPlayerValues(Player player)
@@ -322,7 +362,7 @@ namespace SOTS.FakePlayer
         public void CopyFakeToReal(Player player)
         {
             //Set default values (ones that aren't used/modified by FakePlayer)
-            player.selectedItem = UseItemSlot;
+            player.selectedItem = UseItemSlot(player);
             player.lastVisualizedSelectedItem = lastUsedItem;
             player.channel = Channel;
             player.frozen = player.stoned = player.webbed = player.wet = false;
@@ -695,16 +735,16 @@ namespace SOTS.FakePlayer
         public void SetupBodyFrame(Player player)
         {
             Player PlayerToFrame = new Player();
-            PlayerToFrame.itemAnimation = itemAnimation;
-            PlayerToFrame.itemAnimationMax = itemAnimationMax;
-            PlayerToFrame.selectedItem = UseItemSlot;
-            PlayerToFrame.itemRotation = itemRotation;
-            PlayerToFrame.direction = direction;
-            PlayerToFrame.inventory[UseItemSlot] = player.inventory[UseItemSlot];
-            if(CheckItemValidityFull(player, PlayerToFrame.inventory[UseItemSlot]) || PlayerToFrame.inventory[UseItemSlot].IsAir)
+            PlayerToFrame.itemAnimation = player.itemAnimation;
+            PlayerToFrame.itemAnimationMax = player.itemAnimationMax;
+            PlayerToFrame.selectedItem = UseItemSlot(player);
+            PlayerToFrame.itemRotation = player.itemRotation;
+            PlayerToFrame.direction = player.direction;
+            PlayerToFrame.inventory[UseItemSlot(player)] = player.inventory[UseItemSlot(player)];
+            if(CheckItemValidityFull(player, PlayerToFrame.inventory[UseItemSlot(player)], lastUsedItem, FakePlayerType) || PlayerToFrame.inventory[UseItemSlot(player)].IsAir)
                 PlayerToFrame.PlayerFrame(); //don't care about what happens in here except for the body frame outcome
             bodyFrame = PlayerToFrame.bodyFrame;
-            if (ShouldUseWingsArmPosition)
+            if (ShouldUseWingsArmPosition && !player.ItemAnimationActive)
             {
                 bodyFrame.Y = bodyFrame.Height * 6;
             }

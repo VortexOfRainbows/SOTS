@@ -1,7 +1,6 @@
 Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
-1. Subspace Locket's swing animation for normal items is delayed by 1 frame. This is ultimately unimportant. But urks me (and I cannot fix it for the life of me). Wielding multiple items (owned projectile count) from some mods does not work with the servant. No big issue. Might need to do more tested.
-2. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret dimension containing the Superbia Portal
+1. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret dimension containing the Superbia Portal
 
 Tmodloader Bugs (some of these may be fixed, idk):
 1. Chest Swapping doesn't drop item.
@@ -30,21 +29,30 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Heart Swapper / Hydrokinetic Antennae (in progress)
 	1. Grants close ranged weapons the ability to be used at range through Hydrokinesis (fake player item)
-5. Phantaray: Multiplayer Syncing, Banner (pending)
+5. Phantaray: Multiplayer Syncing (pending)
 6. Unique Archaeologist tooltips for items (pending)
 7. Polaris Rework (pending)
  
 Daily Log:
 
-9/6/23
+9/6/23 to 9/7/23
 1. Now that the framework is done for the HydroServant shaders... so NEXT:
 	1. Unique movement to distinguish from Subspace Servant
-	2. Can only use melee and other closed ranged options
+	2. Can only use melee and other closed ranged options (DONE)
+		1. Make a list of non-melee items considered acceptions, instead of the if statements which are in place now.
 	3. No pickaxe or placing tiles
 	4. Disappears when not actively using an item
 	5. Unique metablob particles and supporting system
 	6. More optimization and visual improvements for the shader
 	7. Visual improvements
+	8. Uses the item the player is holding, not allowing player's use (DONE)
+	9. Custom player body frame when used, so player isn't spazing out while servant is using the item
+		1. Also make sure no swung dust is created!
+		2. Also make sure player is not dealing damage with melee hitbox, instead only servant
+	10. Fix right click continuity
+2. Added Phantaray's Banners
+3. Fixed issue where fake players had a delayed item use animation by 1 frame. Yeeah!
+4. Fixed issue where phantaray would accidentally duplicate when dying on the same frame as parent (now has some immunity after splitting)
 
 9/4/23 to 9/6/23
 1. LOTS OF WORK IN PROGRESS WATER AND SHADERS

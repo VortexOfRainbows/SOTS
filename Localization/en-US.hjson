@@ -5097,6 +5097,16 @@ Mods: {
 
 			HydrokineticAntennae: {
 				DisplayName: Hydrokinetic Antennae
+				Tooltip: Use hydrokinesis to extend the effective range of melee weapons and other low-reach items
+			}
+
+			BigPhantarayBanner: {
+				DisplayName: Phantaray Banner (Big)
+				Tooltip: ""
+			}
+
+			SmallPhantarayBanner: {
+				DisplayName: Phantaray Banner (Small)
 				Tooltip: ""
 			}
 		}

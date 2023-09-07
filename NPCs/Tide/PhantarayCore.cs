@@ -33,8 +33,9 @@ namespace SOTS.NPCs.Tide
 			isCore = reader.ReadBoolean();
         }
         public const float AttackWindup = 75;
-		public bool isCore = true;
+		public bool isCore = false;
 		public bool runOnce = true;
+        public int spawnedInCounter = 0;
         Vector2 wanderDirection = Vector2.Zero;
         bool previousWet;
         public override void SetStaticDefaults()
@@ -58,8 +59,10 @@ namespace SOTS.NPCs.Tide
             NPC.HitSound = SoundID.SplashWeak;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.netAlways = true;
-			//Banner = NPC.type;
-			//BannerItem = ItemType<UltracapBanner>();
+            NPC.dontTakeDamage = true;
+            NPC.alpha = 255;
+		    Banner = NPC.type;
+	        BannerItem = ItemType<SmallPhantarayBanner>();
 		}
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
@@ -120,6 +123,10 @@ namespace SOTS.NPCs.Tide
 				if (NPC.ai[0] == -1)
 				{
 					isCore = false;
+                }
+                else
+                {
+                    isCore = true;
                 }
                 if (NPC.ai[1] != 0)
                     NPC.velocity += Main.rand.NextVector2CircularEdge(2.5f, 1.5f);
@@ -297,10 +304,17 @@ namespace SOTS.NPCs.Tide
 			if (player.wet)
 				alphaToGo = 155;
 			NPC.alpha = (int)MathHelper.Lerp(NPC.alpha, alphaToGo, NPC.ai[2] / 30f);
-			if (NPC.alpha > 200)
-				NPC.dontTakeDamage = !player.wet;
-			else
-				NPC.dontTakeDamage = false;
+            if(spawnedInCounter > 30)
+            {
+                if (NPC.alpha > 200)
+                    NPC.dontTakeDamage = !player.wet;
+                else
+                    NPC.dontTakeDamage = false;
+            }
+            else
+            {
+                spawnedInCounter++;
+            }
 			NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true, true);
             NPC.ai[1]--;
         }

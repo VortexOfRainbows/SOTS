@@ -290,8 +290,8 @@ namespace SOTS.FakePlayer
             drawInfo.drawPlayer.compositeFrontArm = fakePlayer.compositeFrontArm;
             drawInfo.drawPlayer.bodyFrame = fakePlayer.bodyFrame;
             drawInfo.drawPlayer.Male = true;
-            drawInfo.drawPlayer.selectedItem = fakePlayer.UseItemSlot;
-            drawInfo.drawPlayer.lastVisualizedSelectedItem = player.inventory[fakePlayer.UseItemSlot];
+            drawInfo.drawPlayer.selectedItem = fakePlayer.UseItemSlot(player);
+            drawInfo.drawPlayer.lastVisualizedSelectedItem = player.inventory[drawInfo.drawPlayer.selectedItem];
             //Main.NewText(DrawInfoDummy.compFrontArmFrame.ToString() + " : " + DrawInfoDummy.usesCompositeTorso + " : " + DrawInfoDummy.drawPlayer.body);
             drawInfo.drawPlayer.heldProj = fakePlayer.HeldProj;
             drawInfo.Position = fakePlayer.Position;

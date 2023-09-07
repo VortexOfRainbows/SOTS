@@ -133,8 +133,6 @@ namespace SOTS.Projectiles.Blades
 			{
 				rand = Main.rand.NextFloat(1.0f, 1.2f);
 				type = ModContent.DustType<Dusts.AlphaDrainDust>();
-				if (Main.rand.NextBool(3))
-					type = DustID.Obsidian;
 				dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
 				dust.velocity *= 0.2f;
 				dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.3f, 0.5f) * rand;

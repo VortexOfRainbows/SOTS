@@ -54,8 +54,8 @@ namespace SOTS.NPCs.Tide
             NPC.HitSound = SoundID.SplashWeak;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.netAlways = true;
-			//Banner = NPC.type;
-			//BannerItem = ItemType<UltracapBanner>();
+		    Banner = NPC.type;
+		    BannerItem = ItemType<BigPhantarayBanner>();
 		}
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {

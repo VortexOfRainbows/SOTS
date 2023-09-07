@@ -4,6 +4,7 @@ using SOTS.NPCs;
 using SOTS.NPCs.Anomaly;
 using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Phase;
+using SOTS.NPCs.Tide;
 using SOTS.NPCs.TreasureSlimes;
 using Terraria;
 using Terraria.DataStructures;
@@ -666,7 +667,13 @@ namespace SOTS.Items.Banners
 					case 15:
 						type = NPCType<Planetoid>();
 						break;
-					default:
+                    case 16:
+                        type = NPCType<PhantarayCore>();
+                        break;
+                    case 17:
+                        type = NPCType<PhantarayBig>();
+                        break;
+                    default:
 						return;
 				}
 				Main.SceneMetrics.hasBanner = true;
@@ -809,5 +816,21 @@ namespace SOTS.Items.Banners
 			Item.createTile = TileType<SOTSBanners2>();
 			Item.placeStyle = 15;
 		}
-	}
+    }
+    public class SmallPhantarayBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 16;
+        }
+    }
+    public class BigPhantarayBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 17;
+        }
+    }
 }
