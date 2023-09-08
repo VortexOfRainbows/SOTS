@@ -35,21 +35,28 @@ Update Objectives:
  
 Daily Log:
 
-9/6/23 to 9/7/23
-1. Now that the framework is done for the HydroServant shaders... so NEXT:
+9/8/23
+1. Stuff for Servants needed:
+	1. Right click and control use item continuity should be better for all servants (Multiplayer Testing)
+	2. Issue: right clicking is not really being synced at all... need a way to sync item animation after a right click (probably)
+		1. Check when it is being synced in vanilla, maybe after empty frame when altfunctionuse is being set to 2?
+	3. Issue: hydro servant consumes ammo and items as if the player was also using them very quickly
+	4. Turning in the wrong direction with sky dragon's fury is a vanilla bug in multiplayer...
+2. Fixed bug where dream lamp right click would display improperly in multiplayer
+3. After bugs are fixed:
 	1. Unique movement to distinguish from Subspace Servant
-	2. Can only use melee and other closed ranged options (DONE)
 		1. Make a list of non-melee items considered acceptions, instead of the if statements which are in place now.
-	3. No pickaxe or placing tiles
-	4. Disappears when not actively using an item
-	5. Unique metablob particles and supporting system
-	6. More optimization and visual improvements for the shader
-	7. Visual improvements
-	8. Uses the item the player is holding, not allowing player's use (DONE)
-	9. Custom player body frame when used, so player isn't spazing out while servant is using the item
+	2. No pickaxe or placing tiles
+	3. Disappears when not actively using an item
+	4. Unique metablob particles and supporting system
+	5. More optimization and visual improvements for the shader
+	6. Visual improvements
+	7. Custom player body frame when used, so player isn't spazing out while servant is using the item
 		1. Also make sure no swung dust is created!
 		2. Also make sure player is not dealing damage with melee hitbox, instead only servant
-	10. Fix right click continuity
+
+9/6/23 to 9/8/23
+1. Now that the framework is done for the HydroServant shaders...
 2. Added Phantaray's Banners
 3. Fixed issue where fake players had a delayed item use animation by 1 frame. Yeeah!
 4. Fixed issue where phantaray would accidentally duplicate when dying on the same frame as parent (now has some immunity after splitting)

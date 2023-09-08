@@ -84,7 +84,7 @@ namespace SOTS.Items.Secrets
 			Item.createTile = ModContent.TileType<ForgottenLampTile>();
 			Item.consumable = true;
 			Item.channel = false;
-			Item.noUseGraphic = false;
+			Item.noUseGraphic = true;
 		}
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
 		{

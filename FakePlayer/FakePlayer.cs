@@ -15,6 +15,7 @@ using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
@@ -159,7 +160,8 @@ namespace SOTS.FakePlayer
             }
             else if (valid)
             {
-                subspacePlayer.foundItem = true;
+                if(FakePlayerType == 0)
+                    subspacePlayer.foundItem = true;
                 RunItemCheck(player, true);
                 //Main.NewText(player.ItemUsesThisAnimation);
             }
@@ -181,6 +183,7 @@ namespace SOTS.FakePlayer
                     RunItemCheck(player, false);
                 ResetVariables();
             }
+            Main.NewText(player.itemAnimation);
             if (itemAnimation > 0)
             {
                 ShouldUseWingsArmPosition = false;
@@ -239,6 +242,7 @@ namespace SOTS.FakePlayer
         public int itemHeight;
         public int direction;
         public int reuseDelay;
+        public bool controlUseItem;
         public bool releaseUseItem;
         public bool justDroppedAnItem;
 
@@ -286,15 +290,20 @@ namespace SOTS.FakePlayer
         {
             FakePlayerProjectile.OwnerOfThisUpdateCycle = FakePlayerID; //Temporarily assign the owner of the update cycle, which will make any projectile spawned during the update cycle a child of the fake player
             int whoAmI = player.whoAmI;
+            bool ownersControlUseItem = player.controlUseItem;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             Update(player);
             bool valid = CheckItemValidityFull(player, player.HeldItem, lastUsedItem, FakePlayerType);
             if (canUseItem || player.channel)
             {
-                //player.controlUseItem = false; //For some reason, hydro servant is unable to continually right click. This is probably because player.controlUseItem needs to be FALSE before this function begins, but is true due to something happening in the REAL player's code for the held item
-                player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
-                if(!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
+                }
+                if (!player.controlUseItem)
+                    player.controlUseItem = ownersControlUseItem;
+                if (!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
                     player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
                 player.ItemCheck(); //Run the actual item use code
                 //Main.NewText(player.channel);
@@ -302,6 +311,7 @@ namespace SOTS.FakePlayer
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
+            player.controlUseItem = false;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             if (valid && FakePlayerType == 1)
@@ -351,6 +361,7 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties.saveDirection = player.direction;
             PlayerSavedProperties.saveReuseDelay = player.reuseDelay;
             PlayerSavedProperties.saveReleaseUseItem = player.releaseUseItem;
+            PlayerSavedProperties.saveControlUseItem = player.controlUseItem;
             PlayerSavedProperties.saveJustDroppedAnItem = player.JustDroppedAnItem;
             PlayerSavedProperties.saveAttackCD = player.attackCD;
             PlayerSavedProperties.saveItemUsesThisAnimation = player.ItemUsesThisAnimation;
@@ -376,6 +387,7 @@ namespace SOTS.FakePlayer
             player.bodyFrame = bodyFrame;
             player.gfxOffY = 0;
 
+            player.controlUseItem = controlUseItem;
             //Set values that player uses to the FakePlayer's values
             player.position = Position;
             player.oldPosition = OldPosition;
@@ -404,6 +416,7 @@ namespace SOTS.FakePlayer
         }
         public void CopyRealToFake(Player player)
         {
+            controlUseItem = player.controlUseItem;
             //Run using FakePlayer values, then set FakePlayer values to the newly updated ones
             HeldProj = player.heldProj;
             Channel = player.channel;
@@ -470,6 +483,7 @@ namespace SOTS.FakePlayer
             player.direction = PlayerSavedProperties.saveDirection;
             player.reuseDelay = PlayerSavedProperties.saveReuseDelay;
             player.releaseUseItem = PlayerSavedProperties.saveReleaseUseItem;
+            player.controlUseItem = PlayerSavedProperties.saveControlUseItem;
             player.JustDroppedAnItem = PlayerSavedProperties.saveJustDroppedAnItem;
             player.attackCD = PlayerSavedProperties.saveAttackCD;
             player.boneGloveTimer = PlayerSavedProperties.saveBoneGloveTimer;
@@ -887,6 +901,7 @@ namespace SOTS.FakePlayer
         public int saveDirection;
         public int saveReuseDelay;
         public bool saveReleaseUseItem;
+        public bool saveControlUseItem;
         public bool saveJustDroppedAnItem;
         public int saveAttackCD;
         public int saveItemUsesThisAnimation;

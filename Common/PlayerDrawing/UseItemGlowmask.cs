@@ -32,8 +32,7 @@ namespace SOTS.Common.PlayerDrawing
 			if (drawInfo.shadow != 0)
 				return;
 			if (!heldItem.IsAir && (!heldItem.noUseGraphic || heldItem.type == ModContent.ItemType<Items.Temple.SupernovaScatter>() || 
-				heldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || heldItem.type == ModContent.ItemType<StormSpell>() || 
-				heldItem.type == ModContent.ItemType<Items.Temple.Revolution>()))// || heldItem.type == ModContent.ItemType<DreamLamp>()))
+				heldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || heldItem.type == ModContent.ItemType<StormSpell>() || heldItem.type == ModContent.ItemType<DreamLamp>()))
 			{
 				Item item = heldItem;
 				float beginningScale = drawPlayer.GetAdjustedItemScale(item);
@@ -43,21 +42,13 @@ namespace SOTS.Common.PlayerDrawing
 				{
 					texture = ModContent.Request<Texture2D>("SOTS/Items/Permafrost/StormSpellAnim").Value;
 				}
-				/*if (item.type == ModContent.ItemType<DreamLamp>())
+				if (item.type == ModContent.ItemType<DreamLamp>())
 				{
 					glowColor = Lighting.GetColor(drawPlayer.itemLocation.ToTileCoordinates());
-					if (drawPlayer.altFunctionUse != 2)
+					if (drawPlayer.altFunctionUse != 0 || drawPlayer.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Camera.DreamLamp>()] > 0 || SOTSWorld.DreamLampSolved)
 						return;
-					if (DreamLamp.IsItemForgotten)
-					{
-						texture = Terraria.GameContent.TextureAssets.Item[item.type].Value;
-					}
-					else
-                    {
-						texture = DreamLamp.texture;
-                    }
-					beginningScale = 0.8f;
-				}*/
+                    texture = Terraria.GameContent.TextureAssets.Item[item.type].Value;
+                }
 				Vector2 zero2 = Vector2.Zero;
 				SpriteEffects effects = drawInfo.playerEffect; //this is just a guess... might actually require drawInfo.itemEffect
 				bool isTwilightPole = item.type == ModContent.ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ModContent.ProjectileType<TwilightBobber>()] > 0;

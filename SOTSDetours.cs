@@ -51,6 +51,7 @@ namespace SOTS
 			On_ItemSlot.DrawItemIcon += ItemSlot_DrawItemIcon;
 			On_Player.TryUpdateChannel += Player_TryUpdateChannel;
 			On_Player.TryCancelChannel += Player_TryCancelChannel;
+			On_Player.ItemCheck_ManageRightClickFeatures += Player_ItemCheck_ManageRightClickFeatures;
             //The following is for Time Freeze
             //order of updates: player, NPC, gore, projectile, item, dust, time
             On_Player.Update += Player_Update;
@@ -839,5 +840,9 @@ namespace SOTS
 			}
 			return orig(self);
 		}
+		private static void Player_ItemCheck_ManageRightClickFeatures(On_Player.orig_ItemCheck_ManageRightClickFeatures orig, Player self)
+        {
+            orig(self);
+        }
     }
 }

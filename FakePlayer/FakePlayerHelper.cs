@@ -31,6 +31,7 @@ namespace SOTS.FakePlayer
         public FakePlayer FakePlayer = null;
         public Vector2 cursorArea;
         public int Direction = 1;
+        public bool ControlUseItem = false;
         public sealed override void SetStaticDefaults()
         {
             FakePlayerHelper.FakePlayerPossessingProjectile.Add(Type);
@@ -47,6 +48,7 @@ namespace SOTS.FakePlayer
             writer.Write(ItemLocation.Y);
             writer.Write(ItemRotation);
             writer.Write(Direction);
+            writer.Write(ControlUseItem); //I don't think this is needed but I'll re-check later
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -56,9 +58,11 @@ namespace SOTS.FakePlayer
             ItemLocation.Y = reader.ReadSingle();
             ItemRotation = reader.ReadSingle();
             Direction = reader.ReadInt32();
+            ControlUseItem = reader.ReadBoolean(); //I don't think this is needed but I'll re-check later
         }
         public void UpdateItems(Player player)
         {
+            FakePlayer.controlUseItem = ControlUseItem;
             FakePlayer.itemLocation = ItemLocation;
             FakePlayer.itemRotation = ItemRotation;
             FakePlayer.WingFrame = (int)(Projectile.ai[1] / 4);
@@ -71,6 +75,7 @@ namespace SOTS.FakePlayer
             Direction = FakePlayer.direction;
             if (Main.myPlayer == player.whoAmI)
             {
+                ControlUseItem = FakePlayer.controlUseItem;
                 ItemLocation = FakePlayer.itemLocation;
                 ItemRotation = FakePlayer.itemRotation;
             }

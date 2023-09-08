@@ -4,6 +4,7 @@ using SOTS.Items.Celestial;
 using SOTS.Projectiles.Celestial;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Security.Permissions;
 using Terraria;
 using Terraria.DataStructures;
@@ -42,13 +43,26 @@ namespace SOTS.FakePlayer
         }
         public override bool CanUseItem(Item item)
         {
-            if(hasHydroFakePlayer)
+            if(hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
             {
                 bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(Player, item, item, 1);
-                if (isHydroPlayerUsingAnItem && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1) //and update id is not hydroplayer
+                if (isHydroPlayerUsingAnItem)
                 {
                     Player.SetDummyItemTime(2); //This is necessary to prevent the owner from switching items mid-use
                     Player.itemTimeMax--;
+                    return false;
+                }
+            }
+            return true;
+        }
+        public static bool CanPlayerUseRightClickAction(Player self)
+        {
+            if (FakeModPlayer.ModPlayer(self).hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
+            {
+                Item item = self.inventory[self.selectedItem];
+                bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(self, item, item, 1);
+                if (isHydroPlayerUsingAnItem)
+                {
                     return false;
                 }
             }
