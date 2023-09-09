@@ -47,6 +47,7 @@ namespace SOTS.FakePlayer
     {
         public static bool SupressNetMessage13and41 = false;
         public bool ShouldUseWingsArmPosition = false;
+        public int BonusItemAnimationTime = 0;
         public int WingFrame = 0;
         public int TrailingType = 0;
         public const int Width = 20;
@@ -183,11 +184,11 @@ namespace SOTS.FakePlayer
                     RunItemCheck(player, false);
                 ResetVariables();
             }
-            Main.NewText(player.itemAnimation);
+            //Main.NewText(player.itemAnimation);
             if (itemAnimation > 0)
             {
                 ShouldUseWingsArmPosition = false;
-                TrailingType = ItemTrailingType(item);
+                BonusItemAnimationTime = 15;
             }
             else
             {
@@ -197,6 +198,11 @@ namespace SOTS.FakePlayer
                     ShouldUseWingsArmPosition = Velocity.Length() > 2f;
                 else
                     ShouldUseWingsArmPosition = false;
+            }
+            if(BonusItemAnimationTime > 0)
+            {
+                BonusItemAnimationTime--;
+                TrailingType = ItemTrailingType(item);
             }
             player.cursorItemIconEnabled = saveCursorIconEnabled;
             player.cursorItemIconID = saveCursorIconID;
@@ -933,6 +939,18 @@ namespace SOTS.FakePlayer
                 }
             }
             return base.GetAlpha(item, lightColor);
+        }
+        public override bool ConsumeItem(Item item, Player player)
+        {
+            if (FakeModPlayer.ModPlayer(player).hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
+            {
+                bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(player, item, item, 1);
+                if (isHydroPlayerUsingAnItem)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -37,11 +37,9 @@ Daily Log:
 
 9/8/23
 1. Stuff for Servants needed:
-	1. Right click and control use item continuity should be better for all servants (Multiplayer Testing)
-	2. Issue: right clicking is not really being synced at all... need a way to sync item animation after a right click (probably)
-		1. Check when it is being synced in vanilla, maybe after empty frame when altfunctionuse is being set to 2?
-	3. Issue: hydro servant consumes ammo and items as if the player was also using them very quickly
-	4. Turning in the wrong direction with sky dragon's fury is a vanilla bug in multiplayer...
+	1. Animations for the fake players are now better synced in multiplayer. There are some discontinuity occassionally, but not anything too big of a deal imo.
+	2. Fake player now spends some time on the same movement frame/position instead of moving back immediately after not using an item.
+	3. Hydro servant no longer consumes items rapidly
 2. Fixed bug where dream lamp right click would display improperly in multiplayer
 3. After bugs are fixed:
 	1. Unique movement to distinguish from Subspace Servant

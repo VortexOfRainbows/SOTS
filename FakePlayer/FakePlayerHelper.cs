@@ -31,7 +31,11 @@ namespace SOTS.FakePlayer
         public FakePlayer FakePlayer = null;
         public Vector2 cursorArea;
         public int Direction = 1;
-        public bool ControlUseItem = false;
+        //public bool ControlUseItem = false;
+        public int itemAnimation = 0;
+        public int itemAnimationMax = 0;
+        public int itemTime = 0;
+        public int itemTimeMax = 0;
         public sealed override void SetStaticDefaults()
         {
             FakePlayerHelper.FakePlayerPossessingProjectile.Add(Type);
@@ -48,7 +52,11 @@ namespace SOTS.FakePlayer
             writer.Write(ItemLocation.Y);
             writer.Write(ItemRotation);
             writer.Write(Direction);
-            writer.Write(ControlUseItem); //I don't think this is needed but I'll re-check later
+            //writer.Write(ControlUseItem); //I don't think this is needed but I'll re-check later
+            writer.Write(itemAnimation);
+            writer.Write(itemAnimationMax);
+            writer.Write(itemTime);
+            writer.Write(itemTimeMax);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -58,11 +66,15 @@ namespace SOTS.FakePlayer
             ItemLocation.Y = reader.ReadSingle();
             ItemRotation = reader.ReadSingle();
             Direction = reader.ReadInt32();
-            ControlUseItem = reader.ReadBoolean(); //I don't think this is needed but I'll re-check later
+            //bool na1 = reader.ReadBoolean(); //I don't think this is needed but I'll re-check later
+            itemAnimation = reader.ReadInt32();
+            itemAnimationMax = reader.ReadInt32();
+            itemTime = reader.ReadInt32();
+            itemTimeMax = reader.ReadInt32();
         }
         public void UpdateItems(Player player)
         {
-            FakePlayer.controlUseItem = ControlUseItem;
+            //FakePlayer.controlUseItem = ControlUseItem;
             FakePlayer.itemLocation = ItemLocation;
             FakePlayer.itemRotation = ItemRotation;
             FakePlayer.WingFrame = (int)(Projectile.ai[1] / 4);
@@ -71,14 +83,27 @@ namespace SOTS.FakePlayer
             FakePlayer.direction = Direction;
             FakePlayer.Position = Projectile.position;
             FakePlayer.Velocity = Projectile.velocity; //this is only used for wing drawing
+
+            if(FakePlayer.itemTimeMax != itemTimeMax || FakePlayer.itemAnimationMax != itemAnimationMax || FakePlayer.itemTime != itemTime || (FakePlayer.itemAnimation != itemAnimation && FakePlayer.itemAnimation + 1 != itemAnimation && itemAnimation != 0))
+            {
+                FakePlayer.itemAnimation = itemAnimation;
+                FakePlayer.itemAnimationMax = itemAnimationMax;
+                FakePlayer.itemTime = itemTime;
+                FakePlayer.itemTimeMax = itemTimeMax;
+            }
+
             FakePlayer.ItemCheckHack(player);
             Direction = FakePlayer.direction;
             if (Main.myPlayer == player.whoAmI)
             {
-                ControlUseItem = FakePlayer.controlUseItem;
-                ItemLocation = FakePlayer.itemLocation;
-                ItemRotation = FakePlayer.itemRotation;
+                //ControlUseItem = FakePlayer.controlUseItem;
             }
+            ItemLocation = FakePlayer.itemLocation;
+            ItemRotation = FakePlayer.itemRotation;
+            itemAnimation = FakePlayer.itemAnimation;
+            itemAnimationMax = FakePlayer.itemAnimationMax;
+            itemTime = FakePlayer.itemTime;
+            itemTimeMax = FakePlayer.itemTimeMax;
             Projectile.position = FakePlayer.Position;
         }
     }

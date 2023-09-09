@@ -55,19 +55,6 @@ namespace SOTS.FakePlayer
             }
             return true;
         }
-        public static bool CanPlayerUseRightClickAction(Player self)
-        {
-            if (FakeModPlayer.ModPlayer(self).hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
-            {
-                Item item = self.inventory[self.selectedItem];
-                bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(self, item, item, 1);
-                if (isHydroPlayerUsingAnItem)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
         public int subspaceServantShader = 0;
         public override void ResetEffects()
         {
