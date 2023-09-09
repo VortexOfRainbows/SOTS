@@ -56,56 +56,30 @@ namespace SOTS.FakePlayer
                 }
 			}
 			if (cursorArea != Vector2.Zero)
-			{
-				if (TrailingType == 0)
-				{
-					idlePosition.X -= player.direction * 64f;
-				}
-				if (TrailingType == 1) //magic
-				{
-					idlePosition.Y -= 48f;
-					Vector2 toCursor = cursorArea - player.Center;
-					toCursor = toCursor.SafeNormalize(Vector2.Zero) * -128f;
-					toCursor.Y *= 0.375f;
-					toCursor.Y = -Math.Abs(toCursor.Y);
-					idlePosition += toCursor;
-				}
-				if (TrailingType == 2) //ranged
-				{
-					idlePosition.Y -= 64f;
-					Vector2 toCursor = cursorArea - player.Center;
-					toCursor = toCursor.SafeNormalize(Vector2.Zero) * 128f;
-					toCursor.Y *= 0.4125f;
-					idlePosition += toCursor;
-				}
-				if (TrailingType == 3) //melee
+            {
+				float speed = 0;
+				Vector2 toIdle = Vector2.Zero;
+                if (FakePlayer.itemAnimation > 0 || FakePlayer.SkipDrawing)
                 {
                     Vector2 toCursor = cursorArea - player.Center;
                     float length = toCursor.Length();
-                    if (length > 720)
-                        length = 720;
-					float lengthToCursor = -32 + length;
-					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
-					idlePosition += toCursor;
-				}
-				if (TrailingType == 4) //melee, but limitted range
-                {
-                    Vector2 toCursor = cursorArea - player.Center;
-                    float length = toCursor.Length();
-					if (length > 480)
-						length = 480;
-                    idlePosition.Y += 8f;
-                    float lengthToCursor = -64 + length;
+                    if (length > 320)
+                        length = 320;
+                    float lengthToCursor = -32 + length;
                     toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
                     idlePosition += toCursor;
+					toIdle = idlePosition - Projectile.Center;
+                    float dist = toIdle.Length();
+					speed = 3.25f + dist * 0.01f;
+                    if (FakePlayer.SkipDrawing)
+                    {
+                        speed *= 2;
+                    }
+                    if (dist < speed)
+                    {
+                        speed = toIdle.Length();
+                    }
                 }
-				Vector2 toIdle = idlePosition - Projectile.Center;
-				float dist = toIdle.Length();
-				float speed = 3 + (float)Math.Pow(dist, 1.45) * 0.002f;
-				if (dist < speed)
-				{
-					speed = toIdle.Length();
-				}
 				Projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed;
 				if (Direction == 1)
 				{
@@ -131,7 +105,8 @@ namespace SOTS.FakePlayer
 			}
 			if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
 				Projectile.netUpdate = true;
-			Lighting.AddLight(Projectile.Center, new Vector3(0.65f, 0.8f, 0.75f));
+			if(!FakePlayer.SkipDrawing)
+				Lighting.AddLight(Projectile.Center, new Vector3(0.65f, 0.8f, 0.75f));
 		}
         public override bool PreDraw(ref Color lightColor)
 		{

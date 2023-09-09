@@ -2,8 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using SOTS.Items.Invidia;
 using SOTS.Items.Planetarium.FromChests;
 using SOTS.Items.Tide;
+using SOTS.Items.Whips;
 using SOTS.Projectiles.Base;
 using SOTS.Projectiles.Celestial;
 using SOTS.Void;
@@ -46,6 +48,7 @@ namespace SOTS.FakePlayer
     public class FakePlayer
     {
         public static bool SupressNetMessage13and41 = false;
+        public bool SkipDrawing = false;
         public bool ShouldUseWingsArmPosition = false;
         public int BonusItemAnimationTime = 0;
         public int WingFrame = 0;
@@ -102,23 +105,37 @@ namespace SOTS.FakePlayer
                 proj.active = false;
                 proj.Kill();
             }
-            bool uniqueUseConditions = true;
+            bool additionalValid = true;
             if(fakePlayerType == 1)
             {
-                uniqueUseConditions = false;
-                if(ItemTrailingType(item) == TrailingID.CLOSERANGE || ItemTrailingType(item) == TrailingID.MELEE)
+                if(additionalValid)
                 {
-                    uniqueUseConditions = true;
+                    additionalValid = ValidItemForHydroPlayer(item);
                 }
             }
-            bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity && uniqueUseConditions;
+            bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity && additionalValid;
             return validItem;
             #endregion
+        }
+        private static bool ValidItemForHydroPlayer(Item item)
+        {
+            bool uniqueUseConditions = false;
+            if (ItemTrailingType(item) == TrailingID.CLOSERANGE || ItemTrailingType(item) == TrailingID.MELEE || item.type == ItemID.FlareGun)
+            {
+                if(item.pick > 0 || item.axe > 0 || item.createTile != -1 || item.type == ModContent.ItemType<VorpalKnife>() || item.type == ItemID.LawnMower)
+                {
+                    return false;
+                }
+                uniqueUseConditions = true;
+            }
+            return uniqueUseConditions;
         }
         public static int ItemTrailingType(Item item)
         {
             int returnType = TrailingID.RANGED;
-            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
+            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.type == ItemID.Toxikarp || 
+                item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ItemID.FairyQueenMagicItem ||
+                item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
                 || item.consumable)
             {
                 if (item.noMelee && !IsPlaceable(item))
@@ -291,6 +308,14 @@ namespace SOTS.FakePlayer
             }
             player.heldProj = -1;
             HeldProj = -1;
+            if (player.attackCD > 0)
+            {
+                player.attackCD--;
+            }
+            if (player.itemAnimation == 0)
+            {
+                player.attackCD = 0;
+            }
         }
         public void RunItemCheck(Player player, bool canUseItem = false)
         {
@@ -320,14 +345,63 @@ namespace SOTS.FakePlayer
             player.controlUseItem = false;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
-            if (valid && FakePlayerType == 1)
+            if (FakePlayerType == 1)
             {
-                player.SetDummyItemTime(itemTime); //This is necessary to prevent the owner from switching items mid-use
-                player.itemTimeMax--;
-                player.reuseDelay = itemTime;
-                player.direction = direction;
+                if (valid)
+                    HydroServantPostUpdate(player);
+                else if (itemAnimation <= 0 && BonusItemAnimationTime <= 0)
+                    SkipDrawing = true;
             }
             FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
+        }
+        public void HydroServantPostUpdate(Player player)
+        {
+            bool isPlayerUsingAHydroCapableItem = FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1);
+            player.SetDummyItemTime(itemAnimation); //This is necessary to prevent the owner from switching items mid-use
+            player.itemTimeMax--;
+            player.reuseDelay = itemAnimation;
+            if(isPlayerUsingAHydroCapableItem)
+            {
+                Vector2 fromOwnerToMe = Position - player.position;
+                int newDirection = Math.Sign(fromOwnerToMe.X);
+                if (newDirection != 0)
+                    player.direction = newDirection;
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, fromOwnerToMe.ToRotation() - MathHelper.PiOver2);
+                player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, fromOwnerToMe.ToRotation() - MathHelper.PiOver2);
+                if(itemAnimation > 0 || BonusItemAnimationTime > 0)
+                {
+                    SkipDrawing = false;
+                }
+                else if(player.HeldItem.holdStyle != ItemUseStyleID.None)
+                {
+                    SkipDrawing = false;
+                }
+                else //SOTS currently has nothing with a holdstyle hook, but this should serve as a catchall for other mods that do modify item held positions...
+                {
+                    Player tempPlayer = new Player();
+                    float tempPlayerItemRotation = tempPlayer.itemRotation;
+                    Vector2 tempPlayerItemLocation = tempPlayer.itemLocation;
+                    Rectangle frame = new Rectangle(0, 0, 0, 0);
+                    ItemLoader.HoldStyle(player.HeldItem, tempPlayer, frame);
+                    bool wasAnythingEffected = false;
+                    if(tempPlayer.itemRotation != tempPlayerItemRotation || !tempPlayer.itemLocation.Equals(tempPlayerItemLocation))
+                    {
+                        wasAnythingEffected = true;
+                    }
+                    if (wasAnythingEffected)
+                    {
+                        SkipDrawing = false;
+                    }
+                    else
+                    {
+                        SkipDrawing = true;
+                    }
+                }
+            }
+            else
+            {
+                SkipDrawing = true;
+            }
         }
         public void SaveRealPlayerValues(Player player)
         {
@@ -543,7 +617,7 @@ namespace SOTS.FakePlayer
         public bool PrepareDrawing(ref PlayerDrawSet drawInfo, Player player, int DrawState)
         {
             FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
-            if (bodyFrame.IsEmpty)
+            if (bodyFrame.IsEmpty || SkipDrawing)
                 return false;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
@@ -951,6 +1025,21 @@ namespace SOTS.FakePlayer
                 }
             }
             return true;
+        }
+        public override void UseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox)
+        {
+            if (FakeModPlayer.ModPlayer(player).hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
+            {
+                bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(player, item, item, 1);
+                if (isHydroPlayerUsingAnItem)
+                {
+                    noHitbox = true; //This gets rid of particle effets from melee swings
+                }
+            }
+        }
+        public override void HoldStyle(Item item, Player player, Rectangle heldItemFrame)
+        {
+            return;
         }
     }
 }

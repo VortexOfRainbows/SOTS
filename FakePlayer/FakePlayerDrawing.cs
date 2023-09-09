@@ -303,6 +303,10 @@ namespace SOTS.FakePlayer
             fakePlayer.compositeFrontArmRotation = drawInfo.compositeFrontArmRotation;
             fakePlayer.compositeBackArmRotation = drawInfo.compositeBackArmRotation;
             fakePlayer.weaponDrawOrder = (int)drawInfo.weaponDrawOrder;
+            if(drawInfo.weaponOverFrontArm || Terraria.Item.claw[drawInfo.heldItem.type])
+            {
+                fakePlayer.weaponDrawOrder = 2;
+            }
             fakePlayer.bodyVect = drawInfo.bodyVect;
         }
         private static SpriteDrawBuffer spriteBuffer;

@@ -35,23 +35,22 @@ Update Objectives:
  
 Daily Log:
 
-9/8/23
-1. Stuff for Servants needed:
+9/8/23 to 9/9/23
+1. Stuff for Servants fixed:
 	1. Animations for the fake players are now better synced in multiplayer. There are some discontinuity occassionally, but not anything too big of a deal imo.
 	2. Fake player now spends some time on the same movement frame/position instead of moving back immediately after not using an item.
-	3. Hydro servant no longer consumes items rapidly
+	3. Hydro servant no longer consumes items rapidly	
+	4. No pickaxe or placing tiles
+	5. Player should no longer have any more GHOST using of the held item... Some exceptions might exist and may need to be looked out for...	
+	6. Disappears when not actively using an item
+	7. Melee weapon hit rates with fake players is fixed!
 2. Fixed bug where dream lamp right click would display improperly in multiplayer
 3. After bugs are fixed:
 	1. Unique movement to distinguish from Subspace Servant
 		1. Make a list of non-melee items considered acceptions, instead of the if statements which are in place now.
-	2. No pickaxe or placing tiles
-	3. Disappears when not actively using an item
-	4. Unique metablob particles and supporting system
-	5. More optimization and visual improvements for the shader
-	6. Visual improvements
-	7. Custom player body frame when used, so player isn't spazing out while servant is using the item
-		1. Also make sure no swung dust is created!
-		2. Also make sure player is not dealing damage with melee hitbox, instead only servant
+ 	2. Unique metablob particles and supporting system
+	3. More optimization and visual improvements for the shader
+	4. Visual improvements
 
 9/6/23 to 9/8/23
 1. Now that the framework is done for the HydroServant shaders...

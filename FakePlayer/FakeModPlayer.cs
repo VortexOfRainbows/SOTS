@@ -55,6 +55,18 @@ namespace SOTS.FakePlayer
             }
             return true;
         }
+        public override bool? CanMeleeAttackCollideWithNPC(Item item, Rectangle meleeAttackHitbox, NPC target)
+        {
+            if (hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
+            {
+                bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(Player, item, item, 1);
+                if (isHydroPlayerUsingAnItem)
+                {
+                    return false;
+                }
+            }
+            return null;
+        }
         public int subspaceServantShader = 0;
         public override void ResetEffects()
         {
