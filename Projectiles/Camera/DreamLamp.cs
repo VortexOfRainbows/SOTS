@@ -4,6 +4,7 @@ using SOTS.Items.Secrets;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

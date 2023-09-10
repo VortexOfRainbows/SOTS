@@ -1,4 +1,3 @@
-
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SOTS.FakePlayer;
@@ -10,6 +9,8 @@ using Terraria.ModLoader.UI.ModBrowser;
 using Terraria.GameContent.UI.Elements;
 using SOTS.Common;
 using static Terraria.GameContent.TextureAssets;
+using static Terraria.ModLoader.PlayerDrawLayer;
+using Humanizer;
 
 namespace SOTS.FakePlayer
 {
@@ -245,11 +246,11 @@ namespace SOTS.FakePlayer
         public static void DrawHydroFakePlayersFull()
         {
             DrawFakePlayers(1, DrawStateID.Border);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget0); //Draws the water player wings sprites
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerWings); //Draws the water player wings sprites
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeBackArm);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget1); //Draws the water player body sprites
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerBody); //Draws the water player body sprites
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeFrontArm);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTarget2); //Draws the front arm of the water player
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerFrontArm); //Draws the front arm of the water player
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesAfterFrontArm);
         }
         public static void DrawFakePlayers(int fakePlayerType, int DrawState)
@@ -273,6 +274,15 @@ namespace SOTS.FakePlayer
                 if(fakePlayer.FakePlayerType == drawType)
                 {
                     bool canIDraw = fakePlayer.PrepareDrawing(ref drawInfo, player, drawState);
+                    if(fakePlayer.FakePlayerType == 1 && drawState == DrawStateID.Wings)
+                    {
+                        if (FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1))
+                        {
+                            Main.spriteBatch.End();
+                            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                            DrawHydroConnection(player, fakePlayer);
+                        }
+                    }
                     if (canIDraw)
                     {
                         Main.spriteBatch.End();
@@ -365,6 +375,35 @@ namespace SOTS.FakePlayer
                 }
             }
             return ret;
+        }
+        public static void DrawHydroConnection(Player player, FakePlayer fakePlayer)
+        {
+            Texture2D waterBall = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBall").Value;
+            Texture2D waterBallOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallOutline").Value;
+            Vector2 origin = waterBall.Size() / 2;
+            Vector2 center = fakePlayer.Position + new Vector2(FakePlayer.Width, FakePlayer.Height) / 2;
+            for (int k = 0; k < 4; k++)
+            {
+                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+            }
+            Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+        }
+        public static void DrawHeldHydroBall(Player player)
+        {
+            Texture2D waterBall = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallCore").Value;
+            Texture2D waterBallOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallOutlineRed").Value;
+            Vector2 origin = waterBall.Size() / 2;
+            float rotation = (player.compositeFrontArm.rotation + player.compositeBackArm.rotation) / 2f;
+            Vector2 rotated = new Vector2(0, 12).RotatedBy(rotation);
+            rotated.Y *= 1.5f;
+            Vector2 center = player.RotatedRelativePoint(player.MountedCenter) + new Vector2(-2 * player.direction, 12).RotatedBy(rotation) + new Vector2(0, -2);
+            for (int k = 0; k < 4; k++)
+            {
+                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+                Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+            }
+            Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
         }
     }
 }

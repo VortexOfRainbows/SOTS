@@ -70,16 +70,22 @@ namespace SOTS.Common
         public static void SetupGreenscreens(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             RenderTargetBinding[] prevTarget = graphicsDevice.GetRenderTargets();
-            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget0, DrawStateID.Wings);
-            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget1, DrawStateID.Body);
-            MagicWaterLayer.DrawGreenscreenOnInterfaces(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTarget2, DrawStateID.FrontArm);
+            MagicWaterLayer.DrawOntoRenderTarget(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTargetFakePlayerWings, DrawStateID.Wings);
+            MagicWaterLayer.DrawOntoRenderTarget(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTargetFakePlayerBody, DrawStateID.Body);
+            MagicWaterLayer.DrawOntoRenderTarget(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTargetFakePlayerFrontArm, DrawStateID.FrontArm);
+            MagicWaterLayer.DrawOntoRenderTarget(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTargetPlayerHoldsWaterBall, -1);
             graphicsDevice.SetRenderTargets(prevTarget);
         }
-        public static void DrawWaterLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget)
+        public static void DrawWaterLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget, bool returnToGameZoomMatrix = false)
         {
             spriteBatch.End();
             MagicWaterLayer.DrawLayer(spriteBatch, ref RenderTarget);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
+            if(!returnToGameZoomMatrix)
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
+            else
+            {
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            }
         }
     }
     public interface IWaterSprite
@@ -94,9 +100,10 @@ namespace SOTS.Common
     {
         public static Color BorderColor;
         public static List<IWaterSprite> MaskedEntities;
-        public static RenderTarget2D RenderTarget0;
-        public static RenderTarget2D RenderTarget1;
-        public static RenderTarget2D RenderTarget2;
+        public static RenderTarget2D RenderTargetFakePlayerWings;
+        public static RenderTarget2D RenderTargetFakePlayerBody;
+        public static RenderTarget2D RenderTargetFakePlayerFrontArm;
+        public static RenderTarget2D RenderTargetPlayerHoldsWaterBall;
         public static Texture2D LiquidNoise;
         public static void Initialize()
         {
@@ -105,11 +112,12 @@ namespace SOTS.Common
         }
         public static void UpdateWindowSize(GraphicsDevice graphicsDevice, int width, int height)
         {
-            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget0, graphicsDevice, width, height));
-            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget1, graphicsDevice, width, height));
-            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTarget2, graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTargetFakePlayerWings, graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTargetFakePlayerBody, graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTargetFakePlayerFrontArm, graphicsDevice, width, height));
+            Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTargetPlayerHoldsWaterBall, graphicsDevice, width, height));
         }
-        public static void DrawGreenscreenOnInterfaces(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, ref RenderTarget2D RenderTarget, int DrawState)
+        public static void DrawOntoRenderTarget(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, ref RenderTarget2D RenderTarget, int DrawState)
         {
             if (RenderTarget == null)
             {
@@ -118,28 +126,43 @@ namespace SOTS.Common
             graphicsDevice.SetRenderTarget(RenderTarget);
             graphicsDevice.Clear(Color.Transparent);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
-            /*foreach (var s in MaskedEntities)
+            if(DrawState != -1)
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
+            else
             {
-                s.DrawMappedSprite(spriteBatch);
-                if (s is Entity)
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            }
+            if(DrawState == DrawStateID.Wings)
+            {
+                /*foreach (var s in MaskedEntities)
                 {
-                    if (s is Projectile a && !a.active)
+                    s.DrawMappedSprite(spriteBatch);
+                    if (s is Entity)
+                    {
+                        if (s is Projectile a && !a.active)
+                        {
+                            MaskedEntities.Remove(s);
+                        }
+                    }
+                    else
                     {
                         MaskedEntities.Remove(s);
                     }
-                }
-                else
-                {
-                    MaskedEntities.Remove(s);
-                }
-            }*/
+                }*/
+            }
             for (int i = 0; i < Main.player.Length; i++)
             {
                 Player player = Main.player[i];
                 if (player.active)
                 {
-                    FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawState);
+                    if (DrawState != -1)
+                    {
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawState);
+                    }
+                    else
+                    {
+                        FakePlayerDrawing.DrawHeldHydroBall(player);
+                    }
                 }
             }
             spriteBatch.End();

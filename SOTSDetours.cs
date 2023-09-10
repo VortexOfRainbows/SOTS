@@ -59,7 +59,8 @@ namespace SOTS
 			On_Item.GetPrefixCategory += Item_GetPrefixCategory;
 			On_PlayerDrawLayers.DrawPlayer_27_HeldItem += On_PlayerDrawLayers_DrawPlayer_27_HeldItem;
             On_PlayerDrawLayers.DrawPlayer_30_BladedGlove += On_PlayerDrawLayers_DrawPlayer_30_BladedGlove;
-			On_Player.ItemCheck_EmitHeldItemLight += On_Player_ItemCheck_EmitHeldItemLight; 
+			On_Player.ItemCheck_EmitHeldItemLight += On_Player_ItemCheck_EmitHeldItemLight;
+			On_PlayerDrawSet.BoringSetup_2 += On_PlayerDrawSet_BoringSetup_2;
             //On_NPC.UpdateCollision += NPC_UpdateCollision;
 
             //The following is to allow Plating Doors to function as tiles for housing (in conjuction with Tmodloader stuff)
@@ -859,11 +860,17 @@ namespace SOTS
 			if (FakeModPlayer.ModPlayer(self).hasHydroFakePlayer)
             {
                 Item item = drawInfo.drawPlayer.HeldItem;
-                bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(self, item, item, 1);
-				if (isHydroPlayerUsingAnItem)
+                if (FakePlayerProjectile.OwnerOfThisDrawCycle == -1)
                 {
-                    if (FakePlayerProjectile.OwnerOfThisDrawCycle == -1)
+                    bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(self, item, item, 1);
+					if (isHydroPlayerUsingAnItem)
+					{
+                        if (drawInfo.drawPlayer.heldProj >= 0 && drawInfo.shadow == 0f)
+                        {
+                            drawInfo.projectileDrawPosition = drawInfo.DrawDataCache.Count;
+                        }
                         return;
+                    }
 				}
 			}
 			orig(ref drawInfo);
@@ -874,11 +881,13 @@ namespace SOTS
             if (FakeModPlayer.ModPlayer(self).hasHydroFakePlayer)
             {
                 Item item = drawInfo.drawPlayer.HeldItem;
-                bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(self, item, item, 1);
-                if (isHydroPlayerUsingAnItem)
+                if (FakePlayerProjectile.OwnerOfThisDrawCycle == -1)
                 {
-                    if (FakePlayerProjectile.OwnerOfThisDrawCycle == -1)
+                    bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(self, item, item, 1);
+                    if (isHydroPlayerUsingAnItem)
+                    {
                         return;
+                    }
                 }
             }
             orig(ref drawInfo);
@@ -887,14 +896,31 @@ namespace SOTS
         {
             if (FakeModPlayer.ModPlayer(self).hasHydroFakePlayer)
             {
-                bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(self, item, item, 1);
-                if (isHydroPlayerUsingAnItem)
+                if (FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
                 {
-                    if (FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
+                    bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(self, item, item, 1);
+                    if (isHydroPlayerUsingAnItem)
+                    {
                         return;
+                    }
                 }
             }
             orig(self, item);
 		}
+		private static void On_PlayerDrawSet_BoringSetup_2(On_PlayerDrawSet.orig_BoringSetup_2 orig, ref PlayerDrawSet self, Player player, List<DrawData> drawData, List<int> dust, List<int> gore, Vector2 drawPosition, float shadowOpacity, float rotation, Vector2 rotationOrigin)
+		{
+			orig(ref self, player, drawData, dust, gore, drawPosition, shadowOpacity, rotation, rotationOrigin);
+            if (FakeModPlayer.ModPlayer(player).hasHydroFakePlayer)
+            {
+				if(FakePlayerProjectile.OwnerOfThisDrawCycle == -1)
+                {
+                    bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1);
+                    if (isHydroPlayerUsingAnItem)
+                    {
+                        self.weaponDrawOrder = WeaponDrawOrder.BehindFrontArm;
+                    }
+                }
+            }
+        }
     }
 }

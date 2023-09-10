@@ -12,6 +12,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace SOTS.FakePlayer
 {
@@ -39,6 +40,24 @@ namespace SOTS.FakePlayer
             {
                 int type = ModContent.ProjectileType<HydroServant>();
                 SOTSPlayer.ModPlayer(Player).runPets(ref Probe2, type, 0, 0, false);
+                for (int i = 0; i < Main.projectile.Length; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (proj.active)
+                    {
+                        if (proj.ModProjectile is FakePlayerPossessingProjectile fppp && proj.owner == Player.whoAmI)
+                        {
+                            if (fppp.FakePlayer != null && fppp.FakePlayer.FakePlayerType == 1)
+                            {
+                                Vector2 fromOwnerToMe = fppp.FakePlayer.Position - Player.position;
+                                int newDirection = Math.Sign(fromOwnerToMe.X);
+                                if (newDirection != 0)
+                                    Player.direction = newDirection;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
         public override bool CanUseItem(Item item)

@@ -67,7 +67,11 @@ namespace SOTS.Items.Secrets
 			Item.noUseGraphic = true;
 			Item.channel = true;
 		}
-		public void SetDreamStats()
+        public override void HoldStyle(Player player, Rectangle heldItemFrame)
+        {
+            ModifyStats(player);
+        }
+        public void SetDreamStats()
 		{
 			SetCommonStats();
 		}
@@ -83,7 +87,6 @@ namespace SOTS.Items.Secrets
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.createTile = ModContent.TileType<ForgottenLampTile>();
 			Item.consumable = true;
-			Item.channel = false;
 			Item.noUseGraphic = true;
 		}
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)

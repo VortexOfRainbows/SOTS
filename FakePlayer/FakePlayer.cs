@@ -17,6 +17,7 @@ using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Biomes;
 using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -113,7 +114,7 @@ namespace SOTS.FakePlayer
                     additionalValid = ValidItemForHydroPlayer(item);
                 }
             }
-            bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && !subspacePlayer.servantIsVanity && additionalValid;
+            bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && (!subspacePlayer.servantIsVanity || fakePlayerType != 0) && additionalValid;
             return validItem;
             #endregion
         }
@@ -363,11 +364,9 @@ namespace SOTS.FakePlayer
             if(isPlayerUsingAHydroCapableItem)
             {
                 Vector2 fromOwnerToMe = Position - player.position;
-                int newDirection = Math.Sign(fromOwnerToMe.X);
-                if (newDirection != 0)
-                    player.direction = newDirection;
-                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, fromOwnerToMe.ToRotation() - MathHelper.PiOver2);
-                player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, fromOwnerToMe.ToRotation() - MathHelper.PiOver2);
+                float cyclicOffset = (float)(8f * MathHelper.TwoPi / 180f * Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2f))) * player.direction;
+                player.SetCompositeArmFront(true, CompositeArmStretchAmount.Full, fromOwnerToMe.ToRotation() + cyclicOffset - MathHelper.PiOver2);
+                player.SetCompositeArmBack(true, CompositeArmStretchAmount.Full, fromOwnerToMe.ToRotation() - cyclicOffset - MathHelper.PiOver2);
                 if(itemAnimation > 0 || BonusItemAnimationTime > 0)
                 {
                     SkipDrawing = false;

@@ -46,8 +46,7 @@ Daily Log:
 	7. Melee weapon hit rates with fake players is fixed!
 2. Fixed bug where dream lamp right click would display improperly in multiplayer
 3. After bugs are fixed:
-	1. Unique movement to distinguish from Subspace Servant
-		1. Make a list of non-melee items considered acceptions, instead of the if statements which are in place now.
+	1. Make a list of non-melee items considered acceptions, instead of the if statements which are in place now.
  	2. Unique metablob particles and supporting system
 	3. More optimization and visual improvements for the shader
 	4. Visual improvements

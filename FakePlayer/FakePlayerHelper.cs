@@ -94,7 +94,8 @@ namespace SOTS.FakePlayer
             }
 
             FakePlayer.ItemCheckHack(player);
-            Direction = FakePlayer.direction;
+            if (!FakePlayer.SkipDrawing)
+                Direction = FakePlayer.direction;
             if (Main.myPlayer == player.whoAmI)
             {
                 //ControlUseItem = FakePlayer.controlUseItem;
