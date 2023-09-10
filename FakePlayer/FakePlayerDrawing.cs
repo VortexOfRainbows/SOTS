@@ -11,6 +11,10 @@ using SOTS.Common;
 using static Terraria.GameContent.TextureAssets;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Humanizer;
+using UtfUnknown.Core.Models.SingleByte.Croatian;
+using SOTS.Items.Conduit;
+using System;
+using Terraria.ID;
 
 namespace SOTS.FakePlayer
 {
@@ -380,24 +384,74 @@ namespace SOTS.FakePlayer
         {
             Texture2D waterBall = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBall").Value;
             Texture2D waterBallOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallOutline").Value;
+            Texture2D waterBallLine = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallLightning").Value;
+            Texture2D waterBallLineOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallLightningOutline").Value;
             Vector2 origin = waterBall.Size() / 2;
             Vector2 center = fakePlayer.Position + new Vector2(FakePlayer.Width, FakePlayer.Height) / 2;
-            for (int k = 0; k < 4; k++)
+            Vector2 playerCenter = PlayerBallCenter(player);
+            float length = Vector2.Distance(center, playerCenter);
+            float textureSize = waterBallLine.Width;
+            float max = length / textureSize + 50;
+            int totalHelixes = 4;
+            Vector2 origin2 = new Vector2(waterBallLine.Width / 2, waterBallLine.Height / 2);
+            for (int k = 0; k < 2; k++)
             {
-                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+                if(k == 0)
+                {
+                    for (int a = 0; a < 4; a++)
+                    {
+                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * a));
+                        Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+                    }
+                }
+                else
+                {
+                    Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+                }
+                for (float v = 0; v < max; v += 0.25f)
+                {
+                    Vector2 drawPos = Vector2.Lerp(center, playerCenter, v / max);
+                    Vector2 direction = playerCenter - center;
+                    float rotation = direction.ToRotation();
+                    float heightOfHelix = (float)Math.Sin(v / max * MathHelper.Pi) * 1.01f;
+                    float scaleOfHelix = 1f - heightOfHelix;
+                    for (int b = 0; b < totalHelixes; b++)
+                    {
+                        float scaleY = 1f - 0.1f * b;
+                        if (scaleOfHelix * scaleY > 0.02f)
+                        {
+                            float size = 6 + b;
+                            float sinusoidMod = 1 + (float)Math.Sin(MathHelper.ToRadians(scaleY * SOTSWorld.GlobalCounter * 4f));
+                            float sizeOfHelix = sinusoidMod * heightOfHelix * size;
+                            Vector2 sinusoid = new Vector2(0, sizeOfHelix * (float)Math.Sin(MathHelper.ToRadians(v * 6 + SOTSWorld.GlobalCounter * 3 + b * 90))).RotatedBy(rotation);
+                            if(k == 1)
+                            {
+                                Main.spriteBatch.Draw(waterBallLine, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f, scaleY * scaleOfHelix), SpriteEffects.None, 0f);
+                            }
+                            else
+                            {
+                                float scaleForOneBonusPixelX = 2f / waterBallLine.Width;
+                                float scaleForOneBonusPixelY = 2f / waterBallLine.Height * scaleOfHelix;
+                                Main.spriteBatch.Draw(waterBallLineOutline, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f + scaleForOneBonusPixelX, scaleY * scaleOfHelix + scaleForOneBonusPixelY), SpriteEffects.None, 0f);
+                            }
+                        }
+                    }
+                }
             }
-            Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+        }
+        public static Vector2 PlayerBallCenter(Player player)
+        {
+            float rotation = (player.compositeFrontArm.rotation + player.compositeBackArm.rotation) / 2f;
+            Vector2 rotated = new Vector2(0, 12).RotatedBy(rotation);
+            rotated.Y *= 1.5f;
+            return player.RotatedRelativePoint(player.MountedCenter) + new Vector2(-2 * player.direction, 12).RotatedBy(rotation) + new Vector2(0, -2);
         }
         public static void DrawHeldHydroBall(Player player)
         {
             Texture2D waterBall = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallCore").Value;
             Texture2D waterBallOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallOutlineRed").Value;
             Vector2 origin = waterBall.Size() / 2;
-            float rotation = (player.compositeFrontArm.rotation + player.compositeBackArm.rotation) / 2f;
-            Vector2 rotated = new Vector2(0, 12).RotatedBy(rotation);
-            rotated.Y *= 1.5f;
-            Vector2 center = player.RotatedRelativePoint(player.MountedCenter) + new Vector2(-2 * player.direction, 12).RotatedBy(rotation) + new Vector2(0, -2);
+            Vector2 center = PlayerBallCenter(player);
             for (int k = 0; k < 4; k++)
             {
                 Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));

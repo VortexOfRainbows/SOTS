@@ -40,20 +40,23 @@ namespace SOTS.FakePlayer
             {
                 int type = ModContent.ProjectileType<HydroServant>();
                 SOTSPlayer.ModPlayer(Player).runPets(ref Probe2, type, 0, 0, false);
-                for (int i = 0; i < Main.projectile.Length; i++)
+                if(FakePlayer.CheckItemValidityFull(Player, Player.HeldItem, Player.HeldItem, 1))
                 {
-                    Projectile proj = Main.projectile[i];
-                    if (proj.active)
+                    for (int i = 0; i < Main.projectile.Length; i++)
                     {
-                        if (proj.ModProjectile is FakePlayerPossessingProjectile fppp && proj.owner == Player.whoAmI)
+                        Projectile proj = Main.projectile[i];
+                        if (proj.active)
                         {
-                            if (fppp.FakePlayer != null && fppp.FakePlayer.FakePlayerType == 1)
+                            if (proj.ModProjectile is FakePlayerPossessingProjectile fppp && proj.owner == Player.whoAmI)
                             {
-                                Vector2 fromOwnerToMe = fppp.FakePlayer.Position - Player.position;
-                                int newDirection = Math.Sign(fromOwnerToMe.X);
-                                if (newDirection != 0)
-                                    Player.direction = newDirection;
-                                break;
+                                if (fppp.FakePlayer != null && fppp.FakePlayer.FakePlayerType == 1)
+                                {
+                                    Vector2 fromOwnerToMe = fppp.FakePlayer.Position - Player.position;
+                                    int newDirection = Math.Sign(fromOwnerToMe.X);
+                                    if (newDirection != 0)
+                                        Player.direction = newDirection;
+                                    break;
+                                }
                             }
                         }
                     }

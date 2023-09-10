@@ -408,7 +408,7 @@ namespace SOTS.Items.Conduit
 						else
 							scaleY *= 0.45f;
 					}
-					float sinusoidMod = 1 + (float)Math.Sin(MathHelper.ToRadians(b * SOTSWorld.GlobalCounter * 3 * scaleY * scaleY + v * 8f / b * scaleY));
+					float sinusoidMod = 1 + (float)Math.Sin(MathHelper.ToRadians(b * SOTSWorld.GlobalCounter * 3 * scaleY * scaleY + v * 8f / (b + 1) * scaleY));
 					float sizeOfHelix = sinusoidMod * heightOfHelix * alpha * size * alphaMult;
 					Vector2 sinusoid = new Vector2(0, sizeOfHelix * (float)Math.Sin(MathHelper.ToRadians(v * 6 + SOTSWorld.GlobalCounter * 2 * scaleY + b * 120))).RotatedBy(rotation);
 					Color color2 = color * alpha * 0.33f;
