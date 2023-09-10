@@ -44,12 +44,13 @@ Daily Log:
 	5. Player should no longer have any more GHOST using of the held item... Some exceptions might exist and may need to be looked out for...	
 	6. Disappears when not actively using an item
 	7. Melee weapon hit rates with fake players is fixed!
+	8. Visually improved the Hydro Servant
+	9. Added the metablob system
 2. Fixed bug where dream lamp right click would display improperly in multiplayer
 3. After bugs are fixed:
 	1. Make a list of non-melee items considered acceptions, instead of the if statements which are in place now.
- 	2. Unique metablob particles and supporting system
-	3. More optimization and visual improvements for the shader
-	4. Visual improvements
+		1. No OLYMPIAN WARAXE
+	2. More optimization and visual improvements for the shader
 
 9/6/23 to 9/8/23
 1. Now that the framework is done for the HydroServant shaders...

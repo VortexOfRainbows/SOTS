@@ -125,30 +125,10 @@ namespace SOTS.Common
             }
             graphicsDevice.SetRenderTarget(RenderTarget);
             graphicsDevice.Clear(Color.Transparent);
-
-            if(DrawState != -1)
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
-            else
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            if (DrawState == DrawStateID.Wings)
             {
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-            }
-            if(DrawState == DrawStateID.Wings)
-            {
-                /*foreach (var s in MaskedEntities)
-                {
-                    s.DrawMappedSprite(spriteBatch);
-                    if (s is Entity)
-                    {
-                        if (s is Projectile a && !a.active)
-                        {
-                            MaskedEntities.Remove(s);
-                        }
-                    }
-                    else
-                    {
-                        MaskedEntities.Remove(s);
-                    }
-                }*/
+                ParticleHelper.DrawWaterParticles();
             }
             for (int i = 0; i < Main.player.Length; i++)
             {

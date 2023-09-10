@@ -111,6 +111,17 @@ namespace SOTS.FakePlayer
                     return false;
                 }
             }
+            else
+            {
+                if (hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)
+                {
+                    bool isHydroPlayerUsingAnItem = FakePlayer.CheckItemValidityFull(Player, item, item, 1);
+                    if (isHydroPlayerUsingAnItem)
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
     }

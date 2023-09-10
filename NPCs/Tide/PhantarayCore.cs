@@ -12,6 +12,7 @@ using SOTS.Projectiles.Tide;
 using SOTS.WorldgenHelpers;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -96,6 +97,10 @@ namespace SOTS.NPCs.Tide
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / (2 * Main.npcFrameCount[NPC.type]));
 			Vector2 drawPos = NPC.Center - screenPos;
+            if(NPC.IsABestiaryIconDummy)
+            {
+                NPC.alpha = 0;
+            }
 			if(isCore && !runOnce)
             {
                 Texture2D textureGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Tide/PhantarayCoreGlow").Value;
@@ -109,9 +114,9 @@ namespace SOTS.NPCs.Tide
                     spriteBatch.Draw(textureGlow, drawPos + circular, NPC.frame, new Color(200, 100, 100, 0) * (1f - (NPC.alpha / 255f) * 0.25f * percentCharged) * percentCharged, NPC.rotation, drawOrigin, 0.85f, SpriteEffects.None, 0f);
                 }
             }
-			else
+			else if(!runOnce)
             {
-                texture = ModContent.Request<Texture2D>("SOTS/NPCs/Tide/PhantaraySmall").Value;
+                texture = ModContent.Request<Texture2D>("SOTS/NPCs/Tide/PhantaraySmall", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             }
             spriteBatch.Draw(texture, drawPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;

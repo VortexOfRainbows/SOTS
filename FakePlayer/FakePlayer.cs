@@ -350,7 +350,7 @@ namespace SOTS.FakePlayer
             {
                 if (valid)
                     HydroServantPostUpdate(player);
-                else if (itemAnimation <= 0 && BonusItemAnimationTime <= 0)
+                else if (itemAnimation <= 0 && (BonusItemAnimationTime <= 0 || !valid))
                     SkipDrawing = true;
             }
             FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;

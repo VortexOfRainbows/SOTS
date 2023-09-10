@@ -278,13 +278,19 @@ namespace SOTS.FakePlayer
                 if(fakePlayer.FakePlayerType == drawType)
                 {
                     bool canIDraw = fakePlayer.PrepareDrawing(ref drawInfo, player, drawState);
-                    if(fakePlayer.FakePlayerType == 1 && drawState == DrawStateID.Wings)
+                    if(fakePlayer.FakePlayerType == 1)
                     {
-                        if (FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1))
+                        if(drawState == DrawStateID.Border || drawState == DrawStateID.Wings)
                         {
-                            Main.spriteBatch.End();
-                            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-                            DrawHydroConnection(player, fakePlayer);
+                            if (FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1))
+                            {
+                                Main.spriteBatch.End();
+                                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                                if(drawState == DrawStateID.Border)
+                                    DrawHydroConnection(player, fakePlayer, true);
+                                else
+                                    DrawHydroConnection(player, fakePlayer, false);
+                            }
                         }
                     }
                     if (canIDraw)
@@ -380,7 +386,7 @@ namespace SOTS.FakePlayer
             }
             return ret;
         }
-        public static void DrawHydroConnection(Player player, FakePlayer fakePlayer)
+        public static void DrawHydroConnection(Player player, FakePlayer fakePlayer, bool border = false)
         {
             Texture2D waterBall = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBall").Value;
             Texture2D waterBallOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroBallOutline").Value;
@@ -391,49 +397,46 @@ namespace SOTS.FakePlayer
             Vector2 playerCenter = PlayerBallCenter(player);
             float length = Vector2.Distance(center, playerCenter);
             float textureSize = waterBallLine.Width;
-            float max = length / textureSize + 50;
+            float max = length / textureSize + 60;
             int totalHelixes = 4;
             Vector2 origin2 = new Vector2(waterBallLine.Width / 2, waterBallLine.Height / 2);
-            for (int k = 0; k < 2; k++)
+            if (border)
             {
-                if(k == 0)
+                for (int a = 0; a < 4; a++)
                 {
-                    for (int a = 0; a < 4; a++)
-                    {
-                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * a));
-                        Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
-                    }
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * a));
+                    Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
                 }
-                else
+            }
+            else
+            {
+                Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+            }
+            for (float v = 0; v < max; v += 0.2f)
+            {
+                Vector2 drawPos = Vector2.Lerp(center, playerCenter, v / max);
+                Vector2 direction = playerCenter - center;
+                float rotation = direction.ToRotation();
+                float heightOfHelix = (float)Math.Sin(v / max * MathHelper.Pi) * 1.01f;
+                float scaleOfHelix = 1f - heightOfHelix;
+                for (int b = 0; b < totalHelixes; b++)
                 {
-                    Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
-                }
-                for (float v = 0; v < max; v += 0.25f)
-                {
-                    Vector2 drawPos = Vector2.Lerp(center, playerCenter, v / max);
-                    Vector2 direction = playerCenter - center;
-                    float rotation = direction.ToRotation();
-                    float heightOfHelix = (float)Math.Sin(v / max * MathHelper.Pi) * 1.01f;
-                    float scaleOfHelix = 1f - heightOfHelix;
-                    for (int b = 0; b < totalHelixes; b++)
+                    float scaleY = 1f - 0.1f * b;
+                    if (scaleOfHelix * scaleY > 0.02f)
                     {
-                        float scaleY = 1f - 0.1f * b;
-                        if (scaleOfHelix * scaleY > 0.02f)
+                        float size = 6 + b;
+                        float sinusoidMod = 1 + (float)Math.Sin(MathHelper.ToRadians(scaleY * SOTSWorld.GlobalCounter * 4f));
+                        float sizeOfHelix = sinusoidMod * heightOfHelix * size;
+                        Vector2 sinusoid = new Vector2(0, sizeOfHelix * (float)Math.Sin(MathHelper.ToRadians(v * 6 + SOTSWorld.GlobalCounter * 3 + b * 90))).RotatedBy(rotation);
+                        if (!border)
                         {
-                            float size = 6 + b;
-                            float sinusoidMod = 1 + (float)Math.Sin(MathHelper.ToRadians(scaleY * SOTSWorld.GlobalCounter * 4f));
-                            float sizeOfHelix = sinusoidMod * heightOfHelix * size;
-                            Vector2 sinusoid = new Vector2(0, sizeOfHelix * (float)Math.Sin(MathHelper.ToRadians(v * 6 + SOTSWorld.GlobalCounter * 3 + b * 90))).RotatedBy(rotation);
-                            if(k == 1)
-                            {
-                                Main.spriteBatch.Draw(waterBallLine, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f, scaleY * scaleOfHelix), SpriteEffects.None, 0f);
-                            }
-                            else
-                            {
-                                float scaleForOneBonusPixelX = 2f / waterBallLine.Width;
-                                float scaleForOneBonusPixelY = 2f / waterBallLine.Height * scaleOfHelix;
-                                Main.spriteBatch.Draw(waterBallLineOutline, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f + scaleForOneBonusPixelX, scaleY * scaleOfHelix + scaleForOneBonusPixelY), SpriteEffects.None, 0f);
-                            }
+                            Main.spriteBatch.Draw(waterBallLine, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f, scaleY * scaleOfHelix), SpriteEffects.None, 0f);
+                        }
+                        else
+                        {
+                            float scaleForOneBonusPixelX = 2f / waterBallLine.Width;
+                            float scaleForOneBonusPixelY = 4f / waterBallLine.Height * scaleOfHelix;
+                            Main.spriteBatch.Draw(waterBallLineOutline, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f + scaleForOneBonusPixelX, scaleY * scaleOfHelix + scaleForOneBonusPixelY), SpriteEffects.None, 0f);
                         }
                     }
                 }

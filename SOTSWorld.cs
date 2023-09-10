@@ -179,7 +179,16 @@ namespace SOTS
 			}
 			return IsFrozenThisFrame;
 		}
-		public static void Update()
+        public override void Load()
+        {
+			ParticleHelper.Load();
+        }
+        public override void PostUpdateDusts()
+        {
+			if(!SOTSWorld.IsFrozenThisFrame)
+				ParticleHelper.Update();
+        }
+        public static void Update()
         {
 			GlobalCounter++;
 			if(GlobalCounter % 300 == 0)

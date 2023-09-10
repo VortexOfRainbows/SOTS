@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using System.IO;
 using SOTS.Common;
 using SOTS.Projectiles.Pyramid;
+using Terraria.ID;
 
 namespace SOTS.FakePlayer
 {
@@ -23,7 +24,7 @@ namespace SOTS.FakePlayer
 			Projectile.hide = false;
 		}
 		bool runOnce = true;
-		public float timeSinceTransforming = 0f;
+		public float timeSinceTransforming = -1f;
 		public bool LastDrawSkipped = false;
         public override bool PreAI()
 		{
@@ -55,20 +56,23 @@ namespace SOTS.FakePlayer
             {
 				float speed = 0;
 				Vector2 toIdle = Vector2.Zero;
-                if (!FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1) && FakePlayer.BonusItemAnimationTime <= 0)
+				bool valid = FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1);
+                if (!valid && FakePlayer.BonusItemAnimationTime <= 0)
                 {
 					Vector2 position = player.Center + new Vector2(12, 2 * player.direction).RotatedBy((cursorArea - player.Center).ToRotation());
 					Projectile.Center = position;
 					timeSinceTransforming = 0f;
                 }
-				else
+				else if(timeSinceTransforming != -1)
 				{
 					if(FakePlayer.SkipDrawing || FakePlayer.BonusItemAnimationTime <= 0)
-                        timeSinceTransforming += 1f / 90f;
+                        timeSinceTransforming += 1f / 30f;
                     else if(FakePlayer.BonusItemAnimationTime > 0)
 					{
-						if (timeSinceTransforming > 0.35f)
-							timeSinceTransforming -= 1f / 210f;
+						if (timeSinceTransforming > 0.5f)
+							timeSinceTransforming -= 1f / 240f;
+                        else
+                            timeSinceTransforming += 1f / 120f;
                     }
 					timeSinceTransforming = Math.Clamp(timeSinceTransforming, 0.0f, 1f);
                     player.heldProj = Projectile.whoAmI;
@@ -83,14 +87,15 @@ namespace SOTS.FakePlayer
                         idlePosition += toCursor;
                         toIdle = idlePosition - Projectile.Center;
                         float dist = toIdle.Length();
-                        speed = 5f + (float)Math.Pow(dist, 1.5f) * 0.00075f;
+                        speed = 6.75f + (float)Math.Pow(dist, 1.5f) * 0.001f;
 						if (dist < speed)
                         {
                             speed = toIdle.Length();
                         }
                     }
                 }
-				speed *= timeSinceTransforming;
+                if(timeSinceTransforming != -1)
+				    speed *= timeSinceTransforming;
                 Projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed;
 				if (Direction == 1)
 				{
@@ -106,22 +111,64 @@ namespace SOTS.FakePlayer
 				{
 					Projectile.ai[1] -= 24f;
 				}
-				Vector2 circular = new Vector2(1f, 0).RotatedBy(MathHelper.ToRadians(12 * Projectile.ai[1]));
+				float sinusoid = 1f * (float)Math.Sin(MathHelper.ToRadians(12 * Projectile.ai[1]));
 				Projectile.ai[1] += 0.65f;
-				if (circular.Y > 0)
-					circular.Y *= 0.5f;
-				Projectile.velocity.Y += circular.Y;
                 LastDrawSkipped = FakePlayer.SkipDrawing;
                 UpdateItems(player);
-				if(LastDrawSkipped != FakePlayer.SkipDrawing && timeSinceTransforming != 0)
+                if (valid)
+                {
+                    if (LastDrawSkipped != FakePlayer.SkipDrawing && timeSinceTransforming > 0)
 				{
-
+					if(LastDrawSkipped) //was previously incomplete
+                    {
+						SOTSUtils.PlaySound(SoundID.Item80, Projectile.Center, 1.0f, -0.8f);
+						for(int j = 0; j < 2; j++)
+                        {
+                            for (int i = 0; i < 40; i++)
+                            {
+                                Vector2 circular = new Vector2(2.0f + Main.rand.NextFloat(2.0f), 0).RotatedBy(i / 40f * MathHelper.TwoPi) * (1.1f - 0.4f * j);
+								circular.Y *= 1.4f;
+                                WaterParticle.NewWaterParticle(Projectile.Center, circular + Projectile.velocity * 0.75f, j * 1f + Main.rand.NextFloat(1.6f, 2.1f));
+                            }
+                        }
+                    }
+					else //is now incomplete
+                    {
+                        SOTSUtils.PlaySound(SoundID.Item130, Projectile.Center, 1.1f, -0.8f);
+                        for (int i = 0; i < 80; i++)
+                        {
+                            Vector2 circular = new Vector2(1f, 0).RotatedBy(i / 80f * MathHelper.TwoPi);
+                            circular.Y *= 1.4f;
+                            float rand = Main.rand.NextFloat(1f);
+                            WaterParticle.NewWaterParticle(Projectile.Center + circular * 48 * rand, -circular * (Main.rand.NextFloat(3f) + rand * Main.rand.NextFloat(1f, 2f)) + Projectile.velocity * 0.75f, Main.rand.NextFloat(1.7f, 2.2f));
+                        }
+                    }
                 }
-			}
+                    Lighting.AddLight(Projectile.Center, new Vector3(0.65f, 0.7f, 0.8f));
+                    if (!FakePlayer.SkipDrawing)
+                    {
+                        WaterParticle.NewWaterParticle(Projectile.Center + new Vector2(-1 * FakePlayer.direction, 6), Projectile.velocity * 0.75f + new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 2.2f), Main.rand.NextFloat(0.8f, 1.1f));
+                        WaterParticle.NewWaterParticle(Projectile.Center, Projectile.velocity * 0.75f + Main.rand.NextVector2Circular(4, 4), Main.rand.NextFloat(1.0f, 1.2f));
+                    }
+					else
+                    {
+						for(int j = 0; j < 3; j++)
+                        {
+                            WaterParticle.NewWaterParticle(Projectile.Center, Projectile.velocity * 0.75f * (0.45f + j * 0.35f) + Main.rand.NextVector2Circular(1.5f, 1.5f) * (1.0f - 0.4f * j), Main.rand.NextFloat(0.9f, 1.1f));
+                        }
+                    }
+                    for (int j = 0; j < 2; j++)
+                    {
+                        if(Main.rand.NextBool(3))
+                            WaterParticle.NewWaterParticle(FakePlayerDrawing.PlayerBallCenter(player), player.velocity * 0.65f * (0.5f + j * 0.5f) + Main.rand.NextVector2Circular(1.5f, 1.5f) * (1.0f - 0.8f * j), Main.rand.NextFloat(0.8f, 1.1f));
+                    }
+                }
+                if(timeSinceTransforming < 0)
+                    timeSinceTransforming += 0.5f;
+                Projectile.velocity.Y += sinusoid * 0.5f;
+            }
 			if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
 				Projectile.netUpdate = true;
-			if(!FakePlayer.SkipDrawing)
-				Lighting.AddLight(Projectile.Center, new Vector3(0.65f, 0.8f, 0.75f));
 		}
         public override bool PreDraw(ref Color lightColor)
         {
