@@ -25,6 +25,7 @@ namespace SOTS.Items.Tide
 		{
 			FakeModPlayer modPlayer = FakeModPlayer.ModPlayer(player);
             modPlayer.hasHydroFakePlayer = true;
+			player.sotsPlayer().StatShareMeleeAndSummon = true;
         }
 		public override void AddRecipes()
 		{

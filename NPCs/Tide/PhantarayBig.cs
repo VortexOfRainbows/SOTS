@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Utils;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
@@ -25,20 +26,24 @@ namespace SOTS.NPCs.Tide
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.WriteVector2(wanderDirection);
+            writer.Write(previousWet);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             wanderDirection = reader.ReadVector2();
+            previousWet = reader.ReadBoolean();
         }
         public const float AttackWindup = 75;
         Vector2 wanderDirection = Vector2.Zero;
         bool previousWet;
         public override void SetStaticDefaults()
-		{
-			Main.npcFrameCount[NPC.type] = 11;
+        {
+            NPCID.Sets.NoMultiplayerSmoothingByType[Type] = false;
+            Main.npcFrameCount[NPC.type] = 11;
 		}
         public override void SetDefaults()
-		{
+        {
+            NPC.aiStyle = -1;
             NPC.lifeMax = 500;   
             NPC.damage = 78; 
             NPC.defense = 22;  
@@ -53,7 +58,7 @@ namespace SOTS.NPCs.Tide
             NPC.netUpdate = true;
             NPC.HitSound = SoundID.SplashWeak;
             NPC.DeathSound = SoundID.NPCDeath6;
-            NPC.netAlways = true;
+            NPC.netAlways = false;
 		    Banner = NPC.type;
 		    BannerItem = ItemType<BigPhantarayBanner>();
 		}
@@ -154,15 +159,18 @@ namespace SOTS.NPCs.Tide
                         }
 						else
                         {
-                            wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
-                            wanderDirection.Y *= 0.5f;
-                            wanderDirection.Y -= 0.5f;
                             NPC.velocity += wanderDirection * 18.5f;
                         }
+                    }
+                    else if (!canSeePlayer && Main.netMode != NetmodeID.MultiplayerClient && NPC.ai[1] % 120 == 119)
+                    {
+                        wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
+                        wanderDirection.Y *= 0.5f;
+                        wanderDirection.Y -= 0.5f;
                         if (Main.netMode == NetmodeID.Server)
                             NPC.netUpdate = true;
                     }
-				}
+                }
             }
             if (!NPC.wet)
             {
@@ -225,20 +233,35 @@ namespace SOTS.NPCs.Tide
 			else if(NPC.wet)
 			{
                 if(NPC.ai[0] % 150 == 0 || wanderDirection == Vector2.Zero)
-				{
-					wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
-					wanderDirection.Y *= 0.5f;
-					wanderDirection.Y += 0.5f;
-                    if (Main.netMode == NetmodeID.Server)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
+                        wanderDirection.Y *= 0.5f;
+                        wanderDirection.Y += 0.35f;
                         NPC.netUpdate = true;
+                    }
+                    else
+                    {
+                        wanderDirection = Vector2.Zero;
+                    }
                 }
                 NPC.velocity += wanderDirection * speed * sinusoid * 0.3f;
                 NPC.velocity *= 0.875f;
             }
 			if(previousWet != NPC.wet)
+            {
+                if (Main.netMode == NetmodeID.Server)
+                    NPC.netUpdate = true;
                 SOTSUtils.PlaySound(SoundID.Splash, NPC.Center, 0.8f, -0.4f);
+            }
+            if (SOTSWorld.GlobalCounter % 15 == 0)
+            {
+                if (Main.netMode == NetmodeID.Server)
+                    NPC.netUpdate = true;
+            }
             previousWet = NPC.wet;
-            NPC.velocity.X /= 0.93f;
+            //NPC.velocity.X /= 0.93f;
             CheckOtherCollision();
             NPC.alpha = (int)MathHelper.Lerp(195, 50, sinusoid);
 			if(NPC.wet)
@@ -309,7 +332,7 @@ namespace SOTS.NPCs.Tide
 			for(int i = 0; i < Main.maxNPCs; i++)
             {
 				NPC npc = Main.npc[i];
-				if (npc.active && npc.type == Type && npc.Hitbox.Intersects(NPC.Hitbox))
+				if (npc.active && npc.type == Type && npc.Hitbox.Intersects(NPC.Hitbox) && npc.whoAmI != NPC.whoAmI)
                 {
 					Vector2 away = NPC.Center - npc.Center;
 					nudge += away * 0.05f;

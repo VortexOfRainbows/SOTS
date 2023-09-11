@@ -139,7 +139,7 @@ namespace SOTS.Common
                     {
                         FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawState);
                     }
-                    else
+                    else if(FakePlayer.FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1) && FakeModPlayer.ModPlayer(player).hasHydroFakePlayer)
                     {
                         FakePlayerDrawing.DrawHeldHydroBall(player);
                     }

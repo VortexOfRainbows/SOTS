@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -27,11 +28,13 @@ namespace SOTS.NPCs.Tide
         {
 			writer.WriteVector2(wanderDirection);
 			writer.Write(isCore);
+            writer.Write(previousWet);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             wanderDirection = reader.ReadVector2();
 			isCore = reader.ReadBoolean();
+            previousWet = reader.ReadBoolean();
         }
         public const float AttackWindup = 75;
 		public bool isCore = false;
@@ -41,10 +44,12 @@ namespace SOTS.NPCs.Tide
         bool previousWet;
         public override void SetStaticDefaults()
 		{
+            NPCID.Sets.NoMultiplayerSmoothingByType[Type] = false;
 			Main.npcFrameCount[NPC.type] = 3;
 		}
         public override void SetDefaults()
 		{
+            NPC.aiStyle = -1;
             NPC.lifeMax = 80;   
             NPC.damage = 32; 
             NPC.defense = 8;  
@@ -59,7 +64,7 @@ namespace SOTS.NPCs.Tide
             NPC.netUpdate = true;
             NPC.HitSound = SoundID.SplashWeak;
             NPC.DeathSound = SoundID.NPCDeath6;
-            NPC.netAlways = true;
+            NPC.netAlways = false;
             NPC.dontTakeDamage = true;
             NPC.alpha = 255;
 		    Banner = NPC.type;
@@ -114,7 +119,7 @@ namespace SOTS.NPCs.Tide
                     spriteBatch.Draw(textureGlow, drawPos + circular, NPC.frame, new Color(200, 100, 100, 0) * (1f - (NPC.alpha / 255f) * 0.25f * percentCharged) * percentCharged, NPC.rotation, drawOrigin, 0.85f, SpriteEffects.None, 0f);
                 }
             }
-			else if(!runOnce)
+			else
             {
                 texture = ModContent.Request<Texture2D>("SOTS/NPCs/Tide/PhantaraySmall", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             }
@@ -209,11 +214,16 @@ namespace SOTS.NPCs.Tide
                         }
 						else
                         {
-                            wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
-                            wanderDirection.Y *= 0.5f;
-                            wanderDirection.Y -= 0.5f;
                             NPC.velocity += wanderDirection * 18.5f;
                         }
+                        if (Main.netMode == NetmodeID.Server)
+                            NPC.netUpdate = true;
+                    }
+                    else if (!canSeePlayer && Main.netMode != NetmodeID.MultiplayerClient && NPC.ai[1] % 120 == 119)
+                    {
+                        wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
+                        wanderDirection.Y *= 0.5f;
+                        wanderDirection.Y -= 0.5f;
                         if (Main.netMode == NetmodeID.Server)
                             NPC.netUpdate = true;
                     }
@@ -280,10 +290,13 @@ namespace SOTS.NPCs.Tide
 			else if(NPC.wet)
 			{
                 if(NPC.ai[0] % 150 == 0 || wanderDirection == Vector2.Zero)
-				{
-					wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
-					wanderDirection.Y *= 0.5f;
-					wanderDirection.Y += 0.5f;
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
+                        wanderDirection.Y *= 0.5f;
+                        wanderDirection.Y += 0.35f;
+                    }
                     if (Main.netMode == NetmodeID.Server)
                         NPC.netUpdate = true;
                 }
@@ -291,9 +304,13 @@ namespace SOTS.NPCs.Tide
                 NPC.velocity *= 0.875f;
             }
 			if(previousWet != NPC.wet)
+            {
+                if (Main.netMode == NetmodeID.Server)
+                    NPC.netUpdate = true;
                 SOTSUtils.PlaySound(SoundID.Splash, NPC.Center, 0.8f, -0.4f);
+            }
             previousWet = NPC.wet;
-            NPC.velocity.X /= 0.93f;
+            //NPC.velocity.X /= 0.93f;
             CheckOtherCollision();
             NPC.alpha = (int)MathHelper.Lerp(165, 50, sinusoid);
 			if(NPC.wet)
@@ -315,12 +332,18 @@ namespace SOTS.NPCs.Tide
                     NPC.dontTakeDamage = !player.wet;
                 else
                     NPC.dontTakeDamage = false;
+                spawnedInCounter++;
+                if(spawnedInCounter % 15 == 0)
+                {
+                    if (Main.netMode == NetmodeID.Server)
+                        NPC.netUpdate = true;
+                }
             }
             else
             {
                 spawnedInCounter++;
             }
-			NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true, true);
+            NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true, true);
             NPC.ai[1]--;
         }
         public override void PostAI()
@@ -374,7 +397,7 @@ namespace SOTS.NPCs.Tide
 			for(int i = 0; i < Main.maxNPCs; i++)
             {
 				NPC npc = Main.npc[i];
-				if (npc.active && npc.type == Type && npc.Hitbox.Intersects(NPC.Hitbox))
+                if (npc.active && npc.type == Type && npc.Hitbox.Intersects(NPC.Hitbox) && npc.whoAmI != NPC.whoAmI)
                 {
 					Vector2 away = NPC.Center - npc.Center;
 					nudge += away * 0.05f;

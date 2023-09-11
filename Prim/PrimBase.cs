@@ -121,6 +121,8 @@ namespace SOTS.Prim
 
 		public void CreateTrail(PrimTrail trail)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			if (!Main.dedServ) //never make trails on servers
 				_trails.Add(trail);
 		}

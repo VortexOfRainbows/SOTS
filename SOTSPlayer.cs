@@ -320,6 +320,7 @@ namespace SOTS
 		public bool hasSoaringInsigniaFake = false;
 		public bool GoldenTrowel = false;
 		public bool AnomalyLocator = false;
+		public bool StatShareMeleeAndSummon = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -723,16 +724,44 @@ namespace SOTS
 					Player.rocketTimeMax = 11;
 				}
 				else
-                {
+				{
 					Player.rocketTimeMax = 7; //7 is the default found in Terraria's code
-                }
+				}
 			}
-            else
+			else
 			{
 				Player.rocketTimeMax = 7;
 			}
-		}
-        public override void ResetEffects()
+			if(StatShareMeleeAndSummon)
+			{
+				float meleeAdditiveBonus = (Player.GetDamage(DamageClass.Melee).Additive - 1) * 0.5f;
+                float meleeFlatBonus = Player.GetDamage(DamageClass.Melee).Flat * 0.5f;
+                float meleeMultiplicativeBonus = (Player.GetDamage(DamageClass.Melee).Multiplicative - 1) * 0.5f + 1;
+                float meleeBaseBonus = Player.GetDamage(DamageClass.Melee).Base * 0.5f;
+                float summonAdditiveBonus = (Player.GetDamage(DamageClass.Summon).Additive - 1) * 0.5f;
+                float summonFlatBonus = Player.GetDamage(DamageClass.Summon).Flat * 0.5f;
+                float summonMultiplicativeBonus = (Player.GetDamage(DamageClass.Summon).Multiplicative - 1) * 0.5f + 1;
+                float summonBaseBonus = Player.GetDamage(DamageClass.Summon).Base * 0.5f;
+				if (meleeAdditiveBonus > 0)
+					Player.GetDamage(DamageClass.Summon) += meleeAdditiveBonus;
+                if (meleeFlatBonus > 0)
+                    Player.GetDamage(DamageClass.Summon).Flat += meleeFlatBonus;
+                if (meleeMultiplicativeBonus > 1)
+                    Player.GetDamage(DamageClass.Summon) *= meleeMultiplicativeBonus;
+                if (meleeBaseBonus > 0)
+                    Player.GetDamage(DamageClass.Summon).Base += meleeBaseBonus;
+                if (summonAdditiveBonus > 0)
+                    Player.GetDamage(DamageClass.Melee) += summonAdditiveBonus;
+                if (summonFlatBonus > 0)
+                    Player.GetDamage(DamageClass.Melee).Flat += summonFlatBonus;
+                if (summonMultiplicativeBonus > 1)
+                    Player.GetDamage(DamageClass.Melee) *= summonMultiplicativeBonus;
+                if (summonBaseBonus > 0)
+                    Player.GetDamage(DamageClass.Melee).Base += summonBaseBonus;
+            }
+			StatShareMeleeAndSummon = false;
+        }
+		public override void ResetEffects()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
 			{

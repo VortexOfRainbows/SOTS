@@ -10,12 +10,12 @@ Tmodloader Bugs (some of these may be fixed, idk):
 Acknowledged But Likely Delayed:
 1. Reimplement (older) Blade Items using the abstract class
 2. Earthen Plating starter house.
-3. Master mode go crazy. It's a bit unfair.
-4. Glowmasks for Corruption Trees in SOTSTP
-5. Wind mechanics for vines and banners + banners to be placeable on platforms
-6. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
-7. Smart cursor doesn't work with dressers.
-8. Most Void Minions do not work with whip debuffs
+3. Glowmasks for Corruption Trees in SOTSTP
+4. Wind mechanics for vines and banners + banners to be placeable on platforms
+5. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
+6. Smart cursor doesn't work with dressers.
+7. Most Void Minions do not work with whip debuffs
+8. HydroServant's HeldProj ball renders on the topmost player layer of who is holding it. This means it will be layered improperly in multiplayer, but only when multiple people are using it, and only for other clients (not the local client). This is ultimately a non-issue.
 
 Update Objectives:
 1. Ghost Town! (later)
@@ -27,15 +27,16 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
 3. More Bestiary entries (and visual fixes)
-4. Heart Swapper / Hydrokinetic Antennae (in progress)
-	1. Grants close ranged weapons the ability to be used at range through Hydrokinesis (fake player item)
-5. Phantaray: Multiplayer Syncing (pending)
-6. Unique Archaeologist tooltips for items (pending)
-7. Polaris Rework (pending)
+4. Heart Swapper / Hydrokinetic Antennae: needs feedback (shaders and stuff) (in progress)
+5. Unique Archaeologist tooltips for items (pending)
+6. Polaris Rework (pending)
+7. Awakened Riptide -> Wormhole Conversion -> Atlantis (magic weapon)
+	1. Left click - charge and throw (traps enemies in bubbles)
+	2. Right click - glaive slash that launches a water ball
  
 Daily Log:
 
-9/8/23 to 9/9/23
+9/8/23 to 9/11/23
 1. Stuff for Servants fixed:
 	1. Animations for the fake players are now better synced in multiplayer. There are some discontinuity occassionally, but not anything too big of a deal imo.
 	2. Fake player now spends some time on the same movement frame/position instead of moving back immediately after not using an item.
@@ -46,11 +47,9 @@ Daily Log:
 	7. Melee weapon hit rates with fake players is fixed!
 	8. Visually improved the Hydro Servant
 	9. Added the metablob system
+	10. Hydro servant seems to work great in multiplayer!
 2. Fixed bug where dream lamp right click would display improperly in multiplayer
-3. After bugs are fixed:
-	1. Make a list of non-melee items considered acceptions, instead of the if statements which are in place now.
-		1. No OLYMPIAN WARAXE
-	2. More optimization and visual improvements for the shader
+3. Phantarays are now synced in multiplayer!
 
 9/6/23 to 9/8/23
 1. Now that the framework is done for the HydroServant shaders...

@@ -123,7 +123,7 @@ namespace SOTS.FakePlayer
             bool uniqueUseConditions = false;
             if (ItemTrailingType(item) == TrailingID.CLOSERANGE || ItemTrailingType(item) == TrailingID.MELEE || item.type == ItemID.FlareGun)
             {
-                if(item.pick > 0 || item.axe > 0 || item.createTile != -1 || item.type == ModContent.ItemType<VorpalKnife>() || item.type == ItemID.LawnMower)
+                if(item.pick > 0 || item.axe > 0 || item.createTile != -1 || FakePlayerHelper.HydroPlayerItemBlacklist.Contains(item.type))
                 {
                     return false;
                 }
@@ -134,10 +134,7 @@ namespace SOTS.FakePlayer
         public static int ItemTrailingType(Item item)
         {
             int returnType = TrailingID.RANGED;
-            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.type == ItemID.Toxikarp || 
-                item.type == ItemID.SpiritFlame || item.type == ItemID.LawnMower || item.type == ItemID.FairyQueenMagicItem ||
-                item.type == ModContent.ItemType<LashesOfLightning>() || item.type == ModContent.ItemType<SharkPog>()
-                || item.consumable)
+            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.consumable || FakePlayerHelper.CloseRangeItemsForFakePlayer.Contains(item.type))
             {
                 if (item.noMelee && !IsPlaceable(item))
                     returnType = TrailingID.CLOSERANGE;

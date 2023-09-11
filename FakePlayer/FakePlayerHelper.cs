@@ -21,6 +21,7 @@ using Terraria.UI;
 using SOTS.Items.Celestial;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Microsoft.CodeAnalysis;
+using SOTS.Items.Tide;
 
 namespace SOTS.FakePlayer
 {
@@ -113,6 +114,8 @@ namespace SOTS.FakePlayer
     {
         public static HashSet<int> FakePlayerPossessingProjectile;
         public static int[] FakePlayerItemBlacklist;
+        public static HashSet<int> HydroPlayerItemBlacklist;
+        public static HashSet<int> CloseRangeItemsForFakePlayer;
         public static int[] FakePlayerItemWhitelist;
         public static void Initialize()
         {
@@ -127,6 +130,19 @@ namespace SOTS.FakePlayer
                 ItemID.DrumStick,
                 ItemID.Harp,
                 ItemID.Bell 
+            };
+            HydroPlayerItemBlacklist = new HashSet<int> {
+                ModContent.ItemType<VorpalKnife>(),
+                ModContent.ItemType<OlympianAxe>(),
+                ItemID.LawnMower
+            };
+            CloseRangeItemsForFakePlayer = new HashSet<int> {
+                ItemID.Toxikarp,
+                ItemID.SpiritFlame,
+                ItemID.LawnMower,
+                ItemID.FairyQueenMagicItem,
+                ModContent.ItemType<LashesOfLightning>(),
+                ModContent.ItemType<SharkPog>()
             };
         }
     }

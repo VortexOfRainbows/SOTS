@@ -5097,7 +5097,12 @@ Mods: {
 
 			HydrokineticAntennae: {
 				DisplayName: Hydrokinetic Antennae
-				Tooltip: Use hydrokinesis to extend the effective range of melee weapons and other low-reach items
+				Tooltip:
+					'''
+					Use hydrokinesis to extend the effective range of melee weapons and other low-reach items, such as whips
+					Increases melee damage by 50% of the increases recieved to summon damage from other sources
+					Increases summon damage by 50% of the increases recieved to melee damage from other sources
+					'''
 			}
 
 			BigPhantarayBanner: {
