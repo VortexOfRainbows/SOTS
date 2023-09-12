@@ -5114,6 +5114,11 @@ Mods: {
 				DisplayName: Phantaray Banner (Small)
 				Tooltip: ""
 			}
+
+			Atlantis: {
+				DisplayName: Atlantis
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6674,6 +6679,7 @@ Mods: {
 			GlowWhipProjectile.DisplayName: Glow Whip Projectile
 			PhantarayBall.DisplayName: Phantaray Ball
 			HydroServant.DisplayName: Hydro Servant
+			AtlantisProj.DisplayName: Atlantis
 		}
 
 		DamageClasses: {

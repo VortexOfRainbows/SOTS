@@ -36,6 +36,9 @@ Update Objectives:
  
 Daily Log:
 
+9/11/23
+1. WIP Atlantis
+
 9/8/23 to 9/11/23
 1. Stuff for Servants fixed:
 	1. Animations for the fake players are now better synced in multiplayer. There are some discontinuity occassionally, but not anything too big of a deal imo.

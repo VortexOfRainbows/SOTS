@@ -38,6 +38,7 @@ using Terraria.GameContent;
 using Terraria.Localization;
 using SOTS.Items.Conduit;
 using SOTS.Common;
+using SOTS.Items.Tide;
 
 namespace SOTS
 {
@@ -754,7 +755,8 @@ namespace SOTS
 				new WormholeRecipe("SOTS:AnyGem", ItemType<SkipShard>()),
 				new WormholeRecipe(ItemType<RoyalRubyShard>(), ItemType<TaintedKeystoneShard>()),
 				new WormholeRecipe(ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()),
-			};
+                new WormholeRecipe(ItemType<Riptide>(), ItemType<Atlantis>()),
+            };
 		}
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
         {
