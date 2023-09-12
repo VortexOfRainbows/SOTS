@@ -12,6 +12,7 @@ using System.IO;
 using Terraria.GameContent.UI.Elements;
 using Mono.Cecil;
 using static Terraria.ModLoader.PlayerDrawLayer;
+using SOTS.Buffs;
 
 namespace SOTS.Projectiles.Tide
 {    
@@ -21,14 +22,16 @@ namespace SOTS.Projectiles.Tide
         {
 			writer.Write(aiCounter);
 			writer.Write(trueChannel);
-		}
+            writer.Write(returnHit);
+        }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			aiCounter = reader.ReadInt32();
             trueChannel = reader.ReadBoolean();
-		}
+			returnHit = reader.ReadBoolean();
+        }
 		public bool trueChannel = true;
-		public bool firstHit = true;
+		public bool returnHit = false;
         public const int ThrowDuration = 30;
 		int aiCounter = 0;
         public override void SetDefaults()
@@ -44,12 +47,10 @@ namespace SOTS.Projectiles.Tide
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 4;
-			if(firstHit)
-			{
-				firstHit = false;
-				Projectile.netUpdate = true;
-            }
-		}
+			if(!Projectile.tileCollide)
+				returnHit = true;
+            Projectile.netUpdate = true;
+        }
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			width = 16;
@@ -186,6 +187,14 @@ namespace SOTS.Projectiles.Tide
                 }
             }
 		}
-	}
+        public override void Kill(int timeLeft)
+        {
+            Player player = Main.player[Projectile.owner];
+            if (returnHit)
+			{
+				player.AddBuff(ModContent.BuffType<AtlantisBuff>(), 15 * 60);
+			}
+        }
+    }
 }
 		

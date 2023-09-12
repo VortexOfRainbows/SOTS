@@ -321,7 +321,8 @@ namespace SOTS
 		public bool GoldenTrowel = false;
 		public bool AnomalyLocator = false;
 		public bool StatShareMeleeAndSummon = false;
-		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+        public bool StatShareMeleeAndMagic = false;
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
 			VoidPlayer voidPlayer = Player.GetModPlayer<VoidPlayer>();
@@ -732,18 +733,26 @@ namespace SOTS
 			{
 				Player.rocketTimeMax = 7;
 			}
-			if(StatShareMeleeAndSummon)
-			{
-				float meleeAdditiveBonus = (Player.GetDamage(DamageClass.Melee).Additive - 1) * 0.5f;
-                float meleeFlatBonus = Player.GetDamage(DamageClass.Melee).Flat * 0.5f;
-                float meleeMultiplicativeBonus = (Player.GetDamage(DamageClass.Melee).Multiplicative - 1) * 0.5f + 1;
-                float meleeBaseBonus = Player.GetDamage(DamageClass.Melee).Base * 0.5f;
-                float summonAdditiveBonus = (Player.GetDamage(DamageClass.Summon).Additive - 1) * 0.5f;
-                float summonFlatBonus = Player.GetDamage(DamageClass.Summon).Flat * 0.5f;
-                float summonMultiplicativeBonus = (Player.GetDamage(DamageClass.Summon).Multiplicative - 1) * 0.5f + 1;
-                float summonBaseBonus = Player.GetDamage(DamageClass.Summon).Base * 0.5f;
-				if (meleeAdditiveBonus > 0)
-					Player.GetDamage(DamageClass.Summon) += meleeAdditiveBonus;
+			StatShare();
+        }
+		public void StatShare()
+        {
+            float meleeAdditiveBonus = (Player.GetDamage(DamageClass.Melee).Additive - 1) * 0.5f;
+            float meleeFlatBonus = Player.GetDamage(DamageClass.Melee).Flat * 0.5f;
+            float meleeMultiplicativeBonus = (Player.GetDamage(DamageClass.Melee).Multiplicative - 1) * 0.5f + 1;
+            float meleeBaseBonus = Player.GetDamage(DamageClass.Melee).Base * 0.5f;
+            float magicAdditiveBonus = (Player.GetDamage(DamageClass.Magic).Additive - 1) * 0.5f;
+            float magicFlatBonus = Player.GetDamage(DamageClass.Magic).Flat * 0.5f;
+            float magicMultiplicativeBonus = (Player.GetDamage(DamageClass.Magic).Multiplicative - 1) * 0.5f + 1;
+            float magicBaseBonus = Player.GetDamage(DamageClass.Magic).Base * 0.5f;
+            float summonAdditiveBonus = (Player.GetDamage(DamageClass.Summon).Additive - 1) * 0.5f;
+            float summonFlatBonus = Player.GetDamage(DamageClass.Summon).Flat * 0.5f;
+            float summonMultiplicativeBonus = (Player.GetDamage(DamageClass.Summon).Multiplicative - 1) * 0.5f + 1;
+            float summonBaseBonus = Player.GetDamage(DamageClass.Summon).Base * 0.5f;
+            if (StatShareMeleeAndSummon)
+            {
+                if (meleeAdditiveBonus > 0)
+                    Player.GetDamage(DamageClass.Summon) += meleeAdditiveBonus;
                 if (meleeFlatBonus > 0)
                     Player.GetDamage(DamageClass.Summon).Flat += meleeFlatBonus;
                 if (meleeMultiplicativeBonus > 1)
@@ -759,7 +768,26 @@ namespace SOTS
                 if (summonBaseBonus > 0)
                     Player.GetDamage(DamageClass.Melee).Base += summonBaseBonus;
             }
-			StatShareMeleeAndSummon = false;
+            if (StatShareMeleeAndMagic)
+            {
+                if (meleeAdditiveBonus > 0)
+                    Player.GetDamage(DamageClass.Magic) += meleeAdditiveBonus;
+                if (meleeFlatBonus > 0)
+                    Player.GetDamage(DamageClass.Magic).Flat += meleeFlatBonus;
+                if (meleeMultiplicativeBonus > 1)
+                    Player.GetDamage(DamageClass.Magic) *= meleeMultiplicativeBonus;
+                if (meleeBaseBonus > 0)
+                    Player.GetDamage(DamageClass.Magic).Base += meleeBaseBonus;
+                if (magicAdditiveBonus > 0)
+                    Player.GetDamage(DamageClass.Melee) += magicAdditiveBonus;
+                if (magicFlatBonus > 0)
+                    Player.GetDamage(DamageClass.Melee).Flat += magicFlatBonus;
+                if (magicMultiplicativeBonus > 1)
+                    Player.GetDamage(DamageClass.Melee) *= magicMultiplicativeBonus;
+                if (magicBaseBonus > 0)
+                    Player.GetDamage(DamageClass.Melee).Base += magicBaseBonus;
+            }
+            StatShareMeleeAndSummon = StatShareMeleeAndMagic = false;
         }
 		public override void ResetEffects()
 		{
