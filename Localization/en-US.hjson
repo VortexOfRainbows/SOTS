@@ -5122,7 +5122,7 @@ Mods: {
 					Left click to throw a loyal trident, which returns after colliding with tiles
 					If the trident hits an enemy during its return, it will heal life and grant a buff when caught
 					The buff increases magic and melee damage based on increases in damage to the other, and it increases movement speed by 20% and reduces damage taken by 10%
-					While buffed, the void cost of this weapon is also decreased to 3
+					While buffed, this weapon also no longer costs void
 					Right click to launch a homing Water Shark
 					When an enemy is hit by either attack, they will by encircled by water, drastically lowering their speed
 					Encircled enemies recieve a flurry of slashes that deal 20% damage

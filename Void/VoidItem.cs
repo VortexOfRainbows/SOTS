@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using SOTS.Items.Tide;
 
 namespace SOTS.Void
 {
@@ -62,7 +63,7 @@ namespace SOTS.Void
 					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
 				finalCost = (int)(baseCost * voidPlayer.voidCost * voidCostMult);
-				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>() && Item.type != ModContent.ItemType<PixelBlaster>())
+				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>() && Item.type != ModContent.ItemType<Items.Temple.Revolution>() && Item.type != ModContent.ItemType<PixelBlaster>() && Item.type != ModContent.ItemType<Atlantis>())
 				{
 					finalCost = 1;
 				}

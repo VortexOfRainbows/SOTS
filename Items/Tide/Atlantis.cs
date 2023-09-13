@@ -64,7 +64,7 @@ namespace SOTS.Items.Tide
 		public override int GetVoid(Player player)
 		{
 			if (player.HasBuff<AtlantisBuff>())
-				return 3;
+				return 0;
 			return 15;
 		}
 		public override float UseTimeMultiplier(Player player)
