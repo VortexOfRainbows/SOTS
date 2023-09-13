@@ -81,7 +81,24 @@ namespace SOTS.Projectiles.Tide
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			lightColor = Projectile.GetAlpha(Color.Lerp(lightColor, Color.White, 0.5f));
-			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(-1, Projectile.gfxOffY + 2), null, lightColor, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Color color = new Color(40, 50, 120, 0);
+			if (returnHit)
+			{
+                color = new Color(140, 40, 50, 0);
+            }
+			else if(aiCounter >= ThrowDuration)
+			{
+				if(!Projectile.tileCollide)
+				{
+                    color = new Color(120, 50, 120, 0);
+                }
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 circular = new Vector2(2, 0).RotatedBy(i * MathHelper.TwoPi / 6f + MathHelper.ToRadians(SOTSWorld.GlobalCounter * -1.5f));
+                Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY) + circular, null, color, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+            }
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, lightColor, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		bool runOnce = true;
@@ -99,6 +116,7 @@ namespace SOTS.Projectiles.Tide
             aiCounter++;
 			if (aiCounter >= ThrowDuration) //this controls when the spear is actually left the player
 			{
+				Projectile.extraUpdates = 1;
 				Projectile.friendly = true;
 				if (runOnce)
 				{
@@ -106,6 +124,8 @@ namespace SOTS.Projectiles.Tide
 					Projectile.tileCollide = true;
 					Projectile.netUpdate = true;
                     SOTSUtils.PlaySound(SoundID.Item71, Projectile.Center, 0.9f, -0.4f);
+					for(int i = 0; i < 28; i++)
+						WaterParticle.NewWaterParticle(Projectile.Center, Projectile.velocity * 0.75f + Main.rand.NextVector2Circular(12, 12) * 0.4f, Main.rand.NextFloat(1.4f, 1.7f));
                     return;
 				}
 				if(aiCounter >= ThrowDuration + 60)
@@ -113,7 +133,7 @@ namespace SOTS.Projectiles.Tide
 					Projectile.tileCollide = false;
                 }
                 Vector2 toPlayer = player.Center - Projectile.Center;
-                if (!Projectile.tileCollide)
+                if (!Projectile.tileCollide && aiCounter > ThrowDuration + 20)
                 {
                     Vector2 holdUpOffset = new Vector2(0, 17);
 					float length = toPlayer.Length();
@@ -122,7 +142,7 @@ namespace SOTS.Projectiles.Tide
 					if (speed > length)
 						speed = length;
                     Projectile.velocity += toPlayer.SafeNormalize(Vector2.Zero) * speed;
-					if(toPlayer.Length() < 24)
+					if(toPlayer.Length() < 24 )
                     {
                         if(player.channel)
                         {
@@ -135,8 +155,41 @@ namespace SOTS.Projectiles.Tide
 					float reducedInertia = (aiCounter - ThrowDuration - 60) / 60f;
 					reducedInertia = Math.Clamp(reducedInertia, 0, 1);
 					Projectile.velocity *= 0.9375f - 0.05f * reducedInertia;
-				}
-				Projectile.velocity += new Vector2(0, -0.15f * Math.Sign(toPlayer.X)).RotatedBy(toPlayer.ToRotation());
+					for(float i = 0; i < 1; i += 0.125f)
+                    {
+                        if (Main.rand.NextBool(3))
+                        {
+                            Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 55);
+                            dust.scale = 1.0f;
+                            dust.velocity += Projectile.velocity * 0.35f;
+                            dust.velocity *= 0.75f;
+                            dust.noGravity = true;
+                            dust.color = ColorHelpers.AtlantisColorInverse;
+                            dust.fadeIn = 0.2f;
+                        }
+                        else
+                            WaterParticle.NewWaterParticle(Projectile.Center + Projectile.velocity * i, Projectile.velocity * 0.2f + Main.rand.NextVector2Circular(1, 1) * 0.4f, Main.rand.NextFloat(0.8f, 1.0f));
+                    }
+                }
+				else
+                {
+                    for (float i = 0; i < 1; i += 0.125f)
+                    {
+						if(Main.rand.NextBool(3))
+                        {
+                            Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 55);
+                            dust.scale = 1.0f;
+                            dust.velocity += Projectile.velocity * 0.35f;
+                            dust.velocity *= 0.75f;
+                            dust.noGravity = true;
+                            dust.color = ColorHelpers.AtlantisColor;
+                            dust.fadeIn = 0.2f;
+                        }
+						else
+							WaterParticle.NewWaterParticle(Projectile.Center + Projectile.velocity * i, Projectile.velocity * 0.2f + Main.rand.NextVector2Circular(1, 1) * 0.4f, Main.rand.NextFloat(0.8f, 1.0f));
+                    }
+                }
+				Projectile.velocity += new Vector2(0, -0.1f * Math.Sign(toPlayer.X)).RotatedBy(toPlayer.ToRotation());
 				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 			else //This is the animation for charging and holding out the proj, and for throwing it
@@ -192,8 +245,24 @@ namespace SOTS.Projectiles.Tide
             Player player = Main.player[Projectile.owner];
             if (returnHit)
 			{
+				if(player.lifeSteal > 0)
+				{
+					player.lifeSteal -= 5;
+					player.statLife += 5;
+					if(Main.myPlayer == Projectile.owner)
+						player.HealEffect(5, true);
+				}
 				player.AddBuff(ModContent.BuffType<AtlantisBuff>(), 15 * 60);
-			}
+				if(Main.netMode != NetmodeID.Server)
+                {
+                    SOTSUtils.PlaySound(SoundID.Item3, Projectile.Center, 0.9f, -0.5f);
+                    for (int i = 0; i < 30; i++)
+                    {
+						Vector2 circular = new Vector2(1, 0).RotatedBy(i * MathHelper.TwoPi / 30f);
+                        WaterParticle.NewWaterParticle(player.Center + circular * 48, -circular * 2.5f + Main.rand.NextVector2Circular(1, 1) * 0.4f, Main.rand.NextFloat(1.4f, 1.6f));
+                    }
+                }
+            }
         }
     }
 }

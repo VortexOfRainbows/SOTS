@@ -2,9 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using SOTS.FakePlayer;
+using SOTS.Projectiles.Tide;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -117,6 +120,21 @@ namespace SOTS.Common
             Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTargetFakePlayerFrontArm, graphicsDevice, width, height));
             Main.QueueMainThreadAction(() => GreenScreenManager.ResetRenderTarget2D(ref RenderTargetPlayerHoldsWaterBall, graphicsDevice, width, height));
         }
+        public static void DrawOntoRenderTargetProjectile(bool drawBorder = false)
+        {
+            for (int i = 0; i < Main.projectile.Length; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if(proj.active && proj.type == ModContent.ProjectileType<WaterShark>() && proj.ModProjectile is WaterShark ws)
+                {
+                    Color white = Color.White;
+                    if(drawBorder)
+                        ws.Draw(true);
+                    else 
+                        ws.Draw(false);
+                }
+            }
+        }
         public static void DrawOntoRenderTarget(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, ref RenderTarget2D RenderTarget, int DrawState)
         {
             if (RenderTarget == null)
@@ -128,7 +146,9 @@ namespace SOTS.Common
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
             if (DrawState == DrawStateID.Wings)
             {
+                DrawOntoRenderTargetProjectile(true);
                 ParticleHelper.DrawWaterParticles();
+                DrawOntoRenderTargetProjectile(false);
             }
             for (int i = 0; i < Main.player.Length; i++)
             {
@@ -139,7 +159,7 @@ namespace SOTS.Common
                     {
                         FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawState);
                     }
-                    else if(FakePlayer.FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1) && FakeModPlayer.ModPlayer(player).hasHydroFakePlayer)
+                    else if(FakePlayer.FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1) && FakeModPlayer.ModPlayer(player).hasHydroFakePlayer) //This may cause repeated draws in multiplayer due to where the ball is rendered, but this should ultimately be more optimal than the solution (making each player have a seperate render target for the held ball)
                     {
                         FakePlayerDrawing.DrawHeldHydroBall(player);
                     }

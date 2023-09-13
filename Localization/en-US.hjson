@@ -5119,11 +5119,10 @@ Mods: {
 				DisplayName: Atlantis
 				Tooltip:
 					'''
-					Left click to throw a loyal trident
-					If the trident hits an enemy during its return, it will grant a buff when caught:
-					Increases melee damage by 50% of the increases recieved to magic damage from other sources
-					Increases magic damage by 50% of the increases recieved to melee damage from other sources
-					Increases movement speed by 20% and reduces damage taken by 10%
+					Left click to throw a loyal trident, which returns after colliding with tiles
+					If the trident hits an enemy during its return, it will heal life and grant a buff when caught
+					The buff increases magic and melee damage based on increases in damage to the other, and it increases movement speed by 20% and reduces damage taken by 10%
+					While buffed, the void cost of this weapon is also decreased to 3
 					Right click to launch a homing Water Shark
 					When an enemy is hit by either attack, they will by encircled by water, drastically lowering their speed
 					Encircled enemies recieve a flurry of slashes that deal 20% damage
@@ -5500,13 +5499,13 @@ Mods: {
 			}
 
 			AtlantisBuff: {
-				DisplayName: Bloodied Scent
+				DisplayName: Bloody Waters
 				Description:
-				'''
-					Increases melee damage by 50% of the increases recieved to magic damage from other sources
-					Increases magic damage by 50% of the increases recieved to melee damage from other sources
-					Increases movement speed by 20% and reduces damage taken by 10%
-				'''
+					'''
+						Increases melee damage by 50% of the increases recieved to magic damage from other sources
+						Increases magic damage by 50% of the increases recieved to melee damage from other sources
+						Increases movement speed by 20% and reduces damage taken by 10%
+					'''
 			}
 		}
 
@@ -6701,6 +6700,7 @@ Mods: {
 			HydroServant.DisplayName: Hydro Servant
 			AtlantisProj.DisplayName: Atlantis
 			AtlantisGlaive.DisplayName: Atlantis Glaive
+			WaterShark.DisplayName: Water Shark
 		}
 
 		DamageClasses: {

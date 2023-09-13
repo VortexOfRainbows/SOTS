@@ -36,8 +36,10 @@ Update Objectives:
  
 Daily Log:
 
-9/11/23
+9/11/23 - 9/13/23
 1. WIP Atlantis
+2. Visuals are closer to finalized for atlantis
+3. Water sharks for atlantis
 
 9/8/23 to 9/11/23
 1. Stuff for Servants fixed:

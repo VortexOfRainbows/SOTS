@@ -31,7 +31,20 @@ namespace SOTS.Projectiles.Tide
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
+            Vector2 drawOrigin = new Vector2(0, 0) + (Projectile.spriteDirection != 1 ? new Vector2(94, 0) : Vector2.Zero);
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 circular = new Vector2(2, 0).RotatedBy(i * MathHelper.TwoPi / 6f + MathHelper.ToRadians(SOTSWorld.GlobalCounter * -1.5f));
+                Main.spriteBatch.Draw(texture, drawPos + circular, null, new Color(40, 50, 120, 0), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            }
+            Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            return false;
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;
@@ -57,7 +70,8 @@ namespace SOTS.Projectiles.Tide
 		{
 			if(runOnce)
             {
-				originalVelo = Projectile.velocity;
+                SOTSUtils.PlaySound(SoundID.DD2_GhastlyGlaivePierce, Projectile.Center, 0.9f, 0.2f);
+                originalVelo = Projectile.velocity;
 				runOnce = false;
             }
 			Player player = Main.player[Projectile.owner];
@@ -105,28 +119,27 @@ namespace SOTS.Projectiles.Tide
 			}
 			if (Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 100, Scale: 1.2f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 30, Scale: 1.2f);
 				dust.velocity += Projectile.velocity * 0.3f;
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
-				dust.color = Color.Lerp(new Color(160, 200, 220, 70), new Color(120, 140, 180, 70), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);
+				dust.color = ColorHelpers.AtlantisColor;
 				dust.fadeIn = 0.2f;
 			}
 			if (Main.rand.NextBool(4))
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), 0, 0, 150, Scale: 0.3f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), 0, 0, 30, Scale: 0.75f);
 				dust.velocity += Projectile.velocity * 0.5f;
-				dust.velocity *= 0.5f;
+				dust.velocity *= 0.25f;
 				dust.noGravity = true;
-				dust.color = Color.Lerp(new Color(160, 200, 220, 70), new Color(120, 140, 180, 70), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);
-				dust.fadeIn = 0.2f;
+				dust.color = ColorHelpers.AtlantisColor;
+                dust.fadeIn = 0.2f;
 			}
 			if (runOnce2 && player.itemAnimation <= player.itemAnimationMax / 3)
 			{
-				SOTSUtils.PlaySound(SoundID.NPCHit53, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.625f);
 				runOnce2 = false;
-				//if(Projectile.owner == Main.myPlayer)
-				//	Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, ModContent.ProjectileType<HardlightColumn>(), (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
+				if(Projectile.owner == Main.myPlayer)
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, originalVelo.SafeNormalize(Vector2.Zero) * 0.5f, ModContent.ProjectileType<WaterShark>(), Projectile.damage, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
 			}
 			return false;
 		}

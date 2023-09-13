@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Earth;
 using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Tide;
+using SOTS.Buffs;
+using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Tide
 {
@@ -29,14 +31,13 @@ namespace SOTS.Items.Tide
 			Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 5.25f;
 			Item.value = Item.sellPrice(0, 3, 0, 0);
-			Item.rare = ItemRarityID.Lime;
-			Item.UseSound = SoundID.Item1;
+            Item.rare = ModContent.RarityType<AnomalyRarity>();
+            Item.UseSound = null;
 			Item.autoReuse = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Tide.AtlantisProj>(); 
             Item.shootSpeed = 16f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-			Item.crit = 16;
 			Item.channel = true;
 			Item.useTurn = true;
 		}
@@ -62,6 +63,8 @@ namespace SOTS.Items.Tide
 		}
 		public override int GetVoid(Player player)
 		{
+			if (player.HasBuff<AtlantisBuff>())
+				return 3;
 			return 15;
 		}
 		public override float UseTimeMultiplier(Player player)

@@ -169,6 +169,24 @@ namespace SOTS
 				Color other = new Color(225, 124, 30);
 				return Color.Lerp(color, other, (float)(0.5f + 0.5f * Math.Sin(MathHelper.ToRadians(soulColorCounter))));
 			}
-		}
-	}
+        }
+        public static Color AtlantisColor
+        {
+            get
+            {
+                Color color = new Color(84, 161, 192);
+                Color other = new Color(213, 121, 135);
+                return Color.Lerp(color, other, Main.rand.NextFloat(1) * Main.rand.NextFloat(1));
+            }
+        }
+        public static Color AtlantisColorInverse
+        {
+            get
+            {
+                Color color = new Color(213, 121, 135);
+                Color other = new Color(84, 161, 192);
+                return Color.Lerp(color, other, Main.rand.NextFloat(1) * Main.rand.NextFloat(1));
+            }
+        }
+    }
 }

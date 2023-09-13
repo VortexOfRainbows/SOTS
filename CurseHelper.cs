@@ -7,6 +7,7 @@ using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS
@@ -220,6 +221,8 @@ namespace SOTS
     {
 		public static void NewWaterParticle(Vector2 position, Vector2 velocity, float scale)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			ParticleHelper.waterParticles.Add(new WaterParticle(position, velocity, scale));
 		}
         public Vector2 position;
