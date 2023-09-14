@@ -23,12 +23,14 @@ namespace SOTS.Projectiles.Tide
 			writer.Write(aiCounter);
 			writer.Write(trueChannel);
             writer.Write(returnHit);
+            writer.Write(Projectile.tileCollide);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			aiCounter = reader.ReadInt32();
             trueChannel = reader.ReadBoolean();
 			returnHit = reader.ReadBoolean();
+            Projectile.tileCollide = reader.ReadBoolean();
         }
 		public bool trueChannel = true;
 		public bool returnHit = false;

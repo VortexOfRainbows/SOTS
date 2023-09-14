@@ -485,6 +485,7 @@ namespace SOTS.Common.GlobalNPCs
                 Core.OnSuccess(ItemDropRule.Common(ItemID.Coral, 5));
                 Core.OnSuccess(ItemDropRule.Common(ItemID.OceanCrate, 50));
                 Core.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SharkPog>(), 50));
+                Core.OnSuccess(ItemDropRule.Common(ModContent.ItemType<HydrokineticAntennae>(), 50));
                 NotCore.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfTide>(), 20));
                 NotCore.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SharkPog>(), 250));
                 npcLoot.Add(Core);
@@ -493,6 +494,7 @@ namespace SOTS.Common.GlobalNPCs
 			if(npc.type == ModContent.NPCType<PhantarayBig>())
             {
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfTide>(), 1, 1, 2));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HydrokineticAntennae>(), 20));
                 npcLoot.Add(ItemDropRule.Common(ItemID.LifeCrystal, 5));
                 npcLoot.Add(ItemDropRule.Common(ItemID.OceanCrateHard, 5));
             }

@@ -27,19 +27,16 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
 3. More Bestiary entries (and visual fixes)
-4. Heart Swapper / Hydrokinetic Antennae: Needs obtain method
-5. Unique Archaeologist tooltips for items (pending)
-6. Polaris Rework (pending)
-7. Awakened Riptide -> Wormhole Conversion -> Atlantis (magic weapon)
-	1. Left click - charge and throw (traps enemies in bubbles)
-	2. Right click - glaive slash that launches a water ball
+4. Unique Archaeologist tooltips for items (pending)
+5. Polaris Rework (pending)
  
 Daily Log:
 
 9/11/23 - 9/14/23
-1. Atlantis finished... But NEEDS MULTIPLAYER SYNCING TESTING
+1. Atlantis finished... and works in multiplayer!
 2. Visuals are closer to finalized for atlantis
 3. Water sharks for atlantis
+4. Hydrokinetic Antennae now drop from Phantaray... Will probably have a different obtain method in the future
 
 9/8/23 to 9/11/23
 1. Stuff for Servants fixed:

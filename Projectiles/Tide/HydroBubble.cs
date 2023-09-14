@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Tide
             {
                 SOTSUtils.PlaySound(SoundID.Item21, Projectile.Center, 1.2f, -0.5f);
             }
-			if((int)Projectile.ai[1] != -1 && Projectile.owner == Main.myPlayer)
+			if((int)Projectile.ai[1] != -1)
 			{
 				NPC target = Main.npc[(int)Projectile.ai[1]];
 				if(target.active && !target.friendly)
