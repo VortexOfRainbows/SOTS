@@ -25,11 +25,11 @@ namespace SOTS.Projectiles.Tide
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 			Projectile.ownerHitCheck = true;
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.localNPCHitCooldown = 20;
 		}
         public override bool PreDraw(ref Color lightColor)
         {

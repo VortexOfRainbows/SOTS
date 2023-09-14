@@ -134,5 +134,10 @@ namespace SOTS.Projectiles.Tide
                 WaterParticle.NewWaterParticle(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * 1.85f + circular + Main.rand.NextVector2Circular(1, 1), Main.rand.NextFloat(1.4f, 1.5f));
             }
         }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Main.myPlayer == Projectile.owner)
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HydroBubble>(), (int)(Projectile.damage * 0.2f), Projectile.knockBack * 0.1f, Projectile.owner, 3, target.whoAmI);
+        }
     }
 }

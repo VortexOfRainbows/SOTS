@@ -49,10 +49,10 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR
         newOffset.y /= height;
         float2 intCoords = float2(int(coords.x * scale.x) / scale.x, int(coords.y * scale.y) / scale.y) + newOffset / 16.0;
         float2 intCoords2 = float2(int(coords.x * 256.0) / 64.0, int(coords.y * 256.0) / 64.0);
-        float wave1 = 0.5 + 0.5 * sin(-time * 4.0 + intCoords.y * 120.0 + intCoords.x * 12.0 + sin(intCoords.x * 48.0 + sin(time + intCoords.y * twoPi) * 2.5) * 2.4);
+        float wave1 = 0.5 + 0.5 * sin(-time * 4.0 + intCoords.y * 60.0 + intCoords.x * 12.0 + sin(intCoords.x * 24.0 + sin(time + intCoords.y * twoPi) * 2.5) * 2.4);
         if (wave1 < 0.975)
             wave1 = clamp(pow(wave1, 8) - 0.1, -0.1, 1);
-        float wave2 = 0.5 + 0.5 * sin(time * 4.0 + intCoords.x * 120.0 + intCoords.y * -12.0 + sin(intCoords.y * 48.0 + cos(time + intCoords.x * twoPi) * 2.5) * 2.4);
+        float wave2 = 0.5 + 0.5 * sin(time * 4.0 + intCoords.x * 60.0 + intCoords.y * -12.0 + sin(intCoords.y * 24.0 + cos(time + intCoords.x * twoPi) * 2.5) * 2.4);
         if (wave2 < 0.975)
             wave2 = clamp(pow(wave2, 8) - 0.1, -0.1, 1);
         float3 color = float3(0.3125, 0.725, 1.0) + float3(wave1 * 0.9, wave1, wave1 * 1.1) * 0.25 + float3(wave2 * 0.9, wave2, wave2 * 1.1) * 0.25;

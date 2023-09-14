@@ -127,11 +127,17 @@ namespace SOTS.Common
                 Projectile proj = Main.projectile[i];
                 if(proj.active && proj.type == ModContent.ProjectileType<WaterShark>() && proj.ModProjectile is WaterShark ws)
                 {
-                    Color white = Color.White;
                     if(drawBorder)
                         ws.Draw(true);
                     else 
                         ws.Draw(false);
+                }
+                if (proj.active && proj.type == ModContent.ProjectileType<HydroBubble>() && proj.ModProjectile is HydroBubble hb)
+                {
+                    if (drawBorder)
+                        hb.Draw(true);
+                    else
+                        hb.Draw(false);
                 }
             }
         }

@@ -27,7 +27,7 @@ Update Objectives:
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
 3. More Bestiary entries (and visual fixes)
-4. Heart Swapper / Hydrokinetic Antennae: needs feedback (shaders and stuff) (in progress)
+4. Heart Swapper / Hydrokinetic Antennae: Needs obtain method
 5. Unique Archaeologist tooltips for items (pending)
 6. Polaris Rework (pending)
 7. Awakened Riptide -> Wormhole Conversion -> Atlantis (magic weapon)
@@ -36,8 +36,8 @@ Update Objectives:
  
 Daily Log:
 
-9/11/23 - 9/13/23
-1. WIP Atlantis
+9/11/23 - 9/14/23
+1. Atlantis finished... But NEEDS MULTIPLAYER SYNCING TESTING
 2. Visuals are closer to finalized for atlantis
 3. Water sharks for atlantis
 

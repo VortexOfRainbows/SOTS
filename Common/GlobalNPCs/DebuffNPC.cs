@@ -35,6 +35,7 @@ using SOTS.Projectiles.Blades;
 using SOTS.Buffs.Debuffs;
 using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.NPCs.Anomaly;
+using SOTS.Projectiles.Tide;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -673,6 +674,7 @@ namespace SOTS.Common.GlobalNPCs
             pinkied = false;
             bool hooked = false;
             bool darkArmed = false;
+            bool isBubbled = false;
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
@@ -814,6 +816,16 @@ namespace SOTS.Common.GlobalNPCs
                         }
                     }
                 }
+                if(proj.active && proj.type == ProjectileType<HydroBubble>() && (int)proj.ai[1] == npc.whoAmI)
+                {
+                    if(proj.ModProjectile is HydroBubble hydroBubble)
+                    {
+                        if(hydroBubble.AiCounter > hydroBubble.ChargeTime)
+                        {
+                            isBubbled = true;
+                        }
+                    }
+                }
             }
             if (flowered >= 1)
             {
@@ -834,7 +846,7 @@ namespace SOTS.Common.GlobalNPCs
             float dartVeloMult = 1 / (1 + dartMult * impaledDarts);
             float flowerVeloMult = 1 / (1 + flowerMult * flowered);
             float finalSlowdown = 1f;
-            if(npc.HasBuff(BuffType<WebbedNPC>()) || darkArmed)
+            if(npc.HasBuff(BuffType<WebbedNPC>()) || darkArmed || isBubbled)
             {
                 if(!npc.boss)
                     finalSlowdown *= 0.2f;

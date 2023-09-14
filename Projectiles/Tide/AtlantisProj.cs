@@ -50,6 +50,10 @@ namespace SOTS.Projectiles.Tide
 			if(!Projectile.tileCollide)
 				returnHit = true;
             Projectile.netUpdate = true;
+			if(Main.myPlayer == Projectile.owner && !Projectile.tileCollide)
+            {
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HydroBubble>(), (int)(Projectile.damage * 0.2f), Projectile.knockBack * 0.1f, Projectile.owner, 6, target.whoAmI);
+            }
         }
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{

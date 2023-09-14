@@ -22,7 +22,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void SafeSetDefaults()
         {
-            Item.damage = 35;  
+            Item.damage = 30;  
             Item.DamageType = DamageClass.Magic;  
             Item.width = 66;    
             Item.height = 62;
@@ -65,7 +65,7 @@ namespace SOTS.Items.Tide
 		{
 			if (player.HasBuff<AtlantisBuff>())
 				return 0;
-			return 15;
+			return 10;
 		}
 		public override float UseTimeMultiplier(Player player)
 		{
