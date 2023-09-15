@@ -32,9 +32,9 @@ Update Objectives:
  
 Daily Log:
 
-9/11/23 - 9/14/23
+9/11/23 - 9/15/23 (this is where changelog last was updated)
 1. Atlantis finished... and works in multiplayer!
-2. Visuals are closer to finalized for atlantis
+2. Visuals are finalized for atlantis
 3. Water sharks for atlantis
 4. Hydrokinetic Antennae now drop from Phantaray... Will probably have a different obtain method in the future
 
