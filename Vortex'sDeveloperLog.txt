@@ -29,6 +29,7 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
 5. Polaris Rework (pending)
+6. Ability to Relock chests in SOTS
  
 Daily Log:
 
