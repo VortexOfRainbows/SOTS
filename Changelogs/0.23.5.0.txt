@@ -4,6 +4,7 @@ Additions:
 1. Two new Ocean Enemies
 2. Three new Pre-HM Weapons
 3. One new accessory
+4. A new developer item that can lock chests (obtainable only in item browsers)
 
 Changes:
 1. Subspace Servant and other Fake Player entities are now capable of using almost all weapons...
@@ -16,3 +17,4 @@ Fixes:
 3. Fixed issue where accessories with damage values were recieving weapon reforges
 4. Fixed the drawing of some item effects in your inventory
 5. Fixed issues with tooltips of prefixes being incorrect
+6. Modded chests should now drop the proper item

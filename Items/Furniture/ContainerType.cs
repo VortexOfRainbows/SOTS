@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -248,5 +249,9 @@ namespace SOTS.Items.Furniture
 				player.cursorItemIconID = 0;
 			}
 		}
-	}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ChestDrop);
+        }
+    }
 }

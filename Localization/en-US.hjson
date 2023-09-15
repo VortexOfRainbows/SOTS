@@ -5128,6 +5128,17 @@ Mods: {
 					Encircled enemies are slashed multiple times for 20% damage
 					'''
 			}
+
+			LockingMechanism: {
+				DisplayName: Locking Mechanism
+				Tooltip:
+					'''
+					Developer and Map Creator item:
+					Locks Skyware, Meteorite, Planetarium, and other Secrets of the Shadows Chests
+					Simply click on the chest to lock
+					Will probably NOT work when used in multiplayer (you must lock the chest in singleplayer first)
+					'''
+			}
 		}
 
 		ItemTooltip: {
