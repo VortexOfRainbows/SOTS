@@ -29,7 +29,11 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
 5. Polaris Rework (pending)
-6. Ability to Relock chests in SOTS
+6. Post-Lux and Post-Subspace Armor sets! (pending)
+	1. Voidspace Ranger's Armor Set (Void/Range)
+		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
+	2. Elemental Armor Set (Void/Melee)
+		1. As it drops from lux, it should be colorful and fairly futuristic.
  
 Daily Log:
 

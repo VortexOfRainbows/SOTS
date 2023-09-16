@@ -5119,13 +5119,12 @@ Mods: {
 				DisplayName: Atlantis
 				Tooltip:
 					'''
-					Left click to throw a loyal trident, which returns after colliding with tiles
-					If the trident hits an enemy during its return, it will heal life and grant a buff when caught
-					The buff increases magic and melee damage based on increases in damage to the other, and it increases movement speed by 20% and reduces damage taken by 10%
-					While buffed, this weapon also no longer costs void
+					Throw a loyal trident that returns shortly after
 					Right click to launch a homing Water Shark
-					When an enemy is hit by the Water Shark or the return hit of the trident, they will be encircled by water, drastically lowering their speed
-					Encircled enemies are slashed multiple times for 20% damage
+					If the trident hits an enemy on its return, it will steal life and grant a buff when caught
+					The buff increases magic and melee damage based on stat increases to the other, increases movement speed by 20%, and reduces damage taken by 10%
+					While buffed, this weapon also no longer costs void
+					Enemies hit by the Water Shark or the returning trident will be encircled by water, slashed several times for 20% damage, and slowed
 					'''
 			}
 
