@@ -165,7 +165,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                     WeaponFrame++;
                     if (WeaponFrame >= WeaponFrameMax - 1) //Frame counter going up means resetting the frame back to default
                     {
-                        WeaponFrame = WeaponFrameMax - 1;
+                        WeaponFrame = WeaponFrameMax - 1; //The frame counter should hold a delay after this point... maybe just set the counter to a negative number?
                         SwapWeapon(TypeToSwapTo);
                     }
                 }
