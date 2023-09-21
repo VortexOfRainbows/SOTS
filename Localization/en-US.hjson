@@ -5914,6 +5914,7 @@ Mods: {
 			Snake.DisplayName: Snake
 			PhantarayBig.DisplayName: Phantaray
 			PhantarayCore.DisplayName: Phantaray
+			NewPolaris.DisplayName: New Polaris
 		}
 
 		Bestiary: {

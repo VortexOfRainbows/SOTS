@@ -37,6 +37,10 @@ Update Objectives:
  
 Daily Log:
 
+9/20/23
+1. Rudimentary Logic for Polaris weaponry swapping
+	1. Needs more delay + speed adjustments and visual polish
+
 
 -- Update 0.23.5.0 Released! on 9/16/23 --
 
