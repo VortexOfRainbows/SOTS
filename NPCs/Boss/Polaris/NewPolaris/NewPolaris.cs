@@ -18,6 +18,8 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
 {	[AutoloadBossHead]
 	public class NewPolaris : ModNPC
 	{
+        public bool LoadedWeaponData = false;
+        public PolarisWeaponData[] polarisWeaponData = new PolarisWeaponData[4];
         public int despawn = 0;
 		private float AI0
 		{
@@ -72,8 +74,8 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Polaris");
-			NPC.netAlways = true;
-		}
+            NPC.netAlways = true;
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             DrawWeapon(spriteBatch, screenPos, Color.White);
@@ -112,69 +114,69 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         }
 		public void DrawWeapon(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
-			Texture2D texture = ModContent.Request<Texture2D>(WeaponTexture(0, WeaponType, false)).Value;
-            Rectangle frame = new Rectangle(0, WeaponHeight * WeaponFrame, WeaponWidth, WeaponHeight - 2);
-            Vector2 origin = new Vector2(32, WeaponHeight - 34);
-            Vector2 position = NPC.Center - screenPos;
-            spriteBatch.Draw(texture, position, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+            for(int i = 0; i < polarisWeaponData.Length; i++)
+            {
+                PolarisWeaponData Weapon = polarisWeaponData[i];
+                Texture2D texture = ModContent.Request<Texture2D>(WeaponTexture(0, Weapon.Type, false)).Value;
+                Rectangle frame = new Rectangle(0, Weapon.Height * Weapon.Frame, Weapon.Width, Weapon.Height - 2);
+                Vector2 origin = new Vector2(32, Weapon.Height - 34);
+                Vector2 position = NPC.Center - screenPos + new Vector2(48, 48).RotatedBy(i * MathHelper.PiOver2);
+                spriteBatch.Draw(texture, position, frame, drawColor, (i - 1) * MathHelper.PiOver2, origin, 1f, SpriteEffects.None, 0f);
+            }
 		}
-        public int WeaponType = 0;
-        public int WeaponWidth = 50;
-        public int WeaponHeight = 52;
-        public int WeaponFrameCounter = 0;
-        public int WeaponFrame = 0;
-        public int WeaponFrameMax = 8;
-        public int TypeToSwapTo = 0;
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 
         }
-        public void QueueSwapWeapon(int type)
+        public void QueueSwapWeapon(PolarisWeaponData Weapon, int type)
         {
-            TypeToSwapTo = type;
+            Weapon.TypeToSwapTo = type;
         }
-        public void SwapWeapon(int type)
+        public void SwapWeapon(PolarisWeaponData Weapon, int type)
         {
-            WeaponFrameCounter = 0;
-            WeaponWidth = 50;
-            WeaponHeight = 52;
-            WeaponFrameMax = 8;
+            Weapon.Width = 50;
+            Weapon.Height = 52;
+            Weapon.FrameMax = 8;
             if (type == 1)
             {
-                WeaponWidth = 48;
-                WeaponHeight = 50;
-                WeaponFrameMax = 8;
+                Weapon.Width = 48;
+                Weapon.Height = 50;
+                Weapon.FrameMax = 8;
             }
             if (type == 2)
             {
-                WeaponWidth = 94;
-                WeaponHeight = 96;
-                WeaponFrameMax = 15;
+                Weapon.Width = 94;
+                Weapon.Height = 96;
+                Weapon.FrameMax = 15;
             }
-            WeaponFrame = WeaponFrameMax - 1;
-            WeaponType = type;
+            Weapon.Frame = Weapon.FrameMax - 1;
+            Weapon.Type = type;
         }
         public override void FindFrame(int frameHeight)
         {
-            WeaponFrameCounter++;
-            if(WeaponFrameCounter > 3)
+            foreach(PolarisWeaponData Weapon in polarisWeaponData)
             {
-                WeaponFrameCounter = 0;
-                if(WeaponType != TypeToSwapTo)
+                Weapon.FrameCounter++;
+                if (Weapon.FrameCounter > 3)
                 {
-                    WeaponFrame++;
-                    if (WeaponFrame >= WeaponFrameMax - 1) //Frame counter going up means resetting the frame back to default
+                    Weapon.FrameCounter = 0;
+                    if (Weapon.Type != Weapon.TypeToSwapTo)
                     {
-                        WeaponFrame = WeaponFrameMax - 1; //The frame counter should hold a delay after this point... maybe just set the counter to a negative number?
-                        SwapWeapon(TypeToSwapTo);
+                        Weapon.Frame++;
+                        if (Weapon.Frame >= Weapon.FrameMax - 1) //Frame counter going up means resetting the frame back to default
+                        {
+                            Weapon.Frame = Weapon.FrameMax - 1; //The frame counter should hold a delay after this point... maybe just set the counter to a negative number?
+                            SwapWeapon(Weapon, Weapon.TypeToSwapTo);
+                            Weapon.FrameCounter = -60;
+                        }
                     }
-                }
-                else if(WeaponFrame < WeaponFrameMax)
-                {
-                    WeaponFrame--;
-                    if (WeaponFrame <= 0) //Frame counter going down means opening up the weapon
+                    else if (Weapon.Frame < Weapon.FrameMax)
                     {
-                        WeaponFrame = 0;
+                        Weapon.Frame--;
+                        if (Weapon.Frame <= 0) //Frame counter going down means opening up the weapon
+                        {
+                            Weapon.Frame = 0;
+                        }
                     }
                 }
             }
@@ -191,10 +193,18 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                 NPC.active = false;
             }
             AI1++;
-            if(AI1 % 100 == 0)
+            if(AI1 % 200 == 0)
             {
                 Main.NewText("Swap");
-                QueueSwapWeapon(Main.rand.Next(3));
+                foreach (PolarisWeaponData Weapon in polarisWeaponData)
+                {
+                    int nextType = Main.rand.Next(3);
+                    while (nextType == Weapon.Type)
+                    {
+                        nextType = Main.rand.Next(3);
+                    }
+                    QueueSwapWeapon(Weapon, nextType);
+                }
             }
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
@@ -227,7 +237,53 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
 			}
 			//Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.9f / 255f, (255 - NPC.alpha) * 0.1f / 255f, (255 - NPC.alpha) * 0.3f / 255f);
 		}
-	}
+        public override bool PreAI()
+        {
+            if(!LoadedWeaponData)
+            {
+                LoadedWeaponData = true;
+                polarisWeaponData = new PolarisWeaponData[]
+                {
+                    new PolarisWeaponData(),
+                    new PolarisWeaponData(),
+                    new PolarisWeaponData(),
+                    new PolarisWeaponData()
+                };
+            }
+            return true;
+        }
+    }
+    public class PolarisWeaponData
+    { 
+        public int Type = 0;
+        public int Width = 50;
+        public int Height = 52;
+        public int FrameCounter = 0;
+        public int Frame = 0;
+        public int FrameMax = 8;
+        public int TypeToSwapTo = 0;
+        public PolarisWeaponData() {
+            Type = 0;
+            Width = 50;
+            Height = 52;
+            FrameCounter = 0;
+            Frame = 0;
+            FrameMax = 8;
+            TypeToSwapTo = 0;
+        }
+        public void Draw()
+        {
+
+        }
+        public void Update()
+        {
+
+        }
+        public void UpdateFrame()
+        {
+            
+        }
+    }
 }
 
 
