@@ -128,7 +128,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
             spriteBatch.Draw(eyeTexture, position + eyeOffset, null, Color.White, 0f, eyeTexture.Size() / 2f, 1f, SpriteEffects.None, 0f);
             spriteBatch.Draw(coreTexture, position, null, Color.White, NPC.velocity.X * 0.05f, coreTexture.Size() / 2f, 1f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(myTexture, position, NPC.frame, Color.White, NPC.rotation + MathHelper.Pi, origin, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(myTexture, position, NPC.frame, Color.White, NPC.rotation + MathHelper.Pi + NPC.velocity.X * 0.05f, origin, 1f, SpriteEffects.None, 0f);
             return false;
         }
         public static string WeaponTexture(int color = 0, int weaponType = 0, bool glow = false)
@@ -174,10 +174,6 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         {
 
         }
-        public void QueueSwapWeapon(PolarisWeaponData Weapon, int type)
-        {
-            Weapon.TypeToSwapTo = type;
-        }
         public override void FindFrame(int frameHeight)
         {
             foreach(PolarisWeaponData Weapon in polarisWeaponData)
@@ -186,6 +182,29 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
         }
         public int rotationDirection = 1;
+        public void UpdateWeapons()
+        {
+            for (int i = 0; i < polarisWeaponData.Length; i++)
+            {
+                PolarisWeaponData Weapon = polarisWeaponData[i];
+                if (AI1 % 200 == 0)
+                {
+                    int nextType = Main.rand.Next(3);
+                    while (nextType == Weapon.Type)
+                    {
+                        nextType = Main.rand.Next(3);
+                    }
+                    Weapon.TypeToSwapTo = nextType;
+                    SOTSUtils.PlaySound(SoundID.MenuClose, Weapon.position, 1.1f, -0.5f);
+                }
+                Vector2 position = NPC.Center + new Vector2(64, 64).RotatedBy(i * MathHelper.PiOver2 + NPC.rotation + NPC.velocity.X * 0.05f);
+                Weapon.Update(position);
+                float rotation = (i - 1) * MathHelper.PiOver2 + NPC.rotation + NPC.velocity.X * 0.05f;
+                Weapon.rotation = rotation;
+                Weapon.rotationDirection = rotationDirection;
+                Weapon.redOrBlue = 1 - i / 2;
+            }
+        }
         public override void PostAI()
         {
             Player player = Main.player[NPC.target];
@@ -198,30 +217,19 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                 NPC.active = false;
             }
             AI1++; 
-            rotationDirection = 1;
-            for (int i = 0; i < polarisWeaponData.Length; i++)
-            {
-                PolarisWeaponData Weapon = polarisWeaponData[i];
-                if (AI1 % 200 == 0)
-                {
-                    int nextType = Main.rand.Next(3);
-                    while (nextType == Weapon.Type)
-                    {
-                        nextType = Main.rand.Next(3);
-                    }
-                    QueueSwapWeapon(Weapon, nextType);
-                }
-                Vector2 position = NPC.Center + new Vector2(64, 64).RotatedBy(i * MathHelper.PiOver2 + NPC.rotation);
-                Weapon.Update(position);
-                float rotation = (i - 1) * MathHelper.PiOver2 + NPC.rotation;
-                Weapon.rotation = rotation;
-                Weapon.rotationDirection = rotationDirection;
-                Weapon.redOrBlue = 1 - i / 2;
-            }
             Vector2 toPlayer = player.Center - NPC.Center;
             NPC.velocity *= 0.45f;
             NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 1.25f;
             NPC.rotation += rotationDirection * MathHelper.TwoPi / 360f;
+            UpdateWeapons();
+            AI2++;
+            if(AI2 % 30 == 0)
+            {
+                foreach(PolarisWeaponData weapon in polarisWeaponData)
+                {
+                    weapon.LaunchAttack(NPC, 0);
+                }
+            }
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
@@ -309,15 +317,15 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         public void Update(Vector2 updatedPosition)
         {
             active = true;
-            if(TypeToSwapTo == Type) //If the switch is completed
+            if (TypeToSwapTo == Type) //If the switch is completed
             {
-                if(Frame == 0)
+                if (Frame == 0)
                 {
                     if (Type == 2 && AI == 0)
                     {
                         Color Color1 = new Color(187, 11, 76, 0);
                         Color Color2 = new Color(202, 234, 247, 0);
-                        if(redOrBlue == 0)
+                        if (redOrBlue == 0)
                         {
                             Color1 = new Color(64, 74, 204, 0);
                             Color2 = new Color(255, 221, 233, 0);
@@ -333,18 +341,28 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                     if (SaberTrail != null)
                         SaberTrail.OnDestroy();
                 }
+                if (Frame == 4 && FrameCounter == 0)
+                {
+                    SOTSUtils.PlaySound(SoundID.MenuOpen, position, 1.4f, -0.75f);
+                }
             }
-            else if(TypeToSwapTo != 2)
+            else
             {
-                if (SaberTrail != null)
-                    SaberTrail.OnDestroy();
+                if (TypeToSwapTo != 2)
+                {
+                    if (SaberTrail != null)
+                        SaberTrail.OnDestroy();
+                }
             }
             position = updatedPosition;
         }
         public void UpdateFrame()
         {
+            int frameSpeed = 3;
+            if (Type == 2)
+                frameSpeed = 2;
             FrameCounter++;
-            if (FrameCounter > 3)
+            if (FrameCounter > frameSpeed)
             {
                 FrameCounter = 0;
                 if (Type != TypeToSwapTo)
@@ -387,6 +405,32 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             Frame = FrameMax - 1;
             Type = type;
             AI = 0;
+        }
+        public void LaunchAttack(NPC owner, int style = 0)
+        {
+            if(Frame == 0 && TypeToSwapTo == Type)
+            {
+                Vector2 outward = new Vector2(-1, 0).RotatedBy(rotation - MathHelper.PiOver4);
+                if(style == 0)
+                {
+                    if (Type == 0)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 4, outward * 4, ProjectileID.Bullet, 0, 0, Main.myPlayer);
+                        }
+                        SOTSUtils.PlaySound(SoundID.Item11, position, 1.0f, -0.4f);
+                    }
+                    if (Type == 1)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 32, outward * 4, ProjectileID.MiniRetinaLaser, 0, 0, Main.myPlayer);
+                        }
+                        SOTSUtils.PlaySound(SoundID.Item18, position, 1.0f, -0.7f);
+                    }
+                }
+            }
         }
     }
 }
