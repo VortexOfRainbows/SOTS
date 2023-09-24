@@ -23,8 +23,8 @@ namespace SOTS.Items.Nature
 			Item.damage = 6;
 			Item.knockBack = 2f;
 			Item.mana = 9;
-			Item.width = 24;
-			Item.height = 32;
+			Item.width = 30;
+			Item.height = 36;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;

@@ -37,6 +37,11 @@ Update Objectives:
  
 Daily Log:
 
+9/23/23 to 9/24/23
+1. Polaris now holds multiple weapons capable of swapping
+2. Polaris prim trails for sword attack
+3. Polaris hitbox makes moer sense
+
 9/20/23
 1. Rudimentary Logic for Polaris weaponry swapping
 	1. Needs more delay + speed adjustments and visual polish

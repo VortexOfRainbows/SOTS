@@ -21,7 +21,6 @@ namespace SOTS.Prim
 			primTargetNPC = new RenderTarget2D(GD, Main.screenWidth / 2, Main.screenHeight / 2);
 			primTargetProjectile = new RenderTarget2D(GD, Main.screenWidth / 2, Main.screenHeight / 2);
 		}
-
 		public void DrawTrailsNPC(SpriteBatch spriteBatch, GraphicsDevice gD)
 		{
 			List<PrimTrail> pixelTrails = new List<PrimTrail>();
