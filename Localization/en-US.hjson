@@ -6713,6 +6713,8 @@ Mods: {
 			AtlantisGlaive.DisplayName: Atlantis Glaive
 			WaterShark.DisplayName: Water Shark
 			HydroBubble.DisplayName: Hydro Bubble
+			PolarisMines.DisplayName: Polaris Mine
+			PolarisBeam.DisplayName: Polaris Beam
 		}
 
 		DamageClasses: {

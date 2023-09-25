@@ -34,13 +34,14 @@ Update Objectives:
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
+7. Fix enemy death projectiles doing damage to player through hydroservant (make sure enemy spawned projectiles are not owned)
  
 Daily Log:
 
 9/23/23 to 9/24/23
 1. Polaris now holds multiple weapons capable of swapping
 2. Polaris prim trails for sword attack
-3. Polaris hitbox makes moer sense
+3. Polaris hitbox makes more sense
 
 9/20/23
 1. Rudimentary Logic for Polaris weaponry swapping

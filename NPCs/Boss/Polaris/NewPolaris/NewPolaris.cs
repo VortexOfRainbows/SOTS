@@ -17,6 +17,8 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Humanizer.In;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace SOTS.NPCs.Boss.Polaris.NewPolaris
 {	[AutoloadBossHead]
@@ -218,16 +220,26 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
             AI1++; 
             Vector2 toPlayer = player.Center - NPC.Center;
-            NPC.velocity *= 0.45f;
-            NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 1.25f;
+            NPC.velocity *= 0.95f;
+            NPC.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.2f;
+            rotationDirection = Math.Sign(NPC.velocity.X);
             NPC.rotation += rotationDirection * MathHelper.TwoPi / 360f;
             UpdateWeapons();
             AI2++;
-            if(AI2 % 30 == 0)
+            if(AI2 > 360)
             {
-                foreach(PolarisWeaponData weapon in polarisWeaponData)
+                AI2 = -60;
+                LaunchMines();
+            }
+            if(AI2 > 0)
+            {
+                if (AI2 % 30 == 0)
                 {
-                    weapon.LaunchAttack(NPC, 0);
+                    for (int i = 0; i < polarisWeaponData.Length; i++)
+                    {
+                        PolarisWeaponData Weapon = polarisWeaponData[i];
+                        Weapon.LaunchAttack(NPC, i / 2);
+                    }
                 }
             }
         }
@@ -276,6 +288,22 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
             return true;
         }
+        public void LaunchMines()
+        {
+            SOTSUtils.PlaySound(SoundID.Item94, NPC.Center, 1.0f, -0.5f);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Player player = Main.player[NPC.target];
+                Vector2 toPlayer = player.Center - NPC.Center;
+                toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
+                NPC.velocity -= toPlayer * 12f;
+                for (int i= -2; i <= 2; i++)
+                {
+                    Vector2 outward = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 15) + toPlayer.ToRotation()) + Main.rand.NextVector2Circular(4, 4);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + outward * 2, outward * Main.rand.NextFloat(0.75f, 1.25f), ModContent.ProjectileType<PolarisMines>(), NPC.GetBaseDamage() / 2, 0, Main.myPlayer, Main.rand.Next(2), Main.rand.Next(60));
+                }
+            }
+        }
     }
     public class PolarisWeaponData : Entity
     { 
@@ -295,6 +323,8 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         public float AI = 0;
         public float rotation;
         public int rotationDirection = 1;
+        public int previousRotationDirection = 1;
+        public bool ReRegisterPrimTrail = false;
         public PrimTrail SaberTrail = null;
         public PolarisWeaponData() {
             Type = 0;
@@ -321,7 +351,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             {
                 if (Frame == 0)
                 {
-                    if (Type == 2 && AI == 0)
+                    if (Type == 2 && (AI == 0 || ReRegisterPrimTrail))
                     {
                         Color Color1 = new Color(187, 11, 76, 0);
                         Color Color2 = new Color(202, 234, 247, 0);
@@ -333,13 +363,22 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                         PolarisSaberTrail trail = new PolarisSaberTrail(this, rotationDirection, Color2.ToVector4() * 0.5f, Color1.ToVector4() * 0.5f, 48, 0);
                         SOTS.primitives.CreateTrail(trail);
                         SaberTrail = trail;
+                        ReRegisterPrimTrail = false;
+                    }
+                    if(Type == 2 && previousRotationDirection != rotationDirection)
+                    {
+                        if (SaberTrail != null)
+                            SaberTrail.OnDestroy();
+                        ReRegisterPrimTrail = true;
                     }
                     AI++;
                 }
                 else
                 {
                     if (SaberTrail != null)
+                    {
                         SaberTrail.OnDestroy();
+                    }
                 }
                 if (Frame == 4 && FrameCounter == 0)
                 {
@@ -355,6 +394,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                 }
             }
             position = updatedPosition;
+            previousRotationDirection = rotationDirection;
         }
         public void UpdateFrame()
         {
@@ -411,24 +451,21 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             if(Frame == 0 && TypeToSwapTo == Type)
             {
                 Vector2 outward = new Vector2(-1, 0).RotatedBy(rotation - MathHelper.PiOver4);
-                if(style == 0)
+                if (Type == 0)
                 {
-                    if (Type == 0)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 4, outward * 4, ProjectileID.Bullet, 0, 0, Main.myPlayer);
-                        }
-                        SOTSUtils.PlaySound(SoundID.Item11, position, 1.0f, -0.4f);
+                        Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 4, outward * 4, ProjectileID.Bullet, 0, 0, Main.myPlayer);
                     }
-                    if (Type == 1)
+                    SOTSUtils.PlaySound(SoundID.Item11, position, 1.0f, -0.4f);
+                }
+                if (Type == 1)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 32, outward * 4, ProjectileID.MiniRetinaLaser, 0, 0, Main.myPlayer);
-                        }
-                        SOTSUtils.PlaySound(SoundID.Item18, position, 1.0f, -0.7f);
+                        Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 32, outward * 4, ModContent.ProjectileType<PolarisBeam>(), owner.GetBaseDamage() / 2, 0, Main.myPlayer, style);
                     }
+                    SOTSUtils.PlaySound(SoundID.Item33, position, 1.0f, -0.1f);
                 }
             }
         }
