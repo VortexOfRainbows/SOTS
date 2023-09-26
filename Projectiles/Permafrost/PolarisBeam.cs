@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Buffs;
+using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS.Projectiles.Permafrost	
 {    
@@ -17,7 +18,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override void SetStaticDefaults()
 		{
 			Main.projFrames[Type] = 2;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 24;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 		public override bool PreDraw(ref Color lightColor)
@@ -66,15 +67,31 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.alpha = 0;
 			Projectile.ignoreWater = true;
 		}
+		bool runOnce = true;
 		public override void AI()
-		{
-			if (Projectile.timeLeft < 24)
+        {
+            Color color = Projectile.ai[0] == 1 ? new Color(100, 100, 250, 200) : new Color(250, 100, 100, 200);
+            if (Projectile.timeLeft < 24)
 			{
 				Projectile.alpha += 20;
 			}
+			if (runOnce)
+            {
+				for(int i = 0; i < 5; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.Zero) * 16 - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
+                    dust.velocity *= 0.85f;
+                    dust.velocity += Projectile.velocity * 0.5f;
+                    dust.noGravity = true;
+                    dust.scale = dust.scale * 0.75f + 0.75f;
+                    dust.color = color;
+                    dust.fadeIn = 0.1f;
+                    dust.alpha = Projectile.alpha;
+                }
+				runOnce = false;
+            }
 			Vector2 velo = Projectile.velocity * Projectile.ai[1];
 			Projectile.position += velo;
-			Color color = Projectile.ai[0] == 1 ? new Color(100, 100, 250, 200) : new Color(250, 100, 100, 200);
 			Lighting.AddLight(Projectile.Center, color.ToVector3() * 0.5f);
 			if (Projectile.velocity.Length() > 1)
 			{
@@ -101,4 +118,3 @@ namespace SOTS.Projectiles.Permafrost
         }
 	}
 }
-		
