@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Buffs;
 using Terraria.GameContent.ItemDropRules;
+using System.Diagnostics.Metrics;
 
 namespace SOTS.Projectiles.Permafrost	
 {    
@@ -25,16 +26,29 @@ namespace SOTS.Projectiles.Permafrost
         {
             Draw(1f, Projectile.Center, true);
 			return false;
-		}
-		public void Draw(float alphaMult, Vector2 pos, bool outLine = true)
+        }
+        public void Draw(float alphaMult, Vector2 pos, bool outLine = true)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(24, texture.Height / 4);
 			Color color = new Color(100, 100, 100, 0);
 			Rectangle frame = new Rectangle(0, 0, 24, 10);
-			if ((int)Projectile.ai[0] == 1)
+			if ((int)Projectile.ai[0] == 1 || Projectile.ai[0] == 3)
                 frame = new Rectangle(0, 12, 24, 10);
 			Vector2 previous = Projectile.Center;
+			if(Projectile.ai[0] >= 2)
+            {
+                Vector2 from = Projectile.Center;
+                for (int i = 1; i < 10; i++)
+                {
+                    float alphaMult2 = Math.Clamp((Projectile.ai[1] - 1) / 3f, 0, 1);
+                    Vector2 to = Projectile.Center + Projectile.velocity * i * 15f * alphaMult;
+                    Vector2 toPos = from - to;
+                    int length = (int)toPos.Length() + 1;
+                    Main.spriteBatch.Draw(texture, from - Main.screenPosition, frame, color * Math.Clamp(alphaMult2 * (1 - ((float)(i - 1) / 10f)) * 0.5f, 0, 1.0f), Projectile.velocity.ToRotation(), origin, new Vector2(length / 6f, 0.25f), SpriteEffects.None, 0f);
+                    from = to;
+                }
+            }
 			if(Projectile.timeLeft < 480)
 				for (int k = 0; k < Projectile.oldPos.Length; k++)
 				{
@@ -70,7 +84,7 @@ namespace SOTS.Projectiles.Permafrost
 		bool runOnce = true;
 		public override void AI()
         {
-            Color color = Projectile.ai[0] == 1 ? new Color(100, 100, 250, 200) : new Color(250, 100, 100, 200);
+            Color color = (Projectile.ai[0] == 1 || Projectile.ai[0] == 3) ? new Color(100, 100, 250, 200) : new Color(250, 100, 100, 200);
             if (Projectile.timeLeft < 24)
 			{
 				Projectile.alpha += 20;

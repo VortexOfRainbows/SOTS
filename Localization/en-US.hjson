@@ -6715,6 +6715,7 @@ Mods: {
 			HydroBubble.DisplayName: Hydro Bubble
 			PolarisMines.DisplayName: Polaris Mine
 			PolarisBeam.DisplayName: Polaris Beam
+			PolarisLaser.DisplayName: Polaris Laser
 		}
 
 		DamageClasses: {

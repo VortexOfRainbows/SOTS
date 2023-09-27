@@ -32,17 +32,16 @@ Update Objectives:
 	1. Attack Ideas:
 		1. Attack using big poles as lasers (spinning laser attack), while also using weapons to attack
 			1. Can use all cannons, all laser, all sword, or a random combination (each have different movement patterns)
-		2. Dash attack spinning with swords. Leave behing land mines. Only happens in PHASE2
-		3. Attack where Polaris spins around the player shooting lasers
-		4. Launch snow flakes which do a fractal-like pattern
-		5. Rain snow flakes down from the sky
-		6. Extend weapons out and spin them using their connections as a hitbox
+		2. Attack where Polaris spins around the player shooting lasers
+		3. Launch snow flakes which do a fractal-like pattern
+		4. Rain snow flakes down from the sky
+		5. Extend weapons out and spin them using their connections as a hitbox
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
-7. Fix enemy death projectiles doing damage to player through hydroservant (make sure enemy spawned projectiles are not owned) 
+7. Fix enemy death projectiles doing damage to player through hydroservant/fakeplayer (make sure enemy spawned projectiles are not owned) 
 8. Add elemental amulet borders for fontaine
 
 Daily Log:
