@@ -1707,7 +1707,8 @@ namespace SOTS
 		}
 		public static float LuxLightingFadeIn = 0;
 		public static float PlanetariumLightingFadeIn = 0;
-		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+        public static float PolarisLightingFadeIn = 0;
+        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
 		{
 			if (Main.gameMenu)
 			{
@@ -1715,15 +1716,17 @@ namespace SOTS
 			}
 			var player = Main.LocalPlayer;
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
-			if (sPlayer.zoneLux)
-			{
-
-			}
-			else if (LuxLightingFadeIn > 0)
+			if (!sPlayer.zoneLux && LuxLightingFadeIn > 0)
 			{
 				LuxLightingFadeIn -= 0.01f;
-			}
-			backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+            }
+            if (!sPlayer.zonePolaris && PolarisLightingFadeIn > 0)
+            {
+                PolarisLightingFadeIn -= 0.01f;
+            }
+            backgroundColor = Color.Lerp(backgroundColor, new Color(45, 45, 70), 0.8f * PolarisLightingFadeIn);
+            tileColor = Color.Lerp(tileColor, new Color(45, 45, 70), 0.8f * PolarisLightingFadeIn);
+            backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
 			tileColor = Color.Lerp(tileColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
 			//Lighting.GlobalBrightness *= MathHelper.Lerp(1, 0, 0.96f * LuxLightingFadeIn);
 			if (sPlayer.PlanetariumBiome)

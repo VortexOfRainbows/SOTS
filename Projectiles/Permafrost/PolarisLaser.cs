@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
+using SOTS.Items.Planetarium.Furniture;
 
 namespace SOTS.Projectiles.Permafrost
 {
@@ -102,35 +103,37 @@ namespace SOTS.Projectiles.Permafrost
 			return false;
 			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
-		public void Draw(SpriteBatch spriteBatch)
+		public static void Draw(SpriteBatch spriteBatch, Vector2 start, Vector2 end, int Type, float alphaScale, float progressMultiplier = 1f)
 		{
-			if (!hasInit)
-				return;
-			float alphaScale = Projectile.timeLeft / 30f;
-			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[ModContent.ProjectileType<PolarisLaser>()].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 4);
-			Vector2 toEnd = finalPosition - Projectile.Center;
+			Vector2 toEnd = end - start;
 			float maxLength = toEnd.Length() / texture.Height * 4;
 			Color color;
+			float xScale = 1f;
+			if (progressMultiplier != 1)
+			{
+                xScale = 1f / texture.Width * 4f;
+            }
 			for (int j = -1; j <= 1; j += 2)
             {
                 Rectangle frame = new Rectangle(0, texture.Height / 2, texture.Width, texture.Height / 2);
-                if (Projectile.ai[0] == 0)
+                if (Type == 0)
                 {
                     frame = new Rectangle(0, 0, texture.Width, texture.Height / 2);
                 }
-                if (Projectile.ai[0] == 1)
+                if (Type == 1)
                 {
                     if (j == -1)
                         frame = new Rectangle(0, 0, texture.Width, texture.Height / 2);
                     else
                         frame = new Rectangle(0, texture.Height / 2, texture.Width, texture.Height / 2);
                 }
-                if (Projectile.ai[0] == 2)
+                if (Type == 2)
                 {
                     frame = new Rectangle(0, texture.Height / 2, texture.Width, texture.Height / 2);
                 }
-                if (Projectile.ai[0] == 3)
+                if (Type == 3)
                 {
                     if (j == -1)
                         frame = new Rectangle(0, texture.Height / 2, texture.Width, texture.Height / 2);
@@ -140,24 +143,27 @@ namespace SOTS.Projectiles.Permafrost
                 Vector2 offset = Vector2.Zero;
 				float percent = 0f;
 				color = new Color(100, 100, 100, 0);
-				for (float i = 0; i < maxLength; i++)
+				for (float i = 0; i < maxLength * progressMultiplier; i++)
 				{
 					if (percent < 1)
 						percent += 0.1f;
 					if (!SOTS.Config.lowFidelityMode || (int)(i % 2) == 0)
 					{
-						Vector2 position = Vector2.Lerp(Projectile.Center, finalPosition, i / maxLength);
-						Vector2 sinusoid = j * new Vector2(0, 8 * (float)Math.Sin(MathHelper.ToRadians(i * 4))).RotatedBy(Projectile.velocity.ToRotation()) * percent;
-						Vector2 drawPos = position - Main.screenPosition + sinusoid;
-						spriteBatch.Draw(texture, drawPos + offset, frame, color * alphaScale * percent, Projectile.velocity.ToRotation() + MathHelper.PiOver2, origin, new Vector2(1f, 2f), SpriteEffects.None, 0f);
+						Vector2 position = Vector2.Lerp(start, end, i / maxLength);
+						Vector2 sinusoid = j * new Vector2(0, 8 * (float)Math.Sin(MathHelper.ToRadians(i * 4))).RotatedBy(toEnd.ToRotation()) * percent;
+						Vector2 drawPos = position - Main.screenPosition + sinusoid * progressMultiplier;
+						spriteBatch.Draw(texture, drawPos + offset, frame, color * alphaScale * percent * progressMultiplier, toEnd.ToRotation() + MathHelper.PiOver2, origin, new Vector2(xScale, 2f), SpriteEffects.None, 0f);
 					}
 				}
 			}
 			return;
 		}
         public override bool PreDraw(ref Color lightColor)
-		{
-			Draw(Main.spriteBatch);
+        {
+            if (!hasInit)
+                return false;
+            float alphaScale = Projectile.timeLeft / 30f;
+            Draw(Main.spriteBatch, Projectile.Center, finalPosition, (int)Projectile.ai[0], alphaScale);
 			return false;
 		}
     }

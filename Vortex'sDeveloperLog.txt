@@ -30,12 +30,15 @@ Update Objectives:
 4. Unique Archaeologist tooltips for items (pending)
 5. Polaris Rework (pending)
 	1. Attack Ideas:
-		1. Attack using big poles as lasers (spinning laser attack), while also using weapons to attack
-			1. Can use all cannons, all laser, all sword, or a random combination (each have different movement patterns)
+		1. Attack using big poles as laser, while also using weapons to attack
+			1. Can use all cannons (which shoot mines)
+			2. All Laser (which just shoot lasers)
+			3. All Saber (which spin with an extended hitbox) (phase 2 attack, already complete)
+			4. or a random combination (each have different movement patterns)
 		2. Attack where Polaris spins around the player shooting lasers
 		3. Launch snow flakes which do a fractal-like pattern
 		4. Rain snow flakes down from the sky
-		5. Extend weapons out and spin them using their connections as a hitbox
+	2. Needs: Second Phase Transition (use sword spin attack), Second phase variants of phase 1 attacks 
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
@@ -46,11 +49,11 @@ Update Objectives:
 
 Daily Log:
 
-9/23/23 to 9/25/23
+9/23/23 to 9/26/23
 1. Polaris now holds multiple weapons capable of swapping
 2. Polaris prim trails for sword attack
 3. Polaris hitbox makes more sense
-4. 3 basic attack patterns done for polaris!
+4. 4 basic attack patterns done for polaris!
 	1. Needs: A LOT MORE SOUND FX
 
 9/20/23

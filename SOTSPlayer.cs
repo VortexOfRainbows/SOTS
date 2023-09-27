@@ -58,6 +58,7 @@ using SOTS.Items.Temple;
 using SOTS.Items.ChestItems;
 using SOTS.Common.Systems;
 using SOTS.FakePlayer;
+using SOTS.NPCs.Boss.Polaris.NewPolaris;
 
 namespace SOTS
 {
@@ -171,6 +172,7 @@ namespace SOTS
 		}
 		public int oldHeldProj = -1;
 		public bool zoneLux = false;
+		public bool zonePolaris = false;
 		public bool oldTimeFreezeImmune = false;
 		public bool TimeFreezeImmune = true;
 		public bool VoidAnomaly = false;
@@ -808,15 +810,21 @@ namespace SOTS
             }
 			VoidAnomaly = false;
 			VMincubator = false;
-			zoneLux = false;
-			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()))
+			zoneLux = zonePolaris = false;
+			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()) || NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()))
 			{
 				for(int i = 0; i < Main.npc.Length; i++)
                 {
-					if(Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<Lux>() && Main.npc[i].Distance(Player.Center) < 3200)
+					if(Main.npc[i].active && Main.npc[i].Distance(Player.Center) < 3200)
                     {
-						zoneLux = true;
-						break;
+                        if (Main.npc[i].type == ModContent.NPCType<NewPolaris>())
+                        {
+                            zonePolaris = true;
+                        }
+                        if (Main.npc[i].type == ModContent.NPCType<Lux>())
+                        {
+                            zoneLux = true;
+                        }
                     }
                 }
             }
