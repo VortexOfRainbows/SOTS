@@ -31,6 +31,8 @@ Update Objectives:
 5. Polaris Rework (pending)
 	1. Attack Ideas (need one more second phase attack)
 		1. Laser spiral attack which shoots lasers in a cool pattern similar to phase 1
+	2. Needs: Balance testing, server syncing, sound effects and consistency for phase 2 transition
+	3. Needs: Special armor while waiting for transition and (perhaps) certain attacks
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
