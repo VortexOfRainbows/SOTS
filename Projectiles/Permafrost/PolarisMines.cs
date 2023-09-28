@@ -60,8 +60,25 @@ namespace SOTS.Projectiles.Permafrost
             if (Projectile.ai[1] < 590)
                 Projectile.ai[1] = 590;
         }
+        bool runOnce = true;
         public override bool PreAI()
         {
+            if(runOnce && Projectile.velocity.Length() > 3)
+            {
+                runOnce = false;
+                for(int i = 0; i < 15; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
+                    dust.velocity *= 1.8f;
+                    dust.velocity += Projectile.velocity * 0.4f;
+                    dust.noGravity = true;
+                    dust.scale += 0.65f;
+                    dust.color = Projectile.ai[0] == 1 ? new Color(100, 100, 250, 200) : new Color(250, 100, 100, 200);
+                    dust.fadeIn = 0.1f;
+                    dust.scale *= 1.0f;
+                    dust.alpha = Projectile.alpha;
+                }
+            }
             if (Projectile.ai[0] > 0)
             {
                 Projectile.frame = 1;
@@ -72,7 +89,7 @@ namespace SOTS.Projectiles.Permafrost
                 Projectile.Kill();
             }
             Projectile.rotation += Projectile.velocity.X * 0.025f;
-            if(Projectile.velocity.Length() > 1)
+            if(Projectile.velocity.Length() > 1 && Projectile.timeLeft < 597)
             {
                 int chance = 20;
                 chance -= (int)Projectile.velocity.Length();
@@ -113,8 +130,8 @@ namespace SOTS.Projectiles.Permafrost
             {
                 for(int i = 0; i < 4; i++)
                 {
-                    Vector2 circular = new Vector2(2.0f, 0).RotatedBy(i * MathHelper.TwoPi / 4f + Projectile.rotation);
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + circular * 12, circular, ModContent.ProjectileType<PolarBullet>(), Projectile.damage, 0, Main.myPlayer, 0, 1 - Projectile.ai[0]);
+                    Vector2 circular = new Vector2(1.0f, 0).RotatedBy(i * MathHelper.TwoPi / 4f + Projectile.rotation);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + circular * 24, circular * 1.5f, ModContent.ProjectileType<PolarBullet>(), Projectile.damage, 0, Main.myPlayer, 420, 1 - Projectile.ai[0]);
                 }
             }
         }

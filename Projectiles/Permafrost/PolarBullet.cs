@@ -71,6 +71,7 @@ namespace SOTS.Projectiles.Permafrost
             }
             if (!AllowTrailToEnd)
             {
+                lightColor = Color.Lerp(lightColor, Color.White, 0.25f);
                 Main.spriteBatch.Draw(textureReal, Projectile.Center - Main.screenPosition, frame, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
                 Main.spriteBatch.Draw(textureGlow, Projectile.Center - Main.screenPosition, frame, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
             }
@@ -135,7 +136,7 @@ namespace SOTS.Projectiles.Permafrost
 				cataloguePos();
 			}
 			checkPos();
-			if (Projectile.timeLeft < 600 && !AllowTrailToEnd)
+			if (Projectile.timeLeft < 600 + Projectile.ai[0] && !AllowTrailToEnd)
 			{
 				triggerStop();
 			}

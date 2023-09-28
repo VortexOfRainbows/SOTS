@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using static Humanizer.In;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -14,24 +16,24 @@ namespace SOTS.Projectiles.Permafrost
 			writer.Write(randIncrement);
 			writer.Write(Projectile.tileCollide);
 			writer.Write(Projectile.friendly);
-			writer.Write(endHow);
+			writer.Write(AllowTrailToEnd);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			randIncrement = reader.ReadSingle();
 			Projectile.tileCollide = reader.ReadBoolean();
 			Projectile.friendly = reader.ReadBoolean();
-			endHow = reader.ReadInt32();
+            AllowTrailToEnd = reader.ReadBoolean();
 		}
         public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Polar Mortar");
+			Main.projFrames[Type] = 2;
 		}
         public override void SetDefaults()
         {
 			Projectile.aiStyle = 0;
-			Projectile.height = 28;
-			Projectile.width = 44;
+			Projectile.height = 32;
+			Projectile.width = 32;
 			Projectile.penetrate = -1;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
@@ -41,7 +43,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.netImportant = true;
 			Projectile.extraUpdates = 1;
 		}
-		float randIncrement = 3;
+		float randIncrement = 2.5f;
 		float counter = 0;
 		bool runOnce = true;
 		bool runOnce2 = true;
@@ -51,49 +53,9 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool ShouldUpdatePosition()
 		{
-			return endHow == 0;
+			return !AllowTrailToEnd;
 		}
 		Vector2[] trailPos = new Vector2[12];
-		public void TrailPreDraw(Color lightColor)
-		{
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarMortarTrail").Value;
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = Projectile.Center;
-			float drawAmt = 1f;
-			if (SOTS.Config.lowFidelityMode)
-				drawAmt = 0.5f;
-			for (int k = 0; k < trailPos.Length; k++)
-			{
-				float scale = Projectile.scale * 1.8f * (trailPos.Length - k) / (float)trailPos.Length;
-				if (trailPos[k] == Vector2.Zero)
-				{
-					break;
-				}
-				Color color = new Color(100, 100, 100, 0);
-				Vector2 drawPos = trailPos[k] - Main.screenPosition;
-				Vector2 currentPos = trailPos[k];
-				Vector2 betweenPositions = previousPosition - currentPos;
-				color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.33f;
-				float max = betweenPositions.Length() / (5f * scale) * drawAmt;
-				for (int i = 0; i < max; i++)
-				{
-					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 3; j++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.1f * scale;
-						float y = Main.rand.Next(-10, 11) * 0.1f * scale;
-						if (j == 0)
-						{
-							x = 0;
-							y = 0;
-						}
-						if (trailPos[k] != Projectile.Center)
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
-					}
-				}
-				previousPosition = currentPos;
-			}
-		}
 		public void cataloguePos()
 		{
 			Vector2 current = Projectile.Center;
@@ -105,54 +67,91 @@ namespace SOTS.Projectiles.Permafrost
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
-		{
-			TrailPreDraw(lightColor);
-			return endHow == 0;
+        {
+            Texture2D textureReal = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarMortarTrail").Value;
+            Texture2D textureGlow = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarMortarGlow").Value;
+            Vector2 drawOrigin = new Vector2(textureReal.Width * 0.5f, textureReal.Height / 4f);
+            Vector2 drawOriginTrail = new Vector2(0, texture.Height / 2f);
+            Vector2 previousPosition = Projectile.Center;
+            Rectangle frame = new Rectangle(0, textureReal.Height / 2 * (int)(Projectile.ai[1] % 2), textureReal.Width, textureReal.Height / 2);
+            for (int k = 0; k < trailPos.Length; k++)
+            {
+                if (trailPos[k] == Vector2.Zero)
+                {
+                    break;
+                }
+                Color color = new Color(100, 100, 100, 0);
+                Vector2 drawPos;
+                Vector2 currentPos = trailPos[k];
+                Vector2 betweenPositions = currentPos - previousPosition;
+                color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
+                drawPos = previousPosition - Main.screenPosition;
+                if (trailPos[k] != Projectile.Center)
+                    Main.spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation(), drawOriginTrail, new Vector2(betweenPositions.Length() / texture.Width, 1f), SpriteEffects.None, 0f);
+                previousPosition = currentPos;
+            }
+            lightColor = Color.Lerp(lightColor, Color.White, 0.25f);
+			if (!AllowTrailToEnd)
+            {
+				Main.spriteBatch.Draw(textureReal, Projectile.Center - Main.screenPosition, frame, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(textureGlow, Projectile.Center - Main.screenPosition, frame, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+			}
+            return false;
 		}
 		public override bool PreAI()
 		{
-			int dustAmtMult = 3;
-			if (SOTS.Config.lowFidelityMode)
-				dustAmtMult = 1;
-			if (Projectile.ai[0] == -1)
+            Color Color = new Color(187, 11, 76, 0);
+            if ((int)(Projectile.ai[1] % 2) != 0)
+            {
+                Color = new Color(64, 74, 204, 0);
+            }
+            if (Projectile.ai[0] == -1)
 			{
 				Vector2 position = Projectile.Center;
 				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, position);
 				Projectile.ai[0]--;
-				for (int i = 0; i < 15 * dustAmtMult; i++)
+                int dustAmtMult = 2;
+                if (SOTS.Config.lowFidelityMode)
+                    dustAmtMult = 1;
+                for (int i = 0; i < 20 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
-					Dust dust = Main.dust[num1];
-					dust.velocity *= 2.75f;
-					dust.velocity += Projectile.velocity * 0.2f;
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
+					dust.velocity *= 2.0f;
+					dust.velocity += Projectile.velocity * 0.25f;
 					dust.noGravity = true;
-					dust.scale += 1.0f;
-					dust.color = new Color(250, 100, 100, 100);
+                    dust.scale *= 0.5f;
+                    dust.scale += 1.5f;
+					dust.color = Color;
 					dust.fadeIn = 0.1f;
-					dust.scale *= 1.5f;
 					dust.alpha = Projectile.alpha;
-				}
-			}
-			if (runOnce)
-			{
-				for (int i = 0; i < 8.5 * dustAmtMult; i++)
-				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
-					Dust dust = Main.dust[num1];
-					dust.velocity *= 1.5f;
-					dust.noGravity = true;
-					dust.scale += 0.1f;
-					dust.color = new Color(250, 100, 100, 100);
-					dust.fadeIn = 0.1f;
-					dust.scale *= 1.4f;
-					dust.alpha = Projectile.alpha;
-				}
-				for (int i = 0; i < trailPos.Length; i++)
-				{
-					trailPos[i] = Vector2.Zero;
+					if(Main.rand.NextBool(2))
+					{
+						dust.type = ModContent.DustType<PixelDust>();
+						dust.fadeIn = 7;
+						dust.scale = 2;
+					}
 				}
 				if(Main.netMode != NetmodeID.MultiplayerClient)
-					randIncrement = Main.rand.NextFloat(1.5f, 4.5f);
+                {
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, -Projectile.velocity * 0.5f + new Vector2(0, -2) + Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<PolarisMines>(), Projectile.damage, 0, Main.myPlayer, (int)(Projectile.ai[1] % 2), Main.rand.NextFloat(120));
+                }
+            }
+            if (runOnce)
+            {
+                for (int i = 0; i < trailPos.Length; i++)
+                {
+                    trailPos[i] = Vector2.Zero;
+                }
+				if(Projectile.velocity == Vector2.Zero)
+                {
+                    randIncrement = 2.5f;
+                }
+				else
+				{
+					counter = 200;
+					runOnce2 = false;
+				}
 				Projectile.netUpdate = true;
 				runOnce = false;
 			}
@@ -162,11 +161,22 @@ namespace SOTS.Projectiles.Permafrost
 					cataloguePos();
 			}
 			checkPos();
-			if (Projectile.timeLeft < 1000 && endHow == 0)
+			if (Projectile.timeLeft < 1000 && !AllowTrailToEnd)
 			{
 				triggerStop();
-			}
-			return endHow != 1;
+            }
+            else if (!AllowTrailToEnd && Main.rand.NextBool(15))
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
+                dust.velocity *= 0.2f;
+                dust.velocity += Projectile.velocity * 0.2f;
+                dust.noGravity = true;
+                dust.scale += 0.5f;
+                dust.color = Color;
+                dust.fadeIn = 0.1f;
+                dust.alpha = Projectile.alpha;
+            }
+            return !AllowTrailToEnd;
 		}
 		public void checkPos()
 		{
@@ -188,16 +198,16 @@ namespace SOTS.Projectiles.Permafrost
 			width = 24;
 			height = 24;
 			return true;
-		}
-		int endHow = 0;
-		public override bool OnTileCollide(Vector2 oldVelocity)
+        }
+        bool AllowTrailToEnd = false;
+        public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			triggerStop();
 			return false;
 		}
 		public void triggerStop()
 		{
-			endHow = 1;
+            AllowTrailToEnd = true;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
 			Projectile.velocity *= 0f;
@@ -208,9 +218,9 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			if(Projectile.alpha > 0)
             {
-				Projectile.alpha -= 4;
+				Projectile.alpha -= 12;
             }
-			else
+			if(Projectile.alpha <= 0)
             {
 				Projectile.alpha = 0;
 				Projectile.hostile = true;
@@ -220,32 +230,31 @@ namespace SOTS.Projectiles.Permafrost
 			Vector2 toLocation = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 			Vector2 toTheLocation = toLocation - Projectile.Center;
 			Vector2 SaveToLocatio = toTheLocation;
-			Vector2 circular = new Vector2(3f + counter * 0.025f, 0).RotatedBy(MathHelper.ToRadians(counter));
+			Vector2 circular = new Vector2(2.25f + counter * 0.1f, 0).RotatedBy(MathHelper.ToRadians(counter * 270f / 190f));
 			toTheLocation = toTheLocation.SafeNormalize(Vector2.Zero) * circular.Y;
-			if(counter < 270)
+			if(counter < 190)
 			{
 				Projectile.Center -= toTheLocation;
 				Projectile.rotation = SaveToLocatio.ToRotation();
-				if (toTheLocation.X < 0)
-				{
-					Projectile.rotation -= MathHelper.Pi;
-					Projectile.spriteDirection = -1;
-				}
-				else
-				{
-					Projectile.spriteDirection = 1;
-				}
+				if(counter < 30)
+					if (toTheLocation.X < 0)
+					{
+						Projectile.spriteDirection = -1;
+					}
+					else
+					{
+						Projectile.spriteDirection = 1;
+					}
 			}
-			if (counter >= 270)
+			if (counter >= 190)
 			{
 				if(runOnce2)
-					Projectile.velocity = toTheLocation.SafeNormalize(Vector2.Zero) * -12;
+					Projectile.velocity = toTheLocation.SafeNormalize(Vector2.Zero) * -11.0f;
 				runOnce2 = false;
-				Projectile.velocity.Y += 0.09f;
+				Projectile.velocity.Y += 0.104f;
 				Projectile.rotation = Projectile.velocity.ToRotation();
 				if (Projectile.velocity.X < 0)
 				{
-					Projectile.rotation -= MathHelper.Pi;
 					Projectile.spriteDirection = -1;
 				}
 				else
