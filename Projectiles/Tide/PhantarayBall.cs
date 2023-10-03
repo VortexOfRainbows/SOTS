@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Tide
             Main.spriteBatch.Draw(texture, drawPos, null, new Color(200, 150, 160, 0), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             DustExplosion();
 		}

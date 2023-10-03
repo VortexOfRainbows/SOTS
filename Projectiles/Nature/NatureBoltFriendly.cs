@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Nature
         {
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			if(Projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeatFriendly>(), Projectile.damage, 0, Main.myPlayer);

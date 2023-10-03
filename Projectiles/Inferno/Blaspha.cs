@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Inferno
         {
             return Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             SOTSUtils.PlaySound(SoundID.Item36, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.4f);

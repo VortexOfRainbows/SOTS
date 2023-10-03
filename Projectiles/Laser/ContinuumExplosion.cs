@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.hostile = false;
 			Projectile.alpha = 255;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
 			if(Projectile.ai[0] == 1)
 			{

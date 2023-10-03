@@ -130,7 +130,7 @@ namespace SOTS.Projectiles.Evil
 		}
 		public bool[] effected = new bool[200];
 		float bubbleSize = 0f;
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 360; i += 10)
 			{

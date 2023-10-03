@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Earth
         }
         bool ended = false;
         int chargeLevel = 0;
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
             if (chargeLevel != 0)

@@ -25,7 +25,7 @@ namespace SOTS.Projectiles
 		}
 		Vector2 initialVelo;
 		bool runOnce = true;
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.65f);
 			for (int i = 0; i < 5; i++)

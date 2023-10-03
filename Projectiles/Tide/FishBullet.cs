@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Tide
 				}
 			}
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/DumbFishSound"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 2.0f, -0.6f + Main.rand.NextFloat(-0.1f, 0.1f));
 			for (int i = 0; i < 30; i++)

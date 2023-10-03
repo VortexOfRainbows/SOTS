@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.Pyramid
 				dustRing(-1);
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 10; i++)
 			{

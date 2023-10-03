@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Tide
 				Main.dust[num1].velocity += Projectile.velocity * -0.1f;
 			}
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 10; i++)
 			{

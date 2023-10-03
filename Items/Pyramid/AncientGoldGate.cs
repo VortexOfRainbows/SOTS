@@ -301,7 +301,7 @@ namespace SOTS.Items.Pyramid
 			Projectile.alpha = 255;
 			Projectile.hide = true;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			int uniqueC = (int)Projectile.ai[0];
 			if (Math.Abs(uniqueC) == 1)

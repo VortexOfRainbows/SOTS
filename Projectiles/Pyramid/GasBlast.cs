@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(rotateMod * Direction2));
 			return base.PreAI();
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			if(Main.netMode != NetmodeID.Server)
 			{

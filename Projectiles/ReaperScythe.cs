@@ -86,7 +86,7 @@ namespace SOTS.Projectiles
         {
 			return Projectile.ai[1] != 25;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 360; i += 30)
 			{

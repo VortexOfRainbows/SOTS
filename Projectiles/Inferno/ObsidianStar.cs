@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			hitbox = new Rectangle((int)(Projectile.position.X - Projectile.width/2), (int)(Projectile.position.Y - Projectile.height/2), Projectile.width * 2, Projectile.height * 2);
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 360; i += 8)
 			{

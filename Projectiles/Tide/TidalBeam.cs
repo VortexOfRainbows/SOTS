@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Tide
 				Main.spriteBatch.Draw(texture, drawPos + random, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 1f, SpriteEffects.None, 0f);
 			}
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 20; i++)
 			{

@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.alpha = 255;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if (Projectile.ai[1] == -1)
             {

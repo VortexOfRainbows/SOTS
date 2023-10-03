@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.05f;
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			DustOut();
 		}

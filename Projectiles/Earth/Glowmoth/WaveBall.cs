@@ -210,7 +210,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
         {
 			return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			DustOut();
 		}

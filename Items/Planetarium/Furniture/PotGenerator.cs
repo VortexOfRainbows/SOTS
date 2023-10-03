@@ -399,7 +399,7 @@ namespace SOTS.Items.Planetarium.Furniture
 			Projectile.alpha = 255;
 			Projectile.Kill();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			int i = (int)Projectile.Center.X / 16;
 			i--;

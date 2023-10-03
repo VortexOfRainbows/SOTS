@@ -59,7 +59,7 @@ namespace SOTS.Projectiles
 			modifiers.ScalingArmorPenetration += 0.2f;
 			modifiers.ArmorPenetration += 10;
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 20; i++)
 			{
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles
 				dust.velocity += Projectile.oldVelocity.SafeNormalize(Vector2.Zero) * 0.4f;
 				dust.scale *= 1.4f;
 			}
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

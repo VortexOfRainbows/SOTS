@@ -176,7 +176,7 @@ namespace SOTS.Projectiles.Earth
 				}
 			}
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
 			if(Projectile.ai[0] != -1)
             {

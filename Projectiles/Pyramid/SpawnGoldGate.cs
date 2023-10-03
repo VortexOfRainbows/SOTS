@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.alpha = 255;
 			Projectile.Kill();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Vector2 position = Projectile.Center + new Vector2(16, 0);
 			for (int k = 0; k < 360; k += 5)

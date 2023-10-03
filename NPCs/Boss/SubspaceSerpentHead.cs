@@ -42,7 +42,7 @@ namespace SOTS.NPCs.Boss
         {
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             Main.npcFrameCount[NPC.type] = 8;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true } );
+            NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
         }
         public override void SetDefaults()
         {

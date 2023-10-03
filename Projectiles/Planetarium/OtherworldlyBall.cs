@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Planetarium
 			loc.Y += Main.rand.Next(-5, 6);
 			loc *= 0.1f;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 			if (Projectile.owner == Main.myPlayer)

@@ -35,7 +35,7 @@ namespace SOTS.Projectiles
 			Projectile.aiStyle = 0;
 			return false;
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 20; i ++)
 			{
@@ -43,7 +43,7 @@ namespace SOTS.Projectiles
 				dust.scale *= 1.1f;
 				dust.velocity *= 1.15f;
 			}
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
         }
         public override void AI()
 		{

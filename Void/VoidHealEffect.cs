@@ -27,7 +27,7 @@ namespace SOTS.Void
 		* The reason I use a projectile to execute server syncing is because I don't know enough to do it a different way
 		* It also allows me to generate dust in a special way, so it isn't just a workaround, but also useful in other ways
 		*/
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			int voidAmt = (int)Projectile.ai[1];

@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
                 }
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if(timeLeft <= 1)
             {

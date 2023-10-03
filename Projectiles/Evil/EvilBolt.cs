@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Evil
 				dust.scale *= 1.25f;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			DustOut();
 		}

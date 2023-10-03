@@ -37,7 +37,7 @@ namespace SOTS.Projectiles
 				Projectile.velocity += circularLocation;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 22; i++)
 			{

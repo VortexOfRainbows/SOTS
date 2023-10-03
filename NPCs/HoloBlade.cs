@@ -25,17 +25,7 @@ namespace SOTS.NPCs
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.TrailCacheLength[NPC.type] = 8;
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Poisoned,
-					BuffID.Frostburn,
-					BuffID.Ichor,
-					BuffID.Venom,
-					BuffID.OnFire
-				}
-			});
+			NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
 		}
 		public override void SetDefaults()
 		{

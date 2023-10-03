@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Chaos
 			dust2.fadeIn = 0.2f;
 			dust2.scale = 1.8f;
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if(Projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(360), Main.rand.NextFloat(360));

@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Planetarium
 			loc.Y += Main.rand.Next(-5, 6);
 			loc *= 0.1f;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.5f);
 			Vector2 circularLocation = new Vector2(10, 0);
@@ -151,7 +151,6 @@ namespace SOTS.Projectiles.Planetarium
 			{
 				LaunchLightningAtNearbyEnemies(Projectile, ModContent.ProjectileType<OriginLightningZap>(), 36, 1256, Projectile.damage);
 			}
-			base.Kill(timeLeft);
         }
 		public static void LaunchLightningAtNearbyEnemies(Projectile Projectile, int LightningType, int TotalNPCs, int distance, int damage)
 		{

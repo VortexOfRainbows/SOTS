@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			return base.PreAI();
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			if(player.active)

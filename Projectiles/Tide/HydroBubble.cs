@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Tide
 			AiCounter++;
 
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
             float popMultiplier = 2.5f;
             for (int j = 0; j < TargetWidth * popMultiplier; j++)

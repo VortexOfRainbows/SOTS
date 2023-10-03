@@ -239,7 +239,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.friendly = reader.ReadBoolean();
 			lockedVelo = reader.ReadBoolean();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int k = 0; k < trailPos.Length; k++)
 			{

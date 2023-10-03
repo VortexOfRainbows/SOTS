@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Planetarium
         {
 			return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			int frostFlake = (int)Projectile.ai[0];
 			if(frostFlake > 0 && Main.myPlayer == Projectile.owner)

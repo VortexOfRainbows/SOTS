@@ -16,7 +16,7 @@ namespace SOTS.Projectiles
             AIType = 48; 
 			Projectile.penetrate = 1;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
 			if(Projectile.owner == Main.myPlayer)
 			{

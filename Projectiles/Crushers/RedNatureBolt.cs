@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Crushers
         {
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			if(Projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<RedNatureBeat>(), Projectile.damage, 0, Main.myPlayer);

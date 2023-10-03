@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Ores
 			Player player = Main.player[Projectile.owner];
             target.immune[Projectile.owner] = 0;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 360; i += 8)
 			{

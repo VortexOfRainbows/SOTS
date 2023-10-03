@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
         {
 			return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			if(Main.netMode != NetmodeID.MultiplayerClient)
 			{
@@ -436,7 +436,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		{
 			return true;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 
 		}

@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.45f);
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			genGore();
 			if(Projectile.owner == Main.myPlayer)

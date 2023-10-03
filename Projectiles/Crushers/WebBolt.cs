@@ -41,11 +41,11 @@ namespace SOTS.Projectiles.Crushers
             dust.noGravity = true;
             dust.scale = 0.75f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if(Main.myPlayer == Projectile.owner)
                 Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Webbing>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner);
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
         }
     }
 }

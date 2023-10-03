@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Permafrost
 				dust.scale *= 1.25f;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item50, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.3f);
 			for (int i = 0; i < 360; i += 30)

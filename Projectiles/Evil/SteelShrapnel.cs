@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Evil
 			int width = 16;
 			hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 8; i++)
 			{

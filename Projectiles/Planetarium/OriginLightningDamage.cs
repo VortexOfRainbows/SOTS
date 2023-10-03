@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Planetarium
         {
 			return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for (int h = 0; h < 8; h++)
 			{

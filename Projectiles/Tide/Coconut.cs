@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Tide
 				Main.dust[num1].scale = Projectile.scale + 0.2f;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
 			Player owner = Main.player[Projectile.owner];

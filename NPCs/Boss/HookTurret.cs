@@ -70,14 +70,8 @@ namespace SOTS.NPCs.Boss
 				Hide = true
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Poisoned
-				}
-			});
-		}
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;

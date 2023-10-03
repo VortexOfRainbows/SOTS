@@ -1577,7 +1577,7 @@ namespace SOTS.NPCs.Town
 				entity.Center = entity.Center + toFinal;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 32; i++)
 			{
@@ -1894,7 +1894,7 @@ namespace SOTS.NPCs.Town
 			Projectile.alpha = 255;
 			Projectile.Kill();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			int whoAmI = (int)Projectile.ai[0];
 			bool isAnItem = Projectile.ai[1] == -1;

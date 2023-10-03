@@ -38,19 +38,7 @@ namespace SOTS.NPCs.Boss.Lux
 				PortraitPositionYOverride = -20f,
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Poisoned,
-					BuffID.Frostburn,
-					BuffID.Ichor,
-					BuffID.Venom,
-					BuffID.OnFire,
-					BuffID.BetsysCurse
-				}
-			});
+			NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
 		}
 		public override void SetDefaults()
 		{

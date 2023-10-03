@@ -334,7 +334,7 @@ namespace SOTS.Items.Furniture.Functional
 				HydraulicPressTile.ReturnHydraulic(i, j);
 			}
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
 			if(timeLeft > 2)
 				ResetHydraulic();

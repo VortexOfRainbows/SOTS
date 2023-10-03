@@ -38,7 +38,7 @@ namespace SOTS.Projectiles
 			if(Projectile.timeLeft % 10 == 0)
 				Projectile.alpha++;
         }
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 4; i++)
 				Gore.NewGore(Projectile.GetSource_Death(), new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 0.45f);	

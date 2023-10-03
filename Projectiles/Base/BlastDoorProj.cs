@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Base
 			Projectile.alpha = 255;
 			Projectile.Kill();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if(Projectile.ai[0] == 1)
 				Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/BlastDoorClose").WithVolumeScale(0.7f), Projectile.Center);

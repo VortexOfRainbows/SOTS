@@ -41,17 +41,8 @@ namespace SOTS.NPCs
 				CustomTexturePath = "SOTS/NPCs/PhaseEye",
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Frostburn,
-					BuffID.OnFire,
-					BuffID.Poisoned,
-					BuffID.Venom
-				}
-			});
-		}
+            NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
+        }
 		public override void SetDefaults()
 		{
             NPC.aiStyle =0; 

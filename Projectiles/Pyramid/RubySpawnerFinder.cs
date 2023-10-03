@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.Kill();
 			cataloguePos(Projectile.Center, trailPos);
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			if(Projectile.knockBack < 0)
 			{

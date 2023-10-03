@@ -217,7 +217,7 @@ namespace SOTS.Projectiles.Inferno
                 dust.alpha = 100;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             GenDust();
         }

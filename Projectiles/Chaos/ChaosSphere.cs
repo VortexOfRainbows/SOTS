@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			return false;
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)

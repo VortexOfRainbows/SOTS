@@ -685,7 +685,7 @@ namespace SOTS
 
 			return !diff;
         }
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[(int)Projectile.ai[0]];
 			if(Main.netMode != NetmodeID.MultiplayerClient)

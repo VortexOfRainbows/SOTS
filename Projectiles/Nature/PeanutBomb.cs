@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Nature
 				Main.dust[num1].scale = Projectile.scale + 0.2f;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if (Main.myPlayer == Projectile.owner)
 			{

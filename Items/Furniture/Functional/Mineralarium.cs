@@ -737,7 +737,7 @@ namespace SOTS.Items.Furniture.Functional
 			Projectile.alpha = 255;
 			Projectile.Kill();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			int tileID = (int)Projectile.ai[1];
 			int i = (int)Projectile.Center.X / 16;

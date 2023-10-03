@@ -63,16 +63,10 @@ namespace SOTS.NPCs.Boss.Advisor
 				PortraitPositionYOverride = 10f,
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-			{ 
-				SpecificallyImmuneTo= new int[]
-				{
-					BuffID.OnFire,
-					BuffID.Frostburn,
-					BuffID.ShadowFlame,
-					BuffID.CursedInferno
-				}
-			});
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.ShadowFlame] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.CursedInferno] = true;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

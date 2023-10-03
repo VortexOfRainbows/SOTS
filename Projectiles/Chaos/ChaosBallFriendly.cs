@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Chaos
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, (npc.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (Projectile.velocity.Length() + 3), 0.06f);
 			}
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			if(Main.myPlayer == Projectile.owner)
 			{

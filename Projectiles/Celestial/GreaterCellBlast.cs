@@ -128,7 +128,7 @@ namespace SOTS.Projectiles.Celestial
 		{
 			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(Terraria.ID.SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f);
 			if (Main.netMode != NetmodeID.MultiplayerClient)

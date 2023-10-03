@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
         {
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			int particlesR = 60;
 			owner = (int)Projectile.ai[0];
@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 				dust.alpha = Projectile.alpha;
 				dust.color = ColorHelpers.soulLootingColor;
 			}
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
         }
     }
 }

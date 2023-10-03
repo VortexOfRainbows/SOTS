@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Nature
 			Projectile.alpha = 255;
 			Projectile.timeLeft = 720;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item105, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.45f, -0.2f);
 			DustHelper.DrawStar(Projectile.Center, 231, 5f, 3f, 1.5f, 1.75f, 0.7f, 0.7f, true, 8, 0);

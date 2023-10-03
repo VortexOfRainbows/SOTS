@@ -38,19 +38,13 @@ namespace SOTS.NPCs.Phase
 		public override void SetStaticDefaults()
         {
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Poisoned,
-					BuffID.Frostburn,
-					BuffID.Ichor,
-					BuffID.Venom,
-					BuffID.OnFire,
-					BuffID.BetsysCurse
-				}
-			});
-		}
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Ichor] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.BetsysCurse] = true;
+        }
 		public override void SetDefaults()
 		{
             NPC.aiStyle =-1; 

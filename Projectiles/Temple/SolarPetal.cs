@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Temple
         }
         Vector2 initialVelo;
 		bool runOnce = true;
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.65f, -0.3f);
 			if(Main.myPlayer == Projectile.owner)

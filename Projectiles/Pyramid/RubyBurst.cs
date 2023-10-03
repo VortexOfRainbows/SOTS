@@ -84,10 +84,6 @@ namespace SOTS.Projectiles.Pyramid
 				Projectile.friendly = false;
             }
 		}
-        public override void Kill(int timeLeft)
-		{
-			base.Kill(timeLeft);
-        }
         public override bool PreDraw(ref Color lightColor)
 		{
 			Vector2 circularLocation = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation)) + Projectile.Center;

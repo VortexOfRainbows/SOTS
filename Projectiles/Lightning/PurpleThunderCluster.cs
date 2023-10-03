@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Lightning
         {
             target.immune[Projectile.owner] = 15;
         }
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			Vector2 cursorArea = Main.MouseWorld;

@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Chaos
 			float sin = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[0]++ * 10f));
 			Projectile.Center += new Vector2(0, sin * 1f).RotatedBy(Projectile.velocity.ToRotation());
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			DustOut();
 		}

@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Planetarium
                 Projectile.Kill();
             Projectile.rotation = (float)Math.Atan2((double)lastVelo.Y, (double)lastVelo.X) + 1.57f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SOTSUtils.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 0.4f);
             for (int i = 0; i < 3; i++)
@@ -130,7 +130,6 @@ namespace SOTS.Projectiles.Planetarium
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<TravelingFlareFlame>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.frame);
                 }
             }
-            base.Kill(timeLeft);
         }
         public override void PostAI()
         {

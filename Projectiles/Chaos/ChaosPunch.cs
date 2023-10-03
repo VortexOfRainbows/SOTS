@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Chaos
 				dust.alpha = 100;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 10; i++)
 			{
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 				dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + Projectile.whoAmI * 10), true);
 				dust.alpha = 100;
 			}
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
 		}
 	}
 }

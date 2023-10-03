@@ -44,17 +44,7 @@ namespace SOTS.NPCs
 		private Vector2 lookAtPos = new Vector2(-1, -1);
 		public override void SetStaticDefaults()
 		{
-			NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Poisoned,
-					BuffID.Frostburn,
-					BuffID.Ichor,
-					BuffID.Venom,
-					BuffID.OnFire
-				}
-			});
+			NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
             Main.npcFrameCount[NPC.type] = 1;
         }
 		public override void SetDefaults()

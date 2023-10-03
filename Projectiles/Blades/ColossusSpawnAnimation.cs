@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Blades
 			}
 			return true;
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item30, Projectile.Center, 1f, -0.3f);
 			for(int j = 1; j <= 2; j++)

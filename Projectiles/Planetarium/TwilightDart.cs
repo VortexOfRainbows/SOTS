@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Planetarium
 		}
 		float soundIterater = 0;
 		float distMult = 0.1f;
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 10; i++)
 			{

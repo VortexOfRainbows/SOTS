@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Permafrost
                 Projectile.Kill();
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SOTSUtils.PlaySound(SoundID.Item62, Projectile.Center, 1f, -0.5f);
             for(int i = 0; i < 20; i++)

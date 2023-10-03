@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Pyramid
 				dust.alpha = 100;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 32; i++)
 			{
@@ -128,7 +128,7 @@ namespace SOTS.Projectiles.Pyramid
 				dust.color = new Color(150, 100, 200, 0);
 				dust.alpha = 100;
 			}
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
 		}
 	}
 }

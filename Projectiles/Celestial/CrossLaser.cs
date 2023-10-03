@@ -192,7 +192,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93, Projectile.Center);
 			if (Main.netMode != NetmodeID.MultiplayerClient)

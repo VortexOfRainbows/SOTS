@@ -65,7 +65,7 @@ namespace SOTS.Projectiles.Inferno
 			Lighting.AddLight(Projectile.Center, ColorHelpers.InfernoColorAttemptDegrees(SOTSWorld.GlobalCounter * 2).ToVector3());
 			Projectile.alpha = 200 - (int)(200f * Projectile.timeLeft / 1200f);
         }
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f, 0.5f);
 			for (int i = 20; i > 0; i--)

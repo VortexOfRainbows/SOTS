@@ -83,17 +83,13 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         {
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Frostburn,
-					BuffID.OnFire,
-					BuffID.Ichor,
-                    BuffID.CursedInferno,
-                    BuffID.OnFire3
-				}
-			});
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Ichor] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.CursedInferno] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
 		}
 		public override void SetDefaults()
         {

@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.width = 14;
 			Projectile.height = 38;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)

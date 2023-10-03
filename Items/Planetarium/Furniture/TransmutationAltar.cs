@@ -340,7 +340,7 @@ namespace SOTS.Items.Planetarium.Furniture
 			Projectile.alpha = 255;
 			Projectile.Kill();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Color white = Color.White;
 			white.A = 0;

@@ -64,14 +64,8 @@ namespace SOTS.NPCs.Boss
         {
             Main.npcFrameCount[NPC.type] = 1;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Poisoned
-				}
-			});
-		}
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+        }
 		public override void SetDefaults()
 		{
             NPC.aiStyle =-1;   

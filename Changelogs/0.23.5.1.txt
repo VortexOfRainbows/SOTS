@@ -1,0 +1,9 @@
+Update 0.23.5.1
+
+Changes:
+1. Lux is now immune to all regular debuffs
+2. Hardlight enemies are now immune to all regular debuffs
+3. Polaris and minions have more buff immunities'
+
+Bug Fixes:
+1. Furniture should now drop properly from all sources

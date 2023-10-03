@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Tide
                 dust.alpha = 200;
             }
         }
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item54, Projectile.Center, 0.75f, -0.1f, 0.05f);
 			for(int i = 0; i < 24; i++)

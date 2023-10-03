@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			hitbox = new Rectangle((int)Projectile.position.X - Projectile.width, (int)Projectile.position.Y - Projectile.height, Projectile.width * 3, Projectile.height * 3);
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
 			for(int i = 0; i < 360; i += 20)
 			{

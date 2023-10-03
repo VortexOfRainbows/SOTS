@@ -26,17 +26,7 @@ namespace SOTS.NPCs
         {
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new Terraria.DataStructures.NPCDebuffImmunityData
-			{
-				SpecificallyImmuneTo = new int[]
-				{
-					BuffID.Poisoned,
-					BuffID.Frostburn,
-					BuffID.Ichor,
-					BuffID.Venom,
-					BuffID.OnFire
-				}
-			});
+			NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
 		}
 		public override void SetDefaults()
 		{

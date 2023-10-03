@@ -164,14 +164,13 @@ namespace SOTS.Projectiles.Laser
                 Projectile.Kill();
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Main.myPlayer == Projectile.owner)
                 for (int i = 0; i < 7; i++)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PrismLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, i);
                 }   
-            base.Kill(timeLeft);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

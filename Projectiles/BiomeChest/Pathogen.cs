@@ -145,7 +145,7 @@ namespace SOTS.Projectiles.BiomeChest
 				alpha = 150;
 			dust.alpha = alpha + 55;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 9; i++)
 			{
@@ -185,7 +185,7 @@ namespace SOTS.Projectiles.BiomeChest
 					dust.alpha = 145;
 				}
 			}
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
 		}
 	}
 }

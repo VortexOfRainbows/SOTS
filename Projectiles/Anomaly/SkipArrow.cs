@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Anomaly
 			height = 8;
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 20; i++)
 			{
@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Anomaly
 				d.color = ColorHelpers.VoidAnomaly;
 				d.color.A = 0;
 			}
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
         }
         public override void AI()
 		{

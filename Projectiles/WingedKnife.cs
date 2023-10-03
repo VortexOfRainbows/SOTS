@@ -76,7 +76,7 @@ namespace SOTS.Projectiles
         {
 			Projectile.timeLeft -= 1000;
         }
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 3; i++)
 			{

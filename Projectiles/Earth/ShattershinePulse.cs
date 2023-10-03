@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Earth
                 }
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SOTSUtils.PlaySound(SoundID.Item105, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, -0.2f);
             StarDust();

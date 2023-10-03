@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Inferno
 			Lighting.AddLight(Projectile.Center, ColorHelpers.InfernoColorAttemptDegrees(SOTSWorld.GlobalCounter * 2).ToVector3() * 0.3f);
 			Projectile.alpha = 220 - (int)(220f * Projectile.timeLeft / 300f);
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 5; i > 0; i--)
 			{

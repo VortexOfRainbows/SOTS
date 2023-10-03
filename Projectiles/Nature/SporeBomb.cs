@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Nature
 				Projectile.timeLeft = Main.rand.Next(22, 44);
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
 			Vector2 position = Projectile.Center;
 			SOTSUtils.PlaySound(SoundID.NPCHit1, (int)position.X, (int)position.Y);  

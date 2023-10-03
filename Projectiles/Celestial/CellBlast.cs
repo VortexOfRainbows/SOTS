@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.position += Projectile.velocity *= 1.033f;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(Terraria.ID.SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f);
 			if (Main.netMode != NetmodeID.MultiplayerClient)

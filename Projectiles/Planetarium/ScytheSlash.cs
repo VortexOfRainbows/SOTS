@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.position += Projectile.velocity * Projectile.scale;
             return base.PreAI();
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			for(int i = 0; i < 50; i++)

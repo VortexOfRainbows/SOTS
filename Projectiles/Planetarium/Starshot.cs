@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Planetarium
             }
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             float compression = ((100f - Projectile.ai[0]) / 100f);
             if (compression < 0)
@@ -142,8 +142,6 @@ namespace SOTS.Projectiles.Planetarium
                 dust.scale *= 1.6f;
                 dust.alpha = Projectile.alpha;
             }
-
-            base.Kill(timeLeft);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

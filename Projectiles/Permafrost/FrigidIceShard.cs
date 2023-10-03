@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Permafrost
 			height = 6;
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for (int a = 0; a < 12; a++)
 			{

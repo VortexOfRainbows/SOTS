@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.alpha = 0;
 			Projectile.timeLeft = 640;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			for (int i = 0; i < 2; i++)

@@ -558,7 +558,7 @@ namespace SOTS
 			else
 				return;
         }
-        public override void Kill(Projectile projectile, int timeLeft)
+        public override void OnKill(Projectile projectile, int timeLeft)
         {
 			if(!hasFrostBloomed && frostFlake >= 3)
 			{

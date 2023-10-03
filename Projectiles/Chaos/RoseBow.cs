@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Chaos
         int chargeLevel = 0;
         float counter = -1;
         bool ended = false;
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if(Projectile.owner == Main.myPlayer)
             {

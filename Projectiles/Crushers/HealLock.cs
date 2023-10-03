@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Crushers
 			Main.dust[num1].velocity *= 0.1f;
 			Main.dust[num1].scale = 1.5f;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.owner == Main.myPlayer)

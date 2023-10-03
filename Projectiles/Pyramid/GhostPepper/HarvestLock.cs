@@ -149,9 +149,9 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 				width = 0;
             }
 		}
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
-			base.Kill(timeLeft);
+			base.OnKill(timeLeft);
         }
         public override bool PreDraw(ref Color lightColor)
 		{

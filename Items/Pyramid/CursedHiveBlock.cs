@@ -100,7 +100,7 @@ namespace SOTS.Items.Pyramid
 			Projectile.alpha = 255;
 			Projectile.Kill();
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if(Projectile.ai[0] == -1)
 			{

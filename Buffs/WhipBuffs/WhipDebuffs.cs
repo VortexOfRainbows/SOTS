@@ -11,21 +11,21 @@ namespace SOTS.Buffs.WhipBuffs
     {
         public override void SetStaticDefaults()
         {
-            BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
+            BuffID.Sets.IsATagBuff[Type] = true;
         }
     }
     public class KelpWhipBuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{
-			BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
+			BuffID.Sets.IsATagBuff[Type] = true;
 		}
 	}
 	public class KelpWhipCooldown : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{
-			BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
+			BuffID.Sets.IsATagBuff[Type] = true;
 		}
 		public override void Update(NPC npc, ref int buffIndex)
 		{

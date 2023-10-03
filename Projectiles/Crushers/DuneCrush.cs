@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Crushers
 			Projectile.rotation += 1.1f;
 			Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(3.5f * Projectile.ai[1]));
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 15; i++)
 			{

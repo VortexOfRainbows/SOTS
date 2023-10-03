@@ -91,7 +91,7 @@ namespace SOTS.Items.Secrets
                 Projectile.Kill();
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (timeLeft > 2)
                 return;

@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Planetarium
 				Projectile.timeLeft = Main.rand.Next(32, 46);
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
 			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.625f);
 			for (int i = 0; i < 13; i++)

@@ -167,7 +167,7 @@ namespace SOTS.Projectiles.Planetarium
 				Projectile.tileCollide = true;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if(timeLeft < 749)
 			{

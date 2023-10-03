@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Minions
 			Projectile.ai[1] = -1;
 			Projectile.netUpdate = true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			DustOut();
 		}

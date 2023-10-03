@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Permafrost
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
 			if(Projectile.owner == Main.myPlayer)
 			{

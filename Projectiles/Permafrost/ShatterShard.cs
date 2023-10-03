@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Permafrost
 				}
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item50, Projectile.Center);
 			for (int i = 0; i < 10; i++)

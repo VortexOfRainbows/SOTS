@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Nature
         {
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			if(Main.netMode != NetmodeID.MultiplayerClient)
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeat>(), Projectile.damage, 0, Main.myPlayer);

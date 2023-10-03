@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Inferno
 		bool ended = false;
 		float ogVelo = 0;
 		float veloScale = 0;
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, -0.5f);
 			for (int i = 30; i > 0; i--)

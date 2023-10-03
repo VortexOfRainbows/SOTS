@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Planetarium
 			fallThrough = false;
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 			if (Main.netMode != NetmodeID.MultiplayerClient)

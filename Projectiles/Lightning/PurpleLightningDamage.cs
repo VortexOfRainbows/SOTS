@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Lightning
         {
 			return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			for (int h = 0; h < 20; h++)
 			{

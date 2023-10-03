@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Earth
 				dust.velocity += circularLocation * 0.25f;
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			color = new Color(80, 120, 220, 0);
 			DustRing();

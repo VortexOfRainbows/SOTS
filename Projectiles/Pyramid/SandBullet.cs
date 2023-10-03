@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Pyramid
 			if (end == true && Projectile.timeLeft > 40)
 				Projectile.timeLeft = 40;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for (int i = 0; i < 10; i++)
 			{

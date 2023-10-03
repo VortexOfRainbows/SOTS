@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			Projectile.velocity.X *= 0.99f;
 			Projectile.rotation += Projectile.velocity.X * 0.03f;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if(Projectile.owner == Main.myPlayer)
 			{
@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			Projectile.velocity.X *= 0.99f;
 			Projectile.rotation += Projectile.velocity.X * 0.03f;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if (Projectile.owner == Main.myPlayer)
 			{
@@ -217,7 +217,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				}
 			}
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 14; i++)
 			{

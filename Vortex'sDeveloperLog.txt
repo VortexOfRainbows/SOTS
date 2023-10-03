@@ -41,8 +41,21 @@ Update Objectives:
 7. Fix enemy death projectiles doing damage to player through hydroservant/fakeplayer (make sure enemy spawned projectiles are not owned) 
 8. Add elemental amulet borders for fontaine
 9. Add Soul of Plight (it should go in quite a few recipes, including certain vanilla recipes)
+10. double check chair items are dropping properly
 
 Daily Log:
+
+
+-- Port to tModLoader Monthly Update™ -- (0.23.5.1)
+
+
+10/2/23
+1. Lux is now completely immune to regular debuffs
+2. Hardlight enemies are now immune to all regular debuffs
+3. Old polaris and minions have more buff immunities'
+4. Furniture should now drop properly from all sources
+
+i get covid
 
 9/23/23 to 9/27/23
 1. Polaris now holds multiple weapons capable of swapping

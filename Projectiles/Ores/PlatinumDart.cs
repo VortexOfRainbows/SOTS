@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Ores
 			}
 			Projectile.netUpdate = true;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
         {
 			if(timeLeft > 1)
 				Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
