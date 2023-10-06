@@ -11,6 +11,7 @@ using Terraria.ID;
 using SOTS.Buffs;
 using Terraria.GameContent.ItemDropRules;
 using System.Diagnostics.Metrics;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Permafrost	
 {    
@@ -130,5 +131,9 @@ namespace SOTS.Projectiles.Permafrost
         {
 			return false;
         }
-	}
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+			VoidPlayer.VoidDamage(Mod, target, 5);
+        }
+    }
 }

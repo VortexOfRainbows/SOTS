@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using SOTS.Dusts;
 using SOTS.FakePlayer;
 using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
@@ -40,11 +41,24 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             public static int DashWithBeams1 = 4;
             public static int DashWithBeams2 = 5;
             public static int MortarRain = 6;
+            public static int QuickBeamCircle = 7;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.63889f * balance * bossAdjustment);  //boss life scale in expertmode
             NPC.damage = (int)(NPC.damage * 0.75f);  //boss damage increase in expermode
+        }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if(needsASecondPhaseTransition && !SecondPhase)
+            {
+                modifiers.SourceDamage *= 0.6f;
+                modifiers.FinalDamage *= 0.9f;
+                modifiers.Defense += 0.25f;
+            }
+            float survivalResistance = NPC.life / NPC.lifeMax;
+            survivalResistance = Math.Clamp(survivalResistance, 0, 1);
+            modifiers.FinalDamage *= (0.72f + 0.28f * survivalResistance);
         }
         public bool LoadedWeaponData = false;
         public PolarisWeaponData[] polarisWeaponData = new PolarisWeaponData[4];
@@ -55,6 +69,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         public bool hasUsedLaserSpinWithOnlyGunsAlready = false;
         public bool hasUsedLaserSpinWithOnlyBeamsAlready = false;
         public bool needsASecondPhaseTransition = false;
+        public float PhaseTwoTransitionPercent => Main.expertMode ? 0.65f : 0.5f;
         private float Phase
 		{
 			get => NPC.ai[0];
@@ -96,12 +111,12 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             Main.npcFrameCount[NPC.type] = 6;
             NPC.aiStyle = -1;
             NPC.lifeMax = 36000;
-            NPC.damage = 80; 
-            NPC.defense = 24;  
+            NPC.damage = 90; 
+            NPC.defense = 30;  
             NPC.knockBackResist = 0f;
             NPC.width = 100;
             NPC.height = 100;
-            NPC.value = 100000;
+            NPC.value = Item.buyPrice(0, 50, 0, 0);
             NPC.npcSlots = 1f;
             NPC.boss = true;
             NPC.lavaImmune = true;
@@ -109,6 +124,8 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             NPC.noTileCollide = true;
             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Polaris");
             NPC.netAlways = true;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath14;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -367,7 +384,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
             if(!SecondPhase)
             {
-                if(NPC.life < NPC.lifeMax * 0.8f)
+                if(NPC.life < NPC.lifeMax * PhaseTwoTransitionPercent)
                 {
                     needsASecondPhaseTransition = true;
                 }
@@ -537,6 +554,10 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                     }
                     if (AI0 > 60)
                     {
+                        if(AI0 == 150 && needsASecondPhaseTransition && !SecondPhase)
+                        {
+                            SOTSUtils.PlaySound(SoundID.Item119, NPC.Center, 1.25f, -0.3f);
+                        }
                         OpenWeapons();
                     }
                     else
@@ -596,10 +617,10 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                                 }
                                 else if(AI1 % (shotCooldown * 2) == 0)
                                 {
-                                    SOTSUtils.PlaySound(SoundID.Item42, NPC.Center, 1.0f, -1f);
                                     if (SecondPhase)
                                     {
-                                        if(Main.netMode != NetmodeID.MultiplayerClient)
+                                        SOTSUtils.PlaySound(SoundID.Item42, NPC.Center, 1.0f, -1f);
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
                                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Main.rand.NextVector2Circular(1, 1), ModContent.ProjectileType<PolarisMines>(), NPC.GetBaseDamage() / 2, 0, Main.myPlayer, ((int)AI1 / (shotCooldown * 2)) % 2, 180 + Main.rand.Next(60));
                                     }    
                                     //else
@@ -785,7 +806,10 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                             hasUsedLaserSpinWithOnlyBeamsAlready = true;
                         }
                     }
-                    SwapPhase(AttackID.BulletStorm);
+                    if(!SecondPhase)
+                        SwapPhase(AttackID.BulletStorm);
+                    else
+                        SwapPhase(AttackID.QuickBeamCircle);
                 }
             }
             else if(Phase == AttackID.MortarRain)
@@ -871,6 +895,57 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                             SwapPhase(AttackID.BulletStorm);
                         else
                             SwapPhase(AttackID.LaserSpinAttack);
+                    }
+                }
+            }
+            else if(Phase == AttackID.QuickBeamCircle)
+            {
+                resetRotation = true;
+                resetWeaponSpin = true;
+                NPC.velocity *= 0.925f;
+                GoNearPlayer(360f, 720f, 3f);
+                AI0++;
+                //if(!hasUsedFirstAttackOnceAlready)
+                SwapAllWeapons(1);
+                /*else
+                {
+                    for (int i = 0; i < polarisWeaponData.Length; i++)
+                    {
+                        PolarisWeaponData Weapon = polarisWeaponData[i];
+                        Weapon.TypeToSwapTo = 1 - i % 2;
+                    }
+                }*/
+                if (AI0 > 100)
+                {
+                    OpenWeapons();
+                    WeaponExtension = MathHelper.Lerp(WeaponExtension, 100f, 0.06f);
+                }
+                else
+                {
+                    CloseWeapons();
+                }
+                if (AI0 > 180)
+                {
+                    NPC.velocity *= 0.75f;
+                    if (AI0 > AI1 + 180)
+                    {
+                        float sinusoid = (float)Math.Sin(MathHelper.ToRadians(AI2 * 6f));
+                        for (int i = 0; i < polarisWeaponData.Length; i++)
+                        {
+                            PolarisWeaponData Weapon = polarisWeaponData[i];
+                            for (int j = -1; j <= 1; j += 2)
+                            {
+                                Weapon.LaunchAttack(NPC, i / 2, MathHelper.ToRadians(j * 90 * sinusoid));
+                            }
+                        }
+                        AI0 -= AI1;
+                        if (AI1 > 3)
+                            AI1--;
+                        AI2++;
+                    }
+                    if (AI2 >= 60f)
+                    {
+                        SwapPhase(AttackID.BulletStorm);
                     }
                 }
             }
@@ -993,7 +1068,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             AI0 = 0;
             AI1 = 0;
             AI2 = 0;
-            if (phase == 0)
+            if (phase == 0 || phase == AttackID.QuickBeamCircle)
             {
                 int sign = Math.Sign(toPlayer.X);
                 if (sign != 0)
@@ -1057,14 +1132,62 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<PolarisBossBag>()));
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AbsoluteBar>(), 1, 26, 34));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.FrostCore, 1, 1, 2));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SoulOfPlight>(), 1, 25, 40));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.HallowedBar, 1, 15, 30));
             npcLoot.Add(notExpertRule);
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PolarisRelic>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
+        }
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (Main.netMode != NetmodeID.Server && NPC.life <= 0)
+            {
+                int goreNum = 1;
+                int goreNum2 = 3;
+                Vector2 goreOrigin = new Vector2(44, 10);
+                for (int i = 1; i <= 4; i++)
+                {
+                    if (i == 2)
+                    { 
+                        goreOrigin = new Vector2(76, 16);
+                        goreNum = 4; 
+                        goreNum2 = 3;
+                    }
+                    if (i == 3)
+                    {
+                        goreOrigin = new Vector2(44, 90);
+                        goreNum = 5; 
+                        goreNum2 = 2;
+                    }
+                    if (i == 4)
+                    {
+                        goreOrigin = new Vector2(10, 16);
+                        goreNum = 6;
+                        goreNum2 = 2;
+                    }
+                    Vector2 circular = new Vector2(0, 32).RotatedBy(MathHelper.ToRadians(i * 90));
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - goreOrigin, circular * 0.15f, ModGores.GoreType("Gores/Polaris/PolarisGore" + goreNum), 1f);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular.RotatedBy(MathHelper.PiOver4), circular.RotatedBy(MathHelper.PiOver4) * 0.15f, ModGores.GoreType("Gores/Polaris/PolarisGore7"), 1f);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular.RotatedBy(MathHelper.PiOver4) * 2, circular.RotatedBy(MathHelper.PiOver4) * 0.15f, ModGores.GoreType("Gores/Polaris/PolarisGore" + goreNum2), 1f);
+                }
+                for(int i= 0; i < 120; i++)
+                {
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(i / 120f * MathHelper.TwoPi);
+                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y) - new Vector2(5) + circular * 32, NPC.width, NPC.height, ModContent.DustType<Dusts.CopyDust4>());
+                    dust.velocity *= 0.5f;
+                    dust.velocity += circular * 8;
+                    dust.velocity += NPC.velocity * 0.1f;
+                    dust.noGravity = true;
+                    dust.scale += 0.75f;
+                    dust.color = Color.Lerp(new Color(100, 100, 250, 200), new Color(250, 100, 100, 200), (float)Math.Cos(MathHelper.Pi / 120f * i));
+                    dust.fadeIn = 0.1f;
+                    dust.scale *= 1.5f;
+                    dust.alpha = NPC.alpha;
+                }
+            }
         }
     }
     public class PolarisWeaponData : Entity

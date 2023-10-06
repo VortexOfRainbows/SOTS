@@ -46,6 +46,7 @@ using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.NPCs.Anomaly;
 using SOTS.NPCs.Tide;
+using SOTS.NPCs.Boss.Polaris.NewPolaris;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -104,7 +105,7 @@ namespace SOTS.Common.GlobalNPCs
 		}
 		public static bool isPolarisNPC(int type)
         {
-			return (type == ModContent.NPCType<BulletSnakeHead>() || type == ModContent.NPCType<BulletSnakeWing>() || type == ModContent.NPCType<BulletSnakeBody>() || type == ModContent.NPCType<BulletSnakeEnd>() || type == ModContent.NPCType<Polaris>() || type == ModContent.NPCType<PolarisLaser>() || type == ModContent.NPCType<PolarisCannon>());
+			return (type == ModContent.NPCType<NewPolaris>() || type == ModContent.NPCType<BulletSnakeHead>() || type == ModContent.NPCType<BulletSnakeWing>() || type == ModContent.NPCType<BulletSnakeBody>() || type == ModContent.NPCType<BulletSnakeEnd>() || type == ModContent.NPCType<Polaris>() || type == ModContent.NPCType<PolarisLaser>() || type == ModContent.NPCType<PolarisCannon>());
 		}
         public override bool PreAI(NPC npc)
 		{

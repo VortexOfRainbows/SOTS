@@ -29,10 +29,8 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
 5. Polaris Rework (pending)
-	1. Attack Ideas (need one more second phase attack)
-		1. Laser spiral attack which shoots lasers in a cool pattern similar to phase 1
-	2. Needs: Balance testing, server syncing, sound effects and consistency for phase 2 transition
-	3. Needs: Special armor while waiting for transition and (perhaps) certain attacks
+	1. Needs: Balance testing, server syncing. Bestiary and shift Boss CL. Rework a few items
+	2. Needs: Readjust all pre-existing polaris references to New Polaris in progression
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
@@ -41,9 +39,16 @@ Update Objectives:
 7. Fix enemy death projectiles doing damage to player through hydroservant/fakeplayer (make sure enemy spawned projectiles are not owned) 
 8. Add elemental amulet borders for fontaine
 9. Add Soul of Plight (it should go in quite a few recipes, including certain vanilla recipes)
-10. double check chair items are dropping properly
 
 Daily Log:
+
+10/6/23
+1. Added Soul of Plight and modified some recipes
+2. Polaris Gores and reworked loot pool
+
+10/2/23
+1. Finish POLARIS attack patterns, sound effects, and defense
+2. Fix phantaray not panicking properly outside of water
 
 
 -- Port to tModLoader Monthly Update™ -- (0.23.5.1)

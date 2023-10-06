@@ -21,7 +21,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<DissolvingAurora>(1).AddIngredient(ItemID.FrostCore, 1).AddIngredient(ItemID.SoulofSight, 3).AddIngredient(ItemID.SoulofMight, 3).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<DissolvingAurora>(1).AddIngredient(ItemID.FrostCore, 1).AddIngredient(ItemID.SoulofSight, 1).AddIngredient(ItemID.SoulofMight, 1).AddIngredient(ItemID.SoulofFright, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

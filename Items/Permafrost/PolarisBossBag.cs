@@ -28,8 +28,8 @@ namespace SOTS.Items.Permafrost
 		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FrigidHourglass>()));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<AbsoluteBar>(), 1, 26, 42));
-			itemLoot.Add(ItemDropRule.Common(ItemID.FrostCore, 1, 1, 2));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoulOfPlight>(), 1, 25, 40));
+			itemLoot.Add(ItemDropRule.Common(ItemID.HallowedBar, 1, 20, 35));
 			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Polaris>()));
 		}
 	}

@@ -1903,5 +1903,22 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:CrushingComponents", group);
 		}
-	}
+        public override void PostAddRecipes()
+        {
+			if (!SOTS.ServerConfig.AddPlightToVanillaRecipes)
+				return;
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                Recipe recipe = Main.recipe[i];
+				Item fright;
+				Item sight;
+				Item might;
+                if (recipe.TryGetIngredient(ItemID.SoulofFright, out fright) && recipe.TryGetIngredient(ItemID.SoulofSight, out sight) && recipe.TryGetIngredient(ItemID.SoulofMight, out might) && recipe.createItem.type != ModContent.ItemType<FrostedKey>())
+                {
+					int stackAvg = fright.stack + sight.stack + might.stack;
+					recipe.AddIngredient(ModContent.ItemType<SoulOfPlight>(), stackAvg / 3);
+                }
+            }
+        }
+    }
 }

@@ -87,12 +87,17 @@ namespace SOTS
 	}
 	[BackgroundColor(45, 50, 65, 192)]
 	public class SOTSServerConfig : ModConfig
-	{
-		public override ConfigScope Mode => ConfigScope.ServerSide;
+    {
+        public override ConfigScope Mode => ConfigScope.ServerSide;
 
 		[Header("$Mods.SOTS.Configuration.Header.BAL")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(true)]
 		public bool NerfInsignia;
-	}
+
+        [BackgroundColor(110, 80, 150, 192)]
+        [DefaultValue(true)]
+		[ReloadRequired]
+        public bool AddPlightToVanillaRecipes;
+    }
 }

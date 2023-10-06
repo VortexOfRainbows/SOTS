@@ -607,7 +607,7 @@ namespace SOTS
 					"LogBoss",
 					this,
 					nameof(Polaris),
-					10.05f,
+					10.99f,
 					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
 					new List<int>() { ModContent.NPCType<Polaris>() },
 					new Dictionary<string, object>()

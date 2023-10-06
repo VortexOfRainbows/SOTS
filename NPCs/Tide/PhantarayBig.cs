@@ -162,7 +162,7 @@ namespace SOTS.NPCs.Tide
                             NPC.velocity += wanderDirection * 18.5f;
                         }
                     }
-                    else if (!canSeePlayer && Main.netMode != NetmodeID.MultiplayerClient && NPC.ai[1] % 120 == 119)
+                    else if (!canSeePlayer && Main.netMode != NetmodeID.MultiplayerClient && NPC.ai[1] % 120 == -119)
                     {
                         wanderDirection = Main.rand.NextVector2CircularEdge(1, 1);
                         wanderDirection.Y *= 0.5f;

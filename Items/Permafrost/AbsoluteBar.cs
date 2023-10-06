@@ -1,3 +1,4 @@
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,11 +16,15 @@ namespace SOTS.Items.Permafrost
 			Item.CloneDefaults(ItemID.IronBar);
 			Item.width = 30;
 			Item.height = 24;
-			Item.value = Item.sellPrice(0, 0, 75, 0);
+			Item.value = Item.sellPrice(0, 1, 30, 0);
 			Item.rare = ItemRarityID.Pink;
 			Item.maxStack = 99;
 			Item.placeStyle = 7;
 			Item.createTile = ModContent.TileType<TheBars>();
-		}
-	}
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ItemID.HallowedBar, 1).AddIngredient<SoulOfPlight>(1).AddTile(TileID.AdamantiteForge).Register();
+        }
+    }
 }

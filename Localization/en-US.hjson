@@ -5138,6 +5138,11 @@ Mods: {
 					Will probably NOT work when used in multiplayer (you must lock the chest in singleplayer first)
 					'''
 			}
+
+			SoulOfPlight: {
+				DisplayName: Soul Of Plight
+				Tooltip: "'The essence of war'"
+			}
 		}
 
 		ItemTooltip: {
@@ -5224,7 +5229,7 @@ Mods: {
 
 			DiamondSkin: {
 				DisplayName: Diamond Skin
-				Description: 15 increased defense, 15% reduced damage taken, and 15% increased movement speed
+				Description: Increase defense by 8, reduces damage taken by 8%, and increases movement speed by 8%
 			}
 
 			DilationSickness: {
@@ -6814,6 +6819,11 @@ Mods: {
 				NerfInsignia: {
 					Label: "{$Mods.SOTS.Configuration.Label.NINS}"
 					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.NINS}"
+				}
+
+				AddPlightToVanillaRecipes: {
+					Label: Add Plight To Vanilla Recipes
+					Tooltip: Disable and reload in order to remove Soul of Plight from drecipes that normally do not require it
 				}
 			}
 		}

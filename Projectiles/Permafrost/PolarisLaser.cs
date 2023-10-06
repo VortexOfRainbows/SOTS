@@ -26,7 +26,11 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.friendly = false;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
-		}
+        }
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            VoidPlayer.VoidDamage(Mod, target, 15);
+        }
         public override bool ShouldUpdatePosition()
         {
 			return false;
