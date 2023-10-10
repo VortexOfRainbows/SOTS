@@ -335,7 +335,6 @@ namespace SOTS.FakePlayer
                 if (!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
                     player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
                 player.ItemCheck(); //Run the actual item use code
-                //Main.NewText(player.channel);
             }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
@@ -421,6 +420,7 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties.saveGravDir = player.gravDir;
             PlayerSavedProperties.saveInvis = player.invis;
             PlayerSavedProperties.saveGFXOffY = player.gfxOffY;
+            PlayerSavedProperties.saveSelectItemOnNextUse = player.selectItemOnNextUse;
 
             //Save Player original values that have corresponding fakeplayer values
             PlayerSavedProperties.savecompositeFrontArmEnabled = player.compositeFrontArm.enabled;
@@ -462,6 +462,7 @@ namespace SOTS.FakePlayer
             player.invis = false;
             player.bodyFrame = bodyFrame;
             player.gfxOffY = 0;
+            player.selectItemOnNextUse = false;
 
             player.controlUseItem = controlUseItem;
             //Set values that player uses to the FakePlayer's values
@@ -543,6 +544,7 @@ namespace SOTS.FakePlayer
             player.gravDir = PlayerSavedProperties.saveGravDir;
             player.invis = PlayerSavedProperties.saveInvis;
             player.gfxOffY = PlayerSavedProperties.saveGFXOffY;
+            player.selectItemOnNextUse = PlayerSavedProperties.saveSelectItemOnNextUse;
 
             //Reset other player values back to normal
             player.compositeFrontArm.enabled = PlayerSavedProperties.savecompositeFrontArmEnabled;
@@ -986,6 +988,7 @@ namespace SOTS.FakePlayer
         public CompositeArmData saveBackArm;
         public Rectangle saveBodyFrame;
         public float saveGFXOffY;
+        public bool saveSelectItemOnNextUse;
     }
     public class FakeItem : GlobalItem
     {

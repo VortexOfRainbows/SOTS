@@ -45,6 +45,7 @@ Daily Log:
 1. More colorful friendly polar bullets
 2. Some Bestiary and boss CL fixes for polaris
 3. Fixed fake player sometime acting as a hurtbox
+4. Fixed fake player using items that player was not hovering if a hotbar button was held
 
 10/6/23
 1. Added Soul of Plight and modified some recipes
