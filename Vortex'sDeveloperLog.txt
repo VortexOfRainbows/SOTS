@@ -29,18 +29,22 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
 5. Polaris Rework (pending)
-	1. Needs: Balance testing, server syncing. Bestiary and shift Boss CL. Rework a few items
+	1. Needs: Balance testing, server syncing. Rework a few items
 	2. Needs: Readjust all pre-existing polaris references to New Polaris in progression
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
-7. Fix enemy death projectiles doing damage to player through hydroservant/fakeplayer (make sure enemy spawned projectiles are not owned) 
-8. Add elemental amulet borders for fontaine
-9. Add Soul of Plight (it should go in quite a few recipes, including certain vanilla recipes)
+7. Add elemental amulet borders for fontaine
+8. Add Soul of Plight (it should go in quite a few recipes, including certain vanilla recipes)
 
 Daily Log:
+
+10/10/23
+1. More colorful friendly polar bullets
+2. Some Bestiary and boss CL fixes for polaris
+3. Fixed fake player sometime acting as a hurtbox
 
 10/6/23
 1. Added Soul of Plight and modified some recipes

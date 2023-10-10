@@ -40,47 +40,41 @@ namespace SOTS.Projectiles.Permafrost
         {
             return false;
         }
-        public void TrailPreDraw(ref Color lightColor)
-		{
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarisTrail").Value;
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = Projectile.Center;
-			float drawAmt = 1f;
-			if (SOTS.Config.lowFidelityMode)
-				drawAmt = 0.5f;
-			for (int k = 0; k < trailPos.Length; k++)
-			{
-				float scale = Projectile.scale * 0.9f * (trailPos.Length - k) / (float)trailPos.Length;
-				if (trailPos[k] == Vector2.Zero)
-				{
-					break;
-				}
-				Color color = new Color(100, 100, 100, 0);
-				Vector2 drawPos = trailPos[k] - Main.screenPosition;
-				Vector2 currentPos = trailPos[k];
-				Vector2 betweenPositions = previousPosition - currentPos;
-				color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.33f;
-				float max = betweenPositions.Length() / (5f * scale) * drawAmt;
-				for (int i = 0; i < max; i++)
-				{
-					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 3; j++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.1f * scale;
-						float y = Main.rand.Next(-10, 11) * 0.1f * scale;
-						if (j == 0)
-						{
-							x = 0;
-							y = 0;
-						}
-						if (trailPos[k] != Projectile.Center)
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
-					}
-				}
-				previousPosition = currentPos;
-			}
-		}
-		public void cataloguePos()
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D textureReal = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarBullet").Value;
+            Texture2D textureGlow = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarBulletGlow").Value;
+            Texture2D textureTrail = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarisTrail").Value;
+            Vector2 drawOrigin = new Vector2(textureReal.Width * 0.5f, 10);
+            Vector2 drawOriginTrail = new Vector2(0, textureTrail.Height / 2f);
+            Vector2 previousPosition = Projectile.Center;
+            Rectangle frame = new Rectangle(0, 22 * (int)Projectile.ai[1], textureReal.Width, 20);
+            for (int k = 0; k < trailPos.Length; k++)
+            {
+                float scale = Projectile.scale * 0.9f * (trailPos.Length - k) / (float)trailPos.Length;
+                if (trailPos[k] == Vector2.Zero)
+                {
+                    break;
+                }
+                Color color = new Color(100, 100, 100, 0);
+                Vector2 drawPos;
+                Vector2 currentPos = trailPos[k];
+                Vector2 betweenPositions = currentPos - previousPosition;
+                color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
+                drawPos = previousPosition - Main.screenPosition;
+                if (trailPos[k] != Projectile.Center)
+                    Main.spriteBatch.Draw(textureTrail, drawPos, null, color, betweenPositions.ToRotation(), drawOriginTrail, new Vector2(betweenPositions.Length() / textureTrail.Width * 2f, scale), SpriteEffects.None, 0f);
+                previousPosition = currentPos;
+            }
+            if (!AllowTrailToEnd)
+            {
+                lightColor = Color.Lerp(lightColor, Color.White, 0.25f);
+                Main.spriteBatch.Draw(textureReal, Projectile.Center - Main.screenPosition, frame, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(textureGlow, Projectile.Center - Main.screenPosition, frame, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+            }
+            return false;
+        }
+        public void cataloguePos()
 		{
 			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
@@ -90,22 +84,22 @@ namespace SOTS.Projectiles.Permafrost
 				current = previousPosition;
 			}
 		}
-		public override bool PreDraw(ref Color lightColor)
-		{
-			TrailPreDraw(ref lightColor);
-			return endHow == 0;
-		}
 		bool runOnce = true;
 		float acceleration = 0.3f;
 		public override bool PreAI()
-		{
-			int dustAmtMult = 3;
+        {
+            Color Color = new Color(187, 11, 76, 0);
+            if (Projectile.ai[1] == 0)
+            {
+                Color = new Color(64, 74, 204, 0);
+            }
+            int dustAmtMult = 3;
 			if (SOTS.Config.lowFidelityMode)
 				dustAmtMult = 1;
 			if (Projectile.ai[0] == -1)
 			{
 				Projectile.ai[0]--;
-				for (int i = 0; i < 3.3 * dustAmtMult; i++)
+				for (int i = 0; i < dustAmtMult; i++)
 				{
 					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
@@ -113,10 +107,10 @@ namespace SOTS.Projectiles.Permafrost
 					dust.velocity += Projectile.oldVelocity * 0.5f;
 					dust.noGravity = true;
 					dust.scale += 0.1f;
-					dust.color = new Color(200, 250, 250, 100);
+					dust.color = Color;
 					dust.fadeIn = 0.1f;
-					dust.scale *= 1.6f;
-					dust.alpha = 100;
+					dust.scale *= 1.5f;
+					dust.alpha = 120;
 				}
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.ToRadians(90);
@@ -124,7 +118,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				acceleration = 0.4f;
 				Projectile.position += Projectile.velocity * 2;
-				for (int i = 0; i < 1.5 * dustAmtMult; i++)
+				for (int i = 0; i < dustAmtMult; i++)
 				{
 					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					Dust dust = Main.dust[num1];
@@ -132,10 +126,10 @@ namespace SOTS.Projectiles.Permafrost
 					dust.velocity += Projectile.velocity * 0.4f;
 					dust.noGravity = true;
 					dust.scale *= 0.2f;
-					dust.color = new Color(200, 250, 250, 100);
+					dust.color = Color;
 					dust.fadeIn = 0.1f;
 					dust.scale += 1.25f;
-					dust.alpha = 100;
+					dust.alpha = 120;
 				}
 				SOTSUtils.PlaySound(SoundID.Item11, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, 0.1f);
 				for (int i = 0; i < trailPos.Length; i++)
@@ -149,11 +143,23 @@ namespace SOTS.Projectiles.Permafrost
 				cataloguePos();
 			}
 			checkPos();
-			if (Projectile.timeLeft < 1000 && endHow == 0)
+			if (Projectile.timeLeft < 1000 && !AllowTrailToEnd)
 			{
 				triggerStop();
-			}
-			if ((counter > 10 || Projectile.ai[0] == -3) && endHow == 0)
+            }
+            else if (!AllowTrailToEnd && Main.rand.NextBool(12))
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
+                dust.velocity *= 0.1f;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.noGravity = true;
+                dust.scale += 0.1f;
+                dust.color = Color;
+                dust.fadeIn = 0.1f;
+                dust.scale *= 1.2f;
+                dust.alpha = Projectile.alpha;
+            }
+            if ((counter > 10 || Projectile.ai[0] == -3) && !AllowTrailToEnd)
 			{
 				Vector2 temp = Projectile.velocity * acceleration;
 				temp = Collision.TileCollision(Projectile.Center - new Vector2(10, 10), Projectile.velocity * acceleration, 20, 20, true, true);
@@ -191,12 +197,12 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			if (iterator >= trailPos.Length)
 				Projectile.Kill();
-		}
-		int endHow = 0;
-		public void triggerStop()
+        }
+        bool AllowTrailToEnd = false;
+        public void triggerStop()
 		{
 			Projectile.penetrate = -1;
-			endHow = 1;
+            AllowTrailToEnd = true;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
 			Projectile.velocity *= 0f;
@@ -207,15 +213,13 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			writer.Write(Projectile.tileCollide);
 			writer.Write(Projectile.friendly);
-			writer.Write(endHow);
-			base.SendExtraAI(writer);
+			writer.Write(AllowTrailToEnd);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			Projectile.tileCollide = reader.ReadBoolean();
 			Projectile.friendly = reader.ReadBoolean();
-			endHow = reader.ReadInt32();
-			base.ReceiveExtraAI(reader);
+            AllowTrailToEnd = reader.ReadBoolean();
 		}
 	}
 }

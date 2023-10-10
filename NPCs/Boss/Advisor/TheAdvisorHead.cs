@@ -55,7 +55,7 @@ namespace SOTS.NPCs.Boss.Advisor
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             Main.npcFrameCount[NPC.type] = 2;
 			NPCID.Sets.ShouldBeCountedAsBoss[NPC.type] = true;
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				CustomTexturePath = "SOTS/BossCL/AdvisorPortrait",
 				PortraitScale = 0.5f, // Portrait refers to the full picture when clicking on the icon in the bestiary

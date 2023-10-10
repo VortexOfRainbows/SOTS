@@ -96,6 +96,14 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         }
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = "SOTS/BossCL/PolarisPortrait",
+                PortraitScale = 0.5f, // Portrait refers to the full picture when clicking on the icon in the bestiary
+                Scale = 0.5f,
+                PortraitPositionYOverride = 10f,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;

@@ -160,6 +160,7 @@ namespace SOTS.Projectiles.Permafrost
 			Main.spriteBatch.Draw(texture, Projectile.Center + offset - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
 			return false;
         }
+		int bulletAlternatingCounter = 0;
         public void FireBullet()
 		{
 			if (Projectile.owner == Main.myPlayer)
@@ -167,9 +168,10 @@ namespace SOTS.Projectiles.Permafrost
 				Vector2 center = new Vector2(Projectile.Center.X, Projectile.Center.Y + 5);
 				Vector2 playerCursor = Main.MouseWorld;
 				Vector2 rotateArea = new Vector2(6, 0).RotatedBy((playerCursor - center).ToRotation());
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * 0.25f), Projectile.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * 0.25f), Projectile.knockBack, Main.myPlayer, 0, bulletAlternatingCounter % 2);
 			}
-			offset = new Vector2(8 * Projectile.spriteDirection, 0).RotatedBy(Projectile.rotation);
+			bulletAlternatingCounter++;
+            offset = new Vector2(8 * Projectile.spriteDirection, 0).RotatedBy(Projectile.rotation);
 		}
 	}
 }

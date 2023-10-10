@@ -888,10 +888,10 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<PermafrostConstruct>())
+			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<NewPolaris>() || npc.type == ModContent.NPCType<PermafrostConstruct>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ArcticGoblin");
-				if (npc.type == ModContent.NPCType<Polaris>())
+				if (npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<NewPolaris>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Polaris");
 				if (npc.type == ModContent.NPCType<PermafrostConstruct>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PermafrostConstruct");

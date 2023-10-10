@@ -34,12 +34,12 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			Player player = Main.player[Projectile.owner];
 			counter++;
-			if(counter % 6 == 0 && Projectile.owner == Main.myPlayer)
+			if(counter % 6 == 0 && Projectile.owner == Main.myPlayer && counter > 30)
 			{
 				for(int i = 0; i < 4; i++)
                 {
                     Vector2 rotateArea = new Vector2(5.4f, 0).RotatedBy(MathHelper.ToRadians(counter * 6 + i * 90));
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * .35f), Projectile.knockBack, player.whoAmI, -3);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * .35f), Projectile.knockBack, player.whoAmI, -3, i % 2);
                 }
 				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			}

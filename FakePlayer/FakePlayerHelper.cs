@@ -207,12 +207,14 @@ namespace SOTS.FakePlayer
         }
         public override void OnSpawn(Projectile projectile, IEntitySource source) //OnSpawn happens before the netmessage that syncs projectiles is sent, so it should be safe to not run projectile.netUpdate = true; here!
         {
-            if (OwnerOfThisUpdateCycle == -1 || projectile.owner != Main.myPlayer)
+            if (OwnerOfThisUpdateCycle == -1 || projectile.owner != Main.myPlayer || projectile.hostile)
             {
                 FakeOwnerIdentity = -1;
             }
             else
+            {
                 FakeOwnerIdentity = OwnerOfThisUpdateCycle;
+            }
         }
     }
     public class PlayerInventorySlotsManager
