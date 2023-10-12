@@ -324,6 +324,7 @@ namespace SOTS
 		public bool AnomalyLocator = false;
 		public bool StatShareMeleeAndSummon = false;
         public bool StatShareMeleeAndMagic = false;
+        public bool StatShareAll = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
@@ -631,7 +632,7 @@ namespace SOTS
         }
 		public void ResetVisionID()
         {
-			UniqueVisionNumber = Main.rand.Next(32);
+			UniqueVisionNumber = Main.rand.Next(40);
         }
 		public override void PreUpdate()
 		{
@@ -743,6 +744,10 @@ namespace SOTS
             float meleeFlatBonus = Player.GetDamage(DamageClass.Melee).Flat * 0.5f;
             float meleeMultiplicativeBonus = (Player.GetDamage(DamageClass.Melee).Multiplicative - 1) * 0.5f + 1;
             float meleeBaseBonus = Player.GetDamage(DamageClass.Melee).Base * 0.5f;
+            float rangedAdditiveBonus = (Player.GetDamage(DamageClass.Ranged).Additive - 1) * 0.5f;
+            float rangedFlatBonus = Player.GetDamage(DamageClass.Ranged).Flat * 0.5f;
+            float rangedMultiplicativeBonus = (Player.GetDamage(DamageClass.Ranged).Multiplicative - 1) * 0.5f + 1;
+            float rangedBaseBonus = Player.GetDamage(DamageClass.Ranged).Base * 0.5f;
             float magicAdditiveBonus = (Player.GetDamage(DamageClass.Magic).Additive - 1) * 0.5f;
             float magicFlatBonus = Player.GetDamage(DamageClass.Magic).Flat * 0.5f;
             float magicMultiplicativeBonus = (Player.GetDamage(DamageClass.Magic).Multiplicative - 1) * 0.5f + 1;
@@ -789,7 +794,90 @@ namespace SOTS
                 if (magicBaseBonus > 0)
                     Player.GetDamage(DamageClass.Melee).Base += magicBaseBonus;
             }
-            StatShareMeleeAndSummon = StatShareMeleeAndMagic = false;
+			if(StatShareAll)
+            {
+                if (meleeAdditiveBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic) += meleeAdditiveBonus;
+                    Player.GetDamage(DamageClass.Melee) -= meleeAdditiveBonus;
+                }
+                if (meleeFlatBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Flat += meleeFlatBonus;
+                    Player.GetDamage(DamageClass.Melee).Flat -= meleeFlatBonus;
+                }
+                if (meleeMultiplicativeBonus > 1)
+                {
+                    Player.GetDamage(DamageClass.Generic) *= meleeMultiplicativeBonus;
+                    Player.GetDamage(DamageClass.Melee) /= meleeMultiplicativeBonus;
+                }
+                if (meleeBaseBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Base += meleeBaseBonus;
+                    Player.GetDamage(DamageClass.Melee).Base -= meleeBaseBonus;
+                }
+                if (rangedAdditiveBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic) += rangedAdditiveBonus;
+                    Player.GetDamage(DamageClass.Ranged) -= rangedAdditiveBonus;
+                }
+                if (rangedFlatBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Flat += rangedFlatBonus;
+                    Player.GetDamage(DamageClass.Ranged).Flat -= rangedFlatBonus;
+                }
+                if (rangedMultiplicativeBonus > 1)
+                {
+                    Player.GetDamage(DamageClass.Generic) *= rangedMultiplicativeBonus;
+                    Player.GetDamage(DamageClass.Ranged) /= rangedMultiplicativeBonus;
+                }
+                if (rangedBaseBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Base += rangedBaseBonus;
+                    Player.GetDamage(DamageClass.Ranged).Base -= rangedBaseBonus;
+                }
+                if (magicAdditiveBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic) += magicAdditiveBonus;
+                    Player.GetDamage(DamageClass.Magic) -= magicAdditiveBonus;
+                }
+                if (magicFlatBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Flat += magicFlatBonus;
+                    Player.GetDamage(DamageClass.Magic).Flat -= magicFlatBonus;
+                }
+                if (magicMultiplicativeBonus > 1)
+                {
+                    Player.GetDamage(DamageClass.Generic) *= magicMultiplicativeBonus;
+                    Player.GetDamage(DamageClass.Magic) /= magicMultiplicativeBonus;
+                }
+                if (magicBaseBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Base += magicBaseBonus;
+                    Player.GetDamage(DamageClass.Magic).Base -= magicBaseBonus;
+                }
+                if (summonAdditiveBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic) += summonAdditiveBonus;
+                    Player.GetDamage(DamageClass.Summon) -= summonAdditiveBonus;
+                }
+                if (summonFlatBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Flat += summonFlatBonus;
+                    Player.GetDamage(DamageClass.Summon).Flat -= summonFlatBonus;
+                }
+                if (summonMultiplicativeBonus > 1)
+                {
+                    Player.GetDamage(DamageClass.Generic) *= summonMultiplicativeBonus;
+                    Player.GetDamage(DamageClass.Summon) /= summonMultiplicativeBonus;
+                }
+                if (summonBaseBonus > 0)
+                {
+                    Player.GetDamage(DamageClass.Generic).Base += summonBaseBonus;
+                    Player.GetDamage(DamageClass.Summon).Base -= summonBaseBonus;
+                }
+            }
+            StatShareMeleeAndSummon = StatShareMeleeAndMagic = StatShareAll = false;
         }
 		public override void ResetEffects()
 		{

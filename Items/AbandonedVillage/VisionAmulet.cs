@@ -17,7 +17,7 @@ namespace SOTS.Items.AbandonedVillage
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/AbandonedVillage/VisionAmuletSheet");
-			frame = new Rectangle(38 * GetGem(unique), 38 * GetFrame(unique), 36, 38);
+			frame = new Rectangle(38 * GetGem(unique), 44 * GetFrame(unique) + 2, 36, 40);
 			spriteBatch.Draw(texture, position, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -27,7 +27,7 @@ namespace SOTS.Items.AbandonedVillage
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/AbandonedVillage/VisionAmuletSheet");
-			Rectangle frame = new Rectangle(38 * GetGem(unique), 38 * GetFrame(unique), 36, 38);
+			Rectangle frame = new Rectangle(38 * GetGem(unique), 44 * GetFrame(unique) + 2, 36, 40);
 			Vector2 origin = Item.Size / 2;
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
 			return false;
@@ -39,7 +39,7 @@ namespace SOTS.Items.AbandonedVillage
 		public override void SetDefaults()
 		{
             Item.width = 36;     
-            Item.height = 38;   
+            Item.height = 40;   
             Item.value = Item.sellPrice(gold: 10);
             Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;
@@ -88,7 +88,6 @@ namespace SOTS.Items.AbandonedVillage
 				case 1: //electro
 					player.maxMinions++;
 					player.maxTurrets++;
-					player.GetDamage(DamageClass.Generic) += 0.1f;
 					break;
 				case 2: //anemo
 					modPlayer.attackSpeedMod += 0.12f;
@@ -104,8 +103,9 @@ namespace SOTS.Items.AbandonedVillage
 					player.lifeRegen += 2;
 					break;
 				case 6: //dendro
-					player.statLifeMax2 += 80;
-					break;
+					player.statLifeMax2 += 20;
+                    player.GetDamage(DamageClass.Generic) += 0.1f;
+                    break;
 				case 7: //masterless
 					vPlayer.voidRegenSpeed += 0.2f;
 					break;
@@ -129,7 +129,10 @@ namespace SOTS.Items.AbandonedVillage
 					modPlayer.additionalPotionMana += 40;
 					player.statManaMax2 += 40;
 					break;
-			}
+                case 4: //Fontaine
+					modPlayer.StatShareAll = true;
+                    break;
+            }
         }
 		public string GetTooltip(int gem, int frame)
 		{

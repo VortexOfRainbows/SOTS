@@ -39,6 +39,7 @@ using Terraria.Localization;
 using SOTS.Items.Conduit;
 using SOTS.Common;
 using SOTS.Items.Tide;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS
 {

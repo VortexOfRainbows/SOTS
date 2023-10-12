@@ -33,13 +33,16 @@ Update Objectives:
 	2. Needs: Readjust all pre-existing polaris references to New Polaris in progression
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
-		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
+		1. Somewhat futuristic looking. HaDAs a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
-7. Add elemental amulet borders for fontaine
-8. Add Soul of Plight (it should go in quite a few recipes, including certain vanilla recipes)
 
 Daily Log:
+
+10/12/23
+1. Elemental amulet borders for Fontaine~!
+2. Electro vision nerfed, 10% increased damage -> 0% increased damage (still gives sentry and minion)
+3. Dendro vision rework, now gives 20 life instead of 80, but increase damage by 10% (better reflect Dendro as a offensive element)
 
 10/10/23
 1. More colorful friendly polar bullets

@@ -79,8 +79,8 @@ namespace SOTS.Items.Planetarium.FromChests
 			}*/
 			SOTSPlayer sPlayer = player.sotsPlayer();
 			sPlayer.UniqueVisionNumber++;
-			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 32;
-			player.VoidPlayer().ResetAllVoidBonuses();
+			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 40;
+			//player.VoidPlayer().ResetAllVoidBonuses();
 			//Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
 			return false; 
 		}

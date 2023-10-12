@@ -6015,7 +6015,11 @@ Mods: {
 				Increases healing recieved from potions by 40
 				Increases life regeneration by 2 
 				'''
-			6: Increases max life by 80
+			6:
+				'''
+				Increases max life by 20
+				Increases damage by 10%
+				'''
 			7: Increases void regeneration speed by 20%
 		}
 
@@ -6042,6 +6046,11 @@ Mods: {
 
 				Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
 				Increases max mana and mana recieved from potions by 40
+				'''
+			4:
+				'''
+
+				Increases all damage by 50% of the increases recieved to any damage type from other sources
 				'''
 		}
 
