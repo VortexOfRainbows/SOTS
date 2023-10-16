@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
 using SOTS.NPCs.Boss.Polaris;
+using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
@@ -71,7 +72,7 @@ namespace SOTS.Items.Permafrost
 			for(int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
-				if(item.type == ModContent.ItemType<FrostedKey>() && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()))
+				if(item.type == ModContent.ItemType<FrostedKey>() && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()) && !NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()))
 				{
 					//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
 					player.AddBuff(ModContent.BuffType<SpawnBossIce>(), ylocation, false);
@@ -87,9 +88,9 @@ namespace SOTS.Items.Permafrost
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[i, j];
-			int left = i;
-			int top = j;
+			//Tile tile = Main.tile[i, j];
+			//int left = i;
+			//int top = j;
 			player.cursorItemIconID = ModContent.ItemType<FrostedKey>();
 			//player.cursorItemIconText = "";
 			player.noThrow = 2;

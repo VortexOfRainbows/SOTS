@@ -16,6 +16,7 @@ Acknowledged But Likely Delayed:
 6. Smart cursor doesn't work with dressers.
 7. Most Void Minions do not work with whip debuffs
 8. HydroServant's HeldProj ball renders on the topmost player layer of who is holding it. This means it will be layered improperly in multiplayer, but only when multiple people are using it, and only for other clients (not the local client). This is ultimately a non-issue.
+(. Hydro servant wont attack in multiplayer, but fixed on a reload..?
 
 Update Objectives:
 1. Ghost Town! (later)
@@ -29,8 +30,7 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
 5. Polaris Rework (pending)
-	1. Needs: Balance testing, server syncing. Rework a few items
-	2. Needs: Readjust all pre-existing polaris references to New Polaris in progression
+	1. Needs: Balance testing. Rework a few items
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. HaDAs a spacesuit-like helmet.
@@ -38,6 +38,13 @@ Update Objectives:
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 
 Daily Log:
+
+10/15/23
+1. Nature Spirit Minion: Effectively a small damage buff (+6.67%), but a healing nerf (-33.4%)
+	1. Healing 1.2 -> 1.0
+	2. Firerate 72 -> 90
+	3. Damage 9 -> 12
+2. Server synced New Polaris
 
 10/12/23
 1. Elemental amulet borders for Fontaine~!

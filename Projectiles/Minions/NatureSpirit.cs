@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Minions
 				direction *= distance;
 				Projectile.velocity = direction;
 				Vector2 toNPC = targetCenter - Projectile.Center;
-				int fireRate = 72;
+				int fireRate = 90;
 				if((int)(modPlayer.orbitalCounter + (float)fireRate / total * Projectile.ai[1]) % fireRate == 0 && inRange)
 				{
 					SOTSUtils.PlaySound(SoundID.Item43, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);

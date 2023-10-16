@@ -32,6 +32,36 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
 {	[AutoloadBossHead]
 	public class NewPolaris : ModNPC
     {
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            if(LoadedWeaponData)
+            {
+                writer.Write(polarisWeaponData[0].TypeToSwapTo);
+                writer.Write(polarisWeaponData[1].TypeToSwapTo);
+                writer.Write(polarisWeaponData[2].TypeToSwapTo);
+                writer.Write(polarisWeaponData[3].TypeToSwapTo);
+            }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                    writer.Write((int)0);
+            }
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            if (LoadedWeaponData)
+            {
+                polarisWeaponData[0].TypeToSwapTo = reader.ReadInt32();
+                polarisWeaponData[1].TypeToSwapTo = reader.ReadInt32();
+                polarisWeaponData[2].TypeToSwapTo = reader.ReadInt32();
+                polarisWeaponData[3].TypeToSwapTo = reader.ReadInt32();
+            }
+            else
+            {
+                for(int i = 0; i < 4; i++)
+                    reader.ReadInt32();
+            }
+        }
         public static class AttackID
         {
             public static int BulletStorm = 0;
@@ -1034,12 +1064,12 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         public void LaunchMines()
         {
             SOTSUtils.PlaySound(SoundID.Item94, NPC.Center, 0.70f, -0.5f);
+            Player player = Main.player[NPC.target];
+            Vector2 toPlayer = player.Center - NPC.Center;
+            toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
+            NPC.velocity -= toPlayer * 8f;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Player player = Main.player[NPC.target];
-                Vector2 toPlayer = player.Center - NPC.Center;
-                toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
-                NPC.velocity -= toPlayer * 8f;
                 for (int i= 0; i < 5; i++)
                 {
                     Vector2 outward = new Vector2(6.4f + i * 3.6f, 0).RotatedBy(toPlayer.ToRotation()) + Main.rand.NextVector2Circular(3f, 3f);
@@ -1287,35 +1317,41 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             {
                 if (Frame == 0)
                 {
-                    if (Type == 2 && (AI == 0 || ReRegisterPrimTrail))
+                    if(Main.netMode != NetmodeID.Server)
                     {
-                        Color Color1 = new Color(187, 11, 76, 0);
-                        Color Color2 = new Color(202, 234, 247, 0);
-                        if (redOrBlue == 0)
+                        if (Type == 2 && (AI == 0 || ReRegisterPrimTrail))
                         {
-                            Color1 = new Color(64, 74, 204, 0);
-                            Color2 = new Color(255, 221, 233, 0);
+                            Color Color1 = new Color(187, 11, 76, 0);
+                            Color Color2 = new Color(202, 234, 247, 0);
+                            if (redOrBlue == 0)
+                            {
+                                Color1 = new Color(64, 74, 204, 0);
+                                Color2 = new Color(255, 221, 233, 0);
+                            }
+                            PolarisSaberTrail trail = new PolarisSaberTrail(this, rotationDirection, Color2.ToVector4() * 0.5f, Color1.ToVector4() * 0.5f, 30, 0);
+                            SOTS.primitives.CreateTrail(trail);
+                            SaberTrail = trail;
+                            ReRegisterPrimTrail = false;
                         }
-                        PolarisSaberTrail trail = new PolarisSaberTrail(this, rotationDirection, Color2.ToVector4() * 0.5f, Color1.ToVector4() * 0.5f, 30, 0);
-                        SOTS.primitives.CreateTrail(trail);
-                        SaberTrail = trail;
-                        ReRegisterPrimTrail = false;
-                    }
-                    if(Type == 2 && (previousRotationDirection != rotationDirection || wasClosedLastTick != close))
-                    {
-                        if (SaberTrail != null)
-                            SaberTrail.OnDestroy();
-                        ReRegisterPrimTrail = true;
+                        if (Type == 2 && (previousRotationDirection != rotationDirection || wasClosedLastTick != close))
+                        {
+                            if (SaberTrail != null)
+                                SaberTrail.OnDestroy();
+                            ReRegisterPrimTrail = true;
+                        }
                     }
                     AI++;
                 }
                 else
                 {
-                    if (SaberTrail != null)
+                    if (Main.netMode != NetmodeID.Server)
                     {
-                        SaberTrail.OnDestroy();
+                        if (SaberTrail != null)
+                        {
+                            SaberTrail.OnDestroy();
+                        }
+                        ReRegisterPrimTrail = true;
                     }
-                    ReRegisterPrimTrail = true;
                 }
                 if (Frame == 4 && FrameCounter == 0)
                 {
@@ -1326,8 +1362,11 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             {
                 if (TypeToSwapTo != 2)
                 {
-                    if (SaberTrail != null)
-                        SaberTrail.OnDestroy();
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        if (SaberTrail != null)
+                            SaberTrail.OnDestroy();
+                    }
                     ReRegisterPrimTrail = true;
                 }
             }

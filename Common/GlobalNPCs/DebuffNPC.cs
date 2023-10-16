@@ -204,64 +204,69 @@ namespace SOTS.Common.GlobalNPCs
             NPC realNPC = npc;
             if (npc.realLife != -1)
                 realNPC = Main.npc[npc.realLife];
-            DebuffNPC debuffNPC = realNPC.GetGlobalNPC<DebuffNPC>();
-            if (debuffNPC.timeFrozen > 0 || debuffNPC.frozen)
+            DebuffNPC debuffNPC;
+            bool found = realNPC.TryGetGlobalNPC<DebuffNPC>(out debuffNPC);
+            if (found)
             {
-                if (npc.immune[Main.myPlayer] > 0)
-                    npc.immune[Main.myPlayer]--;
-                if (!debuffNPC.frozen)
+                if (debuffNPC.timeFrozen > 0 || debuffNPC.frozen)
                 {
-                    if (debuffNPC.aiSpeedMultiplier > 0)
+                    if (npc.immune[Main.myPlayer] > 0)
+                        npc.immune[Main.myPlayer]--;
+                    if (!debuffNPC.frozen)
                     {
-                        debuffNPC.aiSpeedMultiplier -= 1 / timeBeforeFullFreeze;
-                    }
-                    else
-                    {
-                        debuffNPC.aiSpeedMultiplier = 0;
-                        debuffNPC.frozen = true;
-                    }
-                }
-                else
-                {
-                    debuffNPC.frozenForTime++;
-                    if (debuffNPC.timeFrozen > 1)
-                    {
-                        debuffNPC.timeFrozen--;
-                    }
-                    else
-                    {
-                        debuffNPC.aiSpeedMultiplier += 1 / timeBeforeFullFreeze;
-                        if (debuffNPC.aiSpeedMultiplier > 1)
+                        if (debuffNPC.aiSpeedMultiplier > 0)
                         {
-                            debuffNPC.aiSpeedMultiplier = 1;
-                            debuffNPC.timeFrozen = 0;
-                            debuffNPC.frozen = false;
+                            debuffNPC.aiSpeedMultiplier -= 1 / timeBeforeFullFreeze;
+                        }
+                        else
+                        {
+                            debuffNPC.aiSpeedMultiplier = 0;
+                            debuffNPC.frozen = true;
                         }
                     }
-                }
-                if (debuffNPC.timeFrozen == 0 && Main.netMode == NetmodeID.Server)
-                {
-                    debuffNPC.netUpdateTime = true;
-                }
-                npc.whoAmI = i;
-            }
-            else
-            {
-                if (debuffNPC.frozenForTime > 0)
-                {
-                    debuffNPC.frozenForTime--;
+                    else
+                    {
+                        debuffNPC.frozenForTime++;
+                        if (debuffNPC.timeFrozen > 1)
+                        {
+                            debuffNPC.timeFrozen--;
+                        }
+                        else
+                        {
+                            debuffNPC.aiSpeedMultiplier += 1 / timeBeforeFullFreeze;
+                            if (debuffNPC.aiSpeedMultiplier > 1)
+                            {
+                                debuffNPC.aiSpeedMultiplier = 1;
+                                debuffNPC.timeFrozen = 0;
+                                debuffNPC.frozen = false;
+                            }
+                        }
+                    }
+                    if (debuffNPC.timeFrozen == 0 && Main.netMode == NetmodeID.Server)
+                    {
+                        debuffNPC.netUpdateTime = true;
+                    }
+                    npc.whoAmI = i;
                 }
                 else
-                    debuffNPC.frozenForTime = 0;
-                debuffNPC.frozen = false;
+                {
+                    if (debuffNPC.frozenForTime > 0)
+                    {
+                        debuffNPC.frozenForTime--;
+                    }
+                    else
+                        debuffNPC.frozenForTime = 0;
+                    debuffNPC.frozen = false;
+                }
+                debuffNPC.aiSpeedCounter += debuffNPC.aiSpeedMultiplier;
+                if (debuffNPC.aiSpeedCounter >= 1)
+                {
+                    debuffNPC.aiSpeedCounter -= 1;
+                }
+                else
+                    return true;
             }
-            debuffNPC.aiSpeedCounter += debuffNPC.aiSpeedMultiplier;
-            if (debuffNPC.aiSpeedCounter >= 1)
-            {
-                debuffNPC.aiSpeedCounter -= 1;
-            }
-            else
-                return true;
+            else return true;
             return false;
         }
         public void SendClientChanges(Player player, NPC npc, int type = 0)

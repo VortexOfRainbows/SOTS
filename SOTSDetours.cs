@@ -533,16 +533,21 @@ namespace SOTS
 					NPC npc = Main.npc[i];
 					if (npc.active)
 					{
-						if (!npc.GetGlobalNPC<GlobalEntityNPC>().RecentlyTeleported)
-						{
-							DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
-							if (instancedNPC.timeFrozen != 0)
-								instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch);
-						}
-						else
+						GlobalEntityNPC gen;
+						bool found = npc.TryGetGlobalNPC<GlobalEntityNPC>(out gen);
+						if(found)
                         {
-							npc.GetGlobalNPC<GlobalEntityNPC>().Draw(npc, Main.spriteBatch);
-						}
+                            if (!gen.RecentlyTeleported)
+                            {
+                                DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
+                                if (instancedNPC.timeFrozen != 0)
+                                    instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch);
+                            }
+                            else
+                            {
+                                gen.Draw(npc, Main.spriteBatch);
+                            }
+                        }
 						if(npc.ModNPC is Archaeologist arch)
                         {
 							arch.Draw(Main.spriteBatch, Main.screenPosition, Lighting.GetColor((int)npc.Center.X / 16, (int)npc.Center.Y / 16));

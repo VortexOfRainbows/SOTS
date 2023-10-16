@@ -170,7 +170,6 @@ namespace SOTS.Projectiles.Nature
 			Player player = Main.player[Projectile.owner];
 			target.immune[player.whoAmI] = 0;
 			int heal = 1;
-			if (Main.rand.NextBool(5)) heal = 2;
 			hasHit = true;
 			if (player.whoAmI == Main.myPlayer)
 			{
