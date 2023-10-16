@@ -1,6 +1,8 @@
 Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
 1. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret dimension containing the Superbia Portal
+2. Starward Sword (Upgrade to Digital Daito and Vorpal Knife)
+3. Refracting Crystal + Void Anomaly => Reflecting Crystal
 
 Tmodloader Bugs (some of these may be fixed, idk):
 1. Chest Swapping doesn't drop item.
@@ -15,8 +17,7 @@ Acknowledged But Likely Delayed:
 5. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
 6. Smart cursor doesn't work with dressers.
 7. Most Void Minions do not work with whip debuffs
-8. HydroServant's HeldProj ball renders on the topmost player layer of who is holding it. This means it will be layered improperly in multiplayer, but only when multiple people are using it, and only for other clients (not the local client). This is ultimately a non-issue.
-(. Hydro servant wont attack in multiplayer, but fixed on a reload..?
+8. Hydro servant wont attack in multiplayer, but fixed on a reload..?
 
 Update Objectives:
 1. Ghost Town! (later)
@@ -36,10 +37,11 @@ Update Objectives:
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
+7. Starmap
 
 Daily Log:
 
-10/15/23
+10/15/23 to 10/16/23
 1. Nature Spirit Minion: Effectively a small damage buff (+6.67%), but a healing nerf (-33.4%)
 	1. Healing 1.2 -> 1.0
 	2. Firerate 72 -> 90
@@ -54,7 +56,7 @@ Daily Log:
 	4. Now requires Night Illuminator to craft
 6. Shard Guard and Permafrost Medallion Now stack, leading to more damage and probes (3x basically)
 	1. deals 576 DPS against non armor (same as Chaos Spirit...) (0.75 damage multiplier when stacked)
-7. Resprited Blizzard Probes, 
+7. Resprited Blizzard Probes, Permafrost Medallion, Shard Guard (Including Sheet)
 
 10/12/23
 1. Elemental amulet borders for Fontaine~!

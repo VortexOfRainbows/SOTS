@@ -1,0 +1,7 @@
+Low Priority Objectives:
+1. AI Companion related accessories
+	1. Matsumoto Minion (Vivy reference)
+	2. Calculator + Subspace Locket + Some digital related item
+
+Notes:
+1. HydroServant's HeldProj ball renders on the topmost player layer of who is holding it. This means it will be layered improperly in multiplayer, but only when multiple people are using it, and only for other clients (not the local client). This is ultimately a non-issue.

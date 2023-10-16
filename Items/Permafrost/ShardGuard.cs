@@ -17,10 +17,11 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
 			Item.damage = 36;
-			Item.DamageType = DamageClass.Summon;
+            Item.knockBack = 1;
+            Item.DamageType = DamageClass.Summon;
 			Item.maxStack = 1;
-            Item.width = 38;     
-            Item.height = 34;   
+            Item.width = 34;
+            Item.height = 38;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Lime;
 			Item.defense = 1;
