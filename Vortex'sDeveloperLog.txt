@@ -38,6 +38,7 @@ Update Objectives:
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 7. Starmap
+8. Prevent constructs from despawning for a while
 
 Daily Log:
 
