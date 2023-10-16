@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.Diagnostics;
 using SOTS.Projectiles.Laser;
+using SOTS.Common.GlobalNPCs;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -14,145 +14,121 @@ namespace SOTS.Projectiles.Minions
     {	
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Blizzard Probe");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-			Main.projPet[Projectile.type] = false;
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
-		}
-		
+            Main.projPet[Projectile.type] = false;
+            Main.projFrames[Projectile.type] = 1;
+        }
         public override void SetDefaults()
         {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 26;
 			Projectile.height = 26;
-            Main.projFrames[Projectile.type] = 1;
 			Projectile.penetrate = -1;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 300;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			//Projectile.minion = true;
 			Projectile.alpha = 0;
             Projectile.netImportant = true;
 		}
-		public int FindClosestEnemy()
-		{
-			Player player = Main.player[Projectile.owner];
-			float minDist = 600;
-			int target2 = -1;
-			float dX = 0f;
-			float dY = 0f;
-			float distance = 0;
-			if (player.HasMinionAttackTargetNPC)
-			{
-				NPC target = Main.npc[player.MinionAttackTargetNPC];
-				bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height);
-				dX = target.Center.X - Projectile.Center.X;
-				dY = target.Center.Y - Projectile.Center.Y;
-				distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-				if (distance < minDist && lineOfSight)
-				{
-					minDist = distance;
-					target2 = player.MinionAttackTargetNPC;
-				}
-			}
-			for (int i = 0; i < Main.npc.Length - 1; i++)
-			{
-				NPC target = Main.npc[i];
-				if (target.CanBeChasedBy())
-				{
-					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height);
-					dX = target.Center.X - Projectile.Center.X;
-					dY = target.Center.Y - Projectile.Center.Y;
-					distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-					if(distance < minDist && lineOfSight)
-					{
-						minDist = distance;
-						target2 = i;
-					}
-				}
-			}
-			return target2;
-		}
-		int targetValue = 120;
 		public override void AI()
         {
 			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			float speedRotation = Projectile.velocity.ToRotation();
+            float targetRotation = speedRotation;
 			if (Projectile.timeLeft > 100)
 			{
 				Projectile.timeLeft = 300;
-			}
-			if (player.whoAmI == Main.myPlayer)
-			{
-				if (modPlayer.orbitalCounter % 60 == 0)
-				{
-					Projectile.netUpdate = true;
-				}
-				Vector2 playerCursor = Main.MouseWorld;
-				
-				float shootToX = playerCursor.X - Projectile.Center.X;
-				float shootToY = playerCursor.Y - Projectile.Center.Y;
-						
-				Projectile.tileCollide = true;
-				if(FindClosestEnemy() == -1)
-				{
-					Projectile.rotation = (float)Math.Atan2((double)shootToY, (double)shootToX) + MathHelper.ToRadians(45);
-				}
-				else
-				{
-					Projectile.ai[1] += 1;
-					NPC target = Main.npc[FindClosestEnemy()];
-					shootToX = target.Center.X - Projectile.Center.X;
-					shootToY = target.Center.Y - Projectile.Center.Y;
-					Projectile.rotation = (float)Math.Atan2((double)shootToY, (double)shootToX) + MathHelper.ToRadians(45);
-					if(Projectile.ai[1] >= targetValue)
-					{
-						targetValue = Main.rand.Next(120,240);
-						Projectile.ai[1] = 0;
-						LaunchLaser(target.Center);
-					}
-				}
-			}
-			Vector2 initialLoop = new Vector2(164, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 2.15f + 45 * (int)Projectile.ai[0]));
+            }
+            int targetID = SOTSNPCs.FindTarget_Basic(player.Center + new Vector2(0, -16), 720, needsLOS: true);
+            if (targetID != -1 && Projectile.Center.Distance(player.Center) < 1440)
+            {
+                Projectile.ai[1] += 1;
+                NPC target = Main.npc[targetID];
+                Vector2 shootTo = target.Center - Projectile.Center;
+                targetRotation = shootTo.ToRotation();
+                if ((int)Projectile.ai[1] % 90 == 0 && player.whoAmI == Main.myPlayer)
+                {
+                    LaunchLaser(target.Center);
+                    Projectile.netUpdate = true;
+                }
+            }
+            Vector2 initialLoop = new Vector2(164, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 1.5f + 45 * Projectile.ai[0] + Projectile.ai[0] % 2 * 45));
 
 			if((int)Projectile.ai[0] % 2 == 0)
 			{
-				initialLoop.X /= 2.0f;
+				initialLoop.X *= 0.25f;
 			}
 			else
 			{
-				initialLoop.Y /= 2.0f;
+				initialLoop.Y *= 0.25f;
 			}
-
-			Vector2 properLoop = new Vector2(initialLoop.X, initialLoop.Y).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 2.15f));
-			Projectile.position.X = properLoop.X + player.Center.X - Projectile.width / 2;
-			Projectile.position.Y = properLoop.Y + player.Center.Y - Projectile.height / 2;
+			float firingProgress = (Projectile.ai[1] % 90 - 50f) / 40f;
+            if (targetID == -1)
+				firingProgress = 0f;
+            firingProgress = MathHelper.Clamp(firingProgress, 0, 1f);
+            if (FireProgress > firingProgress)
+				FireProgress = MathHelper.Lerp(FireProgress, firingProgress, 0.1f);
+            else
+                FireProgress = MathHelper.Lerp(FireProgress, firingProgress, firingProgress);
+            Vector2 properLoop = new Vector2(initialLoop.X, initialLoop.Y).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 1.5f)) + player.Center;
+			Vector2 travelToLoopPosition = properLoop - Projectile.Center;
+			float length = travelToLoopPosition.Length();
+			float speed = 15f + length * 0.05f;
+			if(speed > length)
+			{
+				speed = length;
+			}
+			speed *= (1 - FireProgress * 0.8f);
+            Projectile.velocity *= 0.95f * (1 - FireProgress * 0.8f);
+			Projectile.velocity = Vector2.Lerp(Projectile.velocity, travelToLoopPosition.SafeNormalize(Vector2.Zero) * speed, 0.06f);
+			if (targetRotation != speedRotation)
+			{
+				Projectile.rotation = MathHelper.Lerp(Projectile.rotation, targetRotation, 0.1f);
+			}
+			else
+				Projectile.rotation = speedRotation;
 		}
-		public void LaunchLaser(Vector2 area)
+		public float FireProgress;
+        public void LaunchLaser(Vector2 area)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<BrightRedLaser>(), Projectile.damage, 0, Projectile.owner, area.X, area.Y);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(12, 0).RotatedBy(Projectile.rotation), Vector2.Zero, ModContent.ProjectileType<BrightRedLaser>(), Projectile.damage, 1f, Projectile.owner, area.X, area.Y);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
-			for (int k = 0; k < Projectile.oldPos.Length; k++) {
+			Texture2D probeTexture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D glowTexture = ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/BlizzardProbeGlow").Value;
+            Vector2 drawOrigin = new Vector2(probeTexture.Width * 0.5f, Projectile.height * 0.5f);
+			for (int k = 0; k < Projectile.oldPos.Length; k++) 
+			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-			}
-			return true;
+				float alphaMult = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
+                Color color = Projectile.GetAlpha(lightColor) * alphaMult;
+				Main.spriteBatch.Draw(probeTexture, drawPos, null, color, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(glowTexture, drawPos, null, Color.White * alphaMult * 0.5f, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+            }
+            Main.spriteBatch.Draw(probeTexture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(glowTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+            if (FireProgress != 0)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector2 circular = new Vector2(16 * (1 - FireProgress), 0).RotatedBy(Projectile.rotation + i * MathHelper.PiOver4);
+                    Main.spriteBatch.Draw(glowTexture, circular + Projectile.Center - Main.screenPosition, null, new Color(100, 50, 60, 0) * FireProgress, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+                }
+            }
+            return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(Projectile.rotation);
-			writer.Write(Projectile.spriteDirection);
+
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			Projectile.rotation = reader.ReadSingle();
-			Projectile.spriteDirection = reader.ReadInt32();
+
 		}
 	}
 }

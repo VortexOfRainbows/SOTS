@@ -2996,7 +2996,7 @@ Mods: {
 
 			PermafrostMedallion: {
 				DisplayName: Permafrost Medallion
-				Tooltip: Surrounds you with a blizzard of artifact probes
+				Tooltip: Surrounds you with a blizzard of artifact probes that fire lasers at nearby enemies
 			}
 
 			PolarisBossBag: {
@@ -3009,7 +3009,7 @@ Mods: {
 				Tooltip:
 					'''
 					Puts a shell around the owner when below 50% life that reduces damage by 25%
-					Surrounds you with a blizzard of artifact probes
+					Surrounds you with a blizzard of artifact probes that fire lasers at nearby enemies
 					Getting hit surrounds you with ice shards
 					Increases max life by 20
 					'''
@@ -6050,7 +6050,7 @@ Mods: {
 			4:
 				'''
 
-				Increases all damage by 50% of the increases recieved to any damage type from other sources
+				Increases all damage by 50% of the increases recieved to any other damage type from other sources
 				'''
 		}
 

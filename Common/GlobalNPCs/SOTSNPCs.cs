@@ -555,7 +555,7 @@ namespace SOTS.Common.GlobalNPCs
 			float constructRateMultiplier = 1f;
 			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
 				constructRateMultiplier = 0f;
-			if(Main.invasionType != InvasionID.None)
+			if(Main.invasionType != InvasionID.None || NPC.AnyNPCs(NPCID.DD2EterniaCrystal))
             {
 				constructRateMultiplier *= 0.0f;
             }

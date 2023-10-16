@@ -14,10 +14,6 @@ namespace SOTS.Projectiles.Laser
 {
 	public class BrightRedLaser : ModProjectile
 	{
-		public override void SetStaticDefaults() 
-		{
-			// DisplayName.SetDefault("Artifact Laser");
-		}
 		public override void SetDefaults() 
 		{
 			Projectile.width = 10;
@@ -29,78 +25,96 @@ namespace SOTS.Projectiles.Laser
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesLocalNPCImmunity = true;
 		}
+		public void DustScatter(Vector2 position, float mult = 1f)
+        {
+            Vector2 start = Projectile.Center;
+            Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+            Vector2 toDestination = destination - start;
+            for (int i = 0; i < 8; i++)
+            {
+                Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.0f);
+                dust.scale *= 0.2f;
+                dust.scale += 1.4f;
+                dust.velocity *= 0.45f;
+                dust.velocity += Main.rand.NextFloat() * mult * toDestination.SafeNormalize(Vector2.Zero);
+                dust.noGravity = true;
+                dust.color = Color.Lerp(coreColor, Color.White, Main.rand.NextFloat(0.5f));
+                dust.fadeIn = 0.2f;
+            }
+        }
 		public override void AI() 
 		{
-			//Projectile.Center = npc.Center;
-			if((int)Projectile.localAI[0] == 0)
-				SOTSUtils.PlaySound(SoundID.Item12, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f);
-			Projectile.localAI[0] += 1f;
-			if (Projectile.localAI[0] == 2f) {
-				Projectile.damage = 0;
-				Projectile.alpha += 75;
+			if ((int)Projectile.localAI[0] == 0)
+			{
+                if(Projectile.knockBack <= 0)
+				    SOTSUtils.PlaySound(SoundID.Item12, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, -0.2f);
+                else
+                    SOTSUtils.PlaySound(SoundID.Item33, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f, 0.5f);
+                Vector2 start = Projectile.Center;
+                DustScatter(start, -0.2f);
+				Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+                DustScatter(destination, 1.2f);
+                float length = start.Distance(destination);
+                float increment = 4f / length;
+                for (float f = 0; f < 1; f += increment)
+                {
+                    Vector2 position = Vector2.Lerp(start, destination, f);
+                    Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.0f);
+					dust.scale *= 0.1f;
+					dust.scale += 0.9f;
+					dust.velocity *= 0.6f;
+                    dust.noGravity = true;
+					dust.color = Color.Lerp(coreColor, Color.White, Main.rand.NextFloat(0.6f));
+                    dust.fadeIn = 0.2f;
+                }
 			}
-			if (Projectile.localAI[0] > 15f) {
+			Projectile.localAI[0] += 1f;
+			if (Projectile.localAI[0] >= 5f) 
+			{
+				Projectile.friendly = false;
+			}
+			if (Projectile.localAI[0] > 15f) 
+			{
 				Projectile.Kill();
 			}
-			Projectile.alpha += 10;
 		}
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            target.immune[Projectile.owner] = 3;
-			if(Projectile.CountsAsClass(DamageClass.Melee)) 
-				target.immune[Projectile.owner] = 0;
-			Projectile.damage--;
-        }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;
 			Vector2 endPoint = new Vector2(Projectile.ai[0], Projectile.ai[1]);
-			Vector2 unit = endPoint - Projectile.Center;
-			float length = unit.Length();
-			unit.Normalize();
-			for (float Distance = 0; Distance <= length; Distance += 6f) 
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 20f, ref point))
+            {
+                return true;
+            }
+            return false;
+            //return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
+        }
+        public Color coreColor => Projectile.knockBack > 0 ? new Color(187, 31, 96, 0) : new Color(255, 10, 10, 0);
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 origin = new Vector2(0, texture.Height / 2);
+            Vector2 start = Projectile.Center;
+			Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+			float length = start.Distance(destination);
+			float rotation = (destination - start).ToRotation();
+			float progress = Projectile.localAI[0] / 15f;
+			float increment = 2f / length;
+            length /= texture.Width;
+            for (float f = 0; f < 1; f += increment)
 			{
-				Vector2 position = Projectile.Center + unit * Distance;	
-				int i = (int)(position.X / 16);
-				int j =	(int)(position.Y / 16);
-				
-				if(Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
-				{
-					break;
-				}
-				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, position, 10f, ref point))
-				{
-					return true;
-				}
-			}
-			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
-		}
-		public override bool PreDraw(ref Color lightColor)
-		{
-			Player player  = Main.player[Projectile.owner];
-			Vector2 endPoint = new Vector2(Projectile.ai[0], Projectile.ai[1]);
-			Vector2 unit = endPoint - Projectile.Center;
-			float length = unit.Length();
-			unit.Normalize();
-			for (float Distance = 0; Distance <= length; Distance += 7f) {
-				Distance += Main.rand.Next(5);
-				Vector2 drawPos = Projectile.Center + unit * Distance - Main.screenPosition;
-				
-				Vector2 position = Projectile.Center + unit * Distance;	
-				int i = (int)(position.X / 16);
-				int j =	(int)(position.Y / 16);
-				if(Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
-				{
-					Distance -= 6f;
-					break;
-				}
-				Color alpha = new Color(255, 0, 0) * ((255 - Projectile.alpha) / 255f);
-				//Color alpha = ((255 - Projectile.alpha) / 255f);
-				Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, alpha, Distance, new Vector2(5, 5), (0.01f * (float)Main.rand.Next(50,151)), SpriteEffects.None, 0f);
-			}
-			return false;
-		}
-	}
+				Vector2 position = Vector2.Lerp(start, destination, f);
+                for (int i = -2; i <= 2; i++)
+                {
+                    Vector2 offset = new Vector2(0, i * 3 * progress * (float)Math.Sin(f * MathHelper.Pi)).RotatedBy(rotation);
+                    Main.spriteBatch.Draw(texture, position + offset - Main.screenPosition, null, coreColor * (1 - progress), rotation, origin, new Vector2(length * increment, 0.5f * (1 - progress)), SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, position + offset - Main.screenPosition, null, new Color(100, 100, 100, 0) * (1 - progress), rotation, origin, new Vector2(length * increment, 0.35f * (1 - progress)), SpriteEffects.None, 0f);
+                }
+            }
+            return false;
+        }
+    }
 }

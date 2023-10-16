@@ -452,23 +452,27 @@ namespace SOTS
 		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 		int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
 		int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
-		public int aqueductNum = 0;
+        int[] ArtifactProbes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+        public int aqueductNum = 0;
 		public int aqueductDamage = -1;
-		int lastAqueductMax = 0;
+        public int artifactProbeDamage = -1;
+        public int artifactProbeNum = 0;
+        int lastAqueductMax = 0;
 		public int tPlanetNum = 0;
 		public int tPlanetDamage = -1;
 		int lastPlanetMax = 0;
-		public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false)
+		int lastArtifactMax = 0;
+        public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false, float ai0 = 0f, float ai1 = 0f)
 		{
 			if (Main.myPlayer == Player.whoAmI)
 			{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, ai0, ai1);
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != type || Main.projectile[Probe].owner != Player.whoAmI)
 				{
-					Probe = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, ai0, ai1);
 				}
 				if(!skipTimeleftReset)
 					Main.projectile[Probe].timeLeft = 6;
@@ -483,7 +487,8 @@ namespace SOTS
 		{
 			if (aqueductNum > 8) aqueductNum = 8;
 			if (tPlanetNum > 8) tPlanetNum = 8;
-			if (lastAqueductMax != aqueductNum)
+            if (artifactProbeNum > 16) artifactProbeNum = 16;
+            if (lastAqueductMax != aqueductNum)
 			{
 				for (int i = 0; i < 8; i++)
 					probesAqueduct[i] = -1;
@@ -500,8 +505,26 @@ namespace SOTS
 			for (int i = 0; i < tPlanetNum; i++)
 			{
 				runPets(ref probesTinyPlanet[i], ModContent.ProjectileType<TinyPlanetTear>(), tPlanetDamage + 1);
+            }
+			if(lastArtifactMax != artifactProbeNum)
+            {
+                for (int i = 0; i < 16; i++)
+                    ArtifactProbes[i] = -1;
+            }
+			if(artifactProbeNum > 8)
+			{
+				artifactProbeDamage = (int)(artifactProbeDamage * 0.75f);
 			}
-		}
+            for (int i = 0; i < artifactProbeNum; i++)
+            {
+				float special = i;
+				if (i >= 8)
+					special += 0.5f;
+                runPets(ref ArtifactProbes[i], ModContent.ProjectileType<BlizzardProbe>(), artifactProbeDamage, 0f, false, special, special / 8f * 90f);
+            }
+			lastArtifactMax = artifactProbeNum;
+            artifactProbeDamage = artifactProbeNum = 0;
+        }
 		public void doCurseAura()
         {
 			if(CurseAura || CurseVision)

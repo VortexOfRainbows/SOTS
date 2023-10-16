@@ -33,7 +33,7 @@ Update Objectives:
 	1. Needs: Balance testing. Rework a few items
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
-		1. Somewhat futuristic looking. HaDAs a spacesuit-like helmet.
+		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 
@@ -44,7 +44,17 @@ Daily Log:
 	1. Healing 1.2 -> 1.0
 	2. Firerate 72 -> 90
 	3. Damage 9 -> 12
-2. Server synced New Polaris
+2. Server synced New Polaris, plus now should be properly integrated 
+3. Constructs should no longer spawn during OOA
+4. Reworked visuals for Gold Arc Staff
+5. Reworked functioning of Blizzard Medallion. Now looks better and functions better
+	1. Firerate average 180 -> consistent 90
+	2. Attack range 600 -> 720
+	3. 36 * 8 / 90 => Around 192 DPS against non armor (about as powerful as 2 xeno)
+	4. Now requires Night Illuminator to craft
+6. Shard Guard and Permafrost Medallion Now stack, leading to more damage and probes (3x basically)
+	1. deals 576 DPS against non armor (same as Chaos Spirit...) (0.75 damage multiplier when stacked)
+7. Resprited Blizzard Probes, 
 
 10/12/23
 1. Elemental amulet borders for Fontaine~!
