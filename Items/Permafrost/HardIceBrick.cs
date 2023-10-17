@@ -18,7 +18,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(50).AddIngredient(ItemID.IceBlock, 50).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(200).AddIngredient(ItemID.IceBlock, 200).AddIngredient<AbsoluteBar>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

@@ -65,6 +65,10 @@ namespace SOTS.Items.Permafrost
 		{
 			Item.CloneDefaults(ItemID.StoneWall);
 			Item.createWall = ModContent.WallType<HardIceBrickWallWall>();
-		}
-	}
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<HardIceBrick>(1).AddTile(TileID.WorkBenches).Register();
+        }
+    }
 }

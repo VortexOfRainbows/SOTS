@@ -16,7 +16,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 48;
+			Item.width = 38;
 			Item.height = 34;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Cyan;
