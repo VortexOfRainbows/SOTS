@@ -13,7 +13,7 @@ namespace SOTS.Items.Permafrost
         public override void SetDefaults()
         {
             Item.Size = new Microsoft.Xna.Framework.Vector2(34, 30);
-            Item.damage = 40;
+            Item.damage = 47;
             Item.DamageType = DamageClass.Melee; 
             Item.useTime = 22;  
             Item.useAnimation = 22;   

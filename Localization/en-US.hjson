@@ -2989,7 +2989,7 @@ Mods: {
 				DisplayName: Metalmalgamation
 				Tooltip:
 					'''
-					Rapidly sprays out bullets in a radius around it that deal 35% damage
+					Rapidly sprays out bullets in a radius around it that deal 50% damage
 					'Guns on MY children's toy!?'
 					'''
 			}
@@ -4281,7 +4281,7 @@ Mods: {
 					Increases movement speed greatly
 					Provides the ability to walk on water and lava
 					Grants immunity to fire blocks and 10 seconds of immunity to lava
-					            Running causes you to blast forward, granting higher speed and acceleration
+					Running causes you to blast forward, granting higher speed and acceleration
 					This blast cannot be controlled
 					'Recipro Burst!'
 					'''

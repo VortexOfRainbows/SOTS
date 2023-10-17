@@ -408,6 +408,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
             if (!LoadedWeaponData)
             {
+                Phase = -1;
                 SwapPhase(0);
                 AI0 = 0;
                 LoadedWeaponData = true;
@@ -1079,7 +1080,9 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         }
         public void SwapPhase(int phase)
         {
-            if(!SecondPhase)
+            if (Main.expertMode && Phase != -1)
+                SpawnShard(4, 0.6f);
+            if (!SecondPhase)
             {
                 if (needsASecondPhaseTransition)
                 {
@@ -1143,8 +1146,6 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                 if (sign != 0)
                     rotationDirection = sign;
             }
-            if(Main.expertMode)
-                SpawnShard(4, 0.6f);
             NPC.netUpdate = true;
         }
         public void SpawnShard(int amt = 1, float randomnessMult = 1f)

@@ -31,16 +31,22 @@ Update Objectives:
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
 5. Polaris Rework (pending)
-	1. Needs: Balance testing. Rework a few items
+	1. Needs: Balance testing
 6. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 7. Starmap
-8. Prevent constructs from despawning for a while
 
 Daily Log:
+
+10/16/23
+1. Buffed Metalmalgamation's movespeed, max range, and lifetime
+	1. Bullet damage 35% -> 50%
+	2. Damage 40 -> 47
+2. Hyperice Cluster Cannon damage 30 -> 38
+3. Azure Bombardment damage 36 -> 40, firerate 55 -> 48
 
 10/15/23 to 10/16/23
 1. Nature Spirit Minion: Effectively a small damage buff (+6.67%), but a healing nerf (-33.4%)

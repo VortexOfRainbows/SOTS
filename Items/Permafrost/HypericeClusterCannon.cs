@@ -15,7 +15,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 30;
+            Item.damage = 38;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 64;
             Item.height = 24;

@@ -6,7 +6,8 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles.Permafrost
 {
     public class Metalmalgamation : ModProjectile 
-    {	int counter = 0;
+    {	
+        int counter = 0;
 		public override void SetStaticDefaults()
 		{
 			// DisplayName.SetDefault("Metalmalgamation");
@@ -20,9 +21,9 @@ namespace SOTS.Projectiles.Permafrost
             Projectile.friendly = true;	
             Projectile.penetrate = -1;	
 			Projectile.DamageType = DamageClass.Melee;	        
-            ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 10f;
-            ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 196f;
-            ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 12f;
+            ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 12f;
+            ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 240f;
+            ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 14f;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
@@ -39,7 +40,7 @@ namespace SOTS.Projectiles.Permafrost
 				for(int i = 0; i < 4; i++)
                 {
                     Vector2 rotateArea = new Vector2(5.4f, 0).RotatedBy(MathHelper.ToRadians(counter * 6 + i * 90));
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * .35f), Projectile.knockBack, player.whoAmI, -3, i % 2);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * 0.50f), Projectile.knockBack, player.whoAmI, -3, i % 2);
                 }
 				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 			}
