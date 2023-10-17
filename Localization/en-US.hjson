@@ -5140,8 +5140,13 @@ Mods: {
 			}
 
 			SoulOfPlight: {
-				DisplayName: Soul Of Plight
+				DisplayName: Soul of Plight
 				Tooltip: "'The essence of war'"
+			}
+
+			SoulOfPlightInABottle: {
+				DisplayName: Soul of Plight in a Bottle
+				Tooltip: ""
 			}
 		}
 

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using Terraria;
@@ -23,8 +24,7 @@ namespace SOTS.Buffs
 					NPC npc = Main.npc[king];
 					if(npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<NewPolaris>())
 					{
-						npc.position.X = player.Center.X - npc.width / 2;
-						npc.position.Y = player.Center.Y - npc.height / 2 - 1200;
+						npc.Center = player.Center + new Vector2(0, -1000);
 					}
 				}
 			}

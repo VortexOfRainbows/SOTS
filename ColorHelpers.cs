@@ -188,5 +188,10 @@ namespace SOTS
                 return Color.Lerp(color, other, Main.rand.NextFloat(1) * Main.rand.NextFloat(1));
             }
         }
+		public static Color PolarisColor(float lerp = 0)
+		{
+			return Color.Lerp(new Color(100, 100, 250), new Color(250, 100, 100), lerp);
+
+        }
     }
 }
