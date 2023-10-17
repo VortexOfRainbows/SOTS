@@ -430,7 +430,8 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
             else
                 needsASecondPhaseTransition = false;
-            return true;
+            UpdateWeapons();
+            return despawn < 300;
         }
         float LerpingXVelocity = 0;
         public override void AI()
@@ -444,7 +445,6 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             bool resetRotation = false;
             bool resetWeaponSpin = false;
             bool resetWeaponExtension = false;
-            UpdateWeapons();
             if(Phase == AttackID.BulletStorm)
             {
                 NPC.velocity *= 0.925f;
@@ -1059,7 +1059,12 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             }
             if (despawn >= 300)
             {
-                NPC.active = false;
+                despawn++;
+                NPC.velocity.Y -= 0.5f;
+                if(despawn > 480)
+                {
+                    NPC.active = false;
+                }
             }
         }
         public void LaunchMines()

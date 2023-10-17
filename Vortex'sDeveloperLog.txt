@@ -18,6 +18,7 @@ Acknowledged But Likely Delayed:
 6. Smart cursor doesn't work with dressers.
 7. Most Void Minions do not work with whip debuffs
 8. Hydro servant wont attack in multiplayer, but fixed on a reload..?
+9. Soul of Plight in a Bottle, Polaris Boss Trophy, 
 
 Update Objectives:
 1. Ghost Town! (later)
@@ -47,6 +48,8 @@ Daily Log:
 	2. Damage 40 -> 47
 2. Hyperice Cluster Cannon damage 30 -> 38
 3. Azure Bombardment damage 36 -> 40, firerate 55 -> 48
+4. North Star damage 42 -> 45, velocity mult 2.1 -> 1.85
+5. Small despawn anim for Polaris
 
 10/15/23 to 10/16/23
 1. Nature Spirit Minion: Effectively a small damage buff (+6.67%), but a healing nerf (-33.4%)

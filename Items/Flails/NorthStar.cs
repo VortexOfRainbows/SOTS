@@ -15,7 +15,7 @@ namespace SOTS.Items.Flails
         public override void SafeSetDefaults()
         {
             Item.Size = new Vector2(44, 42);
-            Item.damage = 42;
+            Item.damage = 45;
             Item.value = Item.sellPrice(0, 7, 25, 0);
             Item.rare = ItemRarityID.Lime;
             Item.useTime = 30;

@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         // public override void SetStaticDefaults() => DisplayName.SetDefault("North Star");
         public override void SetDefaults()
         {
-            SetFlailStats(new Vector2(0.2f, 2.1f), new Vector2(1f, 1f), 2f, 80, 12);
+            SetFlailStats(new Vector2(0.2f, 1.85f), new Vector2(1f, 1f), 2f, 80, 12);
             Projectile.Size = new Vector2(50, 68);
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;
