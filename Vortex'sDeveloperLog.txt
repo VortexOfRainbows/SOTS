@@ -39,6 +39,7 @@ Update Objectives:
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 7. Starmap
+8 Nerf platinum scythe and illuminant staff
 
 Daily Log:
 
@@ -60,6 +61,7 @@ Daily Log:
 12. Less mortars in mortar rain
 13. Sometimes the beam spray attack in phase 2 will be skipped (33% chance)
 14. Polaris Now Faces the correct way (red on top, blue on bottom)
+15. Phase Ore no longer appears on metal detector
 
 10/15/23 to 10/16/23
 1. Nature Spirit Minion: Effectively a small damage buff (+6.67%), but a healing nerf (-33.4%)

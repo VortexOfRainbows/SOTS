@@ -59,7 +59,7 @@ namespace SOTS.Items.Chaos
 		{
 			Main.tileShine[Type] = 200;
 			Main.tileShine2[Type] = true;
-			Main.tileOreFinderPriority[Type] = 1200;
+			//Main.tileOreFinderPriority[Type] = 1200;
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = false;
