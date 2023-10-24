@@ -2447,7 +2447,7 @@ Mods: {
 
 			PlatinumScythe: {
 				DisplayName: Platinum Scythe
-				Tooltip: Attacks permanently curse enemies for 4 damage per second, stacking up to 10 times
+				Tooltip: Attacks permanently curse enemies for 3 damage per second, stacking up to 10 times
 			}
 
 			PlatinumSoulStaff: {
@@ -2627,7 +2627,7 @@ Mods: {
 					'''
 					Critical hits summon a Soul of Retaliation into the air
 					Every 10th void attack will release the soul in the form of a powerful laser
-					Direct melee hits permanently curse enemies for 4 damage per second, stacking up to 10 times
+					Direct melee hits permanently curse enemies for 3 damage per second, stacking up to 10 times
 					'''
 			}
 

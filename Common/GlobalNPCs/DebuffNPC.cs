@@ -895,7 +895,7 @@ namespace SOTS.Common.GlobalNPCs
         {
             if(PlatinumCurse > 0)
             {
-                npc.lifeRegen -= PlatinumCurse * 8;
+                npc.lifeRegen -= PlatinumCurse * 6;
                 damage = PlatinumCurse;
             }
             if (BleedingCurse > 0)

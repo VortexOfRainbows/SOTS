@@ -22,7 +22,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 13;
+			Item.damage = 12;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 40;
 			Item.height = 72;
@@ -38,7 +38,7 @@ namespace SOTS.Items.Earth.Glowmoth
             Item.shootSpeed = 9f;
 			Item.noMelee = true;
 			Item.staff[Item.type] = true; //this makes the useStyle animate as a staff
-			Item.mana = 10;
+			Item.mana = 20;
 			Item.scale = 0.9f;
 			if (!Main.dedServ)
 			{

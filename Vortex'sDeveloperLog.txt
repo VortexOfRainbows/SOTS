@@ -31,17 +31,19 @@ Update Objectives:
 2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
-5. Polaris Rework (pending)
-	1. Needs: Balance testing
-6. Post-Lux and Post-Subspace Armor sets! (pending)
+5. Post-Lux and Post-Subspace Armor sets! (pending)
 	1. Voidspace Ranger's Armor Set (Void/Range)
 		1. Somewhat futuristic looking. Has a spacesuit-like helmet.
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
-7. Starmap
-8 Nerf platinum scythe and illuminant staff
+6. Starmap
 
 Daily Log:
+
+10/19/23 and 10/24/23
+1. Illuminant Staff mana cost 10 -> 20, damage 13 -> 12 (the doubled mana cost should make this a way harder weapon to use consistently)
+2. Platinum scythe curse now deals 4 -> 3 damage per second. Same with Section Chief's Scythe
+3. 2 trophy item sprites
 
 10/16/23 to 10/17/23
 1. Buffed Metalmalgamation's movespeed, max range, and lifetime
