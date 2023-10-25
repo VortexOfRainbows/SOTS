@@ -27,7 +27,7 @@ Art: MrPetkins, Cloud
 
 [b]~Major Contributors and Past Developers~[/b]
 Art: Blasfah, Mochi, HugeKraken, Lunatix, SpicySpaceSnake, Pokerface
-Code: Moonseer
+Art, Code: Moonseer
 Localization: Lacewing, Linnnnnna
 Misc, Direction: FlameFreezer
 Music: BananaLizard
