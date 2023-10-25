@@ -153,16 +153,18 @@ namespace SOTS.Items.Chaos
 			Tile tile = Framing.GetTileSafely(i, j);
 			float currentDistanceAway = 196;
 			int playerN = closestPlayer(i, j, ref currentDistanceAway);
-			if (playerN == -1)
+			if (playerN == -1 && !Main.LocalPlayer.CanSeeInvisibleBlocks)
 			{
 				if (tile.TileFrameY <= 72)
 				{
 					tile.TileFrameY += 90;
 				}
 				return;
-			}
-			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f);
-			if (alphaScale > 0.0)
+            }
+            float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f);
+            if (Main.LocalPlayer.CanSeeInvisibleBlocks && alphaScale < 0.3f)
+				alphaScale = 0.3f;
+            if (alphaScale > 0.0)
             {
 				if(tile.TileFrameY > 72)
                 {

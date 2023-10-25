@@ -99,5 +99,11 @@ namespace SOTS
         [DefaultValue(true)]
 		[ReloadRequired]
         public bool AddPlightToVanillaRecipes;
+
+        [Header("$Mods.SOTS.Configuration.Header.GPS")]
+        [BackgroundColor(110, 80, 150, 192)]
+        [DefaultValue(true)]
+        [ReloadRequired]
+        public bool GeneratePhaseOreAfterDefeatingLux;
     }
 }

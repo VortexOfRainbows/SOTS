@@ -131,10 +131,12 @@ namespace SOTS.Items.Planetarium.Blocks
         {
 			float currentDistanceAway = 128;
 			int playerN = closestPlayer(i, j, ref currentDistanceAway);
-			if (playerN == -1)
+			if (playerN == -1 && !Main.LocalPlayer.CanSeeInvisibleBlocks)
 				return;
 			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 128f, 0.725f);
-			if (alphaScale <= 0.00001f)
+            if (Main.LocalPlayer.CanSeeInvisibleBlocks && alphaScale < 0.3f)
+                alphaScale = 0.3f;
+            if (alphaScale <= 0.00001f)
 				return;
 			if(!Main.tile[i, j].HasUnactuatedTile)
             {

@@ -6839,6 +6839,11 @@ Mods: {
 					Label: Add Plight To Vanilla Recipes
 					Tooltip: Disable and reload in order to remove Soul of Plight from drecipes that normally do not require it
 				}
+
+				GeneratePhaseOreAfterDefeatingLux: {
+					Label: Generate Phase Ore After Defeating Lux
+					Tooltip: Disable to prevent Phase Ore from generating after the first Lux kill
+				}
 			}
 		}
 	}

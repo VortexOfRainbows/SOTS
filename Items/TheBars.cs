@@ -233,10 +233,12 @@ namespace SOTS.Items
 			{
 				float currentDistanceAway = 196;
 				int playerN = PhaseOreTile.closestPlayer(i, j, ref currentDistanceAway);
-				if (playerN == -1)
+				if (playerN == -1 && !Main.LocalPlayer.CanSeeInvisibleBlocks)
 					return;
 				float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f) * 0.3f;
-				if (currentDistanceAway >= 195)
+                if (Main.LocalPlayer.CanSeeInvisibleBlocks && alphaScale < 0.1f)
+                    alphaScale = 0.1f;
+                if (currentDistanceAway >= 195)
 					return;
 				r = 2.5f * alphaScale;
 				g = 1.45f * alphaScale;

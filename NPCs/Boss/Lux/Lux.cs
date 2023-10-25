@@ -354,7 +354,8 @@ namespace SOTS.NPCs.Boss.Lux
 			{
 				//if (Main.netMode == NetmodeID.Server)
 					//Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen Start 0"), ColorHelpers.ChaosPink);
-				PhaseWorldgenHelper.Generate();
+				if(SOTS.ServerConfig.GeneratePhaseOreAfterDefeatingLux)
+					PhaseWorldgenHelper.Generate();
 				//if (Main.netMode == NetmodeID.Server)
 					//Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Gen End 2"), ColorHelpers.ChaosPink);
 				SOTSWorld.downedLux = true;
