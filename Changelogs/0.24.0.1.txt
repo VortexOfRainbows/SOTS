@@ -32,4 +32,4 @@ Changes:
 Fixes:
 1. Furniture items should now drop properly
 2. Constructs should no longer spawn during old one's army
-3. 
+3. Hydrokinetic Antennae should no longer break when holding down an inventory button
