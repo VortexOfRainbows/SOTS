@@ -7,7 +7,7 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			this.SetResearchCost(99);
+			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
@@ -15,8 +15,8 @@ namespace SOTS.Items.ChestItems
 			Item.damage = 12;
 			Item.DamageType = DamageClass.Ranged;
 			Item.rare = ItemRarityID.Blue;
-			Item.width = 46;
-			Item.height = 40;
+			Item.width = 42;
+			Item.height = 42;
 			Item.maxStack = 1;
 			Item.useTime = 24;
 			Item.useAnimation = 24;

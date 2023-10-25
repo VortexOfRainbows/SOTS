@@ -9,17 +9,13 @@ namespace SOTS.Projectiles
 {    
     public class WingedKnife : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Winged Knife");
-		}
         public override void SetDefaults()
         {
 			Projectile.aiStyle = 2;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
-			Projectile.width = 46;
-			Projectile.height = 40;
+			Projectile.width = 42;
+			Projectile.height = 42;
 			Projectile.timeLeft = 6000;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = true;
@@ -33,7 +29,7 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
 			Projectile.alpha = 0;		
 			float minDist = 500;
 			int target2 = -1;
