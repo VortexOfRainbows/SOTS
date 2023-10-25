@@ -1,6 +1,7 @@
 Update 0.24.0.1
 
 1. Reworked Polaris
+2. Resprited some items
 
 Additions:
 1. Boss Trophies for Pharaoh's Curse and Advisor

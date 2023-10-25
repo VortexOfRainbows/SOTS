@@ -36,6 +36,6 @@ Music: BananaLizard
 
 [b]~Minor Contributors~[/b]
 Art: Arcri, Naka, DeJuiceTD, Nomis
-Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR
+Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR, Sovregi
 Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Ramen
 Art, Testing/Misc: Astrobit
