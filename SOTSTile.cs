@@ -225,7 +225,7 @@ namespace SOTS
                     }
                 }
             }
-            if(tile.TileType == TileID.Grass && tile.WallType == 0)
+            if(tile.TileType == TileID.Grass && tile.WallType == 0 && SOTS.ServerConfig.NaturallySpawningPeanutBushes)
             {
                 int rate = 3500; //Dye plants = 3000
                 if (WorldGen.genRand.NextBool(rate))

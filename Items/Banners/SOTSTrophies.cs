@@ -34,8 +34,8 @@ namespace SOTS.Items.Banners
 		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
-			Item.width = 30;
-			Item.height = 30;
+			Item.width = 32;
+			Item.height = 32;
 			Item.maxStack = 99;
 			Item.useTurn = true;
 			Item.autoReuse = true;
@@ -60,5 +60,21 @@ namespace SOTS.Items.Banners
 			Item.createTile = TileType<SOTSTrophies>();
 			Item.placeStyle = 0;
 		}
-	}
+    }
+    public class CurseTrophy : ModTrophy
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSTrophies>();
+            Item.placeStyle = 1;
+        }
+    }
+    public class AdvisorTrophy : ModTrophy
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSTrophies>();
+            Item.placeStyle = 2;
+        }
+    }
 }

@@ -5148,6 +5148,16 @@ Mods: {
 				DisplayName: Soul of Plight in a Bottle
 				Tooltip: ""
 			}
+
+			AdvisorTrophy: {
+				DisplayName: Advisor Trophy
+				Tooltip: ""
+			}
+
+			CurseTrophy: {
+				DisplayName: Pharaoh's Curse Trophy
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6843,6 +6853,11 @@ Mods: {
 				GeneratePhaseOreAfterDefeatingLux: {
 					Label: Generate Phase Ore After Defeating Lux
 					Tooltip: Disable to prevent Phase Ore from generating after the first Lux kill
+				}
+
+				NaturallySpawningPeanutBushes: {
+					Label: Naturally Spawning Peanut Bushes
+					Tooltip: Disable to prevent Peanut Bushes from growing naturally on grass
 				}
 			}
 		}

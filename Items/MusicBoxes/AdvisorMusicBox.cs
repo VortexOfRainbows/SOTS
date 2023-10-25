@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using rail;
+using SOTS.Items.Banners;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -34,15 +35,10 @@ namespace SOTS.Items.MusicBoxes
 			Item.value = 100000;
 			Item.accessory = true;
 		}
-		/*public override void AddRecipes()
-		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "AdvisorTrophy", 1);
-			recipe.AddIngredient(ItemID.MusicBox);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}*/
+		public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<AdvisorTrophy>(), 1).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
+        }
 	}
 	public class AdvisorMusicBoxTile : ModTile
 	{

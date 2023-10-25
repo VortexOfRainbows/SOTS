@@ -1171,7 +1171,8 @@ namespace SOTS.NPCs.Boss.Advisor
 				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<StrangeKey>(), 1, 1, 1));
 			npcLoot.Add(notExpertRule);
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<AdvisorRelic>()));
-		}
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AdvisorTrophy>(), 10));
+        }
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
 			SOTSWorld.downedAdvisor = true;

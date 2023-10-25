@@ -162,7 +162,8 @@ namespace SOTS.NPCs.Boss.Curse
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CursedMatter>(), 1, 12, 24));
 			npcLoot.Add(notExpertRule);
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PharaohsCurseRelic>()));
-		}
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CurseTrophy>(), 10));
+        }
         public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = ItemID.HealingPotion;

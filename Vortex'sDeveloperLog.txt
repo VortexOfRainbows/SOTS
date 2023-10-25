@@ -40,12 +40,12 @@ Update Objectives:
 
 Daily Log:
 
-10/19/23 and 10/24/23
+10/19/23 and 10/24/23 to 10/25/23
 1. Illuminant Staff mana cost 10 -> 20, damage 13 -> 12 (the doubled mana cost should make this a way harder weapon to use consistently)
 2. Platinum scythe curse now deals 4 -> 3 damage per second. Same with Section Chief's Scythe
-3. 2 trophy item sprites
+3. Added Advisor and Pharaoh's Curse trophies
 4. Spectre Goggles grants additional visibility to Phase Ore and Hardlight Block
-5. Config option to disable generation of Phase Ore
+5. Config option to disable generation of Phase Ore and/or Peanut Bushes
 
 10/16/23 to 10/17/23
 1. Buffed Metalmalgamation's movespeed, max range, and lifetime

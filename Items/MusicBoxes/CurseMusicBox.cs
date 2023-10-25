@@ -10,6 +10,7 @@ using SOTS.Items.Planetarium;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Pyramid;
 using System.Collections.Generic;
+using SOTS.Items.Banners;
 
 namespace SOTS.Items.MusicBoxes
 {
@@ -36,8 +37,9 @@ namespace SOTS.Items.MusicBoxes
 		}
 		
 		public override void AddRecipes()
-		{
-			CreateRecipe(1).AddIngredient<PyramidSlab>(10).AddIngredient<PyramidBrick>(10).AddIngredient(ModContent.ItemType<CursedMatter>(), 10).AddIngredient(ModContent.ItemType<CursedTumor>(), 10).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
+        {
+            CreateRecipe(1).AddIngredient<CurseTrophy>(1).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
+            CreateRecipe(1).AddIngredient<PyramidSlab>(10).AddIngredient<PyramidBrick>(10).AddIngredient(ModContent.ItemType<CursedMatter>(), 10).AddIngredient(ModContent.ItemType<CursedTumor>(), 10).AddIngredient(ItemID.MusicBox).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class CurseMusicBoxTile : ModTile
