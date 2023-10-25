@@ -158,7 +158,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             NPC.knockBackResist = 0f;
             NPC.width = 100;
             NPC.height = 100;
-            NPC.value = Item.buyPrice(0, 50, 0, 0);
+            NPC.value = Item.buyPrice(0, 15, 0, 0);
             NPC.npcSlots = 1f;
             NPC.boss = true;
             NPC.lavaImmune = true;

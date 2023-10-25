@@ -1,4 +1,5 @@
 using SOTS.NPCs.Boss.Polaris;
+using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -30,7 +31,7 @@ namespace SOTS.Items.Permafrost
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FrigidHourglass>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoulOfPlight>(), 1, 25, 40));
 			itemLoot.Add(ItemDropRule.Common(ItemID.HallowedBar, 1, 20, 35));
-			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Polaris>()));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NewPolaris>()));
 		}
 	}
 }

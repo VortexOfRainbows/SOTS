@@ -16,7 +16,7 @@ namespace SOTS.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-			if(!NPC.AnyNPCs(ModContent.NPCType<Polaris>()) && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()))
+			if(!NPC.AnyNPCs(ModContent.NPCType<Polaris>()) && !NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()))
 			{
 				NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NewPolaris>());
 				for(int king = 0; king < 200; king++)

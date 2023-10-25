@@ -40,6 +40,7 @@ using System.Linq;
 using SOTS.NPCs.Boss.Glowmoth;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.Items.Tools;
+using SOTS.NPCs.Boss.Polaris.NewPolaris;
 
 namespace SOTS
 {
@@ -606,10 +607,10 @@ namespace SOTS
 				bossChecklist.Call(
 					"LogBoss",
 					this,
-					nameof(Polaris),
+					nameof(NewPolaris),
 					11.01f,
 					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
-					new List<int>() { ModContent.NPCType<Polaris>() },
+					new List<int>() { ModContent.NPCType<NewPolaris>() },
 					new Dictionary<string, object>()
 					{
 						["displayName"] = Language.GetText("Mods.SOTS.NPCs.Polaris.DisplayName"),

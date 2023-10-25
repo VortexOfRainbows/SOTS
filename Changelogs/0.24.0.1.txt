@@ -1,0 +1,35 @@
+Update 0.24.0.1
+
+1. Reworked Polaris
+
+Additions:
+1. Boss Trophies for Pharaoh's Curse and Advisor
+2. New Variants for Elemental Amulet
+3. Spectre Goggles grants additional visibility to Phase Ore and Hardlight Block
+4. Config option to disable generation of Phase Ore and/or Peanut Bushes
+
+Changes:
+1. Hard Ice Brick Wall can now be crafted, and the recipe for the brick is cheaper (50 -> 200 per craft)
+2. Electro Elemental Amulet no longer grants increased damage (10% -> 0%)
+3. Dendro Elemental Amulet max life bonus 80 -> 20, now increases damage by 10%
+4. Nature Spirit Minion (effectively: small damage buff (+6.67%), but a healing nerf (-33.4%))
+	1. Healing 1.2 -> 1.0
+	2. Firerate 72 -> 90
+	3. Damage 9 -> 12
+5. Gold Arc Staff now has better visuals
+6. Reworked Blizzard Medallion visuals and functionality. Now much more powerful
+7. Shard Guard and Permafrost Medallion minions now stack more intuitively.
+8. Phase Ore no longer appears on metal detector
+9. Metalmalgamation yoyo now has increased speed, range, and lifetime
+	1. Damage 40 -> 47
+	2. Bullet damage 35% -> 50%
+10. Hyperice Cluster Cannon damage 30 -> 38
+11. Azure Bombardment damage 36 -> 40, use time 55 -> 48
+12. North Star damage 42 -> 45, velocity mult 2.1 -> 1.85 (range nerf)
+13. Illuminant Staff mana cost 10 -> 20, damage 13 -> 12 (the doubled mana cost should make this a way harder weapon to use consistently, especially at the point it is obtained)
+14. Platinum scythe curse now deals 4 -> 3 damage per second. Also applies to Section Chief's Scythe curse
+
+Fixes:
+1. Furniture items should now drop properly
+2. Constructs should no longer spawn during old one's army
+3. 
