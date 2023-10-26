@@ -37,6 +37,7 @@ Update Objectives:
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 6. Starmap
+7. More generous plating block crafts
 
 Daily Log:
 
