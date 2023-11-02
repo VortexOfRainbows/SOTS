@@ -22,6 +22,8 @@ using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
 using System.Linq;
+using System.Collections.Generic;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.PointsToAnalysis;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -741,5 +743,105 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
+		public static void GenerateDownwardEntrance(int x, int y)
+		{
+			float rotation = 30;
+			int ropeStops = Main.rand.Next(16, 25);
+            float nextPlatform = 10;
+			int height = 30;
+			float bonusDegreesLeft = Main.rand.NextFloat(360);
+            float bonusDegreesRight = Main.rand.NextFloat(360);
+            HashSet<Point> platformPoints = new HashSet<Point>();
+            for (float j = 0; j < height; j += 0.25f)
+            {
+                bool generatePlatforms = false;
+				nextPlatform -= 0.25f * Math.Abs((float)Math.Cos(MathHelper.ToRadians(rotation)));
+                if (nextPlatform <= 0)
+                {
+                    generatePlatforms = true;
+                    nextPlatform = WorldGen.genRand.Next(8, 15);
+                }
+                int left = -6 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+				int right = 6 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootLeft = -7 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootRight = 7 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+				for(int RunType = 0; RunType <= 2; RunType++)
+                {
+                    for (float i = left - 3; i <= right + 3; i += 0.25f)
+                    {
+                        Vector2 vPoint = new Vector2(i + 0.5f, j + 0.5f).RotatedBy(MathHelper.ToRadians(rotation));
+                        Point rPoint = new Point(x + (int)(vPoint.X), y + (int)(vPoint.Y));
+                        Tile tile = Framing.GetTileSafely(rPoint);
+                        bool interior = false;
+                        bool generateSoot = Math.Abs(i - sootLeft) < 1.5f || Math.Abs(i - sootRight) < 1.5f;
+						bool generateSides = i >= left && i <= right && (Math.Abs(i - left) < 3.5f || Math.Abs(i - right) < 3.5f);
+                        if ((i >= left && i <= right) || generateSoot)
+                        {
+                            interior = true;
+                            if (RunType == 0)
+                                tile.HasTile = false;
+                        }
+						if (RunType == 1)
+                        {
+                            if (generateSides)
+                            {
+                                int type = TileID.GrayBrick;
+                                ushort wType = WallID.GrayBrick;
+                                if (WorldGen.genRand.NextBool(2))
+                                {
+                                    type = TileID.Stone;
+                                    wType = WallID.RocksUnsafe1;
+                                }
+                                else if (WorldGen.genRand.NextBool(3))
+                                {
+                                    type = TileID.StoneSlab;
+                                    wType = WallID.StoneSlab;
+                                }
+                                WorldGen.PlaceTile(rPoint.X, rPoint.Y, type);
+                                tile.WallType = wType;
+                            }
+                            else if (generateSoot)
+                            {
+                                int type = ModContent.TileType<SootBlockTile>();
+                                WorldGen.PlaceTile(rPoint.X, rPoint.Y, type);
+                                tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
+                            }
+                        }
+                        else if (interior && RunType == 2 && !generateSoot)
+                        {
+                            ushort type = WallID.RocksUnsafe1;
+                            if (WorldGen.genRand.NextBool(7))
+                            {
+                                type = WallID.GrayBrick;
+                            }
+                            else if (WorldGen.genRand.NextBool(10))
+                                type = WallID.StoneSlab;
+                            tile.WallType = type;
+                            if ((int)i == 0 && !tile.HasTile)
+                            {
+                                if (generatePlatforms)
+                                {
+									if(!platformPoints.Contains(rPoint))
+										platformPoints.Add(rPoint); 
+									generatePlatforms = false;
+                                }
+                                else if (j < ropeStops)
+                                    WorldGen.PlaceTile(rPoint.X, rPoint.Y, TileID.Rope);
+                            }
+                        }
+                    }
+                }
+				bonusDegreesLeft += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 35;
+                bonusDegreesRight += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 35;
+            }
+			foreach (Point p in platformPoints)
+            {
+                for (int i2 = -8; i2 <= 8; i2++)
+                {
+                    WorldGen.PlaceTile(p.X + i2, p.Y, TileID.Platforms, false, false, -1, 43);
+                }
+            }
+			SOTSWorldgenHelper.SmoothRegion(x, y + height / 2, 12, height);
+		}
 	}
 }

@@ -21,14 +21,14 @@ Acknowledged But Likely Delayed:
 9. Boss Trophies
 
 Update Objectives:
-1. Ghost Town! (later)
+1. Ghost Town! (Next up)
 	1. Make it spawn
 	2. Cave that integrates into evil biome
 	3. Smart spawning houses and rubble
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings
+2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings (Next up)
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
 5. Post-Lux and Post-Subspace Armor sets! (pending)
@@ -37,9 +37,18 @@ Update Objectives:
 	2. Elemental Armor Set (Void/Melee)
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 6. Starmap
-7. More generous plating block crafts
+7. Nerf Plasma Accelerator
+8. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 
 Daily Log:
+
+10/26/23 and 11/1/23
+1. Plating Block crafting now crafts double (5 -> 10)
+2. WIP Abandoned Village World gen
+
+
+-- Update 0.24.0.1 Released --
+
 
 10/19/23 and 10/24/23 to 10/25/23
 1. Illuminant Staff mana cost 10 -> 20, damage 13 -> 12 (the doubled mana cost should make this a way harder weapon to use consistently)

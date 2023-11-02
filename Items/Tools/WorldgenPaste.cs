@@ -27,10 +27,11 @@ namespace SOTS.Items.Tools
 		}
 		public override bool? UseItem(Player player)
 		{
-			Main.NewText(SOTSWorld.AmberKeySlotted);
-			Main.NewText(SOTSWorld.DreamLampSolved);
+			//Main.NewText(SOTSWorld.AmberKeySlotted);
+			//Main.NewText(SOTSWorld.DreamLampSolved);
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
+			AbandonedVillageWorldgenHelper.GenerateDownwardEntrance((int)tileLocation.X, (int)tileLocation.Y);
 			//PhaseWorldgenHelper.ClearPrevious = true;
 			//PhaseWorldgenHelper.Generate();
 			//WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
@@ -40,7 +41,7 @@ namespace SOTS.Items.Tools
 			//{
 			//	player.Center = Location.Value;
 			//}
-			SOTSWorld.DreamLampSolved = false;
+			//SOTSWorld.DreamLampSolved = false;
 			return true;
 		}
 	}
