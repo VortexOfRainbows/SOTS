@@ -743,10 +743,8 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-		public static void GenerateDownwardEntrance(int x, int y)
+		public static void GenerateDownwardEntrance(ref int x, ref int y, float rotation)
 		{
-			float rotation = 30;
-			int ropeStops = Main.rand.Next(16, 25);
             float nextPlatform = 10;
 			int height = 30;
 			float bonusDegreesLeft = Main.rand.NextFloat(360);
@@ -761,13 +759,13 @@ namespace SOTS.WorldgenHelpers
                     generatePlatforms = true;
                     nextPlatform = WorldGen.genRand.Next(8, 15);
                 }
-                int left = -6 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
-				int right = 6 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
-                int sootLeft = -7 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
-                int sootRight = 7 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+                int left = -7 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+				int right = 7 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootLeft = -8 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootRight = 8 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
 				for(int RunType = 0; RunType <= 2; RunType++)
                 {
-                    for (float i = left - 3; i <= right + 3; i += 0.25f)
+                    for (float i = left - 4; i <= right + 4; i += 0.25f)
                     {
                         Vector2 vPoint = new Vector2(i + 0.5f, j + 0.5f).RotatedBy(MathHelper.ToRadians(rotation));
                         Point rPoint = new Point(x + (int)(vPoint.X), y + (int)(vPoint.Y));
@@ -779,33 +777,37 @@ namespace SOTS.WorldgenHelpers
                         {
                             interior = true;
                             if (RunType == 0)
-                                tile.HasTile = false;
+                            {
+                                if (tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick)
+                                    tile.HasTile = false;
+                            }
                         }
 						if (RunType == 1)
                         {
-                            if (generateSides)
-                            {
-                                int type = TileID.GrayBrick;
-                                ushort wType = WallID.GrayBrick;
-                                if (WorldGen.genRand.NextBool(2))
+							if((tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick)
+								|| tile.TileType == ModContent.TileType<SootBlockTile>())
+                                if (generateSides)
                                 {
-                                    type = TileID.Stone;
-                                    wType = WallID.RocksUnsafe1;
+                                    ushort type = TileID.GrayBrick;
+                                    if (WorldGen.genRand.NextBool(2))
+                                    {
+                                        type = TileID.Stone;
+                                    }
+                                    else if (WorldGen.genRand.NextBool(3))
+                                    {
+                                        type = TileID.StoneSlab;
+                                    }
+                                    tile.TileType = (ushort)type;
+									tile.HasTile = true;
+									if(tile.HasTile)
+										tile.WallType = WallID.Stone;
                                 }
-                                else if (WorldGen.genRand.NextBool(3))
+                                else if (generateSoot)
                                 {
-                                    type = TileID.StoneSlab;
-                                    wType = WallID.StoneSlab;
+                                    tile.TileType = (ushort)ModContent.TileType<SootBlockTile>();
+                                    tile.HasTile = true;
+                                    tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
                                 }
-                                WorldGen.PlaceTile(rPoint.X, rPoint.Y, type);
-                                tile.WallType = wType;
-                            }
-                            else if (generateSoot)
-                            {
-                                int type = ModContent.TileType<SootBlockTile>();
-                                WorldGen.PlaceTile(rPoint.X, rPoint.Y, type);
-                                tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
-                            }
                         }
                         else if (interior && RunType == 2 && !generateSoot)
                         {
@@ -816,8 +818,9 @@ namespace SOTS.WorldgenHelpers
                             }
                             else if (WorldGen.genRand.NextBool(10))
                                 type = WallID.StoneSlab;
-                            tile.WallType = type;
-                            if ((int)i == 0 && !tile.HasTile)
+							if(!generateSides)
+								tile.WallType = (ushort)type;
+                            if (i == 0)
                             {
                                 if (generatePlatforms)
                                 {
@@ -825,23 +828,51 @@ namespace SOTS.WorldgenHelpers
 										platformPoints.Add(rPoint); 
 									generatePlatforms = false;
                                 }
-                                else if (j < ropeStops)
-                                    WorldGen.PlaceTile(rPoint.X, rPoint.Y, TileID.Rope);
+								else if(Math.Abs(rotation) < 5)
+									WorldGen.PlaceTile(rPoint.X, rPoint.Y, TileID.Rope);
                             }
                         }
                     }
                 }
-				bonusDegreesLeft += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 35;
-                bonusDegreesRight += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 35;
+				bonusDegreesLeft += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 32 * 0.5f;
+                bonusDegreesRight += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 32 * 0.5f;
             }
 			foreach (Point p in platformPoints)
             {
                 for (int i2 = -8; i2 <= 8; i2++)
                 {
+					Tile tile = Main.tile[p.X + i2, p.Y];
+					if(tile.HasTile && tile.TileType == TileID.Rope)
+					{
+						tile.HasTile = false;
+					}
                     WorldGen.PlaceTile(p.X + i2, p.Y, TileID.Platforms, false, false, -1, 43);
                 }
             }
-			SOTSWorldgenHelper.SmoothRegion(x, y + height / 2, 12, height);
-		}
+            SOTSWorldgenHelper.SmoothRegion(x, y + height / 2, 24, height);
+            Vector2 vPointA = new Vector2(0, height + 1).RotatedBy(MathHelper.ToRadians(rotation));
+			x = (int)(x + vPointA.X + 0.5f);
+            y = (int)(y + vPointA.Y + 0.5f);
+        }
+		public static void GenerateDownwardPath(int x, int y)
+		{
+			float rotation = 0;
+			for(int i = 0; i < 20; i++)
+            {
+                int previousX = x;
+                int previousY = y;
+                //after 6 tunnels, the earthen layer should start setting in
+
+                //at the 10nth tunnell intersection, there will be a split. One side leads to the GULA portal. The other side leads to a crimson/corruption boss arena.
+                //Which has some orbs and a pylon for calling down the ancient Earthen Construct
+
+                if (previousY > Main.rockLayer + 601 && i > 12) //At least 12 layers should be built
+					break; //after this is the earthen layer
+
+				//bottom of the earthen layer will be the Gula Layer
+                GenerateDownwardEntrance(ref x, ref y, rotation);
+				rotation = WorldGen.genRand.NextFloat(-80, 80);
+            }
+        }
 	}
 }

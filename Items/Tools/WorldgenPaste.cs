@@ -31,7 +31,7 @@ namespace SOTS.Items.Tools
 			//Main.NewText(SOTSWorld.DreamLampSolved);
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			AbandonedVillageWorldgenHelper.GenerateDownwardEntrance((int)tileLocation.X, (int)tileLocation.Y);
+			AbandonedVillageWorldgenHelper.GenerateDownwardPath((int)tileLocation.X, (int)tileLocation.Y);
 			//PhaseWorldgenHelper.ClearPrevious = true;
 			//PhaseWorldgenHelper.Generate();
 			//WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);

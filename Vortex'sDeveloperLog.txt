@@ -39,12 +39,21 @@ Update Objectives:
 6. Starmap
 7. Nerf Plasma Accelerator
 8. Pitati Longbow Upgrade..? Maybe also use spore sprayer
+9. Bug: reality shatter visuals draw twice with hydro servant
 
 Daily Log:
 
-10/26/23 and 11/1/23
+10/26/23 and 11/1/23 and 11/7/23
 1. Plating Block crafting now crafts double (5 -> 10)
 2. WIP Abandoned Village World gen
+	1. Needs: More parameters, testing, earthen plating torches appear as you get lower down the cave
+	2. Needs: Orb Cave generation to round out cooridors.
+	3. Needs: Generate Ancient Steel and Chests on cooridors occasionally
+	4. Needs: Caves become more technological as you go deeper... Also more symmetric
+	5. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
+		1. Should deal contact damage. Also spawns enemies on top of it.
+	6. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
+	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 
 -- Update 0.24.0.1 Released --
