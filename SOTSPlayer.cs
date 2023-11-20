@@ -1676,11 +1676,13 @@ namespace SOTS
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {
-			healValue += additionalHeal;
+			if(healValue > 0)
+				healValue += additionalHeal;
         }
         public override void GetHealMana(Item item, bool quickHeal, ref int healValue)
         {
-			healValue += additionalPotionMana;
+            if (healValue > 0)
+                healValue += additionalPotionMana;
 		}
         public override bool PreItemCheck()
 		{

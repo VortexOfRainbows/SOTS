@@ -40,8 +40,14 @@ Update Objectives:
 7. Nerf Plasma Accelerator
 8. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 9. Bug: reality shatter visuals draw twice with hydro servant
+10. look into subspace servant gender and sound bug (changes the damage-sound of your character)
+11. Buff storm spell (activation time)
+12. Reforge cost for void-based reforges is too expensive
 
 Daily Log:
+
+11/20/23
+1. Healing and Mana heal buffs no longer transfer to the other type of potion (weird tmod bug)
 
 10/26/23 and 11/1/23 and 11/7/23
 1. Plating Block crafting now crafts double (5 -> 10)
