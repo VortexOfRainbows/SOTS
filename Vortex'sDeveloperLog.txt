@@ -43,11 +43,15 @@ Update Objectives:
 10. look into subspace servant gender and sound bug (changes the damage-sound of your character)
 11. Buff storm spell (activation time)
 12. Reforge cost for void-based reforges is too expensive
+13. Flare Detonator hold-out uses the old sprite
+14. Crit-Damage Accessories have halved stats (compared to what they should have)
+15. Update max stack for items
 
 Daily Log:
 
-11/20/23
+11/20/23 & 11/28/23
 1. Healing and Mana heal buffs no longer transfer to the other type of potion (weird tmod bug)
+2. Roast Peanuts now has the correct improvement tooltip
 
 10/26/23 and 11/1/23 and 11/7/23
 1. Plating Block crafting now crafts double (5 -> 10)
