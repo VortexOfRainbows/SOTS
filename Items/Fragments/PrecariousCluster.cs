@@ -57,7 +57,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 66;
             Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override void AddRecipes()
@@ -215,7 +215,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 66;
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override void AddRecipes()

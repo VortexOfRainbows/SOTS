@@ -47,7 +47,7 @@ namespace SOTS.Items.Chaos
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.width = 18;
 			Item.height = 18;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(silver: 20);
 			Item.createTile = ModContent.TileType<PhaseOreTile>();

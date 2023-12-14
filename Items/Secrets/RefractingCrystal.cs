@@ -195,7 +195,7 @@ namespace SOTS.Items.Secrets
 		{
 			Item.width = 20;
 			Item.height = 18;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.value = Item.sellPrice(1, 0, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;
 		}

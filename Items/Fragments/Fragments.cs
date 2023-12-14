@@ -18,7 +18,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 26;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 	public class FragmentOfEarth : ModItem
@@ -33,7 +33,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 24;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 	public class FragmentOfPermafrost : ModItem
@@ -48,7 +48,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 30;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 	public class FragmentOfTide : ModItem
@@ -63,7 +63,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 28;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 	public class FragmentOfOtherworld : ModItem
@@ -78,7 +78,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 30;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 	public class FragmentOfEvil : ModItem
@@ -93,7 +93,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 26;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -120,7 +120,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 38;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 	public class FragmentOfInferno : ModItem
@@ -135,7 +135,7 @@ namespace SOTS.Items.Fragments
 			Item.height = 36;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 }

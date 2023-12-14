@@ -22,7 +22,7 @@ namespace SOTS.Items.Pyramid
 			Item.value = 0;
 			Item.rare = ItemRarityID.LightPurple;
 			Item.expert = true;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 		}
 		public override bool CanRightClick()

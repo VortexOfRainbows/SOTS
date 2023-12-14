@@ -13,10 +13,8 @@ using SOTS.Buffs;
 using Terraria.ID;
 using SOTS.Projectiles.Inferno;
 using SOTS.Items.Void;
-using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Localization;
-using System.Linq;
 using SOTS.Projectiles.Pyramid.GhostPepper;
 
 namespace SOTS.Void
@@ -45,6 +43,8 @@ namespace SOTS.Void
 		public int BonusCrushRangeMin = 0;
 		public int BonusCrushRangeMax = 0;
 		public float VoidGenerateMoney = 0;
+		public float GainHealthOnVoidUse = 0f;
+		public float GainVoidOnHurt = 0f;
 		public static string GetVoidDeathMessage(int num)
         {
 			return Language.GetTextValue(("Mods.SOTS.DeathMessage.VD" + num));
@@ -670,6 +670,7 @@ namespace SOTS.Void
 			CrushTransformer = 1f;
 			BonusCrushRangeMax = 0;
 			BonusCrushRangeMin = 0;
+			GainHealthOnVoidUse = GainVoidOnHurt = 0f;
 		}
 		public float resolveVoidCounter = 0;
 		public float resolveVoidAmount = 0;
@@ -854,6 +855,21 @@ namespace SOTS.Void
 			voidStar = 0;
 			voidSoul = 0;
 			voidMeterMax = 100;
+        }
+		private float StoredLifeHeals = 0f;
+		public override void OnHurt(Player.HurtInfo info)
+		{
+            if (GainVoidOnHurt > 0)
+            {
+				int damage = info.Damage;
+                float healAmount = damage * GainVoidOnHurt + StoredLifeHeals;
+                if (healAmount >= 1)
+                {
+                    voidMeter += (int)healAmount;
+                    VoidEffect(Player, (int)healAmount);
+                }
+                StoredLifeHeals = healAmount % 1f;
+            }
         }
     }
 }

@@ -54,7 +54,7 @@ namespace SOTS.Items.Planetarium
 		}
 		public override void SetDefaults()
 		{
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
             Item.width = 20;     
             Item.height = 18;
             Item.value = Item.sellPrice(0, 0, 2, 50);

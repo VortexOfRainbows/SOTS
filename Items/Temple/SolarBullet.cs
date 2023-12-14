@@ -20,7 +20,7 @@ namespace SOTS.Items.Temple
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 22;
 			Item.height = 40;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;           
 			Item.knockBack = 1f;
 			Item.value = Item.buyPrice(0, 0, 2, 0);

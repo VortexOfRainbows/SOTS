@@ -21,7 +21,7 @@ namespace SOTS.Items.Void
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.autoReuse = false;
 			Item.consumable = true;
 			ItemID.Sets.ItemNoGravity[Item.type] = false;

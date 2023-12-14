@@ -25,7 +25,7 @@ namespace SOTS.Items.Fishing
 			Item.DefaultToPlaceableTile(ModContent.TileType<PyramidCrateTile>());
 			Item.width = 12; //The hitbox dimensions are intentionally smaller so that it looks nicer when fished up on a bobber
 			Item.height = 12;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Orange;
 			Item.value = Item.sellPrice(0, 1);
 			Item.consumable = true;

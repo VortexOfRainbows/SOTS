@@ -14,7 +14,7 @@ namespace SOTS.Items.Pyramid
 			Item.height = 28;
 			Item.value = Item.sellPrice(0, 0, 2, 50);
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.alpha = 80;
 		}
         public override Color? GetAlpha(Color lightColor)

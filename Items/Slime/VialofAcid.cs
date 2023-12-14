@@ -14,7 +14,7 @@ namespace SOTS.Items.Slime
 		{
 			Item.width = 24;
 			Item.height = 24;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 2, 0);
 		}
@@ -29,7 +29,7 @@ namespace SOTS.Items.Slime
 		{
 			Item.width = 20;
 			Item.height = 22;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 5, 0);

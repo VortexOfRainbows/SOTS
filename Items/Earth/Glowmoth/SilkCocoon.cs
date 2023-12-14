@@ -31,7 +31,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			Item.height = 34;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.expert = true;
 		}

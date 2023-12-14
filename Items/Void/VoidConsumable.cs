@@ -25,7 +25,7 @@ namespace SOTS.Items.Void
 			Item.height = 32;
 			Item.value = Item.sellPrice(0, 0, 0, 0);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.useStyle = 2;
 			Item.useTime = 15;
 			Item.useAnimation = 15;

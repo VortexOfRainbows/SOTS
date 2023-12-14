@@ -15,7 +15,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Item.width = 16;
 			Item.height = 16;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
@@ -47,7 +47,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Item.width = 28;
 			Item.height = 28;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;

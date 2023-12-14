@@ -17,7 +17,7 @@ namespace SOTS.Items.SoldStuff
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 14;
 			Item.height = 30;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;           
 			Item.knockBack = 1f;
 			Item.value = Item.buyPrice(0, 0, 1, 50);

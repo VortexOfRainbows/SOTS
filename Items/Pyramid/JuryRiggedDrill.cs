@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
 			Item.shoot = ModContent.ProjectileType<Projectiles.Pyramid.JuryRiggedDrill>();
 			Item.shootSpeed = 20f;
 			Item.consumable = true;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

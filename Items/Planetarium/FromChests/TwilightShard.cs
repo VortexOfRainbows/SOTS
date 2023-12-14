@@ -16,7 +16,7 @@ namespace SOTS.Items.Planetarium.FromChests
 		}
 		public override void SetDefaults()
 		{
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
             Item.width = 36;     
             Item.height = 26;
             Item.value = Item.sellPrice(0, 0, 4, 0);

@@ -19,7 +19,7 @@ namespace SOTS.Items.Conduit
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 16;
 			Item.height = 30;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;           
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(copper: 7);
@@ -50,7 +50,7 @@ namespace SOTS.Items.Conduit
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 18;
 			Item.height = 52;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(copper: 7);

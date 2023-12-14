@@ -209,6 +209,7 @@ namespace SOTS.Void
 		{
 			return true;
 		}
+		private float StoredLifeHeals = 0f;
 		public void DrainMana(Player player)
 		{
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
@@ -217,6 +218,16 @@ namespace SOTS.Void
 			{
 				if(player.whoAmI == Main.myPlayer)
 					vPlayer.voidMeter -= finalCost;
+			}
+			if(vPlayer.GainHealthOnVoidUse > 0)
+			{
+				float healAmount = finalCost * vPlayer.GainHealthOnVoidUse + StoredLifeHeals;
+				if(healAmount >= 1)
+                {
+                    player.statLife += (int)healAmount;
+                    player.HealEffect((int)healAmount);
+                }
+				StoredLifeHeals = healAmount % 1f;
 			}
 		}
 	}

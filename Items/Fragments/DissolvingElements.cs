@@ -46,7 +46,7 @@ namespace SOTS.Items.Fragments
 		{
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()

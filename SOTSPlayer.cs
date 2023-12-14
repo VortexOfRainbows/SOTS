@@ -239,7 +239,7 @@ namespace SOTS
 
 		public int mourningStarFire = 0;
 
-		public bool deoxysPet = false;
+		public bool VoidspaceFlames = false;
 
 		public bool DapperChu = false;
 
@@ -1146,7 +1146,7 @@ namespace SOTS
 			ceres = false;
 			doubledActive = 0;
 			backUpBow = false;
-			deoxysPet = false;
+			VoidspaceFlames = false;
 			DapperChu = false;
 			TurtleTem = false;
 			//DevilSpawn = false;	

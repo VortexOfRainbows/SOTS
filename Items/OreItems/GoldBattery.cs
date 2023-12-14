@@ -26,17 +26,15 @@ namespace SOTS.Items.OreItems
 			CreateRecipe(1).AddIngredient(ItemID.GoldBar, 10).AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1).AddTile(TileID.Anvils).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
-		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+        {
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+            VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 1;
 			voidPlayer.voidMeterMax2 += 20;
-
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			voidPlayer.GainVoidOnHurt += 0.1f;
 			if (modPlayer.onhit == 1)
 			{
-				voidPlayer.voidMeter += 2 + (modPlayer.onhitdamage / 11);
-				VoidPlayer.VoidEffect(player, 2 + (modPlayer.onhitdamage / 11));
-				if(voidPlayer.voidMeter >= voidPlayer.voidMeterMax2 - 5 && Main.rand.Next(10) == 0)
+				if(voidPlayer.voidMeter >= voidPlayer.voidMeterMax2 && Main.rand.NextBool(10))
 				{
 					int minute = 3600;
 					player.AddBuff(BuffID.Ichor, (int)(minute * 2.5f), false);

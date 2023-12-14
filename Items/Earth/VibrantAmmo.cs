@@ -18,7 +18,7 @@ namespace SOTS.Items.Earth
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 14;
 			Item.height = 36;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;           
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(copper: 5);
@@ -49,7 +49,7 @@ namespace SOTS.Items.Earth
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 26;
 			Item.height = 56;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(copper: 5);

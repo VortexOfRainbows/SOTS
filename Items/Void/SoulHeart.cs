@@ -59,7 +59,7 @@ namespace SOTS.Items.Void
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = 0;
 			Item.rare = ModContent.RarityType<AnomalyRarity>();
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.autoReuse = false;
 			Item.consumable = true;
 		}

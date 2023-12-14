@@ -19,7 +19,7 @@ namespace SOTS.Items.Pyramid
 			Item.height = 30;
             Item.value = Item.sellPrice(0, 0, 7, 50);
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 }

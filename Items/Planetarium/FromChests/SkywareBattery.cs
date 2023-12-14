@@ -42,20 +42,14 @@ namespace SOTS.Items.Planetarium.FromChests
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
-		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+        {
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+            VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 2;
 			voidPlayer.voidMeterMax2 += 50;
-
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if (modPlayer.onhit == 1)
-			{
-				voidPlayer.voidMeter += 3 + (modPlayer.onhitdamage / 11);
-				VoidPlayer.VoidEffect(player, 3 + (modPlayer.onhitdamage / 11));
-			}
+			voidPlayer.GainVoidOnHurt += 0.12f;
 			player.buffImmune[BuffID.BrokenArmor] = true;
 			player.buffImmune[BuffID.Ichor] = true;
-
 			if (!hideVisual)
 				modPlayer.rainbowGlowmasks = true;
 		}

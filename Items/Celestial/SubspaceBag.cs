@@ -20,7 +20,7 @@ namespace SOTS.Items.Celestial
 			Item.height = 34;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Red;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.expert = true;
 		}

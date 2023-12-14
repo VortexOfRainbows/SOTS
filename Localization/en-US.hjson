@@ -2417,7 +2417,8 @@ Mods: {
 				Tooltip:
 					'''
 					Increases void gain by 1 and max void by 20
-					Regenerate void when hit, but also have a 10% chance to recieve ichor when near max void
+					When hurt, 10% of damage taken is converted into void
+					If hurt while the void meter is maxed, there is a 10% chance to be inflicted with ichor
 					'''
 			}
 
@@ -2436,7 +2437,8 @@ Mods: {
 				Tooltip:
 					'''
 					Increases void gain by 1 and max void by 20
-					Regenerate void when hit, but also have a 10% chance to recieve broken armor when near max void
+					When hurt, 10% of damage taken is converted into void
+					If hurt while the void meter is maxed, there is a 10% chance to be inflicted with broken armor
 					'''
 			}
 
@@ -2646,7 +2648,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases void gain by 2 and max void by 50
-					Regenerate void when hit
+					When hurt, 12% of damage taken is converted into void
 					Immunity to broken armor and ichor
 					'''
 			}
@@ -5158,6 +5160,37 @@ Mods: {
 				DisplayName: Pharaoh's Curse Trophy
 				Tooltip: ""
 			}
+
+			VoidspaceBreastplate: {
+				DisplayName: Voidspace Ranger's Breastplate
+				Tooltip:
+					'''
+					When hurt, 15% of damage taken is converted into void
+					When using void, 15% of the void used is converted in life
+					Reduces mana cost by 15% 
+					Increases void gain by 3 and max void by 100
+					'''
+			}
+
+			VoidspaceLeggings: {
+				DisplayName: Voidspace Ranger's Leggings
+				Tooltip:
+					'''
+					Increases magic and ranged damage by 25%
+					Increases void damage by 15% and movement speed by 20%
+					Increases void gain by 3 and max void by 50
+					'''
+			}
+
+			VoidspaceMask: {
+				DisplayName: Voidspace Ranger's Mask
+				Tooltip:
+					'''
+					Increases magic and ranged critical strike chance by 25%
+					Increases void damage critical strike chance by 15% and max mana by 100
+					Increases void gain by 4 and max void by 50
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -5575,6 +5608,12 @@ Mods: {
 				However, increases void drain by 6 instead of increasing void regeneration speed by 10%
 				'''
 			PatchLeather: Summons a flock of flying snakes to assist in combat
+			Voidspace:
+				'''
+				Attacks permanently inflict the Subspace Flames debuff, which deals 10 damage per second
+				When an enemy with Subspace Flames is killed, they deal damage to all other enemies equal to the cumulative damage they took from Subspace Flames
+				Enemies that take damage this way will also be inflicted with Subspace Flames
+				'''
 		}
 
 		Tiles: {

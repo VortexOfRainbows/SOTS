@@ -21,7 +21,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			Item.CloneDefaults(ItemID.Cobweb);
 			Item.width = 24;
 			Item.height = 26;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 0, 20);
 			Item.createTile = ModContent.TileType<GlowWebTile>();
@@ -50,7 +50,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		{
 			Item.width = 18;
 			Item.height = 28;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 2, 0);
 		}

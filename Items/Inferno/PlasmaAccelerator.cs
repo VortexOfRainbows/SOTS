@@ -23,8 +23,8 @@ namespace SOTS.Items.Inferno
             Item.DamageType = DamageClass.Ranged;  
             Item.width = 28;   
             Item.height = 64; 
-            Item.useTime = 10; 
-            Item.useAnimation = 10;
+            Item.useTime = 12; 
+            Item.useAnimation = 12;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
             Item.knockBack = 4f;

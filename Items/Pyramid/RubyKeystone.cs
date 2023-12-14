@@ -19,7 +19,7 @@ namespace SOTS.Items.Pyramid
 			Item.height = 42;
 			Item.value = Item.sellPrice(0, 7, 50, 0);
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 			//Item.autoReuse = false;
 			//Item.useAnimation = 15;

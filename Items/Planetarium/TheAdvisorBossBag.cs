@@ -25,7 +25,7 @@ namespace SOTS.Items.Planetarium
 			Item.value = 0;
 			Item.rare = ItemRarityID.LightPurple;
 			Item.expert = true;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 		}
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

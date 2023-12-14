@@ -30,7 +30,7 @@ namespace SOTS.Items.Tools
             Item.shootSpeed = 13f;
 			Item.consumable = true;
 			Item.noUseGraphic = true;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 }

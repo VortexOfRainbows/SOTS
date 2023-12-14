@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Item.width = 14;
 			Item.height = 26;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.value = Item.sellPrice(0, 0, 22, 50);

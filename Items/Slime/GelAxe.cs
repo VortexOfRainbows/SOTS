@@ -26,7 +26,7 @@ namespace SOTS.Items.Slime
 			Item.shoot = ModContent.ProjectileType<Projectiles.GelAxe>(); 
             Item.shootSpeed *= 1.2f;
 			Item.consumable = true;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 		public override void AddRecipes()
 		{

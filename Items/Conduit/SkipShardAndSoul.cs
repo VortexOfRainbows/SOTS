@@ -59,7 +59,7 @@ namespace SOTS.Items.Conduit
 		{
 			Item.width = 18;
 			Item.height = 24;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.value = Item.sellPrice(0, 0, 75, 0);
 		}
@@ -108,7 +108,7 @@ namespace SOTS.Items.Conduit
 		{
 			Item.width = 18;
 			Item.height = 30;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ModContent.RarityType<AnomalyRarity>();
 			Item.value = Item.sellPrice(0, 0, 37, 50);
 		}
