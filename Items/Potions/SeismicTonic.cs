@@ -47,7 +47,7 @@ namespace SOTS.Items.Potions
 			Item.height = 32;
             Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 30;
+			Item.maxStack = 9999;
             Item.UseSound = SoundID.Item3;            
             Item.useStyle = ItemUseStyleID.EatFood;      
             Item.useTurn = true;

@@ -16,7 +16,7 @@ namespace SOTS.Items
 			Item.height = 34;
             Item.value = Item.sellPrice(0, 0, 70, 0);
 			Item.rare = ItemRarityID.LightPurple;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace SOTS.Items.Planetarium
 			//Item.CloneDefaults(ItemID.GoldenKey);
 			Item.width = 18;
 			Item.height = 36;
-			Item.maxStack = 99; 
+			Item.maxStack = 9999; 
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.shopCustomPrice = Item.buyPrice(0, 50, 0, 0);

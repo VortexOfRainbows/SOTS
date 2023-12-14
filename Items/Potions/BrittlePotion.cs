@@ -16,7 +16,7 @@ namespace SOTS.Items.Potions
 			Item.height = 28;
             Item.value = Item.sellPrice(0, 0, 2, 0);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 30;
+			Item.maxStack = 9999;
             Item.buffType = Mod.Find<ModBuff>("Brittle").Type;   
             Item.buffTime = 3600 * 4 + 300;  
             Item.UseSound = SoundID.Item3;            

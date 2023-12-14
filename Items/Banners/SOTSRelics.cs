@@ -121,7 +121,7 @@ namespace SOTS.Items.Banners
 		{
 			Item.width = 30;
 			Item.height = 40;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 			Item.value = Item.buyPrice(gold: 5);

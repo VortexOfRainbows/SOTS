@@ -18,7 +18,7 @@ namespace SOTS.Items.Permafrost
 			Item.height = 24;
 			Item.value = Item.sellPrice(0, 1, 30, 0);
 			Item.rare = ItemRarityID.Pink;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.placeStyle = 7;
 			Item.createTile = ModContent.TileType<TheBars>();
         }

@@ -26,7 +26,7 @@ namespace SOTS.Items.Earth
 			Item.height = 24;
             Item.value = Item.sellPrice(0, 0, 15, 0);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.placeStyle = 9;
 			Item.createTile = ModContent.TileType<TheBars>();
 		}

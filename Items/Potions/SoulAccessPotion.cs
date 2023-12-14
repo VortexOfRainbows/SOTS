@@ -20,7 +20,7 @@ namespace SOTS.Items.Potions
 			Item.height = 28;
             Item.value = Item.sellPrice(0, 0, 2, 0);
 			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 30;
+			Item.maxStack = 9999;
             Item.buffType = ModContent.BuffType<SoulAccess>();   
             Item.buffTime = 22000;  
             Item.UseSound = SoundID.Item3;            

@@ -45,7 +45,7 @@ namespace SOTS.Items.Chaos
 			Item.height = 24;
 			Item.value = Item.sellPrice(0, 1, 80, 0);
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.placeStyle = 10;
 			Item.createTile = ModContent.TileType<TheBars>();
 		}

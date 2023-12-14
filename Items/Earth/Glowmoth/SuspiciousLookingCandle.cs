@@ -26,7 +26,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			Item.height = 42;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 30;
+			Item.maxStack = 9999;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.useStyle = ItemUseStyleID.HoldUp;

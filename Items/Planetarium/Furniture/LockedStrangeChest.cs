@@ -17,7 +17,7 @@ namespace SOTS.Items.Planetarium.Furniture
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.width = 32;
 			Item.height = 26;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 0, 10, 0);
 			Item.rare = ItemRarityID.LightRed;

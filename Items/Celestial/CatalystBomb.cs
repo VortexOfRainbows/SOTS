@@ -27,7 +27,7 @@ namespace SOTS.Items.Celestial
 			Item.shoot = ModContent.ProjectileType<Projectiles.Celestial.CatalystBomb>(); 
             Item.shootSpeed = 12f;
 			Item.consumable = true;
-			Item.maxStack = 30;
+			Item.maxStack = 9999;
 			Item.noUseGraphic = true;
 		}
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

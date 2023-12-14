@@ -16,7 +16,7 @@ namespace SOTS.Items.Fishing
 			Item.height = 32;
             Item.value = Item.sellPrice(0, 0, 6, 25);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 		}
 	}
 }

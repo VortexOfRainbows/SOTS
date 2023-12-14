@@ -18,7 +18,7 @@ namespace SOTS.Items.Potions
 			Item.height = 28;
             Item.value = Item.sellPrice(0, 0, 2, 0);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 30;
+			Item.maxStack = 9999;
             Item.buffType = ModContent.BuffType<GoodVibes>();   
             Item.buffTime = 21630; //around 6 minutes
             Item.UseSound = SoundID.Item3;            

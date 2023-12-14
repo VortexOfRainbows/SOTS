@@ -23,7 +23,7 @@ namespace SOTS.Items.Furniture.AncientGold
 		{
 			Item.width = 14;
 			Item.height = 16;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.holdStyle = 1;
 			Item.noWet = true;
 			Item.useTurn = true;

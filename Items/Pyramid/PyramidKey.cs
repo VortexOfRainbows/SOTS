@@ -13,7 +13,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Item.width = 16;
 			Item.height = 30;
-			Item.maxStack = 99; 
+			Item.maxStack = 9999; 
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes()

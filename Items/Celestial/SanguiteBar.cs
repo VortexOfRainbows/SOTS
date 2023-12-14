@@ -16,7 +16,7 @@ namespace SOTS.Items.Celestial
 			Item.height = 34;
             Item.value = Item.sellPrice(0, 0, 75, 0);
 			Item.rare = ItemRarityID.Yellow;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 		}
 	}
 }
