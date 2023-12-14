@@ -56,6 +56,7 @@ Daily Log:
 	2. Skyware Battery: 3 + 9.09% -> 12% of damage taken
 	3. Battery debuffs from Platinum and Gold battery occur only at max void, instead of max void - 5
 4. Stackable items should now stack to 9999.
+5. Note: Look down for Abandoned Village todo and progress...
 
 11/20/23 & 11/28/23
 1. Healing and Mana heal buffs no longer transfer to the other type of potion (weird tmod bug)
