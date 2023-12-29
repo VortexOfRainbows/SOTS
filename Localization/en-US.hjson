@@ -6784,6 +6784,7 @@ Mods: {
 			PolarisMines.DisplayName: Polaris Mine
 			PolarisBeam.DisplayName: Polaris Beam
 			PolarisLaser.DisplayName: Polaris Laser
+			VoidspaceFlameHitbox.DisplayName: Voidspace Flame Hitbox
 		}
 
 		DamageClasses: {

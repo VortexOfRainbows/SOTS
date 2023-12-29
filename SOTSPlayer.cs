@@ -262,11 +262,9 @@ namespace SOTS
 
 		public bool PurpleBalloon = false;
 		public int StartingDamage = 0;
-		public bool ItemDivision = false;
 		public bool PushBack = false; // marble protecter effect
 		public bool HarvestersScythe = false;
 
-		public bool pearlescentMagic = false; //pearlescent core effect
 		public bool bloodstainedJewel = false; //bloodstained jewel effect
 		public bool snakeSling = false; //snakeskin sling effect
 		public bool CurseVision = false;
@@ -1005,27 +1003,18 @@ namespace SOTS
 						bladeAlpha = 255;
 				}
 			}
-			additionalHeal = 0;
-			additionalPotionMana = 0;
+			additionalHeal = additionalPotionMana = 0;
 			HoloEyeAutoAttack = false;
 			blinkPackMult = 1f;
 			BlinkDamage = 0;
 			BlinkType = 0;
-			VisionVanity = false;
-			backUpBowVisual = false;
-			rippleEffect = false;
+			VisionVanity = backUpBowVisual = rippleEffect = false;
 			rippleBonusDamage = 0;
 			symbioteDamage = -1;
 			petPinky = -1;
 			petFreeWisp = -1;
-			petPepper = false;
-			petAdvisor = false; 
-			rainbowGlowmasks = false;
-			HoloEyeIsVanity = false;
-			HoloEye = false;
-			HoloEyeDamage = 0;
-			darkEyeShader = 0;
-			platformShader = 0;
+			petPepper = petAdvisor = rainbowGlowmasks = HoloEyeIsVanity = HoloEye = false;
+			HoloEyeDamage = darkEyeShader = platformShader = 0;
 			aqueductDamage = -1;
 			lastAqueductMax = aqueductNum;
 			aqueductNum = 0;
@@ -1034,6 +1023,7 @@ namespace SOTS
 			tPlanetNum = 0;
 			RubyMonolith = false;
 			RubyMonolithIsNOTVanity = AnomalyLocator = false;
+			int voidspacePiecesWorn = 0;
 			for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
             {
 				Item item = Player.armor[i];
@@ -1117,26 +1107,30 @@ namespace SOTS
 				{
 					HoloEyeIsVanity = false;
 				}
-				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
+				if (item.type == ModContent.ItemType<VoidspaceLeggings>() ||
+					item.type == ModContent.ItemType<VoidspaceBreastplate>() || 
+					item.type == ModContent.ItemType<VoidspaceMask>())
+				{
+					voidspacePiecesWorn++;
+                }
+                /*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
 				}*/
+            }
+			if(voidspacePiecesWorn > 0)
+			{
+				Lighting.AddLight(Player.Center, new Vector3(0.4f, 0.88f, 0.42f) * voidspacePiecesWorn * 0.25f);
 			}
-			typhonRange = 0;
-			assassinateFlat = 0;
-			assassinateNum = 1;
-			assassinate = false;
-			VibrantArmor = false;
-			shardSpellExtra = 0;
-			frigidJavelinBoost = 0;
-			frigidJavelinNoCost = false;
-			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
+			typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
+            assassinateNum = 1;
+			assassinate = VibrantArmor = frigidJavelinNoCost = false;
+            brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
 			if (SOTSWorld.GlobalCounter % 360 == 0)
 			{
 				netUpdate = true;
 			}
-			shardOnHit = 0;
-			bonusShardDamage = 0;
+			shardOnHit = bonusShardDamage = 0;
 			if (onhit > 0)
 			{
 				onhit--;
@@ -1145,17 +1139,10 @@ namespace SOTS
 			//Some important variables 1
 			ceres = false;
 			doubledActive = 0;
-			backUpBow = false;
-			VoidspaceFlames = false;
-			DapperChu = false;
-			TurtleTem = false;
-			//DevilSpawn = false;	
-			PurpleBalloon = false;
-			ItemDivision = false;
+			backUpBow = VoidspaceFlames = DapperChu = TurtleTem = PurpleBalloon = false;
 			//projectileSize = 1;
 			PushBack = false;
 
-			pearlescentMagic = false;
 			bloodstainedJewel = false;
 			snakeSling = false;
 			if (CurseVision)

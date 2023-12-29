@@ -37,6 +37,7 @@ using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.NPCs.Anomaly;
 using SOTS.Projectiles.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
+using Terraria.DataStructures;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -85,6 +86,7 @@ namespace SOTS.Common.GlobalNPCs
         public int BleedingCurse = 0;
         public int BlazingCurse = 0;
         public int AnomalyCurse = 0;
+        public float VoidspaceCurse = 0;
         public int timeFrozen = 0;
         public bool netUpdateTime = false;
         public bool frozen = false;
@@ -285,6 +287,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(BleedingCurse);
                 packet.Write(BlazingCurse);
                 packet.Write(AnomalyCurse);
+                packet.Write(VoidspaceCurse);
                 packet.Send();
             }
             else if(type == 1) //can be called by server or player
@@ -538,6 +541,8 @@ namespace SOTS.Common.GlobalNPCs
             {
                 modifiers.SourceDamage *= (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse);
             }
+            if (player.sotsPlayer().VoidspaceFlames || projectile.type == ModContent.ProjectileType<VoidspaceFlameHitbox>())
+                ApplyVoidspaceCurse(npc, player);
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
@@ -569,6 +574,17 @@ namespace SOTS.Common.GlobalNPCs
             if (BlazingCurse > 0 || AnomalyCurse > 0)
             {
                 modifiers.SourceDamage *= (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse);
+            }
+            if(player.sotsPlayer().VoidspaceFlames)
+                ApplyVoidspaceCurse(npc, player);
+        }
+        public void ApplyVoidspaceCurse(NPC npc, Player player)
+        {
+            if (VoidspaceCurse < 1)
+            {
+                VoidspaceCurse += 1;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                    SendClientChanges(player, npc);
             }
         }
         public static int HarvestCost(NPC npc)
@@ -937,7 +953,22 @@ namespace SOTS.Common.GlobalNPCs
             {
                 npc.lifeRegen -= 12;
             }
-            base.UpdateLifeRegen(npc, ref damage);
+            if (VoidspaceCurse >= 1)
+            {
+                npc.lifeRegen -= 20;
+                VoidspaceCurse += 1 / 6f;
+                if (Main.rand.NextBool(5))
+                {
+                    Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5), npc.width, npc.height, DustType<CopyDust4>());
+                    dust.velocity *= 1.5f;
+                    dust.velocity += 1.5f * circular.SafeNormalize(Vector2.Zero);
+                    dust.scale = 1.75f;
+                    dust.noGravity = true;
+                    dust.color = new Color(70, 255, 60);
+                    dust.fadeIn = 0.2f;
+                }
+            }
         }
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -1169,6 +1200,13 @@ namespace SOTS.Common.GlobalNPCs
             if (DendroDamage > 0)
             {
                 DendroChainNPCOperators.HurtOtherNPCs(npc, DendroDamage);
+            }
+            if (VoidspaceCurse >= 1)
+            {
+                if(Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, Vector2.Zero, ModContent.ProjectileType<VoidspaceFlameHitbox>(), (int)VoidspaceCurse, 0f, Main.myPlayer);
+                }
             }
         }
         public void AddAmmoToList(Projectile projectile)

@@ -40,23 +40,22 @@ Update Objectives:
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 8. Bug: reality shatter visuals draw twice with hydro servant
 9. look into subspace servant gender and sound bug (changes the damage-sound of your character)
-10. Buff storm spell (activation time)
-11. Reforge cost for void-based reforges is too expensive
-12. Flare Detonator hold-out uses the old sprite
-13. Crit-Damage Accessories have halved stats (compared to what they should have)
 
 Daily Log:
 
-12/13/23 to 12/14/23
+12/13/23 to 12/28/23
 1. Plasma Accelerator usetime 10 -> 12 (20% firerate nerf)
-2. Added WIP Voidspace Ranger's Armor:
-	1. Needs Glowmask and Set bonus
+2. Added Voidspace Ranger's Armor:
+	1. Needs balancing and visual polish
 3. Battery accessories now have a more consistent damage to void scaling.
 	1. Ore batteries: 2 + 9.09% -> 10% of damage taken
 	2. Skyware Battery: 3 + 9.09% -> 12% of damage taken
 	3. Battery debuffs from Platinum and Gold battery occur only at max void, instead of max void - 5
 4. Stackable items should now stack to 9999.
-5. Note: Look down for Abandoned Village todo and progress...
+5. Fixed crit damage accessories doing incorrect damage buffs.
+6. Reduced the cost of reforging void-based reforges.
+7. Update flare detonator hold sprite
+Note: Look down for Abandoned Village todo and progress...
 
 11/20/23 & 11/28/23
 1. Healing and Mana heal buffs no longer transfer to the other type of potion (weird tmod bug)

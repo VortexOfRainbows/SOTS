@@ -19,7 +19,7 @@ namespace SOTS.Void
 		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoid = 10;
         public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.4f;
+			float multiplier = 1.25f;
 			valueMult *= multiplier;
 		}
 	}
@@ -33,7 +33,7 @@ namespace SOTS.Void
 		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoid = 20;
 		public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.8f;
+			float multiplier = 1.5f;
 			valueMult *= multiplier;
 		}
 	}
@@ -47,7 +47,7 @@ namespace SOTS.Void
 		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoidGain = 1;
 		public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.4f;
+			float multiplier = 1.3f;
 			valueMult *= multiplier;
 		}
 	}
@@ -61,7 +61,7 @@ namespace SOTS.Void
 		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoidGain = 2;
 		public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.8f;
+			float multiplier = 1.6f;
 			valueMult *= multiplier;
 		}
 	}
