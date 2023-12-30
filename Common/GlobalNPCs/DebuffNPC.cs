@@ -1201,11 +1201,11 @@ namespace SOTS.Common.GlobalNPCs
             {
                 DendroChainNPCOperators.HurtOtherNPCs(npc, DendroDamage);
             }
-            if (VoidspaceCurse >= 1)
+            if (VoidspaceCurse >= 1 && (npc.realLife == -1 || npc.realLife == npc.whoAmI))
             {
                 if(Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, Vector2.Zero, ModContent.ProjectileType<VoidspaceFlameHitbox>(), (int)VoidspaceCurse, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, Vector2.Zero, ModContent.ProjectileType<VoidspaceFlameHitbox>(), (int)VoidspaceCurse, 0f, Main.myPlayer, npc.width, npc.height);
                 }
             }
         }

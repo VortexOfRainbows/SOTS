@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Celestial
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.SetCrit();
+            modifiers.DisableCrit();
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Celestial
             float dist = Projectile.Center.Distance(target.Center);
             if (dist < 2000)
             {
-                if (target.active && !target.friendly && target.lifeMax > 5 && !target.dontTakeDamage)
+                if (target.active && !target.friendly && target.lifeMax > 5 && !target.dontTakeDamage && (target.realLife == -1 || target.realLife == target.whoAmI))
                 {
                     return true;
                 }
@@ -52,31 +52,48 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if(runOnce)
             {
+                CircleDust(Projectile.Center, new Vector2(Projectile.ai[0], Projectile.ai[1]));
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC npc = Main.npc[i];
                     if(TargetableNPC(npc))
                     {
-                        for (float j = 0; j < 30; j++)
-                        {
-                            Vector2 pos = npc.Center - new Vector2(4, 4);
-                            Dust dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<CopyDust4>());
-                            dust.noGravity = true;
-                            dust.fadeIn = 0.1f;
-                            dust.scale *= 2.25f;
-                            dust.color = new Color(70, 255, 60);
-                            dust.velocity *= 2.5f;
-                        }
-                        DrawDustBetweenPoints(npc.Center, Projectile.Center);
+                        CircleDust(npc.Center, npc.Size);
                     }
                 }
                 SOTSUtils.PlaySound(SoundID.Item74, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1f, 0.2f);
                 runOnce = false;
 			}
 		}
+        public void CircleDust(Vector2 center, Vector2 size)
+        {
+            for (float j = 0; j < 30; j++)
+            {
+                Vector2 circular = new Vector2(MathHelper.Lerp(size.X, size.Y, 0.5f), 0).RotatedBy(j / 30f * MathHelper.TwoPi);
+                Vector2 pos = center - new Vector2(4, 4) + circular;
+                Dust dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<CopyDust4>());
+                dust.noGravity = true;
+                dust.fadeIn = 0.1f;
+                dust.scale *= 2.25f;
+                dust.color = new Color(70, 255, 60);
+                dust.velocity *= 0.5f;
+                dust.velocity += circular.SafeNormalize(Vector2.Zero) * 2f;
+
+                circular.X *= Main.rand.NextFloat(0, 1);
+                circular.Y *= Main.rand.NextFloat(0, 2);
+                pos = center - new Vector2(4, 4) + circular;
+                dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<CopyDust4>());
+                dust.noGravity = true;
+                dust.fadeIn = 0.1f;
+                dust.scale *= 1.75f;
+                dust.color = new Color(0, 125, 0);
+                dust.velocity *= 0.3f;
+                dust.velocity += circular.SafeNormalize(Vector2.Zero) * 5.5f * Main.rand.NextFloat(0, 1);
+            }
+        }
         public void DrawDustBetweenPoints(Vector2 point1, Vector2 point2)
         {
-            float step = 10;
+            float step = 11;
             float dist = point1.Distance(point2);
             for (float j = 0; j <= 1; j += step / dist)
             {
