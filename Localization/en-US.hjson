@@ -5191,6 +5191,15 @@ Mods: {
 					Increases void gain by 4 and max void by 50
 					'''
 			}
+
+			HandCannon: {
+				DisplayName: Hand Cannon
+				Tooltip:
+				'''
+				Launches three bullets; the middle bullet deals 100% damage and side bullets deal 50% damage
+				Converts musket balls into explosive bullets
+				'''
+			}
 		}
 
 		ItemTooltip: {

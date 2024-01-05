@@ -240,9 +240,7 @@ namespace SOTS
 		public int mourningStarFire = 0;
 
 		public bool VoidspaceFlames = false;
-
-		public bool DapperChu = false;
-
+		public bool AutoReuseAnything = false;
 		public bool TurtleTem = false;
 
 		public bool PlanetariumBiome => Player.InModBiome<Biomes.PlanetariumBiome>();
@@ -1120,7 +1118,7 @@ namespace SOTS
             }
 			if(voidspacePiecesWorn > 0)
 			{
-				Lighting.AddLight(Player.Center, new Vector3(0.4f, 0.88f, 0.42f) * voidspacePiecesWorn * 0.25f);
+				Lighting.AddLight(Player.Center, new Vector3(0.5f, 0.88f, 0.62f) * voidspacePiecesWorn * 0.3f);
 			}
 			typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
             assassinateNum = 1;
@@ -1139,7 +1137,7 @@ namespace SOTS
 			//Some important variables 1
 			ceres = false;
 			doubledActive = 0;
-			backUpBow = VoidspaceFlames = DapperChu = TurtleTem = PurpleBalloon = false;
+			backUpBow = VoidspaceFlames = AutoReuseAnything = TurtleTem = PurpleBalloon = false;
 			//projectileSize = 1;
 			PushBack = false;
 
@@ -1842,6 +1840,14 @@ namespace SOTS
 					return false;
             }
             return base.CanConsumeAmmo(weapon, ammo);
+        }
+        public override bool? CanAutoReuseItem(Item item)
+        {
+			if(AutoReuseAnything)
+			{
+				return true;
+			}
+            return base.CanAutoReuseItem(item);
         }
     }
 }
