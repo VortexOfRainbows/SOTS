@@ -5195,10 +5195,19 @@ Mods: {
 			HandCannon: {
 				DisplayName: Hand Cannon
 				Tooltip:
-				'''
-				Launches three bullets; the middle bullet deals 100% damage and side bullets deal 50% damage
-				Converts musket balls into explosive bullets
-				'''
+					'''
+					Launches three bullets; the middle bullet deals 100% damage and side bullets deal 50% damage
+					Converts musket balls into explosive bullets
+					'''
+			}
+
+			MineralSpewer: {
+				DisplayName: Soot Spewer
+				Tooltip:
+					'''
+					Covers enemies with combustible powder
+					Enemies covered in powder combust when set aflame, taking all the damage that would've been dealt by the fire debuff instantly
+					'''
 			}
 		}
 
@@ -5578,6 +5587,11 @@ Mods: {
 						Increases magic damage by 50% of the increases recieved to melee damage from other sources
 						Increases movement speed by 20% and reduces damage taken by 10%
 					'''
+			}
+
+			EmberOiled: {
+				DisplayName: Ember Oiled
+				Description: Mods.SOTS.Buffs.EmberOiled.Description
 			}
 		}
 
@@ -6794,6 +6808,8 @@ Mods: {
 			PolarisBeam.DisplayName: Polaris Beam
 			PolarisLaser.DisplayName: Polaris Laser
 			VoidspaceFlameHitbox.DisplayName: Voidspace Flame Hitbox
+			SootBall.DisplayName: Soot Ball
+			EmberDamage.DisplayName: Ember Damage
 		}
 
 		DamageClasses: {

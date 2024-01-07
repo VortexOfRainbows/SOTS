@@ -43,9 +43,11 @@ Update Objectives:
 
 Daily Log:
 
-1/4/24
+1/4/24 and 1/7/24
 1. Added Hand Cannon 
 	1. Needs obtain method (probably abandoned village related)
+2. Added Soot Spewer
+	1. Needs: balancing advice, obtain method, multiplayer testing
 Note: Look down for Abandoned Village todo and progress...
 
 --New Year--
