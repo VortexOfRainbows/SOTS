@@ -38,16 +38,16 @@ Update Objectives:
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 6. Starmap
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
-8. Bug: reality shatter visuals draw twice with hydro servant
-9. look into subspace servant gender and sound bug (changes the damage-sound of your character)
 
 Daily Log:
 
-1/4/24 and 1/7/24
+1/4/24 and 1/7/24 and 1/14/24
 1. Added Hand Cannon 
 	1. Needs obtain method (probably abandoned village related)
 2. Added Soot Spewer
 	1. Needs: balancing advice, obtain method, multiplayer testing
+3. Fix bug with hydro servant drawing additional sprites on top of the normal player
+4. Fix bug where servants would swap the gender of the player to Male when used/equipped.
 Note: Look down for Abandoned Village todo and progress...
 
 --New Year--

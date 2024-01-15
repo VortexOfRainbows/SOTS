@@ -445,6 +445,7 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties.saveFrontArm = player.compositeFrontArm;
             PlayerSavedProperties.saveBackArm = player.compositeBackArm;
             PlayerSavedProperties.saveBodyFrame = player.bodyFrame;
+            PlayerSavedProperties.saveMale = player.Male;
         }
         public void CopyFakeToReal(Player player)
         {
@@ -569,6 +570,7 @@ namespace SOTS.FakePlayer
             player.compositeBackArm = PlayerSavedProperties.saveBackArm;
             player.bodyFrame = PlayerSavedProperties.saveBodyFrame;
             SetPlayerItemUsesThisAnimationViaReflection(player, PlayerSavedProperties.saveItemUsesThisAnimation);
+            player.Male = PlayerSavedProperties.saveMale;
         }
         public void SetPlayerItemUsesThisAnimationViaReflection(Player player, int setUses)
         {
@@ -989,6 +991,7 @@ namespace SOTS.FakePlayer
         public Rectangle saveBodyFrame;
         public float saveGFXOffY;
         public bool saveSelectItemOnNextUse;
+        public bool saveMale;
     }
     public class FakeItem : GlobalItem
     {

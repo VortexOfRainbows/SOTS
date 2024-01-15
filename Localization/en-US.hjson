@@ -5209,6 +5209,14 @@ Mods: {
 					Enemies covered in powder combust when set aflame, taking all the damage that would've been dealt by the fire debuff instantly
 					'''
 			}
+
+			AutoClicker: {
+				DisplayName: Auto Clicker
+				Tooltip:
+					'''
+					Increases attack speed by 10% and makes all items autoreuse
+					'''
+			}
 		}
 
 		ItemTooltip: {

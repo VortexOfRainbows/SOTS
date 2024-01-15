@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SOTS.FakePlayer;
 
 namespace SOTS.Common.PlayerDrawing
 {
@@ -29,7 +30,8 @@ namespace SOTS.Common.PlayerDrawing
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			Item heldItem = drawPlayer.HeldItem;
-			if (drawInfo.shadow != 0)
+            bool isPlayerUsingAHydroCapableItem = FakePlayer.FakePlayer.CheckItemValidityFull(drawPlayer, drawPlayer.HeldItem, drawPlayer.HeldItem, 1);
+            if (drawInfo.shadow != 0 || (isPlayerUsingAHydroCapableItem && FakePlayerProjectile.OwnerOfThisDrawCycle == -1))
 				return;
 			if (!heldItem.IsAir && (!heldItem.noUseGraphic || heldItem.type == ModContent.ItemType<Items.Temple.SupernovaScatter>() || 
 				heldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || heldItem.type == ModContent.ItemType<StormSpell>() || heldItem.type == ModContent.ItemType<DreamLamp>()))
