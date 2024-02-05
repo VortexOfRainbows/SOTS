@@ -20,12 +20,12 @@ namespace SOTS.Items.Inferno
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 20;
+			Item.damage = 19;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 46;
-			Item.useTime = 39;
-			Item.useAnimation = 39;
+			Item.useTime = 40;
+			Item.useAnimation = 40;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 2.2f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
@@ -44,7 +44,7 @@ namespace SOTS.Items.Inferno
 			for(int i = 0; i <= player.spikedBoots; i++)
 			{
 				float speedMult = 0.5f + i * 0.5f + (player.altFunctionUse == 2 ? 0.75f : 0);
-				int totalDamage = damage - i; //slight damage fall of for farther mines (bigger quantities)
+				int totalDamage = damage - i * 2; //slight damage fall of for farther mines (bigger quantities)
 				if (totalDamage < damage / 2)
 					totalDamage = damage / 2;
 				Projectile.NewProjectile(source, position, velocity * speedMult, type, totalDamage, knockback, player.whoAmI, player.altFunctionUse == 2 ? -1 : 0);

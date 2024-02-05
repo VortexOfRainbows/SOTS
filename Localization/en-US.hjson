@@ -1117,7 +1117,7 @@ Mods: {
 				Tooltip:
 					'''
 					5% increased critical strike chance
-					Critical strikes may detonate enemies for 50% critical damage
+					Critical strikes may detonate enemies for 100% 
 					Critical strikes steal life, regenerate void, and recover mana
 					'''
 			}
@@ -1141,7 +1141,7 @@ Mods: {
 				DisplayName: Borealis Icosahedron
 				Tooltip:
 					'''
-					Critical strikes may cause a frostburn explosion, dealing 100% critical damage
+					Critical strikes may cause a frostburn explosion, dealing 200% damage
 					Increases crit chance by 2%
 					'''
 			}
@@ -1150,8 +1150,8 @@ Mods: {
 				DisplayName: Cursed Icosahedron
 				Tooltip:
 					'''
-					Critical strikes may cause a release of cursed thunder, dealing 50% critical damage
-					Critical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage
+					Critical strikes may cause a release of cursed thunder, dealing 100% damage
+					Critical strikes may also cause frostburn or flaming explosions, dealing 100% damage
 					Increases crit chance by 2%
 					'''
 			}
@@ -1160,7 +1160,7 @@ Mods: {
 				DisplayName: Hellfire Icosahedron
 				Tooltip:
 					'''
-					Critical strikes may cause a flaming explosion, dealing 50% critical damage
+					Critical strikes may cause a flaming explosion, dealing 100% damage
 					Increases crit chance by 2%
 					'''
 			}
@@ -2677,7 +2677,7 @@ Mods: {
 				DisplayName: Supernova Hammer
 				Tooltip:
 					'''
-					Critical strikes release 3 seekers that do 50% critical damage
+					Critical strikes release 3 seekers that do 100% damage
 					Killing enemies releases 3 seekers that do 70% damage
 					Enemies killed by seekers release 2 more seekers, each doing 75% damage
 					Seekers home onto enemies, but do not attack the enemies they are released from
@@ -5196,7 +5196,7 @@ Mods: {
 				DisplayName: Hand Cannon
 				Tooltip:
 					'''
-					Launches three bullets; the middle bullet deals 100% damage and side bullets deal 50% damage
+					Launches three bullets: the middle bullet deals 100% damage and side bullets deal 50% damage
 					Converts musket balls into explosive bullets
 					'''
 			}
@@ -5212,9 +5212,19 @@ Mods: {
 
 			AutoClicker: {
 				DisplayName: Auto Clicker
+				Tooltip: Increases attack speed by 10% and makes all items auto swing
+			}
+
+			SupernovaEmblem: {
+				DisplayName: Supernova Emblem
 				Tooltip:
 					'''
-					Increases attack speed by 10% and makes all items autoreuse
+					Killing enemies releases a seeker for 150% damage
+					Enemies killed by seekers release 2 seekers instead, each doing 75% damage
+					Increases melee damage by 15%
+					Increases void gain by 2 and max void by 50
+					When hurt, 12% of damage taken is converted into void
+					Immunity to broken armor and ichor
 					'''
 			}
 		}

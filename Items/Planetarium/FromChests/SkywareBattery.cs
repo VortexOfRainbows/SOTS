@@ -27,7 +27,6 @@ namespace SOTS.Items.Planetarium.FromChests
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Player player = Main.player[Main.myPlayer];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/FromChests/SkywareBatteryEffect").Value;
 			Main.spriteBatch.Draw(texture, position, frame, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), 0f, origin, scale, SpriteEffects.None, 0f);
 		}

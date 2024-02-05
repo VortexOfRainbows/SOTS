@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using SOTS.Items.Invidia;
 
 namespace SOTS.Items.Celestial
 {
@@ -53,7 +54,7 @@ namespace SOTS.Items.Celestial
         }
 		public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient<FragmentOfInferno>(6).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient<FragmentOfInferno>(6).AddIngredient<VesperaMask>(1).AddTile(TileID.MythrilAnvil).Register();
         }
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -96,7 +97,7 @@ namespace SOTS.Items.Celestial
         }
 		public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<SanguiteBar>(10).AddIngredient<FragmentOfInferno>(6).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<SanguiteBar>(10).AddIngredient<FragmentOfInferno>(6).AddIngredient<VesperaLeggings>(1).AddTile(TileID.MythrilAnvil).Register();
         }
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -138,7 +139,7 @@ namespace SOTS.Items.Celestial
         }
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<SanguiteBar>(20).AddIngredient<FragmentOfInferno>(6).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<SanguiteBar>(20).AddIngredient<FragmentOfInferno>(6).AddIngredient<VesperaBreastplate>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

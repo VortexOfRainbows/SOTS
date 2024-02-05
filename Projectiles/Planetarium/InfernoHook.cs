@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Planetarium
         }
         public override void GrapplePullSpeed(Player player, ref float speed)
         {
-            speed = 18.5f;
+            speed = 14.8f;
             base.GrapplePullSpeed(player, ref speed);
         }
         public override float GrappleRange()
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Planetarium
         }
         public override void GrappleRetreatSpeed(Player player, ref float speed)
         {
-            speed = 30f;
+            speed = 24f;
         }
         public override bool PreDrawExtras()
         {

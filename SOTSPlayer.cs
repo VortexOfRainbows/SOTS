@@ -59,6 +59,7 @@ using SOTS.Items.ChestItems;
 using SOTS.Common.Systems;
 using SOTS.FakePlayer;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
+using Microsoft.CodeAnalysis;
 
 namespace SOTS
 {
@@ -263,7 +264,7 @@ namespace SOTS
 		public bool PushBack = false; // marble protecter effect
 		public bool HarvestersScythe = false;
 
-		public bool bloodstainedJewel = false; //bloodstained jewel effect
+		public bool SupernovaEmblem = false; //bloodstained jewel effect
 		public bool snakeSling = false; //snakeskin sling effect
 		public bool CurseVision = false;
 		public float curseVisionCounter = 0;
@@ -1141,7 +1142,7 @@ namespace SOTS
 			//projectileSize = 1;
 			PushBack = false;
 
-			bloodstainedJewel = false;
+			SupernovaEmblem = false;
 			snakeSling = false;
 			if (CurseVision)
 			{
@@ -1311,7 +1312,7 @@ namespace SOTS
 				}
 			}
 			DebuffNPC instancedTarget = target.GetGlobalNPC<DebuffNPC>();
-			if (target.life <= 0)
+			if (target.life <= 0) //If the enemy DIES in this hit
 			{
 				if (AmmoRegather && projectile != null)
 				{
@@ -1322,8 +1323,12 @@ namespace SOTS
 					{
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
 					}
-				}
-			}
+                }
+                if (SupernovaEmblem && projectile.type != ModContent.ProjectileType<Seeker>())
+                {
+                    Projectiles.Planetarium.SupernovaHammer.SpawnSeekers(new EntitySource_OnHit(Player, target), target.Center, 1, (int)(hit.SourceDamage * 1.5f), -1);
+                }
+            }
 			if (Main.myPlayer == Player.whoAmI && AmmoRegather && !target.immortal && projectile != null)
 			{
 				if (projectile.CountsAsClass(DamageClass.Ranged))
@@ -1370,8 +1375,12 @@ namespace SOTS
 					{
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
 					}
-				}
-			}
+                }
+                if (SupernovaEmblem)
+                {
+                    Projectiles.Planetarium.SupernovaHammer.SpawnSeekers(new EntitySource_OnHit(Player, target), target.Center, 1, (int)(hit.SourceDamage * 1.5f), -1);
+                }
+            }
 		}
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
 		{
@@ -1650,13 +1659,12 @@ namespace SOTS
 					else if (BlueFireOrange)
 					{
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.SourceDamage * 0.3f), 0, Main.myPlayer, 1);
-					}
-				}
-				if (SadistRing)
-				{
-					if (Main.myPlayer == Player.whoAmI)
+                    }
+                    if (SadistRing)
+                    {
 						GrantRandomRingBuff(Player);
-				}
+                    }
+                }
 			}
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)

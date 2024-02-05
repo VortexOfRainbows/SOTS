@@ -12,11 +12,21 @@ using Terraria.Audio;
 using Terraria.WorldBuilding;
 using Terraria.Enums;
 using System.Diagnostics.Contracts;
+using Terraria.DataStructures;
 
 namespace SOTS.Projectiles.Planetarium
 {
 	public class SupernovaHammer : ModProjectile
 	{
+        public static void SpawnSeekers(IEntitySource src, Vector2 position, int count, int damage, int originalTarget)
+        {
+            SOTSUtils.PlaySound(SoundID.Item14, position, 0.6f);
+            for (int i = 0; i < count; i++)
+            {
+                Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+                Projectile.NewProjectile(src, position, circular, ModContent.ProjectileType<Seeker>(), damage, 0f, Main.myPlayer, Main.rand.Next(360), originalTarget);
+            }
+        }
 		public override void SetStaticDefaults()
 		{
 			// DisplayName.SetDefault("Supernova Hammer");
@@ -37,7 +47,7 @@ namespace SOTS.Projectiles.Planetarium
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
-            Projectile.alpha = (int)byte.MaxValue;
+            Projectile.alpha = byte.MaxValue;
             Projectile.hide = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
@@ -47,29 +57,17 @@ namespace SOTS.Projectiles.Planetarium
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if ((double)Projectile.ai[0] >= 36f) Projectile.localAI[1] = 1.0f;
-            if (hit.Crit)
+            if ((double)Projectile.ai[0] >= 36f) 
+                Projectile.localAI[1] = 1.0f;
+            if (Projectile.owner == Main.myPlayer)
             {
-                SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
-                if (Projectile.owner == Main.myPlayer)
+                if (hit.Crit)
                 {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Seeker>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
-                    }
+                    SpawnSeekers(Projectile.GetSource_FromThis(), target.Center, 3, Projectile.damage, target.whoAmI);
                 }
-            }
-            if (target.life <= 0)
-            {
-                SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
-                if (Projectile.owner == Main.myPlayer)
+                if (target.life <= 0)
                 {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Seeker>(), (int)(0.7f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
-                    }
+                    SpawnSeekers(Projectile.GetSource_FromThis(), target.Center, 3, (int)(0.7f * Projectile.damage) + 1, target.whoAmI);
                 }
             }
         }

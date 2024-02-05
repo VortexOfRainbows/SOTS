@@ -23,7 +23,7 @@ namespace SOTS.Items.Planetarium.FromChests
             Item.value = Item.sellPrice(0, 3, 80, 0);
             Item.rare = ItemRarityID.LightPurple;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Planetarium.InfernoHook>(); 
-            Item.shootSpeed = 26f;
+            Item.shootSpeed = 20.8f;
 		}
 		public override void AddRecipes()
 		{

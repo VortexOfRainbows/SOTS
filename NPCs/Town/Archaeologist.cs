@@ -31,6 +31,7 @@ using SOTS.WorldgenHelpers;
 using SOTS.Common;
 using SOTS.Buffs.Debuffs;
 using SOTS.Items.Crushers;
+using SOTS.Items.Earth.Glowmoth;
 
 namespace SOTS.NPCs.Town
 {
@@ -477,13 +478,14 @@ namespace SOTS.NPCs.Town
 				shopName = "Shop";
 			}
 		}
-		private static void AddItemToShop(Chest shop, ref int nextSlot, int itemID)
+		/*private static void AddItemToShop(Chest shop, ref int nextSlot, int itemID)
 		{
 			shop.item[nextSlot].SetDefaults(itemID);
 			nextSlot++;
-		}
+		}*/
 		public const string ShopKey = "Mods.SOTS.Common.ArchaeologistShopCondition";
-		public override void AddShops()
+        public const string TorchKey = "Mods.SOTS.Common.ArchaeologistTorchCondition";
+        public override void AddShops()
 		{
 			var npcShop = new NPCShop(Type, ShopName)
 				.Add<AnomalyLocator>()
@@ -517,8 +519,9 @@ namespace SOTS.NPCs.Town
 				.Add<BoneClapper>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain && NPC.downedBoss3))
 				.Add(new Item(ItemID.Terragrim), new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain))
 				.Add<PerfectStar>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal && NPC.downedBoss1))
-				.Add<VisionAmulet>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal));
-			npcShop.Register(); // Name of this shop tab
+				.Add<VisionAmulet>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal))
+				.Add<TorchBomb>(Condition.PlayerCarriesItem(ModContent.ItemType<TorchGun>()));
+            npcShop.Register(); // Name of this shop tab
 		}
 		public static int currentLocationType = -1;
 		public void FindALocationToGoTo()

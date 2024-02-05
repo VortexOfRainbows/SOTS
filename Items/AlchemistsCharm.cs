@@ -22,7 +22,7 @@ namespace SOTS.Items
             Item.width = 38;
 			Item.height = 60;   
             Item.value = Item.sellPrice(0, 2, 10, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Yellow;
 			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)

@@ -13,10 +13,6 @@ namespace SOTS.Projectiles.Planetarium
 {    
     public class Seeker : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Critical Seeker");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 16;
@@ -37,18 +33,10 @@ namespace SOTS.Projectiles.Planetarium
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			if (target.life <= 0)
-			{
-				SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
-				if (Projectile.owner == Main.myPlayer)
-				{
-					for (int i = 0; i < 2; i++)
-					{
-						Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-						Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center.X, target.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Seeker>(), (int)(0.75f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
-					}
-				}
-			}
+			if (target.life <= 0 && Projectile.owner == Main.myPlayer)
+            {
+                SupernovaHammer.SpawnSeekers(Projectile.GetSource_FromThis(), target.Center, 2, (int)(0.75f * Projectile.damage) + 1, target.whoAmI);
+            }
 		}
 		public override bool? CanHitNPC(NPC target)
         {
@@ -57,17 +45,30 @@ namespace SOTS.Projectiles.Planetarium
         int lastID = -1;
 		float lastLength = 200f;
 		float counter = 1f;
-		public override void AI()
+        public override void OnKill(int timeLeft)
+        {
+			for(int i = 0; i  < 10; i++)
+			{
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
+                dust.velocity *= 1.5f;
+                dust.noGravity = true;
+                dust.scale *= 1.2f;
+                dust.scale += 0.4f;
+                dust.color = Color.Lerp(new Color(0, 200, 220, 100), new Color(220, 200, 30, 100), new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0])).X + 0.5f);
+                dust.fadeIn = 0.1f;
+                dust.alpha = Projectile.alpha;
+            }
+        }
+        public override void AI()
 		{
 			Projectile.ai[0]++;
-			int num1 = Dust.NewDust(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), 8, 8, ModContent.DustType<Dusts.CopyDust4>());
-			Dust dust = Main.dust[num1];
-			dust.velocity *= 0.2f;
+			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
+            dust.velocity *= 0.1f;
 			dust.noGravity = true;
-			dust.scale += 0.1f;
+            dust.scale *= 0.7f;
+            dust.scale += 0.7f;
 			dust.color = Color.Lerp(new Color(0, 200, 220, 100), new Color(220, 200, 30, 100), new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0])).X + 0.5f);
 			dust.fadeIn = 0.1f;
-			dust.scale *= 1.6f;
 			dust.alpha = Projectile.alpha;
 			int npcId = (int)Projectile.ai[1];
 			if(Projectile.ai[1] >= 0 && Main.npc[npcId].active == false)
@@ -123,7 +124,7 @@ namespace SOTS.Projectiles.Planetarium
 					lastLength = 200f;
 				}
 			}
-			if(Projectile.alpha >= 255)
+			if(Projectile.alpha >= 200)
             {
 				Projectile.Kill();
             }
