@@ -304,7 +304,7 @@ namespace SOTS
 					debuffNPC.BleedingCurse = reader.ReadInt32();
 					debuffNPC.BlazingCurse = reader.ReadInt32();
 					debuffNPC.AnomalyCurse = reader.ReadInt32();
-                    debuffNPC.VoidspaceCurse = reader.ReadSingle();
+                    debuffNPC.OwnerOfVoidspaceCurseDamage = reader.ReadInt32();
                     if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -317,7 +317,7 @@ namespace SOTS
 						packet.Write(debuffNPC.BleedingCurse);
 						packet.Write(debuffNPC.BlazingCurse);
 						packet.Write(debuffNPC.AnomalyCurse);
-                        packet.Write(debuffNPC.VoidspaceCurse);
+                        packet.Write(debuffNPC.OwnerOfVoidspaceCurseDamage);
                         packet.Send(-1, playernumber);
 					}
 					break;

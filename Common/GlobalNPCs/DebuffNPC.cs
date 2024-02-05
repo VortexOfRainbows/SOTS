@@ -87,6 +87,7 @@ namespace SOTS.Common.GlobalNPCs
         public int BlazingCurse = 0;
         public int AnomalyCurse = 0;
         public float VoidspaceCurse = 0;
+        public int OwnerOfVoidspaceCurseDamage = -1;
         public int timeFrozen = 0;
         public bool netUpdateTime = false;
         public bool frozen = false;
@@ -287,7 +288,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(BleedingCurse);
                 packet.Write(BlazingCurse);
                 packet.Write(AnomalyCurse);
-                packet.Write(VoidspaceCurse);
+                packet.Write(OwnerOfVoidspaceCurseDamage);
                 packet.Send();
             }
             else if(type == 1) //can be called by server or player
@@ -580,9 +581,9 @@ namespace SOTS.Common.GlobalNPCs
         }
         public void ApplyVoidspaceCurse(NPC npc, Player player)
         {
-            if (VoidspaceCurse < 1)
+            if (OwnerOfVoidspaceCurseDamage < 0)
             {
-                VoidspaceCurse += 1;
+                OwnerOfVoidspaceCurseDamage = player.whoAmI;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
@@ -953,7 +954,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 npc.lifeRegen -= 12;
             }
-            if (VoidspaceCurse >= 1)
+            if (OwnerOfVoidspaceCurseDamage >= 0)
             {
                 npc.lifeRegen -= 20;
                 VoidspaceCurse += 1 / 6f;
@@ -1093,6 +1094,13 @@ namespace SOTS.Common.GlobalNPCs
                         dust.color = Color.LightGray;
                     }
                 }
+                if (VoidspaceCurse >= 1 && (npc.realLife == -1 || npc.realLife == npc.whoAmI))
+                {
+                    if (Main.myPlayer == OwnerOfVoidspaceCurseDamage)
+                    {
+                        Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, Vector2.Zero, ModContent.ProjectileType<VoidspaceFlameHitbox>(), (int)VoidspaceCurse, 0f, OwnerOfVoidspaceCurseDamage, npc.width, npc.height);
+                    }
+                }
             }
         }
         public override void OnKill(NPC npc)
@@ -1200,13 +1208,6 @@ namespace SOTS.Common.GlobalNPCs
             if (DendroDamage > 0)
             {
                 DendroChainNPCOperators.HurtOtherNPCs(npc, DendroDamage);
-            }
-            if (VoidspaceCurse >= 1 && (npc.realLife == -1 || npc.realLife == npc.whoAmI))
-            {
-                if(Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, Vector2.Zero, ModContent.ProjectileType<VoidspaceFlameHitbox>(), (int)VoidspaceCurse, 0f, Main.myPlayer, npc.width, npc.height);
-                }
             }
         }
         public void AddAmmoToList(Projectile projectile)
