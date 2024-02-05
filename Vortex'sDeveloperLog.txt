@@ -35,9 +35,13 @@ Update Objectives:
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 6. Starmap
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
-8. Balance Needed List: Soot Spewer, Voidspace Ranger's Armor
-9. Visual Uprade Needed List: Voidspace Ranger's Armor, Supernova Seekers
-10. Multiplayer Changes List: Voidspace Ranger armor needs to know which player the damage first originated from.
+8. Torch Bomb Upgrade
+
+
+Balance Needed List: Soot Spewer, Voidspace Ranger's Armor
+Visual Uprade Needed List: Voidspace Ranger's Armor, Supernova Seekers
+Multiplayer Changes List: Voidspace Ranger armor needs to know which player the damage first originated from.
+Content Needed List: Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
@@ -47,7 +51,6 @@ Daily Log:
 3. Added Supernova Emblem item, works in multiplayer
 4. Archaeologist now sells torch bombs when there is a torch gun in the player inventory (8 silver)
 5. Decreased Inferno Hook speed by 20%
-Note: Look down for Abandoned Village todo and progress...
 
 1/4/24 and 1/7/24 and 1/14/24
 1. Added Hand Cannon 
