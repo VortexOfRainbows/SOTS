@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Invidia;
@@ -218,18 +219,18 @@ namespace SOTS.Items.Gems
 		{
 			AddMapEntry(new Color(212, 37, 24), this.GetLocalization("MapEntry0"), MapChestName);
 			AddMapEntry(new Color(212, 37, 24), this.GetLocalization("MapEntry1"), MapChestName);
-			AddMapEntry(new Color(18, 116, 211), this.GetLocalization("MapEntry2"), MapChestName);
-			AddMapEntry(new Color(18, 116, 211), this.GetLocalization("MapEntry3"), MapChestName);
-			AddMapEntry(new Color(33, 184, 115), this.GetLocalization("MapEntry4"), MapChestName);
-			AddMapEntry(new Color(33, 184, 115), this.GetLocalization("MapEntry5"), MapChestName);
-			AddMapEntry(new Color(239, 167, 10), this.GetLocalization("MapEntry6"), MapChestName);
-			AddMapEntry(new Color(239, 167, 10), this.GetLocalization("MapEntry7"), MapChestName);
-			AddMapEntry(new Color(158, 0, 244), this.GetLocalization("MapEntry8"), MapChestName);
-			AddMapEntry(new Color(158, 0, 244), this.GetLocalization("MapEntry9"), MapChestName);
-			AddMapEntry(new Color(154, 197, 239), this.GetLocalization("MapEntry10"), MapChestName);
-			AddMapEntry(new Color(154, 197, 239), this.GetLocalization("MapEntry11"), MapChestName);
-			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry12"), MapChestName);
-			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry13"), MapChestName);
+			AddMapEntry(new Color(18, 116, 211), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(18, 116, 211), this.GetLocalization("MapEntry1"), MapChestName);
+			AddMapEntry(new Color(33, 184, 115), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(33, 184, 115), this.GetLocalization("MapEntry1"), MapChestName);
+			AddMapEntry(new Color(239, 167, 10), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(239, 167, 10), this.GetLocalization("MapEntry1"), MapChestName);
+			AddMapEntry(new Color(158, 0, 244), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(158, 0, 244), this.GetLocalization("MapEntry1"), MapChestName);
+			AddMapEntry(new Color(154, 197, 239), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(154, 197, 239), this.GetLocalization("MapEntry1"), MapChestName);
+			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry0"), MapChestName);
+			AddMapEntry(new Color(225, 124, 30), this.GetLocalization("MapEntry1"), MapChestName);
 		}
         public override bool CreateDust(int i, int j, ref int type)
         {
@@ -302,6 +303,11 @@ namespace SOTS.Items.Gems
 
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-		}
-	}
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            Tile tile = Main.tile[i, j];
+            yield return new Item(ChestDrop(tile.TileFrameX));
+        }
+    }
 }

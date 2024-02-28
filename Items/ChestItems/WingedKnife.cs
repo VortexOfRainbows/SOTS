@@ -1,5 +1,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace SOTS.Items.ChestItems
 {
@@ -25,6 +26,7 @@ namespace SOTS.Items.ChestItems
             Item.shootSpeed = 12f;
 			Item.consumable = false;
 			Item.knockBack = 1.5f;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
 		}
 	}
 }

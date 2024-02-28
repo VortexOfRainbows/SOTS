@@ -198,5 +198,9 @@ namespace SOTS.Items.Earth
 			DustType = ModContent.DustType<VibrantDust>();
 			AddMapEntry(new Color(67, 91, 19));
 		}
-	}
+        public override bool Drop(int i, int j, ref int type)
+        {
+			return false;
+        }
+    }
 }

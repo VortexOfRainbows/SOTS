@@ -5792,20 +5792,8 @@ Mods: {
 			PermafrostPlatingBlastDoorTileOpen.MapEntry: Permafrost Plating Blast Door
 
 			GemChestTile: {
-				MapEntry0: Ruby Chest
-				MapEntry1: Locked Ruby Chest
-				MapEntry2: Sapphire Chest
-				MapEntry3: Locked Sapphire Chest
-				MapEntry4: Emerald Chest
-				MapEntry5: Locked Emerald Chest
-				MapEntry6: Topaz Chest
-				MapEntry7: Locked Topaz Chest
-				MapEntry8: Amethyst Chest
-				MapEntry9: Locked Amethyst Chest
-				MapEntry10: Diamond Chest
-				MapEntry11: Locked Diamond Chest
-				MapEntry12: Amber Chest
-				MapEntry13: Locked Amber Chest
+				MapEntry0: Gem Chest
+				MapEntry1: Locked Gem Chest
 			}
 		}
 
