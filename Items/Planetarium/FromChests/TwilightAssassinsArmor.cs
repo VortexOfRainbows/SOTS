@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
-using SOTS.Items.Planetarium.EpicWings;
+using SOTS.Items.Wings;
 using SOTS.Items.Planetarium.Furniture;
 using SOTS.Void;
 using System.Collections.Generic;

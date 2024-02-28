@@ -14,10 +14,10 @@ using Terraria.ModLoader;
 using static SOTS.SOTS;
 using Terraria.Localization;
 
-namespace SOTS.Items.Planetarium.EpicWings
+namespace SOTS.Items.Wings
 {
 	[AutoloadEquip(EquipType.Wings)]
-	public class TestWings : ModItem
+	public class MachinaBooster : ModItem
 	{ 
 		public override void SetStaticDefaults()
 		{
@@ -32,7 +32,7 @@ namespace SOTS.Items.Planetarium.EpicWings
 				{
 					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.Text = Language.GetTextValue("Mods.SOTS.TestWingsText", key);
+						line.Text = Language.GetTextValue("Mods.SOTS.MachinaBoosterText", key);
 						return;
 					}
 				}
@@ -42,16 +42,16 @@ namespace SOTS.Items.Planetarium.EpicWings
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValue("Mods.SOTS.TestWingsText2", Textkey);
+					line.Text = Language.GetTextValue("Mods.SOTS.MachinaBoosterText2", Textkey);
 				}
 			}
 			base.ModifyTooltips(tooltips);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWings").Value;
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBooster").Value;
 			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
-			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWingsEffect").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBoosterEffect").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 4; k++)
 			{
@@ -59,16 +59,16 @@ namespace SOTS.Items.Planetarium.EpicWings
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				Main.spriteBatch.Draw(texture2, new Vector2(position.X + x, position.Y + y), null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
-			texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWingsBorder").Value;
+			texture = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBoosterBorder").Value;
 			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWings").Value;
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBooster").Value;
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWingsEffect").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBoosterEffect").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 4; k++)
 			{
@@ -76,7 +76,7 @@ namespace SOTS.Items.Planetarium.EpicWings
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
-			texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWingsBorder").Value;
+			texture = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBoosterBorder").Value;
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -96,8 +96,8 @@ namespace SOTS.Items.Planetarium.EpicWings
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			TestWingsPlayer testWingsPlayer = player.GetModPlayer<TestWingsPlayer>();
-			testWingsPlayer.canCreativeFlight = true;
+			MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
+			MachinaBoosterPlayer.canCreativeFlight = true;
 			player.wingTimeMax = 150;
 			player.noFallDmg = true;
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -105,8 +105,8 @@ namespace SOTS.Items.Planetarium.EpicWings
 		}
 		public override bool WingUpdate(Player player, bool inUse)
 		{
-			TestWingsPlayer testWingsPlayer = player.GetModPlayer<TestWingsPlayer>();
-			if (testWingsPlayer.creativeFlight)
+			MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
+			if (MachinaBoosterPlayer.creativeFlight)
 			{
 				player.wingFrame = 2;
 			}
@@ -134,7 +134,7 @@ namespace SOTS.Items.Planetarium.EpicWings
 			constantAscend = num1;
 		}
 	}
-	public class TestWingsPlayer : ModPlayer
+	public class MachinaBoosterPlayer : ModPlayer
 	{
 		public void SendPacket()
 		{

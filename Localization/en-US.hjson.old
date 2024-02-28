@@ -616,7 +616,7 @@ Mods: {
 					PortalPlatingWall: Avaritia Plating Wall
 				
 				# EpicWings
-					TestWings: Machina Booster
+					MachinaBooster: Machina Booster
 					TwilightGyroscope: Twilight Gyroscope
 				
 				# FromChests
@@ -1856,7 +1856,7 @@ Mods: {
 				
 			# Otherworld
 				# EpicWings
-					TestWings: Allows flight and slow fall
+					MachinaBooster: Allows flight and slow fall
 					TwilightGyroscope: 
 						'''
 						Increases jump height and flight speed
@@ -3423,7 +3423,7 @@ Mods: {
 			7: Increases summon damage by 3%, up to 12% total
 		}
 
-		TestWingsText: 
+		MachinaBoosterText: 
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1
@@ -3431,7 +3431,7 @@ Mods: {
 			Increases void drain by 3 while active
 			'''
 
-		TestWingsText2: 
+		MachinaBoosterText2: 
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1

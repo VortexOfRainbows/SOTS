@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.Planetarium.EpicWings;
+using SOTS.Items.Wings;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,7 +17,7 @@ namespace SOTS.Common.PlayerDrawing
 		//public override bool IsHeadLayer => true;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
 		{
-			return drawInfo.drawPlayer.wings == EquipLoader.GetEquipSlot(Mod, "TestWings", EquipType.Wings);
+			return drawInfo.drawPlayer.wings == EquipLoader.GetEquipSlot(Mod, "MachinaBooster", EquipType.Wings);
 		}
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Wings);
 		public static Color changeColorBasedOnStealth(Color color, PlayerDrawSet drawInfo)
@@ -79,21 +79,21 @@ namespace SOTS.Common.PlayerDrawing
 			if(wingAssets == null)
             {
 				wingAssets = new Texture2D[11];
-				wingAssets[0] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[1] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4Base", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[2] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4Base2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[3] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart5", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[4] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart5_2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[5] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingBooster2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[6] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4EffectFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[7] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4EffectOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[8] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingBooster2Effect", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[9] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingBooster2Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				wingAssets[10] = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/WingPart4Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[0] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[1] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart4Base", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[2] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart4Base2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[3] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart5", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[4] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart5_2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[5] = Mod.Assets.Request<Texture2D>("Items/Wings/WingBooster2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[6] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart4EffectFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[7] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart4EffectOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[8] = Mod.Assets.Request<Texture2D>("Items/Wings/WingBooster2Effect", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[9] = Mod.Assets.Request<Texture2D>("Items/Wings/WingBooster2Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				wingAssets[10] = Mod.Assets.Request<Texture2D>("Items/Wings/WingPart4Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			}
 			Player drawPlayer = drawInfo.drawPlayer;
-			TestWingsPlayer testWingsPlayer = drawPlayer.GetModPlayer<TestWingsPlayer>();
-			//Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/EpicWings/TestWings_Wings_Glow").Value;
+			MachinaBoosterPlayer MachinaBoosterPlayer = drawPlayer.GetModPlayer<MachinaBoosterPlayer>();
+			//Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBooster_Wings_Glow").Value;
 			Texture2D smallPiece = wingAssets[0];
 			Texture2D bigPiece = wingAssets[1];
 			Texture2D bigPieceAlt = wingAssets[2];
@@ -316,7 +316,7 @@ namespace SOTS.Common.PlayerDrawing
 									x = 0;
 									y = 0;
 								}
-								Vector2 tilt2 = new Vector2(0, 4.5f).RotatedBy(MathHelper.ToRadians(testWingsPlayer.randCounter * 20));
+								Vector2 tilt2 = new Vector2(0, 4.5f).RotatedBy(MathHelper.ToRadians(MachinaBoosterPlayer.randCounter * 20));
 								Vector2 tilt3 = new Vector2(tilt2.X, 0).RotatedBy(rotation - rotationI);
 								Vector2 tilt = new Vector2(0, 1).RotatedBy(rotation - rotationI) * drawPlayer.gravDir;
 								Vector2 currentPos2 = currentPos - vector2_1 + Main.screenPosition;

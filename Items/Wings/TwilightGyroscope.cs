@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Planetarium.EpicWings
+namespace SOTS.Items.Wings
 {
 	public class TwilightGyroscope : ModItem	
 	{	
@@ -23,8 +23,8 @@ namespace SOTS.Items.Planetarium.EpicWings
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			TestWingsPlayer testWingsPlayer = player.GetModPlayer<TestWingsPlayer>();
-			testWingsPlayer.gyro = true;
+			MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
+			MachinaBoosterPlayer.gyro = true;
 			player.jumpSpeedBoost += 3f;
 			player.noFallDmg = true;
 			player.moveSpeed += 0.2f;

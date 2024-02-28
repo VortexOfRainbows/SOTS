@@ -4,7 +4,7 @@ using SOTS.Buffs;
 using SOTS.Items;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Planetarium;
-using SOTS.Items.Planetarium.EpicWings;
+using SOTS.Items.Wings;
 using SOTS.Items.Planetarium.FromChests;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Earth;
@@ -324,7 +324,7 @@ namespace SOTS
         public bool StatShareAll = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
-			TestWingsPlayer testPlayer = Player.GetModPlayer<TestWingsPlayer>();
+			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
 			VoidPlayer voidPlayer = Player.GetModPlayer<VoidPlayer>();
 			ModPacket packet = Mod.GetPacket();
 			packet.Write((byte)SOTSMessageType.SOTSSyncPlayer);
@@ -940,7 +940,7 @@ namespace SOTS
 			HarvestersScythe = false;
 			ParticleRelocator = false;
 			pyramidBattle = false;
-			if (normalizedGravity && !Player.GetModPlayer<TestWingsPlayer>().creativeFlight)
+			if (normalizedGravity && !Player.GetModPlayer<MachinaBoosterPlayer>().creativeFlight)
             {
 				Player.gravity = Player.defaultGravity;
             }
@@ -1062,12 +1062,12 @@ namespace SOTS
 				}
 				if (item.type == ModContent.ItemType<BackupBow>())
 					backUpBowVisual = true;
-				if (item.type == ModContent.ItemType<TestWings>())
+				if (item.type == ModContent.ItemType<MachinaBooster>())
 				{
-					TestWingsPlayer testWingsPlayer = Player.GetModPlayer<TestWingsPlayer>();
-					if(!testWingsPlayer.canCreativeFlight)
+					MachinaBoosterPlayer MachinaBoosterPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
+					if(!MachinaBoosterPlayer.canCreativeFlight)
                     {
-						testWingsPlayer.HaloDust();
+						MachinaBoosterPlayer.HaloDust();
 					}
 				}
 				/*if (item.type == ModContent.ItemType<SubspaceLocket>())

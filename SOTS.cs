@@ -12,7 +12,7 @@ using Terraria.UI;
 using SOTS.Prim;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
-using SOTS.Items.Planetarium.EpicWings;
+using SOTS.Items.Wings;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Planetarium.FromChests;
 using SOTS.NPCs.Boss;
@@ -253,7 +253,7 @@ namespace SOTS
 				case (int)SOTSMessageType.SOTSSyncPlayer:
 					byte playernumber = reader.ReadByte();
 					SOTSPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
-					TestWingsPlayer testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
+					MachinaBoosterPlayer testPlayer = Main.player[playernumber].GetModPlayer<MachinaBoosterPlayer>();
 					VoidPlayer voidPlayer = Main.player[playernumber].GetModPlayer<VoidPlayer>();
 					bool creativeFlight = reader.ReadBoolean();
 					testPlayer.creativeFlight = creativeFlight;
@@ -262,7 +262,7 @@ namespace SOTS
 					break;
                 case (int)SOTSMessageType.SyncCreativeFlight:
 					playernumber = reader.ReadByte(); 
-					testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
+					testPlayer = Main.player[playernumber].GetModPlayer<MachinaBoosterPlayer>();
 					testPlayer.creativeFlight = reader.ReadBoolean();
 					if (Main.netMode == NetmodeID.Server)
 					{

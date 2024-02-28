@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Planetarium.FromChests;
-using SOTS.Items.Planetarium.EpicWings;
+using SOTS.Items.Wings;
 using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS.Items.Planetarium

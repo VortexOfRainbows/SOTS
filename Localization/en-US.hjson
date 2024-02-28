@@ -2484,11 +2484,8 @@ Mods: {
 				Tooltip: ""
 			}
 
-			TestWings: {
-				# EpicWings
+			MachinaBooster: {
 				DisplayName: Machina Booster
-				# Otherworld
-				# EpicWings
 				Tooltip: Allows flight and slow fall
 			}
 
@@ -6187,14 +6184,14 @@ Mods: {
 			7: Increases summon damage by 3%, up to 12% total
 		}
 
-		TestWingsText:
+		MachinaBoosterText:
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1
 			Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
 			Increases void drain by 3 while active
 			'''
-		TestWingsText2:
+		MachinaBoosterText2:
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1

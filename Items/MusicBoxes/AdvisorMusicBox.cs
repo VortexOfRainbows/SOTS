@@ -81,8 +81,8 @@ namespace SOTS.Items.MusicBoxes
 				}
 				for (int k = 0; k < 5; k++)
 				{
-					float x = (float)Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
-					float y = (float)Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
+					float x = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
+					float y = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
 					if (k <= 1)
 					{
 						x = 0;

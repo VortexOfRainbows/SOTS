@@ -45,11 +45,12 @@ Content Needed List: Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
-2/27/24
+2/27/24 to 2/28/24
 1. Fix pricing for Winged Knife
 2. Fix incorrect drops for gem chests and vibrant background walls
 3. Edit localization for gem chests to be more consistent and prevent metal detector bugs
 4. Added the Infinity Pouch
+5. Reorganized and renamed the EPIC WINGS folder. This will make it more organized for when I implement Gilded Blade-Wings
 
 2/5/24
 1. Spiked Club usetime 39 -> 40, damage 20 -> 19, doubled damage dropoff for additional mines (-1 per additional mine -> -2 per additional mine)
