@@ -34,13 +34,13 @@ Update Objectives:
 		1. As it drops from lux, it should be colorful and fairly futuristic.
 6. Starmap
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
-8. Torch Bomb Upgrade
+8. Torch Bomb Upgrade Item
 9. Fix world generation compat with Exxo Avalon
 
 
-Balance Needed List: Soot Spewer, Voidspace Ranger's Armor
-Visual Uprade Needed List: Voidspace Ranger's Armor, Supernova Seekers
-Multiplayer Changes List: Voidspace Ranger armor needs to know which player the damage first originated from.
+Balance Needed List: Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag
+Visual Upgrade Needed List: Voidspace Ranger's Armor, Supernova Seekers
+Multiplayer Fixed Needed List: none currently
 Content Needed List: Look down for Abandoned Village todo and progress...
 
 Daily Log:
@@ -49,6 +49,7 @@ Daily Log:
 1. Fix pricing for Winged Knife
 2. Fix incorrect drops for gem chests and vibrant background walls
 3. Edit localization for gem chests to be more consistent and prevent metal detector bugs
+4. Added the Infinity Pouch
 
 2/5/24
 1. Spiked Club usetime 39 -> 40, damage 20 -> 19, doubled damage dropoff for additional mines (-1 per additional mine -> -2 per additional mine)

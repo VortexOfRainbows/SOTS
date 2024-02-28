@@ -77,7 +77,7 @@ namespace SOTS.Items.Planetarium.FromChests
 				if (next == 6)
 					SOTSWorld.AmberKeySlotted = true;
 			}*/
-			SOTSPlayer sPlayer = player.sotsPlayer();
+			SOTSPlayer sPlayer = player.SOTSPlayer();
 			sPlayer.UniqueVisionNumber++;
 			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 40;
 			//player.VoidPlayer().ResetAllVoidBonuses();

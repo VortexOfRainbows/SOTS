@@ -14,7 +14,7 @@ namespace SOTS.Buffs
         }
 		public override void Update(Player player, ref int buffIndex)
 		{
-            player.sotsPlayer().StatShareMeleeAndMagic = true;
+            player.SOTSPlayer().StatShareMeleeAndMagic = true;
             player.moveSpeed += 0.2f;
             player.endurance += 0.1f;
 		}

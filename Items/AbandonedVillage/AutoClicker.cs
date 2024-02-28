@@ -23,7 +23,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = player.sotsPlayer();
+			SOTSPlayer modPlayer = player.SOTSPlayer();
 			modPlayer.attackSpeedMod += 0.1f;
 			modPlayer.AutoReuseAnything = true;
 		}

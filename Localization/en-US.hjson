@@ -5227,6 +5227,11 @@ Mods: {
 					Immunity to broken armor and ichor
 					'''
 			}
+
+			InfinityPouch: {
+				DisplayName: Infinity Pouch
+				Tooltip: Consume void instead of ammunition
+			}
 		}
 
 		ItemTooltip: {

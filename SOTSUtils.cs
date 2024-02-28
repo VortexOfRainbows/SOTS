@@ -93,9 +93,9 @@ namespace SOTS
         {
 			return Void.VoidPlayer.ModPlayer(player);
 		}
-		public static SOTSPlayer sotsPlayer(this Player player)
+		public static SOTSPlayer SOTSPlayer(this Player player)
 		{
-			return SOTSPlayer.ModPlayer(player);
+			return global::SOTS.SOTSPlayer.ModPlayer(player);
 		}
 		/*public static void SetResearchCostAutomatically(this ModItem modItem)
 		{

@@ -557,7 +557,7 @@ namespace SOTS
 				if (!SOTSPlayer.ModPlayer(player).ConduitBelt)
 					return false;
 			}
-			if(player.sotsPlayer().PlasmaShrimp)
+			if(player.SOTSPlayer().PlasmaShrimp)
 			{
 				if (Main.myPlayer == player.whoAmI && player.statMana > player.statManaMax2 * 0.4f && item.CountsAsClass(DamageClass.Magic))
 				{
@@ -757,6 +757,7 @@ namespace SOTS
 				new WormholeRecipe(ItemType<RoyalRubyShard>(), ItemType<TaintedKeystoneShard>()),
 				new WormholeRecipe(ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()),
                 new WormholeRecipe(ItemType<Riptide>(), ItemType<Atlantis>()),
+                new WormholeRecipe(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
             };
 		}
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
@@ -788,14 +789,14 @@ namespace SOTS
 				if (ItemIDInput != -20)
 				{
 					Recipe.Create(ItemIDOutput, 1)
-						.AddCondition(Language.GetText("Mods.SOTS.Common.VoidAnomalyCrafting"), () => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
+						.AddCondition(Language.GetText("Mods.SOTS.Common.VoidAnomalyCrafting"), () => Main.LocalPlayer.SOTSPlayer().VoidAnomaly || Main.LocalPlayer.SOTSPlayer().VMincubator)
 						.AddIngredient(ItemIDInput)
 						.Register();
 				}
 				else
 				{
 					Recipe.Create(ItemIDOutput, 1)
-						.AddCondition(Language.GetText("Mods.SOTS.Common.VoidAnomalyCrafting"), () => Main.LocalPlayer.sotsPlayer().VoidAnomaly || Main.LocalPlayer.sotsPlayer().VMincubator)
+						.AddCondition(Language.GetText("Mods.SOTS.Common.VoidAnomalyCrafting"), () => Main.LocalPlayer.SOTSPlayer().VoidAnomaly || Main.LocalPlayer.SOTSPlayer().VMincubator)
 						.AddRecipeGroup(RecipeGroupInput, 1).Register();
 				}
 			}

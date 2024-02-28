@@ -29,8 +29,8 @@ namespace SOTS.Items.Permafrost
 		}
 		public void ProbesGen(Player player)
         {
-            player.sotsPlayer().artifactProbeDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
-            player.sotsPlayer().artifactProbeNum += 8;
+            player.SOTSPlayer().artifactProbeDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
+            player.SOTSPlayer().artifactProbeNum += 8;
         }
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

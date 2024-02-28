@@ -542,7 +542,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 modifiers.SourceDamage *= (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse);
             }
-            if (player.sotsPlayer().VoidspaceFlames || projectile.type == ModContent.ProjectileType<VoidspaceFlameHitbox>())
+            if (player.SOTSPlayer().VoidspaceFlames)
                 ApplyVoidspaceCurse(npc, player);
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
@@ -576,7 +576,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 modifiers.SourceDamage *= (1.0f + 0.03f * BlazingCurse + 0.005f * AnomalyCurse);
             }
-            if(player.sotsPlayer().VoidspaceFlames)
+            if(player.SOTSPlayer().VoidspaceFlames)
                 ApplyVoidspaceCurse(npc, player);
         }
         public void ApplyVoidspaceCurse(NPC npc, Player player)

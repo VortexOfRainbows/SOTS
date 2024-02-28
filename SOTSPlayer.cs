@@ -242,7 +242,7 @@ namespace SOTS
 
 		public bool VoidspaceFlames = false;
 		public bool AutoReuseAnything = false;
-		public bool TurtleTem = false;
+		public bool InfinityPouch = false;
 
 		public bool PlanetariumBiome => Player.InModBiome<Biomes.PlanetariumBiome>();
 		public bool PhaseBiome => Player.InModBiome<Biomes.PhaseBiome>();
@@ -1138,7 +1138,7 @@ namespace SOTS
 			//Some important variables 1
 			ceres = false;
 			doubledActive = 0;
-			backUpBow = VoidspaceFlames = AutoReuseAnything = TurtleTem = PurpleBalloon = false;
+			backUpBow = VoidspaceFlames = AutoReuseAnything = InfinityPouch = PurpleBalloon = false;
 			//projectileSize = 1;
 			PushBack = false;
 
@@ -1848,6 +1848,27 @@ namespace SOTS
 					return false;
             }
             return base.CanConsumeAmmo(weapon, ammo);
+        }
+        public override void OnConsumeAmmo(Item weapon, Item ammo)
+        {
+			if (InfinityPouch)
+			{
+				ammo.stack++;
+				float voidCost = 1f;
+				if (ammo.value >= 100) //If item is worth silver, cost more
+				{
+					voidCost = 2;
+                }
+				if (ammo.value >= 10000) //gold
+				{
+					voidCost = 3;
+				}
+				if( ammo.value >= 1000000) //platinum
+				{
+					voidCost = 4;
+				}
+                Player.VoidPlayer().voidMeter -= voidCost;
+            }
         }
         public override bool? CanAutoReuseItem(Item item)
         {

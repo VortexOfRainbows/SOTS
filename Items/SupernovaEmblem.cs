@@ -38,7 +38,7 @@ namespace SOTS.Items
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer modPlayer = player.sotsPlayer();
+			SOTSPlayer modPlayer = player.SOTSPlayer();
 			modPlayer.SupernovaEmblem = true;
 			player.GetDamage(DamageClass.Melee) += 0.15f;
 
