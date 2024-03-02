@@ -837,13 +837,27 @@ namespace SOTS
 				InitializeRecipe();
 			}
 		}
-		public class AnomalyRarity : ModRarity
+    }
+    public class AnomalyRarity : ModRarity
+    {
+        public override Color RarityColor => ColorHelpers.VoidAnomaly;
+        public override int GetPrefixedRarity(int offset, float valueMult)
         {
-			public override Color RarityColor => ColorHelpers.VoidAnomaly;
-            public override int GetPrefixedRarity(int offset, float valueMult)
-            {
-                return Type;
-            }
+            return Type;
         }
-	}
+    }
+    public class PastelRainbowRarity : ModRarity
+    {
+        public override Color RarityColor
+		{
+			get
+			{
+				return ColorHelpers.pastelRainbow;
+            }
+		}
+        public override int GetPrefixedRarity(int offset, float valueMult)
+        {
+            return Type;
+        }
+    }
 }

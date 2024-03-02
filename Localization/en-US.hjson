@@ -5229,6 +5229,11 @@ Mods: {
 				DisplayName: Infinity Pouch
 				Tooltip: Consume void instead of ammunition
 			}
+
+			ChallengerRing: {
+				DisplayName: Challenger's Ring
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
