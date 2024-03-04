@@ -2085,7 +2085,7 @@ Mods: {
 				DisplayName: Beelzebub's Ring
 				Tooltip:
 					'''
-					Killed enemies has a 50% chance to drop additional hearts
+					Killed enemies have a 50% chance to drop additional hearts
 					This chance increases to 100% with critical strikes
 					Collecting hearts lengthens the duration of active buffs
 					'''
@@ -5232,7 +5232,34 @@ Mods: {
 
 			ChallengerRing: {
 				DisplayName: Challenger's Ring
-				Tooltip: ""
+				Tooltip:
+					'''
+					Right click to invert the currently selected gem, disabling the effect of the gem and enabling the inverted effect
+					0
+					1
+					2
+					3
+					4
+					5
+					6
+					'''
+				G0: Chain together blocks when mining, breaking up to 50 blocks at once
+				G1: Killing enemies grants a random buff for 30 seconds
+				G2: Generate income when void is gained
+				G3: Enemies have a 14.3% chance to drop double the loot
+				G4:
+					'''
+					Killed enemies have a 50% chance to drop additional hearts
+					This chance increases to 100% with critical strikes
+					Collecting hearts lengthens the duration of active buffs
+					'''
+				G5:
+					'''
+					Increase damage based on defense, then decreases defense by a third of the damage buff
+					Increases damage by {0}%
+					Decreases defense by {1}
+					'''
+				G6: Getting hit grants a random buff for 30 seconds
 			}
 		}
 

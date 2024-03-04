@@ -59,7 +59,7 @@ namespace SOTS.Items.Gems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer.ModPlayer(player).VultureRing = true;
+			SOTSPlayer.ModPlayer(player).RubyRing = true;
 		}
 	}
 }

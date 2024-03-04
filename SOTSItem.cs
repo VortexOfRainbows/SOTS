@@ -586,7 +586,7 @@ namespace SOTS
 		}
         public override bool OnPickup(Item item, Player player)
         {
-            if (SOTSPlayer.ModPlayer(player).VultureRing && (item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane))
+            if (SOTSPlayer.ModPlayer(player).RubyRing && (item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane))
             {
 				SOTSPlayer.IncreaseBuffDurations(player, 300, 0.05f, 600, true); //increases buff duration by 5 seconds + 5% of the remaining buff duration, caps at 10 seconds
 			}

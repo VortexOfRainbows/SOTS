@@ -299,12 +299,12 @@ namespace SOTS
 
 		public bool PlasmaShrimpVanity = false;
 		public bool PlasmaShrimp = false;
-		public bool VultureRing = false;
-		public bool MasochistRing = false;
-		public bool SadistRing = false;
-		public bool ImposterRing = false;
-		public bool DevilRing = false;
-		public bool LazyMinerRing = false;
+		public bool RubyRing = false;
+		public bool AmberRing = false;
+		public bool TopazRing = false;
+		public bool EmeraldRing = false;
+		public bool DiamondRing = false;
+		public bool AmethystRing = false;
 		public bool LazyCrafterAmulet = false;
 		public int bonusPickaxePower = 0;
 		public int previousDefense = 0;
@@ -683,12 +683,12 @@ namespace SOTS
                 defenseToConvert = 30;
             }
             previousDefense = defenseToConvert;
-            if (DevilRing)
+            if (DiamondRing)
             {
                 Player.statDefense -= defenseToConvert / 3;
                 Player.GetDamage(DamageClass.Generic) += defenseToConvert * 0.01f;
             }
-            DevilRing = false;
+            DiamondRing = false;
         }
         public override void PostUpdateEquips()
 		{
@@ -1193,7 +1193,7 @@ namespace SOTS
 				Player.adjTile[TileID.Tables] = true;
 				Player.alchemyTable = true;
 			}
-			VultureRing = MasochistRing = SadistRing = ImposterRing = LazyMinerRing = LazyCrafterAmulet = false;
+			RubyRing = AmberRing = TopazRing = EmeraldRing = AmethystRing = LazyCrafterAmulet = false;
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
 			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = GoldenTrowel = false;
@@ -1460,7 +1460,7 @@ namespace SOTS
 				}
 				OnHitCD = 15;
 			}
-			if (MasochistRing && Main.myPlayer == Player.whoAmI)
+			if (AmberRing && Main.myPlayer == Player.whoAmI)
 				GrantRandomRingBuff(Player);
 		}
         int shotCounter = 0;
@@ -1660,7 +1660,7 @@ namespace SOTS
 					{
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.SourceDamage * 0.3f), 0, Main.myPlayer, 1);
                     }
-                    if (SadistRing)
+                    if (TopazRing)
                     {
 						GrantRandomRingBuff(Player);
                     }

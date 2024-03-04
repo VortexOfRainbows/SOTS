@@ -59,7 +59,7 @@ namespace SOTS.Items.Gems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer.ModPlayer(player).ImposterRing = true;
+			SOTSPlayer.ModPlayer(player).EmeraldRing = true;
 		}
 	}
 }

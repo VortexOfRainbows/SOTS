@@ -230,7 +230,7 @@ namespace SOTS
 						pickPower += 300;
                     }
                 }
-				if (SOTSPlayer.ModPlayer(self).LazyMinerRing)
+				if (SOTSPlayer.ModPlayer(self).AmethystRing)
 				{
 					bool DoNotMineNormally = Helpers.LazyMinerHelper.FakePickTile(self, x, y, pickPower);
 					if (DoNotMineNormally)

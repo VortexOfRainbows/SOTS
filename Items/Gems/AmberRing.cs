@@ -60,7 +60,7 @@ namespace SOTS.Items.Gems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			SOTSPlayer.ModPlayer(player).MasochistRing = true;
+			SOTSPlayer.ModPlayer(player).AmberRing = true;
 		}
 	}
 }
