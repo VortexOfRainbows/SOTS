@@ -5234,7 +5234,7 @@ Mods: {
 				DisplayName: Challenger's Ring
 				Tooltip:
 					'''
-					Right click to invert the currently selected gem, disabling the effect of the gem and enabling the inverted effect
+					Right click while favorited to invert the currently selected gem, disabling the effect of the gem and enabling the inverted effect
 					0
 					1
 					2
@@ -5260,6 +5260,44 @@ Mods: {
 					Decreases defense by {1}
 					'''
 				G6: Getting hit grants a random buff for 30 seconds
+				# Opposite of Sloth, Diligence
+				I0:
+					'''
+					Increases block and wall placement speed by 20% and placement range by 3
+					Increases movement speed by 20%
+					'''
+				# Opposite of Wrath, Patience
+				I1: Recieve a random buff for 30 seconds every 20 seconds
+				# Opposite of Greed, Charity
+				I2:
+					'''
+					When hurt, 10% of damage taken is converted into void
+					When using void, 10% of the void used is converted in life
+					'''
+				# Opposite of Envy, Kindness
+				I3:
+					'''
+					Reduce damage taken by 15%
+					Reduce damage dealt by 15%
+					'''
+				# Opposite of Gluttony, Temperance
+				I4:
+					'''
+					Grants permanent Well Fed
+					Void consumeables refill 75% less void
+					'''
+				# Opposite of Pride, Humility
+				I5:
+					'''
+					You can no longer critically strike
+					Increases received to critical strike chance are converted into multiplicative increases to damage
+					'''
+				# Opposite of Lust, Chastity
+				I6:
+					'''
+					Buffs do not decay while above 70% life
+					Getting hit while below 70% life causes all buff durations to halve
+					'''
 			}
 		}
 

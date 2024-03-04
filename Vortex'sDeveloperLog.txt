@@ -37,13 +37,34 @@ Update Objectives:
 8. Torch Bomb Upgrade Item
 9. Fix world generation compat with Exxo Avalon
 
+---Code Refactoring Needed List---
+Challenger's Ring
 
-Balance Needed List: Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag
-Visual Upgrade Needed List: Voidspace Ranger's Armor, Supernova Seekers
-Multiplayer Fixed Needed List: none currently
-Content Needed List: Look down for Abandoned Village todo and progress...
+---Balance Needed List---
+Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag
+
+---Visual Upgrade Needed---
+Voidspace Ranger's Armor, Supernova Seekers
+Challenger's Ring (it has inventory animations, now it needs world animations)
+
+---Multiplayer Fixes/Testing Needed---
+Challenger's Ring
+
+---Content Needed---
+Look down for Abandoned Village todo and progress...
+	1. Needs: More parameters, testing, earthen plating torches appear as you get lower down the cave
+	2. Needs: Orb Cave generation to round out cooridors.
+	3. Needs: Generate Ancient Steel and Chests on cooridors occasionally
+	4. Needs: Caves become more technological as you go deeper... Also more symmetric
+	5. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
+		1. Should deal contact damage. Also spawns enemies on top of it.
+	6. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
+	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 Daily Log:
+
+3/3/24 to 3/4/24
+1. Added Challenger's Ring (this item has a lot going on)
 
 2/27/24 to 2/28/24
 1. Fix pricing for Winged Knife
@@ -86,14 +107,6 @@ Daily Log:
 10/26/23 and 11/1/23 and 11/7/23
 1. Plating Block crafting now crafts double (5 -> 10)
 2. WIP Abandoned Village World gen
-	1. Needs: More parameters, testing, earthen plating torches appear as you get lower down the cave
-	2. Needs: Orb Cave generation to round out cooridors.
-	3. Needs: Generate Ancient Steel and Chests on cooridors occasionally
-	4. Needs: Caves become more technological as you go deeper... Also more symmetric
-	5. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
-		1. Should deal contact damage. Also spawns enemies on top of it.
-	6. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
-	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 
 -- Update 0.24.0.1 Released --

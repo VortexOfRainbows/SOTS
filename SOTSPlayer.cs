@@ -301,10 +301,14 @@ namespace SOTS
 		public bool PlasmaShrimp = false;
 		public bool RubyRing = false;
 		public bool AmberRing = false;
-		public bool TopazRing = false;
+        public bool InverseAmberRing = false;
+        public bool TopazRing = false;
+		public bool InverseTopazRing = false;
+		private int InverseTopazRingCD = 0;
 		public bool EmeraldRing = false;
 		public bool DiamondRing = false;
-		public bool AmethystRing = false;
+        public bool InverseDiamondRing = false;
+        public bool AmethystRing = false;
 		public bool LazyCrafterAmulet = false;
 		public int bonusPickaxePower = 0;
 		public int previousDefense = 0;
@@ -756,7 +760,39 @@ namespace SOTS
 			{
 				Player.rocketTimeMax = 7;
 			}
-			StatShare();
+			ReplaceCritWithDamage();
+            StatShare();
+        }
+		public void ReplaceCritWithDamage()
+		{
+			if(InverseDiamondRing)
+            {
+                float critGeneric = Player.GetCritChance(DamageClass.Generic);
+                float critMelee = Player.GetCritChance(DamageClass.Melee);
+                float critRanged = Player.GetCritChance(DamageClass.Ranged);
+                float critMagic = Player.GetCritChance(DamageClass.Magic);
+                float critVGeneric = Player.GetCritChance<VoidGeneric>();
+                float critVMelee = Player.GetCritChance<VoidMelee>();
+                float critVRanged = Player.GetCritChance<VoidRanged>();
+                float critVMagic = Player.GetCritChance<VoidMagic>();
+                Player.GetCritChance(DamageClass.Generic) -= critGeneric + 4;
+                Player.GetCritChance(DamageClass.Melee) -= critMelee + 4;
+                Player.GetCritChance(DamageClass.Ranged) -= critRanged + 4;
+                Player.GetCritChance(DamageClass.Magic) -= critMagic + 4;
+                Player.GetCritChance<VoidGeneric>() -= critVGeneric + 4;
+                Player.GetCritChance<VoidMelee>() -= critVMelee + 4;
+                Player.GetCritChance<VoidRanged>() -= critVRanged + 4;
+                Player.GetCritChance<VoidMagic>() -= critVMagic + 4;
+				Player.GetDamage(DamageClass.Generic) *= 1 + critGeneric / 100f;
+                Player.GetDamage(DamageClass.Melee) *= 1 + critMelee / 100f;
+                Player.GetDamage(DamageClass.Ranged) *= 1 + critRanged / 100f;
+                Player.GetDamage(DamageClass.Magic) *= 1 + critMagic / 100f;
+				Player.GetDamage<VoidGeneric>() *= 1 + critVGeneric / 100f;
+                Player.GetDamage<VoidMelee>() *= 1 + critVMelee / 100f;
+                Player.GetDamage<VoidRanged>() *= 1 + critVRanged / 100f;
+                Player.GetDamage<VoidMagic>() *= 1 + critVMagic / 100f;
+            }
+            InverseDiamondRing = false;
         }
 		public void StatShare()
         {
@@ -1193,7 +1229,19 @@ namespace SOTS
 				Player.adjTile[TileID.Tables] = true;
 				Player.alchemyTable = true;
 			}
-			RubyRing = AmberRing = TopazRing = EmeraldRing = AmethystRing = LazyCrafterAmulet = false;
+			if(InverseTopazRing && Main.myPlayer == Player.whoAmI)
+			{
+				if(InverseTopazRingCD <= 0)
+				{
+                    GrantRandomRingBuff(Player);
+                    InverseTopazRingCD = 1200;
+                }
+				else
+				{
+					InverseTopazRingCD--;
+				}
+            }
+			RubyRing = AmberRing = TopazRing = EmeraldRing = AmethystRing = LazyCrafterAmulet = InverseTopazRing = false;
 			AmmoConsumptionModifier = 0.0f;
 			bonusPickaxePower = 0;
 			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = GoldenTrowel = false;
@@ -1462,7 +1510,14 @@ namespace SOTS
 			}
 			if (AmberRing && Main.myPlayer == Player.whoAmI)
 				GrantRandomRingBuff(Player);
-		}
+			if(InverseAmberRing)
+            {
+                if (Player.statLife <= Player.statLifeMax2 * 0.7f)
+                {
+					IncreaseBuffDurations(Player, 0, -0.5f, 0, true);
+                }
+            }
+        }
         int shotCounter = 0;
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -1555,7 +1610,12 @@ namespace SOTS
 					modifiers.FinalDamage *= 2;
 				}
 			}
-			modifiers.CritDamage.Flat += CritBonusDamage;
+			if (InverseDiamondRing)
+				modifiers.DisableCrit();
+			else
+            {
+                modifiers.CritDamage.Flat += CritBonusDamage;
+            }
 		}
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
@@ -1788,22 +1848,30 @@ namespace SOTS
 				if (totalDrainedDebuffs >= 1)
 					IncreaseBuffDurations(Player, totalDrainedDebuffs * 3, 0f, totalDrainedDebuffs * 3, true);
 			}
+			if(InverseAmberRing)
+			{
+				if(Player.statLife > Player.statLifeMax2 * 0.7f)
+				{
+					DelayPotionDegrade = true;
+                }
+			}
 			DrainDebuffs = false;
 			if (Player.HasBuff(ModContent.BuffType<Harmony>()) || DelayPotionDegrade)
             {
-				IncreaseBuffDurations(Player, 1, 0, 1, false);
+				IncreaseBuffDurations(Player, 1, 0, 1, false, InverseAmberRing);
 			}
 			PotionBuffDegradeRate = 1f;
-		}
-		public static void IncreaseBuffDurations(Player player, int time, float timeBonusMultiplier = 0, int maximumTimeBonus = 1, bool affectAll = false)
+            InverseAmberRing = false;
+        }
+		public static void IncreaseBuffDurations(Player player, int time, float timeBonusMultiplier = 0, int maximumTimeBonus = 1, bool affectAll = false, bool allowUnder30Seconds = false)
 		{
 			for (int i = 0; i < player.buffTime.Length; i++)
 			{
 				int type = player.buffType[i];
-				if (!Main.debuff[type] && (((player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type)) && type != ModContent.BuffType<Harmony>()) || affectAll))
+				if (!Main.debuff[type] && (((player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type) || allowUnder30Seconds) && type != ModContent.BuffType<Harmony>()) || affectAll))
 				{
 					int totalIncrease = time;
-					if(timeBonusMultiplier > 0)
+					if(timeBonusMultiplier != 0)
                     {
 						int bonusTime = (int)(timeBonusMultiplier * player.buffTime[i]); //gets a percentage increase
 						totalIncrease += bonusTime;
