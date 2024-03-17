@@ -167,6 +167,7 @@ Mods: {
 			PharaohsCurse: Pharaoh's Curse has awoken!
 			Lux: Lux has awoken!
 			Glowmoth: Glowmoth has awoken!
+			Polaris: Polaris has awoken!
 		}
 
 		Biomes: {
@@ -6888,6 +6889,7 @@ Mods: {
 			VoidspaceFlameHitbox.DisplayName: Voidspace Flame Hitbox
 			SootBall.DisplayName: Soot Ball
 			EmberDamage.DisplayName: Ember Damage
+			SpawnEnemyProj.DisplayName: Spawn Enemy Proj
 		}
 
 		DamageClasses: {

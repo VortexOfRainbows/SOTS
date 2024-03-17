@@ -4,6 +4,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs.Boss.Curse;
 using Terraria.DataStructures;
+using SOTS.NPCs.Boss.Polaris.NewPolaris;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace SOTS.Items.Pyramid
 {
@@ -67,7 +70,7 @@ namespace SOTS.Items.Pyramid
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient && !noItem && Main.rand.NextBool(24) && !fail && !effectOnly)
 			{
-				Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, ModContent.ProjectileType<ReleaseWallMimic>(), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, ModContent.ProjectileType<SpawnEnemyProj>(), 0, 0, Main.myPlayer);
 				noItem = true;
 			}
 		}
@@ -80,13 +83,9 @@ namespace SOTS.Items.Pyramid
 			return SOTSWorld.downedCurse;
 		}
 	}
-	public class ReleaseWallMimic : ModProjectile
+	public class SpawnEnemyProj : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Release Wall Mimic"); //Do you enjoy how all my net sycning is done via projectiles?
-		}
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
 			Projectile.alpha = 255;
 			Projectile.timeLeft = 24;
@@ -101,8 +100,17 @@ namespace SOTS.Items.Pyramid
 			Projectile.Kill();
 		}
 		public override void OnKill(int timeLeft)
-		{
-			if(Projectile.ai[0] == -1)
+        {
+            if (Projectile.ai[0] == -2)
+            {
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue("Mods.SOTS.BossAwoken.Polaris"), 175, 75, byte.MaxValue);
+                else if (Main.netMode == NetmodeID.Server)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.SOTS.BossAwoken.Polaris"), new Color(175, 75, byte.MaxValue));
+                if (!NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()) && Main.netMode != NetmodeID.MultiplayerClient)
+					NPC.NewNPCDirect(Projectile.GetSource_FromThis(), (int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, ModContent.NPCType<NewPolaris>()).netUpdate = true;
+            }
+            else if (Projectile.ai[0] == -1)
 			{
 				if (!NPC.AnyNPCs(ModContent.NPCType<PharaohsCurse>()))
 				{

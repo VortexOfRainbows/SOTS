@@ -1,14 +1,17 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
+using SOTS.Items.Pyramid;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.Void;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI.ModBrowser;
 using Terraria.ObjectData;
 
 namespace SOTS.Items.Permafrost
@@ -64,22 +67,16 @@ namespace SOTS.Items.Permafrost
 		}
         public override bool RightClick(int i, int j)
         {
-			int xlocation = i * 16 - 8;
-			int ylocation = j * 16 + 8;
 			Main.mouseRightRelease = true;
             Player player = Main.LocalPlayer;
-			//Main.NewText("Debug", 145, 145, 255);
-			for(int k = 0; k < 50; k++)
-			{
-				Item item = player.inventory[k];
-				if(item.type == ModContent.ItemType<FrostedKey>() && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()) && !NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()))
-				{
-					//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
-					player.AddBuff(ModContent.BuffType<SpawnBossIce>(), ylocation, false);
-					break;
-				}
-			}
-			return true;
+			if(player.HasItem(ModContent.ItemType<FrostedKey>()))
+            {
+                if (!NPC.AnyNPCs(ModContent.NPCType<Polaris>()) && !NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()))
+                {
+                    Projectile.NewProjectile(player.GetSource_TileInteraction(i, j), player.Center + new Vector2(0, -1000), Vector2.Zero, ModContent.ProjectileType<SpawnEnemyProj>(), 0, 0, Main.myPlayer, -2);
+                }
+            }
+            return true;
 		}  
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{

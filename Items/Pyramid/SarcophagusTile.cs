@@ -46,8 +46,7 @@ namespace SOTS.Items.Pyramid
             Player player = Main.LocalPlayer;
 			if(!NPC.AnyNPCs(ModContent.NPCType<PharaohsCurse>()))
 			{
-				Projectile.NewProjectile(player.GetSource_TileInteraction(i, j), new Vector2(left * 16, top * 16) + new Vector2(48, 16), Vector2.Zero, ModContent.ProjectileType<ReleaseWallMimic>(), 0, 0, Main.myPlayer, -1);
-				return true;
+				Projectile.NewProjectile(player.GetSource_TileInteraction(i, j), new Vector2(left * 16, top * 16) + new Vector2(48, 16), Vector2.Zero, ModContent.ProjectileType<SpawnEnemyProj>(), 0, 0, Main.myPlayer, -1);
 			}
 			return true;
 		}  
