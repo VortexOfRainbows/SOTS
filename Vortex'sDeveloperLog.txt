@@ -69,6 +69,7 @@ Daily Log:
 	1. Should also fixed a bug where planetarium would sometimes get stuck generating
 3. Challenger Ring now animates in the world space
 4. Challenger Ring now syncs its state in multiplayer
+5. WIP Earth Grinder
 
 3/3/24 to 3/4/24
 1. Added Challenger's Ring (this item has a lot going on)

@@ -5300,6 +5300,16 @@ Mods: {
 					Getting hit while below 70% life causes all buff durations to halve
 					'''
 			}
+
+			EarthGrinder: {
+				DisplayName: Earth Grinder
+				Tooltip: 
+					'''
+					Right click to strike with 2 slashes
+					The first slash will stun enemies
+					The second slash will inflict a permanent bleed on stunned enemies
+					'''
+			}
 		}
 
 		ItemTooltip: {
