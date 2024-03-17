@@ -551,48 +551,45 @@ namespace SOTS
 						xCord = -1;
 						return;
                     }
-					for (int ydown = 0; ydown != -1; ydown++)
+					for (int ydown = 0; ydown < Main.maxTilesY / 2; ydown++)
 					{
 						Tile tile = Framing.GetTileSafely(xCord, ydown);
 						if (tile.HasTile && Main.tileSolid[tile.TileType])
-						{
-							if(tile.TileType == TileID.JungleGrass || tile.TileType == TileID.JunglePlants || tile.TileType == TileID.JunglePlants2 || overrideCounter > 100)
+                        {
+                            if (!hasDoneJungle)
                             {
-								int y = 140 + Main.rand.Next(50);
-								if(!hasDoneJungle)
-								{
-									hasDoneJungle = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 3, Mod);
-								}
-								break;
-							}
-							if (tile.TileType == TileID.Crimstone || tile.TileType == TileID.CrimsonGrass || (tile.TileType == TileID.Crimsand && overrideCounter > 20) || overrideCounter > 100)
-							{
-								int y = 140 + Main.rand.Next(50);
-								if (!hasDoneEvil)
-								{
-									hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 0, Mod);
-								}
-								break;
-							}
-							if (tile.TileType == TileID.Ebonstone || tile.TileType == TileID.CorruptGrass || (tile.TileType == TileID.Ebonsand && overrideCounter > 20) || overrideCounter > 100)
-							{
-								int y = 140 + Main.rand.Next(50);
-								if (!hasDoneEvil)
-								{
-									hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 1, Mod);
-								}
-								break;
-							}
-							if (tile.TileType == TileID.Sand || overrideCounter > 100)
-							{
-								int y = 140 + Main.rand.Next(50);
-								if (!hasDoneDesert)
-								{
-									hasDoneDesert = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 5, Mod);
-								}
-								break;
-							}
-							break;
+                                if (tile.TileType == TileID.JungleGrass || tile.TileType == TileID.JunglePlants || tile.TileType == TileID.JunglePlants2 || overrideCounter > 100)
+                                {
+                                    int y = 140 + Main.rand.Next(50);
+                                    hasDoneJungle = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 3, Mod);
+                                }
+                                break;
+                            }
+                            if (!hasDoneEvil)
+                            {
+                                if (tile.TileType == TileID.Crimstone || tile.TileType == TileID.CrimsonGrass || (tile.TileType == TileID.Crimsand && overrideCounter > 20) || overrideCounter > 100)
+                                {
+                                    int y = 140 + Main.rand.Next(50);
+                                    hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 0, Mod);
+                                    break;
+                                }
+                                if (tile.TileType == TileID.Ebonstone || tile.TileType == TileID.CorruptGrass || (tile.TileType == TileID.Ebonsand && overrideCounter > 20) || overrideCounter > 100)
+                                {
+                                    int y = 140 + Main.rand.Next(50);
+                                    hasDoneEvil = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 1, Mod);
+                                    break;
+                                }
+                            }
+                            if (!hasDoneDesert)
+                            {
+                                if (tile.TileType == TileID.Sand || overrideCounter > 100)
+                                {
+                                    int y = 140 + Main.rand.Next(50);
+                                    hasDoneDesert = SOTSWorldgenHelper.GenerateBiomeChestIslands(xCord, y, 5, Mod);
+                                }
+                                break;
+                            }
+                            break;
 						}
 					}
 				}

@@ -261,15 +261,27 @@ namespace SOTS.WorldgenHelpers
 			GenerateAmberWaterVault(chosenX, chosenY);
 		}
 		private static void PlaceAndGenerateRuby()
-		{
-			int yToBeat = -1;
+        {
+            int avalonType = -100;
+            ushort type = TileID.ShadowOrbs;
+            Mod AVALON;
+            bool avalon = ModLoader.TryGetMod("Avalon", out AVALON);
+            if (avalon)
+            {
+                if (AVALON.TryFind("SnotOrb", out ModTile grossOrb))
+                {
+					avalonType = grossOrb.Type;
+                }
+            }
+
+            int yToBeat = -1;
 			int xTB = -1;
 			for (int i = Main.maxTilesX - 500; i > 500; i--)
 			{
 				for (int j = Main.maxTilesY - 100; j > 100; j--)
 				{
 					Tile tile = Framing.GetTileSafely(i, j);
-					if (tile.HasTile && tile.TileType == TileID.ShadowOrbs)
+					if (tile.HasTile && (tile.TileType == type || tile.TileType == avalonType))
 					{
 						if (yToBeat < j)
 						{

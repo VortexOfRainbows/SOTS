@@ -35,8 +35,7 @@ Update Objectives:
 6. Starmap
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 8. Torch Bomb Upgrade Item
-9. Fix world generation compat with Avalon (Perhaps related to mini planetarium islands?)
-10. Remote Detonator from Isaac
+9. Remote Detonator from Isaac
 
 
 ---Code Refactoring Needed List---
@@ -67,6 +66,8 @@ Daily Log:
 
 3/16/24
 1. Issue where Polaris does not spawn sometimes should be fixed.
+2. Fixed world generation when using Exxo Avalon Origins and Contagion
+	1. Should also fixed a bug where planetarium would sometimes get stuck generating
 
 3/3/24 to 3/4/24
 1. Added Challenger's Ring (this item has a lot going on)

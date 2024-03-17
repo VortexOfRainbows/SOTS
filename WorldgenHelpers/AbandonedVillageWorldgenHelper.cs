@@ -1,35 +1,56 @@
 using Terraria.ID;
-using System.Diagnostics;
 using Terraria;
 using Terraria.ModLoader;
-using SOTS.Items.Planetarium;
-using SOTS.Items.Pyramid;
-using SOTS.Items.ChestItems;
 using System;
-using SOTS.Items;
-using SOTS.Items.Pyramid.PyramidWalls;
-using SOTS.Items.Furniture.AncientGold;
-using SOTS.Items.Tide;
-using SOTS.Items.Permafrost;
-using SOTS.Items.Secrets;
 using SOTS.Items.AbandonedVillage;
-using SOTS.Items.Planetarium.Furniture;
-using SOTS.Items.Planetarium.Blocks;
-using SOTS.Items.Earth;
-using SOTS.Items.Invidia;
-using SOTS.Items.Chaos;
-using SOTS.Items.Furniture.Earthen;
-using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
-using System.Linq;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.PointsToAnalysis;
 
 namespace SOTS.WorldgenHelpers
 {
 	public class AbandonedVillageWorldgenHelper
 	{
-		public static void GenHalfCircle(int spawnX, int spawnY, int side = 0, int radius = 10, int radiusY = 10)
+		public static void InitializeValidTileLists()
+		{
+			if (ValidGrassTiles != null && ValidStoneTiles != null && InvalidTiles != null)
+				return;
+            ValidGrassTiles = new List<int>()
+            {
+                TileID.CrimsonGrass,
+                TileID.CorruptGrass
+            };
+            ValidStoneTiles = new List<int>()
+            {
+                TileID.CrimsonGrass,
+                TileID.CorruptGrass,
+                TileID.Ebonstone,
+                TileID.Crimstone
+            };
+            InvalidTiles = new List<int>()
+            {
+                TileID.Cloud,
+                TileID.RainCloud,
+                TileID.Trees
+            };
+            Mod AVALON;
+            bool avalon = ModLoader.TryGetMod("Avalon", out AVALON);
+            if (avalon)
+            {
+                if (AVALON.TryFind("Ickgrass", out ModTile grossGrass))
+                {
+                    ValidGrassTiles.Add(grossGrass.Type);
+                    ValidStoneTiles.Add(grossGrass.Type);
+                }
+                if (AVALON.TryFind("Chunkstone", out ModTile grossStone))
+                {
+                    ValidStoneTiles.Add(grossStone.Type);
+                }
+            }
+        }
+		private static List<int> ValidGrassTiles = null;
+        private static List<int> ValidStoneTiles = null;
+        private static List<int> InvalidTiles = null;
+        public static void GenHalfCircle(int spawnX, int spawnY, int side = 0, int radius = 10, int radiusY = 10)
 		{
 			//radius++;
 			radiusY++;
@@ -619,26 +640,16 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void PlaceAbandonedVillage()
 		{
-			int center = Main.maxTilesX / 2;
+			InitializeValidTileLists();
+
+            int center = Main.maxTilesX / 2;
 			int leftTiles = 0;
 			int rightTiles = 0;
 			int foundEvilBiomeLeft = 0;
 			int foundEvilBiomeRight = 0;
 			Point rightSide = new Point();
 			Point leftSide = new Point();
-			int[] ValidEvilTiles = new int[]
-			{
-				TileID.CrimsonGrass,
-				TileID.CorruptGrass
-				//TileID.Ebonstone,
-				//TileID.Crimstone
-			};
-			int[] InvalidTiles = new int[]
-			{
-				TileID.Cloud,
-				TileID.RainCloud,
-				TileID.Trees
-			};
+
 			for (int x = center; x < Main.maxTilesX - 200; x++)
 			{
 				rightTiles++;
@@ -647,7 +658,7 @@ namespace SOTS.WorldgenHelpers
 					Tile tile = Main.tile[x, y];
 					if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
 					{
-						if (ValidEvilTiles.Contains(tile.TileType) && IsLineSolid(x, y))
+						if (ValidGrassTiles.Contains(tile.TileType) && IsLineSolid(x, y))
 						{
 							if (foundEvilBiomeRight < 30)
 							{
@@ -671,7 +682,7 @@ namespace SOTS.WorldgenHelpers
 					Tile tile = Main.tile[x, y];
 					if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
 					{
-						if (ValidEvilTiles.Contains(tile.TileType) && IsLineSolid(x, y))
+						if (ValidGrassTiles.Contains(tile.TileType) && IsLineSolid(x, y))
 						{
 							if(foundEvilBiomeLeft < 30)
 							{
@@ -700,19 +711,6 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void ContinueGeneration(int X, int direction = 1)
 		{
-			int[] ValidEvilTiles = new int[]
-			{
-				TileID.CrimsonGrass,
-				TileID.CorruptGrass,
-				TileID.Ebonstone,
-				TileID.Crimstone
-			};
-			int[] InvalidTiles = new int[]
-			{
-				TileID.Cloud,
-				TileID.RainCloud,
-				TileID.Trees
-			};
 			bool generating = true;
 			int tileFoundCounter = 0;
 			int totalCounter = 0;
@@ -724,7 +722,7 @@ namespace SOTS.WorldgenHelpers
 					Tile tile = Main.tile[X, y];
 					if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
 					{
-						if (ValidEvilTiles.Contains(tile.TileType) && IsLineSolid(X, y))
+						if (ValidStoneTiles.Contains(tile.TileType) && IsLineSolid(X, y))
 						{
 							tileFoundCounter++;
 							if(tileFoundCounter == 40) //40 solid tiles from well
