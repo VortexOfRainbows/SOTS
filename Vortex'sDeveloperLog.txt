@@ -46,10 +46,9 @@ Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
-Challenger's Ring (it has inventory animations, now it needs world animations)
 
 ---Multiplayer Fixes/Testing Needed---
-Challenger's Ring
+NA
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -68,6 +67,8 @@ Daily Log:
 1. Issue where Polaris does not spawn sometimes should be fixed.
 2. Fixed world generation when using Exxo Avalon Origins and Contagion
 	1. Should also fixed a bug where planetarium would sometimes get stuck generating
+3. Challenger Ring now animates in the world space
+4. Challenger Ring now syncs its state in multiplayer
 
 3/3/24 to 3/4/24
 1. Added Challenger's Ring (this item has a lot going on)

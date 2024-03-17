@@ -4,6 +4,8 @@ using SOTS.Items.Pyramid;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -15,6 +17,26 @@ namespace SOTS.Items.Gems
 {
     public class ChallengerRing : ModItem
     {
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.Write(GemDisabled[0]);
+            writer.Write(GemDisabled[1]);
+            writer.Write(GemDisabled[2]);
+            writer.Write(GemDisabled[3]);
+            writer.Write(GemDisabled[4]);
+            writer.Write(GemDisabled[5]);
+            writer.Write(GemDisabled[6]);
+        }
+        public override void NetReceive(BinaryReader reader)
+        {
+            GemDisabled[0] = reader.ReadBoolean();
+            GemDisabled[1] = reader.ReadBoolean();
+            GemDisabled[2] = reader.ReadBoolean();
+            GemDisabled[3] = reader.ReadBoolean();
+            GemDisabled[4] = reader.ReadBoolean();
+            GemDisabled[5] = reader.ReadBoolean();
+            GemDisabled[6] = reader.ReadBoolean();
+        }
         private const float orbitSpeed = -0.8f;
         private bool[] GemDisabled = new bool[7];
         public override void SaveData(TagCompound tag)
@@ -32,8 +54,8 @@ namespace SOTS.Items.Gems
         private string Glow => this.Texture + "Glow";
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
+            DrawOrbitalsInInventory(spriteBatch, position, drawColor, scale, 0, false);
             Texture2D texture = ModContent.Request<Texture2D>(Glow).Value;
-            DrawOrbitalsInInventory(spriteBatch, position, drawColor, scale, false);
             position -= new Vector2(2, 2) * scale;
             for (int k = 0; k < 6; k++)
             {
@@ -48,9 +70,9 @@ namespace SOTS.Items.Gems
         {
             Texture2D texture = ModContent.Request<Texture2D>(Glow).Value;
             Main.spriteBatch.Draw(texture, position - new Vector2(2, 2) * scale, null, Color.Lerp(drawColor, Color.White, 0.5f), 0f, origin, scale, SpriteEffects.None, 0f);
-            DrawOrbitalsInInventory(spriteBatch, position, drawColor, scale, true);
+            DrawOrbitalsInInventory(spriteBatch, position, drawColor, scale, 0, true);
         }
-        private void DrawOrbitalsInInventory(SpriteBatch spriteBatch, Vector2 position, Color drawColor, float scale, bool front = true)
+        private void DrawOrbitalsInInventory(SpriteBatch spriteBatch, Vector2 position, Color drawColor, float scale, float rotation, bool front = true)
         {
             for (int i = 0; i < 7; i++)
             {
@@ -62,10 +84,10 @@ namespace SOTS.Items.Gems
                     float radiansCheck = counter - MathHelper.PiOver2;
                     float maxRadians = MathHelper.Pi / 7f;
                     float bonusAlpha = 1 - Math.Abs(radiansCheck) / maxRadians;
-                    float rotation = circular.ToRotation() + MathHelper.Pi / 2f;
+                    float rotation2 = circular.ToRotation() + MathHelper.Pi / 2f + rotation;
                     float zScale = 1 + circular.Y / circular.Length() / 5f;
                     circular.Y *= 0.625f;
-                    circular = circular.RotatedBy(MathHelper.Pi / 4 * -1);
+                    circular = circular.RotatedBy(MathHelper.Pi / 4 * -1 + rotation);
                     Rectangle rect = new Rectangle(0, 16 * i, 16, 16);
                     Texture2D texture = GemDisabled[i] ? InvertedChallengerGems : ChallengerGems;
                     bonusAlpha = Math.Clamp(bonusAlpha, 0.25f, 1f);
@@ -73,9 +95,9 @@ namespace SOTS.Items.Gems
                     for (int k = 0; k < 8; k++)
                     {
                         Vector2 bonus = new Vector2(0, 3 * scale * radialMult).RotatedBy(MathHelper.ToRadians(k * 45 + SOTSWorld.GlobalCounter * 2));
-                        spriteBatch.Draw(ChallengerGems, position + circular + bonus, rect, new Color(200, 200, 200, 0) * bonusAlpha, rotation, new Vector2(8, 8), scale * 0.60f * zScale, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(ChallengerGems, position + circular + bonus, rect, new Color(200, 200, 200, 0) * bonusAlpha, rotation2, new Vector2(8, 8), scale * 0.60f * zScale, SpriteEffects.None, 0f);
                     }
-                    spriteBatch.Draw(texture, position + circular, rect, drawColor, rotation, new Vector2(8, 8), scale * 0.60f * zScale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(texture, position + circular, rect, drawColor, rotation2, new Vector2(8, 8), scale * 0.60f * zScale, SpriteEffects.None, 0f);
                 }
             }
         }
@@ -97,13 +119,14 @@ namespace SOTS.Items.Gems
         }
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = ModContent.Request<Texture2D>(Glow).Value;
+            DrawOrbitalsInInventory(spriteBatch, Item.Center - Main.screenPosition, lightColor, scale, rotation, false);
+            Texture2D texture = ModContent.Request<Texture2D>(Glow).Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(0, 2).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSWorld.GlobalCounter * 2));
-				Color color = new Color(120 - k * 7, 110 - k * 2, 100 + k * 4, 0);
-				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + circular, null, color * (1f - (Item.alpha / 255f)) * 1.2f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+                Color color = new Color(70 - k * 7, 45 - k * 2, 40 + k * 4, 250);
+                Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + circular, null, color * (1f - (Item.alpha / 255f)) * 1.2f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -112,7 +135,8 @@ namespace SOTS.Items.Gems
 			Texture2D texture = ModContent.Request<Texture2D>(Glow).Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, Color.Lerp(lightColor, Color.White, 0.5f), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-		}
+            DrawOrbitalsInInventory(spriteBatch, Item.Center - Main.screenPosition, lightColor, scale, rotation, true);
+        }
 		public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
@@ -120,73 +144,46 @@ namespace SOTS.Items.Gems
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             int selected = SimulateSelectedGem();
-            float iColorSwap = 0.5f;
-            float colorSwap = 0.4f;
 			foreach (TooltipLine line in tooltips) //goes through each tooltip line
 			{
 				if(line.Mod == "Terraria")
                 {
                     if (line.Name == "Tooltip1") //checks the name of the tootip line
-                    {
-                        string bonus = selected == 0 ? "> " : "";
-                        line.OverrideColor = Color.Lerp(GemDisabled[0] ? Color.LightGray : Color.White, ColorHelpers.AmethystColor, GemDisabled[0] ? iColorSwap : colorSwap);
-                        line.Text = bonus + (GemDisabled[0] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I0") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G0"));
-                        if (selected == 0)
-                            line.Text = line.Text.Replace("\n", "\n" + bonus);
-                    }
+                        AddGemTooltipLine(line, selected, 0, ColorHelpers.AmethystColor);
                     if (line.Name == "Tooltip2")
-                    {
-                        string bonus = selected == 1 ? "> " : "";
-                        line.OverrideColor = Color.Lerp(GemDisabled[1] ? Color.LightGray : Color.White, ColorHelpers.TopazColor, GemDisabled[1] ? iColorSwap : colorSwap);
-                        line.Text = bonus + (GemDisabled[1] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I1") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G1"));
-                        if (selected == 1)
-                            line.Text = line.Text.Replace("\n", "\n" + bonus);
-                    }
+                        AddGemTooltipLine(line, selected, 1, ColorHelpers.TopazColor);
                     if (line.Name == "Tooltip3")
-                    {
-                        string bonus = selected == 2 ? "> " : "";
-                        line.OverrideColor = Color.Lerp(GemDisabled[2] ? Color.LightGray : Color.White, ColorHelpers.SapphireColor, GemDisabled[2] ? iColorSwap : colorSwap);
-                        line.Text = bonus + (GemDisabled[2] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I2") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G2"));
-                        if (selected == 2)
-                            line.Text = line.Text.Replace("\n", "\n" + bonus);
-                    }
+                        AddGemTooltipLine(line, selected, 2, ColorHelpers.SapphireColor);
                     if (line.Name == "Tooltip4")
-                    {
-                        string bonus = selected == 3 ? "> " : "";
-                        line.OverrideColor = Color.Lerp(GemDisabled[3] ? Color.LightGray : Color.White, ColorHelpers.EmeraldColor, GemDisabled[3] ? iColorSwap : colorSwap);
-                        line.Text = bonus + (GemDisabled[3] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I3") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G3"));
-                        if (selected == 3)
-                            line.Text = line.Text.Replace("\n", "\n" + bonus);
-                    }
+                        AddGemTooltipLine(line, selected, 3, ColorHelpers.EmeraldColor);
                     if (line.Name == "Tooltip5")
-                    {
-                        string bonus = selected == 4 ? "> " : "";
-                        line.OverrideColor = Color.Lerp(GemDisabled[4] ? Color.LightGray : Color.White, ColorHelpers.RubyColor, GemDisabled[4] ? iColorSwap : colorSwap);
-                        line.Text = bonus + (GemDisabled[4] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I4") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G4"));
-                        if (selected == 4)
-                            line.Text = line.Text.Replace("\n", "\n" + bonus);
-                    }
+                        AddGemTooltipLine(line, selected, 4, ColorHelpers.RubyColor);
                     if (line.Name == "Tooltip6")
-                    {
-                        string bonus = selected == 5 ? "> " : "";
-                        int defenseStat = SOTSPlayer.ModPlayer(Main.LocalPlayer).previousDefense;
-                        line.OverrideColor = Color.Lerp(GemDisabled[5] ? Color.LightGray : Color.White, ColorHelpers.DiamondColor, GemDisabled[5] ? iColorSwap : colorSwap);
-                        line.Text = bonus + (GemDisabled[5] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I5") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G5", Convert.ToString(defenseStat), Convert.ToString(defenseStat / 3)));
-                        if (selected == 5)
-                            line.Text = line.Text.Replace("\n", "\n" + bonus);
-                    }
+                        AddGemTooltipLine(line, selected, 5, ColorHelpers.DiamondColor);
                     if (line.Name == "Tooltip7")
-                    {
-                        string bonus = selected == 6 ? "> " : "";
-                        line.OverrideColor = Color.Lerp(GemDisabled[6] ? Color.LightGray : Color.White, ColorHelpers.AmberColor, GemDisabled[6] ? iColorSwap : colorSwap);
-                        line.Text = bonus + (GemDisabled[6] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I6") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G6"));
-                        if (selected == 6)
-                            line.Text = line.Text.Replace("\n", "\n" + bonus);
-                    }
+                        AddGemTooltipLine(line, selected, 6, ColorHelpers.AmberColor);
                 }
 			}
 			base.ModifyTooltips(tooltips);
-		}
+        }
+        private const float iColorSwap = 0.5f;
+        private const float colorSwap = 0.4f;
+        private void AddGemTooltipLine(TooltipLine line, int selected, int myType, Color color)
+        {
+            string bonus = selected == myType ? "> " : "";
+            line.OverrideColor = Color.Lerp(GemDisabled[myType] ? Color.LightGray : Color.White, color, GemDisabled[0] ? iColorSwap : colorSwap);
+            if(myType == 5)
+            {
+                int defenseStat = SOTSPlayer.ModPlayer(Main.LocalPlayer).previousDefense;
+                line.Text = bonus + (GemDisabled[5] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I5") : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G5", Convert.ToString(defenseStat), Convert.ToString(defenseStat / 3)));
+            }
+            else
+            {
+                line.Text = bonus + (GemDisabled[myType] ? Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.I" + myType) : Language.GetTextValue("Mods.SOTS.Items.ChallengerRing.G" + myType));
+            }
+            if (selected == myType)
+                line.Text = line.Text.Replace("\n", "\n" + bonus);
+        }
 		public override void SetDefaults()
 		{
 			Item.maxStack = 1;
