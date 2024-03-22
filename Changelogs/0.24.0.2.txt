@@ -1,0 +1,35 @@
+Update 0.24.0.1
+
+Additions:
+1. Added Post-Subspace armor set for Mages/Ranger
+2. Added Supernova Emblem accessory
+3. Added Infinity Pouch accessory
+4. Added an accessory to combine all the Gem Rings
+
+
+
+Changes:
+1. Plating Block recipes now craft 5 -> 10 blocks
+2. Plasma Accelerator usetimes 10 -> 12
+3. Items that give void upon taking damage have been reworked, now giving void based on percent of damage taken, with gains rolling over onto the next instance of damage if unable to grant a whole number.
+4. All stackable items should now stack to 9999
+5. Crit damage accessories should apply the correct amount of damage buff now
+6. Reforging void-based reforges is now cheaper
+7. Blazing Club usetime 39 -> 40, damage 20 -> 19, damage dropoff for additional mines -1 -> -2
+8. Supernova Hammer seekers no longer deal knockback, they also have adjusted visuals
+9. Archaeologist sells torch bombs if a torch gun is in a player's inventory
+10. Inferno Hook has decreased velocity by 20%
+
+Fixes:
+1. Roast Peanuts tooltip localization fixes
+2. Healing and Mana potion buffing accessories only apply their bonuses to the designated potion
+3. Flare detonator now uses the correct sprite when held
+4. Fixed Hydrokinetic Antennae drawing additional sprites on top of the player when using weapons with glowmasks
+5. Fixed issue where Subspace Servant and Hydrokinetic Antennae would switch the gender of the player
+6. Winged Knife now sells for the correct amount
+7. Gem chests now drop the correct item when broken
+8. Vibrant Geode background walls no longer drop when broken
+9. Gem chests localization changed to work with metal detector
+10. Issue where Polaris would sometimes refuse to spawn should be fixed
+11. World generation should now work when using Exxo Avalon Origins on a Contagion world
+12. World generation should no longer get stuck on Generating Planetarium

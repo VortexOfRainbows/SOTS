@@ -5303,7 +5303,7 @@ Mods: {
 
 			EarthGrinder: {
 				DisplayName: Earth Grinder
-				Tooltip: 
+				Tooltip:
 					'''
 					Right click to strike with 2 slashes
 					The first slash will stun enemies

@@ -37,9 +37,11 @@ Update Objectives:
 8. Torch Bomb Upgrade Item
 9. Remote Detonator from Isaac
 
+---WIP List---
+Earth Grinder
 
 ---Code Refactoring Needed List---
-Challenger's Ring
+N/A
 
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag
@@ -48,7 +50,7 @@ Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag
 Voidspace Ranger's Armor, Supernova Seekers
 
 ---Multiplayer Fixes/Testing Needed---
-NA
+N/A
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -82,7 +84,7 @@ Daily Log:
 5. Reorganized and renamed the EPIC WINGS folder. This will make it more organized for when I implement Gilded Blade-Wings
 
 2/5/24
-1. Spiked Club usetime 39 -> 40, damage 20 -> 19, doubled damage dropoff for additional mines (-1 per additional mine -> -2 per additional mine)
+1. Blazing Club usetime 39 -> 40, damage 20 -> 19, doubled damage dropoff for additional mines (-1 per additional mine -> -2 per additional mine)
 2. Supernova Hammer seekers no longer deal knockback, also adjusted their dust released and their decay speed
 3. Added Supernova Emblem item, works in multiplayer
 4. Archaeologist now sells torch bombs when there is a torch gun in the player inventory (8 silver)

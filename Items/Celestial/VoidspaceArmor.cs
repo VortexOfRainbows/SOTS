@@ -42,7 +42,11 @@ namespace SOTS.Items.Celestial
 			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Voidspace");
             player.SOTSPlayer().VoidspaceFlames = true;
         }
-		public override void UpdateEquip(Player player)
+        public override void ArmorSetShadows(Player player)
+        {
+            player.armorEffectDrawOutlinesForbidden = true;
+        }
+        public override void UpdateEquip(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 4;
@@ -64,7 +68,6 @@ namespace SOTS.Items.Celestial
 		{
 			this.SetResearchCost(1);
 			SetupDrawing();
-
         }
         public override void SetDefaults()
         {
