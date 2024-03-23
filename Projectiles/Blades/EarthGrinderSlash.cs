@@ -43,7 +43,10 @@ namespace SOTS.Projectiles.Blades
 		public override float OverAllSpeedMultiplier => 5 * (thisSlashNumber == 2 ? 1 : 0.65f);
         public override float ActiveSpeedMultiplier()
 		{
-			return 0.2f + (float)Math.Pow(1.8f * (timeLeftCounter / swipeDegreesTotal), thisSlashNumber == 2 ? 2 : 1) * Projectile.ai[1];
+            float timeLeft = timeLeftCounter;
+            if (timeLeft < 0)
+                timeLeft = 0;
+			return 0.2f + (float)Math.Pow(1.8f * (timeLeft / swipeDegreesTotal), thisSlashNumber == 2 ? 2 : 1) * Projectile.ai[1];
         }
         public override float MinSwipeDistance => 80;
 		public override float MaxSwipeDistance => 80;
@@ -57,6 +60,7 @@ namespace SOTS.Projectiles.Blades
         public override void PostAI()
         {
             base.PostAI();
+            //Main.NewText(timeLeftCounter);
             if (Main.player[Projectile.owner].HeldItem.type == ModContent.ItemType<EarthGrinder>())
             {
                 Main.player[Projectile.owner].HeldItem.noUseGraphic = true;
@@ -113,7 +117,10 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float TimeLeftIterator(float incrementAmount)
         {
-            return (float)Math.Abs(incrementAmount) * Math.Sign(Projectile.ai[1]);
+            float num = (float)Math.Abs(incrementAmount) * Math.Sign(Projectile.ai[1]);
+            if (timeLeftCounter < 0 && num < 0)
+                num = 0;
+            return num;
         }
         public override void SlashPattern(Player player, int slashNumber)
 		{
