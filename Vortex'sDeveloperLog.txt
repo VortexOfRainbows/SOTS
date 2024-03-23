@@ -4,9 +4,6 @@ The following is my development plans :D
 2. Starward Sword (Upgrade to Digital Daito and Vorpal Knife)
 3. Refracting Crystal + Void Anomaly => Reflecting Crystal
 
-Tmodloader Bugs (some of these may be fixed, idk):
-1. Block swap is not prevented for pyramid tiles pre EoW (don't think there is support for this in TMOD)
-
 Acknowledged But Likely Delayed:
 1. Reimplement (older) Blade Items using the abstract class
 2. Earthen Plating starter house.
@@ -65,6 +62,14 @@ Look down for Abandoned Village todo and progress...
 	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 Daily Log:
+
+3/23/24
+1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated
+2. 
+
+
+--- Update 0.24.0.2 ---
+
 
 3/22/24
 1. Added Earth Grinder, which works in multiplayer

@@ -41,7 +41,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	public class PyramidWallWall : ModWall
 	{
 		public override void SetStaticDefaults()
-		{
+        {
 			Main.wallHouse[Type] = true;
 			Main.wallLargeFrames[Type] = (byte)1;
 			DustType = 32;
@@ -53,8 +53,8 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	{
 		public override string Texture => "SOTS/Items/Pyramid/PyramidWalls/PyramidWallWall";
 		public override void SetStaticDefaults()
-		{
-			Main.wallLargeFrames[Type] = (byte)1;
+        {
+            Main.wallLargeFrames[Type] = (byte)1;
 			Main.wallHouse[Type] = false;
 			DustType = 32;
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PyramidWall>();

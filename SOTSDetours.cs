@@ -7,6 +7,7 @@ using SOTS.FakePlayer;
 using SOTS.Items.Celestial;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
+using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.NPCs.Town;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
@@ -14,6 +15,7 @@ using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
@@ -95,7 +97,10 @@ namespace SOTS
 			On_Main.DrawItem += Main_DrawItem;
 			On_Main.CheckMonoliths += Main_CheckMonoliths;
 
-			if (!Main.dedServ)
+
+			On_WorldGen.KillWall_CheckFailure += On_WorldGen_KillWall_CheckFailure;
+
+            if (!Main.dedServ)
 				ResizeTargets();
 		}
 		public static void Unload() //Apparently unloading Detours is handled automatically now..?
@@ -928,5 +933,13 @@ namespace SOTS
                 }
             }
         }
+		private static bool On_WorldGen_KillWall_CheckFailure(On_WorldGen.orig_KillWall_CheckFailure orig, bool fail, Tile tileCache)
+        {
+            if (SOTSWall.unsafePyramidWall.Contains(tileCache.WallType))
+            {
+                return !SOTSWorld.downedCurse;
+			}
+            return orig(fail, tileCache);
+		}
     }
 }

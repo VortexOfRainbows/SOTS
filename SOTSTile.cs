@@ -19,6 +19,7 @@ using Terraria.GameContent;
 using SOTS.Items;
 using System;
 using SOTS.Items.Conduit;
+using SOTS.Items.Pyramid.PyramidWalls;
 
 namespace SOTS
 {
@@ -49,6 +50,14 @@ namespace SOTS
         public static void LoadArrays() //called in SOTS.Load()
         {
             pyramidTiles = new int[] { TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>() };
+        }
+        public override bool CanReplace(int i, int j, int type, int tileTypeBeingPlaced)
+        {
+            if (pyramidTiles.Contains(type))
+            {
+                return NPC.downedBoss2;
+            }
+            return base.CanReplace(i, j, type, tileTypeBeingPlaced);
         }
         public static bool GenerateVibrantCrystal(int i, int j)
         {

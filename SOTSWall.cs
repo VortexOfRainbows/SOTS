@@ -7,6 +7,7 @@ using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Pyramid;
 using Terraria;
 using SOTS.Items.Gems;
+using Terraria.ID;
 
 namespace SOTS
 {
@@ -14,9 +15,9 @@ namespace SOTS
 	{
 		public static int[] unsafePyramidWall;
 		public static void LoadArrays() //called in SOTS.Load()
-		{
-			unsafePyramidWall = new int[] { WallType<UnsafePyramidWallWall>() , WallType<UnsafeCursedTumorWallWall>(), WallType<UnsafePyramidBrickWallWall>(), WallType<UnsafeOvergrownPyramidWallWall>(), WallType<UnsafeAcediaWallWall>() }; //Unsafe wall items
-		}
+        {
+            unsafePyramidWall = new int[] { WallType<UnsafePyramidWallWall>(), WallType<UnsafeCursedTumorWallWall>(), WallType<UnsafePyramidBrickWallWall>(), WallType<UnsafeOvergrownPyramidWallWall>(), WallType<UnsafeAcediaWallWall>() }; //Unsafe wall items
+        }
         public override bool CanExplode(int i, int j, int type)
         {
             if (unsafePyramidWall.Contains(type) || Framing.GetTileSafely(i, j).TileType == TileType<SOTSGemLockTiles>())
@@ -29,7 +30,6 @@ namespace SOTS
                 fail = !SOTSWorld.downedCurse;
             if (Framing.GetTileSafely(i, j).TileType == TileType<SOTSGemLockTiles>())
                 fail = true;
-            base.KillWall(i, j, type, ref fail);
         }
     }
 }
