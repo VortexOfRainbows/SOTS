@@ -36,6 +36,7 @@ Update Objectives:
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 8. Torch Bomb Upgrade Item
 9. Remote Detonator from Isaac
+10. Fix bug where Earth Grinder will get stuck when hitting too many enemies at once
 
 ---WIP List---
 N/A
