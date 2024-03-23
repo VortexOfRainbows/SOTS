@@ -8,6 +8,7 @@ using System.IO;
 using SOTS.Utilities;
 using SOTS.Void;
 using SOTS.Prim.Trails;
+using SOTS.Common.GlobalNPCs;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -121,7 +122,15 @@ namespace SOTS.Projectiles.Blades
 				standardSwordLength = texture.Height - handleSize;
 			float scaleMultiplier = length / standardSwordLength;
 			float rotation = toProjectile.ToRotation() + (isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : MathHelper.ToRadians(90 + direction * OffsetAngleIfNotDiagonal));
-			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			if(Projectile.type == ModContent.ProjectileType<EarthGrinderSlash>() && thisSlashNumber == 1)
+			{
+				Texture2D bonusTexture = ModContent.Request<Texture2D>("SOTS/Projectiles/Blades/EarthGrinderSlashAlternate").Value;
+                spriteBatch.Draw(bonusTexture, drawPos + Main.rand.NextVector2CircularEdge(1, 1) * (SOTSWorld.GlobalCounter / 4 % 2), new Rectangle(0, bonusTexture.Height / 2 * (SOTSWorld.GlobalCounter / 4 % 2), bonusTexture.Width, bonusTexture.Height / 2), lightColor, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            }
+			else
+            {
+                spriteBatch.Draw(texture, drawPos, null, lightColor, rotation, origin, 0.1f + 1f * scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            }
 		}
 		float counter = 225;
 		float spinSpeed = 0;
@@ -221,6 +230,14 @@ namespace SOTS.Projectiles.Blades
 			original.Y *= (0.75f + swingNumber * 0.005f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
 			return original;
 		}
+		public virtual float ActiveSpeedMultiplier()
+		{
+			return 1f;
+		}
+		public virtual float TimeLeftIterator(float incrementAmount)
+		{
+			return (float)Math.Abs(incrementAmount);
+        }
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
@@ -243,21 +260,19 @@ namespace SOTS.Projectiles.Blades
 				dustAway = ovalArea;
 				Projectile.rotation = dustAway.ToRotation();
 			}
-			float totalSwipeDegrees = swipeDegreesTotal;
-			float incremendAmount = spinSpeed * FetchDirection;
-			if (timeLeftCounter > totalSwipeDegrees)
+			float incrementAmount = spinSpeed * FetchDirection * ActiveSpeedMultiplier();
+			if (timeLeftCounter > swipeDegreesTotal)
 			{
 				if (delayDeathTime > 0)
 				{
 					delayDeathTime--;
 					delayDeathSlowdown *= delayDeathSlowdownAmount;
-					incremendAmount *= delayDeathSlowdown;
+					incrementAmount *= delayDeathSlowdown;
 				}
 			}
-			float iterator2 = (float)Math.Abs(incremendAmount);
-			timeLeftCounter += iterator2;
-			counter += incremendAmount;
-			if (timeLeftCounter > totalSwipeDegrees)
+			timeLeftCounter += TimeLeftIterator(incrementAmount);
+			counter += incrementAmount;
+			if (timeLeftCounter > swipeDegreesTotal)
             {
 				if(delayDeathTime <= 0)
 				{

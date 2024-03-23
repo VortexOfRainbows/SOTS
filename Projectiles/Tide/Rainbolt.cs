@@ -73,11 +73,14 @@ namespace SOTS.Projectiles.Tide
 			if (player.dead)
 			{
 				Projectile.Kill();
-			}
-			if ((modPlayer.aqueductDamage + 1) != Projectile.damage)
-			{
-				Projectile.Kill();
-			}
+            }
+            if (Projectile.owner == Main.myPlayer)
+            {
+                if ((modPlayer.aqueductDamage + 1) != Projectile.damage)
+                {
+                    Projectile.Kill();
+                }
+            }
 			if (Projectile.timeLeft > 100)
 			{
 				Projectile.timeLeft = 300;

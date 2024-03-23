@@ -5306,8 +5306,8 @@ Mods: {
 				Tooltip:
 					'''
 					Right click to strike with 2 slashes
-					The first slash will stun enemies
-					The second slash will inflict a permanent bleed on stunned enemies
+					The first slash will always crit
+					The second slash will hit enemies repeatedly
 					'''
 			}
 		}
@@ -6900,6 +6900,7 @@ Mods: {
 			SootBall.DisplayName: Soot Ball
 			EmberDamage.DisplayName: Ember Damage
 			SpawnEnemyProj.DisplayName: Spawn Enemy Proj
+			EarthGrinderSlash.DisplayName: Earth Grinder Slash
 		}
 
 		DamageClasses: {

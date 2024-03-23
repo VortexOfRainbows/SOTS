@@ -1,13 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
-using SOTS.Utilities;
 using SOTS.Void;
-using SOTS.Prim.Trails;
 using SOTS.Projectiles.Earth;
 
 namespace SOTS.Projectiles.Blades
@@ -16,14 +12,10 @@ namespace SOTS.Projectiles.Blades
 	{
 		public override Color color1 => new Color(166, 221, 145);
 		public override Color color2 => new Color(46, 63, 77);
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Vespera Slash");
-		}
 		public override void SafeSetDefaults()
 		{
 			Projectile.localNPCHitCooldown = 20;
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
 			delayDeathTime = 12;
 		}
 		public override float HitboxWidth => 18;

@@ -47,10 +47,13 @@ namespace SOTS.Projectiles.Minions
 			{
 				Projectile.Kill();
 			}
-			if ((modPlayer.tPlanetDamage + 1) != Projectile.damage)
+			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.Kill();
-			}
+                if ((modPlayer.tPlanetDamage + 1) != Projectile.damage)
+                {
+                    Projectile.Kill();
+                }
+            }
 			if (Projectile.timeLeft > 100)
 			{
 				Projectile.timeLeft = 300;

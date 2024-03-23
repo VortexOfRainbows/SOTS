@@ -6,8 +6,6 @@ Additions:
 3. Added Infinity Pouch accessory
 4. Added an accessory to combine all the Gem Rings
 
-
-
 Changes:
 1. Plating Block recipes now craft 5 -> 10 blocks
 2. Plasma Accelerator usetimes 10 -> 12
@@ -19,6 +17,8 @@ Changes:
 8. Supernova Hammer seekers no longer deal knockback, they also have adjusted visuals
 9. Archaeologist sells torch bombs if a torch gun is in a player's inventory
 10. Inferno Hook has decreased velocity by 20%
+11. Increased sell price of Fire Spitter
+12. Decreased drop rate of Zombie Hand
 
 Fixes:
 1. Roast Peanuts tooltip localization fixes
@@ -33,3 +33,4 @@ Fixes:
 10. Issue where Polaris would sometimes refuse to spawn should be fixed
 11. World generation should now work when using Exxo Avalon Origins on a Contagion world
 12. World generation should no longer get stuck on Generating Planetarium
+13. Fixed issues with Tiny Planet and Arcade Aqueduct projectiles not syncing in multiplayer

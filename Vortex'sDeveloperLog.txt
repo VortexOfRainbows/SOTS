@@ -38,13 +38,13 @@ Update Objectives:
 9. Remote Detonator from Isaac
 
 ---WIP List---
-Earth Grinder
+N/A
 
 ---Code Refactoring Needed List---
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag
+Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
@@ -65,13 +65,18 @@ Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
+3/22/24
+1. Added Earth Grinder, which works in multiplayer
+2. Fixed issues with tiny planet and arcane aqueduct projectiles not appearing properly in multiplayer
+3. Decreased droprate of Zombie Hand
+4. Increased sell price of Fire Spitter
+
 3/16/24
 1. Issue where Polaris does not spawn sometimes should be fixed.
 2. Fixed world generation when using Exxo Avalon Origins and Contagion
 	1. Should also fixed a bug where planetarium would sometimes get stuck generating
 3. Challenger Ring now animates in the world space
 4. Challenger Ring now syncs its state in multiplayer
-5. WIP Earth Grinder
 
 3/3/24 to 3/4/24
 1. Added Challenger's Ring (this item has a lot going on)

@@ -433,7 +433,7 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == NPCID.GreekSkeleton)
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<OlympianAxe>(), 25, 20));
 			if (DebuffNPC.Zombies.Contains(npc.type))
-				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ZombieHand>(), 100, 80));
+				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ZombieHand>(), 120, 100));
 			if (npc.type == NPCID.QueenBee)
             {
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1));
