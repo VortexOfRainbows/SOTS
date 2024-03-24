@@ -7,6 +7,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using SOTS.WorldgenHelpers;
 using System;
+using System.ComponentModel;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -111,6 +112,10 @@ namespace SOTS.NPCs
 			{
 				Vector2 spawn = (NPC.position + new Vector2(4, 4) + new Vector2(Main.rand.Next(NPC.width - 8), Main.rand.Next(NPC.height - 8)));
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, NPC.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, -3, -1f);
+			}
+			if(NPC.velocity.Length() > 8)
+			{
+				NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero) * 8;
 			}
 			if(tileCollide)
 				NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);

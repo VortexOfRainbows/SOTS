@@ -1,4 +1,4 @@
-Update 0.24.0.1
+Update 0.24.0.2
 
 Additions:
 1. Added Post-Subspace armor set for Mages/Ranger

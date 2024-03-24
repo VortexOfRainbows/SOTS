@@ -91,7 +91,7 @@ namespace SOTS.Buffs.WhipBuffs
                         count = 2;
                     for (int i = 0; i < count; i++)
                     {
-						Projectile.NewProjectile(new EntitySource_OnHit(projectile, npc), npc.Center, new Vector2(1, 0) * hit.HitDirection, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 1f, Main.myPlayer, npc.whoAmI, 3 + 4 * i);
+						Projectile.NewProjectile(new EntitySource_OnHit(projectile, npc), npc.Center, new Vector2(1, 0) * hit.HitDirection, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 0.0f, Main.myPlayer, npc.whoAmI, 3 + 4 * i);
                     }
                 }
             }

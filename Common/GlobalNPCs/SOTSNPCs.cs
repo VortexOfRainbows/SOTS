@@ -360,55 +360,60 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<Ultracap>())
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<GravityAnchor>(), 70, 50));
 			if (npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
-			{
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrushingResistor>(), 50));
+            {
+                int type = ModContent.ItemType<NaturePlating>();
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrushingResistor>(), 50));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectromagneticDeterrent>(), 10));
-				if (npc.type != ModContent.NPCType<OtherworldlyConstructHead2>() && npc.type != ModContent.NPCType<OtherworldlyConstructHead>())
+                if (npc.type == ModContent.NPCType<NatureConstruct>())
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MantisGrip>(), 30));
+                    type = ModContent.ItemType<NaturePlating>();
+                }
+                if (npc.type == ModContent.NPCType<EarthenConstruct>())
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Earthshaker>(), 30));
+                    type = ModContent.ItemType<EarthenPlating>();
+                }
+                if (npc.type == ModContent.NPCType<PermafrostConstruct>())
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EndothermicAfterburner>(), 30));
+                    type = ModContent.ItemType<PermafrostPlating>();
+                }
+                if (npc.type == ModContent.NPCType<TidalConstruct>())
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PiscesPuncher>(), 30));
+                    type = ModContent.ItemType<TidePlating>();
+                }
+                if (npc.type == ModContent.NPCType<EvilConstruct>())
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeathSpiral>(), 30));
+                    type = ModContent.ItemType<EvilPlating>();
+                }
+                if (npc.type == ModContent.NPCType<InfernoConstruct>())
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IncineratorGlove>(), 30));
+                    type = ModContent.ItemType<InfernoPlating>();
+                }
+                if (npc.type == ModContent.NPCType<ChaosConstruct>())
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ParticleRelocator>(), 30));
+                    type = ModContent.ItemType<ChaosPlating>();
+                }
+                if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
 				{
-					if (npc.type == ModContent.NPCType<NatureConstruct>())
-						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MantisGrip>(), 30));
-					if (npc.type == ModContent.NPCType<EarthenConstruct>())
-						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Earthshaker>(), 30));
-					if (npc.type == ModContent.NPCType<PermafrostConstruct>())
-						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EndothermicAfterburner>(), 30));
-					if (npc.type == ModContent.NPCType<TidalConstruct>())
-						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PiscesPuncher>(), 30));
-					if (npc.type == ModContent.NPCType<EvilConstruct>())
-						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeathSpiral>(), 30));
-					if (npc.type == ModContent.NPCType<InfernoConstruct>())
-						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IncineratorGlove>(), 30));
-					if (npc.type == ModContent.NPCType<ChaosConstruct>())
-						npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ParticleRelocator>(), 30));
-				}
-				else
-				{
-					int type = ModContent.ItemType<NaturePlating>();
-					if (npc.type == ModContent.NPCType<NatureConstruct>())
-						type = ModContent.ItemType<NaturePlating>();
-					if (npc.type == ModContent.NPCType<EarthenConstruct>())
-						type = ModContent.ItemType<EarthenPlating>();
-					if (npc.type == ModContent.NPCType<PermafrostConstruct>())
-						type = ModContent.ItemType<PermafrostPlating>();
-					if (npc.type == ModContent.NPCType<TidalConstruct>())
-						type = ModContent.ItemType<TidePlating>();
-					if (npc.type == ModContent.NPCType<EvilConstruct>())
-						type = ModContent.ItemType<EvilPlating>();
-					if (npc.type == ModContent.NPCType<ChaosConstruct>())
-						type = ModContent.ItemType<ChaosPlating>();
-					if (npc.type == ModContent.NPCType<InfernoConstruct>())
-						type = ModContent.ItemType<InfernoPlating>();
-					if(npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
-						type = ModContent.ItemType<OtherworldPlating>();
-					if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
-					{
-						type = ModContent.ItemType<DullPlating>();
-						npcLoot.Add(ItemDropRule.Common(type, 1, 5, 10));
-					}
-					else
-						npcLoot.Add(ItemDropRule.Common(type, 1, 20, 40));
-				}
-				if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
-					npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PhaseCannon>(), 100));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PhaseCannon>(), 100));
+                }
+                if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+                {
+                    type = ModContent.ItemType<OtherworldPlating>();
+                }
+                if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
+                {
+                    type = ModContent.ItemType<DullPlating>();
+                    npcLoot.Add(ItemDropRule.Common(type, 1, 5, 10));
+                }
+                else
+                    npcLoot.Add(ItemDropRule.Common(type, 1, 20, 40));
 			}
 			if (npc.type == NPCID.VoodooDemon || npc.type == NPCID.BoneSerpentHead)
 			{

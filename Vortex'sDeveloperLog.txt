@@ -33,6 +33,7 @@ Update Objectives:
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 8. Torch Bomb Upgrade Item
 9. Remote Detonator from Isaac
+10. Tesseract Summon item which allows summoning automatically attacking player clones
 
 
 ---WIP List---
@@ -63,9 +64,12 @@ Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
-3/23/24
+3/23/24 & 3/24/24
 1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated
 2. Fixed some localization and earth grinder bug
+3. Removed Knockback from Glow Whip sparkles, as repeated hits would glitch grounded enemies into the floor
+4. Made Pre-HM Ghasts have a max speed of 8
+5. Fix Construct NPCs not dropping their respective plating blocks
 
 
 --- Update 0.24.0.2 ---
