@@ -1,50 +1,42 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
 using ReLogic.Content;
-using SOTS.Items.Invidia;
-using SOTS.Items.Planetarium.FromChests;
-using SOTS.Items.Tide;
-using SOTS.Items.Whips;
-using SOTS.Projectiles.Base;
-using SOTS.Projectiles.Celestial;
-using SOTS.Void;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Biomes;
-using Terraria.GameInput;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.Player;
 
 namespace SOTS.FakePlayer
 {
+    public static class FakePlayerTypeID
+    {
+        public const int Subspace = 0;
+        public const int Hydro = 1;
+        public const int Tesseract = 2;
+    }
     public static class TrailingID
     {
-        public static int IDLE = 0;
-        public static int MAGIC = 1;
-        public static int RANGED = 2;
-        public static int MELEE = 3;
-        public static int CLOSERANGE = 4;
+        public const int IDLE = 0;
+        public const int MAGIC = 1;
+        public const int RANGED = 2;
+        public const int MELEE = 3;
+        public const int CLOSERANGE = 4;
     }
     public static class DrawStateID
     {
-        public static int All = -1; //Drawn by fakeplayerdrawer
-        public static int Border = 0; //Drawn by fakeplayerdrawer
-        public static int Wings = 1; //By renderer
-        public static int HeldItemAndProjectilesBeforeBackArm = 2; //Drawn by fakeplayerdrawer
-        public static int Body = 3; //Drawn by renderer
-        public static int HeldItemAndProjectilesBeforeFrontArm = 4; //Drawn by fakeplayerdrawer
-        public static int FrontArm = 5; //Drawn by renderer
-        public static int HeldItemAndProjectilesAfterFrontArm = 6; //Drawn by fakeplayerdrawer
+        public const int All = -1; //Drawn by fakeplayerdrawer
+        public const int Border = 0; //Drawn by fakeplayerdrawer
+        public const int Wings = 1; //By renderer
+        public const int HeldItemAndProjectilesBeforeBackArm = 2; //Drawn by fakeplayerdrawer
+        public const int Body = 3; //Drawn by renderer
+        public const int HeldItemAndProjectilesBeforeFrontArm = 4; //Drawn by fakeplayerdrawer
+        public const int FrontArm = 5; //Drawn by renderer
+        public const int HeldItemAndProjectilesAfterFrontArm = 6; //Drawn by fakeplayerdrawer
     }
     public class FakePlayer
     {
@@ -107,14 +99,14 @@ namespace SOTS.FakePlayer
                 proj.Kill();
             }
             bool additionalValid = true;
-            if(fakePlayerType == 1)
+            if(fakePlayerType == FakePlayerTypeID.Hydro)
             {
                 if(additionalValid)
                 {
                     additionalValid = ValidItemForHydroPlayer(item);
                 }
             }
-            bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && (!subspacePlayer.servantIsVanity || fakePlayerType != 0) && additionalValid;
+            bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && (!subspacePlayer.servantIsVanity || fakePlayerType != FakePlayerTypeID.Subspace) && additionalValid;
             return validItem;
             #endregion
         }
@@ -176,7 +168,7 @@ namespace SOTS.FakePlayer
             }
             else if (valid)
             {
-                if(FakePlayerType == 0)
+                if(FakePlayerType == FakePlayerTypeID.Subspace)
                     subspacePlayer.foundItem = true;
                 RunItemCheck(player, true);
                 //Main.NewText(player.ItemUsesThisAnimation);
@@ -186,7 +178,7 @@ namespace SOTS.FakePlayer
                 if (lastUsedItem != null && !lastUsedItem.IsAir && lastUsedItem.type != item.type && (!subspacePlayer.servantIsVanity || FakePlayerType != 0)) //reload the item check if the item is different
                 {
                     lastUsedItem = heldItem.Clone();
-                    if(FakePlayerType != 1)
+                    if(FakePlayerType != FakePlayerTypeID.Hydro)
                     {
                         RunItemCheck(player, true);
                     }
@@ -241,7 +233,7 @@ namespace SOTS.FakePlayer
         private int FakePlayerID = 0;
         public int UseItemSlot(Player player)
         {
-            if (FakePlayerType == 1)
+            if (FakePlayerType == FakePlayerTypeID.Hydro)
             {
                 return player.selectedItem;
             }
@@ -342,7 +334,7 @@ namespace SOTS.FakePlayer
             player.controlUseItem = false;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
-            if (FakePlayerType == 1)
+            if (FakePlayerType == FakePlayerTypeID.Hydro)
             {
                 if (valid)
                     HydroServantPostUpdate(player);
@@ -754,7 +746,7 @@ namespace SOTS.FakePlayer
         }
         public Color MyBorderColor()
         {
-            return FakePlayerType == 0 ? new Color(0, 255, 0) : new Color(255, 255, 0);
+            return FakePlayerType == FakePlayerTypeID.Subspace ? new Color(0, 255, 0) : new Color(255, 255, 0);
         }
         public void ConvertItemTextureBackToNormal(Item item)
         {
