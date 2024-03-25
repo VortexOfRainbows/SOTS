@@ -69,6 +69,7 @@ Daily Log:
 
 3/25/24
 1. Photon Geyser Damage 34 -> 33, mana cost 50 -> 60
+2. Holoblade should no longer switch targets eradically in Multiplayer
 
 3/23/24 to 3/25/24
 1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated

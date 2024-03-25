@@ -7,6 +7,7 @@ using SOTS.Items.Planetarium.FromChests;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.Serialization.Formatters;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -29,7 +30,7 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            NPC.aiStyle = 0; 
+            NPC.aiStyle = -1; 
             NPC.lifeMax = 40;   
             NPC.damage = 45; 
             NPC.defense = 20;  
@@ -51,6 +52,8 @@ namespace SOTS.NPCs
 		Vector2 savePos = new Vector2(0, 0);
 		public override void AI()
 		{
+			if(NPC.target == -1 || Main.player[NPC.target].dead || Main.player[NPC.target].Distance(NPC.Center) > 800)
+				NPC.TargetClosest(false);
 			Player player = Main.player[NPC.target];
 			//SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			Vector2 toPlayer = NPC.Center - player.Center;
