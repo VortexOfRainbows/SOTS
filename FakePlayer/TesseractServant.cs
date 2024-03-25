@@ -66,9 +66,10 @@ namespace SOTS.FakePlayer
                 target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange - nearbyPursuitRange, this, true);
             int oldMouseX = Main.mouseX;
             int oldMouseY = Main.mouseY;
-
+            bool foundTarget = false;
             if (target != -1)
             {
+                foundTarget = true;
                 NPC npc = Main.npc[target];
                 cursorArea = npc.Center;
 
@@ -89,6 +90,10 @@ namespace SOTS.FakePlayer
                         Direction = player.direction;
                     }
                 }
+            }
+            if (!foundTarget)
+            {
+                //FakePlayer.KillMyOwnedProjectiles = true;
             }
             int TrailingType = FakePlayer.TrailingType;
             if (cursorArea != Vector2.Zero || TrailingType == 0)
@@ -114,28 +119,36 @@ namespace SOTS.FakePlayer
                     toCursor.Y *= 0.4125f;
                     idlePosition += toCursor;
                 }
-                float appropriateMeleeDistance = 64;
+                float appropriateMeleeDistance = -4;
                 if(FakePlayer.heldItem != null && !FakePlayer.heldItem.IsAir)
                 {
-                    appropriateMeleeDistance = FakePlayer.heldItem.Size.Length();
+                    appropriateMeleeDistance += FakePlayer.heldItem.Size.Length() * FakePlayer.heldItem.scale;
                     if(FakePlayer.heldItem.CountsAsClass(DamageClass.SummonMeleeSpeed))
                     {
                         appropriateMeleeDistance += 128f;
                     }
                 }
+                if (appropriateMeleeDistance < 50)
+                    appropriateMeleeDistance = 50;
                 if (TrailingType == 3 || TrailingType == 4) //melee
                 {
                     Vector2 toCursor = cursorArea - player.Center;
                     float length = toCursor.Length();
                     if (length > maxPursuitRange)
                         length = maxPursuitRange;
-                    float lengthToCursor = -appropriateMeleeDistance + length;
+                    float lengthToCursor = length;
                     toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
                     idlePosition += toCursor;
+                    idlePosition.Y = cursorArea.Y;
+                    idlePosition.X -= appropriateMeleeDistance * Math.Sign(toCursor.X);
                 }
                 Vector2 toIdle = idlePosition - Projectile.Center;
                 float dist = toIdle.Length();
-                float speed = 3 + (float)Math.Pow(dist, 2) * 0.0025f;
+                float speed = 8f + dist * 0.0025f;
+                if (dist > nearbyPursuitRange)
+                {
+                    speed = dist;
+                }
                 if (dist < speed)
                 {
                     speed = toIdle.Length();

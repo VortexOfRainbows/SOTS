@@ -189,7 +189,18 @@ namespace SOTS.FakePlayer
             Projectile fakePlayer = Main.projectile.Where(x => x.identity == FakeOwnerIdentity).First();
             if(fakePlayer == null) 
                 return;
-            if(!FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) || !fakePlayer.active || fakePlayer.owner != projectile.owner)
+            bool killMe = !FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) || !fakePlayer.active || fakePlayer.owner != projectile.owner;
+            if(fakePlayer.type == ModContent.ProjectileType<TesseractServant>())
+            {
+                if(fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
+                {
+                    if(fppp.FakePlayer.KillMyOwnedProjectiles)
+                    {
+                        killMe = true;
+                    }
+                }
+            }
+            if (killMe)
             {
                 FakeOwnerIdentity = -1; //This adds it back to the normal update queue... However, this causes bugs... Therefore I have decided to make it... (next line)
                 projectile.active = false;

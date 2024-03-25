@@ -237,9 +237,10 @@ namespace SOTS.FakePlayer
         public Rectangle compFrontArmFrame = Rectangle.Empty;
         public Rectangle compBackArmFrame = Rectangle.Empty;
         public Item heldItem;                        
-        Item lastUsedItem;
+        private Item lastUsedItem;
         public int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
         private int FakePlayerID = 0;
+        public bool KillMyOwnedProjectiles = false;
         public int UseItemSlot(Player player)
         {
             if (FakePlayerType == FakePlayerTypeID.Hydro)
@@ -316,6 +317,7 @@ namespace SOTS.FakePlayer
                 player.attackCD = 0;
             }
         }
+        private int lastUsedItemType = -1;
         public void RunItemCheck(Player player, bool canUseItem = false)
         {
             FakePlayerProjectile.OwnerOfThisUpdateCycle = FakePlayerID; //Temporarily assign the owner of the update cycle, which will make any projectile spawned during the update cycle a child of the fake player
@@ -333,8 +335,15 @@ namespace SOTS.FakePlayer
                 }
                 if(FakePlayerType == FakePlayerTypeID.Tesseract)
                 {
+                    if(lastUsedItemType == -1)
+                        lastUsedItemType = heldItem.type;
                     if (!player.controlUseItem)
                         player.controlUseItem = ForceItemUse;
+                    if (heldItem.type != lastUsedItemType)
+                    {
+                        KillMyOwnedProjectiles = true;
+                    }
+                    lastUsedItemType = heldItem.type;
                 }
                 else
                 {
@@ -347,6 +356,7 @@ namespace SOTS.FakePlayer
             }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
+            KillMyOwnedProjectiles = false;
             SetupBodyFrame(player); //run code to get frame after
             player.controlUseItem = false;
             ForceItemUse = false;
