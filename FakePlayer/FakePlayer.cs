@@ -41,6 +41,8 @@ namespace SOTS.FakePlayer
     }
     public class FakePlayer
     {
+        public int UniqueMouseX = -1;
+        public int UniqueMouseY = -1;
         public static bool SupressNetMessage13and41 = false;
         public bool ForceItemUse = false;
         public bool SkipDrawing = false;
@@ -422,6 +424,9 @@ namespace SOTS.FakePlayer
         public void SaveRealPlayerValues(Player player)
         {
             //Save Player original values
+            PlayerSavedProperties.SaveMouseX = Main.mouseX;
+            PlayerSavedProperties.SaveMouseY = Main.mouseY;
+
             PlayerSavedProperties.SavePosition = player.position;
             PlayerSavedProperties.SaveOldPos = player.oldPosition;
             PlayerSavedProperties.SaveVelocity = player.velocity;
@@ -470,6 +475,11 @@ namespace SOTS.FakePlayer
         }
         public void CopyFakeToReal(Player player)
         {
+            if(UniqueMouseX != -1 && UniqueMouseY != -1)
+            {
+                Main.mouseX = UniqueMouseX;
+                Main.mouseY = UniqueMouseY;
+            }
             //Set default values (ones that aren't used/modified by FakePlayer)
             player.selectedItem = UseItemSlot(player);
             player.lastVisualizedSelectedItem = lastUsedItem;
@@ -592,6 +602,9 @@ namespace SOTS.FakePlayer
             player.bodyFrame = PlayerSavedProperties.saveBodyFrame;
             SetPlayerItemUsesThisAnimationViaReflection(player, PlayerSavedProperties.saveItemUsesThisAnimation);
             player.Male = PlayerSavedProperties.saveMale;
+
+            Main.mouseX = PlayerSavedProperties.SaveMouseX;
+            Main.mouseY = PlayerSavedProperties.SaveMouseY;
         }
         public void SetPlayerItemUsesThisAnimationViaReflection(Player player, int setUses)
         {
@@ -977,6 +990,8 @@ namespace SOTS.FakePlayer
     }
     public class SavedPlayerValues
     {
+        public int SaveMouseX;
+        public int SaveMouseY;
         public Vector2 SavePosition;
         public Vector2 SaveOldPos;
         public Vector2 SaveVelocity;

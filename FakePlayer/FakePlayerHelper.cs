@@ -80,6 +80,9 @@ namespace SOTS.FakePlayer
         }
         public void UpdateItems(Player player)
         {
+            FakePlayer.UniqueMouseX = Main.mouseX;
+            FakePlayer.UniqueMouseY = Main.mouseY;
+
             //FakePlayer.controlUseItem = ControlUseItem;
             FakePlayer.itemLocation = ItemLocation;
             FakePlayer.itemRotation = ItemRotation;

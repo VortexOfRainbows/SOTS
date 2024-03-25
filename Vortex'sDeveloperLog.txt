@@ -67,11 +67,11 @@ Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
-3/23/24 & 3/24/24
+3/23/24 to 3/25/24
 1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated
 2. Fixed some localization and earth grinder bug
 3. Removed Knockback from Glow Whip sparkles, as repeated hits would glitch grounded enemies into the floor
-4. Fixed issue where Planetoid, Ghasts, Maligmor, and 
+4. Fixed issue where Planetoid, Ghasts, Maligmor, etc. Where they had the wrong AI style, thus accelerating incorrectly
 5. Fix Construct NPCs not dropping their respective plating blocks
 6. Remove debug text for resizing render targets
 7. Fixed issue where Earth Grinder right click would cause item location to get stuck when swinging after a subsequent left click when used by a fake player

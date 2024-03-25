@@ -75,8 +75,8 @@ namespace SOTS.FakePlayer
                 cursorArea = npc.Center;
 
                 Vector2 result = npc.Center - Main.screenPosition;
-                Main.mouseX = (int)result.X;
-                Main.mouseY = (int)result.Y;
+                Main.mouseX = FakePlayer.UniqueMouseX = (int)result.X;
+                Main.mouseY = FakePlayer.UniqueMouseY = (int)result.Y;
 
                 FakePlayer.ForceItemUse = true;
 
@@ -86,7 +86,7 @@ namespace SOTS.FakePlayer
             {
                 if (Main.myPlayer == player.whoAmI)
                 {
-                    //Direction = player.direction;
+                    Direction = player.direction;
                 }
             }
             if (!foundTarget)

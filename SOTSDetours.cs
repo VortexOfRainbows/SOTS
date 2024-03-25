@@ -397,7 +397,7 @@ namespace SOTS
 							{
 								FakePlayerPossessingProjectile fPPP = fPPInstance.WhoOwnsMe(proj);
 								if(fPPP != null && fPPP.FakePlayer != null)
-								{
+                                {
                                     fPPP.FakePlayer.LoadValuesForCachedProjectileDraw(Main.player[proj.owner], true);
                                     orig(self, i);
                                     fPPP.FakePlayer.LoadValuesForCachedProjectileDraw(Main.player[proj.owner], false);
