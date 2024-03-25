@@ -34,6 +34,8 @@ Update Objectives:
 8. Torch Bomb Upgrade Item
 9. Remote Detonator from Isaac
 10. Tesseract Summon item which allows summoning automatically attacking player clones
+11. Fix issue where pyramid crates spawn incorrectly
+12. Nerf Photon Geyser again :(
 
 
 ---WIP List---

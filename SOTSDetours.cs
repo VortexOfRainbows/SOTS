@@ -97,7 +97,7 @@ namespace SOTS
 			On_Main.DrawItem += Main_DrawItem;
 			On_Main.CheckMonoliths += Main_CheckMonoliths;
 
-
+			//Used to make sure you cannot break pyramid walls before Pharaoh's curse
 			On_WorldGen.KillWall_CheckFailure += On_WorldGen_KillWall_CheckFailure;
 
             if (!Main.dedServ)

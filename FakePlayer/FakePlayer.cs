@@ -1,3 +1,4 @@
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -41,6 +42,7 @@ namespace SOTS.FakePlayer
     public class FakePlayer
     {
         public static bool SupressNetMessage13and41 = false;
+        public bool ForceItemUse = false;
         public bool SkipDrawing = false;
         public bool ShouldUseWingsArmPosition = false;
         public int BonusItemAnimationTime = 0;
@@ -155,6 +157,11 @@ namespace SOTS.FakePlayer
             int saveCursorIconID = player.cursorItemIconID;
             bool saveAutoSwing = item.autoReuse;
             bool saveUseTurn = item.useTurn;
+            int savePick = item.pick;
+            int saveAxe = item.axe;
+            int saveHammer = item.hammer;
+            if(FakePlayerType == FakePlayerTypeID.Tesseract)
+                item.pick = item.axe = item.hammer = 0;
             item.autoReuse = true;
             item.useTurn = true;
             bool valid = CheckItemValidityFull(player, item, lastUsedItem, FakePlayerType);
@@ -209,6 +216,12 @@ namespace SOTS.FakePlayer
             }
             player.cursorItemIconEnabled = saveCursorIconEnabled;
             player.cursorItemIconID = saveCursorIconID;
+            if (FakePlayerType == FakePlayerTypeID.Tesseract)
+            {
+                item.pick = savePick;
+                item.axe = saveAxe;
+                item.hammer = saveHammer;
+            }
             item.autoReuse = saveAutoSwing;
             item.useTurn = saveUseTurn;
             SupressNetMessage13and41 = false;
@@ -318,8 +331,16 @@ namespace SOTS.FakePlayer
                 {
                     player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
                 }
-                if (!player.controlUseItem)
-                    player.controlUseItem = ownersControlUseItem;
+                if(FakePlayerType == FakePlayerTypeID.Tesseract)
+                {
+                    if (!player.controlUseItem)
+                        player.controlUseItem = ForceItemUse;
+                }
+                else
+                {
+                    if (!player.controlUseItem)
+                        player.controlUseItem = ownersControlUseItem;
+                }
                 if (!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
                     player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
                 player.ItemCheck(); //Run the actual item use code
@@ -328,6 +349,7 @@ namespace SOTS.FakePlayer
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
             player.controlUseItem = false;
+            ForceItemUse = false;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             if (FakePlayerType == FakePlayerTypeID.Hydro)

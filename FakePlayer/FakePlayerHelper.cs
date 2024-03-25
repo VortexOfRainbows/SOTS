@@ -185,6 +185,7 @@ namespace SOTS.FakePlayer
         {
             if (FakeOwnerIdentity == -1)
                 return;
+            projectile.ownerHitCheck = false; //Projectiles owned by fake players should not need collision to hit NPCs
             Projectile fakePlayer = Main.projectile.Where(x => x.identity == FakeOwnerIdentity).First();
             if(fakePlayer == null) 
                 return;

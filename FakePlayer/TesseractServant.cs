@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Common.GlobalNPCs;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace SOTS.FakePlayer
 {
@@ -43,6 +45,8 @@ namespace SOTS.FakePlayer
 		}
         public override void AI()
 		{
+            if (FakePlayer == null)
+                return;
 			Player player = Main.player[Projectile.owner];
 			if(!player.HasBuff<TesseractBuff>())
             {
@@ -53,25 +57,41 @@ namespace SOTS.FakePlayer
                 Projectile.timeLeft = 6;
             }
 			Vector2 idlePosition = player.Center;
-			if (Main.myPlayer == player.whoAmI)
-			{
-				cursorArea = Main.MouseWorld;
-                Direction = Math.Sign(cursorArea.X - Projectile.Center.X);
-            }
-            if (Main.myPlayer == player.whoAmI)
+
+            float maxPursuitRange = 1800;
+            float nearbyPursuitRange = 240;
+
+            int target = SOTSNPCs.FindTarget_Basic(Projectile.Center, nearbyPursuitRange, this, false);
+            if(target == -1 && (FakePlayer.itemAnimation <= 0 || FakePlayer.heldItem.IsAir))
+                target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange - nearbyPursuitRange, this, true);
+            int oldMouseX = Main.mouseX;
+            int oldMouseY = Main.mouseY;
+
+            if (target != -1)
             {
-                cursorArea = Main.MouseWorld;
-                if (FakePlayer.itemAnimation <= 0 || FakePlayer.heldItem.IsAir)
+                NPC npc = Main.npc[target];
+                cursorArea = npc.Center;
+
+                Vector2 result = npc.Center - Main.screenPosition;
+                Main.mouseX = (int)result.X;
+                Main.mouseY = (int)result.Y;
+
+                FakePlayer.ForceItemUse = true;
+
+                Direction = Math.Sign(npc.Center.X - Projectile.Center.X);
+            }
+            else
+            {
+                if (Main.myPlayer == player.whoAmI)
                 {
-                    Direction = player.direction;
-                }
-                if (FakePlayer.itemAnimation == FakePlayer.itemAnimationMax && FakePlayer.itemAnimationMax != 0)
-                {
-                    Direction = Math.Sign(cursorArea.X - Projectile.Center.X);
+                    if (FakePlayer.itemAnimation <= 0 || FakePlayer.heldItem.IsAir)
+                    {
+                        Direction = player.direction;
+                    }
                 }
             }
             int TrailingType = FakePlayer.TrailingType;
-            if (cursorArea != Vector2.Zero)
+            if (cursorArea != Vector2.Zero || TrailingType == 0)
             {
                 if (TrailingType == 0)
                 {
@@ -94,30 +114,28 @@ namespace SOTS.FakePlayer
                     toCursor.Y *= 0.4125f;
                     idlePosition += toCursor;
                 }
-                if (TrailingType == 3) //melee
+                float appropriateMeleeDistance = 64;
+                if(FakePlayer.heldItem != null && !FakePlayer.heldItem.IsAir)
                 {
-                    Vector2 toCursor = cursorArea - player.Center;
-                    float length = toCursor.Length();
-                    if (length > 720)
-                        length = 720;
-                    float lengthToCursor = -32 + length;
-                    toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
-                    idlePosition += toCursor;
+                    appropriateMeleeDistance = FakePlayer.heldItem.Size.Length();
+                    if(FakePlayer.heldItem.CountsAsClass(DamageClass.SummonMeleeSpeed))
+                    {
+                        appropriateMeleeDistance += 128f;
+                    }
                 }
-                if (TrailingType == 4) //melee, but limitted range
+                if (TrailingType == 3 || TrailingType == 4) //melee
                 {
                     Vector2 toCursor = cursorArea - player.Center;
                     float length = toCursor.Length();
-                    if (length > 480)
-                        length = 480;
-                    idlePosition.Y += 8f;
-                    float lengthToCursor = -64 + length;
+                    if (length > maxPursuitRange)
+                        length = maxPursuitRange;
+                    float lengthToCursor = -appropriateMeleeDistance + length;
                     toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
                     idlePosition += toCursor;
                 }
                 Vector2 toIdle = idlePosition - Projectile.Center;
                 float dist = toIdle.Length();
-                float speed = 3 + (float)Math.Pow(dist, 1.45) * 0.002f;
+                float speed = 3 + (float)Math.Pow(dist, 2) * 0.0025f;
                 if (dist < speed)
                 {
                     speed = toIdle.Length();
@@ -145,6 +163,9 @@ namespace SOTS.FakePlayer
                 UpdateItems(player);
                 //Projectile.velocity = FakePlayer.Velocity;
             }
+
+            Main.mouseX = oldMouseX;
+            Main.mouseY = oldMouseY;
             if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
                 Projectile.netUpdate = true;
         }
