@@ -41,6 +41,11 @@ namespace SOTS.FakePlayer
         {
             FakePlayerHelper.FakePlayerPossessingProjectile.Add(Type);
             Main.projPet[Projectile.type] = true;
+            SafeSetStaticDefaults();
+        }
+        public virtual void SafeSetStaticDefaults()
+        {
+            
         }
         public sealed override bool? CanCutTiles() => false;
         public sealed override bool MinionContactDamage() => false;

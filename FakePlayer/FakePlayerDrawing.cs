@@ -24,13 +24,13 @@ namespace SOTS.FakePlayer
         {
             if (outLine)
             {
-                if(type == 1)
+                if (type == FakePlayerTypeID.Hydro)
                 {
                     return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantWingsOutline").Value;
                 }
                 return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWingsOutline").Value;
             }
-            if (type == 1)
+            if (type == FakePlayerTypeID.Hydro)
             {
                 return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantWings").Value;
             }
@@ -40,13 +40,21 @@ namespace SOTS.FakePlayer
         {
             if(outLine)
             {
-                if (type == 1)
+                if (type == FakePlayerTypeID.Tesseract)
+                {
+                    return ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractServantSheetOutline").Value;
+                }
+                if (type == FakePlayerTypeID.Hydro)
                 {
                     return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantSheetOutline").Value;
                 }
                 return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantSheetGreen").Value;
             }
-            if(type == 1)
+            if(type == FakePlayerTypeID.Tesseract)
+            {
+                return ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractServantSheet").Value;
+            }
+            if (type == FakePlayerTypeID.Hydro)
             {
                 return ModContent.Request<Texture2D>("SOTS/FakePlayer/HydroServantSheet").Value;
             }
@@ -100,13 +108,12 @@ namespace SOTS.FakePlayer
         }
         public static void DrawTail(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outLine = false)
         {
-            if (fakePlayer.FakePlayerType == 0)
+            if (fakePlayer.FakePlayerType == FakePlayerTypeID.Subspace || fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract)
             {
-                Texture2D texture = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTail").Value;
-                Texture2D textureOutline = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailOutline").Value;
-                Texture2D texture2 = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailScales").Value;
-                Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+                Texture2D texture = fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract ? ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractServantTail").Value : ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTail").Value;
+                Texture2D textureOutline = fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract ? ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractServantTailOutline").Value : ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailOutline").Value;
                 Vector2 center = drawInfo.Position + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 + 2);
+                Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
                 Vector2 velo = new Vector2(0, 4f);
                 float scale = 1f;
                 List<Vector2> positions = new List<Vector2>();
@@ -140,9 +147,13 @@ namespace SOTS.FakePlayer
                     {
                         drawInfo.DrawDataCache.Add(new DrawData(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
                     }
-                    for (int i = 8; i >= 0; i--)
+                    if(fakePlayer.FakePlayerType == FakePlayerTypeID.Subspace)
                     {
-                        drawInfo.DrawDataCache.Add(new DrawData(texture2, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                        Texture2D textureInner = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailScales").Value;
+                        for (int i = 8; i >= 0; i--)
+                        {
+                            drawInfo.DrawDataCache.Add(new DrawData(textureInner, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                        }
                     }
                 }
             }
@@ -215,6 +226,8 @@ namespace SOTS.FakePlayer
         }
         public static void DrawWings(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, int Frame, bool outline)
         {
+            if (fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract)
+                return;
             int Direction = drawInfo.drawPlayer.direction;
             Texture2D texture = WingTexture(fakePlayer.FakePlayerType, false);
             Texture2D textureOutline = WingTexture(fakePlayer.FakePlayerType, true);
@@ -278,7 +291,7 @@ namespace SOTS.FakePlayer
                 if(fakePlayer.FakePlayerType == drawType)
                 {
                     bool canIDraw = fakePlayer.PrepareDrawing(ref drawInfo, player, drawState);
-                    if(fakePlayer.FakePlayerType == 1)
+                    if(fakePlayer.FakePlayerType == FakePlayerTypeID.Hydro)
                     {
                         if(drawState == DrawStateID.Border || drawState == DrawStateID.Wings)
                         {

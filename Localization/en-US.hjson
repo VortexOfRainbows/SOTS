@@ -5310,6 +5310,11 @@ Mods: {
 					The second slash will hit enemies repeatedly
 					'''
 			}
+
+			Tesseract: {
+				DisplayName: Tesseract
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -5692,7 +5697,12 @@ Mods: {
 
 			EmberOiled: {
 				DisplayName: Ember Oiled
-				Description: Mods.SOTS.Buffs.EmberOiled.Description
+				Description: Instantly activate fire DOT
+			}
+
+			TesseractBuff: {
+				DisplayName: Tesseract
+				Description: You are now everywhere, everything, all at once
 			}
 		}
 
@@ -6901,6 +6911,7 @@ Mods: {
 			EmberDamage.DisplayName: Ember Damage
 			SpawnEnemyProj.DisplayName: Spawn Enemy Proj
 			EarthGrinderSlash.DisplayName: Earth Grinder Slash
+			TesseractServant.DisplayName: Tesseract Servant
 		}
 
 		DamageClasses: {

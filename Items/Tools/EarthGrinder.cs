@@ -36,7 +36,7 @@ namespace SOTS.Items.Tools
 
 			Item.shoot = ModContent.ProjectileType<EarthGrinderSlash>();
 			Item.shootSpeed = 12;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.noUseGraphic = true;
             Item.noMelee = true;
 
@@ -56,14 +56,14 @@ namespace SOTS.Items.Tools
             {
                 Item.noMelee = true;
                 Item.noUseGraphic = true;
-                Item.useStyle = ItemUseStyleID.Shoot;
+                //Item.useStyle = ItemUseStyleID.Shoot; //Switching use styles breaks the functionality of this item for subspace servants
                 Item.channel = false;
             }
             else
             {
                 Item.noMelee = false;
                 Item.noUseGraphic = false;
-                Item.useStyle = ItemUseStyleID.Swing;
+                //Item.useStyle = ItemUseStyleID.Swing;
                 Item.channel = true;
             }
             return true;

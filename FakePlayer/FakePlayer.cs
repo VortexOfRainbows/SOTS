@@ -81,8 +81,6 @@ namespace SOTS.FakePlayer
             #region check if item is useable
             if (!FakePlayerHelper.FakePlayerItemWhitelist.Contains(item.type) || lastUsedItem == null)
             {
-                Projectile proj = new Projectile();
-                proj.SetDefaults(item.shoot);
                 if (FakePlayerHelper.FakePlayerItemBlacklist.Contains(item.type))
                 {
                     canUseItem = false;
@@ -95,8 +93,6 @@ namespace SOTS.FakePlayer
                 {
                     canUseItem = false;
                 }
-                proj.active = false;
-                proj.Kill();
             }
             bool additionalValid = true;
             if(fakePlayerType == FakePlayerTypeID.Hydro)
@@ -576,7 +572,7 @@ namespace SOTS.FakePlayer
         {
             if(green)
             {
-                ConvertItemTextureToGreen(drawInfo.heldItem);
+                ConvertItemTextureToSolid(drawInfo.heldItem);
                 Draw27_HeldItem(ref drawInfo, new Vector2(1, 0));
                 Draw27_HeldItem(ref drawInfo, new Vector2(-1, 0));
                 Draw27_HeldItem(ref drawInfo, new Vector2(0, 1));
@@ -731,7 +727,7 @@ namespace SOTS.FakePlayer
         public Texture2D saveGreenTexture;
         public Texture2D saveNormalTexture;
         public int lastItemID = -1;
-        public void ConvertItemTextureToGreen(Item item)
+        public void ConvertItemTextureToSolid(Item item)
         {
             saveNormalTexture = TextureAssets.Item[item.type].Value;
             if (item.type != lastItemID)
@@ -746,7 +742,15 @@ namespace SOTS.FakePlayer
         }
         public Color MyBorderColor()
         {
-            return FakePlayerType == FakePlayerTypeID.Subspace ? new Color(0, 255, 0) : new Color(255, 255, 0);
+            if(FakePlayerType == FakePlayerTypeID.Subspace)
+            {
+                return new Color(0, 255, 0);
+            }
+            if (FakePlayerType == FakePlayerTypeID.Hydro)
+            {
+                return new Color(255, 255, 0);
+            }
+            return new Color(255, 255, 255);
         }
         public void ConvertItemTextureBackToNormal(Item item)
         {

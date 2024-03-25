@@ -70,6 +70,11 @@ Daily Log:
 3. Removed Knockback from Glow Whip sparkles, as repeated hits would glitch grounded enemies into the floor
 4. Made Pre-HM Ghasts have a max speed of 8
 5. Fix Construct NPCs not dropping their respective plating blocks
+6. Remove debug text for resizing render targets
+7. Fixed issue where Earth Grinder right click would cause item location to get stuck when swinging after a subsequent left click when used by a fake player
+8. Fixed issue where anomaly blocks were not framed in multiplayer
+9. Fixed issue where Earthen Spirit would sometimes deal damage even while invisible
+10. WIP "Tesseract" summon staff
 
 
 --- Update 0.24.0.2 ---

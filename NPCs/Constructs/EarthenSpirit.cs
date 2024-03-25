@@ -41,7 +41,11 @@ namespace SOTS.NPCs.Constructs
             NPC.netAlways = true;
 			NPC.rarity = 2;
 		}
-		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return NPC.alpha < 200 ? base.CanHitPlayer(target, ref cooldownSlot) : false;
+        }
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
 			NPC.damage = (int)(NPC.damage * 7 / 10);
 			NPC.lifeMax = (int)(NPC.lifeMax * 5 / 6);
@@ -51,7 +55,7 @@ namespace SOTS.NPCs.Constructs
 			writer.Write(phase);
 			writer.Write(counter);
 			writer.Write(saveData);
-			writer.Write(dmg);
+			writer.Write(hasHidden);
 			writer.Write(owner);
 			writer.Write(NPC.scale);
 			writer.Write(NPC.width);
@@ -67,7 +71,7 @@ namespace SOTS.NPCs.Constructs
 			phase = reader.ReadInt32();
 			counter = reader.ReadInt32();
 			saveData = reader.ReadSingle();
-			dmg = reader.ReadInt32();
+            hasHidden = reader.ReadBoolean();
 			owner = reader.ReadInt32();
 			NPC.scale = reader.ReadSingle();
 			NPC.width = reader.ReadInt32();
@@ -84,7 +88,7 @@ namespace SOTS.NPCs.Constructs
 		private Vector2 reticlePos = new Vector2(-1, -1);
 		private float reticleAlpha = 0;
 		int phase = 1;
-		int dmg = -1;
+		bool hasHidden = false;
 		int counter = 0;
 		float saveData = -1;
 		int owner = -1;
@@ -121,11 +125,10 @@ namespace SOTS.NPCs.Constructs
 				}
 				return false;
 			}
-			if(NPC.alpha >= 200 && dmg == -1)
-			{
-				NPC.dontTakeDamage = true;
-				dmg = NPC.damage;
-				NPC.damage = 0;
+			if(NPC.alpha >= 200 && !hasHidden)
+            {
+				hasHidden = true;
+                NPC.dontTakeDamage = true;
 				for(int i = 0; i < 10; i++)
 				{
 					reticlePos = player.Center + new Vector2(Main.rand.Next(-256, 257), Main.rand.Next(-256, 257));
@@ -142,12 +145,11 @@ namespace SOTS.NPCs.Constructs
 					NPC.netUpdate = true;
 				}
 			}
-			else if (dmg != -1 && NPC.alpha < 200)
+			else if (hasHidden && NPC.alpha < 200)
 			{
-				NPC.damage = dmg;
-				dmg = -1;
 				NPC.dontTakeDamage = false;
-			}
+				hasHidden = false;
+            }
 			if (saveData > 0)
 			{
 				NPC.dontTakeDamage = true;

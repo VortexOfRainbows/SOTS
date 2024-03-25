@@ -132,7 +132,7 @@ namespace SOTS
 		}
 		public static void ResizeTargets()
 		{
-			Main.NewText("resized");
+			//Main.NewText("resized");
 			Main.QueueMainThreadAction(() =>
 			{
 				TargetProj = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight);
@@ -571,6 +571,7 @@ namespace SOTS
                 ParticleHelper.DrawWaterParticles(true);
                 FakePlayerDrawing.DrawHydroFakePlayersFull(); //Hydro servant has a totally unique shader, so it must be drawn in different steps... The particle layer will be drawn before this 
                 FakePlayerDrawing.DrawFakePlayers(0, DrawStateID.All); //Subspace servant has no shader, and thus can be drawn in its entirety right away
+                FakePlayerDrawing.DrawFakePlayers(2, DrawStateID.All); //Subspace servant has no shader, and thus can be drawn in its entirety right away
 
                 ConduitHelper.preDrawBeforePlayers();
                 for (int i = 0; i < Main.player.Length; i++)

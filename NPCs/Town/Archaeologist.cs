@@ -32,6 +32,7 @@ using SOTS.Common;
 using SOTS.Buffs.Debuffs;
 using SOTS.Items.Crushers;
 using SOTS.Items.Earth.Glowmoth;
+using Terraria.Chat;
 
 namespace SOTS.NPCs.Town
 {
@@ -1169,7 +1170,8 @@ namespace SOTS.NPCs.Town
 			color.A = 0;
 			if (Main.netMode == NetmodeID.Server && SOTSWorld.GlobalCounter % 120 == 0)
 			{
-				for (int k = 0; k < 255; k++)
+				//ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("hi"), Color.White, -1);
+				for (int k = 0; k < Main.maxNetPlayers; k++)
 				{
 					if (Main.player[k].active)
 					{
@@ -1182,12 +1184,15 @@ namespace SOTS.NPCs.Town
 					runOnce = false;
 				}
 			}
-			else if(Main.netMode == NetmodeID.SinglePlayer)
+			else if(Main.netMode != NetmodeID.Server)
 			{
-				if (runOnce)
+				if (runOnce || SOTSWorld.GlobalCounter % 120 == 0)
 				{
-					FramePortalBlocks();
-					runOnce = false;
+					if(Main.LocalPlayer.Distance(positionOfOtherPortal) < 2000)
+                    {
+                        FramePortalBlocks();
+                        runOnce = false;
+                    }
 				}
 			}
 			if (alphaBarrier < 1)
