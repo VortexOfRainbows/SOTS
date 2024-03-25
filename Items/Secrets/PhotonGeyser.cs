@@ -88,7 +88,7 @@ namespace SOTS.Items.Secrets
 		}
         public override void SetDefaults()
 		{
-			Item.damage = 34;
+			Item.damage = 33;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 74;
 			Item.height = 36;
@@ -105,7 +105,7 @@ namespace SOTS.Items.Secrets
 			Item.shootSpeed = 22f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-			Item.mana = 50;
+			Item.mana = 60;
 			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

@@ -35,12 +35,12 @@ Update Objectives:
 9. Remote Detonator from Isaac
 10. Tesseract Summon item which allows summoning automatically attacking player clones
 11. Fix issue where pyramid crates spawn incorrectly
-12. Nerf Photon Geyser again :(
+12. Nerf Night Illuminator (it synergizes too much with too many items)
 13. Being in the the top left of the world will crash the game... presumed TMODLOADER bug? Need to modify Diamond Island spawn location (move it down a bit and to the right maybe)
 
 
 ---WIP List---
-N/A
+Tesseract
 
 ---Code Refactoring Needed List---
 N/A
@@ -66,6 +66,9 @@ Look down for Abandoned Village todo and progress...
 	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 Daily Log:
+
+3/25/24
+1. Photon Geyser Damage 34 -> 33, mana cost 50 -> 60
 
 3/23/24 to 3/25/24
 1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated
