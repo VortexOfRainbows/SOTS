@@ -18,8 +18,8 @@ namespace SOTS.NPCs
 	public class FlamingGhast : ModNPC
 	{	float ai1 = 0;
 		public override void SetDefaults()
-		{
-            NPC.aiStyle =0; 
+        {
+            NPC.aiStyle = 0;
             NPC.lifeMax = 185;   
             NPC.damage = 45; 
             NPC.defense = 20;  

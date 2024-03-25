@@ -60,7 +60,8 @@ namespace SOTS.NPCs.Boss.Polaris
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
         }
 		public override void SetDefaults()
-		{
+        {
+            NPC.aiStyle = 0;
             NPC.lifeMax = 36000;
             NPC.damage = 80; 
             NPC.defense = 28;  

@@ -17,7 +17,8 @@ namespace SOTS.NPCs
 	public class BleedingGhast : ModNPC
 	{	float ai1 = 0;
 		public override void SetDefaults()
-		{
+        {
+            NPC.aiStyle = 0;
             NPC.lifeMax = 150;   
             NPC.damage = 70; 
             NPC.defense = 16;  

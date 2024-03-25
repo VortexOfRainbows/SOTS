@@ -26,8 +26,9 @@ namespace SOTS.NPCs.Anomaly
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
         }
         public override void SetDefaults()
-		{
-			NPC.lifeMax = 250;  
+        {
+            NPC.aiStyle = 0;
+            NPC.lifeMax = 250;  
 			NPC.damage = 60; 
 			NPC.defense = 7;  
 			NPC.knockBackResist = 0.0f;

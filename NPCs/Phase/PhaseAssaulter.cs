@@ -46,7 +46,7 @@ namespace SOTS.NPCs.Phase
         public override void SetDefaults()
         {
             NPC.knockBackResist = 0f;
-            NPC.aiStyle =0;
+            NPC.aiStyle = 0;
             NPC.lifeMax = 9500;
             NPC.damage = 100;
             NPC.defense = 30;

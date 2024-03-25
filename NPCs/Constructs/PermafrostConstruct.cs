@@ -24,7 +24,7 @@ namespace SOTS.NPCs.Constructs
         }
         public override void SetDefaults()
 		{
-			NPC.aiStyle =26; //unicorn AI
+			NPC.aiStyle = 26; //unicorn AI
 			NPC.lifeMax = 275;  
 			NPC.damage = 25; 
 			NPC.defense = 10;  

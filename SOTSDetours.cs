@@ -100,6 +100,9 @@ namespace SOTS
 			//Used to make sure you cannot break pyramid walls before Pharaoh's curse
 			On_WorldGen.KillWall_CheckFailure += On_WorldGen_KillWall_CheckFailure;
 
+			//Make sure fake player minions can hit npcs through walls
+			On_Player.CanHit += On_Player_CanHit;
+
             if (!Main.dedServ)
 				ResizeTargets();
 		}
@@ -941,6 +944,14 @@ namespace SOTS
                 return !SOTSWorld.downedCurse;
 			}
             return orig(fail, tileCache);
+		}
+		private static bool On_Player_CanHit(On_Player.orig_CanHit orig, Player self, Entity ent)
+        {
+            if (FakePlayerProjectile.OwnerOfThisUpdateCycle != -1) //Allow hitting through walls with fake players
+            {
+				return true;
+			}
+			return orig(self, ent);
 		}
     }
 }

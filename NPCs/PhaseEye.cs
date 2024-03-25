@@ -45,7 +45,7 @@ namespace SOTS.NPCs
         }
 		public override void SetDefaults()
 		{
-            NPC.aiStyle =0; 
+            NPC.aiStyle = 0; 
             NPC.lifeMax = 50;   
             NPC.damage = 50; 
             NPC.defense = 0;  

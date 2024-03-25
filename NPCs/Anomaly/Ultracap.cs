@@ -25,7 +25,8 @@ namespace SOTS.NPCs.Anomaly
 			Main.npcFrameCount[NPC.type] = 10;
 		}
         public override void SetDefaults()
-		{
+        {
+            NPC.aiStyle = 0;
             NPC.lifeMax = 90;   
             NPC.damage = 36; 
             NPC.defense = 10;  

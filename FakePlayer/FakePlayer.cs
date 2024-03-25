@@ -337,13 +337,14 @@ namespace SOTS.FakePlayer
                 {
                     if(lastUsedItemType == -1)
                         lastUsedItemType = heldItem.type;
-                    if (!player.controlUseItem)
-                        player.controlUseItem = ForceItemUse;
                     if (heldItem.type != lastUsedItemType)
                     {
                         KillMyOwnedProjectiles = true;
                     }
                     lastUsedItemType = heldItem.type;
+
+                    if (ForceItemUse)
+                        player.controlUseItem = ForceItemUse;
                 }
                 else
                 {
@@ -356,10 +357,8 @@ namespace SOTS.FakePlayer
             }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
-            KillMyOwnedProjectiles = false;
             SetupBodyFrame(player); //run code to get frame after
             player.controlUseItem = false;
-            ForceItemUse = false;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             if (FakePlayerType == FakePlayerTypeID.Hydro)
@@ -369,6 +368,8 @@ namespace SOTS.FakePlayer
                 else if (itemAnimation <= 0 && (BonusItemAnimationTime <= 0 || !valid))
                     SkipDrawing = true;
             }
+            ForceItemUse = false;
+            KillMyOwnedProjectiles = false;
             FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
         }
         public void HydroServantPostUpdate(Player player)

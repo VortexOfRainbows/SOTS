@@ -62,11 +62,12 @@ namespace SOTS.FakePlayer
             float nearbyPursuitRange = 240;
 
             int target = SOTSNPCs.FindTarget_Basic(Projectile.Center, nearbyPursuitRange, this, false);
-            if(target == -1 && (FakePlayer.itemAnimation <= 0 || FakePlayer.heldItem.IsAir))
+            if(target == -1)
                 target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange - nearbyPursuitRange, this, true);
             int oldMouseX = Main.mouseX;
             int oldMouseY = Main.mouseY;
             bool foundTarget = false;
+            int TrailingType = FakePlayer.TrailingType;
             if (target != -1)
             {
                 foundTarget = true;
@@ -85,22 +86,18 @@ namespace SOTS.FakePlayer
             {
                 if (Main.myPlayer == player.whoAmI)
                 {
-                    if (FakePlayer.itemAnimation <= 0 || FakePlayer.heldItem.IsAir)
-                    {
-                        Direction = player.direction;
-                    }
+                    //Direction = player.direction;
                 }
             }
             if (!foundTarget)
             {
                 //FakePlayer.KillMyOwnedProjectiles = true;
             }
-            int TrailingType = FakePlayer.TrailingType;
             if (cursorArea != Vector2.Zero || TrailingType == 0)
             {
                 if (TrailingType == 0)
                 {
-                    idlePosition.X -= player.direction * 64f;
+                    idlePosition.Y -= 64f;
                 }
                 if (TrailingType == 1) //magic
                 {

@@ -5887,6 +5887,18 @@ Mods: {
 			GemChestTile: {
 				MapEntry0: Gem Chest
 				MapEntry1: Locked Gem Chest
+				MapEntry2: Gem Chest
+				MapEntry3: Locked Gem Chest
+				MapEntry4: Gem Chest
+				MapEntry5: Locked Gem Chest
+				MapEntry6: Gem Chest
+				MapEntry7: Locked Gem Chest
+				MapEntry8: Gem Chest
+				MapEntry9: Locked Gem Chest
+				MapEntry10: Gem Chest
+				MapEntry11: Locked Gem Chest
+				MapEntry12: Gem Chest
+				MapEntry13: Locked Gem Chest
 			}
 		}
 
@@ -6179,9 +6191,8 @@ Mods: {
 			0: Reduces damage taken by 10%
 			1:
 				'''
-				      Increases max minions and sentries by 1
-				      Increases damage by 10%
-				      
+				Increases max minions and sentries by 1
+				Increases damage by 10%
 				'''
 			2: Increases attack speed by 12%
 			3: Increases critical strike chance by 10%

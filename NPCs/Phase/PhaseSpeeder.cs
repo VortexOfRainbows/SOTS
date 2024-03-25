@@ -47,7 +47,7 @@ namespace SOTS.NPCs.Phase
         }
 		public override void SetDefaults()
 		{
-            NPC.aiStyle =-1; 
+            NPC.aiStyle = -1; 
             NPC.lifeMax = 650;   
             NPC.damage = 64; 
             NPC.defense = 42;  

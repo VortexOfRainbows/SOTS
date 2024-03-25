@@ -36,6 +36,7 @@ Update Objectives:
 10. Tesseract Summon item which allows summoning automatically attacking player clones
 11. Fix issue where pyramid crates spawn incorrectly
 12. Nerf Photon Geyser again :(
+13. Being in the the top left of the world will crash the game... presumed TMODLOADER bug? Need to modify Diamond Island spawn location (move it down a bit and to the right maybe)
 
 
 ---WIP List---
@@ -70,13 +71,15 @@ Daily Log:
 1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated
 2. Fixed some localization and earth grinder bug
 3. Removed Knockback from Glow Whip sparkles, as repeated hits would glitch grounded enemies into the floor
-4. Made Pre-HM Ghasts have a max speed of 8
+4. Fixed issue where Planetoid, Ghasts, Maligmor, and 
 5. Fix Construct NPCs not dropping their respective plating blocks
 6. Remove debug text for resizing render targets
 7. Fixed issue where Earth Grinder right click would cause item location to get stuck when swinging after a subsequent left click when used by a fake player
 8. Fixed issue where anomaly blocks were not framed in multiplayer
 9. Fixed issue where Earthen Spirit would sometimes deal damage even while invisible
 10. WIP "Tesseract" summon staff
+11. Fake Players (servants) can now hit enemies through walls always
+12. Fix strange tooltip localization with elemental amulet
 
 
 --- Update 0.24.0.2 ---

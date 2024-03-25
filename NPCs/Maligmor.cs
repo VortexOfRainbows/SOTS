@@ -14,8 +14,10 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class Maligmor : ModNPC
-	{		public override void SetDefaults()
-		{
+	{		
+		public override void SetDefaults()
+        {
+            NPC.aiStyle = 0;
             NPC.lifeMax = 200;   
             NPC.damage = 40; 
             NPC.defense = 10;  
