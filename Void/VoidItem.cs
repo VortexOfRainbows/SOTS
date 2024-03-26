@@ -165,7 +165,8 @@ namespace SOTS.Void
 				return false;
 			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
 			int finalCost = VoidCost(player);
-			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < finalCost && !Item.CountsAsClass(DamageClass.Summon) && !voidPlayer.frozenVoid)
+			bool canDrainMana = BeforeDrainMana(player);
+			if ((voidPlayer.safetySwitch && canDrainMana) && voidPlayer.voidMeter < finalCost && !Item.CountsAsClass(DamageClass.Summon) && !voidPlayer.frozenVoid)
 			{
 				return false;
 			}
@@ -175,7 +176,7 @@ namespace SOTS.Void
 			}
 			OnUseEffects(player);
 			//Item.mana = 0;
-			if(Item.useAmmo == 0 && BeforeDrainMana(player) && !Item.CountsAsClass(DamageClass.Summon))
+			if(Item.useAmmo == 0 && canDrainMana && !Item.CountsAsClass(DamageClass.Summon))
 				DrainMana(player);
 			if (Item.mana > 0)
 				player.statMana += Item.mana;

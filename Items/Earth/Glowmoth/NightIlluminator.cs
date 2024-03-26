@@ -27,7 +27,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 8;
+			Item.damage = 10;
 			Item.knockBack = 3f;
 			Item.mana = 10;
 			Item.width = 58;
@@ -78,7 +78,7 @@ namespace SOTS.Items.Earth.Glowmoth
 				return true;
 			}
 			player.AddBuff(Item.buffType, 2);
-			for(int i = 0; i< 3; i++)
+			for(int i = 0; i< 2; i++)
 				player.SpawnMinionOnCursor(source, player.whoAmI, ModContent.ProjectileType<MothMinion>(), Item.damage, knockback);
 			return false;
 		}

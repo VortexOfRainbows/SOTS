@@ -44,6 +44,8 @@ namespace SOTS.Items.Invidia
 		}
         public override bool BeforeDrainMana(Player player)
         {
+			if(player.overrideFishingBobber > 0)
+				return player.ownedProjectileCounts[player.overrideFishingBobber] <= 1;
             return player.ownedProjectileCounts[Item.shoot] <= 1;
         }
         public override int GetVoid(Player player)

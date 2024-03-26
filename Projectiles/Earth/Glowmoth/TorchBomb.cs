@@ -73,13 +73,14 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		{
 			Projectile.width = 14;
 			Projectile.height = 20;
-			Projectile.timeLeft = 35;
+			Projectile.timeLeft = 30;
 			Projectile.penetrate = 1;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
 			Projectile.tileCollide = true;
 			Projectile.ignoreWater = false;
 			Projectile.alpha = 0;
+			Projectile.extraUpdates = 1;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
@@ -96,7 +97,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				SOTSUtils.PlaySound(SoundID.Item61, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f, -0.1f);
 				runOnce = false;
 			}
-			if (!Main.rand.NextBool(3))
+			if (!Main.rand.NextBool(5))
 			{
 				Vector2 fuse = new Vector2(0, -10).RotatedBy(Projectile.rotation);
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4) + fuse, 0, 0, ModContent.DustType<AlphaDrainDust>());

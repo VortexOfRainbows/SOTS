@@ -72,8 +72,8 @@ namespace SOTS.WorldgenHelpers
 		}
 		private static void PlaceAndGenerateDiamond()
 		{
-			int i = 130 + WorldGen.genRand.Next(-10, 11); //140 tiles from left
-			int j = 90 + WorldGen.genRand.Next(-4, 5); //90 tiles from top
+			int i = 150 + WorldGen.genRand.Next(-10, 11); //140 tiles from left
+			int j = 100 + WorldGen.genRand.Next(-4, 5); //90 tiles from top
 			GenerateDiamondSkyStructure(i, j);
 		}
 		private static void PlaceAndGenerateTopaz()

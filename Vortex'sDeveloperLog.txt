@@ -34,10 +34,7 @@ Update Objectives:
 8. Torch Bomb Upgrade Item
 9. Remote Detonator from Isaac
 10. Tesseract Summon item which allows summoning automatically attacking player clones
-11. Fix issue where pyramid crates spawn incorrectly
-12. Nerf Night Illuminator (it synergizes too much with too many items)
-13. Being in the the top left of the world will crash the game... presumed TMODLOADER bug? Need to modify Diamond Island spawn location (move it down a bit and to the right maybe)
-
+11. Anomaly Relocator Item which relocates anomalies when used
 
 ---WIP List---
 Tesseract
@@ -70,6 +67,12 @@ Daily Log:
 3/25/24
 1. Photon Geyser Damage 34 -> 33, mana cost 50 -> 60
 2. Holoblade should no longer switch targets eradically in Multiplayer
+3. Torch Gun right click now explodes faster 35 -> 30 frames, has 1 extra update
+4. Night Illuminator damage 8 -> 10, now summons 2 moths instead of 3
+5. Fix issue where Evostone Fishing rod would consume void again when using an fishing bobber accessory
+6. Safety Switch should no longer prevent using void items when they would not normally consume void
+7. Pyramid crates should no longer spawn in the Pyramid with an incorrect tile offset
+8. The diamond gem structure now spawns 20 tiles closer to the right and 10 tiles further down, hopefully preventing a Top-Left corner WaterFall crash ???
 
 3/23/24 to 3/25/24
 1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated

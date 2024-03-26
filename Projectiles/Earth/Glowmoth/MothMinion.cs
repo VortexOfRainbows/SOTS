@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.minionSlots = 0.333f;
+			Projectile.minionSlots = 0.5f;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.netImportant = true;

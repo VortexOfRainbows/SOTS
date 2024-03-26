@@ -1420,7 +1420,7 @@ Mods: {
 				DisplayName: Night Illuminator
 				Tooltip:
 					'''
-					Summons three luminous moths to swarm your enemies
+					Summons two luminous moths to swarm your enemies
 					Right click to call the moths to your cursor
 					'''
 			}

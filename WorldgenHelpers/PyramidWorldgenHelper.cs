@@ -1695,7 +1695,7 @@ namespace SOTS.WorldgenHelpers
 			}
 			else
 			{
-				WorldGen.PlaceTile(x + 1, y, ModContent.TileType<PyramidCrateTile>());
+				WorldGen.PlaceTile(x, y, ModContent.TileType<PyramidCrateTile>());
 			}
 		}
 		public static void GenerateShrineRoom(int x, int y, Mod mod, int type = 0)
