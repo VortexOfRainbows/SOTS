@@ -1,0 +1,25 @@
+Update 0.24.0.3
+
+Additions:
+N/A
+
+Changes:
+1. Glow Whip sparkles no longer deal knockback
+2. Subspace Servant and Hydrokinetic Antannae can now hit enemies through walls more consistently with melee items and certain projectiles
+3. Photon Geyser damage 34 -> 33, mana cost 50 -> 60
+4. Night Illuminator damage 8 -> 10, now summons 2 moths instead of 3
+5. Torch Gun right click attack now explodes faster 35 -> 30 updates, 1 -> 2 updates per frame
+6. The diamond gem structure now spawns slightly more down and right, in order to prevent a certain game crash
+
+Fixes:
+1. Pyramid blocks and walls can no longer be blockswapped before appropirate bosses are defeated
+2. Fixed certain NPCs not deaccelerating due to AIStyle changes
+3. Constructs now properly drop their plating blocks again
+4. Removed debug text that would appear when resizing the game
+5. Fixed issue where the viewport visualized on a Wormhole did not properly frame blocks in multiplayer
+6. Fixed issue where Earthen Spirit would deal damage while invisible
+7. Fix error in Elemental Amulet tooltip for purple variant
+8. Holoblade should no longer switch targets eradically in Multiplayer
+9. Evostone Fishing rod should not consume void an additional time when using a bobber accessory
+10. Safety Switch should no longer prevent using void items that would not consume void
+11. Pyramid Crates that spawn in the Pyramid should no longer spawn with an incorrect tile offset

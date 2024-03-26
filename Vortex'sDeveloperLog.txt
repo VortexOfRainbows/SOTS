@@ -68,6 +68,10 @@ Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
+
+--- Update 0.24.0.3 ---
+
+
 3/25/24
 1. Photon Geyser Damage 34 -> 33, mana cost 50 -> 60
 2. Holoblade should no longer switch targets eradically in Multiplayer
