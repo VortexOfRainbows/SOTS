@@ -38,6 +38,10 @@ Update Objectives:
 
 ---WIP List---
 Tesseract
+1. Custom Item slots
+2. Seperate items for multiple summons
+3. Better animations / visuals
+4. Better movement logic
 
 ---Code Refactoring Needed List---
 N/A

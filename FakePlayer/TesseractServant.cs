@@ -46,7 +46,9 @@ namespace SOTS.FakePlayer
 		}
         private int target = -1;
         public override void AI()
-		{
+        {
+            int oldMouseX = Main.mouseX;
+            int oldMouseY = Main.mouseY;
             if (FakePlayer == null)
                 return;
 			Player player = Main.player[Projectile.owner];
@@ -58,14 +60,18 @@ namespace SOTS.FakePlayer
             {
                 Projectile.timeLeft = 6;
             }
-			Vector2 idlePosition = player.Center;
 
+			Vector2 idlePosition = player.Center;
             float maxPursuitRange = 1800;
             float nearbyPursuitRange = 240;
 
+            bool foundTarget = false;
             bool validItem = false;
             if(FakePlayer.heldItem != null)
                 validItem = FakePlayer.CheckItemValidityFull(player, FakePlayer.heldItem, FakePlayer.heldItem, FakePlayerTypeID.Tesseract);
+            int TrailingType = FakePlayer.ItemTrailingType(player.inventory[FakePlayer.UseItemSlot(player)]);
+            bool needsLOS = TrailingType == TrailingID.RANGED || TrailingType == TrailingID.MAGIC;
+
             if (target != -1)
             {
                 NPC prevTarget = Main.npc[target];
@@ -76,18 +82,18 @@ namespace SOTS.FakePlayer
                 else if (FakePlayer.itemAnimation <= 1)
                 {
                     target = -1;
+                } 
+                else if(needsLOS && !Collision.CanHitLine(Projectile.Center - -new Vector2(16, 16), 32, 32, prevTarget.position, prevTarget.width, prevTarget.height))
+                {
+                    target = -1;
                 }
             }
             if (target == -1 && validItem)
             {
-                target = SOTSNPCs.FindTarget_Basic(Projectile.Center, nearbyPursuitRange, this, false);
+                target = SOTSNPCs.FindTarget_Basic(Projectile.Center, nearbyPursuitRange, this, needsLOS);
                 if (target == -1)
                     target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange - nearbyPursuitRange, this, true);
             }
-            int oldMouseX = Main.mouseX;
-            int oldMouseY = Main.mouseY;
-            bool foundTarget = false;
-            int TrailingType = FakePlayer.ItemTrailingType(player.inventory[FakePlayer.UseItemSlot(player)]);
             NPC npc = null;
             if (target != -1)
             {
@@ -134,7 +140,7 @@ namespace SOTS.FakePlayer
                     float appropriateRangedDistance = 128;
                     if (npc != null && foundTarget)
                     {
-                        hasLOS = Collision.CanHitLine(Projectile.Center - new Vector2(4, 4), 8, 8, npc.position, npc.width, npc.height);
+                        hasLOS = Collision.CanHitLine(Projectile.Center - -new Vector2(16, 16), 32, 32, npc.position, npc.width, npc.height);
                         appropriateRangedDistance += npc.Size.Length() / 2f + (float)Math.Sqrt(npc.width * npc.height);
                     }
                     Vector2 toCursor = cursorArea - Projectile.Center;

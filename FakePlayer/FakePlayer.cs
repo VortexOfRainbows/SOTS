@@ -117,6 +117,10 @@ namespace SOTS.FakePlayer
             {
                 return false;
             }
+            if (item.consumable && item.stack <= 1)
+            {
+                return false;
+            }
             return true;
         }
         private static bool ValidItemForHydroPlayer(Item item)
