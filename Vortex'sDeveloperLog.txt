@@ -73,6 +73,8 @@ Daily Log:
 6. Safety Switch should no longer prevent using void items when they would not normally consume void
 7. Pyramid crates should no longer spawn in the Pyramid with an incorrect tile offset
 8. The diamond gem structure now spawns 20 tiles closer to the right and 10 tiles further down, hopefully preventing a Top-Left corner WaterFall crash ???
+9. Consumable items no longer count as melee-range for Fake Players
+10. More WIP Tesseract
 
 3/23/24 to 3/25/24
 1. Fixed issue where pyramid blocks and walls could be swapped using blockswap before appropriate bosses were defeated

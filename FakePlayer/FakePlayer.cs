@@ -99,21 +99,31 @@ namespace SOTS.FakePlayer
                 }
             }
             bool additionalValid = true;
-            if(fakePlayerType == FakePlayerTypeID.Hydro)
+            if(fakePlayerType == FakePlayerTypeID.Hydro && additionalValid)
             {
-                if(additionalValid)
-                {
-                    additionalValid = ValidItemForHydroPlayer(item);
-                }
+                additionalValid = ValidItemForHydroPlayer(item);
+            }
+            if(fakePlayerType == FakePlayerTypeID.Tesseract && additionalValid)
+            {
+                additionalValid = ValidItemForTesseractPlayer(item);
             }
             bool validItem = canUseItem && lastUsedItem.type == item.type && IsValidUseStyle(item) && (!subspacePlayer.servantIsVanity || fakePlayerType != FakePlayerTypeID.Subspace) && additionalValid;
             return validItem;
             #endregion
         }
+        private static bool ValidItemForTesseractPlayer(Item item)
+        {
+            if (item.createTile != -1)
+            {
+                return false;
+            }
+            return true;
+        }
         private static bool ValidItemForHydroPlayer(Item item)
         {
             bool uniqueUseConditions = false;
-            if (ItemTrailingType(item) == TrailingID.CLOSERANGE || ItemTrailingType(item) == TrailingID.MELEE || item.type == ItemID.FlareGun)
+            int trailingType = ItemTrailingType(item);
+            if (trailingType == TrailingID.CLOSERANGE || trailingType == TrailingID.MELEE || item.type == ItemID.FlareGun)
             {
                 if(item.pick > 0 || item.axe > 0 || item.createTile != -1 || FakePlayerHelper.HydroPlayerItemBlacklist.Contains(item.type))
                 {
@@ -126,7 +136,7 @@ namespace SOTS.FakePlayer
         public static int ItemTrailingType(Item item)
         {
             int returnType = TrailingID.RANGED;
-            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || item.consumable || FakePlayerHelper.CloseRangeItemsForFakePlayer.Contains(item.type))
+            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed) || FakePlayerHelper.CloseRangeItemsForFakePlayer.Contains(item.type) || IsPlaceable(item))
             {
                 if (item.noMelee && !IsPlaceable(item))
                     returnType = TrailingID.CLOSERANGE;
@@ -341,6 +351,11 @@ namespace SOTS.FakePlayer
                         lastUsedItemType = heldItem.type;
                     if (heldItem.type != lastUsedItemType)
                     {
+                        player.itemAnimation = -1;
+                        player.itemTime = -1;
+                        player.itemAnimationMax = -1;
+                        player.channel = false;
+                        canUseItem = false;
                         KillMyOwnedProjectiles = true;
                     }
                     lastUsedItemType = heldItem.type;
@@ -353,9 +368,12 @@ namespace SOTS.FakePlayer
                     if (!player.controlUseItem)
                         player.controlUseItem = ownersControlUseItem;
                 }
-                if (!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
-                    player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
-                player.ItemCheck(); //Run the actual item use code
+                if(canUseItem || player.channel) //Check again because these values could have changed
+                {
+                    if (!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
+                        player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
+                    player.ItemCheck(); //Run the actual item use code
+                }
             }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)

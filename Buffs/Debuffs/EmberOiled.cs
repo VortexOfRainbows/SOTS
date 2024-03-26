@@ -129,7 +129,7 @@ namespace SOTS.Buffs.Debuffs
             modifiers.DisableCrit();
             modifiers.FinalDamage += Projectile.ai[1];
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             DustCircle();
         }
