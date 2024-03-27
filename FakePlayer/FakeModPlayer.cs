@@ -1,18 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Celestial;
-using SOTS.Projectiles.Celestial;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Security.Permissions;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace SOTS.FakePlayer
 {
@@ -20,11 +12,17 @@ namespace SOTS.FakePlayer
     {
         public override void SetStaticDefaults()
         {
+
         }
         public bool foundItem = false;
         public bool servantActive = false;
         public bool servantIsVanity = false;
         public bool hasHydroFakePlayer = false;
+        public static int TesseractPlayerCount(Player player)
+        {
+            return FakeModPlayer.ModPlayer(player).tesseractPlayerCount;
+        }
+        public int tesseractPlayerCount => Player.ownedProjectileCounts[ModContent.ProjectileType<TesseractServant>()];
         public static FakeModPlayer ModPlayer(Player player)
         {
             return player.GetModPlayer<FakeModPlayer>();

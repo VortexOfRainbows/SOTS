@@ -4,6 +4,7 @@ using SOTS.Buffs.Debuffs;
 using SOTS.Common;
 using SOTS.Common.GlobalNPCs;
 using SOTS.FakePlayer;
+using SOTS.Items;
 using SOTS.Items.Celestial;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
@@ -796,13 +797,35 @@ namespace SOTS
 		private static void ItemSlot_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color(On_ItemSlot.orig_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color orig, SpriteBatch spriteBatch, Item[] inv, int context, int slot, Vector2 position, Color lightColor = default(Color))
         {
             PlayerInventorySlotsManager.SavedInventoryColor = Main.inventoryBack;
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             Item item = inv[slot];
-            if (PlayerInventorySlotsManager.DrawSubspaceSlot(item))
+            if (PlayerInventorySlotsManager.DrawSubspaceSlot(item) || PlayerInventorySlotsManager.DrawTesseractSlot(item, slot))
+            {
                 Main.inventoryBack = Color.Transparent;
+            }
+            FakeModPlayer subPlayer = FakeModPlayer.ModPlayer(player);
+			int tesCount = subPlayer.tesseractPlayerCount;
+            if (tesCount > 0)
+            {
+				if(slot < 49 && slot >= 49 - tesCount)
+                {
+                    if (item.type <= ItemID.None || item.stack <= 0)
+                    {
+                        int saveItemType = item.type;
+                        int saveItemStack = item.stack;
+                        item.type = ModContent.ItemType<Tesseract>();
+                        item.stack = 1;
+                        PlayerInventorySlotsManager.FakeBorderDrawCycle = true;
+                        orig(spriteBatch, inv, context, slot, position, lightColor);
+                        PlayerInventorySlotsManager.FakeBorderDrawCycle = false;
+                        item.type = saveItemType;
+                        item.stack = saveItemStack;
+                        return;
+                    }
+                }
+            }
             if (slot == 49)
             {
-				FakeModPlayer subPlayer = FakeModPlayer.ModPlayer(player);
 				if(subPlayer.servantActive && !subPlayer.servantIsVanity)
 				{
 					if(item.type <= ItemID.None || item.stack <= 0)
@@ -820,6 +843,7 @@ namespace SOTS
 					}
 				}
             }
+            PlayerInventorySlotsManager.RealBorderDrawCycleSlot = slot;
             orig(spriteBatch, inv, context, slot, position, lightColor);
 		}
 		private static float ItemSlot_DrawItemIcon(On_ItemSlot.orig_DrawItemIcon orig, Item item, int context, SpriteBatch spriteBatch, Vector2 screenPositionForItemCenter, float scale, float sizeLimit, Color environmentColor)
