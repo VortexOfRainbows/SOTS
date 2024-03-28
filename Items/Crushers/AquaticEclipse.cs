@@ -37,7 +37,7 @@ namespace SOTS.Items.Crushers
 		}
         public override bool CanShoot(Player player)
 		{
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
+			return true; // player.ownedProjectileCounts[Item.shoot] <= 0;
 		}
 		public override int GetVoid(Player player)
 		{

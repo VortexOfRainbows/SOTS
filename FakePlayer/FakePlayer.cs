@@ -379,9 +379,7 @@ namespace SOTS.FakePlayer
                     lastUsedItemType = heldItem.type;
                 if (heldItem.type != lastUsedItemType)
                 {
-                    player.itemAnimation = -1;
-                    player.itemTime = -1;
-                    player.itemAnimationMax = -1;
+                    ChargeDuration = player.itemAnimation = player.itemTime = player.itemAnimationMax = -1;
                     player.channel = false;
                     canUseItem = false;
                     KillMyOwnedProjectiles = true;
@@ -391,7 +389,6 @@ namespace SOTS.FakePlayer
                     }
                 }
                 lastUsedItemType = heldItem.type;
-
                 if (FakePlayerType == FakePlayerTypeID.Tesseract && UniqueUsageSlot >= 0)
                 {
                     int automaticUseTimer = fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames;
@@ -399,23 +396,41 @@ namespace SOTS.FakePlayer
                     {
                         if (!player.controlUseItem && !holdingTesseract)
                             player.controlUseItem = ownersControlUseItem;
-                        if(!holdingTesseract)
+                        if (!holdingTesseract)
                             player.controlUseTile = ownersControlUseTile;
                     }
                     else if (ForceItemUse)
                     {
-                        if (fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse)
+                        if (ChargeDuration < 0 && (player.ItemAnimationEndingOrEnded || player.ItemAnimationJustStarted))
                         {
-                            SupressSound = true;
-                            player.mouseInterface = Main.HoveringOverAnNPC = CaptureManager.Instance.Active = Main.SmartInteractShowingGenuine = false;
-                            SupressSound = false;
-                            player.controlUseTile = ForceItemUse;
-                            player.controlUseItem = false;
+                            ChargeDuration++;
                         }
-                        else
+                        if(ChargeDuration >= 0)
                         {
-                            player.controlUseItem = ForceItemUse;
-                            player.controlUseTile = false;  
+                            ChargeDuration++;
+                            if (ChargeDuration <= automaticUseTimer)
+                            {
+                                if (fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse)
+                                {
+                                    SupressSound = true;
+                                    player.mouseInterface = Main.HoveringOverAnNPC = CaptureManager.Instance.Active = Main.SmartInteractShowingGenuine = false;
+                                    SupressSound = false;
+
+                                    player.controlUseTile = ForceItemUse;
+                                    player.controlUseItem = false;
+                                }
+                                else
+                                {
+                                    player.controlUseItem = ForceItemUse;
+                                    player.controlUseTile = false;
+                                }
+                            }
+                            else
+                            {
+                                player.channel = false;
+                                player.controlUseItem = player.controlUseTile = false;
+                                ChargeDuration = -2;
+                            }
                         }
                     }
                 }
@@ -534,9 +549,9 @@ namespace SOTS.FakePlayer
             ///These values are used for right clicking. 
             PlayerSavedProperties.saveMouseInterface = player.mouseInterface;
             PlayerSavedProperties.saveHoveringOverAnNPC = Main.HoveringOverAnNPC;
-            SupressSound = true;
+            //SupressSound = true;
             PlayerSavedProperties.saveCaptureManagerActive = CaptureManager.Instance.Active;
-            SupressSound = false;
+            //SupressSound = false;
             PlayerSavedProperties.saveSmartInteractShowingGenuine = Main.SmartInteractShowingGenuine;
 
             //Save Player original values

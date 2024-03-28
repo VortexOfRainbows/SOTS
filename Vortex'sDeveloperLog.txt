@@ -74,6 +74,7 @@ Daily Log:
 
 3/26/24 to 3/28/24
 1. Tesseract WIP. Now can designate right or left click for how the item should be used automatically, also has custom inventory slots
+2. Tesseract can now designate time to use charge based items
 
 3/25/24
 1. Photon Geyser Damage 34 -> 33, mana cost 50 -> 60
