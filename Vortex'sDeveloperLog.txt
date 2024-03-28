@@ -40,10 +40,9 @@ Update Objectives:
 
 ---WIP List---
 Tesseract
-1. Custom Item slots
-2. Seperate items for multiple summons
-3. Better animations / visuals
-4. Better movement logic
+1. Better animations / visuals
+2. Better movement logic
+	a. Don't return to default position until done with item animations
 
 ---Code Refactoring Needed List---
 N/A
@@ -73,6 +72,8 @@ Daily Log:
 
 --- Update 0.24.0.3 ---
 
+3/26/24 to 3/28/24
+1. Tesseract WIP. Now can designate right or left click for how the item should be used automatically, also has custom inventory slots
 
 3/25/24
 1. Photon Geyser Damage 34 -> 33, mana cost 50 -> 60

@@ -22,6 +22,7 @@ using SOTS.Items.Celestial;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Microsoft.CodeAnalysis;
 using SOTS.Items.Tide;
+using System;
 
 namespace SOTS.FakePlayer
 {
@@ -193,14 +194,11 @@ namespace SOTS.FakePlayer
             if(fakePlayer == null) 
                 return;
             bool killMe = !FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) || !fakePlayer.active || fakePlayer.owner != projectile.owner;
-            if(fakePlayer.type == ModContent.ProjectileType<TesseractServant>())
+            if (fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
             {
-                if(fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
+                if (fppp.FakePlayer.KillMyOwnedProjectiles)
                 {
-                    if(fppp.FakePlayer.KillMyOwnedProjectiles)
-                    {
-                        killMe = true;
-                    }
+                    killMe = true;
                 }
             }
             if (killMe)
@@ -257,11 +255,16 @@ namespace SOTS.FakePlayer
         public static bool FakeBorderDrawCycle = false;
         public static int RealBorderDrawCycleSlot = -1;
         public static Color SavedInventoryColor;
+        public static bool SlotIsWithinTesseractSlotRange(Player player, int slot)
+        {
+            int bonusSlots = Math.Clamp(FakeModPlayer.TesseractPlayerCount(player), 0, 10);
+            return slot >= 40 && slot < 40 + bonusSlots;
+        }
         public static bool DrawTesseractSlot(Item item, int slot)
         {
             //Main.NewText(slot);
             Player player = Main.LocalPlayer;
-            bool correctSlot = slot >= 0 && (player.inventory[slot] == item && slot < 49 && slot >= 49 - FakeModPlayer.TesseractPlayerCount(player));
+            bool correctSlot = slot >= 0 && (player.inventory[slot] == item && SlotIsWithinTesseractSlotRange(player, slot));
             bool correctItem = item.type == ModContent.ItemType<Tesseract>() && (player.inventory.Contains(item) || player.armor.Contains(item));
             if (correctSlot || correctItem)
             {
@@ -272,7 +275,12 @@ namespace SOTS.FakePlayer
         public static bool DrawSubspaceSlot(Item item)
         {
             Player player = Main.LocalPlayer;
-            bool correctSlot = player.inventory[49] == item;
+            int slot = 49;
+            if(FakeModPlayer.TesseractPlayerCount(player) >= 10)
+            {
+                slot = 39;
+            }
+            bool correctSlot = player.inventory[slot] == item;
             bool correctItem = item.type == ModContent.ItemType<SubspaceLocket>() && (player.inventory.Contains(item) || player.armor.Contains(item));
             if ((correctSlot && FakeModPlayer.ModPlayer(player).servantActive && !FakeModPlayer.ModPlayer(player).servantIsVanity) || correctItem)
             {
@@ -284,6 +292,7 @@ namespace SOTS.FakePlayer
         public static void PreDrawSlots(Item item, SpriteBatch spriteBatch, Vector2 position, Color drawColor)
         {
             Player player = Main.LocalPlayer;
+            FakeModPlayer fmPlayer = FakeModPlayer.ModPlayer(player);
             if (DrawSubspaceSlot(item))
             {
                 bool correctItem = item.type == ModContent.ItemType<SubspaceLocket>() && (player.inventory.Contains(item) || player.armor.Contains(item));
@@ -294,7 +303,7 @@ namespace SOTS.FakePlayer
                 dummyItem.height = 52;
                 ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 52f, ref frame2, out var itemLight, out var finalDrawScale);
                 Texture2D textureOfBox = grayLocketBox;
-                if((correctItem || FakeModPlayer.ModPlayer(player).foundItem) && !FakeBorderDrawCycle)
+                if((correctItem || fmPlayer.foundItem) && !FakeBorderDrawCycle)
                 {
                     textureOfBox = locketBox;
                     if (item.favorited)
@@ -311,11 +320,12 @@ namespace SOTS.FakePlayer
                 if (!correctItem || FakeBorderDrawCycle)
                 {
                     ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 32f, ref frame2, out var itemLight2, out var finalDrawScale2);
-                    spriteBatch.Draw(FakeModPlayer.ModPlayer(player).foundItem ? locket : grayscaleLocket, position, null, InventoryBoxStandard * 0.5f, 0f, grayscaleLocket.Size() / 2, finalDrawScale2 * 0.85f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(fmPlayer.foundItem ? locket : grayscaleLocket, position, null, InventoryBoxStandard * 0.5f, 0f, grayscaleLocket.Size() / 2, finalDrawScale2 * 0.85f, SpriteEffects.None, 0f);
                 }
             }
             else if(DrawTesseractSlot(item, PlayerInventorySlotsManager.RealBorderDrawCycleSlot))
             {
+                bool foundItem = fmPlayer.tesseractData[PlayerInventorySlotsManager.RealBorderDrawCycleSlot % 10].FoundValidItem;
                 bool correctItem = item.type == ModContent.ItemType<Tesseract>() && (player.inventory.Contains(item) || player.armor.Contains(item));
                 Color color = Color.White;
                 Rectangle frame2 = new Rectangle(0, 0, 40, 50);
@@ -324,7 +334,7 @@ namespace SOTS.FakePlayer
                 dummyItem.height = 52;
                 ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 52f, ref frame2, out var itemLight, out var finalDrawScale);
                 Texture2D textureOfBox = tesseractBoxG;
-                if (correctItem && !FakeBorderDrawCycle)
+                if ((correctItem || foundItem) && !FakeBorderDrawCycle)
                 {
                     textureOfBox = tesseractBox;
                     if (item.favorited)
@@ -340,11 +350,12 @@ namespace SOTS.FakePlayer
                 dummyItem.height = 32;
                 if (!correctItem || FakeBorderDrawCycle)
                 {
+                    Color alternateColor = Color.Lerp(InventoryBoxStandard, new Color(231, 95, 203), 0.75f);
                     ItemSlot.DrawItem_GetColorAndScale(dummyItem, Main.inventoryScale, ref color, 48f, ref frame2, out var itemLight2, out var finalDrawScale2);
-                    int frameY = (48 - RealBorderDrawCycleSlot) % 10;
+                    int frameY = (RealBorderDrawCycleSlot) % 10;
                     int height = planetariumTextures.Height / 10;
                     Rectangle frame = new Rectangle(0, height * frameY, planetariumTextures.Width, height);
-                    spriteBatch.Draw(planetariumTextures, position, frame, InventoryBoxStandard * 0.5f, 0f, new Vector2(planetariumTextures.Width, planetariumTextures.Height / 10) / 2f, finalDrawScale2 * 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(planetariumTextures, position, frame, (foundItem ? alternateColor: InventoryBoxStandard) * 0.5f, 0f, new Vector2(planetariumTextures.Width, planetariumTextures.Height / 10) / 2f, finalDrawScale2 * 1f, SpriteEffects.None, 0f);
                 }
             }
         }

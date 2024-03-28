@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Utilities;
 using SOTS.Buffs.Debuffs;
 using SOTS.Common;
 using SOTS.Common.GlobalNPCs;
@@ -19,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Light;
@@ -103,6 +106,9 @@ namespace SOTS
 
 			//Make sure fake player minions can hit npcs through walls
 			On_Player.CanHit += On_Player_CanHit;
+
+			//So automatic right clicks from FakePlayers don't erroneously play sounds while the camera is on
+			On_SoundEngine.PlaySound_int_int_int_int_float_float += On_SoundEngine_PlaySound_int_int_int_int_float_float;
 
             if (!Main.dedServ)
 				ResizeTargets();
@@ -807,7 +813,7 @@ namespace SOTS
 			int tesCount = subPlayer.tesseractPlayerCount;
             if (tesCount > 0)
             {
-				if(slot < 49 && slot >= 49 - tesCount)
+				if(PlayerInventorySlotsManager.SlotIsWithinTesseractSlotRange(player, slot))
                 {
                     if (item.type <= ItemID.None || item.stack <= 0)
                     {
@@ -824,7 +830,10 @@ namespace SOTS
                     }
                 }
             }
-            if (slot == 49)
+			int subSlot = 49;
+			if (tesCount >= 10)
+				subSlot = 39;
+            if (slot == subSlot)
             {
 				if(subPlayer.servantActive && !subPlayer.servantIsVanity)
 				{
@@ -976,6 +985,14 @@ namespace SOTS
 				return true;
 			}
 			return orig(self, ent);
+		}
+		private static SoundEffectInstance On_SoundEngine_PlaySound_int_int_int_int_float_float(On_SoundEngine.orig_PlaySound_int_int_int_int_float_float orig, int type, int x, int y, int style, float volumeScale, float pitchOffset)
+		{
+			if(FakePlayer.FakePlayer.SupressSound)
+			{
+				return null;
+			}
+			return orig(type, x, y, style, volumeScale, pitchOffset);
 		}
     }
 }

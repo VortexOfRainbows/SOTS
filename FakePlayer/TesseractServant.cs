@@ -32,6 +32,7 @@ namespace SOTS.FakePlayer
         }
         private bool runOnce = true;
         private float SinusoidCounter;
+        public int MyUniqueID => (int)Projectile.ai[1] % 10;
         public override bool PreAI()
 		{
 			if (Main.myPlayer != Projectile.owner)
@@ -41,10 +42,8 @@ namespace SOTS.FakePlayer
                 Player player = Main.player[Projectile.owner];
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    if (player.TryGetModPlayer<FakeModPlayer>(out FakeModPlayer fPlayer))
-                    {
-                        Projectile.ai[1] = fPlayer.tesseractPlayerCount;
-                    }
+                    FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+                    Projectile.ai[1] = fPlayer.tesseractPlayerCount;
                     Projectile.netUpdate = true;
                 }
 				SinusoidCounter = 80f;
@@ -52,7 +51,9 @@ namespace SOTS.FakePlayer
 			}
 			if (FakePlayer == null)
 				FakePlayer = new FakePlayer(FakePlayerTypeID.Tesseract, Projectile.identity);
-			return base.PreAI();
+            int useItemSlot = 40 + MyUniqueID;
+            FakePlayer.OverrideUseSlot = useItemSlot;
+			return true;
 		}
         private int target = -1;
         public override void AI()
@@ -62,7 +63,8 @@ namespace SOTS.FakePlayer
             if (FakePlayer == null)
                 return;
 			Player player = Main.player[Projectile.owner];
-			if(!player.HasBuff<TesseractBuff>())
+            FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+            if (!player.HasBuff<TesseractBuff>())
             {
 				Projectile.Kill();
             }
@@ -75,6 +77,7 @@ namespace SOTS.FakePlayer
             float maxPursuitRange = 1600;
             float nearbyPursuitRange = 240;
 
+            bool itemDataRegistered = fPlayer.tesseractData[MyUniqueID].ChargeFrames >= 0;
             bool foundTarget = false;
             bool validItem = false;
             if(FakePlayer.heldItem != null)
@@ -125,6 +128,14 @@ namespace SOTS.FakePlayer
                     {
                         Direction = Math.Sign(npc.Center.X - Projectile.Center.X);
                     }
+                }
+            }
+            else if (!itemDataRegistered)
+            {
+                if (FakePlayer.itemAnimation <= 1 && Main.myPlayer == player.whoAmI)
+                {
+                    cursorArea = Main.MouseWorld;
+                    Direction = Math.Sign(cursorArea.X - player.Center.X);
                 }
             }
             else

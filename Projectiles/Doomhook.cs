@@ -63,7 +63,6 @@ namespace SOTS.Projectiles
 		}
         public override bool PreDraw(ref Color lightColor)
 		{
-			Player player = Main.player[Projectile.owner];
 			float scale = 0.825f;
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/DoomChain");
 			Vector2 position = Projectile.Center;
@@ -121,7 +120,6 @@ namespace SOTS.Projectiles
             }
 			Projectile owner = Main.projectile[(int)Projectile.ai[0]];
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			aiCounter++;
 			speedMult = 1 + 0.005f * aiCounter;
 			Projectile.ai[1] += 0.4f;
@@ -139,7 +137,7 @@ namespace SOTS.Projectiles
 					Projectile.Kill();
                 }
 			}
-			if(!Main.mouseRight && Main.myPlayer == Projectile.owner)
+			if(!player.controlUseTile && Main.myPlayer == Projectile.owner)
 			{
 				letGo = true;
 				Projectile.netUpdate = true;
@@ -151,8 +149,7 @@ namespace SOTS.Projectiles
 			if (owner.type == ModContent.ProjectileType<DoomstickHoldOut>() && owner.active)
 			{
 				Vector2 ownerToPlayer = owner.Center - player.Center;
-				Vector2 toPos = Vector2.Zero;
-				toPos = new Vector2((12 + (Projectile.Center - player.Center).Length()) * speedMult, 0).RotatedBy(ownerToPlayer.ToRotation());
+				Vector2 toPos = new Vector2((12 + (Projectile.Center - player.Center).Length()) * speedMult, 0).RotatedBy(ownerToPlayer.ToRotation());
 				toPos += player.Center;
 				if(goBack)
                 {

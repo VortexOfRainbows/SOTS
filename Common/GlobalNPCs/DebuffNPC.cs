@@ -38,6 +38,7 @@ using SOTS.NPCs.Anomaly;
 using SOTS.Projectiles.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using Terraria.DataStructures;
+using SOTS.FakePlayer;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -742,7 +743,7 @@ namespace SOTS.Common.GlobalNPCs
                                     toOwner *= 4.8f + mult;
                                     npc.position += toOwner;
                                 }
-                                else
+                                else if(!proj.TryGetGlobalProjectile<FakePlayerProjectile>(out FakePlayerProjectile fpp) || fpp.FakeOwnerIdentity == -1)
                                 {
                                     Player player = Main.player[proj.owner];
                                     Vector2 toNPC = npc.Center - player.Center;

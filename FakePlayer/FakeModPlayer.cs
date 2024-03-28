@@ -3,17 +3,40 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.FakePlayer
 {
+    public class TesseractMinionData
+    {
+        public bool FoundValidItem;
+        public int ChargeFrames;
+        public bool AltFunctionUse;
+        public TesseractMinionData()
+        {
+            Reset();
+        }
+        public void Reset()
+        {
+            FoundValidItem = false;
+            ChargeFrames = -1;
+            AltFunctionUse = false;
+        }
+    }
     public class FakeModPlayer : ModPlayer
     {
         public override void SetStaticDefaults()
         {
 
         }
+        public TesseractMinionData[] tesseractData = 
+            { new TesseractMinionData(), new TesseractMinionData(), 
+            new TesseractMinionData(), new TesseractMinionData(), 
+            new TesseractMinionData(), new TesseractMinionData(),
+            new TesseractMinionData(),new TesseractMinionData(),
+            new TesseractMinionData(),new TesseractMinionData() };
         public bool foundItem = false;
         public bool servantActive = false;
         public bool servantIsVanity = false;
@@ -95,6 +118,19 @@ namespace SOTS.FakePlayer
             servantActive = false;
             hasHydroFakePlayer = false;
             foundItem = false;
+        }
+        public override void PostUpdateMiscEffects()
+        {
+            //Main.NewText(tesseractPlayerCount);
+            for (int i = 0; i < tesseractData.Length; i++)
+            {
+                if (i >= tesseractPlayerCount) //Reset states if the fake player is despawned
+                {
+                    tesseractData[i].Reset();
+                }
+                else
+                    tesseractData[i].FoundValidItem = false;
+            }
         }
         public int Probe = -1;
         public int Probe2 = -1;

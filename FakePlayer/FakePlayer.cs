@@ -2,12 +2,15 @@ using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using SOTS.Items;
+using SOTS.Items.Inferno;
 using System;
 using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Capture;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.Player;
@@ -41,9 +44,12 @@ namespace SOTS.FakePlayer
     }
     public class FakePlayer
     {
+        public static bool SupressNetMessage13and41 = false;
+        public static bool SupressSound = false;
+
+        public int OverrideUseSlot = -1;
         public int UniqueMouseX = -1;
         public int UniqueMouseY = -1;
-        public static bool SupressNetMessage13and41 = false;
         public bool ForceItemUse = false;
         public bool SkipDrawing = false;
         public bool ShouldUseWingsArmPosition = false;
@@ -183,12 +189,18 @@ namespace SOTS.FakePlayer
             bool valid = CheckItemValidityFull(player, item, lastUsedItem, FakePlayerType);
             if (item.IsAir)
             {
+                KillMyOwnedProjectiles = true;
                 RunItemCheck(player, true);
             }
             else if (valid)
             {
                 if(FakePlayerType == FakePlayerTypeID.Subspace)
                     subspacePlayer.foundItem = true;
+                if(FakePlayerType == FakePlayerTypeID.Tesseract)
+                {
+                    int UniqueUsageSlot = OverrideUseSlot % 10;
+                    subspacePlayer.tesseractData[UniqueUsageSlot].FoundValidItem = true;
+                }
                 RunItemCheck(player, true);
                 //Main.NewText(player.ItemUsesThisAnimation);
             }
@@ -263,6 +275,18 @@ namespace SOTS.FakePlayer
             {
                 return player.selectedItem;
             }
+            if(FakePlayerType == FakePlayerTypeID.Subspace)
+            {
+                if(FakeModPlayer.TesseractPlayerCount(player) >= 10)
+                {
+                    return 39;
+                }
+                return 49;
+            }
+            if(OverrideUseSlot != -1)
+            {
+                return OverrideUseSlot;
+            }
             return 49;
         }
         public bool compositeFrontArmEnabled = false;
@@ -282,6 +306,7 @@ namespace SOTS.FakePlayer
         public int direction;
         public int reuseDelay;
         public bool controlUseItem;
+        public bool controlUseTile;
         public bool releaseUseItem;
         public bool justDroppedAnItem;
 
@@ -334,55 +359,116 @@ namespace SOTS.FakePlayer
             }
         }
         private int lastUsedItemType = -1;
+        private int ChargeDuration = 0;
         public void RunItemCheck(Player player, bool canUseItem = false)
         {
+            FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
             FakePlayerProjectile.OwnerOfThisUpdateCycle = FakePlayerID; //Temporarily assign the owner of the update cycle, which will make any projectile spawned during the update cycle a child of the fake player
             int whoAmI = player.whoAmI;
+            bool holdingTesseract = !player.HeldItem.IsAir && player.HeldItem.type == ModContent.ItemType<Tesseract>();
             bool ownersControlUseItem = player.controlUseItem;
+            bool ownersControlUseTile = player.controlUseTile;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             Update(player);
             bool valid = CheckItemValidityFull(player, player.HeldItem, lastUsedItem, FakePlayerType);
+            int UniqueUsageSlot = OverrideUseSlot % 10;
             if (canUseItem || player.channel)
             {
-                if (Main.myPlayer == player.whoAmI)
-                {
-                    player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
-                }
-                if(FakePlayerType == FakePlayerTypeID.Tesseract)
-                {
-                    if(lastUsedItemType == -1)
-                        lastUsedItemType = heldItem.type;
-                    if (heldItem.type != lastUsedItemType)
-                    {
-                        player.itemAnimation = -1;
-                        player.itemTime = -1;
-                        player.itemAnimationMax = -1;
-                        player.channel = false;
-                        canUseItem = false;
-                        KillMyOwnedProjectiles = true;
-                    }
+                if (lastUsedItemType == -1)
                     lastUsedItemType = heldItem.type;
+                if (heldItem.type != lastUsedItemType)
+                {
+                    player.itemAnimation = -1;
+                    player.itemTime = -1;
+                    player.itemAnimationMax = -1;
+                    player.channel = false;
+                    canUseItem = false;
+                    KillMyOwnedProjectiles = true;
+                    if (FakePlayerType == FakePlayerTypeID.Tesseract && UniqueUsageSlot >= 0)
+                    {
+                        fPlayer.tesseractData[UniqueUsageSlot].Reset();
+                    }
+                }
+                lastUsedItemType = heldItem.type;
 
-                    if (ForceItemUse)
-                        player.controlUseItem = ForceItemUse;
+                if (FakePlayerType == FakePlayerTypeID.Tesseract && UniqueUsageSlot >= 0)
+                {
+                    int automaticUseTimer = fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames;
+                    if (automaticUseTimer < 0)
+                    {
+                        if (!player.controlUseItem && !holdingTesseract)
+                            player.controlUseItem = ownersControlUseItem;
+                        if(!holdingTesseract)
+                            player.controlUseTile = ownersControlUseTile;
+                    }
+                    else if (ForceItemUse)
+                    {
+                        if (fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse)
+                        {
+                            SupressSound = true;
+                            player.mouseInterface = Main.HoveringOverAnNPC = CaptureManager.Instance.Active = Main.SmartInteractShowingGenuine = false;
+                            SupressSound = false;
+                            player.controlUseTile = ForceItemUse;
+                            player.controlUseItem = false;
+                        }
+                        else
+                        {
+                            player.controlUseItem = ForceItemUse;
+                            player.controlUseTile = false;  
+                        }
+                    }
                 }
                 else
                 {
                     if (!player.controlUseItem)
                         player.controlUseItem = ownersControlUseItem;
+                    player.controlUseTile = ownersControlUseTile;
                 }
-                if(canUseItem || player.channel) //Check again because these values could have changed
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
+                }
+                if (canUseItem || player.channel) //Check again because these values could have changed
                 {
                     if (!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
                         player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
                     player.ItemCheck(); //Run the actual item use code
+
+                    if(FakePlayerType == FakePlayerTypeID.Tesseract)
+                    {
+                        if (player.controlUseItem || player.altFunctionUse == 2)
+                        {
+                            if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1)
+                                ChargeDuration++;
+                            //Main.NewText("[" + UniqueUsageSlot + "] my charge duration: " + ChargeDuration);
+                        }
+                        //Main.NewText("[" + UniqueUsageSlot + "] my alt function: " + player.altFunctionUse);
+                        if (player.altFunctionUse == 2)
+                        {
+                            if(!fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse)
+                            {
+                                Main.NewText("Locked in as alternate");
+                                fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse = true;
+                            }
+                        }
+                    }
                 }
+            }
+            if(!player.controlUseItem && player.altFunctionUse == 0 && ChargeDuration > 0 && FakePlayerType == FakePlayerTypeID.Tesseract)
+            {
+                if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1)
+                {
+                    fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames = ChargeDuration; //Set the frames that will now be used to guage how long charge weapons should be held for
+                    Main.NewText("my charge duration is now: " + fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames);
+                }
+                ChargeDuration = 0;
             }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
             player.controlUseItem = false;
+            player.controlUseTile = false;
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             if (FakePlayerType == FakePlayerTypeID.Hydro)
@@ -445,6 +531,14 @@ namespace SOTS.FakePlayer
         }
         public void SaveRealPlayerValues(Player player)
         {
+            ///These values are used for right clicking. 
+            PlayerSavedProperties.saveMouseInterface = player.mouseInterface;
+            PlayerSavedProperties.saveHoveringOverAnNPC = Main.HoveringOverAnNPC;
+            SupressSound = true;
+            PlayerSavedProperties.saveCaptureManagerActive = CaptureManager.Instance.Active;
+            SupressSound = false;
+            PlayerSavedProperties.saveSmartInteractShowingGenuine = Main.SmartInteractShowingGenuine;
+
             //Save Player original values
             PlayerSavedProperties.SaveMouseX = Main.mouseX;
             PlayerSavedProperties.SaveMouseY = Main.mouseY;
@@ -486,6 +580,7 @@ namespace SOTS.FakePlayer
             PlayerSavedProperties.saveReuseDelay = player.reuseDelay;
             PlayerSavedProperties.saveReleaseUseItem = player.releaseUseItem;
             PlayerSavedProperties.saveControlUseItem = player.controlUseItem;
+            PlayerSavedProperties.saveControlUseTile = player.controlUseTile;
             PlayerSavedProperties.saveJustDroppedAnItem = player.JustDroppedAnItem;
             PlayerSavedProperties.saveAttackCD = player.attackCD;
             PlayerSavedProperties.saveItemUsesThisAnimation = player.ItemUsesThisAnimation;
@@ -519,6 +614,7 @@ namespace SOTS.FakePlayer
             player.selectItemOnNextUse = false;
 
             player.controlUseItem = controlUseItem;
+            player.controlUseTile = controlUseTile;
             //Set values that player uses to the FakePlayer's values
             player.position = Position;
             player.oldPosition = OldPosition;
@@ -548,6 +644,7 @@ namespace SOTS.FakePlayer
         public void CopyRealToFake(Player player)
         {
             controlUseItem = player.controlUseItem;
+            controlUseTile = player.controlUseTile;
             //Run using FakePlayer values, then set FakePlayer values to the newly updated ones
             HeldProj = player.heldProj;
             Channel = player.channel;
@@ -578,6 +675,13 @@ namespace SOTS.FakePlayer
         }
         public void LoadRealPlayerValues(Player player)
         {
+            player.mouseInterface = PlayerSavedProperties.saveMouseInterface;
+            Main.HoveringOverAnNPC = PlayerSavedProperties.saveHoveringOverAnNPC;
+            SupressSound = true;
+            CaptureManager.Instance.Active = PlayerSavedProperties.saveCaptureManagerActive;
+            SupressSound = false;
+            Main.SmartInteractShowingGenuine = PlayerSavedProperties.saveSmartInteractShowingGenuine;
+
             //Reset player values back to normal
             player.position = PlayerSavedProperties.SavePosition;
             player.oldPosition = PlayerSavedProperties.SaveOldPos;
@@ -616,6 +720,7 @@ namespace SOTS.FakePlayer
             player.reuseDelay = PlayerSavedProperties.saveReuseDelay;
             player.releaseUseItem = PlayerSavedProperties.saveReleaseUseItem;
             player.controlUseItem = PlayerSavedProperties.saveControlUseItem;
+            player.controlUseTile = PlayerSavedProperties.saveControlUseTile;
             player.JustDroppedAnItem = PlayerSavedProperties.saveJustDroppedAnItem;
             player.attackCD = PlayerSavedProperties.saveAttackCD;
             player.boneGloveTimer = PlayerSavedProperties.saveBoneGloveTimer;
@@ -1012,6 +1117,11 @@ namespace SOTS.FakePlayer
     }
     public class SavedPlayerValues
     {
+        public bool saveMouseInterface;
+        public bool saveCaptureManagerActive;
+        public bool saveHoveringOverAnNPC;
+        public bool saveSmartInteractShowingGenuine;
+
         public int SaveMouseX;
         public int SaveMouseY;
         public Vector2 SavePosition;
@@ -1048,6 +1158,7 @@ namespace SOTS.FakePlayer
         public int saveReuseDelay;
         public bool saveReleaseUseItem;
         public bool saveControlUseItem;
+        public bool saveControlUseTile;
         public bool saveJustDroppedAnItem;
         public int saveAttackCD;
         public int saveItemUsesThisAnimation;
@@ -1066,7 +1177,7 @@ namespace SOTS.FakePlayer
         public static bool superOverrideLightColor = false;
         public override Color? GetAlpha(Item item, Color lightColor)
         {
-            if(superOverrideLightColor)
+            if (superOverrideLightColor)
             {
                 return Color.White;
             }

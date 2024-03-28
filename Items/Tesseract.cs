@@ -37,6 +37,12 @@ namespace SOTS.Items
 			Item.buffType = ModContent.BuffType<TesseractBuff>();
 			Item.shoot = ModContent.ProjectileType<TesseractServant>();
 		}
+        public override bool BeforeUseItem(Player player)
+        {
+			return true;
+			//Might want to implement the bottom line of code to limit the total amount of minions that can be spawned for performance and balance related reasons.
+			//return player.ownedProjectileCounts[Item.shoot] < 10;
+        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			player.AddBuff(Item.buffType, 2);
