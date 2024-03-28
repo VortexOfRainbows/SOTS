@@ -433,6 +433,10 @@ namespace SOTS.FakePlayer
                             }
                         }
                     }
+                    else
+                    { 
+                        ChargeDuration = -2; 
+                    }
                 }
                 else
                 {
@@ -475,6 +479,10 @@ namespace SOTS.FakePlayer
                 if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1)
                 {
                     fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames = ChargeDuration; //Set the frames that will now be used to guage how long charge weapons should be held for
+                    if(!player.HeldItem.IsAir && !player.HeldItem.channel)
+                    {
+                        fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames = 7200; //Will hold attack for 2 minutes before switching
+                    }
                     Main.NewText("my charge duration is now: " + fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames);
                 }
                 ChargeDuration = 0;
