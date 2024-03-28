@@ -439,7 +439,7 @@ namespace SOTS.FakePlayer
                     {
                         if (player.controlUseItem || player.altFunctionUse == 2)
                         {
-                            if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1)
+                            if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1 && !player.HeldItem.IsAir)
                                 ChargeDuration++;
                             //Main.NewText("[" + UniqueUsageSlot + "] my charge duration: " + ChargeDuration);
                         }
@@ -455,7 +455,7 @@ namespace SOTS.FakePlayer
                     }
                 }
             }
-            if(!player.controlUseItem && player.altFunctionUse == 0 && ChargeDuration > 0 && FakePlayerType == FakePlayerTypeID.Tesseract)
+            if(!player.controlUseItem && player.altFunctionUse == 0 && ChargeDuration > 0 && FakePlayerType == FakePlayerTypeID.Tesseract && !player.HeldItem.IsAir)
             {
                 if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1)
                 {

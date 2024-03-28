@@ -325,7 +325,8 @@ namespace SOTS.FakePlayer
             }
             else if(DrawTesseractSlot(item, PlayerInventorySlotsManager.RealBorderDrawCycleSlot))
             {
-                bool foundItem = fmPlayer.tesseractData[PlayerInventorySlotsManager.RealBorderDrawCycleSlot % 10].FoundValidItem;
+                TesseractMinionData data = fmPlayer.tesseractData[PlayerInventorySlotsManager.RealBorderDrawCycleSlot % 10];
+                bool foundItem = data.FoundValidItem;
                 bool correctItem = item.type == ModContent.ItemType<Tesseract>() && (player.inventory.Contains(item) || player.armor.Contains(item));
                 Color color = Color.White;
                 Rectangle frame2 = new Rectangle(0, 0, 40, 50);
@@ -336,9 +337,9 @@ namespace SOTS.FakePlayer
                 Texture2D textureOfBox = tesseractBoxG;
                 if ((correctItem || foundItem) && !FakeBorderDrawCycle)
                 {
-                    textureOfBox = tesseractBox;
+                    textureOfBox = (data.AltFunctionUse && !correctItem) ? tesseractBoxA : tesseractBox;
                     if (item.favorited)
-                        textureOfBox = tesseractBoxF;
+                        textureOfBox = (data.AltFunctionUse && !correctItem) ? tesseractBoxFA : tesseractBoxF;
                 }
                 else
                 {
