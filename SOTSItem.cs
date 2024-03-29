@@ -40,17 +40,20 @@ using SOTS.Items.Conduit;
 using SOTS.Common;
 using SOTS.Items.Tide;
 using SOTS.Items.AbandonedVillage;
+using SOTS.FakePlayer;
 
 namespace SOTS
 {
 	public class PrefixItem : GlobalItem
 	{
         public override bool InstancePerEntity => true;
+		public int InventorySlotID;
 		public int extraVoid;
 		public int extraVoidGain;
 		public float voidCostMultiplier;
 		public PrefixItem()
 		{
+			InventorySlotID = -1;
 			extraVoidGain = 0;
 			extraVoid = 0;
 			voidCostMultiplier = 1;
@@ -61,7 +64,8 @@ namespace SOTS
 			myClone.voidCostMultiplier = voidCostMultiplier;
 			myClone.extraVoidGain = extraVoidGain;
 			myClone.extraVoid = extraVoid;
-			return myClone;
+            myClone.InventorySlotID = InventorySlotID;
+            return myClone;
 		}
 		public override int ChoosePrefix(Item item, UnifiedRandom rand)
 		{
@@ -191,7 +195,11 @@ namespace SOTS
 			extraVoid = reader.ReadInt32();
 			voidCostMultiplier = reader.ReadSingle();
 		}
-	}
+		public static void SetInventorySlot(Item item, int slot)
+        {
+			item.GetGlobalItem<PrefixItem>().InventorySlotID = slot;
+        }
+    }
 	public class SOTSItem : GlobalItem
 	{
 		public static int[] rarities1;
@@ -409,7 +417,21 @@ namespace SOTS
 				TooltipLine line = new TooltipLine(Mod, "Dedicated", Language.GetTextValue("Mods.SOTS.Common.Dedicated"));
 				line.OverrideColor = dedicatedColor;
 				tooltips.Add(line);
+			
 			}
+			FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(Main.LocalPlayer);
+			for(int i = 0; i < Math.Clamp(fPlayer.tesseractPlayerCount, 0, 10); i++)
+            {
+				int slot = 40 + i;
+                Item check = Main.LocalPlayer.inventory[slot];
+                if (!check.IsAir && !item.IsAir && check.GetGlobalItem<PrefixItem>().InventorySlotID == item.GetGlobalItem<PrefixItem>().InventorySlotID)
+                {
+                    TooltipLine line = new TooltipLine(Mod, "TesseractInventory", Language.GetTextValue("Mods.SOTS.Common.TesseractInventory"));
+                    line.OverrideColor = dedicatedColor;
+                    tooltips.Add(line);
+                    break;
+                }
+            }
 		}
 		public Tile? FindTATile(Player player)
         {

@@ -246,6 +246,10 @@ namespace SOTS.FakePlayer
         public static Texture2D tesseractBoxGA => ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractUI/BoxGrayAlt").Value;
         public static Texture2D tesseractBoxFG => ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractUI/BoxFavoriteGray").Value;
         public static Texture2D tesseractBoxFGA => ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractUI/BoxFavoriteGrayAlt").Value;
+        public static Texture2D tesseractBoxGlow => ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractUI/BoxGlow").Value;
+        public static Texture2D tesseractBoxGlowA => ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractUI/BoxGlowAlt").Value;
+        public static Texture2D tesseractBoxFGlow => ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractUI/BoxGlowFavorite").Value;
+        public static Texture2D tesseractBoxFGlowA => ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractUI/BoxGlowFavoriteAlt").Value;
         public static Texture2D locket => ModContent.Request<Texture2D>("SOTS/Items/Celestial/SubspaceLocket").Value;
         public static Texture2D grayscaleLocket => ModContent.Request<Texture2D>("SOTS/FakePlayer/GraySubspaceLocket").Value;
         public static Texture2D grayLocketBox => ModContent.Request<Texture2D>("SOTS/FakePlayer/GraySubspaceInventoryBox").Value;
@@ -347,6 +351,11 @@ namespace SOTS.FakePlayer
                         textureOfBox = tesseractBoxFG;
                 }
                 spriteBatch.Draw(textureOfBox, position, null, InventoryBoxStandard, 0f, locketBox.Size() / 2, finalDrawScale, SpriteEffects.None, 0f);
+                if(foundItem && data.ChargeFrames < 0 && !correctItem)
+                {
+                    Color alternateColor = Color.Lerp(InventoryBoxStandard, Color.Red, 0.75f);
+                    spriteBatch.Draw(tesseractBoxGlow, position, null, alternateColor, 0f, locketBox.Size() / 2, finalDrawScale, SpriteEffects.None, 0f);
+                }
                 dummyItem.width = 26;
                 dummyItem.height = 32;
                 if (!correctItem || FakeBorderDrawCycle)

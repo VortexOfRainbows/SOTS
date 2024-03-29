@@ -1117,12 +1117,16 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>() && item.favorited)
 				{
 					if (!HoloEye)
-                    {
+					{
 						HoloEyeIsVanity = true;
 						HoloEyeDamage += ApplyDamageClassModWithGeneric(Player, DamageClass.Summon, 33);
 					}
 					HoloEye = true;
 					break;
+				}
+				if (!item.IsAir)
+				{
+					PrefixItem.SetInventorySlot(item, i);
 				}
 			}
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories

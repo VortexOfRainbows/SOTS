@@ -24,6 +24,7 @@ Mods: {
 			ArchaeologistItemMap: "Teleported "
 			ArchaeologistShopCondition: In a certain location
 			VoidAnomalyCrafting: Wormhole conversion
+			TesseractInventory: Tesseract Item
 		}
 
 		ContainerName: {
@@ -5313,7 +5314,13 @@ Mods: {
 
 			Tesseract: {
 				DisplayName: Tesseract
-				Tooltip: ""
+				Tooltip:
+					'''
+					Summons a Void Clone that uses items to attack enemies
+					Starting with the item in the bottom-left inventory slot and ending with the bottom-right slot, each Clone uses a different item
+					When first summoned, the Clone will await a command for how it should use the item (left or right click) and for how long (for charge items)
+					After the first usage of the item, the Clone will now automatically use the item as specified
+					'''
 			}
 		}
 

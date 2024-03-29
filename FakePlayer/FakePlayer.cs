@@ -383,9 +383,10 @@ namespace SOTS.FakePlayer
                     player.channel = false;
                     canUseItem = false;
                     KillMyOwnedProjectiles = true;
-                    if (FakePlayerType == FakePlayerTypeID.Tesseract && UniqueUsageSlot >= 0)
+                    if (FakePlayerType == FakePlayerTypeID.Tesseract)
                     {
-                        fPlayer.tesseractData[UniqueUsageSlot].Reset();
+                        if(UniqueUsageSlot >= 0)
+                            fPlayer.tesseractData[UniqueUsageSlot].Reset();
                     }
                 }
                 lastUsedItemType = heldItem.type;
@@ -467,7 +468,7 @@ namespace SOTS.FakePlayer
                         {
                             if(!fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse)
                             {
-                                Main.NewText("Locked in as alternate");
+                                //Main.NewText("Locked in as alternate");
                                 fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse = true;
                             }
                         }
@@ -483,7 +484,7 @@ namespace SOTS.FakePlayer
                     {
                         fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames = 7200; //Will hold attack for 2 minutes before switching
                     }
-                    Main.NewText("my charge duration is now: " + fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames);
+                   // Main.NewText("my charge duration is now: " + fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames);
                 }
                 ChargeDuration = 0;
             }
