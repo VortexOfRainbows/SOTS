@@ -513,7 +513,7 @@ namespace SOTS.FakePlayer
         {
             for(int i = index - 1; i >= 0; i--)
             {
-                if(fPlayer.tesseractData[i].ChargeFrames < 0 && fPlayer.tesseractData[i].FoundValidItem)
+                if(fPlayer.tesseractData[i].ChargeFrames <= 0 && fPlayer.tesseractData[i].FoundValidItem)
                 {
                     return false;
                 }

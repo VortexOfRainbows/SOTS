@@ -36,13 +36,17 @@ namespace SOTS.FakePlayer
             }
             return ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantWings").Value;
         }
-        public static Texture2D FakePlayerTexture(int type, bool outLine)
+        public static Texture2D FakePlayerTexture(int type, bool outLine, int tesseractType)
         {
             if(outLine)
             {
                 if (type == FakePlayerTypeID.Tesseract)
                 {
-                    return ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractServantSheetOutline").Value;
+                    if(tesseractType == 2 || tesseractType == 3)
+                    {
+                        return ModContent.Request<Texture2D>("SOTS/FakePlayer/Tesseract/TesseractServantSheetWhite").Value;
+                    }
+                    return ModContent.Request<Texture2D>("SOTS/FakePlayer/Tesseract/TesseractServantSheetWhiteMale").Value;
                 }
                 if (type == FakePlayerTypeID.Hydro)
                 {
@@ -52,7 +56,7 @@ namespace SOTS.FakePlayer
             }
             if(type == FakePlayerTypeID.Tesseract)
             {
-                return ModContent.Request<Texture2D>("SOTS/FakePlayer/TesseractServantSheet").Value;
+                return ModContent.Request<Texture2D>("SOTS/FakePlayer/Tesseract/TesseractServantSheet" + (tesseractType + 1)).Value;
             }
             if (type == FakePlayerTypeID.Hydro)
             {
@@ -62,7 +66,7 @@ namespace SOTS.FakePlayer
         }
         public static void DrawFrontArm(FakePlayer fakePlayer, SpriteBatch spriteBatch)
         {
-            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false, fakePlayer.OverrideUseSlot % 10);
             SpriteEffects spriteEffects = fakePlayer.playerEffect;
             Vector2 vector = new Vector2((int)fakePlayer.Position.X, (int)fakePlayer.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
             if (fakePlayer.compFrontArmFrame.X / fakePlayer.compFrontArmFrame.Width >= 7)
@@ -82,8 +86,8 @@ namespace SOTS.FakePlayer
         }
         public static void DrawBackArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outline)
         {
-            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
-            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false, fakePlayer.OverrideUseSlot % 10);
+            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true, fakePlayer.OverrideUseSlot % 10);
             Vector2 vector = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
             Vector2 vector3 = vector;
             Vector2 compositeOffset_BackArm = GetCompositeOffset_BackArm(ref drawInfo);
@@ -168,8 +172,8 @@ namespace SOTS.FakePlayer
         }
         public static void DrawFrontArm(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outline)
         {
-            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
-            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false, fakePlayer.OverrideUseSlot % 10);
+            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true, fakePlayer.OverrideUseSlot % 10);
             SpriteEffects spriteEffects = drawInfo.playerEffect;
             Vector2 vector = new Vector2((int)drawInfo.Position.X, (int)drawInfo.Position.Y) - Main.screenPosition + new Vector2(FakePlayer.Width / 2, FakePlayer.Height / 2 - 3);
             if (drawInfo.compFrontArmFrame.X / drawInfo.compFrontArmFrame.Width >= 7)
@@ -199,8 +203,8 @@ namespace SOTS.FakePlayer
         }
         public static void DrawBody(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outline)
         {
-            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false);
-            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true);
+            Texture2D texture = FakePlayerTexture(fakePlayer.FakePlayerType, false, fakePlayer.OverrideUseSlot % 10);
+            Texture2D textureGreen = FakePlayerTexture(fakePlayer.FakePlayerType, true, fakePlayer.OverrideUseSlot % 10);
             Player drawPlayer = drawInfo.drawPlayer;
             float drawX = (int)drawInfo.Position.X + FakePlayer.Width / 2;
             float drawY = (int)drawInfo.Position.Y + FakePlayer.Height - drawPlayer.bodyFrame.Height / 2 + 4f;
