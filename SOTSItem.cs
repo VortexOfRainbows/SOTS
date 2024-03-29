@@ -41,6 +41,8 @@ using SOTS.Common;
 using SOTS.Items.Tide;
 using SOTS.Items.AbandonedVillage;
 using SOTS.FakePlayer;
+using System.Collections.ObjectModel;
+using Terraria.UI.Chat;
 
 namespace SOTS
 {
@@ -423,17 +425,51 @@ namespace SOTS
 			for(int i = 0; i < Math.Clamp(fPlayer.tesseractPlayerCount, 0, 10); i++)
             {
 				int slot = 40 + i;
+				TesseractMinionData data = fPlayer.tesseractData[i];
                 Item check = Main.LocalPlayer.inventory[slot];
                 if (!check.IsAir && !item.IsAir && check.GetGlobalItem<PrefixItem>().InventorySlotID == item.GetGlobalItem<PrefixItem>().InventorySlotID)
                 {
-                    TooltipLine line = new TooltipLine(Mod, "TesseractInventory", Language.GetTextValue("Mods.SOTS.Common.TesseractInventory"));
-                    line.OverrideColor = dedicatedColor;
+					Color c = Color.Lerp(ColorHelpers.RubyColor, Color.Red, 0.4f);
+                    string aligned = Language.GetTextValue("Mods.SOTS.Common.Solar" + i);
+					string text;
+					if(!data.FoundValidItem)
+                    {
+                        text = Language.GetTextValue("Mods.SOTS.Common.TesseractInvalid", aligned);
+                    }
+					else if(data.ChargeFrames < 0)
+                    {
+                        text = Language.GetTextValue("Mods.SOTS.Common.TesseractAwaiting", aligned);
+                    }
+					else
+                    {
+						c = Color.Lerp(ColorHelpers.pastelRainbow, ColorHelpers.AmethystColor, 0.9f);
+                        string duration = data.ChargeFrames == 7200 ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsageContinuous") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageDuration", MathF.Round(data.ChargeFrames / 60f, 3));
+						string primaryOrSecondary = !data.AltFunctionUse ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsagePrimary") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageSecondary");
+                        text = Language.GetTextValue("Mods.SOTS.Common.TesseractUsage", aligned, primaryOrSecondary, duration);
+                    }
+                    TooltipLine line = new TooltipLine(Mod, "TesseractInventory", text);
+                    line.OverrideColor = c;
                     tooltips.Add(line);
                     break;
                 }
             }
 		}
-		public Tile? FindTATile(Player player)
+        public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            if (line.Name == "TesseractInventory")
+            {
+                Color outer = line.OverrideColor ?? line.Color;
+                Color inner = Color.White;
+                TextSnippet[] snippets = ChatManager.ParseMessage(line.Text, inner).ToArray();
+                ChatManager.ConvertNormalSnippets(snippets);
+                ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), outer, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+                int outSnip;
+                ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
+                return false;
+            }
+            return true;
+        }
+        public Tile? FindTATile(Player player)
         {
 			int x = (int)player.Center.X / 16;
 			int y = (int)player.Center.Y / 16;

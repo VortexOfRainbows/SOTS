@@ -393,14 +393,15 @@ namespace SOTS.FakePlayer
                 if (FakePlayerType == FakePlayerTypeID.Tesseract && UniqueUsageSlot >= 0)
                 {
                     int automaticUseTimer = fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames;
-                    if (automaticUseTimer < 0)
+                    bool NextToBeRegistered = TesseractServantNextInLine(fPlayer, UniqueUsageSlot);
+                    if (automaticUseTimer < 0 && NextToBeRegistered)
                     {
                         if (!player.controlUseItem && !holdingTesseract)
                             player.controlUseItem = ownersControlUseItem;
                         if (!holdingTesseract)
                             player.controlUseTile = ownersControlUseTile;
                     }
-                    else if (ForceItemUse)
+                    else if (ForceItemUse && NextToBeRegistered)
                     {
                         if (ChargeDuration < 0 && (player.ItemAnimationEndingOrEnded || player.ItemAnimationJustStarted))
                         {
@@ -459,6 +460,8 @@ namespace SOTS.FakePlayer
                     {
                         if (player.controlUseItem || player.altFunctionUse == 2)
                         {
+                            if (ChargeDuration < 0)
+                                ChargeDuration = 0;
                             if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1 && !player.HeldItem.IsAir)
                                 ChargeDuration++;
                             //Main.NewText("[" + UniqueUsageSlot + "] my charge duration: " + ChargeDuration);
@@ -475,7 +478,7 @@ namespace SOTS.FakePlayer
                     }
                 }
             }
-            if(!player.controlUseItem && player.altFunctionUse == 0 && ChargeDuration > 0 && FakePlayerType == FakePlayerTypeID.Tesseract && !player.HeldItem.IsAir)
+            if(!player.controlUseItem && player.altFunctionUse == 0 && ChargeDuration > 0 && FakePlayerType == FakePlayerTypeID.Tesseract && !player.HeldItem.IsAir && player.itemAnimation <= 0)
             {
                 if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1)
                 {
@@ -484,7 +487,7 @@ namespace SOTS.FakePlayer
                     {
                         fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames = 7200; //Will hold attack for 2 minutes before switching
                     }
-                   // Main.NewText("my charge duration is now: " + fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames);
+                    //Main.NewText("my charge duration is now: " + fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames);
                 }
                 ChargeDuration = 0;
             }
@@ -505,6 +508,17 @@ namespace SOTS.FakePlayer
             ForceItemUse = false;
             KillMyOwnedProjectiles = false;
             FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
+        }
+        public bool TesseractServantNextInLine(FakeModPlayer fPlayer, int index)
+        {
+            for(int i = index - 1; i >= 0; i--)
+            {
+                if(fPlayer.tesseractData[i].ChargeFrames < 0 && fPlayer.tesseractData[i].FoundValidItem)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         public void HydroServantPostUpdate(Player player)
         {

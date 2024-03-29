@@ -25,6 +25,23 @@ Mods: {
 			ArchaeologistShopCondition: In a certain location
 			VoidAnomalyCrafting: Wormhole conversion
 			TesseractInventory: Tesseract Item
+			TesseractInvalid: Invalid item for clone usage
+			TesseractAwaiting: "{0} aligned clones are awaiting usage specifications"
+			TesseractUsage: "{0} aligned clones will use {1} fire {2}"
+			TesseractUsageContinuous: continuously
+			TesseractUsageDuration: for {0} seconds
+			TesseractUsagePrimary: primary
+			TesseractUsageSecondary: secondary
+			Solar0: Sol
+			Solar1: Mercurius
+			Solar2: Venus
+			Solar3: Terra
+			Solar4: Mars
+			Solar5: Jupiter
+			Solar6: Saturnus
+			Solar7: Uranus
+			Solar8: Neptunus
+			Solar9: Pluto
 		}
 
 		ContainerName: {

@@ -32,7 +32,7 @@ namespace SOTS.Items.Evil
 			Item.rare = ItemRarityID.LightPurple;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-			Item.channel = true;
+			Item.channel = false;
 			Item.autoReuse = true;
 			Item.DamageType = DamageClass.Melee;
 		}

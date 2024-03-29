@@ -353,8 +353,17 @@ namespace SOTS.FakePlayer
                 spriteBatch.Draw(textureOfBox, position, null, InventoryBoxStandard, 0f, locketBox.Size() / 2, finalDrawScale, SpriteEffects.None, 0f);
                 if(foundItem && data.ChargeFrames < 0 && !correctItem)
                 {
+                    Texture2D glowBox;
+                    if (item.favorited)
+                    {
+                        glowBox = (data.AltFunctionUse && !correctItem) ? tesseractBoxFGlowA : tesseractBoxFGlow;
+                    }
+                    else
+                    {
+                        glowBox = (data.AltFunctionUse && !correctItem) ? tesseractBoxGlowA : tesseractBoxGlow;
+                    }
                     Color alternateColor = Color.Lerp(InventoryBoxStandard, Color.Red, 0.75f);
-                    spriteBatch.Draw(tesseractBoxGlow, position, null, alternateColor, 0f, locketBox.Size() / 2, finalDrawScale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(glowBox, position, null, alternateColor, 0f, locketBox.Size() / 2, finalDrawScale, SpriteEffects.None, 0f);
                 }
                 dummyItem.width = 26;
                 dummyItem.height = 32;
