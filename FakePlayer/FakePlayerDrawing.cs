@@ -20,6 +20,14 @@ namespace SOTS.FakePlayer
 {
     public static class FakePlayerDrawing
     {
+        public static Color DrawColor(FakePlayer fakePlayer)
+        {
+            if(fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract)
+            {
+                return ColorHelpers.TesseractColor(MathHelper.TwoPi * (fakePlayer.OverrideUseSlot % 10) / 10f, 0.5f);
+            }
+            return Color.White;
+        }
         public static Texture2D WingTexture(int type, bool outLine)
         {
             if (outLine)
@@ -75,7 +83,7 @@ namespace SOTS.FakePlayer
             }
             Vector2 origin = fakePlayer.bodyVect;
             Vector2 position = vector + GetCompositeOffset_FrontArm(fakePlayer);
-            Color color = Color.White;
+            Color color = DrawColor(fakePlayer);
             Rectangle frame = fakePlayer.compFrontArmFrame;
             float rotation = fakePlayer.compositeFrontArmRotation;
             spriteBatch.Draw(texture, position, frame, color, rotation, origin + GetCompositeOffset_FrontArm(fakePlayer), 1f, spriteEffects, 0);
@@ -93,7 +101,7 @@ namespace SOTS.FakePlayer
             Vector2 compositeOffset_BackArm = GetCompositeOffset_BackArm(ref drawInfo);
             vector3 += compositeOffset_BackArm;
             float rotation = drawInfo.compositeBackArmRotation;
-            Color color = Color.White;
+            Color color = DrawColor(fakePlayer);
             if (outline)
             {
                 for (int k = 0; k < 4; k++)
@@ -141,7 +149,7 @@ namespace SOTS.FakePlayer
                         for (int k = 0; k < 4; k++)
                         {
                             Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                            drawInfo.DrawDataCache.Add(new DrawData(textureOutline, positions[i] + circular, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                            drawInfo.DrawDataCache.Add(new DrawData(textureOutline, positions[i] + circular, new Rectangle(0, 0, texture.Width, texture.Height), DrawColor(fakePlayer), rotations[i], origin, (1 - i * 0.08f), fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
                         }
                     }
                 }
@@ -149,14 +157,14 @@ namespace SOTS.FakePlayer
                 {
                     for (int i = 8; i >= 0; i--)
                     {
-                        drawInfo.DrawDataCache.Add(new DrawData(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                        drawInfo.DrawDataCache.Add(new DrawData(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), DrawColor(fakePlayer), rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
                     }
                     if(fakePlayer.FakePlayerType == FakePlayerTypeID.Subspace)
                     {
                         Texture2D textureInner = ModContent.Request<Texture2D>("SOTS/FakePlayer/SubspaceServantTailScales").Value;
                         for (int i = 8; i >= 0; i--)
                         {
-                            drawInfo.DrawDataCache.Add(new DrawData(textureInner, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
+                            drawInfo.DrawDataCache.Add(new DrawData(textureInner, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), DrawColor(fakePlayer), rotations[i], origin, 1 - i * 0.08f, fakePlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0));
                         }
                     }
                 }
@@ -182,7 +190,7 @@ namespace SOTS.FakePlayer
             }
             Vector2 origin = drawInfo.bodyVect;
             Vector2 position = vector + GetCompositeOffset_FrontArm(ref drawInfo);
-            Color color = Color.White;
+            Color color = DrawColor(fakePlayer);
             Rectangle frame = drawInfo.compFrontArmFrame;
             float rotation = drawInfo.compositeFrontArmRotation;
             if (outline)
@@ -210,7 +218,7 @@ namespace SOTS.FakePlayer
             float drawY = (int)drawInfo.Position.Y + FakePlayer.Height - drawPlayer.bodyFrame.Height / 2 + 4f;
             Vector2 origin = drawInfo.bodyVect;
             Vector2 position = new Vector2(drawX, drawY) - Main.screenPosition;
-            Color color = Color.White;
+            Color color = DrawColor(fakePlayer);
             Rectangle frame = new Rectangle(0, 0, 40, 56); //very first box
             SpriteEffects spriteEffects = drawInfo.playerEffect;
             if (outline)
@@ -254,13 +262,13 @@ namespace SOTS.FakePlayer
                 for (int k = 0; k < 4; k++)
                 {
                     Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-                    DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                    DrawData drawData2 = new DrawData(textureOutline, drawPos + circular, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), DrawColor(fakePlayer), 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
                     drawInfo.DrawDataCache.Add(drawData2);
                 }
             }
             else
             {
-                DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                DrawData drawData = new DrawData(texture, drawPos, new Rectangle(0, Frame * texture.Height / 6, texture.Width, texture.Height / 6), DrawColor(fakePlayer), 0, origin, 1f, Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
                 drawInfo.DrawDataCache.Add(drawData);
             }
         }
@@ -422,12 +430,12 @@ namespace SOTS.FakePlayer
                 for (int a = 0; a < 4; a++)
                 {
                     Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * a));
-                    Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+                    Main.spriteBatch.Draw(waterBallOutline, center - Main.screenPosition + circular, null, DrawColor(fakePlayer), 0f, origin, 1f, SpriteEffects.None, 0);
                 }
             }
             else
             {
-                Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(waterBall, center - Main.screenPosition, null, DrawColor(fakePlayer), 0f, origin, 1f, SpriteEffects.None, 0);
             }
             for (float v = 0; v < max; v += 0.2f)
             {
@@ -447,13 +455,13 @@ namespace SOTS.FakePlayer
                         Vector2 sinusoid = new Vector2(0, sizeOfHelix * (float)Math.Sin(MathHelper.ToRadians(v * 6 + SOTSWorld.GlobalCounter * 3 + b * 90))).RotatedBy(rotation);
                         if (!border)
                         {
-                            Main.spriteBatch.Draw(waterBallLine, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f, scaleY * scaleOfHelix), SpriteEffects.None, 0f);
+                            Main.spriteBatch.Draw(waterBallLine, drawPos - Main.screenPosition + sinusoid, null, DrawColor(fakePlayer), rotation, origin2, new Vector2(0.5f, scaleY * scaleOfHelix), SpriteEffects.None, 0f);
                         }
                         else
                         {
                             float scaleForOneBonusPixelX = 2f / waterBallLine.Width;
                             float scaleForOneBonusPixelY = 4f / waterBallLine.Height * scaleOfHelix;
-                            Main.spriteBatch.Draw(waterBallLineOutline, drawPos - Main.screenPosition + sinusoid, null, Color.White, rotation, origin2, new Vector2(0.5f + scaleForOneBonusPixelX, scaleY * scaleOfHelix + scaleForOneBonusPixelY), SpriteEffects.None, 0f);
+                            Main.spriteBatch.Draw(waterBallLineOutline, drawPos - Main.screenPosition + sinusoid, null, DrawColor(fakePlayer), rotation, origin2, new Vector2(0.5f + scaleForOneBonusPixelX, scaleY * scaleOfHelix + scaleForOneBonusPixelY), SpriteEffects.None, 0f);
                         }
                     }
                 }

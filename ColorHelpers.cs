@@ -193,5 +193,9 @@ namespace SOTS
 			return Color.Lerp(new Color(100, 100, 250), new Color(250, 100, 100), lerp);
 
         }
+		public static Color TesseractColor(float radians, float lerp = 0.5f)
+		{
+			return Color.Lerp(ColorHelpers.pastelAttempt(radians + soulColorCounter * 9 / 130f), ColorHelpers.AmethystColor, lerp);
+        }
     }
 }

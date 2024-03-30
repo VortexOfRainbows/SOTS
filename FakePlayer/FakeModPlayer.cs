@@ -11,6 +11,7 @@ namespace SOTS.FakePlayer
 {
     public class TesseractMinionData
     {
+        public bool FoundValidItemLastFrame;
         public bool FoundValidItem;
         public int ChargeFrames;
         public bool AltFunctionUse;
@@ -129,7 +130,10 @@ namespace SOTS.FakePlayer
                     tesseractData[i].Reset();
                 }
                 else
+                {
+                    tesseractData[i].FoundValidItemLastFrame = tesseractData[i].FoundValidItem;
                     tesseractData[i].FoundValidItem = false;
+                }
             }
         }
         public int Probe = -1;

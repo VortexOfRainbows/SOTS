@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.Common.GlobalNPCs;
 using Steamworks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace SOTS.FakePlayer
@@ -31,7 +34,7 @@ namespace SOTS.FakePlayer
             return false;
         }
         private bool runOnce = true;
-        private float SinusoidCounter;
+        private float TotalTesseracts = 1;
         public int MyUniqueID => (int)Projectile.ai[1] % 10;
         public override bool PreAI()
 		{
@@ -46,7 +49,6 @@ namespace SOTS.FakePlayer
                     Projectile.ai[1] = fPlayer.tesseractPlayerCount;
                     Projectile.netUpdate = true;
                 }
-				SinusoidCounter = 80f;
 				runOnce = false;
 			}
 			if (FakePlayer == null)
@@ -56,6 +58,7 @@ namespace SOTS.FakePlayer
 			return true;
 		}
         private int target = -1;
+        private bool validItem;
         public override void AI()
         {
             int oldMouseX = Main.mouseX;
@@ -64,6 +67,9 @@ namespace SOTS.FakePlayer
                 return;
 			Player player = Main.player[Projectile.owner];
             FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+            TotalTesseracts = fPlayer.tesseractPlayerCount;
+            if (TotalTesseracts < 1)
+                TotalTesseracts = 1;
             if (!player.HasBuff<TesseractBuff>())
             {
 				Projectile.Kill();
@@ -79,7 +85,7 @@ namespace SOTS.FakePlayer
 
             bool itemDataRegistered = fPlayer.tesseractData[MyUniqueID].ChargeFrames >= 0;
             bool foundTarget = false;
-            bool validItem = false;
+            validItem = false;
             if(FakePlayer.heldItem != null)
                 validItem = FakePlayer.CheckItemValidityFull(player, FakePlayer.heldItem, FakePlayer.heldItem, FakePlayerTypeID.Tesseract);
             int TrailingType = FakePlayer.ItemTrailingType(player.inventory[FakePlayer.UseItemSlot(player)]);
@@ -165,7 +171,14 @@ namespace SOTS.FakePlayer
                 bool hasLOS = false;
                 if (TrailingType == 0)
                 {
-                    idlePosition.Y -= 64f;
+                    if(fPlayer.tesseractPlayerCount > 0)
+                    {
+                        float distance = 54f + fPlayer.tesseractPlayerCount * 10;
+                        float bonus = MathHelper.TwoPi * Projectile.ai[1] / TotalTesseracts;
+                        float sinusoid = MathF.Sin(SOTSWorld.GlobalCounter * MathHelper.Pi / 180f);
+                        Vector2 circular = new Vector2(distance, 0).RotatedBy(SOTSWorld.GlobalCounter * MathHelper.Pi / 360f + bonus);
+                        idlePosition += circular;
+                    }
                 }
                 if (TrailingType == TrailingID.RANGED || TrailingType == TrailingID.MAGIC || TrailingType == TrailingID.CLOSERANGE)
                 {
@@ -222,7 +235,7 @@ namespace SOTS.FakePlayer
                     if (Projectile.ai[0] > Direction)
                         Projectile.ai[0] -= 0.1f;
                 }
-                if (SinusoidCounter >= 24)
+                /*if (SinusoidCounter >= 24)
                 {
                     SinusoidCounter -= 24f;
                 }
@@ -230,7 +243,7 @@ namespace SOTS.FakePlayer
                 SinusoidCounter += 0.75f;
                 if (circular.Y > 0)
                     circular.Y *= 0.5f;
-                Projectile.velocity.Y += circular.Y;
+                Projectile.velocity.Y += circular.Y;*/
 
                 if(foundTarget)
                 {
@@ -245,11 +258,144 @@ namespace SOTS.FakePlayer
             if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
                 Projectile.netUpdate = true;
         }
+        private List<Vector2> outerPoints;
+        private List<float> outerDepths;
         public override bool PreDraw(ref Color lightColor)
         {
-			//if (Main.player[Projectile.owner].heldProj == Projectile.whoAmI)
-			//	GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetPlayerHoldsWaterBall, true);
+            bool drawItem = false;
+            if (runOnce)
+                return false;
+            if (FakePlayer == null || !FakePlayer.SkipDrawing)
+                return false;
+            else if(FakePlayer != null && FakePlayer.heldItem != null && !FakePlayer.heldItem.IsAir && validItem)
+            {
+                drawItem = true;
+            }
+            Vector2 drawPosition = Projectile.Center - Main.screenPosition;
+            float bonus = MathHelper.TwoPi * Projectile.ai[1] / TotalTesseracts;
+            Color drawColor = ColorHelpers.TesseractColor(bonus, 0.5f);
+            Texture2D planetariumTexture = PlayerInventorySlotsManager.planetariumTextures;
+            //drawPosition += new Vector2(0, -64);
+            int frameY = (int)Projectile.ai[1] % 10;
+            int height = planetariumTexture.Height / 10;
+            DrawTesseract(drawColor * 0.8f, 3f);
+            drawColor *= 0.5f;
+            Rectangle frame = new Rectangle(0, height * frameY, planetariumTexture.Width, height);
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 circular = new Vector2(1f, 0).RotatedBy(i * MathHelper.PiOver2);
+                Main.spriteBatch.Draw(planetariumTexture, drawPosition + circular, frame, drawColor * 0.5f, 0f, new Vector2(planetariumTexture.Width, height) * 0.5f, 1f, SpriteEffects.None, 0f);
+            }
+            DrawTesseract(Color.Black, 1f);
+            Main.spriteBatch.Draw(planetariumTexture, drawPosition, frame, drawColor * 1.5f, 0f, new Vector2(planetariumTexture.Width, height) * 0.5f, 1f, SpriteEffects.None, 0f);
+            if(drawItem)
+            {
+                int heldItemType = FakePlayer.heldItem.type;
+                DrawAnimation anim = Main.itemAnimations[heldItemType];
+                int frameCount = 1;
+                int ticksPerFrame = 1;
+                if (anim != null)
+                {
+                    frameCount = anim.FrameCount;
+                    ticksPerFrame = anim.TicksPerFrame;
+                }
+                Texture2D texture = Terraria.GameContent.TextureAssets.Item[heldItemType].Value;
+                Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / frameCount / 2);
+                Rectangle rectangleFrame = new Rectangle(0, texture.Height / frameCount * (SOTSWorld.GlobalCounter / ticksPerFrame % frameCount), texture.Width, texture.Height / frameCount);
+                int topSize = Math.Max(rectangleFrame.Width, rectangleFrame.Height);
+                float scale = Math.Clamp(42f / topSize, 0, 1f);
+                float sinusoid = (float)Math.Sin(SOTSWorld.GlobalCounter * Math.PI / 180f + Projectile.ai[1]) * 0.3f;
+                float cosinusoid = MathF.Cos(SOTSWorld.GlobalCounter * MathHelper.Pi / 180f + Projectile.ai[1]) * 4f;
+                Main.spriteBatch.Draw(texture, drawPosition + new Vector2(0, cosinusoid), rectangleFrame, Color.White * 1.0f, sinusoid, drawOrigin, scale, SpriteEffects.None, 0f);
+            }
             return false;
+        }
+        public void DrawTesseract(Color color, float innerScale)
+        {
+            outerPoints = new List<Vector2>();
+            outerDepths = new List<float>();
+            float scale = 14f;
+            DrawFace(color, 0, scale, innerScale);
+            DrawFace(color, 90, scale, innerScale);
+            DrawFace(color, 180, scale, innerScale);
+            DrawFace(color, 270, scale, innerScale);
+
+            DrawFace(color, 0, 2 * scale, innerScale);
+            DrawFace(color, 90, 2 * scale, innerScale);
+            DrawFace(color, 180, 2 * scale, innerScale);
+            DrawFace(color, 270, 2 * scale, innerScale);
+
+            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            int halfWay = outerPoints.Count / 2;
+            for (int i = 0; i < outerPoints.Count / 2; i++)
+            {
+                Vector2 previousPoint = outerPoints[i + halfWay];
+                float previousDepth = outerDepths[i + halfWay];
+                Vector2 toOtherPoint = previousPoint - outerPoints[i];
+                Main.spriteBatch.Draw(whitePixel, outerPoints[i], null, color, toOtherPoint.ToRotation(), new Vector2(0, 1f), new Vector2(toOtherPoint.Length() / 2f, innerScale * (outerDepths[i] * 0.5f + previousDepth * 0.5f)), SpriteEffects.None, 0f);
+            }
+        }
+        public void DrawFace(Color color, float degreesOffset, float size = 8f, float innerScale = 2f)
+        {
+            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            Vector2 drawPosition = Projectile.Center - Main.screenPosition;
+            //drawPosition += new Vector2(0, -64);
+            float root2 = (float)Math.Sqrt(2);
+            List<Vector2> points = new List<Vector2>();
+            List<float> depths = new List<float>();
+            float bonus = MathHelper.TwoPi * Projectile.ai[1] / TotalTesseracts;
+            for (int a = 0; a < 4; a++)
+            {
+                int i = 0;
+                int j = 1;
+                if (a == 0)
+                {
+                    i = 0;
+                    j = 1;
+                }
+                if (a == 1)
+                {
+                    i = 1;
+                    j = 1;
+                }
+                if (a == 2)
+                {
+                    i = 1;
+                    j = -1;
+                }
+                if (a == 3)
+                {
+                    i = 0;
+                    j = -1;
+                }
+                float cos = (float)Math.Cos(MathHelper.ToRadians(SOTSWorld.GlobalCounter + degreesOffset) + i * MathHelper.PiOver2 + bonus);
+                float sin = (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter + degreesOffset) + i * MathHelper.PiOver2 + bonus);
+                float depth = 0.8f - 0.2f * sin;
+                Vector2 offset = new Vector2(size * root2, size * j);
+                offset.X *= cos;
+                offset *= depth;
+                offset = offset.RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter) + bonus / 2f);
+                points.Add(drawPosition + offset);
+                depths.Add(depth);
+                if (degreesOffset % 180 == 0)
+                {
+                    outerPoints.Add(drawPosition + offset);
+                    outerDepths.Add(depth);
+                }
+            }
+            Vector2 previousPoint = points[points.Count - 1];
+            float previousDepth = depths[points.Count - 1];
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (i != 2)
+                {
+                    Main.spriteBatch.Draw(whitePixel, points[i], null, color * 0.5f, 0f, Vector2.One, depths[i] * innerScale, SpriteEffects.None, 0f);
+                    Vector2 toOtherPoint = previousPoint - points[i];
+                    Main.spriteBatch.Draw(whitePixel, points[i], null, color, toOtherPoint.ToRotation(), new Vector2(0, 1f), new Vector2(toOtherPoint.Length() / 2f, innerScale * (depths[i] /2f + previousDepth / 2f)), SpriteEffects.None, 0f);
+                }
+                previousPoint = points[i];
+                previousDepth = depths[i];
+            }
         }
     }
 }

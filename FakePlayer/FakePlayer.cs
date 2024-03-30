@@ -386,7 +386,9 @@ namespace SOTS.FakePlayer
                     if (FakePlayerType == FakePlayerTypeID.Tesseract)
                     {
                         if(UniqueUsageSlot >= 0)
+                        {
                             fPlayer.tesseractData[UniqueUsageSlot].Reset();
+                        }
                     }
                 }
                 lastUsedItemType = heldItem.type;
@@ -496,6 +498,38 @@ namespace SOTS.FakePlayer
             SetupBodyFrame(player); //run code to get frame after
             player.controlUseItem = false;
             player.controlUseTile = false;
+            if (FakePlayerType == FakePlayerTypeID.Tesseract)
+            {
+                if (itemAnimation > 0 || BonusItemAnimationTime > 0)
+                {
+                    SkipDrawing = false;
+                }
+                else if (player.HeldItem.holdStyle != ItemUseStyleID.None)
+                {
+                    SkipDrawing = false;
+                }
+                else
+                {
+                    Player tempPlayer = new Player();
+                    float tempPlayerItemRotation = tempPlayer.itemRotation;
+                    Vector2 tempPlayerItemLocation = tempPlayer.itemLocation;
+                    Rectangle frame = new Rectangle(0, 0, 0, 0);
+                    ItemLoader.HoldStyle(player.HeldItem, tempPlayer, frame);
+                    bool wasAnythingEffected = false;
+                    if (tempPlayer.itemRotation != tempPlayerItemRotation || !tempPlayer.itemLocation.Equals(tempPlayerItemLocation))
+                    {
+                        wasAnythingEffected = true;
+                    }
+                    if (wasAnythingEffected)
+                    {
+                        SkipDrawing = false;
+                    }
+                    else
+                    {
+                        SkipDrawing = true;
+                    }
+                }
+            }
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             if (FakePlayerType == FakePlayerTypeID.Hydro)
@@ -513,7 +547,7 @@ namespace SOTS.FakePlayer
         {
             for(int i = index - 1; i >= 0; i--)
             {
-                if(fPlayer.tesseractData[i].ChargeFrames <= 0 && fPlayer.tesseractData[i].FoundValidItem)
+                if (fPlayer.tesseractData[i].ChargeFrames <= 0 && fPlayer.tesseractData[i].FoundValidItemLastFrame)
                 {
                     return false;
                 }
