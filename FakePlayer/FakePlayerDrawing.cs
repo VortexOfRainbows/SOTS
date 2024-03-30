@@ -1,20 +1,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SOTS.FakePlayer;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using Terraria.ModLoader.UI.ModBrowser;
-using Terraria.GameContent.UI.Elements;
 using SOTS.Common;
-using static Terraria.GameContent.TextureAssets;
-using static Terraria.ModLoader.PlayerDrawLayer;
-using Humanizer;
-using UtfUnknown.Core.Models.SingleByte.Croatian;
-using SOTS.Items.Conduit;
 using System;
-using Terraria.ID;
 
 namespace SOTS.FakePlayer
 {

@@ -987,13 +987,17 @@ namespace SOTS.FakePlayer
         }
         public Color MyBorderColor()
         {
-            if(FakePlayerType == FakePlayerTypeID.Subspace)
+            if (FakePlayerType == FakePlayerTypeID.Subspace)
             {
                 return new Color(0, 255, 0);
             }
             if (FakePlayerType == FakePlayerTypeID.Hydro)
             {
                 return new Color(255, 255, 0);
+            }
+            if (FakePlayerType == FakePlayerTypeID.Tesseract)
+            {
+                return ColorHelpers.TesseractColor(MathHelper.TwoPi * (OverrideUseSlot % 10) / 10f, 0.5f);
             }
             return new Color(255, 255, 255);
         }
