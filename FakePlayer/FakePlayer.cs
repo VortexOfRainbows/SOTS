@@ -226,7 +226,12 @@ namespace SOTS.FakePlayer
             if (itemAnimation > 0)
             {
                 ShouldUseWingsArmPosition = false;
-                BonusItemAnimationTime = 15;
+                if (FakePlayerType == FakePlayerTypeID.Tesseract)
+                {
+                    BonusItemAnimationTime = 4;
+                }
+                else
+                    BonusItemAnimationTime = 15;
             }
             else
             {
@@ -498,9 +503,27 @@ namespace SOTS.FakePlayer
             SetupBodyFrame(player); //run code to get frame after
             player.controlUseItem = false;
             player.controlUseTile = false;
+
+
+
+            CopyRealToFake(player);
+            LoadRealPlayerValues(player);
+            if (FakePlayerType == FakePlayerTypeID.Hydro)
+            {
+                if (valid)
+                    HydroServantPostUpdate(player);
+                else if (itemAnimation <= 0 && (BonusItemAnimationTime <= 0 || !valid))
+                    SkipDrawing = true;
+            }
+            ForceItemUse = false;
+            KillMyOwnedProjectiles = false;
+            FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
+        }
+        public void CheckTesseractShouldDraw(Player player, int trailingType)
+        {
             if (FakePlayerType == FakePlayerTypeID.Tesseract)
             {
-                if (itemAnimation > 0 || BonusItemAnimationTime > 0)
+                if (itemAnimation > 0 || BonusItemAnimationTime > 0 || trailingType != TrailingID.IDLE)
                 {
                     SkipDrawing = false;
                 }
@@ -530,18 +553,6 @@ namespace SOTS.FakePlayer
                     }
                 }
             }
-            CopyRealToFake(player);
-            LoadRealPlayerValues(player);
-            if (FakePlayerType == FakePlayerTypeID.Hydro)
-            {
-                if (valid)
-                    HydroServantPostUpdate(player);
-                else if (itemAnimation <= 0 && (BonusItemAnimationTime <= 0 || !valid))
-                    SkipDrawing = true;
-            }
-            ForceItemUse = false;
-            KillMyOwnedProjectiles = false;
-            FakePlayerProjectile.OwnerOfThisUpdateCycle = -1;
         }
         public bool TesseractServantNextInLine(FakeModPlayer fPlayer, int index)
         {

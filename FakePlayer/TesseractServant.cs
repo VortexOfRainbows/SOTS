@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.Common.GlobalNPCs;
+using SOTS.WorldgenHelpers;
 using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
@@ -37,12 +38,12 @@ namespace SOTS.FakePlayer
         private float TotalTesseracts = 1;
         public int MyUniqueID => (int)Projectile.ai[1] % 10;
         public override bool PreAI()
-		{
-			if (Main.myPlayer != Projectile.owner)
+        {
+            Player player = Main.player[Projectile.owner];
+            if (Main.myPlayer != Projectile.owner)
 				Projectile.timeLeft = 20;
 			if (runOnce)
 			{
-                Player player = Main.player[Projectile.owner];
                 if (Main.myPlayer == Projectile.owner)
                 {
                     FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
@@ -55,42 +56,41 @@ namespace SOTS.FakePlayer
 				FakePlayer = new FakePlayer(FakePlayerTypeID.Tesseract, Projectile.identity);
             int useItemSlot = 40 + MyUniqueID;
             FakePlayer.OverrideUseSlot = useItemSlot;
-			return true;
-		}
-        private int target = -1;
-        private bool validItem;
-        public override void AI()
-        {
-            int oldMouseX = Main.mouseX;
-            int oldMouseY = Main.mouseY;
-            if (FakePlayer == null)
-                return;
-			Player player = Main.player[Projectile.owner];
-            FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
-            TotalTesseracts = fPlayer.tesseractPlayerCount;
-            if (TotalTesseracts < 1)
-                TotalTesseracts = 1;
             if (!player.HasBuff<TesseractBuff>())
             {
-				Projectile.Kill();
+                Projectile.Kill();
             }
             else
             {
                 Projectile.timeLeft = 6;
             }
-
+            return true;
+		}
+        private int target = -1;
+        private bool validItem;
+        private bool lastSkipDraw = false;
+        private int TrailingType = 0;
+        public override void AI()
+        {
+            if (FakePlayer == null)
+                return;
+            Player player = Main.player[Projectile.owner];
+            FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+            NPC npc = null;
+            int oldMouseX = Main.mouseX;
+            int oldMouseY = Main.mouseY;
+            TotalTesseracts = fPlayer.tesseractPlayerCount;
+            if (TotalTesseracts < 1)
+                TotalTesseracts = 1;
 			Vector2 idlePosition = player.Center;
-            float maxPursuitRange = 1600;
-            float nearbyPursuitRange = 240;
-
+            float maxPursuitRange = 1200;
             bool itemDataRegistered = fPlayer.tesseractData[MyUniqueID].ChargeFrames >= 0;
             bool foundTarget = false;
             validItem = false;
             if(FakePlayer.heldItem != null)
                 validItem = FakePlayer.CheckItemValidityFull(player, FakePlayer.heldItem, FakePlayer.heldItem, FakePlayerTypeID.Tesseract);
-            int TrailingType = FakePlayer.ItemTrailingType(player.inventory[FakePlayer.UseItemSlot(player)]);
+            TrailingType = FakePlayer.ItemTrailingType(player.inventory[FakePlayer.UseItemSlot(player)]);
             bool needsLOS = TrailingType == TrailingID.RANGED || TrailingType == TrailingID.MAGIC;
-
             if (target != -1)
             {
                 NPC prevTarget = Main.npc[target];
@@ -102,39 +102,23 @@ namespace SOTS.FakePlayer
                 {
                     target = -1;
                 } 
-                else if(needsLOS && !Collision.CanHitLine(Projectile.Center - new Vector2(16, 16), 32, 32, prevTarget.position, prevTarget.width, prevTarget.height))
+                /*else if(needsLOS && !Collision.CanHitLine(Projectile.Center - new Vector2(16, 16), 32, 32, prevTarget.position, prevTarget.width, prevTarget.height))
                 {
                     target = -1;
-                }
+                }*/
             }
             if (target == -1 && validItem)
             {
-                target = SOTSNPCs.FindTarget_Basic(Projectile.Center, nearbyPursuitRange, this, needsLOS);
-                if (target == -1)
-                    target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange - nearbyPursuitRange, this, true);
+                target = SOTSNPCs.FindTarget_Basic(Projectile.Center, maxPursuitRange, this, true);
+                if(target == -1)
+                    target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange, this, true);
             }
-            NPC npc = null;
-            if (target != -1)
+            if (target != -1 && itemDataRegistered)
             {
                 foundTarget = true;
                 npc = Main.npc[target];
                 cursorArea = npc.Center;
-
-                Vector2 result = npc.Center - Main.screenPosition;
-                Main.mouseX = FakePlayer.UniqueMouseX = (int)result.X;
-                Main.mouseY = FakePlayer.UniqueMouseY = (int)result.Y;
-
-                if (FakePlayer.itemAnimation <= 1)
-                {
-                    if (TrailingType == TrailingID.MELEE || TrailingType == TrailingID.CLOSERANGE)
-                    {
-                        Direction = Math.Sign(npc.Center.X - player.Center.X);
-                    }
-                    else
-                    {
-                        Direction = Math.Sign(npc.Center.X - Projectile.Center.X);
-                    }
-                }
+                Direction = Math.Sign(npc.Center.X - Projectile.Center.X);
             }
             else if (!itemDataRegistered)
             {
@@ -151,12 +135,16 @@ namespace SOTS.FakePlayer
                     Direction = player.direction;
                 }
             }
-            if (!foundTarget)
+            bool readyToUseItem = validItem && itemDataRegistered && foundTarget;
+            if (!readyToUseItem)
             {
                 TrailingType = 0;
             }
             if (cursorArea != Vector2.Zero || TrailingType == 0)
             {
+                Vector2 result = cursorArea - Main.screenPosition;
+                Main.mouseX = FakePlayer.UniqueMouseX = (int)result.X;
+                Main.mouseY = FakePlayer.UniqueMouseY = (int)result.Y;
                 float appropriateMeleeDistance = -4;
                 if (FakePlayer.heldItem != null && !FakePlayer.heldItem.IsAir)
                 {
@@ -175,25 +163,32 @@ namespace SOTS.FakePlayer
                     {
                         float distance = 54f + fPlayer.tesseractPlayerCount * 10;
                         float bonus = MathHelper.TwoPi * Projectile.ai[1] / TotalTesseracts;
-                        float sinusoid = MathF.Sin(SOTSWorld.GlobalCounter * MathHelper.Pi / 180f);
                         Vector2 circular = new Vector2(distance, 0).RotatedBy(SOTSWorld.GlobalCounter * MathHelper.Pi / 360f + bonus);
                         idlePosition += circular;
                     }
                 }
                 if (TrailingType == TrailingID.RANGED || TrailingType == TrailingID.MAGIC || TrailingType == TrailingID.CLOSERANGE)
                 {
-                    float appropriateRangedDistance = TrailingType == TrailingID.CLOSERANGE ? appropriateMeleeDistance : 128;
+                    float appropriateRangedDistance = TrailingType == TrailingID.CLOSERANGE ? appropriateMeleeDistance : 96;
                     if (npc != null && foundTarget && needsLOS)
                     {
-                        hasLOS = Collision.CanHitLine(Projectile.Center - new Vector2(16, 16), 32, 32, npc.position, npc.width, npc.height);
-                        appropriateRangedDistance += npc.Size.Length() / 2f + (float)Math.Sqrt(npc.width * npc.height);
+                        hasLOS = CollisionLineOfSight(npc, player);
+                        appropriateRangedDistance += npc.Size.Length() / 2f + (float)Math.Sqrt(npc.width * npc.height) / 2f;
                     }
                     else if (!needsLOS)
                     {
                         hasLOS = true;
                     }
                     Vector2 toCursor = cursorArea - Projectile.Center;
-                    Vector2 fromNPC = cursorArea - toCursor.SafeNormalize(Vector2.Zero) * appropriateRangedDistance;
+                    Vector2 fromNPC = cursorArea;
+                    for(float distM = 0.1f; distM < 1; distM += 0.05f)
+                    {
+                        if (SOTSWorldgenHelper.TrueTileSolid((int)fromNPC.X / 16, (int)fromNPC.Y / 16, false))
+                        {
+                            break;
+                        }
+                        fromNPC = cursorArea - toCursor.SafeNormalize(Vector2.Zero) * appropriateRangedDistance * distM;
+                    }
                     idlePosition = fromNPC;
                 }
                 if (TrailingType == TrailingID.MELEE)
@@ -201,29 +196,45 @@ namespace SOTS.FakePlayer
                     hasLOS = true;
                     Vector2 toCursor = cursorArea - player.Center;
                     float length = toCursor.Length();
-                    if (length > maxPursuitRange)
-                        length = maxPursuitRange;
+                    if (length > maxPursuitRange + appropriateMeleeDistance)
+                        length = maxPursuitRange + appropriateMeleeDistance;
                     float lengthToCursor = length;
                     toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
                     idlePosition += toCursor;
                     idlePosition.Y = cursorArea.Y;
                     idlePosition.X -= appropriateMeleeDistance * Math.Sign(Direction);
                 }
-                Vector2 toIdle = idlePosition - Projectile.Center;
-                float dist = toIdle.Length();
-                float speed = 8f + dist * 0.0025f;
-                if (dist > nearbyPursuitRange)
+                bool move = TrailingType != 0 || FakePlayer.itemAnimation <= 0 || !itemDataRegistered;
+                if(move)
                 {
-                    Projectile.position = idlePosition;
-                    Projectile.velocity = Vector2.Zero;
+                    Vector2 toIdle = idlePosition - Projectile.Center;
+                    float dist = toIdle.Length();
+                    float speed = 6f + dist * 0.01f;
+                    if(TrailingType == 0)
+                    {
+                        speed += (float)Math.Pow(dist, 1.5f) * 0.0025f;
+                    }
+                    else
+                    {
+                        speed += 1;
+                    }
+                    if (lastSkipDraw != FakePlayer.SkipDrawing)
+                    {
+                        Projectile.position = idlePosition;
+                        Projectile.velocity = Vector2.Zero;
+                    }
+                    else
+                    {
+                        if (dist < speed)
+                        {
+                            speed = toIdle.Length();
+                        }
+                        Projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed;
+                    }
                 }
                 else
                 {
-                    if (dist < speed)
-                    {
-                        speed = toIdle.Length();
-                    }
-                    Projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed;
+                    Projectile.velocity *= 0.75f;
                 }
                 if (Direction == 1)
                 {
@@ -247,8 +258,15 @@ namespace SOTS.FakePlayer
 
                 if(foundTarget)
                 {
-                    FakePlayer.ForceItemUse = hasLOS;
+                    FakePlayer.ForceItemUse = hasLOS || FakePlayer.itemAnimation > 0;
                 }
+                lastSkipDraw = FakePlayer.SkipDrawing;
+                if(needsLOS && TrailingType != TrailingID.IDLE)
+                {
+                    Projectile.velocity = Collision.TileCollision(Projectile.Center - new Vector2(16, 16), Projectile.velocity, 32, 32, true, true);
+                }
+                CheckNoCollisionNearby();
+                FakePlayer.CheckTesseractShouldDraw(player, TrailingType);
                 UpdateItems(player);
                 //Projectile.velocity = FakePlayer.Velocity;
             }
@@ -258,6 +276,31 @@ namespace SOTS.FakePlayer
             if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
                 Projectile.netUpdate = true;
         }
+        private bool CollisionLineOfSight(NPC npc, Player player)
+        {
+            return Collision.CanHitLine(Projectile.Center - new Vector2(8, 8), 16, 16, npc.position, npc.width, npc.height) ||
+                Collision.CanHitLine(player.Center - new Vector2(8, 8), 16, 16, npc.position, npc.width, npc.height);
+        }
+        private void CheckNoCollisionNearby()
+        {
+            float collideRange = 40;
+            for(int i = 0; i < Main.projectile.Length; i++)
+            {
+                Projectile other = Main.projectile[i];
+                if(Projectile.whoAmI != i)
+                {
+                    if(other.type == Type)
+                    {
+                        Vector2 nudge = Projectile.Center - other.Center;
+                        float dist = nudge.Length();
+                        if (dist < collideRange)
+                        {
+                            Projectile.Center += nudge.SafeNormalize(Vector2.Zero) * (collideRange - dist);
+                        }
+                    }
+                }
+            }
+        }
         private List<Vector2> outerPoints;
         private List<float> outerDepths;
         public override bool PreDraw(ref Color lightColor)
@@ -265,7 +308,7 @@ namespace SOTS.FakePlayer
             bool drawItem = false;
             if (runOnce)
                 return false;
-            if (FakePlayer == null || !FakePlayer.SkipDrawing)
+            if (FakePlayer == null || !FakePlayer.SkipDrawing || !lastSkipDraw || TrailingType != TrailingID.IDLE)
                 return false;
             else if(FakePlayer != null && FakePlayer.heldItem != null && !FakePlayer.heldItem.IsAir && validItem)
             {
