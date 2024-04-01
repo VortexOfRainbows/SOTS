@@ -8,6 +8,7 @@ using SOTS.WorldgenHelpers;
 using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.FakePlayer
@@ -17,11 +18,12 @@ namespace SOTS.FakePlayer
         public override void SafeSetStaticDefaults()
         {
             Main.projPet[Type] = false;
+            ProjectileID.Sets.MinionTargettingFeature[Type] = true;
         }
         public override string Texture => "SOTS/FakePlayer/SubspaceServant";
         public sealed override void SetDefaults()
-		{
-			Projectile.width = 20;
+        {
+            Projectile.width = 20;
 			Projectile.height = 42;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
@@ -107,11 +109,23 @@ namespace SOTS.FakePlayer
                     target = -1;
                 }*/
             }
-            if (target == -1 && validItem)
+            if(validItem)
             {
-                target = SOTSNPCs.FindTarget_Basic(Projectile.Center, maxPursuitRange, this, true);
-                if(target == -1)
-                    target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange, this, true);
+                if (player.HasMinionAttackTargetNPC)
+                {
+                    NPC attackNPC = Main.npc[player.MinionAttackTargetNPC];
+                    if (attackNPC.Distance(player.Center) < maxPursuitRange)
+                    {
+                        target = player.MinionAttackTargetNPC;
+                        foundTarget = true;
+                    }
+                }
+                if (target == -1)
+                {
+                    target = SOTSNPCs.FindTarget_Basic(Projectile.Center, maxPursuitRange, this, true);
+                    if (target == -1)
+                        target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange, this, true);
+                }
             }
             if (target != -1 && itemDataRegistered)
             {
@@ -261,7 +275,7 @@ namespace SOTS.FakePlayer
                     FakePlayer.ForceItemUse = hasLOS || FakePlayer.itemAnimation > 0;
                 }
                 lastSkipDraw = FakePlayer.SkipDrawing;
-                if(needsLOS && TrailingType != TrailingID.IDLE)
+                if(needsLOS && TrailingType != TrailingID.IDLE && Projectile.Distance(cursorArea) < 320)
                 {
                     Projectile.velocity = Collision.TileCollision(Projectile.Center - new Vector2(16, 16), Projectile.velocity, 32, 32, true, true);
                 }
@@ -289,7 +303,7 @@ namespace SOTS.FakePlayer
                 Projectile other = Main.projectile[i];
                 if(Projectile.whoAmI != i)
                 {
-                    if(other.type == Type)
+                    if(other.type == Type && other.ModProjectile is TesseractServant ts && ts.TrailingType != TrailingID.IDLE)
                     {
                         Vector2 nudge = Projectile.Center - other.Center;
                         float dist = nudge.Length();

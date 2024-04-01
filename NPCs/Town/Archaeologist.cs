@@ -33,6 +33,7 @@ using SOTS.Buffs.Debuffs;
 using SOTS.Items.Crushers;
 using SOTS.Items.Earth.Glowmoth;
 using Terraria.Chat;
+using SOTS.Items;
 
 namespace SOTS.NPCs.Town
 {
@@ -518,7 +519,8 @@ namespace SOTS.NPCs.Town
 				.Add<CoconutGun>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonumentBroken && NPC.downedBoss1))
 				.Add<PhotonGeyser>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonumentBroken))
 				.Add<BoneClapper>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain && NPC.downedBoss3))
-				.Add(new Item(ItemID.Terragrim), new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain))
+                .Add<Baguette>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain && NPC.downedBoss3))
+                .Add(new Item(ItemID.Terragrim), new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain))
 				.Add<PerfectStar>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal && NPC.downedBoss1))
 				.Add<VisionAmulet>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal))
 				.Add<TorchBomb>(Condition.PlayerCarriesItem(ModContent.ItemType<TorchGun>()));
