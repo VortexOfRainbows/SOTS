@@ -41,6 +41,11 @@ Update Objectives:
 ---WIP List---
 Tesseract
 1. Better animations / visuals
+	1. Laser trail when teleporting
+	2. Dust when transforming
+	3. Wings made of lines
+2. Needs void cost + damage scaling (should have a unique visual on effected items tooltips)
+3. 100% damage instead of 100 damage
 
 ---Code Refactoring Needed List---
 N/A
@@ -74,6 +79,7 @@ Daily Log:
 4. WIP Tsseract Visuals
 5. Better movement for tesseract
 6. Baguette is sold by the Archaeologist in the Damocles Room
+7. Putrid Eye animation is now anchored properly again
 
 
 --- Update 0.24.0.3 ---

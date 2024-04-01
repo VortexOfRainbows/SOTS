@@ -3,12 +3,18 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.FakePlayer;
+using SOTS.Items.OreItems;
+using SOTS.Items.Planetarium.FromChests;
+using SOTS.Items.Planetarium.Furniture;
+using SOTS.Items.SpiritStaves;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace SOTS.Items
 {
@@ -48,6 +54,34 @@ namespace SOTS.Items
 			player.AddBuff(Item.buffType, 2);
 			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			return false;
-		}
-	}
+        }
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        {
+            if (line.Name == "ItemName")
+            {
+                Color outer = ColorHelpers.TesseractColor(0, 0.5f);
+                Color inner = Color.Black;
+                TextSnippet[] snippets = ChatManager.ParseMessage(line.Text, inner).ToArray();
+                ChatManager.ConvertNormalSnippets(snippets);
+                ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), outer, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+                int outSnip;
+                ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
+                return false;
+            }
+            return true;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1)
+				.AddIngredient<ChaosSpiritStaff>(1)
+                .AddIngredient<EvilSpiritStaff>(1)
+                .AddIngredient<InfernoSpiritStaff>(1)
+                .AddIngredient<TidalSpiritStaff>(1)
+                .AddIngredient<OtherworldlySpiritStaff>(1)
+                .AddIngredient<PermafrostSpiritStaff>(1)
+                .AddIngredient<EarthenSpiritStaff>(1)
+                .AddIngredient<NatureSpiritStaff>(1)
+				.AddTile(TileID.LunarCraftingStation).Register();
+        }
+    }
 }

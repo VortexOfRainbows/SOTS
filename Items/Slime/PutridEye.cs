@@ -41,7 +41,7 @@ namespace SOTS.Items.Slime
 				waitTime--;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Slime/PutridPupil").Value;
 			spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture2, position + new Vector2(27 * scale, 17 * scale) + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
+			spriteBatch.Draw(texture2, position + new Vector2(6 * scale, -6 * scale) + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -69,7 +69,7 @@ namespace SOTS.Items.Slime
 				waitTime--;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Slime/PutridPupil").Value;
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture2, Item.position + new Vector2(27 * scale, 17 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
+			spriteBatch.Draw(texture2, Item.position + new Vector2(6 * scale, -6 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override void SafeSetDefaults()

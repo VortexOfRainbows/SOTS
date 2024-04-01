@@ -136,10 +136,11 @@ namespace SOTS.FakePlayer
             }
             else if (!itemDataRegistered)
             {
-                if (FakePlayer.itemAnimation <= 1 && Main.myPlayer == player.whoAmI)
+                if (Main.myPlayer == player.whoAmI)
                 {
                     cursorArea = Main.MouseWorld;
-                    Direction = Math.Sign(cursorArea.X - player.Center.X);
+                    if(FakePlayer.itemAnimation <= 1)
+                        Direction = Math.Sign(cursorArea.X - player.Center.X);
                 }
             }
             else
@@ -230,7 +231,7 @@ namespace SOTS.FakePlayer
                     }
                     else
                     {
-                        speed += 1;
+                        speed += 2 + dist * 0.0075f;
                     }
                     if (lastSkipDraw != FakePlayer.SkipDrawing)
                     {
