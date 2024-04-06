@@ -33,17 +33,17 @@ Update Objectives:
 7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 8. Torch Bomb Upgrade Item
 9. Remote Detonator from Isaac
-10. Tesseract Summon item which allows summoning automatically attacking player clones
-11. Anomaly Relocator Item which relocates anomalies when used
-12. House Cube Accessory that can generate a temporary house
-13. Accessory that uses void instead of mana when low on mana
+10. Anomaly Relocator Item which relocates anomalies when used
+11. House Cube Accessory that can generate a temporary house
+12. Accessory that uses void instead of mana when low on mana
+13. Nerf seekers to generate less lag
+14. Fix Putrid Pinky vine drawing to be more performant
 
 ---WIP List---
 Tesseract
 1. Better animations / visuals
 	1. Laser trail when teleporting
 	2. Dust when transforming
-	3. Wings made of lines
 2. Needs void cost + damage scaling (should have a unique visual on effected items tooltips)
 3. 100% damage instead of 100 damage
 
@@ -57,7 +57,7 @@ Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth G
 Voidspace Ranger's Armor, Supernova Seekers
 
 ---Multiplayer Fixes/Testing Needed---
-N/A
+Tesseract
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -71,6 +71,9 @@ Look down for Abandoned Village todo and progress...
 	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 Daily Log:
+
+4/6/24
+1. Tesseract now has Wings
 
 3/26/24 to 3/31/24
 1. Tesseract WIP. Now can designate right or left click for how the item should be used automatically, also has custom inventory slots

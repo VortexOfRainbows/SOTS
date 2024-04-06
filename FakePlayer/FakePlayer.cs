@@ -400,7 +400,7 @@ namespace SOTS.FakePlayer
                 if (FakePlayerType == FakePlayerTypeID.Tesseract && UniqueUsageSlot >= 0)
                 {
                     int automaticUseTimer = fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames;
-                    bool NextToBeRegistered = TesseractServantNextInLine(fPlayer, UniqueUsageSlot);
+                    bool NextToBeRegistered = TesseractServantNextInLine(fPlayer, UniqueUsageSlot) || automaticUseTimer >= 0;
                     if (automaticUseTimer < 0 && NextToBeRegistered)
                     {
                         if (!player.controlUseItem && !holdingTesseract)
