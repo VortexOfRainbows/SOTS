@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.Common.GlobalNPCs;
+using SOTS.Void;
 using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.DataStructures;
@@ -35,6 +37,8 @@ namespace SOTS.FakePlayer
         {
             return false;
         }
+        private int aliveCounter = 0;
+        private int timeSinceLastTP = 0;
         private bool runOnce = true;
         private float TotalTesseracts = 1;
         public int MyUniqueID => (int)Projectile.ai[1] % 10;
@@ -65,18 +69,21 @@ namespace SOTS.FakePlayer
             {
                 Projectile.timeLeft = 6;
             }
+            timeSinceLastTP--;
+            aliveCounter++;
             return true;
 		}
+        private int lastTarget = -1;
         private int target = -1;
         private bool validItem;
         private bool lastSkipDraw = false;
         private int TrailingType = 0;
         public override void AI()
         {
-            if (FakePlayer == null)
-                return;
             Player player = Main.player[Projectile.owner];
             FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+            if (FakePlayer == null || fPlayer.tesseractPlayerCount <= 0)
+                return;
             NPC npc = null;
             int oldMouseX = Main.mouseX;
             int oldMouseY = Main.mouseY;
@@ -99,16 +106,13 @@ namespace SOTS.FakePlayer
                 {
                     target = -1;
                 }
-                else if (FakePlayer.itemAnimation <= 1)
+                else if (FakePlayer.itemAnimation <= 1 && lastTarget != -1)
                 {
                     target = -1;
-                } 
-                /*else if(needsLOS && !Collision.CanHitLine(Projectile.Center - new Vector2(16, 16), 32, 32, prevTarget.position, prevTarget.width, prevTarget.height))
-                {
-                    target = -1;
-                }*/
+                }
             }
-            if(validItem)
+            lastTarget = target;
+            if (validItem)
             {
                 if (player.HasMinionAttackTargetNPC)
                 {
@@ -116,12 +120,19 @@ namespace SOTS.FakePlayer
                     if (attackNPC.Distance(player.Center) < maxPursuitRange)
                     {
                         target = player.MinionAttackTargetNPC;
-                        foundTarget = true;
                     }
                 }
                 if (target == -1)
                 {
                     target = SOTSNPCs.FindTarget_Basic(Projectile.Center, maxPursuitRange, this, true);
+                    if(target != -1)
+                    {
+                        NPC attackNPC = Main.npc[target];
+                        if (attackNPC.Distance(player.Center) > maxPursuitRange + 100)
+                        {
+                            target = -1;
+                        }
+                    }
                     if (target == -1)
                         target = SOTSNPCs.FindTarget_Basic(player.Center, maxPursuitRange, this, true);
                 }
@@ -232,10 +243,15 @@ namespace SOTS.FakePlayer
                     {
                         speed += 2 + dist * 0.0075f;
                     }
-                    if (lastSkipDraw != FakePlayer.SkipDrawing)
+                    if ((lastSkipDraw != FakePlayer.SkipDrawing || (dist > 320 && timeSinceLastTP <= 0) || aliveCounter == 4) && aliveCounter > 3)
                     {
-                        Projectile.position = idlePosition;
+                        if (Main.myPlayer == player.whoAmI)
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<TesseractLaser>(), 0, 0, Main.myPlayer, idlePosition.X, idlePosition.Y, Projectile.ai[1]);
+                        }
+                        Projectile.Center = idlePosition;
                         Projectile.velocity = Vector2.Zero;
+                        timeSinceLastTP = 10;
                     }
                     else
                     {
@@ -269,8 +285,12 @@ namespace SOTS.FakePlayer
                 {
                     Projectile.velocity = Collision.TileCollision(Projectile.Center - new Vector2(16, 16), Projectile.velocity, 32, 32, true, true);
                 }
+                if(aliveCounter < 4)
+                {
+                    Projectile.velocity *= 0;
+                }
                 CheckNoCollisionNearby();
-                FakePlayer.CheckTesseractShouldDraw(player, TrailingType);
+                FakePlayer.OverrideTrailingType = TrailingType;
                 UpdateItems(player);
                 //Projectile.velocity = FakePlayer.Velocity;
             }
@@ -278,12 +298,14 @@ namespace SOTS.FakePlayer
             Main.mouseX = oldMouseX;
             Main.mouseY = oldMouseY;
             if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
+            {
                 Projectile.netUpdate = true;
+            }
         }
         private bool CollisionLineOfSight(NPC npc, Player player)
         {
-            return Collision.CanHitLine(Projectile.Center - new Vector2(8, 8), 16, 16, npc.position, npc.width, npc.height) ||
-                Collision.CanHitLine(player.Center - new Vector2(8, 8), 16, 16, npc.position, npc.width, npc.height);
+            return Collision.CanHitLine(Projectile.Center - new Vector2(16, 16), 32, 32, npc.position, npc.width, npc.height) ||
+                Collision.CanHitLine(player.Center - new Vector2(16, 16), 32, 32, npc.position, npc.width, npc.height);
         }
         private void CheckNoCollisionNearby()
         {
@@ -309,14 +331,14 @@ namespace SOTS.FakePlayer
         private List<float> outerDepths;
         public override bool PreDraw(ref Color lightColor)
         {
-            if (runOnce || FakePlayer == null)
+            if (runOnce || FakePlayer == null || aliveCounter <= 3)
                 return false;
             Color drawColor = FakePlayer.MyBorderColor();
             bool skipDrawing = !FakePlayer.SkipDrawing || !lastSkipDraw || TrailingType != TrailingID.IDLE;
             bool drawItem = false;
             if (skipDrawing)
             {
-                if(!lastSkipDraw)
+                if(!lastSkipDraw && !FakePlayer.SkipDrawing)
                 {
                     DrawWings(drawColor * 0.8f, 3f);
                     DrawWings(Color.Black, 1f);
@@ -399,8 +421,8 @@ namespace SOTS.FakePlayer
                     j = 0;
                     k = a == 4 ? 1 : -1;
                 }
-                float cos = j * (float)Math.Cos(MathHelper.ToRadians(SOTSWorld.GlobalCounter + degreesOffset) + i * MathHelper.PiOver2 + bonus);
-                float sin = j * (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter + degreesOffset) + (2 + i) * MathHelper.PiOver2 + bonus);
+                float cos = j * (float)Math.Cos(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + degreesOffset) + i * MathHelper.PiOver2 + bonus);
+                float sin = j * (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + degreesOffset) + (2 + i) * MathHelper.PiOver2 + bonus);
                 float depth = 0.8f - 0.2f * sin;
                 Vector2 offset = new Vector2(size, root2 * size * k);
                 offset.X *= cos;
@@ -513,6 +535,82 @@ namespace SOTS.FakePlayer
                 previousPoint = points[i];
                 previousDepth = depths[i];
             }
+        }
+    }
+    public class TesseractLaser : ModProjectile
+    {
+        public override string Texture => "SOTS/Items/Secrets/WhitePixel";
+        public override void SetDefaults()
+        {
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.timeLeft = 60;
+            Projectile.penetrate = -1;
+            Projectile.hostile = Projectile.friendly = Projectile.tileCollide = false;
+            Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
+            Projectile.ignoreWater = true;
+        }
+        public void DustScatter(Vector2 position, float mult = 1f)
+        {
+            Vector2 start = Projectile.Center;
+            Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+            Vector2 toDestination = destination - start;
+            float rand = Main.rand.NextFloat(MathHelper.TwoPi);
+            for (int i = 0; i < 18; i++)
+            {
+                Vector2 circular = new Vector2(1, 0).RotatedBy(i / 18f * MathHelper.TwoPi + rand);
+                Dust dust = Dust.NewDustDirect(position - new Vector2(5) + circular * 16, 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.0f);
+                dust.scale *= 0.2f;
+                dust.scale += 1.0f;
+                dust.velocity *= 0.5f;
+                dust.velocity += Main.rand.NextFloat() * mult * toDestination.SafeNormalize(Vector2.Zero);
+                dust.velocity += circular * Main.rand.NextFloat(2.4f, 3.2f);
+                dust.noGravity = true;
+                dust.color = Color.Lerp(coreColor, Color.White, Main.rand.NextFloat(0.5f));
+                dust.fadeIn = 0.2f;
+            }
+        }
+        public override void AI()
+        {
+            if ((int)Projectile.localAI[0] == 0)
+            {
+                Vector2 start = Projectile.Center;
+                Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+                DustScatter(start, -0.5f);
+                int length = (int)start.Distance(destination);
+                if(length > 40)
+                    DustScatter(destination, 0.5f);
+                for (int f = 0; f < Math.Min(length, 45); f ++)
+                {
+                    Vector2 position = Vector2.Lerp(start, destination, Main.rand.NextFloat());
+                    Dust dust = Dust.NewDustDirect(position - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.0f);
+                    dust.scale *= 0.2f;
+                    dust.scale += 0.75f;
+                    dust.velocity *= 0.3f;
+                    dust.noGravity = true;
+                    dust.color = Color.Lerp(coreColor, Color.White, Main.rand.NextFloat(0.6f));
+                    dust.fadeIn = 0.2f;
+                }
+            }
+            Projectile.localAI[0] += 1f;
+            if (Projectile.localAI[0] > 24f)
+            {
+                Projectile.Kill();
+            }
+        }
+        public Color coreColor => ColorHelpers.TesseractColor(MathHelper.TwoPi * (Projectile.ai[2] % 10) / 10f, 0.5f);
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 origin = new Vector2(0, 1);
+            Vector2 start = Projectile.Center;
+            Vector2 end = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+            Vector2 toEnd = end - start;
+            float length = toEnd.Length() / 2;
+            float progress = Projectile.localAI[0] / 24f;
+            Main.spriteBatch.Draw(texture, start - Main.screenPosition, null, coreColor * (1 - progress), toEnd.ToRotation(), origin, new Vector2(length, 3f * (1 - progress)), SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, start - Main.screenPosition, null, Color.Black * (1 - progress), toEnd.ToRotation(), origin, new Vector2(length, 1f * (1 - progress)), SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

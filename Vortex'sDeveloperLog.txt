@@ -14,6 +14,7 @@ Acknowledged But Likely Delayed:
 7. Most Void Minions do not work with whip debuffs
 8. Hydro servant wont attack in multiplayer, but fixed on a reload..?
 9. Boss Trophies
+10. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -41,11 +42,8 @@ Update Objectives:
 
 ---WIP List---
 Tesseract
-1. Better animations / visuals
-	1. Laser trail when teleporting
-	2. Dust when transforming
-2. Needs void cost + damage scaling (should have a unique visual on effected items tooltips)
-3. 100% damage instead of 100 damage
+1. Needs void cost + damage scaling (should have a unique visual on effected items tooltips)
+2. 100% damage instead of 100 damage
 
 ---Code Refactoring Needed List---
 N/A
@@ -72,8 +70,10 @@ Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
-4/6/24
+4/6/24 to 4/7/24
 1. Tesseract now has Wings
+2. Fix some drawing related bugs with having multiple FakePlayer types out at once
+3. Tesseract now has teleport movement with cool visuals to designate form changes
 
 3/26/24 to 3/31/24
 1. Tesseract WIP. Now can designate right or left click for how the item should be used automatically, also has custom inventory slots

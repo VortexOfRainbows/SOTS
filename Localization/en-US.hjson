@@ -6947,6 +6947,7 @@ Mods: {
 			SpawnEnemyProj.DisplayName: Spawn Enemy Proj
 			EarthGrinderSlash.DisplayName: Earth Grinder Slash
 			TesseractServant.DisplayName: Tesseract Servant
+			TesseractLaser.DisplayName: Tesseract Laser
 		}
 
 		DamageClasses: {

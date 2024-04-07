@@ -893,7 +893,7 @@ namespace SOTS
             {
                 bool isHydroPlayerUsingAnItem = FakePlayer.FakePlayer.CheckItemValidityFull(self, item, item, 1);
                 if (isHydroPlayerUsingAnItem)
-                {
+				{
 					if(FakePlayerProjectile.OwnerOfThisDrawCycle != -1 || FakePlayerProjectile.OwnerOfThisUpdateCycle != -1)
 						return orig(self, item);
 					else

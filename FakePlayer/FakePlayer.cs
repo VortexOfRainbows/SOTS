@@ -55,6 +55,7 @@ namespace SOTS.FakePlayer
         public bool ShouldUseWingsArmPosition = false;
         public int BonusItemAnimationTime = 0;
         public int WingFrame = 0;
+        public int OverrideTrailingType = -1;
         public int TrailingType = 0;
         public const int Width = 20;
         public const int Height = 42;
@@ -368,6 +369,7 @@ namespace SOTS.FakePlayer
         public void RunItemCheck(Player player, bool canUseItem = false)
         {
             FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+            //FakePlayerProjectile.FakePlayerTypeOfThisCycle = FakePlayerType;
             FakePlayerProjectile.OwnerOfThisUpdateCycle = FakePlayerID; //Temporarily assign the owner of the update cycle, which will make any projectile spawned during the update cycle a child of the fake player
             int whoAmI = player.whoAmI;
             bool holdingTesseract = !player.HeldItem.IsAir && player.HeldItem.type == ModContent.ItemType<Tesseract>();
@@ -443,7 +445,7 @@ namespace SOTS.FakePlayer
                         }
                     }
                     else
-                    { 
+                    {
                         ChargeDuration = -2; 
                     }
                 }
@@ -501,11 +503,10 @@ namespace SOTS.FakePlayer
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
+            if (FakePlayerType == FakePlayerTypeID.Tesseract)
+                CheckTesseractShouldDraw(player, OverrideTrailingType != -1 ? OverrideTrailingType : TrailingType);
             player.controlUseItem = false;
             player.controlUseTile = false;
-
-
-
             CopyRealToFake(player);
             LoadRealPlayerValues(player);
             if (FakePlayerType == FakePlayerTypeID.Hydro)
@@ -526,6 +527,10 @@ namespace SOTS.FakePlayer
                 if (itemAnimation > 0 || BonusItemAnimationTime > 0 || trailingType != TrailingID.IDLE)
                 {
                     SkipDrawing = false;
+                }
+                else if (lastUsedItemType != player.HeldItem.type) //This is to fix a situation where tesseract will consider animating with a player's held item when holding down hotbar shortcuts
+                {
+                    SkipDrawing = true;
                 }
                 else if (player.HeldItem.holdStyle != ItemUseStyleID.None)
                 {
@@ -860,9 +865,12 @@ namespace SOTS.FakePlayer
         }
         public bool PrepareDrawing(ref PlayerDrawSet drawInfo, Player player, int DrawState)
         {
-            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
+            //FakePlayerProjectile.FakePlayerTypeOfThisCycle = FakePlayerType;
             if (bodyFrame.IsEmpty || SkipDrawing)
+            {
                 return false;
+            }
+            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             FakePlayerDrawing.SetupCompositeDrawing(ref drawInfo, this, player);
