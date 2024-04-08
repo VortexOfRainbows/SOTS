@@ -17,6 +17,7 @@ using SOTS.Buffs.DilationSickness;
 using Terraria.Localization;
 using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.FakePlayer;
+using SOTS.Projectiles.Laser;
 
 namespace SOTS.Void
 {
@@ -276,6 +277,7 @@ namespace SOTS.Void
 			{
 				return 0;
 			}
+			int currentTesseracts = 0;
 			VoidMinions = new List<int>();
 			List<int> whoAmI = new List<int>();
 			for (int i = 0; i < Main.projectile.Length; i++)
@@ -285,7 +287,11 @@ namespace SOTS.Void
 				{
 					VoidMinions.Add(voidMinion(projectile));
 					whoAmI.Add(projectile.whoAmI);
-				}
+					if(projectile.type == ProjectileType<TesseractServant>())
+					{
+						currentTesseracts++;
+					}
+                }
 			}
 			int total = 0;
 			for (int i = 0; i < VoidMinions.Count; i++)
@@ -302,8 +308,24 @@ namespace SOTS.Void
 					Projectile projectile = Main.projectile[whoAmI[i]];
 					if (projectile.owner == Player.whoAmI)
 					{
-						projectile.active = false;
-						projectile.Kill();
+						if (projectile.type == ProjectileType<TesseractServant>())
+						{
+							if (projectile.ai[1] >= currentTesseracts - 1)
+							{
+								projectile.active = false;
+								projectile.Kill();
+								currentTesseracts--;
+                            }
+							else
+							{
+								continue;
+							}
+						}
+						else
+                        {
+                            projectile.active = false;
+                            projectile.Kill();
+                        }
 					}
 					total -= minionVoidCost(type);
 					if (projectile.owner == Player.whoAmI)

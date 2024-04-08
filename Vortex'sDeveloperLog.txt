@@ -39,10 +39,11 @@ Update Objectives:
 12. Accessory that uses void instead of mana when low on mana
 13. Nerf seekers to generate less lag
 14. Fix Putrid Pinky vine drawing to be more performant
+15. Fake Players switch items when Shift is held. This should not happen
 
 ---WIP List---
 Tesseract
-1. Needs void cost
+1. Needs void cost adjustments
 
 ---Code Refactoring Needed List---
 N/A
@@ -76,6 +77,8 @@ Daily Log:
 4. Some tesseract inventory optimizations and apply void/summon damage to items held by Tesseract
 5. Improved teleport visual inconsistencies
 6. Fix issue with FakePlayer projectiles not drawing when the player is invisible
+7. Tesseract now correctly applies damage multipliers
+8. Void Summons no logner show critical strike chance in their tooltip
 
 3/26/24 to 3/31/24
 1. Tesseract WIP. Now can designate right or left click for how the item should be used automatically, also has custom inventory slots

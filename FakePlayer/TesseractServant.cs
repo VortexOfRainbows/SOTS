@@ -69,6 +69,14 @@ namespace SOTS.FakePlayer
             {
                 Projectile.timeLeft = 6;
             }
+            //if (Main.myPlayer == Projectile.owner)
+            //{
+            //    FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+            //    if(fPlayer.tesseractPlayerCount < Projectile.ai[1])
+            //    {
+            //        Projectile.Kill();
+            //    }
+            //}
             timeSinceLastTP--;
             aliveCounter++;
             return true;

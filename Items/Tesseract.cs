@@ -58,7 +58,7 @@ namespace SOTS.Items
         }
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-            if (line.Name == "ItemName")
+            if (line.Name == "ItemName" || line.Name == "Damage" || line.Name == "Favorite" || line.Name == "FavoriteDesc")
             {
                 Color outer = ColorHelpers.TesseractColor(0, 0.5f);
                 Color inner = Color.Black;

@@ -92,6 +92,8 @@ namespace SOTS.FakePlayer
             Vector2 compositeOffset_BackArm = GetCompositeOffset_BackArm(ref drawInfo);
             vector3 += compositeOffset_BackArm;
             float rotation = drawInfo.compositeBackArmRotation;
+            Color saveColor = drawInfo.armGlowColor;
+            drawInfo.armGlowColor = DrawColor(fakePlayer);
             Color color = DrawColor(fakePlayer);
             if (outline)
             {
@@ -108,6 +110,7 @@ namespace SOTS.FakePlayer
                     //shader = drawInfo.cBody
                 });
             }
+            drawInfo.armGlowColor = saveColor;
         }
         public static void DrawTail(FakePlayer fakePlayer, ref PlayerDrawSet drawInfo, bool outLine = false)
         {

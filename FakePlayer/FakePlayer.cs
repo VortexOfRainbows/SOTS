@@ -688,6 +688,10 @@ namespace SOTS.FakePlayer
             //Set default values (ones that aren't used/modified by FakePlayer)
             player.selectedItem = UseItemSlot(player);
             player.lastVisualizedSelectedItem = lastUsedItem;
+            if(lastUsedItem == null)
+            {
+                player.lastVisualizedSelectedItem = player.HeldItem;
+            }
             player.channel = Channel;
             player.frozen = player.stoned = player.webbed = player.wet = false;
             player.mount._active = false;
@@ -865,17 +869,12 @@ namespace SOTS.FakePlayer
         }
         public bool PrepareDrawing(ref PlayerDrawSet drawInfo, Player player, int DrawState)
         {
-            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
-            //FakePlayerProjectile.FakePlayerTypeOfThisCycle = FakePlayerType;
-            if (bodyFrame.IsEmpty || SkipDrawing)
+            if(bodyFrame.IsEmpty)
             {
-                if (DrawState == DrawStateID.All || DrawState == DrawStateID.Border)
-                {
-                    DrawMyProjectiles(player); //Doesn't matter where in the order this is called... as drawInfoDrawing will happen later anyway
-                }
-                FakePlayerProjectile.OwnerOfThisDrawCycle = -1;
                 return false;
             }
+            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
+            //FakePlayerProjectile.FakePlayerTypeOfThisCycle = FakePlayerType;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             FakePlayerDrawing.SetupCompositeDrawing(ref drawInfo, this, player);
@@ -898,46 +897,49 @@ namespace SOTS.FakePlayer
             drawInfo.heldProjOverHand = this.heldProjOverHand;
             drawInfo.bodyVect = this.bodyVect;
 
-            if(DrawState == DrawStateID.All || DrawState == DrawStateID.Border)
+            if (!SkipDrawing)
             {
-                FakePlayerDrawing.DrawTail(this, ref drawInfo, true);
-                HijackItemDrawing(ref drawInfo, true);
-                FakePlayerDrawing.DrawBackArm(this, ref drawInfo, true);
-                FakePlayerDrawing.DrawBody(this, ref drawInfo, true);
-                FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, true);
-                FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame, true);
-            }
-            if(DrawState == DrawStateID.All || DrawState == DrawStateID.Wings)
-            {
-                FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame, false);
-            }
-            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectilesBeforeBackArm) //Draws the item before the back hand (used for items like the Nightglow lamp)
-            {
-                if (weaponDrawOrder == 0)
-                    HijackItemDrawing(ref drawInfo, false);
-            }
-            if (DrawState == DrawStateID.All || DrawState == DrawStateID.Body)
-            {
-                FakePlayerDrawing.DrawBackArm(this, ref drawInfo, false);
-                FakePlayerDrawing.DrawTail(this, ref drawInfo, false);
-                FakePlayerDrawing.DrawBody(this, ref drawInfo, false);
-            }
-            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectilesBeforeFrontArm) //Draws items before the front arm, similar to most held projectiles
-            {
-                if (weaponDrawOrder == 1)
-                    HijackItemDrawing(ref drawInfo, false);
-            }
-            if (DrawState == DrawStateID.All || DrawState == DrawStateID.FrontArm)
-            {
-                if (player.heldProj == -1 || heldProjOverHand)
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.Border)
                 {
-                    FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, false);
+                    FakePlayerDrawing.DrawTail(this, ref drawInfo, true);
+                    HijackItemDrawing(ref drawInfo, true);
+                    FakePlayerDrawing.DrawBackArm(this, ref drawInfo, true);
+                    FakePlayerDrawing.DrawBody(this, ref drawInfo, true);
+                    FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, true);
+                    FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame, true);
                 }
-            }
-            if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectilesAfterFrontArm) //Draws item after the front arm, like charged blaster cannon
-            {
-                if (weaponDrawOrder == 2)
-                    HijackItemDrawing(ref drawInfo, false);
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.Wings)
+                {
+                    FakePlayerDrawing.DrawWings(this, ref drawInfo, WingFrame, false);
+                }
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectilesBeforeBackArm) //Draws the item before the back hand (used for items like the Nightglow lamp)
+                {
+                    if (weaponDrawOrder == 0)
+                        HijackItemDrawing(ref drawInfo, false);
+                }
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.Body)
+                {
+                    FakePlayerDrawing.DrawBackArm(this, ref drawInfo, false);
+                    FakePlayerDrawing.DrawTail(this, ref drawInfo, false);
+                    FakePlayerDrawing.DrawBody(this, ref drawInfo, false);
+                }
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectilesBeforeFrontArm) //Draws items before the front arm, similar to most held projectiles
+                {
+                    if (weaponDrawOrder == 1)
+                        HijackItemDrawing(ref drawInfo, false);
+                }
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.FrontArm)
+                {
+                    if (player.heldProj == -1 || heldProjOverHand)
+                    {
+                        FakePlayerDrawing.DrawFrontArm(this, ref drawInfo, false);
+                    }
+                }
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.HeldItemAndProjectilesAfterFrontArm) //Draws item after the front arm, like charged blaster cannon
+                {
+                    if (weaponDrawOrder == 2)
+                        HijackItemDrawing(ref drawInfo, false);
+                }
             }
 
             //Save this arm data

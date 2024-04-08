@@ -111,12 +111,13 @@ namespace SOTS.Void
 				{
 					if(Item.type == ModContent.ItemType<Tesseract>())
                     {
-                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSPercent", damageValue, damageWord);
+                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSPercent", damageWord);
                     }
 					else
                     {
                         tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidS", damageValue, damageWord);
                     }
+					tooltips.FirstOrDefault(x => x.Name == "CritChance" && x.Mod == "Terraria").Hide();
                 }
 			}
 			string voidCostText = VoidCost(Main.LocalPlayer).ToString();

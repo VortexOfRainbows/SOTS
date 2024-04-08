@@ -17,7 +17,7 @@ Mods: {
 			VoidM2: "{0} void + magic {1}"
 			VoidS: "{0} void + summon {1}"
 			VoidSDouble: "{0} void + {1}summon {2}"
-			VoidSPercent: "{0}% void + summon {1}"
+			VoidSPercent: ??? void + summon {0}
 			CV: Consumes {0} void
 			GenSOTSOres: Generating SOTS Ores
 			GenSOTSGeodes: Generating Fancy Geodes
@@ -5339,6 +5339,7 @@ Mods: {
 					Starting with the item in the bottom-left inventory slot and ending with the bottom-right slot, each Clone uses a different item
 					When first summoned, the Clone will await a command for how it should use the item (left or right click) and for how long (for charge items)
 					After the first usage of the item, the Clone will now automatically use the item as specified
+					Items used by Clones are affected by Void and Summon damage bonuses
 					'''
 			}
 		}

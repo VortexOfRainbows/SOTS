@@ -489,8 +489,28 @@ namespace SOTS
                 TesseractMinionData data = fPlayer.tesseractData[tesseractDataIBelongIn];
 				if(data.FoundValidItem)
 				{
-					damage.Flat -= item.OriginalDamage;
-					damage.Flat += player.GetTotalDamage<VoidSummon>().ApplyTo(item.OriginalDamage);
+                    float flat = player.GetDamage<VoidSummon>().Flat - player.GetDamage(DamageClass.Generic).Flat;
+                    float baseD = player.GetDamage<VoidSummon>().Base - player.GetDamage(DamageClass.Generic).Base;
+					float multi = player.GetDamage<VoidSummon>().Multiplicative - player.GetDamage(DamageClass.Generic).Multiplicative + 1;
+					float add = player.GetDamage<VoidSummon>().Additive - player.GetDamage(DamageClass.Generic).Additive;
+					if(!item.CountsAsClass<VoidGeneric>())
+					{
+						flat += player.GetDamage<VoidGeneric>().Flat;
+                        baseD += player.GetDamage<VoidGeneric>().Base;
+                        multi += player.GetDamage<VoidGeneric>().Multiplicative - 1;
+                        add += player.GetDamage<VoidGeneric>().Additive - 1;
+                    }
+					if(!item.CountsAsClass(DamageClass.Summon))
+                    {
+                        flat += player.GetDamage(DamageClass.Summon).Flat;
+                        baseD += player.GetDamage(DamageClass.Summon).Base;
+                        multi += player.GetDamage(DamageClass.Summon).Multiplicative - 1;
+						add += player.GetDamage(DamageClass.Summon).Additive - 1;
+                    }
+					damage.Flat += flat;
+                    damage.Base += baseD;
+                    damage *= multi;
+                    damage += add;
                 }
             }
         }
