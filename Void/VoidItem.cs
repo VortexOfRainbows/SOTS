@@ -13,6 +13,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using SOTS.Items.Tide;
+using SOTS.Items;
 
 namespace SOTS.Void
 {
@@ -107,7 +108,16 @@ namespace SOTS.Void
 					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidM2", damageValue, damageWord);
 
 				if (Item.CountsAsClass(DamageClass.Summon))
-					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidS", damageValue, damageWord);
+				{
+					if(Item.type == ModContent.ItemType<Tesseract>())
+                    {
+                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSPercent", damageValue, damageWord);
+                    }
+					else
+                    {
+                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidS", damageValue, damageWord);
+                    }
+                }
 			}
 			string voidCostText = VoidCost(Main.LocalPlayer).ToString();
 			TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.Mod == "Terraria");

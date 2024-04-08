@@ -378,6 +378,8 @@ namespace SOTS.FakePlayer
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             Update(player);
+            if (FakePlayerType == FakePlayerTypeID.Tesseract)
+                CheckTesseractShouldDraw(player, OverrideTrailingType != -1 ? OverrideTrailingType : TrailingType);
             bool valid = CheckItemValidityFull(player, player.HeldItem, lastUsedItem, FakePlayerType);
             int UniqueUsageSlot = OverrideUseSlot % 10;
             if (canUseItem || player.channel)
@@ -503,8 +505,6 @@ namespace SOTS.FakePlayer
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             SetupBodyFrame(player); //run code to get frame after
-            if (FakePlayerType == FakePlayerTypeID.Tesseract)
-                CheckTesseractShouldDraw(player, OverrideTrailingType != -1 ? OverrideTrailingType : TrailingType);
             player.controlUseItem = false;
             player.controlUseTile = false;
             CopyRealToFake(player);
@@ -865,12 +865,17 @@ namespace SOTS.FakePlayer
         }
         public bool PrepareDrawing(ref PlayerDrawSet drawInfo, Player player, int DrawState)
         {
+            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             //FakePlayerProjectile.FakePlayerTypeOfThisCycle = FakePlayerType;
             if (bodyFrame.IsEmpty || SkipDrawing)
             {
+                if (DrawState == DrawStateID.All || DrawState == DrawStateID.Border)
+                {
+                    DrawMyProjectiles(player); //Doesn't matter where in the order this is called... as drawInfoDrawing will happen later anyway
+                }
+                FakePlayerProjectile.OwnerOfThisDrawCycle = -1;
                 return false;
             }
-            FakePlayerProjectile.OwnerOfThisDrawCycle = FakePlayerID;
             SaveRealPlayerValues(player);
             CopyFakeToReal(player);
             FakePlayerDrawing.SetupCompositeDrawing(ref drawInfo, this, player);

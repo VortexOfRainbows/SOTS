@@ -106,7 +106,7 @@ namespace SOTS.FakePlayer
                 {
                     target = -1;
                 }
-                else if (FakePlayer.itemAnimation <= 1 && lastTarget != -1)
+                else if (FakePlayer.BonusItemAnimationTime <= 1 && FakePlayer.itemAnimation <= 1 && lastTarget != -1)
                 {
                     target = -1;
                 }
@@ -149,7 +149,7 @@ namespace SOTS.FakePlayer
                 if (Main.myPlayer == player.whoAmI)
                 {
                     cursorArea = Main.MouseWorld;
-                    if(FakePlayer.itemAnimation <= 1)
+                    if(FakePlayer.BonusItemAnimationTime <= 1 && FakePlayer.itemAnimation <= 1)
                         Direction = Math.Sign(cursorArea.X - player.Center.X);
                 }
             }
@@ -229,7 +229,7 @@ namespace SOTS.FakePlayer
                     idlePosition.Y = cursorArea.Y;
                     idlePosition.X -= appropriateMeleeDistance * Math.Sign(Direction);
                 }
-                bool move = TrailingType != 0 || FakePlayer.itemAnimation <= 0 || !itemDataRegistered;
+                bool move = TrailingType != 0 || (FakePlayer.BonusItemAnimationTime <= 0 && FakePlayer.itemAnimation <= 0) || !itemDataRegistered;
                 if(move)
                 {
                     Vector2 toIdle = idlePosition - Projectile.Center;
@@ -278,7 +278,7 @@ namespace SOTS.FakePlayer
                 }
                 if(foundTarget)
                 {
-                    FakePlayer.ForceItemUse = hasLOS || FakePlayer.itemAnimation > 0;
+                    FakePlayer.ForceItemUse = (hasLOS || FakePlayer.itemAnimation > 0) && aliveCounter > 10;
                 }
                 lastSkipDraw = FakePlayer.SkipDrawing;
                 if(needsLOS && TrailingType != TrailingID.IDLE && Projectile.Distance(cursorArea) < 320)
@@ -291,7 +291,8 @@ namespace SOTS.FakePlayer
                 }
                 CheckNoCollisionNearby();
                 FakePlayer.OverrideTrailingType = TrailingType;
-                UpdateItems(player);
+                if(aliveCounter > 3)
+                    UpdateItems(player);
                 //Projectile.velocity = FakePlayer.Velocity;
             }
 

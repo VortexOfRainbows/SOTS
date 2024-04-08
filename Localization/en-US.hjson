@@ -16,6 +16,8 @@ Mods: {
 			VoidR: "{0} void + ranged {1}"
 			VoidM2: "{0} void + magic {1}"
 			VoidS: "{0} void + summon {1}"
+			VoidSDouble: "{0} void + {1}summon {2}"
+			VoidSPercent: "{0}% void + summon {1}"
 			CV: Consumes {0} void
 			GenSOTSOres: Generating SOTS Ores
 			GenSOTSGeodes: Generating Fancy Geodes
@@ -5203,7 +5205,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases magic and ranged critical strike chance by 25%
-					Increases void damage critical strike chance by 15% and max mana by 100
+					Increases void critical strike chance by 15% and max mana by 100
 					Increases void gain by 4 and max void by 50
 					'''
 			}

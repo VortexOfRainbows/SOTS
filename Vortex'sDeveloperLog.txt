@@ -42,8 +42,7 @@ Update Objectives:
 
 ---WIP List---
 Tesseract
-1. Needs void cost + damage scaling (should have a unique visual on effected items tooltips)
-2. 100% damage instead of 100 damage
+1. Needs void cost
 
 ---Code Refactoring Needed List---
 N/A
@@ -74,6 +73,9 @@ Daily Log:
 1. Tesseract now has Wings
 2. Fix some drawing related bugs with having multiple FakePlayer types out at once
 3. Tesseract now has teleport movement with cool visuals to designate form changes
+4. Some tesseract inventory optimizations and apply void/summon damage to items held by Tesseract
+5. Improved teleport visual inconsistencies
+6. Fix issue with FakePlayer projectiles not drawing when the player is invisible
 
 3/26/24 to 3/31/24
 1. Tesseract WIP. Now can designate right or left click for how the item should be used automatically, also has custom inventory slots

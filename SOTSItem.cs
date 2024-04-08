@@ -3,12 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.ObjectData;
-using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Planetarium.FromChests;
 using System.Linq;
@@ -20,11 +16,8 @@ using SOTS.Items.Planetarium;
 using SOTS.Items.ChestItems;
 using SOTS.Items;
 using SOTS.Items.Fragments;
-using SOTS.Items.Earth;
 using SOTS.Items.Inferno;
 using Terraria.Utilities;
-using SOTS.Items.Pyramid.PyramidWalls;
-using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Permafrost;
 using SOTS.Items.DoorItems;
 using SOTS.Items.Secrets;
@@ -32,16 +25,13 @@ using System;
 using SOTS.Items.Planetarium.Furniture;
 using SOTS.Items.Fishing;
 using SOTS.Items.Chaos;
-using SOTS.Projectiles.Planetarium;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent;
 using Terraria.Localization;
 using SOTS.Items.Conduit;
 using SOTS.Common;
 using SOTS.Items.Tide;
-using SOTS.Items.AbandonedVillage;
 using SOTS.FakePlayer;
-using System.Collections.ObjectModel;
 using Terraria.UI.Chat;
 
 namespace SOTS
@@ -421,36 +411,55 @@ namespace SOTS
 				tooltips.Add(line);
 			
 			}
-			FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(Main.LocalPlayer);
-			for(int i = 0; i < Math.Clamp(fPlayer.tesseractPlayerCount, 0, 10); i++)
+			if(!item.IsAir)
             {
-				int slot = 40 + i;
-				TesseractMinionData data = fPlayer.tesseractData[i];
-                Item check = Main.LocalPlayer.inventory[slot];
-                if (!check.IsAir && !item.IsAir && check.GetGlobalItem<PrefixItem>().InventorySlotID == item.GetGlobalItem<PrefixItem>().InventorySlotID)
+                FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(Main.LocalPlayer);
+                int validItemSlots = fPlayer.tesseractPlayerCount;
+                bool validSlot = item.GetGlobalItem<PrefixItem>().InventorySlotID >= 40 && item.GetGlobalItem<PrefixItem>().InventorySlotID < 40 + validItemSlots;
+                int tesseractDataIBelongIn = item.GetGlobalItem<PrefixItem>().InventorySlotID % 10;
+                if (validSlot)
                 {
-					Color c = Color.Lerp(ColorHelpers.RubyColor, Color.Red, 0.4f);
-                    string aligned = Language.GetTextValue("Mods.SOTS.Common.Solar" + i);
-					string text;
-					if(!data.FoundValidItem)
+                    TesseractMinionData data = fPlayer.tesseractData[tesseractDataIBelongIn];
+                    Color c = Color.Lerp(ColorHelpers.RubyColor, Color.Red, 0.4f);
+                    string aligned = Language.GetTextValue("Mods.SOTS.Common.Solar" + tesseractDataIBelongIn);
+                    string text;
+                    if (!data.FoundValidItem)
                     {
                         text = Language.GetTextValue("Mods.SOTS.Common.TesseractInvalid", aligned);
                     }
-					else if(data.ChargeFrames < 0)
+                    else if (data.ChargeFrames < 0)
                     {
                         text = Language.GetTextValue("Mods.SOTS.Common.TesseractAwaiting", aligned);
                     }
-					else
+                    else
                     {
-						c = Color.Lerp(ColorHelpers.pastelRainbow, ColorHelpers.AmethystColor, 0.9f);
+                        c = Color.Lerp(ColorHelpers.pastelRainbow, ColorHelpers.AmethystColor, 0.9f);
                         string duration = data.ChargeFrames == 7200 ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsageContinuous") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageDuration", MathF.Round(data.ChargeFrames / 60f, 3));
-						string primaryOrSecondary = !data.AltFunctionUse ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsagePrimary") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageSecondary");
+                        string primaryOrSecondary = !data.AltFunctionUse ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsagePrimary") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageSecondary");
                         text = Language.GetTextValue("Mods.SOTS.Common.TesseractUsage", aligned, primaryOrSecondary, duration);
                     }
                     TooltipLine line = new TooltipLine(Mod, "TesseractInventory", text);
                     line.OverrideColor = c;
                     tooltips.Add(line);
-                    break;
+					if(data.FoundValidItem)
+                    {
+                        TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
+                        if (tt != null)
+                        {
+                            string[] splitText = tt.Text.Split(' ');
+							string originalType = "";
+                            if (!item.CountsAsClass(DamageClass.Summon))
+                            {
+                                if (splitText.Length > 2) //not TRUE damage, must be a damage type
+                                {
+                                    originalType = splitText[1] + " + ";
+                                }
+                            }
+                            string damageValue = splitText.First();
+                            string damageWord = Language.GetTextValue("Mods.SOTS.Common.Damage");
+							tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSDouble", damageValue, originalType, damageWord);
+                        }
+                    }
                 }
             }
 		}
@@ -468,6 +477,22 @@ namespace SOTS
                 return false;
             }
             return true;
+        }
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
+        {
+			FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
+			int validItemSlots = fPlayer.tesseractPlayerCount;
+			bool validSlot = item.GetGlobalItem<PrefixItem>().InventorySlotID >= 40 && item.GetGlobalItem<PrefixItem>().InventorySlotID < 40 + validItemSlots;
+			int tesseractDataIBelongIn = item.GetGlobalItem<PrefixItem>().InventorySlotID % 10;
+            if (!item.IsAir && validSlot)
+            {
+                TesseractMinionData data = fPlayer.tesseractData[tesseractDataIBelongIn];
+				if(data.FoundValidItem)
+				{
+					damage.Flat -= item.OriginalDamage;
+					damage.Flat += player.GetTotalDamage<VoidSummon>().ApplyTo(item.OriginalDamage);
+                }
+            }
         }
         public Tile? FindTATile(Player player)
         {

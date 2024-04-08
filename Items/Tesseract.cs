@@ -9,6 +9,7 @@ using SOTS.Items.Planetarium.Furniture;
 using SOTS.Items.SpiritStaves;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.DataStructures;

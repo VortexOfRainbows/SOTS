@@ -16,6 +16,7 @@ using SOTS.Items.Void;
 using SOTS.Buffs.DilationSickness;
 using Terraria.Localization;
 using SOTS.Projectiles.Pyramid.GhostPepper;
+using SOTS.FakePlayer;
 
 namespace SOTS.Void
 {
@@ -333,7 +334,9 @@ namespace SOTS.Void
 				return 120;
 			if (type == (int)VoidMinionID.InfernoSpirit)
 				return 150;
-			return 1;
+            if (type == (int)VoidMinionID.TesseractServant)
+                return 20;
+            return 1;
 		}
 		public static Color minionVoidColor(int type)
 		{
@@ -361,6 +364,10 @@ namespace SOTS.Void
 			{
 				Color color = Color.Lerp(new Color(165, 21, 0), new Color(114, 54, 183), 0.5f + (float)Math.Sin(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 1.25f)) * 0.5f);
 				return color;
+			}
+			if (type == (int)VoidMinionID.TesseractServant)
+			{
+				return ColorHelpers.TesseractColor(0);
 			}
 			return Color.White;
 		}
@@ -390,7 +397,7 @@ namespace SOTS.Void
 				return (int)VoidMinionID.BethanySpirit;
 			if (type == ProjectileType<LemegetonWispGreen>() || type == ProjectileType<LemegetonWispPurple>() || type == ProjectileType<LemegetonWispRed>())
 				return (int)VoidMinionID.TBethanySpirit;
-			if (type == ProjectileType<Projectiles.Minions.CursedBlade>())
+			if (type == ProjectileType<CursedBlade>())
 				return (int)VoidMinionID.CursedBlade;
 			if (type == ProjectileType<TidalSpirit>())
 				return (int)VoidMinionID.TidalSpirit;
@@ -400,7 +407,9 @@ namespace SOTS.Void
 				return (int)VoidMinionID.InfernoSpirit;
 			if (type == ProjectileType<EvilSpirit>())
 				return (int)VoidMinionID.EvilSpirit;
-			return -1;
+            if (type == ProjectileType<TesseractServant>())
+                return (int)VoidMinionID.TesseractServant;
+            return -1;
 		}
 		public enum VoidMinionID
         {
@@ -414,7 +423,8 @@ namespace SOTS.Void
 			TidalSpirit,
 			PermafrostSpirit,
 			InfernoSpirit,
-			EvilSpirit
+			EvilSpirit,
+			TesseractServant
 		}
 		public static void VoidBurn(Mod mod, Player player, int damage, int duration)
 		{
