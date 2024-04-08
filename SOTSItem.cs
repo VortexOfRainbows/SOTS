@@ -489,10 +489,10 @@ namespace SOTS
                 TesseractMinionData data = fPlayer.tesseractData[tesseractDataIBelongIn];
 				if(data.FoundValidItem)
 				{
-                    float flat = player.GetDamage<VoidSummon>().Flat - player.GetDamage(DamageClass.Generic).Flat;
-                    float baseD = player.GetDamage<VoidSummon>().Base - player.GetDamage(DamageClass.Generic).Base;
-					float multi = player.GetDamage<VoidSummon>().Multiplicative - player.GetDamage(DamageClass.Generic).Multiplicative + 1;
-					float add = player.GetDamage<VoidSummon>().Additive - player.GetDamage(DamageClass.Generic).Additive;
+					float flat = player.GetDamage<VoidSummon>().Flat;
+					float baseD = player.GetDamage<VoidSummon>().Base;
+					float multi = player.GetDamage<VoidSummon>().Multiplicative;
+					float add = player.GetDamage<VoidSummon>().Additive - 1;
 					if(!item.CountsAsClass<VoidGeneric>())
 					{
 						flat += player.GetDamage<VoidGeneric>().Flat;

@@ -39,7 +39,7 @@ Update Objectives:
 12. Accessory that uses void instead of mana when low on mana
 13. Nerf seekers to generate less lag
 14. Fix Putrid Pinky vine drawing to be more performant
-15. Fake Players switch items when Shift is held. This should not happen
+15. Fake Players switch items when Shift is held. This should not happen (Detour SmartSelectLookup())
 
 ---WIP List---
 Tesseract
