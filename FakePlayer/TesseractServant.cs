@@ -178,7 +178,7 @@ namespace SOTS.FakePlayer
                 Vector2 result = cursorArea - Main.screenPosition;
                 Main.mouseX = FakePlayer.UniqueMouseX = (int)result.X;
                 Main.mouseY = FakePlayer.UniqueMouseY = (int)result.Y;
-                float appropriateMeleeDistance = -6;
+                float appropriateMeleeDistance = -7;
                 if (FakePlayer.heldItem != null && !FakePlayer.heldItem.IsAir)
                 {
                     appropriateMeleeDistance += FakePlayer.heldItem.Size.Length() * FakePlayer.heldItem.scale;
@@ -229,8 +229,8 @@ namespace SOTS.FakePlayer
                     hasLOS = true;
                     Vector2 toCursor = cursorArea - player.Center;
                     float length = toCursor.Length();
-                    if (length > maxPursuitRange + appropriateMeleeDistance)
-                        length = maxPursuitRange + appropriateMeleeDistance;
+                    if (length > maxPursuitRange + appropriateMeleeDistance + 320)
+                        length = maxPursuitRange + appropriateMeleeDistance + 320;
                     float lengthToCursor = length;
                     toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
                     idlePosition += toCursor;
@@ -328,6 +328,7 @@ namespace SOTS.FakePlayer
                     {
                         Vector2 nudge = Projectile.Center - other.Center;
                         float dist = nudge.Length();
+                        nudge = nudge.RotatedBy(Projectile.ai[1] % 10 * 0.02f);
                         if (dist < collideRange)
                         {
                             Projectile.Center += nudge.SafeNormalize(Vector2.Zero) * (collideRange - dist);
