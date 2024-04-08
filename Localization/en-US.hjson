@@ -7053,7 +7053,7 @@ Mods: {
 
 				AddPlightToVanillaRecipes: {
 					Label: Add Plight To Vanilla Recipes
-					Tooltip: Disable and reload in order to remove Soul of Plight from drecipes that normally do not require it
+					Tooltip: Disable and reload in order to remove Soul of Plight from recipes that normally do not require it
 				}
 
 				GeneratePhaseOreAfterDefeatingLux: {

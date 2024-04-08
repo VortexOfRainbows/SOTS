@@ -79,6 +79,7 @@ Daily Log:
 6. Fix issue with FakePlayer projectiles not drawing when the player is invisible
 7. Tesseract now correctly applies damage multipliers
 8. Void Summons no logner show critical strike chance in their tooltip
+9. Soul of Plight should no longer appear in recipes from other mods.
 
 3/26/24 to 3/31/24
 1. Tesseract WIP. Now can designate right or left click for how the item should be used automatically, also has custom inventory slots

@@ -1,11 +1,10 @@
-NOW WORKING IN 1.4.4!
+[b]If you find any issues with SOTS, the Discord server is the best place to find help. 
+Seriously! I RARELY check steam comments, so please find me here if you need anything![/b]
 
 Secrets of the Shadows is a mod with a focus on exploring dungeons throughout your world! Many secrets can be found hidden in these long forgotten locations of old.
-
-[b]If you find any issues with SOTS, the Discord server is the best place to find help. 
-Seriously! I don't often check steam comments, so please find me here if you need anything![/b]
 [url=https://discord.gg/Dd8e9nw]Discord Server Invite Link[/url]
-[url=https://secretsoftheshadows.miraheze.org/wiki/Secrets_Of_The_Shadows_Wiki]Wiki (WIP)[/url]
+
+[url=https://secretsoftheshadows.miraheze.org/wiki/Secrets_Of_The_Shadows_Wiki]Unfinished Wiki[/url]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843080273]SOTS Texture Pack[/url]
 
 [b]!! This mod is in development !![/b]
@@ -39,3 +38,4 @@ Art: Arcri, Naka, DeJuiceTD, Nomis
 Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR, Sovregi
 Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Ramen
 Art, Testing/Misc: Astrobit
+[quote=tModLoader]Developed By Vortex Of Rainbows[/quote]
