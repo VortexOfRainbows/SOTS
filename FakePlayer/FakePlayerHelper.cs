@@ -90,7 +90,8 @@ namespace SOTS.FakePlayer
             FakePlayer.WingFrame = (int)(Projectile.ai[1] / 4);
             FakePlayer.SecondPosition = Projectile.position + new Vector2(-5 * Projectile.ai[0], 2);
             Projectile.position += Projectile.velocity;
-            if(FakePlayer.BonusItemAnimationTime <= 0 || FakePlayer.itemAnimation > 0)
+            Projectile.Center = new Vector2(MathHelper.Clamp(Projectile.Center.X, 160f, (float)(Main.maxTilesX * 16 - 160)), MathHelper.Clamp(Projectile.Center.Y, 160f, (float)(Main.maxTilesY * 16 - 160)));
+            if (FakePlayer.BonusItemAnimationTime <= 0 || FakePlayer.itemAnimation > 0)
                 FakePlayer.direction = Direction;
             FakePlayer.Position = Projectile.position;
             FakePlayer.Velocity = Projectile.velocity; //this is only used for wing drawing

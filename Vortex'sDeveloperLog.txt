@@ -37,13 +37,10 @@ Update Objectives:
 10. Anomaly Relocator Item which relocates anomalies when used
 11. House Cube Accessory that can generate a temporary house
 12. Accessory that uses void instead of mana when low on mana
-13. Nerf seekers to generate less lag
-14. Fix Putrid Pinky vine drawing to be more performant
-15. Fake Players switch items when Shift is held. This should not happen (Detour SmartSelectLookup())
+
 
 ---WIP List---
-Tesseract
-1. Needs void cost adjustments
+N/A
 
 ---Code Refactoring Needed List---
 N/A
@@ -69,6 +66,13 @@ Look down for Abandoned Village todo and progress...
 	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 Daily Log:
+
+4/14/24
+1. New wiki link on the workshop https://terrariamods.wiki.gg/wiki/Secrets_Of_The_Shadows
+2. Fake players should no longer use Shift to smart select
+3. Seekers from Supernova Emblem and Supernova Hammer have drastically reduced lifetimes
+4. Fix Tesseract Servant going too far from the player
+5. Infinite Void Accessory
 
 4/6/24 to 4/7/24
 1. Tesseract now has Wings

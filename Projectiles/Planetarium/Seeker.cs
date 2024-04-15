@@ -1,13 +1,6 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Planetarium
 {    
@@ -18,7 +11,7 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.height = 16;
 			Projectile.width = 16;
 			Projectile.DamageType = DamageClass.Melee;
-			Projectile.timeLeft = 7200;
+			Projectile.timeLeft = 900;
 			Projectile.friendly = true;
 			Projectile.hostile = false;
 			Projectile.tileCollide = false;
@@ -92,23 +85,9 @@ namespace SOTS.Projectiles.Planetarium
 						}
 					}
 				}
-				lastLength += 6;
-				if(lastLength > 1200)
-				{
-					if (Projectile.alpha < 255)
-					{
-						Projectile.alpha++;
-						Projectile.timeLeft -= 2;
-					}
-                }
 			}
 			else 
 			{
-				if(Projectile.alpha > 0)
-				{
-					Projectile.alpha--;
-					Projectile.timeLeft += 2;
-				}
 				NPC npc = Main.npc[lastID];
 				if (npc.CanBeChasedBy() && npc.whoAmI != npcId)
 				{

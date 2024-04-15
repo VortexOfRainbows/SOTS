@@ -110,6 +110,9 @@ namespace SOTS
 			//So automatic right clicks from FakePlayers don't erroneously play sounds while the camera is on
 			On_SoundEngine.PlaySound_int_int_int_int_float_float += On_SoundEngine_PlaySound_int_int_int_int_float_float;
 
+			//Make sure fake players don't switch items erroneously
+			On_Player.SmartSelectLookup += On_Player_SmartSelectLookup;
+
             if (!Main.dedServ)
 				ResizeTargets();
 		}
@@ -383,7 +386,10 @@ namespace SOTS
 					}
 				}
 			}
-			orig(self, i);
+			if(i < Main.maxProjectiles)
+            {
+                orig(self, i);
+            }
 		}
 		private static void Main_DrawProj(On_Main.orig_DrawProj orig, Main self, int i)
         {
@@ -993,6 +999,14 @@ namespace SOTS
 				return null;
 			}
 			return orig(type, x, y, style, volumeScale, pitchOffset);
+		}
+		private static void On_Player_SmartSelectLookup(On_Player.orig_SmartSelectLookup orig, Player self)
+		{
+            if (FakePlayerProjectile.OwnerOfThisUpdateCycle != -1) //Disable smart lookup for fake players
+            {
+				return;
+            }
+            orig(self);
 		}
     }
 }

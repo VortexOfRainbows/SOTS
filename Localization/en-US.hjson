@@ -5342,6 +5342,11 @@ Mods: {
 					Items used by Clones are affected by Void and Summon damage bonuses
 					'''
 			}
+
+			InfiniteVoid: {
+				DisplayName: Infinite Void
+				Tooltip: Increases max void by 10000
+			}
 		}
 
 		ItemTooltip: {

@@ -45,18 +45,22 @@ namespace SOTS.FakePlayer
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
+            FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
             if (Main.myPlayer != Projectile.owner)
 				Projectile.timeLeft = 20;
 			if (runOnce)
 			{
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
                     Projectile.ai[1] = fPlayer.tesseractPlayerCount;
                     Projectile.netUpdate = true;
                 }
 				runOnce = false;
 			}
+            else if (Projectile.ai[1] > fPlayer.tesseractPlayerCount)
+            {
+                Projectile.Kill();
+            }
 			if (FakePlayer == null)
 				FakePlayer = new FakePlayer(FakePlayerTypeID.Tesseract, Projectile.identity);
             int useItemSlot = 40 + MyUniqueID;
@@ -128,6 +132,14 @@ namespace SOTS.FakePlayer
                     if (attackNPC.Distance(player.Center) < maxPursuitRange)
                     {
                         target = player.MinionAttackTargetNPC;
+                    }
+                }
+                if (target != -1)
+                {
+                    NPC attackNPC = Main.npc[target];
+                    if (attackNPC.Distance(player.Center) > maxPursuitRange + 100)
+                    {
+                        target = -1;
                     }
                 }
                 if (target == -1)

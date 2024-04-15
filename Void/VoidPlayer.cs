@@ -340,7 +340,7 @@ namespace SOTS.Void
 		{
 			if (type == (int)VoidMinionID.NatureSpirit || type == (int)VoidMinionID.TidalSpirit)
 				return 45;
-			if (type == (int)VoidMinionID.ChaosSpirit)
+			if (type == (int)VoidMinionID.ChaosSpirit || type == (int)VoidMinionID.TesseractServant)
 				return 200;
 			if (type == (int)VoidMinionID.EarthenSpirit)
 				return 30;
@@ -356,8 +356,6 @@ namespace SOTS.Void
 				return 120;
 			if (type == (int)VoidMinionID.InfernoSpirit)
 				return 150;
-            if (type == (int)VoidMinionID.TesseractServant)
-                return 20;
             return 1;
 		}
 		public static Color minionVoidColor(int type)
@@ -834,8 +832,9 @@ namespace SOTS.Void
 				positiveVoidRegenCounter += voidRegen;
 				if(positiveVoidRegenCounter > 1)
                 {
-					positiveVoidRegenCounter -= 1;
-					voidMeter += 1;
+                    voidMeter += (int)positiveVoidRegenCounter;
+					voidMeter = Math.Min(voidMeterMax2, voidMeter);
+                    positiveVoidRegenCounter -= (int)positiveVoidRegenCounter;
 				}					
 			}
 
