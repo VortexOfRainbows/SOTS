@@ -41,6 +41,10 @@ using SOTS.NPCs.Boss.Glowmoth;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.Items.Tools;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
+using SOTS.FakePlayer;
+using SOTS.Common;
+using Terraria.UI.Chat;
+using Terraria.Chat;
 
 namespace SOTS
 {
@@ -234,7 +238,8 @@ namespace SOTS
 			SyncGlobalGemLocks,
 			SyncTileLocations,
 			RequestTileLocations,
-			SyncHasTeleported
+			SyncHasTeleported,
+			SyncTesseractData
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -244,10 +249,6 @@ namespace SOTS
 				Common.Systems.ImportantTilesWorld.HandlePacket(reader, whoAmI, msgType);
 				return;
             }
-			/* if (Main.netMode == NetmodeID.Server)
-				NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Handling Packet: " + msgType), Color.Gray);
-			else
-				Main.NewText("Handling Packet: " + msgType); */
 			switch (msgType)
 			{
 				case (int)SOTSMessageType.SOTSSyncPlayer:
@@ -476,16 +477,46 @@ namespace SOTS
 				Vector2 vel = reader.ReadVector2();
 				bool recentlyTeleported = reader.ReadBoolean();
 				NPC npc = Main.npc[whoAmItemOrNpc];
-				Common.GlobalEntityNPC gInstance;
-				if (npc.TryGetGlobalNPC<Common.GlobalEntityNPC>(out gInstance))
+				if (npc.TryGetGlobalNPC<Common.GlobalEntityNPC>(out GlobalEntityNPC gInstance))
 				{
 					gInstance.RecentlyTeleported = recentlyTeleported;
 					//gInstance.PreviousTeleported = recentlyTeleported;
 				}
 				npc.Center = cen;
 				npc.velocity = vel;
-			}
-		}
+            }
+            if (msgType == (int)SOTSMessageType.SyncTesseractData)
+            {
+                byte playernumber = reader.ReadByte();
+                int ID = reader.ReadInt32();
+                FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(Main.player[playernumber]);
+                fPlayer.tesseractData[ID].AltFunctionUse = reader.ReadBoolean();
+                fPlayer.tesseractData[ID].ChargeFrames = reader.ReadInt32();
+                if (Main.netMode == NetmodeID.Server)
+                {
+					//if (Main.netMode == NetmodeID.Server)
+					//	ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Handling Packet: " + msgType + ", " + playernumber + ", " + ID), Color.Gray);
+                    var packet = GetPacket();
+                    packet.Write((byte)msgType);
+                    packet.Write((byte)playernumber);
+                    packet.Write(ID);
+                    packet.Write(fPlayer.tesseractData[ID].AltFunctionUse);
+                    packet.Write(fPlayer.tesseractData[ID].ChargeFrames);
+                    packet.Send(-1, playernumber);
+                }
+            }
+        }
+		public static void SendTesseractDataPacket(int playerNumber, int tesseractID)
+        {
+            FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(Main.player[playerNumber]);
+            var packet = Instance.GetPacket();
+            packet.Write((byte)SOTSMessageType.SyncTesseractData);
+            packet.Write((byte)playerNumber);
+            packet.Write(tesseractID);
+            packet.Write(fPlayer.tesseractData[tesseractID].AltFunctionUse);
+            packet.Write(fPlayer.tesseractData[tesseractID].ChargeFrames);
+            packet.Send(-1, playerNumber);
+        }
 		public override void PostSetupContent()
 		{
 			Mod bossChecklist;

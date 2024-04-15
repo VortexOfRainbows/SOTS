@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -336,7 +337,7 @@ namespace SOTS.FakePlayer
                 Projectile other = Main.projectile[i];
                 if(Projectile.whoAmI != i)
                 {
-                    if(other.type == Type && other.ModProjectile is TesseractServant ts && ts.TrailingType != TrailingID.IDLE)
+                    if(other.type == Type && other.ModProjectile is TesseractServant ts && ts.TrailingType != TrailingID.IDLE && TrailingType != TrailingID.IDLE)
                     {
                         Vector2 nudge = Projectile.Center - other.Center;
                         float dist = nudge.Length();

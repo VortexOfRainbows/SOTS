@@ -475,15 +475,14 @@ namespace SOTS.FakePlayer
                                 ChargeDuration = 0;
                             if (fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames == -1 && !player.HeldItem.IsAir)
                                 ChargeDuration++;
-                            //Main.NewText("[" + UniqueUsageSlot + "] my charge duration: " + ChargeDuration);
                         }
-                        //Main.NewText("[" + UniqueUsageSlot + "] my alt function: " + player.altFunctionUse);
                         if (player.altFunctionUse == 2)
                         {
                             if(!fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse)
                             {
-                                //Main.NewText("Locked in as alternate");
                                 fPlayer.tesseractData[UniqueUsageSlot].AltFunctionUse = true;
+                                if(Main.myPlayer == player.whoAmI)
+                                    SOTS.SendTesseractDataPacket(player.whoAmI, UniqueUsageSlot);
                             }
                         }
                     }
@@ -498,9 +497,14 @@ namespace SOTS.FakePlayer
                     {
                         fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames = 7200; //Will hold attack for 2 minutes before switching
                     }
-                    //Main.NewText("my charge duration is now: " + fPlayer.tesseractData[UniqueUsageSlot].ChargeFrames);
+                    if (Main.myPlayer == player.whoAmI)
+                        SOTS.SendTesseractDataPacket(player.whoAmI, UniqueUsageSlot);
                 }
                 ChargeDuration = 0;
+            }
+            if (Main.myPlayer == player.whoAmI && SOTSWorld.GlobalCounter % 10 == UniqueUsageSlot)
+            {
+                SOTS.SendTesseractDataPacket(player.whoAmI, UniqueUsageSlot);
             }
             player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
@@ -1120,7 +1124,7 @@ namespace SOTS.FakePlayer
             for(int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];
-                if(projectile.active && projectile.owner == player.whoAmI)
+                if(projectile.active)
                 {
                     FakePlayerProjectile fPPInstance;
                     bool canGetGlobal = projectile.TryGetGlobalProjectile(out fPPInstance);
@@ -1147,7 +1151,7 @@ namespace SOTS.FakePlayer
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.owner == player.whoAmI && projectile.type > 0 && !projectile.hide && projectile.whoAmI != HeldProj)
+                if (projectile.active && projectile.type > 0 && !projectile.hide && projectile.whoAmI != HeldProj)
                 {
                     FakePlayerProjectile fPPInstance;
                     bool canGetGlobal = projectile.TryGetGlobalProjectile(out fPPInstance);

@@ -180,6 +180,8 @@ namespace SOTS.FakePlayer
         {
             if (FakeOwnerIdentity == -1)
                 return;
+            //else
+            //    Main.NewText(FakeOwnerIdentity);
             if (BeginStartNetUpdate % 5 == 0 && BeginStartNetUpdate < 20)
             {
                 projectile.netUpdate = true;
@@ -192,8 +194,10 @@ namespace SOTS.FakePlayer
                 return;
             projectile.ownerHitCheck = false; //Projectiles owned by fake players should not need collision to hit NPCs
             Projectile fakePlayer = Main.projectile.Where(x => x.identity == FakeOwnerIdentity).First();
-            if(fakePlayer == null) 
+            if(fakePlayer == null)
+            {
                 return;
+            }
             bool killMe = !FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) || !fakePlayer.active || fakePlayer.owner != projectile.owner;
             if (fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
             {

@@ -15,6 +15,7 @@ Acknowledged But Likely Delayed:
 8. Hydro servant wont attack in multiplayer, but fixed on a reload..?
 9. Boss Trophies
 10. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
+11. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -37,6 +38,8 @@ Update Objectives:
 10. Anomaly Relocator Item which relocates anomalies when used
 11. House Cube Accessory that can generate a temporary house
 12. Accessory that uses void instead of mana when low on mana
+13. Get screenshots showing of Fake Players for the steam page
+14. Get screenshot of Glowmoth for the steam page
 
 
 ---WIP List---
@@ -52,7 +55,7 @@ Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth G
 Voidspace Ranger's Armor, Supernova Seekers
 
 ---Multiplayer Fixes/Testing Needed---
-Tesseract
+POSSIBLY Tesseract
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -67,12 +70,13 @@ Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
-4/14/24
+4/14/24 to 4/15/24
 1. New wiki link on the workshop https://terrariamods.wiki.gg/wiki/Secrets_Of_The_Shadows
 2. Fake players should no longer use Shift to smart select
 3. Seekers from Supernova Emblem and Supernova Hammer have drastically reduced lifetimes
 4. Fix Tesseract Servant going too far from the player
 5. Infinite Void Accessory
+6. Tesseract Servant should now sync properly in multiplayer.
 
 4/6/24 to 4/7/24
 1. Tesseract now has Wings
