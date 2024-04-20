@@ -79,6 +79,20 @@ Daily Log:
 1. Some Tesseract Fixes
 2. Tiny Planetoid Helmet which rarely drops from Planetoids
 3. Fixed head player layers drawing in strange offsets on the map
+4. Subspace Serpent Max Life (130000, 195000, 248625) -> (160000, 240000, 306000)
+5. Subspace Serpent head defense 50 -> 70
+6. Subspace Serpent Body parts now take 50% source damage, then defense is applied
+7. Subspace Serpent now transitions to second phase below 60% health in all difficulties, instead of 65% in Expert/Master
+8. Subspace Serpent Head now takes 20% source damage, then defense is applied, when ready to transition to the second phase when below 60% health but not yet on the second phase
+7. Subspace Serpent Tail now takes 80% source damage before defense is applied.
+8. Subspace Serpent takes 75% damage from Chaos Spirit staff
+9. Chaos Chamber damage 85 -> 70
+10. Subspace Serpent Body DPS max indicators are now transparent
+11. Subspace Serpent Memory Attack now includes 4 -> 5 blasts 
+12. Stellar Serpent Launcher deals 75% -> 100% damage to subspace serpent (In hindsight, this item may have been over-nerfed)
+13. Increase Size of Subspace Serpent (Big/Small) Cell Blast telegraph, also some optimizations on the drawing
+14. Changed visuals for lasers in the Subspace Boss fight, also optimized performance
+15. Serpents spawned during subspace wall attack deal more 50% more damage
 
 4/14/24 to 4/15/24
 1. New wiki link on the workshop https://terrariamods.wiki.gg/wiki/Secrets_Of_The_Shadows

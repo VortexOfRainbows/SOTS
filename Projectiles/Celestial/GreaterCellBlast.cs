@@ -27,11 +27,11 @@ namespace SOTS.Projectiles.Celestial
 				Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero);
 				float scale = scaleIndicator / 120f;
 				Vector2 drawPos = Projectile.Center;
-				for (int j = 0; j < 300; j++)
+				for (int j = 0; j < 100; j++)
 				{
-					drawPos += velo * scale * (texture2.Width);
-					Main.spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, color * scale, velo.ToRotation(), origin2, scale, SpriteEffects.None, 0.0f);
-					scale *= 0.99f;
+					drawPos += velo * scale * (texture2.Width) * 2;
+					Main.spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, color * scale, velo.ToRotation(), origin2, new Vector2(scale * 2, scale), SpriteEffects.None, 0.0f);
+					scale *= 0.98f;
 					scale -= 0.01f;
 					if (scale <= 0.05f)
 					{
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 			if (Projectile.timeLeft < 40)
 			{
-				Projectile.position += Projectile.velocity *= 1.05f;
+				Projectile.position += Projectile.velocity *= 1.04f;
 			}
 			base.AI();
 		}

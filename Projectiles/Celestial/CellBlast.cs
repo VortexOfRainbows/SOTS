@@ -20,17 +20,16 @@ namespace SOTS.Projectiles.Celestial
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/CrossLaserIndicator");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 origin2 = new Vector2(texture2.Width / 2, texture2.Height / 2);
-			Color color = Color.Black;
-			color = new Color(100, 255, 100, 0);
+			Color color = new Color(100, 255, 100, 0);
 			if (Projectile.ai[1] > 0)
 			{
 				Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero);
 				float scale = 1 - (Projectile.ai[1] / 120f);
 				Vector2 drawPos = Projectile.Center;
-				for (int j = 0; j < 100; j++)
+				for (int j = 0; j < 50; j++)
 				{
-					drawPos += velo * scale * (texture2.Width + 0.5f);
-					Main.spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, color * scale, velo.ToRotation(), origin2, scale, SpriteEffects.None, 0.0f);
+					drawPos += velo * scale * (texture2.Width + 0.5f) * 2;
+					Main.spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, color * scale * 1.5f, velo.ToRotation(), origin2, new Vector2(scale * 2, scale), SpriteEffects.None, 0.0f);
 					scale *= 0.94f;
 					scale -= 0.01f;
 					if (scale <= 0.05f)

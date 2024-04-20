@@ -17,6 +17,17 @@ namespace SOTS.NPCs.Boss
 {[AutoloadBossHead]
     public class SubspaceSerpentHead : ModNPC
     {
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if (ReadyToEnterPhase2() && !hasEnteredSecondPhase)
+            {
+                modifiers.SourceDamage *= 0.2f;
+            }
+        }
+        public bool ReadyToEnterPhase2()
+        {
+            return NPC.life < NPC.lifeMax * 0.6f;
+        }
         float ai1 = 240;
         private float ai2
         {
@@ -47,9 +58,9 @@ namespace SOTS.NPCs.Boss
         public override void SetDefaults()
         {
             NPC.aiStyle =0;
-            NPC.lifeMax = 130000;
+            NPC.lifeMax = 160000;
             NPC.damage = 100;
-            NPC.defense = 50;
+            NPC.defense = 70;
             NPC.knockBackResist = 0f;
             NPC.width = 48;
             NPC.height = 38;
@@ -368,10 +379,7 @@ namespace SOTS.NPCs.Boss
                 ai1--;
                 if (ai1 <= 0)
                 {
-                    float mult = 0.6f;
-                    if (Main.expertMode)
-                        mult = 0.65f;
-                    if (NPC.life < NPC.lifeMax * mult && !hasEnteredSecondPhase)
+                    if (ReadyToEnterPhase2() && !hasEnteredSecondPhase)
                     {
                         TransitionPhase(5);
                     }
@@ -666,7 +674,7 @@ namespace SOTS.NPCs.Boss
                 else if(ai1 <= 0)
                 {
                     ai3--;
-                    if(ai3 >= 700 && ai3  % 50 == 0)
+                    if(ai3 >= 650 && ai3 % 50 == 0)
                     {
                         if (ai4 <= 10)
                         {
@@ -682,7 +690,7 @@ namespace SOTS.NPCs.Boss
                             counter++;
                             if(counter % num != interval)
                             {
-                                Vector2 spawnPos = new Vector2((250 - ai3 + 650) * 1.5f * worldSide, 75 * i);
+                                Vector2 spawnPos = new Vector2((900 - ai3) * 1.5f * worldSide, 75 * i);
                                 spawnPos.X += NPC.Center.X;
                                 spawnPos.Y += ai4;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -693,13 +701,13 @@ namespace SOTS.NPCs.Boss
                             }
                         }
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, NPC.whoAmI, (250 - ai3 + 700) * 1.5f * worldSide);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, NPC.whoAmI, (950 - ai3) * 1.5f * worldSide);
                     }
-                    if (ai3 <= 380)
+                    if (ai3 <= 330)
                     {
                         ai4 = -1;
                     }
-                    if (ai3 < 350)
+                    if (ai3 < 300)
                     {
                         ai3 = 900;
                         ai1--;
@@ -966,7 +974,7 @@ namespace SOTS.NPCs.Boss
                 for (int i = 0; i < 180; i += 30)
                 {
                     Vector2 circular = new Vector2(-Main.rand.NextFloat(6f, 12f), 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.Next(-10, 11)));
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.6f), 0, Main.myPlayer, 6, -1);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.9f), 0, Main.myPlayer, 6, -1);
                 }
             }
         }

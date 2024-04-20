@@ -534,7 +534,7 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(isSubspaceSerpent.Contains(npc.type))
             {
-                if(projectile.type == ProjectileType<ChaosSnake>())
+                if(projectile.type == ProjectileType<ChaosBeam>())
                 {
                     modifiers.SourceDamage *= 0.75f;
                 }

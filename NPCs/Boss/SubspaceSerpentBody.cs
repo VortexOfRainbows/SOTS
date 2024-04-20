@@ -13,7 +13,7 @@ namespace SOTS.NPCs.Boss
     {
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Hide = true
             };
@@ -58,6 +58,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
+            modifiers.SourceDamage *= 0.5f;
             modifiers.SetMaxDamage((int)currentDPS);
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -147,12 +148,13 @@ namespace SOTS.NPCs.Boss
                 percentShield = 0.3334f;
             if (percentShield > 0 || phase2)
             {
+                float alpha = ((255f - NPC.alpha) / 255f);
                 Color color = new Color(phase2 ? 0 : 255, phase2 ? 255 : 0, 0);
                 for (int i = 0; i < 2; i++)
                 {
                     int direction = i * 2 - 1;
                     Vector2 toTheSide = new Vector2(6 * percentShield * direction, 0).RotatedBy(NPC.rotation);
-                    spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * alpha * alpha * 0.5f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
                 }
             }
             texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;

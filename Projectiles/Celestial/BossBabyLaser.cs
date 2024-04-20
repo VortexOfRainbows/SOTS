@@ -46,8 +46,8 @@ namespace SOTS.Projectiles.Celestial
 					int dust3 = Dust.NewDust(Projectile.Center - new Vector2(20, 20) - new Vector2(5), 40, 40, ModContent.DustType<CopyDust4>());
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 0.55f;
-					dust4.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 2f;
-					dust4.color = new Color(255, 69, 0, 0);
+					dust4.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(8);
+                    dust4.color = new Color(255, 69, 0, 0);
 					dust4.noGravity = true;
 					dust4.fadeIn = 0.1f;
 					dust4.scale *= 2.75f;
@@ -83,18 +83,21 @@ namespace SOTS.Projectiles.Celestial
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			float laserDist = 200;
+			float laserDist = 100;
 			Vector2 center = Projectile.Center;
-			for (int i = 0; i < laserDist; i++)
+			Color color = new Color(255, 69, 0, 0);
+            float bonusAlphaMult = 1 - 1 * (counter / 28f);
+            float alpha = ((255f - Projectile.alpha) / 255f);
+            for (int i = 0; i < laserDist; i++)
             {
-				center += Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * Projectile.width * 3f;
-				Main.spriteBatch.Draw(texture, center - Main.screenPosition, null, new Color(255, 69, 0, 0) * ((255f - Projectile.alpha) / 255f), Projectile.velocity.ToRotation(), origin, 3f, SpriteEffects.None, 0f);
-				for (int j = 0; j < 2; j++)
+				center += Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * Projectile.width * 6f;
+				Main.spriteBatch.Draw(texture, center - Main.screenPosition, null, color * alpha, Projectile.velocity.ToRotation(), origin, new Vector2(12, 3), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, center - Main.screenPosition, null, Color.White * alpha * 0.75f * bonusAlphaMult, Projectile.velocity.ToRotation(), origin, new Vector2(6f, 2.5f), SpriteEffects.None, 0f);
+                for (int j = 0; j < 2; j++)
 				{
-					float bonusAlphaMult = 1 - 1 * (counter / 28f);
 					float dir = j * 2 - 1;
 					Vector2 offset = new Vector2(counter * 0.75f * dir, 0).RotatedBy(Projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
-					Main.spriteBatch.Draw(texture, center - Main.screenPosition + offset, null, new Color(255, 69, 0, 0) * bonusAlphaMult * ((255f - Projectile.alpha) / 255f), Projectile.velocity.ToRotation(), origin, 3f, SpriteEffects.None, 0.0f);
+					Main.spriteBatch.Draw(texture, center - Main.screenPosition + offset, null, color * bonusAlphaMult * alpha, Projectile.velocity.ToRotation(), origin, new Vector2(6, 3), SpriteEffects.None, 0.0f);
 				}
 			}
 			return false;

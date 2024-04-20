@@ -8,10 +8,14 @@ using Terraria.ModLoader;
 namespace SOTS.NPCs.Boss
 {   
     public class SubspaceSerpentTail : ModNPC
-    {	
-		public override void SetStaticDefaults()
+    {
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            modifiers.SourceDamage *= 0.8f;
+        }
+        public override void SetStaticDefaults()
 		{
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Hide = true
             };
