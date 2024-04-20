@@ -1,0 +1,37 @@
+Update 0.24.1.0
+
+1. Added the Ultimate Summon Item: Tesseract
+2. Many Subspace Serpent Adjustments
+
+Additions: 
+1. A new summon item
+2. A new "armor piece" that drops form Wormhole Enemies
+
+Changes: 
+1. Baguette is now sold by the Archaeologist in the Damocles Room
+2. Seekers from Supernova Hammer/Emblem now have a way shorter max life time and a more consistent homing range
+3. Chaos Chamber damage 85 -> 70 (this item proved overtuned after autofire was given to all items)
+4. Chaos Spirit Staff now does 100% -> 75% damage to Subspace Serpent (this item is an issue as it hits exclusively the head)
+5. Stellar Serpent Launcher now does 75% -> 100% damage to Subspace Serpent (previous nerfs now unneeded due to Subspace buffs)
+
+Subspace Serpent Changes: 
+1. Max Life (130000, 195000, 248625) -> (160000, 240000, 306000)
+2. Head defense 50 -> 70
+3. Body now reduces damage by 50% before applying defense
+4. Tail now reduces damage by 20% before applying defense
+5. When preparing to enter phase 2, Head now reduces damage by 80% before applying defense
+6. Memory attack now includes 4 -> 5 blasts
+7. Serpents spawned during the wall attack now deal 60% -> 90% damage
+
+8. Body damage-cap indicators are now transparent (visually more appealing)
+9. Increased telegraph size of laser attacks
+10. Modified visuals for Subspace Laser attacks
+11. Made performance optimizations for Subspace laser attacks, should be around 50% better performant
+
+
+Fixes: 
+1. Putrid Eye inventory animation is no longer bugged
+2. Soul of Plight should no longer appear in recipes from other mods
+3. Void Summons should no longer show critical strike chance in item tooltips
+4. Fixed obscure Subspace Locket and Hydrokinetic Antannae related bugs
+5. Fixed issue where Putrid Pinky mask would draw strangely on the minimap

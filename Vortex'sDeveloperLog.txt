@@ -75,6 +75,10 @@ Look down for Abandoned Village todo and progress...
 
 Daily Log:
 
+
+--- Update 0.24.1.0 ---
+
+
 4/19/23
 1. Some Tesseract Fixes
 2. Tiny Planetoid Helmet which rarely drops from Planetoids
@@ -93,6 +97,7 @@ Daily Log:
 13. Increase Size of Subspace Serpent (Big/Small) Cell Blast telegraph, also some optimizations on the drawing
 14. Changed visuals for lasers in the Subspace Boss fight, also optimized performance
 15. Serpents spawned during subspace wall attack deal more 50% more damage
+16. Homing range of Supernova Seekers is (200 + scaling over time) -> 800
 
 4/14/24 to 4/15/24
 1. New wiki link on the workshop https://terrariamods.wiki.gg/wiki/Secrets_Of_The_Shadows

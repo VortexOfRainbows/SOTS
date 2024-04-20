@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Planetarium
 			return target.whoAmI == lastID ? (bool?)null : false;
 		}
         int lastID = -1;
-		float lastLength = 200f;
+		float lastLength = 800f;
 		float counter = 1f;
         public override void OnKill(int timeLeft)
         {
@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Planetarium
 				else
 				{
 					lastID = -1;
-					lastLength = 200f;
+					lastLength = 800f;
 				}
 			}
 			if(Projectile.alpha >= 200)
