@@ -13,7 +13,7 @@ namespace SOTS.Items.Conduit
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-            Color color = new Color(110, 100, 130, 0);
+            Color color = new Color(110, 100, 130, 50);
             for (int k = 0; k < 8; k++)
             {
                 Vector2 offset = new Vector2(4f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 45));
@@ -25,7 +25,7 @@ namespace SOTS.Items.Conduit
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-            Color color = new Color(110, 100, 130, 0);
+            Color color = new Color(110, 100, 130, 50);
             Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
             for (int k = 0; k < 8; k++)
             {
