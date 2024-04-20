@@ -19,6 +19,7 @@ Acknowledged But Likely Delayed:
 9. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
 10. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
 11. Tesseract Servants over-sends packets when over 10 total tesseracts.
+12. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -73,6 +74,11 @@ Look down for Abandoned Village todo and progress...
 	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 Daily Log:
+
+4/19/23
+1. Some Tesseract Fixes
+2. Tiny Planetoid Helmet which rarely drops from Planetoids
+3. Fixed head player layers drawing in strange offsets on the map
 
 4/14/24 to 4/15/24
 1. New wiki link on the workshop https://terrariamods.wiki.gg/wiki/Secrets_Of_The_Shadows

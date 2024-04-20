@@ -5347,6 +5347,15 @@ Mods: {
 				DisplayName: Infinite Void
 				Tooltip: Increases max void by 10000
 			}
+
+			TinyPlanetoid: {
+				DisplayName: Tiny Planetoid
+				Tooltip:
+					'''
+					Increases max void by 50
+					Allows the control of gravity
+					'''
+			}
 		}
 
 		ItemTooltip: {

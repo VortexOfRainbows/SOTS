@@ -867,6 +867,8 @@ namespace SOTS
             Main.inventoryBack = PlayerInventorySlotsManager.SavedInventoryColor;
             if (!PlayerInventorySlotsManager.FakeBorderDrawCycle)
             {
+				if (item == null || spriteBatch == null)
+					return 0f;
                 return orig(item, context, spriteBatch, screenPositionForItemCenter, scale, sizeLimit, environmentColor);
             }
 			return 0f;
