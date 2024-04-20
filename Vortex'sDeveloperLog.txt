@@ -70,7 +70,14 @@ Look down for Abandoned Village todo and progress...
 	6. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
 	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
+---Items To Make Work With Tesseract---
+1. Putrid Eye
+2. Photon Geyser
+
 Daily Log:
+
+4/20/24
+1. Fixed interaction with "More Accessory Slots (More Accessories)" causing inventory slots to disappear with index out of bounds exception with high inventory slot count
 
 
 --- Update 0.24.1.0 ---

@@ -273,6 +273,10 @@ namespace SOTS.FakePlayer
         {
             //Main.NewText(slot);
             Player player = Main.LocalPlayer;
+            if(player.inventory.Length <= slot)
+            {
+                return false;
+            }
             bool correctSlot = slot >= 0 && (player.inventory[slot] == item && SlotIsWithinTesseractSlotRange(player, slot));
             bool correctItem = item.type == ModContent.ItemType<Tesseract>() && (player.inventory.Contains(item) || player.armor.Contains(item));
             if (correctSlot || correctItem)

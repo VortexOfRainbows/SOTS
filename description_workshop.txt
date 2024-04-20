@@ -25,7 +25,7 @@ Direction, Art: Taco
 Music, SFX, Direction, Art: Heart Plus Up!
 Music: YuriO
 Code, SFX: apotofkoolaid
-Art: MrPetkins, Cloud
+Art: Petaniks, Cloud
 
 [b]~Major Contributors and Past Developers~[/b]
 Art: Blasfah, Mochi, HugeKraken, Lunatix, SpicySpaceSnake, Pokerface
