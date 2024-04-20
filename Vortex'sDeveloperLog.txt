@@ -43,6 +43,7 @@ Update Objectives:
 12. Accessory that uses void instead of mana when low on mana
 13. Get screenshots showing of Fake Players for the steam page
 14. Get screenshot of Glowmoth for the steam page
+15. Seriously Buff the Survivability of Subspace Serpent
 
 
 ---WIP List---

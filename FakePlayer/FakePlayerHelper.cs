@@ -201,7 +201,7 @@ namespace SOTS.FakePlayer
             bool killMe = !FakePlayerHelper.FakePlayerPossessingProjectile.Contains(fakePlayer.type) || !fakePlayer.active || fakePlayer.owner != projectile.owner;
             if (fakePlayer.ModProjectile is FakePlayerPossessingProjectile fppp)
             {
-                if (fppp.FakePlayer.KillMyOwnedProjectiles)
+                if (fppp.FakePlayer != null && fppp.FakePlayer.KillMyOwnedProjectiles)
                 {
                     killMe = true;
                 }

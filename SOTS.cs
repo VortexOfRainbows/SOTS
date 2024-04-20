@@ -508,6 +508,8 @@ namespace SOTS
         }
 		public static void SendTesseractDataPacket(int playerNumber, int tesseractID)
         {
+			if (Main.netMode == NetmodeID.SinglePlayer)
+				return;
             FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(Main.player[playerNumber]);
             var packet = Instance.GetPacket();
             packet.Write((byte)SOTSMessageType.SyncTesseractData);
