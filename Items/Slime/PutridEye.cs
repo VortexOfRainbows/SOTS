@@ -99,7 +99,7 @@ namespace SOTS.Items.Slime
 		}
 		public override int GetVoid(Player player)
 		{
-			return  20;
+			return 20;
 		}
 		public override float UseTimeMultiplier(Player player)
 		{
@@ -107,25 +107,7 @@ namespace SOTS.Items.Slime
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			bool summon = true;
-			for (int l = 0; l < Main.projectile.Length; l++)
-			{
-				Projectile proj = Main.projectile[l];
-				if (proj.active && proj.type == Item.shoot && Main.player[proj.owner] == player)
-				{
-					summon = false;
-				}
-			}
-			if (player.altFunctionUse != 2)
-			{
-				//Item.UseSound = SoundID.Item22;
-				if (summon)
-				{
-					//Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
-					return true;
-				}
-			}
-			return false;
-		}
+            return true;
+        }
 	}
 }

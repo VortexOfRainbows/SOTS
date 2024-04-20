@@ -71,13 +71,14 @@ Look down for Abandoned Village todo and progress...
 	7. Deeper Part should have Gula Plating instead of Earthen Plating
 
 ---Items To Make Work With Tesseract---
-1. Putrid Eye
-2. Photon Geyser
+N/A
 
 Daily Log:
 
 4/20/24
 1. Fixed interaction with "More Accessory Slots (More Accessories)" causing inventory slots to disappear with index out of bounds exception with high inventory slot count
+2. Fixed crash related to "Remnant of the Ancients", which was caused because it used item drawing code in the main menu, causing Tesseract related code to run erroneously
+3. Putrid Eye now works with Tesseract
 
 
 --- Update 0.24.1.0 ---

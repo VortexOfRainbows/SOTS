@@ -808,6 +808,11 @@ namespace SOTS
 		}
 		private static void ItemSlot_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color(On_ItemSlot.orig_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color orig, SpriteBatch spriteBatch, Item[] inv, int context, int slot, Vector2 position, Color lightColor = default(Color))
         {
+			if(Main.gameMenu)
+            {
+                orig(spriteBatch, inv, context, slot, position, lightColor);
+				return;
+            }
             PlayerInventorySlotsManager.SavedInventoryColor = Main.inventoryBack;
             Player player = Main.LocalPlayer;
             Item item = inv[slot];
@@ -863,8 +868,11 @@ namespace SOTS
 		}
 		private static float ItemSlot_DrawItemIcon(On_ItemSlot.orig_DrawItemIcon orig, Item item, int context, SpriteBatch spriteBatch, Vector2 screenPositionForItemCenter, float scale, float sizeLimit, Color environmentColor)
         {
-            PlayerInventorySlotsManager.PreDrawSlots(item, spriteBatch, screenPositionForItemCenter, Color.White);
-            Main.inventoryBack = PlayerInventorySlotsManager.SavedInventoryColor;
+            if (!Main.gameMenu)
+            {
+                PlayerInventorySlotsManager.PreDrawSlots(item, spriteBatch, screenPositionForItemCenter, Color.White);
+                Main.inventoryBack = PlayerInventorySlotsManager.SavedInventoryColor;
+            }
             if (!PlayerInventorySlotsManager.FakeBorderDrawCycle)
             {
 				if (item == null || spriteBatch == null)
