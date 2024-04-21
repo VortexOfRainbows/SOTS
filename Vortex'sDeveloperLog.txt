@@ -75,6 +75,10 @@ N/A
 
 Daily Log:
 
+
+--- Hotfix 0.24.1.1 ---
+
+
 4/20/24
 1. Fixed interaction with "More Accessory Slots (More Accessories)" causing inventory slots to disappear with index out of bounds exception with high inventory slot count
 2. Fixed crash related to "Remnant of the Ancients", which was caused because it used item drawing code in the main menu, causing Tesseract related code to run erroneously

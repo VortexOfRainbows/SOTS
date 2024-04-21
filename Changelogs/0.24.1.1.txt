@@ -1,0 +1,14 @@
+Hotfix 0.24.1.1
+
+1. Crashes related to the most recent update should be fixed..?
+
+Additions: 
+N/A
+
+Changes: 
+N/A 
+
+Fixes: 
+1. Fixed interaction with "More Accessory Slots (More Accessories)" causing inventory slots to disappear with index out of bounds exception with high inventory slot count
+2. Fixed crash related to "Remnant of the Ancients", which was caused because it used item drawing code in the main menu, causing Tesseract related code to run erroneously
+3. Putrid Eye now works with Tesseract
