@@ -36,7 +36,7 @@ namespace SOTS.NPCs
 		private Vector2 lookAtPos = new Vector2(-1, -1);
 		public override void SetStaticDefaults()
 		{
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				CustomTexturePath = "SOTS/NPCs/PhaseEye",
 			};

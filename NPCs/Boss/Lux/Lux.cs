@@ -31,7 +31,7 @@ namespace SOTS.NPCs.Boss.Lux
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 10;
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				CustomTexturePath = "SOTS/BossCL/LuxBossLog",
 				PortraitScale = 0.9f, // Portrait refers to the full picture when clicking on the icon in the bestiary

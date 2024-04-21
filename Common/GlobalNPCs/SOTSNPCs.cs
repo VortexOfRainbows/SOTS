@@ -103,13 +103,13 @@ namespace SOTS.Common.GlobalNPCs
 			dist = minDistance;
 			return target;
 		}
-		public static bool isPolarisNPC(int type)
+		public static bool IsPolarisNPC(int type)
         {
 			return (type == ModContent.NPCType<NewPolaris>() || type == ModContent.NPCType<BulletSnakeHead>() || type == ModContent.NPCType<BulletSnakeWing>() || type == ModContent.NPCType<BulletSnakeBody>() || type == ModContent.NPCType<BulletSnakeEnd>() || type == ModContent.NPCType<Polaris>() || type == ModContent.NPCType<PolarisLaser>() || type == ModContent.NPCType<PolarisCannon>());
 		}
         public override bool PreAI(NPC npc)
 		{
-			if(isPolarisNPC(npc.type))
+			if(IsPolarisNPC(npc.type))
 			{
 				if (Main.rand.NextBool(2))
 				{
@@ -135,7 +135,7 @@ namespace SOTS.Common.GlobalNPCs
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
-			if (isPolarisNPC(npc.type))
+			if (IsPolarisNPC(npc.type))
 			{
 				if (npc.life <= 0)
 				{
@@ -213,7 +213,7 @@ namespace SOTS.Common.GlobalNPCs
 				}
 			}
         }
-        public void SetDebuffImmunities(NPC npc)
+        public static void SetDebuffImmunities(NPC npc)
         {
 			if(npc.type == NPCID.BlackRecluse || npc.type == NPCID.WallCreeper || npc.type == NPCID.WallCreeperWall || npc.type == NPCID.BlackRecluseWall || npc.type == NPCID.JungleCreeperWall || npc.type == NPCID.JungleCreeper)
             {

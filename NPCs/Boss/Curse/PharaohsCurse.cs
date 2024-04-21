@@ -59,7 +59,7 @@ namespace SOTS.NPCs.Boss.Curse
 		public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 1;
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				CustomTexturePath = "SOTS/BossCL/PharaohPortrait",
 				PortraitScale = 0.5f, // Portrait refers to the full picture when clicking on the icon in the bestiary

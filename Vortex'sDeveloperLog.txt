@@ -75,6 +75,11 @@ N/A
 
 Daily Log:
 
+4/20/24
+1. Attempt another fix for Tesseract related crashes
+2. Import some textures for Blade Wings
+3. Changed some code that was causing warnings
+
 
 --- Hotfix 0.24.1.1 ---
 

@@ -78,7 +78,6 @@ namespace SOTS.NPCs.Boss
         {
             return false;
         }
-        float ai2 = 0;
         public override bool PreAI()
         {
             if (glow > 0)

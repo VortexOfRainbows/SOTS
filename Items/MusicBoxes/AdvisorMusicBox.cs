@@ -68,7 +68,6 @@ namespace SOTS.Items.MusicBoxes
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color = new Color(80, 80, 80, 0);
 			int frameX = Main.tile[i, j].TileFrameX / 18;
 			int frameY = Main.tile[i, j].TileFrameY / 18;
@@ -81,9 +80,9 @@ namespace SOTS.Items.MusicBoxes
 				}
 				for (int k = 0; k < 5; k++)
 				{
-					float x = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
-					float y = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
-					if (k <= 1)
+					float x = Main.rand.NextFloat(-1f, 1f);
+					float y = Main.rand.NextFloat(-1f, 1f);
+                    if (k <= 1)
 					{
 						x = 0;
 						y = 0;

@@ -310,6 +310,10 @@ namespace SOTS.FakePlayer
         public static void PreDrawSlots(Item item, SpriteBatch spriteBatch, Vector2 position, Color drawColor)
         {
             Player player = Main.LocalPlayer;
+            if(player == null || !player.active)
+            {
+                return;
+            }
             FakeModPlayer fmPlayer = FakeModPlayer.ModPlayer(player);
             if (DrawSubspaceSlot(item))
             {

@@ -94,7 +94,6 @@ namespace SOTS.Items.Furniture.AncientGold
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color = new Color(100, 80, 80, 0);
 			int frameX = Main.tile[i, j].TileFrameX / 18;
 			int frameY = Main.tile[i, j].TileFrameY / 18;
@@ -107,10 +106,10 @@ namespace SOTS.Items.Furniture.AncientGold
 			int k = Main.tileFrame[Type] % 8;
 			int animate = k * 36;
 			for (k = 0; k < 7; k++)
-			{
-				float x = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
-				float y = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
-				if (k <= 1)
+            {
+                float x = Main.rand.NextFloat(-1f, 1f);
+                float y = Main.rand.NextFloat(-1f, 1f);
+                if (k <= 1)
 				{
 					x = 0;
 					y = 0;

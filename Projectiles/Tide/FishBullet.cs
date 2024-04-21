@@ -135,6 +135,7 @@ namespace SOTS.Projectiles.Tide
 				SOTS.primitives.CreateTrail(new WaterTrail(Projectile, 24));
 				runOnce = false;
 			}
+			counter++;
 			Projectile.rotation += Projectile.direction * MathHelper.ToRadians(14 + accelerate * 12);
 			Projectile.velocity.Y += accelerate + 0.1f;
 			if(accelerate < 0.2f)

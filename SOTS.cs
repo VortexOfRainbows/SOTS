@@ -164,9 +164,9 @@ namespace SOTS
 			DebuffNPC.LoadArrays();
 			if(Main.netMode != NetmodeID.Server)
 			{
-				Ref<Effect> TPrismdyeRef = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/TPrismEffect", AssetRequestMode.ImmediateLoad));
-				Ref<Effect> voidMageShader = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/VMShader", AssetRequestMode.ImmediateLoad));
-				Ref<Effect> anomalyShader = new Ref<Effect>((Effect)Assets.Request<Effect>("Effects/AnomalyShader", AssetRequestMode.ImmediateLoad));
+                Asset<Effect> TPrismdyeRef = Assets.Request<Effect>("Effects/TPrismEffect", AssetRequestMode.ImmediateLoad);
+                Asset<Effect> voidMageShader = Assets.Request<Effect>("Effects/VMShader", AssetRequestMode.ImmediateLoad);
+				Asset<Effect> anomalyShader = Assets.Request<Effect>("Effects/AnomalyShader", AssetRequestMode.ImmediateLoad);
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
 				Filters.Scene["VMFilter"] = new Filter(new ScreenShaderData(voidMageShader, "VMShaderPass"), EffectPriority.VeryHigh);
 				Filters.Scene["VMFilter"].Load();

@@ -82,7 +82,6 @@ namespace SOTS.Prim.Trails
 			effect.Parameters["ColorTwo"].SetValue(Color2);
 			PrepareShader(effect, "MainPS", 0);
 		}
-		public Vector2 ownerCenter;
 		public List<float> WidthList = new List<float>();
 		public List<Vector2> toOwner = new List<Vector2>();
 		public override void OnUpdate()

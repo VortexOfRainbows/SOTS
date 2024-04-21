@@ -58,13 +58,13 @@ namespace SOTS.Projectiles.Blades
 		public override float delayDeathSlowdownAmount => 0.7f;
 		public override Color? DrawColor => null;
 		//private float nextIntervalForRocks = 80;
-		bool runOnce = true;
+		private bool RunOnce = true;
         public override void PostAI()
         {
-            if(runOnce && thisSlashNumber == 1)
+            if(RunOnce && thisSlashNumber == 1)
             {
 				Main.player[Projectile.owner].velocity.X -= Projectile.velocity.X * 0.15f;
-				runOnce = false;
+				RunOnce = false;
             }
 			base.PostAI();
 			/*if(timeLeftCounter > nextIntervalForRocks && thisSlashNumber == 1)

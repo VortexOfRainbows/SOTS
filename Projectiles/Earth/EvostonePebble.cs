@@ -2,8 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Projectiles.Blades;
-using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,7 +47,6 @@ namespace SOTS.Projectiles.Earth
 			}
 			return true;
 		}
-		int counter = 0;
 		public Color getColor => Color.Lerp(new Color(166, 221, 145), new Color(46, 63, 77), Main.rand.NextFloat(1));
 		public override void AI()
         {
