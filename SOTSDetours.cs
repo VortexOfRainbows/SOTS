@@ -808,19 +808,24 @@ namespace SOTS
 		}
 		private static void ItemSlot_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color(On_ItemSlot.orig_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color orig, SpriteBatch spriteBatch, Item[] inv, int context, int slot, Vector2 position, Color lightColor = default(Color))
         {
-			if(Main.gameMenu)
+            Player player = Main.LocalPlayer;
+            if (Main.gameMenu)
             {
                 orig(spriteBatch, inv, context, slot, position, lightColor);
 				return;
             }
+            FakeModPlayer subPlayer = FakeModPlayer.ModPlayer(player);
+            if (subPlayer == null)
+            {
+                orig(spriteBatch, inv, context, slot, position, lightColor);
+                return;
+            }
             PlayerInventorySlotsManager.SavedInventoryColor = Main.inventoryBack;
-            Player player = Main.LocalPlayer;
             Item item = inv[slot];
             if (PlayerInventorySlotsManager.DrawSubspaceSlot(item) || PlayerInventorySlotsManager.DrawTesseractSlot(item, slot))
             {
                 Main.inventoryBack = Color.Transparent;
             }
-            FakeModPlayer subPlayer = FakeModPlayer.ModPlayer(player);
 			int tesCount = subPlayer.tesseractPlayerCount;
             if (tesCount > 0)
             {
