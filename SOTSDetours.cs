@@ -809,7 +809,7 @@ namespace SOTS
 		private static void ItemSlot_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color(On_ItemSlot.orig_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color orig, SpriteBatch spriteBatch, Item[] inv, int context, int slot, Vector2 position, Color lightColor = default(Color))
         {
             Player player = Main.LocalPlayer;
-            if (Main.gameMenu)
+            if (Main.gameMenu || player == null || !player.active)
             {
                 orig(spriteBatch, inv, context, slot, position, lightColor);
 				return;
