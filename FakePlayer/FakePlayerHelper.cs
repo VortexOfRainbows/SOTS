@@ -273,7 +273,12 @@ namespace SOTS.FakePlayer
         {
             //Main.NewText(slot);
             Player player = Main.LocalPlayer;
-            if(player.inventory.Length <= slot)
+            if(player == null || !player.active)
+            {
+                return false;
+            }
+            FakeModPlayer fmPlayer = FakeModPlayer.ModPlayer(player);
+            if(player.inventory.Length <= slot || fmPlayer.tesseractData.Length < 10)
             {
                 return false;
             }

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Security.Permissions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -28,16 +29,19 @@ namespace SOTS.FakePlayer
     }
     public class FakeModPlayer : ModPlayer
     {
+        private static TesseractMinionData[] InitializeTesseractData()
+        {
+            TesseractMinionData[] tesseractData = new TesseractMinionData[10];
+            for (int i = 0; i < tesseractData.Length; i++)
+                tesseractData[i] = new TesseractMinionData();
+            return tesseractData;
+        }
         public override void SetStaticDefaults()
         {
-
+            if(tesseractData.Length < 10)
+                tesseractData = InitializeTesseractData();
         }
-        public TesseractMinionData[] tesseractData = 
-            { new TesseractMinionData(), new TesseractMinionData(), 
-            new TesseractMinionData(), new TesseractMinionData(), 
-            new TesseractMinionData(), new TesseractMinionData(),
-            new TesseractMinionData(),new TesseractMinionData(),
-            new TesseractMinionData(),new TesseractMinionData() };
+        public TesseractMinionData[] tesseractData = InitializeTesseractData();
         public bool foundItem = false;
         public bool servantActive = false;
         public bool servantIsVanity = false;
