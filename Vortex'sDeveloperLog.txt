@@ -42,7 +42,10 @@ Update Objectives:
 10. Anomaly Relocator Item which relocates anomalies when used
 11. House Cube Accessory that can generate a temporary house
 12. Accessory that uses void instead of mana when low on mana
-
+13. Speed up Heal Projectiles, potentially improve visuals
+14. Lock Polished Coin to hardmode. Make focus crystal harder to craft
+15. Make Frost Key recipe less annoying (no more frost core)
+16. After death blink pank
 
 ---WIP List---
 N/A
@@ -51,7 +54,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
+Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
