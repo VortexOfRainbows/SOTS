@@ -14,6 +14,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using SOTS.Items.Tide;
 using SOTS.Items;
+using System.Diagnostics;
 
 namespace SOTS.Void
 {
@@ -117,7 +118,10 @@ namespace SOTS.Void
                     {
                         tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidS", damageValue, damageWord);
                     }
-					tooltips.FirstOrDefault(x => x.Name == "CritChance" && x.Mod == "Terraria").Hide();
+					TooltipLine tl = tooltips.FirstOrDefault(x => x.Name == "CritChance" && x.Mod == "Terraria");
+					bool Found = tl != default;
+                    if (Found)
+                        tl.Hide();
                 }
 			}
 			string voidCostText = VoidCost(Main.LocalPlayer).ToString();

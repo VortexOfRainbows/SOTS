@@ -60,6 +60,7 @@ using SOTS.Common.Systems;
 using SOTS.FakePlayer;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using Microsoft.CodeAnalysis;
+using SOTS.Buffs.ConduitBoosts;
 
 namespace SOTS
 {
@@ -422,7 +423,7 @@ namespace SOTS
 		{
 			if (SOTS.BlinkHotKey.JustPressed)
 			{
-				if (BlinkType == 1 && !Player.HasBuff(BuffID.ChaosState) && !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen)
+				if (BlinkType == 1 && !Player.HasBuff(BuffID.ChaosState) && !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead)
 				{
 					Vector2 toCursor = Main.MouseWorld - Player.Center;
 					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<Blink1>(), 0, 0, Player.whoAmI);
@@ -1874,6 +1875,8 @@ namespace SOTS
 				int type = player.buffType[i];
 				if (!Main.debuff[type] && (((player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type) || allowUnder30Seconds) && type != ModContent.BuffType<Harmony>()) || affectAll))
 				{
+					if (type == ModContent.BuffType<EarthBoosted>() || type == ModContent.BuffType<NatureBoosted>())
+						continue;
 					int totalIncrease = time;
 					if(timeBonusMultiplier != 0)
                     {

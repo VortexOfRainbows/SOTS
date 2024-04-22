@@ -6230,11 +6230,7 @@ Mods: {
 
 		VisionAmuletTextList: {
 			0: Reduces damage taken by 10%
-			1:
-				'''
-				Increases max minions and sentries by 1
-				Increases damage by 10%
-				'''
+			1: Increases max minions and sentries by 1
 			2: Increases attack speed by 12%
 			3: Increases critical strike chance by 10%
 			4: Increases critical strike damage by 30%

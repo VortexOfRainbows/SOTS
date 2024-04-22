@@ -44,8 +44,6 @@ Update Objectives:
 12. Accessory that uses void instead of mana when low on mana
 13. Speed up Heal Projectiles, potentially improve visuals
 14. Lock Polished Coin to hardmode. Make focus crystal harder to craft
-15. Make Frost Key recipe less annoying (no more frost core)
-16. After death blink pank
 
 ---WIP List---
 N/A
@@ -54,7 +52,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf
+Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
@@ -77,6 +75,13 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+4/22/24
+1. Fixed issue in electro amulet tooltip
+2. Fix bug where Inverted Diamond on Challenger ring caused void + summon tooltips to stop appearing
+3. Conduits should no longer have their buffs drop into the negatives when combined with Ruby Ring effects
+4. Blink Pack should no longer be useable after dying
+5. Frost Core can now be crafted at a Mythril Anvil with Permafrost related materials
 
 4/20/24
 1. Attempt another fix for Tesseract related crashes

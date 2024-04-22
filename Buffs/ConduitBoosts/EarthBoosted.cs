@@ -18,10 +18,12 @@ namespace SOTS.Buffs.ConduitBoosts
         }
         public override void Update(Player player, ref int buffIndex)
         {
+            if (player.buffTime[buffIndex] > 90)
+                player.buffTime[buffIndex] = 90;
             if (player.buffTime[buffIndex] == 31 && Main.myPlayer == player.whoAmI)
             {
                 SOTSUtils.PlaySound(SoundID.Item30, player.Center, 0.75f, 0.25f);
-                for(int i = 0; i < 24; i++)
+                for (int i = 0; i < 24; i++)
                 {
                     Dust dust = Dust.NewDustDirect(player.Center, 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, ColorHelpers.EarthColor, 1.1f);
                     dust.scale *= 1.4f;
@@ -34,9 +36,9 @@ namespace SOTS.Buffs.ConduitBoosts
             else if (player.buffTime[buffIndex] < 30)
                 player.buffTime[buffIndex] = 30;
             int buffAmt = (int)(20 * (1 - (player.buffTime[buffIndex] - 30) / 60f));
-            if (Main.myPlayer != player.whoAmI) 
+            if (Main.myPlayer != player.whoAmI)
                 buffAmt = 20;
-            player.statLifeMax2 += buffAmt;
+            player.statLifeMax2 += Math.Clamp(buffAmt, 0, 20);
         }
     }
 }
