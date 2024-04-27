@@ -644,7 +644,7 @@ Mods: {
 					'''
 					Summons a voidspace cell on your cursor that releases flames at nearby enemies
 					Grants stat boosts while in the radius of the cell
-					Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
+					Void regeneration speed increases by 4%, life regeneration by 4, defense by 4, and reduces damage taken by 4%
 					Damages all enemies within range
 					Range scales with summon damage
 					'''
@@ -721,8 +721,8 @@ Mods: {
 				DisplayName: Particle Relocator
 				Tooltip:
 					'''
-					When an enemy hits you, you will be teleported behind them, avoiding damage and stunning them temporarily
-					16 second cooldown, but increases melee damage by 50% for 7 seconds after teleporting
+					When an enemy hits you, you will be teleported behind them, avoiding damage and freezing them in time temporarily
+					Has a 16 second cooldown, but increases melee damage by 50% for 7 seconds after teleporting
 					Does damage equal to your defense
 					'''
 			}
@@ -901,7 +901,7 @@ Mods: {
 				DisplayName: Shield of Stekpla
 				Tooltip:
 					'''
-					Increases crit chance by 1% for every 4 full inventory slots
+					Increases critical strike chance by 1% for every 4 full inventory slots
 					'More is more'
 					'''
 			}
@@ -1086,7 +1086,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes have a 50% chance to deal 30 more damage
-					Increases crit chance by 2%
+					Increases critical strike chance by 2%
 					Immunity to bleeding and poisoned
 					'''
 			}
@@ -1096,14 +1096,14 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes deal 40 more damage
-					Increases crit chance by 4%
+					Increases critical strike chance by 4%
 					Immunity to bleeding and poisoned debuffs
 					'''
 			}
 
 			ChaosBadge: {
 				DisplayName: Chaos Badge
-				Tooltip: Increases crit chance by 10%
+				Tooltip: Increases critical strike chance by 10%
 			}
 
 			CloverCharm: {
@@ -1111,7 +1111,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes have a 50% chance to steal life
-					Increases crit chance by 2%
+					Increases critical strike chance by 2%
 					'''
 			}
 
@@ -1120,7 +1120,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes have a 50% chance to regenerate void
-					Increases crit chance by 2%
+					Increases critical strike chance by 2%
 					'''
 			}
 
@@ -1129,7 +1129,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes steal life, regenerate void, and recover mana
-					Increases crit chance by 2%
+					Increases critical strike chance by 2%
 					'''
 			}
 
@@ -1137,7 +1137,7 @@ Mods: {
 				DisplayName: Bag of Charms
 				Tooltip:
 					'''
-					5% increased critical strike chance
+					Increases critical strike chance by 5%
 					Critical strikes may detonate enemies for 100% 
 					Critical strikes steal life, regenerate void, and recover mana
 					'''
@@ -1145,14 +1145,14 @@ Mods: {
 
 			EyeOfChaos: {
 				DisplayName: Eye of Chaos
-				Tooltip: Increases crit chance by 18%
+				Tooltip: Increases critical strike chance by 18%
 			}
 
 			FocusReticle: {
 				DisplayName: Focus Reticle
 				Tooltip:
 					'''
-					Increases crit chance by 20%
+					Increases critical strike chance by 20%
 					Critical strikes deal 40 more damage
 					Immunity to bleeding and poisoned debuffs
 					'''
@@ -1163,7 +1163,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes may cause a frostburn explosion, dealing 200% damage
-					Increases crit chance by 2%
+					Increases critical strike chance by 2%
 					'''
 			}
 
@@ -1173,7 +1173,7 @@ Mods: {
 					'''
 					Critical strikes may cause a release of cursed thunder, dealing 100% damage
 					Critical strikes may also cause frostburn or flaming explosions, dealing 100% damage
-					Increases crit chance by 2%
+					Increases critical strike chance by 2%
 					'''
 			}
 
@@ -1182,13 +1182,13 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes may cause a flaming explosion, dealing 100% damage
-					Increases crit chance by 2%
+					Increases critical strike chance by 2%
 					'''
 			}
 
 			SnakeEyes: {
 				DisplayName: Snake Eyes
-				Tooltip: Increases crit chance by 8%
+				Tooltip: Increases critical strike chance by 8%
 			}
 
 			AquaticEclipse: {
@@ -1394,7 +1394,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases mana recieved from potions by 40
-					Increases magic crit chance by 5%
+					Increases magic critical strike chance by 5%
 					'''
 			}
 
@@ -1583,7 +1583,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases max void by 50
-					Increases ranged crit chance by 5%
+					Increases ranged critical strike chance by 5%
 					'''
 			}
 
@@ -1903,7 +1903,7 @@ Mods: {
 				DisplayName: Exotic Polarizer
 				Tooltip:
 					'''
-					Increases jump speed, life regen, and void gain by 2
+					Increases jump speed, life regeneration, and void gain by 2
 					Changes the effects of exotic dissolving elements in your inventory
 					'''
 			}
@@ -1914,7 +1914,7 @@ Mods: {
 					'''
 					Increases damage, endurance, and movement speed by 3%
 					Increases max life, mana, and void by 20
-					Increases jump speed, life regen, and void gain by 2
+					Increases jump speed, life regeneration, and void gain by 2
 					Changes the effects of all dissolving elements in your inventory
 					'''
 			}
@@ -2375,17 +2375,17 @@ Mods: {
 
 			NatureWreath: {
 				DisplayName: Wormwood Wreath
-				Tooltip: Increased max minions
+				Tooltip: Increases max minions by 1
 			}
 
 			NatureLeggings: {
 				DisplayName: Wormwood Leggings
-				Tooltip: 5% increased minion damage and movement speed
+				Tooltip: 5% increases minion damage and movement speed
 			}
 
 			NatureShirt: {
 				DisplayName: Wormwood Shirt
-				Tooltip: Increased defense for every active minion
+				Tooltip: Increases defense for every active minion
 			}
 
 			NatureSpell: {
@@ -2628,7 +2628,7 @@ Mods: {
 				DisplayName: Platform Generator
 				Tooltip:
 					'''
-					10% increased minion damage
+					Increases minion damage by 10%
 					Generates 2 platforms to the left and right of you
 					You can right click to drag the platforms, but they will always remain symmetrical
 					Sentries can be summoned on top of the platforms
@@ -2676,8 +2676,8 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes recover mana
-					Increased max mana by 40
-					Increases magic crit chance by 10%
+					Increases max mana by 40
+					Increases magic critical strike chance by 10%
 					'''
 			}
 
@@ -2716,9 +2716,9 @@ Mods: {
 				DisplayName: Twilight Assassin Chestplate
 				Tooltip:
 					'''
-					Increased your max number of minions by 1
-					Increased melee and void critical strike chance by 10%
-					Increased life regeneration by 2 and void regeneration speed by 10%
+					Increases max minions by 1
+					Increases melee and void critical strike chance by 10%
+					Increases life regeneration by 2 and void regeneration speed by 10%
 					'''
 			}
 
@@ -2726,7 +2726,7 @@ Mods: {
 				DisplayName: Twilight Assassin Leggings
 				Tooltip:
 					'''
-					Increased movement speed by 15%
+					Increases movement speed by 15%
 					Blink Pack decreased cooldown by 20%
 					Slightly increased jump speed
 					'''
@@ -2928,7 +2928,7 @@ Mods: {
 				Tooltip:
 					'''
 					Grants Ice Skates effect
-					10% increased movement and void attack speed
+					Increases movement and void attack speed by 10%
 					'''
 			}
 
@@ -3317,7 +3317,7 @@ Mods: {
 				DisplayName: Cursed Robe
 				Tooltip:
 					'''
-					Increased maximum mana and void by 80
+					Increases maximum mana and void by 80
 					Reduces mana and void usage by 15%
 					Summons a Ruby Monolith to your side
 					The Ruby Monolith increases your void regeneration speed by 10%
@@ -3329,7 +3329,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases magic damage and void damage by 8%
-					Also increases magic crit chance and void crit chance by 5%
+					Increases magic critical strike chance and void critical strike chance by 5%
 					The closest enemy to you is afflicted with a curse
 					Upon taking damage, cursed enemies will Flare, taking 140% additional damage and dealing 140% damage to other nearby enemies
 					This effect has a 2 second cooldown
@@ -3552,12 +3552,12 @@ Mods: {
 
 			SpiritGlove: {
 				DisplayName: Spirit Glove
-				Tooltip: Increases void regeneration speed by 5% and melee crit chance by 8%
+				Tooltip: Increases void regeneration speed by 5% and melee critical strike chance by 8%
 			}
 
 			SpiritShield: {
 				DisplayName: Spirit Shield
-				Tooltip: Increases void gain by 2, life regen by 1, and reduces damage taken by 2%
+				Tooltip: Increases void gain by 2, life regeneration by 1, and reduces damage taken by 2%
 			}
 
 			SpiritSurfer: {
@@ -4240,7 +4240,7 @@ Mods: {
 					'''
 					Grants immunity to knockback and fire blocks
 					Grants immunity to most debuffs
-					Increases void gain by 2, life regen by 1, reduces damage taken by 5%, and increases crit chance by 4%
+					Increases void gain by 2, life regeneration by 1, reduces damage taken by 5%, and increases critical strike chance by 4%
 					Surrounds you with 4 orbital projectiles
 					Projectiles disabled when hidden
 					'''
@@ -4258,7 +4258,7 @@ Mods: {
 
 			CrestofDasuver: {
 				DisplayName: Crest of Dasuver
-				Tooltip: Increases crit chance by 6%
+				Tooltip: Increases critical strike chance by 6%
 			}
 
 			DigitalDaito: {
@@ -4344,8 +4344,8 @@ Mods: {
 				DisplayName: Olympian Aegis
 				Tooltip:
 					'''
-					Increases void gain by 2 and life regen by 1
-					Reduces damage taken by 7% and increases crit chance by 4%
+					Increases void gain by 2 and life regeneration by 1
+					Reduces damage taken by 7% and increases critical strike chance by 4%
 					'''
 			}
 
@@ -5356,6 +5356,38 @@ Mods: {
 					Allows the control of gravity
 					'''
 			}
+
+			ElementalBreastplate: {
+				DisplayName: Elemental Breastplate
+				Tooltip:
+					'''
+					Increases melee and summon damage by 30%
+					Increases life regeneration by 4
+					(WIP) Press the '{0}' key to teleport to your cursor, dealing 200% of your defense as damage to all enemies in your path
+					Has a 30 second cooldown, but increases melee speed by 20% during the duration
+					'''
+			}
+
+			ElementalHelmet: {
+				DisplayName: Elemental Helmet
+				Tooltip:
+					'''
+					Increases melee, summon, and void damage by 15%
+					Increases void gain by 3 and max void by 100
+					Increases max minions by 2
+					'''
+			}
+
+			ElementalLeggings: {
+				DisplayName: Elemental Leggings
+				Tooltip:
+					'''
+					Increases summon damage, whip range, and movement speed by 15%
+					Increases melee critical strike chance by 15%
+					Increases void gain by 2 and max void by 100
+					Increases max sentries by 2
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -5397,7 +5429,7 @@ Mods: {
 
 			AuraBoost: {
 				DisplayName: Aura Boost
-				Description: Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%
+				Description: Void regeneration speed increased by 4%, life regeneration by 4, defense by 4, and reduces damage taken by 4%
 			}
 
 			Bluefire: {
@@ -5432,7 +5464,7 @@ Mods: {
 
 			CyberneticEnhancements: {
 				DisplayName: Cybernetic Enhancements
-				Description: Increased void damage by 10%
+				Description: Increases void damage by 10%
 			}
 
 			DEFEBuff: {
@@ -5482,7 +5514,7 @@ Mods: {
 
 			Frenzy: {
 				DisplayName: Frenzy
-				Description: Melee Speed increased by 100%
+				Description: Melee speed increased by 100%
 			}
 
 			GoodVibes: {
@@ -5577,7 +5609,7 @@ Mods: {
 
 			Roughskin: {
 				DisplayName: Roughskin
-				Description: 4 increased defense and 4% increased damage
+				Description: Increases defense by 4 and damage by 4%
 			}
 
 			RubyMonolithAttack: {
@@ -5773,7 +5805,7 @@ Mods: {
 			FrostArtifact: Most melee and ranged attacks summon a handful of Polar Cannons that each deal 25% damage
 			ShatterShard:
 				'''
-				Increases life regen by 2
+				Increases life regeneration by 2
 				Immunity to Chilled, Frozen, and Frostburn
 				'''
 			Cursed:
@@ -5788,6 +5820,12 @@ Mods: {
 				Attacks permanently inflict the Subspace Flames debuff, which deals 10 damage per second
 				When an enemy with Subspace Flames is killed, they deal damage to all other enemies equal to the cumulative damage they took from Subspace Flames
 				Enemies that take damage this way will also be inflicted with Subspace Flames
+				'''
+			Elemental:
+				'''
+				(WIP) Enemies hit by the teleport will be frozen in time temporarily
+				Decreases cooldown on the teleport to 10 seconds and increases the range enemies will take damage from the teleport by 50%
+				Increases teleport damage based on melee, summon, and void damage modifiers
 				'''
 		}
 
@@ -6353,9 +6391,9 @@ Mods: {
 			'''
 		TwilightAssassinsCircletText:
 			'''
-			Increases your max number of minions and sentries by 1
+			Increases max minions and sentries by 1
 			Increases minion and melee damage by 7%
-			Increased max void by 50
+			Increases max void by 50
 			Provides a Holo Eye minion to assist in combat
 			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked
@@ -6364,9 +6402,9 @@ Mods: {
 			'''
 		TwilightAssassinsCircletText2:
 			'''
-			Increases your max number of minions and sentries by 1
+			Increases max minions and sentries by 1
 			Increases minion and melee damage by 7%
-			Increased max void by 50
+			Increases max void by 50
 			Provides a Holo Eye minion to assist in combat
 			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked

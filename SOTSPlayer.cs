@@ -61,6 +61,7 @@ using SOTS.FakePlayer;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using Microsoft.CodeAnalysis;
 using SOTS.Buffs.ConduitBoosts;
+using SOTS.Items.Chaos;
 
 namespace SOTS
 {
@@ -1059,7 +1060,7 @@ namespace SOTS
 			tPlanetNum = 0;
 			RubyMonolith = false;
 			RubyMonolithIsNOTVanity = AnomalyLocator = false;
-			int voidspacePiecesWorn = 0;
+			int voidspacePiecesWorn = 0, chaosPiecesWorn = 0;
 			for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
             {
 				Item item = Player.armor[i];
@@ -1153,6 +1154,12 @@ namespace SOTS
 				{
 					voidspacePiecesWorn++;
                 }
+                if (item.type == ModContent.ItemType<ElementalLeggings>() ||
+                    item.type == ModContent.ItemType<ElementalBreastplate>() ||
+                    item.type == ModContent.ItemType<ElementalHelmet>())
+                {
+                    chaosPiecesWorn++;
+                }
                 /*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
@@ -1161,8 +1168,12 @@ namespace SOTS
 			if(voidspacePiecesWorn > 0)
 			{
 				Lighting.AddLight(Player.Center, new Vector3(0.5f, 0.88f, 0.62f) * voidspacePiecesWorn * 0.3f);
-			}
-			typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
+            }
+            if (chaosPiecesWorn > 0)
+            {
+                Lighting.AddLight(Player.Center, Vector3.Lerp(Vector3.One, ColorHelpers.ChaosPink.ToVector3(), 0.5f) * chaosPiecesWorn * 0.5f);
+            }
+            typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
             assassinateNum = 1;
 			assassinate = VibrantArmor = frigidJavelinNoCost = false;
             brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;

@@ -6,12 +6,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using SOTS.Items.Invidia;
+using SOTS.Items.Planetarium.FromChests;
 
-namespace SOTS.Items.Celestial
+namespace SOTS.Items.Chaos
 {
 	[AutoloadEquip(EquipType.Head)]
-	public class VoidspaceMask : ModItem
+	public class ElementalHelmet : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -27,42 +27,42 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 26;
+			Item.width = 28;
 			Item.height = 26;
-			Item.value = Item.sellPrice(0, 9, 0, 0);
+			Item.value = Item.sellPrice(0, 11, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
-			Item.defense = 16;
+			Item.defense = 18;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ModContent.ItemType<VoidspaceBreastplate>() && legs.type == ModContent.ItemType<VoidspaceLeggings>();
+            return body.type == ModContent.ItemType<ElementalBreastplate>() && legs.type == ModContent.ItemType<ElementalLeggings>();
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Voidspace");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Elemental");
             player.SOTSPlayer().VoidspaceFlames = true;
         }
         public override void ArmorSetShadows(Player player)
         {
-            player.armorEffectDrawOutlinesForbidden = true;
+            player.armorEffectDrawShadow = true;
         }
         public override void UpdateEquip(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.bonusVoidGain += 4;
-			voidPlayer.voidMeterMax2 += 50;
-			player.statManaMax2 += 100;
-            player.GetCritChance<VoidGeneric>() += 15;
-            player.GetCritChance(DamageClass.Magic) += 25;
-            player.GetCritChance(DamageClass.Ranged) += 25;
+			voidPlayer.bonusVoidGain += 3;
+			voidPlayer.voidMeterMax2 += 100;
+            player.GetDamage<VoidGeneric>() += 0.15f;
+            player.GetDamage(DamageClass.Summon) += 0.15f;
+            player.GetDamage(DamageClass.Melee) += 0.15f;
+			player.maxMinions += 2;
         }
 		public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient<FragmentOfInferno>(10).AddIngredient<VesperaMask>(1).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<PhaseBar>(15).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsCirclet>(1).AddTile(TileID.MythrilAnvil).Register();
         }
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class VoidspaceLeggings : ModItem
+	public class ElementalLeggings : ModItem
 	{
         public override void SetStaticDefaults()
 		{
@@ -71,11 +71,11 @@ namespace SOTS.Items.Celestial
         }
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 26;
             Item.height = 14;
-            Item.value = Item.sellPrice(0, 12, 0, 0);
+            Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Yellow;
-            Item.defense = 20;
+            Item.defense = 18;
         }
         private void SetupDrawing()
         {
@@ -86,25 +86,26 @@ namespace SOTS.Items.Celestial
         }
         public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == ModContent.ItemType<VoidspaceBreastplate>() && head.type == ModContent.ItemType<VoidspaceMask>();
+			return body.type == ModContent.ItemType<ElementalBreastplate>() && head.type == ModContent.ItemType<ElementalHelmet>();
 		}
 		public override void UpdateEquip(Player player)
         {
             VoidPlayer vPlayer = player.VoidPlayer();
-            player.GetDamage<VoidGeneric>() += 0.15f;
-            player.GetDamage(DamageClass.Magic) += 0.25f;
-            player.GetDamage(DamageClass.Ranged) += 0.25f;
-            player.moveSpeed += 0.2f;
-            vPlayer.bonusVoidGain += 3;
-            vPlayer.voidMeterMax2 += 50;
+            vPlayer.bonusVoidGain += 2;
+            vPlayer.voidMeterMax2 += 100;
+            player.whipRangeMultiplier += 0.15f;
+            player.moveSpeed += 0.15f;
+            player.maxTurrets += 2;
+            player.GetDamage(DamageClass.Summon) += 15;
+            player.GetCritChance(DamageClass.Melee) += 15;
         }
 		public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<SanguiteBar>(10).AddIngredient<FragmentOfInferno>(10).AddIngredient<VesperaLeggings>(1).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<PhaseBar>(10).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsLeggings>(1).AddIngredient<BlinkPack>().AddIngredient<ParticleRelocator>().AddTile(TileID.MythrilAnvil).Register();
         }
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class VoidspaceBreastplate : ModItem
+	public class ElementalBreastplate : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -122,27 +123,25 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 42;
-			Item.height = 20;
-			Item.value = Item.sellPrice(0, 15, 0, 0);
+			Item.width = 46;
+			Item.height = 26;
+			Item.value = Item.sellPrice(0, 12, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
 			Item.defense = 24;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return head.type == ModContent.ItemType<VoidspaceMask>() && legs.type == ModContent.ItemType<VoidspaceLeggings>();
+			return head.type == ModContent.ItemType<ElementalHelmet>() && legs.type == ModContent.ItemType<ElementalLeggings>();
 		}
 		public override void UpdateEquip(Player player)
-		{
-			VoidPlayer vPlayer = player.VoidPlayer();
-			vPlayer.GainVoidOnHurt = vPlayer.GainHealthOnVoidUse = 0.15f;
-			player.manaCost -= 0.15f;
-            vPlayer.bonusVoidGain += 3;
-            vPlayer.voidMeterMax2 += 100;
+        {
+            player.GetDamage(DamageClass.Melee) += 0.3f;
+            player.GetDamage(DamageClass.Summon) += 0.3f;
+			player.lifeRegen += 4;
         }
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<SanguiteBar>(20).AddIngredient<FragmentOfInferno>(10).AddIngredient<VesperaBreastplate>(1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<PhaseBar>(20).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsChestplate>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

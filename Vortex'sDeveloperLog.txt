@@ -52,7 +52,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf
+Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf, Nerf Inverted Amber ring on the Challenger Ring
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
@@ -75,6 +75,11 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+4/26/24
+1. Increased Fragment of Inferno cost for Voidspace Ranger's Armorset: 18 -> 30
+2. Many localization consistency changes
+3. Begin working on Elemental armor set. For now, basic stats should be good
 
 4/22/24
 1. Fixed issue in electro amulet tooltip
