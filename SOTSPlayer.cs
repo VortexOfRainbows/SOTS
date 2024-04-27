@@ -63,6 +63,7 @@ using Microsoft.CodeAnalysis;
 using SOTS.Buffs.ConduitBoosts;
 using SOTS.Items.Chaos;
 using MonoMod.Cil;
+using SOTS.Buffs.Debuffs;
 
 namespace SOTS
 {
@@ -425,10 +426,10 @@ namespace SOTS
 		public int bladeAlpha = 0;
 		public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            bool canBlink = !Player.HasBuff(BuffID.ChaosState) && !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead;
+            bool canBlink = !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead;
             if (SOTS.BlinkHotKey.JustPressed)
             {
-				if (BlinkType == 1 && canBlink)
+				if (!Player.HasBuff(BuffID.ChaosState) && BlinkType == 1 && canBlink)
 				{
 					Vector2 toCursor = Main.MouseWorld - Player.Center;
 					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), 
@@ -437,7 +438,7 @@ namespace SOTS
 			}
 			if (SOTS.ArmorSetHotKey.JustPressed)
             {
-                if (ElementalBlink && canBlink)
+                if (!Player.HasBuff<ChaosState2>() && ElementalBlink && canBlink)
                 {
 					Vector2 finalLocation = Main.MouseWorld - new Vector2(0, Player.height / 2);
                     Vector2 toCursor = finalLocation - Player.Center;
@@ -1057,13 +1058,6 @@ namespace SOTS
 						bladeAlpha += 5;
 					else
 						bladeAlpha = 255;
-				}
-			}
-			if(ElementalBlink)
-			{
-				if(Player.HasBuff(BuffID.ChaosState))
-				{
-					Player.GetAttackSpeed(DamageClass.Melee) += 0.4f;
 				}
 			}
 			additionalHeal = additionalPotionMana = 0;

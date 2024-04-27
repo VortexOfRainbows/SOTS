@@ -56,7 +56,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf, Nerf Inverted Amber ring on the Challenger Ring, Synthetic Liver with Ice water
+Soot Spewer, Voidspace Ranger's Armor, Elemental Armor , Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf, Nerf Inverted Amber ring on the Challenger Ring, Synthetic Liver with Ice water
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
@@ -81,10 +81,11 @@ N/A
 
 Daily Log:
 
-4/26/24
+4/26/24 to 4/27/24
 1. Increased Fragment of Inferno cost for Voidspace Ranger's Armorset: 18 -> 30
 2. Many localization consistency changes
-3. Begin working on Elemental armor set. For now, basic stats should be good
+3. Finish basic effects of the Elemental armor set, might need some adjustments to stats
+4. Particle Relocator should no longer effect bosses with the time frozen debuff
 
 4/22/24
 1. Fixed issue in electro amulet tooltip

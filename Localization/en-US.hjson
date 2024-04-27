@@ -5359,10 +5359,7 @@ Mods: {
 
 			ElementalBreastplate: {
 				DisplayName: Elemental Breastplate
-				Tooltip:
-					'''
-					TEMP
-					'''
+				Tooltip: TEMP
 				TooltipExt:
 					'''
 					Increases melee and summon damage by 30%
@@ -5739,7 +5736,7 @@ Mods: {
 
 			DendroChain: {
 				DisplayName: Dendro Chain
-				Description: Mods.SOTS.BuffDescription.DendroChain
+				Description: Tied up
 			}
 
 			Skipped: {
@@ -5766,9 +5763,9 @@ Mods: {
 				DisplayName: Bloody Waters
 				Description:
 					'''
-						Increases melee damage by 50% of the increases recieved to magic damage from other sources
-						Increases magic damage by 50% of the increases recieved to melee damage from other sources
-						Increases movement speed by 20% and reduces damage taken by 10%
+					Increases melee damage by 50% of the increases recieved to magic damage from other sources
+					Increases magic damage by 50% of the increases recieved to melee damage from other sources
+					Increases movement speed by 20% and reduces damage taken by 10%
 					'''
 			}
 
@@ -5780,6 +5777,15 @@ Mods: {
 			TesseractBuff: {
 				DisplayName: Tesseract
 				Description: You are now everywhere, everything, all at once
+			}
+
+			ChaosState2: {
+				DisplayName: Chaotic State
+				Description:
+					'''
+					Elemental teleports are disabled
+					Increases melee speed by 40%
+					'''
 			}
 		}
 

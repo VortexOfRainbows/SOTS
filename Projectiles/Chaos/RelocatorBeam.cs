@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SOTS.Buffs.Debuffs;
 
 namespace SOTS.Projectiles.Chaos
 {    
@@ -47,7 +48,19 @@ namespace SOTS.Projectiles.Chaos
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.myPlayer == Projectile.owner)
-                DebuffNPC.SetTimeFreeze(Main.player[Projectile.owner], target, 90);
+            {
+                if(!target.boss)
+                {
+                    if (Projectile.ai[2] == 0)
+                    {
+                        DebuffNPC.SetTimeFreeze(Main.player[Projectile.owner], target, 90);
+                    }
+                    if (Projectile.ai[2] == -2)
+                    {
+                        DebuffNPC.SetTimeFreeze(Main.player[Projectile.owner], target, 120);
+                    }
+                }
+            }
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
@@ -258,11 +271,11 @@ namespace SOTS.Projectiles.Chaos
                 {
                     if (Projectile.ai[2] == -2)
                     {
-                        player.AddBuff(BuffID.ChaosState, 360);
+                        player.AddBuff(ModContent.BuffType<ChaosState2>(), 360);
                     }
                     else
                     {
-                        player.AddBuff(BuffID.ChaosState, 900);
+                        player.AddBuff(ModContent.BuffType<ChaosState2>(), 900);
                     }
                     player.Teleport(destination.Value, 1);
                     NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, destination.Value.X, destination.Value.Y, 1);
