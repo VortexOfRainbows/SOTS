@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using SOTS.Items.Planetarium.FromChests;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Chaos
 {
@@ -40,7 +41,7 @@ namespace SOTS.Items.Chaos
         public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Elemental");
-            player.SOTSPlayer().VoidspaceFlames = true;
+			player.SOTSPlayer().ElementalBlinkBuff = true;
         }
         public override void ArmorSetShadows(Player player)
         {
@@ -101,7 +102,7 @@ namespace SOTS.Items.Chaos
         }
 		public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<PhaseBar>(10).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsLeggings>(1).AddIngredient<BlinkPack>().AddIngredient<ParticleRelocator>().AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<PhaseBar>(10).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsLeggings>(1).AddTile(TileID.MythrilAnvil).Register();
         }
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -120,8 +121,30 @@ namespace SOTS.Items.Chaos
 			ArmorIDs.Body.Sets.shouldersAreAlwaysInTheBack[equipSlotBody] = false;
 			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = false;
 			ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
-		}
-		public override void SetDefaults()
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
+            {
+                foreach (TooltipLine line in tooltips) //goes through each tooltip line
+                {
+                    if (line.Mod == "Terraria" && line.Name == "Tooltip0")
+                    {
+                        line.Text = Language.GetTextValue("Mods.SOTS.Items.ElementalBreastplate.TooltipExt", key);
+                        return;
+                    }
+                }
+            }
+            foreach (TooltipLine line in tooltips) //goes through each tooltip line
+            {
+                if (line.Mod == "Terraria" && line.Name == "Tooltip0")
+                {
+                    string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
+                    line.Text = Language.GetTextValue("Mods.SOTS.Items.ElementalBreastplate.TooltipExt", Textkey);
+                }
+            }
+        }
+        public override void SetDefaults()
 		{
 			Item.width = 46;
 			Item.height = 26;
@@ -138,10 +161,11 @@ namespace SOTS.Items.Chaos
             player.GetDamage(DamageClass.Melee) += 0.3f;
             player.GetDamage(DamageClass.Summon) += 0.3f;
 			player.lifeRegen += 4;
+			player.SOTSPlayer().ElementalBlink = true;
         }
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<PhaseBar>(20).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsChestplate>(1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<PhaseBar>(20).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsChestplate>(1).AddIngredient<BlinkPack>().AddIngredient<ParticleRelocator>().AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

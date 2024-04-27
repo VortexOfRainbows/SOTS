@@ -4,13 +4,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Dusts;
-using SOTS.NPCs;
 using SOTS.Common.GlobalNPCs;
-using SOTS.Void;
 using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,7 +17,6 @@ namespace SOTS.Projectiles.Chaos
     {	
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Relocator Beam");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
@@ -103,6 +99,16 @@ namespace SOTS.Projectiles.Chaos
             Vector2 finalDestination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
             int initialEnemyID = (int)Projectile.knockBack;
             int totalPossibleEnemies = 10;
+            float seekOutOthersMult = 1f;
+            if (Projectile.ai[2] == -1)
+            {
+                totalPossibleEnemies = 15;
+            }
+            else if(Projectile.ai[2] == -2)
+            {
+                totalPossibleEnemies = 20;
+                seekOutOthersMult = 1.5f;
+            }
             if(initialEnemyID >= 0)
             {
                 NPC first = Main.npc[initialEnemyID];
@@ -130,7 +136,7 @@ namespace SOTS.Projectiles.Chaos
                     dust2.scale *= 2.2f;
                 }
                 bool continueToFinal = true;
-                if (firstDestination != Vector2.Zero)
+                if (firstDestination != Vector2.Zero && initialEnemyID >= 0)
                 {
                     NPC target = Main.npc[initialEnemyID];
                     Rectangle hitbox = new Rectangle((int)position.X - Projectile.width / 2, (int)position.Y - Projectile.height / 2, Projectile.width, Projectile.height);
@@ -148,7 +154,7 @@ namespace SOTS.Projectiles.Chaos
                 }
                 else if (totalPossibleEnemies > 0 && counter > 10)
                 {
-                    initialEnemyID = SOTSNPCs.FindTarget_Ignore(position, ignoreNPC, SeekOutOthersRange);
+                    initialEnemyID = SOTSNPCs.FindTarget_Ignore(position, ignoreNPC, SeekOutOthersRange * seekOutOthersMult);
                     if (initialEnemyID >= 0)
                     {
                         NPC target = Main.npc[initialEnemyID];
@@ -175,11 +181,14 @@ namespace SOTS.Projectiles.Chaos
                     }
                     radians = Redirect(radians, position, finalDestination);
                 }
-                Point16 tileP = position.ToTileCoordinates16();
-                if (SOTSWorldgenHelper.TrueTileSolid(tileP.X, tileP.Y))
+                if (Projectile.ai[2] == 0)
                 {
-                    end = true;
-                    position -= velocity.SafeNormalize(Vector2.Zero) * 16f;
+                    Point16 tileP = position.ToTileCoordinates16();
+                    if (SOTSWorldgenHelper.TrueTileSolid(tileP.X, tileP.Y))
+                    {
+                        end = true;
+                        position -= velocity.SafeNormalize(Vector2.Zero) * 16f;
+                    }
                 }
                 velocity = new Vector2(1, 0).RotatedBy(radians) * Speed;
                 counter++;
@@ -189,7 +198,7 @@ namespace SOTS.Projectiles.Chaos
             if (drawPositionList.Count / 6 < GrowthRange)
                 GrowthRange = drawPositionList.Count / 6;
             //Projectile.velocity = velocity;
-            Projectile.Center = position;
+            Projectile.Center = finalDestination;
         }
         float redirectGrowth = 0.0f;
         public float Redirect(float radians, Vector2 pos, Vector2 npc)
@@ -206,11 +215,22 @@ namespace SOTS.Projectiles.Chaos
         {
             return false;
         }
+        private Vector2? destination;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             if (runOnce)
             {
+                if (Projectile.ai[2] != 0)
+                {
+                    destination = SimulateRodOfDiscordTeleport(player);
+                    if(destination == null)
+                    {
+                        runOnce = false;
+                        Projectile.Kill();
+                        return;
+                    }
+                }
                 for (int i = 0; i < 20; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
@@ -225,12 +245,28 @@ namespace SOTS.Projectiles.Chaos
                 runOnce = false;
                 player.immuneTime = 40;
                 player.immune = true;
-                player.AddBuff(BuffID.ChaosState, 960);
-                player.AddBuff(ModContent.BuffType<SurpriseAttack>(), 420);
-                player.Center = Projectile.Center;
-                player.velocity *= 0.1f;
-                player.velocity += Projectile.velocity * 4.6f;
-                player.velocity.Y -= 2;
+                if (Projectile.ai[2] == 0)
+                {
+                    player.velocity *= 0.1f;
+                    player.velocity += Projectile.velocity * 4.6f;
+                    player.velocity.Y -= 2;
+                    player.AddBuff(BuffID.ChaosState, 960);
+                    player.AddBuff(ModContent.BuffType<SurpriseAttack>(), 420);
+                    player.Teleport(Projectile.Center + new Vector2(0, -16), -1, 0);
+                }
+                else
+                {
+                    if (Projectile.ai[2] == -2)
+                    {
+                        player.AddBuff(BuffID.ChaosState, 360);
+                    }
+                    else
+                    {
+                        player.AddBuff(BuffID.ChaosState, 900);
+                    }
+                    player.Teleport(destination.Value, 1);
+                    NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, destination.Value.X, destination.Value.Y, 1);
+                }
                 SOTSUtils.PlaySound(SoundID.Item72, (int)player.Center.X, (int)player.Center.Y, 1.2f, 0.1f);
                 for (int i = 0; i < 20; i++)
                 {
@@ -245,6 +281,25 @@ namespace SOTS.Projectiles.Chaos
             }
             float endPercent = Projectile.timeLeft / 60f;
             Projectile.alpha = (int)(255 - 255 * endPercent * endPercent);
+        }
+        private Vector2? SimulateRodOfDiscordTeleport(Player player)
+        {
+            Vector2 finalDestination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+            Vector2 pointPoisition = Vector2.Zero;
+            pointPoisition.X = finalDestination.X;
+            pointPoisition.Y = finalDestination.Y - (player.height * 0.5f);
+            player.LimitPointToPlayerReachableArea(ref pointPoisition);
+            if (!(pointPoisition.X > 50f) || !(pointPoisition.X < (float)(Main.maxTilesX * 16 - 50)) || !(pointPoisition.Y > 50f) || !(pointPoisition.Y < (float)(Main.maxTilesY * 16 - 50)))
+            {
+                return null;
+            }
+            int num = (int)(pointPoisition.X / 16f);
+            int num2 = (int)(pointPoisition.Y / 16f);
+            if ((Main.tile[num, num2].WallType == 87 && !NPC.downedPlantBoss && (Main.remixWorld || (double)num2 > Main.worldSurface)) || Collision.SolidCollision(pointPoisition, player.width, player.height))
+            {
+                return null;
+            }
+            return pointPoisition;
         }
 	}
 }

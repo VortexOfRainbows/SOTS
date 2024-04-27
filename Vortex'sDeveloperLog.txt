@@ -44,6 +44,10 @@ Update Objectives:
 12. Accessory that uses void instead of mana when low on mana
 13. Speed up Heal Projectiles, potentially improve visuals
 14. Lock Polished Coin to hardmode. Make focus crystal harder to craft
+15. Upgrade to Code Corruptor: Binary Blaster (?)
+16. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
+17. Shimmer Item that upgrades the store for Archaeologist
+
 
 ---WIP List---
 N/A
@@ -52,13 +56,14 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf, Nerf Inverted Amber ring on the Challenger Ring
+Soot Spewer, Voidspace Ranger's Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf, Nerf Inverted Amber ring on the Challenger Ring, Synthetic Liver with Ice water
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
 
 ---Multiplayer Fixes/Testing Needed---
 POSSIBLY Tesseract
+Tidal Spirit locks onto only one player for some reason
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...

@@ -62,6 +62,7 @@ using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using Microsoft.CodeAnalysis;
 using SOTS.Buffs.ConduitBoosts;
 using SOTS.Items.Chaos;
+using MonoMod.Cil;
 
 namespace SOTS
 {
@@ -218,7 +219,9 @@ namespace SOTS
 		public float BlinkedAmount = 0;
 		public int BlinkType = 0;
 		public int BlinkDamage = 0;
-		public int typhonRange = 0;
+		public bool ElementalBlink = false;
+        public bool ElementalBlinkBuff = false;
+        public int typhonRange = 0;
 		public bool weakerCurse = false;
 		public bool VibrantArmor = false;
 		public int brokenFrigidSword = 0;
@@ -421,18 +424,34 @@ namespace SOTS
 		}
 		public int bladeAlpha = 0;
 		public override void ProcessTriggers(TriggersSet triggersSet)
-		{
-			if (SOTS.BlinkHotKey.JustPressed)
-			{
-				if (BlinkType == 1 && !Player.HasBuff(BuffID.ChaosState) && !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead)
+        {
+            bool canBlink = !Player.HasBuff(BuffID.ChaosState) && !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead;
+            if (SOTS.BlinkHotKey.JustPressed)
+            {
+				if (BlinkType == 1 && canBlink)
 				{
 					Vector2 toCursor = Main.MouseWorld - Player.Center;
-					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<Blink1>(), 0, 0, Player.whoAmI);
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), 
+						ModContent.ProjectileType<Blink1>(), 0, 0, Player.whoAmI);
 				}
 			}
 			if (SOTS.ArmorSetHotKey.JustPressed)
-			{
-				if(!HoloEyeIsVanity)
+            {
+                if (ElementalBlink && canBlink)
+                {
+					Vector2 finalLocation = Main.MouseWorld - new Vector2(0, Player.height / 2);
+                    Vector2 toCursor = finalLocation - Player.Center;
+					float damage = Player.statDefense * 2f;
+					int type = -1;
+					if(ElementalBlinkBuff)
+					{
+						type = -2;
+						damage = Player.GetTotalDamage<VoidGeneric>().ApplyTo(damage);
+					}
+                    Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), 
+						ModContent.ProjectileType<RelocatorBeam>(), (int)damage, 0, Player.whoAmI, finalLocation.X, finalLocation.Y, type);
+                }
+                if (!HoloEyeIsVanity)
 					HoloEyeAttack = true;
 				if (CanCurseSwap)
 					CurseSwap = true;
@@ -1040,8 +1059,15 @@ namespace SOTS
 						bladeAlpha = 255;
 				}
 			}
+			if(ElementalBlink)
+			{
+				if(Player.HasBuff(BuffID.ChaosState))
+				{
+					Player.GetAttackSpeed(DamageClass.Melee) += 0.4f;
+				}
+			}
 			additionalHeal = additionalPotionMana = 0;
-			HoloEyeAutoAttack = false;
+			HoloEyeAutoAttack = ElementalBlink = ElementalBlinkBuff = false;
 			blinkPackMult = 1f;
 			BlinkDamage = 0;
 			BlinkType = 0;
@@ -1468,7 +1494,6 @@ namespace SOTS
 						direction = -1;
 					Vector2 otherSide = new Vector2(collidingNPC.Center.X + (collidingNPC.width / 2 + 96) * direction, Player.Center.Y - 16 + toNPC.X * 0.1f);
 					Projectile.NewProjectile(new EntitySource_OnHit(collidingNPC, Player), Player.Center, toNPC.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<RelocatorBeam>(), Player.statDefense + 1, collidingNPC.whoAmI, Player.whoAmI, otherSide.X, otherSide.Y);
-					Player.AddBuff(BuffID.ChaosState, 20);
 					modifiers.FinalDamage *= 0; //Take no damage from colliding
 					Player.immuneTime = 4;
 					Player.immune = true;

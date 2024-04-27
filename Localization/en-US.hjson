@@ -5184,7 +5184,7 @@ Mods: {
 				Tooltip:
 					'''
 					When hurt, 15% of damage taken is converted into void
-					When using void, 15% of the void used is converted in life
+					When using void, 15% of the void used is converted into life
 					Reduces mana cost by 15% 
 					Increases void gain by 3 and max void by 100
 					'''
@@ -5293,7 +5293,7 @@ Mods: {
 				I2:
 					'''
 					When hurt, 10% of damage taken is converted into void
-					When using void, 10% of the void used is converted in life
+					When using void, 10% of the void used is converted into life
 					'''
 				# Opposite of Envy, Kindness
 				I3:
@@ -5361,10 +5361,14 @@ Mods: {
 				DisplayName: Elemental Breastplate
 				Tooltip:
 					'''
+					TEMP
+					'''
+				TooltipExt:
+					'''
 					Increases melee and summon damage by 30%
 					Increases life regeneration by 4
-					(WIP) Press the '{0}' key to teleport to your cursor, dealing 200% of your defense as damage to all enemies in your path
-					Has a 30 second cooldown, but increases melee speed by 20% during the duration
+					Press the '{0}' key to teleport to your cursor, dealing 200% of your defense as damage to all enemies in your path
+					Has a 15 second cooldown, but increases melee speed by 40% during the cooldown
 					'''
 			}
 
@@ -5823,9 +5827,9 @@ Mods: {
 				'''
 			Elemental:
 				'''
-				(WIP) Enemies hit by the teleport will be frozen in time temporarily
-				Decreases cooldown on the teleport to 10 seconds and increases the range enemies will take damage from the teleport by 50%
-				Increases teleport damage based on melee, summon, and void damage modifiers
+				Enemies hit by the teleport will be frozen in time temporarily
+				Decreases cooldown on the teleport to 6 seconds and increases the range enemies will take damage from the teleport by 50%
+				Increases teleport damage based on void damage modifiers
 				'''
 		}
 
