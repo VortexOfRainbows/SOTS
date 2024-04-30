@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using SOTS.Void;
 using System;
@@ -270,7 +271,7 @@ namespace SOTS.Items.Gems
 				.AddIngredient<RubyRing>()
 				.AddIngredient<DiamondRing>()
 				.AddIngredient<AmberRing>()
-                .AddIngredient<TaintedKeystoneShard>()
+                .AddIngredient<PrecariousCluster>()
                 .AddTile(TileID.TinkerersWorkbench).Register();
         }
         public override void RightClick(Player player)

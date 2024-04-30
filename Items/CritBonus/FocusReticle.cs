@@ -70,7 +70,7 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.GetCritChance(DamageClass.Generic) += 20;
-			modPlayer.CritBonusDamage += 20;
+			modPlayer.CritBonusDamage += 40;
             player.buffImmune[BuffID.Bleeding] = true; 
             player.buffImmune[BuffID.Poisoned] = true; 
 		}

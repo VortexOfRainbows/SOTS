@@ -97,7 +97,7 @@ namespace SOTS.Items.Chaos
             player.whipRangeMultiplier += 0.15f;
             player.moveSpeed += 0.15f;
             player.maxTurrets += 2;
-            player.GetDamage(DamageClass.Summon) += 15;
+            player.GetDamage(DamageClass.Summon) += 0.15f;
             player.GetCritChance(DamageClass.Melee) += 15;
         }
 		public override void AddRecipes()

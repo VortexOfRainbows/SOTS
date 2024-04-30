@@ -4,6 +4,7 @@ using SOTS.Items.AbandonedVillage;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SOTS.Items.Permafrost;
 
 namespace SOTS.Items.CritBonus
 {
@@ -111,18 +112,18 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Generic) += 4;
+			player.GetCritChance(DamageClass.Generic) += 2;
 			if (Main.rand.NextBool(2))
 			{
-				modPlayer.CritBonusDamage += 15;
+				modPlayer.CritBonusDamage += 30;
 			}
 			player.buffImmune[BuffID.Bleeding] = true;
 			player.buffImmune[BuffID.Poisoned] = true;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<PutridCoin>(), 1).AddIngredient(ItemID.MedicatedBandage, 1).AddTile(TileID.TinkerersWorkbench).Register();
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<BloodstainedCoin>(), 1).AddIngredient(ItemID.MedicatedBandage, 1).AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1).AddIngredient<PutridCoin>().AddIngredient(ItemID.MedicatedBandage).AddIngredient<DissolvingUmbra>().AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1).AddIngredient<BloodstainedCoin>().AddIngredient(ItemID.MedicatedBandage).AddIngredient<DissolvingUmbra>().AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 	public class FocusCrystal : ModItem
@@ -150,7 +151,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<PolishedCoin>(), 1).AddIngredient(ModContent.ItemType<OtherworldlyAmplifier>(), 1).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 5).AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PolishedCoin>(), 1).AddIngredient(ModContent.ItemType<OtherworldlyAmplifier>(), 1).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 5).AddIngredient<SoulOfPlight>(5).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

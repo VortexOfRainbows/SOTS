@@ -1087,7 +1087,7 @@ Mods: {
 					'''
 					Critical strikes have a 50% chance to deal 30 more damage
 					Increases critical strike chance by 2%
-					Immunity to bleeding and poisoned
+					Immunity to Poison and Bleeding
 					'''
 			}
 
@@ -1097,7 +1097,7 @@ Mods: {
 					'''
 					Critical strikes deal 40 more damage
 					Increases critical strike chance by 4%
-					Immunity to bleeding and poisoned debuffs
+					Immunity to Poison and Bleeding
 					'''
 			}
 
