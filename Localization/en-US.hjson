@@ -629,7 +629,7 @@ Mods: {
 					Summons a Subspace Servant to assist in combat
 					Uses the item in your last inventory slot for you
 					Decreases damage by 25% multiplicatively
-					Increases max void by 50, but reduces healing recieved from potions by 40
+					Increases max void by 50, but reduces healing received from potions by 40
 					'''
 			}
 
@@ -928,7 +928,7 @@ Mods: {
 				DisplayName: Synthetic Liver
 				Tooltip:
 					'''
-					Increases void recieved from food by 25%
+					Increases void received from food by 25%
 					Consuming potions multiple times will increase buff duration instead of resetting it
 					Debuff durations are drained faster, increasing the duration of all active buffs
 					'''
@@ -1393,7 +1393,7 @@ Mods: {
 				# Glowmoth
 				Tooltip:
 					'''
-					Increases mana recieved from potions by 40
+					Increases mana received from potions by 40
 					Increases magic critical strike chance by 5%
 					'''
 			}
@@ -2275,7 +2275,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases void gain by 1 and max void by 50
-					Reduces healing recieved from potions by 20
+					Reduces healing received from potions by 20
 					'''
 			}
 
@@ -3873,7 +3873,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases buff duration by 67%
-					Increases healing and mana recieved from potions by 50
+					Increases healing and mana received from potions by 50
 					'''
 			}
 
@@ -4373,7 +4373,7 @@ Mods: {
 				DisplayName: Royal Jelly
 				Tooltip:
 					'''
-					Increases healing recieved from potions by 40
+					Increases healing received from potions by 40
 					'I could make a very, very bad joke right now...'
 					'''
 			}
@@ -4382,7 +4382,7 @@ Mods: {
 				DisplayName: Sandwich
 				Tooltip:
 					'''
-					Increases healing recieved from potions by 40
+					Increases healing received from potions by 40
 					Killing enemies will drop baguette crumbs
 					Summons a pet Putrid Pinky to assist in combat
 					Latches onto enemies, slowing them down and draining life
@@ -4423,14 +4423,14 @@ Mods: {
 
 			GlowJelly: {
 				DisplayName: Glow Jelly
-				Tooltip: Increases healing and mana recieved from potions by 40
+				Tooltip: Increases healing and mana received from potions by 40
 			}
 
 			AlchemistsCharm: {
 				DisplayName: Alchemist's Charm
 				Tooltip:
 					'''
-					Increases healing and mana recieved from potions by 100
+					Increases healing and mana received from potions by 100
 					Increases buff duration by 67%
 					Increases life regeneration by 2 and reduces the cooldown of healing potions by 25%
 					'''
@@ -5120,8 +5120,8 @@ Mods: {
 				Tooltip:
 					'''
 					Use hydrokinesis to extend the effective range of melee weapons and other low-reach items, such as whips
-					Increases melee damage by 50% of the increases recieved to summon damage from other sources
-					Increases summon damage by 50% of the increases recieved to melee damage from other sources
+					Increases melee damage by 50% of the increases received to summon damage from other sources
+					Increases summon damage by 50% of the increases received to melee damage from other sources
 					'''
 			}
 
@@ -5763,8 +5763,8 @@ Mods: {
 				DisplayName: Bloody Waters
 				Description:
 					'''
-					Increases melee damage by 50% of the increases recieved to magic damage from other sources
-					Increases magic damage by 50% of the increases recieved to melee damage from other sources
+					Increases melee damage by 50% of the increases received to magic damage from other sources
+					Increases magic damage by 50% of the increases received to melee damage from other sources
 					Increases movement speed by 20% and reduces damage taken by 10%
 					'''
 			}
@@ -6284,7 +6284,7 @@ Mods: {
 			4: Increases critical strike damage by 30%
 			5:
 				'''
-				Increases healing recieved from potions by 40
+				Increases healing received from potions by 40
 				Increases life regeneration by 2 
 				'''
 			6:
@@ -6317,12 +6317,12 @@ Mods: {
 				'''
 
 				Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
-				Increases max mana and mana recieved from potions by 40
+				Increases max mana and mana received from potions by 40
 				'''
 			4:
 				'''
 
-				Increases all damage by 50% of the increases recieved to any other damage type from other sources
+				Increases all damage by 50% of the increases received to any other damage type from other sources
 				'''
 		}
 

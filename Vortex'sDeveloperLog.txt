@@ -81,7 +81,7 @@ N/A
 
 Daily Log:
 
-4/26/24 to 4/27/24
+4/26/24 to 4/29/24
 1. Increased Fragment of Inferno cost for Voidspace Ranger's Armorset: 18 -> 30
 2. Many localization consistency changes
 3. Finish basic effects of the Elemental armor set, might need some adjustments to stats
