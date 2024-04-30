@@ -24,7 +24,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Generic) += 2;
+			player.GetCritChance(DamageClass.Generic) += 1;
 			if(Main.rand.NextBool(2))
 				modPlayer.CritLifesteal += Main.rand.Next(3) + 3;
 		}
@@ -50,7 +50,7 @@ namespace SOTS.Items.CritBonus
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.GetCritChance(DamageClass.Generic) += 2;
+			player.GetCritChance(DamageClass.Generic) += 1;
 			if (Main.rand.NextBool(2))
 				modPlayer.CritVoidsteal += 2.5f + Main.rand.Next(2);
 		}

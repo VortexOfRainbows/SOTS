@@ -24,7 +24,7 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritFrost = true;
-			player.GetCritChance(DamageClass.Generic) += 2;
+			player.GetCritChance(DamageClass.Generic) += 1;
 		}
 		public override void AddRecipes()
 		{
@@ -74,7 +74,7 @@ namespace SOTS.Items.CritBonus
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CritFire = true;
-			player.GetCritChance(DamageClass.Generic) += 2;
+			player.GetCritChance(DamageClass.Generic) += 1;
 		}
 		public override void AddRecipes()
 		{

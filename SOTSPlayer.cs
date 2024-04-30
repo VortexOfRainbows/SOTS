@@ -1547,16 +1547,16 @@ namespace SOTS
 				GrantRandomRingBuff(Player);
 			if(InverseAmberRing)
             {
-                if (Player.statLife <= Player.statLifeMax2 * 0.7f)
+                if (Player.statLife <= Player.statLifeMax2 * 0.9f)
                 {
 					IncreaseBuffDurations(Player, 0, -0.5f, 0, true);
                 }
             }
         }
-        int shotCounter = 0;
+        //int shotCounter = 0;
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			shotCounter++;
+			//shotCounter++;
 			if(PurpleBalloon && item.fishingPole > 0)
 			{
 				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(50));
@@ -1865,30 +1865,32 @@ namespace SOTS
 					DelayPotionDegrade = true;
 				}
 			}
-			if(DrainDebuffs)
+			bool inverseAmberRingInRange = InverseAmberRing && Player.statLife > Player.statLifeMax2 * 0.9f;
+
+            if (DrainDebuffs)
 			{
 				int totalDrainedDebuffs = 0;
 				for (int i = 0; i < Player.buffTime.Length; i++)
 				{
 					int type = Player.buffType[i];
-					if (Player.HasBuff(type) && Main.debuff[type] && type != ModContent.BuffType<DilationSickness>() && type != BuffID.PotionSickness)
+					if (Player.HasBuff(type) && Main.debuff[type] && type != ModContent.BuffType<DilationSickness>() && type != BuffID.PotionSickness && type != BuffID.Chilled)
 					{
-						if(Player.buffTime[i] > 30) //prevent stuff like campfire and banner from activating this
+						if(Player.buffTime[i] > 30) 
                         {
 							Player.buffTime[i]--;
 							totalDrainedDebuffs++;
 						}
 					}
 				}
+				int drainAmt = 3;
+				if (inverseAmberRingInRange)
+					drainAmt = 2;
 				if (totalDrainedDebuffs >= 1)
-					IncreaseBuffDurations(Player, totalDrainedDebuffs * 3, 0f, totalDrainedDebuffs * 3, true);
+					IncreaseBuffDurations(Player, totalDrainedDebuffs * drainAmt, 0f, totalDrainedDebuffs * drainAmt, true);
 			}
-			if(InverseAmberRing)
+			if(inverseAmberRingInRange)
 			{
-				if(Player.statLife > Player.statLifeMax2 * 0.7f)
-				{
-					DelayPotionDegrade = true;
-                }
+				DelayPotionDegrade = true;
 			}
 			DrainDebuffs = false;
 			if (Player.HasBuff(ModContent.BuffType<Harmony>()) || DelayPotionDegrade)

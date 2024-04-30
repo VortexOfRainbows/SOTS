@@ -13,7 +13,7 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 11;
+			Item.damage = 8;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 14;
 			Item.height = 30;

@@ -1111,7 +1111,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes have a 50% chance to steal life
-					Increases critical strike chance by 2%
+					Increases critical strike chance by 1%
 					'''
 			}
 
@@ -1120,7 +1120,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes have a 50% chance to regenerate void
-					Increases critical strike chance by 2%
+					Increases critical strike chance by 1%
 					'''
 			}
 
@@ -1163,7 +1163,7 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes may cause a frostburn explosion, dealing 200% damage
-					Increases critical strike chance by 2%
+					Increases critical strike chance by 1%
 					'''
 			}
 
@@ -1182,13 +1182,13 @@ Mods: {
 				Tooltip:
 					'''
 					Critical strikes may cause a flaming explosion, dealing 100% damage
-					Increases critical strike chance by 2%
+					Increases critical strike chance by 1%
 					'''
 			}
 
 			SnakeEyes: {
 				DisplayName: Snake Eyes
-				Tooltip: Increases critical strike chance by 8%
+				Tooltip: Increases critical strike chance by 7%
 			}
 
 			AquaticEclipse: {
@@ -5316,8 +5316,8 @@ Mods: {
 				# Opposite of Lust, Chastity
 				I6:
 					'''
-					Buffs do not decay while above 70% life
-					Getting hit while below 70% life causes all buff durations to halve
+					Buffs do not decay while above 90% life
+					Getting hit while below 90% life causes all buff durations to halve
 					'''
 			}
 

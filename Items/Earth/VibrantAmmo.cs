@@ -45,7 +45,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 12;
+			Item.damage = 10;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 26;
 			Item.height = 56;
