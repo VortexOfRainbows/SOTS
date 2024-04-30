@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override bool? CanHitNPC(NPC target)
         {
-            return ignoreNPC.Contains(target.whoAmI);
+            return ignoreNPC.Contains(target.whoAmI) && Projectile.timeLeft < 56; //The extra waiting time should allow the laser to sync better in multiplayer by not killing enemies first
         }
         public override bool PreDraw(ref Color lightColor)
         {

@@ -47,6 +47,7 @@ Update Objectives:
 15. Upgrade to Code Corruptor: Binary Blaster (?)
 16. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
 17. Shimmer Item that upgrades the store for Archaeologist
+18. Sculpting Table item that allows crafting Statues
 
 
 ---WIP List---
@@ -56,7 +57,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Elemental Armor , Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf, Nerf Inverted Amber ring on the Challenger Ring, Synthetic Liver with Ice water
+Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Potentially Nerf Crit Chance items, Vibrant Arrow Nerf, Bore Bullet nerf, Challenger's Ring obtain method nerf, Nerf Inverted Amber ring on the Challenger Ring, Synthetic Liver with Ice water
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
@@ -86,6 +87,7 @@ Daily Log:
 2. Many localization consistency changes
 3. Finish basic effects of the Elemental armor set, might need some adjustments to stats
 4. Particle Relocator should no longer effect bosses with the time frozen debuff
+5. Multiplayer syncing for Elemental Armor set and Particle Relocator
 
 4/22/24
 1. Fixed issue in electro amulet tooltip
