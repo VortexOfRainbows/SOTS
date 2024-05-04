@@ -739,7 +739,7 @@ Mods: {
 
 			RealityShatter: {
 				DisplayName: Reality Shatter
-				Tooltip: Enemies recieve an additional flurry of slashes that do 4x50% damage
+				Tooltip: Enemies receive an additional flurry of slashes that do 4x50% damage
 			}
 
 			RoseBow: {
@@ -4195,7 +4195,7 @@ Mods: {
 				DisplayName: Avocado Soup
 				Tooltip:
 					'''
-					Refills 24 void and recieve Regeneration for 60 seconds
+					Refills 24 void and receive Regeneration for 60 seconds
 					'Finally some good soup!'
 					'''
 			}
@@ -5288,7 +5288,7 @@ Mods: {
 					Increases movement speed by 20%
 					'''
 				# Opposite of Wrath, Patience
-				I1: Recieve a random buff for 30 seconds every 20 seconds
+				I1: Receive a random buff for 30 seconds every 20 seconds
 				# Opposite of Greed, Charity
 				I2:
 					'''
@@ -5305,7 +5305,7 @@ Mods: {
 				I4:
 					'''
 					Grants permanent Well Fed
-					Void consumeables refill 75% less void
+					Void consumables refill 75% less void
 					'''
 				# Opposite of Pride, Humility
 				I5:
@@ -5485,7 +5485,7 @@ Mods: {
 
 			DoubleVision: {
 				DisplayName: Double Vision
-				Description: Extra fishing lines
+				Description: Bonus fishing lines (+{0})
 			}
 
 			EarthenSpiritAid: {

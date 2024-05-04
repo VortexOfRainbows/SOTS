@@ -765,7 +765,7 @@ namespace SOTS.Void
 					voidMeter += voidGain;
 					if(VoidGenerateMoney > 0 && Main.myPlayer == Player.whoAmI)
                     {
-						float generateMoneyValue = (Main.rand.NextFloat(50, 70) + 4 * voidGain) * (VoidGenerateMoney + (float)Math.Sqrt(16* VoidGenerateMoney + voidGain)) * voidGainMultiplier;
+						float generateMoneyValue = (Main.rand.NextFloat(50, 70) + 4 * voidGain) * (VoidGenerateMoney + (float)Math.Sqrt(16 * VoidGenerateMoney + voidGain)) * voidGainMultiplier;
 						while ((int)generateMoneyValue > 0)
 						{
 							if (generateMoneyValue > 1000000f)

@@ -8,10 +8,8 @@ namespace SOTS.Buffs
     {
         public override void SetStaticDefaults()
         {
-            Main.buffNoSave[Type] = false;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;
-		
         }
 		public override void Update(Player player, ref int buffIndex)
 		{

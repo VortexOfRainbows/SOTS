@@ -32,14 +32,14 @@ namespace SOTS.Items.Potions
 		public override bool? UseItem(Player player) 
 		{
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
-			if(modPlayer.doubledActive == 0)
+			if(!modPlayer.DoubleVisionActive)
 			{
-				modPlayer.doubledAmount = 0;
+				modPlayer.BonusFishingLines = 0;
 			}
-			modPlayer.doubledAmount++;
-			if(modPlayer.doubledAmount > 6)
+			modPlayer.BonusFishingLines++;
+			if(modPlayer.BonusFishingLines > 6)
 			{
-				modPlayer.doubledAmount = 6;
+				modPlayer.BonusFishingLines = 6;
 			}
 			return true;
 		}

@@ -32,21 +32,17 @@ Update Objectives:
 2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings (Next up)
 3. More Bestiary entries (and visual fixes)
 4. Unique Archaeologist tooltips for items (pending)
-5. Post-Lux and Post-Subspace Armor sets! (pending)
-	1. Elemental Armor Set (Void/Melee/Summon)
-		1. As it drops from lux, it should be colorful and fairly futuristic.
-6. Starmap
-7. Pitati Longbow Upgrade..? Maybe also use spore sprayer
-8. Torch Bomb Upgrade Item
-9. Remote Detonator from Isaac
-10. Anomaly Relocator Item which relocates anomalies when used
-11. House Cube Accessory that can generate a temporary house
-12. Accessory that uses void instead of mana when low on mana
-13. Speed up Heal Projectiles, potentially improve visuals
-14. Upgrade to Code Corruptor: Binary Blaster (?)
-15. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
-16. Shimmer Item that upgrades the store for Archaeologist
-17. Sculpting Table item that allows crafting Statues
+5. Starmap
+6. Pitati Longbow Upgrade..? Maybe also use spore sprayer
+7. Torch Bomb Upgrade Item
+8. Remote Detonator from Isaac
+9. Anomaly Relocator Item which relocates anomalies when used
+10. House Cube Accessory that can generate a temporary house
+11. Accessory that uses void instead of mana when low on mana
+12. Upgrade to Code Corruptor: Binary Blaster (?)
+13. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
+14. Shimmer Item that upgrades the store for Archaeologist
+15. Sculpting Table item that allows crafting Statues
 
 
 ---WIP List---
@@ -63,7 +59,6 @@ Voidspace Ranger's Armor, Supernova Seekers
 
 ---Multiplayer Fixes/Testing Needed---
 POSSIBLY Tesseract
-Tidal Spirit locks onto only one player for some reason
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -80,6 +75,13 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+5/3/24
+1. Tidal Spirit should no longer target dead players in multiplayer
+2. Increased the travel speed of self-heal projectiles, such as those spawned by the clover charm, and also touched up the visuals
+3. The tooltip of the Double Vision buff now includes the amount of lines you have
+4. Fixed certain potion buffs disappearing upon relog, even when they should not
+5. More English localization fixes
 
 4/26/24 to 4/29/24
 1. Increased Fragment of Inferno cost for Voidspace Ranger's Armorset: 18 -> 30

@@ -35,7 +35,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			NPC.aiStyle =10;
+			NPC.aiStyle = 10;
             NPC.lifeMax = 960; 
             NPC.damage = 60; 
             NPC.defense = 0;   
@@ -68,6 +68,10 @@ namespace SOTS.NPCs.Constructs
 		public override void AI()
 		{
 			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);
+			if (NPC.target == -1 || Main.player[NPC.target].dead)
+			{
+				NPC.TargetClosest(false);
+			}
 			Player player = Main.player[NPC.target];
 			if(phase == 3)
 			{
@@ -212,7 +216,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				counter++;
 			}
-			if(Main.player[NPC.target].dead)
+			if(player.dead)
 			{
 				counter++;
 			}

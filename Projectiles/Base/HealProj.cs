@@ -7,24 +7,35 @@ using Terraria.ID;
 using SOTS.Void;
 
 namespace SOTS.Projectiles.Base
-{    
+{
+	public static class HealProjID
+    {
+        public const int CrimsonHealAlt = -1;
+        public const int PlatinumStaff = 0;
+		public const int CrimsonHeal = 1;
+		public const int CorruptionVoidHeal = 2;
+		public const int CorruptionManaHeal = 3;
+		public const int Ice = 4;
+		public const int HungryHunter = 5;
+		public const int CloverCharm = 6;
+        public const int CeremonialDagger = 7;
+        public const int MacaroniHeal = 8;
+        public const int NatureSpiritHeal = 9;
+    }
     public class HealProj : ModProjectile 
     {	
 		private float amount {
 			get => Projectile.ai[0];
 			set => Projectile.ai[0] = value;
 		}
-
-		private float type {
-			get => Projectile.ai[1];
+		private int type {
+			get => (int)Projectile.ai[1];
 			set => Projectile.ai[1] = value;
 		}
-
 		private float extraNum1 {
 			get => Projectile.knockBack;
 			set => Projectile.knockBack = value;
 		}
-		
 		private int healType {
 			get => Projectile.damage;
 			set => Projectile.damage = value;
@@ -72,58 +83,66 @@ namespace SOTS.Projectiles.Base
 		int counter = 0;
 		private void genDust()
 		{
-			if((int)type == 0) //platinum staff
+			if(type == HealProjID.PlatinumStaff) //platinum staff
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.Cloud);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-			}
-			if((int)type == 1 || (int)type == -1) //crimson heal
-			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.RedTorch);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-				Main.dust[num1].scale = 1.5f;
-			}
-			if((int)type == 2) //corruption void heal
-			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.PurpleTorch);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-				Main.dust[num1].scale = 1.5f;
-			}
-			if((int)type == 3) //corruption mana heal
-			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.MagicMirror);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-				Main.dust[num1].scale = 1.5f;
-			}
-			if((int)type == 4) //ice
-			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.IceRod);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.Cloud);
+                dust.noGravity = true;
+                dust.velocity *= 0.1f;
+                dust.alpha = 100;
+            }
+			if(type == HealProjID.CrimsonHeal || type == HealProjID.CrimsonHealAlt) //crimson heal
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.RedTorch);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+                dust.scale = 1.5f;
+                dust.alpha = 100;
+            }
+			if(type == HealProjID.CorruptionVoidHeal) //corruption void heal
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.PurpleTorch);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+                dust.scale = 1.5f;
+                dust.alpha = 100;
+            }
+			if(type == HealProjID.CorruptionManaHeal) //corruption mana heal
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.MagicMirror);
+				dust.noGravity = true;
+                dust.velocity *= 0.1f;
+				dust.scale = 1.5f;
+                dust.alpha = 200;
+            }
+			if(type == HealProjID.Ice) //ice
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.IceRod);
+				dust.noGravity = true;
+                dust.velocity *= 0.1f;
 				if(Projectile.timeLeft % 12 == 0)
 				{
 					additionalEffects();
-				}
-			}
-			if((int)type == 5) //Hungry Hunter / default
+                }
+                dust.alpha = 100;
+            }
+			if(type == HealProjID.HungryHunter) //Hungry Hunter / default
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.Obsidian);
+				dust.noGravity = true;
+                dust.velocity *= 0.1f;
+                dust.alpha = 100;
+            }
+			if(type == HealProjID.CloverCharm) //Clover Charm
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.Grass);
+				dust.noGravity = true;
+                dust.velocity *= 0.05f;
+				dust.color = new Color(100, 120, 110, 0);
+                dust.scale = dust.scale * 0.5f + 0.6f;
+				dust.alpha = 100;
+            }
+			if (type == HealProjID.MacaroniHeal) //Macaroni Heal
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.Obsidian);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-			}
-			if((int)type == 6) //Clover Charm
-			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X , Projectile.position.Y), Projectile.width, Projectile.height, DustID.Grass);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-			}
-			if ((int)type == 8) //Macaroni Heal
-			{
-				counter++;
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
@@ -132,11 +151,10 @@ namespace SOTS.Projectiles.Base
 				dust.fadeIn = 0.1f;
 				dust.scale *= 0.7f;
 			}
-			if ((int)type == 9) //Nature Heal
+			if (type == HealProjID.NatureSpiritHeal) //Nature Heal
 			{
 				Color color1 = new Color(177, 238, 181, 100);
 				Color color2 = new Color(64, 178, 77, 100);
-				counter++;
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
@@ -148,34 +166,37 @@ namespace SOTS.Projectiles.Base
 		}
 		private float getSpeed()
 		{
-			if((int)type == 4)
+			if(type == HealProjID.Ice)
 			{
-				Projectile.extraUpdates = 2;
-				return 11f;
+				Projectile.extraUpdates = 4;
+				return 5f;
 			}
-			if((int)type == 5) 
-			{
-				return 16.25f;
+			if(type == HealProjID.HungryHunter)
+            {
+                Projectile.extraUpdates = 5;
+                return 3.25f;
 			}
-			if((int)type == 6) //Clover Charm
-			{
-				return 11f;
+			if(type == HealProjID.CloverCharm) //Clover Charm
+            {
+                Projectile.extraUpdates = 2;
+                return 4f;
 			}
-			if ((int)type == 7) //Ceremonial Dagger
+			if (type == HealProjID.CeremonialDagger) //Ceremonial Dagger
 			{
 				Projectile.extraUpdates = 3;
 				return 4.6f;
 			}
-			if ((int)type == 8 || (int) type == 9)  //Macaroni Heal or Nature Heal
+			if (type == HealProjID.MacaroniHeal || type == HealProjID.NatureSpiritHeal)  //Macaroni Heal or Nature Heal
 			{
 				Projectile.extraUpdates = 5;
 				return 7.0f;
 			}
-			return 14.5f;
+			Projectile.extraUpdates = 2;
+			return 5.5f;
 		}
 		private float getMinDist()
 		{
-			if ((int)type == 7 || (int)type == 8 || (int)type == 9) //Ceremonial Dagger, Macaroni Heal or Nature Heal
+			if (type == HealProjID.CeremonialDagger || type == HealProjID.MacaroniHeal || type == HealProjID.NatureSpiritHeal) //Ceremonial Dagger, Macaroni Heal or Nature Heal
 			{
 				return 9f;
 			}
@@ -183,14 +204,14 @@ namespace SOTS.Projectiles.Base
 		}
 		private void additionalEffects()
 		{
-			if((int)type == 4)
+			if(type == HealProjID.Ice)
 			{
 				for(int i = 0; i < 360; i += 30)
 				{
 					Vector2 circularLocation = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(i));
-					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.IceRod);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = -Projectile.velocity;
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.IceRod);
+					dust.noGravity = true;
+                    dust.velocity = -Projectile.velocity;
 				}
 			}
 		}
@@ -202,27 +223,29 @@ namespace SOTS.Projectiles.Base
 		{
 			if(runOnce)
             {
-				if((int)type == -1)
+				if(type == HealProjID.CrimsonHealAlt)
 				{
 					SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f, 0.1f);
 					for (int i = 0; i < 40; i++)
 					{
 						Vector2 circularLocation = new Vector2(Main.rand.NextFloat(6f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, DustID.RedTorch);
-						Main.dust[dust].velocity = circularLocation;
-						Main.dust[dust].scale *= 1.5f;
-						Main.dust[dust].noGravity = true;
+                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, DustID.RedTorch);
+						dust.velocity = circularLocation;
+						dust.scale *= 1.5f;
+                        dust.noGravity = true;
 					}
 				}
 				runOnce = false;
             }
 			Player player = Main.player[Projectile.owner];
 			if(Projectile.timeLeft < 720)
-			{
-				genDust();
-				Projectile.velocity = new Vector2(-getSpeed(), 0).RotatedBy(Math.Atan2(Projectile.Center.Y - player.Center.Y, Projectile.Center.X - player.Center.X));
-				
-				Vector2 toPlayer = player.Center - Projectile.Center;
+            {
+                counter++;
+                genDust();
+                Vector2 toPlayer = player.Center - Projectile.Center;
+				float bonusSpeed = 1 + counter / 360f;
+				float finalSpeed = getSpeed() * bonusSpeed;
+                Projectile.velocity = finalSpeed * toPlayer.SafeNormalize(Vector2.Zero);
 				float distance = toPlayer.Length();
 				if(distance < getMinDist() && amount > 0)
 				{
@@ -232,9 +255,9 @@ namespace SOTS.Projectiles.Base
 						if(player.whoAmI == Main.myPlayer)
 							player.HealEffect((int)amount);
 					}
-					if(healType == 1 || (int)type == 8)
+					if(healType == 1 || type == HealProjID.MacaroniHeal)
 					{
-						if ((int)type == 8)
+						if (type == HealProjID.MacaroniHeal)
                         {
 							amount *= Main.rand.NextFloat(2f, 5f);
                         }

@@ -256,8 +256,8 @@ namespace SOTS
 		public bool PyramidBiome => Player.InModBiome<Biomes.PyramidBiome>();
 		public bool backUpBow = false;
 		public bool backUpBowVisual = false;
-		public int doubledActive = 0;
-		public int doubledAmount = 0;
+		public bool DoubleVisionActive = false;
+		public int BonusFishingLines = 0;
 		public bool ceres = false;
 		public int onhit = 0;
 		public int onhitdamage = 0;
@@ -1209,7 +1209,7 @@ namespace SOTS
 			attackSpeedMod = 1;
 			//Some important variables 1
 			ceres = false;
-			doubledActive = 0;
+			DoubleVisionActive = false;
 			backUpBow = VoidspaceFlames = AutoReuseAnything = InfinityPouch = PurpleBalloon = false;
 			//projectileSize = 1;
 			PushBack = false;
@@ -1572,9 +1572,9 @@ namespace SOTS
 				Vector2 perturbedSpeed = -velocity;
 				Projectile.NewProjectile(source, position, perturbedSpeed, ModContent.ProjectileType<BackupArrow>(), (int)(damage * 0.45f) + 1, knockback, Player.whoAmI);
 			}*/
-			if(doubledActive == 1 && item.fishingPole > 0)
+			if(DoubleVisionActive && item.fishingPole > 0)
 			{
-				for(int i = doubledAmount; i > 0; i--)
+				for(int i = BonusFishingLines; i > 0; i--)
 				{
 					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(i % 2 == 0 ? i * 6 : i * -6));
 					Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, Player.whoAmI);
