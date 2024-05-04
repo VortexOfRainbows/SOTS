@@ -75,6 +75,10 @@ N/A
 
 Daily Log:
 
+
+--- Update 0.24.1.2 ---
+
+
 5/3/24
 1. Tidal Spirit should no longer target dead players in multiplayer
 2. Increased the travel speed of self-heal projectiles, such as those spawned by the clover charm, and also touched up the visuals
@@ -82,6 +86,7 @@ Daily Log:
 4. Fixed certain potion buffs disappearing upon relog, even when they should not
 5. More English localization fixes
 6. Added "Rift Cookie", which relocates Anomalies when used (works in Multiplayer). Dropped by Planetoids and Ultracaps
+7. Bestiary entry for Chaos Construct
 
 4/26/24 to 4/29/24
 1. Increased Fragment of Inferno cost for Voidspace Ranger's Armorset: 18 -> 30

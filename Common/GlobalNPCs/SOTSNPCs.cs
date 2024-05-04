@@ -945,10 +945,12 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<Lux>())
+			if (npc.type == ModContent.NPCType<Lux>() || npc.type == ModContent.NPCType<ChaosConstruct>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Lux");
-				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+				if(npc.type == ModContent.NPCType<ChaosConstruct>())
+					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ChaosConstruct");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					TheHallow,
 					flavorText
 				});

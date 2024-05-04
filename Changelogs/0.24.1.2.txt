@@ -1,0 +1,37 @@
+Hotfix 0.24.1.2
+
+1. SOTS updated to latest Tmodloader version
+
+Additions: 
+1. New Post-Lux armor set called the "Elemental" armor
+2. Frost Core can now be crafted at a Mythril Anvil using Permafrost materials
+3. Bestiary entry for Chaos Construct
+4. Rift Cookie, an item which allows you to relocate Anomalies and the Archaeologist
+
+Changes: 
+1. Voidspace Ranger's Armorset now costs more Fragment of Inferno to craft 18 -> 30
+2. Particle Relocator no longer freezes bosses
+3. Vibrant Arrow damage 12 -> 10
+4. Bore Bullet damage 11 -> 8
+5. Skip Bullet damage 8 -> 7
+6. Snake Eyes crit chance 8 -> 7
+7. Chaos Badge crit chance 10 -> 9
+8. Clover Charm, Void Charm, Borealis Icosahedron, and Hellfire Icosahedron crit chance 2 -> 1
+9. When Challenger Ring's Inverted Amber is active, Synthetic Liver's debuff to buff conversion rate decreases from 1:3 to 1:2
+10. Polished Coin now requires Dissolving Umbra to craft, locking it into Hardmode
+11. Focus Crystal now requires 5 Soul of Plight to craft, locking it to Post-Polaris
+12. Challenger Ring now requires a Primordial Cluster to craft instead of a Tainted Keystone Shard, making it Post-Advisor
+13. Self-Heal projectiles, such as those spawned by Clover Charm and many other items, move faster and have improved visuals
+14. Double Vision potion now displays how many lines it has stacked under the buff description  
+
+Fixes: 
+1. Attempted a fix for Tesseract related crashes
+2. Fixed many localization issues and outdated tooltips, including grammar issues and inconsistencies with wording
+3. Conduits should no longer decrease max life when combined with certain buff-related accessories
+4. Blink Pack should no longer be useable after dying
+5. Challenger Ring should no longer glitch out certain item tooltips when diamond is inverted
+6. Synthetic Liver no longer works on the Chilled debuff (Ice Bath)
+7. Polished Coin now properly boosts crit damage by 30 and gives 2 crit chance (Previously, the effect did not match the tooltip)
+8. Focus Reticle now properly boosts crit damage by 40 (Previously, the effect did not match the tooltip)
+9. Tidal Spirit should no longer target dead players in Multiplayer
+10. Fixed certain potion buffs disappearing upon relog, even though they should not
