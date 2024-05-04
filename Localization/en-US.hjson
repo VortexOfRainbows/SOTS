@@ -1103,7 +1103,7 @@ Mods: {
 
 			ChaosBadge: {
 				DisplayName: Chaos Badge
-				Tooltip: Increases critical strike chance by 10%
+				Tooltip: Increases critical strike chance by 9%
 			}
 
 			CloverCharm: {
@@ -5387,6 +5387,15 @@ Mods: {
 					Increases melee critical strike chance by 15%
 					Increases void gain by 2 and max void by 100
 					Increases max sentries by 2
+					'''
+			}
+
+			RiftCookie: {
+				DisplayName: Rift Cookie
+				Tooltip:
+					'''
+					Shifts the position of anomalies and the Archaeologist
+					Will not work when the Archaeologist is near a player
 					'''
 			}
 		}

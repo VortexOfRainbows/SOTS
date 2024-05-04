@@ -36,13 +36,12 @@ Update Objectives:
 6. Pitati Longbow Upgrade..? Maybe also use spore sprayer
 7. Torch Bomb Upgrade Item
 8. Remote Detonator from Isaac
-9. Anomaly Relocator Item which relocates anomalies when used
-10. House Cube Accessory that can generate a temporary house
-11. Accessory that uses void instead of mana when low on mana
-12. Upgrade to Code Corruptor: Binary Blaster (?)
-13. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
-14. Shimmer Item that upgrades the store for Archaeologist
-15. Sculpting Table item that allows crafting Statues
+9. House Cube Accessory that can generate a temporary house
+10. Accessory that uses void instead of mana when low on mana
+11. Upgrade to Code Corruptor: Binary Blaster (?)
+12. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
+13. Shimmer Item that upgrades the store for Archaeologist
+14. Sculpting Table item that allows crafting Statues
 
 
 ---WIP List---
@@ -63,8 +62,8 @@ POSSIBLY Tesseract
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
 	1. Needs: More parameters, testing, earthen plating torches appear as you get lower down the cave
-	2. Needs: Orb Cave generation to round out cooridors.
-	3. Needs: Generate Ancient Steel and Chests on cooridors occasionally
+	2. Needs: Orb Cave generation to round out corridors.
+	3. Needs: Generate Ancient Steel and Chests on corridors occasionally
 	4. Needs: Caves become more technological as you go deeper... Also more symmetric
 	5. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
 		1. Should deal contact damage. Also spawns enemies on top of it.
@@ -82,6 +81,7 @@ Daily Log:
 3. The tooltip of the Double Vision buff now includes the amount of lines you have
 4. Fixed certain potion buffs disappearing upon relog, even when they should not
 5. More English localization fixes
+6. Added "Rift Cookie", which relocates Anomalies when used (works in Multiplayer). Dropped by Planetoids and Ultracaps
 
 4/26/24 to 4/29/24
 1. Increased Fragment of Inferno cost for Voidspace Ranger's Armorset: 18 -> 30

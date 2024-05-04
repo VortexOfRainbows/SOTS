@@ -235,7 +235,8 @@ namespace SOTS.NPCs.Anomaly
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemType<SkipSoul>(), 1, 1, 2));
-		}
+            npcLoot.Add(ItemDropRule.Common(ItemType<RiftCookie>(), 10, 1, 1));
+        }
 		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)

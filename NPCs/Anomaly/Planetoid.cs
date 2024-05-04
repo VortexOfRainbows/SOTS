@@ -289,6 +289,7 @@ namespace SOTS.NPCs.Anomaly
         public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkipSoul>(), 1, 2, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RiftCookie>(), 5, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TinyPlanetoid>(), 20, 1, 1));
         }
 		public List<GravityWellLine> GravityWell = new List<GravityWellLine>();

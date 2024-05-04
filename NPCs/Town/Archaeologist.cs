@@ -40,6 +40,7 @@ namespace SOTS.NPCs.Town
 	public class Archaeologist : ModNPC
 	{
 		public const string ShopName = "Shop";
+		public static Archaeologist Instance;
 		public static Vector2 AnomalyPosition1 = Vector2.Zero;
 		public static Vector2 AnomalyPosition2 = Vector2.Zero;
 		public static Vector2 AnomalyPosition3 = Vector2.Zero;
@@ -124,8 +125,9 @@ namespace SOTS.NPCs.Town
 			NPC.noGravity = true;
 			NPC.netAlways = true;
 		}
-		public bool playerNearby = false;
-		public int AnimCycles = 0;
+		public static bool PlayerNearby = false;
+        public static bool PlayerOnScreen = false;
+        public int AnimCycles = 0;
 		public int FrameY = 0;
 		public int FrameSpeed = 5;
 		public int TotalIdleFrameCycles = 6;
@@ -239,7 +241,7 @@ namespace SOTS.NPCs.Town
         float bonusAlphaFromBeingNear = 0f;
         public override void FindFrame(int frameHeight)
 		{
-			if(playerNearby)
+			if(PlayerNearby)
             {
 				AnimCycles = TotalIdleFrameCycles;
             }
@@ -304,7 +306,7 @@ namespace SOTS.NPCs.Town
 				InitialDirection = 1;
 			}
 			int directionToGoTo = InitialDirection;
-			playerNearby = false;
+			PlayerNearby = false;
 			bool playerWithinSecondRange = false;
 			for (int i = 0; i < Main.player.Length; i++)
 			{
@@ -317,7 +319,7 @@ namespace SOTS.NPCs.Town
 
 						if (player.Distance(NPC.Center) < 120)
 						{
-							playerNearby = true;
+							PlayerNearby = true;
 							if (NPC.Center.X > player.Center.X)
 							{
 								directionToGoTo = -1;
@@ -353,8 +355,9 @@ namespace SOTS.NPCs.Town
 				}
 				locationTimer++;
 			}
-			NPC.direction = NPC.spriteDirection = directionToGoTo;
-			if (playerNearby)
+			PlayerOnScreen = playerWithinSecondRange;
+            NPC.direction = NPC.spriteDirection = directionToGoTo;
+			if (PlayerNearby)
 			{
 				bonusAlphaFromBeingNear += 0.02f;
 			}
@@ -382,7 +385,8 @@ namespace SOTS.NPCs.Town
 		}
         public override bool PreAI()
         {
-			return base.PreAI();
+			Instance = this;
+            return base.PreAI();
         }
         public override void PostAI()
         {
@@ -527,6 +531,10 @@ namespace SOTS.NPCs.Town
             npcShop.Register(); // Name of this shop tab
 		}
 		public static int currentLocationType = -1;
+		public static void ForceToNewLocation()
+		{
+			locationTimer = timeToGoToSetPiece;
+        }
 		public void FindALocationToGoTo()
 		{
 			NPC.netUpdate = true;
