@@ -102,7 +102,7 @@ namespace SOTS.Common.PlayerDrawing
 								itemTexture = texture;
 								frameCount = 5;
 							}
-							Vector2 vector10 = new Vector2((float)(width / 2), (float)(itemTexture.Height / 2 / frameCount));
+							Vector2 vector10 = new Vector2((float)0, (float)(itemTexture.Height / 2 / frameCount));
 							//Vector2 vector11 = this.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
 							Vector2 vector11 = new Vector2(10, texture.Height / 2 / frameCount);
 							if (item.GetGlobalItem<ItemUseGlow>().glowOffsetX != 0)

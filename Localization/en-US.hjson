@@ -660,7 +660,7 @@ Mods: {
 					Reduces void cost by 8%
 					Increases void gain by 4 and max void by 50
 					Regenerate void when hit
-					Immunity to broken armor and ichor
+					Immunity to Broken Armor and Ichor
 					'''
 			}
 
@@ -1138,7 +1138,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases critical strike chance by 5%
-					Critical strikes may detonate enemies for 100% 
+					Critical strikes may detonate enemies for 100% damage
 					Critical strikes steal life, regenerate void, and recover mana
 					'''
 			}
@@ -2439,7 +2439,7 @@ Mods: {
 					'''
 					Increases void gain by 1 and max void by 20
 					When hurt, 10% of damage taken is converted into void
-					If hurt while the void meter is maxed, there is a 10% chance to be inflicted with ichor
+					If hurt while the void meter is maxed, there is a 10% chance to be inflicted with Ichor
 					'''
 			}
 
@@ -2459,7 +2459,7 @@ Mods: {
 					'''
 					Increases void gain by 1 and max void by 20
 					When hurt, 10% of damage taken is converted into void
-					If hurt while the void meter is maxed, there is a 10% chance to be inflicted with broken armor
+					If hurt while the void meter is maxed, there is a 10% chance to be inflicted with Broken Armor
 					'''
 			}
 
@@ -2667,7 +2667,7 @@ Mods: {
 					'''
 					Increases void gain by 2 and max void by 50
 					When hurt, 12% of damage taken is converted into void
-					Immunity to broken armor and ichor
+					Immunity to Broken Armor and Ichor
 					'''
 			}
 
@@ -5242,7 +5242,7 @@ Mods: {
 					Increases melee damage by 15%
 					Increases void gain by 2 and max void by 50
 					When hurt, 12% of damage taken is converted into void
-					Immunity to broken armor and ichor
+					Immunity to Broken Armor and Ichor
 					'''
 			}
 
@@ -5396,6 +5396,19 @@ Mods: {
 					'''
 					Shifts the position of anomalies and the Archaeologist
 					Will not work when the Archaeologist is near a player
+					'''
+			}
+
+			GildedBladeWings: {
+				DisplayName: Gilded Blade Wings
+				Tooltip: TEMP
+				Description:
+					'''
+					Allows infinite flight and slow fall
+					Increases void gain by 3 and void regeneration speed by 25%
+					Doubles damage done to non-Lux spirit enemies
+					Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
+					Increases void drain by 3 while active
 					'''
 			}
 		}

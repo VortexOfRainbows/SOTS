@@ -75,6 +75,10 @@ N/A
 
 Daily Log:
 
+5/4/24 to 5/5/24
+1. Fixed issue with Tesseract tooltips showing incorrect damage type with void items.
+2. Added base stats for Gilded Blade wings. No visuals yet.
+3. Fixed bug where gun glowmasks were put in improper positions.
 
 --- Update 0.24.1.2 ---
 

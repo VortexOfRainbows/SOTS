@@ -452,7 +452,10 @@ namespace SOTS
                             {
                                 if (splitText.Length > 2) //not TRUE damage, must be a damage type
                                 {
-                                    originalType = splitText[1] + " + ";
+									int index = 1;
+									if (item.CountsAsClass<VoidMelee>() || item.CountsAsClass<VoidRanged>() || item.CountsAsClass<VoidMagic>())
+										index = 3;
+                                    originalType = splitText[index] + " + ";
                                 }
                             }
                             string damageValue = splitText.First();
