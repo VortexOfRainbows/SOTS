@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using Terraria.Chat;
 using Terraria.Localization;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Pyramid
 {
@@ -82,7 +83,11 @@ namespace SOTS.Items.Pyramid
 		{
 			return SOTSWorld.downedCurse;
 		}
-	}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<CursedHiveBlock>());
+        }
+    }
 	public class SpawnEnemyProj : ModProjectile
 	{
         public override void SetDefaults()

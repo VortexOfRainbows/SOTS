@@ -54,11 +54,11 @@ namespace SOTS.Items.Wings
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWings").Value;
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWingsGlow").Value;
-            Color color = new Color(110, 110, 110, 0);
+            Color color = new Color(110, 110, 110, 0) * 0.25f;
             Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
-			for (int k = 0; k < 4; k++)
+			for (int k = 0; k < 8; k++)
 			{
-				Vector2 offset = Main.rand.NextVector2Circular(0.3f, 0.3f);
+				Vector2 offset = new Vector2(2, 0).RotatedBy(k * MathHelper.PiOver4 + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2));
 				Main.spriteBatch.Draw(texture2, position + offset, null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
@@ -68,11 +68,11 @@ namespace SOTS.Items.Wings
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWings").Value;
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWingsGlow").Value;
-            Color color = new Color(110, 110, 110, 0);
+            Color color = new Color(110, 110, 110, 0) * 0.25f;
             Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			for (int k = 0; k < 4; k++)
+			for (int k = 0; k < 8; k++)
             {
-                Vector2 offset = Main.rand.NextVector2Circular(0.3f, 0.3f);
+                Vector2 offset = new Vector2(2, 0).RotatedBy(k * MathHelper.PiOver4 + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2));
                 Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + offset, null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
@@ -112,7 +112,7 @@ namespace SOTS.Items.Wings
 
 
             MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
-			MachinaBoosterPlayer.canCreativeFlight = true;
+			MachinaBoosterPlayer.canCreativeFlight = MachinaBoosterPlayer.CreativeFlightTier2 = true;
 			player.wingTimeMax = 7200; //May as well have 2 minutes worth of base-time
 			player.noFallDmg = true;
             //voidPlayer.bonusVoidGain += 1f;

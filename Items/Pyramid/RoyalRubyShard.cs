@@ -26,7 +26,7 @@ namespace SOTS.Items.Pyramid
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
-			Item.createTile = Mod.Find<ModTile>("RoyalRubyShardTile").Type;
+			Item.createTile = ModContent.TileType<RoyalRubyShardTile>();
 		}
 		public override void PostUpdate()
 		{
@@ -210,8 +210,8 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool CanPlace(int i, int j)
 		{
-			return TileIsCapable(i, j + 1) || TileIsCapable(i, j - 1) || TileIsCapable(i + 1, j) || TileIsCapable(i - 1, j);
-		}
+            return TileIsCapable(i, j + 1) || TileIsCapable(i, j - 1) || TileIsCapable(i + 1, j) || TileIsCapable(i - 1, j);
+        }
 		public static bool TileIsCapable(Tile tile)
 		{
 			return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.IsHalfBlock && !tile.IsActuated;

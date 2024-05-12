@@ -301,7 +301,7 @@ namespace SOTS.Projectiles.Chaos
             Vector2 pointPoisition = Vector2.Zero;
             pointPoisition.X = finalDestination.X;
             pointPoisition.Y = finalDestination.Y - (player.height * 0.5f);
-            player.LimitPointToPlayerReachableArea(ref pointPoisition);
+            //player.LimitPointToPlayerReachableArea(ref pointPoisition);
             if (!(pointPoisition.X > 50f) || !(pointPoisition.X < (float)(Main.maxTilesX * 16 - 50)) || !(pointPoisition.Y > 50f) || !(pointPoisition.Y < (float)(Main.maxTilesY * 16 - 50)))
             {
                 return null;

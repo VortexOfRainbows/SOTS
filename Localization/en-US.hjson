@@ -5407,8 +5407,7 @@ Mods: {
 					Allows infinite flight and slow fall
 					Increases void gain by 3 and void regeneration speed by 25%
 					Doubles damage done to non-Lux spirit enemies
-					Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
-					Increases void drain by 3 while active
+					Press the '{0}' key to gain fast, multidirectional flight
 					'''
 			}
 		}

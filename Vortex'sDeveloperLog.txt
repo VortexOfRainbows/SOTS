@@ -42,6 +42,8 @@ Update Objectives:
 12. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
 13. Shimmer Item that upgrades the store for Archaeologist
 14. Sculpting Table item that allows crafting Statues
+15. Fish Bomb
+16. Make pyramid guaranteed to spawn all chest items at least once
 
 
 ---WIP List---
@@ -51,7 +53,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
+Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Snake Armor might need buffs (has to compete with Obsidian)
 
 ---Visual Upgrade Needed---
 Voidspace Ranger's Armor, Supernova Seekers
@@ -74,6 +76,11 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+5/11/24 to 5/12/24
+1. Fixed bug where naturally spawned, Unsafe Infected Pyramid bricks didn't properly drop items 
+2. Relocator effect from Elemental Armor no longer has a distance limit, making the visual more consistent
+3. WIP Blade Wings visuals
 
 5/4/24 to 5/5/24
 1. Fixed issue with Tesseract tooltips showing incorrect damage type with void items.

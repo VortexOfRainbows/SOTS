@@ -147,7 +147,8 @@ namespace SOTS.Items.Wings
 		}
 		public const float voidDrain = 3f;
 		public bool canCreativeFlight = false;
-		public bool creativeFlight = false;
+        public bool CreativeFlightTier2 = false;
+        public bool creativeFlight = false;
 		public float wingSpeed = 7f;
 		public float wingSpeedMax = 7f;
 		public int epicWingType = 0;
@@ -194,8 +195,11 @@ namespace SOTS.Items.Wings
 				if (!creativeFlight)
 				{
 					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
-					voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
-					VoidPlayer.VoidEffect(Player, (int)(-5 * voidPlayer.voidCost), false, false);
+					if(!CreativeFlightTier2)
+                    {
+                        voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
+                        VoidPlayer.VoidEffect(Player, (int)(-5 * voidPlayer.voidCost), false, false);
+                    }
 				}
 				creativeFlight = !creativeFlight; 
 				if(Main.myPlayer == Player.whoAmI && Main.netMode != NetmodeID.SinglePlayer)
@@ -285,7 +289,10 @@ namespace SOTS.Items.Wings
 		public void flight()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
-			voidPlayer.flatVoidRegen -= voidDrain;
+			if (!CreativeFlightTier2)
+			{
+				voidPlayer.flatVoidRegen -= voidDrain;
+			}
 			HaloDust();
 			Player.gravity = 0f;
 			Player.noFallDmg = true;
@@ -440,7 +447,7 @@ namespace SOTS.Items.Wings
 					runOnce = true;
 				}
 			}
-			canCreativeFlight = false;
+            CreativeFlightTier2 = canCreativeFlight = false;
 			wingSpeed = wingSpeedMax;
 		}
 	}

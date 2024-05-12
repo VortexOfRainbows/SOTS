@@ -33,6 +33,7 @@ using SOTS.Common;
 using SOTS.Items.Tide;
 using SOTS.FakePlayer;
 using Terraria.UI.Chat;
+using SOTS.Items.Wings;
 
 namespace SOTS
 {
@@ -120,7 +121,7 @@ namespace SOTS
 					}
 				}
 			}
-			if(!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia && (item.type == ModContent.ItemType<SpiritInsignia>() || item.type == ItemID.EmpressFlightBooster))
+			if(!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia && (item.type == ItemType<SpiritInsignia>() || item.type == ItemID.EmpressFlightBooster || item.type == ItemType<GildedBladeWings>()))
 			{
 				TooltipLine line = new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.SOTS.Common.InsigniaNerf"))
 				{
