@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Wings;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -376,22 +377,24 @@ namespace SOTS.Common.PlayerDrawing
         private void DrawBladeWings(ref PlayerDrawSet drawInfo)
         {
             Player drawPlayer = drawInfo.drawPlayer;
-            List<DrawData> drawDataFront = new List<DrawData>();
-            List<DrawData> drawDataBack = new List<DrawData>();
+            MachinaBoosterPlayer mbPlayer = drawPlayer.GetModPlayer<MachinaBoosterPlayer>();
+            List<DrawData> drawData1 = new List<DrawData>();
+            List<DrawData> drawData2 = new List<DrawData>();
+            List<DrawData> drawData3 = new List<DrawData>();
             Texture2D blade = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D bladeF = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingFlipped", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D bladeBase = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingBase", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D bladeBaseF = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingBaseFlipped", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D bladeOutline = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D bladeOutlineF = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingOutlineFlipped", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D bladeHandle = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingHandle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D bladeHandleF = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingHandleFlipped", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
             float drawY = (int)drawInfo.Position.Y + drawPlayer.height / 2;
-            drawX -= 1 * drawPlayer.direction;
-            drawY -= 6 * drawPlayer.gravDir;
+            drawX -= 2 * drawPlayer.direction;
 
-            int mode = drawPlayer.wingFrame;
-            bool InCreativeFlight = mode == 2;
-            bool InNormalFlight = mode == 1;
-            Vector2 position = new Vector2(drawX, drawY) - Main.screenPosition;
+            //int mode = drawPlayer.wingFrame;
+            //bool InCreativeFlight = mode == 2;
+            //bool InNormalFlight = mode == 1;
             float alpha = 1 - drawInfo.shadow;
             float dustAlpha = 1 - drawInfo.shadow;
             dustAlpha *= drawPlayer.stealth;
@@ -402,44 +405,82 @@ namespace SOTS.Common.PlayerDrawing
             float rotation = drawPlayer.bodyRotation;
             SpriteEffects spriteEffects = drawInfo.playerEffect;
             Vector2 bladeOrigin = blade.Size() / 2;
-            Vector2 bladeBaseOrigin = bladeBase.Size() / 2;
+            float counter = mbPlayer.FlightCounter + 40;
             for (int i = -1; i <= 1; i += 2)
             {
                 bool Front = i == 1;
-                float scale = Front ? 1f : 0.95f;
                 float direction = drawPlayer.direction * i;
-                for (int j = -1; j <= 1; j++)
+                for (int j = -4; j <= 4; j++)
                 {
+                    Vector2 position = new Vector2(drawX, drawY) - Main.screenPosition;
                     int proper = j * i * (int)drawPlayer.direction;
-                    Vector2 circularOffset1 = Vector2.Zero; 
-                    Vector2 circularOffset2 = Vector2.Zero;
-                    float rotation1 = -MathHelper.ToRadians(45 * direction * drawPlayer.gravDir - 35 * proper);
-                    float rotation2 = MathHelper.ToRadians(90 * direction * drawPlayer.gravDir + 35 * proper);
-                    if (InCreativeFlight)
+                    float scale = (Front ? 0.7f : 0.625f) + 0.05f * j;
+                    float bonusDist = 0;
+                    if (Math.Abs(j) % 2 == 1)
                     {
-                        circularOffset1 = new Vector2(-66 * direction, 6 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 35)) * scale;
-                        circularOffset2 = new Vector2(-52 * direction, 0).RotatedBy(MathHelper.ToRadians(proper * 35)) * scale;
+                        scale *= 0.75f;
+                        bonusDist = 20;
+                    }
+
+                    //Creative Flight
+                    float sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 12 * j)) * (35 - j) * direction;
+                    Vector2 creativeOffset = new Vector2(-66 * direction, 0 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 25 + sinusoid)) * scale;
+                    float creativeRotation = -MathHelper.ToRadians(45 * direction * drawPlayer.gravDir - 35 * proper - sinusoid);
+
+                    //Normal Flight
+                    sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 12 * j));
+                    sinusoid *= (35 - j) * direction;
+                    sinusoid += 20 * direction;
+                    Vector2 normalOffset = new Vector2(-(60 + bonusDist) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 7 + sinusoid)) * scale;
+                    float normalRotation = -MathHelper.ToRadians(72 * direction * drawPlayer.gravDir - 14 * proper - sinusoid);
+
+                    //Grounded
+                    proper -= 6 * (int)direction;
+                    sinusoid = MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + 12 * j)) * (16 - j) * direction;
+                    Vector2 groundedOffset = new Vector2(-(68 + bonusDist * scale) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 6 + sinusoid * 0.2f)) * scale;
+                    groundedOffset.X *= 0.4f;
+                    if (!Front)
+                    {
+                        groundedOffset.Y *= 1.1f;
+                    }
+                    float groundedRotation = -MathHelper.ToRadians(72 * direction * drawPlayer.gravDir - 6 * proper - sinusoid);
+                    float groundedScale = scale * 0.75f;
+
+                    Vector2 finalOffset;
+                    float finalRotation;
+                    float finalScale;
+
+                    if(mbPlayer.FlightModeFloat > 1)
+                    {
+                        float lerpAmt = mbPlayer.FlightModeFloat - 1;
+                        finalOffset = Vector2.Lerp(normalOffset, creativeOffset, lerpAmt);
+                        finalRotation = MathHelper.Lerp(normalRotation, creativeRotation, lerpAmt);
+                        finalScale = scale;
                     }
                     else
                     {
-                        circularOffset1 = new Vector2(-50 * direction, 6 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 15)) * scale;
-                        circularOffset2 = new Vector2(-(36 - 4 * proper * direction) * direction, 0).RotatedBy(MathHelper.ToRadians(proper * 15)) * scale;
-                        rotation1 = -MathHelper.ToRadians(72 * direction * drawPlayer.gravDir - 24 * proper);
-                        rotation2 = MathHelper.ToRadians(45 * direction * drawPlayer.gravDir + 24 * proper);
+                        float lerpAmt = mbPlayer.FlightModeFloat;
+                        finalOffset = Vector2.Lerp(groundedOffset, normalOffset, lerpAmt);
+                        finalRotation = MathHelper.Lerp(groundedRotation, normalRotation, lerpAmt);
+                        finalScale = MathHelper.Lerp(groundedScale, scale, lerpAmt);
+                        position.Y -= 22 * drawPlayer.gravDir * (1 - lerpAmt);
                     }
-                    drawDataBack.Add(new DrawData(Front ? blade : bladeF, position + circularOffset1, null, color * alpha, rotation + rotation1, bladeOrigin, scale, spriteEffects, 0));
-                    drawDataFront.Add(new DrawData(Front ? bladeBase : bladeBaseF, position + circularOffset2 * 0.5f, null, color * alpha, rotation + rotation2, bladeBaseOrigin, scale, spriteEffects, 0));
+                    Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + j * 20), true), 0.5f);
+                    Color finalColor2 = Color.Lerp(new Color(150, 150, 150, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + j * 20), true), 0.5f);
+                    drawData1.Add(new DrawData(Front ? blade : bladeF, position + finalOffset, null, finalColor1 * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    drawData2.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, position + finalOffset, null, finalColor2 * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    drawData3.Add(new DrawData(Front ? bladeHandle : bladeHandleF, position + finalOffset, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
                 }
             }
-            for (int i = 0; i < drawDataBack.Count; i++)
+            for (int i = 0; i < drawData1.Count; i++)
             {
-                DrawData data = drawDataBack[i];
+                DrawData data = drawData1[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
-            }
-            for (int i = 0; i < drawDataFront.Count; i++)
-            {
-                DrawData data = drawDataFront[i];
+                data = drawData2[i];
+                data.shader = drawInfo.cWings;
+                drawInfo.DrawDataCache.Add(data);
+                data = drawData3[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
             }

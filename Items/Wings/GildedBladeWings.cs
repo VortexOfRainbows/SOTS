@@ -117,23 +117,6 @@ namespace SOTS.Items.Wings
 			player.noFallDmg = true;
             //voidPlayer.bonusVoidGain += 1f;
         }
-        public override bool WingUpdate(Player player, bool inUse)
-		{
-			MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
-			if (MachinaBoosterPlayer.creativeFlight)
-			{
-				player.wingFrame = 2;
-			}
-			else if ((player.controlJump && player.velocity.Y != 0f) || player.velocity.Y != 0f)
-			{
-				player.wingFrame = 1;
-			}
-			else
-			{
-				player.wingFrame = 0;
-			}
-			return true;
-		}
 		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
         {
 			//These stats are ripped stright from solar wings

@@ -711,6 +711,43 @@ namespace SOTS
                 }
             }
         }
+        public override bool WingUpdate(int wings, Player player, bool inUse)
+        {
+			if(wings == EquipLoader.GetEquipSlot(Mod, "MachinaBooster", EquipType.Wings) || wings == EquipLoader.GetEquipSlot(Mod, "GildedBladeWings", EquipType.Wings))
+            {
+                MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
+                if (MachinaBoosterPlayer.creativeFlight)
+                {
+                    MachinaBoosterPlayer.FlightCounter += 2;
+                    player.wingFrame = 2;
+                }
+                else if ((player.controlJump && player.velocity.Y != 0f) || player.velocity.Y != 0f)
+                {
+                    player.wingFrame = 1;
+					if(inUse)
+                    {
+                        MachinaBoosterPlayer.FlightCounter += 5;
+						if(SOTSWorld.GlobalCounter % 18 == 0)
+						{
+							SOTSUtils.PlaySound(SoundID.Item32, player.Center, 1.4f, -0.1f, 0.05f);
+						}
+                    }
+					else
+                    {
+                        MachinaBoosterPlayer.FlightCounter += 2;
+                    }
+                }
+                else
+                {
+                    player.wingFrame = 0;
+					if(MachinaBoosterPlayer.FlightModeFloat <= 0.02f)
+						MachinaBoosterPlayer.FlightCounter = 0;
+                }
+				MachinaBoosterPlayer.FlightModeFloat = MathHelper.Lerp(MachinaBoosterPlayer.FlightModeFloat, player.wingFrame, 0.24f);
+                return true;
+            }
+            return false;
+        }
     }
 	public class DataTransferProj : ModProjectile
 	{

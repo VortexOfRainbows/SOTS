@@ -44,6 +44,8 @@ Update Objectives:
 14. Sculpting Table item that allows crafting Statues
 15. Fish Bomb
 16. Make pyramid guaranteed to spawn all chest items at least once
+17. Fix tome of the reaper hitting town npcs
+18. Increase Particle Relocator drop rate
 
 
 ---WIP List---

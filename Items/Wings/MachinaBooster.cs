@@ -103,23 +103,6 @@ namespace SOTS.Items.Wings
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.bonusVoidGain += 1f;
 		}
-		public override bool WingUpdate(Player player, bool inUse)
-		{
-			MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
-			if (MachinaBoosterPlayer.creativeFlight)
-			{
-				player.wingFrame = 2;
-			}
-			else if ((player.controlJump && player.velocity.Y != 0f) || player.velocity.Y != 0f)
-			{
-				player.wingFrame = 1;
-			}
-			else
-			{
-				player.wingFrame = 0;
-			}
-			return true;
-		}
 		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
 		{
 			float num1 = 0.1f;
@@ -154,6 +137,8 @@ namespace SOTS.Items.Wings
 		public int epicWingType = 0;
 		public bool gyro = false;
 		public bool netUpdate = false;
+		public float FlightModeFloat = 0f;
+		public float FlightCounter = 0f;
 		public enum EpicWingType : int
 		{
 			Default = 0,
