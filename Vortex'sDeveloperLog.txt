@@ -49,7 +49,7 @@ Update Objectives:
 
 
 ---WIP List---
-N/A
+Gilded Blade Wings needs: Dust particles, Better creative flight mode (including trail and halo visuals) 
 
 ---Code Refactoring Needed List---
 N/A
@@ -79,7 +79,7 @@ N/A
 
 Daily Log:
 
-5/11/24 to 5/12/24
+5/11/24 to 5/13/24
 1. Fixed bug where naturally spawned, Unsafe Infected Pyramid bricks didn't properly drop items 
 2. Relocator effect from Elemental Armor no longer has a distance limit, making the visual more consistent
 3. WIP Blade Wings visuals

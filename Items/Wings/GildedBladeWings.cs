@@ -25,7 +25,7 @@ namespace SOTS.Items.Wings
 		{
 			this.SetResearchCost(1);
 			
-			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(7200, 9f, 2.5f); //These stats should closely mirror stats from the pillars
+			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(300, 9f, 2.5f); //These stats should closely mirror stats from the pillars
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
@@ -113,7 +113,7 @@ namespace SOTS.Items.Wings
 
             MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
 			MachinaBoosterPlayer.canCreativeFlight = MachinaBoosterPlayer.CreativeFlightTier2 = true;
-			player.wingTimeMax = 7200; //May as well have 2 minutes worth of base-time
+			player.wingTimeMax = 300;
 			player.noFallDmg = true;
             //voidPlayer.bonusVoidGain += 1f;
         }
