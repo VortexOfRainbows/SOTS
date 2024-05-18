@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using SOTS.Dusts;
-using Terraria.Audio;
 
 namespace SOTS.Projectiles
 {
@@ -42,7 +41,7 @@ namespace SOTS.Projectiles
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = false;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10 * (Projectile.extraUpdates + 1); //nerf immunity ignoring to make it less overpowered on single target
+			Projectile.localNPCHitCooldown = 20; 
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
@@ -84,7 +83,7 @@ namespace SOTS.Projectiles
 		}
         public override bool? CanHitNPC(NPC target)
         {
-			return Projectile.ai[1] != 25;
+			return Projectile.ai[1] != 25 ? null : false;
 		}
 		public override void OnKill(int timeLeft)
 		{
@@ -107,8 +106,6 @@ namespace SOTS.Projectiles
 			{
 				Projectile.oldPos[i] = Projectile.oldPos[i - 1] + (Projectile.oldPos[i] - Projectile.oldPos[i - 1]).SafeNormalize(Vector2.Zero) * MathHelper.Min(Vector2.Distance(Projectile.oldPos[i - 1], Projectile.oldPos[i]), start);
 			}
-			//spriteBatch.End();
-			//spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, Main.GameViewMatrix.ZoomMatrix);
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Rectangle frame = new Rectangle(0, 0, 26, 28);
 			Vector2 drawOrigin = new Vector2(26 * 0.5f, 28 * 0.5f);
@@ -133,8 +130,6 @@ namespace SOTS.Projectiles
 				alphaMult = (1 - 0.33f * (Projectile.ai[0] - 70) / 30);
 			}
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, trueColor * alphaMult, Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			//spriteBatch.End();
-			//spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.GameViewMatrix.ZoomMatrix);
 			return false;
 		}
 	}

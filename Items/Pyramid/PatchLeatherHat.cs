@@ -16,7 +16,7 @@ namespace SOTS.Items.Pyramid
 			Item.height = 14;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Orange;
-			Item.defense = 3;
+			Item.defense = 4;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -34,61 +34,16 @@ namespace SOTS.Items.Pyramid
         {
             return body.type == ModContent.ItemType<PatchLeatherTunic>() && legs.type == ModContent.ItemType<PatchLeatherPants>();
         }
-		int Probe = -1;
-		int Probe2 = -1;
-		int Probe3 = -1;
-		public override void UpdateArmorSet(Player player)
+		private int[] SnakeProbes = new int[] { -1, -1, -1, -1, -1, -1 };
+        public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.PatchLeather");
-			int counter = 0;
-			for(int i = 0; i < 1000; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if(Main.player[proj.owner] == player && proj.type == ModContent.ProjectileType<FlyingSnake>() && proj.active)
-				{
-					counter++;
-				}
-			}
 			if(Main.myPlayer == player.whoAmI)
-			{
-				if (counter < 3)
-				{
-					Probe = -1;
-					Probe2 = -1;
-					Probe3 = -1;
-				}
-				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 14);
-				if (Probe == -1)
-				{
-					Probe = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 1);
-				}
-				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != ModContent.ProjectileType<FlyingSnake>())
-				{
-					Probe = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 1);
-				}
-
-				Main.projectile[Probe].timeLeft = 6;
-
-				if (Probe2 == -1)
-				{
-					Probe2 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 2);
-				}
-				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != ModContent.ProjectileType<FlyingSnake>())
-				{
-					Probe2 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 2);
-				}
-
-				Main.projectile[Probe2].timeLeft = 6;
-
-				if (Probe3 == -1)
-				{
-					Probe3 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 3);
-				}
-				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != ModContent.ProjectileType<FlyingSnake>())
-				{
-					Probe3 = Projectile.NewProjectile(player.GetSource_Misc("SOTS:Pets"), player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<FlyingSnake>(), damage, 0, player.whoAmI, 3);
-				}
-				Main.projectile[Probe3].timeLeft = 6;
+            {
+                SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+                int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 15);
+                for (int i = 0; i < 3; i++)
+                    sPlayer.runPets(ref SnakeProbes[i], ModContent.ProjectileType<FlyingSnake>(), damage, 1f, false, i);
 			}
 		}
 		public override void UpdateEquip(Player player)

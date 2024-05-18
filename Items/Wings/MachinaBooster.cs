@@ -139,7 +139,8 @@ namespace SOTS.Items.Wings
 		public bool netUpdate = false;
 		public float FlightModeFloat = 0f;
 		public float FlightCounter = 0f;
-		public enum EpicWingType : int
+        public int PlayerWasLastOnASlope = 0; //Used exclusively to makes SOTS wing visuals less buggy when moving down a slope
+        public enum EpicWingType : int
 		{
 			Default = 0,
 			Blocky = 1,

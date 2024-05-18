@@ -43,9 +43,7 @@ Update Objectives:
 13. Shimmer Item that upgrades the store for Archaeologist
 14. Sculpting Table item that allows crafting Statues
 15. Fish Bomb
-16. Make pyramid guaranteed to spawn all chest items at least once
-17. Fix tome of the reaper hitting town npcs
-18. Increase Particle Relocator drop rate
+16. Add Planetarium Crate
 
 
 ---WIP List---
@@ -78,6 +76,18 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+5/18/24
+1. Tome of the Reaper no longer hits town NPCs
+2. Drop rate for construct-rare drops, excluding the Phase Cannon, now is more common in expert mode, 3.33% -> 4% (1/30 -> 1/25)
+3. Drop rate for Pre-EoC drops (Royal Jelly, Vertebraeker, Baguette, etc.) after EoC has been defeated increased in expert mode. 5% -> 6.66% (1/20 -> 1/15)
+4. Pyramid Chests will attempt to spawn at least one of each item before randomly spawning items, making it less likely that players have to farm for specific drops
+5. Since Patch Leather armor is harder to obtain than Obsidian, it has received some buffs, making the defense equal and damage competitive... However, it does not buff whips, keeping Obsidian armor strong for whip users:
+	1. Head: Defense 3 -> 4, Base damage of set bonus 14 -> 15, knockback 0 -> 1
+	2. Chest: Defense 4 -> 6, damage bonus 10% -> 15%
+	3. Legs: Defense 3 -> 5, damage bonus 10% -> 15%
+6. All references to "minion damage" replaced with "summon damage"
+7. More messing around with Blade Wings
 
 5/11/24 to 5/13/24
 1. Fixed bug where naturally spawned, Unsafe Infected Pyramid bricks didn't properly drop items 

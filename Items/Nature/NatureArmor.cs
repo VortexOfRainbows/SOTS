@@ -31,7 +31,7 @@ namespace SOTS.Items.Nature
 			Item.rare = ItemRarityID.Blue;
 			Item.defense = 1;
 		}
-		int[] Probes = new int[] {-1, -1, -1 };
+		private int[] Probes = new int[] {-1, -1, -1 };
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return body.type == ModContent.ItemType<NatureShirt>() && legs.type == ModContent.ItemType<NatureLeggings>();

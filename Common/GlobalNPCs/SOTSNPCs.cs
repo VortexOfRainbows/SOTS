@@ -322,7 +322,7 @@ namespace SOTS.Common.GlobalNPCs
 				leadingConditionRule.OnSuccess(notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>())));
 				npcLoot.Add(leadingConditionRule);
 				preEoC2.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ToothAche>()));
-				postEoC2.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ToothAche>(), 20));
+				postEoC2.OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<ToothAche>(), 20, 15));
 				npcLoot.Add(preEoC2);
 				npcLoot.Add(postEoC2);
 			}
@@ -331,7 +331,7 @@ namespace SOTS.Common.GlobalNPCs
 				notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PyramidKey>(), 1, 1, 1));
 				npcLoot.Add(notExpert);
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Vertebraeker>(), 1));
-				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Vertebraeker>(), 20));
+				postEoC.OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<Vertebraeker>(), 20, 15));
 				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
@@ -366,37 +366,37 @@ namespace SOTS.Common.GlobalNPCs
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectromagneticDeterrent>(), 10));
                 if (npc.type == ModContent.NPCType<NatureConstruct>())
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MantisGrip>(), 30));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<MantisGrip>(), 30, 25));
                     type = ModContent.ItemType<NaturePlating>();
                 }
                 if (npc.type == ModContent.NPCType<EarthenConstruct>())
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Earthshaker>(), 30));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Earthshaker>(), 30, 25));
                     type = ModContent.ItemType<EarthenPlating>();
                 }
                 if (npc.type == ModContent.NPCType<PermafrostConstruct>())
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EndothermicAfterburner>(), 30));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<EndothermicAfterburner>(), 30, 25));
                     type = ModContent.ItemType<PermafrostPlating>();
                 }
                 if (npc.type == ModContent.NPCType<TidalConstruct>())
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PiscesPuncher>(), 30));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<PiscesPuncher>(), 30, 25));
                     type = ModContent.ItemType<TidePlating>();
                 }
                 if (npc.type == ModContent.NPCType<EvilConstruct>())
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeathSpiral>(), 30));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<DeathSpiral>(), 30, 25));
                     type = ModContent.ItemType<EvilPlating>();
                 }
                 if (npc.type == ModContent.NPCType<InfernoConstruct>())
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IncineratorGlove>(), 30));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<IncineratorGlove>(), 30, 25));
                     type = ModContent.ItemType<InfernoPlating>();
                 }
                 if (npc.type == ModContent.NPCType<ChaosConstruct>())
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ParticleRelocator>(), 30));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<ParticleRelocator>(), 30, 25));
                     type = ModContent.ItemType<ChaosPlating>();
                 }
                 if (npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
@@ -442,28 +442,28 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == NPCID.QueenBee)
             {
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 1));
-				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoyalJelly>(), 20));
+				postEoC.OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<RoyalJelly>(), 20, 15));
 				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>())
 			{
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 1));
-				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PeanutButter>(), 20));
+				postEoC.OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<PeanutButter>(), 20, 15));
 				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			if (npc.type == ModContent.NPCType<Glowmoth>())
 			{
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GlowSpores>(), 1));
-				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GlowSpores>(), 20));
+				postEoC.OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<GlowSpores>(), 20, 15));
 				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}
 			if (npc.type == NPCID.SkeletronHead)
 			{
 				preEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 1));
-				postEoC.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Baguette>(), 20));
+				postEoC.OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<Baguette>(), 20, 15));
 				npcLoot.Add(postEoC);
 				npcLoot.Add(preEoC);
 			}

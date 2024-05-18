@@ -741,8 +741,13 @@ namespace SOTS
 
 			List<int> LihzahrdItems2 = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
 			List<int> LihzahrdItems = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
-			// Iterate chests
-			GemStructureWorldgenHelper.FillChestsWithLoot();
+
+			List<int> PyramidPoolGuaranteed = new List<int>() { ModContent.ItemType<Aten>(), ModContent.ItemType<EmeraldBracelet>(), ModContent.ItemType<ImperialPike>(), ModContent.ItemType<PharaohsCane>(), 
+				ModContent.ItemType<PitatiLongbow>(), ModContent.ItemType<RoyalMagnum>(), ModContent.ItemType<SandstoneEdge>(), ModContent.ItemType<SandstoneWarhammer>(), ModContent.ItemType<ShiftingSands>(),
+				ModContent.ItemType<SunlightAmulet>(), ItemID.FlyingCarpet, ItemID.SandstorminaBottle };
+			List<int> PyramidPoolAfter = new List<int>(PyramidPoolGuaranteed);
+            // Iterate chests
+            GemStructureWorldgenHelper.FillChestsWithLoot();
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest
@@ -1138,89 +1143,25 @@ namespace SOTS
 				}
 				if (tile.TileType == ModContent.TileType<PyramidChestTile>())
 				{
-					int slot = 39;
-					for(int i = 0; i < 39; i++)
-					{
-						if(chest.item[i].type == ItemID.None && i < slot)
-						{
-							slot = i;
-						}
-					}
-				
-					int rand = WorldGen.genRand.Next(12);
-					if(rand == 0)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<Aten>());
-						slot++;
-					}
-					if(rand == 1)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<EmeraldBracelet>());
-						slot++;
-					}
-					if(rand == 2)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<ImperialPike>());
-						slot++;
-					}
-					if(rand == 3)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<PharaohsCane>());
-						slot++;
-					}
-					if(rand == 4)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<PitatiLongbow>());
-						slot++;
-					}
-					if(rand == 5)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<RoyalMagnum>());
-						slot++;
-					}
-					if(rand == 6)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<SandstoneEdge>());
-						slot++;
-					}
-					if(rand == 7)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<SandstoneWarhammer>());
-						slot++;
-					}
-					if(rand == 8)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<ShiftingSands>());
-						slot++;
-					}
-					if(rand == 9)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<SunlightAmulet>());
-						slot++;
-					}
-					if(rand == 10)
-					{
-						chest.item[slot].SetDefaults(ItemID.FlyingCarpet);
-						slot++;
-					}
-					if(rand == 11)
-					{
-						chest.item[slot].SetDefaults(ItemID.SandstorminaBottle);
-						slot++;
-					}
+					int slot = 0;
+                    int primaryTreasure = PyramidPoolAfter[Main.rand.Next(lightItemPool2.Count)];
+                    if (PyramidPoolGuaranteed.Count > 0)
+                    {
+                        int rand = Main.rand.Next(PyramidPoolGuaranteed.Count);
+                        primaryTreasure = PyramidPoolGuaranteed[rand];
+                        PyramidPoolGuaranteed.RemoveAt(rand);
+                    }
+                    chest.item[slot++].SetDefaults(primaryTreasure);
 					
 					int second = WorldGen.genRand.Next(10);
 					if(second == 0)
 					{
-						chest.item[slot].SetDefaults(848);
-						slot++;
-						chest.item[slot].SetDefaults(866);
-						slot++;
+						chest.item[slot++].SetDefaults(ItemID.PharaohsMask);
+						chest.item[slot++].SetDefaults(ItemID.PharaohsRobe);
 					}
 					if(second == 1)
 					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<AnubisHat>());
-						slot++;
+						chest.item[slot++].SetDefaults(ModContent.ItemType<AnubisHat>());
 					}
 					if(second > 1)
 					{

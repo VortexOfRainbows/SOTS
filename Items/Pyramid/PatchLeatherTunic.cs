@@ -13,7 +13,7 @@ namespace SOTS.Items.Pyramid
 			Item.height = 18;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Orange;
-			Item.defense = 4;
+			Item.defense = 6;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -36,7 +36,7 @@ namespace SOTS.Items.Pyramid
         }
 		public override void UpdateEquip(Player player)
 		{
-			player.GetDamage(DamageClass.Summon) += 0.10f;
+			player.GetDamage(DamageClass.Summon) += 0.15f;
 			player.buffImmune[BuffID.Venom] = true;
 			player.buffImmune[BuffID.Poisoned] = true;
 		}

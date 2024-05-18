@@ -392,9 +392,6 @@ namespace SOTS.Common.PlayerDrawing
             float drawY = (int)drawInfo.Position.Y + drawPlayer.height / 2;
             drawX -= 2 * drawPlayer.direction;
 
-            //int mode = drawPlayer.wingFrame;
-            //bool InCreativeFlight = mode == 2;
-            //bool InNormalFlight = mode == 1;
             float alpha = 1 - drawInfo.shadow;
             float dustAlpha = 1 - drawInfo.shadow;
             dustAlpha *= drawPlayer.stealth;
@@ -423,21 +420,21 @@ namespace SOTS.Common.PlayerDrawing
                     }
 
                     //Creative Flight
-                    float sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 10 * j)) * 6 * direction;
+                    float sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 10 * j)) * 5.5f * direction;
                     Vector2 creativeOffset = new Vector2(-60 * direction, 0 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 18.5f + sinusoid + 2 * direction)) * scale;
                     float creativeRotation = -MathHelper.ToRadians(45 * direction * drawPlayer.gravDir - 21 * proper - sinusoid);
 
                     //Normal Flight
                     sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 12 * j));
-                    sinusoid *= (35 - j) * direction;
-                    sinusoid += 20 * direction;
-                    Vector2 normalOffset = new Vector2(-(60 + bonusDist) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 7 + sinusoid)) * scale;
-                    float normalRotation = -MathHelper.ToRadians(72 * direction * drawPlayer.gravDir - 14 * proper - sinusoid);
+                    sinusoid *= (34 - j) * direction;
+                    sinusoid += 12 * direction;
+                    Vector2 normalOffset = new Vector2(-(56 + bonusDist) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 6.5f + sinusoid)) * scale;
+                    float normalRotation = -MathHelper.ToRadians(76 * direction * drawPlayer.gravDir - 13 * proper - sinusoid);
 
                     //Grounded
                     proper -= 6 * (int)direction;
                     sinusoid = MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + 12 * j)) * (16 - j) * direction;
-                    Vector2 groundedOffset = new Vector2(-(68 + bonusDist * scale) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 6 + sinusoid * 0.2f)) * scale;
+                    Vector2 groundedOffset = new Vector2(-(66 + bonusDist * scale) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 6 + sinusoid * 0.2f)) * scale;
                     groundedOffset.X *= 0.4f;
                     if (!Front)
                     {
@@ -467,10 +464,11 @@ namespace SOTS.Common.PlayerDrawing
                         finalScale = MathHelper.Lerp(groundedScale, scale, lerpAmt);
                         position.Y -= 22 * drawPlayer.gravDir * (1 - lerpAmt);
                     }
-                    Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + j * 20), true), 0.5f);
-                    Color finalColor2 = Color.Lerp(new Color(150, 150, 150, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + j * 20), true), 0.5f);
-                    drawData1.Add(new DrawData(Front ? blade : bladeF, position + finalOffset, null, finalColor1 * alpha * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
-                    drawData2.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, position + finalOffset, null, finalColor2 * alpha * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.7f);
+                    Color finalColor2 = Color.Lerp(new Color(150, 150, 150, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.6f);
+                    finalColor2.A = 0;
+                    drawData1.Add(new DrawData(Front ? blade : bladeF, position + finalOffset, null, finalColor1 * alpha * alpha * .7f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    drawData2.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, position + finalOffset, null, finalColor2 * alpha * alpha * .8f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
                     drawData3.Add(new DrawData(Front ? bladeHandle : bladeHandleF, position + finalOffset, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
                 }
             }

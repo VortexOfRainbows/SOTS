@@ -34,6 +34,7 @@ using SOTS.Items.Tide;
 using SOTS.FakePlayer;
 using Terraria.UI.Chat;
 using SOTS.Items.Wings;
+using System.Drawing.Printing;
 
 namespace SOTS
 {
@@ -716,20 +717,20 @@ namespace SOTS
 			if(wings == EquipLoader.GetEquipSlot(Mod, "MachinaBooster", EquipType.Wings) || wings == EquipLoader.GetEquipSlot(Mod, "GildedBladeWings", EquipType.Wings))
             {
                 MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
-                if (MachinaBoosterPlayer.creativeFlight)
-                {
-                    MachinaBoosterPlayer.FlightCounter += 2;
-                    player.wingFrame = 2;
-                }
-                else if ((player.controlJump && player.velocity.Y != 0f) || player.velocity.Y != 0f)
+				if (MachinaBoosterPlayer.creativeFlight)
+				{
+					MachinaBoosterPlayer.FlightCounter += 2;
+					player.wingFrame = 2;
+				}
+				else if (player.velocity.Y != 0f && (player.controlJump || (MachinaBoosterPlayer.PlayerWasLastOnASlope < 0)))
                 {
                     player.wingFrame = 1;
 					if(inUse)
                     {
-                        MachinaBoosterPlayer.FlightCounter += 5;
+                        MachinaBoosterPlayer.FlightCounter += 6;
 						if(SOTSWorld.GlobalCounter % 18 == 0)
 						{
-							SOTSUtils.PlaySound(SoundID.Item32, player.Center, 1.4f, -0.1f, 0.05f);
+							SOTSUtils.PlaySound(SoundID.Item32, player.Center, 1.0f, -0.1f, 0.05f);
 						}
                     }
 					else
@@ -743,6 +744,7 @@ namespace SOTS
 					if(MachinaBoosterPlayer.FlightModeFloat <= 0.02f)
 						MachinaBoosterPlayer.FlightCounter = 0;
                 }
+                MachinaBoosterPlayer.PlayerWasLastOnASlope = player.sloping ? 5 : MachinaBoosterPlayer.PlayerWasLastOnASlope - 1;
 				MachinaBoosterPlayer.FlightModeFloat = MathHelper.Lerp(MachinaBoosterPlayer.FlightModeFloat, player.wingFrame, 0.24f);
                 return true;
             }

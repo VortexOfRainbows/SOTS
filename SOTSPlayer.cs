@@ -472,10 +472,10 @@ namespace SOTS
 				CreativeFlightButtonPressed = false;
 			}
 		}
-		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
-		int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
-		int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
-        int[] ArtifactProbes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+		private int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+		private int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
+		private int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
+        private int[] ArtifactProbes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
         public int aqueductNum = 0;
 		public int aqueductDamage = -1;
         public int artifactProbeDamage = -1;

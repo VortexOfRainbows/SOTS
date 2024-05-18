@@ -9,14 +9,13 @@ namespace SOTS.Projectiles.Pyramid
     public class FlyingSnake : ModProjectile 
     {	
 		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Snakey Boi");
-		}
+        {
+            Main.projFrames[Projectile.type] = 4;
+        }
         public override void SetDefaults()
         {
 			Projectile.width = 50;
 			Projectile.height = 26;
-            Main.projFrames[Projectile.type] = 4;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 960;
@@ -61,7 +60,7 @@ namespace SOTS.Projectiles.Pyramid
 			Player player = Main.player[Projectile.owner];
 			if(player.whoAmI != Main.myPlayer)
             {
-				Projectile.timeLeft = 20;
+				Projectile.timeLeft = 100;
             }
 			Projectile.tileCollide = true;
             Projectile.frameCounter++;
@@ -84,12 +83,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			float minDist = 480;
 			int target2 = -1;
-			float dX = 0f;
-			float dY = 0f;
-			float distance = 0;
-			float dXP = 0f;
-			float dYP = 0f;
-			float distanceP = 0;
+			float dX, dY, distance, dXP, dYP, distanceP = 0f;
 			float speed = 0.8f + Projectile.ai[0] * 0.15f; 
 			bool foundTarget = false;
 
@@ -139,7 +133,6 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				counter++;
 				int unique = (int)Projectile.ai[0] % 3;
-
 				if(Main.myPlayer == Projectile.owner)
 				{
 					if(counter % 2 == 0)

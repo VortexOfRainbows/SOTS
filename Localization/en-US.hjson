@@ -2380,7 +2380,7 @@ Mods: {
 
 			NatureLeggings: {
 				DisplayName: Wormwood Leggings
-				Tooltip: 5% increases minion damage and movement speed
+				Tooltip: 5% increases summon damage and movement speed
 			}
 
 			NatureShirt: {
@@ -2628,7 +2628,7 @@ Mods: {
 				DisplayName: Platform Generator
 				Tooltip:
 					'''
-					Increases minion damage by 10%
+					Increases summon damage by 10%
 					Generates 2 platforms to the left and right of you
 					You can right click to drag the platforms, but they will always remain symmetrical
 					Sentries can be summoned on top of the platforms
@@ -3459,14 +3459,14 @@ Mods: {
 
 			PatchLeatherPants: {
 				DisplayName: Patch Leather Boots
-				Tooltip: Increases minion damage by 10%
+				Tooltip: Increases summon damage by 15%
 			}
 
 			PatchLeatherTunic: {
 				DisplayName: Patch Leather Tunic
 				Tooltip:
 					'''
-					Increases minion damage by 10%
+					Increases summon damage by 15%
 					Grants immunity to venom and poison debuffs
 					'''
 			}
