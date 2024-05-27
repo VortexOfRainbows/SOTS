@@ -31,13 +31,12 @@ namespace SOTS.Projectiles.Blades
 			Projectile.alpha = 0;
 			Projectile.hide = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 5;
+			Projectile.localNPCHitCooldown = 10;
 			Projectile.ownerHitCheck = true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
+			Projectile.damage = Math.Max((int)(Projectile.damage * 0.95f), 1);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{

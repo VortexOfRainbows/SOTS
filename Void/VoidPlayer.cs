@@ -577,7 +577,8 @@ namespace SOTS.Void
 			}
 			//Main.NewText("I think " + player.whoAmI + " has " + voidMeterMax2 + " meter max 2 and " + voidMeter + " void and " + voidMeterMax + " void meter max 1 and " + VoidMinionConsumption + " void minion consumption");
 			lastVoidMeter = voidMeter;
-			ColorHelpers.ColorUpdate();
+			if(Player.whoAmI == Main.myPlayer)
+				ColorHelpers.ColorUpdate();
 			if (soulsOnKill > 0)
 				UseSouls();
 			if (ColorHelpers.soulColorCounter % 40 == 0)

@@ -39,7 +39,7 @@ namespace SOTS.Items
             Item.noUseGraphic = true; 
             Item.noMelee = true;
 		}
-		int i = 0;
+		private int i = 0;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			i++;
@@ -50,9 +50,5 @@ namespace SOTS.Items
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Terragrim, 1).AddIngredient<HardlightAlloy>(20).AddIngredient<PrecariousCluster>(1).AddIngredient<TaintedKeystone>(1).AddTile<HardlightFabricatorTile>().Register();
 		}
-		/*public override int GetVoid(Player player)
-		{
-			return  3;
-		}*/
 	}
 }
