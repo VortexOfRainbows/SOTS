@@ -409,7 +409,7 @@ namespace SOTS.Common.PlayerDrawing
             int bladeID = drawPlayer.direction == 1 ? 9 : 0;
             for (int i = -1; i <= 1; i += 2)
             {
-                bool Front = i == 1;
+                bool Front = i * drawPlayer.gravDir == 1;
                 float direction = drawPlayer.direction * i;
                 for (int j = -4; j <= 4; j++)
                 {
@@ -425,26 +425,26 @@ namespace SOTS.Common.PlayerDrawing
 
                     //Creative Flight
                     float sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 10 * j)) * 5.5f * direction;
-                    Vector2 creativeOffset = new Vector2(-60 * direction, 0 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 18.5f + sinusoid + 2 * direction)) * scale;
-                    float creativeRotation = -MathHelper.ToRadians(45 * direction * drawPlayer.gravDir - 21 * proper - sinusoid);
+                    Vector2 creativeOffset = new Vector2(-60 * direction, 0).RotatedBy(MathHelper.ToRadians(proper * 18.5f + sinusoid + 2 * direction)) * scale;
+                    float creativeRotation = -MathHelper.ToRadians(45 * direction - 21 * proper - sinusoid);
 
                     //Normal Flight
                     sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 12 * j));
                     sinusoid *= (34 - j) * direction;
                     sinusoid += 12 * direction;
-                    Vector2 normalOffset = new Vector2(-(56 + bonusDist) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 6.5f + sinusoid)) * scale;
-                    float normalRotation = -MathHelper.ToRadians(76 * direction * drawPlayer.gravDir - 13 * proper - sinusoid);
+                    Vector2 normalOffset = new Vector2(-(56 + bonusDist) * direction, 4).RotatedBy(MathHelper.ToRadians(proper * 6.5f + sinusoid)) * scale;
+                    float normalRotation = -MathHelper.ToRadians(76 * direction - 13 * proper - sinusoid);
 
                     //Grounded
                     proper -= 6 * (int)direction;
                     sinusoid = MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + 12 * j)) * (16 - j) * direction;
-                    Vector2 groundedOffset = new Vector2(-(66 + bonusDist * scale) * direction, 4 * drawPlayer.gravDir).RotatedBy(MathHelper.ToRadians(proper * 6 + sinusoid * 0.2f)) * scale;
+                    Vector2 groundedOffset = new Vector2(-(66 + bonusDist * scale) * direction, 4).RotatedBy(MathHelper.ToRadians(proper * 6 + sinusoid * 0.2f)) * scale;
                     groundedOffset.X *= 0.4f;
                     if (!Front)
                     {
                         groundedOffset.Y *= 1.1f;
                     }
-                    float groundedRotation = -MathHelper.ToRadians(72 * direction * drawPlayer.gravDir - 6 * proper - sinusoid);
+                    float groundedRotation = -MathHelper.ToRadians(72 * direction - 6 * proper - sinusoid);
                     float groundedScale = scale * 0.75f;
 
                     Vector2 finalOffset;
@@ -457,7 +457,7 @@ namespace SOTS.Common.PlayerDrawing
                         finalOffset = Vector2.Lerp(normalOffset, creativeOffset, lerpAmt);
                         finalRotation = MathHelper.Lerp(normalRotation, creativeRotation, lerpAmt);
                         finalScale = scale;
-                        position.Y += 6 * drawPlayer.gravDir * lerpAmt;
+                        position.Y += 6 * lerpAmt * drawPlayer.gravDir;
                         finalScale += lerpAmt * 0.05f; 
                     }
                     else
@@ -466,12 +466,12 @@ namespace SOTS.Common.PlayerDrawing
                         finalOffset = Vector2.Lerp(groundedOffset, normalOffset, lerpAmt);
                         finalRotation = MathHelper.Lerp(groundedRotation, normalRotation, lerpAmt);
                         finalScale = MathHelper.Lerp(groundedScale, scale, lerpAmt);
-                        position.Y -= 22 * drawPlayer.gravDir * (1 - lerpAmt);
+                        position.Y -= 22 * (1 - lerpAmt) * drawPlayer.gravDir;
                     }
                     Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.7f);
                     Color finalColor2 = Color.Lerp(new Color(150, 150, 150, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.6f);
                     finalColor2.A = 0;
-                    Vector2 bladePosition = position + finalOffset;
+                    Vector2 bladePosition = position + finalOffset * drawPlayer.gravDir;
                     drawData1.Add(new DrawData(Front ? blade : bladeF, bladePosition, null, finalColor1 * alpha * alpha * .7f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
                     drawData2.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, bladePosition, null, finalColor2 * alpha * alpha * .8f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
                     drawData3.Add(new DrawData(Front ? bladeHandle : bladeHandleF, bladePosition, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
@@ -481,7 +481,7 @@ namespace SOTS.Common.PlayerDrawing
                         mbPlayer.WingsBeingVisualized = true;
                         if (drawInfo.shadow == 0f && mbPlayer.BladeWingTrails != null && mbPlayer.BladeWingTrails[bladeID] != null) // Add dust to end of blades
                         {
-                            Vector2 offset = ((-bladeOrigin + new Vector2(2, 2)) * finalScale).RotatedBy(rotation + finalRotation + (direction == -1 ? MathHelper.ToRadians(76) : 0));
+                            Vector2 offset = ((-bladeOrigin + new Vector2(2, 2)) * finalScale * drawPlayer.gravDir).RotatedBy(rotation + finalRotation + (direction == -1 ? MathHelper.ToRadians(76) : 0));
                             Vector2 dustPosition = bladePosition + offset + Main.screenPosition;
                             mbPlayer.BladeWingTrails[bladeID].Insert(0, dustPosition);
                         }
