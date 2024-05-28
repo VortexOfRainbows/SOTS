@@ -47,16 +47,17 @@ Update Objectives:
 
 
 ---WIP List---
-Gilded Blade Wings needs: Dust particles, Better creative flight mode (including trail and halo visuals) 
+Gilded Blade Wings needs: Halo Visuals
 
 ---Code Refactoring Needed List---
 N/A
 
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
+Possibly Blade Wings
 
 ---Visual Upgrade Needed---
-Voidspace Ranger's Armor, Supernova Seekers
+N/A
 
 ---Multiplayer Fixes/Testing Needed---
 POSSIBLY Tesseract
@@ -77,10 +78,13 @@ N/A
 
 Daily Log:
 
-5/26/24
+5/26/24 to 5/27/24
 1. Digital Daito now does 5% less damage for every enemy it pierces with the main slash.
 2. Digital Daito blade hit rate 5 -> 10 ticks (this should make it less likely to strike the same enemy twice with the same swing)
-3. 
+3. Gilded Blade Wings now has custom flight speed modifiers compared to Machina Boosters.
+4. Gilded Blade Wings now have trails on the blades
+5. Changed localization for keybinded items to make the text less cluttered.
+6. Gilded Blade Wings creative mode slow-down syncs in multiplayer.
 
 5/18/24 to 5/19/24
 1. Tome of the Reaper no longer hits town NPCs

@@ -180,6 +180,7 @@ Mods: {
 			Blink: Blink
 			ArmorSet: Armor Set
 			MFM: Modify Flight Mode
+			SlowFlight: Slow Down Flight Mode
 		}
 
 		BossAwoken: {
@@ -5364,7 +5365,7 @@ Mods: {
 					'''
 					Increases melee and summon damage by 30%
 					Increases life regeneration by 4
-					Press the '{0}' key to teleport to your cursor, dealing 200% of your defense as damage to all enemies in your path
+					Press '{0}' to teleport to your cursor, dealing 200% of your defense as damage to all enemies in your path
 					Has a 15 second cooldown, but increases melee speed by 40% during the cooldown
 					'''
 			}
@@ -5407,7 +5408,8 @@ Mods: {
 					Allows infinite flight and slow fall
 					Increases void gain by 3 and void regeneration speed by 25%
 					Doubles damage done to non-Lux spirit enemies
-					Press the '{0}' key to gain fast, multidirectional flight
+					Press '{0}' to gain fast, multidirectional flight
+					Hold '{1}' to fly slower while in the special flight mode
 					'''
 			}
 		}
@@ -5841,7 +5843,7 @@ Mods: {
 				'''
 			Cursed:
 				'''
-				Press the '{0}' key to change the Ruby Monolith into an offensive stance
+				Press '{0}' to change the Ruby Monolith into an offensive stance
 				While in offensive stance, decreases the cooldown of Curse Flaring by 80%
 				However, increases void drain by 6 instead of increasing void regeneration speed by 10%
 				'''
@@ -6397,26 +6399,26 @@ Mods: {
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1
-			Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
+			Press '{0}' to gain fast, multidirectional flight at the cost of 5 void
 			Increases void drain by 3 while active
 			'''
 		MachinaBoosterText2:
 			'''
 			Allows flight and slow fall
 			Increases void gain by 1
-			Press the '{0}' key to gain fast, multidirectional flight at the cost of 5 void
+			Press '{0}' to gain fast, multidirectional flight at the cost of 5 void
 			Increases void drain by 3 while active
 			'''
 		BlinkPackText:
 			'''
-			Press the '{0}' key to blink towards your cursor
+			Press '{0}' to blink towards your cursor
 			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
 			Provides some immunity after dashing
 			Negates fall damage
 			'''
 		BlinkPackText2:
 			'''
-			Press the '{0}' key to blink towards your cursor
+			Press '{0}' to blink towards your cursor
 			Blinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession
 			Provides some immunity after dashing
 			Negates fall damage
@@ -6427,7 +6429,7 @@ Mods: {
 			Increases minion and melee damage by 7%
 			Increases max void by 50
 			Provides a Holo Eye minion to assist in combat
-			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Press '{0}' to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked
 			Costs 6 void to launch
 			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
@@ -6438,7 +6440,7 @@ Mods: {
 			Increases minion and melee damage by 7%
 			Increases max void by 50
 			Provides a Holo Eye minion to assist in combat
-			Press the '{0}' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
+			Press '{0}' to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy
 			Destabilized enemies gain a 5% flat chance to be critically striked
 			Costs 6 void to launch
 			Holo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack
@@ -7048,6 +7050,7 @@ Mods: {
 						Blink.DisplayName: Blink
 						ArmorSet.DisplayName: Armor Set
 						MFM.DisplayName: Switch Flight Mode
+						SlowFlight.DisplayName: Slow Flight
 					}
 				}
 			}

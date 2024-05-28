@@ -13,6 +13,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
 using Terraria.Localization;
+using SOTS.NPCs.Boss.Lux;
+using System;
 
 namespace SOTS.Items.Wings
 {
@@ -125,7 +127,8 @@ namespace SOTS.Items.Wings
 			packet.Write((byte)SOTSMessageType.SyncCreativeFlight);
 			packet.Write((byte)Player.whoAmI);
 			packet.Write(creativeFlight);
-			packet.Send();
+            packet.Write(SlowFlight);
+            packet.Send();
 			netUpdate = false;
 		}
 		public const float voidDrain = 3f;
@@ -133,7 +136,30 @@ namespace SOTS.Items.Wings
         public bool CreativeFlightTier2 = false;
         public bool creativeFlight = false;
 		public float wingSpeed = 7f;
-		public float wingSpeedMax = 7f;
+		public void UpdateSlowFlight()
+        {
+			bool previous = SlowFlight;
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                SlowFlight = CreativeFlightTier2 && SlowFlightHotKey.Current;
+                if (SlowFlight != previous)
+                {
+                    SendPacket();
+                }
+            }
+        }
+		public bool SlowFlight = false;
+        public float wingSpeedMax
+		{
+			get
+			{
+				float num = CreativeFlightTier2 ? 8f : 7f;
+				if (SlowFlight)
+					num = 4f;
+				return num;
+            }
+			
+		}
 		public int epicWingType = 0;
 		public bool gyro = false;
 		public bool netUpdate = false;
@@ -149,28 +175,42 @@ namespace SOTS.Items.Wings
 		{
 			for (int i = 0; i < 360; i += 4)
 			{
-				if (epicWingType == 0)
-				{
-					int index = Dust.NewDust(Player.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust>(), 0, 0, 0, Color.White);
-					Dust dust = Main.dust[index];
-					dust.noGravity = true;
-					dust.fadeIn = 0.1f;
-					dust.velocity *= 0.8f;
-					dust.scale += 1.5f;
-					dust.velocity += new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i));
-					dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
-				}
+				if(CreativeFlightTier2)
+                {
+                    Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + i), true), 0.7f);
+                    Dust dust = Dust.NewDustDirect(Player.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, finalColor1);
+                    dust.noGravity = true;
+                    dust.fadeIn = 0.1f;
+                    dust.velocity *= 0.5f;
+                    dust.scale += 1f;
+                    dust.velocity += new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i));
+                    dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
+                }
 				else
-				{
-					int index = Dust.NewDust(Player.Center + new Vector2(-5, -5), 0, 0, ModContent.DustType<CopyDust>());
-					Dust dust = Main.dust[index];
-					dust.noGravity = true;
-					dust.fadeIn = 0.5f;
-					dust.velocity *= 0.8f;
-					dust.scale = 1.5f;
-					dust.velocity += new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i));
-					dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
-				}
+                {
+                    if (epicWingType == 0)
+                    {
+                        int index = Dust.NewDust(Player.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust>(), 0, 0, 0, Color.White);
+                        Dust dust = Main.dust[index];
+                        dust.noGravity = true;
+                        dust.fadeIn = 0.1f;
+                        dust.velocity *= 0.8f;
+                        dust.scale += 1.5f;
+                        dust.velocity += new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i));
+                        dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
+                    }
+                    else
+                    {
+                        int index = Dust.NewDust(Player.Center + new Vector2(-5, -5), 0, 0, ModContent.DustType<CopyDust>());
+                        Dust dust = Main.dust[index];
+                        dust.noGravity = true;
+                        dust.fadeIn = 0.5f;
+                        dust.velocity *= 0.8f;
+                        dust.scale = 1.5f;
+                        dust.velocity += new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i));
+                        dust.shader = GameShaders.Armor.GetSecondaryShader(Player.cWings, Player);
+                    }
+                }
 			}
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuTick, Player.Center);
 		}
@@ -178,19 +218,18 @@ namespace SOTS.Items.Wings
 		{
 			if (SOTSPlayer.ModPlayer(Player).CreativeFlightButtonPressed)
 			{
-				if (!creativeFlight)
-				{
-					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
-					if(!CreativeFlightTier2)
-                    {
-                        voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
-                        VoidPlayer.VoidEffect(Player, (int)(-5 * voidPlayer.voidCost), false, false);
-                    }
-				}
+				if (!creativeFlight && !CreativeFlightTier2)
+                {
+                    VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
+                    voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
+                    VoidPlayer.VoidEffect(Player, (int)(-5 * voidPlayer.voidCost), false, false);
+                }
 				creativeFlight = !creativeFlight; 
 				if(Main.myPlayer == Player.whoAmI && Main.netMode != NetmodeID.SinglePlayer)
 					SendPacket();
-			}
+				if(CreativeFlightTier2)
+					Player.wingTime = 7200;
+            }
 		}
 		bool movingHori = false;
 		bool movingVert = false;
@@ -221,6 +260,8 @@ namespace SOTS.Items.Wings
 		Vector2[] dustPos = new Vector2[180];
 		public void HaloDust()
 		{
+			if (CreativeFlightTier2)
+				return;
 			for (int i = 0; i < 3; i++)
 			{
 				dustIter++;
@@ -275,68 +316,81 @@ namespace SOTS.Items.Wings
 		public void flight()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
-			if (!CreativeFlightTier2)
+            if (!CreativeFlightTier2)
 			{
 				voidPlayer.flatVoidRegen -= voidDrain;
-			}
-			HaloDust();
+            }
+			UpdateSlowFlight();
+            HaloDust();
 			Player.gravity = 0f;
 			Player.noFallDmg = true;
 			Player.maxFallSpeed *= 4f;
-			Player.wingTime = -1;
-
-			if (Player.controlDown && !(Player.controlUp || Player.controlJump) && !TilesBelow())
+            Player.wingTime = -1;
+			bool up = (Player.controlUp || Player.controlJump) && !Player.controlDown;
+			bool down = Player.controlDown && !(Player.controlUp || Player.controlJump) && !TilesBelow();
+			bool left = Player.controlLeft && Player.dashDelay >= 0 && !Player.controlRight;
+			bool right = Player.controlRight && Player.dashDelay >= 0 && !Player.controlLeft;
+            movingVert = up || down;
+            movingHori = left || right;
+            float accelerationSpeed = wingSpeed / 3f;
+			float speedMult = 1.5f;
+            //if (movingHori && movingVert)
+            //{
+			//	speedMult /= MathF.Sqrt(2);
+            //}
+            if (down)
 			{
-				movingVert = true;
-				float toBeAdded = wingSpeed / 3;
-				if (Player.velocity.Y + toBeAdded < wingSpeed * 1.5f)
+				float toBeAdded = accelerationSpeed;
+				if (Player.velocity.Y + toBeAdded < wingSpeed * speedMult)
 				{
 					Player.velocity.Y += toBeAdded;
 				}
-				else if (Player.velocity.Y < wingSpeed * 1.5f)
+				else if (Player.velocity.Y < wingSpeed * speedMult)
 				{
-					Player.velocity.Y = wingSpeed * 1.5f;
+					Player.velocity.Y = wingSpeed * speedMult;
 				}
 			}
-			if ((Player.controlUp || Player.controlJump) && !Player.controlDown)
+			if (up)
 			{
-				movingVert = true;
-				float toBeAdded = -wingSpeed / 3;
-				if (Player.velocity.Y + toBeAdded > -wingSpeed * 1.5f)
+				float toBeAdded = -accelerationSpeed;
+				if (Player.velocity.Y + toBeAdded > -wingSpeed * speedMult)
 				{
 					Player.velocity.Y += toBeAdded;
 				}
-				else if (Player.velocity.Y > -wingSpeed * 1.5f)
+				else if (Player.velocity.Y > -wingSpeed * speedMult)
 				{
-					Player.velocity.Y = -wingSpeed * 1.5f;
+					Player.velocity.Y = -wingSpeed * speedMult;
 				}
 			}
-			if (Player.controlLeft && Player.dashDelay >= 0 && !Player.controlRight)
+			if (left)
 			{
-				movingHori = true;
-				float toBeAdded = -wingSpeed / 3;
-				if (Player.velocity.X + toBeAdded > -wingSpeed * 1.5f)
+				float toBeAdded = -accelerationSpeed;
+				if (Player.velocity.X + toBeAdded > -wingSpeed * speedMult)
 				{
 					Player.velocity.X += toBeAdded;
 				}
-				else if (Player.velocity.X > -wingSpeed * 1.5f)
+				else if (Player.velocity.X > -wingSpeed * speedMult)
 				{
-					Player.velocity.X = -wingSpeed * 1.5f;
+					Player.velocity.X = -wingSpeed * speedMult;
 				}
 			}
-			if (Player.controlRight && Player.dashDelay >= 0 && !Player.controlLeft)
+			if (right)
 			{
-				movingHori = true;
-				float toBeAdded = wingSpeed / 3;
-				if (Player.velocity.X + toBeAdded < wingSpeed * 1.5f)
+				float toBeAdded = accelerationSpeed;
+				if (Player.velocity.X + toBeAdded < wingSpeed * speedMult)
 				{
 					Player.velocity.X += toBeAdded;
 				}
-				else if (Player.velocity.X < wingSpeed * 1.5f)
+				else if (Player.velocity.X < wingSpeed * speedMult)
 				{
-					Player.velocity.X = wingSpeed * 1.5f;
+					Player.velocity.X = wingSpeed * speedMult;
 				}
 			}
+			if (SlowFlight)
+			{
+				Player.velocity.X = Math.Clamp(Player.velocity.X, -wingSpeed * speedMult, wingSpeed * speedMult);
+				Player.velocity.Y = Math.Clamp(Player.velocity.Y, -wingSpeed * speedMult, wingSpeed * speedMult);
+            }
 			if (!movingVert)
 			{
 				Player.velocity.Y *= 0.8f;
@@ -352,20 +406,16 @@ namespace SOTS.Items.Wings
 				if (Player.controlDown)
 					Player.gravity = Player.defaultGravity + 0.2f;
 			}
-			else
-			{
-				if (Player.velocity.Y == 0f)
-					Player.velocity.Y = -0.04f;
-			}
-			movingHori = false;
-			movingVert = false;
+			else if (Player.velocity.Y == 0f)
+				Player.velocity.Y = -0.04f;
 		}
 		public int randCounter = 0;
 		float boost = 0f;
 		bool runOnce = true;
 		public override void ResetEffects()
 		{
-			if (gyro && !TilesBelow())
+			UpdateWingTrails();
+            if (gyro && !TilesBelow())
 			{
 				if (Player.controlDown && !creativeFlight)
 				{
@@ -432,9 +482,43 @@ namespace SOTS.Items.Wings
 					DustExplosion();
 					runOnce = true;
 				}
-			}
+            }
+            wingSpeed = wingSpeedMax;
             CreativeFlightTier2 = canCreativeFlight = false;
-			wingSpeed = wingSpeedMax;
 		}
+		public List<Vector2>[] BladeWingTrails = null;
+        public static int MaxBladeTrailLength => SOTS.Config.lowFidelityMode ? 10 : 24;
+		public bool WingsBeingVisualized = false;
+		private void InitWingTrails()
+		{
+			BladeWingTrails = new List<Vector2>[18];
+			for(int i = 0; i < BladeWingTrails.Length; i++)
+			{
+				BladeWingTrails[i] = new List<Vector2>();
+			}
+		}
+		private void UpdateWingTrails()
+        {
+            if (BladeWingTrails == null)
+				InitWingTrails();
+            for (int i = 0; i < BladeWingTrails.Length; i++)
+            {
+                List<Vector2> list = BladeWingTrails[i];
+				for (int j = 1; j < list.Count - 1; j++)
+				{
+					Vector2 previous = list[j - 1];
+					Vector2 next = list[j + 1];
+					Vector2 supposedCenter = previous * 0.5f + next * 0.5f;
+					Vector2 me = list[j];
+					list[j] = me * 0.5f + supposedCenter * 0.5f;
+				}
+				if(list.Count > MaxBladeTrailLength || !WingsBeingVisualized)
+				{
+					if(list.Count > 0)
+						list.RemoveAt(list.Count - 1);
+				}
+            }
+			WingsBeingVisualized = false;
+        }
 	}
 }

@@ -376,8 +376,13 @@ namespace SOTS.Common.PlayerDrawing
         }
         private void DrawBladeWings(ref PlayerDrawSet drawInfo)
         {
+            //if(drawInfo.shadow != 0f)
+            //{
+            //    return;
+            //}a
             Player drawPlayer = drawInfo.drawPlayer;
             MachinaBoosterPlayer mbPlayer = drawPlayer.GetModPlayer<MachinaBoosterPlayer>();
+            List<DrawData> drawData0 = new List<DrawData>();
             List<DrawData> drawData1 = new List<DrawData>();
             List<DrawData> drawData2 = new List<DrawData>();
             List<DrawData> drawData3 = new List<DrawData>();
@@ -387,14 +392,12 @@ namespace SOTS.Common.PlayerDrawing
             Texture2D bladeOutlineF = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingOutlineFlipped", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D bladeHandle = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingHandle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D bladeHandleF = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingHandleFlipped", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D pixel = Mod.Assets.Request<Texture2D>("Items/Secrets/WhitePixel", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
             float drawY = (int)drawInfo.Position.Y + drawPlayer.height / 2;
             drawX -= 2 * drawPlayer.direction;
-
             float alpha = 1 - drawInfo.shadow;
-            float dustAlpha = 1 - drawInfo.shadow;
-            dustAlpha *= drawPlayer.stealth;
             alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
             Color color = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16)); //apply lighting to wings
             color = changeColorBasedOnStealth(color, drawInfo);
@@ -403,6 +406,7 @@ namespace SOTS.Common.PlayerDrawing
             SpriteEffects spriteEffects = drawInfo.playerEffect;
             Vector2 bladeOrigin = blade.Size() / 2;
             float counter = mbPlayer.FlightCounter + 40;
+            int bladeID = drawPlayer.direction == 1 ? 9 : 0;
             for (int i = -1; i <= 1; i += 2)
             {
                 bool Front = i == 1;
@@ -454,7 +458,7 @@ namespace SOTS.Common.PlayerDrawing
                         finalRotation = MathHelper.Lerp(normalRotation, creativeRotation, lerpAmt);
                         finalScale = scale;
                         position.Y += 6 * drawPlayer.gravDir * lerpAmt;
-                        finalScale += lerpAmt * 0.1f; 
+                        finalScale += lerpAmt * 0.05f; 
                     }
                     else
                     {
@@ -467,10 +471,55 @@ namespace SOTS.Common.PlayerDrawing
                     Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.7f);
                     Color finalColor2 = Color.Lerp(new Color(150, 150, 150, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.6f);
                     finalColor2.A = 0;
-                    drawData1.Add(new DrawData(Front ? blade : bladeF, position + finalOffset, null, finalColor1 * alpha * alpha * .7f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
-                    drawData2.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, position + finalOffset, null, finalColor2 * alpha * alpha * .8f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
-                    drawData3.Add(new DrawData(Front ? bladeHandle : bladeHandleF, position + finalOffset, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    Vector2 bladePosition = position + finalOffset;
+                    drawData1.Add(new DrawData(Front ? blade : bladeF, bladePosition, null, finalColor1 * alpha * alpha * .7f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    drawData2.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, bladePosition, null, finalColor2 * alpha * alpha * .8f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    drawData3.Add(new DrawData(Front ? bladeHandle : bladeHandleF, bladePosition, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+
+                    if(!Main.gamePaused && !Main.gameMenu)
+                    {
+                        mbPlayer.WingsBeingVisualized = true;
+                        if (drawInfo.shadow == 0f && mbPlayer.BladeWingTrails != null && mbPlayer.BladeWingTrails[bladeID] != null) // Add dust to end of blades
+                        {
+                            Vector2 offset = ((-bladeOrigin + new Vector2(2, 2)) * finalScale).RotatedBy(rotation + finalRotation + (direction == -1 ? MathHelper.ToRadians(76) : 0));
+                            Vector2 dustPosition = bladePosition + offset + Main.screenPosition;
+                            mbPlayer.BladeWingTrails[bladeID].Insert(0, dustPosition);
+                        }
+                    }
+                    bladeID++;
+                    bladeID %= 18;
                 }
+            }
+            if(mbPlayer.BladeWingTrails != null && !Main.gameMenu && drawInfo.shadow == 0f)
+            {
+                Vector2 trailOrigin = new Vector2(0, 1);
+                float trailSpriteLength = pixel.Width;
+                for (int i = 0; i < mbPlayer.BladeWingTrails.Length; i++)
+                {
+                    int bladeNum = i % 9;
+                    float scaleF = 0.5f + bladeNum * 0.0625f;
+                    List<Vector2> list = mbPlayer.BladeWingTrails[i];
+                    if(list.Count > 0)
+                    {
+                        Vector2 previous = list[0];
+                        for (int j = 0; j < list.Count; j++)
+                        {
+                            float alpha2 = 1 - (j / (float)list.Count);
+                            Vector2 current = list[j];
+                            Vector2 toPrevious = previous - current;
+                            Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + (bladeNum - 4) * 20 + j * 6), true), 0.75f);
+                            finalColor1.A = 0;
+                            drawData0.Add(new DrawData(pixel, current - Main.screenPosition, null, finalColor1 * alpha * alpha2 * scaleF * 0.7f, toPrevious.ToRotation(), trailOrigin, new Vector2(toPrevious.Length() / trailSpriteLength, 0.5f * scaleF + 1f * alpha2), SpriteEffects.None, 0));
+                            previous = current;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < drawData0.Count; i++)
+            {
+                DrawData data = drawData0[i];
+                data.shader = drawInfo.cWings;
+                drawInfo.DrawDataCache.Add(data);
             }
             for (int i = 0; i < drawData1.Count; i++)
             {

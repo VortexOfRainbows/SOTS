@@ -15,6 +15,7 @@ using static SOTS.SOTS;
 using Terraria.Localization;
 using SOTS.Items.Chaos;
 using System;
+using Microsoft.Xna.Framework.Input;
 
 namespace SOTS.Items.Wings
 {
@@ -24,30 +25,29 @@ namespace SOTS.Items.Wings
 		public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
-			
 			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(300, 9f, 2.5f); //These stats should closely mirror stats from the pillars
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			foreach (string key in SOTS.MachinaBoosterHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-			{
-				foreach (TooltipLine line in tooltips) //goes through each tooltip line
-				{
-					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+        {
+            foreach (TooltipLine line in tooltips) //goes through each tooltip line
+            {
+                if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+                {
+                    string Textkey1 = Language.GetTextValue("Mods.SOTS.Common.Unbound");
+                    string Textkey2 = Textkey1;
+                    foreach (string key in MachinaBoosterHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
 					{
-						line.Text = Language.GetTextValue("Mods.SOTS.Items.GildedBladeWings.Description", key);
-						return;
-					}
-				}
-			}
-			foreach (TooltipLine line in tooltips) //goes through each tooltip line
-			{
-				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
-				{
-					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValue("Mods.SOTS.Items.GildedBladeWings.Description", Textkey);
-				}
-			}
+						Textkey1 = key;
+						break;
+                    }
+                    foreach (string key in SlowFlightHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
+                    {
+                        Textkey2 = key;
+                        break;
+                    }
+                    line.Text = Language.GetTextValue("Mods.SOTS.Items.GildedBladeWings.Description", Textkey1, Textkey2);
+                }
+            }
 			base.ModifyTooltips(tooltips);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

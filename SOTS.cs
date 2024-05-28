@@ -75,7 +75,8 @@ namespace SOTS
 		public static ModKeybind BlinkHotKey;
 		public static ModKeybind ArmorSetHotKey;
 		public static ModKeybind MachinaBoosterHotKey;
-		internal static SOTS Instance;
+        public static ModKeybind SlowFlightHotKey;
+        internal static SOTS Instance;
 
 		public static Effect AtenTrail;
 		public static Effect WaterTrail;
@@ -107,13 +108,11 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			string blinkKeyBind = Language.GetOrRegister("Mods.SOTS.KeyBindName.Blink").ToString(); //.GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
-            string armorSetKeyBind = Language.GetOrRegister("Mods.SOTS.KeyBindName.ArmorSet").ToString(); //.GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
-			string mfmKeyBind = Language.GetOrRegister("Mods.SOTS.KeyBindName.MFM").ToString(); //.GetTranslation(GameCulture.FromName(Language.ActiveCulture.Name));
-			BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue(blinkKeyBind), "V");//TODO: Localize it when 1.4.4 comes
-			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, armorSetKeyBind, "F");
-			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, mfmKeyBind, "C");
-			SOTSWorld.LoadUI();
+            BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.Blink").ToString(), "V");//TODO: Localize it when 1.4.4 comes
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.ArmorSet").ToString(), "F");
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.MFM").ToString(), "C");
+            SlowFlightHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.SlowFlight").ToString(), "LeftShift");
+            SOTSWorld.LoadUI();
 			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
 			{
@@ -254,24 +253,26 @@ namespace SOTS
 				case (int)SOTSMessageType.SOTSSyncPlayer:
 					byte playernumber = reader.ReadByte();
 					SOTSPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
-					MachinaBoosterPlayer testPlayer = Main.player[playernumber].GetModPlayer<MachinaBoosterPlayer>();
+					MachinaBoosterPlayer mbPlayer = Main.player[playernumber].GetModPlayer<MachinaBoosterPlayer>();
 					VoidPlayer voidPlayer = Main.player[playernumber].GetModPlayer<VoidPlayer>();
 					bool creativeFlight = reader.ReadBoolean();
-					testPlayer.creativeFlight = creativeFlight;
+					mbPlayer.creativeFlight = creativeFlight;
 					int lootingSouls = reader.ReadInt32();
 					voidPlayer.lootingSouls = lootingSouls;
 					break;
                 case (int)SOTSMessageType.SyncCreativeFlight:
 					playernumber = reader.ReadByte(); 
-					testPlayer = Main.player[playernumber].GetModPlayer<MachinaBoosterPlayer>();
-					testPlayer.creativeFlight = reader.ReadBoolean();
-					if (Main.netMode == NetmodeID.Server)
+					mbPlayer = Main.player[playernumber].GetModPlayer<MachinaBoosterPlayer>();
+					mbPlayer.creativeFlight = reader.ReadBoolean();
+					mbPlayer.SlowFlight = reader.ReadBoolean();
+                    if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
 						packet.Write((byte)SOTSMessageType.SyncCreativeFlight);
 						packet.Write(playernumber);
-						packet.Write(testPlayer.creativeFlight);
-						packet.Send(-1, playernumber);
+						packet.Write(mbPlayer.creativeFlight);
+                        packet.Write(mbPlayer.SlowFlight);
+                        packet.Send(-1, playernumber);
 					}
 					break;
 				case (int)SOTSMessageType.SyncLootingSoulsAndVoidMax:

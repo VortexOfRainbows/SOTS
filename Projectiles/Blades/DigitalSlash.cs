@@ -9,11 +9,10 @@ using SOTS.Utilities;
 
 namespace SOTS.Projectiles.Blades
 {    
-    public class DigitalSlash : ModProjectile //, IPixellated
+    public class DigitalSlash : ModProjectile 
     {
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Digital Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        
