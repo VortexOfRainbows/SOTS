@@ -144,7 +144,8 @@ namespace SOTS.Items.Wings
                 SlowFlight = CreativeFlightTier2 && SlowFlightHotKey.Current;
                 if (SlowFlight != previous)
                 {
-                    SendPacket();
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        SendPacket();
                 }
             }
         }
