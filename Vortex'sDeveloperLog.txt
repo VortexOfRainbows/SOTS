@@ -46,7 +46,7 @@ Update Objectives:
 
 
 ---WIP List---
-Gilded Blade Wings Special Inventory and World drawing (Halo behind the item).
+N/A
 
 ---Code Refactoring Needed List---
 N/A
@@ -58,7 +58,7 @@ Nerf Polaris 2nd Phase Bomb Drop Attack
 Nerf Polaris 2nd Phase Bullet Hell Attack
 
 ---Visual Upgrade Needed---
-N/A
+Gilded Blade Wings coloring for blade part
 
 ---Multiplayer Fixes/Testing Needed---
 POSSIBLY Tesseract
