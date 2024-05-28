@@ -502,7 +502,7 @@ namespace SOTS.Common.PlayerDrawing
                     if(list.Count > 0)
                     {
                         Vector2 previous = list[0];
-                        for (int j = 0; j < list.Count; j++)
+                        for (int j = 1; j < list.Count; j++)
                         {
                             float alpha2 = 1 - (j / (float)list.Count);
                             Vector2 current = list[j];
@@ -530,6 +530,148 @@ namespace SOTS.Common.PlayerDrawing
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
                 data = drawData3[i];
+                data.shader = drawInfo.cWings;
+                drawInfo.DrawDataCache.Add(data);
+            }
+        }
+    }
+    public class Halo : PlayerDrawLayer
+    {
+        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
+        {
+            return HasBladeWings(drawInfo);
+        }
+        public override Position GetDefaultPosition() => PlayerDrawLayers.AfterLastVanillaLayer;
+        protected override void Draw(ref PlayerDrawSet drawInfo)
+        {
+            if (Main.dresserInterfaceDummy == drawInfo.drawPlayer)
+                return;
+            if (drawInfo.drawPlayer.dead || drawInfo.drawPlayer.mount.Active)
+            {
+                return;
+            }
+            if (HasBladeWings(drawInfo))
+            {
+                DrawHalo(ref drawInfo);
+            }
+        }
+        public bool HasBladeWings(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.wings == EquipLoader.GetEquipSlot(Mod, "GildedBladeWings", EquipType.Wings);
+        private void DrawHalo(ref PlayerDrawSet drawInfo)
+        {
+            if (drawInfo.shadow != 0)
+                return;
+            Player drawPlayer = drawInfo.drawPlayer;
+            MachinaBoosterPlayer mbPlayer = drawPlayer.GetModPlayer<MachinaBoosterPlayer>();
+            List<DrawData> drawData0 = new List<DrawData>();
+            List<DrawData> drawData1 = new List<DrawData>();
+            List<DrawData> drawData2 = new List<DrawData>();
+            Texture2D pixel = Mod.Assets.Request<Texture2D>("Items/Secrets/WhitePixel", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            int repeats = 40;
+            Vector2 center = new Vector2((int)drawPlayer.Center.X, (int)drawPlayer.Center.Y + drawPlayer.gfxOffY) + new Vector2(-10 * drawPlayer.direction, -(drawPlayer.height / 2 + 6) * drawPlayer.gravDir);
+            Vector2[] points = new Vector2[repeats];
+            float[] scales = new float[repeats];
+            Vector2[] points2 = new Vector2[repeats / 2];
+            float[] scales2 = new float[repeats / 2];
+            Vector2 bonusPoint = Vector2.Zero;
+            float bonusScale = 0f;
+            float tilt = 35f + MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 1.5f)) * 5f;
+            float zTilt = 1f + MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.75f)) * 0.2f;
+            for (int i = 0; i < repeats; i++)
+            {
+                float rotation = i / (float)repeats * MathHelper.TwoPi + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.75f);
+                float offset = 11;
+                int pointN = i % repeats;
+                float offsetBonus = 0;
+                if (pointN == 39)
+                    offsetBonus += 18;
+                if (pointN == 2)
+                    offsetBonus += 14;
+                if (pointN == 5)
+                    offsetBonus += 14;
+                if (pointN == 10)
+                    offsetBonus += 10;
+                if (pointN == 14)
+                    offsetBonus += 20;
+                if (pointN == 17)
+                    offsetBonus += 14;
+                if (pointN == 20)
+                    offsetBonus += 8;
+                if (pointN == 27)
+                    offsetBonus += 10;
+                if (pointN == 31)
+                    offsetBonus += 16;
+                offset += offsetBonus * (0.85f + 0.15f * MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * (2 + i / 40f) + i * 24))) * 0.95f;
+
+                if(i % 2 == 0)
+                {
+                    Vector2 innerCircular = new Vector2(7, 0).RotatedBy(rotation);
+                    innerCircular.Y *= 0.45f * drawPlayer.gravDir * zTilt;
+                    innerCircular.X *= drawPlayer.direction;
+                    innerCircular = innerCircular.RotatedBy(MathHelper.ToRadians(tilt * -drawPlayer.direction * drawPlayer.gravDir));
+                    points2[i / 2] = center + innerCircular;
+                    scales2[i / 2] = 0.7f + MathF.Sin(rotation) * 0.1f / zTilt;
+                }
+
+                Vector2 circular = new Vector2(offset, 0).RotatedBy(rotation);
+                circular.Y *= 0.55f * drawPlayer.gravDir * zTilt;
+                circular.X *= drawPlayer.direction;
+                circular = circular.RotatedBy(MathHelper.ToRadians(tilt * -drawPlayer.direction * drawPlayer.gravDir));
+                points[i] = center + circular;
+                scales[i] = 0.8f + MathF.Sin(rotation) * 0.2f / zTilt;
+                if (pointN == 37)
+                {
+                    Vector2 bonusPos = new Vector2(5, 0).RotatedBy(rotation);
+                    bonusPos.Y *= 0.55f * drawPlayer.gravDir * zTilt;
+                    bonusPos.X *= drawPlayer.direction;
+                    bonusPos = bonusPos.RotatedBy(MathHelper.ToRadians(tilt * -drawPlayer.direction * drawPlayer.gravDir));
+                    bonusPoint = points[i] + bonusPos;
+                    bonusScale = scales[i];
+                }
+            }
+            Vector2 previous = points[points.Length - 1];
+            for (int i = 0; i < points.Length; i++)
+            {
+                Color color = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2) + i / (float)repeats * MathHelper.TwoPi, true), 0.8f);
+                Color color2 = color * 1.1f;
+                color.A = 0;
+                Vector2 current = points[i];
+                Vector2 toPrevious = previous - current;
+                drawData0.Add(new DrawData(pixel, points[i] - Main.screenPosition, null, color, toPrevious.ToRotation(), new Vector2(0, 1), new Vector2(toPrevious.Length() / 2, scales[i] * 0.8f), SpriteEffects.None, 0));
+                drawData2.Add(new DrawData(pixel, points[i] - Main.screenPosition, null, color2, toPrevious.ToRotation(), new Vector2(0, 1), new Vector2(toPrevious.Length() / 2, scales[i]) + Vector2.One * 0.6f, SpriteEffects.None, 0));
+                previous = current;
+            }
+            previous = points2[points2.Length - 1];
+            for (int i = 0; i < points2.Length; i++)
+            {
+                Color color = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * -1) + i / (float)repeats * MathHelper.TwoPi * 2, true), 0.8f);
+                Color color2 = color * 1.1f;
+                color.A = 0;
+                Vector2 current = points2[i];
+                Vector2 toPrevious = previous - current;
+                drawData1.Add(new DrawData(pixel, points2[i] - Main.screenPosition, null, color, toPrevious.ToRotation(), new Vector2(0, 1), new Vector2(toPrevious.Length() / 2, scales2[i] * 0.8f), SpriteEffects.None, 0));
+                drawData2.Add(new DrawData(pixel, points2[i] - Main.screenPosition, null, color2, toPrevious.ToRotation(), new Vector2(0, 1), new Vector2(toPrevious.Length() / 2, scales2[i]) + Vector2.One * 0.6f, SpriteEffects.None, 0));
+                previous = current;
+            }
+            Color finalColor2 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2) + 37f / (float)repeats * MathHelper.TwoPi, true), 0.8f);
+            Color finalColor3 = finalColor2;
+            finalColor2.A = 0;
+            drawData0.Add(new DrawData(pixel, bonusPoint - Main.screenPosition, null, finalColor2, 0f, new Vector2(1, 1), bonusScale + 0.2f, SpriteEffects.None, 0));
+            drawData2.Add(new DrawData(pixel, bonusPoint - Main.screenPosition, null, finalColor3, 0f, new Vector2(1, 1), bonusScale + 0.8f, SpriteEffects.None, 0));
+            for (int i = 0; i < drawData2.Count; i++)
+            {
+                DrawData data = drawData2[i];
+                data.shader = drawInfo.cWings;
+                drawInfo.DrawDataCache.Add(data);
+            }
+            for (int i = 0; i < drawData1.Count; i++)
+            {
+                DrawData data = drawData1[i];
+                data.shader = drawInfo.cWings;
+                drawInfo.DrawDataCache.Add(data);
+            }
+            for (int i = 0; i < drawData0.Count; i++)
+            {
+                DrawData data = drawData0[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
             }

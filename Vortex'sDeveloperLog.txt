@@ -29,25 +29,24 @@ Update Objectives:
 	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-2. Combine with Machina Booster + Spirit Insignia for new wings: Gilded Blade-Wings (Next up)
-3. More Bestiary entries (and visual fixes)
-4. Unique Archaeologist tooltips for items (pending)
-5. Starmap
-6. Pitati Longbow Upgrade..? Maybe also use spore sprayer
-7. Torch Bomb Upgrade Item
-8. Remote Detonator from Isaac
-9. House Cube Accessory that can generate a temporary house
-10. Accessory that uses void instead of mana when low on mana
-11. Upgrade to Code Corruptor: Binary Blaster (?)
-12. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
-13. Shimmer Item that upgrades the store for Archaeologist
-14. Sculpting Table item that allows crafting Statues
-15. Fish Bomb
-16. Add Planetarium Crate
+2. More Bestiary entries (and visual fixes)
+3. Unique Archaeologist tooltips for items (pending)
+4. Starmap
+5. Pitati Longbow Upgrade..? Maybe also use spore sprayer
+6. Torch Bomb Upgrade Item
+7. Remote Detonator from Isaac
+8. House Cube Accessory that can generate a temporary house
+9. Accessory that uses void instead of mana when low on mana
+10. Upgrade to Code Corruptor: Binary Blaster (?)
+11. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
+12. Shimmer Item that upgrades the store for Archaeologist
+13. Sculpting Table item that allows crafting Statues
+14. Fish Bomb
+15. Add Planetarium Crate
 
 
 ---WIP List---
-Gilded Blade Wings needs: Halo Visuals
+Gilded Blade Wings Special Inventory and World drawing (Halo behind the item).
 
 ---Code Refactoring Needed List---
 N/A
@@ -55,6 +54,8 @@ N/A
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
 Possibly Blade Wings
+Nerf Polaris 2nd Phase Bomb Drop Attack
+Nerf Polaris 2nd Phase Bullet Hell Attack
 
 ---Visual Upgrade Needed---
 N/A
@@ -78,13 +79,15 @@ N/A
 
 Daily Log:
 
-5/26/24 to 5/27/24
+5/26/24 to 5/28/24
 1. Digital Daito now does 5% less damage for every enemy it pierces with the main slash.
 2. Digital Daito blade hit rate 5 -> 10 ticks (this should make it less likely to strike the same enemy twice with the same swing)
 3. Gilded Blade Wings now has custom flight speed modifiers compared to Machina Boosters.
 4. Gilded Blade Wings now have trails on the blades
 5. Changed localization for keybinded items to make the text less cluttered.
 6. Gilded Blade Wings creative mode slow-down syncs in multiplayer.
+7. Gilded Blade Wings visuals work upside down
+8. Gilded Blade Wings Halo added! Now it is a reference to NGNL, just like the predecessor wings. This also means the item is (almost) done!
 
 5/18/24 to 5/19/24
 1. Tome of the Reaper no longer hits town NPCs

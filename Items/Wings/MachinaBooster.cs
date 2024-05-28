@@ -228,7 +228,7 @@ namespace SOTS.Items.Wings
 				creativeFlight = !creativeFlight; 
 				if(Main.myPlayer == Player.whoAmI && Main.netMode != NetmodeID.SinglePlayer)
 					SendPacket();
-				if(CreativeFlightTier2)
+				if(CreativeFlightTier2 && (SOTSWorld.downedLux || !SOTS.ServerConfig.NerfInsignia))
 					Player.wingTime = 7200;
             }
 		}
