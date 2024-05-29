@@ -45,7 +45,7 @@ namespace SOTS.Items.Chaos
 
 		public override void SetDefaults() 
 		{
-			Item.damage = 70;
+			Item.damage = 66;
 			Item.knockBack = 4.5f;
 			Item.width = 66;
 			Item.height = 74;

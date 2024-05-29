@@ -20,8 +20,15 @@ namespace SOTS.Buffs.WhipBuffs
 		{
 			BuffID.Sets.IsATagBuff[Type] = true;
 		}
-	}
-	public class KelpWhipCooldown : ModBuff
+    }
+    public class BrassWhipDebuff : ModBuff
+    {
+        public override void SetStaticDefaults()
+        {
+            BuffID.Sets.IsATagBuff[Type] = true;
+        }
+    }
+    public class KelpWhipCooldown : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{
@@ -92,6 +99,17 @@ namespace SOTS.Buffs.WhipBuffs
                     for (int i = 0; i < count; i++)
                     {
 						Projectile.NewProjectile(new EntitySource_OnHit(projectile, npc), npc.Center, new Vector2(1, 0) * hit.HitDirection, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 0.0f, Main.myPlayer, npc.whoAmI, 3 + 4 * i);
+                    }
+                }
+				if (npc.HasBuff<BrassWhipDebuff>())
+                {
+                    npc.DelBuff(npc.FindBuffIndex(ModContent.BuffType<BrassWhipDebuff>()));
+                    int count = 3;
+                    if (projectile.type == ProjectileID.Smolstar)
+                        count = 1;
+                    for (int i = 0; i < count; i++)
+                    {
+                        Projectile.NewProjectile(new EntitySource_OnHit(projectile, npc), npc.Center, new Vector2(1, 0) * hit.HitDirection, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 0.0f, Main.myPlayer, npc.whoAmI, 3 + 4 * i);
                     }
                 }
             }

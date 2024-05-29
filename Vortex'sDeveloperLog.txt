@@ -52,7 +52,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Nerf Ethereal Scepter to be weaker than Terraprisma
+Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
 Possibly Blade Wings
 Nerf Polaris 2nd Phase Bomb Drop Attack
 Nerf Polaris 2nd Phase Bullet Hell Attack
@@ -79,6 +79,9 @@ N/A
 
 Daily Log:
 
+5/28/24
+1. WIP Brass Whip. Right now the hit effect is identical to Glow Whip
+
 5/26/24 to 5/28/24
 1. Digital Daito now does 5% less damage for every enemy it pierces with the main slash.
 2. Digital Daito blade hit rate 5 -> 10 ticks (this should make it less likely to strike the same enemy twice with the same swing)
@@ -89,6 +92,7 @@ Daily Log:
 7. Gilded Blade Wings visuals work upside down
 8. Gilded Blade Wings Halo added! Now it is a reference to NGNL, just like the predecessor wings. This also means the item is (almost) done!
 9. Remove armor effect trail from Elemental Armor
+10. Ethereal Scepter damage 70 -> 66. This item is already weaker than Terraprisma and Stardust dragon in most situations, but this should make it slightly less powerful for its tier.
 
 5/18/24 to 5/19/24
 1. Tome of the Reaper no longer hits town NPCs

@@ -5412,6 +5412,15 @@ Mods: {
 					Hold '{1}' to fly slower while in the special flight mode
 					'''
 			}
+
+			BrassWhip: {
+				DisplayName: Brass Whip
+				Tooltip: 
+				'''
+				Minions cause tagged enemies to explode spiky balls that deal 50% damage
+				Your summons will focus struck enemies
+				'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7033,6 +7042,7 @@ Mods: {
 			EarthGrinderSlash.DisplayName: Earth Grinder Slash
 			TesseractServant.DisplayName: Tesseract Servant
 			TesseractLaser.DisplayName: Tesseract Laser
+			BrassWhipProjectile.DisplayName: Brass Whip
 		}
 
 		DamageClasses: {
