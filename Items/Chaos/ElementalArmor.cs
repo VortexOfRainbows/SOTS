@@ -45,7 +45,7 @@ namespace SOTS.Items.Chaos
         }
         public override void ArmorSetShadows(Player player)
         {
-            player.armorEffectDrawShadow = true;
+            //player.armorEffectDrawShadow = true;
         }
         public override void UpdateEquip(Player player)
 		{

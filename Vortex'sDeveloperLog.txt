@@ -52,7 +52,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
+Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Nerf Ethereal Scepter to be weaker than Terraprisma
 Possibly Blade Wings
 Nerf Polaris 2nd Phase Bomb Drop Attack
 Nerf Polaris 2nd Phase Bullet Hell Attack
@@ -88,6 +88,7 @@ Daily Log:
 6. Gilded Blade Wings creative mode slow-down syncs in multiplayer.
 7. Gilded Blade Wings visuals work upside down
 8. Gilded Blade Wings Halo added! Now it is a reference to NGNL, just like the predecessor wings. This also means the item is (almost) done!
+9. Remove armor effect trail from Elemental Armor
 
 5/18/24 to 5/19/24
 1. Tome of the Reaper no longer hits town NPCs
