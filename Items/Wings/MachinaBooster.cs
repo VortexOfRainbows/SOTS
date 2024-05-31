@@ -515,8 +515,13 @@ namespace SOTS.Items.Wings
 				}
 				if(list.Count > MaxBladeTrailLength || !WingsBeingVisualized)
 				{
-					if(list.Count > 0)
-						list.RemoveAt(list.Count - 1);
+					bool runOnce = true;
+					while(runOnce)
+                    {
+                        if (list.Count > 0)
+                            list.RemoveAt(list.Count - 1);
+                        runOnce = list.Count > MaxBladeTrailLength;
+                    }
 				}
             }
 			WingsBeingVisualized = false;

@@ -43,6 +43,7 @@ Update Objectives:
 13. Sculpting Table item that allows crafting Statues
 14. Fish Bomb
 15. Add Planetarium Crate
+16. Fix generation bug with Infernum and Leviathan area
 
 
 ---WIP List---
@@ -79,8 +80,11 @@ N/A
 
 Daily Log:
 
-5/28/24
+5/28/24 to 5/30/24
 1. WIP Brass Whip. Right now the hit effect is identical to Glow Whip
+2. Adjusted Gilded Blade Wings colors and added rainbow glowmask to the item sprite.
+3. Implemented Code Corrupter resprite
+4. Blade wings should automatically adjust in performance mode
 
 5/26/24 to 5/28/24
 1. Digital Daito now does 5% less damage for every enemy it pierces with the main slash.

@@ -382,10 +382,10 @@ namespace SOTS.Common.PlayerDrawing
             //}a
             Player drawPlayer = drawInfo.drawPlayer;
             MachinaBoosterPlayer mbPlayer = drawPlayer.GetModPlayer<MachinaBoosterPlayer>();
-            List<DrawData> drawData0 = new List<DrawData>();
-            List<DrawData> drawData1 = new List<DrawData>();
-            List<DrawData> drawData2 = new List<DrawData>();
-            List<DrawData> drawData3 = new List<DrawData>();
+            List<DrawData> dataTrails = new List<DrawData>();
+            List<DrawData> dataBack = new List<DrawData>();
+            List<DrawData> dataMiddle = new List<DrawData>();
+            List<DrawData> dataFront = new List<DrawData>();
             Texture2D blade = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D bladeF = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingFlipped", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D bladeOutline = Mod.Assets.Request<Texture2D>("Items/Wings/BladeWingOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -468,13 +468,13 @@ namespace SOTS.Common.PlayerDrawing
                         finalScale = MathHelper.Lerp(groundedScale, scale, lerpAmt);
                         position.Y -= 22 * (1 - lerpAmt) * drawPlayer.gravDir;
                     }
-                    Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.7f);
-                    Color finalColor2 = Color.Lerp(new Color(150, 150, 150, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.6f);
+                    Color finalColor1 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.85f);
+                    Color finalColor2 = finalColor1;
                     finalColor2.A = 0;
                     Vector2 bladePosition = position + finalOffset * drawPlayer.gravDir;
-                    drawData1.Add(new DrawData(Front ? blade : bladeF, bladePosition, null, finalColor1 * alpha * alpha * .7f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
-                    drawData2.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, bladePosition, null, finalColor2 * alpha * alpha * .8f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
-                    drawData3.Add(new DrawData(Front ? bladeHandle : bladeHandleF, bladePosition, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    dataBack.Add(new DrawData(Front ? blade : bladeF, bladePosition, null, finalColor1 * alpha * alpha * 0.8f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    dataMiddle.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, bladePosition, null, finalColor2 * alpha * alpha * 1.2f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
+                    dataFront.Add(new DrawData(Front ? bladeHandle : bladeHandleF, bladePosition, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
 
                     if(!Main.gamePaused && !Main.gameMenu)
                     {
@@ -507,29 +507,29 @@ namespace SOTS.Common.PlayerDrawing
                             float alpha2 = 1 - (j / (float)list.Count);
                             Vector2 current = list[j];
                             Vector2 toPrevious = previous - current;
-                            Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + (bladeNum - 4) * 20 + j * 6), true), 0.75f);
+                            Color finalColor1 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + (bladeNum - 4) * 20 + j * 6), true), 0.85f);
                             finalColor1.A = 0;
-                            drawData0.Add(new DrawData(pixel, current - Main.screenPosition, null, finalColor1 * alpha * alpha2 * scaleF * 0.7f, toPrevious.ToRotation(), trailOrigin, new Vector2(toPrevious.Length() / trailSpriteLength, 0.5f * scaleF + 1f * alpha2), SpriteEffects.None, 0));
+                            dataTrails.Add(new DrawData(pixel, current - Main.screenPosition, null, finalColor1 * alpha * alpha2 * scaleF * 0.8f, toPrevious.ToRotation(), trailOrigin, new Vector2(toPrevious.Length() / trailSpriteLength, 0.5f * scaleF + 1f * alpha2), SpriteEffects.None, 0));
                             previous = current;
                         }
                     }
                 }
             }
-            for (int i = 0; i < drawData0.Count; i++)
+            for (int i = 0; i < dataTrails.Count; i++)
             {
-                DrawData data = drawData0[i];
+                DrawData data = dataTrails[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
             }
-            for (int i = 0; i < drawData1.Count; i++)
+            for (int i = 0; i < dataBack.Count; i++)
             {
-                DrawData data = drawData1[i];
+                DrawData data = dataBack[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
-                data = drawData2[i];
+                data = dataMiddle[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
-                data = drawData3[i];
+                data = dataFront[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
             }
@@ -653,7 +653,7 @@ namespace SOTS.Common.PlayerDrawing
                 previous = current;
             }
             Color finalColor2 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2) + 37f / (float)repeats * MathHelper.TwoPi, true), 0.8f);
-            Color finalColor3 = finalColor2;
+            Color finalColor3 = finalColor2 * 1.1f;
             finalColor2.A = 0;
             drawData0.Add(new DrawData(pixel, bonusPoint - Main.screenPosition, null, finalColor2, 0f, new Vector2(1, 1), bonusScale + 0.2f, SpriteEffects.None, 0));
             drawData2.Add(new DrawData(pixel, bonusPoint - Main.screenPosition, null, finalColor3, 0f, new Vector2(1, 1), bonusScale + 0.8f, SpriteEffects.None, 0));

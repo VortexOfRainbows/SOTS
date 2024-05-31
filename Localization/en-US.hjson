@@ -5415,11 +5415,11 @@ Mods: {
 
 			BrassWhip: {
 				DisplayName: Brass Whip
-				Tooltip: 
-				'''
-				Minions cause tagged enemies to explode spiky balls that deal 50% damage
-				Your summons will focus struck enemies
-				'''
+				Tooltip:
+					'''
+					Minions cause tagged enemies to explode spiky balls that deal 50% damage
+					Your summons will focus struck enemies
+					'''
 			}
 		}
 
@@ -5818,6 +5818,11 @@ Mods: {
 					Elemental teleports are disabled
 					Increases melee speed by 40%
 					'''
+			}
+
+			BrassWhipDebuff: {
+				DisplayName: Brass Whip Debuff
+				Description: Mods.SOTS.Buffs.BrassWhipDebuff.Description
 			}
 		}
 

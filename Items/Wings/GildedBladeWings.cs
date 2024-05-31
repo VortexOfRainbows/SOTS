@@ -54,31 +54,36 @@ namespace SOTS.Items.Wings
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWings").Value;
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWingsGlow").Value;
+            Texture2D texture3 = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWingsGlow2").Value;
             Color color = new Color(110, 110, 110, 0) * 0.25f;
             DrawHalo(spriteBatch, position, scale, 0f);
             Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			for (int k = 0; k < 8; k++)
 			{
 				Vector2 offset = new Vector2(2, 0).RotatedBy(k * MathHelper.PiOver4 + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2));
-				Main.spriteBatch.Draw(texture2, position + offset, null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
+				Main.spriteBatch.Draw(texture2, position + offset, null, color, 0f, origin, scale, SpriteEffects.None, 0f);
+            }
+            Main.spriteBatch.Draw(texture3, position, null, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter), true) * 1.2f, 0f, origin, scale, SpriteEffects.None, 0f);
+            return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWings").Value;
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWingsGlow").Value;
+            Texture2D texture3 = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWingsGlow2").Value;
             Color color = new Color(110, 110, 110, 0) * 0.25f;
             Vector2 drawPos = new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y));
             DrawHalo(spriteBatch, drawPos, scale, rotation);
-            Main.spriteBatch.Draw(texture, drawPos, null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+            float alpha = (1f - (Item.alpha / 255f));
+            Main.spriteBatch.Draw(texture, drawPos, null, lightColor * alpha, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			for (int k = 0; k < 8; k++)
             {
                 Vector2 offset = new Vector2(2, 0).RotatedBy(k * MathHelper.PiOver4 + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2));
-                Main.spriteBatch.Draw(texture2, drawPos + offset, null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
+                Main.spriteBatch.Draw(texture2, drawPos + offset, null, color * alpha, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+            }
+            Main.spriteBatch.Draw(texture3, drawPos, null, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter), true) * 1.2f * alpha, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+            return false;
 		}
 		public override void SetDefaults()
 		{

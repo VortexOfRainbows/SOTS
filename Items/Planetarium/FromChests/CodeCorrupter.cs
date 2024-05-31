@@ -20,8 +20,8 @@ namespace SOTS.Items.Planetarium.FromChests
 			Item.noMelee = true;
 			Item.damage = 36;  
             Item.DamageType = DamageClass.Magic;    
-            Item.width = 46;  
-            Item.height = 30;   
+            Item.width = 38;  
+            Item.height = 36;   
             Item.useTime = 24;  
             Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Shoot;    
@@ -49,11 +49,11 @@ namespace SOTS.Items.Planetarium.FromChests
 		}
 		public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-1, 0);
+            return new Vector2(-1, 1);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			position += velocity * 3;
+			position += velocity * 2;
 			Projectile.NewProjectile(source, position, velocity * 0.75f, ModContent.ProjectileType<CodeVolley>(), damage, knockback, player.whoAmI);
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 			return false;
