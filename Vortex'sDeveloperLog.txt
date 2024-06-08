@@ -21,6 +21,7 @@ Acknowledged But Likely Delayed:
 11. Tesseract Servants over-sends packets when over 10 total tesseracts.
 12. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 
+
 Update Objectives:
 1. Ghost Town! (Next up)
 	1. Make it spawn
@@ -44,6 +45,7 @@ Update Objectives:
 14. Fish Bomb
 15. Add Planetarium Crate
 16. Fix generation bug with Infernum and Leviathan area
+17. Upgrade item to the Hydrokinetic Antannae
 
 
 ---WIP List---
@@ -79,6 +81,12 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+6/3/24 to 6/8/24
+1. Evil Construct is more likely to spawn from Electromagnetic Lure when Earthen Construct is also present in the spawn table.
+2. All SOTS whips now reduce damage by 10% when piercing multiple enemies
+3. Finish Brass Whip attack effects. It should be noticeable stronger against groups of enemies than the other pre-hm whips, which is appropriate and intended for its tier.
+4. Evil construct should no longer lose its legs when frozen by Relocator beams
 
 5/28/24 to 5/30/24
 1. WIP Brass Whip. Right now the hit effect is identical to Glow Whip

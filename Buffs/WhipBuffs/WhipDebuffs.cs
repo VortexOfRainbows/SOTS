@@ -103,13 +103,18 @@ namespace SOTS.Buffs.WhipBuffs
                 }
 				if (npc.HasBuff<BrassWhipDebuff>())
                 {
-                    npc.DelBuff(npc.FindBuffIndex(ModContent.BuffType<BrassWhipDebuff>()));
-                    int count = 3;
-                    if (projectile.type == ProjectileID.Smolstar)
-                        count = 1;
-                    for (int i = 0; i < count; i++)
-                    {
-                        Projectile.NewProjectile(new EntitySource_OnHit(projectile, npc), npc.Center, new Vector2(1, 0) * hit.HitDirection, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 0.0f, Main.myPlayer, npc.whoAmI, 3 + 4 * i);
+					Player player = Main.player[projectile.owner];
+					if(player.SOTSPlayer().BrassWhipDelay <= 0)
+					{
+						player.SOTSPlayer().BrassWhipDelay = 10;
+                        npc.DelBuff(npc.FindBuffIndex(ModContent.BuffType<BrassWhipDebuff>()));
+                        int count = 3;
+                        if (projectile.type == ProjectileID.Smolstar)
+                            count = Main.rand.Next(1, 4);
+                        for (int i = 0; i < count; i++)
+                        {
+                            Projectile.NewProjectile(new EntitySource_OnHit(projectile, npc), npc.Center, Main.rand.NextVector2Circular(10, 10) + Vector2.UnitY * -2, ModContent.ProjectileType<Projectiles.Evil.BrassBall>(), (int)(hit.SourceDamage * 0.5f), 0.0f, Main.myPlayer, npc.whoAmI);
+                        }
                     }
                 }
             }

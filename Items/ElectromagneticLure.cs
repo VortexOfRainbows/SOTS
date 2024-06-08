@@ -35,14 +35,13 @@ namespace SOTS.Items
 			if (CapableNPCs.Contains(ModContent.NPCType<TidalConstruct>()))
 				tooltips.Add(new TooltipLine(Mod, "Construct5", "Tidal Construct") { OverrideColor = ColorHelpers.TideColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<EvilConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct6", "Evil Construct") { OverrideColor = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B)  });
+				tooltips.Add(new TooltipLine(Mod, "Construct6", "Evil Construct") { OverrideColor = new Color(ColorHelpers.EvilColor.R + 50, ColorHelpers.EvilColor.G + 50, ColorHelpers.EvilColor.B + 50)  });
 			if (CapableNPCs.Contains(ModContent.NPCType<ChaosConstruct>()))
 				tooltips.Add(new TooltipLine(Mod, "Construct7", "Chaos Construct") { OverrideColor = ColorHelpers.pastelRainbow });
 			if (CapableNPCs.Contains(ModContent.NPCType<InfernoConstruct>()))
 				tooltips.Add(new TooltipLine(Mod, "Construct8", "Inferno Construct") { OverrideColor = ColorHelpers.Inferno1 });
 			if(CapableNPCs.Count <= 0)
 				tooltips.Add(new TooltipLine(Mod, "Construct8", "None") { OverrideColor = new Color(150, 150, 150) });
-
 		}
         public override void SetDefaults()
 		{
@@ -111,6 +110,14 @@ namespace SOTS.Items
 		{
 			if (npcList.Count == 0)
 				return -1;
+			if(npcList.Contains(ModContent.NPCType<EarthenConstruct>()) && 
+				npcList.Contains(ModContent.NPCType<EvilConstruct>()))
+			{
+				if(Main.rand.NextBool(3))
+				{
+					return ModContent.NPCType<EvilConstruct>();
+                }
+			}	
 			return npcList[Main.rand.Next(npcList.Count)];
 		}
 		public override bool CanUseItem(Player player)

@@ -332,6 +332,7 @@ namespace SOTS
 		public bool StatShareMeleeAndSummon = false;
         public bool StatShareMeleeAndMagic = false;
         public bool StatShareAll = false;
+		public int BrassWhipDelay = 0;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -1284,7 +1285,9 @@ namespace SOTS
 			SpiritSymphony = false;
 			if (AmmoRegatherDelay < 120)
 				AmmoRegatherDelay++;
-		}
+			if (BrassWhipDelay > 0)
+				BrassWhipDelay--;
+        }
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
             return base.AddStartingItems(mediumCoreDeath);

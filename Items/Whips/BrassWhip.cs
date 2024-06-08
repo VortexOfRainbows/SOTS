@@ -4,6 +4,8 @@ using SOTS.Buffs.WhipBuffs;
 using SOTS.Dusts;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.Items.Slime;
+using SOTS.Projectiles.Evil;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -24,7 +26,7 @@ namespace SOTS.Items.Whips
 		{
 			// This method quickly sets the whip's properties.
 			// Mouse over to see its parameters.
-			Item.DefaultToWhip(ModContent.ProjectileType<BrassWhipProjectile>(), 24, 4f, 12, 45);
+			Item.DefaultToWhip(ModContent.ProjectileType<BrassWhipProjectile>(), 23, 4f, 12, 45);
 			Item.Size = new Vector2(40, 32);
 			Item.shootSpeed = 4;
             Item.value = Item.sellPrice(0, 1, 0, 0);
@@ -86,7 +88,8 @@ namespace SOTS.Items.Whips
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			target.AddBuff(ModContent.BuffType<GlowWhipDebuff>(), 120);
+			Projectile.damage = Math.Max((int)(Projectile.damage * 0.9f), 1);
+			target.AddBuff(ModContent.BuffType<BrassWhipDebuff>(), 120);
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}
 

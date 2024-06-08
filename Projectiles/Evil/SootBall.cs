@@ -1,12 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.Audio;
 using SOTS.Dusts;
 using SOTS.Void;
-using System.Security.Permissions;
 using SOTS.Buffs.Debuffs;
 
 namespace SOTS.Projectiles.Evil

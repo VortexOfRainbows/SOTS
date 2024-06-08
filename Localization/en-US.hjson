@@ -5417,7 +5417,7 @@ Mods: {
 				DisplayName: Brass Whip
 				Tooltip:
 					'''
-					Minions cause tagged enemies to explode spiky balls that deal 50% damage
+					Minions cause tagged enemies to explode into spiky balls that deal 50% of the minion's damage
 					Your summons will focus struck enemies
 					'''
 			}
@@ -7048,6 +7048,7 @@ Mods: {
 			TesseractServant.DisplayName: Tesseract Servant
 			TesseractLaser.DisplayName: Tesseract Laser
 			BrassWhipProjectile.DisplayName: Brass Whip
+			BrassBall.DisplayName: Brass Ball
 		}
 
 		DamageClasses: {

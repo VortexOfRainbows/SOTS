@@ -4,6 +4,7 @@ using SOTS.Buffs.WhipBuffs;
 using SOTS.Dusts;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.Items.Slime;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -83,8 +84,9 @@ namespace SOTS.Items.Whips
 			set => Projectile.ai[0] = value;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			target.AddBuff(ModContent.BuffType<GlowWhipDebuff>(), 120);
+        {
+            Projectile.damage = Math.Max((int)(Projectile.damage * 0.9f), 1);
+            target.AddBuff(ModContent.BuffType<GlowWhipDebuff>(), 120);
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}
 

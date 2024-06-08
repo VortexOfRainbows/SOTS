@@ -623,10 +623,6 @@ namespace SOTS.NPCs.Constructs
         {
             return false; 
         }
-        public override void SetStaticDefaults()
-        {
-			// DisplayName.SetDefault("Evil Construct Arm");
-		}
 		public bool stuck = false;
 		public int stabbyCounter = 0;
 		public bool launch = false;
@@ -659,7 +655,7 @@ namespace SOTS.NPCs.Constructs
         }
 		public void Update(Vector2 center)
         {
-			Projectile.timeLeft = 6;
+			Projectile.timeLeft = 7200;
 			if (runOnce)
 				return;
 			Vector2 fromNPC = center - Projectile.Center;
@@ -708,6 +704,14 @@ namespace SOTS.NPCs.Constructs
 				Projectile.ai[1] = -1;
 				Projectile.netUpdate = true;
             }
+			if (Projectile.ai[0] >= 0)
+			{
+				NPC owner = Main.npc[(int)Projectile.ai[0]];
+				if(!owner.active || owner.type != ModContent.NPCType<EvilConstruct>())
+				{
+					Projectile.Kill();
+				}
+			}
             return base.PreAI();
         }
 		public void Launch()
