@@ -5421,6 +5421,11 @@ Mods: {
 					Your summons will focus struck enemies
 					'''
 			}
+
+			GuardianGreatsword: {
+				DisplayName: Guardian Greatsword
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7049,6 +7054,7 @@ Mods: {
 			TesseractLaser.DisplayName: Tesseract Laser
 			BrassWhipProjectile.DisplayName: Brass Whip
 			BrassBall.DisplayName: Brass Ball
+			GuardianGreatswordSlash.DisplayName: Guardian Greatsword Slash
 		}
 
 		DamageClasses: {

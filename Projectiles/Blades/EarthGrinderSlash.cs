@@ -130,7 +130,7 @@ namespace SOTS.Projectiles.Blades
 				Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack * 0.4f, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1]);
 			}
 		}
-		public override float ArmAngleOffset => 18; //hold it with a backwards grip because thats funny
+		public override float ArmAngleOffset => 5;
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
 		{
 			float rand = Main.rand.NextFloat(0.6f, 0.7f);

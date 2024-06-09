@@ -464,6 +464,12 @@ namespace SOTS
                 }
             }
 		}
+		/// <summary>
+		/// Sets the zoom level for greenscreen effects.
+		/// Clamps them to the minimum and maximum zoom as determined by Tmodloader and Terraria.
+		/// The zoom does not update dynamically to how other mods adjust zoom, making this not work with 
+		/// </summary>
+		/// <param name="orig"></param>
 		private static void Main_CheckMonoliths(On_Main.orig_CheckMonoliths orig)
         {
 			if (Main.spriteBatch != null && !Main.dedServ)

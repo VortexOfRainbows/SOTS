@@ -87,6 +87,9 @@ Daily Log:
 2. All SOTS whips now reduce damage by 10% when piercing multiple enemies
 3. Finish Brass Whip attack effects. It should be noticeable stronger against groups of enemies than the other pre-hm whips, which is appropriate and intended for its tier.
 4. Evil construct should no longer lose its legs when frozen by Relocator beams
+5. Fix issue with how dreaming lamp spawned when broken. Such as the prefix and the spawn offset
+6. Increase Earth Grinder tool speed
+7. WIP Guardian Greatsword
 
 5/28/24 to 5/30/24
 1. WIP Brass Whip. Right now the hit effect is identical to Glow Whip

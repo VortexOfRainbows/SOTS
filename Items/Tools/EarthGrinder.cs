@@ -23,7 +23,7 @@ namespace SOTS.Items.Tools
 			Item.width = 56;   
             Item.height = 58;   
 			Item.useTurn = true;
-			Item.useTime = 12;
+			Item.useTime = 6;
 			Item.useAnimation = 24;
 			Item.hammer = 55;
 			Item.axe = 16;

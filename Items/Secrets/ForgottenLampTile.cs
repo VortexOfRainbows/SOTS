@@ -35,10 +35,6 @@ namespace SOTS.Items.Secrets
         {
             return false;
         }
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            yield return new Item(ModContent.ItemType<DreamLamp>());
-        }
 	    public override bool CanExplode(int i, int j)
 		{
 			return true;
@@ -46,6 +42,10 @@ namespace SOTS.Items.Secrets
     	public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
 			offsetY = 2;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<DreamLamp>());
         }
     }
     public class ForgottenLampProjectile : ModProjectile

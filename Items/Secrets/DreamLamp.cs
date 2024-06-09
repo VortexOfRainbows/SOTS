@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Camera;
 using System.Collections.Generic;
 using Terraria.Localization;
+using Terraria.Utilities;
 
 namespace SOTS.Items.Secrets
 {
@@ -220,6 +221,12 @@ namespace SOTS.Items.Secrets
 				return false;
             }
             return base.BeforeDrainMana(player);
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand)
+        {
+			if (pre == -1)
+				return false;
+            return base.PrefixChance(pre, rand);
         }
     }
 }
