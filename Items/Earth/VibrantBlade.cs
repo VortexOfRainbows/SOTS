@@ -21,7 +21,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 23;
+			Item.damage = 22;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 48;
 			Item.height = 48;
@@ -43,7 +43,7 @@ namespace SOTS.Items.Earth
 		}
 		public override int GetVoid(Player player)
 		{
-			return 7;
+			return 8;
 		}
 		public override void AddRecipes()
 		{

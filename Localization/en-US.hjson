@@ -1487,7 +1487,10 @@ Mods: {
 
 			EchoDisk: {
 				DisplayName: Echo Disc
-				Tooltip: ""
+				Tooltip: 
+				'''
+				Strikes with an additional disc that mirrors the first
+				'''
 			}
 
 			Geostorm: {
@@ -5424,7 +5427,11 @@ Mods: {
 
 			GuardianGreatsword: {
 				DisplayName: Guardian Greatsword
-				Tooltip: ""
+				Tooltip:
+					'''
+					Strike with 3 slashes
+					The third slash unleashes a wave blades that deal 50% damage
+					'''
 			}
 		}
 
@@ -7055,6 +7062,7 @@ Mods: {
 			BrassWhipProjectile.DisplayName: Brass Whip
 			BrassBall.DisplayName: Brass Ball
 			GuardianGreatswordSlash.DisplayName: Guardian Greatsword Slash
+			GuardianGreatswordBeam.DisplayName: Guardian Greatsword Beam
 		}
 
 		DamageClasses: {

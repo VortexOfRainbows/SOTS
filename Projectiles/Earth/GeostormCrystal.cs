@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.aiStyle = 0;
 			Projectile.width = 30;
 			Projectile.height = 38;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 3;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
 			Projectile.timeLeft = 360;

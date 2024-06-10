@@ -22,8 +22,8 @@ namespace SOTS.Items.Earth
 		{
 			Item.damage = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTime = 27;
-			Item.useAnimation = 27;
+			Item.useTime = 25;
+			Item.useAnimation = 25;
 			Item.DamageType = DamageClass.Ranged;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Blue;
@@ -37,6 +37,7 @@ namespace SOTS.Items.Earth
 			Item.consumable = false;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
+			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes()
 		{

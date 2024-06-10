@@ -17,7 +17,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 20;
+            Item.damage = 30;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 58;
             Item.height = 58;  
@@ -41,7 +41,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
         public override int GetVoid(Player player)
         {
-            return 6;
+            return 10;
         }
     }
 }

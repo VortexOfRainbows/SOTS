@@ -46,6 +46,7 @@ Update Objectives:
 15. Add Planetarium Crate
 16. Fix generation bug with Infernum and Leviathan area
 17. Upgrade item to the Hydrokinetic Antannae
+18. Add swallowed penny to SOTS
 
 
 ---WIP List---
@@ -82,14 +83,19 @@ N/A
 
 Daily Log:
 
-6/3/24 to 6/8/24
+6/3/24 to 6/9/24
 1. Evil Construct is more likely to spawn from Electromagnetic Lure when Earthen Construct is also present in the spawn table.
 2. All SOTS whips now reduce damage by 10% when piercing multiple enemies
 3. Finish Brass Whip attack effects. It should be noticeable stronger against groups of enemies than the other pre-hm whips, which is appropriate and intended for its tier.
 4. Evil construct should no longer lose its legs when frozen by Relocator beams
 5. Fix issue with how dreaming lamp spawned when broken. Such as the prefix and the spawn offset
 6. Increase Earth Grinder tool speed
-7. WIP Guardian Greatsword
+7. Vibrant Blade damage 23 -> 22, void cost 7 -> 8, max hits on ring 4 -> 3
+	1. This item proved too strong generally. These nerfs should bring it down a bit
+8. Geostorm Max pierce infinity -> 3
+	1. Takes down some of the potential for killing the evil bosses.
+9. Echo Disc usetime 27 -> 25, now has a tooltip and usesound
+10. WIP Guardian Greatsword... Right now it is about 50% less void efficient damage wise than the two boss evil blades.
 
 5/28/24 to 5/30/24
 1. WIP Brass Whip. Right now the hit effect is identical to Glow Whip
