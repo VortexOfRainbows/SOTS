@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
-using SOTS.Items.AbandonedVillage;
-using SOTS.Projectiles.Blades;
 using SOTS.Projectiles.Earth;
 using System;
 using Terraria;
