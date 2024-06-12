@@ -25,7 +25,7 @@ namespace SOTS.Items.AbandonedVillage
             Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;		
             Item.knockBack = 3.6f;
-            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.value = Item.sellPrice(0, 2, 0, 0);
             Item.rare = ItemRarityID.Green;
             Item.UseSound = null;
             Item.autoReuse = true;

@@ -56,7 +56,7 @@ N/A
 N/A
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder
+Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword
 Possibly Blade Wings
 Nerf Polaris 2nd Phase Bomb Drop Attack
 Nerf Polaris 2nd Phase Bullet Hell Attack
@@ -83,7 +83,7 @@ N/A
 
 Daily Log:
 
-6/3/24 to 6/9/24
+6/3/24 to 6/11/24
 1. Evil Construct is more likely to spawn from Electromagnetic Lure when Earthen Construct is also present in the spawn table.
 2. All SOTS whips now reduce damage by 10% when piercing multiple enemies
 3. Finish Brass Whip attack effects. It should be noticeable stronger against groups of enemies than the other pre-hm whips, which is appropriate and intended for its tier.
@@ -95,7 +95,10 @@ Daily Log:
 8. Geostorm Max pierce infinity -> 3
 	1. Takes down some of the potential for killing the evil bosses.
 9. Echo Disc usetime 27 -> 25, now has a tooltip and usesound
-10. WIP Guardian Greatsword... Right now it is about 50% less void efficient damage wise than the two boss evil blades.
+10. Finish Guardian Greatsword... Right now it is about 50% less void efficient damage wise than the two boss evil blades.
+11. HPU Advisor Resprite
+12. WIP Earth Breaker pickaxe
+13. Some localization fixes
 
 5/28/24 to 5/30/24
 1. WIP Brass Whip. Right now the hit effect is identical to Glow Whip

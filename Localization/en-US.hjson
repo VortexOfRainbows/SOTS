@@ -1487,10 +1487,7 @@ Mods: {
 
 			EchoDisk: {
 				DisplayName: Echo Disc
-				Tooltip: 
-				'''
-				Strikes with an additional disc that mirrors the first
-				'''
+				Tooltip: Strikes with an additional disc that mirrors the first
 			}
 
 			Geostorm: {
@@ -4042,7 +4039,7 @@ Mods: {
 
 			MinersPickaxe: {
 				DisplayName: Miner's Pickaxe
-				Tooltip: Finally, throwing pickaxe
+				Tooltip: "'Finally, throwing pickaxe'"
 			}
 
 			PyramidGenerator: {
@@ -5431,6 +5428,15 @@ Mods: {
 					'''
 					Strike with 3 slashes
 					The third slash unleashes a wave blades that deal 50% damage
+					'''
+			}
+
+			EarthBreaker: {
+				DisplayName: Earth Breaker
+				Tooltip:
+					'''
+					Can mine Meteorite
+					Right click to throw
 					'''
 			}
 		}
@@ -7063,6 +7069,7 @@ Mods: {
 			BrassBall.DisplayName: Brass Ball
 			GuardianGreatswordSlash.DisplayName: Guardian Greatsword Slash
 			GuardianGreatswordBeam.DisplayName: Guardian Greatsword Beam
+			EarthBreakerPickaxe.DisplayName: Earth Breaker Pickaxe
 		}
 
 		DamageClasses: {
