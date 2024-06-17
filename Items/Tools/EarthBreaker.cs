@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
 using SOTS.Projectiles.Earth;
+using SOTS.Void;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -9,14 +10,14 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Tools
 {
-	public class EarthBreaker : ModItem
+	public class EarthBreaker : VoidItem
 	{	
 		public override void SetStaticDefaults()
 		{
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			this.SetResearchCost(1);
 		}
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
             Item.damage = 15;
             Item.DamageType = DamageClass.Melee;  
@@ -50,7 +51,7 @@ namespace SOTS.Items.Tools
                 dust.color.A = 0;
             }
         }
-        public override bool CanUseItem(Player player)
+        public override bool BeforeUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
             {
@@ -75,6 +76,14 @@ namespace SOTS.Items.Tools
             if (player.altFunctionUse == 2)
                 Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 2 * Math.Sign(velocity.X) * player.gravDir, 1);
             return false;
+        }
+        public override int GetVoid(Player player)
+        {
+            return 10;
+        }
+        public override bool BeforeDrainMana(Player player)
+        {
+            return player.altFunctionUse == 2;
         }
     }
 }

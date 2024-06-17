@@ -112,13 +112,13 @@ namespace SOTS.Projectiles.Earth
                 }
                 Projectile.rotation += MathHelper.ToRadians(7 * (float)Math.Sqrt(Projectile.velocity.Length()));
                 Projectile.velocity *= 0.98f;
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), Projectile.width - 8, Projectile.height - 8, ModContent.DustType<PixelDust>());
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
-                dust.scale *= 1.2f;
-                dust.fadeIn = 0.1f;
+                dust.scale = 1.5f;
+                dust.fadeIn = 6f;
                 dust.color = ColorHelpers.EarthColor;
-                dust.alpha = 100;
+                dust.color.A = 0;
                 Projectile.velocity.Y += 0.1f;
             }
             Projectile.direction = overrideDirection.X > 0 ? 1 : -1;
@@ -165,14 +165,14 @@ namespace SOTS.Projectiles.Earth
             for (int i = 0; i < 360; i += 24)
             {
                 Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(i));
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<PixelDust>());
                 dust.noGravity = true;
-                dust.velocity *= 1.5f;
+                dust.velocity *= 1.6f;
                 dust.velocity += circularLocation * 0.3f;
-                dust.scale *= 1.4f;
-                dust.fadeIn = 0.1f;
+                dust.scale = 1.5f;
+                dust.fadeIn = 4.5f;
                 dust.color = ColorHelpers.EarthColor;
-                dust.alpha = 100;
+                dust.color.A = 0;
             }
         }
     }

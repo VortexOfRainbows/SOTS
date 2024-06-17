@@ -14,6 +14,8 @@ namespace SOTS.Items.Fishing
         public override void SetDefaults()
         {
             Item.damage = 22;
+            Item.width = 32;
+            Item.height = 36;
             Item.DamageType = DamageClass.Melee; 
             Item.useTime = 25;  
             Item.useAnimation = 25;   

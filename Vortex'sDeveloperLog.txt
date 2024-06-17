@@ -45,8 +45,9 @@ Update Objectives:
 14. Fish Bomb
 15. Add Planetarium Crate
 16. Fix generation bug with Infernum and Leviathan area
-17. Upgrade item to the Hydrokinetic Antannae
+17. Upgrade item to the Hydrokinetic Antennae
 18. Add swallowed penny to SOTS
+19. Remove autocancel from Machina Booster flight
 
 
 ---WIP List---
@@ -82,6 +83,10 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+6/16/24
+1. Zephyrous Zeppelin resprite by Kekcroc
+2. Earthbreaker pickaxe finished.
 
 6/3/24 to 6/11/24
 1. Evil Construct is more likely to spawn from Electromagnetic Lure when Earthen Construct is also present in the spawn table.

@@ -5436,7 +5436,8 @@ Mods: {
 				Tooltip:
 					'''
 					Can mine Meteorite
-					Right click to throw
+					Right click to throw a block-breaking pickaxe
+					Only consumes void when thrown
 					'''
 			}
 		}
