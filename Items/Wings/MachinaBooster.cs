@@ -237,8 +237,10 @@ namespace SOTS.Items.Wings
 		public override void PostUpdate()
 		{
 			if (creativeFlight)
-				if (Player.bodyFrame.Y == Player.bodyFrame.Height * 5 && !TilesBelow())
-					Player.bodyFrame.Y = Player.bodyFrame.Height * 6;
+            {
+                if (Player.bodyFrame.Y == Player.bodyFrame.Height * 5 && !TilesBelow())
+                    Player.bodyFrame.Y = Player.bodyFrame.Height * 6;
+            }
 		}
 		public bool TilesBelow()
 		{
@@ -259,6 +261,7 @@ namespace SOTS.Items.Wings
 		int[] dustID = new int[180];
 		int[] dustOwnerID = new int[180];
 		Vector2[] dustPos = new Vector2[180];
+		private bool AutoCancelFlight = false;
 		public void HaloDust()
 		{
 			if (CreativeFlightTier2)
@@ -401,12 +404,15 @@ namespace SOTS.Items.Wings
 				Player.velocity.X *= 0.8f;
 			}
 			if (TilesBelow())
-			{
-				if (!Player.controlDown && !Player.controlUp && !Player.controlLeft && !Player.controlRight && !Player.controlJump && Player.velocity.Y > -2)
-					creativeFlight = false;
-				if (Player.controlDown)
-					Player.gravity = Player.defaultGravity + 0.2f;
-			}
+            {
+                if (AutoCancelFlight)
+                {
+                    if (!Player.controlDown && !Player.controlUp && !Player.controlLeft && !Player.controlRight && !Player.controlJump && Player.velocity.Y > -2)
+                        creativeFlight = false;
+                }
+                if (Player.controlDown)
+                    Player.gravity = Player.defaultGravity + 0.2f;
+            }
 			else if (Player.velocity.Y == 0f)
 				Player.velocity.Y = -0.04f;
 		}

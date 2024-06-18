@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Earth
         {
             HitTiles();
             SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.4f);
-            for (int i = 0; i < 360; i += 24)
+            for (int i = 0; i < 360; i += 20)
             {
                 Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(i));
                 Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<PixelDust>());
@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Earth
                 dust.velocity *= 1.6f;
                 dust.velocity += circularLocation * 0.3f;
                 dust.scale = 1.5f;
-                dust.fadeIn = 4.5f;
+                dust.fadeIn = 4f;
                 dust.color = ColorHelpers.EarthColor;
                 dust.color.A = 0;
             }
