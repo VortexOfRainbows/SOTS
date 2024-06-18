@@ -47,7 +47,6 @@ Update Objectives:
 16. Fix generation bug with Infernum and Leviathan area
 17. Upgrade item to the Hydrokinetic Antennae
 18. Add swallowed penny to SOTS
-19. Remove autocancel from Machina Booster flight
 
 
 ---WIP List---
@@ -86,7 +85,9 @@ Daily Log:
 
 6/16/24
 1. Zephyrous Zeppelin resprite by Kekcroc
-2. Earthbreaker pickaxe finished.
+2. Earthbreaker pickaxe finished
+3. Gilded Blade Wings resprite from Petaniks
+4. Remove autocancelling upon landing from creative mode flight
 
 6/3/24 to 6/11/24
 1. Evil Construct is more likely to spawn from Electromagnetic Lure when Earthen Construct is also present in the spawn table.

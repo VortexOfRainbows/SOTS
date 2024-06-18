@@ -425,20 +425,21 @@ namespace SOTS.Common.PlayerDrawing
 
                     //Creative Flight
                     float sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 10 * j)) * 5.5f * direction;
-                    Vector2 creativeOffset = new Vector2(-60 * direction, 0).RotatedBy(MathHelper.ToRadians(proper * 18.5f + sinusoid + 2 * direction)) * scale;
+                    Vector2 creativeOffset = new Vector2(-58 * direction, 0).RotatedBy(MathHelper.ToRadians(proper * 18.5f + sinusoid + 2 * direction)) * scale;
                     float creativeRotation = -MathHelper.ToRadians(45 * direction - 21 * proper - sinusoid);
+                    creativeOffset.Y += 2;
 
                     //Normal Flight
                     sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 12 * j));
                     sinusoid *= (34 - j) * direction;
                     sinusoid += 12 * direction;
-                    Vector2 normalOffset = new Vector2(-(56 + bonusDist) * direction, 4).RotatedBy(MathHelper.ToRadians(proper * 6.5f + sinusoid)) * scale;
+                    Vector2 normalOffset = new Vector2(-(54 + bonusDist) * direction, 4).RotatedBy(MathHelper.ToRadians(proper * 6.5f + sinusoid)) * scale;
                     float normalRotation = -MathHelper.ToRadians(76 * direction - 13 * proper - sinusoid);
 
                     //Grounded
                     proper -= 6 * (int)direction;
                     sinusoid = MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2 + 12 * j)) * (16 - j) * direction;
-                    Vector2 groundedOffset = new Vector2(-(66 + bonusDist * scale) * direction, 4).RotatedBy(MathHelper.ToRadians(proper * 6 + sinusoid * 0.2f)) * scale;
+                    Vector2 groundedOffset = new Vector2(-(64 + bonusDist * scale) * direction, 4).RotatedBy(MathHelper.ToRadians(proper * 6 + sinusoid * 0.2f)) * scale;
                     groundedOffset.X *= 0.4f;
                     if (!Front)
                     {
@@ -466,7 +467,7 @@ namespace SOTS.Common.PlayerDrawing
                         finalOffset = Vector2.Lerp(groundedOffset, normalOffset, lerpAmt);
                         finalRotation = MathHelper.Lerp(groundedRotation, normalRotation, lerpAmt);
                         finalScale = MathHelper.Lerp(groundedScale, scale, lerpAmt);
-                        position.Y -= 22 * (1 - lerpAmt) * drawPlayer.gravDir;
+                        position.Y -= 24 * (1 - lerpAmt) * drawPlayer.gravDir;
                     }
                     Color finalColor1 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + j * 20), true), 0.85f);
                     Color finalColor2 = finalColor1;
@@ -529,9 +530,12 @@ namespace SOTS.Common.PlayerDrawing
                 data = dataMiddle[i];
                 data.shader = drawInfo.cWings;
                 drawInfo.DrawDataCache.Add(data);
-                data = dataFront[i];
-                data.shader = drawInfo.cWings;
-                drawInfo.DrawDataCache.Add(data);
+                if(dataFront.Count > i)
+                {
+                    data = dataFront[i];
+                    data.shader = drawInfo.cWings;
+                    drawInfo.DrawDataCache.Add(data);
+                }
             }
         }
     }
