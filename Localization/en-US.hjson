@@ -2735,7 +2735,7 @@ Mods: {
 
 			TwilightFishingPole: {
 				DisplayName: Twilight Fishing Pole
-				Tooltip: Casts two lines at once
+				Tooltip: Casts two lines at once and allows the catching of Planetarium Crates anywhere
 			}
 
 			TwilightShard: {
@@ -5440,6 +5440,24 @@ Mods: {
 					Only consumes void when thrown
 					'''
 			}
+
+			OtherworldCrate: {
+				DisplayName: Otherworld Crate
+				Tooltip: 
+				'''
+				Can only be reeled in by a Twilight Fishing Pole
+				{$CommonItemTooltip.RightClickToOpen}
+				'''
+			}
+
+			PlanetariumCrate: {
+				DisplayName: Planetarium Crate
+				Tooltip: 
+				'''
+				Can only be reeled in by a Twilight Fishing Pole
+				{$CommonItemTooltip.RightClickToOpen}
+				'''
+			}
 		}
 
 		ItemTooltip: {
@@ -6045,6 +6063,9 @@ Mods: {
 				MapEntry12: Gem Chest
 				MapEntry13: Locked Gem Chest
 			}
+
+			OtherworldCrateTile.MapEntry: Otherworld Crate Tile
+			PlanetariumCrateTile.MapEntry: Planetarium Crate Tile
 		}
 
 		WorldGeneration: {

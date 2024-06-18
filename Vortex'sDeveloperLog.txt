@@ -43,10 +43,9 @@ Update Objectives:
 12. Shimmer Item that upgrades the store for Archaeologist
 13. Sculpting Table item that allows crafting Statues
 14. Fish Bomb
-15. Add Planetarium Crate
-16. Fix generation bug with Infernum and Leviathan area
-17. Upgrade item to the Hydrokinetic Antennae
-18. Add swallowed penny to SOTS
+15. Fix generation bug with Infernum and Leviathan area
+16. Upgrade item to the Hydrokinetic Antennae
+17. Add swallowed penny to SOTS
 
 
 ---WIP List---
@@ -83,11 +82,12 @@ N/A
 
 Daily Log:
 
-6/16/24
+6/16/24 to 6/17/24
 1. Zephyrous Zeppelin resprite by Kekcroc
 2. Earthbreaker pickaxe finished
 3. Gilded Blade Wings resprite from Petaniks
 4. Remove autocancelling upon landing from creative mode flight
+5. Added Planetarium crates from the Twilight Fishing Pole.
 
 6/3/24 to 6/11/24
 1. Evil Construct is more likely to spawn from Electromagnetic Lure when Earthen Construct is also present in the spawn table.
@@ -102,7 +102,7 @@ Daily Log:
 	1. Takes down some of the potential for killing the evil bosses.
 9. Echo Disc usetime 27 -> 25, now has a tooltip and usesound
 10. Finish Guardian Greatsword... Right now it is about 50% less void efficient damage wise than the two boss evil blades.
-11. HPU Advisor Resprite
+11. HPU Advisor Resprite (WIP, not in current build)
 12. WIP Earth Breaker pickaxe
 13. Some localization fixes
 

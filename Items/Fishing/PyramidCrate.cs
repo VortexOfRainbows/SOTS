@@ -175,6 +175,10 @@ namespace SOTS.Items.Fishing
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(200, 180, 100), name);
 			TileObjectData.addTile(Type);
-		}
-	}
+        }
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
+    }
 }

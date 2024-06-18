@@ -1302,13 +1302,6 @@ namespace SOTS
 				itemDrop = ModContent.ItemType<TinyPlanetFish>();
 			if(Player.ZoneBeach && liquidType == 0 && ScaleCatch2(power, 0, 100, 100, 200))
 				itemDrop = ModContent.ItemType<PistolShrimp>();
-			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
-			//caughtType = mod.ItemType("ZephyriousZepline"); }
-			//if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
-			//caughtType = mod.ItemType("ScaledFish");}
-			//if (Player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(175))
-			//	caughtType = ModContent.ItemType<Items.SpecialDrops.SpikyPufferfish>();
-			//Fish Set 2
 
 			if (Player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(225))
 				itemDrop = ModContent.ItemType<CrabClaw>(); 
@@ -1341,11 +1334,16 @@ namespace SOTS
 				if (ScaleCatch2(power, 0, 200, 20, 200) && PyramidBiome && liquidType == 0)
 					itemDrop = ModContent.ItemType<PyramidCrate>(); 
 			}
+			else if (ScaleCatch2(power, 0, 200, 10, 100) && PyramidBiome && liquidType == 0)
+					itemDrop = ModContent.ItemType<PyramidCrate>(); 
 			else
 			{
-				if (ScaleCatch2(power, 0, 200, 10, 100) && PyramidBiome && liquidType == 0)
-					itemDrop = ModContent.ItemType<PyramidCrate>(); 
-			}
+				bool cratePotion = Player.HasBuff(BuffID.Crate);
+                if (attempt.playerFishingConditions.PoleItemType == ModContent.ItemType<TwilightFishingPole>() && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
+                {
+                    itemDrop = Main.hardMode ? ModContent.ItemType<OtherworldCrate>() : ModContent.ItemType<PlanetariumCrate>();
+                }
+            }
 
 		}
 		/** minPower is the minimum power required, and yields a 1/maxRate chance of catching
