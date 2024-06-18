@@ -7,9 +7,7 @@ using Terraria.ObjectData;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Potions;
 using SOTS.Items.Flails;
-using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
-using SOTS.NPCs.Boss;
 
 namespace SOTS.Items.Fishing
 {
