@@ -47,6 +47,7 @@ using SOTS.Items.Earth.Glowmoth;
 using SOTS.NPCs.Anomaly;
 using SOTS.NPCs.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
+using SOTS.NPCs.Chaos;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -665,7 +666,13 @@ namespace SOTS.Common.GlobalNPCs
 				if (!Main.dayTime)
 					rateMult = 3f;
 				if(player.ZoneOverworldHeight)
-					pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.006f * constructRateMultiplier * rateMult);
+                {
+                    pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.006f * constructRateMultiplier * rateMult);
+                    if (NPC.CountNPCS(ModContent.NPCType<Chimera>()) < 1)
+                        pool.Add(ModContent.NPCType<Chimera>(), 0.07f);
+					else
+						pool.Add(ModContent.NPCType<Chimera>(), 0.02f );
+                }
 				pool.Add(ModContent.NPCType<HallowTreasureSlime>(), 0.0075f);
 			}
 			if (player.ZoneBeach && !spawnInfo.Player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby

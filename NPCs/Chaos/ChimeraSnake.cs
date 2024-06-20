@@ -14,20 +14,10 @@ namespace SOTS.NPCs.Chaos
 			get => NPC.ai[0];
 			set => NPC.ai[0] = value;
 		}
-		private float aiCounter
-		{
-			get => NPC.ai[1];
-			set => NPC.ai[1] = value;
-		}
 		private float aiCounter2
 		{
 			get => NPC.ai[2];
 			set => NPC.ai[2] = value;
-		}
-		private float UniqueMultiplier
-		{
-			get => NPC.ai[3];
-			set => NPC.ai[3] = value;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -54,8 +44,6 @@ namespace SOTS.NPCs.Chaos
             NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.dontTakeDamage = true;
 		}
-		float counter2 = 0;
-		float randMult = 1f;
 		bool runOnce = true;
 		float[] counterArr = new float[6];
 		float[] randSeed1 = new float[6];
@@ -184,8 +172,6 @@ namespace SOTS.NPCs.Chaos
 			{
 				NPC.rotation = MathHelper.Lerp(NPC.rotation, toTarget.ToRotation(), 0.02f);
 			}
-			aiCounter += 1 * NPC.direction;
-
 			aiCounter2++;
 			if (aiCounter2 >= 210 && distanceToTarget2 < 480f)
 			{

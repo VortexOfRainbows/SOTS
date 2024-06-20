@@ -36,10 +36,11 @@ namespace SOTS.NPCs.Chaos
             NPC.value = 1800;
             NPC.npcSlots = .5f;
             NPC.HitSound = SoundID.NPCHit12;
-            NPC.DeathSound = SoundID.NPCDeath18;
-            AnimationType = NPCID.None;
+			NPC.DeathSound = SoundID.NPCDeath18;
+			NPC.rarity = 5;
+			AnimationType = NPCID.None;
             Banner = NPC.type;
-			BannerItem = ItemType<FluxSlimeBanner>();
+			BannerItem = ItemType<ChimeraBanner>();
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

@@ -5458,6 +5458,11 @@ Mods: {
 					{$CommonItemTooltip.RightClickToOpen}
 					'''
 			}
+
+			ChimeraBanner: {
+				DisplayName: Chimera Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

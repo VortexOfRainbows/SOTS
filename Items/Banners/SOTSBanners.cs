@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs;
 using SOTS.NPCs.Anomaly;
+using SOTS.NPCs.Chaos;
 using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Phase;
 using SOTS.NPCs.Tide;
@@ -673,6 +674,9 @@ namespace SOTS.Items.Banners
                     case 17:
                         type = NPCType<PhantarayBig>();
                         break;
+                    case 18:
+                        type = NPCType<Chimera>();
+                        break;
                     default:
 						return;
 				}
@@ -831,6 +835,14 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 17;
+        }
+    }
+    public class ChimeraBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 18;
         }
     }
 }
