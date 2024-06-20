@@ -712,9 +712,19 @@ namespace SOTS
                 }
             }
         }
+        public override void UpdateEquip(Item item, Player player)
+        {
+			if(item.type == ModContent.ItemType<GildedBladeWings>() || item.type == ModContent.ItemType<MachinaBooster>())
+			{
+				if (player.grappling[0] >= 0)
+				{
+					WingUpdate(-10, player, false);
+				}
+			}
+        }
         public override bool WingUpdate(int wings, Player player, bool inUse)
         {
-			if(wings == EquipLoader.GetEquipSlot(Mod, "MachinaBooster", EquipType.Wings) || wings == EquipLoader.GetEquipSlot(Mod, "GildedBladeWings", EquipType.Wings))
+			if(wings == EquipLoader.GetEquipSlot(Mod, "MachinaBooster", EquipType.Wings) || wings == EquipLoader.GetEquipSlot(Mod, "GildedBladeWings", EquipType.Wings) || wings == -10)
             {
                 MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
 				if (MachinaBoosterPlayer.creativeFlight)

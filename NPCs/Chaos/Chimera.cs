@@ -1,10 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Slime;
 using SOTS.Items.Void;
+using SOTS.Projectiles.Chaos;
+using SOTS.Projectiles.Pyramid;
 using System;
 using System.IO;
 using Terraria;
@@ -41,7 +44,7 @@ namespace SOTS.NPCs.Chaos
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/Chaos/ChimeraGoatHead");
-			int frameY = 0;
+			int frameY = GoatFrameY;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 16);
 			Rectangle frame = new Rectangle(0, frameY * texture.Height / 8, texture.Width, texture.Height / 8);
             Vector2 drawPos = NPC.Center - new Vector2(16 * NPC.spriteDirection, 20 - NPC.gfxOffY) - screenPos;
@@ -82,6 +85,7 @@ namespace SOTS.NPCs.Chaos
 		{
 			counter = reader.ReadInt32();
 		}
+		private int GoatFrameY = 0;
 		public override void AI()
 		{
 			NPC.TargetClosest(false);
@@ -94,6 +98,36 @@ namespace SOTS.NPCs.Chaos
 				{
                     NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height, NPCType<ChimeraSnake>(), 0, NPC.whoAmI);
                 }
+			}
+			if(counter > 60)
+			{
+				counter++;
+				if(counter >= 70)
+				{
+					NPC.netUpdate = true;
+					counter -= 10;
+					GoatFrameY++;
+                    if (GoatFrameY == 4)
+                    {
+						if(Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+							Vector2 away = -new Vector2(16 * NPC.direction, 20 - NPC.gfxOffY);
+                            Vector2 spawn = NPC.Center + away;
+							away.Y *= 0.6f;
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, away * 0.5f, ProjectileType<ChimeraFireball>(), damage2, 1f, Main.myPlayer, -3, -1f);
+                        }
+                    }
+                }
+				if(GoatFrameY >= 8)
+				{
+					GoatFrameY = 0;
+					counter = -60;
+				}
+			}
+			if (counter < 0)
+			{
+				GoatFrameY = 0;
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit)
