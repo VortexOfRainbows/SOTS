@@ -103,27 +103,33 @@ namespace SOTS.NPCs.Chaos
 			if (NPC.life > 0)
 			{
 				int num = 0;
-				while (num < hit.Damage / (double)NPC.lifeMax * 150.0)
+				while (num < hit.Damage / (double)NPC.lifeMax * 100.0)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Dirt, hit.HitDirection, -1f, NPC.alpha);
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Dirt, hit.HitDirection, -1f, NPC.alpha, Scale: 1.1f);
 					dust.color = new Color(140, 108, 37) * 1.7f;
 
 
-                    dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Stone, hit.HitDirection, -1f, NPC.alpha);
+                    short d = DustID.Stone;
+                    if (Main.rand.NextBool(2))
+                        d = DustID.Blood;
+                    dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, d, hit.HitDirection, -1f, NPC.alpha, Scale: 1.1f);
                     dust.color = new Color(138, 137, 138) * 1.3f;
                     num++;
-				}
+                }
 			}
 			else
 			{
-				for (int k = 0; k < 45; k++)
+				for (int k = 0; k < 35; k++)
                 {
                     Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Dirt, 2 * hit.HitDirection, -2f, NPC.alpha);
                     dust.color = new Color(140, 108, 37) * 1.7f;
 
 
-                    dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Stone, 2 * hit.HitDirection, -2f, NPC.alpha);
-                    dust.color = new Color(138, 137, 138) * 1.3f;
+                    short d = DustID.Stone;
+                    if (Main.rand.NextBool(2))
+                        d = DustID.Blood;
+                    dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, d, 2 * hit.HitDirection, -2f, NPC.alpha, Scale: 1.1f);
+					dust.color = new Color(138, 137, 138) * 1.3f;
                 }
 			}
 		}

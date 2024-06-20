@@ -131,15 +131,26 @@ namespace SOTS.NPCs.Chaos
 				NPC.active = false;
 			}
 			Vector2 distanceToOwner = owner.Center - NPC.Center;
-			Vector2 distanceToTarget = (player.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-            float distanceToTarget2 = (player.Center - NPC.Center).Length();
+			Vector2 toTarget = player.Center - NPC.Center;
+            float distanceToTarget2 = toTarget.Length();
+			toTarget = toTarget.SafeNormalize(Vector2.Zero);
 
-			rotateVector += distanceToTarget;
+            rotateVector += toTarget;
 			rotateVector = rotateVector.SafeNormalize(Vector2.Zero);
-			NPC.velocity *= 0.98f;
-			NPC.velocity.X += distanceToOwner.X * 0.0001f;
-			NPC.velocity.Y += distanceToOwner.Y * 0.0001f;
-			NPC.velocity.Y += -0.02f;
+			float returnToOwnerSpeed = 0.0005f;
+            if (aiCounter2 < 0)
+            {
+                NPC.velocity *= 0.985f;
+                NPC.velocity += toTarget * 0.25f;
+                returnToOwnerSpeed = 0.0002f;
+            }
+			else
+			{
+                NPC.velocity *= 0.98f;
+            }
+            NPC.velocity.X += distanceToOwner.X * returnToOwnerSpeed;
+            NPC.velocity.Y += distanceToOwner.Y * returnToOwnerSpeed;
+            NPC.velocity.Y += -0.02f;
 			NPC.velocity += rotateVector * 0.02f;
 			if(aiCounter2 < 0)
 			{
@@ -166,17 +177,19 @@ namespace SOTS.NPCs.Chaos
 			}
 
 			if(aiCounter2 >= 0)
-				NPC.rotation = distanceToTarget.ToRotation();
+            {
+                NPC.rotation = toTarget.ToRotation();
+            }
 			else
 			{
-				NPC.rotation = MathHelper.Lerp(NPC.rotation, distanceToTarget.ToRotation(), 0.02f);
+				NPC.rotation = MathHelper.Lerp(NPC.rotation, toTarget.ToRotation(), 0.02f);
 			}
 			aiCounter += 1 * NPC.direction;
 
 			aiCounter2++;
 			if (aiCounter2 >= 210 && distanceToTarget2 < 480f)
 			{
-				NPC.velocity += rotateVector * 12f;
+				NPC.velocity += rotateVector * 14f;
 				NPC.netUpdate = true;
 				aiCounter2 = -30;
 				SOTSUtils.PlaySound(SoundID.Item96, (int)NPC.Center.X, (int)NPC.Center.Y, 0.6f, -0.3f);
@@ -222,43 +235,39 @@ namespace SOTS.NPCs.Chaos
 			if (Main.netMode == NetmodeID.Server)
 				return;
 			if (NPC.life > 0)
-			{
-				int num = 0;
-				while ((double)num < hit.Damage / (double)NPC.lifeMax * 30.0)
-				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)hit.HitDirection * 0.75f, -1f, NPC.alpha, default, 1f);
-					num++;
-				}
-			}
-			else
+				return;
+            for (int k = 0; k < 12; k++)
             {
-                for (int k = 0; k < 15; k++)
+                Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.t_Cactus, 1.5f * hit.HitDirection, -2f, NPC.alpha, default, 1.3f);
+                dust.velocity *= 0.5f;
+            }
+            bool flip = false;
+            if (Math.Abs(MathHelper.WrapAngle(NPC.rotation)) <= MathHelper.ToRadians(90))
+            {
+                flip = true;
+            }
+            Vector2 myCenter = NPC.Center - new Vector2(12, 2 * (flip ? -1 : 1)).RotatedBy(NPC.rotation);
+            Vector2 p0 = ownerCenter;
+            Vector2 p1 = ownerCenter - new Vector2(120 * OwnerDir, 16); //Add some variety to the movement of the curve using a sinusoidal function
+            Vector2 p2 = myCenter - new Vector2(140, 32 * (flip ? -1 : 1)).RotatedBy(NPC.rotation);
+            Vector2 p3 = myCenter;
+            int segments = 36;
+            for (int i = 0; i < segments; i++)
+            {
+                float t = i / (float)segments;
+                Vector2 drawPos2 = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
+                for (int k = 0; k < Main.rand.Next(1, 3); k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkSlime, (float)(1.5f * hit.HitDirection), -2f, NPC.alpha, default, 1f);
+					short d = DustID.t_Cactus;
+                    if (Main.rand.NextBool(2))
+                        d = DustID.Blood;
+                    Dust dust = Dust.NewDustDirect(drawPos2 - new Vector2(5), 0, 0, d, 1.5f * hit.HitDirection, -2f, NPC.alpha, default, 1.3f);
+					dust.velocity *= 0.5f;
                 }
-                bool flip = false;
-                if (Math.Abs(MathHelper.WrapAngle(NPC.rotation)) <= MathHelper.ToRadians(90))
-                {
-                    flip = true;
-                }
-                Vector2 myCenter = NPC.Center - new Vector2(12, 2 * (flip ? -1 : 1)).RotatedBy(NPC.rotation);
-                Vector2 p0 = ownerCenter;
-                Vector2 p1 = ownerCenter - new Vector2(120 * OwnerDir, 16); //Add some variety to the movement of the curve using a sinusoidal function
-                Vector2 p2 = myCenter - new Vector2(140, 32 * (flip ? -1 : 1)).RotatedBy(NPC.rotation);
-                Vector2 p3 = myCenter;
-                int segments = 36;
-				for (int i = 0; i < segments; i++)
-				{
-					float t = i / (float)segments;
-					Vector2 drawPos2 = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
-
-					for (int k = 0; k < Main.rand.Next(1, 3); k++)
-					{
-						Dust.NewDust(drawPos2 - new Vector2(5), 0, 0, DustID.PinkSlime, (float)(1.5f * hit.HitDirection), -2f, NPC.alpha, default, 1f);
-					}
-				}
-			}
-		}
+                Gore.NewGore(NPC.GetSource_Death(), drawPos2 + Vector2.UnitY * -2f, NPC.velocity, ModGores.GoreType("Gores/Chimera/ChimeraSnakeBodyGore"), NPC.scale);
+            }
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Chimera/ChimeraSnakeHeadGore"), NPC.scale);
+        }
         public override bool PreKill()
 		{
 			return false;
