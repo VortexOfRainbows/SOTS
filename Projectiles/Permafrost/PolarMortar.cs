@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Permafrost
 				}
 				if(Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, -Projectile.velocity * 0.5f + new Vector2(0, -2) + Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<PolarisMines>(), Projectile.damage, 0, Main.myPlayer, (int)(Projectile.ai[1] % 2), Main.rand.NextFloat(120));
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, -Projectile.velocity * 0.5f + new Vector2(0, -2) + Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<PolarisMines>(), (int)(Projectile.damage * 0.8f), 0, Main.myPlayer, (int)(Projectile.ai[1] % 2), Main.rand.NextFloat(120));
                 }
             }
             if (runOnce)

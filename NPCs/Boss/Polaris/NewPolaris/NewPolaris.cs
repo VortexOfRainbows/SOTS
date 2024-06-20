@@ -1,32 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Metadata;
-using System.Security.Permissions;
-using Ionic.Zip;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
-using SOTS.Dusts;
-using SOTS.FakePlayer;
 using SOTS.Items.Banners;
-using SOTS.Items.Chaos;
-using SOTS.Items.ChestItems;
 using SOTS.Items.Permafrost;
 using SOTS.Prim;
 using SOTS.Prim.Trails;
-using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Permafrost;
 using SOTS.WorldgenHelpers;
-using Steamworks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.Items;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace SOTS.NPCs.Boss.Polaris.NewPolaris
 {	[AutoloadBossHead]
@@ -82,7 +67,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         {
             if(needsASecondPhaseTransition && !SecondPhase)
             {
-                modifiers.SourceDamage *= 0.6f;
+                modifiers.SourceDamage *= 0.7f;
                 modifiers.FinalDamage *= 0.9f;
                 modifiers.Defense += 0.25f;
             }
@@ -278,14 +263,6 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                 Weapon.Draw(spriteBatch, screenPos, drawColor);
             }
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-
-        }
-        public override void FindFrame(int frameHeight)
-        {
-
-        }
         public float coreAttackProgress = 0f;
         public float TicksPerCoreAnimation
         {
@@ -666,7 +643,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                                     {
                                         SOTSUtils.PlaySound(SoundID.Item42, NPC.Center, 1.0f, -1f);
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Main.rand.NextVector2Circular(1, 1), ModContent.ProjectileType<PolarisMines>(), NPC.GetBaseDamage() / 2, 0, Main.myPlayer, ((int)AI1 / (shotCooldown * 2)) % 2, 180 + Main.rand.Next(60));
+                                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Main.rand.NextVector2Circular(1, 1), ModContent.ProjectileType<PolarisMines>(), (int)(NPC.GetBaseDamage() / 2 * 0.8f), 0, Main.myPlayer, ((int)AI1 / (shotCooldown * 2)) % 2, 180 + Main.rand.Next(60));
                                     }    
                                     //else
                                     //    SpawnShard(1, 0f);
@@ -896,10 +873,10 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                     {
                         AI2++;
                         int shotRate = 4;
-                        int mortarRate = 7;
+                        int mortarRate = 8;
                         if (Main.expertMode)
                         {
-                            mortarRate = 6;
+                            mortarRate = 7;
                             shotRate = 3;
                         }
                         if(AI2 < 420)
@@ -1090,7 +1067,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                 for (int i= 0; i < 5; i++)
                 {
                     Vector2 outward = new Vector2(6.4f + i * 3.6f, 0).RotatedBy(toPlayer.ToRotation()) + Main.rand.NextVector2Circular(3f, 3f);
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, outward, ModContent.ProjectileType<PolarisMines>(), NPC.GetBaseDamage() / 2, 0, Main.myPlayer, Main.rand.Next(2), Main.rand.Next(60));
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, outward, ModContent.ProjectileType<PolarisMines>(), (int)(NPC.GetBaseDamage() / 2 * 0.8f), 0, Main.myPlayer, Main.rand.Next(2), Main.rand.Next(60));
                 }
             }
         }
@@ -1467,7 +1444,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 4, outward * 20, ModContent.ProjectileType<PolarisMines>(), owner.GetBaseDamage() / 2, 0, Main.myPlayer, 1 - colorStyle, 400);
+                            Projectile.NewProjectile(owner.GetSource_FromAI(), position + outward * 4, outward * 20, ModContent.ProjectileType<PolarisMines>(), (int)(owner.GetBaseDamage() / 2 * 0.8f), 0, Main.myPlayer, 1 - colorStyle, 400);
                         }
                         SOTSUtils.PlaySound(SoundID.Item61, position, 1.10f, -0.1f);
                     }

@@ -57,8 +57,6 @@ N/A
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword
 Possibly Blade Wings
-Nerf Polaris 2nd Phase Bomb Drop Attack
-Nerf Polaris 2nd Phase Bullet Hell Attack
 
 ---Visual Upgrade Needed---
 Gilded Blade Wings coloring for blade part
@@ -81,6 +79,12 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+6/20/24
+1. Polaris Nerfs: 
+	1. While awaiting transition to second phase, Polaris incoming source damage multiplier 0.6 -> 0.7
+	2. Reduced rate of Mortar drops in the mortar drop attack (7, 6, 6) -> (8, 7, 7)
+	3. Polaris Mines now deal 100% -> 80% of Polaris damage
 
 6/16/24 to 6/20/24
 1. Zephyrous Zeppelin resprite by Kekcroc
