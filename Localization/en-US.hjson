@@ -7094,8 +7094,8 @@ Mods: {
 			GuardianGreatswordSlash.DisplayName: Guardian Greatsword Slash
 			GuardianGreatswordBeam.DisplayName: Guardian Greatsword Beam
 			EarthBreakerPickaxe.DisplayName: Earth Breaker Pickaxe
-			ChimeraFireball.DisplayName: Chimera Fireball
-			ChimeraFireballSmall.DisplayName: Chimera Fireball Small
+			ChimeraFireball.DisplayName: Shadow Fireball
+			ChimeraFireballSmall.DisplayName: Shadow Fireball
 		}
 
 		DamageClasses: {

@@ -27,10 +27,10 @@ namespace SOTS.NPCs.Chaos
         public override void SetDefaults()
 		{
 			NPC.aiStyle = NPCAIStyleID.Unicorn;
-            NPC.lifeMax = 600;  
+            NPC.lifeMax = 1000;  
             NPC.damage = 70; 
             NPC.defense = 36;  
-            NPC.knockBackResist = 0.1f;
+            NPC.knockBackResist = 0.04f;
             NPC.width = 88;
             NPC.height = 66;
             NPC.value = 1800;
@@ -44,17 +44,19 @@ namespace SOTS.NPCs.Chaos
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = (Texture2D)Request<Texture2D>("SOTS/NPCs/Chaos/ChimeraGoatHead");
-			int frameY = GoatFrameY;
+            Texture2D textureG = (Texture2D)Request<Texture2D>("SOTS/NPCs/Chaos/ChimeraGoatHeadGlow");
+            int frameY = GoatFrameY;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 16);
 			Rectangle frame = new Rectangle(0, frameY * texture.Height / 8, texture.Width, texture.Height / 8);
             Vector2 drawPos = NPC.Center - new Vector2(16 * NPC.spriteDirection, 20 - NPC.gfxOffY) - screenPos;
-            spriteBatch.Draw(texture, drawPos, frame, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : 0, 0f); //This draws the actual ball
+            spriteBatch.Draw(texture, drawPos, frame, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : 0, 0f);
+            spriteBatch.Draw(textureG, drawPos, frame, ColorHelpers.ChaosPink, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : 0, 0f);
             return true;
 		}
 		public override bool PreAI()
-		{
-			NPC.TargetClosest(true);
-			NPC.velocity.X *= 0.99f;
+        {
+            NPC.TargetClosest(false);
+            NPC.velocity.X *= 0.99f;
 			return true;
 		}
         public override void FindFrame(int frameHeight)
@@ -88,8 +90,8 @@ namespace SOTS.NPCs.Chaos
 		private int GoatFrameY = 0;
 		public override void AI()
 		{
-			NPC.TargetClosest(false);
-			NPC.direction = NPC.spriteDirection = MathF.Sign(NPC.velocity.X);
+			if (MathF.Sign(NPC.velocity.X) == MathF.Sign(NPC.oldVelocity.X))
+				NPC.direction = NPC.spriteDirection = MathF.Sign(NPC.velocity.X);
 			counter++;
 			if (runOnce) 
 			{
@@ -122,7 +124,7 @@ namespace SOTS.NPCs.Chaos
 				if(GoatFrameY >= 8)
 				{
 					GoatFrameY = 0;
-					counter = -60;
+					counter = -90;
 				}
 			}
 			if (counter < 0)
@@ -165,7 +167,9 @@ namespace SOTS.NPCs.Chaos
                     dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, d, 2 * hit.HitDirection, -2f, NPC.alpha, Scale: 1.1f);
 					dust.color = new Color(138, 137, 138) * 1.3f;
                 }
-			}
+                Gore.NewGore(NPC.GetSource_Death(), NPC.Center + Vector2.UnitX * NPC.width / 3 * NPC.direction - new Vector2(20, 20), NPC.velocity, ModGores.GoreType("Gores/Chimera/ChimeraGore1"), NPC.scale);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.Center - Vector2.UnitX * NPC.width / 3 * NPC.direction - new Vector2(20, 20), NPC.velocity, ModGores.GoreType("Gores/Chimera/ChimeraGore2"), NPC.scale);
+            }
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
