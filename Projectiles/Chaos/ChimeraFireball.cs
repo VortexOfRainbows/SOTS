@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using System;
 
 namespace SOTS.Projectiles.Chaos
 {    
@@ -36,12 +37,35 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void OnKill(int timeLeft)
         {
-
+            if(Main.myPlayer == Projectile.owner)
+            {
+                for(int i = 0; i < 8; i ++)
+                {
+                    Vector2 circular = new Vector2(2, 0).RotatedBy(i * MathHelper.PiOver4);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<ChimeraFireballSmall>(), Projectile.damage, 1f, Main.myPlayer, Projectile.ai[0]);
+                }
+            }
 		}
 		public override void AI()
-		{
-
-		}
+        {
+            int target = (int)Projectile.ai[0];
+            Player player = Main.player[target];
+            if (!player.active || player.dead)
+            {
+                Projectile.Kill();
+            }
+            else
+            {
+                float speedMult = Projectile.ai[1] / 60f;
+                if (speedMult > 1)
+                    speedMult = 1;
+                Vector2 hoverPosition = player.Center - new Vector2(0, 200);
+                Vector2 toPlayer = hoverPosition - Projectile.Center;
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, toPlayer.SafeNormalize(Vector2.Zero) * (2 + speedMult + Projectile.velocity.Length()), 0.02f * (1 + speedMult));
+                Projectile.ai[1]++;
+                Projectile.rotation += MathHelper.ToRadians(4) * Math.Sign(Projectile.velocity.X) * MathF.Sqrt(Math.Abs(Projectile.velocity.X));
+            }
+        }
     }
     public class ChimeraFireballSmall : ModProjectile
     {
@@ -78,7 +102,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override void AI()
         {
-
+            Projectile.rotation += MathHelper.ToRadians(4);
         }
     }
 }

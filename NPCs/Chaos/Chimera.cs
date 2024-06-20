@@ -115,7 +115,7 @@ namespace SOTS.NPCs.Chaos
 							Vector2 away = -new Vector2(16 * NPC.direction, 20 - NPC.gfxOffY);
                             Vector2 spawn = NPC.Center + away;
 							away.Y *= 0.6f;
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, away * 0.5f, ProjectileType<ChimeraFireball>(), damage2, 1f, Main.myPlayer, -3, -1f);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), spawn, away * 0.5f, ProjectileType<ChimeraFireball>(), damage2, 1f, Main.myPlayer, NPC.target);
                         }
                     }
                 }
