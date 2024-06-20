@@ -5443,20 +5443,20 @@ Mods: {
 
 			OtherworldCrate: {
 				DisplayName: Otherworld Crate
-				Tooltip: 
-				'''
-				Can only be reeled in by a Twilight Fishing Pole
-				{$CommonItemTooltip.RightClickToOpen}
-				'''
+				Tooltip:
+					'''
+					Can only be reeled in by a Twilight Fishing Pole
+					{$CommonItemTooltip.RightClickToOpen}
+					'''
 			}
 
 			PlanetariumCrate: {
 				DisplayName: Planetarium Crate
-				Tooltip: 
-				'''
-				Can only be reeled in by a Twilight Fishing Pole
-				{$CommonItemTooltip.RightClickToOpen}
-				'''
+				Tooltip:
+					'''
+					Can only be reeled in by a Twilight Fishing Pole
+					{$CommonItemTooltip.RightClickToOpen}
+					'''
 			}
 		}
 
@@ -6274,6 +6274,8 @@ Mods: {
 			PhantarayBig.DisplayName: Phantaray
 			PhantarayCore.DisplayName: Phantaray
 			NewPolaris.DisplayName: Polaris
+			Chimera.DisplayName: Chimera
+			ChimeraSnake.DisplayName: Chimera Snake
 		}
 
 		Bestiary: {

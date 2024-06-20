@@ -82,12 +82,13 @@ N/A
 
 Daily Log:
 
-6/16/24 to 6/17/24
+6/16/24 to 6/19/24
 1. Zephyrous Zeppelin resprite by Kekcroc
 2. Earthbreaker pickaxe finished
 3. Gilded Blade Wings resprite from Petaniks
 4. Remove autocancelling upon landing from creative mode flight
 5. Added Planetarium crates from the Twilight Fishing Pole.
+6. WIP Chimera
 
 6/3/24 to 6/11/24
 1. Evil Construct is more likely to spawn from Electromagnetic Lure when Earthen Construct is also present in the spawn table.
