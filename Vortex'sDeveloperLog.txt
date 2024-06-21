@@ -45,6 +45,7 @@ Update Objectives:
 14. Fish Bomb
 15. Fix generation bug with Infernum and Leviathan area
 16. Upgrade item to the Hydrokinetic Antennae
+17. Look into vibrant pistol autofire set bonus on Vibrant Armor (might be obsolete due to autofire on all weapons)
 
 
 ---WIP List---
@@ -79,7 +80,7 @@ N/A
 
 Daily Log:
 
-6/20/24
+6/20/24 to 6/21/24
 1. Polaris Nerfs: 
 	1. While awaiting transition to second phase, Polaris incoming source damage multiplier 0.6 -> 0.7
 	2. Reduced rate of Mortar drops in the mortar drop attack (7, 6, 6) -> (8, 7, 7)
@@ -88,6 +89,8 @@ Daily Log:
 3. Slightly modified Hellbreaker to have better visual clarity
 4. Tested: Chimera works in Multiplayer
 5. Fix issue where Elemental Armor / Particle Relocator caused visual desync in Multiplayer by teleporting multiple players
+5. Added Bundle of Snakes, a 5% drop from Chimera and works in Multiplayer
+6. Some misc. Localization fixes and changes
 
 6/16/24 to 6/20/24
 1. Zephyrous Zeppelin resprite by Kekcroc

@@ -562,7 +562,7 @@ Mods: {
 			}
 
 			DanceOfDeath: {
-				DisplayName: Dance Of Death
+				DisplayName: Dance of Death
 				Tooltip: Cast many demon scythes around you
 			}
 
@@ -2370,7 +2370,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases life regeneration by 1 during the day
-					Grants a Blooming Hook to all minions
+					Attaches a Blooming Hook to all minions
 					'''
 			}
 
@@ -3685,7 +3685,7 @@ Mods: {
 			}
 
 			JarOfPeanuts: {
-				DisplayName: Jar Of Peanuts
+				DisplayName: Jar of Peanuts
 				Tooltip: Summons the Putrid Pinky
 			}
 
@@ -5473,6 +5473,15 @@ Mods: {
 					'Gulp!'
 					'''
 			}
+
+			BundleOfSnakes: {
+				DisplayName: Bundle of Snakes
+				Tooltip:
+					'''
+					Increases life regeneration by 1 during the night
+					Attaches a Venomous Snake to all minions
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7111,6 +7120,7 @@ Mods: {
 			EarthBreakerPickaxe.DisplayName: Earth Breaker Pickaxe
 			ChimeraFireball.DisplayName: Shadow Fireball
 			ChimeraFireballSmall.DisplayName: Shadow Fireball
+			BundleSnakeMinion.DisplayName: Bundle Snake Minion
 		}
 
 		DamageClasses: {

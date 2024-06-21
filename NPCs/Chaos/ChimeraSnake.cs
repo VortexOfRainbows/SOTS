@@ -77,13 +77,13 @@ namespace SOTS.NPCs.Chaos
                     float rotation = toNext.ToRotation();
                     float distance = toNext.Length();
                     drawColor = Lighting.GetColor((int)drawPos2.X / 16, (int)(drawPos2.Y / 16));
-                    spriteBatch.Draw(texture, drawPos2 - screenPos, null, NPC.GetAlpha(drawColor), rotation, drawOrigin, NPC.scale * new Vector2((distance + 4) / (float)texture.Width, 1), SpriteEffects.None, 0f); //Terraria's main drawing function
+                    spriteBatch.Draw(texture, drawPos2 - screenPos, null, NPC.GetAlpha(drawColor), rotation, drawOrigin, NPC.scale * new Vector2((distance + 4) / (float)texture.Width, 1), SpriteEffects.None, 0f); 
 				}
 			}
 			Vector2 drawPos = NPC.Center - screenPos;
 			texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 6);
-            spriteBatch.Draw(texture, drawPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : 0, 0f); //This draws the actual ball
+            spriteBatch.Draw(texture, drawPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : 0, 0f);
 			return false; 
 		}
 		public override bool PreAI()

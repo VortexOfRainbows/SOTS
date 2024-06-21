@@ -19,7 +19,6 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Blooming Hook");
 			Main.projFrames[Projectile.type] = 14;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
@@ -47,7 +46,7 @@ namespace SOTS.Projectiles.Nature
 		}
 		public void Draw(SpriteBatch spriteBatch, Color drawColor)
         {
-			if (pastParent != null)
+			if (pastParent != null && Projectile.timeLeft >= 4)
 			{
 				Player player = Main.player[Projectile.owner];
 				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Nature/BloomingVine");
@@ -74,11 +73,11 @@ namespace SOTS.Projectiles.Nature
 						Vector2 drawPos2 = pos - Main.screenPosition;
 						spriteBatch.Draw(texture, drawPos2 + dynamicAddition, null, Projectile.GetAlpha(drawColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 					}
-				}
-			}
-			Vector2 drawPos = Projectile.Center - Main.screenPosition;
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * Projectile.height, Projectile.width, Projectile.height), Projectile.GetAlpha(drawColor), Projectile.rotation, Projectile.Size/2, Projectile.scale, SpriteEffects.None, 0f);
-		}
+                }
+                Vector2 drawPos = Projectile.Center - Main.screenPosition;
+                spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * Projectile.height, Projectile.width, Projectile.height), Projectile.GetAlpha(drawColor), Projectile.rotation, Projectile.Size / 2, Projectile.scale, SpriteEffects.None, 0f);
+            }
+        }
 		int frame = 0;
 		Vector2 rotateVector = new Vector2(4, 0);
 		Projectile pastParent = null;
@@ -109,10 +108,6 @@ namespace SOTS.Projectiles.Nature
 			float distanceFromTarget = 640f;
 			Vector2 targetCenter = Projectile.Center;
 			bool foundTarget = false;
-			if (Projectile.timeLeft > 100)
-			{
-				Projectile.timeLeft = 300;
-			}
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
@@ -158,10 +153,17 @@ namespace SOTS.Projectiles.Nature
 			Projectile owner = getParent();
 			Vector2 target = FindTarget();
 			counter++;
-			if (owner == null || !owner.active || player.dead || !player.active || Projectile.damage != modPlayer.symbioteDamage)
+			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.Kill();
-				return;
+                if (owner == null || !owner.active || player.dead || !player.active || Projectile.damage != modPlayer.symbioteDamage)
+                {
+                    Projectile.Kill();
+                    return;
+                }
+            }
+			else
+			{
+				Projectile.timeLeft = 100;
 			}
 			Vector2 distanceToOwner = owner.Center - Projectile.Center;
 			Vector2 distanceToOwner2 = owner.Center - Projectile.Center;

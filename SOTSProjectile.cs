@@ -118,7 +118,7 @@ namespace SOTS
 		public int petAdvisorID = -1;
 		private float AffixAI0 = 0;
 		public bool hasFrostBloomed = false;
-		public int bloomingHookAssignment = -1;
+		public int bloomingHookAssignment = -1, SnakeAssignment = -1;
 		private Vector2 initialVelo = Vector2.Zero;
 		public static void SetTimeFreeze(Player player, Projectile proj, int time)
 		{
@@ -538,25 +538,40 @@ namespace SOTS
 		public void NatureSlimeUnit(Projectile projectile)
 		{
 			Player player = Main.player[projectile.owner];
-			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) && projectile.damage > 0)
+			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) && projectile.damage > 0 && projectile.owner == Main.myPlayer)
 			{
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-				if(modPlayer.symbioteDamage > 0 && projectile.owner == Main.myPlayer)
+				if (modPlayer.symbioteDamage > 0)
 				{
 					if (bloomingHookAssignment == -1)
 					{
-						bloomingHookAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
+						bloomingHookAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
 					}
 					Projectile hook = Main.projectile[bloomingHookAssignment];
 					if (!hook.active || hook.type != ModContent.ProjectileType<BloomingHookMinion>())
 					{
-						bloomingHookAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
+						bloomingHookAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
 					}
 					hook.timeLeft = 6;
 				}
-			}
-			else
-				return;
+				else
+					bloomingHookAssignment = -1;
+                if (modPlayer.BundleSnakeDamage > 0)
+				{
+					if (SnakeAssignment == -1)
+					{
+						SnakeAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BundleSnakeMinion>(), modPlayer.BundleSnakeDamage, 1f, Main.myPlayer, projectile.identity);
+					}
+					Projectile hook = Main.projectile[SnakeAssignment];
+					if (!hook.active || hook.type != ModContent.ProjectileType<BundleSnakeMinion>())
+					{
+						SnakeAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BundleSnakeMinion>(), modPlayer.BundleSnakeDamage, 1f, Main.myPlayer, projectile.identity);
+					}
+					hook.timeLeft = 6;
+				}
+				else
+					SnakeAssignment = -1;
+            }
         }
         public override void OnKill(Projectile projectile, int timeLeft)
         {

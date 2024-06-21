@@ -347,8 +347,12 @@ namespace SOTS.Common.GlobalNPCs
 			if (npc.type == ModContent.NPCType<NatureSlime>())
 			{
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BotanicalSymbiote>(), 50, 1, 1));
-			}
-			if (npc.type == ModContent.NPCType<TwilightScouter>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>())
+            }
+            if (npc.type == ModContent.NPCType<Chimera>())
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BundleOfSnakes>(), 20, 1, 1));
+            }
+            if (npc.type == ModContent.NPCType<TwilightScouter>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>())
 			{
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GravityAnchor>(), 20, 1, 1));
 			}
