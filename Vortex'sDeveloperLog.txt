@@ -86,6 +86,8 @@ Daily Log:
 	3. Polaris Mines now deal 100% -> 80% of Polaris damage
 2. Add Swallowed Penny and modify localization for Mammon's ring
 3. Slightly modified Hellbreaker to have better visual clarity
+4. Tested: Chimera works in Multiplayer
+5. Fix issue where Elemental Armor / Particle Relocator caused visual desync in Multiplayer by teleporting multiple players
 
 6/16/24 to 6/20/24
 1. Zephyrous Zeppelin resprite by Kekcroc

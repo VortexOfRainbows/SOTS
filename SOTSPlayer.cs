@@ -440,7 +440,7 @@ namespace SOTS
 			}
 			if (SOTS.ArmorSetHotKey.JustPressed)
             {
-                if (!Player.HasBuff<ChaosState2>() && ElementalBlink && canBlink)
+                if (!Player.HasBuff<ChaosState2>() && ElementalBlink && canBlink && Player.whoAmI == Main.myPlayer)
                 {
 					Vector2 finalLocation = Main.MouseWorld - new Vector2(0, Player.height / 2);
                     Vector2 toCursor = finalLocation - Player.Center;

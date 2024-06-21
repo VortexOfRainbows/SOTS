@@ -278,7 +278,8 @@ namespace SOTS.Projectiles.Chaos
                         player.AddBuff(ModContent.BuffType<ChaosState2>(), 900);
                     }
                     player.Teleport(destination.Value, 1);
-                    NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, destination.Value.X, destination.Value.Y, 1);
+                    if(Projectile.owner == Main.myPlayer)
+                        NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, destination.Value.X, destination.Value.Y, 1);
                 }
                 SOTSUtils.PlaySound(SoundID.Item72, (int)player.Center.X, (int)player.Center.Y, 1.2f, 0.1f);
                 for (int i = 0; i < 20; i++)
@@ -301,7 +302,6 @@ namespace SOTS.Projectiles.Chaos
             Vector2 pointPoisition = Vector2.Zero;
             pointPoisition.X = finalDestination.X;
             pointPoisition.Y = finalDestination.Y - (player.height * 0.5f);
-            //player.LimitPointToPlayerReachableArea(ref pointPoisition);
             if (!(pointPoisition.X > 50f) || !(pointPoisition.X < (float)(Main.maxTilesX * 16 - 50)) || !(pointPoisition.Y > 50f) || !(pointPoisition.Y < (float)(Main.maxTilesY * 16 - 50)))
             {
                 return null;
