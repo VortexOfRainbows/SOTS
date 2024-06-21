@@ -71,6 +71,7 @@ namespace SOTS.Items.Planetarium.Furniture
 		}
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
+            SOTSTile.TryDroppingSwallowedPenny(i, j, Type);
             SOTSUtils.PlaySound(SoundID.Shatter, i * 16, j * 16);
             Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/SkyPotGore1"), 1f);
             Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/SkyPotGore2"), 1f);

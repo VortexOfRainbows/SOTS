@@ -766,39 +766,9 @@ namespace SOTS.Void
 					voidMeter += voidGain;
 					if(VoidGenerateMoney > 0 && Main.myPlayer == Player.whoAmI)
                     {
-						float generateMoneyValue = (Main.rand.NextFloat(50, 70) + 4 * voidGain) * (VoidGenerateMoney + (float)Math.Sqrt(16 * VoidGenerateMoney + voidGain)) * voidGainMultiplier;
-						while ((int)generateMoneyValue > 0)
-						{
-							if (generateMoneyValue > 1000000f)
-							{
-								int num4 = (int)(generateMoneyValue / 1000000f);
-								generateMoneyValue -= (1000000 * num4);
-								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.PlatinumCoin, num4);
-							}
-							else if (generateMoneyValue > 10000f)
-							{
-								int num6 = (int)(generateMoneyValue / 10000f);
-								generateMoneyValue -= (10000 * num6);
-								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.GoldCoin, num6);
-							}
-							else if (generateMoneyValue > 100f)
-							{
-								int num7 = (int)(generateMoneyValue / 100f);
-								generateMoneyValue -= (100 * num7);
-								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.SilverCoin, num7);
-							}
-							else
-							{
-								int num8 = (int)generateMoneyValue;
-								if (num8 < 1)
-								{
-									num8 = 1;
-								}
-								generateMoneyValue -= num8;
-								Player.QuickSpawnItem(Player.GetSource_Misc("SOTS:VoidCoins"), ItemID.CopperCoin, num8);
-							}
-						}
-					}						
+                        float generateMoneyValue = (Main.rand.NextFloat(50, 70) + 4 * voidGain) * (VoidGenerateMoney + (float)Math.Sqrt(16 * VoidGenerateMoney + voidGain)) * voidGainMultiplier;
+						SpawnCoins(Player, generateMoneyValue);
+                    }						
 				}
 				else
 					resolveVoidCounter = 15;
@@ -901,6 +871,40 @@ namespace SOTS.Void
                     VoidEffect(Player, (int)healAmount);
                 }
                 StoredLifeHeals = healAmount % 1f;
+            }
+        }
+		public static void SpawnCoins(Player player, float generateMoneyValue)
+		{
+            while ((int)generateMoneyValue > 0)
+            {
+                if (generateMoneyValue > 1000000f)
+                {
+                    int num4 = (int)(generateMoneyValue / 1000000f);
+                    generateMoneyValue -= (1000000 * num4);
+                    player.QuickSpawnItem(player.GetSource_Misc("SOTS:VoidCoins"), ItemID.PlatinumCoin, num4);
+                }
+                else if (generateMoneyValue > 10000f)
+                {
+                    int num6 = (int)(generateMoneyValue / 10000f);
+                    generateMoneyValue -= (10000 * num6);
+                    player.QuickSpawnItem(player.GetSource_Misc("SOTS:VoidCoins"), ItemID.GoldCoin, num6);
+                }
+                else if (generateMoneyValue > 100f)
+                {
+                    int num7 = (int)(generateMoneyValue / 100f);
+                    generateMoneyValue -= (100 * num7);
+                    player.QuickSpawnItem(player.GetSource_Misc("SOTS:VoidCoins"), ItemID.SilverCoin, num7);
+                }
+                else
+                {
+                    int num8 = (int)generateMoneyValue;
+                    if (num8 < 1)
+                    {
+                        num8 = 1;
+                    }
+                    generateMoneyValue -= num8;
+                    player.QuickSpawnItem(player.GetSource_Misc("SOTS:VoidCoins"), ItemID.CopperCoin, num8);
+                }
             }
         }
     }

@@ -333,6 +333,7 @@ namespace SOTS
         public bool StatShareMeleeAndMagic = false;
         public bool StatShareAll = false;
 		public int BrassWhipDelay = 0;
+		public float DamageGenerateMoney = 0;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -375,8 +376,9 @@ namespace SOTS
 				}
 				netUpdate = false;
 			}
-		}
-		int foamParticleCounter = 0;
+        }
+        public int bladeAlpha = 0;
+        int foamParticleCounter = 0;
 		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
 		public void FoamStuff()
 		{
@@ -424,7 +426,6 @@ namespace SOTS
 				foamParticleList1.Add(temp[i]);
 			}
 		}
-		public int bladeAlpha = 0;
 		public override void ProcessTriggers(TriggersSet triggersSet)
         {
             bool canBlink = !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead;
@@ -481,10 +482,10 @@ namespace SOTS
 		public int aqueductDamage = -1;
         public int artifactProbeDamage = -1;
         public int artifactProbeNum = 0;
-        int lastAqueductMax = 0;
 		public int tPlanetNum = 0;
 		public int tPlanetDamage = -1;
-		int lastPlanetMax = 0;
+        int lastAqueductMax = 0;
+        int lastPlanetMax = 0;
 		int lastArtifactMax = 0;
         public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false, float ai0 = 0f, float ai1 = 0f)
 		{
@@ -1279,7 +1280,7 @@ namespace SOTS
 				}
             }
 			RubyRing = AmberRing = TopazRing = EmeraldRing = AmethystRing = LazyCrafterAmulet = InverseTopazRing = false;
-			AmmoConsumptionModifier = 0.0f;
+			AmmoConsumptionModifier = DamageGenerateMoney = 0.0f;
 			bonusPickaxePower = 0;
 			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = GoldenTrowel = false;
 			SpiritSymphony = false;
@@ -1346,14 +1347,13 @@ namespace SOTS
             }
 
 		}
-		/** minPower is the minimum power required, and yields a 1/maxRate chance of catching
+        /** minPower is the minimum power required, and yields a 1/maxRate chance of catching
 		*	maxPower is the maximum power required, and yields a 1/minRate chance of catching
 		*	rates are overall rounded down
 		*	anything below minPower will fail to catch
 		*	pre condition: minPower < maxPower, minRate < maxRate
-		*	post condition: returns true at a specific chance.
-		*/
-		public static bool ScaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
+		*	post condition: returns true at a specific chance.	*/
+        public static bool ScaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
 		{
 			if (power < minPower)
 			{
@@ -1553,6 +1553,10 @@ namespace SOTS
 					IncreaseBuffDurations(Player, 0, -0.5f, 0, true);
                 }
             }
+			if(DamageGenerateMoney > 0 && Main.myPlayer == Player.whoAmI)
+			{
+				VoidPlayer.SpawnCoins(Player, DamageGenerateMoney * (10 + info.Damage + info.SourceDamage));
+			}
         }
         //int shotCounter = 0;
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

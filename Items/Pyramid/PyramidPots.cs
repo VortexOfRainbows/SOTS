@@ -53,6 +53,7 @@ namespace SOTS.Items.Pyramid
 		}
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
+            SOTSTile.TryDroppingSwallowedPenny(i, j, Type);
             SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i, j) * 16);
             int num = 0;
             bool snakePot = false;

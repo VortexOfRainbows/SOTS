@@ -2115,7 +2115,7 @@ Mods: {
 
 			SapphireRing: {
 				DisplayName: Mammon's Ring
-				Tooltip: Generate income when void is gained
+				Tooltip: Generate coins when void is gained
 			}
 
 			TopazRing: {
@@ -5267,7 +5267,7 @@ Mods: {
 					'''
 				G0: Chain together blocks when mining, breaking up to 50 blocks at once
 				G1: Killing enemies grants a random buff for 30 seconds
-				G2: Generate income when void is gained
+				G2: Generate coins when void is gained
 				G3: Enemies have a 14.3% chance to drop double the loot
 				G4:
 					'''
@@ -5462,6 +5462,16 @@ Mods: {
 			ChimeraBanner: {
 				DisplayName: Chimera Banner
 				Tooltip: ""
+			}
+
+			SwallowedPenny: {
+				DisplayName: Swallowed Penny
+				Tooltip:
+					'''
+					Increases critical strike chance by 4%
+					Generate coins when hurt
+					'Gulp!'
+					'''
 			}
 		}
 

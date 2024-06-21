@@ -20,6 +20,7 @@ using SOTS.Items;
 using System;
 using SOTS.Items.Conduit;
 using SOTS.Items.Pyramid.PyramidWalls;
+using Terraria.DataStructures;
 
 namespace SOTS
 {
@@ -540,6 +541,34 @@ namespace SOTS
                 }
             }
             return false;
+        }
+        public override void Drop(int i, int j, int type)
+        {
+            TryDroppingSwallowedPenny(i, j, type);
+        }
+        public static void TryDroppingSwallowedPenny(int i, int j, int type)
+        {
+            if (type == TileID.Pots || type == TileType<PyramidPots>() || type == TileType<SkyPots>())
+            {
+                bool PyramidPot = type == TileType<PyramidPots>();
+                bool SkyPot = type == TileType<SkyPots>();
+                int chanceToDrop = 1000;
+                if (SkyPot)
+                {
+                    chanceToDrop = 900;
+                }
+                if (PyramidPot)
+                {
+                    chanceToDrop = 800;
+                }
+                if (Main.rand.NextBool(chanceToDrop))
+                {
+                    Tile tile = Framing.GetTileSafely(i, j);
+                    int left = i - (tile.TileFrameX % 36) / 18;
+                    int top = j - (tile.TileFrameY % 36) / 18;
+                    Item.NewItem(new EntitySource_TileBreak(i, j), left * 16, top * 16, 32, 32, ItemType<SwallowedPenny>());
+                }
+            }
         }
     }
 }

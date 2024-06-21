@@ -1,22 +1,22 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Crushers
 {    
     public class HellCrush : ModProjectile 
     {
 		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Hell Crush");
-		}
+        {
+            Main.projFrames[Projectile.type] = 5;
+        }
         public override void SetDefaults()
         {
 			Projectile.height = 70;
 			Projectile.width = 70;
-            Main.projFrames[Projectile.type] = 5;
 			Projectile.penetrate = -1;
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
 			Projectile.friendly = true;
 			Projectile.timeLeft = 24;
 			Projectile.tileCollide = false;
@@ -38,9 +38,8 @@ namespace SOTS.Projectiles.Crushers
 				int ogDamage = (int)Projectile.ai[0];
 				for (float i = 0; i < Projectile.damage; i += ogDamage * 2.5f)
 				{ 
-					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, Main.rand.Next(-100, 101) * 0.015f, Main.rand.Next(-100, 101) * 0.015f, ProjectileID.Flames, (int)(Projectile.damage * 0.1f), 0, Projectile.owner);
-					Main.projectile[proj].DamageType = DamageClass.Melee;
-					Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);
+					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2Circular(1.0f, 1.0f), ProjectileID.Flames, (int)(Projectile.damage * 0.1f), 0, Projectile.owner);
+					proj.DamageType = ModContent.GetInstance<VoidMelee>();
 				}
 			}
             Projectile.frameCounter++;

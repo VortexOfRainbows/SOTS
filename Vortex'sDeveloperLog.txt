@@ -45,7 +45,6 @@ Update Objectives:
 14. Fish Bomb
 15. Fix generation bug with Infernum and Leviathan area
 16. Upgrade item to the Hydrokinetic Antennae
-17. Add swallowed penny to SOTS
 
 
 ---WIP List---
@@ -85,6 +84,8 @@ Daily Log:
 	1. While awaiting transition to second phase, Polaris incoming source damage multiplier 0.6 -> 0.7
 	2. Reduced rate of Mortar drops in the mortar drop attack (7, 6, 6) -> (8, 7, 7)
 	3. Polaris Mines now deal 100% -> 80% of Polaris damage
+2. Add Swallowed Penny and modify localization for Mammon's ring
+3. Slightly modified Hellbreaker to have better visual clarity
 
 6/16/24 to 6/20/24
 1. Zephyrous Zeppelin resprite by Kekcroc
