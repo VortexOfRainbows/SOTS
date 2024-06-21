@@ -58,7 +58,7 @@ namespace SOTS.Void
 			int baseCost = GetVoid(player);
 			int finalCost;
 			float voidCostMult = 1f;
-			if (!Item.CountsAsClass<VoidSummon>())
+			if (!Item.CountsAsClass<VoidSummon>() && Item.type != ModContent.ItemType<VibrantPistol>())
 			{
 				if (Item.prefix == ModContent.PrefixType<Famished>() || Item.prefix == ModContent.PrefixType<Precarious>() || Item.prefix == ModContent.PrefixType<Potent>() || Item.prefix == ModContent.PrefixType<Omnipotent>() || Item.prefix == ModContent.PrefixType<Chthonic>())
 				{

@@ -1566,7 +1566,7 @@ Mods: {
 
 			VibrantPistol: {
 				DisplayName: Vibrant Pistol
-				Tooltip: Fires almost as fast as you can pull the trigger
+				Tooltip: Rapidly fires Vibrant Bolts
 			}
 
 			VibrantStaff: {
@@ -5896,7 +5896,7 @@ Mods: {
 			Vibrant:
 				'''
 				Increases void gain by 2
-				Grants autofire to the Vibrant Pistol at the cost of accuracy
+				Vibrant Pistol fires three shots at once at the cost of accuracy
 				'''
 			Vespera: Increases max void by 25 and void gain by 50%
 			NatureWreath: Summons three Blooming Hooks to assist in combat

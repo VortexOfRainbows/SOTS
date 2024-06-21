@@ -45,7 +45,6 @@ Update Objectives:
 14. Fish Bomb
 15. Fix generation bug with Infernum and Leviathan area
 16. Upgrade item to the Hydrokinetic Antennae
-17. Look into vibrant pistol autofire set bonus on Vibrant Armor (might be obsolete due to autofire on all weapons)
 
 
 ---WIP List---
@@ -91,6 +90,10 @@ Daily Log:
 5. Fix issue where Elemental Armor / Particle Relocator caused visual desync in Multiplayer by teleporting multiple players
 5. Added Bundle of Snakes, a 5% drop from Chimera and works in Multiplayer
 6. Some misc. Localization fixes and changes
+7. Vibrant Pistol usetime 5 -> 12, void cost 1 -> 2 (now ever-so-slightly weaker than Paintball Gun)
+8. Vibrant Armor set bonus changed: instead of granting autofire to Vibrant Pistol (since all weapons can have autofire now), triples the amount of projectiles shot.
+	1. Effectively, buffs the set bonus by 25% compared to before. It now DPS's like a clockwork assault rifle with limited range.
+9. Modified spread pattern for Vibrant Pistol after the Vibrant Armor set bonus 
 
 6/16/24 to 6/20/24
 1. Zephyrous Zeppelin resprite by Kekcroc

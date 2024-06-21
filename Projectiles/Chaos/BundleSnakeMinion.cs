@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Chaos
         Projectile pastParent = null;
 		public Projectile getParent()
 		{
-			Projectile parent = currentParent = pastParent;
+			Projectile parent = pastParent;
 			if (parent != null && parent.active && parent.owner == Projectile.owner && parent.minion && parent.identity == (int)(Projectile.ai[0] + 0.5f)) //this is to prevent it from iterating the loop over and over
 			{
 				return parent;

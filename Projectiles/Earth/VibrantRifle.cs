@@ -1,3 +1,4 @@
+using Microsoft.Build.Construction;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -30,7 +31,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 			Projectile.DamageType = DamageClass.Ranged;
-            Projectile.timeLeft = 6;
+            Projectile.timeLeft = 13;
             Projectile.hide = true;
             Projectile.alpha = 255;
         }

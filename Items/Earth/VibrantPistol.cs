@@ -27,8 +27,8 @@ namespace SOTS.Items.Earth
             Item.DamageType = DamageClass.Ranged;
             Item.width = 36;
             Item.height = 24;
-            Item.useTime = 5; 
-            Item.useAnimation = 5;
+            Item.useTime = 12; 
+            Item.useAnimation = 12;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
 			Item.knockBack = 2f;  
@@ -62,12 +62,12 @@ namespace SOTS.Items.Earth
 			{
 				Item.autoReuse = true;
 				Item.noUseGraphic = true;
-			}
+            }
 			else
 			{
 				Item.autoReuse = false;
 				Item.noUseGraphic = false;
-			}
+            }
 		}
 		public override bool BeforeUseItem(Player player)
 		{
@@ -76,7 +76,7 @@ namespace SOTS.Items.Earth
 		}
 		public override int GetVoid(Player player)
 		{
-			return 1;
+			return 2;
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -84,12 +84,15 @@ namespace SOTS.Items.Earth
 			triggerItemUpdates(player);
 			if (modPlayer.VibrantArmor)
 			{
-				float mult = 1.33f;
-				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(4.5f));
+				float mult = 1.2f;
+				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(3f));
 				Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<VibrantRifle>(), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - velocity.ToRotation());
 				velocity.X = perturbedSpeed.X * mult;
 				velocity.Y = perturbedSpeed.Y * mult;
-				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+				for(int i = 0; i < 3; i++)
+                {
+                    Projectile.NewProjectile(source, position, velocity * (.8f + 0.2f * i) + Main.rand.NextVector2Circular(.5f, .5f), type, damage - i, knockback, player.whoAmI);
+                }
 				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, position);
 				return false;
 			}
