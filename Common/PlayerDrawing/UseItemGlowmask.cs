@@ -31,7 +31,7 @@ namespace SOTS.Common.PlayerDrawing
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			Item heldItem = drawPlayer.HeldItem;
             bool isPlayerUsingAHydroCapableItem = FakePlayer.FakePlayer.CheckItemValidityFull(drawPlayer, drawPlayer.HeldItem, drawPlayer.HeldItem, 1);
-            if (drawInfo.shadow != 0 || (isPlayerUsingAHydroCapableItem && FakePlayerProjectile.OwnerOfThisDrawCycle == -1))
+            if (drawInfo.shadow != 0 || (isPlayerUsingAHydroCapableItem && FakePlayerProjectile.OwnerOfThisDrawCycle == -1 && FakePlayer.FakeModPlayer.ModPlayer(drawPlayer).hasHydroFakePlayer))
 				return;
 			if (!heldItem.IsAir && (!heldItem.noUseGraphic || heldItem.type == ModContent.ItemType<Items.Temple.SupernovaScatter>() || 
 				heldItem.type == ModContent.ItemType<Items.Temple.Revolution>() || heldItem.type == ModContent.ItemType<StormSpell>() || heldItem.type == ModContent.ItemType<DreamLamp>()))
@@ -161,9 +161,8 @@ namespace SOTS.Common.PlayerDrawing
 						{
 							for (int k = 0; k < 6; k++)
 							{
-								Color color = glowColor;
 								Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-								color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+                                Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
 								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);

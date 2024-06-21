@@ -1410,7 +1410,7 @@ namespace SOTS
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
 					}
                 }
-                if (SupernovaEmblem && projectile.type != ModContent.ProjectileType<Seeker>())
+                if (SupernovaEmblem && projectile.type != ModContent.ProjectileType<Seeker>() && target.realLife == -1)
                 {
                     Projectiles.Planetarium.SupernovaHammer.SpawnSeekers(new EntitySource_OnHit(Player, target), target.Center, 1, (int)(hit.SourceDamage * 1.5f), -1);
                 }

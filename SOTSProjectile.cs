@@ -27,6 +27,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
+using SOTS.Projectiles.BiomeChest;
 
 namespace SOTS
 {
@@ -535,10 +536,14 @@ namespace SOTS
 				}
 			}
 		}
+		public static bool IsValidForCoMinions(Player player, Projectile projectile)
+		{
+			return player.active && (projectile.minion || projectile.type == ModContent.ProjectileType<CrystalSerpentHead>()) && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) && projectile.damage > 0 && projectile.owner == Main.myPlayer;
+        }
 		public void NatureSlimeUnit(Projectile projectile)
 		{
 			Player player = Main.player[projectile.owner];
-			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) && projectile.damage > 0 && projectile.owner == Main.myPlayer)
+			if (IsValidForCoMinions(player, projectile))
 			{
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 				if (modPlayer.symbioteDamage > 0)

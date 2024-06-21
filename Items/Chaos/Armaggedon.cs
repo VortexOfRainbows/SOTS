@@ -19,7 +19,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 250;
+			Item.damage = 200;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 28;
 			Item.height = 26;
@@ -54,7 +54,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override int GetVoid(Player player)
 		{
-			return 6;
+			return 8;
 		}
 	}
 }

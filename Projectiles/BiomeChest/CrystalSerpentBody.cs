@@ -1,12 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
-using System.Collections.Generic;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.BiomeChest
@@ -15,7 +9,6 @@ namespace SOTS.Projectiles.BiomeChest
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Crystal Serpent Counter");
 			Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

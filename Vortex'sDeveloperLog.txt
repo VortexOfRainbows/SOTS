@@ -18,7 +18,7 @@ Acknowledged But Likely Delayed:
 8. Boss Trophies
 9. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
 10. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
-11. Tesseract Servants over-sends packets when over 10 total tesseracts.
+11. Tesseract Servants over-sends packets when over 10 total tesseracts (Currently not possible in regular play).
 12. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 
 
@@ -93,7 +93,11 @@ Daily Log:
 7. Vibrant Pistol usetime 5 -> 12, void cost 1 -> 2 (now ever-so-slightly weaker than Paintball Gun)
 8. Vibrant Armor set bonus changed: instead of granting autofire to Vibrant Pistol (since all weapons can have autofire now), triples the amount of projectiles shot.
 	1. Effectively, buffs the set bonus by 25% compared to before. It now DPS's like a clockwork assault rifle with limited range.
-9. Modified spread pattern for Vibrant Pistol after the Vibrant Armor set bonus 
+9. Modified spread pattern for Vibrant Pistol after the Vibrant Armor set bonus
+10. Armaggedon Damage 250 -> 200, void cost 6 -> 8 
+11. Fixed issue where sword glowmasks only appeared on Hydrokinetic Antennae
+12. Botanical Symbiote (and Bundle of Snakes) now works on Crystal Serpent from the Starcaller Staff
+13. Supernova Emblem no longer works on worms
 
 6/16/24 to 6/20/24
 1. Zephyrous Zeppelin resprite by Kekcroc
@@ -152,6 +156,7 @@ Daily Log:
 6. All references to "minion damage" replaced with "summon damage"
 7. More messing around with Blade Wings
 8. Attempt fixing bug where certain mod colors would cycle faster in multiplayer with more players
+	1. This also fixed a bug where Ghost Cursed Apple sometimes wouldn't drain souls in multiplayer when unequipped.
 
 5/11/24 to 5/13/24
 1. Fixed bug where naturally spawned, Unsafe Infected Pyramid bricks didn't properly drop items 

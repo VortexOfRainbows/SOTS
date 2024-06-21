@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.BiomeChest;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -84,7 +85,7 @@ namespace SOTS.Projectiles.Nature
 		public Projectile getParent()
 		{
 			Projectile parent = pastParent;
-			if (parent != null && parent.active && parent.owner == Projectile.owner && parent.minion && parent.identity == (int)(Projectile.ai[0] + 0.5f)) //this is to prevent it from iterating the loop over and over
+			if (parent != null && parent.active && parent.owner == Projectile.owner && (parent.minion || parent.type == ModContent.ProjectileType<CrystalSerpentHead>()) && parent.identity == (int)(Projectile.ai[0] + 0.5f)) //this is to prevent it from iterating the loop over and over
 			{
 				return parent;
 			}
@@ -93,7 +94,7 @@ namespace SOTS.Projectiles.Nature
 			for (short i = 0; i < Main.maxProjectiles; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (proj.active && proj.owner == Projectile.owner && proj.minion && proj.identity == (int)(Projectile.ai[0] + 0.5f)) //use identity since it aids with server syncing (.whoAmI is client dependent)
+				if (proj.active && proj.owner == Projectile.owner && (proj.minion || proj.type == ModContent.ProjectileType<CrystalSerpentHead>()) && proj.identity == (int)(Projectile.ai[0] + 0.5f)) //use identity since it aids with server syncing (.whoAmI is client dependent)
 				{
 					parent = proj;
 					break;
