@@ -376,6 +376,7 @@ namespace SOTS.Common.PlayerDrawing
         }
         private void DrawBladeWings(ref PlayerDrawSet drawInfo)
         {
+            bool DrawCycleIsPartOfStarlightRiverStupidPlayerTargetSystem = Main.screenPosition == Vector2.Zero;
             //if(drawInfo.shadow != 0f)
             //{
             //    return;
@@ -477,7 +478,7 @@ namespace SOTS.Common.PlayerDrawing
                     dataMiddle.Add(new DrawData(Front ? bladeOutline : bladeOutlineF, bladePosition, null, finalColor2 * alpha * alpha * 1.2f, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
                     dataFront.Add(new DrawData(Front ? bladeHandle : bladeHandleF, bladePosition, null, color * alpha, rotation + finalRotation, bladeOrigin, finalScale, spriteEffects, 0));
 
-                    if(!Main.gamePaused && !Main.gameMenu)
+                    if(!Main.gamePaused && !Main.gameMenu && !DrawCycleIsPartOfStarlightRiverStupidPlayerTargetSystem)
                     {
                         mbPlayer.WingsBeingVisualized = true;
                         if (drawInfo.shadow == 0f && mbPlayer.BladeWingTrails != null && mbPlayer.BladeWingTrails[bladeID] != null) // Add dust to end of blades
@@ -508,10 +509,15 @@ namespace SOTS.Common.PlayerDrawing
                             float alpha2 = 1 - (j / (float)list.Count);
                             Vector2 current = list[j];
                             Vector2 toPrevious = previous - current;
-                            Color finalColor1 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + (bladeNum - 4) * 20 + j * 6), true), 0.85f);
-                            finalColor1.A = 0;
-                            dataTrails.Add(new DrawData(pixel, current - Main.screenPosition, null, finalColor1 * alpha * alpha2 * scaleF * 0.8f, toPrevious.ToRotation(), trailOrigin, new Vector2(toPrevious.Length() / trailSpriteLength, 0.5f * scaleF + 1f * alpha2), SpriteEffects.None, 0));
-                            previous = current;
+                            if (toPrevious.LengthSquared() < 1000000) //Length squared is a faster calculation than length. sqrt 1000000 = 1000
+                            {
+                                Color finalColor1 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter + (bladeNum - 4) * 20 + j * 6), true), 0.85f);
+                                finalColor1.A = 0;
+                                dataTrails.Add(new DrawData(pixel, current - Main.screenPosition, null, finalColor1 * alpha * alpha2 * scaleF * 0.8f, toPrevious.ToRotation(), trailOrigin, new Vector2(toPrevious.Length() / trailSpriteLength, 0.5f * scaleF + 1f * alpha2), SpriteEffects.None, 0));
+                                previous = current;
+                            }
+                            else
+                                break;
                         }
                     }
                 }
