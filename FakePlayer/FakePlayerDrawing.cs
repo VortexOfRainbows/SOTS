@@ -289,10 +289,16 @@ namespace SOTS.FakePlayer
         }
         public static void DrawMyFakePlayers(Player player, int drawType, int drawState)
         {
+            if (player == null)
+                return;
             List<FakePlayer> fakePlayers = GetFakePlayers(player);
+            if (fakePlayers == null || fakePlayers.Count <= 0)
+                return;
             for(int i = 0; i < fakePlayers.Count; i++)
             {
                 FakePlayer fakePlayer = fakePlayers[i];
+                if (fakePlayer == null)
+                    continue;
                 PlayerDrawSet drawInfo = new PlayerDrawSet();
                 if(fakePlayer.FakePlayerType == drawType)
                 {
@@ -304,18 +310,26 @@ namespace SOTS.FakePlayer
                             if (FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1))
                             {
                                 Main.spriteBatch.End();
-                                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-                                if(drawState == DrawStateID.Border)
+                                if (drawState == DrawStateID.Border)
+                                {
+                                    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
                                     DrawHydroConnection(player, fakePlayer, true);
+                                }
                                 else
+                                {
+                                    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                                     DrawHydroConnection(player, fakePlayer, false);
+                                }
                             }
                         }
                     }
                     if (canIDraw)
                     {
                         Main.spriteBatch.End();
-                        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                        if (drawState == DrawStateID.Border)
+                            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                        else
+                            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                         DrawFromCache(ref drawInfo);
                         fakePlayer.DrawFrontHandAndHeldProj(Main.spriteBatch, player, drawState);
                     }
