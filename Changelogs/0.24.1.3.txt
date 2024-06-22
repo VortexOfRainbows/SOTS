@@ -1,0 +1,54 @@
+Hotfix 0.24.1.3
+
+Additions: 
+1. New accessories: Gilded Blade Wings, Swallowed Penny, Bundle of Snakes
+2. Fishing with the Twilight Fishing Pole now allows the catching of Planetarium/Otherworld Crates
+3. A new enemy spawns in the Surface Hallow, the Chimera
+
+Changes: 
+1. Increased drop rate for rare construct drops in expert mode (3.33% -> 4%)
+2. Drop rate for Glow Jelly, Royal Jelly, Peanut Butter, Vertebraeker, Tooth Ache, and Baguette has been increased in expert mode (5% -> 6.66%). Drop rate is still 100% before Eye of Cthulhu has been defeated
+3. Pyramid Chest lootpool will now attempt to spawn all items at least once before randomly selecting items to populate chests, making it less likely that you will have to farm Pyramid Treasure slimes
+4. Many localization changes (tooltip consistency and other stuff)
+5. Elemental Armor no longer has an armor effect trail
+6. Resprited Code Corrupter and Zephyrous Zeppelin
+7. Machina Booster's special flight mode no longer autocancels when landing
+8. Hellbreaker's residual projectile now have a longer lifetime, leading to better visual clarity
+
+Balance Changes:
+1. Patch Leather armor:
+	1. Head: Defense 3 -> 4,
+	2. Chest: Defense 4 -> 6, damage bonus 10% -> 15%
+	3. Legs: Defense 3 -> 5, damage bonus 10% -> 15%
+	4. Set Bonus damage 14 -> 15, knockback 0 -> 1
+2. Digital Daito hit rate 5 -> 10 (should not hit the same enemy multiple times as often)
+3. Digital Daito now reduces damage by 5% for each enemy pierced with the main slash
+4. Ethereal Scepter damage 70 -> 66
+5. All SOTS Whips now reduce damage by 10% for each enemy pierced
+6. Vibrant Blade damage 23 -> 22, void cost 7 -> 8, max hits on ring per enemy 4 -> 3
+7. Geostorm pierce infinite -> 3
+8. Echo Disc usetime 27 -> 25, also has tooltip and sound now
+9. Vibrant Pistol usetime 5 -> 12, void cost 1 -> 2
+10. Vibrant armor:
+	1. Set Bonus reworked, since previous set bonus was made obsolete by autofire being granted to all weapons. Now makes Vibrant Pistol fire multiple projectiles at once
+	2. 25% damage bonus compared to previous effect 
+11. Armaggedon damage 250 -> 200, void cost 6 -> 8
+12. Polaris Nerfs:
+	1. While awaiting transition to second phase, Polaris incoming source damage multiplier 0.6 -> 0.7
+	2. Reduced rate of Mortar drops in the mortar drop attack (7, 6, 6) -> (8, 7, 7)
+	3. Polaris Mines now deal 100 -> 80% of Polaris's damage
+
+Fixes: 
+1. Tesseract now shows the correct damage type when paired with void items
+2. Glowmasks on gun weapons are now in the correct positions
+3. Glowmasks for sword weapons now appear again
+4. Relocator beam from Elemental Armor no longer has a distance limit, making the visual match where the player ends up more accurately
+5. Infected Pyramid bricks now drop its item again
+6. Tome of the Reaper no longer hits Town NPCs
+7. Certain mod colors should no longer cycle faster the more players there are in multiplayer
+8. Unequipping Cursed Apple in multiplayer should more consistently cause souls to exit the void meter
+9. Evil Construct legs should no longer disappear when frozen in time
+10. Peanut Bushes now consistently drop its item
+11. Supernova Emblem no longer spawns projectiles when killing worms
+12. Elemental Armor and Particle Relocator should no longer cause visual desyncs in multiplayer by "fake" teleporting other players
+13. Botanical Symbiote now works on Starcaller Staff
