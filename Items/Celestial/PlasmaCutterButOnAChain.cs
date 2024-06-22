@@ -29,14 +29,13 @@ namespace SOTS.Items.Celestial
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item22;
-            Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<PlasmaCutter>(); 
             Item.shootSpeed = 0f;
-			Item.channel = true;
 			Item.axe = 200;
+            Item.autoReuse = false;
+            Item.channel = true;
             Item.noUseGraphic = true; 
             Item.noMelee = true;
-			Item.staff[Item.type] = true; 
 		}
         public override float UseTimeMultiplier(Player player)
 		{
@@ -56,24 +55,9 @@ namespace SOTS.Items.Celestial
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			bool summon = true;
-			for (int l = 0; l < Main.projectile.Length; l++)
-			{
-				Projectile proj = Main.projectile[l];
-				if(proj.active && proj.type == Item.shoot && Main.player[proj.owner] == player)
-				{
-					summon = false;
-				}
-			}
-			if(player.altFunctionUse != 2)
-			{
-				Item.UseSound = SoundID.Item22;
-				if(summon)
-				{
-					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (float)Math.Atan2(velocity.Y, velocity.X) + 90f, 0);
-				}
-			}
-			return false; 
+            Item.UseSound = SoundID.Item22;
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (float)Math.Atan2(velocity.Y, velocity.X) + 90f, 0);
+            return false; 
 		}
 		public override void AddRecipes()
 		{

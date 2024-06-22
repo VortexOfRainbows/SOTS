@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
+using SOTS.Items.Planetarium.Furniture;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -120,6 +121,8 @@ namespace SOTS.Projectiles.Celestial
 					
 				float cursorX = cursorArea.X - player.Center.X;
 				float cursorY = cursorArea.Y - player.Center.Y;
+				Projectile.direction = Math.Sign(cursorX);
+				player.direction = Projectile.direction;
 				float disX = player.Center.X - Projectile.Center.X;
 				float disY = player.Center.Y - Projectile.Center.Y;
 				float distance = Vector2.Distance(player.Center, cursorArea);
@@ -140,8 +143,7 @@ namespace SOTS.Projectiles.Celestial
 				ovalArea.Y += ovalArea2.Y;
 				if(player.channel && !ReturnTo)
 				{
-					Projectile.position.X = player.Center.X + ovalArea.X - Projectile.width/2;
-					Projectile.position.Y = player.Center.Y + ovalArea.Y - Projectile.height/2;
+					Projectile.Center = player.Center + ovalArea;
 				}
 				else
 				{
@@ -158,6 +160,20 @@ namespace SOTS.Projectiles.Celestial
 				Projectile.rotation = (float)Math.Atan2(disY, disX) + MathHelper.ToRadians(225f);
 				spinSpeed = 1 + (2574f / distance);
 			}
+			if(player.channel)
+			{
+				if(player.itemAnimation <= 2)
+				{
+					player.itemAnimation = 2;
+                }
+                if (player.itemTime <= 2)
+                {
+                    player.itemTime = 2;
+                }
+                Vector2 toProjectile = Projectile.Center - player.Center;
+                player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toProjectile.ToRotation() + MathHelper.ToRadians(-90)));
+            }
 			counter += spinSpeed;
 		}
 		int storeData = -1;
