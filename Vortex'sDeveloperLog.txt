@@ -78,6 +78,10 @@ N/A
 
 Daily Log:
 
+
+--- Hotfix 0.24.1.4 ---
+
+
 6/22/24 to 6/23/24
 1. Fix issue where Gilded Blade Wings trail would bug out due to weird Starlight River shenanigans.
 2. Fix bug where orientation of arm following SOTS blades was broken when upside down due to gravity potion.
@@ -86,6 +90,7 @@ Daily Log:
 5. Hydrokinetic Antennae no longer work while upside down due to technical complications.
 6. Water particles from Atlantis and Hydrokinetic Antennae now draw properly when upside down (including viewing another player in multiplayer).
 7. Subspace Locket now fires at the correct place when the player is upside down.
+
 
 --- Update 0.24.1.3 ---
 

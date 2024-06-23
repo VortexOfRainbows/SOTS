@@ -1,0 +1,12 @@
+Hotfix 0.24.1.4
+
+Changes:
+1. Plasma Cutter on a chain now has improved Arm Rotation visuals and can have multiple copies with items like Tesseract
+2. Hydrokinetic Antennae no longer works with flipped gravity due to technical complications
+
+Fixes: 
+1. Gilded Blade Wings trail should no longer bug out due to Starlight River shenanigans
+2. Orientation of the player arm while using certain melee weapons from SOTS should now work properly with flipped gravity
+3. Attempted a fix on a cross-mod crash potentially related to Fake Players
+4. Water "metablobs" from Atlantis and Hydrokinetic Antennae should now draw properly with flipped gravity
+5. Subspace Locket now aims in the correct place when player gravity is flipped

@@ -143,7 +143,7 @@ namespace SOTS.Projectiles.Blades
 				player.itemTime = 2;
 				player.itemAnimation = 2;
 				player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(player.gravDir * -90 + (FetchDirection == -1 ? -15 : 15))));
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (player.gravDir * FetchDirection == -1 ? -15 : 15))));
 			}
 			Projectile.hide = false;
 		}

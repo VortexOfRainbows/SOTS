@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Blades
 				player.ChangeDir(direction);
 				player.heldProj = Projectile.whoAmI;
 				player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(toProjectile.ToRotation() + MathHelper.ToRadians(player.gravDir * -90 + (FetchDirection == -1 ? -12 : 12))));
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (player.gravDir * FetchDirection == -1 ? -12 : 12))));
 				player.itemTime = 4;
 				player.itemAnimation = 4;
 			}
