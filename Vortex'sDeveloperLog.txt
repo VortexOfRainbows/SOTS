@@ -10,17 +10,16 @@ The following is my development plans :D
 Acknowledged But Likely Delayed:
 1. Reimplement (older) Blade Items using the abstract class
 2. Earthen Plating starter house.
-3. Wind mechanics for vines and banners + banners to be placeable on platforms
-4. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
-5. Smart cursor doesn't work with dressers.
-6. Most Void Minions do not work with whip debuffs
-7. Hydro servant wont attack in multiplayer, but fixed on a reload..?
-8. Boss Trophies
-9. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
-10. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
-11. Tesseract Servants over-sends packets when over 10 total tesseracts (Currently not possible in regular play).
-12. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
-
+3. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
+4. Smart cursor doesn't work with dressers.
+5. Most Void Minions do not work with whip debuffs
+6. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
+7. Boss Trophies
+8. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
+9. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
+10. Tesseract Servants over-sends packets when over 10 total tesseracts (Currently not possible in regular play).
+11. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
+12. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -79,13 +78,13 @@ N/A
 
 Daily Log:
 
-6/22/24
+6/22/24 to 6/23/24
 1. Fix issue where Gilded Blade Wings trail would bug out due to weird Starlight River shenanigans.
 2. Fix bug where orientation of arm following SOTS blades was broken when upside down due to gravity potion.
 3. Plasma Cutter on a chain now has improved Arm Rotation visuals and works with Fake Players better
 4. Tried fixing strange cross-mod crash potentially related to FakePlayers.
 5. Hydrokinetic Antennae no longer work while upside down due to technical complications.
-6. Water particles from Atlantis and Hydrokinetic Antennae now draw properly when upside down.
+6. Water particles from Atlantis and Hydrokinetic Antennae now draw properly when upside down (including viewing another player in multiplayer).
 7. Subspace Locket now fires at the correct place when the player is upside down.
 
 --- Update 0.24.1.3 ---

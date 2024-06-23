@@ -149,7 +149,7 @@ namespace SOTS.Common
             }
             graphicsDevice.SetRenderTarget(RenderTarget);
             graphicsDevice.Clear(Color.Transparent);
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             if (DrawState == DrawStateID.Wings)
             {
                 DrawOntoRenderTargetProjectile(true);
@@ -167,6 +167,8 @@ namespace SOTS.Common
                     }
                     else if(FakePlayer.FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1) && FakeModPlayer.ModPlayer(player).hasHydroFakePlayer) //This may cause repeated draws in multiplayer due to where the ball is rendered, but this should ultimately be more optimal than the solution (making each player have a seperate render target for the held ball)
                     {
+                        Main.spriteBatch.End();
+                        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
                         FakePlayerDrawing.DrawHeldHydroBall(player);
                     }
                 }

@@ -268,12 +268,17 @@ namespace SOTS.FakePlayer
         }
         public static void DrawHydroFakePlayersFull()
         {
+            bool localPlayerUpsideDown = false;
+            if(Main.LocalPlayer != null)
+            {
+                localPlayerUpsideDown = Main.LocalPlayer.gravDir == -1;
+            }
             DrawFakePlayers(1, DrawStateID.Border);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerWings, false, SpriteEffects.None); //Draws the water player wings sprites
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerWings, false, localPlayerUpsideDown ? SpriteEffects.FlipVertically : SpriteEffects.None); //Draws the water player wings sprites
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeBackArm);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerBody, false, SpriteEffects.None); //Draws the water player body sprites
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerBody, false, localPlayerUpsideDown ? SpriteEffects.FlipVertically : SpriteEffects.None); //Draws the water player body sprites
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeFrontArm);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerFrontArm, false, SpriteEffects.None); //Draws the front arm of the water player
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerFrontArm, false, localPlayerUpsideDown ? SpriteEffects.FlipVertically : SpriteEffects.None); //Draws the front arm of the water player
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesAfterFrontArm);
         }
         public static void DrawFakePlayers(int fakePlayerType, int DrawState)

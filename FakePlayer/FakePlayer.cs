@@ -278,6 +278,7 @@ namespace SOTS.FakePlayer
         private Item lastUsedItem;
         public int FakePlayerType = 0; //For now, FakePlayerType of 0 will mean SubspaceServant. Other FakePlayers may have other types in the future for organization.
         private int FakePlayerID = 0;
+        public int ID => FakePlayerID;
         public bool KillMyOwnedProjectiles = false;
         public int UseItemSlot(Player player)
         {

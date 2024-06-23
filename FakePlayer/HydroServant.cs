@@ -42,6 +42,11 @@ namespace SOTS.FakePlayer
         public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
+            //if(Main.myPlayer == Projectile.owner)
+            //{
+            //    if (SOTSWorld.GlobalCounter % 30 == 0)
+            //        Main.NewText(FakePlayer.ID);
+            //}
 			if(!FakeModPlayer.ModPlayer(player).hasHydroFakePlayer || player.gravDir != 1)
             {
 				Projectile.Kill();
