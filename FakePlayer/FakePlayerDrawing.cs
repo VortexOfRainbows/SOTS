@@ -269,11 +269,11 @@ namespace SOTS.FakePlayer
         public static void DrawHydroFakePlayersFull()
         {
             DrawFakePlayers(1, DrawStateID.Border);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerWings); //Draws the water player wings sprites
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerWings, false, SpriteEffects.None); //Draws the water player wings sprites
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeBackArm);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerBody); //Draws the water player body sprites
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerBody, false, SpriteEffects.None); //Draws the water player body sprites
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesBeforeFrontArm);
-            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerFrontArm); //Draws the front arm of the water player
+            GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetFakePlayerFrontArm, false, SpriteEffects.None); //Draws the front arm of the water player
             DrawFakePlayers(1, DrawStateID.HeldItemAndProjectilesAfterFrontArm);
         }
         public static void DrawFakePlayers(int fakePlayerType, int DrawState)
@@ -310,28 +310,21 @@ namespace SOTS.FakePlayer
                             if (FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1))
                             {
                                 Main.spriteBatch.End();
+                                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                                 if (drawState == DrawStateID.Border)
-                                {
-                                    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
                                     DrawHydroConnection(player, fakePlayer, true);
-                                }
                                 else
-                                {
-                                    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                                     DrawHydroConnection(player, fakePlayer, false);
-                                }
                             }
                         }
                     }
                     if (canIDraw)
                     {
                         Main.spriteBatch.End();
-                        if (drawState == DrawStateID.Border)
-                            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-                        else
-                            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-                        DrawFromCache(ref drawInfo);
-                        fakePlayer.DrawFrontHandAndHeldProj(Main.spriteBatch, player, drawState);
+                        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+                        DrawFromCache(ref drawInfo); //This draws arms, body, etc.
+                        fakePlayer.DrawFrontHandAndHeldProj(Main.spriteBatch, player, drawState); //This might be an important location to look at for fixing hydro servants gravdir bug...
                     }
                 }
             }

@@ -84,8 +84,9 @@ Daily Log:
 2. Fix bug where orientation of arm following SOTS blades was broken when upside down due to gravity potion.
 3. Plasma Cutter on a chain now has improved Arm Rotation visuals and works with Fake Players better
 4. Tried fixing strange cross-mod crash potentially related to FakePlayers.
-5. WIP Fixing FakePlayer under gravity flip bugs. For some reason, Hydro Player and Subspace Servant are very broken, but Tesseract works fine while upside down? Needs more investigation...
-
+5. Hydrokinetic Antennae no longer work while upside down due to technical complications.
+6. Water particles from Atlantis and Hydrokinetic Antennae now draw properly when upside down.
+7. Subspace Locket now fires at the correct place when the player is upside down.
 
 --- Update 0.24.1.3 ---
 

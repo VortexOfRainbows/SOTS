@@ -588,7 +588,7 @@ namespace SOTS
 		{
 			if (!Main.dedServ)
             {
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
                 ParticleHelper.DrawWaterParticles(true);
                 FakePlayerDrawing.DrawHydroFakePlayersFull(); //Hydro servant has a totally unique shader, so it must be drawn in different steps... The particle layer will be drawn before this 

@@ -37,7 +37,9 @@ namespace SOTS.FakePlayer
         public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			if(!isVanity && FakeModPlayer.ModPlayer(player).servantIsVanity)
+            int oldMouseX = Main.mouseX;
+            int oldMouseY = Main.mouseY;
+            if (!isVanity && FakeModPlayer.ModPlayer(player).servantIsVanity)
             {
 				Projectile.Kill();
             }
@@ -130,10 +132,15 @@ namespace SOTS.FakePlayer
 				if (circular.Y > 0)
 					circular.Y *= 0.5f;
 				Projectile.velocity.Y += circular.Y;
+                Vector2 result = cursorArea - Main.screenPosition;
+                Main.mouseX = FakePlayer.UniqueMouseX = (int)result.X;
+                Main.mouseY = FakePlayer.UniqueMouseY = (int)result.Y;
                 UpdateItems(player);
                 //Projectile.velocity = FakePlayer.Velocity;
             }
-			if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
+            Main.mouseX = oldMouseX;
+            Main.mouseY = oldMouseY;
+            if (Main.myPlayer == player.whoAmI) //might be excessive but is the easiest way to sync everything
 				Projectile.netUpdate = true;
 			Lighting.AddLight(Projectile.Center, new Vector3(0.65f, 0.8f, 0.75f));
 		}

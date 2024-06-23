@@ -42,7 +42,7 @@ namespace SOTS.FakePlayer
         public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			if(!FakeModPlayer.ModPlayer(player).hasHydroFakePlayer)
+			if(!FakeModPlayer.ModPlayer(player).hasHydroFakePlayer || player.gravDir != 1)
             {
 				Projectile.Kill();
             }
@@ -173,7 +173,7 @@ namespace SOTS.FakePlayer
         public override bool PreDraw(ref Color lightColor)
         {
 			if (Main.player[Projectile.owner].heldProj == Projectile.whoAmI)
-				GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetPlayerHoldsWaterBall, true);
+				GreenScreenManager.DrawWaterLayer(Main.spriteBatch, ref MagicWaterLayer.RenderTargetPlayerHoldsWaterBall, true, 0);
             return false;
         }
     }

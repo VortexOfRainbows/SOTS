@@ -88,6 +88,10 @@ namespace SOTS.FakePlayer
             {
                 return false;
             }
+            if (fakePlayerType == FakePlayerTypeID.Hydro && player.gravDir != 1)
+            {
+                return false;
+            }
             bool canUseItem = true;
             #region check if item is useable
             if (!FakePlayerHelper.FakePlayerItemWhitelist.Contains(item.type) || lastUsedItem == null)
@@ -703,7 +707,8 @@ namespace SOTS.FakePlayer
             player.isPettingAnimal = false;
             player.heldProj = HeldProj;
             player.stealth = 1f;
-            player.gravDir = 1f;
+            if(FakePlayerType != FakePlayerTypeID.Hydro)
+                player.gravDir = 1f;
             player.invis = false;
             player.bodyFrame = bodyFrame;
             player.gfxOffY = 0;

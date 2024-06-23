@@ -79,10 +79,10 @@ namespace SOTS.Common
             MagicWaterLayer.DrawOntoRenderTarget(spriteBatch, graphicsDevice, ref MagicWaterLayer.RenderTargetPlayerHoldsWaterBall, -1);
             graphicsDevice.SetRenderTargets(prevTarget);
         }
-        public static void DrawWaterLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget, bool returnToGameZoomMatrix = false)
+        public static void DrawWaterLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget, bool returnToGameZoomMatrix = false, SpriteEffects effects = 0)
         {
             spriteBatch.End();
-            MagicWaterLayer.DrawLayer(spriteBatch, ref RenderTarget);
+            MagicWaterLayer.DrawLayer(spriteBatch, ref RenderTarget, effects);
             if(!returnToGameZoomMatrix)
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
             else
@@ -149,7 +149,7 @@ namespace SOTS.Common
             }
             graphicsDevice.SetRenderTarget(RenderTarget);
             graphicsDevice.Clear(Color.Transparent);
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
             if (DrawState == DrawStateID.Wings)
             {
                 DrawOntoRenderTargetProjectile(true);
@@ -163,7 +163,7 @@ namespace SOTS.Common
                 {
                     if (DrawState != -1)
                     {
-                        FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawState);
+                        FakePlayerDrawing.DrawMyFakePlayers(player, 1, DrawState); 
                     }
                     else if(FakePlayer.FakePlayer.CheckItemValidityFull(player, player.HeldItem, player.HeldItem, 1) && FakeModPlayer.ModPlayer(player).hasHydroFakePlayer) //This may cause repeated draws in multiplayer due to where the ball is rendered, but this should ultimately be more optimal than the solution (making each player have a seperate render target for the held ball)
                     {
@@ -174,7 +174,7 @@ namespace SOTS.Common
             spriteBatch.End();
             AddEffect(spriteBatch, graphicsDevice, RenderTarget, GreenScreenManager.greenScreenColor.Value);
         }
-        public static void DrawLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget)
+        public static void DrawLayer(SpriteBatch spriteBatch, ref RenderTarget2D RenderTarget, SpriteEffects effect = 0)
         {
             if (RenderTarget == null)
                 return;
@@ -197,7 +197,7 @@ namespace SOTS.Common
 
             WaterParallax.CurrentTechnique.Passes[0].Apply();
             Vector2 offset = new Vector2((float)Main.screenWidth / 2, (float)Main.screenHeight / 2);
-            spriteBatch.Draw(RenderTarget, offset, null, Color.White, 0, offset, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(RenderTarget, offset, null, Color.White, 0, offset, 1, effect, 0);
 
             spriteBatch.End();
         }
