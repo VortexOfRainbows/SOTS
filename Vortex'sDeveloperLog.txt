@@ -78,6 +78,9 @@ N/A
 
 Daily Log:
 
+6/23/24
+1. Chaos Conduit sprites
+
 
 --- Hotfix 0.24.1.4 ---
 
