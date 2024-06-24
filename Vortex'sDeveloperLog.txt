@@ -79,7 +79,7 @@ N/A
 Daily Log:
 
 6/23/24
-1. Chaos Conduit sprites
+1. Chaos Conduit added (Needs localization)
 
 
 --- Hotfix 0.24.1.4 ---

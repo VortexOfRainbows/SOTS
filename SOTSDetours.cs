@@ -243,7 +243,10 @@ namespace SOTS
 				if (SOTSPlayer.ModPlayer(self).ConduitBelt)
 				{
 					Tile tile = Framing.GetTileSafely(x, y);
-					if (tile.TileType == ModContent.TileType<ConduitChassisTile>() || tile.TileType == ModContent.TileType<NatureConduitTile>() || tile.TileType == ModContent.TileType<EarthenConduitTile>())
+					if (tile.TileType == ModContent.TileType<ConduitChassisTile>() || 
+						tile.TileType == ModContent.TileType<NatureConduitTile>() || 
+						tile.TileType == ModContent.TileType<EarthenConduitTile>() ||
+                        tile.TileType == ModContent.TileType<ChaosConduitTile>())
                     {
 						pickPower += 300;
                     }

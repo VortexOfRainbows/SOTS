@@ -5482,6 +5482,11 @@ Mods: {
 					Attaches a Venomous Snake to all minions
 					'''
 			}
+
+			ChaosConduit: {
+				DisplayName: Chaos Conduit
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -5885,6 +5890,11 @@ Mods: {
 				DisplayName: Brass Whip Debuff
 				Description: Mods.SOTS.Buffs.BrassWhipDebuff.Description
 			}
+
+			BrillianceBoosted: {
+				DisplayName: Brilliance Boosted
+				Description: Mods.SOTS.Buffs.BrillianceBoosted.Description
+			}
 		}
 
 		ArmorSetBonus: {
@@ -6090,6 +6100,7 @@ Mods: {
 
 			OtherworldCrateTile.MapEntry: Otherworld Crate Tile
 			PlanetariumCrateTile.MapEntry: Planetarium Crate Tile
+			ChaosConduitTile.MapEntry: Chaos Conduit Tile
 		}
 
 		WorldGeneration: {

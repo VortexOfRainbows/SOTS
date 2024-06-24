@@ -73,8 +73,36 @@ namespace SOTS.Items.Conduit
 			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
 			DustType = DustID.Iron;
 		}
-	}
-	public abstract class ConduitTile : ModTile
+    }
+    public class ChaosConduit : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            this.SetResearchCost(100);
+        }
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.rare = ItemRarityID.Blue;
+            Item.Size = new Vector2(68, 68);
+            Item.value = Item.buyPrice(0, 0, 40, 0);
+            Item.createTile = ModContent.TileType<ChaosConduitTile>();
+        }
+    }
+    public class ChaosConduitTile : ConduitTile
+    {
+        public override int DissolvingTileType => ModContent.TileType<DissolvingBrillianceTile>();
+        public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/ChaosConduitTileGlow").Value;
+        public override Color elementalColor => ColorHelpers.ChaosPink;
+        public override int BuffType => ModContent.BuffType<BrillianceBoosted>();
+        public override void SafeSetStaticDefaults()
+        {
+            LocalizedText name = CreateMapEntryName();
+            AddMapEntry(SOTSTile.ChaosPlatingColor, name);
+            DustType = DustID.Platinum;
+        }
+    }
+    public abstract class ConduitTile : ModTile
 	{
 		public sealed override void SetStaticDefaults()
 		{

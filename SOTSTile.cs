@@ -44,6 +44,7 @@ namespace SOTS
         public static Color NaturePlatingColor = new Color(119, 141, 138);
         public static Color EarthenPlatingColor = new Color(112, 90, 86);
         public static Color PermafrostPlatingColor = new Color(165, 179, 198);
+        public static Color ChaosPlatingColor = new Color(82, 85, 123);
         public static Vector3 NaturePlatingLight = new Vector3(0.275f, 0.4f, 0.215f);
         public static Vector3 EarthenPlatingLight = new Vector3(0.36f, 0.32f, 0.11f);
         public static Vector3 PermafrostPlatingLight = new Vector3(0.225f, 0.30f, 0.30f);
@@ -509,9 +510,11 @@ namespace SOTS
         }
         public override bool CanPlace(int i, int j, int type)
         {
-            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<DissolvingNatureTile>(), 0, ModContent.TileType<NatureConduitTile>()))
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingNatureTile>(), 0, TileType<NatureConduitTile>()))
                 return false;
-            if (DoNotPlaceNearConduit(i, j, type, ModContent.TileType<DissolvingEarthTile>(), 0, ModContent.TileType<EarthenConduitTile>()))
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingEarthTile>(), 0, TileType<EarthenConduitTile>()))
+                return false;
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingBrillianceTile>(), 0, TileType<ChaosConduitTile>()))
                 return false;
             return base.CanPlace(i, j, type);
         }
