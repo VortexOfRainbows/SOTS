@@ -1712,7 +1712,7 @@ Mods: {
 
 			DissolvingAetherBlock: {
 				# Fragments
-				DisplayName: Purple Aether Block
+				DisplayName: Aether Block
 				Tooltip: ""
 			}
 
@@ -5485,7 +5485,20 @@ Mods: {
 
 			ChaosConduit: {
 				DisplayName: Chaos Conduit
-				Tooltip: ""
+				Tooltip:
+					'''
+					An incomplete redirector of chaos energy: it lacks a support chassis
+					When fully charged, it will focus nearby chaos energy into valid repositories
+					'''
+			}
+
+			OtherworldConduit: {
+				DisplayName: Otherworld Conduit
+				Tooltip:
+					'''
+					An incomplete redirector of otherworldly energy: it lacks a support chassis
+					When fully charged, it will focus nearby otherworldly energy into valid repositories
+					'''
 			}
 		}
 
@@ -5888,12 +5901,17 @@ Mods: {
 
 			BrassWhipDebuff: {
 				DisplayName: Brass Whip Debuff
-				Description: Mods.SOTS.Buffs.BrassWhipDebuff.Description
+				Description: Explode into brass balls!
 			}
 
 			BrillianceBoosted: {
 				DisplayName: Brilliance Boosted
-				Description: Mods.SOTS.Buffs.BrillianceBoosted.Description
+				Description: Increases max life by 20
+			}
+
+			OtherworldBoosted: {
+				DisplayName: Aether Boosted
+				Description: Increases max life by 20
 			}
 		}
 
@@ -6098,9 +6116,10 @@ Mods: {
 				MapEntry13: Locked Gem Chest
 			}
 
-			OtherworldCrateTile.MapEntry: Otherworld Crate Tile
-			PlanetariumCrateTile.MapEntry: Planetarium Crate Tile
-			ChaosConduitTile.MapEntry: Chaos Conduit Tile
+			OtherworldCrateTile.MapEntry: Otherworld Crate
+			PlanetariumCrateTile.MapEntry: Planetarium Crate
+			ChaosConduitTile.MapEntry: Chaos Conduit
+			OtherworldConduitTile.MapEntry: Otherworld Conduit
 		}
 
 		WorldGeneration: {

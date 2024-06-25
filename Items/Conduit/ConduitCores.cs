@@ -102,6 +102,34 @@ namespace SOTS.Items.Conduit
             DustType = DustID.Platinum;
         }
     }
+    public class OtherworldConduit : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            this.SetResearchCost(100);
+        }
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.rare = ItemRarityID.Blue;
+            Item.Size = new Vector2(48, 52);
+            Item.value = Item.buyPrice(0, 0, 40, 0);
+            Item.createTile = ModContent.TileType<OtherworldConduitTile>();
+        }
+    }
+    public class OtherworldConduitTile : ConduitTile
+    {
+        public override int DissolvingTileType => ModContent.TileType<DissolvingAetherTile>();
+        public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/OtherworldConduitTileGlow").Value;
+        public override Color elementalColor => ColorHelpers.PurpleOtherworldColor;
+        public override int BuffType => ModContent.BuffType<OtherworldBoosted>();
+        public override void SafeSetStaticDefaults()
+        {
+            LocalizedText name = CreateMapEntryName();
+            AddMapEntry(SOTSTile.OtherworldPlatingColor, name);
+            DustType = DustID.Lead;
+        }
+    }
     public abstract class ConduitTile : ModTile
 	{
 		public sealed override void SetStaticDefaults()

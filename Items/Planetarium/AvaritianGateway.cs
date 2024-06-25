@@ -161,7 +161,7 @@ namespace SOTS.Items.Planetarium
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Planetarium/AvaritianGatewayTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (50f / 255f);
 			color.A = 0;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -173,7 +173,7 @@ namespace SOTS.Items.Planetarium
 			{
 				Vector2 pos = new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 2) + zero;
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.10f * k;
-				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.5f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

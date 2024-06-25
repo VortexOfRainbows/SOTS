@@ -52,6 +52,8 @@ N/A
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
+Conduit powering code for the two portals
+
 
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword
@@ -79,8 +81,11 @@ N/A
 
 Daily Log:
 
-6/23/24
-1. Chaos Conduit added (Needs localization)
+6/23/24 to 6/25/24
+1. Chaos Conduit added 
+2. Otherworld Conduit added
+3. Conduits power the Avaritia Gateway glowmask
+4. Decreased natural brightness of the Avaritia Gateway glowmask
 
 
 --- Hotfix 0.24.1.4 ---

@@ -246,7 +246,8 @@ namespace SOTS
 					if (tile.TileType == ModContent.TileType<ConduitChassisTile>() || 
 						tile.TileType == ModContent.TileType<NatureConduitTile>() || 
 						tile.TileType == ModContent.TileType<EarthenConduitTile>() ||
-                        tile.TileType == ModContent.TileType<ChaosConduitTile>())
+                        tile.TileType == ModContent.TileType<ChaosConduitTile>() ||
+                        tile.TileType == ModContent.TileType<OtherworldConduitTile>())
                     {
 						pickPower += 300;
                     }

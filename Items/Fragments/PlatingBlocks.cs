@@ -272,7 +272,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<OtherworldPlating>();
-			AddMapEntry(new Color(48, 57, 70));
+			AddMapEntry(SOTSTile.OtherworldPlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Lead; //demonite
