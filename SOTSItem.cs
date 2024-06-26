@@ -35,6 +35,7 @@ using SOTS.FakePlayer;
 using Terraria.UI.Chat;
 using SOTS.Items.Wings;
 using System.Drawing.Printing;
+using SOTS.Items.Void;
 
 namespace SOTS
 {
@@ -208,7 +209,7 @@ namespace SOTS
 		public static int[] dedicatedRainbow;
 		public static int[] dedicatedBlasfah;
 		public static int[] dedicatedHeartPlus;
-		public static int[] dedicatedCoolio;
+		public static int[] dedicatedTaco;
 		public static int[] piscesFishItems;
 		public static void LoadArrays() //called in SOTS.Load()
 		{
@@ -225,7 +226,7 @@ namespace SOTS
 			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>(), ItemType<DreamLamp>() }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>() }; //Heart Plus Up
-			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
+			dedicatedTaco = new int[] { ItemType<Baguette>(), ItemType<Taco>() }; //Coolio/Taco
 																  //unsafeWallItem = new int[] { ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
 
 			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
@@ -401,7 +402,7 @@ namespace SOTS
 				dedicatedColor = new Color(255, 123, 123);
 				dedicated = true;
 			}
-			if (dedicatedCoolio.Contains(item.type))
+			if (dedicatedTaco.Contains(item.type))
 			{
 				dedicatedColor = new Color(252, 254, 56);
 				dedicated = true;
@@ -914,6 +915,7 @@ namespace SOTS
 				new WormholeRecipe(ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()),
                 new WormholeRecipe(ItemType<Riptide>(), ItemType<Atlantis>()),
                 new WormholeRecipe(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
+                new WormholeRecipe(ItemType<AlmondMilk>(), ItemType<Taco>()),
             };
 		}
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)

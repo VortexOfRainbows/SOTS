@@ -86,6 +86,7 @@ Daily Log:
 2. Otherworld Conduit added
 3. Conduits power the Avaritia Gateway glowmask
 4. Decreased natural brightness of the Avaritia Gateway glowmask
+5. Add Big Taco
 
 
 --- Hotfix 0.24.1.4 ---

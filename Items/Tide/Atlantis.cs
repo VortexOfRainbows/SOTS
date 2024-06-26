@@ -4,12 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Earth;
-using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Tide;
 using SOTS.Buffs;
-using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Tide
 {
@@ -34,7 +30,7 @@ namespace SOTS.Items.Tide
             Item.rare = ModContent.RarityType<AnomalyRarity>();
             Item.UseSound = null;
 			Item.autoReuse = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Tide.AtlantisProj>(); 
+			Item.shoot = ModContent.ProjectileType<AtlantisProj>(); 
             Item.shootSpeed = 16f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;

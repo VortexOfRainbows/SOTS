@@ -4196,7 +4196,7 @@ Mods: {
 				DisplayName: Avocado Soup
 				Tooltip:
 					'''
-					Refills 24 void and receive Regeneration for 60 seconds
+					Refills 24 void and grants Regeneration for 60 seconds
 					'Finally some good soup!'
 					'''
 			}
@@ -5499,6 +5499,11 @@ Mods: {
 					An incomplete redirector of otherworldly energy: it lacks a support chassis
 					When fully charged, it will focus nearby otherworldly energy into valid repositories
 					'''
+			}
+
+			Taco: {
+				DisplayName: Big Taco
+				Tooltip: Refills 40 void and grants Wrath for 3 minutes
 			}
 		}
 

@@ -351,5 +351,29 @@ namespace SOTS.Items.Void
 		{
 			return 5;
 		}
-	}
+    }
+    public class Taco : VoidConsumable
+    {
+        public override void SetStaticDefaults()
+        {
+            this.SetResearchCost(20);
+        }
+        public override void SafeSetDefaults()
+        {
+            Item.width = 40;
+            Item.height = 40;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = SoundID.Item2;
+        }
+        public override void OnActivation(Player player)
+        {
+            RefillEffect(player, 40);
+            player.AddBuff(BuffID.Wrath, 10800, true);
+        }
+        public override int GetSatiateDuration()
+        {
+            return 5;
+        }
+    }
 }
