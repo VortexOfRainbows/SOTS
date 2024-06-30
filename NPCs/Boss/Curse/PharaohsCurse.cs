@@ -15,6 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.GameContent.UI.States;
 
 namespace SOTS.NPCs.Boss.Curse
 {
@@ -523,10 +524,10 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 				if (startParticles != 0.0f)
 				{
-					SpawnPassiveDust(texture, NPC.Center + new Vector2(0, smaller? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 40 : 50, NPC.rotation);
-					SpawnPassiveDust(textureFill, NPC.Center + new Vector2(0, smaller ? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 100 : 200, NPC.rotation);
+					SpawnPassiveDust(texture, NPC.Center + new Vector2(0, smaller? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 40 : 60, NPC.rotation);
+					SpawnPassiveDust(textureFill, NPC.Center + new Vector2(0, smaller ? 0 : 10), (smaller ? 1.0f : 0.9f) * startParticles, foamParticleList1, 1, 0, smaller ? 100 : 240, NPC.rotation);
 					if(!enteredSecondPhase)
-						SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/FartGasBorder"), NPC.Center + new Vector2(0, 10), 1.2f * startParticles, foamParticleList4, 0.2f, 2, 3600, NPC.rotation);
+						SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/FartGasBorder"), NPC.Center + new Vector2(0, 10), 1.2f * startParticles, foamParticleList4, 0.2f, 2, 4200, NPC.rotation);
 				}
 				int alphaCounter = enteredSecondPhase ? (int)(255 * ai2 / 90f) : NPC.alpha;
 				if(!enteredSecondPhase || (ai1 < 1 && ai2 < 90))
@@ -552,12 +553,6 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public void ResetLists()
 		{	
-			/*
-			foamParticleList1 = new List<CurseFoam>();
-			foamParticleList2 = new List<CurseFoam>();
-			foamParticleList3 = new List<CurseFoam>();
-			foamParticleList4 = new List<CurseFoam>();
-			return;*/
 			List<CurseFoam> temp = new List<CurseFoam>();
 			for(int i = 0; i < foamParticleList1.Count; i++)
             {
@@ -608,67 +603,62 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public void cataloguePos()
 		{
-			for (int i = 0; i < foamParticleList1.Count; i++)
-			{
-				CurseFoam particle = foamParticleList1[i];
-				particle.Update();
-				if (!particle.active)
+			int largest = Math.Max(Math.Max(foamParticleList1.Count, foamParticleList2.Count), Math.Max(foamParticleList3.Count, foamParticleList4.Count));
+			for (int i = largest; i >= 0; i--)
+            {
+				if (i < foamParticleList1.Count)
 				{
-					particle = null;
-					foamParticleList1.RemoveAt(i);
-					i--;
-				}
-				else
-				{
+					CurseFoam particle = foamParticleList1[i];
 					particle.Update();
 					if (!particle.active)
 					{
-						particle = null;
-						foamParticleList1.RemoveAt(i);
-						i--;
+						foamParticleList1.RemoveBySwap(i);
 					}
-					else if (!particle.noMovement)
-						particle.position += NPC.velocity * 0.825f;
+					else
+					{
+						particle.Update();
+						if (!particle.active)
+						{
+							foamParticleList1.RemoveBySwap(i);
+						}
+						else if (!particle.noMovement)
+							particle.position += NPC.velocity * 0.825f;
+					}
 				}
-			}
-			for (int i = 0; i < foamParticleList2.Count; i++)
-			{
-				CurseFoam particle = foamParticleList2[i];
-				particle.Update();
-				if (!particle.active)
-				{
-					particle = null;
-					foamParticleList2.RemoveAt(i);
-					i--;
-				}
-				else if (!particle.noMovement)
-					particle.position += NPC.velocity * 0.9f;
-			}
-			for (int i = 0; i < foamParticleList3.Count; i++)
-			{
-				CurseFoam particle = foamParticleList3[i];
-				particle.Update();
-				if (!particle.active)
-				{
-					particle = null;
-					foamParticleList3.RemoveAt(i);
-					i--;
-				}
-				else if (!particle.noMovement)
-					particle.position += NPC.velocity;
-			}
-			for (int i = 0; i < foamParticleList4.Count; i++)
-			{
-				CurseFoam particle = foamParticleList4[i];
-				particle.Update();
-				if (!particle.active)
-				{
-					particle = null;
-					foamParticleList4.RemoveAt(i);
-					i--;
-				}
-				else particle.velocity.Y += 0.11f;
-			}
+				if(i < foamParticleList2.Count)
+                {
+                    CurseFoam particle = foamParticleList2[i];
+                    particle.Update();
+                    if (!particle.active)
+                    {
+                        foamParticleList2.RemoveBySwap(i);
+                    }
+                    else if (!particle.noMovement)
+                        particle.position += NPC.velocity * 0.9f;
+                }
+				if (i < foamParticleList3.Count)
+                {
+                    CurseFoam particle = foamParticleList3[i];
+                    particle.Update();
+                    if (!particle.active)
+                    {
+                        foamParticleList3.RemoveBySwap(i);
+                    }
+                    else if (!particle.noMovement)
+                        particle.position += NPC.velocity;
+                }
+                if (i < foamParticleList4.Count)
+                {
+                    CurseFoam particle = foamParticleList4[i];
+                    particle.Update();
+                    if (!particle.active)
+                    {
+                        foamParticleList4.RemoveBySwap(i);
+                    }
+                    else 
+						particle.velocity.Y += 0.11f;
+                }
+            }
 		}
 		public void MoveTo(Vector2 goTo, float slowDownMult, float flatSpeed, float distanceMult = 1f)
 		{
@@ -1306,12 +1296,11 @@ namespace SOTS.NPCs.Boss.Curse
 		}
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
-            return smaller ? false : (bool?)null;
+            return smaller ? false : null;
 		}
 		bool[] ignore;
 		public override void PostAI()
 		{
-			Player player = Main.player[NPC.target];
 			if(ignore == null)
 			{
 				ignore = new bool[Main.tileSolid.Length];
@@ -1462,7 +1451,8 @@ namespace SOTS.NPCs.Boss.Curse
 					velocity *= 0.925f;
 				}
 			}
-			if (scale <= 0.05f)
+			float dieAt = SOTS.Config.lowFidelityMode ? 0.2f : 0.1f;
+			if (scale <= dieAt)
 				active = false;
 		}
 	}

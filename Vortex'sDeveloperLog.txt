@@ -81,6 +81,14 @@ N/A
 
 Daily Log:
 
+
+6/30/24
+1. Misc. Pharaoh's Curse performance changes
+	1. Lifetime of curse particles reduced in general, and reduced even more in performance mode
+	2. Less curse particles spawn in general
+	3. Generally reduced total particles spawned
+
+
 6/23/24 to 6/25/24
 1. Chaos Conduit added 
 2. Otherworld Conduit added

@@ -175,24 +175,27 @@ namespace SOTS.Projectiles.Pyramid
 						if (Projectile.timeLeft == 2)
 						{
 							PharaohsCurse curse = npc.ModNPC as PharaohsCurse;
-							for (int j = 0; j < 40; j++)
+							for (int j = 0; j < 30; j++)
 							{
 								Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 								curse.foamParticleList1.Add(new CurseFoam(Projectile.Center, rotational, 1.55f, true));
 							}
 						}
-						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center, 1.1f * Projectile.scale, foamParticleList1, 0.2f, 4, 40, Projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
+						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center, 1.1f * Projectile.scale, foamParticleList1, 0.2f, 4, 50, Projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
 					}
 				}
 				else
 				{
 					Projectile.Kill();
 				}
-			}
-			for(float i = 0; i < 1; i+= 0.25f)
-			{
-				foamParticleList1.Add(new CurseFoam(Projectile.Center - Projectile.velocity * i, new Vector2(Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(-0.3f, 0.3f)), 0.4f, true));
-			}
+            }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                for (float i = 0; i < 1; i += 0.34f)
+                {
+                    foamParticleList1.Add(new CurseFoam(Projectile.Center - Projectile.velocity * i, new Vector2(Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(-0.3f, 0.3f)), 0.4f, true));
+                }
+            }
 			catalogueParticles();
 			Projectile.scale *= 0.998f; 
 		}
