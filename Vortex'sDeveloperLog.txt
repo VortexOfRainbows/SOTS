@@ -82,7 +82,7 @@ N/A
 Daily Log:
 
 
-6/30/24
+6/30/24 to 7/1/24
 1. Misc. Pharaoh's Curse performance changes (Currently on the other branch)
 	1. Lifetime of curse particles reduced in general, and reduced even more in performance mode
 	2. Less curse particles spawn in general
@@ -91,7 +91,10 @@ Daily Log:
 3. Non-nature conduits no longer connect to the Dreaming Lamp
 4. Hydraulic press always drops its item now, even when mid animation
 5. Some minor updates to Worldgen captures to make them more readable in code
-
+6. Fix gilded bladewings offset with step stool
+7. Fix gilded bladewings not animating while on a rope
+8. Gilded bladewings slightly modified trail origin rotations
+9. WIP Abandoned Village generation
 
 6/23/24 to 6/25/24
 1. Chaos Conduit added 

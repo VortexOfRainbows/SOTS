@@ -396,7 +396,7 @@ namespace SOTS.Common.PlayerDrawing
             Texture2D pixel = Mod.Assets.Request<Texture2D>("Items/Secrets/WhitePixel", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
-            float drawY = (int)drawInfo.Position.Y + drawPlayer.height / 2;
+            float drawY = (int)drawInfo.Position.Y + drawPlayer.height / 2 + (drawPlayer.portableStoolInfo.IsInUse ? 14 : 0);
             drawX -= 2 * drawPlayer.direction;
             float alpha = 1 - drawInfo.shadow;
             alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
@@ -483,7 +483,7 @@ namespace SOTS.Common.PlayerDrawing
                         mbPlayer.WingsBeingVisualized = true;
                         if (drawInfo.shadow == 0f && mbPlayer.BladeWingTrails != null && mbPlayer.BladeWingTrails[bladeID] != null) // Add dust to end of blades
                         {
-                            Vector2 offset = ((-bladeOrigin + new Vector2(2, 2)) * finalScale * drawPlayer.gravDir).RotatedBy(rotation + finalRotation + (direction == -1 ? MathHelper.ToRadians(76) : 0));
+                            Vector2 offset = ((-bladeOrigin + new Vector2(2, 2)) * finalScale * drawPlayer.gravDir).RotatedBy(rotation + finalRotation + (direction == -1 ? MathHelper.ToRadians(73) : 0));
                             Vector2 dustPosition = bladePosition + offset + Main.screenPosition;
                             mbPlayer.BladeWingTrails[bladeID].Insert(0, dustPosition);
                         }

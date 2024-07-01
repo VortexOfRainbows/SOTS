@@ -9,6 +9,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Functional;
 using SOTS.Items.Conduit;
+using Terraria.GameContent;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -719,10 +720,13 @@ namespace SOTS.WorldgenHelpers
 			bool generating = true;
 			int tileFoundCounter = 0;
 			int totalCounter = 0;
-			while(generating)
+            int bestFlatness = 0;
+            int bestLocationX = 0;
+            int bestLocationY = 0;
+            while (generating)
 			{
 				X += direction;
-                for (int y = 100; y < Main.worldSurface; y++)
+                for (int y = 200; y < Main.worldSurface; y++)
                 {
                     Tile tile = Main.tile[X, y];
                     if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
@@ -730,20 +734,27 @@ namespace SOTS.WorldgenHelpers
                         if (ValidStoneTiles.Contains(tile.TileType) && IsLineSolid(X, y))
                         {
                             tileFoundCounter++;
-                            if (tileFoundCounter >= 40) //40 solid tiles from well
+                            int f = AreaFlatness(X, y);
+                            if(bestFlatness < f)
                             {
-                                GenerateNewMineEntrance(X, y);
-                                generating = false;
+                                bestFlatness = f;
+                                bestLocationX = X;
+                                bestLocationY = y;
                             }
                         }
                         break;
                     }
                 }
 				totalCounter++;
-				if(totalCounter > 1000)
+				if(totalCounter > 1000 || !WorldGen.InWorld(X, 100, 50))
                 {
 					generating = false;
                 }
+            }
+
+            if(!generating && bestLocationX != 0)
+            {
+                GenerateNewMineEntrance(bestLocationX, bestLocationY + 2);
             }
         }
 		public static void GenerateDownwardEntrance(ref int x, ref int y, float rotation)
@@ -781,7 +792,10 @@ namespace SOTS.WorldgenHelpers
                             interior = true;
                             if (RunType == 0)
                             {
-                                if (tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick)
+                                Tile tileabove = Framing.GetTileSafely(rPoint.X, rPoint.Y - 1);
+                                if (tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick && 
+                                    tileabove.TileType != TileID.Containers && tileabove.TileType != TileID.Containers2 && 
+                                    tileabove.TileType != TileID.FakeContainers && tileabove.TileType != TileID.FakeContainers2)
                                 {
                                     tile.HasTile = false;
                                     tile.LiquidAmount = 0;
@@ -877,8 +891,13 @@ namespace SOTS.WorldgenHelpers
                         {
                             if (t.HasTile) //)t.WallType != WallID.StoneSlab && t.WallType != WallID.GrayBrick && t.WallType != WallID.RocksUnsafe1)
                             {
-                                t.HasTile = false;
-                                t.LiquidAmount = 0;
+                                Tile tileabove = Framing.GetTileSafely(x + i, y + j - 1);
+                                if(tileabove.TileType != TileID.Containers && tileabove.TileType != TileID.Containers2 &&
+                                    tileabove.TileType != TileID.FakeContainers && tileabove.TileType != TileID.FakeContainers2)
+                                {
+                                    t.HasTile = false;
+                                    t.LiquidAmount = 0;
+                                }
                             }
                             ushort type = WallID.RocksUnsafe1;
                             if (WorldGen.genRand.NextBool(7))
@@ -923,7 +942,7 @@ namespace SOTS.WorldgenHelpers
 		public static void GenerateDownwardPath(int x, int y)
 		{
 			float rotation = 0;
-			for(int i = 0; i < 20; i++)
+			for(int i = 0; i < 15; i++)
             {
                 int previousX = x;
                 int previousY = y;
@@ -939,11 +958,13 @@ namespace SOTS.WorldgenHelpers
 				if(i != 0)
 					GenerateDownwardPathCircle(x, y);
                 GenerateDownwardEntrance(ref x, ref y, rotation);
-				rotation = WorldGen.genRand.NextFloat(-80, 80);
+				rotation = WorldGen.genRand.NextFloat(-45, 45);
             }
         }
 		public static void GenerateNewMineEntrance(int x, int y)
 		{
+            int endX = 0;
+            int endY = 0;
             int[,] _structure = {
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -1053,23 +1074,23 @@ namespace SOTS.WorldgenHelpers
                 {15,15,15,10,10,10,11,11,11,11,11,11,11,11,11,11,12,12,12,12,12,11,11,11,10,10,10,13,13,13,13,13,14,14,14,14,14,14,14,14,14,13,13,13,13,13,10,10,10,11,11,11,11,11,11,11,12,12,12,12,11,11,11,11,11,11,11,10,10,15,15,15},
                 {15,15,10,10,11,11,11,11,12,12,11,11,12,12,12,12,12,12,12,12,12,12,12,11,11,11,11,16,16,16,16,16 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0,16,16,16,16,16,11,11,11,11,11,11,12,12,12,12,12,12,12,12,12,12,11,12,12,12,11,11,10,10,15,15},
                 {15,10,10,11,11,11,11,12,12,12,12,12,12,12,12,12,12,12,12,17 ,0,11,11,11,11,11,11,13,13,13,13,13 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0,13,13,13,13,13,11,11,11,11,11,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,11,11,10,10,15},
-                {10,10,11,11,12,12,12,12,12,12,12,17 ,0 ,0 ,0 ,0,18,12,12 ,0 ,0 ,0,11,11,11,11 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,0 ,0 ,0 ,0,11,11,11,11 ,0 ,0 ,0,18,12,12 ,0 ,0 ,0,12,12,12,12,12,12,12,11,10,10},
+                {10,10,11,11,12,12,12,12,12,12,12,17 ,0 ,0 ,0 ,0,18,12,12 ,0 ,0 ,0,11,11,11,11 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,0 ,0 ,0 ,0,11,11,11,11 ,0 ,0 ,0,18,12,12 ,0 ,0,12,12,12,12,12,12,12,12,11,10,10},
                 {11,11,11,12,12,12,12,12,12,12,17 ,0 ,0 ,0 ,0 ,0 ,0,12,17 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12,12 ,0 ,0 ,0,12,12,12 ,0,12,12,12,12,11,11},
                 {11,11,12,12,12 ,0 ,0,18,12,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12,17 ,0 ,0 ,0,12,12,17 ,0 ,0 ,0,12,12,11,11},
                 {11,12,12,12,17 ,0 ,0 ,0,12,17 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0,18,12 ,0 ,0 ,0 ,0,12,12,12,11},
                 {11,12,12,12 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0,18,12,12,11},
-                {11 ,0,18,12 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,19,20,20,20,21,21 ,0 ,0,13,13,13,13,22 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0,23,13,13,13,13 ,0 ,0,21,21,20,20,20,24 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0,12,17,11},
-                {11 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,19 ,0,20,20,20 ,0 ,0 ,0,25,16,16,16,16 ,0,22 ,0 ,0 ,0 ,9 ,0 ,0 ,0,23 ,0,16,16,16,16 ,0 ,0 ,0 ,0,20,20,20 ,0,24 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
-                {25 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,19 ,0 ,0,20,20,20 ,0 ,0,25,25,13,13,13,13,14,14,14,14,14,14,14,14,14,14,14,13,13,13,13,25 ,0 ,0 ,0,20,20,20 ,0 ,0,24 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
-                {25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,21,21,21,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25 ,0 ,0,20,20,20,21,21,21 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25},
-                {25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
-                {25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
-                {25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,27 ,0 ,0,20,20,20,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0,25,25,25},
-                {15,25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0,25,25,15},
-                {15,25,25,25,25,25 ,0 ,0,28 ,0 ,0 ,0,29 ,0 ,0,30 ,0,31 ,0 ,0,20,20,20,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,20,20,20 ,0,32 ,0 ,0 ,0 ,0 ,0 ,0,33 ,0 ,0 ,0 ,0 ,0,25,25,25,25,15},
-                {15,15,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,15,15},
-                {15,15,15,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,15,15,15},
-                {15,15,15,15,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,15,15,15}
+                {11 ,0,18,12 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0, 0,20,20,20,21,21 ,0 ,0,13,13,13,13,22 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0,23,13,13,13,13 ,0 ,0,21,21,20,20,20, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0,12,17,11},
+                {11 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0, 0,19,20,20,20 ,0 ,0 ,0,25,16,16,16,16 ,0,22 ,0 ,0 ,0 ,9 ,0 ,0 ,0,23 ,0,16,16,16,16 ,0 ,0 ,0 ,0,20,20,20,24, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
+                {25 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0, 0,19 ,0,20,20,20 ,0 ,0,25,25,13,13,13,13,14,14,14,14,14,14,14,14,14,14,14,13,13,13,13,25 ,0 ,0 ,0,20,20,20 ,0,24, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
+                {25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,21,21,21,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,34,15,15,15,15,15,15,15,25,25,25,25 ,0 ,0,20,20,20,21,21,21 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25},
+                {25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
+                {25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
+                {25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,27 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0,25,25,25},
+                {25,25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0,25,25,25},
+                {25,25,25,25,25,25 ,0 ,0,28 ,0 ,0 ,0,29 ,0 ,0,30 ,0,31 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0,32 ,0 ,0 ,0 ,0 ,0 ,0,33 ,0 ,0 ,0 ,0 ,0,25,25,25,25,25},
+                {25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25},
+                {25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25},
+                {25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25}
             };
             //i = vertical, j = horizontal
             for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
@@ -1152,7 +1173,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 10:
                                     tile.HasTile = true;
-                                    tile.TileType = TileID.Grass;
+                                    tile.TileType = WorldGen.crimson ? TileID.CrimsonGrass : TileID.CorruptGrass;
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -1202,7 +1223,8 @@ namespace SOTS.WorldgenHelpers
                                     tile.IsHalfBlock = false;
                                     break;
                                 case 19:
-                                    tile.HasTile = true;
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
                                     tile.TileType = (ushort)ModContent.TileType<EarthenPlatingPlatformTile>();
                                     tile.Slope = (SlopeType)2;
                                     tile.IsHalfBlock = false;
@@ -1214,7 +1236,8 @@ namespace SOTS.WorldgenHelpers
                                     tile.IsHalfBlock = false;
                                     break;
                                 case 21:
-                                    tile.HasTile = true;
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
                                     tile.TileType = (ushort)ModContent.TileType<EarthenPlatingPlatformTile>();
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
@@ -1301,6 +1324,7 @@ namespace SOTS.WorldgenHelpers
                                         tile.Slope = 0;
                                         tile.IsHalfBlock = false;
                                         WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingBedTile>(), true, true, -1, 0);
+                                        tile.TileFrameX += 72;
                                     }
                                     break;
                                 case 33:
@@ -1314,18 +1338,52 @@ namespace SOTS.WorldgenHelpers
                                         NetMessage.SendTileSquare(Main.myPlayer, k, l, 7);
                                     }
                                     break;
+                                case 34:
+                                    endX = k;
+                                    endY = l;
+                                    break;
                             }
                         }
                     }
                 }
             }
+            GenerateDownwardPath(endX, endY);
         }
-        public static void FindHeightAverage(int x, int y)
+        public static int FindHeightAverage(int x)
         {
+            int avgY = 0;
             for(int i = -30; i < 30; i++)
             {
-
+                for (int j = 200; j < Main.worldSurface; j++)
+                {
+                    Tile tile = Main.tile[x + i, j];
+                    if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
+                    {
+                        avgY += j;
+                        break;
+                    }
+                }
             }
+            avgY = avgY / 61;
+            return avgY;
+        }
+        public static int AreaFlatness(int x, int y)
+        {
+            int tileThere = 0;
+            for (int i = -30; i < 30; i++)
+            {
+                for (int j = -3; j <= 2; j++)
+                {
+                    Tile tile = Main.tile[x + i, y + j];
+                    if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
+                    {
+                        if(j > -3)
+                            tileThere++;
+                        break;
+                    }
+                }
+            }
+            return tileThere;
         }
 	}
 }

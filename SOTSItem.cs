@@ -716,12 +716,16 @@ namespace SOTS
         public override void UpdateEquip(Item item, Player player)
         {
 			if(item.type == ModContent.ItemType<GildedBladeWings>() || item.type == ModContent.ItemType<MachinaBooster>())
-			{
-				if (player.grappling[0] >= 0)
-				{
-					WingUpdate(-10, player, false);
-				}
-			}
+            {
+                 WingUpdate(-10, player, false);
+            }
+        }
+        public override void UpdateVanity(Item item, Player player)
+        {
+            if (item.type == ModContent.ItemType<GildedBladeWings>() || item.type == ModContent.ItemType<MachinaBooster>())
+            {
+                WingUpdate(-10, player, false);
+            }
         }
         public override bool WingUpdate(int wings, Player player, bool inUse)
         {
@@ -730,33 +734,40 @@ namespace SOTS
                 MachinaBoosterPlayer MachinaBoosterPlayer = player.GetModPlayer<MachinaBoosterPlayer>();
 				if (MachinaBoosterPlayer.creativeFlight)
 				{
-					MachinaBoosterPlayer.FlightCounter += 2;
+					if(wings == -10)
+						MachinaBoosterPlayer.FlightCounter += 2;
 					player.wingFrame = 2;
 				}
 				else if (player.velocity.Y != 0f && (player.controlJump || (MachinaBoosterPlayer.PlayerWasLastOnASlope < 0)))
                 {
                     player.wingFrame = 1;
-					if(inUse)
+                    if (inUse)
                     {
-                        MachinaBoosterPlayer.FlightCounter += 6;
-						if(SOTSWorld.GlobalCounter % 18 == 0)
-						{
-							SOTSUtils.PlaySound(SoundID.Item32, player.Center, 1.0f, -0.1f, 0.05f);
-						}
+                        if (wings != -10)
+                        {
+                            MachinaBoosterPlayer.FlightCounter += 5;
+                            if (SOTSWorld.GlobalCounter % 18 == 0)
+                            {
+                                SOTSUtils.PlaySound(SoundID.Item32, player.Center, 1.0f, -0.1f, 0.05f);
+                            }
+                        }
                     }
-					else
+                    else
                     {
-                        MachinaBoosterPlayer.FlightCounter += 2;
+                        MachinaBoosterPlayer.FlightCounter += 1;
                     }
                 }
                 else
                 {
                     player.wingFrame = 0;
-					if(MachinaBoosterPlayer.FlightModeFloat <= 0.02f)
-						MachinaBoosterPlayer.FlightCounter = 0;
+                    if (MachinaBoosterPlayer.FlightModeFloat <= 0.02f)
+                        MachinaBoosterPlayer.FlightCounter = 0;
                 }
-                MachinaBoosterPlayer.PlayerWasLastOnASlope = player.sloping ? 5 : MachinaBoosterPlayer.PlayerWasLastOnASlope - 1;
-				MachinaBoosterPlayer.FlightModeFloat = MathHelper.Lerp(MachinaBoosterPlayer.FlightModeFloat, player.wingFrame, 0.24f);
+				if(wings == -10)
+                {
+                    MachinaBoosterPlayer.PlayerWasLastOnASlope = player.sloping ? 5 : MachinaBoosterPlayer.PlayerWasLastOnASlope - 1;
+                    MachinaBoosterPlayer.FlightModeFloat = MathHelper.Lerp(MachinaBoosterPlayer.FlightModeFloat, player.wingFrame, 0.24f);
+                }
                 return true;
             }
             return false;
