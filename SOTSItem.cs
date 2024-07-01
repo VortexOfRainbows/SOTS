@@ -661,7 +661,7 @@ namespace SOTS
 					player.velocity.X += player.direction * 7f * mult;
 				Projectile.NewProjectile(player.GetSource_Misc("SOTS:Accessory_EndothermicAfterburner"), player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(item.damage * 0.7f), 3f, player.whoAmI);
 			}
-			if (item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() || item.type == ItemType<EarthenConduit>())
+			if (item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() || item.type == ItemType<EarthenConduit>() || item.type == ItemType<OtherworldConduit>() || item.type == ItemType<ChaosConduit>())
 			{
 				if (!SOTSPlayer.ModPlayer(player).ConduitBelt)
 					return false;
@@ -703,8 +703,8 @@ namespace SOTS
         }
         public override void GrabRange(Item item, Player player, ref int grabRange)
         {
-			if(item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() || item.type == ItemType<EarthenConduit>()
-				|| item.type == ItemType<DissolvingNatureBlock>() || item.type == ItemType<DissolvingEarthBlock>() || item.type == ItemType<DissolvingAuroraBlock>() || item.type == ItemType<DissolvingAetherBlock>()
+			if(item.type == ItemType<ConduitChassis>() || item.type == ItemType<NatureConduit>() || item.type == ItemType<EarthenConduit>() || item.type == ItemType<OtherworldConduit>() || item.type == ItemType<ChaosConduit>()
+                || item.type == ItemType<DissolvingNatureBlock>() || item.type == ItemType<DissolvingEarthBlock>() || item.type == ItemType<DissolvingAuroraBlock>() || item.type == ItemType<DissolvingAetherBlock>()
 				|| item.type == ItemType<DissolvingBrillianceBlock>() || item.type == ItemType<DissolvingNetherBlock>() || item.type == ItemType<DissolvingUmbraBlock>() || item.type == ItemType<DissolvingDelugeBlock>())
             {
 				if(SOTSPlayer.ModPlayer(player).ConduitBelt)

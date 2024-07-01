@@ -342,11 +342,22 @@ namespace SOTS.Items.Tools
 			string arrayExport = "";
 			for (int j = 0; j < _structure.GetLength(1); j++)
 			{
-				if (j > 0) arrayExport += ",\n";
+				if (j > 0) 
+					arrayExport += ",\n";
 				arrayExport += "				{";
 				for (int i = 0; i < _structure.GetLength(0); i++)
 				{
-					if (i > 0) arrayExport += ",";
+					if (i > 0)
+                    {
+                        if (tiles.Count > 10)
+                        {
+                            if (_structure[i, j] < 10)
+                            {
+								arrayExport += " ";
+							}
+                        }
+                        arrayExport += ",";
+                    }
 					arrayExport += _structure[i, j];
 				}
 				arrayExport += "}";

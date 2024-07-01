@@ -9,14 +9,13 @@ namespace SOTS.Items.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.tileBrick[Type] = true;
+			//Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			Main.tileBlendAll[Type] = true;
+			//Main.tileBlendAll[Type] = true;
 			DustType = 122; //boreal wood
-			////ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CharredWood>();
 			AddMapEntry(new Color(105, 82, 61));
 		}
 	}

@@ -265,9 +265,19 @@ namespace SOTS.Items.Tools
 				if (j > 0) arrayExport += ",\n";
 				arrayExport += "				{";
 				for (int i = 0; i < _structure.GetLength(0); i++)
-				{
-					if (i > 0) arrayExport += ",";
-					arrayExport += _structure[i, j];
+                {
+                    if (i > 0)
+                    {
+                        if (tiles.Count > 10)
+                        {
+                            if (_structure[i, j] < 10)
+                            {
+                                arrayExport += " ";
+                            }
+                        }
+                        arrayExport += ",";
+                    }
+                    arrayExport += _structure[i, j];
 				}
 				arrayExport += "}";
 			}

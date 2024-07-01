@@ -204,6 +204,10 @@ namespace SOTS.Items.Furniture.Functional
 		{
 			num = 2;
 		}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<HydraulicPress>());
+        }
     }
 	public class PressProjectile : ModProjectile
     {

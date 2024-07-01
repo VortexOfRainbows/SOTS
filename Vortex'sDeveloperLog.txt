@@ -44,11 +44,11 @@ Update Objectives:
 14. Fish Bomb
 15. Fix generation bug with Infernum and Leviathan area
 16. Upgrade item to the Hydrokinetic Antennae
-17. Golden Trowel activates when blocks don't actually break.
+17. Overhaul the conduit buff (make it a single buff with multiple tiers)
 
 
 ---WIP List---
-N/A
+Abandoned village generation
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -57,7 +57,7 @@ Conduit powering code for the two portals
 
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword
-Possibly Blade Wings
+Possibly Blade Wings, Tesseract
 
 ---Visual Upgrade Needed---
 Gilded Blade Wings coloring for blade part
@@ -80,6 +80,18 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+
+6/30/24
+1. Misc. Pharaoh's Curse performance changes (Currently on the other branch)
+	1. Lifetime of curse particles reduced in general, and reduced even more in performance mode
+	2. Less curse particles spawn in general
+	3. Generally reduced total particles spawned
+2. Golden Trowel no longer activates on "breaking" unbreakable chests
+3. Non-nature conduits no longer connect to the Dreaming Lamp
+4. Hydraulic press always drops its item now, even when mid animation
+5. Some minor updates to Worldgen captures to make them more readable in code
+
 
 6/23/24 to 6/25/24
 1. Chaos Conduit added 

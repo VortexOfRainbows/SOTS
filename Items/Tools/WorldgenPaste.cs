@@ -31,18 +31,19 @@ namespace SOTS.Items.Tools
 			//Main.NewText(SOTSWorld.DreamLampSolved);
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			AbandonedVillageWorldgenHelper.GenerateDownwardPath((int)tileLocation.X, (int)tileLocation.Y);
-			//PhaseWorldgenHelper.ClearPrevious = true;
-			//PhaseWorldgenHelper.Generate();
-			//WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
-			//counter++;
-			//Vector2? Location = Common.Systems.ImportantTilesWorld.RandomImportantLocation();
-			//if(Location.HasValue)
-			//{
-			//	player.Center = Location.Value;
-			//}
-			//SOTSWorld.DreamLampSolved = false;
-			return true;
+			AbandonedVillageWorldgenHelper.GenerateNewMineEntrance((int)tileLocation.X, (int)tileLocation.Y);
+			//AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
+            //PhaseWorldgenHelper.ClearPrevious = true;
+            //PhaseWorldgenHelper.Generate();
+            //WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
+            //counter++;
+            //Vector2? Location = Common.Systems.ImportantTilesWorld.RandomImportantLocation();
+            //if(Location.HasValue)
+            //{
+            //	player.Center = Location.Value;
+            //}
+            //SOTSWorld.DreamLampSolved = false;
+            return true;
 		}
 	}
 }

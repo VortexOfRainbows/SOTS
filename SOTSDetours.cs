@@ -276,7 +276,7 @@ namespace SOTS
 					{
 						tileDamage *= 2;
 					}
-					if (futureDamage + tileDamage >= 100) //Basically if the tile is broken
+					if (futureDamage + tileDamage >= 100 && WorldGen.CanKillTile(x, y)) //Basically if the tile is broken
 					{
 						Helpers.LazyMinerHelper.DropBonusItems(self, x, y);
 					}

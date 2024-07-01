@@ -439,7 +439,7 @@ namespace SOTS
 			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("SOTS: Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingAbandonedVillage");
-				//AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
+				AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
 				SOTSWorldgenHelper.PlacePeanuts();
 			}));
 			tasks.Insert(genIndexEnd + 5, new PassLegacy("SOTS: Planetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
