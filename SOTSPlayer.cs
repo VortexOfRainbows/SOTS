@@ -1913,7 +1913,7 @@ namespace SOTS
 				int type = player.buffType[i];
 				if (!Main.debuff[type] && (((player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type) || allowUnder30Seconds) && type != ModContent.BuffType<Harmony>()) || affectAll))
 				{
-					if (type == ModContent.BuffType<EarthBoosted>() || type == ModContent.BuffType<NatureBoosted>())
+					if (type == ModContent.BuffType<Attuned>())
 						continue;
 					int totalIncrease = time;
 					if(timeBonusMultiplier != 0)

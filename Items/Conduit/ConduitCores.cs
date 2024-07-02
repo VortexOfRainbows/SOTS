@@ -14,6 +14,7 @@ using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace SOTS.Items.Conduit
@@ -38,7 +39,6 @@ namespace SOTS.Items.Conduit
 		public override int DissolvingTileType => ModContent.TileType<DissolvingNatureTile>();
 		public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/NatureConduitTileGlow").Value;
 		public override Color elementalColor => ColorHelpers.natureColor;
-		public override int BuffType => ModContent.BuffType<NatureBoosted>();
 		public override void SafeSetStaticDefaults()
 		{
 			LocalizedText name = CreateMapEntryName();
@@ -66,7 +66,6 @@ namespace SOTS.Items.Conduit
 		public override int DissolvingTileType => ModContent.TileType<DissolvingEarthTile>();
 		public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/EarthenConduitTileGlow").Value;
 		public override Color elementalColor => ColorHelpers.EarthColor;
-		public override int BuffType => ModContent.BuffType<EarthBoosted>();
 		public override void SafeSetStaticDefaults()
 		{
 			LocalizedText name = CreateMapEntryName();
@@ -94,7 +93,6 @@ namespace SOTS.Items.Conduit
         public override int DissolvingTileType => ModContent.TileType<DissolvingBrillianceTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/ChaosConduitTileGlow").Value;
         public override Color elementalColor => ColorHelpers.ChaosPink;
-        public override int BuffType => ModContent.BuffType<BrillianceBoosted>();
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -122,7 +120,6 @@ namespace SOTS.Items.Conduit
         public override int DissolvingTileType => ModContent.TileType<DissolvingAetherTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/OtherworldConduitTileGlow").Value;
         public override Color elementalColor => ColorHelpers.PurpleOtherworldColor;
-        public override int BuffType => ModContent.BuffType<OtherworldBoosted>();
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -343,8 +340,7 @@ namespace SOTS.Items.Conduit
 		public virtual int DissolvingTileType => ModContent.TileType<DissolvingBrillianceTile>();
 		public virtual Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/NatureConduitTileGlow").Value;
 		public virtual Color elementalColor => ColorHelpers.natureColor;
-		public virtual int BuffType => ModContent.BuffType<NatureBoosted>();
-		public sealed override void NearbyEffects(int i, int j, bool closer)
+        public sealed override void NearbyEffects(int i, int j, bool closer)
 		{
 			int left = i;
 			int top = j;
@@ -379,14 +375,15 @@ namespace SOTS.Items.Conduit
 			}
 			if (entity.tileCountDissolving >= 20)
 			{
-				Player myPlayer = Main.LocalPlayer;
-				float distance = Vector2.Distance(myPlayer.Center, new Vector2(i * 16 + 8, j * 16 + 8));
-				if (distance <= 240)
-				{
-					if (!myPlayer.HasBuff(BuffType))
-						myPlayer.AddBuff(BuffType, 90, false);
-				}
-				if (ImportantTilesWorld.dreamLamp.HasValue && BuffType == ModContent.BuffType<NatureBoosted>())
+                Player myPlayer = Main.LocalPlayer;
+                float distance = Vector2.Distance(myPlayer.Center, new Vector2(i * 16 + 8, j * 16 + 8));
+                if (distance <= 240)
+                {
+                    int powerType = ConduitHelper.ConduitPowerType(myPlayer, entity.ConduitTile, 0);
+					if(powerType <= 0)
+                        ConduitHelper.ConduitPowerType(myPlayer, entity.ConduitTile, 1);
+                }
+                if (ImportantTilesWorld.dreamLamp.HasValue && DissolvingTileType == ModContent.TileType<DissolvingNatureTile>())
 				{
 					Vector2 dreamLamp = new Vector2(ImportantTilesWorld.dreamLamp.Value.X * 16 + 8, ImportantTilesWorld.dreamLamp.Value.Y * 16 + 8);
 					distance = Vector2.Distance(dreamLamp, new Vector2(i * 16 + 8, j * 16 + 8));

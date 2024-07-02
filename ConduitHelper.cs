@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.ConduitBoosts;
+using SOTS.Common.ModPlayers;
 using SOTS.Common.Systems;
 using SOTS.Items.Conduit;
 using SOTS.Items.Fragments;
@@ -38,12 +39,12 @@ namespace SOTS
 						if (player.active)
 						{
 							float mult = 1f;
-							if (player.HasBuff(tileEntity.ConduitTile.BuffType) && j == Main.myPlayer)
+                            int powerType = ConduitPowerType(player, tileEntity.ConduitTile, 0);
+                            if (powerType > 0 && j == Main.myPlayer)
 							{
-								int buffIndex = player.FindBuffIndex(tileEntity.ConduitTile.BuffType);
-								float timer = player.buffTime[buffIndex] - 30; //starts at 60, goes to 0
-								timer = Math.Clamp(timer, 0, 60);
-								float sinusoid = (float)Math.Sin(MathHelper.ToRadians(180f * (1 - timer / 60f)));
+								float timer = powerType;
+								timer = Math.Clamp(timer, 0, ConduitPlayer.ChargeTime);
+								float sinusoid = (float)Math.Sin(MathHelper.ToRadians(180f * timer / ConduitPlayer.ChargeTime));
 								mult += sinusoid;
 							}
 							tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, player.Center, 0.9f * mult);
@@ -138,31 +139,63 @@ namespace SOTS
 					DrawGatewayGlowmask(x, y, Main.spriteBatch, AvaritiaPortalMiddleAlpha, 0);
             }
         }
-		public static void DrawPlayerEffectOutline(SpriteBatch spriteBatch, Player player)
+        public static int ConduitPowerType(Player player, ConduitTile cT, int change = 0)
+        {
+            ConduitPlayer CP = player.ConduitPlayer();
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingNatureTile>())
+                return CP.NaturePower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingEarthTile>())
+                return CP.EarthPower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingBrillianceTile>())
+                return CP.ChaosPower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingAetherTile>())
+                return CP.OtherworldPower += change;
+            return -1;
+        }
+		public static void DrawPlayerEffectOutline(Player player)
 		{
-			if (player.HasBuff<NatureBoosted>())
+			ConduitPlayer CP = player.ConduitPlayer();
+			if (CP.NaturePower > 0)
 			{
-				int buffIndex = player.FindBuffIndex(ModContent.BuffType<NatureBoosted>());
-				float timer = player.buffTime[buffIndex] - 30; //starts at 60, goes to 0
+				float timer = CP.NaturePower;
 				if (timer > 0)
 				{
 					Color color = ColorHelpers.natureColor;
-					float percent = 1 - timer / 60f;
+					float percent = timer / ConduitPlayer.ChargeTime;
 					DrawConduitCircleFull(player.Center, percent, color);
 				}
-			}
-			if (player.HasBuff<EarthBoosted>())
-			{
-				int buffIndex = player.FindBuffIndex(ModContent.BuffType<EarthBoosted>());
-				float timer = player.buffTime[buffIndex] - 30; //starts at 60, goes to 0
-				if (timer > 0)
-				{
-					Color color = ColorHelpers.EarthColor;
-					float percent = 1 - timer / 60f;
-					DrawConduitCircleFull(player.Center, percent, color);
-				}
-			}
-		}
+            }
+            if (CP.EarthPower > 0)
+            {
+                float timer = CP.EarthPower;
+                if (timer > 0)
+                {
+                    Color color = ColorHelpers.EarthColor;
+                    float percent = timer / ConduitPlayer.ChargeTime;
+                    DrawConduitCircleFull(player.Center, percent, color);
+                }
+            }
+            if (CP.ChaosPower > 0)
+            {
+                float timer = CP.ChaosPower;
+                if (timer > 0)
+                {
+                    Color color = ColorHelpers.ChaosPink;
+                    float percent = timer / ConduitPlayer.ChargeTime;
+                    DrawConduitCircleFull(player.Center, percent, color);
+                }
+            }
+            if (CP.OtherworldPower > 0)
+            {
+                float timer = CP.OtherworldPower;
+                if (timer > 0)
+                {
+                    Color color = ColorHelpers.PurpleOtherworldColor;
+                    float percent = timer / ConduitPlayer.ChargeTime;
+                    DrawConduitCircleFull(player.Center, percent, color);
+                }
+            }
+        }
 		public static void DrawConduitCircleFull(Vector2 position, float percent, Color color)
 		{
 			color.A = 0;

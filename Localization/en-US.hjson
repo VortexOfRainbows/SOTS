@@ -5918,6 +5918,11 @@ Mods: {
 				DisplayName: Aether Boosted
 				Description: Increases max life by 20
 			}
+
+			Attuned: {
+				DisplayName: Attuned
+				Description: Mods.SOTS.Buffs.Attuned.Description
+			}
 		}
 
 		ArmorSetBonus: {

@@ -607,7 +607,7 @@ namespace SOTS
 					{
 						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
 						if(i == Main.myPlayer)
-							ConduitHelper.DrawPlayerEffectOutline(Main.spriteBatch, player);
+							ConduitHelper.DrawPlayerEffectOutline(player);
                     }
                 }
                 Main.spriteBatch.End();

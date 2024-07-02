@@ -8,6 +8,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.ModPlayers;
 
 namespace SOTS
 {
@@ -96,13 +97,17 @@ namespace SOTS
 		public static SOTSPlayer SOTSPlayer(this Player player)
 		{
 			return global::SOTS.SOTSPlayer.ModPlayer(player);
-		}
-		/*public static void SetResearchCostAutomatically(this ModItem modItem)
+        }
+        public static ConduitPlayer ConduitPlayer(this Player player)
+        {
+            return Common.ModPlayers.ConduitPlayer.ModPlayer(player);
+        }
+        /*public static void SetResearchCostAutomatically(this ModItem modItem)
 		{
 			Item item = modItem.Item;
 			item.SetDefaults(modItem.Type);
 			int amt = 1;
 			SetResearchCost(modItem.Type, amt);
 		}*/
-	}
+    }
 }
