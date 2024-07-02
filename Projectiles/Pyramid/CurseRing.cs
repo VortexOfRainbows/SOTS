@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Pyramid
 						Vector2 OwnerPos = npc.Center;
 						Vector2 distanceToOwner = Projectile.Center - OwnerPos;
 						PharaohsCurse curse = npc.ModNPC as PharaohsCurse;
-						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center, 1.05f * Projectile.scale, curse.foamParticleList1, 0.2f, 3, 30, distanceToOwner.ToRotation() + MathHelper.ToRadians(90));
+						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center, 1.05f * Projectile.scale, curse.foamParticleList1, 0.2f, 3, 36, distanceToOwner.ToRotation() + MathHelper.ToRadians(90));
 					}
 				}
 				else

@@ -4,11 +4,11 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Terraria;
 using SOTS.Common.GlobalNPCs;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.ModPlayers;
+using System.Collections.Generic;
 
 namespace SOTS
 {
@@ -102,12 +102,10 @@ namespace SOTS
         {
             return Common.ModPlayers.ConduitPlayer.ModPlayer(player);
         }
-        /*public static void SetResearchCostAutomatically(this ModItem modItem)
-		{
-			Item item = modItem.Item;
-			item.SetDefaults(modItem.Type);
-			int amt = 1;
-			SetResearchCost(modItem.Type, amt);
-		}*/
+        public static void RemoveBySwap<T>(this List<T> list, int index)
+        {
+            list[index] = list[list.Count - 1];
+            list.RemoveAt(list.Count - 1);
+        }
     }
 }
