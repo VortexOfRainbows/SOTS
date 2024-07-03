@@ -361,7 +361,7 @@ namespace SOTS.Void
 		public static Color minionVoidColor(int type)
 		{
 			if (type == (int)VoidMinionID.NatureSpirit)
-				return ColorHelpers.natureColor;
+				return ColorHelpers.NatureColor;
 			if (type == (int)VoidMinionID.ChaosSpirit)
 				return ColorHelpers.pastelRainbow;
 			if (type == (int)VoidMinionID.EarthenSpirit)

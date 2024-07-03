@@ -38,7 +38,7 @@ namespace SOTS.Items.Conduit
 	{
 		public override int DissolvingTileType => ModContent.TileType<DissolvingNatureTile>();
 		public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/NatureConduitTileGlow").Value;
-		public override Color elementalColor => ColorHelpers.natureColor;
+		public override Color elementalColor => ColorHelpers.NatureColor;
 		public override void SafeSetStaticDefaults()
 		{
 			LocalizedText name = CreateMapEntryName();
@@ -339,7 +339,7 @@ namespace SOTS.Items.Conduit
 		}
 		public virtual int DissolvingTileType => ModContent.TileType<DissolvingBrillianceTile>();
 		public virtual Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/NatureConduitTileGlow").Value;
-		public virtual Color elementalColor => ColorHelpers.natureColor;
+		public virtual Color elementalColor => ColorHelpers.NatureColor;
         public sealed override void NearbyEffects(int i, int j, bool closer)
 		{
 			int left = i;

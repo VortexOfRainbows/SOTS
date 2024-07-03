@@ -31,7 +31,7 @@ namespace SOTS.Common.ModPlayers
         public int ChaosPower = 0;
         public override void ResetEffects()
         {
-            IteratePower(ref NaturePower, ColorHelpers.natureColor);
+            IteratePower(ref NaturePower, ColorHelpers.NatureColor);
             IteratePower(ref EarthPower, ColorHelpers.EarthColor);
             IteratePower(ref PermafrostPower, ColorHelpers.PermafrostColor);
             IteratePower(ref OtherworldPower, ColorHelpers.PurpleOtherworldColor);

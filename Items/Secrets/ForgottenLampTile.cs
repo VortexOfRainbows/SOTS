@@ -117,7 +117,7 @@ namespace SOTS.Items.Secrets
                 for (int a = 0; a < 72; a++)
                 {
                     Vector2 outward = new Vector2(0, 9f).RotatedBy(MathHelper.TwoPi * a / 24f);
-                    Dust dust = Dust.NewDustDirect(Projectile.Center + outward.SafeNormalize(Vector2.Zero) * 16 - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, ColorHelpers.natureColor, 1.1f);
+                    Dust dust = Dust.NewDustDirect(Projectile.Center + outward.SafeNormalize(Vector2.Zero) * 16 - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, ColorHelpers.NatureColor, 1.1f);
                     dust.scale *= 1.5f;
                     dust.velocity *= 0.6f;
                     dust.velocity += outward / dust.scale;
@@ -131,7 +131,7 @@ namespace SOTS.Items.Secrets
                 for(int d = 0; d < length; d++)
                 {
                     Vector2 spawnPosition = Projectile.Center + betweenConduit.SafeNormalize(Vector2.Zero) * distanceBetweenDust * d;
-                    Dust dust = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, ColorHelpers.natureColor, 1.1f);
+                    Dust dust = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, ColorHelpers.NatureColor, 1.1f);
                     dust.scale *= 1.4f;
                     dust.velocity *= 0.5f;
                     dust.fadeIn = 0.1f;
@@ -142,7 +142,7 @@ namespace SOTS.Items.Secrets
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            ConduitHelper.DrawConduitCircleFull(Projectile.Center, 1 - (Projectile.timeLeft / 150f), ColorHelpers.natureColor * alphaMult);
+            ConduitHelper.DrawConduitCircleFull(Projectile.Center, 1 - (Projectile.timeLeft / 150f), ColorHelpers.NatureColor * alphaMult);
             return false;
         }
     }

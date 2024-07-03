@@ -84,7 +84,8 @@ Daily Log:
 
 7/1/24
 1. WIP Conduit buff rework
-	1. Needs actual buff effects, localization, multiplayer syncing, drawcode for the buff icon
+	1. Needs: multiplayer syncing
+	2. Localization, drawcode, and actual buff effects added
 
 
 6/30/24 to 7/1/24

@@ -12,7 +12,7 @@ namespace SOTS
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static Color pastelRainbow = Color.White;
-		public static Color natureColor = new Color(180, 240, 180);
+		public static Color NatureColor = new Color(180, 240, 180);
 		public static Color TideColor = new Color(64, 72, 178);
 		public static Color PermafrostColor = new Color(200, 250, 250);
 		public static Color EarthColor = new Color(230, 220, 145);
@@ -40,7 +40,7 @@ namespace SOTS
 			double grn = Math.Sin(frequency * newAi + 2.0) * width + center;
 			double blu = Math.Sin(frequency * newAi + 4.0) * width + center;
 			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
-			natureColor = Color.Lerp(new Color(192, 222, 143), new Color(45, 102, 46), 0.5f + (float)Math.Sin(toRadians) * 0.5f);
+			NatureColor = Color.Lerp(new Color(192, 222, 143), new Color(45, 102, 46), 0.5f + (float)Math.Sin(toRadians) * 0.5f);
 			EarthColor = Color.Lerp(new Color(253, 234, 157), new Color(142, 118, 43), 0.5f + (float)Math.Sin(toRadians * 2.5f) * 0.5f);
 			TideColor = Color.Lerp(new Color(177, 187, 238), new Color(64, 72, 178), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);
 			PermafrostColor = Color.Lerp(new Color(188, 217, 245), new Color(106, 148, 234), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);

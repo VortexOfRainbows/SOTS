@@ -5674,16 +5674,6 @@ Mods: {
 				Description: Nature Spirits assist you in combat
 			}
 
-			NatureBoosted: {
-				DisplayName: Nature Boosted
-				Description: Increases max life by 20
-			}
-
-			EarthBoosted: {
-				DisplayName: Earth Boosted
-				Description: Increases max life by 20
-			}
-
 			Nightmare: {
 				DisplayName: Nightmare
 				Description: Compress enemies together with critical strikes
@@ -5909,19 +5899,45 @@ Mods: {
 				Description: Explode into brass balls!
 			}
 
-			BrillianceBoosted: {
-				DisplayName: Brilliance Boosted
-				Description: Increases max life by 20
-			}
-
-			OtherworldBoosted: {
-				DisplayName: Aether Boosted
-				Description: Increases max life by 20
-			}
-
 			Attuned: {
 				DisplayName: Attuned
-				Description: Mods.SOTS.Buffs.Attuned.Description
+				Description: Temp
+				Tier1: Increases max life by 20
+				Tier2:
+					'''
+					Increases max life by 20
+					Increases max void by 20
+					'''
+				Tier3:
+					'''
+					Increases max life by 40
+					Increases max void by 40
+					'''
+				Tier4:
+					'''
+					Increases max life by 60
+					Increases max void by 40
+					'''
+				Tier5:
+					'''
+					Increases max life by 60
+					Increases max void by 60
+					'''
+				Tier6:
+					'''
+					Increases max life by 80
+					Increases max void by 80
+					'''
+				Tier7:
+					'''
+					Increases max life by 100
+					Increases max void by 80
+					'''
+				Tier8:
+					'''
+					Increases max life by 100
+					Increases max void by 100
+					'''
 			}
 		}
 

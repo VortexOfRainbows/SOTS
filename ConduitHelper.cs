@@ -160,7 +160,7 @@ namespace SOTS
 				float timer = CP.NaturePower;
 				if (timer > 0)
 				{
-					Color color = ColorHelpers.natureColor;
+					Color color = ColorHelpers.NatureColor;
 					float percent = timer / ConduitPlayer.ChargeTime;
 					DrawConduitCircleFull(player.Center, percent, color);
 				}

@@ -25,7 +25,7 @@ namespace SOTS.Items
 			List<int> CapableNPCs = CapableNPCS(Main.LocalPlayer);
 			tooltips.Add(new TooltipLine(Mod, "Construct0", "Possible constructs:"));
 			if (CapableNPCs.Contains(ModContent.NPCType<NatureConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct1", "Nature Construct") { OverrideColor = ColorHelpers.natureColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct1", "Nature Construct") { OverrideColor = ColorHelpers.NatureColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<EarthenConstruct>()))
 				tooltips.Add(new TooltipLine(Mod, "Construct2", "Earthen Construct") { OverrideColor = ColorHelpers.EarthColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<PermafrostConstruct>()))

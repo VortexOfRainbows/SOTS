@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Crushers
 			dust.velocity *= 0.05f;
 			dust.scale = 1.25f;
 			dust.noGravity = true;
-			dust.color = ColorHelpers.natureColor;
+			dust.color = ColorHelpers.NatureColor;
 			dust.noGravity = true;
 			dust.fadeIn = 0.2f;
 			dust.velocity += velo;
