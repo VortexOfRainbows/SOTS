@@ -3,11 +3,34 @@ using SOTS.Buffs.ConduitBoosts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace SOTS.Common.ModPlayers
 {
     public class ConduitPlayer : ModPlayer
     {
+        public override void SaveData(TagCompound tag)
+        {
+            tag["Power1"] = NaturePower;
+            tag["Power2"] = EarthPower;
+            tag["Power3"] = PermafrostPower;
+            tag["Power4"] = OtherworldPower;
+            tag["Power5"] = TidePower;
+            tag["Power6"] = EvilPower;
+            tag["Power7"] = InfernoPower;
+            tag["Power8"] = ChaosPower;
+        }
+        public override void LoadData(TagCompound tag)
+        {
+            NaturePower = tag.GetInt("Power1");
+            EarthPower = tag.GetInt("Power2");
+            PermafrostPower = tag.GetInt("Power3");
+            OtherworldPower = tag.GetInt("Power4");
+            TidePower = tag.GetInt("Power5");
+            EvilPower = tag.GetInt("Power6");
+            InfernoPower = tag.GetInt("Power7");
+            ChaosPower = tag.GetInt("Power8");
+        }
         public const float ChargeTime = 90f;
         public static ConduitPlayer ModPlayer(Player player)
         {
@@ -36,7 +59,7 @@ namespace SOTS.Common.ModPlayers
             IteratePower(ref PermafrostPower, ColorHelpers.PermafrostColor);
             IteratePower(ref OtherworldPower, ColorHelpers.PurpleOtherworldColor);
             IteratePower(ref TidePower, ColorHelpers.TideColor);
-            IteratePower(ref EvilPower, ColorHelpers.EvilColor); //Should change to red
+            IteratePower(ref EvilPower, ColorHelpers.RedEvilColor);
             IteratePower(ref InfernoPower, ColorHelpers.Inferno1);
             IteratePower(ref ChaosPower, ColorHelpers.ChaosPink);
 

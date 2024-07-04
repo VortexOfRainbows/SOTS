@@ -37,7 +37,7 @@ namespace SOTS.Buffs.ConduitBoosts
         }
         public override void SetStaticDefaults()
         {
-            Main.buffNoSave[Type] = true;
+            Main.buffNoSave[Type] = false;
             Main.buffNoTimeDisplay[Type] = true;
             Main.persistentBuff[Type] = true;
         }
@@ -115,7 +115,7 @@ namespace SOTS.Buffs.ConduitBoosts
             if (CP.TideBoosted)
                 DrawCell(spriteBatch, texture, drawParams, ColorHelpers.TideColor, 4);
             if (CP.EvilBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.EvilColor, 5);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.RedEvilColor, 5);
             if (CP.InfernoBoosted)
                 DrawCell(spriteBatch, texture, drawParams, ColorHelpers.Inferno1, 6);
             if (CP.ChaosBoosted)

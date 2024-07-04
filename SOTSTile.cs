@@ -44,8 +44,11 @@ namespace SOTS
         public static Color NaturePlatingColor = new Color(119, 141, 138);
         public static Color EarthenPlatingColor = new Color(112, 90, 86);
         public static Color PermafrostPlatingColor = new Color(165, 179, 198);
-        public static Color ChaosPlatingColor = new Color(82, 85, 123);
         public static Color OtherworldPlatingColor = new Color(48, 57, 70);
+        public static Color TidePlatingColor = new Color(35, 37, 52);
+        public static Color EvilPlatingColor = new Color(98, 47, 126);
+        public static Color InfernoPlatingColor = new Color(73, 35, 59);
+        public static Color ChaosPlatingColor = new Color(82, 85, 123);
         public static Vector3 NaturePlatingLight = new Vector3(0.275f, 0.4f, 0.215f);
         public static Vector3 EarthenPlatingLight = new Vector3(0.36f, 0.32f, 0.11f);
         public static Vector3 PermafrostPlatingLight = new Vector3(0.225f, 0.30f, 0.30f);
@@ -515,9 +518,17 @@ namespace SOTS
                 return false;
             if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingEarthTile>(), 0, TileType<EarthenConduitTile>()))
                 return false;
-            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingBrillianceTile>(), 0, TileType<ChaosConduitTile>()))
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingAuroraTile>(), 0, TileType<PermafrostConduitTile>()))
                 return false;
             if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingAetherTile>(), 0, TileType<OtherworldConduitTile>()))
+                return false;
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingDelugeTile>(), 0, TileType<TidalConduitTile>()))
+                return false;
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingUmbraTile>(), 0, TileType<EvilConduitTile>()))
+                return false;
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingNetherTile>(), 0, TileType<InfernoConduitTile>()))
+                return false;
+            if (DoNotPlaceNearConduit(i, j, type, TileType<DissolvingBrillianceTile>(), 0, TileType<ChaosConduitTile>()))
                 return false;
             return base.CanPlace(i, j, type);
         }

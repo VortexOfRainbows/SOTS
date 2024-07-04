@@ -5505,6 +5505,42 @@ Mods: {
 				DisplayName: Big Taco
 				Tooltip: Refills 40 void and grants Wrath for 3 minutes
 			}
+
+			EvilConduit: {
+				DisplayName: Evil Conduit
+				Tooltip:
+					'''
+					An incomplete redirector of evil energy: it lacks a support chassis
+					When fully charged, it will focus nearby evil energy into valid repositories
+					'''
+			}
+
+			InfernoConduit: {
+				DisplayName: Inferno Conduit
+				Tooltip:
+					'''
+					An incomplete redirector of inferno energy: it lacks a support chassis
+					When fully charged, it will focus nearby inferno energy into valid repositories
+					'''
+			}
+
+			PermafrostConduit: {
+				DisplayName: Permafrost Conduit
+				Tooltip:
+					'''
+					An incomplete redirector of permafrost energy: it lacks a support chassis
+					When fully charged, it will focus nearby permafrost energy into valid repositories
+					'''
+			}
+
+			TidalConduit: {
+				DisplayName: Tide Conduit
+				Tooltip:
+					'''
+					An incomplete redirector of tide energy: it lacks a support chassis
+					When fully charged, it will focus nearby tide energy into valid repositories
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -6146,6 +6182,10 @@ Mods: {
 			PlanetariumCrateTile.MapEntry: Planetarium Crate
 			ChaosConduitTile.MapEntry: Chaos Conduit
 			OtherworldConduitTile.MapEntry: Otherworld Conduit
+			EvilConduitTile.MapEntry: Evil Conduit Tile
+			InfernoConduitTile.MapEntry: Inferno Conduit Tile
+			PermafrostConduitTile.MapEntry: Permafrost Conduit Tile
+			TidalConduitTile.MapEntry: Tidal Conduit Tile
 		}
 
 		WorldGeneration: {

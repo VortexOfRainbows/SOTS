@@ -22,7 +22,8 @@ namespace SOTS
 		public static Color LemegetonColor = new Color(255, 82, 97, 0);
 		public static Color ChaosPink = new Color(231, 95, 203);
 		public static Color EvilColor = new Color(100, 15, 0, 0);
-		public static Color Inferno1 = new Color(213, 68, 13);
+        public static Color RedEvilColor = new Color(100, 15, 0, 0);
+        public static Color Inferno1 = new Color(213, 68, 13);
 		public static Color Inferno2 = new Color(255, 210, 155);
 		public static int soulColorCounter = 0;
 		public static Color VoidAnomaly = new Color(160, 120, 180);
@@ -47,6 +48,7 @@ namespace SOTS
 			OtherworldColor = Color.Lerp(new Color(167, 45, 225, 0), new Color(64, 178, 172, 0), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);
 			PurpleOtherworldColor = Color.Lerp(OtherworldColor, new Color(167, 45, 225, 0), 0.5f);
             EvilColor = Color.Lerp(new Color(55, 7, 0, 0), new Color(38, 18, 61, 0), 0.5f + (float)Math.Sin(toRadians * 1.25f) * 0.5f);
+			RedEvilColor = Color.Lerp(EvilColor, new Color(255, 30, 0, 0), 0.5f) * 1.5f;
 			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + (float)Math.Sin(toRadians * 2.5f) * 0.5f);
 
 			Color LemegetonRed = new Color(255, 82, 97);

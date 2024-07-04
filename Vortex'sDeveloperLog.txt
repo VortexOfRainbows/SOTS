@@ -82,10 +82,13 @@ N/A
 Daily Log:
 
 
-7/1/24
+7/1/24 to 7/3/24
 1. WIP Conduit buff rework
 	1. Needs: multiplayer syncing
 	2. Localization, drawcode, and actual buff effects added
+	3. bonuses from the conduit buffs now stay after leaving and re-entering worlds
+2. Added Evil, Tidal, Permafrost, and Inferno conduits
+
 
 
 6/30/24 to 7/1/24

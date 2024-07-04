@@ -329,7 +329,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<TidePlating>();
-			AddMapEntry(new Color(35, 37, 52));
+			AddMapEntry(SOTSTile.TidePlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Lead; //demonite
@@ -390,7 +390,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EvilPlating>();
-			AddMapEntry(new Color(98, 47, 126));
+			AddMapEntry(SOTSTile.EvilPlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
 			DustType = 14; //demonite
@@ -449,7 +449,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ChaosPlating>();
-			AddMapEntry(new Color(82, 85, 123));
+			AddMapEntry(SOTSTile.ChaosPlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Platinum;
@@ -513,7 +513,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<InfernoPlating>();
-			AddMapEntry(new Color(73, 35, 59));
+			AddMapEntry(SOTSTile.InfernoPlatingColor);
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Iron;

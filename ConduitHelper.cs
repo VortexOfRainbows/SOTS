@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.ConduitBoosts;
+using SOTS.Common.ItemDropConditions;
 using SOTS.Common.ModPlayers;
 using SOTS.Common.Systems;
 using SOTS.Items.Conduit;
@@ -146,51 +147,39 @@ namespace SOTS
                 return CP.NaturePower += change;
             if (cT.DissolvingTileType == ModContent.TileType<DissolvingEarthTile>())
                 return CP.EarthPower += change;
-            if (cT.DissolvingTileType == ModContent.TileType<DissolvingBrillianceTile>())
-                return CP.ChaosPower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingAuroraTile>())
+                return CP.PermafrostPower += change;
             if (cT.DissolvingTileType == ModContent.TileType<DissolvingAetherTile>())
                 return CP.OtherworldPower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingDelugeTile>())
+                return CP.TidePower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingUmbraTile>())
+                return CP.EvilPower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingNetherTile>())
+                return CP.InfernoPower += change;
+            if (cT.DissolvingTileType == ModContent.TileType<DissolvingBrillianceTile>())
+                return CP.ChaosPower += change;
             return -1;
         }
 		public static void DrawPlayerEffectOutline(Player player)
 		{
 			ConduitPlayer CP = player.ConduitPlayer();
-			if (CP.NaturePower > 0)
-			{
-				float timer = CP.NaturePower;
-				if (timer > 0)
-				{
-					Color color = ColorHelpers.NatureColor;
-					float percent = timer / ConduitPlayer.ChargeTime;
-					DrawConduitCircleFull(player.Center, percent, color);
-				}
-            }
-            if (CP.EarthPower > 0)
+            DrawSingleCircle(player, ColorHelpers.NatureColor, CP.NaturePower);
+            DrawSingleCircle(player, ColorHelpers.EarthColor, CP.EarthPower);
+            DrawSingleCircle(player, ColorHelpers.PermafrostColor, CP.PermafrostPower);
+            DrawSingleCircle(player, ColorHelpers.PurpleOtherworldColor, CP.OtherworldPower);
+            DrawSingleCircle(player, ColorHelpers.TideColor, CP.TidePower);
+            DrawSingleCircle(player, ColorHelpers.RedEvilColor, CP.EvilPower);
+            DrawSingleCircle(player, ColorHelpers.Inferno1, CP.InfernoPower);
+            DrawSingleCircle(player, ColorHelpers.ChaosPink, CP.ChaosPower);
+        }
+        public static void DrawSingleCircle(Player player, Color color, int Power)
+        {
+            if (Power > 0 && Power < ConduitPlayer.ChargeTime)
             {
-                float timer = CP.EarthPower;
+                float timer = Power;
                 if (timer > 0)
                 {
-                    Color color = ColorHelpers.EarthColor;
-                    float percent = timer / ConduitPlayer.ChargeTime;
-                    DrawConduitCircleFull(player.Center, percent, color);
-                }
-            }
-            if (CP.ChaosPower > 0)
-            {
-                float timer = CP.ChaosPower;
-                if (timer > 0)
-                {
-                    Color color = ColorHelpers.ChaosPink;
-                    float percent = timer / ConduitPlayer.ChargeTime;
-                    DrawConduitCircleFull(player.Center, percent, color);
-                }
-            }
-            if (CP.OtherworldPower > 0)
-            {
-                float timer = CP.OtherworldPower;
-                if (timer > 0)
-                {
-                    Color color = ColorHelpers.PurpleOtherworldColor;
                     float percent = timer / ConduitPlayer.ChargeTime;
                     DrawConduitCircleFull(player.Center, percent, color);
                 }

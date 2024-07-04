@@ -247,7 +247,11 @@ namespace SOTS
 						tile.TileType == ModContent.TileType<NatureConduitTile>() || 
 						tile.TileType == ModContent.TileType<EarthenConduitTile>() ||
                         tile.TileType == ModContent.TileType<ChaosConduitTile>() ||
-                        tile.TileType == ModContent.TileType<OtherworldConduitTile>())
+                        tile.TileType == ModContent.TileType<OtherworldConduitTile>() ||
+                        tile.TileType == ModContent.TileType<EvilConduitTile>() ||
+                        tile.TileType == ModContent.TileType<PermafrostConduitTile>() ||
+                        tile.TileType == ModContent.TileType<InfernoConduitTile>() ||
+                        tile.TileType == ModContent.TileType<TidalConduitTile>())
                     {
 						pickPower += 300;
                     }
