@@ -34,6 +34,7 @@ namespace SOTS.Items.OreItems
 			Recipe.Create(ItemID.ArmorPolish).AddIngredient(this, 1).AddIngredient<FragmentOfInferno>(10).AddTile(TileID.MythrilAnvil).Register();
 			Recipe.Create(ItemID.Blindfold).AddIngredient(this, 1).AddIngredient<FragmentOfPermafrost>(10).AddTile(TileID.MythrilAnvil).Register();
 			Recipe.Create(ItemID.TrifoldMap).AddIngredient(this, 1).AddIngredient<FragmentOfEarth>(10).AddTile(TileID.MythrilAnvil).Register();
-		}
+            Recipe.Create(ItemID.PocketMirror).AddIngredient(this, 1).AddIngredient<FragmentOfEarth>(10).AddTile(TileID.MythrilAnvil).Register();
+        }
 	}
 }

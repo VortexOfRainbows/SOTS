@@ -1,14 +1,41 @@
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using SOTS.Buffs.ConduitBoosts;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using static SOTS.SOTS;
 
 namespace SOTS.Common.ModPlayers
 {
     public class ConduitPlayer : ModPlayer
     {
+        public void SendAllPacket(int toClient, int fromClient)
+        {
+            var packet = Mod.GetPacket();
+            packet.Write((byte)SOTSMessageType.SyncConduitPlayerAll);
+            packet.Write((byte)Player.whoAmI);
+            packet.Write(NaturePower);
+            packet.Write(EarthPower);
+            packet.Write(PermafrostPower);
+            packet.Write(OtherworldPower);
+            packet.Write(TidePower);
+            packet.Write(EvilPower);
+            packet.Write(InfernoPower);
+            packet.Write(ChaosPower);
+            packet.Send(toClient, fromClient);
+        }
+        private void SendPacket(int type, int value, int toClient, int fromClient)
+        {
+            var packet = Mod.GetPacket();
+            packet.Write((byte)SOTSMessageType.SyncConduitPlayer);
+            packet.Write((byte)Player.whoAmI);
+            packet.Write(type);
+            packet.Write(value);
+            packet.Send(toClient, fromClient);
+        }
         public override void SaveData(TagCompound tag)
         {
             tag["Power1"] = NaturePower;
@@ -54,26 +81,35 @@ namespace SOTS.Common.ModPlayers
         public int ChaosPower = 0;
         public override void ResetEffects()
         {
-            IteratePower(ref NaturePower, ColorHelpers.NatureColor);
-            IteratePower(ref EarthPower, ColorHelpers.EarthColor);
-            IteratePower(ref PermafrostPower, ColorHelpers.PermafrostColor);
-            IteratePower(ref OtherworldPower, ColorHelpers.PurpleOtherworldColor);
-            IteratePower(ref TidePower, ColorHelpers.TideColor);
-            IteratePower(ref EvilPower, ColorHelpers.RedEvilColor);
-            IteratePower(ref InfernoPower, ColorHelpers.Inferno1);
-            IteratePower(ref ChaosPower, ColorHelpers.ChaosPink);
+            IteratePower(ref NaturePower, ColorHelpers.NatureColor, 0);
+            IteratePower(ref EarthPower, ColorHelpers.EarthColor, 1);
+            IteratePower(ref PermafrostPower, ColorHelpers.PermafrostColor, 2);
+            IteratePower(ref OtherworldPower, ColorHelpers.PurpleOtherworldColor, 3);
+            IteratePower(ref TidePower, ColorHelpers.TideColor, 4);
+            IteratePower(ref EvilPower, ColorHelpers.RedEvilColor, 5);
+            IteratePower(ref InfernoPower, ColorHelpers.Inferno1, 6);
+            IteratePower(ref ChaosPower, ColorHelpers.ChaosPink, 7);
 
             if(NatureBoosted || EarthBoosted || PermafrostBoosted || OtherworldBoosted || TideBoosted || EvilBoosted || InfernoBoosted || ChaosBoosted)
             {
                 Player.AddBuff(ModContent.BuffType<Attuned>(), 300);
             }
         }
-        private void IteratePower(ref int Power, Color color)
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+        {
+            SendAllPacket(toWho, fromWho);
+        }
+        private void IteratePower(ref int Power, Color color, int num)
         {
             if(Power > 0)
             {
                 if (Power < ChargeTime)
                 {
+                    if(Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == Player.whoAmI)
+                    {
+                        if(Power <= 5)
+                            SendPacket(num, Power, -1, Player.whoAmI);
+                    }
                     Power++;
                     if(Power >= ChargeTime)
                     {

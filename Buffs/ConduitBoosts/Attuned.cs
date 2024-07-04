@@ -98,6 +98,8 @@ namespace SOTS.Buffs.ConduitBoosts
             Player player = Main.LocalPlayer;
             ConduitPlayer CP = player.ConduitPlayer();
             CP.NaturePower = CP.EarthPower = CP.PermafrostPower = CP.OtherworldPower = CP.TidePower = CP.EvilPower = CP.InfernoPower = CP.ChaosPower = 0;
+            if(Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                CP.SendAllPacket(-1, player.whoAmI);
             return true;
         }
         public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams)

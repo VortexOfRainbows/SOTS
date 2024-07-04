@@ -45,6 +45,8 @@ using SOTS.FakePlayer;
 using SOTS.Common;
 using Terraria.UI.Chat;
 using Terraria.Chat;
+using SOTS.Common.ModPlayers;
+using Terraria.Map;
 
 namespace SOTS
 {
@@ -238,7 +240,9 @@ namespace SOTS
 			SyncTileLocations,
 			RequestTileLocations,
 			SyncHasTeleported,
-			SyncTesseractData
+			SyncTesseractData,
+			SyncConduitPlayer,
+			SyncConduitPlayerAll
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -503,6 +507,66 @@ namespace SOTS
                     packet.Write(ID);
                     packet.Write(fPlayer.tesseractData[ID].AltFunctionUse);
                     packet.Write(fPlayer.tesseractData[ID].ChargeFrames);
+                    packet.Send(-1, playernumber);
+                }
+            }
+			if(msgType == (int)SOTSMessageType.SyncConduitPlayer)
+            {
+                byte playernumber = reader.ReadByte();
+				ConduitPlayer CP = Main.player[playernumber].ConduitPlayer();
+                int valueType = reader.ReadInt32();
+                int newValue = reader.ReadInt32();
+				if (valueType == 0)
+					CP.NaturePower = newValue;
+                if (valueType == 1)
+                    CP.EarthPower = newValue;
+                if (valueType == 2)
+                    CP.PermafrostPower = newValue;
+                if (valueType == 3)
+                    CP.OtherworldPower = newValue;
+                if (valueType == 4)
+                    CP.TidePower = newValue;
+                if (valueType == 5)
+                    CP.EvilPower = newValue;
+                if (valueType == 6)
+                    CP.InfernoPower = newValue;
+                if (valueType == 7)
+                    CP.ChaosPower = newValue;
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    var packet = GetPacket();
+                    packet.Write((byte)SOTSMessageType.SyncConduitPlayer);
+                    packet.Write((byte)playernumber);
+                    packet.Write(valueType);
+                    packet.Write(newValue);
+                    packet.Send(-1, playernumber);
+                }
+            }
+            if (msgType == (int)SOTSMessageType.SyncConduitPlayerAll)
+            {
+                byte playernumber = reader.ReadByte();
+                ConduitPlayer CP = Main.player[playernumber].ConduitPlayer();
+                CP.NaturePower = reader.ReadInt32();
+                CP.EarthPower = reader.ReadInt32();
+                CP.PermafrostPower = reader.ReadInt32();
+                CP.OtherworldPower = reader.ReadInt32();
+                CP.TidePower = reader.ReadInt32();
+                CP.EvilPower = reader.ReadInt32();
+                CP.InfernoPower = reader.ReadInt32();
+                CP.ChaosPower = reader.ReadInt32();
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    var packet = GetPacket();
+                    packet.Write((byte)SOTSMessageType.SyncConduitPlayerAll);
+                    packet.Write((byte)playernumber);
+                    packet.Write(CP.NaturePower);
+                    packet.Write(CP.EarthPower);
+                    packet.Write(CP.PermafrostPower);
+                    packet.Write(CP.OtherworldPower);
+                    packet.Write(CP.TidePower);
+                    packet.Write(CP.EvilPower);
+                    packet.Write(CP.InfernoPower);
+                    packet.Write(CP.ChaosPower);
                     packet.Send(-1, playernumber);
                 }
             }
