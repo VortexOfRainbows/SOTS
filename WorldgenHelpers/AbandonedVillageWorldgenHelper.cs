@@ -10,6 +10,10 @@ using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Functional;
 using SOTS.Items.Conduit;
 using Terraria.GameContent;
+using Microsoft.Win32;
+using Terraria.GameContent.UI.States;
+using Terraria.DataStructures;
+using System.Reflection;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -757,6 +761,10 @@ namespace SOTS.WorldgenHelpers
                 GenerateNewMineEntrance(bestLocationX, bestLocationY + 2);
             }
         }
+        public static bool TileIsNotContainer(Tile tile)
+        {
+            return tile.TileType != TileID.Containers && tile.TileType != TileID.Containers2 && tile.TileType != TileID.FakeContainers && tile.TileType != TileID.FakeContainers2;
+        }
 		public static void GenerateDownwardEntrance(ref int x, ref int y, float rotation)
 		{
             float nextPlatform = 10;
@@ -793,9 +801,7 @@ namespace SOTS.WorldgenHelpers
                             if (RunType == 0)
                             {
                                 Tile tileabove = Framing.GetTileSafely(rPoint.X, rPoint.Y - 1);
-                                if (tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick && 
-                                    tileabove.TileType != TileID.Containers && tileabove.TileType != TileID.Containers2 && 
-                                    tileabove.TileType != TileID.FakeContainers && tileabove.TileType != TileID.FakeContainers2)
+                                if (tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick && TileIsNotContainer(tile) && TileIsNotContainer(tileabove))
                                 {
                                     tile.HasTile = false;
                                     tile.LiquidAmount = 0;
@@ -892,8 +898,7 @@ namespace SOTS.WorldgenHelpers
                             if (t.HasTile) //)t.WallType != WallID.StoneSlab && t.WallType != WallID.GrayBrick && t.WallType != WallID.RocksUnsafe1)
                             {
                                 Tile tileabove = Framing.GetTileSafely(x + i, y + j - 1);
-                                if(tileabove.TileType != TileID.Containers && tileabove.TileType != TileID.Containers2 &&
-                                    tileabove.TileType != TileID.FakeContainers && tileabove.TileType != TileID.FakeContainers2)
+                                if(TileIsNotContainer(t) && TileIsNotContainer(tileabove))
                                 {
                                     t.HasTile = false;
                                     t.LiquidAmount = 0;
@@ -958,7 +963,10 @@ namespace SOTS.WorldgenHelpers
 				if(i != 0)
 					GenerateDownwardPathCircle(x, y);
                 GenerateDownwardEntrance(ref x, ref y, rotation);
-				rotation = WorldGen.genRand.NextFloat(-45, 45);
+                if (i == 13)
+                    rotation = 0;
+                else
+				    rotation = WorldGen.genRand.NextFloat(-45, 45);
             }
         }
 		public static void GenerateNewMineEntrance(int x, int y)
@@ -1079,9 +1087,9 @@ namespace SOTS.WorldgenHelpers
                 {11,11,12,12,12 ,0 ,0,18,12,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12,17 ,0 ,0 ,0,12,12,17 ,0 ,0 ,0,12,12,11,11},
                 {11,12,12,12,17 ,0 ,0 ,0,12,17 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0,18,12 ,0 ,0 ,0 ,0,12,12,12,11},
                 {11,12,12,12 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0,18,12,12,11},
-                {11 ,0,18,12 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0, 0,20,20,20,21,21 ,0 ,0,13,13,13,13,22 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0,23,13,13,13,13 ,0 ,0,21,21,20,20,20, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0,12,17,11},
-                {11 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0, 0,19,20,20,20 ,0 ,0 ,0,25,16,16,16,16 ,0,22 ,0 ,0 ,0 ,9 ,0 ,0 ,0,23 ,0,16,16,16,16 ,0 ,0 ,0 ,0,20,20,20,24, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
-                {25 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0, 0,19 ,0,20,20,20 ,0 ,0,25,25,13,13,13,13,14,14,14,14,14,14,14,14,14,14,14,13,13,13,13,25 ,0 ,0 ,0,20,20,20 ,0,24, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
+                {11 ,0,18,12 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,19,20,20,20,21,21 ,0 ,0,13,13,13,13,22 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0,23,13,13,13,13 ,0 ,0,21,21,20,20,20,24 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0,12,17,11},
+                {11 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,19, 0,20,20,20 ,0 ,0 ,0,25,16,16,16,16 ,0,22 ,0 ,0 ,0 ,9 ,0 ,0 ,0,23 ,0,16,16,16,16 ,0 ,0 ,0 ,0,20,20,20, 0,24 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
+                {25 ,0 ,0,12 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,19, 0, 0,20,20,20 ,0 ,0,25,25,13,13,13,13,14,14,14,14,14,14,14,14,14,14,14,13,13,13,13,25 ,0 ,0 ,0,20,20,20 ,0, 0,24 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,12 ,0,11},
                 {25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,21,21,21,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,34,15,15,15,15,15,15,15,25,25,25,25 ,0 ,0,20,20,20,21,21,21 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25},
                 {25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
                 {25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
@@ -1225,7 +1233,7 @@ namespace SOTS.WorldgenHelpers
                                 case 19:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    tile.TileType = (ushort)ModContent.TileType<EarthenPlatingPlatformTile>();
+                                    WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>(), true, true, -1, 43);
                                     tile.Slope = (SlopeType)2;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -1238,7 +1246,7 @@ namespace SOTS.WorldgenHelpers
                                 case 21:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    tile.TileType = (ushort)ModContent.TileType<EarthenPlatingPlatformTile>();
+                                    WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>(), true, true, -1, 43);
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -1257,8 +1265,9 @@ namespace SOTS.WorldgenHelpers
                                     tile.IsHalfBlock = false;
                                     break;
                                 case 24:
-                                    tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<EarthenPlatingPlatformTile>();
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
+                                    WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>(), true, true, -1, 43);
                                     tile.Slope = (SlopeType)1;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -1384,6 +1393,184 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             return tileThere;
+        }
+        public static void GenerateBeam(int posX, int posY, int width = 13)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    int x = posX + i;
+                    int y = posY + j;
+                    Tile t = Framing.GetTileSafely(x, y);
+                    t.ClearTile();
+                    WorldGen.PlaceTile(x, y, (ushort)ModContent.TileType<EarthenPlatingTile>());
+                }
+            }
+        }
+        public static void GenerateWalls(int posX, int posY, int width, int minHeight, int height)
+        {
+            int full = WorldGen.genRand.Next(2);
+            for (int i = 0; i < 2; i++)
+            {
+                int randU = height;
+                if (i != full && minHeight < height)
+                    randU = WorldGen.genRand.Next(minHeight, height);
+                int rand = WorldGen.genRand.Next(2);
+                int startDir = rand * 2 - 1;
+                int startSide = rand * height;
+                int endY = 0;
+                for (int j = 0; j <= randU; j++)
+                {
+                    int x = posX + i * width;
+                    int y = posY + j * startDir - startSide;
+                    Tile t = Framing.GetTileSafely(x, y);
+                    t.WallType = WallID.None;
+                    WorldGen.PlaceWall(x, y, (ushort)ModContent.WallType<EarthenPlatingBeamWall>());
+                    endY = j;
+                }
+                if (full != i)
+                    for (int k = 1; k < width; k++)
+                    {
+                        for (int l = 0; l <= randU; l++)
+                        {
+                            int x = posX + k;
+                            int y = posY + (endY - l) * startDir - startSide;
+                            Tile t = Framing.GetTileSafely(x, y);
+                            t.WallType = WallID.None;
+                            ushort type = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
+                            if (l != 0)
+                                type = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+                            WorldGen.PlaceWall(x, y, type);
+                        }
+                    }
+            }
+        }
+        public static Point16[] GenerateMineShaft(int posX, int posY)
+        {
+            Point16[] edges = new Point16[4];
+
+            int platW = 12;
+            int biggerPlatform = WorldGen.genRand.Next(2);
+            int bonusPlatSize = WorldGen.genRand.Next(7);
+            int offset = WorldGen.genRand.Next(bonusPlatSize);
+
+            int startX = posX - (biggerPlatform == 1 ? offset : 0);
+            int width1 = platW + (biggerPlatform == 1 ? bonusPlatSize : 0);
+            GenerateBeam(startX, posY, width1);
+            edges[0] = new Point16(startX, posY + 1);
+            edges[1] = new Point16(startX + width1 - 1, posY + 1);
+            int total = 0;
+            for (int i = 0; i < width1; i++)
+            {
+                for (int j = 6; j < 15; j++)
+                {
+                    Tile t = Framing.GetTileSafely(startX + i, posY - j);
+                    if(t.HasTile)
+                    {
+                        total += j;
+                        break;
+                    }
+                }
+            }
+            total /= width1;
+            int sepVert = total + WorldGen.genRand.Next(3);
+            int nextX = posX - (biggerPlatform != 1 ? offset : 0);
+            int nextWidth1 = platW + (biggerPlatform != 1 ? bonusPlatSize : 0);
+            for (int i = 0; i < Math.Max(width1, nextWidth1); i++)
+            {
+                for(int j = 0; j < sepVert - 2; j++)
+                {
+                    int x = Math.Min(nextX, startX) + i;
+                    int y = posY - 1 - j;
+                    Tile tile = Framing.GetTileSafely(x, y);
+                    tile.HasTile = false;
+                }
+            }
+            startX = nextX;
+            width1 = nextWidth1;
+            GenerateBeam(startX, posY - sepVert, width1);
+            edges[2] = new Point16(startX, posY - sepVert);
+            edges[3] = new Point16(startX + width1 - 1, posY - sepVert);
+
+            int wallStuffOffset = WorldGen.genRand.Next(3);
+            int width = WorldGen.genRand.Next(3, 6);
+            int height = sepVert - 3;
+            GenerateWalls(posX + wallStuffOffset, posY - 1, width, WorldGen.genRand.Next(1, 4), height);
+
+            int w = WorldGen.genRand.Next(3, 6);
+            int startPos = platW - w - 1 - WorldGen.genRand.Next(3);
+            GenerateWalls(posX + startPos, posY - 1, w, WorldGen.genRand.Next(1, 4), height);
+
+            return edges;
+        }
+        public static void ClearLine(Point16 start, Point16 end, int dir = 1)
+        {
+            for(float x = 0; x <= 1f; x += 0.2f)
+            {
+                Vector2 middle = Vector2.Lerp(start.ToVector2(), end.ToVector2(), x) + Vector2.One * 0.5f;
+                Tile t = Framing.GetTileSafely((int)middle.X, (int)middle.Y);
+                if (t.TileType != ModContent.TileType<EarthenPlatingTile>())
+                {
+                    for(int j = -4; j <= 4; j++)
+                    {
+                        t = Framing.GetTileSafely((int)middle.X, (int)middle.Y + j * dir);
+                        if (!t.HasTile || j == 0)
+                        {
+                            t.ClearTile();
+                            t.TileType = (ushort)ModContent.TileType<SootBlockTile>();
+                            t.HasTile = true;
+                        }
+                        if(j < 0)
+                        {
+                            t.ClearTile();
+                        }
+                    }
+                }
+            }
+        }
+        public static void GenerateEntireShaft(int posX, int posY)
+        {
+            int x2 = posX;
+            int y2 = posY;
+            GenerateDownwardEntrance(ref x2, ref y2, -90);
+            GenerateDownwardEntrance(ref x2, ref y2, -90);
+            posY += 3;
+            Point16 previousPointTop = new Point16(0, 0);
+            Point16 previousPointBot = new Point16(0, 0);
+            for (int i = 0; i < 3; i++)
+            {
+                Point16[] edges = GenerateMineShaft(posX + i * 20, posY + WorldGen.genRand.Next(4));
+                for(int j = 0; j < 4; j++)
+                {
+                    if (j == 3)
+                    {
+                        previousPointTop = edges[j];
+                    }
+                    if(j == 2)
+                    {
+                        if (previousPointTop.X != 0)
+                        {
+                            Vector2 middle = Vector2.Lerp(edges[j].ToVector2(), previousPointTop.ToVector2(), 0.5f) + Vector2.One * 0.5f;
+                            ClearLine(new Point16((int)middle.X, (int)middle.Y), previousPointTop, -1);
+                            ClearLine(new Point16((int)middle.X, (int)middle.Y), edges[j], -1);
+                        }
+                    }
+                    if (j == 1)
+                    {
+                        previousPointBot = edges[j];
+                    }
+                    if(j == 0)
+                    {
+                        if (previousPointBot.X != 0)
+                        {
+                            Vector2 middle = Vector2.Lerp(edges[j].ToVector2(), previousPointBot.ToVector2(), 0.5f) + Vector2.One * 0.5f;
+                            ClearLine(new Point16((int)middle.X, (int)middle.Y), previousPointBot, 1);
+                            ClearLine(new Point16((int)middle.X, (int)middle.Y), edges[j], 1);
+                        }
+                    }
+                }
+            }
         }
 	}
 }

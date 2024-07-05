@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Tide
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
-            if(runOnce && Projectile.ai[0] == 1)
+            if(runOnce && Projectile.ai[1] == 1)
             {
                 runOnce = false;
                 if (player.wet || player.HasBuff(BuffID.Wet))

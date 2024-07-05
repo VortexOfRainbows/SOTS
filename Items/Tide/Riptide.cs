@@ -49,7 +49,7 @@ namespace SOTS.Items.Tide
 				mult = 1.2f;
 				velocity *= 0.55f;
 			}
-			Projectile.NewProjectile(source, position, velocity, type, (int)(damage * mult), (int)(knockback * mult), player.whoAmI, player.altFunctionUse == 2 ? 1 : 0);
+			Projectile.NewProjectile(source, position, velocity, type, (int)(damage * mult), (int)(knockback * mult), player.whoAmI, 0, player.altFunctionUse == 2 ? 1 : 0);
 			return false;
 		}
         public override float UseAnimationMultiplier(Player player)

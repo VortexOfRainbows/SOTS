@@ -57,7 +57,7 @@ Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoReg
 Possibly Blade Wings, Tesseract
 
 ---Visual Upgrade Needed---
-Gilded Blade Wings coloring for blade part
+N/A
 
 ---Multiplayer Fixes/Testing Needed---
 N/A
@@ -78,15 +78,15 @@ N/A
 Daily Log:
 
 
-7/1/24 to 7/3/24
+7/1/24 to 7/4/24
 1. Conduit buff rework
 	1. Localization, drawcode, and actual buff effects added
 	2. bonuses from the conduit buffs now stay after leaving and re-entering worlds
 	3. Syncs in multiplayer
 2. Added Evil, Tidal, Permafrost, and Inferno conduits
 3. Pocket Mirror can now be crafted using Earthen fragments
-
-
+4. Fixed bug where Riptide was launching the player with left click
+5. WIP Abandoned village generation
 
 6/30/24 to 7/1/24
 1. Misc. Pharaoh's Curse performance changes (Currently on the other branch)

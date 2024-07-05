@@ -31,7 +31,7 @@ namespace SOTS.Items.Tools
 			//Main.NewText(SOTSWorld.DreamLampSolved);
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			AbandonedVillageWorldgenHelper.GenerateNewMineEntrance((int)tileLocation.X, (int)tileLocation.Y);
+			AbandonedVillageWorldgenHelper.GenerateEntireShaft((int)tileLocation.X, (int)tileLocation.Y);
 			//AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
             //PhaseWorldgenHelper.ClearPrevious = true;
             //PhaseWorldgenHelper.Generate();
