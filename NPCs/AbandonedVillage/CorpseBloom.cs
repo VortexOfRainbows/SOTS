@@ -56,7 +56,7 @@ namespace SOTS.NPCs.AbandonedVillage
 				//opening/attacking animation
 				if (NPC.ai[0] == 1)
 				{
-					if (NPC.frameCounter > 8)
+					if (NPC.frameCounter > 6)
 					{
 						NPC.frame.Y = NPC.frame.Y + frameHeight;
 						NPC.frameCounter = 0;
@@ -69,7 +69,7 @@ namespace SOTS.NPCs.AbandonedVillage
 				//closing up animation
 				else
 				{
-					if (NPC.frameCounter > 8)
+					if (NPC.frameCounter > 6)
 					{
 						NPC.frame.Y = NPC.frame.Y + frameHeight;
 						NPC.frameCounter = 0;
