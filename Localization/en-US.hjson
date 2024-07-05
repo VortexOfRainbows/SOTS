@@ -6396,6 +6396,7 @@ Mods: {
 			NewPolaris.DisplayName: Polaris
 			Chimera.DisplayName: Chimera
 			ChimeraSnake.DisplayName: Chimera Snake
+			CorpseBloom.DisplayName: Corpse Bloom
 		}
 
 		Bestiary: {
@@ -7217,6 +7218,7 @@ Mods: {
 			ChimeraFireball.DisplayName: Shadow Fireball
 			ChimeraFireballSmall.DisplayName: Shadow Fireball
 			BundleSnakeMinion.DisplayName: Bundle Snake Minion
+			CorpsebloomAcid.DisplayName: Corpsebloom Acid
 		}
 
 		DamageClasses: {
