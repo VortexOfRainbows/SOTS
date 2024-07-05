@@ -83,7 +83,7 @@ namespace SOTS.Items.Furniture.Permafrost
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
+			AddMapEntry(new Color(SOTSTile.PermafrostPlatingLight * 3), name);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.PlatinumCoin;
 			TileID.Sets.DisableSmartCursor[Type] = true;

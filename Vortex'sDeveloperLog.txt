@@ -64,13 +64,12 @@ N/A
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
-	1. Needs: More parameters, testing, earthen plating torches appear as you get lower down the cave
-	2. Needs: Generate Ancient Steel and Chests on corridors occasionally
-	3. Needs: Caves become more technological as you go deeper... Also more symmetric
-	4. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
+	1. Needs: Generate Ancient Steel and Chests on corridors occasionally
+	2. Needs: Caves become more technological as you go deeper... Also more symmetric
+	3. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
 		1. Should deal contact damage. Also spawns enemies on top of it.
-	5. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
-	6. Deeper Part should have Gula Plating instead of Earthen Plating
+	4. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
+	5. Deeper Part should have Gula Plating instead of Earthen Plating
 
 ---Items To Make Work With Tesseract---
 N/A

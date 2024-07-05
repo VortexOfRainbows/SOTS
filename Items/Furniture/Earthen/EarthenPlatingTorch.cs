@@ -83,7 +83,7 @@ namespace SOTS.Items.Furniture.Earthen
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
+			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight * 3), name);
 			DustType = DustID.GoldCoin;
 			AdjTiles = new int[] { TileID.Torches };
 			TileID.Sets.DisableSmartCursor[Type] = true;

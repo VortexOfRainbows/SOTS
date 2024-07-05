@@ -1440,17 +1440,31 @@ namespace SOTS.WorldgenHelpers
                             t.WallType = WallID.None;
                             ushort type = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
                             if (l != 0)
+                            {
                                 type = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+                            }
                             WorldGen.PlaceWall(x, y, type);
+                            if (l != 0)
+                            {
+                                if(WorldGen.genRand.NextBool(12))
+                                {
+                                    TryPlacingTorch(x, y, WorldGen.genRand.Next(2, 5));
+                                }
+                            }
+
                         }
                     }
             }
         }
-        public static Point16[] GenerateMineShaft(int posX, int posY)
+        public static Point16[] GenerateMineShaft(int posX, int posY, int dir = 1)
         {
             Point16[] edges = new Point16[4];
 
             int platW = 12;
+            if (dir == -1)
+            {
+                posX -= platW;
+            }
             int biggerPlatform = WorldGen.genRand.Next(2);
             int bonusPlatSize = WorldGen.genRand.Next(7);
             int offset = WorldGen.genRand.Next(bonusPlatSize);
@@ -1460,6 +1474,12 @@ namespace SOTS.WorldgenHelpers
             GenerateBeam(startX, posY, width1);
             edges[0] = new Point16(startX, posY + 1);
             edges[1] = new Point16(startX + width1 - 1, posY + 1);
+            if (dir == -1)
+            {
+                Point16 temp = edges[0];
+                edges[0] = edges[1];
+                edges[1] = temp;
+            }
             int total = 0;
             for (int i = 0; i < width1; i++)
             {
@@ -1492,6 +1512,12 @@ namespace SOTS.WorldgenHelpers
             GenerateBeam(startX, posY - sepVert, width1);
             edges[2] = new Point16(startX, posY - sepVert);
             edges[3] = new Point16(startX + width1 - 1, posY - sepVert);
+            if (dir == -1)
+            {
+                Point16 temp = edges[2];
+                edges[2] = edges[3];
+                edges[3] = temp;
+            }
 
             int wallStuffOffset = WorldGen.genRand.Next(3);
             int width = WorldGen.genRand.Next(3, 6);
@@ -1529,18 +1555,22 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static void GenerateEntireShaft(int posX, int posY)
+        public static void GenerateEntireShaft(int posX, int posY, int dir = 1)
         {
+            int size = 15;
             int x2 = posX;
             int y2 = posY;
-            GenerateDownwardEntrance(ref x2, ref y2, -90);
-            GenerateDownwardEntrance(ref x2, ref y2, -90);
+            for(int i = 0; i < (size * 2 / 3); i++)
+            {
+                GenerateDownwardEntrance(ref x2, ref y2, -90 * dir);
+            }
+            posX += 3 * dir;
             posY += 3;
             Point16 previousPointTop = new Point16(0, 0);
             Point16 previousPointBot = new Point16(0, 0);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < size; i++)
             {
-                Point16[] edges = GenerateMineShaft(posX + i * 20, posY + WorldGen.genRand.Next(4));
+                Point16[] edges = GenerateMineShaft(posX + i * 20 * dir, posY + WorldGen.genRand.Next(4), dir);
                 for(int j = 0; j < 4; j++)
                 {
                     if (j == 3)
@@ -1571,6 +1601,24 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            GenerateDownwardPathCircle(x2, y2);
+        }
+        public static void TryPlacingTorch(int posX, int posY, int padding)
+        {
+            for(int i = -padding; i <= padding; i++)
+            {
+                for(int j = -padding; j <= padding; j++)
+                {
+                    Tile t = Framing.GetTileSafely(posX + i, posY + j);
+                    if(t.HasTile && (t.TileType == ModContent.TileType<EarthenPlatingTorchTile>() || Math.Abs(i) <= 1 || Math.Abs(j) <= 1))
+                    {
+                        return;
+                    }
+                }
+            }
+            Tile t2 = Framing.GetTileSafely(posX, posY);
+            t2.ClearTile();
+            WorldGen.PlaceTile(posX, posY, ModContent.TileType<EarthenPlatingTorchTile>());
         }
 	}
 }

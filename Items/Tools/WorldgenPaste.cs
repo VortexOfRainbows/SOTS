@@ -25,13 +25,16 @@ namespace SOTS.Items.Tools
 		{
 			player.rulerGrid = true;
 		}
+		int x = 0;
 		public override bool? UseItem(Player player)
 		{
 			//Main.NewText(SOTSWorld.AmberKeySlotted);
 			//Main.NewText(SOTSWorld.DreamLampSolved);
+			x++;
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			AbandonedVillageWorldgenHelper.GenerateEntireShaft((int)tileLocation.X, (int)tileLocation.Y);
+			AbandonedVillageWorldgenHelper.GenerateEntireShaft((int)tileLocation.X, (int)tileLocation.Y, (x % 2 * 2) - 1);
+
 			//AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
             //PhaseWorldgenHelper.ClearPrevious = true;
             //PhaseWorldgenHelper.Generate();
