@@ -885,16 +885,16 @@ namespace SOTS.WorldgenHelpers
 			x = (int)(x + vPointA.X + 0.5f);
             y = (int)(y + vPointA.Y + 0.5f);
         }
-		public static void GenerateDownwardPathCircle(int x, int y)
+		public static void GenerateCaveCircle(int x, int y, float xMult = 1f, float yMult = 1f, int outlineSize = 11, float wallSize = 6.5f)
 		{
-			int size = 11;
-			float wallSize = 6.5f;
-			for(int i = -size; i < size; i++)
+			for(int i = -outlineSize; i < outlineSize; i++)
 			{
-				for(int j = -size; j < size; j++)
-				{
-					float radius = MathF.Sqrt(i * i + j * j);
-                    Tile t = Framing.GetTileSafely(x + i, y + j);
+				for(int j = -outlineSize; j < outlineSize; j++)
+                {
+                    float radius = MathF.Sqrt(i * i + j * j);
+                    int i2 = (int)(i * xMult);
+                    int j2 = (int)(j * yMult);
+                    Tile t = Framing.GetTileSafely(x + i2, y + j2);
                     if (radius <= wallSize + WorldGen.genRand.NextFloat(-0.5f, 0.5f))
                     {
 						//WallID.stone and soot walls are used for the border of the generation
@@ -902,7 +902,7 @@ namespace SOTS.WorldgenHelpers
                         {
                             if (t.HasTile) //)t.WallType != WallID.StoneSlab && t.WallType != WallID.GrayBrick && t.WallType != WallID.RocksUnsafe1)
                             {
-                                Tile tileabove = Framing.GetTileSafely(x + i, y + j - 1);
+                                Tile tileabove = Framing.GetTileSafely(x + i2, y + j2 - 1);
                                 if(TileIsNotContainer(t) && TileIsNotContainer(tileabove))
                                 {
                                     t.HasTile = false;
@@ -919,7 +919,7 @@ namespace SOTS.WorldgenHelpers
                             t.WallType = type;
                         }
                     }
-					else if(radius <= size + WorldGen.genRand.NextFloat(-0.5f, 0.8f))
+					else if(radius <= outlineSize + WorldGen.genRand.NextFloat(-0.5f, 0.8f))
 					{
 						bool generateStone = radius <= wallSize + 2 * WorldGen.genRand.NextFloat(0.7f, 1.4f);
 						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab;
@@ -966,7 +966,7 @@ namespace SOTS.WorldgenHelpers
 
                 //bottom of the earthen layer will be the Gula Layer
 				if(i != 0)
-					GenerateDownwardPathCircle(x, y);
+					GenerateCaveCircle(x, y);
                 GenerateTunnel(ref x, ref y, rotation);
                 if (i == 13)
                     rotation = 0;
@@ -1617,7 +1617,7 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-            GenerateDownwardPathCircle(x2, y2);
+            GenerateCaveCircle(x2, y2);
         }
         public static void TryPlacingTorch(int posX, int posY, int padding)
         {
@@ -1744,7 +1744,7 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-
+            GenerateCaveCircle(x1, y1 + 5, yMult: 0.5f, outlineSize: 21, wallSize: 14f);
         }
     }
 }
