@@ -349,14 +349,14 @@ namespace SOTS.Items.Tools
 				{
 					if (i > 0)
                     {
+                        arrayExport += ",";
                         if (tiles.Count > 10)
                         {
                             if (_structure[i, j] < 10)
                             {
-								arrayExport += " ";
-							}
+                                arrayExport += " ";
+                            }
                         }
-                        arrayExport += ",";
                     }
 					arrayExport += _structure[i, j];
 				}
@@ -415,14 +415,30 @@ namespace SOTS.Items.Tools
 					{
 						if(tileData == null)
 						{
+							ModTile t = ModContent.GetModTile((ushort)tiles[i]);
 							finalExport += "						tile.HasTile = true;\n";
-							finalExport += "						tile.TileType = " + (ushort)(tiles[i]) + ";\n";
-						}
+                            if (t == null)
+                            {
+                                finalExport += "						tile.TileType = " + (ushort)(tiles[i]) + ";\n";
+                            }
+							else
+							{
+								finalExport += "						tile.TileType = (ushort)ModContent.TileType<" + t.Name + ">();\n";
+                            }
+                        }
 						else if (tileData.Width == 1 && tileData.Height == 1)
-						{
-							finalExport += "						if(confirmPlatforms == 0)\n";
+                        {
+                            ModTile t = ModContent.GetModTile((ushort)tiles[i]);
+                            finalExport += "						if(confirmPlatforms == 0)\n";
 							finalExport += "							tile.HasTile = false;\n";
-							finalExport += "						WorldGen.PlaceTile(k, l," + (int)(tiles[i]) + ", true, true, -1," + specialDigits3 + ");\n";
+                            if (t == null)
+                            {
+                                finalExport += "						WorldGen.PlaceTile(k, l," + (int)(tiles[i]) + ", true, true, -1," + specialDigits3 + ");\n";
+                            }
+                            else
+                            {
+                                finalExport += "						WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<" + t.Name + ">(), true, true, -1," + specialDigits3 + ");\n";
+                            }
 						}
 						//WorldGen.PlaceTile(k, l, (int)(tiles[i]), true, true, -1, specialDigits3);
 

@@ -268,6 +268,7 @@ namespace SOTS.Items.Tools
                 {
                     if (i > 0)
                     {
+                        arrayExport += ",";
                         if (tiles.Count > 10)
                         {
                             if (_structure[i, j] < 10)
@@ -275,7 +276,6 @@ namespace SOTS.Items.Tools
                                 arrayExport += " ";
                             }
                         }
-                        arrayExport += ",";
                     }
                     arrayExport += _structure[i, j];
 				}
@@ -302,7 +302,15 @@ namespace SOTS.Items.Tools
 			{
 				finalExport += "					case " + i + ":\n";
 				double specialType = tiles[i]; //W.YXXX
-				finalExport += "							tile.WallType = " + specialType + ";\n";
+                ModWall w = ModContent.GetModWall((ushort)specialType);
+                if (w == null)
+                {
+                    finalExport += "					tile.WallType = " + specialType + ";\n";
+                }
+                else
+                {
+                    finalExport += "					tile.WallType = (ushort)ModContent.WallType<" + w.Name + ">();\n";
+                }
 				finalExport += "					break;\n";
 			}
 			finalExport += "				}\n";

@@ -33,7 +33,9 @@ namespace SOTS.Items.Tools
 			x++;
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			AbandonedVillageWorldgenHelper.GenerateEntireShaft((int)tileLocation.X, (int)tileLocation.Y, (x % 2 * 2) - 1);
+			int dir = (x % 2 * 2) -1;
+
+            AbandonedVillageWorldgenHelper.GenerateStairs((int)tileLocation.X, (int)tileLocation.Y);
 
 			//AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
             //PhaseWorldgenHelper.ClearPrevious = true;

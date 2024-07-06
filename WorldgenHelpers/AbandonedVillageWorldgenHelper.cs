@@ -14,6 +14,8 @@ using Microsoft.Win32;
 using Terraria.GameContent.UI.States;
 using Terraria.DataStructures;
 using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Threading;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -765,10 +767,11 @@ namespace SOTS.WorldgenHelpers
         {
             return tile.TileType != TileID.Containers && tile.TileType != TileID.Containers2 && tile.TileType != TileID.FakeContainers && tile.TileType != TileID.FakeContainers2;
         }
-		public static void GenerateDownwardEntrance(ref int x, ref int y, float rotation)
+        public static void GenerateTunnel(ref int x, ref int y, float rotation, int width = 7, int size = 30, bool doRopesPlatforms = true)
 		{
+            int sootSize = width + 1;
             float nextPlatform = 10;
-			int height = 30;
+			int height = size;
 			float bonusDegreesLeft = Main.rand.NextFloat(360);
             float bonusDegreesRight = Main.rand.NextFloat(360);
             HashSet<Point> platformPoints = new HashSet<Point>();
@@ -776,15 +779,15 @@ namespace SOTS.WorldgenHelpers
             {
                 bool generatePlatforms = false;
 				nextPlatform -= 0.25f * Math.Abs((float)Math.Cos(MathHelper.ToRadians(rotation)));
-                if (nextPlatform <= 0)
+                if (nextPlatform <= 0 && doRopesPlatforms)
                 {
                     generatePlatforms = true;
                     nextPlatform = WorldGen.genRand.Next(8, 15);
                 }
-                int left = -7 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
-				int right = 7 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
-                int sootLeft = -8 - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
-                int sootRight = 8 + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+                int left = -width - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+				int right = width + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootLeft = -sootSize - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootRight = sootSize + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
 				for(int RunType = 0; RunType <= 2; RunType++)
                 {
                     for (float i = left - 4; i <= right + 4; i += 0.25f)
@@ -793,8 +796,8 @@ namespace SOTS.WorldgenHelpers
                         Point rPoint = new Point(x + (int)(vPoint.X), y + (int)(vPoint.Y));
                         Tile tile = Framing.GetTileSafely(rPoint);
                         bool interior = false;
-                        bool generateSoot = Math.Abs(i - sootLeft) < 1.5f || Math.Abs(i - sootRight) < 1.5f;
-						bool generateSides = i >= left && i <= right && (Math.Abs(i - left) < 3.5f || Math.Abs(i - right) < 3.5f);
+                        bool generateSoot = Math.Abs(i - sootLeft) < 1.75f || Math.Abs(i - sootRight) < 1.75f;
+						bool generateSides = i >= left && i <= right && (Math.Abs(i - left) < 3.75f || Math.Abs(i - right) < 3.75f);
                         if ((i >= left && i <= right) || generateSoot)
                         {
                             interior = true;
@@ -810,8 +813,7 @@ namespace SOTS.WorldgenHelpers
                         }
 						if (RunType == 1)
                         {
-							if((tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick)
-								|| tile.TileType == ModContent.TileType<SootBlockTile>())
+							if((tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick) || tile.TileType == ModContent.TileType<SootBlockTile>())
                                 if (generateSides)
                                 {
                                     ushort type = TileID.GrayBrick;
@@ -845,7 +847,7 @@ namespace SOTS.WorldgenHelpers
                                 type = WallID.StoneSlab;
 							if(!generateSides)
 								tile.WallType = (ushort)type;
-                            if (i == 0)
+                            if (i == 0 && doRopesPlatforms)
                             {
                                 if (generatePlatforms)
                                 {
@@ -862,17 +864,20 @@ namespace SOTS.WorldgenHelpers
 				bonusDegreesLeft += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 32 * 0.5f;
                 bonusDegreesRight += (float)Math.Pow(WorldGen.genRand.NextFloat(), 2) * 32 * 0.5f;
             }
-			foreach (Point p in platformPoints)
+            if(doRopesPlatforms)
             {
-                for (int i2 = -8; i2 <= 8; i2++)
+                foreach (Point p in platformPoints)
                 {
-					Tile tile = Main.tile[p.X + i2, p.Y];
-					if(tile.HasTile && tile.TileType == TileID.Rope)
-					{
-						tile.HasTile = false;
-                        tile.LiquidAmount = 0;
+                    for (int i2 = -8; i2 <= 8; i2++)
+                    {
+                        Tile tile = Main.tile[p.X + i2, p.Y];
+                        if (tile.HasTile && tile.TileType == TileID.Rope)
+                        {
+                            tile.HasTile = false;
+                            tile.LiquidAmount = 0;
+                        }
+                        WorldGen.PlaceTile(p.X + i2, p.Y, TileID.Platforms, false, false, -1, 43);
                     }
-                    WorldGen.PlaceTile(p.X + i2, p.Y, TileID.Platforms, false, false, -1, 43);
                 }
             }
             SOTSWorldgenHelper.SmoothRegion(x, y + height / 2, 24, height);
@@ -962,7 +967,7 @@ namespace SOTS.WorldgenHelpers
                 //bottom of the earthen layer will be the Gula Layer
 				if(i != 0)
 					GenerateDownwardPathCircle(x, y);
-                GenerateDownwardEntrance(ref x, ref y, rotation);
+                GenerateTunnel(ref x, ref y, rotation);
                 if (i == 13)
                     rotation = 0;
                 else
@@ -1094,8 +1099,8 @@ namespace SOTS.WorldgenHelpers
                 {25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
                 {25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0 ,0,25,25},
                 {25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,27 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0,25,25,25},
-                {25,25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0 ,0 ,0 ,0 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0,25,25,25},
-                {25,25,25,25,25,25 ,0 ,0,28 ,0 ,0 ,0,29 ,0 ,0,30 ,0,31 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20 ,0,32 ,0 ,0 ,0 ,0 ,0 ,0,33 ,0 ,0 ,0 ,0 ,0,25,25,25,25,25},
+                {25,25,25,25 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,35,35,35,35 ,0 ,0 ,0,26,26,26 ,0 ,0 ,0 ,0 ,0 ,0,25,25,25},
+                {25,25,25,25,25,25 ,0 ,0,28 ,0 ,0 ,0,29 ,0 ,0,30 ,0,31 ,0 ,0,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,35,32,35,35 ,0 ,0 ,0 ,0,33 ,0 ,0 ,0 ,0 ,0,25,25,25,25,25},
                 {25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25},
                 {25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25},
                 {25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25,25,25,25,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,25,25,25,25,25,25,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,25,25,25}
@@ -1327,14 +1332,25 @@ namespace SOTS.WorldgenHelpers
                                     }
                                     break;
                                 case 32:
-                                    if (confirmPlatforms == 1)
+                                case 35:
+                                    if (confirmPlatforms == 1 && _structure[i, j] == 32)
                                     {
                                         tile.HasTile = false;
                                         tile.Slope = 0;
                                         tile.IsHalfBlock = false;
                                         WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingBedTile>(), true, true, -1, 0);
-                                        tile.TileFrameX += 72;
                                     }
+                                    else if(_structure[i, j] == 35)
+                                    {
+                                        if (confirmPlatforms == 0)
+                                        {
+                                            tile.HasTile = false;
+                                            tile.IsHalfBlock = false;
+                                            tile.Slope = 0;
+                                        }
+                                    }
+                                    if (confirmPlatforms == 2)
+                                        tile.TileFrameX += 72;
                                     break;
                                 case 33:
                                     if (confirmPlatforms == 1)
@@ -1562,7 +1578,7 @@ namespace SOTS.WorldgenHelpers
             int y2 = posY;
             for(int i = 0; i < (size * 2 / 3); i++)
             {
-                GenerateDownwardEntrance(ref x2, ref y2, -90 * dir);
+                GenerateTunnel(ref x2, ref y2, -90 * dir);
             }
             posX += 3 * dir;
             posY += 3;
@@ -1620,5 +1636,115 @@ namespace SOTS.WorldgenHelpers
             t2.ClearTile();
             WorldGen.PlaceTile(posX, posY, ModContent.TileType<EarthenPlatingTorchTile>());
         }
-	}
+        public static void GenerateStairs(int posX, int posY)
+        {
+            int x1 = posX;
+            int y1 = posY + 1;
+            GenerateTunnel(ref x1, ref y1, 0, 9, 22, doRopesPlatforms: false);
+            bool reflected = WorldGen.genRand.NextBool(2);
+            int[,] _structure = {
+                {0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0},
+                {0,0,0,0,0,2,3,3,3,3,3,3,0,0,0,0,0},
+                {4,4,4,3,3,3,2,3,3,3,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,2,3,3,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,2,3,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,3,2,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,3,3,2,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,3,3,3,2,3,3,4,4,4},
+                {0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0},
+                {0,0,0,0,0,2,3,3,3,3,3,3,0,0,0,0,0},
+                {4,4,4,3,3,3,2,3,3,3,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,2,3,3,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,2,3,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,3,2,3,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,3,3,2,3,3,3,4,4,4},
+                {4,4,4,3,3,3,3,3,3,3,3,2,3,3,4,4,4},
+                {0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0},
+                {0,0,0,0,0,3,3,3,3,3,3,3,0,0,0,0,0}
+            };
+            int PosX = posX - 8;  //spawnX and spawnY is where you want the anchor to be when this generates
+            int PosY = posY - 0;
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                {
+                    int k = PosX + j * (reflected ? -1 : 1) + (reflected ? 16 : 0);
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        Tile tile = Framing.GetTileSafely(k, l);
+                        switch (_structure[i, j])
+                        {
+                            case 0:
+                                tile.HasTile = true;
+                                tile.TileType = (ushort)ModContent.TileType<EarthenPlatingTile>();
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 1:
+                                tile.HasTile = false;
+                                WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>());
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 2:
+                                tile.HasTile = false;
+                                WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>());
+                                tile.Slope = (SlopeType)(reflected ? 2 : 1);
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 3:
+                                tile.ClearTile();
+                                break;
+                        }
+                    }
+                }
+            }   
+            _structure = new int[,] {
+                {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0},
+                {0,2,1,2,2,2,2,2,2,2,2,2,2,2,1,2,0},
+                {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0},
+                {0,0,1,2,2,2,2,2,2,2,2,2,2,2,1,0,0},
+                {0,0,1,2,2,2,2,2,2,2,2,2,2,2,1,0,0},
+                {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,0},
+                {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0},
+                {0,2,1,2,2,2,2,2,2,2,2,2,2,2,1,2,0},
+                {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0}
+            };
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                {
+                    int k = PosX + j;
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        Tile tile = Framing.GetTileSafely(k, l);
+                        switch (_structure[i, j])
+                        {
+                            case 1:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
+                                break;
+                            case 2:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+                                break;
+                            case 3:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
+                                break;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }

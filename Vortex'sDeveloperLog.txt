@@ -44,6 +44,7 @@ Update Objectives:
 14. Fish Bomb
 15. Fix generation bug with Infernum and Leviathan area
 16. Upgrade item to the Hydrokinetic Antennae
+17. Polish the Corpsebloom (add banner, server sync, etc)
 
 ---WIP List---
 Abandoned village generation
@@ -86,6 +87,7 @@ Daily Log:
 3. Pocket Mirror can now be crafted using Earthen fragments
 4. Fixed bug where Riptide was launching the player with left click
 5. WIP Abandoned village generation
+6. More worldgen capture modernization
 
 6/30/24 to 7/1/24
 1. Misc. Pharaoh's Curse performance changes (Currently on the other branch)
