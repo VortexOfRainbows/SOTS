@@ -1579,15 +1579,14 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static void GenerateEntireShaft(int posX, int posY, int dir = 1)
+        public static void GenerateEntireShaft(int posX, int posY, int size = 15, int dir = 1, int floorNum = 0)
         {
-            int size = 15;
-            int stairWellLocation = Main.rand.Next(size);
+            int stairWellLocation = Math.Max(WorldGen.genRand.Next(size), WorldGen.genRand.Next(size)); //Use max function to bias the stairs towards spawing farther away. They can still spawn close, but will attempt not to.
             int x2 = posX;
             int y2 = posY;
-            for(int i = 0; i < (size * 2 / 3); i++)
+            for(int i = 0; i < size; i++)
             {
-                GenerateTunnel(ref x2, ref y2, -90 * dir, width: 8);
+                GenerateTunnel(ref x2, ref y2, -90 * dir, width: 8, size: 20);
             }
             posX += 3 * dir;
             posY += 3;
@@ -1625,10 +1624,10 @@ namespace SOTS.WorldgenHelpers
                         }
                     }
                 }
-                if(i == stairWellLocation)
+                if(i == stairWellLocation && floorNum > 0)
                 {
                     Point16 center = new Point16((edges[0].X + edges[1].X) / 2, edges[0].Y - 1);
-                    GenerateStairs(center.X, center.Y);
+                    GenerateStairs(center.X, center.Y, floorNum - 1);
                 }
             }
             GenerateCaveCircle(x2, y2);
@@ -1650,7 +1649,7 @@ namespace SOTS.WorldgenHelpers
             t2.ClearTile();
             WorldGen.PlaceTile(posX, posY, ModContent.TileType<EarthenPlatingTorchTile>());
         }
-        public static void GenerateStairs(int posX, int posY)
+        public static void GenerateStairs(int posX, int posY, int floorNum)
         {
             int x1 = posX;
             int y1 = posY + 1;
@@ -1713,7 +1712,7 @@ namespace SOTS.WorldgenHelpers
                         }
                     }
                 }
-            }   
+            }
             _structure = new int[,] {
                 {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0},
                 {0,2,1,2,2,2,2,2,2,2,2,2,2,2,1,2,0},
@@ -1759,9 +1758,20 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             GenerateCaveCircle(x1, y1 + 5, yMult: 0.6f, outlineSize: 22, wallSize: 14f, stoneSize: 3);
+            if (floorNum >= 0)
+            {
+                int mainSide = WorldGen.genRand.Next(2) * 2 - 1;
+                GenerateEntireShaft(x1 + 9 * mainSide, y1 + 5, 5, mainSide, floorNum);
+                if(WorldGen.genRand.NextBool(3))
+                {
+                    GenerateEntireShaft(x1 - 9 * mainSide, y1 + 5, 3, -mainSide, -1);
+                }
+            }
         }
         public static void GenerateUndergoundEntrance(int posX, int posY)
         {
+            GenerateEntireShaft(posX + 22, posY - 12, 3, 1, -1);
+            GenerateEntireShaft(posX - 22, posY - 12, 3, -1, -1);
             GenerateCaveCircle(posX, posY - 13, 1, 1, 30, 19f, 5);
             int[,] _structure = {
                 { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
@@ -1784,11 +1794,11 @@ namespace SOTS.WorldgenHelpers
                 {-1,-1,-1, 1, 0, 0, 0, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 5, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 0, 0, 1,-1,-1,-1},
                 {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
                 {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1, 1, 1, 8, 1, 8, 1, 8, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 9, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 1, 1, 1, 1, 8, 1, 8, 1, 8, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
                 {-0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0},
                 {-0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {-1, 0,-1, 0,-1, 0, 0, 0, 0, 0, 1, 1,10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1},
@@ -2015,7 +2025,7 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-            GenerateStairs(posX, posY);
+            GenerateStairs(posX, posY, 5);
         }
     }
 }

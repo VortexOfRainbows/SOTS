@@ -44,7 +44,7 @@ Update Objectives:
 14. Fish Bomb
 15. Fix generation bug with Infernum and Leviathan area
 16. Upgrade item to the Hydrokinetic Antennae
-17. Polish the Corpsebloom (add banner, server sync, etc)
+17. Polish the Corpsebloom (add banner, server sync, gore, etc)
 
 ---WIP List---
 Abandoned village generation
@@ -61,7 +61,7 @@ Possibly Blade Wings, Tesseract
 N/A
 
 ---Multiplayer Fixes/Testing Needed---
-N/A
+Lockpick (low priority)
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
