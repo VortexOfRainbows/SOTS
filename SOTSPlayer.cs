@@ -259,7 +259,7 @@ namespace SOTS
 		public bool backUpBowVisual = false;
 		public bool DoubleVisionActive = false;
 		public int BonusFishingLines = 0;
-		public bool ceres = false;
+		public bool Lockpick = false;
 		public int onhit = 0;
 		public int onhitdamage = 0;
 		public int OnHitCD = 0;
@@ -1210,11 +1210,9 @@ namespace SOTS
 				onhit--;
 			}
 			attackSpeedMod = 1;
-			//Some important variables 1
-			ceres = false;
+			Lockpick = false;
 			DoubleVisionActive = false;
 			backUpBow = VoidspaceFlames = AutoReuseAnything = InfinityPouch = PurpleBalloon = false;
-			//projectileSize = 1;
 			PushBack = false;
 
 			SupernovaEmblem = false;

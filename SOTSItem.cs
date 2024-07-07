@@ -36,6 +36,8 @@ using Terraria.UI.Chat;
 using SOTS.Items.Wings;
 using System.Drawing.Printing;
 using SOTS.Items.Void;
+using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Permafrost;
 
 namespace SOTS
 {
@@ -775,6 +777,67 @@ namespace SOTS
                 return true;
             }
             return false;
+        }
+		public static bool CountsForLockpick(Item item)
+		{
+			int t = item.type;
+			return t == ItemID.GoldenKey || t == ItemID.ShadowKey || t == ItemID.CrimsonKey || t == ItemID.FrozenKey || t == ItemID.CorruptionKey || t == ItemID.HallowedKey || t == ItemID.JungleKey || t == ItemID.DungeonDesertKey
+				|| t == ItemType<OldKey>() || t == ItemType<StrangeKey>() || t == ItemType<SkywareKey>() || t == ItemType<MeteoriteKey>();
+		}
+        public override bool ConsumeItem(Item item, Player player)
+        {
+			if(player.SOTSPlayer().Lockpick)
+			{
+				if(Main.rand.NextBool(3))
+				{
+					if(CountsForLockpick(item))
+						return false;
+				}
+			}
+            return base.ConsumeItem(item, player);
+        }
+        public override void OnConsumeItem(Item item, Player player)
+        {
+            if (player.SOTSPlayer().Lockpick && player.whoAmI == Main.myPlayer)
+            {
+				if(CountsForLockpick(item))
+                {
+                    int t = item.type;
+					int outcomeType = ItemID.GoldBar;
+					if (t == ItemID.ShadowKey || t == ItemID.CorruptionKey)
+                        outcomeType = ItemID.DemoniteBar;
+					if (t == ItemID.CrimsonKey)
+						outcomeType = ItemID.CrimtaneBar;
+                    if (t == ItemID.JungleKey)
+                        outcomeType = ItemID.ChlorophyteBar;
+                    if (t == ItemID.DungeonDesertKey)
+                        outcomeType = ItemID.FossilOre;
+                    if (t == ItemID.HallowedKey)
+                        outcomeType = ItemID.HallowedBar;
+                    if (t == ItemID.FrozenKey)
+                        outcomeType = ItemType<FrigidBar>();
+                    if (t == ItemType<OldKey>())
+                        outcomeType = ItemType<AncientSteelBar>();
+                    if (t == ItemType<StrangeKey>())
+                        outcomeType = ItemType<HardlightAlloy>();
+                    if (t == ItemType<SkywareKey>())
+                        outcomeType = ItemType<StarlightAlloy>();
+                    if (t == ItemType<MeteoriteKey>())
+                        outcomeType = ItemType<OtherworldlyAlloy>();
+                    player.QuickSpawnItem(player.GetSource_Misc("SOTS:Lockpick"), outcomeType, Main.rand.Next(1, 4));
+					if(t == ItemID.CrimsonKey || t == ItemID.CorruptionKey)
+                        player.QuickSpawnItem(player.GetSource_Misc("SOTS:Lockpick"), ItemType<DissolvingUmbra>(), 1);
+                    if (t == ItemID.HallowedKey)
+                        player.QuickSpawnItem(player.GetSource_Misc("SOTS:Lockpick"), ItemType<DissolvingBrilliance>(), 1);
+                    if (t == ItemID.FrozenKey)
+                        player.QuickSpawnItem(player.GetSource_Misc("SOTS:Lockpick"), ItemType<DissolvingAurora>(), 1);
+                    if (t == ItemID.JungleKey)
+                        player.QuickSpawnItem(player.GetSource_Misc("SOTS:Lockpick"), ItemType<DissolvingNature>(), 1);
+                    if (t == ItemID.DungeonDesertKey)
+                        player.QuickSpawnItem(player.GetSource_Misc("SOTS:Lockpick"), ItemType<DissolvingEarth>(), 1);
+                }
+            }
+            base.OnConsumeItem(item, player);
         }
     }
 	public class DataTransferProj : ModProjectile

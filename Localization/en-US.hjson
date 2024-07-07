@@ -5541,6 +5541,15 @@ Mods: {
 					When fully charged, it will focus nearby tide energy into valid repositories
 					'''
 			}
+
+			Lockpick: {
+				DisplayName: Lockpick
+				Tooltip:
+					'''
+					33% chance not to lose keys when unlocking chests
+					Recover scrap materials from lost keys
+					'''
+			}
 		}
 
 		ItemTooltip: {

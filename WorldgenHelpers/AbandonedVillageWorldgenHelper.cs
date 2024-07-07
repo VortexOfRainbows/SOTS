@@ -16,6 +16,7 @@ using Terraria.DataStructures;
 using System.Reflection;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Threading;
+using Microsoft.CodeAnalysis;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -798,13 +799,15 @@ namespace SOTS.WorldgenHelpers
                         bool interior = false;
                         bool generateSoot = Math.Abs(i - sootLeft) < 1.75f || Math.Abs(i - sootRight) < 1.75f;
 						bool generateSides = i >= left && i <= right && (Math.Abs(i - left) < 3.75f || Math.Abs(i - right) < 3.75f);
+                        bool validWall = tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick && tile.WallType != WallID.Stone &&
+                            tile.WallType != ModContent.WallType<EarthenPlatingBeamWall>() && tile.WallType != ModContent.WallType<EarthenPlatingPanelWallWall>() && tile.WallType != ModContent.WallType<EarthenPlatingWallWall>();
                         if ((i >= left && i <= right) || generateSoot)
                         {
                             interior = true;
                             if (RunType == 0)
                             {
                                 Tile tileabove = Framing.GetTileSafely(rPoint.X, rPoint.Y - 1);
-                                if (tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick && TileIsNotContainer(tile) && TileIsNotContainer(tileabove))
+                                if (validWall && TileIsNotContainer(tile) && TileIsNotContainer(tileabove))
                                 {
                                     tile.HasTile = false;
                                     tile.LiquidAmount = 0;
@@ -813,7 +816,8 @@ namespace SOTS.WorldgenHelpers
                         }
 						if (RunType == 1)
                         {
-							if((tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick) || tile.TileType == ModContent.TileType<SootBlockTile>())
+							if(validWall || tile.TileType == ModContent.TileType<SootBlockTile>())
+                            {
                                 if (generateSides)
                                 {
                                     ushort type = TileID.GrayBrick;
@@ -826,8 +830,8 @@ namespace SOTS.WorldgenHelpers
                                         type = TileID.StoneSlab;
                                     }
                                     tile.TileType = (ushort)type;
-									tile.HasTile = true;
-									tile.WallType = WallID.Stone;
+                                    tile.HasTile = true;
+                                    tile.WallType = WallID.Stone;
                                 }
                                 else if (generateSoot)
                                 {
@@ -835,6 +839,7 @@ namespace SOTS.WorldgenHelpers
                                     tile.HasTile = true;
                                     tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
                                 }
+                            }
                         }
                         else if (interior && RunType == 2 && !generateSoot)
                         {
@@ -885,9 +890,9 @@ namespace SOTS.WorldgenHelpers
 			x = (int)(x + vPointA.X + 0.5f);
             y = (int)(y + vPointA.Y + 0.5f);
         }
-		public static void GenerateCaveCircle(int x, int y, float xMult = 1f, float yMult = 1f, int outlineSize = 11, float wallSize = 6.5f)
-		{
-			for(int i = -outlineSize; i < outlineSize; i++)
+		public static void GenerateCaveCircle(int x, int y, float xMult = 1f, float yMult = 1f, int outlineSize = 11, float wallSize = 6.5f, float stoneSize = 2)
+        {
+            for (int i = -outlineSize; i < outlineSize; i++)
 			{
 				for(int j = -outlineSize; j < outlineSize; j++)
                 {
@@ -898,7 +903,8 @@ namespace SOTS.WorldgenHelpers
                     if (radius <= wallSize + WorldGen.genRand.NextFloat(-0.5f, 0.5f))
                     {
 						//WallID.stone and soot walls are used for the border of the generation
-						if(t.WallType != WallID.Stone && t.WallType != ModContent.WallType<SootWallTile>())
+						if(t.WallType != WallID.Stone && t.WallType != ModContent.WallType<SootWallTile>() 
+                            && t.WallType != ModContent.WallType<EarthenPlatingBeamWall>() && t.WallType != ModContent.WallType<EarthenPlatingPanelWallWall>() && t.WallType != ModContent.WallType<EarthenPlatingWallWall>())
                         {
                             if (t.HasTile) //)t.WallType != WallID.StoneSlab && t.WallType != WallID.GrayBrick && t.WallType != WallID.RocksUnsafe1)
                             {
@@ -921,10 +927,11 @@ namespace SOTS.WorldgenHelpers
                     }
 					else if(radius <= outlineSize + WorldGen.genRand.NextFloat(-0.5f, 0.8f))
 					{
-						bool generateStone = radius <= wallSize + 2 * WorldGen.genRand.NextFloat(0.7f, 1.4f);
-						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab;
+						bool generateStone = radius <= wallSize + stoneSize + WorldGen.genRand.NextFloat(-0.6f, 0.8f);
+						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab
+                            || t.WallType == ModContent.WallType<EarthenPlatingBeamWall>() || t.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || t.WallType == ModContent.WallType<EarthenPlatingWallWall>();
 						bool isStone = t.TileType == TileID.GrayBrick || t.TileType == TileID.Stone || t.TileType == TileID.StoneSlab;
-                        if (!generateStone && !open && !isStone)
+                        if (!generateStone && !open && !isStone && t.TileType != ModContent.TileType<EarthenPlatingTile>() && t.TileType != ModContent.TileType<EarthenPlatingPlatformTile>())
                         {
                             t.TileType = (ushort)ModContent.TileType<SootBlockTile>();
                             t.HasTile = true;
@@ -947,8 +954,9 @@ namespace SOTS.WorldgenHelpers
                         }
                     }
 				}
-			}
-		}
+            }
+            SOTSWorldgenHelper.SmoothRegion(x, y, outlineSize, outlineSize);
+        }
 		public static void GenerateDownwardPath(int x, int y)
 		{
 			float rotation = 0;
@@ -1574,11 +1582,12 @@ namespace SOTS.WorldgenHelpers
         public static void GenerateEntireShaft(int posX, int posY, int dir = 1)
         {
             int size = 15;
+            int stairWellLocation = Main.rand.Next(size);
             int x2 = posX;
             int y2 = posY;
             for(int i = 0; i < (size * 2 / 3); i++)
             {
-                GenerateTunnel(ref x2, ref y2, -90 * dir);
+                GenerateTunnel(ref x2, ref y2, -90 * dir, width: 8);
             }
             posX += 3 * dir;
             posY += 3;
@@ -1615,6 +1624,11 @@ namespace SOTS.WorldgenHelpers
                             ClearLine(new Point16((int)middle.X, (int)middle.Y), edges[j], 1);
                         }
                     }
+                }
+                if(i == stairWellLocation)
+                {
+                    Point16 center = new Point16((edges[0].X + edges[1].X) / 2, edges[0].Y - 1);
+                    GenerateStairs(center.X, center.Y);
                 }
             }
             GenerateCaveCircle(x2, y2);
@@ -1744,7 +1758,264 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-            GenerateCaveCircle(x1, y1 + 5, yMult: 0.5f, outlineSize: 21, wallSize: 14f);
+            GenerateCaveCircle(x1, y1 + 5, yMult: 0.6f, outlineSize: 22, wallSize: 14f, stoneSize: 3);
+        }
+        public static void GenerateUndergoundEntrance(int posX, int posY)
+        {
+            GenerateCaveCircle(posX, posY - 13, 1, 1, 30, 19f, 5);
+            int[,] _structure = {
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 2, 3, 1, 1, 0, 0, 0, 1, 1, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 1, 1, 0, 0, 0, 1, 1, 4, 2},
+                {-1, 1, 3, 1, 0, 0, 0, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0, 0, 0, 1, 4, 1,-1},
+                {-1, 1, 1, 2, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 2, 1, 1,-1},
+                {-1,-1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,-1,-1},
+                {-1,-1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,-1,-1},
+                {-1,-1,-1, 1, 0, 0, 0, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 5, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 0, 0, 1,-1,-1,-1},
+                {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1, 1, 1, 8, 1, 8, 1, 8, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 9, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1},
+                {-0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+                {-0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {-1, 0,-1, 0,-1, 0, 0, 0, 0, 0, 1, 1,10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1},
+                {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1},
+                {-1, 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1, 0,-1},
+                {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,12, 1,13, 1,15, 1,12, 1, 1, 1, 1, 1, 1, 1, 1, 1,12, 1,14, 1,11, 1,12, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1},
+                {-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1},
+                {1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1, 0,-1}
+            };
+            int PosX = posX - 25; //spawnX and spawnY is where you want the anchor to be when this generates
+            int PosY = posY - 31;
+            //i = vertical, j = horizontal
+            for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+            {
+                for (int i = 0; i < _structure.GetLength(0); i++)
+                {
+                    for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                    {
+                        int k = PosX + j;
+                        int l = PosY + i;
+                        if (WorldGen.InWorld(k, l, 30))
+                        {
+                            Tile tile = Framing.GetTileSafely(k, l);
+                            switch (_structure[i, j])
+                            {
+                                case 0:
+                                    tile.HasTile = true;
+                                    tile.TileType = (ushort)ModContent.TileType<EarthenPlatingTile>();
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 1:
+                                    if (confirmPlatforms == 0)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.IsHalfBlock = false;
+                                        tile.Slope = 0;
+                                    }
+                                    break;
+                                case 2:
+                                    if (confirmPlatforms == 0)
+                                    {
+                                        tile.HasTile = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>(), true, true, -1, 0);
+                                        tile.Slope = (SlopeType)0;
+                                        tile.IsHalfBlock = false;
+                                    }
+                                    break;
+                                case 3:
+                                    if (confirmPlatforms == 0)
+                                    {
+                                        tile.HasTile = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>(), true, true, -1, 0);
+                                        tile.Slope = (SlopeType)1;
+                                        tile.IsHalfBlock = false;
+                                    }
+                                    break;
+                                case 4:
+                                    if (confirmPlatforms == 0)
+                                    {
+                                        tile.HasTile = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>(), true, true, -1, 0);
+                                        tile.Slope = (SlopeType)2;
+                                        tile.IsHalfBlock = false;
+                                    }
+                                    break;
+                                case 5:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingBookcaseTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 6:
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
+                                    WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingTorchTile>(), true, true, -1, 0);
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 7:
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
+                                    WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingBulbTile>(), true, true, -1, 0);
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 8:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, 21, true, true, -1, 5);
+                                    }
+                                    break;
+                                case 9:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingStorageTile>(), true, true, -1, 1);
+                                    }
+                                    break;
+                                case 10:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, 17, true, true, -1, 0);
+                                    }
+                                    break;
+                                case 11:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingClockTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 12:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingLampTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 13:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, 283, true, true, -1, 0);
+                                    }
+                                    break;
+                                case 14:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingSofaTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 15:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingWorkBenchTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            _structure = new int[,] {
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                {0,0,0,0,1,3,2,2,2,2,2,2,2,2,2,2,2,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,2,2,2,2,2,2,2,2,2,2,2,3,1,0,0,0,0},
+                {0,0,0,0,1,3,1,1,1,1,1,1,1,1,1,1,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,1,1,1,1,1,1,1,1,1,1,3,1,0,0,0,0},
+                {0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0},
+                {0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0},
+                {0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0},
+                {0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0},
+                {0,1,1,1,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,1,1,1,0},
+                {0,2,2,2,1,3,1,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1,3,2,2,2,2,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+            };
+            //i = vertical, j = horizontal
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                {
+                    int k = PosX + j;
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        Tile tile = Framing.GetTileSafely(k, l);
+                        switch (_structure[i, j])
+                        {
+                            case 1:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+                                break;
+                            case 2:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
+                                break;
+                            case 3:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
+                                break;
+                        }
+                    }
+                }
+            }
+            GenerateStairs(posX, posY);
         }
     }
 }
