@@ -5560,6 +5560,11 @@ Mods: {
 				DisplayName: Gula Portal Plating
 				Tooltip: ""
 			}
+
+			GulaGateway: {
+				DisplayName: Gula Gateway
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6205,6 +6210,7 @@ Mods: {
 			InfernoConduitTile.MapEntry: Inferno Conduit Tile
 			PermafrostConduitTile.MapEntry: Permafrost Conduit Tile
 			TidalConduitTile.MapEntry: Tidal Conduit Tile
+			GulaGatewayTile.MapEntry: Gula Gateway Tile
 		}
 
 		WorldGeneration: {
@@ -6223,12 +6229,14 @@ Mods: {
 			ArchaeologistDialogueGemlockNotDiamond: This locking mechanism is quite ancient, but the developments that surround it are relatively new. Perhaps they were manmade?
 			ArchaeologistDialogueGemlockDiamond: Strange, this lock is the only one without signs of prior discovery, yet it is still missing a key?
 			ArchaeologistDialoguePortalNotAvaritia: Yet another gateway... I wonder where this one leads.
-			ArchaeologistDialoguePortal1: This gateway looks remarkably similar to the rest of them.
+			ArchaeologistDialoguePortal1: This gateway looks remarkably similar to the others.
 			ArchaeologistDialoguePortal2: It's strange that this planet is so littered with gateways... even mine leads here.
 			ArchaeologistDialogueAcedia1: Despite the vines that have grown on this gateway, it shows remarkable integrity.
 			ArchaeologistDialogueAcedia2: I believe this gateway resonates with nature and earth energy... unfortunately, I am unable to experiment with it myself.
 			ArchaeologistDialogueAvaritia1: As to be expected of The Advisor's gateway: it is in pristine condition.
 			ArchaeologistDialogueAvaritia2: I believe this gateway resonates with otherworldly and chaotic energy... unfortunately, I am unable to experiment with it myself.
+			ArchaeologistDialogueGula1: I wonder the excavation project is related to this gateway...
+			ArchaeologistDialogueGula2: I believe this gateway resonates with earth and evil energy... unfortunately, I am unable to experiment with it myself.
 			ArchaeologistDialogueBigCrystal: I can feel strong energy radiating from this formation.
 			ArchaeologistDialogueCoconutMonument: This tablet is composed of highly light-reactive material. If you could find an object to focus light on it, I wonder what secrets it might reveal?
 			ArchaeologistDialogueCoconutBroken: Very clever traveler... perhaps you have a bright destiny ahead of you.

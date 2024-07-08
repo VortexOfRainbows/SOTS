@@ -21,6 +21,7 @@ using System;
 using SOTS.Items.Conduit;
 using SOTS.Items.Pyramid.PyramidWalls;
 using Terraria.DataStructures;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS
 {
@@ -306,7 +307,7 @@ namespace SOTS
         public bool IsValidTileAbove(int i, int j, int type)
         {
             Tile tileAbove = Main.tile[i, j - 1];
-            if (tileAbove.TileType == (ushort)TileType<AvaritianGatewayTile>() || tileAbove.TileType == (ushort)TileType<AcediaGatewayTile>())
+            if (tileAbove.TileType == (ushort)TileType<AvaritianGatewayTile>() || tileAbove.TileType == (ushort)TileType<AcediaGatewayTile>() || tileAbove.TileType == (ushort)TileType<GulaGatewayTile>())
             {
                 int TileFrame = tileAbove.TileFrameX / 18 + (tileAbove.TileFrameY / 18 * 9);
                 if (TileFrame >= 65 && TileFrame <= 69)

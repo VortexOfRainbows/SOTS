@@ -15,6 +15,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS.Common.Systems
 {
@@ -72,6 +73,7 @@ namespace SOTS.Common.Systems
         public const int dreamLamp = 12;
         public const int damoclesChain = 13;
         public const int bigCrystal = 14;
+        public const int GulaPortal = 15;
     }
     public class ImportantTilesWorld : ModSystem
     {
@@ -135,6 +137,9 @@ namespace SOTS.Common.Systems
                         break;
                     case ImportantTileID.bigCrystal:
                         bigCrystal = ptToSync;
+                        break;
+                    case ImportantTileID.GulaPortal:
+                        GulaPortal = ptToSync;
                         break;
                 }
                 if (Main.netMode == NetmodeID.Server)
@@ -200,6 +205,7 @@ namespace SOTS.Common.Systems
             SyncImportantTileLocations(null, dreamLamp, ImportantTileID.dreamLamp, toClient);
             SyncImportantTileLocations(null, damoclesChain, ImportantTileID.damoclesChain, toClient);
             SyncImportantTileLocations(null, bigCrystal, ImportantTileID.bigCrystal, toClient);
+            SyncImportantTileLocations(null, GulaPortal, ImportantTileID.GulaPortal, toClient);
         }
         public static bool awaitTileCheck = true;
         public static bool finishedThreading = false;
@@ -265,6 +271,7 @@ namespace SOTS.Common.Systems
         public static Point16? damoclesChain = null;
         public static Point16? bigCrystal = null;
 
+        public static Point16? GulaPortal = null;
         public static void AddNewNumberToPrevious(int toAdd)
         {
             PreviousTeleports[4] = PreviousTeleports[3];
@@ -295,7 +302,8 @@ namespace SOTS.Common.Systems
                 coconutIslandMonumentBroken,
                 coconutIslandMonument,
                 damoclesChain,
-                bigCrystal
+                bigCrystal,
+                GulaPortal
             };
             List<int> destinationIDs = new List<int>() {
                 0,
@@ -311,7 +319,8 @@ namespace SOTS.Common.Systems
                 10,
                 11,
                 13,
-                14
+                14,
+                15
             };
             Vector2? myDestination = null;
             int totalAttempts = 0;
@@ -414,6 +423,7 @@ namespace SOTS.Common.Systems
             dreamLamp = null;
             damoclesChain = null;
             bigCrystal = null;
+            GulaPortal = null;
             for (int i = 15; i < Main.maxTilesX - 15; i++)
             {
                 for(int j = 15; j < Main.maxTilesY - 15; j++)
@@ -434,6 +444,7 @@ namespace SOTS.Common.Systems
                     AssignPoint(tile, i, j, ref dreamLamp, ModContent.TileType<ForgottenLampTile>());
                     AssignPoint(tile, i, j, ref damoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
                     AssignPoint(tile, i, j, ref bigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
+                    AssignPoint(tile, i, j, ref GulaPortal, ModContent.TileType<GulaGatewayTile>());
                 }
             }
             CenterPoint(ref AcediaPortal, 4, 7);
@@ -450,6 +461,7 @@ namespace SOTS.Common.Systems
             CenterPoint(ref coconutIslandMonument, 1, 2);
             CenterPoint(ref dreamLamp, 1, 0);
             CenterPoint(ref bigCrystal, 6, 8);
+            CenterPoint(ref GulaPortal, 4, 7);
             finishedThreading = true;
         }
         public static void CenterPoint(ref Point16? pt, int iOffset, int jOffset)
@@ -523,6 +535,7 @@ namespace SOTS.Common.Systems
             TileInCorrectLocation(ref dreamLamp, ModContent.TileType<ForgottenLampTile>());
             TileInCorrectLocation(ref damoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
             TileInCorrectLocation(ref bigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
+            TileInCorrectLocation(ref GulaPortal, ModContent.TileType<GulaGatewayTile>());
         }
     }
 }

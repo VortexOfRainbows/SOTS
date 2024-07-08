@@ -419,7 +419,7 @@ namespace SOTS.NPCs.Town
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue5"), 0.5);
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue6"), 0.5);
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue7"), 0.4);
-				if (currentLocationType == ImportantTileID.AcediaPortal || currentLocationType == ImportantTileID.AvaritiaPortal)
+				if (currentLocationType == ImportantTileID.AcediaPortal || currentLocationType == ImportantTileID.AvaritiaPortal || currentLocationType == ImportantTileID.GulaPortal)
                 {
 					if(currentLocationType != ImportantTileID.AvaritiaPortal)
 						chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialoguePortalNotAvaritia"));
@@ -430,8 +430,13 @@ namespace SOTS.NPCs.Town
 				{
 					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAcedia1"));
 					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAcedia2"));
-				}
-				if (currentLocationType == ImportantTileID.AvaritiaPortal)
+                }
+                if (currentLocationType == ImportantTileID.GulaPortal)
+                {
+                    chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueGula1"));
+                    chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueGula2"));
+                }
+                if (currentLocationType == ImportantTileID.AvaritiaPortal)
 				{
 					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAvaritia1"));
 					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAvaritia2"));
