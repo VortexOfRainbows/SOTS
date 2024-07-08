@@ -15,6 +15,7 @@ using Terraria.ModLoader;
 using SOTS.Items.Tide;
 using SOTS.Items;
 using System.Diagnostics;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS.Void
 {

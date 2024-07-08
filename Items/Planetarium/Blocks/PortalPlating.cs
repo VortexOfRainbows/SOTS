@@ -17,7 +17,7 @@ namespace SOTS.Items.Planetarium.Blocks
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Cyan;
 			Item.createTile = ModContent.TileType<PortalPlatingTile>();
 		}
 	}

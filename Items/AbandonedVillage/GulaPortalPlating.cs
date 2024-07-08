@@ -5,9 +5,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Pyramid
+namespace SOTS.Items.AbandonedVillage
 {
-	public class AcediaPlating : ModItem
+	public class GulaPortalPlating : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -23,30 +23,30 @@ namespace SOTS.Items.Pyramid
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = ItemRarityID.Purple;
+			Item.rare = ItemRarityID.Red;
 			Item.consumable = true;
-			Item.createTile = ModContent.TileType<AcediaPlatingTile>();
+			Item.createTile = ModContent.TileType<GulaPortalPlatingTile>();
 		}
 	}
-	public class AcediaPlatingTile : ModTile
+	public class GulaPortalPlatingTile : ModTile
 	{
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			r = 0.2f;
-			g = 0.1f;
-			b = 0.2f;
+			r = 1f;
+			g = 0.2f;
+			b = 0.1f;
 			base.ModifyLight(i, j, ref r, ref g, ref b);
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			//float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AcediaPlatingTileGlow").Value;
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/AbandonedVillage/GulaPortalPlatingTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
-			float alphaMult = 0.1f; // + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			float alphaMult = 0.125f; // + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -62,16 +62,14 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
-			//Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AcediaPlating>();
 			AddMapEntry(new Color(44, 12, 62));
 			MineResist = 2f;
 			MinPick = 250;
 			HitSound = SoundID.Tink;
-			DustType = ModContent.DustType<AcedianDust>();
+			DustType = ModContent.DustType<GulaDust>();
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override bool CanExplode(int i, int j)

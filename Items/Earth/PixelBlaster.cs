@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Earth;
 using Terraria.DataStructures;
 
-namespace SOTS.Items.Earth
+namespace SOTS.Items.AbandonedVillage
 {
 	public class PixelBlaster : VoidItem
 	{
-		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Earth/PixelBlasterGlow").Value;
+		public Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/AbandonedVillage/PixelBlasterGlow").Value;
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);

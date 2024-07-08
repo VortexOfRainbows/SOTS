@@ -3294,7 +3294,7 @@ Mods: {
 
 			AcediaPlating: {
 				DisplayName: Acedia Portal Plating
-				Tooltip: "'It bares striking resemblance to luminite'"
+				Tooltip: ""
 			}
 
 			AncientGoldGate: {
@@ -5549,6 +5549,16 @@ Mods: {
 					33% chance not to lose keys when unlocking chests
 					Recover scrap materials from lost keys
 					'''
+			}
+
+			GulaPlating: {
+				DisplayName: Gula Plating
+				Tooltip: ""
+			}
+
+			GulaPortalPlating: {
+				DisplayName: Gula Portal Plating
+				Tooltip: ""
 			}
 		}
 
