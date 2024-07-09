@@ -89,7 +89,12 @@ namespace SOTS.Items.Planetarium.Blocks
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PortalPlatingWall>();
 			AddMapEntry(new Color(0, 130, 215));
 		}
-		public override bool CanExplode(int i, int j)
+        public override bool Drop(int i, int j, ref int type)
+        {
+			type = ModContent.ItemType<PortalPlatingWall>();
+			return true;
+        }
+        public override bool CanExplode(int i, int j)
 		{
 			return false;
 		}

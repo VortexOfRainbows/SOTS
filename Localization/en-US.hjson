@@ -5565,6 +5565,11 @@ Mods: {
 				DisplayName: Gula Gateway
 				Tooltip: ""
 			}
+
+			GulaPlatingWall: {
+				DisplayName: Gula Plating Wall
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

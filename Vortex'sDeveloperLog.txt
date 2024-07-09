@@ -45,6 +45,7 @@ Update Objectives:
 15. Fix generation bug with Infernum and Leviathan area
 16. Upgrade item to the Hydrokinetic Antennae
 17. Polish the Corpsebloom (add banner, server sync, gore, etc)
+18. Fix Bundle of Snakes/Botanical Symbiote
 
 ---WIP List---
 Abandoned village generation
@@ -78,7 +79,7 @@ N/A
 Daily Log:
 
 
-7/1/24 to 7/7/24
+7/1/24 to 7/8/24
 1. Conduit buff rework
 	1. Localization, drawcode, and actual buff effects added
 	2. bonuses from the conduit buffs now stay after leaving and re-entering worlds
@@ -92,6 +93,7 @@ Daily Log:
 8. Art update for Acedia Portal Plating
 9. Add 2 new tiles for usage in abandoned mines generation
 10. Add Gula Gateway tile (should work with important tile manager/ Archaeologist)
+11. Fix issue where unsafe planetarium walls didn't drop their item
 
 6/30/24 to 7/1/24
 1. Misc. Pharaoh's Curse performance changes (Currently on the other branch)

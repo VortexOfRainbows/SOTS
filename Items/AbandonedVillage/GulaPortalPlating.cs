@@ -65,7 +65,7 @@ namespace SOTS.Items.AbandonedVillage
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			AddMapEntry(new Color(44, 12, 62));
+			AddMapEntry(new Color(255, 12, 62));
 			MineResist = 2f;
 			MinPick = 250;
 			HitSound = SoundID.Tink;
