@@ -4736,6 +4736,8 @@ namespace SOTS.WorldgenHelpers
 			{
 				for (int j = startY; j <= endY; j++)
 				{
+					if (Main.tile[i, j].TileType == ModContent.TileType<GulaPortalPlatingTile>())
+						continue;
 					if ((whitelist == Main.tile[i, j].TileType) || (whitelist == -1 && Main.tile[i, j].TileType != 48 && Main.tile[i, j].TileType != 137 &&
 						Main.tile[i, j].TileType != 232 && Main.tile[i, j].TileType != 191 &&
 						Main.tile[i, j].TileType != 151 && Main.tile[i, j].TileType != 274))
@@ -4850,7 +4852,8 @@ namespace SOTS.WorldgenHelpers
 								}
 							}
 							else if (!Main.tile[i, j].HasTile && Main.tile[i, j + 1].TileType != 151 &&
-									 Main.tile[i, j + 1].TileType != 274)
+									 Main.tile[i, j + 1].TileType != 274 &&
+                                     Main.tile[i, j + 1].TileType != ModContent.TileType<GulaPortalPlatingTile>())
 							{
 								if (Main.tile[i + 1, j].TileType != 190 &&
 									Main.tile[i + 1, j].TileType != 48 &&
@@ -4915,8 +4918,10 @@ namespace SOTS.WorldgenHelpers
 			for (int i = startX; i <= endX; i++)
 			{
 				for (int j = startY; j <= endY; j++)
-				{
-					bool canRun = WorldGen.genRand.NextBool(2) && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
+                {
+                    if (Main.tile[i, j].TileType == ModContent.TileType<GulaPortalPlatingTile>())
+                        continue;
+                    bool canRun = WorldGen.genRand.NextBool(2) && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
 					if (canRun && ((whitelist == Main.tile[i, j].TileType) ||
 						(whitelist == -1 && Main.tile[i, j].TileType != 137 &&
 						Main.tile[i, j].TileType != 48 &&
