@@ -72,6 +72,7 @@ Look down for Abandoned Village todo and progress...
 		1. Should deal contact damage. Also spawns enemies on top of it.
 	4. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
 	5. Deeper Part should have Gula Plating instead of Earthen Plating
+	6. Ash particles in the air
 
 ---Items To Make Work With Tesseract---
 N/A
@@ -79,7 +80,7 @@ N/A
 Daily Log:
 
 
-7/1/24 to 7/8/24
+7/1/24 to 7/9/24
 1. Conduit buff rework
 	1. Localization, drawcode, and actual buff effects added
 	2. bonuses from the conduit buffs now stay after leaving and re-entering worlds
