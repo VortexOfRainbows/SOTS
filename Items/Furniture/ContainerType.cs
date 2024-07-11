@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using SOTS.Items.AbandonedVillage;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -20,7 +21,6 @@ namespace SOTS.Items.Furniture
         }
         protected virtual void ChestStatics()
         {
-            // Properties
             Main.tileSpelunker[Type] = true;
             Main.tileContainer[Type] = true;
             Main.tileShine2[Type] = true;
@@ -123,12 +123,10 @@ namespace SOTS.Items.Furniture
 			{
 				left--;
 			}
-
 			if (tile.TileFrameY != 0)
 			{
 				top--;
 			}
-
 			player.CloseSign();
 			player.SetTalkNPC(-1);
 			Main.npcChatCornerItem = 0;
@@ -146,7 +144,7 @@ namespace SOTS.Items.Furniture
 				player.editedChestName = false;
 			}
 
-			bool isLocked = Chest.IsLocked(left, top);
+			bool isLocked = Chest.IsLocked(left, top) || (tile.TileType == ModContent.TileType<GulaVaultTile>() && tile.TileFrameX >= 36);
 			if (Main.netMode == NetmodeID.MultiplayerClient && !isLocked)
 			{
 				if (left == player.chestX && top == player.chestY && player.chest >= 0)
@@ -166,9 +164,9 @@ namespace SOTS.Items.Furniture
 				if (isLocked)
 				{
 					int key = ChestKey;
-					if ((tile.TileType == ModContent.TileType<Gems.GemChestTile>() || player.ConsumeItem(key)) && Chest.Unlock(left, top))
-					{
-						if (Main.netMode == NetmodeID.MultiplayerClient)
+                    if ((tile.TileType == ModContent.TileType<Gems.GemChestTile>() || player.ConsumeItem(key)) && Chest.Unlock(left, top))
+                    {
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
 						{
 							NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, left, top);
 						}

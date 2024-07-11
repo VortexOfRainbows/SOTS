@@ -5570,6 +5570,11 @@ Mods: {
 				DisplayName: Gula Plating Wall
 				Tooltip: ""
 			}
+
+			GulaVault: {
+				DisplayName: Gula Vault
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6095,6 +6100,13 @@ Mods: {
 			LockedStrangeChest: {
 				MapEntry0: Planetarium Chest
 				MapEntry1: Locked Planetarium Chest
+			}
+
+			GulaVaultTile: {
+				MapEntry0: Gula Vault
+				MapEntry1: Locked Gula Vault
+				MapEntry2: Double Locked Gula Vault
+				MapEntry3: Triple Locked Gula Vault
 			}
 
 			HoloEyeBannerTile.MapEntry: Banner
