@@ -34,10 +34,12 @@ namespace SOTS.Items.Tools
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
 			int dir = (x % 2 * 2) -1;
+			int x2 = (int)tileLocation.X;
+            int y2 = (int)tileLocation.Y;
+            AbandonedVillageWorldgenHelper.GenerateVaultRoom((int)tileLocation.X, (int)tileLocation.Y, dir);
+            //AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
 
-            AbandonedVillageWorldgenHelper.GeneratePortalBossRoom((int)tileLocation.X, (int)tileLocation.Y);
-
-			//AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
+            //AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
             //PhaseWorldgenHelper.ClearPrevious = true;
             //PhaseWorldgenHelper.Generate();
             //WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<SilkCocoonTile>(), true, true, -1, 0);
