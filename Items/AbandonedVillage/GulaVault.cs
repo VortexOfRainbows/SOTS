@@ -85,5 +85,10 @@ namespace SOTS.Items.AbandonedVillage
             AddMapEntry(new Color(240, 80, 40), this.GetLocalization("MapEntry2"), MapChestName);
             AddMapEntry(new Color(240, 80, 40), this.GetLocalization("MapEntry3"), MapChestName);
         }
+        public override bool IsLockedChest(int i, int j)
+        {
+            Tile tile = Main.tile[i, j];
+            return tile.TileFrameX >= 36;
+        }
     }
 }

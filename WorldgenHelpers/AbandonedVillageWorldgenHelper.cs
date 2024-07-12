@@ -9,6 +9,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Functional;
 using Terraria.DataStructures;
+using SOTS.Items;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -2337,25 +2338,26 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateVaultRoom(int posX, int posY, int dir = 1)
         {
+            List<Point16> lootPlacements = new List<Point16>();
             int[,] _structure = {
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,7,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,0,0,0,0,0,0,0,0,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,2,2,2,2,2,2,2,2,2,2,2,2,0,7,7,7,7,7,7,7,7,7,7,7,7,7,0,2,2,2,2,2,2,2,2,2,2,2,2,0,7,7,7,7,7,7,0,2,2,2,2,2,2,0,7,7,7,7,0,2,2,2,2,2,2,2,2,2,2,2,2,0},
                 {0,2,2,2,2,2,2,2,2,2,2,2,2,0,7,7,7,7,7,7,7,7,7,7,7,7,7,0,2,2,2,2,2,2,2,2,2,2,2,2,0,7,7,7,7,7,7,0,2,2,2,2,2,2,0,7,7,7,7,0,2,2,2,2,2,2,2,2,2,2,2,2,0},
                 {0,2,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,7,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,0,0,0,0,0,0,0,0,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,2,0},
                 {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
-                {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
+                {0,2,0,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
                 {0,2,0,1,1,1,1,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
                 {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
-                {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
+                {0,2,0,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
                 {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,3,3,3,3,3,3,1,1,1,1,1,1,3,3,3,3,3,3,1,1,1,1,0,2,0},
                 {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
-                {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
+                {0,2,0,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
                 {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0,0,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,2,0},
                 {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,2,2,2,2,2,2,2,0,1,1,1,1,0,2,2,2,2,2,2,2,2,2,2,2,2,0},
-                {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,2,2,2,2,2,2,2,2,0,1,1,1,1,0,2,2,2,2,2,2,2,2,2,2,2,2,0},
+                {0,0,0,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,2,2,2,2,2,2,2,2,0,1,1,1,1,0,2,2,2,2,2,2,2,2,2,2,2,2,0},
                 {1,1,1,1,1,1,1,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,4,0,2,2,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,2,0},
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,2,2,0,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
-                {1,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,2,2,0,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
+                {1,5,1,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,2,2,0,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,6,7,0,0,0,0,0,0,0,0,7,7,7,7,0,0,0,0,0,0,0,0,7,7,7,0,2,0},
                 {0,2,2,2,2,2,2,2,2,2,2,2,2,0,7,7,7,7,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,6,7,7,0,2,2,2,2,2,2,0,7,7,7,7,0,2,2,2,2,2,2,0,7,7,7,0,2,0},
                 {0,2,2,2,2,2,2,2,2,2,2,2,2,0,7,7,7,7,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,6,7,7,7,0,2,2,2,2,2,2,0,7,7,7,7,0,2,2,2,2,2,2,0,7,7,7,0,2,0},
@@ -2429,6 +2431,12 @@ namespace SOTS.WorldgenHelpers
                                     tile.Slope = dir == -1 ? (SlopeType)4 : (SlopeType)3;
                                     tile.IsHalfBlock = false;
                                     break;
+                                case 8:
+                                    if (confirmPlatforms == 0)
+                                        tile.ClearTile();
+                                    else
+                                        lootPlacements.Add(new Point16(k, l));
+                                    break;
                             }
                         }
                     }
@@ -2485,6 +2493,76 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            foreach (Point16 p16 in lootPlacements)
+            {
+                GenerateVaultRoomLoot(p16.X, p16.Y, 59, dir);
+            }
+        }
+        private static void GenerateVaultRoomLoot(int posX, int posY, int width, int dir = 1)
+        {
+            int exitAfterFailure = 1000;
+            bool placedChest = false;
+            while(!placedChest)
+            {
+                int randomX = posX + WorldGen.genRand.Next(width) * dir;
+                WorldGen.PlaceTile(randomX, posY, ModContent.TileType<GulaVaultTile>(), style: 3);
+                if (Main.tile[randomX, posY].TileType == ModContent.TileType<GulaVaultTile>()) 
+                    placedChest = true;
+                if (exitAfterFailure-- < 0) 
+                    break;
+            }
+            for(int j = 0; j < 2; j++)
+            {
+                int placeBars = 4 - j * 2;
+                while (placeBars > 0)
+                {
+                    int rY = posY - j;
+                    int randomX = posX + WorldGen.genRand.Next(width) * dir;
+                    WorldGen.PlaceTile(randomX, rY, ModContent.TileType<TheBars>(), style: 11);
+                    if(WorldGen.genRand.NextBool())
+                        WorldGen.PlaceTile(randomX + 1, rY, ModContent.TileType<TheBars>(), style: 11);
+                    else if (!Main.tile[randomX + 1, rY].HasTile && Main.tile[randomX + 1, rY + 1].HasTile && Main.tile[randomX + 1, rY + 1].Slope == SlopeType.Solid)
+                        WorldGen.PlaceTile(randomX + 1, rY, TileID.SilverCoinPile);
+                    if (WorldGen.genRand.NextBool())
+                        WorldGen.PlaceTile(randomX - 1, rY, ModContent.TileType<TheBars>(), style: 11);
+                    else if (!Main.tile[randomX - 1, rY].HasTile && Main.tile[randomX - 1, rY + 1].HasTile && Main.tile[randomX - 1, rY + 1].Slope == SlopeType.Solid)
+                        WorldGen.PlaceTile(randomX - 1, rY, TileID.SilverCoinPile);
+                    if (Main.tile[randomX, rY].TileType == ModContent.TileType<TheBars>() ||
+                        Main.tile[randomX, rY + 1].TileType == ModContent.TileType<TheBars>() ||
+                        Main.tile[randomX, rY - 1].TileType == ModContent.TileType<TheBars>())
+                        placeBars--;
+                    if (exitAfterFailure-- < 0)
+                        break;
+                }
+            }
+            int placeBooks = 10;
+            while (placeBooks > 0)
+            {
+                int randomX = posX + WorldGen.genRand.Next(width) * dir;
+                WorldGen.PlaceTile(randomX, posY, TileID.Books);
+                if (Main.tile[randomX, posY].TileType == TileID.Books)
+                    placeBooks--;
+                if (exitAfterFailure-- < 0)
+                    break;
+            }
+            int placeRandomFurnishings = 30;
+            while (placeRandomFurnishings > 0)
+            {
+                int randomX = posX + WorldGen.genRand.Next(width) * dir;
+                int style = 1;
+                if (WorldGen.genRand.NextBool(4))
+                    style = 2;
+                else if (WorldGen.genRand.NextBool(3))
+                    style = 8;
+                WorldGen.PlaceTile(randomX, posY, 13, style: style);
+                placeRandomFurnishings--;
+                if (exitAfterFailure-- < 0)
+                    break;
+            }
+        }
+        public static void GenerateVaultRoomLoot2(int posX, int posY, int width, int dir = 1)
+        {
+            GenerateVaultRoomLoot(posX, posY, width, dir);
         }
     }
 }

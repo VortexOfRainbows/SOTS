@@ -36,7 +36,8 @@ namespace SOTS.Items.Tools
 			int dir = (x % 2 * 2) -1;
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
-            AbandonedVillageWorldgenHelper.GenerateVaultRoom((int)tileLocation.X, (int)tileLocation.Y, dir);
+			AbandonedVillageWorldgenHelper.GenerateVaultRoom(x2, y2, dir);
+			//AbandonedVillageWorldgenHelper.GenerateVaultRoomLoot2(x2, y2, 59, 1);
             //AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
 
             //AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);

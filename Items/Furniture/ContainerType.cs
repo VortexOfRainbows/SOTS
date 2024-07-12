@@ -144,7 +144,7 @@ namespace SOTS.Items.Furniture
 				player.editedChestName = false;
 			}
 
-			bool isLocked = Chest.IsLocked(left, top) || (tile.TileType == ModContent.TileType<GulaVaultTile>() && tile.TileFrameX >= 36);
+			bool isLocked = Chest.IsLocked(left, top);
 			if (Main.netMode == NetmodeID.MultiplayerClient && !isLocked)
 			{
 				if (left == player.chestX && top == player.chestY && player.chest >= 0)
@@ -225,7 +225,7 @@ namespace SOTS.Items.Furniture
 				if (player.cursorItemIconText == defaultName)
 				{
 					player.cursorItemIconID = ChestDrop;
-					if (Main.tile[left, top].TileFrameX / 36 == 1)
+					if (Main.tile[left, top].TileFrameX / 36 == 1 || (tile.TileType == ModContent.TileType<GulaVaultTile>() && tile.TileFrameX >= 36))
 					{
 						player.cursorItemIconID = ChestKey;
 					}
