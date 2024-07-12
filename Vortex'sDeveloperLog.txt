@@ -73,7 +73,7 @@ Look down for Abandoned Village todo and progress...
 	3. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
 		1. Should deal contact damage. Also spawns enemies on top of it.
 	4. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
-	5. Deeper Part should have Gula Plating instead of Earthen Plating
+	5. Deeper Part should have Gula Plating instead of Earthen Plating... The bottom layer will have the boss room on one side and vault on the other
 	6. Ash particles in the air
 
 ---Items To Make Work With Tesseract---

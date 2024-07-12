@@ -10,11 +10,13 @@ using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Functional;
 using Terraria.DataStructures;
 using SOTS.Items;
+using Steamworks;
 
 namespace SOTS.WorldgenHelpers
 {
 	public static class AbandonedVillageWorldgenHelper
     {
+        private static bool GulaLayer;
         [Obsolete]
         private static void GenerateOldMineEntrance(int xPos, int yPos)
         {
@@ -948,7 +950,7 @@ namespace SOTS.WorldgenHelpers
                     }
 				}
             }
-            SOTSWorldgenHelper.SmoothRegion(x, y, outlineSize * 2 + 1, outlineSize * 2 + 1);
+            SOTSWorldgenHelper.SmoothRegion(x, y, (int)((outlineSize * 2 + 1) * xMult), (int)((outlineSize * 2 + 1) * yMult));
         }
 		public static void GenerateDownwardPath(int x, int y)
 		{
@@ -1413,20 +1415,30 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateBeam(int posX, int posY, int width = 13)
         {
+            int h = 2;
+            ushort type = !GulaLayer ? (ushort)ModContent.TileType<EarthenPlatingTile>() : (ushort)ModContent.TileType<GulaPlatingTile>();
+            if(GulaLayer)
+            {
+                h = 3;
+            }
             for (int i = 0; i < width; i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = GulaLayer ? -1 : 0; j < h; j++)
                 {
                     int x = posX + i;
                     int y = posY + j;
                     Tile t = Framing.GetTileSafely(x, y);
                     t.ClearTile();
-                    WorldGen.PlaceTile(x, y, (ushort)ModContent.TileType<EarthenPlatingTile>());
+                    if(!GulaLayer || (i != 0 && j != -1 && j != 2 && i != width - 1))
+                        WorldGen.PlaceTile(x, y, type);
+                    else
+                        WorldGen.PlaceTile(x, y, (ushort)ModContent.TileType<EarthenPlatingTile>());
                 }
             }
         }
         public static void GenerateWalls(int posX, int posY, int width, int minHeight, int height)
         {
+            ushort typeFill = !GulaLayer ? (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>() : (ushort)ModContent.WallType<GulaPlatingWallWall>();
             int full = WorldGen.genRand.Next(2);
             for (int i = 0; i < 2; i++)
             {
@@ -1458,7 +1470,7 @@ namespace SOTS.WorldgenHelpers
                             ushort type = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
                             if (l != 0)
                             {
-                                type = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+                                type = typeFill;
                             }
                             WorldGen.PlaceWall(x, y, type);
                             if (l != 0)
@@ -1485,10 +1497,11 @@ namespace SOTS.WorldgenHelpers
             int biggerPlatform = WorldGen.genRand.Next(2);
             int bonusPlatSize = WorldGen.genRand.Next(7);
             int offset = WorldGen.genRand.Next(bonusPlatSize);
-
             int startX = posX - (biggerPlatform == 1 ? offset : 0);
             int width1 = platW + (biggerPlatform == 1 ? bonusPlatSize : 0);
-            GenerateBeam(startX, posY, width1);
+            width1 += GulaLayer ? 2 : 0;
+            startX -= GulaLayer ? 1 : 0;
+            GenerateBeam(startX, posY + (GulaLayer ? 1 : 0), width1);
             edges[0] = new Point16(startX, posY + 1);
             edges[1] = new Point16(startX + width1 - 1, posY + 1);
             if (dir == -1)
@@ -1514,6 +1527,8 @@ namespace SOTS.WorldgenHelpers
             int sepVert = total + WorldGen.genRand.Next(3);
             int nextX = posX - (biggerPlatform != 1 ? offset : 0);
             int nextWidth1 = platW + (biggerPlatform != 1 ? bonusPlatSize : 0);
+            nextWidth1 += GulaLayer ? 2 : 0;
+            nextX -= GulaLayer ? 1 : 0;
             for (int i = 0; i < Math.Max(width1, nextWidth1); i++)
             {
                 for(int j = 0; j < sepVert - 2; j++)
@@ -1526,7 +1541,7 @@ namespace SOTS.WorldgenHelpers
             }
             startX = nextX;
             width1 = nextWidth1;
-            GenerateBeam(startX, posY - sepVert, width1);
+            GenerateBeam(startX, posY - sepVert - (GulaLayer ? 1 : 0), width1);
             edges[2] = new Point16(startX, posY - sepVert);
             edges[3] = new Point16(startX + width1 - 1, posY - sepVert);
             if (dir == -1)
@@ -1544,7 +1559,10 @@ namespace SOTS.WorldgenHelpers
             int w = WorldGen.genRand.Next(3, 6);
             int startPos = platW - w - 1 - WorldGen.genRand.Next(3);
             GenerateWalls(posX + startPos, posY - 1, w, WorldGen.genRand.Next(1, 4), height);
-
+            //foreach(Point16 pt in edges)
+            //{
+            //    Main.tile[pt.X, pt.Y].WallType = WallID.AdamantiteBeam;
+            //}
             return edges;
         }
         public static void ClearLine(Point16 start, Point16 end, int dir = 1)
@@ -1574,6 +1592,8 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateEntireShaft(int posX, int posY, int size = 15, int dir = 1, int floorNum = 0)
         {
+            bool finalFloor = floorNum == 0;
+            GulaLayer = finalFloor;
             int stairWellLocation = Math.Max(WorldGen.genRand.Next(size), WorldGen.genRand.Next(size)); //Use max function to bias the stairs towards spawing farther away. They can still spawn close, but will attempt not to.
             int x2 = posX;
             int y2 = posY;
@@ -1624,6 +1644,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             GenerateCaveCircle(x2, y2);
+            GulaLayer = false;
         }
         public static void TryPlacingTorch(int posX, int posY, int padding)
         {
@@ -1670,42 +1691,56 @@ namespace SOTS.WorldgenHelpers
             };
             int PosX = posX - 8;  //spawnX and spawnY is where you want the anchor to be when this generates
             int PosY = posY - 0;
-            for (int i = 0; i < _structure.GetLength(0); i++)
-            {
-                for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+            for(int cPlatforms = 0; cPlatforms < 2; cPlatforms++)
+                for (int i = 0; i < _structure.GetLength(0); i++)
                 {
-                    int k = PosX + j * (reflected ? -1 : 1) + (reflected ? 16 : 0);
-                    int l = PosY + i;
-                    if (WorldGen.InWorld(k, l, 30))
+                    for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
                     {
-                        Tile tile = Framing.GetTileSafely(k, l);
-                        switch (_structure[i, j])
+                        int k = PosX + j * (reflected ? -1 : 1) + (reflected ? 16 : 0);
+                        int l = PosY + i;
+                        if (WorldGen.InWorld(k, l, 30))
                         {
-                            case 0:
-                                tile.HasTile = true;
-                                tile.TileType = (ushort)ModContent.TileType<EarthenPlatingTile>();
-                                tile.Slope = 0;
-                                tile.IsHalfBlock = false;
-                                break;
-                            case 1:
-                                tile.HasTile = false;
-                                WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>());
-                                tile.Slope = 0;
-                                tile.IsHalfBlock = false;
-                                break;
-                            case 2:
-                                tile.HasTile = false;
-                                WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>());
-                                tile.Slope = (SlopeType)(reflected ? 2 : 1);
-                                tile.IsHalfBlock = false;
-                                break;
-                            case 3:
-                                tile.ClearTile();
-                                break;
+                            Tile tile = Framing.GetTileSafely(k, l);
+                            switch (_structure[i, j])
+                            {
+                                case 0:
+                                    tile.HasTile = true;
+                                    tile.TileType = (ushort)ModContent.TileType<EarthenPlatingTile>();
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 1:
+                                    if (cPlatforms == 0)
+                                    {
+                                        tile.ClearTile();
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                    }
+                                    else
+                                    {
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>(), true);
+                                        tile.Slope = 0;
+                                    }
+                                    break;
+                                case 2:
+                                    if (cPlatforms == 0)
+                                    {
+                                        tile.ClearTile();
+                                    }
+                                    else
+                                    {
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>());
+                                        tile.Slope = (SlopeType)(reflected ? 2 : 1);
+                                        tile.IsHalfBlock = false;
+                                    }
+                                    break;
+                                case 3:
+                                    tile.ClearTile();
+                                    break;
+                            }
                         }
                     }
                 }
-            }
             _structure = new int[,] {
                 {0,2,1,3,3,3,3,3,3,3,3,3,3,3,1,2,0},
                 {0,2,1,2,2,2,2,2,2,2,2,2,2,2,1,2,0},
@@ -2559,10 +2594,6 @@ namespace SOTS.WorldgenHelpers
                 if (exitAfterFailure-- < 0)
                     break;
             }
-        }
-        public static void GenerateVaultRoomLoot2(int posX, int posY, int width, int dir = 1)
-        {
-            GenerateVaultRoomLoot(posX, posY, width, dir);
         }
     }
 }
