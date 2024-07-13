@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Evil
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Evil
                 {
                     Main.instance.LoadProjectile(arrowType);
                 }
-                Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[arrowType].Value;
+                Texture2D texture = TextureAssets.Projectile[arrowType].Value;
                 if (arrowType == ModContent.ProjectileType<HardlightArrow>() || arrowType == ModContent.ProjectileType<ChargedHardlightArrow>())
                 {
                     texture = Mod.Assets.Request<Texture2D>("Projectiles/Planetarium/HardlightArrowShaft").Value;

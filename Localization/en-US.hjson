@@ -5575,6 +5575,11 @@ Mods: {
 				DisplayName: Gula Vault
 				Tooltip: ""
 			}
+
+			Icebreaker: {
+				DisplayName: Icebreaker
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7263,6 +7268,7 @@ Mods: {
 			ChimeraFireballSmall.DisplayName: Shadow Fireball
 			BundleSnakeMinion.DisplayName: Bundle Snake Minion
 			CorpsebloomAcid.DisplayName: Corpsebloom Acid
+			Icebreaker.DisplayName: Icebreaker
 		}
 
 		DamageClasses: {
