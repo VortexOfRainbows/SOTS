@@ -48,6 +48,7 @@ Update Objectives:
 18. Fix Bundle of Snakes/Botanical Symbiote
 19. Somehow fix marble biome in vibrant geode
 20. Gula Gateway tile needs to be connectable to evil and earthen conduits
+21. Update Elemental Amulet sprite to include modern genshin visions
 
 ---WIP List---
 Abandoned village generation
@@ -59,6 +60,7 @@ Conduit powering code for the two portals
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword
 Possibly Blade Wings, Tesseract
+Buff Perfect Star
 
 ---Visual Upgrade Needed---
 N/A
