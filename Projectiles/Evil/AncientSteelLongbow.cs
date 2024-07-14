@@ -114,10 +114,10 @@ namespace SOTS.Projectiles.Evil
             else if(runOnce)
             {
                 runOnce = false;
+                SOTSUtils.PlaySound(SoundID.Item5, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, -0.1f);
                 if (Projectile.owner == Main.myPlayer)
                 {
                     Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - textureHeight);
-                    SOTSUtils.PlaySound(SoundID.Item5,(int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, -0.1f);
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity * 4f, (int)Projectile.ai[1], Projectile.damage, Projectile.knockBack, Main.myPlayer);
                     proj.GetGlobalProjectile<SOTSProjectile>().affixID = -1; //this sould sync automatically on the SOTSProjectile end
                 }

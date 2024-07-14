@@ -14,10 +14,12 @@ namespace SOTS.Projectiles.Earth
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(Projectile.friendly);
+            writer.Write(Projectile.tileCollide);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			Projectile.friendly = reader.ReadBoolean();
+            Projectile.tileCollide = reader.ReadBoolean();
         }
         public override void SetStaticDefaults()
 		{
@@ -32,7 +34,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.width = 24;
 			Projectile.height = 24;
 			Projectile.extraUpdates = 4;
-			Projectile.localNPCHitCooldown = 15;
+			Projectile.localNPCHitCooldown = 12;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -68,6 +70,8 @@ namespace SOTS.Projectiles.Earth
 			float height = Projectile.height * scale;
 			for (int i = 0; i < trailPos.Length * 0.5f; i += 3)
 			{
+				if (trailPos[i] == Projectile.Center)
+					continue;
 				Vector2 pos = trailPos[i];
 				projHitbox = new Rectangle((int)pos.X - (int)width / 2, (int)pos.Y - (int)height / 2, (int)width, (int)height);
 				if (projHitbox.Intersects(targetHitbox))
@@ -76,7 +80,6 @@ namespace SOTS.Projectiles.Earth
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -139,15 +142,20 @@ namespace SOTS.Projectiles.Earth
 		{
 			Projectile.tileCollide = false;
 			Projectile.velocity *= 0f;
-			Projectile.friendly = false;
 			Projectile.netUpdate = true;
 		}
 		public override bool PreAI()
 		{
 			int trailLength = (int)Projectile.ai[0];
 			if (runOnce)
-			{
-				for (int i = 0; i < 10 + 10 * -Projectile.ai[1]; i++)
+            {
+                if (Projectile.ai[1] == -3)
+                    Projectile.localNPCHitCooldown = 8;
+                if (Projectile.ai[1] == -2)
+                    Projectile.localNPCHitCooldown = 10;
+                if (Projectile.ai[1] == -1)
+                    Projectile.localNPCHitCooldown = 12;
+                for (int i = 0; i < 10 + 10 * -Projectile.ai[1]; i++)
 				{
 					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 					Color color2 = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
@@ -167,7 +175,7 @@ namespace SOTS.Projectiles.Earth
 				}
 				runOnce = false;
 			}
-			if (Projectile.timeLeft > trailLength && !Projectile.friendly)
+			if (Projectile.timeLeft > trailLength && !Projectile.tileCollide)
             {
 				Projectile.timeLeft = trailLength;
             }
@@ -182,7 +190,7 @@ namespace SOTS.Projectiles.Earth
 				dust.alpha = Projectile.alpha;
 				dust.velocity *= 0.8f * (-0.4f * Projectile.ai[1]);
 			}
-			else if (Projectile.timeLeft <= trailLength && Projectile.friendly)
+			else if (Projectile.timeLeft <= trailLength && Projectile.tileCollide)
             {
 				TriggerStop();
             }		

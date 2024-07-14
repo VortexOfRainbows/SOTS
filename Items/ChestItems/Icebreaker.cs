@@ -20,8 +20,8 @@ namespace SOTS.Items.ChestItems
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 72;
 			Item.height = 30;
-			Item.useTime = 44;
-			Item.useAnimation = 44;
+			Item.useTime = 60;
+			Item.useAnimation = 60;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(0, 0, 80, 0);

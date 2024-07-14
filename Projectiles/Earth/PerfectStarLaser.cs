@@ -32,6 +32,8 @@ namespace SOTS.Projectiles.Earth
 			Projectile.width = 24;
 			Projectile.height = 24;
 			Projectile.extraUpdates = 2;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesLocalNPCImmunity = true;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{

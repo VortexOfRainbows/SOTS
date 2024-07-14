@@ -2,8 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using System;
+using System.Diagnostics.Metrics;
 using System.IO;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,7 +20,7 @@ namespace SOTS.Projectiles.Earth
             Projectile.friendly = false;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 40;
             Projectile.hide = true;
             Projectile.alpha = 255;
@@ -31,6 +33,16 @@ namespace SOTS.Projectiles.Earth
         {
             ended = reader.ReadBoolean();
         }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (Projectile.hide)
+                return false;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            return false;
+        }
         public override void PostDraw(Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/PerfectStarGlow");
@@ -38,6 +50,14 @@ namespace SOTS.Projectiles.Earth
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Color color = Color.White;
             Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            for (int i = 0; i < chargeLevel; i++)
+            {
+                for(int j = 0; j < 4; j++)
+                {
+                    Vector2 c = new Vector2(2 + i * 2, 0).RotatedBy(j * MathHelper.PiOver2 + MathHelper.ToRadians(SOTSWorld.GlobalCounter * (i * 2 - 1)) * Projectile.direction);
+                    Main.spriteBatch.Draw(texture, drawPos + c, null, new Color(100, 100, 100, 0) * (1 / (i + 1f)), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                }
+            }
         }
         bool ended = false;
         int chargeLevel = 0;
@@ -112,31 +132,15 @@ namespace SOTS.Projectiles.Earth
                 player.itemAnimation = 2;
                 Projectile.timeLeft = 2;
             }
-            Vector2 vector2_1 = player.RotatedRelativePoint(Main.player[Projectile.owner].MountedCenter, true);
+            Vector2 center = player.RotatedRelativePoint(player.MountedCenter, true);
             if (Main.myPlayer == Projectile.owner)
             {
-                float num1 = 20 * Projectile.scale;
-                Vector2 vector2_2 = vector2_1;
-                float num2 = (float)((double)Main.mouseX + Main.screenPosition.X - vector2_2.X);
-                float num3 = (float)((double)Main.mouseY + Main.screenPosition.Y - vector2_2.Y);
-                if ((double)Main.player[Projectile.owner].gravDir == -1.0)
-                    num3 = (float)((double)(Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector2_2.Y);
-                float num4 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
-                float num5 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
-                float num6 = num1 / num5;
-                float num7 = num2 * num6;
-                float num8 = num3 * num6;
-
-                if ((double)num7 != Projectile.velocity.X || (double)num8 != Projectile.velocity.Y)
+                float offsetDist = 24 * Projectile.scale;
+                Vector2 toMouse = Main.MouseWorld - center;
+                toMouse = toMouse.SafeNormalize(Vector2.Zero) * offsetDist;
+                if ((double)toMouse.X != Projectile.velocity.X || (double)toMouse.Y != Projectile.velocity.Y)
                     Projectile.netUpdate = true;
-                Projectile.velocity.X = num7;
-                Projectile.velocity.Y = num8;
-                Projectile.velocity = Projectile.velocity;
-            }
-            if (Projectile.hide == false)
-            {
-                Main.player[Projectile.owner].heldProj = Projectile.whoAmI;
-                Projectile.alpha = 0;
+                Projectile.velocity = toMouse;
             }
             Projectile.rotation = (float)(Projectile.velocity.ToRotation() + MathHelper.PiOver2);
             if (Main.player[Projectile.owner].channel || Projectile.timeLeft > 50)
@@ -146,9 +150,9 @@ namespace SOTS.Projectiles.Earth
                 player.itemRotation = MathHelper.WrapAngle(Projectile.rotation + MathHelper.ToRadians(Projectile.direction == -1 ? 90 : -90));
             }
             Projectile.hide = false;
+            Projectile.alpha = 0;
             Projectile.spriteDirection = Projectile.direction;
-            Projectile.position.X = (vector2_1.X - (Projectile.width / 2));
-            Projectile.position.Y = (vector2_1.Y - (Projectile.height / 2));
+            Projectile.Center = center;
             return true;
         }
     }

@@ -7269,6 +7269,7 @@ Mods: {
 			BundleSnakeMinion.DisplayName: Bundle Snake Minion
 			CorpsebloomAcid.DisplayName: Corpsebloom Acid
 			Icebreaker.DisplayName: Icebreaker
+			IcebreakerIce.DisplayName: Icebreaker Ice
 		}
 
 		DamageClasses: {

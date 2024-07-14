@@ -60,13 +60,14 @@ Conduit powering code for the two portals
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword
 Possibly Blade Wings, Tesseract
-Buff Perfect Star
 
 ---Visual Upgrade Needed---
 N/A
 
 ---Multiplayer Fixes/Testing Needed---
 Lockpick (low priority)
+Perfect Star 
+Icebreaker
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -84,7 +85,7 @@ N/A
 Daily Log:
 
 
-7/1/24 to 7/12/24
+7/1/24 to 7/13/24
 1. Conduit buff rework
 	1. Localization, drawcode, and actual buff effects added
 	2. bonuses from the conduit buffs now stay after leaving and re-entering worlds
@@ -100,6 +101,11 @@ Daily Log:
 10. Add Gula Gateway tile (should work with important tile manager/ Archaeologist), uses Kekrock Resprite
 11. Fix issue where unsafe planetarium walls didn't drop their item
 12. Add Gula Vault tile... Saves keys used when relogging... Works in multiplayer!
+13. WIP Icebreaker
+14. Increased Perfect Star hit rate on charges 1, 2, and 3, (15, 15, 15) -> (12, 10, 8)
+	1. This should help increase the damage on later charges by letting shots hit the same enemy multiple times more often
+15. Perfect star now continues to deal damage on the tail of the beam after the head has collided with a block (should make damage feel way more consistent).
+16. Fix some minor drawing issues with Perfect Star when moving up blocks, also gave small glow visual on Perfect Star to visualize charge level
 
 6/30/24 to 7/1/24
 1. Misc. Pharaoh's Curse performance changes (Currently on the other branch)
