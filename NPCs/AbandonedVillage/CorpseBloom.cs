@@ -16,7 +16,7 @@ namespace SOTS.NPCs.AbandonedVillage
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.npcFrameCount[NPC.type] = 14;
+			Main.npcFrameCount[NPC.type] = 19;
 
 			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
@@ -44,26 +44,38 @@ namespace SOTS.NPCs.AbandonedVillage
 
 		public override void FindFrame(int frameHeight)
 		{
+			NPC.frameCounter++;
+
 			if (NPC.ai[0] == 0)
 			{
-				//idle frame
-				NPC.frame.Y = 0 * frameHeight;
-			}
+				if (NPC.frameCounter > 6)
+				{
+					NPC.frame.Y = NPC.frame.Y + frameHeight;
+					NPC.frameCounter = 0;
+				}
+				if (NPC.frame.Y >= frameHeight * 4)
+				{
+					NPC.frame.Y = 0 * frameHeight;
+				}
+            }
 			else
 			{
-				NPC.frameCounter++;
-
 				//opening/attacking animation
 				if (NPC.ai[0] == 1)
 				{
+					if (NPC.frame.Y < frameHeight * 5)
+					{
+						NPC.frame.Y = 4 * frameHeight;
+					}
+
 					if (NPC.frameCounter > 6)
 					{
 						NPC.frame.Y = NPC.frame.Y + frameHeight;
 						NPC.frameCounter = 0;
 					}
-					if (NPC.frame.Y >= frameHeight * 8)
+					if (NPC.frame.Y >= frameHeight * 12)
 					{
-						NPC.frame.Y = 7 * frameHeight;
+						NPC.frame.Y = 10 * frameHeight;
 					}
 				}
 				//closing up animation
@@ -74,7 +86,7 @@ namespace SOTS.NPCs.AbandonedVillage
 						NPC.frame.Y = NPC.frame.Y + frameHeight;
 						NPC.frameCounter = 0;
 					}
-					if (NPC.frame.Y >= frameHeight * 14)
+					if (NPC.frame.Y >= frameHeight * 19)
 					{
 						NPC.frame.Y = 0 * frameHeight;
 					}
@@ -100,7 +112,7 @@ namespace SOTS.NPCs.AbandonedVillage
 			{
 				NPC.ai[1]++;
 
-				if (NPC.ai[1] > 60 && NPC.ai[1] < 120 && NPC.ai[1] % 10 == 0)
+				if (NPC.ai[1] > 30 && NPC.ai[1] < 120 && NPC.ai[1] % 10 == 0)
 				{
 					SoundEngine.PlaySound(SoundID.NPCDeath9, NPC.Center);
 
@@ -123,7 +135,7 @@ namespace SOTS.NPCs.AbandonedVillage
 
 			if (NPC.ai[0] == 2)
 			{
-				if (NPC.frame.Y >= 13 * NPC.height)
+				if (NPC.frame.Y >= 18 * NPC.height)
 				{
 					NPC.ai[0] = 0;
 				}
