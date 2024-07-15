@@ -5578,7 +5578,7 @@ Mods: {
 
 			Icebreaker: {
 				DisplayName: Icebreaker
-				Tooltip: ""
+				Tooltip: Fires a large icicle alongside a storm of bullets
 			}
 		}
 
@@ -7270,6 +7270,7 @@ Mods: {
 			CorpsebloomAcid.DisplayName: Corpsebloom Acid
 			Icebreaker.DisplayName: Icebreaker
 			IcebreakerIce.DisplayName: Icebreaker Ice
+			IcebreakerShard.DisplayName: Icebreaker Shard
 		}
 
 		DamageClasses: {

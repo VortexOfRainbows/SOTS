@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
 using SOTS.Items.Permafrost;
@@ -12,7 +11,6 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Ice Shard");
 			Main.projFrames[Projectile.type] = 3;
 		}
         public override void SetDefaults()
