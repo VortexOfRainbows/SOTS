@@ -39,7 +39,7 @@ namespace SOTS.Items.Tools
 			//AbandonedVillageWorldgenHelper.GenerateEntireShaft(x2, y2, 5, dir, 1);
 			//AbandonedVillageWorldgenHelper.GenerateVaultRoomLoot2(x2, y2, 59, 1);
 			//AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
-			AbandonedVillageWorldgenHelper.GenerateStairs(x2, y2, 0);
+			AbandonedVillageWorldgenHelper.GenerateMineralariumRoom(x2, y2, dir);
             //AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
             //PhaseWorldgenHelper.ClearPrevious = true;
             //PhaseWorldgenHelper.Generate();
