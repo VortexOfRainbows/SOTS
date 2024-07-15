@@ -12,13 +12,18 @@ using Terraria.DataStructures;
 using SOTS.Items;
 using SOTS.Items.Earth;
 using SOTS.Items.Permafrost;
+using Terraria.IO;
 
 namespace SOTS.WorldgenHelpers
 {
 	public static class AbandonedVillageWorldgenHelper
     {
         private static bool GulaLayer;
-        [Obsolete]
+        private static Rectangle OuterRect;
+        private static Rectangle AVRect;
+		private static List<int> ValidGrassTiles = null;
+        private static List<int> ValidStoneTiles = null;
+        private static List<int> InvalidTiles = null;
         public static void InitializeValidTileLists()
 		{
 			if (ValidGrassTiles != null && ValidStoneTiles != null && InvalidTiles != null)
@@ -56,9 +61,6 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-		private static List<int> ValidGrassTiles = null;
-        private static List<int> ValidStoneTiles = null;
-        private static List<int> InvalidTiles = null;
         public static void GenHalfCircle(int spawnX, int spawnY, int side = 0, int radius = 10, int radiusY = 10)
 		{
 			//radius++;
@@ -700,7 +702,7 @@ namespace SOTS.WorldgenHelpers
 						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab
                             || t.WallType == ModContent.WallType<EarthenPlatingBeamWall>() || t.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || t.WallType == ModContent.WallType<EarthenPlatingWallWall>() 
                             || t.WallType == ModContent.WallType<UnsafeGulaPlatingWall>() || t.WallType == ModContent.WallType<GulaPlatingWallWall>();
-						bool isStone = t.TileType == TileID.GrayBrick || t.TileType == TileID.Stone || t.TileType == TileID.StoneSlab;
+						bool isStone = t.TileType == TileID.GrayBrick || t.TileType == TileID.Stone || t.TileType == TileID.StoneSlab || t.TileType == ModContent.TileType<GulaPlatingTile>();
                         if (!generateStone && !open && !isStone && t.TileType != ModContent.TileType<EarthenPlatingTile>() && t.TileType != ModContent.TileType<EarthenPlatingPlatformTile>())
                         {
                             t.TileType = (ushort)ModContent.TileType<SootBlockTile>();
@@ -1427,7 +1429,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             int sizeBonus = GulaLayer ? 3 : 0;
-            GenerateCaveCircle(x2, y2, 1, 1, 11 + sizeBonus * 2, 6.5f + sizeBonus, 3);
+            GenerateCaveCircle(x2, y2, 1, 1, 12 + sizeBonus * 2, 6.5f + sizeBonus, 3);
             if(GulaLayer)
             {
                 if(floorNum == -2)
@@ -1438,6 +1440,10 @@ namespace SOTS.WorldgenHelpers
                 {
                     GeneratePortalBossRoom(x2, y2 + 8, dir);
                 }
+            }
+            if(floorNum == 3)
+            {
+                GenerateMineralariumRoom(x2, y2 + 4, dir);
             }
             GulaLayer = false;
         }
@@ -1588,14 +1594,42 @@ namespace SOTS.WorldgenHelpers
                 int offset = 9;
                 if (floorNum == 0)
                     offset = 11;
-                int mainSide = WorldGen.genRand.Next(2) * 2 - 1;
-                GenerateEntireShaft(x1 + offset * mainSide, y1 + down, 5, mainSide, floorNum);
-                if(floorNum == 0 || WorldGen.genRand.NextBool(3))
+                int attempts = 100;
+                while(attempts > 0)
                 {
-                    int size = 3;
-                    if(floorNum == 0)
-                        size = 5;
-                    GenerateEntireShaft(x1 - offset * mainSide, y1 + down, size, -mainSide, floorNum == 0 ? -2 : - 1);
+                    attempts--;
+                    int mainSide = WorldGen.genRand.Next(2) * 2 - 1;
+
+                    //Try to recenter the generation
+                    int middle = AVRect.Center.X;
+                    bool left = x1 < middle;
+                    bool overrideWithCenteringDirection = floorNum <= 1 || WorldGen.genRand.NextBool(floorNum);
+                    if(overrideWithCenteringDirection)
+                    {
+                        mainSide = left ? 1 : -1;
+                    }
+
+                    int width = WorldGen.genRand.Next(5, 8);
+                    int wMultWidth = GulaLayer ? 24 : 20;
+
+                    int startX = x1 + offset * mainSide;
+                    int startY = y1 + down;
+
+                    bool isMainSideWithinBounds = AVRect.Contains(startX + width * mainSide * wMultWidth, startY);
+                    if (!isMainSideWithinBounds)
+                        continue;
+                    if (GulaLayer)
+                        width -= 1;
+                    GenerateEntireShaft(startX, startY, width, mainSide, floorNum);
+                    if (floorNum == 0 || WorldGen.genRand.NextBool(3))
+                    {
+                        width = WorldGen.genRand.Next(3, 6);
+                        if (floorNum == 0)
+                            width += 1;
+                        GenerateEntireShaft(x1 - offset * mainSide, y1 + down, width, -mainSide, floorNum == 0 ? -2 : -1);
+                    }
+                    attempts = -1;
+                    break;
                 }
             }
         }
@@ -2470,10 +2504,12 @@ namespace SOTS.WorldgenHelpers
                                     }
                                     break;
                                 case 2:
-                                    tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<EarthenPlatingPlatformTile>();
-                                    tile.Slope = 0;
-                                    tile.IsHalfBlock = false;
+                                    if (confirmPlatforms == 0)
+                                        tile.ClearTile();
+                                    else
+                                    {
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingPlatformTile>());
+                                    }
                                     break;
                                 case 3:
                                     tile.HasTile = true;
@@ -2568,6 +2604,55 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+        }
+        public static void DesignateAVRectangle(int x, int y, int w, int h)
+        {
+            int padding = 25;
+            OuterRect = new Rectangle(x - padding, y - padding, w + padding * 2, h + padding * 2);
+            AVRect = new Rectangle(x, y, w, h);
+            for(int i = OuterRect.Left; i < OuterRect.Right; i++)
+            {
+                int pX = i;
+                int pY = OuterRect.Y;
+                Tile t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.StoneSlab;
+
+                pY = OuterRect.Y + OuterRect.Height;
+                t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.StoneSlab;
+            }
+            for (int j = OuterRect.Y; j < OuterRect.Y + OuterRect.Height; j++)
+            {
+                int pX = OuterRect.X;
+                int pY = j;
+                Tile t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.StoneSlab;
+
+                pX = OuterRect.X + OuterRect.Width;
+                t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.StoneSlab;
+            }
+            for (int i = 0; i < w; i++)
+            {
+                for(int j = 0; j < h; j++)
+                {
+                    int pX = x + i;
+                    int pY = y + j;
+                    Tile t = Main.tile[pX, pY];
+                    t.ClearTile();
+                    t.HasTile = true;
+                    t.TileType = TileID.Dirt;
+                }
+            }
+            GenerateStairs(x + w / 2, y, 7);
         }
     }
 }
