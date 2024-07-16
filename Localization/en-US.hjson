@@ -5580,6 +5580,11 @@ Mods: {
 				DisplayName: Icebreaker
 				Tooltip: Fires a large icicle alongside a storm of bullets
 			}
+
+			BCatalogue: {
+				DisplayName: B Catalogue
+				Tooltip: Unlocks 100% of the bestiary
+			}
 		}
 
 		ItemTooltip: {
