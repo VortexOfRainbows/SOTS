@@ -26,7 +26,7 @@ Update Objectives:
 	1. Make it spawn
 	2. Cave that integrates into evil biome
 	3. Smart spawning houses and rubble
-	4. Save location as a rectangle, then make sure pyramid doesn't overlap using that rectangle.
+	4. Use GenVars.Structures (protected structures)
 	5. Variants for the cave entrance and different directions for the cave entrance!
 	6. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 2. More Bestiary entries (and visual fixes)
@@ -81,6 +81,9 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+7/16/24
+1. Flatten the evil biome in preparation for generation (also selector for the biome least likely to interfere with dungeon/pyramid)
 
 
 7/1/24 to 7/15/24

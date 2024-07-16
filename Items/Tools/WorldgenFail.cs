@@ -1,11 +1,7 @@
+using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using System;
-using SOTS.WorldgenHelpers;
-using SOTS.Items.Earth.Glowmoth;
-using Terraria.GameContent.Bestiary;
 
 namespace SOTS.Items.Tools
 {
@@ -29,13 +25,15 @@ namespace SOTS.Items.Tools
 		}
 		public override bool? UseItem(Player player)
 		{
-			for(int j = 0; j < 50; j++)
-				for(int i = 0; i < Main.npcFrameCount.Length; i++)
-				{
-					NPC npc = new NPC();
-					npc.SetDefaults(i);
-					Main.BestiaryTracker.Kills.RegisterKill(npc);
-				}
+			AbandonedVillageWorldgenHelper.FlattenEvilBiome(1);
+
+			//for(int j = 0; j < 50; j++)
+			//	for(int i = 0; i < Main.npcFrameCount.Length; i++)
+			//	{
+			//		NPC npc = new NPC();
+			//		npc.SetDefaults(i);
+			//		Main.BestiaryTracker.Kills.RegisterKill(npc);
+			//	}
 			//SOTSWorldgenHelper.CleanUpFloatingTrees();
 			return true;
 		}

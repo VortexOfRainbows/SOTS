@@ -380,7 +380,9 @@ namespace SOTS
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingSurfaceStructures");
 				SOTSWorldgenHelper.PlaceSetpiecesInMushroomBiome();
 				StarterHouseWorldgenHelper.GenerateStarterHouseFull();
-				int iceY = -1;
+				PyramidWorldgenHelper.DeterminePyramidLocation(); //Determine where the pyramid will go way before it is placed, that way we know which evil biome will be used for the Abandoned Village (farther from pyramid and dungeon)
+                AbandonedVillageWorldgenHelper.DesignateDesiredEvilBiome(); //This method generates after the evil biomes
+                int iceY = -1;
 				int iceX = -1;
 				int totalChecks = 0;
 				for (int xCheck = Main.rand.Next(Main.maxTilesX); xCheck != -1; xCheck = Main.rand.Next(Main.maxTilesX))
@@ -667,7 +669,7 @@ namespace SOTS
 			}
 		}
 		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
-		{
+        {
 			progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSOres");
 			SOTSWorldgenHelper.GenerateEvostoneInMushroomBiome();
 			float max = 240;
@@ -688,8 +690,8 @@ namespace SOTS
 			}
 		}
 		private void GenSOTSGeodes(GenerationProgress progress, GameConfiguration configuration)
-		{
-			progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSGeodes");
+        {
+            progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSGeodes");
 			int max = 60;
 			if (Main.maxTilesX > 6000) //medium worlds
 				max = 90;

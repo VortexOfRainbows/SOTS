@@ -20,7 +20,12 @@ namespace SOTS.WorldgenHelpers
 {
 	public static class AbandonedVillageWorldgenHelper
     {
-        private static List<Rectangle> Corruptions = new List<Rectangle>();
+        public class CorruptionRectangle()
+        {
+            public Rectangle rect;
+            public int AverageHeight;
+        }
+        private static List<CorruptionRectangle> Corruptions = new List<CorruptionRectangle>();
         private static bool GulaLayer;
         private static Rectangle OuterRect;
         private static Rectangle AVRect;
@@ -30,28 +35,30 @@ namespace SOTS.WorldgenHelpers
         public static void InitializeValidTileLists()
 		{
             if(Corruptions == null)
-                Corruptions = new List<Rectangle>();
+                Corruptions = new List<CorruptionRectangle>();
             //if (ValidGrassTiles != null && ValidStoneTiles != null && InvalidTiles != null)
             //	return;
             ValidGrassTiles = new HashSet<int>()
             {
                 TileID.CrimsonGrass,
                 TileID.CorruptGrass,
-                TileID.Crimsand,
-                TileID.Ebonsand,
             };
             ValidStoneTiles = new HashSet<int>()
             {
                 TileID.CrimsonGrass,
                 TileID.CorruptGrass,
                 TileID.Ebonstone,
-                TileID.Crimstone
+                TileID.Crimstone,
+                TileID.Crimsand,
+                TileID.Ebonsand,
             };
             InvalidTiles = new HashSet<int>()
             {
                 TileID.Cloud,
                 TileID.RainCloud,
-                TileID.Trees
+                TileID.Trees,
+                TileID.LivingWood,
+                TileID.LeafBlock
             };
             Mod AVALON;
             bool avalon = ModLoader.TryGetMod("Avalon", out AVALON);
@@ -2699,45 +2706,57 @@ namespace SOTS.WorldgenHelpers
         }
         public static void DesignateDesiredEvilBiome()
         {
+            Corruptions = new List<CorruptionRectangle>();
             InitializeValidTileLists();
+            int totalEvils = 0;
+            while (OutlineOneEvilBiome()) totalEvils++;
+            FlattenEvilBiome(BestEvilBiome());
+        }
+        public static bool OutlineOneEvilBiome()
+        {
             int evilStart = -1;
             int evilLength = 0;
             int evilEnd = -1;
-            int allowance = 10;
+            int allowance = 15;
             int start = 200;
-            if(Corruptions.Count > 0)
+            if (Corruptions.Count > 0)
             {
-                start = Corruptions.Last().Right;
+                start = Corruptions.Last().rect.Right;
             }
-            int startDepth = (WorldGen.GetWorldSize() + 3) * 75;
+            int defaultDepth = (WorldGen.GetWorldSize() + 2) * 75;
+            int startDepth = defaultDepth;
             int overrideDepth = int.MaxValue;
-            for(int i = start; i < Main.maxTilesX - 200; i++)
+            int totalTiles = 0;
+            int totalHeight = 0;
+            for (int i = start; i < Main.maxTilesX - 200; i++)
             {
-                for(int j = startDepth; j < 800; j++)
+                for (int j = startDepth; j < 800; j++)
                 {
                     Tile t = Framing.GetTileSafely(i, j);
                     int type = t.TileType;
-                    if(t.HasTile && Main.tileSolid[type])
+                    if (t.HasTile && Main.tileSolid[type])
                     {
-                        if(ValidGrassTiles.Contains(type) || ValidStoneTiles.Contains(type))
+                        if (ValidGrassTiles.Contains(type) || ValidStoneTiles.Contains(type))
                         {
+                            totalHeight += j;
+                            totalTiles++;
                             if (evilStart == -1)
                                 evilStart = i;
                             else if (i - evilStart - evilLength < allowance)
                             {
                                 evilLength = i - evilStart;
                             }
-                            if(overrideDepth > j - 10)
+                            if (overrideDepth > j - 20)
                             {
-                                overrideDepth = j - 10;
+                                overrideDepth = j - 20;
                                 startDepth = overrideDepth;
-                                if(startDepth > 500)
+                                if (startDepth > 500)
                                 {
                                     startDepth = 500;
                                 }
-                                if(startDepth < 200)
+                                if (startDepth < defaultDepth)
                                 {
-                                    startDepth = 200;
+                                    startDepth = defaultDepth;
                                 }
                             }
                         }
@@ -2752,8 +2771,12 @@ namespace SOTS.WorldgenHelpers
                 if (evilEnd != -1)
                     break;
             }
+            if (evilStart == -1 || totalTiles == 0)
+                return false;
             Rectangle rect = new Rectangle(evilStart - allowance, startDepth, evilLength + allowance * 2, 200);
-            Main.NewText(rect);
+            CorruptionRectangle cR = new CorruptionRectangle();
+            cR.rect = rect;
+            cR.AverageHeight = totalHeight / totalTiles;
             for (int i = rect.Left; i <= rect.Right; i++)
             {
                 int pX = i;
@@ -2764,6 +2787,9 @@ namespace SOTS.WorldgenHelpers
                 pY = rect.Y + rect.Height;
                 t = Main.tile[pX, pY];
                 t.WallType = WallID.StoneSlab;
+
+                t = Main.tile[pX, cR.AverageHeight];
+                t.WallType = WallID.RubyGemspark;
             }
             for (int j = rect.Y; j <= rect.Y + rect.Height; j++)
             {
@@ -2776,7 +2802,110 @@ namespace SOTS.WorldgenHelpers
                 t = Main.tile[pX, pY];
                 t.WallType = WallID.StoneSlab;
             }
-            Corruptions.Add(rect);
+            Corruptions.Add(cR);
+            return true;
+        }
+        public static int BestEvilBiome()
+        {
+            Vector2 dungeon = new Vector2(GenVars.dungeonX, GenVars.dungeonY);
+            Vector2 pyramid = PyramidWorldgenHelper.placementLocation;
+            float bestL = -1;
+            int best = -1;
+            for (int i = 0; i < Corruptions.Count; i++)
+            {
+                float toDung = Vector2.Distance(dungeon, Corruptions[i].rect.Center.ToVector2());
+                float toPyra = Vector2.Distance(pyramid, Corruptions[i].rect.Center.ToVector2());
+                float farthestWins = Math.Min(toDung, toPyra);
+                if(farthestWins > bestL)
+                {
+                    bestL = farthestWins;
+                    best = i;
+                }
+            }
+            return best;
+        }
+        public static void FlattenEvilBiome(int oneToFlatten)
+        {
+            //Flattens the evil biome by shifting tiles that are above the avg down and tiles below the avg up.
+            CorruptionRectangle cR = Corruptions[oneToFlatten];
+            int avg = cR.AverageHeight;
+            for(int i = cR.rect.Left; i <= cR.rect.Right; i++)
+            {
+                float percent = (i - cR.rect.Left) / (float)cR.rect.Width;
+                float flattenAmount = MathF.Sqrt(MathF.Abs(MathF.Sin(percent * MathHelper.Pi)));
+                for (int j = cR.rect.Top; j <= cR.rect.Bottom; j++)
+                {
+                    int diff = avg - j;
+                    Tile t = Framing.GetTileSafely(i, j);
+                    int type = t.TileType;
+                    bool WallToMoveDown = t.WallType == WallID.CrimstoneUnsafe || t.WallType == WallID.EbonstoneUnsafe;
+                    if ((t.HasTile && Main.tileSolid[type] && !InvalidTiles.Contains(t.TileType)) || WallToMoveDown)
+                    {
+                        int shift = (int)Math.Abs(diff * flattenAmount * 0.85f);
+                        List<Tile> tiles = new List<Tile>();
+                        if(diff > 0 && shift > 0)
+                        {
+                            for (int k = j; k < j + shift; k++)
+                            {
+                                tiles.Add(Main.tile[i, k]);
+                            }
+                            int n = 0;
+                            for (int k = j + shift; k < j + shift + tiles.Count; k++)
+                            {
+                                Tile copyFrom = tiles[n];
+                                Tile s = Main.tile[i, k];
+                                //s.ClearEverything();
+                                s.HasTile = copyFrom.HasTile ? true : s.HasTile;
+                                s.Slope = 0;
+                                s.TileType = copyFrom.TileType;
+                                s.WallType = copyFrom.WallType != 0 ? copyFrom.WallType : s.WallType;
+                                if (!Main.tile[i, k - 1].HasTile || !Main.tileSolid[Main.tile[i, k - 1].TileType])
+                                    s.WallType = WallID.None;
+                                n++;
+                            }
+                            for (int k = j; k < j + shift; k++)
+                            {
+                                Tile s = Main.tile[i, k + 1];
+                                s.WallType = WallID.None;
+                                Main.tile[i, k].ClearEverything();
+                            }
+                        }
+                        else if(diff < 0 && shift > 0)
+                        {
+                            for (int k = j; k < j + shift; k++)
+                            {
+                                tiles.Add(Main.tile[i, k]);
+                            }
+                            int n = 0;
+                            for (int k = j - shift; k < j - shift + tiles.Count; k++)
+                            {
+                                Tile copyFrom = tiles[n];
+                                Tile s = Main.tile[i, k];
+                                //s.ClearEverything();
+                                s.HasTile = copyFrom.HasTile ? true : s.HasTile;
+                                s.Slope = 0;
+                                s.TileType = copyFrom.TileType;
+                                s.WallType = copyFrom.WallType != 0 ? copyFrom.WallType : s.WallType;
+                                n++;
+                            }
+                            for (int k = j; k < j + shift; k++)
+                            {
+                                if (ValidGrassTiles.Contains(Main.tile[i, k].TileType) || Main.tile[i, k].TileType == TileID.Grass)
+                                    Main.tile[i, k].ResetToType(TileID.Dirt);
+                                else if (Main.tile[i, k].HasTile && Main.tile[i, k - 1].HasTile)
+                                {
+                                    Tile s = Main.tile[i, k];
+                                    s.Slope = 0;
+                                }
+                                if (!Main.tile[i, k].HasTile && !(Main.tile[i, k].WallType == WallID.CrimstoneUnsafe || Main.tile[i, k].WallType == WallID.EbonstoneUnsafe))
+                                    Main.tile[i, k].ResetToType(Main.tile[i, k - 1].TileType);
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            SOTSWorldgenHelper.SmoothRegion(cR.rect.Center.X, cR.rect.Center.Y, cR.rect.Width, cR.rect.Height);
         }
     }
 }

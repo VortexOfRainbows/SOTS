@@ -19,6 +19,7 @@ namespace SOTS.WorldgenHelpers
 {
 	public class PyramidWorldgenHelper
 	{
+		public static Vector2 placementLocation;
 		public static void GenerateBossRoom(int spawnX, int spawnY, int direction = 1)
 		{
 			int[,] _structure = {
@@ -405,55 +406,65 @@ namespace SOTS.WorldgenHelpers
 			tile.LiquidType = 0;
 			tile.HasTile = true;
 		}
-		public static void GenerateSOTSPyramid(Mod mod, bool generateAllSteps = true, int generateCertainStep = -1, int manualPlacementX = -1, int manualPlacementY = -1, int manualSeed = -1)
-		{
-			int dungeonSide = -1;
-			if (Main.dungeonX > (int)(Main.maxTilesX / 2))
-			{
-				dungeonSide = 1;
-			}
-			// -1 = dungeon on left, 1 = dungeon on right
-			if (manualSeed != -1)
-				WorldGen._genRandSeed = manualSeed; //this should hopefull make the worldgen steps consistent with manual mode!
-			int pyramidY = manualPlacementY;
-			int pyramidX = manualPlacementX;
-			int checks = 0;
-			if(manualPlacementX == -1 || manualPlacementY == -1 || manualSeed == -1)
-			{
-				int xCheck = dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500);
-				for (; xCheck != -1; xCheck = (dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500)))
-				{
-					for (int ydown = 0; ydown != -1; ydown++)
-					{
-						int widthRect = 90 - checks / 10;
-						Rectangle CheckInteract = new Rectangle(xCheck - widthRect / 2, ydown, widthRect, 200);
-						Tile tile = Framing.GetTileSafely(xCheck, ydown);
-						if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 400) || checks > 1000))
-						{
-							if ((!GenVars.UndergroundDesertLocation.Intersects(CheckInteract)) || checks > 800)
-							{
-								pyramidY = ydown;
-							}
-							break;
-						}
-						else if (tile.HasTile)
-						{
-							break;
-						}
-					}
-					if (pyramidY != -1)
-					{
-						pyramidX = xCheck;
-						break;
-					}
-					checks++;
-				}
-			}
-			else
-			{
-				pyramidY += 15;
+		public static void DeterminePyramidLocation(int manualPlacementX = -1, int manualPlacementY = -1, int manualSeed = -1)
+        {
+            int dungeonSide = -1;
+            if (Main.dungeonX > (int)(Main.maxTilesX / 2))
+            {
+                dungeonSide = 1;
             }
-			pyramidY -= 15;
+            // -1 = dungeon on left, 1 = dungeon on right
+            if (manualSeed != -1)
+                WorldGen._genRandSeed = manualSeed; //this should hopefull make the worldgen steps consistent with manual mode!
+            int pyramidY = manualPlacementY;
+            int pyramidX = manualPlacementX;
+            int checks = 0;
+            if (manualPlacementX == -1 || manualPlacementY == -1 || manualSeed == -1)
+            {
+                int xCheck = dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500);
+                for (; xCheck != -1; xCheck = (dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500)))
+                {
+                    for (int ydown = 0; ydown != -1; ydown++)
+                    {
+                        int widthRect = 90 - checks / 10;
+                        Rectangle CheckInteract = new Rectangle(xCheck - widthRect / 2, ydown, widthRect, 200);
+                        Tile tile = Framing.GetTileSafely(xCheck, ydown);
+                        if (tile.HasTile && (tile.TileType == TileID.Sand || ((tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand) && checks >= 400) || checks > 1000))
+                        {
+                            if ((!GenVars.UndergroundDesertLocation.Intersects(CheckInteract)) || checks > 800)
+                            {
+                                pyramidY = ydown;
+                            }
+                            break;
+                        }
+                        else if (tile.HasTile)
+                        {
+                            break;
+                        }
+                    }
+                    if (pyramidY != -1)
+                    {
+                        pyramidX = xCheck;
+                        break;
+                    }
+                    checks++;
+                }
+            }
+            else
+            {
+                pyramidY += 15;
+            }
+            pyramidY -= 15;
+            placementLocation = new Vector2(pyramidX, pyramidY);
+        }
+		public static void GenerateSOTSPyramid(Mod mod, bool generateAllSteps = true, int generateCertainStep = -1, int manualPlacementX = -1, int manualPlacementY = -1, int manualSeed = -1)
+        {
+			if(manualPlacementX != -1 || manualPlacementY != -1 || manualSeed != -1)
+			{
+				DeterminePyramidLocation(manualPlacementX, manualPlacementY, manualSeed);
+			}
+            int pyramidX = (int)placementLocation.X;
+            int pyramidY = (int)placementLocation.Y;
 			int direction = WorldGen.genRand.Next(2) * 2 - 1;
 			int finalDirection = direction;
 			int nextAmount = WorldGen.genRand.Next(6, 16);
