@@ -24,6 +24,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Generation;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.Localization;
@@ -112,6 +113,8 @@ namespace SOTS
 
 			//Make sure fake players don't switch items erroneously
 			On_Player.SmartSelectLookup += On_Player_SmartSelectLookup;
+
+			On_WorldGen.AddGenerationPass_string_WorldGenLegacyMethod += On_WorldGen_AddGenerationPass;
 
             if (!Main.dedServ)
 				ResizeTargets();
@@ -1035,6 +1038,10 @@ namespace SOTS
 				return;
             }
             orig(self);
+		}
+		private static void On_WorldGen_AddGenerationPass(On_WorldGen.orig_AddGenerationPass_string_WorldGenLegacyMethod orig, string name, WorldGenLegacyMethod method)
+		{
+			orig(name, method);
 		}
     }
 }

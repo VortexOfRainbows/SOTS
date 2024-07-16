@@ -12,35 +12,42 @@ using Terraria.DataStructures;
 using SOTS.Items;
 using SOTS.Items.Earth;
 using SOTS.Items.Permafrost;
-using Terraria.IO;
+using Terraria.GameContent.Biomes;
+using System.Linq;
+using Terraria.WorldBuilding;
 
 namespace SOTS.WorldgenHelpers
 {
 	public static class AbandonedVillageWorldgenHelper
     {
+        private static List<Rectangle> Corruptions = new List<Rectangle>();
         private static bool GulaLayer;
         private static Rectangle OuterRect;
         private static Rectangle AVRect;
-		private static List<int> ValidGrassTiles = null;
-        private static List<int> ValidStoneTiles = null;
-        private static List<int> InvalidTiles = null;
+		private static HashSet<int> ValidGrassTiles = null;
+        private static HashSet<int> ValidStoneTiles = null;
+        private static HashSet<int> InvalidTiles = null;
         public static void InitializeValidTileLists()
 		{
-			if (ValidGrassTiles != null && ValidStoneTiles != null && InvalidTiles != null)
-				return;
-            ValidGrassTiles = new List<int>()
+            if(Corruptions == null)
+                Corruptions = new List<Rectangle>();
+            //if (ValidGrassTiles != null && ValidStoneTiles != null && InvalidTiles != null)
+            //	return;
+            ValidGrassTiles = new HashSet<int>()
             {
                 TileID.CrimsonGrass,
-                TileID.CorruptGrass
+                TileID.CorruptGrass,
+                TileID.Crimsand,
+                TileID.Ebonsand,
             };
-            ValidStoneTiles = new List<int>()
+            ValidStoneTiles = new HashSet<int>()
             {
                 TileID.CrimsonGrass,
                 TileID.CorruptGrass,
                 TileID.Ebonstone,
                 TileID.Crimstone
             };
-            InvalidTiles = new List<int>()
+            InvalidTiles = new HashSet<int>()
             {
                 TileID.Cloud,
                 TileID.RainCloud,
@@ -63,7 +70,6 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenHalfCircle(int spawnX, int spawnY, int side = 0, int radius = 10, int radiusY = 10)
 		{
-			//radius++;
 			radiusY++;
 			float scale = radiusY / (float)radius;
 			float invertScale = (float)radius / radiusY;
@@ -85,25 +91,42 @@ namespace SOTS.WorldgenHelpers
 			else if (side == 1)
 			{
 				for (int x = -radius; x <= radius; x++)
-				{
-					for (float y = -1; y <= radius; y += invertScale)
-					{
-						if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+                {
+                    for (float y = -radius + 13; y <= 0; y += invertScale)
+                    {
+                        float length = MathF.Sqrt(x * x + y * y);
+                        float sootY = (radius + y - 13);
+                        if (length <= radius + 0.5)
 						{
-							int xPosition6 = spawnX + x;
-							int yPosition6 = spawnY + (int)(y * scale + 0.5f);
-							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
-							if (!tile.HasTile)
+							int i = spawnX + x;
+							int j = spawnY + (int)(y * scale + 0.5f) + radiusY - 13;
+							Tile t = Framing.GetTileSafely(i, j);
+							Tile tUp = Framing.GetTileSafely(i, j - 1);
+                            Tile tDown = Framing.GetTileSafely(i, j + 1);
+                            bool sootRange = MathF.Sqrt(x * x + sootY * sootY) < 39;
+                            if (!t.HasTile || sootRange || (!Main.tileSolid[t.TileType] && !Main.tileAxe[t.TileType]))
 							{
-								tile.TileType = TileID.Dirt;//WorldGen.crimson ? TileID.Crimstone : TileID.Ebonstone;
-								tile.HasTile = true;
+                                int type = TileID.Dirt;
+                                if (t.WallType == WallID.EbonstoneUnsafe)
+                                {
+                                    type = TileID.Ebonstone;
+                                }
+                                else if(t.WallType == WallID.CrimstoneUnsafe)
+                                {
+                                    type = TileID.Crimstone;
+                                }
+                                else if(sootRange && sootY > 7)
+                                {
+                                    type = ModContent.TileType<SootBlockTile>();
+                                }
+                                t.ClearTile();
+                                WorldGen.PlaceTile(i, j, type);
+                                tDown.Slope = SlopeType.Solid;
 							}
-							if (!tile2.HasTile && tile.TileType == TileID.Dirt)
-							{
-								tile.TileType = WorldGen.crimson ? TileID.CrimsonGrass : TileID.CorruptGrass;
+							if (!tUp.HasTile && t.TileType == TileID.Dirt)
+                            {
+                                WorldGen.PlaceTile(i, j, WorldGen.crimson ? TileID.CrimsonGrass : TileID.CorruptGrass);
 							}
-							//tile.HasTile;
 						}
 					}
 				}
@@ -423,6 +446,7 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void PlaceAbandonedVillage()
 		{
+            return;
 			InitializeValidTileLists();
 
             int center = Main.maxTilesX / 2;
@@ -484,12 +508,12 @@ namespace SOTS.WorldgenHelpers
 			if (rightTiles > leftTiles)
             {
                 GenerateAbandonedVillageWell(leftSide.X, leftSide.Y);
-				ContinueGeneration(leftSide.X, -1);
+				ContinueGeneration(leftSide.X - 30, -1);
 			}
 			else
             {
                 GenerateAbandonedVillageWell(rightSide.X, rightSide.Y);
-				ContinueGeneration(rightSide.X, 1);
+				ContinueGeneration(rightSide.X + 30, 1);
 			}
 		}
 		public static void ContinueGeneration(int X, int direction = 1)
@@ -756,6 +780,7 @@ namespace SOTS.WorldgenHelpers
         }
 		public static void GenerateNewMineEntrance(int x, int y)
 		{
+            GenHalfCircle(x, y, 1, 50, 50);
             int endX = 0;
             int endY = 0;
             int[,] _structure = {
@@ -848,21 +873,21 @@ namespace SOTS.WorldgenHelpers
                 }
             }
 			_structure = new int[,] {
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,3 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,3 ,3 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,3 ,3 ,4 ,5 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,3 ,3 ,0 ,0 ,0 ,5 ,3 ,3 ,3 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6 ,3 ,3 ,3 ,3 ,4 ,0 ,0 ,0 ,0 ,5 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6 ,3 ,3 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,3 ,3 ,3 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,3 ,3 ,3 ,3 ,3 ,6 ,6 ,6 ,6 ,6 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,8 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15},
-                {15,15,15,15,15,15,15,15,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,0,10,10,10,10,10,10,10,10,10,10,10,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,1 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,3 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,1 ,3 ,3 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,1 ,3 ,3 ,4 ,5 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,1 ,3 ,3 ,0 ,0 ,0 ,5 ,3 ,3 ,3,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,6 ,3 ,3 ,3 ,3 ,4 ,0 ,0 ,0 ,0 ,5 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,6 ,3 ,3 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,3 ,3 ,3 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,1 ,3 ,3 ,3 ,3 ,3 ,6 ,6 ,6 ,6 ,6 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,1 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,2,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,8 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15},
+                {15,15,15,15,15,15,15,15,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,15,15 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0,15,15,15,10,10,10,10,10,10,10,10,10,10,10,15,15,15,15,15,15,15,15,15,15},
                 {15,15,15,15,15,10,10,10,10,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,7 ,0 ,7 ,0 ,0 ,0,10,10,10,10,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,15,15,15,15},
                 {15,15,15,10,10,10,11,11,11,11,11,11,11,11,11,11,12,12,12,12,12,11,11,11,10,10,10,13,13,13,13,13,14,14,14,14,14,14,14,14,14,13,13,13,13,13,10,10,10,11,11,11,11,11,11,11,12,12,12,12,11,11,11,11,11,11,11,10,10,15,15,15},
                 {15,15,10,10,11,11,11,11,12,12,11,11,12,12,12,12,12,12,12,12,12,12,12,11,11,11,11,16,16,16,16,16 ,0 ,0 ,0 ,0 ,9 ,0 ,0 ,0 ,0,16,16,16,16,16,11,11,11,11,11,11,12,12,12,12,12,12,12,12,12,12,11,12,12,12,11,11,10,10,15,15},
@@ -1890,7 +1915,7 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-            GenerateStairs(posX, posY, 5);
+            GenerateStairs(posX, posY, 7);
         }
         public static void GeneratePortalBossRoom(int posX, int posY, int dir = 1)
         {
@@ -2607,10 +2632,10 @@ namespace SOTS.WorldgenHelpers
         }
         public static void DesignateAVRectangle(int x, int y, int w, int h)
         {
-            int padding = 25;
+            int padding = 40;
             OuterRect = new Rectangle(x - padding, y - padding, w + padding * 2, h + padding * 2);
             AVRect = new Rectangle(x, y, w, h);
-            for(int i = OuterRect.Left; i < OuterRect.Right; i++)
+            for(int i = OuterRect.Left; i <= OuterRect.Right; i++)
             {
                 int pX = i;
                 int pY = OuterRect.Y;
@@ -2625,7 +2650,7 @@ namespace SOTS.WorldgenHelpers
                 t.HasTile = true;
                 t.TileType = TileID.StoneSlab;
             }
-            for (int j = OuterRect.Y; j < OuterRect.Y + OuterRect.Height; j++)
+            for (int j = OuterRect.Y; j <= OuterRect.Y + OuterRect.Height; j++)
             {
                 int pX = OuterRect.X;
                 int pY = j;
@@ -2640,19 +2665,118 @@ namespace SOTS.WorldgenHelpers
                 t.HasTile = true;
                 t.TileType = TileID.StoneSlab;
             }
-            for (int i = 0; i < w; i++)
+            for (int i = AVRect.Left; i <= AVRect.Right; i++)
             {
-                for(int j = 0; j < h; j++)
-                {
-                    int pX = x + i;
-                    int pY = y + j;
-                    Tile t = Main.tile[pX, pY];
-                    t.ClearTile();
-                    t.HasTile = true;
-                    t.TileType = TileID.Dirt;
-                }
+                int pX = i;
+                int pY = AVRect.Y;
+                Tile t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.Dirt;
+
+                pY = AVRect.Y + AVRect.Height;
+                t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.Dirt;
             }
-            GenerateStairs(x + w / 2, y, 7);
+            for (int j = AVRect.Y; j <= AVRect.Y + AVRect.Height; j++)
+            {
+                int pX = AVRect.X;
+                int pY = j;
+                Tile t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.Dirt;
+
+                pX = AVRect.X + AVRect.Width;
+                t = Main.tile[pX, pY];
+                t.ClearTile();
+                t.HasTile = true;
+                t.TileType = TileID.Dirt;
+            }
+            GenerateUndergoundEntrance(x + w / 2, y + 10);
+        }
+        public static void DesignateDesiredEvilBiome()
+        {
+            InitializeValidTileLists();
+            int evilStart = -1;
+            int evilLength = 0;
+            int evilEnd = -1;
+            int allowance = 10;
+            int start = 200;
+            if(Corruptions.Count > 0)
+            {
+                start = Corruptions.Last().Right;
+            }
+            int startDepth = (WorldGen.GetWorldSize() + 3) * 75;
+            int overrideDepth = int.MaxValue;
+            for(int i = start; i < Main.maxTilesX - 200; i++)
+            {
+                for(int j = startDepth; j < 800; j++)
+                {
+                    Tile t = Framing.GetTileSafely(i, j);
+                    int type = t.TileType;
+                    if(t.HasTile && Main.tileSolid[type])
+                    {
+                        if(ValidGrassTiles.Contains(type) || ValidStoneTiles.Contains(type))
+                        {
+                            if (evilStart == -1)
+                                evilStart = i;
+                            else if (i - evilStart - evilLength < allowance)
+                            {
+                                evilLength = i - evilStart;
+                            }
+                            if(overrideDepth > j - 10)
+                            {
+                                overrideDepth = j - 10;
+                                startDepth = overrideDepth;
+                                if(startDepth > 500)
+                                {
+                                    startDepth = 500;
+                                }
+                                if(startDepth < 200)
+                                {
+                                    startDepth = 200;
+                                }
+                            }
+                        }
+                        else if (evilStart != -1 && evilEnd == -1 && !(i - evilStart - evilLength < allowance))
+                        {
+                            evilEnd = i;
+                            evilLength = evilEnd - evilStart;
+                        }
+                        break;
+                    }
+                }
+                if (evilEnd != -1)
+                    break;
+            }
+            Rectangle rect = new Rectangle(evilStart - allowance, startDepth, evilLength + allowance * 2, 200);
+            Main.NewText(rect);
+            for (int i = rect.Left; i <= rect.Right; i++)
+            {
+                int pX = i;
+                int pY = rect.Y;
+                Tile t = Main.tile[pX, pY];
+                t.WallType = WallID.StoneSlab;
+
+                pY = rect.Y + rect.Height;
+                t = Main.tile[pX, pY];
+                t.WallType = WallID.StoneSlab;
+            }
+            for (int j = rect.Y; j <= rect.Y + rect.Height; j++)
+            {
+                int pX = rect.X;
+                int pY = j;
+                Tile t = Main.tile[pX, pY];
+                t.WallType = WallID.StoneSlab;
+
+                pX = rect.X + rect.Width;
+                t = Main.tile[pX, pY];
+                t.WallType = WallID.StoneSlab;
+            }
+            Corruptions.Add(rect);
         }
     }
 }
