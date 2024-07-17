@@ -53,16 +53,11 @@ using SOTS.Projectiles.Lightning;
 using SOTS.Projectiles.Camera;
 using Terraria.Localization;
 using SOTS.Projectiles.Pyramid.GhostPepper;
-using SOTS.Items.Evil;
-using SOTS.Items.Temple;
-using SOTS.Items.ChestItems;
 using SOTS.Common.Systems;
 using SOTS.FakePlayer;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
-using Microsoft.CodeAnalysis;
 using SOTS.Buffs.ConduitBoosts;
 using SOTS.Items.Chaos;
-using MonoMod.Cil;
 using SOTS.Buffs.Debuffs;
 
 namespace SOTS
@@ -335,6 +330,8 @@ namespace SOTS
         public bool StatShareAll = false;
 		public int BrassWhipDelay = 0;
 		public float DamageGenerateMoney = 0;
+		public bool KeepersBox = false;
+        public bool PrevKeepersBox = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -669,7 +666,8 @@ namespace SOTS
 			{
 				maxCritManastealPerSecondTimer = maxCritManastealPerSecond;
 			}
-			base.PostUpdate();
+			PrevKeepersBox = KeepersBox;
+            KeepersBox = false;
         }
         public override bool? CanHitNPCWithItem(Item item, NPC target)
         {

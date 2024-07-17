@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items;
 using SOTS.Items.Crushers;
 using SOTS.Items.Planetarium.FromChests;
 using SOTS.Items.SoldStuff;
@@ -51,6 +52,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (shop.NpcType == NPCID.Merchant)
 			{
+				shop.Add(ModContent.ItemType<KeepersBox>(), Condition.TimeNight);
 				shop.Add(ModContent.ItemType<BlackFlare>(), Condition.PlayerCarriesItem(ModContent.ItemType<FlareDetonator>()));
 			}
 		}

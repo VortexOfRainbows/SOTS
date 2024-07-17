@@ -114,7 +114,7 @@ namespace SOTS
 			//Make sure fake players don't switch items erroneously
 			On_Player.SmartSelectLookup += On_Player_SmartSelectLookup;
 
-			On_WorldGen.AddGenerationPass_string_WorldGenLegacyMethod += On_WorldGen_AddGenerationPass;
+			On_Player.DropCoins += On_Player_DropCoins;
 
             if (!Main.dedServ)
 				ResizeTargets();
@@ -1039,9 +1039,15 @@ namespace SOTS
             }
             orig(self);
 		}
-		private static void On_WorldGen_AddGenerationPass(On_WorldGen.orig_AddGenerationPass_string_WorldGenLegacyMethod orig, string name, WorldGenLegacyMethod method)
+		private static long On_Player_DropCoins(On_Player.orig_DropCoins orig, Player self)
 		{
-			orig(name, method);
+            if (self.SOTSPlayer().PrevKeepersBox || self.SOTSPlayer().KeepersBox)
+            {
+                self.lostCoins = 0;
+                self.lostCoinString = Main.ValueToCoins(self.lostCoins);
+                return 0;
+            }
+			return orig(self);
 		}
     }
 }

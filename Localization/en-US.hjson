@@ -5585,6 +5585,21 @@ Mods: {
 				DisplayName: B Catalogue
 				Tooltip: Unlocks 100% of the bestiary
 			}
+
+			KeepersBox: {
+				DisplayName: Keeper's Box
+				Tooltip: Don't lose coins upon death
+			}
+
+			SoulOfTheKeeper: {
+				DisplayName: Soul of the Keeper
+				Tooltip:
+					'''
+					Increases mining speed by 5% and critical strike chance by 5%
+					Generate coins when hurt and don't lose coins upon death
+					Mining blocks has a chance to drop bonus resources, such as coins and silt
+					'''
+			}
 		}
 
 		ItemTooltip: {
