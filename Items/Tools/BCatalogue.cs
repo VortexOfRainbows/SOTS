@@ -20,13 +20,13 @@ namespace SOTS.Items.Tools
 		}
 		public override bool? UseItem(Player player)
 		{
-			for(int j = 0; j < 50; j++)
-				for(int i = 0; i < Main.npcFrameCount.Length; i++)
-				{
-					NPC npc = new NPC();
-					npc.SetDefaults(i);
+			for(int i = 0; i < Main.npcFrameCount.Length; i++)
+			{
+				NPC npc = new NPC();
+				npc.SetDefaults(i);
+				for (int j = 0; j < 50; j++)
 					Main.BestiaryTracker.Kills.RegisterKill(npc);
-				}
+			}
 			return true;
 		}
 	}

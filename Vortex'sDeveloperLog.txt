@@ -50,6 +50,8 @@ Update Objectives:
 
 ---WIP List---
 Abandoned village generation
+Ruby Gemlock to spawn loot
+Vault Room to spawn loot
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -80,10 +82,12 @@ N/A
 
 Daily Log:
 
-7/16/24
+7/16/24 to 7/18/24
 1. Flatten the evil biome in preparation for generation (also selector for the biome least likely to interfere with dungeon/pyramid)
 2. Dev tool that fills out the bestiary
 3. Add Keeper's Box and Soul of the Keeper, works in multiplayer
+4. Add new Ruby Gemlock structure (currently not spawning loot)
+5. WIP Abandoned village worldgen (made things more consistent and symmetric)
 
 7/1/24 to 7/15/24
 1. Conduit buff rework

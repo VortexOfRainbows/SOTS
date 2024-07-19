@@ -12,9 +12,11 @@ using Terraria.DataStructures;
 using SOTS.Items;
 using SOTS.Items.Earth;
 using SOTS.Items.Permafrost;
-using Terraria.GameContent.Biomes;
 using System.Linq;
 using Terraria.WorldBuilding;
+using SOTS.Items.Pyramid;
+using SOTS.Items.Invidia;
+using SOTS.Items.Gems;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -586,23 +588,23 @@ namespace SOTS.WorldgenHelpers
                     generatePlatforms = true;
                     nextPlatform = WorldGen.genRand.Next(8, 15);
                 }
-                int left = -width - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
-				int right = width + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
-                int sootLeft = -sootSize - Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
-                int sootRight = sootSize + Math.Abs((int)(2.5f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+                int left = -width - Math.Abs((int)(2.6f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
+				int right = width + Math.Abs((int)(2.6f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootLeft = -sootSize - Math.Abs((int)(2.6f * Math.Sin(MathHelper.ToRadians(bonusDegreesRight))));
+                int sootRight = sootSize + Math.Abs((int)(2.6f * Math.Sin(MathHelper.ToRadians(bonusDegreesLeft))));
 				for(int RunType = 0; RunType <= 2; RunType++)
                 {
                     for (float i = left - 4; i <= right + 4; i += 0.25f)
                     {
-                        Vector2 vPoint = new Vector2(i + 0.5f, j + 0.5f).RotatedBy(MathHelper.ToRadians(rotation));
-                        Point rPoint = new Point(x + (int)(vPoint.X), y + (int)(vPoint.Y));
+                        Vector2 vPoint = new Vector2(i, j).RotatedBy(MathHelper.ToRadians(rotation));
+                        Point rPoint = new Point(x + (int)(vPoint.X), y + (int)(vPoint.Y + 0.75f));
                         Tile tile = Framing.GetTileSafely(rPoint);
                         bool interior = false;
-                        bool generateSoot = Math.Abs(i - sootLeft) < 1.75f || Math.Abs(i - sootRight) < 1.75f;
-						bool generateSides = i >= left && i <= right && (Math.Abs(i - left) < 3.75f || Math.Abs(i - right) < 3.75f);
+                        bool generateSoot = Math.Abs(i - 1 - sootLeft) < 2.25f || Math.Abs(i + 1 - sootRight) < 2.25f;
+						bool generateSides = i >= left + 1 && i <= right && (Math.Abs(i - left) < 3.75f || Math.Abs(i - right) < 3.75f);
                         bool validWall = tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick /*&& tile.WallType != WallID.Stone*/ &&
                             tile.WallType != ModContent.WallType<EarthenPlatingBeamWall>() && tile.WallType != ModContent.WallType<EarthenPlatingPanelWallWall>() && tile.WallType != ModContent.WallType<EarthenPlatingWallWall>();
-                        if ((i >= left && i <= right) || generateSoot) //remove tiles
+                        if ((i >= left + 1 && i <= right) || generateSoot) //remove tiles
                         {
                             interior = true;
                             if (RunType == 0)
@@ -644,15 +646,18 @@ namespace SOTS.WorldgenHelpers
                         }
                         else if (interior && RunType == 2) //Place stone walls behind
                         {
-                            ushort type = WallID.RocksUnsafe1;
-                            if (WorldGen.genRand.NextBool(7))
+                            if(!generateSoot)
                             {
-                                type = WallID.GrayBrick;
+                                ushort type = WallID.RocksUnsafe1;
+                                if (WorldGen.genRand.NextBool(7))
+                                {
+                                    type = WallID.GrayBrick;
+                                }
+                                else if (WorldGen.genRand.NextBool(10))
+                                    type = WallID.StoneSlab;
+                                if (!generateSides)
+                                    tile.WallType = (ushort)type;
                             }
-                            else if (WorldGen.genRand.NextBool(10))
-                                type = WallID.StoneSlab;
-							if(!generateSides)
-								tile.WallType = (ushort)type;
                             if (i == 0 && doRopesPlatforms)
                             {
                                 if (generatePlatforms)
@@ -1995,7 +2000,7 @@ namespace SOTS.WorldgenHelpers
             int PosX = posX; 
             int PosY = posY - 35;
             int height = _structure.GetLength(0);
-            GenerateRectangle(posX, posY - height/2 - 5, _structure.GetLength(1), height);
+            GenerateRectangle(posX, posY - height/2 - 6, _structure.GetLength(1), height + 2);
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
                 for (int i = _structure.GetLength(0) - 1; i >= 0; i--)
@@ -2242,16 +2247,21 @@ namespace SOTS.WorldgenHelpers
             int y2 = posY + height / 2;
             int x3 = x2;
             height /= 2;
-            GenerateTunnel(ref x2, ref y2, -90, height, width + 1 - padding * 2, false);
-            x2 -= padding;
+            //Generate top and bottom
+            GenerateTunnel(ref x2, ref y2, -90, height + 1, width + 1 - padding * 2, false);
+
+            //Generate right side
+            x2 -= 1;
             y2 -= height;
             int y3 = y2;
             GenerateTunnel(ref x2, ref y2, 0, 5, height * 2 - 1, false);
-            GenerateCaveCircle(x2 - 2, y2, 1f, .4f, 13, 0);
-            GenerateCaveCircle(x2 - 2, y2 - height * 2, 1f, .4f, 13, 0);
+            GenerateCaveCircle(x2 - 3, y2, 1f, .4f, 13, 0);
+            GenerateCaveCircle(x2 - 3, y2 - height * 2 + 1, 1f, .4f, 13, 0);
+
+            //Generate left side
             GenerateTunnel(ref x3, ref y3, 0, 5, height * 2 - 1, false);
             GenerateCaveCircle(x3 + 4, y3, 1f, .4f, 13, 0);
-            GenerateCaveCircle(x3 + 4, y3 - height * 2, 1f, .4f, 13, 0);
+            GenerateCaveCircle(x3 + 4, y3 - height * 2 + 1, 1f, .4f, 13, 0);
         }
         public static void GenerateVaultRoom(int posX, int posY, int dir = 1)
         {
@@ -2285,7 +2295,7 @@ namespace SOTS.WorldgenHelpers
             int height = _structure.GetLength(0);
             int PosX = posX - 0;  //spawnX and spawnY is where you want the anchor to be when this generates
             int PosY = posY - 18;
-            GenerateRectangle(PosX + 1, PosY, _structure.GetLength(1), height);
+            GenerateRectangle(PosX, PosY - 1, _structure.GetLength(1), height);
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
                 for (int i = 0; i < _structure.GetLength(0); i++)
@@ -2507,7 +2517,7 @@ namespace SOTS.WorldgenHelpers
             };
             int PosX = posX - (dir == -1 ? _structure.GetLength(1) - 1 : 0);  //spawnX and spawnY is where you want the anchor to be when this generates
             int PosY = posY - 11;
-            GenerateRectangle(PosX, PosY - 1, _structure.GetLength(1) + 1, _structure.GetLength(0) + 2);
+            GenerateRectangle(PosX, PosY - 3, _structure.GetLength(1), _structure.GetLength(0) + 4);
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
                 for (int i = 0; i < _structure.GetLength(0); i++)
@@ -2639,70 +2649,84 @@ namespace SOTS.WorldgenHelpers
         }
         public static void DesignateAVRectangle(int x, int y, int w, int h)
         {
-            int padding = 40;
-            OuterRect = new Rectangle(x - padding, y - padding, w + padding * 2, h + padding * 2);
-            AVRect = new Rectangle(x, y, w, h);
-            for(int i = OuterRect.Left; i <= OuterRect.Right; i++)
+            bool validLocation = false;
+            float attempts = 0;
+            while(!validLocation)
+            {
+                Vector2 random = Main.rand.NextVector2Circular(1, 1) * attempts;
+                if (random.Y > 0)
+                    random.Y *= 1.2f;
+                else
+                    random.Y *= 0.5f;
+                x = (int)(x + random.X);
+                y = (int)(y + random.Y);
+                x = Math.Clamp(x, 150 + w / 2, Main.maxTilesX - 150 - w / 2);
+                y = Math.Clamp(y, 150 + h / 2, Main.maxTilesY - 150 - h / 2);
+                int padding = 40;
+                OuterRect = new Rectangle(x - padding - w / 2, y - padding - h / 2, w + padding * 2, h + padding * 2);
+                AVRect = new Rectangle(x - w/2, y - h / 2, w, h);
+                attempts++;
+                if(attempts > 1000)
+                {
+                    Main.NewText("Failed to find a valid location");
+                    return;
+                }
+                validLocation = ValidLocation(OuterRect);
+            }
+            Main.NewText("took " + attempts + " attempts");
+            //for(int i = AVRect.Left; i < AVRect.Right; i++)
+            //{
+            //    for (int j = AVRect.Top; j < AVRect.Bottom; j++)
+            //    {
+            //        Tile t = Main.tile[i, j];
+            //        t.ClearTile();
+            //        t.HasTile = true;
+            //        t.TileType = TileID.Dirt;
+            //    }
+            //}
+            GenerateUndergoundEntrance(x, y - h / 2 + 10);
+        }
+        public static bool ValidLocation(Rectangle rect)
+        {
+            bool InvalidType(Tile tile)
+            {
+                int type = tile.TileType;
+                return type == TileID.BlueDungeonBrick || type == TileID.GreenDungeonBrick || type == TileID.PinkDungeonBrick
+                    || type == ModContent.TileType<PyramidBrickTile>() || type == ModContent.TileType<PyramidSlabTile>() || type == TileID.LihzahrdBrick;
+            }
+            if (GenVars.shimmerPosition.ToPoint().ToVector2().Distance(rect.Center.ToVector2()) < rect.Width * 1.4f)
+            {
+                return false;
+            }
+            if(rect.Top < Main.rockLayer || rect.Bottom > Main.UnderworldLayer - 100)
+            {
+                return false;
+            }
+            for (int i = rect.Left; i <= rect.Right; i++)
             {
                 int pX = i;
-                int pY = OuterRect.Y;
+                int pY = rect.Y;
                 Tile t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.StoneSlab;
-
-                pY = OuterRect.Y + OuterRect.Height;
+                if (InvalidType(t))
+                    return false;
+                pY = rect.Y + rect.Height;
                 t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.StoneSlab;
+                if (InvalidType(t))
+                    return false;
             }
-            for (int j = OuterRect.Y; j <= OuterRect.Y + OuterRect.Height; j++)
+            for (int j = rect.Y; j <= rect.Y + rect.Height; j++)
             {
-                int pX = OuterRect.X;
+                int pX = rect.X;
                 int pY = j;
                 Tile t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.StoneSlab;
-
-                pX = OuterRect.X + OuterRect.Width;
+                if (InvalidType(t))
+                    return false;
+                pX = rect.X + rect.Width;
                 t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.StoneSlab;
+                if (InvalidType(t))
+                    return false;
             }
-            for (int i = AVRect.Left; i <= AVRect.Right; i++)
-            {
-                int pX = i;
-                int pY = AVRect.Y;
-                Tile t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.Dirt;
-
-                pY = AVRect.Y + AVRect.Height;
-                t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.Dirt;
-            }
-            for (int j = AVRect.Y; j <= AVRect.Y + AVRect.Height; j++)
-            {
-                int pX = AVRect.X;
-                int pY = j;
-                Tile t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.Dirt;
-
-                pX = AVRect.X + AVRect.Width;
-                t = Main.tile[pX, pY];
-                t.ClearTile();
-                t.HasTile = true;
-                t.TileType = TileID.Dirt;
-            }
-            GenerateUndergoundEntrance(x + w / 2, y + 10);
+            return true;
         }
         public static void DesignateDesiredEvilBiome()
         {
@@ -2857,6 +2881,7 @@ namespace SOTS.WorldgenHelpers
                                 //s.ClearEverything();
                                 s.HasTile = copyFrom.HasTile ? true : s.HasTile;
                                 s.Slope = 0;
+                                s.IsHalfBlock = false;
                                 s.TileType = copyFrom.TileType;
                                 s.WallType = copyFrom.WallType != 0 ? copyFrom.WallType : s.WallType;
                                 if (!Main.tile[i, k - 1].HasTile || !Main.tileSolid[Main.tile[i, k - 1].TileType])
@@ -2884,6 +2909,7 @@ namespace SOTS.WorldgenHelpers
                                 //s.ClearEverything();
                                 s.HasTile = copyFrom.HasTile ? true : s.HasTile;
                                 s.Slope = 0;
+                                s.IsHalfBlock = false;
                                 s.TileType = copyFrom.TileType;
                                 s.WallType = copyFrom.WallType != 0 ? copyFrom.WallType : s.WallType;
                                 n++;
@@ -2906,6 +2932,378 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             SOTSWorldgenHelper.SmoothRegion(cR.rect.Center.X, cR.rect.Center.Y, cR.rect.Width, cR.rect.Height);
+        }
+        public static void GenerateNewRubyGemStructure(int spawnX, int spawnY)
+        {
+            ushort orbType = TileID.ShadowOrbs;
+            bool crimson = WorldGen.crimson;
+            Mod AVALON;
+            bool avalon = ModLoader.TryGetMod("Avalon", out AVALON);
+            if (avalon)
+            {
+                if (AVALON.TryFind("SnotOrb", out ModTile grossOrb))
+                {
+                    orbType = grossOrb.Type;
+                }
+            }
+            int[,] _structure = {
+                { 0, 0, 0, 0, 0,30,30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,30,30,30, 0, 0, 0, 0, 0, 0},
+                { 0, 2, 3, 2, 0,30,30, 0, 2, 2, 3, 3, 3, 2, 2, 2, 2, 3, 3, 3, 2, 3, 3, 0,30,30,30, 0, 2, 3, 2, 3, 0},
+                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 4, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 6, 7, 1, 1, 1, 1, 1, 1, 1, 1, 6, 8, 1,30},
+                { 0, 3, 3, 9, 9, 3, 3, 0,10, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 0, 0, 0, 7, 7,11, 1, 1, 6, 7, 0, 0, 0, 0},
+                { 0, 3, 2, 2, 2, 2, 3, 0, 1,10, 1, 1, 1, 1, 1, 4, 1, 1, 0, 2, 3, 0, 7, 8, 1, 1,12, 7, 7, 0, 2, 2, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0,13,13, 1, 1, 1, 1, 1, 4, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,14, 1, 4, 1, 1, 1, 7, 7, 1, 1, 1,16, 1, 1, 1, 1, 1, 7, 7,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 7, 7, 1, 1, 1, 1, 1, 1, 1, 1,17, 7, 7,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 7,11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 7,30},
+                {30, 1,15, 1, 1,18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 7,17, 1, 1, 1, 1,16, 1, 1, 1, 1, 7, 7,30},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,10, 1, 1, 1, 4, 1, 1, 1,19, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,19, 7,30},
+                { 0, 3, 2, 3, 2, 2, 2, 2, 3, 3, 0, 1,10, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,11,30},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,13,13, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1,16, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,30},
+                {30, 1, 1, 1,20,21,22, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1,30},
+                {30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 7, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 8,30},
+                {30, 1,23, 1, 1,24, 1,23, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 7, 7, 1,12, 6, 1,25, 1, 1,26, 1, 7, 7,30},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,13,13,13,13,13, 0, 0, 0, 0,27,28,28,28,28,28,27, 0, 0, 0, 0},
+                { 0, 3, 3, 2, 2, 3, 3, 3, 3, 2, 2, 2, 0, 1, 1, 4, 1, 1, 0, 3, 3, 0,27,28,28,28,28,28,27, 0, 3, 2, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 4, 1, 1, 0, 0, 0, 0,27,27,27,27,27,27,27, 0, 0, 0, 0}
+            };
+            int PosX = spawnX - 15;  //spawnX and spawnY is where you want the anchor to be when this generates
+            int PosY = spawnY - 25;
+            GenerateRectangle(PosX - 1, PosY - 2, _structure.GetLength(1) + 2, _structure.GetLength(0) + 3);
+            for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+            {
+                for (int i = _structure.GetLength(0) - 1; i >= 0; i--)
+                {
+                    for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                    {
+                        int k = PosX + j;
+                        int l = PosY + i;
+                        if (WorldGen.InWorld(k, l, 30))
+                        {
+                            Tile tile = Framing.GetTileSafely(k, l);
+                            switch (_structure[i, j])
+                            {
+                                case 0:
+                                    tile.HasTile = true;
+                                    tile.TileType = (ushort)ModContent.TileType<EarthenPlatingTile>();
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 1:
+                                    if (confirmPlatforms == 0)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.IsHalfBlock = false;
+                                        tile.Slope = 0;
+                                    }
+                                    break;
+                                case 2:
+                                    tile.HasTile = true;
+                                    tile.TileType = (ushort)ModContent.TileType<EvostoneTile>();
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 3:
+                                    tile.HasTile = true;
+                                    tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 4:
+                                    tile.HasTile = true;
+                                    tile.TileType = 214;
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 5:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<GemChestTile>(), true, true, -1, 1);
+                                    }
+                                    break;
+                                case 6:
+                                    tile.HasTile = true;
+                                    tile.TileType = 54;
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = true;
+                                    break;
+                                case 7:
+                                    tile.HasTile = true;
+                                    tile.TileType = 54;
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 8:
+                                    tile.HasTile = true;
+                                    tile.TileType = 54;
+                                    tile.Slope = (SlopeType)1;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 9:
+                                    tile.HasTile = true;
+                                    tile.TileType = 266;
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 10:
+                                    if (confirmPlatforms == 0)
+                                        tile.ClearTile();
+                                    else
+                                    {
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>());
+                                        tile.Slope = (SlopeType)1;
+                                        tile.IsHalfBlock = false;
+                                    }
+                                    break;
+                                case 11:
+                                    tile.HasTile = true;
+                                    tile.TileType = 54;
+                                    tile.Slope = (SlopeType)3;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 12:
+                                    tile.HasTile = true;
+                                    tile.TileType = 54;
+                                    tile.Slope = (SlopeType)2;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 13:
+                                    if (confirmPlatforms == 0)
+                                        tile.ClearTile();
+                                    else
+                                    {
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EarthenPlatingPlatformTile>());
+                                        tile.Slope = (SlopeType)0;
+                                        tile.IsHalfBlock = false;
+                                    }
+                                    break;
+                                case 14:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<SOTSGemLockTiles>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 15:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingBookcaseTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 16:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        tile.TileType = orbType;
+                                        tile.HasTile = true;
+                                        tile.TileFrameX = 0;
+                                        Framing.GetTileSafely(k, l + 1).TileFrameX = 0;
+                                        Framing.GetTileSafely(k + 1, l + 1).TileFrameX = 0;
+                                        Framing.GetTileSafely(k + 1, l).TileFrameX = 0;
+                                        tile.TileFrameY = 0;
+                                        Framing.GetTileSafely(k, l + 1).TileFrameY = 0;
+                                        Framing.GetTileSafely(k + 1, l + 1).TileFrameY = 0;
+                                        Framing.GetTileSafely(k + 1, l).TileFrameY = 0;
+                                        Main.tile[k, l + 1].TileType = orbType;
+                                        Main.tile[k + 1, l + 1].TileType = orbType;
+                                        Main.tile[k + 1, l].TileType = orbType;
+                                        Framing.GetTileSafely(k, l + 1).HasTile = true;
+                                        Framing.GetTileSafely(k + 1, l + 1).HasTile = true;
+                                        Framing.GetTileSafely(k + 1, l).HasTile = true;
+                                        Framing.GetTileSafely(k, l + 1).TileFrameY += 18;
+                                        Framing.GetTileSafely(k + 1, l + 1).TileFrameX += 18;
+                                        Framing.GetTileSafely(k + 1, l + 1).TileFrameY += 18;
+                                        Framing.GetTileSafely(k + 1, l).TileFrameX += 18;
+                                        if (crimson)
+                                        {
+                                            tile.TileFrameX += 36;
+                                            Framing.GetTileSafely(k, l + 1).TileFrameX += 36;
+                                            Framing.GetTileSafely(k + 1, l + 1).TileFrameX += 36;
+                                            Framing.GetTileSafely(k + 1, l).TileFrameX += 36;
+                                        }
+                                    }
+                                    break;
+                                case 17:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        WorldGen.PlaceTile(k, l, TileID.ExposedGems, true, true, -1, 4);
+                                    }
+                                    else
+                                    {
+                                        tile.ClearTile();
+                                    }
+                                    break;
+                                case 18:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingSofaTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 19:
+                                    tile.HasTile = true;
+                                    tile.TileType = 54;
+                                    tile.Slope = (SlopeType)4;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 20:
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
+                                    WorldGen.PlaceTile(k, l, 50, true, true, -1, 0);
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 21:
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
+                                    WorldGen.PlaceTile(k, l, 49, true, true, -1, 0);
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 22:
+                                    if (confirmPlatforms == 0)
+                                        tile.HasTile = false;
+                                    WorldGen.PlaceTile(k, l, 50, true, true, -1, 1);
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 23:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingSinkTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 24:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<EarthenPlatingTableTile>(), true, true, -1, 0);
+                                    }
+                                    break;
+                                case 25:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, TileID.DemonAltar, true, true, -1, 0);
+                                    }
+                                    break;
+                                case 26:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
+                                    }
+                                    break;
+                                case 27:
+                                    tile.HasTile = true;
+                                    tile.TileType = (ushort)ModContent.TileType<EvilPlatingTile>();
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                                case 28:
+                                    tile.HasTile = true;
+                                    tile.TileType = crimson ? TileID.Crimstone : TileID.Ebonstone;
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            _structure = new int[,] {
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1},
+                {3,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,3},
+                {3,4,4,4,3,4,4,3,4,4,4,4,1,4,4,4,4,4,1,4,4,4,4,3,4,4,4,3,4,4,4,4,3},
+                {3,1,1,4,3,4,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,4,4,4,3,4,4,4,1,3},
+                {3,1,1,1,3,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,4,3,4,1,1,1,3},
+                {3,1,1,1,3,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,3,1,1,1,1,3},
+                {3,1,1,1,3,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,3,1,1,1,1,3},
+                {3,4,1,1,3,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,4,1,1,3,1,1,4,4,3},
+                {3,4,4,4,3,4,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,3,4,4,1,3,1,4,4,4,3},
+                {3,4,4,4,3,4,4,3,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,3,4,4,4,3,4,4,4,4,3},
+                {1,1,4,5,5,5,5,5,5,5,5,5,5,5,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+                {1,1,1,1,5,1,1,1,1,1,1,1,2,5,2,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1},
+                {3,1,1,1,1,1,1,1,1,1,1,2,2,5,2,2,1,1,3,1,1,3,4,6,6,6,6,6,4,3,1,1,3},
+                {3,4,4,4,4,4,4,3,1,1,1,2,2,5,2,2,1,1,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,4,4,4,4,4,4,3,1,1,1,2,2,2,2,2,1,1,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,4,4,4,4,4,4,3,4,1,1,1,2,2,2,1,1,1,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,4,4,4,4,4,4,3,4,4,1,1,1,1,1,1,1,1,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,4,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,4,4,4,4,4,4,4,4,4,3,1,1,1,1,1,1,4,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,4,4,4,4,4,4,4,4,4,3,4,1,1,1,1,1,4,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,4,4,4,4,4,4,4,4,4,3,4,1,1,1,1,4,4,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {3,4,4,4,4,4,4,4,4,4,3,4,4,1,4,4,4,4,3,4,4,3,4,6,6,6,6,6,4,3,4,4,3},
+                {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,3,1,1,3,1,1,1,1,1,1,1,3,1,1,1},
+                {1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+            };
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                {
+                    int k = PosX + j;
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        Tile tile = Framing.GetTileSafely(k, l);
+                        switch (_structure[i, j])
+                        {
+                            case 0:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingWallWall>();
+                                break;
+                            case 2:
+                                tile.WallType = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
+                                break;
+                            case 3:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
+                                break;
+                            case 4:
+                                tile.WallType = (ushort)ModContent.WallType<EarthenPlatingPanelWallWall>();
+                                break;
+                            case 5:
+                                tile.WallType = 164;
+                                break;
+                            case 6:
+                                tile.WallType = crimson ? WallID.CrimstoneUnsafe : WallID.EbonstoneUnsafe;
+                                break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
