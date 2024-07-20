@@ -18,6 +18,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using Mono.Cecil;
+using Microsoft.Win32;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3380,6 +3381,48 @@ namespace SOTS.WorldgenHelpers
                     break;
             }
             GenerateNewMineEntrance(placement.X, placement.Y);
+            AbandonedVillageTileCleanup(bestC);
+        }
+        public static void AbandonedVillageTileCleanup(int evilBiome)
+        {
+            CorruptionRectangle cR = Corruptions[evilBiome];
+            for(int passNum = 0; passNum <= 1; passNum++)
+            {
+                for (int i = cR.rect.Left; i <= cR.rect.Right; i++)
+                {
+                    for (int j = cR.rect.Top; j <= cR.rect.Bottom; j++)
+                    {
+                        Tile t = Main.tile[i, j];
+                        int type = t.TileType;
+                        if(passNum == 0)
+                        {
+                            if (type == TileID.Trees)
+                            {
+                                t.ClearTile();
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        else if(passNum == 1)
+                        {
+                            WorldGen.GrowTree(i, j);
+                        }
+                    }
+                    if (passNum == 1)
+                    {
+                        if (WorldGen.genRand.NextBool(3))
+                        {
+                            i++;
+                        }
+                        if (WorldGen.genRand.NextBool(4))
+                        {
+                            i++;
+                        }
+                    }
+                }
+            }
         }
     }
 }
