@@ -59,6 +59,7 @@ Mods: {
 			GeneratingSkyArtifacts: Generating Sky Artifacts
 			GeneratingAPyramid: Generating A Pyramid
 			GeneratingGemStructures: Generating Gem Structures
+			GeneratingPeanuts: Placing Peanuts
 		}
 
 		AdjacentDesertGeneration.SEverywhere: Sand is irritating and gets everywhere!

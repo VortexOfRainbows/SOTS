@@ -357,7 +357,7 @@ namespace SOTS.WorldgenHelpers
 			PlaceAndGenerateTopaz();
 			PlaceAndGenerateSapphire();
 			PlaceAndGenerateAmber();
-			PlaceAndGenerateRuby();
+			//PlaceAndGenerateRuby();
 			PlaceAndGenerateAmethyst();
 		}
 		public static ushort EvostoneWall => (ushort)ModContent.WallType<EvostoneBrickWallTile>(); 

@@ -438,10 +438,9 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("SOTS: Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Insert(genIndexSunflowers + 1, new PassLegacy("SOTS: Peanuts", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
-				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingAbandonedVillage");
-				AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
+				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingPeanuts");
 				SOTSWorldgenHelper.PlacePeanuts();
 			}));
 			tasks.Insert(genIndexEnd + 5, new PassLegacy("SOTS: Planetarium", delegate (GenerationProgress progress, GameConfiguration configuration)
@@ -602,7 +601,12 @@ namespace SOTS
 				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
 				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
-			tasks.Add(new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Add(new PassLegacy("SOTS: Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
+            {
+                progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingAbandonedVillage");
+                AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
+            }));
+            tasks.Add(new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
 				progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingGemStructures");
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right

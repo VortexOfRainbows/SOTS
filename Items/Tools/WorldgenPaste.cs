@@ -36,17 +36,19 @@ namespace SOTS.Items.Tools
 			int dir = (x % 2 * 2) -1;
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
-            //AbandonedVillageWorldgenHelper.GenerateRectangle(x2, y2, 30, 30);
-			//AbandonedVillageWorldgenHelper.GenerateNewRubyGemStructure(x2, y2);
-            // AbandonedVillageWorldgenHelper.DesignateDesiredEvilBiome();
-           //AbandonedVillageWorldgenHelper.GeneratePortalBossRoom(x2, y2);
-            //AbandonedVillageWorldgenHelper.GenerateNewMineEntrance(x2, y2);
+			AbandonedVillageWorldgenHelper.GenerateDownwardPath(x2, y2);
             //AbandonedVillageWorldgenHelper.DesignateAVRectangle(x2, y2, 400, 320);
+			//AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
+
+            //AbandonedVillageWorldgenHelper.GenerateRectangle(x2, y2, 30, 30);
+            //AbandonedVillageWorldgenHelper.GenerateNewRubyGemStructure(x2, y2);
+            // AbandonedVillageWorldgenHelper.DesignateDesiredEvilBiome();
+            //AbandonedVillageWorldgenHelper.GeneratePortalBossRoom(x2, y2);
+            //AbandonedVillageWorldgenHelper.GenerateNewMineEntrance(x2, y2);
             //AbandonedVillageWorldgenHelper.GenerateEntireShaft(x2, y2, 5, dir, 1);
             //AbandonedVillageWorldgenHelper.GenerateVaultRoomLoot2(x2, y2, 59, 1);
-			//AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
-			AbandonedVillageWorldgenHelper.GenerateVaultRoom(x2, y2, dir);
-			//AbandonedVillageWorldgenHelper.GenerateMineralariumRoom(x2, y2, dir);
+            //AbandonedVillageWorldgenHelper.GenerateVaultRoom(x2, y2, dir);
+            //AbandonedVillageWorldgenHelper.GenerateMineralariumRoom(x2, y2, dir);
             //AbandonedVillageWorldgenHelper.GenerateDownwardPathCircle((int)tileLocation.X, (int)tileLocation.Y);
             //PhaseWorldgenHelper.ClearPrevious = true;
             //PhaseWorldgenHelper.Generate();

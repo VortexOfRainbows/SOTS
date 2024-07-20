@@ -17,6 +17,7 @@ using Terraria.WorldBuilding;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
+using Mono.Cecil;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -455,6 +456,7 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static void PlaceAbandonedVillage()
 		{
+            GenerateAbandonedMinesInsideTheCorruptionRectangle();
             return;
 			InitializeValidTileLists();
 
@@ -576,10 +578,10 @@ namespace SOTS.WorldgenHelpers
             int sootSize = width + 1;
             float nextPlatform = 10;
 			int height = size;
-			float bonusDegreesLeft = Main.rand.NextFloat(360);
-            float bonusDegreesRight = Main.rand.NextFloat(360);
+			float bonusDegreesLeft = WorldGen.genRand.NextFloat(360);
+            float bonusDegreesRight = WorldGen.genRand.NextFloat(360);
             HashSet<Point> platformPoints = new HashSet<Point>();
-            for (float j = 0; j < height; j += 0.25f)
+            for (float j = 0; j <= height; j += 0.25f)
             {
                 bool generatePlatforms = false;
 				nextPlatform -= 0.25f * Math.Abs((float)Math.Cos(MathHelper.ToRadians(rotation)));
@@ -600,7 +602,7 @@ namespace SOTS.WorldgenHelpers
                         Point rPoint = new Point(x + (int)(vPoint.X), y + (int)(vPoint.Y + 0.75f));
                         Tile tile = Framing.GetTileSafely(rPoint);
                         bool interior = false;
-                        bool generateSoot = Math.Abs(i - 1 - sootLeft) < 2.25f || Math.Abs(i + 1 - sootRight) < 2.25f;
+                        bool generateSoot = Math.Abs(i - 1 - sootLeft) < 2.25f || Math.Abs(i + 1 - sootRight) <= 2.25f;
 						bool generateSides = i >= left + 1 && i <= right && (Math.Abs(i - left) < 3.75f || Math.Abs(i - right) < 3.75f);
                         bool validWall = tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick /*&& tile.WallType != WallID.Stone*/ &&
                             tile.WallType != ModContent.WallType<EarthenPlatingBeamWall>() && tile.WallType != ModContent.WallType<EarthenPlatingPanelWallWall>() && tile.WallType != ModContent.WallType<EarthenPlatingWallWall>();
@@ -667,7 +669,16 @@ namespace SOTS.WorldgenHelpers
 									generatePlatforms = false;
                                 }
 								else if(Math.Abs(rotation) < 5)
-									WorldGen.PlaceTile(rPoint.X, rPoint.Y, TileID.Rope);
+                                {
+                                    Tile tileAbove = Framing.GetTileSafely(rPoint.X, rPoint.Y - 1);
+                                    Tile tileAbove2 = Framing.GetTileSafely(rPoint.X, rPoint.Y - 2);
+                                    int type = TileID.Rope;
+                                    if(tileAbove.TileType == TileID.Chain || tileAbove2.TileType == TileID.Chain)
+                                    {
+                                        type = TileID.Chain;
+                                    }
+                                    WorldGen.PlaceTile(rPoint.X, rPoint.Y, type);
+                                }
                             }
                         }
                     }
@@ -682,7 +693,7 @@ namespace SOTS.WorldgenHelpers
                     for (int i2 = -8; i2 <= 8; i2++)
                     {
                         Tile tile = Main.tile[p.X + i2, p.Y];
-                        if (tile.HasTile && tile.TileType == TileID.Rope)
+                        if (tile.HasTile && (tile.TileType == TileID.Rope || tile.TileType == TileID.Chain))
                         {
                             tile.HasTile = false;
                             tile.LiquidAmount = 0;
@@ -738,7 +749,10 @@ namespace SOTS.WorldgenHelpers
 						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab
                             || t.WallType == ModContent.WallType<EarthenPlatingBeamWall>() || t.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || t.WallType == ModContent.WallType<EarthenPlatingWallWall>() 
                             || t.WallType == ModContent.WallType<UnsafeGulaPlatingWall>() || t.WallType == ModContent.WallType<GulaPlatingWallWall>();
-						bool isStone = t.TileType == TileID.GrayBrick || t.TileType == TileID.Stone || t.TileType == TileID.StoneSlab || t.TileType == ModContent.TileType<GulaPlatingTile>();
+						bool isStone = t.HasTile && (t.TileType == TileID.GrayBrick || 
+                            t.TileType == TileID.Stone || 
+                            t.TileType == TileID.StoneSlab || 
+                            t.TileType == ModContent.TileType<GulaPlatingTile>());
                         if (!generateStone && !open && !isStone && t.TileType != ModContent.TileType<EarthenPlatingTile>() && t.TileType != ModContent.TileType<EarthenPlatingPlatformTile>())
                         {
                             t.TileType = (ushort)ModContent.TileType<SootBlockTile>();
@@ -767,6 +781,7 @@ namespace SOTS.WorldgenHelpers
         }
 		public static void GenerateDownwardPath(int x, int y)
 		{
+            Vector2 destination = AVRect.Top();
 			float rotation = 0;
 			for(int i = 0; i < 15; i++)
             {
@@ -780,10 +795,16 @@ namespace SOTS.WorldgenHelpers
                 if (previousY > Main.rockLayer + 601 && i > 12) //At least 12 layers should be built
 					break; //after this is the earthen layer
 
+                Vector2 toDest = destination - new Vector2(x, y);
+                rotation = toDest.ToRotation() * 180 / MathHelper.Pi;
+                rotation -= 90;
+
                 //bottom of the earthen layer will be the Gula Layer
                 GenerateTunnel(ref x, ref y, rotation);
+
                 if (i != 0)
                     GenerateCaveCircle(previousX, previousY, 1, 1, 12, 5.5f, 2);
+
                 if (i == 13)
                     rotation = 0;
                 else
@@ -1424,7 +1445,7 @@ namespace SOTS.WorldgenHelpers
                 GenerateTunnel(ref x2, ref y2, -90 * dir, width: tunnelSize, size: separation);
             }
             posX += 3 * dir;
-            posY += 3;
+            posY += 4;
             Point16 previousPointTop = new Point16(0, 0);
             Point16 previousPointBot = new Point16(0, 0);
             for (int i = 0; i < size; i++)
@@ -1481,6 +1502,10 @@ namespace SOTS.WorldgenHelpers
             if(floorNum == 3)
             {
                 GenerateMineralariumRoom(x2, y2 + 4, dir);
+            }
+            if(floorNum == 5)
+            {
+                GenerateNewRubyGemStructure(x2 - 2 * dir, y2 - 20);
             }
             GulaLayer = false;
         }
@@ -1647,6 +1672,10 @@ namespace SOTS.WorldgenHelpers
                     }
 
                     int width = WorldGen.genRand.Next(5, 8);
+                    if(floorNum == 5 && attempts > 92)
+                    {
+                        width = attempts - 85;
+                    }
                     int wMultWidth = GulaLayer ? 24 : 20;
 
                     int startX = x1 + offset * mainSide;
@@ -2653,7 +2682,7 @@ namespace SOTS.WorldgenHelpers
             float attempts = 0;
             while(!validLocation)
             {
-                Vector2 random = Main.rand.NextVector2Circular(1, 1) * attempts;
+                Vector2 random = WorldGen.genRand.NextVector2Circular(1, 1) * attempts;
                 if (random.Y > 0)
                     random.Y *= 1.2f;
                 else
@@ -2666,14 +2695,14 @@ namespace SOTS.WorldgenHelpers
                 OuterRect = new Rectangle(x - padding - w / 2, y - padding - h / 2, w + padding * 2, h + padding * 2);
                 AVRect = new Rectangle(x - w/2, y - h / 2, w, h);
                 attempts++;
-                if(attempts > 1000)
-                {
-                    Main.NewText("Failed to find a valid location");
-                    return;
-                }
                 validLocation = ValidLocation(OuterRect);
+                if (attempts > 1000)
+                {
+                    //Main.NewText("Failed to find a valid location");
+                    validLocation = true;
+                }
             }
-            Main.NewText("took " + attempts + " attempts");
+            //Main.NewText("took " + attempts + " attempts");
             //for(int i = AVRect.Left; i < AVRect.Right; i++)
             //{
             //    for (int j = AVRect.Top; j < AVRect.Bottom; j++)
@@ -2837,9 +2866,11 @@ namespace SOTS.WorldgenHelpers
             int best = -1;
             for (int i = 0; i < Corruptions.Count; i++)
             {
-                float toDung = Vector2.Distance(dungeon, Corruptions[i].rect.Center.ToVector2());
-                float toPyra = Vector2.Distance(pyramid, Corruptions[i].rect.Center.ToVector2());
-                float farthestWins = Math.Min(toDung, toPyra);
+                Vector2 c = Corruptions[i].rect.Center.ToVector2();
+                float toDung = Vector2.Distance(dungeon, c);
+                float toPyra = Vector2.Distance(pyramid, c);
+                float toShimmer = MathF.Abs((float)GenVars.shimmerPosition.X - c.X);
+                float farthestWins = Math.Min(Math.Min(toDung, toPyra), toShimmer);
                 if(farthestWins > bestL)
                 {
                     bestL = farthestWins;
@@ -2946,6 +2977,7 @@ namespace SOTS.WorldgenHelpers
                     orbType = grossOrb.Type;
                 }
             }
+            Point16 pos = Point16.Zero;
             int[,] _structure = {
                 { 0, 0, 0, 0, 0,30,30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,30,30,30, 0, 0, 0, 0, 0, 0},
                 { 0, 2, 3, 2, 0,30,30, 0, 2, 2, 3, 3, 3, 2, 2, 2, 2, 3, 3, 3, 2, 3, 3, 0,30,30,30, 0, 2, 3, 2, 3, 0},
@@ -2974,7 +3006,7 @@ namespace SOTS.WorldgenHelpers
                 {30, 1,23, 1, 1,24, 1,23, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 7, 7, 1,12, 6, 1,25, 1, 1,26, 1, 7, 7,30},
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,13,13,13,13,13, 0, 0, 0, 0,27,28,28,28,28,28,27, 0, 0, 0, 0},
                 { 0, 3, 3, 2, 2, 3, 3, 3, 3, 2, 2, 2, 0, 1, 1, 4, 1, 1, 0, 3, 3, 0,27,28,28,28,28,28,27, 0, 3, 2, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 4, 1, 1, 0, 0, 0, 0,27,27,27,27,27,27,27, 0, 0, 0, 0}
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,34, 1, 1, 0, 0, 0, 0,27,27,27,27,27,27,27, 0, 0, 0, 0}
             };
             int PosX = spawnX - 15;  //spawnX and spawnY is where you want the anchor to be when this generates
             int PosY = spawnY - 25;
@@ -3017,6 +3049,13 @@ namespace SOTS.WorldgenHelpers
                                     tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
+                                    break;
+                                case 34:
+                                    tile.HasTile = true;
+                                    tile.TileType = 214;
+                                    tile.Slope = 0;
+                                    tile.IsHalfBlock = false;
+                                    pos = new Point16(k, l);
                                     break;
                                 case 4:
                                     tile.HasTile = true;
@@ -3212,7 +3251,7 @@ namespace SOTS.WorldgenHelpers
                                         tile.HasTile = false;
                                         tile.Slope = 0;
                                         tile.IsHalfBlock = false;
-                                        WorldGen.PlaceTile(k, l, TileID.DemonAltar, true, true, -1, 0);
+                                        WorldGen.PlaceTile(k, l, TileID.DemonAltar, true, true, -1, crimson ? 1 : 0);
                                     }
                                     break;
                                 case 26:
@@ -3304,6 +3343,18 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+
+            int x2 = pos.X;
+            int y2 = pos.Y + 1;
+            GenerateTunnel(ref x2, ref y2, 0, 7, 15);
+        }
+        public static void GenerateAbandonedMinesInsideTheCorruptionRectangle()
+        {
+            int bestC = BestEvilBiome();
+            CorruptionRectangle cR = Corruptions[bestC];
+            Vector2 bottomOfCr = new Vector2(cR.rect.Center.X, (float)Main.rockLayer + 200);
+
+            AbandonedVillageWorldgenHelper.DesignateAVRectangle((int)bottomOfCr.X, (int)bottomOfCr.Y, 400, 320);
         }
     }
 }
