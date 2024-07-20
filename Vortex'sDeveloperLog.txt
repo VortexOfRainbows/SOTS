@@ -23,11 +23,10 @@ Acknowledged But Likely Delayed:
 
 Update Objectives:
 1. Ghost Town! (Next up)
-	1. Make it spawn
-	2. Cave that integrates into evil biome
-	3. Smart spawning houses and rubble
-	4. Use GenVars.Structures (protected structures)
-	5. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
+	1. Smart spawning houses and rubble	
+	2. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
+	3. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
+	4. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
@@ -71,11 +70,10 @@ N/A
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
 	1. Needs: Generate Ancient Steel and Chests on corridors occasionally
-	2. Needs: Caves become more technological as you go deeper... Also more symmetric
-	3. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
+	2. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
 		1. Should deal contact damage. Also spawns enemies on top of it.
-	4. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
-	5. Ash particles in the air
+	3. Deep part should occur at the cavern layer. Final chamber will have the Gula Portal
+	4. Ash particles in the air
 
 ---Items To Make Work With Tesseract---
 N/A
@@ -88,6 +86,7 @@ Daily Log:
 3. Add Keeper's Box and Soul of the Keeper, works in multiplayer
 4. Add new Ruby Gemlock structure (currently not spawning loot)
 5. WIP Abandoned village worldgen (made things more consistent and symmetric)
+6. Abandoned Mines now generates on world gen
 
 7/1/24 to 7/15/24
 1. Conduit buff rework

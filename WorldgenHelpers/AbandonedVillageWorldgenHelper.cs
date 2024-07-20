@@ -668,15 +668,15 @@ namespace SOTS.WorldgenHelpers
 										platformPoints.Add(rPoint); 
 									generatePlatforms = false;
                                 }
-								else if(Math.Abs(rotation) < 5)
+								else if(Math.Abs(rotation) < 0.5f)
                                 {
-                                    Tile tileAbove = Framing.GetTileSafely(rPoint.X, rPoint.Y - 1);
-                                    Tile tileAbove2 = Framing.GetTileSafely(rPoint.X, rPoint.Y - 2);
-                                    int type = TileID.Rope;
-                                    if(tileAbove.TileType == TileID.Chain || tileAbove2.TileType == TileID.Chain)
-                                    {
-                                        type = TileID.Chain;
-                                    }
+                                    //Tile tileAbove = Framing.GetTileSafely(rPoint.X, rPoint.Y - 1);
+                                    //Tile tileAbove2 = Framing.GetTileSafely(rPoint.X, rPoint.Y - 2);
+                                    int type = TileID.Chain;
+                                    //if(tileAbove.TileType == TileID.Chain || tileAbove2.TileType == TileID.Chain)
+                                    //{
+                                    //    type = TileID.Chain;
+                                    //}
                                     WorldGen.PlaceTile(rPoint.X, rPoint.Y, type);
                                 }
                             }
@@ -781,34 +781,33 @@ namespace SOTS.WorldgenHelpers
         }
 		public static void GenerateDownwardPath(int x, int y)
 		{
+            int total = 0;
+            int size;
             Vector2 destination = AVRect.Top();
 			float rotation = 0;
-			for(int i = 0; i < 15; i++)
+            bool HitDesiredLocation = false;
+			while(!HitDesiredLocation)
             {
                 int previousX = x;
                 int previousY = y;
-                //after 6 tunnels, the earthen layer should start setting in
-
-                //at the 10nth tunnell intersection, there will be a split. One side leads to the GULA portal. The other side leads to a crimson/corruption boss arena.
-                //Which has some orbs and a pylon for calling down the ancient Earthen Construct
-
-                if (previousY > Main.rockLayer + 601 && i > 12) //At least 12 layers should be built
-					break; //after this is the earthen layer
 
                 Vector2 toDest = destination - new Vector2(x, y);
-                rotation = toDest.ToRotation() * 180 / MathHelper.Pi;
-                rotation -= 90;
+                float distanceFrom = toDest.Length();
+                size = (int)Math.Min(30, Math.Max(distanceFrom - 20, 0));
+                float desiredRotation = toDest.ToRotation() * 180 / MathHelper.Pi - 90;
 
-                //bottom of the earthen layer will be the Gula Layer
-                GenerateTunnel(ref x, ref y, rotation);
-
-                if (i != 0)
+                GenerateTunnel(ref x, ref y, rotation, size: size);
+                if (total != 0)
                     GenerateCaveCircle(previousX, previousY, 1, 1, 12, 5.5f, 2);
 
-                if (i == 13)
-                    rotation = 0;
-                else
-				    rotation = WorldGen.genRand.NextFloat(-45, 45);
+                float percent = MathF.Max(1 - (total * size / distanceFrom) * 1.2f, 0);
+                rotation = desiredRotation + WorldGen.genRand.NextFloat(-55, 55) * percent;
+
+                if (size <= 5 || total > 100)
+                {
+                    HitDesiredLocation = true;
+                }
+                total++;
             }
         }
 		public static void GenerateNewMineEntrance(int x, int y)
@@ -835,13 +834,13 @@ namespace SOTS.WorldgenHelpers
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,5,4,4,4,4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,5,0,0,0,5,5,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,5,5,5,5,5,5,4,4,4,4,4,0,4,4,4,4,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,4,4,0,0,0,4,4,4,4,4,4,4,0,4,4,4,5,5,5,5,5,5,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,0,4,4,4,4,0,0,0,0},
-                {0,0,0,0,0,4,4,4,0,4,4,4,4,4,4,4,4,0,4,4,4,4,5,5,5,5,5,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,0,4,4,4,4,0,0,0,0},
-                {0,0,0,0,4,4,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,4,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,4,5,5,5,5,5,4,4,4,4,0,4,4,4,4,4,0,4,4,4,4,0,0,0,0},
-                {0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,0,4,4,4,4,4,0,4,4,4,4,4,0,0,0},
-                {0,4,4,4,4,4,4,4,4,4,4,4,4,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,2,2,2,2,2,2,2,2,2,2,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,4,4,4,0,4,4,4,4,4,4,4,0},
+                {0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,5,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,5,0,0,0,5,5,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0},
+                {0,0,0,0,0,4,4,0,0,0,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0},
+                {0,0,0,0,0,4,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0},
+                {0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,4,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,4,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0},
+                {0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,2,6,6,6,6,6,6,6,6,6,2,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0},
+                {0,4,4,4,4,4,4,4,4,4,4,4,4,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,2,2,2,2,2,2,2,2,2,2,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,4,4,4,4,4,4,4,4,4,4,4,0},
                 {0,4,4,4,4,4,4,4,4,4,4,4,4,7,9,9,9,9,9,9,0,0,0,10,10,10,10,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,10,10,10,10,0,0,0,9,9,9,9,9,9,7,4,4,4,4,4,4,4,4,4,4,4,0},
                 {0,10,4,4,4,4,4,4,4,4,4,4,4,7,9,9,9,9,9,9,0,0,0,10,10,10,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,10,10,10,10,0,0,0,9,9,9,9,9,9,7,4,4,4,4,4,4,4,4,4,0,10,0},
                 {0,10,10,10,4,4,4,4,4,4,4,4,4,7,9,9,9,9,9,9,0,0,0,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,0,0,0,9,9,9,9,9,9,7,4,4,4,4,4,4,4,4,4,10,10,0},
@@ -2770,7 +2769,7 @@ namespace SOTS.WorldgenHelpers
             int evilStart = -1;
             int evilLength = 0;
             int evilEnd = -1;
-            int allowance = 15;
+            int allowance = 25; //How many blocks away from the crimson is still considered part of the crimson rectangle
             int start = 200;
             if (Corruptions.Count > 0)
             {
@@ -2830,31 +2829,28 @@ namespace SOTS.WorldgenHelpers
             CorruptionRectangle cR = new CorruptionRectangle();
             cR.rect = rect;
             cR.AverageHeight = totalHeight / totalTiles;
-            for (int i = rect.Left; i <= rect.Right; i++)
-            {
-                int pX = i;
-                int pY = rect.Y;
-                Tile t = Main.tile[pX, pY];
-                t.WallType = WallID.StoneSlab;
-
-                pY = rect.Y + rect.Height;
-                t = Main.tile[pX, pY];
-                t.WallType = WallID.StoneSlab;
-
-                t = Main.tile[pX, cR.AverageHeight];
-                t.WallType = WallID.RubyGemspark;
-            }
-            for (int j = rect.Y; j <= rect.Y + rect.Height; j++)
-            {
-                int pX = rect.X;
-                int pY = j;
-                Tile t = Main.tile[pX, pY];
-                t.WallType = WallID.StoneSlab;
-
-                pX = rect.X + rect.Width;
-                t = Main.tile[pX, pY];
-                t.WallType = WallID.StoneSlab;
-            }
+            //for (int i = rect.Left; i <= rect.Right; i++)
+            //{
+            //    int pX = i;
+            //    int pY = rect.Y;
+            //    Tile t = Main.tile[pX, pY];
+            //    t.WallType = WallID.StoneSlab;
+            //    pY = rect.Y + rect.Height;
+            //    t = Main.tile[pX, pY];
+            //    t.WallType = WallID.StoneSlab;
+            //    t = Main.tile[pX, cR.AverageHeight];
+            //    t.WallType = WallID.RubyGemspark;
+            //}
+            //for (int j = rect.Y; j <= rect.Y + rect.Height; j++)
+            //{
+            //    int pX = rect.X;
+            //    int pY = j;
+            //    Tile t = Main.tile[pX, pY];
+            //    t.WallType = WallID.StoneSlab;
+            //    pX = rect.X + rect.Width;
+            //    t = Main.tile[pX, pY];
+            //    t.WallType = WallID.StoneSlab;
+            //}
             Corruptions.Add(cR);
             return true;
         }
@@ -2887,7 +2883,7 @@ namespace SOTS.WorldgenHelpers
             for(int i = cR.rect.Left; i <= cR.rect.Right; i++)
             {
                 float percent = (i - cR.rect.Left) / (float)cR.rect.Width;
-                float flattenAmount = MathF.Sqrt(MathF.Abs(MathF.Sin(percent * MathHelper.Pi)));
+                float flattenAmount = MathF.Pow(MathF.Abs(MathF.Sin(percent * MathHelper.Pi)), 0.25f);
                 for (int j = cR.rect.Top; j <= cR.rect.Bottom; j++)
                 {
                     int diff = avg - j;
@@ -2896,7 +2892,7 @@ namespace SOTS.WorldgenHelpers
                     bool WallToMoveDown = t.WallType == WallID.CrimstoneUnsafe || t.WallType == WallID.EbonstoneUnsafe;
                     if ((t.HasTile && Main.tileSolid[type] && !InvalidTiles.Contains(t.TileType)) || WallToMoveDown)
                     {
-                        int shift = (int)Math.Abs(diff * flattenAmount * 0.85f);
+                        int shift = (int)Math.Abs(diff * flattenAmount * 0.9f);
                         List<Tile> tiles = new List<Tile>();
                         if(diff > 0 && shift > 0)
                         {
@@ -3354,7 +3350,36 @@ namespace SOTS.WorldgenHelpers
             CorruptionRectangle cR = Corruptions[bestC];
             Vector2 bottomOfCr = new Vector2(cR.rect.Center.X, (float)Main.rockLayer + 200);
 
-            AbandonedVillageWorldgenHelper.DesignateAVRectangle((int)bottomOfCr.X, (int)bottomOfCr.Y, 400, 320);
+            DesignateAVRectangle((int)bottomOfCr.X, (int)bottomOfCr.Y, 400, 320);
+
+            Point16 placement = new Point16();
+            for (int attempts = 0; attempts < 100; attempts++)
+            {
+                float aboveGroundLocation = MathHelper.Lerp(AVRect.Center.X, cR.rect.Center.X, WorldGen.genRand.NextFloat());
+                int i = (int)(aboveGroundLocation + 0.5f);
+                if(!cR.rect.Contains(i, cR.rect.Center.Y))
+                {
+                    break;
+                }
+                bool foundLocation = false;
+                for(int j = cR.rect.Top; j < cR.rect.Bottom; j++)
+                {
+                    Tile t = Main.tile[i, j];
+                    int type = t.TileType;
+                    if (t.HasTile && Main.tileSolid[type])
+                    {
+                        placement = new Point16(i, j);
+                        if (ValidGrassTiles.Contains(type) || ValidStoneTiles.Contains(type))
+                        {
+                            foundLocation = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundLocation)
+                    break;
+            }
+            GenerateNewMineEntrance(placement.X, placement.Y);
         }
     }
 }
